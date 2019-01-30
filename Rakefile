@@ -19,16 +19,19 @@ namespace :guides do
 
   namespace :generate do
     desc "Generate HTML guides"
-    task html: :encoding do
+    task :html do
       ENV["WARNINGS"] = "1" # authors can't disable this
-      system 'cp -r pt-BR rails/guides/source'
-      ruby "rails/guides/rails_guides.rb"
+      ENV["RAILS_VERSION"] = "5.2.2"
+      ENV["GUIDES_LANGUAGE"] = "pt-BR"
+      system 'cp -r ./pt-BR rails/guides/source'
+      ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
+      system 'rm -rf output'
       system 'cp -r rails/guides/output output'
       system 'rm -rf rails/guides/source/pt-BR && rm -rf rails/guides/output'
     end
 
     desc "Generate .mobi file. The kindlegen executable must be in your PATH. You can get it for free from http://www.amazon.com/gp/feature.html?docId=1000765211"
-    task kindle: :encoding do
+    task :kindle do
       require "kindlerb"
       unless Kindlerb.kindlegen_available?
         abort "Please run `setupkindlerb` to install kindlegen"
@@ -37,7 +40,13 @@ namespace :guides do
         abort "Please install ImageMagick"
       end
       ENV["KINDLE"] = "1"
-      Rake::Task["guides:generate:html"].invoke
+      ENV["RAILS_VERSION"] = "5.2.2"
+      ENV["GUIDES_LANGUAGE"] = "pt-BR"
+      # Rake::Task["guides:generate:html"].invoke
+      system 'cp -r ./pt-BR rails/guides/source'
+      ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
+      system 'cp -r rails/guides/output output'
+      system 'rm -rf rails/guides/source/pt-BR && rm -rf rails/guides/output'
     end
   end
 
