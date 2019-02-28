@@ -22,7 +22,7 @@ Guia Ruby on Rails
   <dl>
     <% section['documents'].each do |document| %>
       <%= guide(document['name'], document['url'], work_in_progress: document['work_in_progress']) do %>
-        <p><%= document['description'] %></p>
+        <%= Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(document['description']).html_safe %>
       <% end %>
     <% end %>
   </dl>
