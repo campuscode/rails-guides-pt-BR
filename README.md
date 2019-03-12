@@ -14,8 +14,8 @@ Você pode ver o conteúdo já traduzido em http://guiarails.com.br/
 
 ## Como ajudar
 
-Se você já tem conhecimento em Rails ou está aprendendo e gostaria de aprender
-mais ao traduzir o Guia, nossas boas-vindas.
+Seja você é alguém que tem conhecimento em Rails ou ainda está aprendendo,
+nossas boas-vindas!
 
 Abaixo deixamos alguns passos sobre como fazer contribuições:
 
@@ -34,14 +34,15 @@ a página `active_record_basics.md`.
       página toda.
     - Temos um template de issue que pode ser utilizado.
 
-1. Faça um fork do projeto e clone para a sua máquina.
+1. Faça um Fork do projeto e clone para a sua máquina.
 
-1. Ao iniciar a tradução, crie um Branch referente à sua tradução e abra um Pull Request [[link da documentação](https://help.github.com/en/articles/creating-a-pull-request)]  com a palavra WIP (Work in Progress) no título, assim todos podem saber que
-você iniciou uma tradução. Lembre-se de marcar no texto do Pull Request as
-issues que planeja traduzir (campuscode/rails-guides-pt-BR#numero-da-issue)
+1. Ao iniciar a tradução, crie um Branch referente à sua tradução e abra um Pull
+Request [[link da documentação](https://help.github.com/en/articles/creating-a-pull-request)] com a palavra WIP (Work in Progress) antes do título, assim todos podem saber
+que você iniciou uma tradução. Lembre-se de marcar no texto do Pull Request as
+issues que planeja traduzir (campuscode/rails-guides-pt-BR#numero-da-issue).
 
 1. Faça a tradução do capítulo fazendo commits durante o processo. Ao final,
-retire o WIP do Pull request para que todos saibam que você terminou a tradução.
+retire o WIP do Pull Request para que todos saibam que você terminou a tradução.
 
 1. Pronto! Agora é só esperar a comunidade avaliar a tradução.
 
@@ -49,6 +50,10 @@ retire o WIP do Pull request para que todos saibam que você terminou a traduç�
 
 Não é necessário verificar o HTML gerado pela sua contribuição, mas temos
 um Guia abaixo mostrando como isso é feito.
+
+### Pré-requisitos
+
+**Ruby 2.5+**
 
 ### Atualizando as dependências
 
@@ -82,6 +87,6 @@ Por fim, para abrir o Guia navegue até essa pasta e abra o arquivo
 
 ## Agradecimentos
 
-Agradecemos sua contribuição, cada uma delas é muito importante para fazer a
-comunidade crescer. Buscamos contribuir com material em pt-BR para trazer
-mais pessoas para o ecossistema Ruby que tanto amamos.
+Agradecemos sua contribuição. Cada uma é importante para fazer a comunidade 
+crescer. Contribuindo com material em pt-BR trazemos mais pessoas 
+para o ecossistema Ruby que tanto amamos.
