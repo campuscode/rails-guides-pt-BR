@@ -21,13 +21,13 @@ namespace :guides do
     desc "Generate HTML guides"
     task :html do
       ENV["WARNINGS"] = "1" # authors can't disable this
-      ENV["RAILS_VERSION"] = "5.2.2"
+      ENV["RAILS_VERSION"] = "v6.0.0"
       ENV["GUIDES_LANGUAGE"] = "pt-BR"
       system 'cp -r ./pt-BR rails/guides/source'
       ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
       system 'rm -rf output'
-      system 'cp -r rails/guides/output output'
-      system 'rm -rf rails/guides/source/pt-BR && rm -rf rails/guides/output'
+      system 'mv rails/guides/output output'
+      system 'rm -rf rails/guides/source/pt-BR'
     end
 
     desc "Generate .mobi file. The kindlegen executable must be in your PATH. You can get it for free from http://www.amazon.com/gp/feature.html?docId=1000765211"
