@@ -103,7 +103,7 @@ Title: Rails debugging guide
 O *Logger*
 ----------
 
-Pode ser util salvar informações em um arquivo de log durante a execução do aplicativo. O Rails mantem um arquivo de log separado para cada ambiente de execução.
+Pode ser útil salvar informações em um arquivo de log durante a execução do aplicativo. O Rails mantem um arquivo de log separado para cada ambiente de execução.
 
 ### O que é o *Logger*?
 
