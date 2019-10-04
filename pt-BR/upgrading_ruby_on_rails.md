@@ -1,9 +1,10 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Upgrading Ruby on Rails
+Atualizando Ruby on Rails
 =======================
 
-This guide provides steps to be followed when you upgrade your applications to a newer version of Ruby on Rails. These steps are also available in individual release guides.
+Este guia fornece os passos a serem seguidos quando você for atualizar suas aplicações
+para uma versão mais nova do Ruby on Rails. Estes passos também estão disponíveis em guias de releases individuais.
 
 --------------------------------------------------------------------------------
 
