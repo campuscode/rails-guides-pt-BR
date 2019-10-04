@@ -100,30 +100,29 @@ Will render:
 Title: Rails debugging guide
 ```
 
-The Logger
+O *Logger*
 ----------
 
-It can also be useful to save information to log files at runtime. Rails maintains a separate log file for each runtime environment.
+Pode ser util salvar informações em um arquivo de log durante a execução do aplicativo. O Rails mantem um arquivo de log separado para cada ambiente de execução.
 
-### What is the Logger?
+### O que é o *Logger*?
 
-Rails makes use of the `ActiveSupport::Logger` class to write log information. Other loggers, such as `Log4r`, may also be substituted.
+O Rails utiliza a classe `ActiveSupport::Logger` para guardar informações de log. Outros tipos de loggers, como o `Log4r`, também pode ser utilizado.
 
-You can specify an alternative logger in `config/application.rb` or any other environment file, for example:
+Você pode especificar um logger alternativo em `config/application.rb` ou em qualquer outro arquivo de ambiente, por exemplo: 
 
 ```ruby
 config.logger = Logger.new(STDOUT)
 config.logger = Log4r::Logger.new("Application Log")
 ```
 
-Or in the `Initializer` section, add _any_ of the following
+Ou na sessão `Initializer`, adicione _qualquer_ um dos seguintes: 
 
 ```ruby
 Rails.logger = Logger.new(STDOUT)
 Rails.logger = Log4r::Logger.new("Application Log")
 ```
-
-TIP: By default, each log is created under `Rails.root/log/` and the log file is named after the environment in which the application is running.
+DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de log é criado com o nome do ambiente no qual a aplicação está sendo executada.
 
 ### Log Levels
 
