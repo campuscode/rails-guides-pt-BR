@@ -1,16 +1,16 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Debugging Rails Applications
+Debugando Aplicações Rails
 ============================
 
-This guide introduces techniques for debugging Ruby on Rails applications.
+Esse guia introduz técnicas de debugação para aplicações de Ruby on Rails
 
-After reading this guide, you will know:
+Após ler esse guia, você saberá:
 
-* The purpose of debugging.
-* How to track down problems and issues in your application that your tests aren't identifying.
-* The different ways of debugging.
-* How to analyze the stack trace.
+* O proposito de debugar
+* Como encontrar problemas nas suas aplicações que testes não estão identificando
+* As diferentes maneiras de debugar
+* Como analisar o *stack trace*
 
 --------------------------------------------------------------------------------
 
