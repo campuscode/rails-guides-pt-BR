@@ -15,24 +15,23 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-Guide Assumptions
+Sobre o Guia
 -----------------
 
-This guide is designed for beginners who want to get started with a Rails
-application from scratch. It does not assume that you have any prior experience
-with Rails.
+Esta aplicação é projetada para iniciantes que desejam começar uma aplicação Rails do
+zero. Ela não assume que você tenha nenhuma experiencia anterior com Rails.
 
-Rails is a web application framework running on the Ruby programming language.
-If you have no prior experience with Ruby, you will find a very steep learning
-curve diving straight into Rails. There are several curated lists of online resources
-for learning Ruby:
+Rails é um framework para aplicações web que roda em cima da linguagem de programação
+Ruby. Se você não tem nenhuma experiencia com Ruby, você vai achar a curva de 
+aprendizado bastante ingrime começando direto com Rails. Existem diversas 
+listas organizadas de materiais online para aprender Ruby:
 
-* [Official Ruby Programming Language website](https://www.ruby-lang.org/en/documentation/)
-* [List of Free Programming Books](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
+* [Site Oficial da Linguagem de Programação Ruby](https://www.ruby-lang.org/en/documentation/)
+* [Lista de Livros Grátis de Programação](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
 
-Be aware that some resources, while still excellent, cover versions of Ruby as old as
-1.6, and commonly 1.8, and will not include some syntax that you will see in day-to-day
-development with Rails.
+Fique atento que alguns materiais, que apesar de excelentes, envolvem versões antigas 
+do Ruby chegando a 1.6, e comummente 1.8, e não incluem parte da sintaxe que você 
+vai ver no seu dia-a-dia desenvolvendo com Rails.
 
 What is Rails?
 --------------
