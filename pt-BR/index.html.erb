@@ -1,5 +1,5 @@
-<% content_for :page_title, "Ruby on Rails Guides" %>
-<% content_for :description, "Ruby on Rails Guides" %>
+<% content_for :page_title, "Guia Ruby on Rails" %>
+<% content_for :description, "Guia Ruby on Rails" %>
 
 <% content_for :header_section do %>
 <%= render 'welcome' %>
@@ -10,9 +10,9 @@
   <dl>
     <dt></dt>
     <% unless @edge -%>
-      <dd class="kindle">Rails Guides are also available for <%= link_to 'Kindle', @mobi %>.</dd>
+      <dd class="kindle">O Guia Rails também está disponível para <%= link_to 'Kindle', @mobi %>.</dd>
     <% end -%>
-    <dd class="work-in-progress">Guides marked with this icon are currently being worked on and will not be available in the Guides Index menu. While still useful, they may contain incomplete information and even errors. You can help by reviewing them and posting your comments and corrections.</dd>
+    <dd class="work-in-progress">Os guias marcados com este ícone estão sendo em processo de tradução no momento e não estarão disponíveis no menu. Embora ainda sejam úteis, podem conter informações incompletas e até erros. Você pode ajudar revendo-os e publicando comentários e correções.</dd>
   </dl>
 </div>
 <% end %>
@@ -22,7 +22,7 @@
   <dl>
     <% section['documents'].each do |document| %>
       <%= guide(document['name'], document['url'], work_in_progress: document['work_in_progress']) do %>
-        <p><%= document['description'] %></p>
+        <%= Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(document['description']).html_safe %>
       <% end %>
     <% end %>
   </dl>
