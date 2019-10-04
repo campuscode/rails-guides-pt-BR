@@ -8,10 +8,10 @@ para uma versão mais nova do Ruby on Rails. Estes passos também estão dispon�
 
 --------------------------------------------------------------------------------
 
-General Advice
+Conselho Geral
 --------------
 
-Before attempting to upgrade an existing application, you should be sure you have a good reason to upgrade. You need to balance several factors: the need for new features, the increasing difficulty of finding support for old code, and your available time and skills, to name a few.
+Antes de tentar atualizar uma aplicação existente, você deve ter certeza que possui uma boa razão para faze-lo. Então tenha em mente alguns fatores: a necessidade de novas funcionalidades, a crescente dificuldade de encontrar suporte para código mais antigo, seu tempo disponível e habilidades, por exemplo
 
 ### Test Coverage
 
