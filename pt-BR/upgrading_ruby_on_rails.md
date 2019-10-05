@@ -17,18 +17,20 @@ Antes de tentar atualizar uma aplicação existente, você deve ter certeza que 
 
 A melhor maneira de garantir que sua aplicação ainda funciona após a atualização é possuir uma boa cobertura de testes antes de começar o processo. Se você não possuir testes automatizados para a maior parte de sua aplicação, será necessário gastar algum tempo realizando testes manuais de todas as partes alteradas. No caso da atualização Ruby on Rails, isso significa cada umas das funcionalidades dentro da aplicação. Faça a si mesmo um favor e tenha certeza de ter uma boa cobertura de teste _antes_ de iniciar uma atualização.
 
-### The Upgrade Process
+### O Processo de Atualização
 
-When changing Rails versions, it's best to move slowly, one minor version at a time, in order to make good use of the deprecation warnings. Rails version numbers are in the form Major.Minor.Patch. Major and Minor versions are allowed to make changes to the public API, so this may cause errors in your application. Patch versions only include bug fixes, and don't change any public API.
+Quando estiver atualizando a versão do Rails, o melhor é mover-se lentamente, uma versão *Minor* por vez, para fazer bom uso dos avisos de depreciação. As versões do Rails são numeradas da maneira *Major*.*Minor*.*Patch*. Versões *Major* e *Minor* tem permissão para alterar à API pública, isso pode causar erros em sua aplicação. Versões *Patch* incluem apenas correções de *bug*, e não alteram nenhuma API pública.
 
-The process should go as follows:
+O processo deve correr da seguinte maneira:
 
-1. Write tests and make sure they pass.
-2. Move to the latest patch version after your current version.
-3. Fix tests and deprecated features.
-4. Move to the latest patch version of the next minor version.
+1. Escreva os testes egaranta que eles passem.
+2. Atualize para a ultima versão *Patch* após a versão atual de seu projeto.
+3. Concerte os testes e funcionalidades  depreciadas.
+4. Atualize para a ultima versão *Patch* da versão *Minor* seguinte.
 
-Repeat this process until you reach your target Rails version. Each time you move versions, you will need to change the Rails version number in the `Gemfile` (and possibly other gem versions) and run `bundle update`. Then run the Update task mentioned below to update configuration files, then run your tests.
+Repita este pocesso até chegar na versão desejada do Rails. Cada vez que você mudar entre versões. Você precisará alterar a versão no `Gemfile` (posivelmente também as versões de outras gems) e rodar `bundle update`. Rodar a tarefa de atualização mencionada abaixo para atualizar arquivos de configuração, e rode os testes.
+
+Você pode encontrar a lista com todas as versões liberadas do Rails [aqui](https://rubygems.org/gems/rails/versions)
 
 You can find a list of all released Rails versions [here](https://rubygems.org/gems/rails/versions).
 
