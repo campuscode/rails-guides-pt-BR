@@ -1,15 +1,15 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 
 Debugando Aplicações Rails
 ============================
 
-Esse guia introduz técnicas de debugação para aplicações de Ruby on Rails
+Esse guia introduz técnicas de *debug* para aplicações de Ruby on Rails
 
 Após ler esse guia, você saberá:
 
-* O propósito de debugar
+* O propósito de das técnicas de *debug*
 * Como encontrar problemas nas suas aplicações que testes não estão identificando
-* As diferentes maneiras de debugar
+* As diferentes maneiras de depurar o seu código
 * Como analisar o *stack trace*
 
 --------------------------------------------------------------------------------
@@ -122,6 +122,7 @@ Ou na seção `Initializer`, adicione _qualquer_ um dos seguintes:
 Rails.logger = Logger.new(STDOUT)
 Rails.logger = Log4r::Logger.new("Application Log")
 ```
+
 DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de log é criado com o nome do ambiente no qual a aplicação está sendo executada.
 
 ### Log Levels
