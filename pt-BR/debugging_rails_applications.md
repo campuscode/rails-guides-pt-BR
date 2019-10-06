@@ -7,7 +7,7 @@ Esse guia introduz técnicas de debugação para aplicações de Ruby on Rails
 
 Após ler esse guia, você saberá:
 
-* O proposito de debugar
+* O propósito de debugar
 * Como encontrar problemas nas suas aplicações que testes não estão identificando
 * As diferentes maneiras de debugar
 * Como analisar o *stack trace*
@@ -103,7 +103,7 @@ Title: Rails debugging guide
 O *Logger*
 ----------
 
-Pode ser util salvar informações em um arquivo de log durante a execução do aplicativo. O Rails mantem um arquivo de log separado para cada ambiente de execução.
+Pode ser útil salvar informações em um arquivo de log em tempo de execução. O Rails mantém um arquivo de log separado para cada ambiente de execução.
 
 ### O que é o *Logger*?
 
@@ -116,7 +116,7 @@ config.logger = Logger.new(STDOUT)
 config.logger = Log4r::Logger.new("Application Log")
 ```
 
-Ou na sessão `Initializer`, adicione _qualquer_ um dos seguintes: 
+Ou na seção `Initializer`, adicione _qualquer_ um dos seguintes: 
 
 ```ruby
 Rails.logger = Logger.new(STDOUT)
