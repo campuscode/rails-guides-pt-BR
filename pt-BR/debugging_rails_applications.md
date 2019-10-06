@@ -109,7 +109,7 @@ Pode ser útil salvar informações em um arquivo de log em tempo de execução.
 
 O Rails utiliza a classe `ActiveSupport::Logger` para guardar informações de log. Outros tipos de loggers, como o `Log4r`, também pode ser utilizado.
 
-Você pode especificar um logger alternativo em `config/application.rb` ou em qualquer outro arquivo de ambiente, por exemplo: 
+Você pode especificar um *logger* alternativo em `config/application.rb` ou em qualquer outro arquivo de ambiente, por exemplo: 
 
 ```ruby
 config.logger = Logger.new(STDOUT)
