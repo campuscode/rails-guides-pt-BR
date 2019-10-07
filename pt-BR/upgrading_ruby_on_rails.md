@@ -4,18 +4,18 @@ Atualizando Ruby on Rails
 =======================
 
 Este guia fornece os passos a serem seguidos quando você for atualizar suas aplicações
-para uma versão mais nova do Ruby on Rails. Estes passos também estão disponíveis em guias de releases individuais.
+para uma versão mais nova do Ruby on Rails. Estes passos também estão disponíveis em guias de lançamento de versão individuais.
 
 --------------------------------------------------------------------------------
 
 Conselho Geral
 --------------
 
-Antes de tentar atualizar uma aplicação existente, você deve ter certeza que possui uma boa razão para faze-lo. Então tenha em mente alguns fatores: a necessidade de novas funcionalidades, a crescente dificuldade de encontrar suporte para código mais antigo, seu tempo disponível e habilidades, por exemplo
+Antes de tentar atualizar uma aplicação existente, você deve ter certeza que possui uma boa razão para faze-lo. Então tenha em mente alguns fatores: a necessidade de novas funcionalidades, a crescente dificuldade de encontrar suporte para código mais antigo, seu tempo disponível e habilidades, entre outros.
 
 ### Cobertura de Testes
 
-A melhor maneira de garantir que sua aplicação ainda funciona após a atualização é possuir uma boa cobertura de testes antes de começar o processo. Se você não possuir testes automatizados para a maior parte de sua aplicação, será necessário gastar algum tempo realizando testes manuais de todas as partes alteradas. No caso da atualização Ruby on Rails, isso significa cada umas das funcionalidades dentro da aplicação. Faça a si mesmo um favor e tenha certeza de ter uma boa cobertura de teste _antes_ de iniciar uma atualização.
+A melhor maneira de garantir que sua aplicação ainda funciona após a atualização é possuir uma boa cobertura de testes antes de começar o processo. Se você não possuir testes automatizados para a maior parte de sua aplicação, será necessário gastar algum tempo realizando testes manuais de todas as partes alteradas. No caso da atualização do Rails, isso significa cada umas das funcionalidades dentro da aplicação. Faça a si mesmo um favor e tenha certeza de ter uma boa cobertura de teste **antes** de iniciar uma atualização.
 
 ### O Processo de Atualização
 
@@ -23,28 +23,26 @@ Quando estiver atualizando a versão do Rails, o melhor é mover-se lentamente, 
 
 O processo deve correr da seguinte maneira:
 
-1. Escreva os testes egaranta que eles passem.
+1. Escreva os testes e garanta que eles passem.
 2. Atualize para a ultima versão *Patch* após a versão atual de seu projeto.
 3. Concerte os testes e funcionalidades  depreciadas.
 4. Atualize para a ultima versão *Patch* da versão *Minor* seguinte.
 
-Repita este pocesso até chegar na versão desejada do Rails. Cada vez que você mudar entre versões. Você precisará alterar a versão no `Gemfile` (posivelmente também as versões de outras gems) e rodar `bundle update`. Rodar a tarefa de atualização mencionada abaixo para atualizar arquivos de configuração, e rode os testes.
+Repita este processo até chegar na versão desejada do Rails. Cada vez que você mudar entre versões. Você precisará alterar a versão no `Gemfile` (possivelmente também as versões de outras gems) e rodar `bundle update`. Rodar a tarefa de atualização mencionada abaixo para atualizar arquivos de configuração, e rode os testes.
 
 Você pode encontrar a lista com todas as versões liberadas do Rails [aqui](https://rubygems.org/gems/rails/versions)
 
-You can find a list of all released Rails versions [here](https://rubygems.org/gems/rails/versions).
+### Versões do Ruby
 
-### Ruby Versions
+Rails geralmente se mantém proximo à versão mais recente do ruby quando é liberado:
 
-Rails generally stays close to the latest released Ruby version when it's released:
-
-* Rails 6 requires Ruby 2.5.0 or newer.
-* Rails 5 requires Ruby 2.2.2 or newer.
+* Rails 6 requer Ruby 2.5.0 ou posterior.
+* Rails 5 requer Ruby 2.2.2 ou posterior.
 * Rails 4 prefers Ruby 2.0 and requires 1.9.3 or newer.
-* Rails 3.2.x is the last branch to support Ruby 1.8.7.
-* Rails 3 and above require Ruby 1.8.7 or higher. Support for all of the previous Ruby versions has been dropped officially. You should upgrade as early as possible.
+* Rails 3.2.x é a última *branch* a suportar Ruby 1.8.7.
+* Rails 3 e posteriores requerem Ruby 1.8.7 ou posteriores. O suporte para todas as versões anteriores do Ruby foi descontinuado. Você deve atualizar o quanto antes.
 
-TIP: Ruby 1.8.7 p248 and p249 have marshalling bugs that crash Rails. Ruby Enterprise Edition has these fixed since the release of 1.8.7-2010.02. On the 1.9 front, Ruby 1.9.1 is not usable because it outright segfaults, so if you want to use 1.9.x, jump straight to 1.9.3 for smooth sailing.
+Dica: O Ruby 1.8.7 p248 e p249 possuem bugs que travam o Rails. Ruby Enterprise Edition possui correções para esses erros desde a versão 1.8.7-2010.02. Na Versão 1.9, Ruby 1.9.1 não é utilizável pois ela falha logo de início, então se você quiser utilizar a versão 1.9.x pule diretamente para 1.9.3 para evitar problemas.
 
 ### The Update Task
 
