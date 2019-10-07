@@ -19,7 +19,7 @@ A melhor maneira de garantir que sua aplicação ainda funciona após a atualiza
 
 ### O Processo de Atualização
 
-Quando estiver atualizando a versão do Rails, o melhor é mover-se lentamente, uma versão *Minor* por vez, para fazer bom uso dos avisos de depreciação. As versões do Rails são numeradas da maneira *Major*.*Minor*.*Patch*. Versões *Major* e *Minor* tem permissão para alterar à API pública, isso pode causar erros em sua aplicação. Versões *Patch* incluem apenas correções de *bug*, e não alteram nenhuma API pública.
+Quando estiver atualizando a versão do Rails, o melhor é mover-se lentamente, uma versão *Minor* por vez, para fazer bom uso dos avisos de depreciação. As versões do Rails são numeradas da maneira *Major*.*Minor*.*Patch*. Versões *Major* e *Minor* tem permissão para alterar API pública, isso pode causar erros em sua aplicação. Versões *Patch* incluem apenas correções de *bug*, e não alteram nenhuma API pública.
 
 O processo deve correr da seguinte maneira:
 
@@ -44,12 +44,9 @@ Rails geralmente se mantém proximo à versão mais recente do ruby quando é li
 
 Dica: O Ruby 1.8.7 p248 e p249 possuem bugs que travam o Rails. Ruby Enterprise Edition possui correções para esses erros desde a versão 1.8.7-2010.02. Na Versão 1.9, Ruby 1.9.1 não é utilizável pois ela falha logo de início, então se você quiser utilizar a versão 1.9.x, pule diretamente para 1.9.3 para evitar problemas.
 
-### The Update Task
+### A Tarefa de Atualização
 
-Rails provides the `app:update` command (`rake rails:update` on 4.2 and earlier). After updating the Rails version
-in the `Gemfile`, run this command.
-This will help you with the creation of new files and changes of old files in an
-interactive session.
+Rails fornece o comando `app:update` (`rake rails:update` na versão 4.2 e anteriores). Rode este comando após atualizar a versão do Rails no `Gemfile`. Isto lhe ajudará na criação de novos arquivos e na alteração de arquivos antigos em uma sessão interativa.
 
 ```bash
 $ rails app:update
@@ -65,7 +62,7 @@ Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
 ...
 ```
 
-Don't forget to review the difference, to see if there were any unexpected changes.
+Não esqueça de revisar a diferença, para verificar se houveram mudanças inesperadas.
 
 ### Configure Framework Defaults
 
