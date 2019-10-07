@@ -64,11 +64,11 @@ Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
 
 Não esqueça de revisar a diferença, para verificar se houveram mudanças inesperadas.
 
-### Configure Framework Defaults
+### Configurar Padrões de Framework
 
-The new Rails version might have different configuration defaults than the previous version. However, after following the steps described above, your application would still run with configuration defaults from the *previous* Rails version. That's because the value for `config.load_defaults` in `config/application.rb` has not been changed yet.
+A nova versão do rails pode ter configurações padrão diferentes da versão anterior. No entanto, após seguir os passos descritos acima, sua aplicação ainda estaria rodando com configurações padrão da versão **anterior** do Rails. Isso é porque o valor para `config.load_defaults` em `config/application.rb` ainda não foi alterado.
 
-To allow you to upgrade to new defaults one by one, the update task has created a file `config/initializers/new_framework_defaults.rb`. Once your application is ready to run with new defaults, you can remove this file and flip the `config.load_defaults` value.
+Para permitir que você atualize para novos padrões um a um, a tarefa de atualização cria um arquivo `config/initializers/new_framework_defaults.rb`. Uma vez que a aplicação esteja pronta para rodar com as novas configurações padrão, você pode remover este arquivo e trocar o valor de `config.load_defaults`.
 
 
 Upgrading from Rails 5.2 to Rails 6.0
