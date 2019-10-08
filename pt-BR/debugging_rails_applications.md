@@ -54,7 +54,7 @@ Title: Guia de *debugging* do Rails
 
 ### `to_yaml`
 
-Como alternativa, chamada `to_yaml` onde qualquer objeto é convertido para YAML. Você pode passar esse objeto convertido para o método *helper* `simple_format` para formatar o *output*. É assim que o `debug` faz sua mágica. 
+Como alternativa, chamar `to_yaml` em qualquer objeto o converte para YAML. Você pode passar esse objeto convertido para o método *helper* `simple_format` para formatar o *output*. É assim que o `debug` faz sua mágica. 
 
 ```html+erb
 <%= simple_format @article.to_yaml %>
