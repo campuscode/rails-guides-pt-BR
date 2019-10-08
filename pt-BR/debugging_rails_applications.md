@@ -25,7 +25,7 @@ Uma tarefa comum é inspecionar o conteúdo de uma variável. O Rails fornece tr
 
 ### `debug`
 
-O *helper* `debug` irá retornar uma tag \<pre> que renderiza um objeto usando o formato YAML. Isso vai gerar um dado legível para humanos para qualquer objeto. Por exemplo, se você tem esse código em uma *view*: 
+O *helper* `debug` irá retornar uma tag \<pre> que renderiza um objeto usando o formato YAML. Isso vai gerar um dado legível para humanos a partir de qualquer objeto. Por exemplo, se você tem esse código em uma *view*: 
 
 ```html+erb
 <%= debug @article %>
