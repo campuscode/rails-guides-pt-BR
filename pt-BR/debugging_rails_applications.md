@@ -281,33 +281,32 @@ The contents of the block, and therefore the string interpolation, are only
 evaluated if debug is enabled. This performance savings are only really
 noticeable with large amounts of logging, but it's a good practice to employ.
 
-Debugging with the `byebug` gem
+Debugging com a gem `byebug`
 ---------------------------------
 
-When your code is behaving in unexpected ways, you can try printing to logs or
-the console to diagnose the problem. Unfortunately, there are times when this
-sort of error tracking is not effective in finding the root cause of a problem.
-When you actually need to journey into your running source code, the debugger
-is your best companion.
+Quando seu código está se comportando de maneiras inesperadas, você pode tentar imprimir em *logs* ou
+no console para diagnosticar o problema. Infelizmente, há momentos em que esse
+tipo de rastreamento de erros não é eficaz para encontrar a causa raiz de um problema.
+Quando você realmente precisa acessar seu código-fonte em execução, o *debugger*
+é o seu melhor companheiro.
 
-The debugger can also help you if you want to learn about the Rails source code
-but don't know where to start. Just debug any request to your application and
-use this guide to learn how to move from the code you have written into the
-underlying Rails code.
+O *debugger* também pode ajudá-lo se você quiser aprender sobre o código-fonte do Rails,
+mas não sabe por onde começar. Basta depurar qualquer requisição da sua aplicação e
+usar este guia para aprender como passar do código que você escreveu para o código Rails subjacente.
 
-### Setup
+### Instalação
 
-You can use the `byebug` gem to set breakpoints and step through live code in
-Rails. To install it, just run:
+Você pode usar a gem `byebug` para definir pontos de interrupção e percorrer o código em execução no
+Rails. Para instalá-lo, basta executar:
 
 ```bash
 $ gem install byebug
 ```
 
-Inside any Rails application you can then invoke the debugger by calling the
-`byebug` method.
+Dentro de qualquer aplicação Rails, você pode invocar o *debugger* chamando o
+método `byebug`.
 
-Here's an example:
+Aqui está um exemplo:
 
 ```ruby
 class PeopleController < ApplicationController
@@ -318,13 +317,13 @@ class PeopleController < ApplicationController
 end
 ```
 
-### The Shell
+### O Shell
 
-As soon as your application calls the `byebug` method, the debugger will be
-started in a debugger shell inside the terminal window where you launched your
-application server, and you will be placed at the debugger's prompt `(byebug)`.
-Before the prompt, the code around the line that is about to be run will be
-displayed and the current line will be marked by '=>', like this:
+Assim que sua aplicação chamar o método `byebug`, o *debugger* será
+iniciado em um *debugger shell* do seu terminal onde você iniciou seu
+servidor da aplicação, e você será colocado no prompt do *debugger* `(byebug)`.
+Antes do prompt, o código ao redor da linha que está prestes a ser execuada será
+exibido e a linha atual será marcada por '=>', assim:
 
 ```
 [1, 10] in /PathTo/project/app/controllers/articles_controller.rb
@@ -342,11 +341,11 @@ displayed and the current line will be marked by '=>', like this:
 (byebug)
 ```
 
-If you got there by a browser request, the browser tab containing the request
-will be hung until the debugger has finished and the trace has finished
-processing the entire request.
+Se você chegou ali por uma requisição do navegador, a aba do navegador que contém a requisição
+ficará suspensa até que o *debugger* termine e que o rastreio tenha terminado
+o processamento da requisição inteira.
 
-For example:
+Por exemplo:
 
 ```bash
 => Booting Puma
@@ -376,8 +375,8 @@ Processing by ArticlesController#index as HTML
 (byebug)
 ```
 
-Now it's time to explore your application. A good place to start is
-by asking the debugger for help. Type: `help`
+Agora é hora de explorar sua aplicação. Um bom lugar para começar é
+pedindo ajuda ao *debugger*. Digite: `help`
 
 ```
 (byebug) help
@@ -423,7 +422,7 @@ by asking the debugger for help. Type: `help`
 (byebug)
 ```
 
-To see the previous ten lines you should type `list-` (or `l-`).
+Para ver as dez linhas anteriores, você deve digitar `list-` (ou `l-`).
 
 ```
 (byebug) l-
@@ -441,9 +440,9 @@ To see the previous ten lines you should type `list-` (or `l-`).
    10     respond_to do |format|
 ```
 
-This way you can move inside the file and see the code above the line where you
-added the `byebug` call. Finally, to see where you are in the code again you can
-type `list=`
+Dessa forma, você pode mover-se dentro do arquivo e ver o código acima da linha em que
+adicionou a chamada `byebug`. Finalmente, para ver onde você está no código novamente, você pode
+digitar `list=`
 
 ```
 (byebug) list=
@@ -462,20 +461,20 @@ type `list=`
 (byebug)
 ```
 
-### The Context
+### O Contexto
 
-When you start debugging your application, you will be placed in different
-contexts as you go through the different parts of the stack.
+Quando você inicia o *debugging* da sua aplicação, você será colocado em diferentes
+contextos conforme você percorre as diferentes partes da *stack*.
 
-The debugger creates a context when a stopping point or an event is reached. The
-context has information about the suspended program which enables the debugger
-to inspect the frame stack, evaluate variables from the perspective of the
-debugged program, and know the place where the debugged program is stopped.
+O *debugger* cria um contexto quando um ponto de parada ou um evento é alcançado. O
+contexo contém informações sobre o programa suspenso, o que habilita o *debugger*
+para inspecionar os *frames* da *stack*, avaliar variáveis da prespectiva do
+programa depurado e saiba o local em que programa depurado está parado.
 
-At any time you can call the `backtrace` command (or its alias `where`) to print
-the backtrace of the application. This can be very helpful to know how you got
-where you are. If you ever wondered about how you got somewhere in your code,
-then `backtrace` will supply the answer.
+A qualquer momento, você pode chamar o comando `backtrace` (ou seu *alias* `where`) para exibir
+o *backtrace* da aplicação. Isso pode ser muito muito útil para saber como você
+chegou aonde está. Se você já se perguntou como chegou a algum lugar no seu código,
+o `backtrace` fornecerá a resposta.
 
 ```
 (byebug) where
@@ -490,10 +489,10 @@ then `backtrace` will supply the answer.
 ...
 ```
 
-The current frame is marked with `-->`. You can move anywhere you want in this
-trace (thus changing the context) by using the `frame n` command, where _n_ is
-the specified frame number. If you do that, `byebug` will display your new
-context.
+O *frame* atual é marcado com `-->`. Você pode se mover para qualquer lugar que desejar nesse
+*trace* (mudando assim o contexto) usando o comando `frame n`, em que _n_ é
+o número do *frame* especificado. Se você fizer isso, o `byebug` exibirá seu novo
+contexto.
 
 ```
 (byebug) frame 2
@@ -512,13 +511,13 @@ context.
 (byebug)
 ```
 
-The available variables are the same as if you were running the code line by
-line. After all, that's what debugging is.
+As variáveis disponíveis são as mesmas que se você estivesse executando o código linha por
+linha.  Afinal, é isso que é o *debugging*.
 
-You can also use `up [n]` and `down [n]` commands in order to change the context
-_n_ frames up or down the stack respectively. _n_ defaults to one. Up in this
-case is towards higher-numbered stack frames, and down is towards lower-numbered
-stack frames.
+Você também pode usar os comandos `up [n]` e `down [n]` para alterar o contexto
+_n_ *frames* acima ou abaixo da *stack*, respectivamente. _n_ assume como padrão o número um. Acima nesse
+caso, é para *stack frames* com números mais altos, e abaixo é para *stack frames*
+com números mais baixos.
 
 ### Threads
 
