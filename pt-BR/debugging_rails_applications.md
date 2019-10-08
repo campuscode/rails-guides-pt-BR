@@ -83,7 +83,7 @@ Title: Guia de *debugging* do Rails
 
 ### `inspect`
 
-Outro método útil para mostrar valores de objeto é o `inspect`, especialmente quando estamos trabalhando com arrays ou hashes. Isso imprimirá o valor de objeto como uma string. Por exemplo:
+Outro método útil para mostrar valores de objeto é o `inspect`, especialmente quando estamos trabalhando com arrays ou hashes. Isso imprimirá o valor do objeto como uma string. Por exemplo:
 
 ```html+erb
 <%= [1, 2, 3, 4, 5].inspect %>
