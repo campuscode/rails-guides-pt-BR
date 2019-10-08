@@ -19,7 +19,7 @@ Sobre o Guia
 -----------------
 
 Esta aplicação é projetada para iniciantes que desejam começar uma aplicação Rails do
-zero. Ela não assume que você tenha nenhuma experiencia anterior com Rails.
+zero. Ela não assume que você tenha nenhuma experiência anterior com Rails.
 
 Rails é um framework para aplicações web que roda em cima da linguagem de programação
 Ruby. Se você não tem nenhuma experiencia com Ruby, você vai achar a curva de 
