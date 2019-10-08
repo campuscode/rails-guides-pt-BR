@@ -41,7 +41,7 @@ Você verá algo parecido com isso:
 --- !ruby/object Article
 attributes:
   updated_at: 2008-09-05 22:55:47
-  body: Esse é um guia muito útil para fazer o debugging da seu app Rails.
+  body: Esse é um guia muito útil para fazer o debugging da sua app Rails.
   title: Guia de debugging do Rails
   published: t
   id: "1"
