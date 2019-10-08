@@ -22,7 +22,7 @@ Esta aplicação é projetada para iniciantes que desejam começar uma aplicaç�
 zero. Ela não assume que você tenha nenhuma experiência anterior com Rails.
 
 Rails é um framework para aplicações web que roda em cima da linguagem de programação
-Ruby. Se você não tem nenhuma experiencia com Ruby, você vai achar a curva de 
+Ruby. Se você não tem nenhuma experiência com Ruby, você vai achar a curva de 
 aprendizado bastante ingrime começando direto com Rails. Existem diversas 
 listas organizadas de materiais online para aprender Ruby:
 
