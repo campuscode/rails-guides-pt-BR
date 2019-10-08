@@ -10,7 +10,7 @@ Após ler esse guia, você saberá:
 * O propósito de das técnicas de *debug*
 * Como encontrar problemas nas suas aplicações que testes não estão identificando
 * As diferentes maneiras de depurar o seu código
-* Como analisar o *stack trace*
+* Como analisar a *stack trace*
 
 --------------------------------------------------------------------------------
 
