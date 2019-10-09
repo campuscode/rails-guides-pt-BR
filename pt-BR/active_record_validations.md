@@ -42,7 +42,7 @@ que todo usuário forneça um endereço de e-mail e endereço de correspondênci
 válidos. Validações de <em>model</em> são o melhor método de garantir que só
 dados válidos sejam salvos em seu banco de dados. Eles são banco de dados
 agnóticos, não podem ser contornador por usuários, e são fáceis de manter e
-de testar. Rails faz que elas sejam fáceis de usar, e fornece ajudantes 
+de testar. O Rails faz com que elas sejam fáceis de usar, e fornece *helpers* 
 <em>build-in</em> para necessidades comuns, e também permite que você crie seus 
 próprios métodos de validação.
 
