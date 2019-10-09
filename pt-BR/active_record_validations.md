@@ -54,7 +54,7 @@ e contras:
 * Restrições no banco de dados e/ou procedimentos armazenados tornam as validações
   dependententes do banco de dados e podem tornar o processo de testar e a manutenção mais difíceis.
   No entanto, se seu banco de dados é usado por outras aplicações, pode ser uma boa
-  ideia usar alguns restrições diretamento no banco de dados. Adicionalmente, 
+  ideia usar algumas restrições diretamente no banco de dados. Adicionalmente, 
   validações no nível de banco de dados são seguras para lidar com algumas coisas
   (como singularidade em tabelas muito utilizadas) que seriam difíceis de
   implementar de outra forma.
