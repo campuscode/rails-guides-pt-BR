@@ -291,7 +291,7 @@ Quando você realmente precisa acessar seu código-fonte em execução, o *debug
 é o seu melhor companheiro.
 
 O *debugger* também pode ajudá-lo se você quiser aprender sobre o código-fonte do Rails,
-mas não sabe por onde começar. Basta depurar qualquer requisição da sua aplicação e
+mas não sabe por onde começar. Basta fazer o *debugging* de qualquer requisição da sua aplicação e
 usar este guia para aprender como passar do código que você escreveu para o código Rails subjacente.
 
 ### Instalação
@@ -521,27 +521,26 @@ com números mais baixos.
 
 ### Threads
 
-The debugger can list, stop, resume, and switch between running threads by using
-the `thread` command (or the abbreviated `th`). This command has a handful of
-options:
+O *debugger* pode listar, parar, continuar e alternar entre threads em execução usando
+o comando `thread` (ou o abreviado `th`). Esse comando possui várias opções:
 
-* `thread`: shows the current thread.
-* `thread list`: is used to list all threads and their statuses. The current
-thread is marked with a plus (+) sign.
-* `thread stop n`: stops thread _n_.
-* `thread resume n`: resumes thread _n_.
-* `thread switch n`: switches the current thread context to _n_.
+* `thread`: mostra a thread atual.
+* `thread list`: é usado para listar todas as threads e seus status. A thread
+atual é marcada com o sinal de mais (+). 
+* `thread stop n`: interrompe a thread _n_.
+* `thread resume n`: retoma a thread _n_.
+* `thread switch n`: alterna o contexto da thread atual para _n_.
 
-This command is very helpful when you are debugging concurrent threads and need
-to verify that there are no race conditions in your code.
+Esse comando é muito útil quando você está fazendo o *debugging*
+para verificar se não há condições do seu código continuar rodando.
 
-### Inspecting Variables
+### Inspecionando variáveis
 
-Any expression can be evaluated in the current context. To evaluate an
-expression, just type it!
+Qualquer expressão pode ser avaliada no contexto atual. Para avaliar uma
+expressão, apenas digite-a!
 
-This example shows how you can print the instance variables defined within the
-current context:
+Este exemplo mostra como você pode imprimir as variáveis de instância definidas no 
+contexto atual:
 
 ```
 [3, 12] in /PathTo/project/app/controllers/articles_controller.rb
@@ -562,10 +561,10 @@ current context:
  :@_config]
 ```
 
-As you may have figured out, all of the variables that you can access from a
-controller are displayed. This list is dynamically updated as you execute code.
-For example, run the next line using `next` (you'll learn more about this
-command later in this guide).
+Como você já deve ter percebido, todas as variáveis que você pode acessar de um
+controller são exibidas. Esta lista é atualizada dinamicamente à medida que você executa o código.
+Por exemplo, execute a próxima linha usando `next` (você aprenderá mais sobre este
+comando posteriormente neste guia).
 
 ```
 (byebug) next
@@ -585,7 +584,7 @@ command later in this guide).
 (byebug)
 ```
 
-And then ask again for the instance_variables:
+E, em seguida, chame novamente o instance_variables:
 
 ```
 (byebug) instance_variables
@@ -594,14 +593,14 @@ And then ask again for the instance_variables:
  :@_config, :@articles]
 ```
 
-Now `@articles` is included in the instance variables, because the line defining
-it was executed.
+Agora `@articles` está incluído nas variáveis de instância, porque a linha que o definiu
+foi executada.
 
-TIP: You can also step into **irb** mode with the command `irb` (of course!).
-This will start an irb session within the context you invoked it.
+DICA: Você também pode entrar no modo **irb** com o comando `irb` (é claro!).
+Isso iniciará uma sessão irb dentro do contexto que você a chamou.
 
-The `var` method is the most convenient way to show variables and their values.
-Let's have `byebug` help us with it.
+O método `var` é a maneira mais conveniente de mostrar variáveis e seus valores.
+Vamos pedir para que o `byebug` nos ajude com isso.
 
 ```
 (byebug) help var
@@ -620,15 +619,15 @@ Let's have `byebug` help us with it.
 
 ```
 
-This is a great way to inspect the values of the current context variables. For
-example, to check that we have no local variables currently defined:
+Essa é uma ótima maneira de inspecionar os valores das variáveis do contexto atuais. Por
+exemplo, para verificar se não temos variáveis locais definidas atualmente:
 
 ```
 (byebug) var local
 (byebug)
 ```
 
-You can also inspect for an object method this way:
+Você também pode inspecionar um método de objeto desta maneira:
 
 ```
 (byebug) var instance Article.new
@@ -644,30 +643,30 @@ You can also inspect for an object method this way:
 @transaction_state = nil
 ```
 
-You can also use `display` to start watching variables. This is a good way of
-tracking the values of a variable while the execution goes on.
+Você também pode usar o `display` para começar a observar as variáveis. Esta é uma boa maneira de
+rastrear os valores de uma variável enquanto a execução continua.
 
 ```
 (byebug) display @articles
 1: @articles = nil
 ```
 
-The variables inside the displayed list will be printed with their values after
-you move in the stack. To stop displaying a variable use `undisplay n` where
-_n_ is the variable number (1 in the last example).
+As variáveis dentro da lista exibida serão impressas com seus valores depois 
+que você se mover na *stack*. Para parar de exibir uma variável, use `undisplay n` onde
+_n_ é o número da variável (1 no último exemplo).
 
-### Step by Step
+### Passo-a-passo
 
-Now you should know where you are in the running trace and be able to print the
-available variables. But let's continue and move on with the application
-execution.
+Agora você deve saber onde está no *trace* em execução e poder imprimir as
+variáveis disponíveis. Mas vamos continuar e seguir em frente com a execução 
+da aplicação.
 
-Use `step` (abbreviated `s`) to continue running your program until the next
-logical stopping point and return control to the debugger. `next` is similar to
-`step`, but while `step` stops at the next line of code executed, doing just a
-single step, `next` moves to the next line without descending inside methods.
+Use `step` (abreviado` s`) para continuar executando o programa até o próximo
+ponto de parada lógica e retornar o controle ao *debugger*. `next` é semelhante a
+`step`, mas enquanto `step` pára na próxima linha de código executada, executando apenas um
+único passo, `next` se move para a próxima linha sem descer nos métodos.
 
-For example, consider the following situation:
+Por exemplo, considere a seguinte situação:
 
 ```
 Started GET "/" for 127.0.0.1 at 2014-04-11 13:39:23 +0200
@@ -684,10 +683,9 @@ Processing by ArticlesController#index as HTML
 (byebug)
 ```
 
-If we use `next`, we won't go deep inside method calls. Instead, `byebug` will
-go to the next line within the same context. In this case, it is the last line
-of the current method, so `byebug` will return to the next line of the caller
-method.
+Se usarmos o `next`, não entraremos em detalhes nas chamadas de método. Em vez disso, o `byebug` irá
+para a próxima linha dentro do mesmo contexto. Nesse caso, é a última linha
+do método atual, então o `byebug` retornará à próxima linha do método chamador.
 
 ```
 (byebug) next
