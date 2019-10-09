@@ -28,7 +28,7 @@ O processo deve correr da seguinte maneira:
 3. Conserte os testes e funcionalidades depreciadas.
 4. Atualize para a última versão *Patch* da versão *Minor* seguinte.
 
-Repita este processo até chegar na versão desejada do Rails. Cada vez que você mudar entre versões, Você precisará alterar a versão do Rails no `Gemfile` (possivelmente também as versões de outras *gems*) e executar um `bundle update`. Após, execute a tarefa de atualização mencionada abaixo para atualizar arquivos de configuração, então execute os testes.
+Repita este processo até chegar na versão desejada do Rails. Cada vez que você mudar entre versões, você precisará alterar a versão do Rails no `Gemfile` (possivelmente também as versões de outras *gems*) e executar um `bundle update`. Após, execute a tarefa de atualização mencionada abaixo para atualizar arquivos de configuração, então execute os testes.
 
 Você pode encontrar a lista com todas as versões liberadas do Rails [aqui](https://rubygems.org/gems/rails/versions)
 
