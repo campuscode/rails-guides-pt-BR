@@ -64,7 +64,7 @@ e contras:
   entanto se forem combinadas com outras técnicas, essas validações podem ser um
   método mais conveniente de fornecer ao usuário um retorno imediato enquanto 
   eles navegam no seu site.
-* Validações no nível do <em>controller</em> podem ser tentadoas de ser utilizadas,
+* Utilizar validações no nível do *controller* pode ser tentador,
   mas frequentemente se tornam pesadas e de manutenção e testagem difíceis. Sempre
   que possível, é uma boa prática manter seus <em>controllers</em> leves, o que irá
   tornar a sua aplicação prazesora de se trabalhar com o passar do tempo.
