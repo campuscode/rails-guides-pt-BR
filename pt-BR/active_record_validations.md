@@ -60,7 +60,7 @@ e contras:
   implementar de outra forma.
 * Validações no lado do cliente são úteis, mas no geral não são seguras quando 
   utilizadas sozinhas. Se elas forem implementadas usando JavaScript, elas podem
-  ser contornadas se o JavaScript estiver desligados no navegados do cliente. No
+  ser contornadas se o JavaScript estiver desligado no navegador do usuário. No
   entanto se forem combinadas com outras técnicas, essas validações podem ser um
   método mais conveniente de fornecer ao usuário um retorno imediato enquanto 
   eles navegam no seu site.
