@@ -58,7 +58,7 @@ e contras:
   validações no nível de banco de dados são seguras para lidar com algumas coisas
   (como singularidade em tabelas muito utilizadas) que seriam difíceis de
   implementar de outra forma.
-* Validações no lado do cliente são úteis, mas no geral não são seguras se 
+* Validações no lado do cliente são úteis, mas no geral não são seguras quando 
   utilizadas sozinhas. Se elas forem implementadas usando JavaScript, elas podem
   ser contornadas se o JavaScript estiver desligados no navegados do cliente. No
   entanto se forem combinadas com outras técnicas, essas validações podem ser um
