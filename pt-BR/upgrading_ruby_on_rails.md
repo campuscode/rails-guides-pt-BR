@@ -1,17 +1,17 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 
-Atualizando Ruby on Rails
+Atualizando o Ruby on Rails
 =======================
 
 Este guia fornece os passos a serem seguidos quando você for atualizar suas aplicações
-para uma versão mais nova do Ruby on Rails. Estes passos também estão disponíveis em guias de lançamento de versão individuais.
+para uma versão mais nova do Ruby on Rails. Estes passos também estão disponíveis em guias de *releases* individuais.
 
 --------------------------------------------------------------------------------
 
 Conselho Geral
 --------------
 
-Antes de tentar atualizar uma aplicação existente, você deve ter certeza que possui uma boa razão para faze-lo. Então tenha em mente alguns fatores: a necessidade de novas funcionalidades, a crescente dificuldade de encontrar suporte para código mais antigo, seu tempo disponível e habilidades, entre outros.
+Antes de tentar atualizar uma aplicação existente, você deve ter certeza que possui uma boa razão para fazê-lo. Então tenha em mente alguns fatores: a necessidade de novas funcionalidades, a crescente dificuldade de encontrar suporte para código mais antigo, seu tempo disponível e habilidades, entre outros.
 
 ### Cobertura de Testes
 
@@ -25,16 +25,16 @@ O processo deve correr da seguinte maneira:
 
 1. Escreva os testes e garanta que eles passem.
 2. Atualize para a ultima versão *Patch* após a versão atual de seu projeto.
-3. Concerte os testes e funcionalidades  depreciadas.
+3. Concerte os testes e funcionalidades depreciadas.
 4. Atualize para a ultima versão *Patch* da versão *Minor* seguinte.
 
-Repita este processo até chegar na versão desejada do Rails. Cada vez que você mudar entre versões. Você precisará alterar a versão no `Gemfile` (possivelmente também as versões de outras gems) e rodar `bundle update`. Rodar a tarefa de atualização mencionada abaixo para atualizar arquivos de configuração, e rode os testes.
+Repita este processo até chegar na versão desejada do Rails. Cada vez que você mudar entre versões, Você precisará alterar a versão do Rails no `Gemfile` (possivelmente também as versões de outras *gems*) e executar um `bundle update`. Após, execute a tarefa de atualização mencionada abaixo para atualizar arquivos de configuração, então execute os testes.
 
 Você pode encontrar a lista com todas as versões liberadas do Rails [aqui](https://rubygems.org/gems/rails/versions)
 
 ### Versões do Ruby
 
-Rails geralmente se mantém proximo à versão mais recente do ruby quando é liberado:
+Rails geralmente se mantém próximo à versão mais recente do ruby quando é liberado:
 
 * Rails 6 requer Ruby 2.5.0 ou posterior.
 * Rails 5 requer Ruby 2.2.2 ou posterior.
@@ -42,11 +42,11 @@ Rails geralmente se mantém proximo à versão mais recente do ruby quando é li
 * Rails 3.2.x é a última *branch* a suportar Ruby 1.8.7.
 * Rails 3 e posteriores requerem Ruby 1.8.7 ou posteriores. O suporte para todas as versões anteriores do Ruby foi descontinuado. Você deve atualizar o quanto antes.
 
-Dica: O Ruby 1.8.7 p248 e p249 possuem bugs que travam o Rails. Ruby Enterprise Edition possui correções para esses erros desde a versão 1.8.7-2010.02. Na Versão 1.9, Ruby 1.9.1 não é utilizável pois ela falha logo de início, então se você quiser utilizar a versão 1.9.x, pule diretamente para 1.9.3 para evitar problemas.
+Dica: O Ruby 1.8.7 p248 e p249 possuem *bugs* que travam o Rails. Ruby *Enterprise Edition* possui correções para esses erros desde a versão 1.8.7-2010.02. Na Versão 1.9, Ruby 1.9.1 não é utilizável pois ela falha logo de início, então se você quiser utilizar a versão 1.9.x, pule diretamente para 1.9.3 para evitar problemas.
 
 ### A Tarefa de Atualização
 
-Rails fornece o comando `app:update` (`rake rails:update` na versão 4.2 e anteriores). Rode este comando após atualizar a versão do Rails no `Gemfile`. Isto lhe ajudará na criação de novos arquivos e na alteração de arquivos antigos em uma sessão interativa.
+Rails fornece o comando `app:update` (`rake rails:update` na versão 4.2 e anteriores). Execute este comando após atualizar a versão do Rails no `Gemfile`. Isto lhe ajudará na criação de novos arquivos e na alteração de arquivos antigos em uma sessão interativa.
 
 ```bash
 $ rails app:update
