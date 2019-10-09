@@ -34,7 +34,7 @@ Você pode encontrar a lista com todas as versões liberadas do Rails [aqui](htt
 
 ### Versões do Ruby
 
-Rails geralmente se mantém próximo à versão mais recente do ruby quando é liberado:
+Rails geralmente se mantém próximo à versão mais recente do Ruby quando é liberado:
 
 * Rails 6 requer Ruby 2.5.0 ou posterior.
 * Rails 5 requer Ruby 2.2.2 ou posterior.
