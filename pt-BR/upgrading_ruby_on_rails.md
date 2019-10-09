@@ -24,7 +24,7 @@ Quando estiver atualizando a versão do Rails, o melhor é mover-se lentamente, 
 O processo deve correr da seguinte maneira:
 
 1. Escreva os testes e garanta que eles passem.
-2. Atualize para a ultima versão *Patch* após a versão atual de seu projeto.
+2. Atualize para a última versão *Patch* após a versão atual de seu projeto.
 3. Concerte os testes e funcionalidades depreciadas.
 4. Atualize para a ultima versão *Patch* da versão *Minor* seguinte.
 
