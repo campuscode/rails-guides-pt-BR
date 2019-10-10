@@ -52,19 +52,19 @@ cliente e valições no nível do *controller*. Este é um sumário dos prós
 e contras:
 
 * Restrições no banco de dados e/ou procedimentos armazenados tornam as validações
-  dependentente do banco de dados e deixam os testes e a manutenção mais difícil.
-  No entanto, se seu banco de dados é usado por outras aplicações, pode ser uma boa
-  ideia usar algumas restrições diretamento no banco de dados. Adicionalmente, 
+  dependententes do banco de dados e podem tornar o processo de testar e a manutenção 
+  mais difíceis. No entanto, se seu banco de dados é usado por outras aplicações, pode 
+  ser uma boa ideia usar algumas restrições diretamente no banco de dados. Adicionalmente, 
   validações no nível de banco de dados são seguras para lidar com algumas coisas
   (como singularidade em tabelas muito utilizadas) que seriam difíceis de
   implementar de outra forma.
-* Validações no lado do cliente são úteis, mas no geral não são seguras se 
+* Validações no lado do cliente são úteis, mas no geral não são seguras quando 
   utilizadas sozinhas. Se elas forem implementadas usando JavaScript, elas podem
-  ser contornadas se o JavaScript estiver desligado no navegador do cliente. No
-  entanto se forem combinadas com outras técnicas, essas validações podem ser uma forma 
-  mais conveniente de fornecer ao usuário um retorno imediato enquanto 
-  ele navega no seu site.
-* Validações no nível do *controller* podem ser tentadoras de ser utilizadas,
+  ser contornadas se o JavaScript estiver desligado no navegador do usuário. No
+  entanto se forem combinadas com outras técnicas, essas validações podem ser um
+  método mais conveniente de fornecer ao usuário um retorno imediato enquanto 
+  eles navegam no seu site.
+* Utilizar validações no nível do *controller* pode ser tentador,
   mas frequentemente se tornam pesadas e de manutenção e testagem difíceis. Sempre
   que possível, é uma boa prática manter seus *controllers* leves, o que irá
   tornar a sua aplicação prazerosa de se trabalhar com o passar do tempo.
@@ -113,7 +113,7 @@ inválido seja armazenado no banco de dados. Você pode escolher validações
 específicas que atuem quando um objeto for criado, salvo, ou editado. 
 
 ADVERTÊNCIA: Existem muitos modos de alterar o estado de um objeto no banco
-de dados. Alguns métodos irão acionar válidações, mas alguns não vão. Isso
+de dados. Alguns métodos irão acionar validações, mas alguns não vão. Isso
 significa que é possível salvar um objeto inválido no banco de dados se você
 não tomar cuidado.
 
