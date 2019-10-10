@@ -156,7 +156,7 @@ usada com cuidado.
 
 ### <em>`valid?`</em> e <em>`invalid?`</em>
 
-Antes de salvar um objeto do <em>Active Record</em>, Rails roda suas
+Antes de salvar um objeto do *Active Record*, Rails executa suas
 validações. Se essas validações produzirem um erro, o Rails não salva
 o objeto.
 
