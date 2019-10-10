@@ -47,7 +47,7 @@ Todos os comandos podem ser executados com -h (ou --help) para mais informaçõe
 
 Além desses comandos, existem:
  about                               Lista a versão de todos os Rails ...
- assets:clean[keep]                  Remove os assets compilados antigos
+ assets:clean[keep]                  Remove os *assets* compilados antigos
  assets:clobber                      Remove os assets compilados
  assets:environment                  Carrega o ambiente de compilação de assets
  assets:precompile                   Compila todos os assets ...
