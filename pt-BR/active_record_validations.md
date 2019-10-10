@@ -220,7 +220,7 @@ caso contrário.
 
 ### <em>`errors[]`</em>
 
-Para verificar se um determinado atributo de um um objeto é válido, você pode 
+Para verificar se um determinado atributo de um objeto é válido, você pode 
 usar <em>`errors[:attribute]`</em>. Isso retorna um <em>array</em> com todos os 
 erros para o <em>`:attribute`</em>. Se não houver nenhum erro para o atributo 
 especificado, uma <em>array</em> vazia é exibida.
