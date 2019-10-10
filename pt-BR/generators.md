@@ -14,7 +14,7 @@ Depois de ler esse guia, você irá saber:
 * Como customizar seu *scaffold* com a criação de novos Geradores.
 * Como customizar seu *scaffold* mudando os *templates* dos geradores.
 * Como utilizar um plano de contingência para evitar sobrescrever um grande conjunto de geradores.
-* Como criar um modelo de aplicação.
+* Como criar um *template* de aplicação.
 
 --------------------------------------------------------------------------------
 
