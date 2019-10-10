@@ -7,7 +7,7 @@ The Rails Command Line
 Depois de ler este guia, você saberá:
 
 * Como criar uma aplicação Rails.
-* Como gerar modelos, controladores, migrações de banco de dados e testes de unidade.
+* Como gerar *models*, *controllers, *migrations* de banco de dados e testes de unidade.
 * Como iniciar um servidor e desenvolvimento.
 * Como fazer experimentos com objetos por meio de um *shell* interativo.
 * How to experiment with objects through an interactive shell.
