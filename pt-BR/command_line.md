@@ -9,7 +9,7 @@ Depois de ler este guia, você saberá:
 * Como criar uma aplicação Rails.
 * Como gerar modelos, controladores, migrações de banco de dados e testes de unidade.
 * Como começar a desenvolver um servidor.
-* Como experimentar objetos por meio de um shell interativo.
+* Como fazer experimentos com objetos por meio de um *shell* interativo.
 * How to experiment with objects through an interactive shell.
 
 --------------------------------------------------------------------------------
