@@ -1,16 +1,16 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 
-Debugging Rails Applications
+*Debug* de Aplicações Rails
 ============================
 
-This guide introduces techniques for debugging Ruby on Rails applications.
+Esse guia introduz técnicas de *debug* para aplicações de Ruby on Rails
 
-After reading this guide, you will know:
+Após ler esse guia, você saberá:
 
-* The purpose of debugging.
-* How to track down problems and issues in your application that your tests aren't identifying.
-* The different ways of debugging.
-* How to analyze the stack trace.
+* O propósito de das técnicas de *debug*
+* Como encontrar problemas nas suas aplicações que testes não estão identificando
+* As diferentes maneiras de depurar o seu código
+* Como analisar a *stack trace*
 
 --------------------------------------------------------------------------------
 
@@ -101,30 +101,31 @@ Vai renderizar:
 Title: Guia de *debugging* do Rails
 ```
 
-O Logger
+
+O *Logger*
 ----------
 
-It can also be useful to save information to log files at runtime. Rails maintains a separate log file for each runtime environment.
+Pode ser útil salvar informações em um arquivo de log em tempo de execução. O Rails mantém um arquivo de log separado para cada ambiente de execução.
 
-### What is the Logger?
+### O que é o *Logger*?
 
-Rails makes use of the `ActiveSupport::Logger` class to write log information. Other loggers, such as `Log4r`, may also be substituted.
+O Rails utiliza a classe `ActiveSupport::Logger` para guardar informações de log. Outros tipos de loggers, como o `Log4r`, também podem ser utilizados.
 
-You can specify an alternative logger in `config/application.rb` or any other environment file, for example:
+Você pode especificar um *logger* alternativo em `config/application.rb` ou em qualquer outro arquivo de ambiente, por exemplo: 
 
 ```ruby
 config.logger = Logger.new(STDOUT)
 config.logger = Log4r::Logger.new("Application Log")
 ```
 
-Or in the `Initializer` section, add _any_ of the following
+Ou na seção `Initializer`, adicione _qualquer_ um dos seguintes: 
 
 ```ruby
 Rails.logger = Logger.new(STDOUT)
 Rails.logger = Log4r::Logger.new("Application Log")
 ```
 
-TIP: By default, each log is created under `Rails.root/log/` and the log file is named after the environment in which the application is running.
+DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de log é criado com o nome do ambiente no qual a aplicação está sendo executada.
 
 ### Log Levels
 
