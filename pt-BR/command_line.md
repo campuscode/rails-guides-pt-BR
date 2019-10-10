@@ -16,7 +16,7 @@ Depois de ler este guia, você saberá:
 
 OBS: Esse tutorial considera que você já tenha um conhecimento básico de Rails, ou tenha lido o [Começando com o Rails](getting_started.html).
 
-Noções Básicas da Linha de Comando
+Noções Básicas de Linha de Comando
 -------------------
 
 Existem alguns comandos essenciais para o uso cotidiano do Rails. Na ordem de quanto você provavelmente irá utilizá-los são:
