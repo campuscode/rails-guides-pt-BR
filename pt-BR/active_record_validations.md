@@ -214,7 +214,7 @@ end
 # => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
 ```
 
-`invalid?` é simplesmente o inverso de `valid?`. Desencadeia sua validações e
+`invalid?` é simplesmente o inverso de `valid?`. Desencadeia suas validações e
 retornam <em>true</em> se algum erro for encontrado no objeto, e <em>false</em> 
 caso contrário.
 
