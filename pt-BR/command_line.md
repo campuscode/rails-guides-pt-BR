@@ -31,7 +31,7 @@ Existem alguns comandos essenciais para o uso cotidiano do Rails. Na ordem de qu
 * `rails dbconsole`
 * `rails new app_name`
 
-Você pode obter uma lista de comandos do Rails disponíveis que geralmente depende de seu diretório atual, escrevendo `rails --help`. Cada comando possui uma descrição, que deverá ajudá-lo a encontrar o que precisa.
+Você pode obter uma lista dos comandos do Rails disponíveis, que geralmente depende de seu diretório atual, escrevendo `rails --help`. Cada comando possui uma descrição, que deverá ajudá-lo a encontrar o que precisa.
 
 ```bash
 $ rails --help
