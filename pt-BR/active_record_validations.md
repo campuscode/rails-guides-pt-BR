@@ -226,7 +226,7 @@ erros para o <em>`:attribute`</em>. Se não houver nenhum erro para o atributo
 especificado, um *array* vazio é exibida.
 
 Esse método só é útil após as validações terem sido executadas, porque só 
-inpeciona as coleções de erros e não aciona nenhuma validação em si. É 
+inspeciona as coleções de erros e não aciona nenhuma validação em si. É 
 diferente do método `ActiveRecord::Base#invalid?` explicado acima porque 
 não verifica ao todo se um objeto é válido. Apenas verifica se existem 
 erros em um determinado atributo do objeto.
