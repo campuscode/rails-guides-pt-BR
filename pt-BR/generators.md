@@ -8,7 +8,7 @@ Geradores do Rails são uma ferramenta essencial se você planeja melhorar seu f
 Depois de ler esse guia, você irá saber:
 
 * Como ver quais Geradores estão disponíveis para sua aplicação.
-* Como criar um Gerador usando Modelos.
+* Como criar um Gerador usando *templates*.
 * Como o Rails procura pelos Geradores antes de chamá-los.
 * Como o Rails gera internamente um código Rails a partir dos modelos.
 * Como customizar seu *scaffold* com a criação de novos Geradores.
