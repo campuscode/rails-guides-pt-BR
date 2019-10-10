@@ -181,7 +181,7 @@ estiver vazia após serem executadas as validações.
 
 Note que um objeto instanciado como `new` não irá informar nenhum erro mesmo que 
 ele seja tecnicamente inválido, porque as validações são executadas automaticamente
-apenas quando o objeto é salvo, como quando acontecem com o métodos <em>`create`</em> 
+apenas quando o objeto é salvo, como quando acontecem com os métodos <em>`create`</em> 
 ou <em>`save`</em>.
 
 ```ruby
