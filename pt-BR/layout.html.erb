@@ -17,8 +17,8 @@
   <meta property="og:title" content="<%= yield(:page_title) %>" />
   <meta name="description" content="<%= yield(:description) %>" />
   <meta property="og:description" content="<%= yield(:description) %>" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:site_name" content="Ruby on Rails Guides" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
   <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
   <meta property="og:type" content="website" />
 </head>
@@ -30,33 +30,33 @@
   <% end %>
   <div id="topNav">
     <div class="wrapper">
-      <strong class="more-info-label">More at <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
       <span class="red-button more-info-button">
-        More Ruby on Rails
+        Mais Ruby on Rails
       </span>
       <ul class="more-info-links s-hidden">
         <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
-        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guides</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Ask for help</a></li>
-        <li class="more-info"><a href="https://github.com/rails/rails">Contribute on GitHub</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
       </ul>
     </div>
   </div>
   <div id="header">
     <div class="wrapper clearfix">
-      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
       <ul class="nav">
         <li><a class="nav-item" href="index.html">Home</a></li>
         <li class="guides-index guides-index-large">
-          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guides Index</a>
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
             <div class="guides-section-container">
               <% documents_by_section.each do |section| %>
                 <div class="guides-section">
                   <dt><%= section['name'] %></dt>
-                  <% finished_documents(section['documents']).each do |document| %>
+                  <% section['documents'].each do |document| %>
                   <dd><a href="<%= document['url'] %>"><%= document['name'] %></a></dd>
                   <% end %>
                 </div>
@@ -64,13 +64,13 @@
             </div>
           </div>
         </li>
-        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribute</a></li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
         <li class="guides-index guides-index-small">
           <select class="guides-index-item nav-item">
-            <option value="index.html">Guides Index</option>
+            <option value="index.html">Guias</option>
             <% docs_for_menu.each do |section| %>
               <optgroup label="<%= section['name'] %>">
-                <% finished_documents(section['documents']).each do |document| %>
+                <% section['documents'].each do |document| %>
                   <option value="<%= document['url'] %>"><%= document['name'] %></option>
                 <% end %>
               </optgroup>
@@ -97,26 +97,28 @@
 
         <h3>Feedback</h3>
         <p>
-          You're encouraged to help improve the quality of this guide.
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
         </p>
         <p>
-          Please contribute if you see any typos or factual errors.
-          To get started, you can read our <%= link_to 'documentation contributions', 'https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation' %> section.
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <%= link_to 'contribuindo com a documentação', 'https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation' %>.
         </p>
         <p>
-          You may also find incomplete content or stuff that is not up to date.
-          Please do add any missing documentation for master. Make sure to check
-          <%= link_to 'Edge Guides', 'https://edgeguides.rubyonrails.org' %> first to verify
-          if the issues are already fixed or not on the master branch.
-          Check the <%= link_to 'Ruby on Rails Guides Guidelines', 'ruby_on_rails_guides_guidelines.html' %>
-          for style and conventions.
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <%= link_to 'Edge Guides (en-US)', 'http://edgeguides.rubyonrails.org' %> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <%= link_to 'Diretrizes do Guia Ruby on Rails', 'ruby_on_rails_guides_guidelines.html' %>
+          para estilo e convenções.
         </p>
         <p>
-          If for whatever reason you spot something to fix but cannot patch it yourself, please
-          <%= link_to 'open an issue', 'https://github.com/rails/rails/issues' %>.
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <%= link_to 'abra uma issue no nosso Guia', 'https://github.com/campuscode/rails-guides-pt-BR/issues' %>.
         </p>
-        <p>And last but not least, any kind of discussion regarding Ruby on Rails
-          documentation is very welcome on the <%= link_to 'rubyonrails-docs mailing list', 'https://groups.google.com/forum/#!forum/rubyonrails-docs' %>.
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <%= link_to 'lista de discussão rubyonrails-docs', 'https://groups.google.com/forum/#!forum/rubyonrails-docs' %> e nas
+          <%= link_to 'issues do Guia em português', 'https://github.com/campuscode/rails-guides-pt-BR/issues' %>.
         </p>
       </div>
     </div>
