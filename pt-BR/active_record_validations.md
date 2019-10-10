@@ -112,7 +112,7 @@ operações de <em>`INSERT`</em> ou <em>`UPDATE`</em>. Isso evita que um dado
 inválido seja armazenado no banco de dados. Você pode escolher validações
 específicas que atuem quando um objeto for criado, salvo, ou editado. 
 
-ADVERTÊNCIA: EXistem muitos modos de alterar o estado de um objeto no banco
+ADVERTÊNCIA: Existem muitos modos de alterar o estado de um objeto no banco
 de dados. Alguns métodos irão acionar válidadções, mas alguns não vão. Isso
 significa que é possível salvar um objeto inválido no banco de dados se você
 não tomar cuidado.
