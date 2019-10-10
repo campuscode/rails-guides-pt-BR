@@ -69,7 +69,7 @@ Além desses comandos, existem:
  tmp:create                          Cria diretórios tmp ...
 ```
 
-Vamos criar uma aplicação simples de Rails passando por cada um destes comandos.
+Vamos criar uma aplicação Rails simples passando por cada um destes comandos.
 
 ### `rails new`
 
