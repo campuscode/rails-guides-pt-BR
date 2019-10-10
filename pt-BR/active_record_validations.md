@@ -223,7 +223,7 @@ caso contrário.
 Para verificar se um determinado atributo de um objeto é válido, você pode 
 usar <em>`errors[:attribute]`</em>. Isso retorna um <em>array</em> com todos os 
 erros para o <em>`:attribute`</em>. Se não houver nenhum erro para o atributo 
-especificado, uma <em>array</em> vazia é exibida.
+especificado, um *array* vazio é exibida.
 
 Esse método só é útil após as validações terem sido executadas, porque só 
 inpeciona as coleções de erros e não aciona nenhuma validação em si. É 
