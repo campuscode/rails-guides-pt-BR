@@ -1,6 +1,6 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 
-Debugando Aplicações Rails
+*Debug* de Aplicações Rails
 ============================
 
 Esse guia introduz técnicas de *debug* para aplicações de Ruby on Rails
