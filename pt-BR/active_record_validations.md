@@ -160,7 +160,7 @@ Antes de salvar um objeto do *Active Record*, Rails executa suas
 validações. Se essas validações produzirem um erro, o Rails não salva
 o objeto.
 
-Você também pode rodar essas validações por si só. `valid?` ativa suas validações
+Você também pode executar essas validações por si só. `valid?` ativa suas validações
 e retorna <em>true</em> se nenhum erro for encontrado no objeto, e <em>false</em> 
 caso contrário.
 Como dito acima:
