@@ -137,7 +137,7 @@ config.log_level = :warn # Em qualquer inicializador de ambiente, ou
 Rails.logger.level = 0 # a qualquer momento
 ```
 
-Isso é útil quando você quer criar logs em ambientes diferentes de desenvolvimento, para não sobrecarregar os logs do seu aplicativo com informação desnecessária.
+Isso é útil quando você quer criar logs em ambientes diferentes de desenvolvimento ou preparação sem sobrecarregar os logs do seu aplicativo com informação desnecessária.
 
 DICA: O nível de log padrão do Rails é `debug` em todos os ambientes de desenvolvimento.
 
