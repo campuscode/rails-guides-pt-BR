@@ -3,7 +3,7 @@
 Criando e Personalizando Geradores e Modelos de Rails
 =====================================================
 
-Geradores de Rails são uma ferramenta essencial se você planeja melhorar seu fluxo de trabalho. Com esse guia você aprenderá como criar Geradores e customizar os já existentes.
+Geradores do Rails são uma ferramenta essencial se você planeja melhorar seu fluxo de trabalho. Com esse guia você aprenderá como criar Geradores e customizar os já existentes.
 
 Depois de ler esse guia, você irá saber:
 
