@@ -7,7 +7,7 @@ Esse guia introduz técnicas de debugação para aplicações de Ruby on Rails
 
 Após ler esse guia, você saberá:
 
-* O proposito de debugar
+* O propósito de debugar
 * Como encontrar problemas nas suas aplicações que testes não estão identificando
 * As diferentes maneiras de debugar
 * Como analisar o *stack trace*
