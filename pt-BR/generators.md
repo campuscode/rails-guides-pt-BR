@@ -12,7 +12,7 @@ Depois de ler esse guia, você irá saber:
 * Como o Rails procura pelos Geradores antes de chamá-los.
 * Como o Rails gera internamente um código Rails a partir dos modelos.
 * Como customizar seu *scaffold* com a criação de novos Geradores.
-* Como customizar seu Scaffold mudando os modelos de Geradores.
+* Como customizar seu *scaffold* mudando os *templates* dos geradores.
 * Como utilizar um plano de contingência para evitar sobrescrever um grande conjunto de geradores.
 * Como criar um modelo de aplicação.
 
