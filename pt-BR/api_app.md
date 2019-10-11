@@ -14,7 +14,7 @@ In this guide you will learn:
 O quê é uma Aplicação API?
 ---------------------------
 Tradicionalmente, quando as pessoas diziam que elas usavam Rails como 
-uma "API", elas queriam dizer prover uma API programaticamente acessível junto de sua aplicações web.
+uma "API", elas queriam dizer prover uma API programaticamente acessível junto de sua apliação web.
 Por exemplo, GitHub oferece [uma API](https://developer.github.com) que você pode usar a partir de seus próprios clients customizados.
 
 Com a chegada dos frameworks client-side, mais desenvolvedores estão usando Rails para construir um back-end que compartilhado entre aplicação web e outras aplicações nativas.
