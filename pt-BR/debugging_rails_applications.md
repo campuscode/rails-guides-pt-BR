@@ -704,8 +704,8 @@ do método atual, então o `byebug` retornará à próxima linha do método cham
 (byebug)
 ```
 
-If we use `step` in the same situation, `byebug` will literally go to the next
-Ruby instruction to be executed -- in this case, Active Support's `week` method.
+Se usarmos `step` na mesma situação, o` byebug` irá literalmente para a próxima
+Instrução Ruby a ser executada - neste caso, o método `week` do Active Support.
 
 ```
 (byebug) step
@@ -724,27 +724,27 @@ Ruby instruction to be executed -- in this case, Active Support's `week` method.
 (byebug)
 ```
 
-This is one of the best ways to find bugs in your code.
+Essa é uma das melhores maneiras de encontrar erros no seu código.
 
-TIP: You can also use `step n` or `next n` to move forward `n` steps at once.
+DICA: Você também pode usar o `step n` ou o `next n` para avançar `n` passos de uma vez.
 
 ### Breakpoints
 
-A breakpoint makes your application stop whenever a certain point in the program
-is reached. The debugger shell is invoked in that line.
+Um breakpoint interrompe sua aplicação sempre que um determinado ponto do programa
+é atingido. O *shell* do *debugger* é chamado nessa linha.
 
-You can add breakpoints dynamically with the command `break` (or just `b`).
-There are 3 possible ways of adding breakpoints manually:
+Você pode adicionar *breakpoints* dinamicamente com o comando `break` (ou apenas `b`).
+Existem três maneiras possíveis de adicionar *breakpoints* manualmente:
 
-* `break n`: set breakpoint in line number _n_ in the current source file.
-* `break file:n [if expression]`: set breakpoint in line number _n_ inside
-file named _file_. If an _expression_ is given it must evaluated to _true_ to
-fire up the debugger.
-* `break class(.|\#)method [if expression]`: set breakpoint in _method_ (. and
-\# for class and instance method respectively) defined in _class_. The
-_expression_ works the same way as with file:n.
+* `break n`: define um *breakpoint* na linha de número _n_ no arquivo fonte atual.
+* `break file:n [if expression]`: define um breakpoint na linha de número _n_ dentro
+do arquivo chamado _file_. Se uma _expression_ for dada, ela deve ser avaliada como _true_ para
+iniciar o *debugger*.
+* `break class(.|\#)method [if expression]`: define um breakpoint no _method_ (. e
+\# para classe e método de instância, respectivamente) definido em _class_. O
+_expression_ funciona da mesma maneira que com o `file:n`.
 
-For example, in the previous situation
+Por exemplo, na situação anterior
 
 ```
 [4, 13] in /PathToProject/app/controllers/articles_controller.rb
@@ -764,8 +764,8 @@ Successfully created breakpoint with id 1
 
 ```
 
-Use `info breakpoints` to list breakpoints. If you supply a number, it lists
-that breakpoint. Otherwise it lists all breakpoints.
+Use `info breakpoints` para listar os breakpoints. Se você fornecer um número, ele listará
+esse breakpoint correspondente. Caso contrário, ele listará todos os breakpoints.
 
 ```
 (byebug) info breakpoints
@@ -773,9 +773,9 @@ Num Enb What
 1   y   at /PathToProject/app/controllers/articles_controller.rb:11
 ```
 
-To delete breakpoints: use the command `delete n` to remove the breakpoint
-number _n_. If no number is specified, it deletes all breakpoints that are
-currently active.
+Para deletar os *breakpoints*: use o comando `delete n` para remover o *breakpoint*
+de número _n_. Se nenhum número for especificado, ele excluirá todos os breakpoints que estão
+ativos no momento.
 
 ```
 (byebug) delete 1
@@ -783,21 +783,21 @@ currently active.
 No breakpoints.
 ```
 
-You can also enable or disable breakpoints:
+Você também pode ativar ou desativar os *breakpoints*:
 
-* `enable breakpoints [n [m [...]]]`: allows a specific breakpoint list or all
-breakpoints to stop your program. This is the default state when you create a
-breakpoint.
-* `disable breakpoints [n [m [...]]]`: make certain (or all) breakpoints have
-no effect on your program.
+* `enable breakpoints [n [m [...]]]`: fornece uma lista de *breakpoints* específicos ou todos
+os *breakpoints* para interromper seu programa. Este é o estado padrão quando você cria um
+*breakpoint*.
+* `disable breakpoints [n [m [...]]]`: garante que certos (ou todos) *breakpoints* não
+tenham efeito no seu programa.
 
-### Catching Exceptions
+### Captura de Exceções
 
-The command `catch exception-name` (or just `cat exception-name`) can be used to
-intercept an exception of type _exception-name_ when there would otherwise be no
-handler for it.
+O comando `catch exception-name` (ou apenas `cat exception-name`) pode ser usado para
+interceptar uma exceção do tipo _exception-name_ quando, de outra forma, não haveria
+um manipulador para isso.
 
-To list all active catchpoints use `catch`.
+Para listar todos os pontos de captura ativos, use `catch`.
 
 ### Resuming Execution
 
