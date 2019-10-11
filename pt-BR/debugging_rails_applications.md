@@ -1,14 +1,6 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-
-Esse guia introduz técnicas de debugação para aplicações de Ruby on Rails
-
-Após ler esse guia, você saberá:
-
-* O propósito de debugar
-* Como encontrar problemas nas suas aplicações que testes não estão identificando
-* As diferentes maneiras de debugar
-* Como analisar o *stack trace*
 *Debug* de Aplicações Rails
 ============================
 
@@ -34,7 +26,7 @@ Uma tarefa comum é inspecionar o conteúdo de uma variável. O Rails fornece tr
 
 ### `debug`
 
-O *helper* `debug` irá retornar uma tag \<pre> que renderiza um objeto usando o formato YAML. Isso vai gerar um dado legível para humanos a partir de qualquer objeto. Por exemplo, se você tem esse código em uma *view*: 
+O *helper* `debug` irá retornar uma tag \<pre> que renderiza um objeto usando o formato YAML. Isso vai gerar um dado legível para humanos a partir de qualquer objeto. Por exemplo, se você tem esse código em uma *view*:
 
 ```html+erb
 <%= debug @article %>
@@ -63,7 +55,7 @@ Title: Guia de *debugging* do Rails
 
 ### `to_yaml`
 
-Como alternativa, chamar `to_yaml` em qualquer objeto o converte para YAML. Você pode passar esse objeto convertido para o método *helper* `simple_format` para formatar o *output*. É assim que o `debug` faz sua mágica. 
+Como alternativa, chamar `to_yaml` em qualquer objeto o converte para YAML. Você pode passar esse objeto convertido para o método *helper* `simple_format` para formatar o *output*. É assim que o `debug` faz sua mágica.
 
 ```html+erb
 <%= simple_format @article.to_yaml %>
@@ -102,7 +94,7 @@ Outro método útil para mostrar valores de objeto é o `inspect`, especialmente
 </p>
 ```
 
-Vai renderizar: 
+Vai renderizar:
 
 ```
 [1, 2, 3, 4, 5]
@@ -120,14 +112,14 @@ Pode ser útil salvar informações em um arquivo de log em tempo de execução.
 
 O Rails utiliza a classe `ActiveSupport::Logger` para guardar informações de log. Outros tipos de loggers, como o `Log4r`, também podem ser utilizados.
 
-Você pode especificar um *logger* alternativo em `config/application.rb` ou em qualquer outro arquivo de ambiente, por exemplo: 
+Você pode especificar um *logger* alternativo em `config/application.rb` ou em qualquer outro arquivo de ambiente, por exemplo:
 
 ```ruby
 config.logger = Logger.new(STDOUT)
 config.logger = Log4r::Logger.new("Application Log")
 ```
 
-Ou na seção `Initializer`, adicione _qualquer_ um dos seguintes: 
+Ou na seção `Initializer`, adicione _qualquer_ um dos seguintes:
 
 ```ruby
 Rails.logger = Logger.new(STDOUT)
@@ -136,7 +128,7 @@ Rails.logger = Log4r::Logger.new("Application Log")
 
 DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de registro é criado com o nome do ambiente no qual a aplicação está sendo executada.
 
-### Níveis de Log 
+### Níveis de Log
 
 Quando algo é registrado, a informação é armazenada no local de registro correspondente se o nível de *log* for igual ou maior que o configurado. Se você quiser saber o nível atual do registro, você pode o método `Rails.logger.level`.
 
