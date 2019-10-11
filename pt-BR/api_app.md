@@ -19,7 +19,7 @@ Por exemplo, GitHub oferece [uma API](https://developer.github.com) que você po
 
 Com a chegada dos frameworks client-side, mais desenvolvedores estão usando Rails para construir um back-end que compartilhado entre aplicação web e outras aplicações nativas.
 
-Por exemplo, o Twitter usa sua [API publica](https://developer.twitter.com/) em sua aplicação web, que é construída como um site estático que consome recursos JSON.
+Por exemplo, o Twitter usa sua [API pública](https://developer.twitter.com/) em sua aplicação web, que é construída como um site estático que consome recursos JSON.
 
 Em véz de usar Rails para gerar HTML que se comunica com o servidor através de formulários e links, muitos desenvolvedores estão tratando suas aplicações web apenas como um cliente API entregues como HTML com JavaScript que consume uma API JSON.
 
