@@ -64,7 +64,6 @@ Como alternativa, chamar `to_yaml` em qualquer objeto o converte para YAML. Voc√
 </p>
 ```
 
-The above code will render something like this:
 O c√≥digo acima vai renderizar algo como isso:
 
 ```yaml
