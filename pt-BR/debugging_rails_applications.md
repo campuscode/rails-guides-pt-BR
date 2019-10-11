@@ -799,39 +799,39 @@ um manipulador para isso.
 
 Para listar todos os pontos de captura ativos, use `catch`.
 
-### Resuming Execution
+### Continuando a execução
 
-There are two ways to resume execution of an application that is stopped in the
-debugger:
+Existem duas maneiras de retomar a execução de uma aplicação que está parada no
+*debugger*:
 
-* `continue [n]`: resumes program execution at the address where your script last
-stopped; any breakpoints set at that address are bypassed. The optional argument
-`n` allows you to specify a line number to set a one-time breakpoint which is
-deleted when that breakpoint is reached.
-* `finish [n]`: execute until the selected stack frame returns. If no frame
-number is given, the application will run until the currently selected frame
-returns. The currently selected frame starts out the most-recent frame or 0 if
-no frame positioning (e.g up, down, or frame) has been performed. If a frame
-number is given it will run until the specified frame returns.
+* `continue [n]`: retoma a execução do programa no local em que o seu script parou
+pela última vez; quaisquer *breakpoints* definidos nesse local são ignorados. O argumento opcional
+`n` permite especificar um número de linha para definir um *breakpoint* único que é
+excluído quando esse *breakpoint* é atingido.
+* `finish [n]`: executa até o *stack frame* selecionado retornar. Se nenhum número
+de *frame* for fornecido, a aplicação será executada até o *frame* atualmente selecionado
+retornar. O *frame* atualmente selecionado inicia o *frame* mais recente ou 0 se
+nenhum posicionamento de *frame* (por exemplo, para cima, para baixo ou *frame*) foi executado. Se um número
+de *frame* for fornecido, ele será executado até que o *frame* especificado retorne.
 
-### Editing
+### Edição
 
-Two commands allow you to open code from the debugger into an editor:
+Dois comandos permitem abrir o código do *debugger* em um editor:
 
-* `edit [file:n]`: edit file named _file_ using the editor specified by the
-EDITOR environment variable. A specific line _n_ can also be given.
+* `edit [file: n]`: edita o arquivo chamado _file_ usando o editor especificado pelo
+Variável de ambiente *EDITOR*. Uma linha específica _n_ também pode ser fornecida.
 
-### Quitting
+### Sair
 
-To exit the debugger, use the `quit` command (abbreviated to `q`). Or, type `q!`
-to bypass the `Really quit? (y/n)` prompt and exit unconditionally.
+Para sair do debugger, use o comando `quit` (abreviado para `q`). Ou digite `q!`
+para ignorar a mensagem `Really quit? (y/n)` e sai incondicionalmente.
 
-A simple quit tries to terminate all threads in effect. Therefore your server
-will be stopped and you will have to start it again.
+Uma saída simples tenta finalizar todos as *threads* em vigor. Portanto, seu servidor
+será parado e você precisará iniciá-lo novamente.
 
-### Settings
+### Configurações
 
-`byebug` has a few available options to tweak its behavior:
+O `byebug` possui algumas opções disponíveis para ajustar seu comportamento:
 
 ```
 (byebug) help set
