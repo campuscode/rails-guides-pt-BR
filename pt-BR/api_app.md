@@ -11,7 +11,7 @@ In this guide you will learn:
 * How to decide which modules to use in your controller
 
 --------------------------------------------------------------------------------
-O quê é uma Aplicação API?
+O que é uma Aplicação API?
 ---------------------------
 Tradicionalmente, quando as pessoas diziam que elas usavam Rails como 
 uma "API", elas queriam dizer prover uma API programaticamente acessível junto de sua apliação web.
