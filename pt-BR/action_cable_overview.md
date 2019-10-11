@@ -6,7 +6,7 @@ Action Cable Overview
 Neste guia, você irá aprender como *Action Cable* funciona e como usar *WebSockets*
 para incorporar funcionalidades de tempo real em sua aplicação Rails.
 
-Ao ler este guia voce aprenderá:
+Ao ler este guia você aprenderá:
 
 * O quê é um Action Cable e sua integração backend e frontend
 * Como configurar um Action Cable
