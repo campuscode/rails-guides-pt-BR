@@ -1,20 +1,20 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Creating and Customizing Rails Generators & Templates
+Criando e Personalizando Geradores e Modelos de Rails
 =====================================================
 
-Rails generators are an essential tool if you plan to improve your workflow. With this guide you will learn how to create generators and customize existing ones.
+Geradores de Rails são uma ferramenta essencial se você planeja melhorar seu fluxo de trabalho. Com esse guia você aprenderá como criar Geradores e customizar os já existentes.
 
-After reading this guide, you will know:
+Depois de ler esse guia, você irá saber:
 
-* How to see which generators are available in your application.
-* How to create a generator using templates.
-* How Rails searches for generators before invoking them.
-* How Rails internally generates Rails code from the templates.
-* How to customize your scaffold by creating new generators.
-* How to customize your scaffold by changing generator templates.
-* How to use fallbacks to avoid overwriting a huge set of generators.
-* How to create an application template.
+* Como ver quais Geradores estão disponíveis para sua aplicação.
+* Como criar um Gerador usando Modelos.
+* Como o Rails procura pelos Geradores antes de chamá-los.
+* Como o Rails gera internalmente um código de Rails a partir dos modelos.
+* Como customizar seu Scaffold criando novos Geradores.
+* Como customizar seu Scaffold mudando os modelos de Geradores.
+* Como utilizar fallbacks para evitar sobrescrever um conjunto de Geradores.
+* Como criar um modelo de aplicação.
 
 --------------------------------------------------------------------------------
 
