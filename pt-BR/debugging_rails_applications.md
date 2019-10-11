@@ -809,7 +809,7 @@ Existem duas maneiras de retomar a execução de uma aplicação que está parad
 pela última vez; quaisquer *breakpoints* definidos nesse local são ignorados. O argumento opcional
 `n` permite especificar um número de linha para definir um *breakpoint* único que é
 excluído quando esse *breakpoint* é atingido.
-* `finish [n]`: executa até o *stack frame* selecionado retornar. Se nenhum número
+* `finish [n]`: executa até a *stack frame* selecionada retornar. Se nenhum número
 de *frame* for fornecido, a aplicação será executada até o *frame* atualmente selecionado
 retornar. O *frame* atualmente selecionado inicia o *frame* mais recente ou 0 se
 nenhum posicionamento de *frame* (por exemplo, para cima, para baixo ou *frame*) foi executado. Se um número
