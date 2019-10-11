@@ -7,12 +7,25 @@
 
 Nesse guia você irá aprender como `controllers` trabalham e como eles se encaixam no ciclo de requestes da sua aplicação.
 
-After reading this guide, you will know:
+~~After reading this guide, you will know:~~
+Depois de ler este guia, você irá saber:
 
-- How to follow the flow of a request through a controller.
-- How to restrict parameters passed to your controller.
-- How and why to store data in the session or cookies.
-- How to work with filters to execute code during request processing.
+~~- How to follow the flow of a request through a controller.~~
+
+- Como seguir o fluxo de um requeste através de um controller.
+
+~~- How to restrict parameters passed to your controller.~~
+
+- Como restringir parametros passados ao seu controller.
+
+~~- How and why to store data in the session or cookies.~~
+
+- Como e Porque salvar dados na sessão ou nos `cookies`.
+
+~~- How to work with filters to execute code during request processing.~~
+
+- Como trabalhar com filtros para executar codigo durante o processamento de um request.
+
 - How to use Action Controller's built-in HTTP authentication.
 - How to stream data directly to the user's browser.
 - How to filter sensitive parameters so they do not appear in the application's log.
