@@ -287,7 +287,7 @@ Debugging com a gem `byebug`
 
 Quando seu código está se comportando de maneiras inesperadas, você pode tentar imprimir em *logs* ou
 no console para diagnosticar o problema. Infelizmente, há momentos em que esse
-tipo de rastreamento de erros não é eficaz para encontrar a causa raiz de um problema.
+tipo de rastreamento de erros não é eficaz para encontrar a raiz de um problema.
 Quando você realmente precisa acessar seu código-fonte em execução, o *debugger*
 é o seu melhor companheiro.
 
@@ -323,7 +323,7 @@ end
 Assim que sua aplicação chamar o método `byebug`, o *debugger* será
 iniciado em um *debugger shell* do seu terminal onde você iniciou seu
 servidor da aplicação, e você será colocado no prompt do *debugger* `(byebug)`.
-Antes do prompt, o código ao redor da linha que está prestes a ser execuada será
+Antes do prompt, o código ao redor da linha que está prestes a ser executada será
 exibido e a linha atual será marcada por '=>', assim:
 
 ```
@@ -468,8 +468,8 @@ Quando você inicia o *debugging* da sua aplicação, você será colocado em di
 contextos conforme você percorre as diferentes partes da *stack*.
 
 O *debugger* cria um contexto quando um ponto de parada ou um evento é alcançado. O
-contexo contém informações sobre o programa suspenso, o que habilita o *debugger*
-para inspecionar os *frames* da *stack*, avaliar variáveis da prespectiva do
+contexto contém informações sobre o programa suspenso, o que habilita o *debugger*
+para inspecionar os *frames* da *stack*, avaliar variáveis da perspectiva do
 programa depurado e saiba o local em que programa depurado está parado.
 
 A qualquer momento, você pode chamar o comando `backtrace` (ou seu *alias* `where`) para exibir
@@ -535,7 +535,7 @@ atual é marcada com o sinal de mais (+).
 Esse comando é muito útil quando você está fazendo o *debugging*
 para verificar se não há condições do seu código continuar rodando.
 
-### Inspecionando variáveis
+### Inspecionando Variáveis
 
 Qualquer expressão pode ser avaliada no contexto atual. Para avaliar uma
 expressão, apenas digite-a!
@@ -562,8 +562,8 @@ contexto atual:
  :@_config]
 ```
 
-Como você já deve ter percebido, todas as variáveis que você pode acessar de um
-controller são exibidas. Esta lista é atualizada dinamicamente à medida que você executa o código.
+Como você já deve ter percebido, todas as variáveis que você pode acessar pelo
+*controller* são exibidas. Esta lista é atualizada dinamicamente à medida que você executa o código.
 Por exemplo, execute a próxima linha usando `next` (você aprenderá mais sobre este
 comando posteriormente neste guia).
 
@@ -738,7 +738,7 @@ Você pode adicionar *breakpoints* dinamicamente com o comando `break` (ou apena
 Existem três maneiras possíveis de adicionar *breakpoints* manualmente:
 
 * `break n`: define um *breakpoint* na linha de número _n_ no arquivo fonte atual.
-* `break file:n [if expression]`: define um breakpoint na linha de número _n_ dentro
+* `break file:n [if expression]`: define um *breakpoint* na linha de número _n_ dentro
 do arquivo chamado _file_. Se uma _expression_ for dada, ela deve ser avaliada como _true_ para
 iniciar o *debugger*.
 * `break class(.|\#)method [if expression]`: define um breakpoint no _method_ (. e
