@@ -61,91 +61,97 @@ The Rails philosophy includes two major guiding principles:
   things in a web application, and defaults to this set of conventions, rather than
   require that you specify minutiae through endless configuration files.
 
-Creating a New Rails Project
+Criando um novo projeto Rails
 ----------------------------
-The best way to read this guide is to follow it step by step. All steps are
-essential to run this example application and no additional code or steps are
-needed.
+A melhor maneira de ler este guia é seguí-lo passo a passo. Todos as etapas são
+essenciais para rodar este exemplo de aplicação e nenhum código ou passos
+adicionais são necessários.
 
-By following along with this guide, you'll create a Rails project called
-`blog`, a (very) simple weblog. Before you can start building the application,
-you need to make sure that you have Rails itself installed.
+Seguindo este guia, você vai criar um projeto Rails chamado `blog`, um weblog
+(muito) simples. Antes de começar a construir sua aplicação, você precisa se
+certificar de que o próprio Rails está instalado.
 
-TIP: The examples below use `$` to represent your terminal prompt in a UNIX-like OS,
-though it may have been customized to appear differently. If you are using Windows,
-your prompt will look something like `c:\source_code>`
+TIP:Os exemplos abaixo usam `$` para representar o *prompt* do seu terminal em
+Sistemas Operacionais semelhantes a UNIX, apesar dele possivelmente ter sido
+personalizado para ter uma aparência diferente. Se você estiver usando Windows,
+seu *prompt* vai parecer com algo como: `c:\source_code>`
 
-### Installing Rails
+### Instalando o Rails
 
-Before you install Rails, you should check to make sure that your system has the
-proper prerequisites installed. These include Ruby and SQLite3.
+Antes de instalar o Rails, você deve se certificar de que seu sistema possui os
+pré-requisitos instalados. Eles incluem o Ruby e o SQLite3.
 
-Open up a command line prompt. On macOS open Terminal.app, on Windows choose
-"Run" from your Start menu and type 'cmd.exe'. Any commands prefaced with a
-dollar sign `$` should be run in the command line. Verify that you have a
-current version of Ruby installed:
+Abra seu *prompt* de comando. Em macOS abra o Terminal.app, em Windows selecione
+*Run* no menu *Start* e digite 'cmd.exe'. Qualquer comando precedido pelo
+símbolo de dólar `$` deve rodar na linha de comando. Verifique se você tem
+instalada a versão mais atual de Ruby:
 
 ```bash
 $ ruby -v
 ruby 2.5.0
 ```
 
-Rails requires Ruby version 2.5.0 or later. If the version number returned is
-less than that number, you'll need to install a fresh copy of Ruby.
+O Rails requer a versão 2.5.0 ou mais recente de Ruby. Se o número da versão
+retornado for menor esse número, será necessário instalar uma cópia corrente de
+Ruby.
 
-TIP: To quickly install Ruby and Ruby on Rails on your system in Windows, you can use
-[Rails Installer](http://railsinstaller.org). For more installation methods for most
-Operating Systems take a look at [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
+TIP: Para rapidamente instalar Ruby e Ruby on Rails no Windows, você pode usar o
+[*Rails Installer*](http://railsinstaller.org). Para mais formas de instalação
+para a maioria dos Sistema Operacionais, visite [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
 
-If you are working on Windows, you should also install the
-[Ruby Installer Development Kit](https://rubyinstaller.org/downloads/).
+Se você está trabalhando no Windows, você deve instalar o [*Ruby Installer
+Development Kit*](https://rubyinstaller.org/downloads/).
 
-You will also need an installation of the SQLite3 database.
-Many popular UNIX-like OSes ship with an acceptable version of SQLite3.
-On Windows, if you installed Rails through Rails Installer, you
-already have SQLite installed. Others can find installation instructions
-at the [SQLite3 website](https://www.sqlite.org).
-Verify that it is correctly installed and in your PATH:
+Você também vai precisar de uma instalação do banco de dados SQLite3. Muitos
+Sistemas Operacionais semelhantes a UNIX vem com uma versão aceitável do
+SQLite3. No Windows, se você instalou o Rails por meio do *Rails Installer*,
+você já possui o SQLite instalado. Para outros casos, você pode encontrar
+instruções de instalação no [Site do SQLite3](https://www.sqlite.org).
+
+Verifique se está instalado corretamente e no seu caminho:
 
 ```bash
 $ sqlite3 --version
 ```
+O programa deve informar sua versão.
 
-The program should report its version.
-
-To install Rails, use the `gem install` command provided by RubyGems:
+Para instalar o Rails, use o comand `gem install` provido pelo RubyGems:
 
 ```bash
 $ gem install rails
 ```
 
-To verify that you have everything installed correctly, you should be able to
-run the following:
+Para verificar se está com tudo instalado corretamente, você deve ser capaz de
+rodar o seguinte comando:
 
 ```bash
 $ rails --version
 ```
 
-If it says something like "Rails 6.0.0", you are ready to continue.
+Se ele disser algo como "Rails 6.0.0", você está pronto para continuar.
 
-### Creating the Blog Application
+### Criando a Aplicação Blog
 
-Rails comes with a number of scripts called generators that are designed to make
-your development life easier by creating everything that's necessary to start
-working on a particular task. One of these is the new application generator,
-which will provide you with the foundation of a fresh Rails application so that
-you don't have to write it yourself.
+O Rails vem com alguns *scripts* chamados *generators* que são projetados para
+tornar o desenvolvimento mais fácil criando tudo que for necessário para iniciar
+o trabalho para uma tarefa em particular. Um deles é o *generator* de nova
+aplicação, que cria toda a fundação de uma nova aplicação Rails para que você
+não precise escrever tudo você mesmo.
 
-To use this generator, open a terminal, navigate to a directory where you have
-rights to create files, and type:
+Para usar esse *generator*, abra o terminal, navegue até o diretório no qual
+você possui permissão para criar arquivos e digite:
 
 ```bash
 $ rails new blog
 ```
 
-This will create a Rails application called Blog in a `blog` directory and
-install the gem dependencies that are already mentioned in `Gemfile` using
-`bundle install`.
+Isso vai criar a aplicação Rails chamada Blog em um diretório chamado `blog`
+e instalar as dependências de gems que já estão mencionadas no `Gemfile` usando
+o comando `bundle install`.
+
+NOTE: Se você está usando *Windows Subsystem for Linux* então você está sob
+algumas limitações de notificações do sistema de arquivos, o que significa que
+você deve desabilitar o as gems `spring` e `listen`.
 
 NOTE: If you're using Windows Subsystem for Linux then there are currently some
 limitations on file system notifications that mean you should disable the `spring`
