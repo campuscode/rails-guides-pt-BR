@@ -1,23 +1,23 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 
-Debugging Rails Applications
+*Debug* de Aplicações Rails
 ============================
 
-This guide introduces techniques for debugging Ruby on Rails applications.
+Esse guia introduz técnicas de *debug* para aplicações de Ruby on Rails
 
-After reading this guide, you will know:
+Após ler esse guia, você saberá:
 
-* The purpose of debugging.
-* How to track down problems and issues in your application that your tests aren't identifying.
-* The different ways of debugging.
-* How to analyze the stack trace.
+* O propósito de das técnicas de *debug*
+* Como encontrar problemas nas suas aplicações que testes não estão identificando
+* As diferentes maneiras de depurar o seu código
+* Como analisar a *stack trace*
 
 --------------------------------------------------------------------------------
 
-View Helpers for Debugging
+*View Helpers* para *Debugging*
 --------------------------
 
-One common task is to inspect the contents of a variable. Rails provides three different ways to do this:
+Uma tarefa comum é inspecionar o conteúdo de uma variável. O Rails fornece três diferentes formas para fazer isso:
 
 * `debug`
 * `to_yaml`
@@ -25,7 +25,7 @@ One common task is to inspect the contents of a variable. Rails provides three d
 
 ### `debug`
 
-The `debug` helper will return a \<pre> tag that renders the object using the YAML format. This will generate human-readable data from any object. For example, if you have this code in a view:
+O *helper* `debug` irá retornar uma tag \<pre> que renderiza um objeto usando o formato YAML. Isso vai gerar um dado legível para humanos a partir de qualquer objeto. Por exemplo, se você tem esse código em uma *view*: 
 
 ```html+erb
 <%= debug @article %>
@@ -35,26 +35,26 @@ The `debug` helper will return a \<pre> tag that renders the object using the YA
 </p>
 ```
 
-You'll see something like this:
+Você verá algo parecido com isso:
 
 ```yaml
 --- !ruby/object Article
 attributes:
   updated_at: 2008-09-05 22:55:47
-  body: It's a very helpful guide for debugging your Rails app.
-  title: Rails debugging guide
+  body: Esse é um guia muito útil para fazer o debugging da sua app Rails.
+  title: Guia de debugging do Rails
   published: t
   id: "1"
   created_at: 2008-09-05 22:55:47
 attributes_cache: {}
 
 
-Title: Rails debugging guide
+Title: Guia de *debugging* do Rails
 ```
 
 ### `to_yaml`
 
-Alternatively, calling `to_yaml` on any object converts it to YAML. You can pass this converted object into the `simple_format` helper method to format the output. This is how `debug` does its magic.
+Como alternativa, chamar `to_yaml` em qualquer objeto o converte para YAML. Você pode passar esse objeto convertido para o método *helper* `simple_format` para formatar o *output*. É assim que o `debug` faz sua mágica. 
 
 ```html+erb
 <%= simple_format @article.to_yaml %>
@@ -65,24 +65,25 @@ Alternatively, calling `to_yaml` on any object converts it to YAML. You can pass
 ```
 
 The above code will render something like this:
+O código acima vai renderizar algo como isso:
 
 ```yaml
 --- !ruby/object Article
 attributes:
 updated_at: 2008-09-05 22:55:47
-body: It's a very helpful guide for debugging your Rails app.
-title: Rails debugging guide
+body: Esse é um guia muito útil para fazer o debugging de sua app Rails.
+title: Guia de debugging do Rails
 published: t
 id: "1"
 created_at: 2008-09-05 22:55:47
 attributes_cache: {}
 
-Title: Rails debugging guide
+Title: Guia de *debugging* do Rails
 ```
 
 ### `inspect`
 
-Another useful method for displaying object values is `inspect`, especially when working with arrays or hashes. This will print the object value as a string. For example:
+Outro método útil para mostrar valores de objeto é o `inspect`, especialmente quando estamos trabalhando com arrays ou hashes. Isso imprimirá o valor do objeto como uma string. Por exemplo:
 
 ```html+erb
 <%= [1, 2, 3, 4, 5].inspect %>
@@ -92,38 +93,39 @@ Another useful method for displaying object values is `inspect`, especially when
 </p>
 ```
 
-Will render:
+Vai renderizar: 
 
 ```
 [1, 2, 3, 4, 5]
 
-Title: Rails debugging guide
+Title: Guia de *debugging* do Rails
 ```
 
-The Logger
+
+O *Logger*
 ----------
 
-It can also be useful to save information to log files at runtime. Rails maintains a separate log file for each runtime environment.
+Pode ser útil salvar informações em um arquivo de log em tempo de execução. O Rails mantém um arquivo de log separado para cada ambiente de execução.
 
-### What is the Logger?
+### O que é o *Logger*?
 
-Rails makes use of the `ActiveSupport::Logger` class to write log information. Other loggers, such as `Log4r`, may also be substituted.
+O Rails utiliza a classe `ActiveSupport::Logger` para guardar informações de log. Outros tipos de loggers, como o `Log4r`, também podem ser utilizados.
 
-You can specify an alternative logger in `config/application.rb` or any other environment file, for example:
+Você pode especificar um *logger* alternativo em `config/application.rb` ou em qualquer outro arquivo de ambiente, por exemplo: 
 
 ```ruby
 config.logger = Logger.new(STDOUT)
 config.logger = Log4r::Logger.new("Application Log")
 ```
 
-Or in the `Initializer` section, add _any_ of the following
+Ou na seção `Initializer`, adicione _qualquer_ um dos seguintes: 
 
 ```ruby
 Rails.logger = Logger.new(STDOUT)
 Rails.logger = Log4r::Logger.new("Application Log")
 ```
 
-TIP: By default, each log is created under `Rails.root/log/` and the log file is named after the environment in which the application is running.
+DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de log é criado com o nome do ambiente no qual a aplicação está sendo executada.
 
 ### Log Levels
 
