@@ -133,7 +133,8 @@ Ou na seção `Initializer`, adicione _qualquer_ um dos seguintes:
 Rails.logger = Logger.new(STDOUT)
 Rails.logger = Log4r::Logger.new("Application Log")
 ```
-DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de log é criado com o nome do ambiente no qual a aplicação está sendo executada.
+
+DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de registro é criado com o nome do ambiente no qual a aplicação está sendo executada.
 
 ### Níveis de Log 
 
@@ -147,7 +148,7 @@ config.log_level = :warn # Em qualquer inicializador de ambiente, ou
 Rails.logger.level = 0 # a qualquer momento
 ```
 
-Isso é útil quando você quer criar logs em ambientes diferentes de desenvolvimento ou preparação sem sobrecarregar os logs do seu aplicativo com informação desnecessária.
+Isso é útil quando você quer criar logs em ambientes diferentes de desenvolvimento ou homologação sem sobrecarregar os registros do seu aplicativo com informação desnecessária.
 
 DICA: O nível de log padrão do Rails é `debug` em todos os ambientes de desenvolvimento.
 
