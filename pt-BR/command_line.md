@@ -1,7 +1,6 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Linhas de Comando do Rails
-The Rails Command Line
 ======================
 
 Depois de ler este guia, você saberá:
