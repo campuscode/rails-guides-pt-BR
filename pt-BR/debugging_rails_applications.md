@@ -535,7 +535,7 @@ atual é marcada com o sinal de mais (+).
 Esse comando é muito útil quando você está fazendo o *debugging*
 para verificar se não há condições do seu código continuar rodando.
 
-### Inspecionando variáveis
+### Inspecionando Variáveis
 
 Qualquer expressão pode ser avaliada no contexto atual. Para avaliar uma
 expressão, apenas digite-a!
