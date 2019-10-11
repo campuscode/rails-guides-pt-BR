@@ -738,7 +738,7 @@ Você pode adicionar *breakpoints* dinamicamente com o comando `break` (ou apena
 Existem três maneiras possíveis de adicionar *breakpoints* manualmente:
 
 * `break n`: define um *breakpoint* na linha de número _n_ no arquivo fonte atual.
-* `break file:n [if expression]`: define um breakpoint na linha de número _n_ dentro
+* `break file:n [if expression]`: define um *breakpoint* na linha de número _n_ dentro
 do arquivo chamado _file_. Se uma _expression_ for dada, ela deve ser avaliada como _true_ para
 iniciar o *debugger*.
 * `break class(.|\#)method [if expression]`: define um breakpoint no _method_ (. e
