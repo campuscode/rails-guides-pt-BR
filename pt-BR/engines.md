@@ -11,7 +11,7 @@ Após ler este guia, você saberá:
 * Como gerar uma *engine*.
 * Como construir as funcionalidades para a *engine*.
 * Como conectar a *engine* em uma aplicação.
-* Como substituir a funcionalidade de uma engine na aplicação.
+* Como substituir a funcionalidade de uma *engine* na aplicação.
 * Evitar carregar frameworks Rails com *Load* e *Hooks* de Configuração.
 
 --------------------------------------------------------------------------------
