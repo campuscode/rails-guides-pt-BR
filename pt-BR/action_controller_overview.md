@@ -1,26 +1,26 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Action Controller Overview
-==========================
+# Action Controller Overview
 
-In this guide you will learn how controllers work and how they fit into the request cycle in your application.
+~~In this guide you will learn how controllers work and how they fit into the request cycle in your application.~~
+
+Nesse guia você irá aprender como `controllers` trabalham e como eles se encaixam no ciclo de requestes da sua aplicação.
 
 After reading this guide, you will know:
 
-* How to follow the flow of a request through a controller.
-* How to restrict parameters passed to your controller.
-* How and why to store data in the session or cookies.
-* How to work with filters to execute code during request processing.
-* How to use Action Controller's built-in HTTP authentication.
-* How to stream data directly to the user's browser.
-* How to filter sensitive parameters so they do not appear in the application's log.
-* How to deal with exceptions that may be raised during request processing.
+- How to follow the flow of a request through a controller.
+- How to restrict parameters passed to your controller.
+- How and why to store data in the session or cookies.
+- How to work with filters to execute code during request processing.
+- How to use Action Controller's built-in HTTP authentication.
+- How to stream data directly to the user's browser.
+- How to filter sensitive parameters so they do not appear in the application's log.
+- How to deal with exceptions that may be raised during request processing.
 
---------------------------------------------------------------------------------
+---
 
-What Does a Controller Do?
---------------------------
+## What Does a Controller Do?
 
 Action Controller is the C in [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). After the router has determined which controller to use for a request, the controller is responsible for making sense of the request, and producing the appropriate output. Luckily, Action Controller does most of the groundwork for you and uses smart conventions to make this as straightforward as possible.
 
@@ -30,8 +30,7 @@ A controller can thus be thought of as a middleman between models and views. It 
 
 NOTE: For more details on the routing process, see [Rails Routing from the Outside In](routing.html).
 
-Controller Naming Convention
-----------------------------
+## Controller Naming Convention
 
 The naming convention of controllers in Rails favors pluralization of the last word in the controller's name, although it is not strictly required (e.g. `ApplicationController`). For example, `ClientsController` is preferable to `ClientController`, `SiteAdminsController` is preferable to `SiteAdminController` or `SitesAdminsController`, and so on.
 
@@ -39,9 +38,7 @@ Following this convention will allow you to use the default route generators (e.
 
 NOTE: The controller naming convention differs from the naming convention of models, which are expected to be named in singular form.
 
-
-Methods and Actions
--------------------
+## Methods and Actions
 
 A controller is a Ruby class which inherits from `ApplicationController` and has methods just like any other class. When your application receives a request, the routing will determine which controller and action to run, then Rails creates an instance of that controller and runs the method with the same name as the action.
 
@@ -66,8 +63,7 @@ The [Layouts & Rendering Guide](layouts_and_rendering.html) explains this in mor
 
 Only public methods are callable as actions. It is a best practice to lower the visibility of methods (with `private` or `protected`) which are not intended to be actions, like auxiliary methods or filters.
 
-Parameters
-----------
+## Parameters
 
 You will probably want to access data sent in by the user or other parameters in your controller actions. There are two kinds of parameters possible in a web application. The first are parameters that are sent as part of the URL, called query string parameters. The query string is everything after "?" in the URL. The second type of parameter is usually referred to as POST data. This information usually comes from an HTML form which has been filled in by the user. It's called POST data because it can only be sent as part of an HTTP POST request. Rails does not make any distinction between query string parameters and POST parameters, and both are available in the `params` hash in your controller:
 
@@ -353,15 +349,14 @@ in mind. It is not meant as a silver bullet to handle all of your
 parameter filtering problems. However, you can easily mix the API with your
 own code to adapt to your situation.
 
-Session
--------
+## Session
 
 Your application has a session for each user in which you can store small amounts of data that will be persisted between requests. The session is only available in the controller and the view and can use one of a number of different storage mechanisms:
 
-* `ActionDispatch::Session::CookieStore` - Stores everything on the client.
-* `ActionDispatch::Session::CacheStore` - Stores the data in the Rails cache.
-* `ActionDispatch::Session::ActiveRecordStore` - Stores the data in a database using Active Record. (require `activerecord-session_store` gem).
-* `ActionDispatch::Session::MemCacheStore` - Stores the data in a memcached cluster (this is a legacy implementation; consider using CacheStore instead).
+- `ActionDispatch::Session::CookieStore` - Stores everything on the client.
+- `ActionDispatch::Session::CacheStore` - Stores the data in the Rails cache.
+- `ActionDispatch::Session::ActiveRecordStore` - Stores the data in a database using Active Record. (require `activerecord-session_store` gem).
+- `ActionDispatch::Session::MemCacheStore` - Stores the data in a memcached cluster (this is a legacy implementation; consider using CacheStore instead).
 
 All session stores use a cookie to store a unique ID for each session (you must use a cookie, Rails will not allow you to pass the session ID in the URL as this is less secure).
 
@@ -555,8 +550,7 @@ class ClientsController < ApplicationController
 end
 ```
 
-Cookies
--------
+## Cookies
 
 Your application can store small amounts of data on the client - called cookies - that will be persisted across requests and even sessions. Rails provides easy access to cookies via the `cookies` method, which - much like the `session` - works like a hash:
 
@@ -644,8 +638,7 @@ manually when reading the values on subsequent requests.
 If you use the cookie session store, this would apply to the `session` and
 `flash` hash as well.
 
-Rendering XML and JSON data
----------------------------
+## Rendering XML and JSON data
 
 ActionController makes it extremely easy to render `XML` or `JSON` data. If you've generated a controller using scaffolding, it would look something like this:
 
@@ -664,8 +657,7 @@ end
 
 You may notice in the above code that we're using `render xml: @users`, not `render xml: @users.to_xml`. If the object is not a String, then Rails will automatically invoke `to_xml` for us.
 
-Filters
--------
+## Filters
 
 Filters are methods that are run "before", "after" or "around" a controller action.
 
@@ -737,9 +729,9 @@ You can choose not to yield and build the response yourself, in which case the a
 
 ### Other Ways to Use Filters
 
-While the most common way to use filters is by creating private methods and using *_action to add them, there are two other ways to do the same thing.
+While the most common way to use filters is by creating private methods and using \*\_action to add them, there are two other ways to do the same thing.
 
-The first is to use a block directly with the *\_action methods. The block receives the controller as an argument. The `require_login` filter from above could be rewritten to use a block:
+The first is to use a block directly with the \*\_action methods. The block receives the controller as an argument. The `require_login` filter from above could be rewritten to use a block:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -773,8 +765,7 @@ end
 
 Again, this is not an ideal example for this filter, because it's not run in the scope of the controller but gets the controller passed as an argument. The filter class must implement a method with the same name as the filter, so for the `before_action` filter the class must implement a `before` method, and so on. The `around` method must `yield` to execute the action.
 
-Request Forgery Protection
---------------------------
+## Request Forgery Protection
 
 Cross-site request forgery is a type of attack in which a site tricks a user into making requests on another site, possibly adding, modifying, or deleting data on that site without the user's knowledge or permission.
 
@@ -795,10 +786,12 @@ You will see how the token gets added as a hidden field:
 
 ```html
 <form accept-charset="UTF-8" action="/users/1" method="post">
-<input type="hidden"
-       value="67250ab105eb5ad10851c00a5621854a23af5489"
-       name="authenticity_token"/>
-<!-- fields -->
+  <input
+    type="hidden"
+    value="67250ab105eb5ad10851c00a5621854a23af5489"
+    name="authenticity_token"
+  />
+  <!-- fields -->
 </form>
 ```
 
@@ -808,8 +801,7 @@ The `form_authenticity_token` generates a valid authentication token. That's use
 
 The [Security Guide](security.html) has more about this and a lot of other security-related issues that you should be aware of when developing a web application.
 
-The Request and Response Objects
---------------------------------
+## The Request and Response Objects
 
 In every controller there are two accessor methods pointing to the request and the response objects associated with the request cycle that is currently in execution. The `request` method contains an instance of `ActionDispatch::Request` and the `response` method returns a response object representing what is going to be sent back to the client.
 
@@ -858,13 +850,12 @@ response.headers["Content-Type"] = "application/pdf"
 
 NOTE: In the above case it would make more sense to use the `content_type` setter directly.
 
-HTTP Authentications
---------------------
+## HTTP Authentications
 
 Rails comes with two built-in HTTP authentication mechanisms:
 
-* Basic Authentication
-* Digest Authentication
+- Basic Authentication
+- Digest Authentication
 
 ### HTTP Basic Authentication
 
@@ -900,8 +891,7 @@ end
 
 As seen in the example above, the `authenticate_or_request_with_http_digest` block takes only one argument - the username. And the block returns the password. Returning `false` or `nil` from the `authenticate_or_request_with_http_digest` will cause authentication failure.
 
-Streaming and File Downloads
-----------------------------
+## Streaming and File Downloads
 
 Sometimes you may want to send a file to the user instead of rendering an HTML page. All controllers in Rails have the `send_data` and the `send_file` methods, which will both stream data to the client. `send_file` is a convenience method that lets you provide the name of a file on the disk and it will stream the contents of that file for you.
 
@@ -996,7 +986,6 @@ you would like in a response object. The `ActionController::Live` module allows
 you to create a persistent connection with a browser. Using this module, you will
 be able to send arbitrary data to the browser at specific points in time.
 
-
 #### Incorporating Live Streaming
 
 Including `ActionController::Live` inside of your controller class will provide
@@ -1066,18 +1055,17 @@ Streaming arbitrary data is an extremely powerful tool. As shown in the previous
 examples, you can choose when and what to send across a response stream. However,
 you should also note the following things:
 
-* Each response stream creates a new thread and copies over the thread local
+- Each response stream creates a new thread and copies over the thread local
   variables from the original thread. Having too many thread local variables can
   negatively impact performance. Similarly, a large number of threads can also
   hinder performance.
-* Failing to close the response stream will leave the corresponding socket open
+- Failing to close the response stream will leave the corresponding socket open
   forever. Make sure to call `close` whenever you are using a response stream.
-* WEBrick servers buffer all responses, and so including `ActionController::Live`
+- WEBrick servers buffer all responses, and so including `ActionController::Live`
   will not work. You must use a web server which does not automatically buffer
   responses.
 
-Log Filtering
--------------
+## Log Filtering
 
 Rails keeps a log file for each environment in the `log` folder. These are extremely useful when debugging what's actually going on in your application, but in a live application you may not want every bit of information to be stored in the log file.
 
@@ -1108,8 +1096,7 @@ config.filter_redirect.concat ['s3.amazonaws.com', /private_path/]
 
 Matching URLs will be marked as '[FILTERED]'.
 
-Rescue
-------
+## Rescue
 
 Most likely your application is going to contain bugs or otherwise throw an exception that needs to be handled. For example, if the user follows a link to a resource that no longer exists in the database, Active Record will throw the `ActiveRecord::RecordNotFound` exception.
 
@@ -1179,8 +1166,7 @@ a custom behavior you don't need to handle this.
 
 NOTE: Certain exceptions are only rescuable from the `ApplicationController` class, as they are raised before the controller gets initialized and the action gets executed.
 
-Force HTTPS protocol
---------------------
+## Force HTTPS protocol
 
 If you'd like to ensure that communication to your controller is only possible
 via HTTPS, you should do so by enabling the `ActionDispatch::SSL` middleware via
