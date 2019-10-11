@@ -1,6 +1,6 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 
-Começando com Engines
+Introdução às *Engines*
 ============================
 
 Neste guia você irá aprender sobre engines e como elas podem ser utilizadas para prover funcionalidades adicionais para suas aplicações de host através uma interface bem facil de usar e limpa.
