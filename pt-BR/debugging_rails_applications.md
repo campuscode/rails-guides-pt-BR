@@ -287,7 +287,7 @@ Debugging com a gem `byebug`
 
 Quando seu código está se comportando de maneiras inesperadas, você pode tentar imprimir em *logs* ou
 no console para diagnosticar o problema. Infelizmente, há momentos em que esse
-tipo de rastreamento de erros não é eficaz para encontrar a causa raiz de um problema.
+tipo de rastreamento de erros não é eficaz para encontrar a raiz de um problema.
 Quando você realmente precisa acessar seu código-fonte em execução, o *debugger*
 é o seu melhor companheiro.
 
