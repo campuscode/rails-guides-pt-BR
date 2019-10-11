@@ -17,7 +17,7 @@ Tradicionalmente, quando as pessoas diziam que elas usavam Rails como
 uma "API", elas queriam dizer prover uma API programaticamente acessível junto de sua apliação web.
 Por exemplo, GitHub oferece [uma API](https://developer.github.com) que você pode usar a partir de seus próprios clients customizados.
 
-Com a chegada dos frameworks client-side, mais desenvolvedores estão usando Rails para construir um back-end que compartilhado entre aplicação web e outras aplicações nativas.
+Com a chegada dos frameworks client-side, mais desenvolvedores estão usando Rails para construir um back-end compartilhado entre aplicação web e outras aplicações nativas.
 
 Por exemplo, o Twitter usa sua [API pública](https://developer.twitter.com/) em sua aplicação web, que é construída como um site estático que consome recursos JSON.
 
