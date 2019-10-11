@@ -1,51 +1,62 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Configuring Rails Applications
-==============================
+Configurando Aplicações Rails
+=============================
 
-This guide covers the configuration and initialization features available to Rails applications.
+Este guia cobre a configuração e funcionaidades de inicialização disponíveis
+para aplicações Rails.
 
-After reading this guide, you will know:
+Após ler esse guia, você irá saber:
 
-* How to adjust the behavior of your Rails applications.
-* How to add additional code to be run at application start time.
+* Como ajustar o comportamento das suas aplicações Rails.
+* Como adicionar código que deve ser executado durante a inicialização da
+  aplicação.
 
 --------------------------------------------------------------------------------
 
-Locations for Initialization Code
----------------------------------
+Locais para Código de Inicialização
+-----------------------------------
 
-Rails offers four standard spots to place initialization code:
+O Rails oferece quatro opções padrão para adicionar código para a inicialização:
 
 * `config/application.rb`
-* Environment-specific configuration files
-* Initializers
-* After-initializers
+* Arquivos de configuração específicos para os ambientes
+* *Initializers*
+* Pós *initializers*
 
-Running Code Before Rails
--------------------------
+Executando Código Antes do Rails
+--------------------------------
 
-In the rare event that your application needs to run some code before Rails itself is loaded, put it above the call to `require 'rails/all'` in `config/application.rb`.
+Em situações raras que sua aplicação necessita executar código antes que o
+próprio Rails tenha sido carregado, coloque este código acima da chamanda 
+`require 'rails/all'` no arquivo `config/application.rb`.
 
-Configuring Rails Components
-----------------------------
 
-In general, the work of configuring Rails means configuring the components of Rails, as well as configuring Rails itself. The configuration file `config/application.rb` and environment-specific configuration files (such as `config/environments/production.rb`) allow you to specify the various settings that you want to pass down to all of the components.
+Configurando Componentes Rails
+------------------------------
 
-For example, you could add this setting to `config/application.rb` file:
+Em geral, o trabalho de configurar o Rails significa configrar os componentes do
+Rails, assim como configurar o Rails em si. O arquivo de configuração
+`config/application.rb` e arquivos de configuração específicos de ambiente (como
+o arquivo `config/environments/production.rb`).
+
+Por exemplo, você pode adicionar a configuração abaixo ao arquivo
+`config/application.rb`
 
 ```ruby
-config.time_zone = 'Central Time (US & Canada)'
+config.time_zone = 'Brasilia'
 ```
 
-This is a setting for Rails itself. If you want to pass settings to individual Rails components, you can do so via the same `config` object in `config/application.rb`:
+Essa é uma configuração para o próprio Rails. Se você deseja definir ajustes
+para componentes do Rails, você pode fazê-lo através do mesmo objeto `config` em
+`config/application.rb`:
 
 ```ruby
 config.active_record.schema_format = :ruby
 ```
 
-Rails will use that particular setting to configure Active Record.
+O Rails vai usar essa configuração em particular no Active Record.
 
 ### Rails General Configuration
 
