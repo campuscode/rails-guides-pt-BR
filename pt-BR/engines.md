@@ -7,7 +7,7 @@ Neste guia você irá aprender sobre *engines* e como elas podem ser utilizadas 
 
 Após ler este guia, você saberá:
 
-* O quê compõe uma engine.
+* O que compõe uma *engine*.
 * Como gerar uma engine.
 * Como construir as características de uma engine.
 * Como conectar a engine na aplicação.
