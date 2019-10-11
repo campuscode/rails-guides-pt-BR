@@ -12,7 +12,7 @@ Após ler este guia, você saberá:
 * Como construir as características de uma engine.
 * Como conectar a engine na aplicação.
 * Como substituir a funcionalidade de uma engine na aplicação.
-* Evitar carregar frameworks de Rails com Load e Configuration Hooks.
+* Evitar carregar frameworks Rails com *Load* e *Hooks* de Configuração.
 
 --------------------------------------------------------------------------------
 
