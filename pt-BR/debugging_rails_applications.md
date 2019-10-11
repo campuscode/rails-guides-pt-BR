@@ -137,7 +137,7 @@ DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de log é
 
 ### Níveis de Log 
 
-Quando algo é logado, o log é feito no arquivo de log correspondente se o nível de log da mensagem for igual ou maior do que o nível de log configurado. Se você quiser saber o nível de log atual, você pode chamar o método `Rails.logger.level`.
+Quando algo é registrado, a informação é armazenada no local de registro correspondente se o nível de *log* for igual ou maior que o configurado. Se você quiser saber o nível atual do registro, você pode o método `Rails.logger.level`.
 
 Os níveis de log disponiveis são: `:debug`, `:info`, `:warn`, `:error`, `:fatal`,
 e `:unknown`, correspondendo aos níveis de log de 0 até 5, respectivamente. Para mudar o nível de log padrão, utilize:
