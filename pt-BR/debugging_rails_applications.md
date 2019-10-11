@@ -468,7 +468,7 @@ Quando você inicia o *debugging* da sua aplicação, você será colocado em di
 contextos conforme você percorre as diferentes partes da *stack*.
 
 O *debugger* cria um contexto quando um ponto de parada ou um evento é alcançado. O
-contexo contém informações sobre o programa suspenso, o que habilita o *debugger*
+contexto contém informações sobre o programa suspenso, o que habilita o *debugger*
 para inspecionar os *frames* da *stack*, avaliar variáveis da perspectiva do
 programa depurado e saiba o local em que programa depurado está parado.
 
