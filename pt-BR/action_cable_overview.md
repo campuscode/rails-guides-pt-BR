@@ -11,7 +11,7 @@ Ao ler este guia você aprenderá:
 * O quê é um Action Cable e sua integração backend e frontend
 * Como configurar um *Action Cable*
 * Como configurar canais
-* Configuração de Deployment e Architecture para rodar um Action Cable
+* Configuração de *Deployment* e Arquitetura para rodar a *Action Cable*
 
 --------------------------------------------------------------------------------
 
