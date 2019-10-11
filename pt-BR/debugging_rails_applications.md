@@ -563,7 +563,7 @@ contexto atual:
 ```
 
 Como você já deve ter percebido, todas as variáveis que você pode acessar de um
-controller são exibidas. Esta lista é atualizada dinamicamente à medida que você executa o código.
+*controller* são exibidas. Esta lista é atualizada dinamicamente à medida que você executa o código.
 Por exemplo, execute a próxima linha usando `next` (você aprenderá mais sobre este
 comando posteriormente neste guia).
 
