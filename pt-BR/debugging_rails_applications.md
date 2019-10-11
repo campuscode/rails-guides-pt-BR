@@ -323,7 +323,7 @@ end
 Assim que sua aplicação chamar o método `byebug`, o *debugger* será
 iniciado em um *debugger shell* do seu terminal onde você iniciou seu
 servidor da aplicação, e você será colocado no prompt do *debugger* `(byebug)`.
-Antes do prompt, o código ao redor da linha que está prestes a ser execuada será
+Antes do prompt, o código ao redor da linha que está prestes a ser executada será
 exibido e a linha atual será marcada por '=>', assim:
 
 ```
