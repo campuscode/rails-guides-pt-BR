@@ -731,7 +731,7 @@ DICA: Você também pode usar o `step n` ou o `next n` para avançar `n` passos 
 
 ### Breakpoints
 
-Um breakpoint interrompe sua aplicação sempre que um determinado ponto do programa
+Um *breakpoint* interrompe sua aplicação sempre que um determinado ponto do programa
 é atingido. O *shell* do *debugger* é chamado nessa linha.
 
 Você pode adicionar *breakpoints* dinamicamente com o comando `break` (ou apenas `b`).
