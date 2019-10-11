@@ -469,7 +469,7 @@ contextos conforme você percorre as diferentes partes da *stack*.
 
 O *debugger* cria um contexto quando um ponto de parada ou um evento é alcançado. O
 contexo contém informações sobre o programa suspenso, o que habilita o *debugger*
-para inspecionar os *frames* da *stack*, avaliar variáveis da prespectiva do
+para inspecionar os *frames* da *stack*, avaliar variáveis da perspectiva do
 programa depurado e saiba o local em que programa depurado está parado.
 
 A qualquer momento, você pode chamar o comando `backtrace` (ou seu *alias* `where`) para exibir
