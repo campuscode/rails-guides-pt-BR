@@ -1,5 +1,14 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 
+
+Esse guia introduz técnicas de debugação para aplicações de Ruby on Rails
+
+Após ler esse guia, você saberá:
+
+* O propósito de debugar
+* Como encontrar problemas nas suas aplicações que testes não estão identificando
+* As diferentes maneiras de debugar
+* Como analisar o *stack trace*
 *Debug* de Aplicações Rails
 ============================
 
@@ -125,27 +134,23 @@ Rails.logger = Logger.new(STDOUT)
 Rails.logger = Log4r::Logger.new("Application Log")
 ```
 
-DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de log é criado com o nome do ambiente no qual a aplicação está sendo executada.
+DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de registro é criado com o nome do ambiente no qual a aplicação está sendo executada.
 
-### Log Levels
+### Níveis de Log 
 
-When something is logged, it's printed into the corresponding log if the log
-level of the message is equal to or higher than the configured log level. If you
-want to know the current log level, you can call the `Rails.logger.level`
-method.
+Quando algo é registrado, a informação é armazenada no local de registro correspondente se o nível de *log* for igual ou maior que o configurado. Se você quiser saber o nível atual do registro, você pode o método `Rails.logger.level`.
 
-The available log levels are: `:debug`, `:info`, `:warn`, `:error`, `:fatal`,
-and `:unknown`, corresponding to the log level numbers from 0 up to 5,
-respectively. To change the default log level, use
+Os níveis de log disponiveis são: `:debug`, `:info`, `:warn`, `:error`, `:fatal`,
+e `:unknown`, correspondendo aos níveis de log de 0 até 5, respectivamente. Para mudar o nível de log padrão, utilize:
 
 ```ruby
-config.log_level = :warn # In any environment initializer, or
-Rails.logger.level = 0 # at any time
+config.log_level = :warn # Em qualquer inicializador de ambiente, ou
+Rails.logger.level = 0 # a qualquer momento
 ```
 
-This is useful when you want to log under development or staging without flooding your production log with unnecessary information.
+Isso é útil quando você quer criar logs em ambientes diferentes de desenvolvimento ou homologação sem sobrecarregar os registros do seu aplicativo com informação desnecessária.
 
-TIP: The default Rails log level is `debug` in all environments.
+DICA: O nível de log padrão do Rails é `debug` em todos os ambientes de desenvolvimento.
 
 ### Sending Messages
 
