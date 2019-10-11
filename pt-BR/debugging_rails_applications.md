@@ -9,7 +9,6 @@ Após ler esse guia, você saberá:
 * Como encontrar problemas nas suas aplicações que testes não estão identificando
 * As diferentes maneiras de debugar
 * Como analisar o *stack trace*
-=======
 *Debug* de Aplicações Rails
 ============================
 
