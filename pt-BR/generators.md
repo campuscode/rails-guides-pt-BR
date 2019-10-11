@@ -1,7 +1,7 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 
 Criando e Personalizando Geradores Rails e *Templates*
-=====================================================
+======================================================
 
 Geradores do Rails são uma ferramenta essencial se você planeja melhorar seu fluxo de trabalho. Com esse guia você aprenderá como criar Geradores e customizar os já existentes.
 
