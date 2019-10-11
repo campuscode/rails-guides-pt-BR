@@ -1,20 +1,20 @@
-**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 
-Criando e Personalizando Geradores e Modelos de Rails
-=====================================================
+Criando e Personalizando Geradores Rails e *Templates*
+======================================================
 
-Geradores de Rails são uma ferramenta essencial se você planeja melhorar seu fluxo de trabalho. Com esse guia você aprenderá como criar Geradores e customizar os já existentes.
+Geradores do Rails são uma ferramenta essencial se você planeja melhorar seu fluxo de trabalho. Com esse guia você aprenderá como criar Geradores e customizar os já existentes.
 
 Depois de ler esse guia, você irá saber:
 
 * Como ver quais Geradores estão disponíveis para sua aplicação.
-* Como criar um Gerador usando Modelos.
+* Como criar um Gerador usando *templates*.
 * Como o Rails procura pelos Geradores antes de chamá-los.
-* Como o Rails gera internalmente um código de Rails a partir dos modelos.
-* Como customizar seu Scaffold criando novos Geradores.
-* Como customizar seu Scaffold mudando os modelos de Geradores.
-* Como utilizar fallbacks para evitar sobrescrever um conjunto de Geradores.
-* Como criar um modelo de aplicação.
+* Como o Rails gera internamente um código Rails a partir dos modelos.
+* Como customizar seu *scaffold* com a criação de novos Geradores.
+* Como customizar seu *scaffold* mudando os *templates* dos geradores.
+* Como utilizar um plano de contingência para evitar sobrescrever um grande conjunto de geradores.
+* Como criar um *template* de aplicação.
 
 --------------------------------------------------------------------------------
 
