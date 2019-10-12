@@ -47,11 +47,16 @@ config.active_record.schema_format = :ruby
 
 Rails will use that particular setting to configure Active Record.
 
-### Rails General Configuration
+### Configuração Geral do Rails
 
-These configuration methods are to be called on a `Rails::Railtie` object, such as a subclass of `Rails::Engine` or `Rails::Application`.
+Esses métodos de configuração devem ser enviados para objetos do tipo
+`Rails::Railtie`, como uma sublclasse de `Rails::Engine` ou
+`Rails::Application`.
 
-* `config.after_initialize` takes a block which will be run _after_ Rails has finished initializing the application. That includes the initialization of the framework itself, engines, and all the application's initializers in `config/initializers`. Note that this block _will_ be run for rake tasks. Useful for configuring values set up by other initializers:
+* `config.after_initialize` recebe um bloco que seré executado _após_ a inicializaçao da aplicação
+Rails. Isso inclui a inicialização do *framework* em si, *engines*  e todos *initializers*  definidos em
+`config/initializers`. Perceba que esse bloco _será_ executado em tarefas
+*rake*. Essa opção é útil para configurações feitas por outros *initializers*:
 
     ```ruby
     config.after_initialize do
@@ -59,24 +64,51 @@ These configuration methods are to be called on a `Rails::Railtie` object, such 
     end
     ```
 
-* `config.asset_host` sets the host for the assets. Useful when CDNs are used for hosting assets, or when you want to work around the concurrency constraints built-in in browsers using different domain aliases. Shorter version of `config.action_controller.asset_host`.
+* `config.asset_host` define o *host* para os *assets*. Essa opção é útil quando
+  CDNs são usados para hospedar *assets*, or para quando você deseja contornar
+restrições de concorrência embutidas em navegadores usando diferentes *aliases*
+de domínios. Essa é uma versão encurtada de `config.action_controller.asset_host`.
 
-* `config.autoload_once_paths` accepts an array of paths from which Rails will autoload constants that won't be wiped per request. Relevant if `config.cache_classes` is `false`, which is the case in development mode by default. Otherwise, all autoloading happens only once. All elements of this array must also be in `autoload_paths`. Default is an empty array.
+* `config.autoload_once_paths` aceita um *array* de caminhos de onde o Rails
+  deve carregar automaticamente constantes que não serão removidas por uma
+requisição. Essa configuração é relevante se `config.cache_classes` está
+`false`, que é o caso no modo de desenvolvimento por padrão. De outra forma,
+todo auto carregamento acontece somente uma vez. Todos elementos desse array
+devem estar também em `autoload_paths`. O valor padrão é um *array* vazio.
 
-* `config.autoload_paths` accepts an array of paths from which Rails will autoload constants. Default is all directories under `app`. It is no longer recommended to adjust this. See [Autoloading and Reloading Constants](autoloading_and_reloading_constants.html#autoload-paths-and-eager-load-paths)
+* `config.autoload_paths` aceita um *array* de caminhos de onde o Rails deve
+carregar automaticamente constantes. O padrão são todos diretórios abaixo de
+`app`. Não é mais recomendado ajustar essa configuração. Veja [Auto carregamento e Recarregando Constantes](autoloading_and_reloading_constants.html#autoload-paths-and-eager-load-paths)
 
-* `config.add_autoload_paths_to_load_path` says whether autoload paths have to be added to `$LOAD_PATH`. This flag is `true` by default, but it is recommended to be set to `false` in `:zeitwerk` mode early, in `config/application.rb`. Zeitwerk uses absolute paths internally, and applications running in `:zeitwerk` mode do not need `require_dependency`, so models, controllers, jobs, etc. do not need to be in `$LOAD_PATH`. Setting this to `false` saves Ruby from checking these directories when resolving `require` calls with relative paths, and saves Bootsnap work and RAM, since it does not need to build an index for them.
+* `config.add_autoload_paths_to_load_path` determina se os caminhos de auto carregamento devem ser adicionados
+para `$LOAD_PATH`. Esta marcação é `true` por padrão, mas é recomendado que seja
+definida como `false` no recém lançado modo `:zeitwerk`, em
+`config/application.rb`, *Zeitwerk* usa caminhos absolutos internamente e
+aplicações executadas no modo `:zeitwerk` não necessitam de `require_dependency`, então *models*, *controllers*, *jobs*, *etc* não 
+precisam estar no `$LOAD_PATH`. Ao ser definido como `false`, previne o Ruby de
+verificar estes diretórios quando resolver chamadas de `require` com caminhos
+relativos e reduz o processamento e o consumo de memória RAM do `Bootsnap`, já
+que ele não precisa construir um índice para eles.
 
-* `config.cache_classes` controls whether or not application classes and modules should be reloaded on each request. Defaults to `false` in development mode, and `true` in test and production modes.
+* `config.cache_classes` controla quando as classes e módulos da aplicação devem ser recarregados em cada requisição.
+O padrão é `false` no modo desenvolvimento e `true` nos modos de teste e produção.
 
-* `config.beginning_of_week` sets the default beginning of week for the
-application. Accepts a valid week day symbol (e.g. `:monday`).
+* `config.beginning_of_week` configura o começo da semana para a aplicação. O
+  valor deve ser um *symbol* com um dia da semana válido (por ex: `monday`).
 
-* `config.cache_store` configures which cache store to use for Rails caching. Options include one of the symbols `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, `:redis_cache_store`, or an object that implements the cache API. Defaults to `:file_store`.
+* `config.cache_store` configura qual armazenamento de *cache* o Rails deve utilizar. As opções
+incluem um dos *symbols*: `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, `:redis_cache_store`, 
+ou um objeto que implementa a API de cache. O padrão é `:file_store`.
 
-* `config.colorize_logging` specifies whether or not to use ANSI color codes when logging information. Defaults to `true`.
+* `config.colorize_logging` determina quando utilizar ou não códigos de cores ANSI ao registrar informações no *log*. O padrão é `true`.
 
-* `config.consider_all_requests_local` is a flag. If `true` then any error will cause detailed debugging information to be dumped in the HTTP response, and the `Rails::Info` controller will show the application runtime context in `/rails/info/properties`. `true` by default in development and test environments, and `false` in production mode. For finer-grained control, set this to `false` and implement `local_request?` in controllers to specify which requests should provide debugging information on errors.
+* `config.consider_all_requests_local` é uma marcação. Quando `true` adiciona
+  informações detalhadas de *debug* de erros à resposta HTTP, e o *controler*
+`Rails::Info` irá exibir o contexto de execução da aplicação em
+`/rails/info/properties`. `true` é o padrão nos ambientes de desenvolvimento e
+teste e `false` é o padrão no modo de produção. Para um controle mais refinado,
+defina como `false` e implemente o método `local_request?` em seus *controllers*
+para especificar que requisições devem prover informações de *debug* em erros.
 
 * `config.console` allows you to set class that will be used as console you run `rails console`. It's best to run it in `console` block:
 
