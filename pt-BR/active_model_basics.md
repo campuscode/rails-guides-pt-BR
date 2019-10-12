@@ -84,11 +84,11 @@ class Person
 end
 ```
 
-### Conversion
+### _Conversion_
 
-If a class defines `persisted?` and `id` methods, then you can include the
-`ActiveModel::Conversion` module in that class, and call the Rails conversion
-methods on objects of that class.
+Se uma classe define os métodos _`persisted?`_ e _`id`_, você pode incluir o 
+módulo _`ActiveModel::Conversion`_ nessa classe, e chamar os métodos de conversão 
+do _Rails_ em objetos dessa classe.
 
 ```ruby
 class Person
