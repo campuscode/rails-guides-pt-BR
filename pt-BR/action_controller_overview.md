@@ -26,7 +26,7 @@ O que um `Controller` faz?
 
 Para a maior parte das aplicações [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer),o `controller` receberá a requisição (o que é "invisível" a você como dev), busca e/ou salva dados de um Modelo, e usa a `view` para criar a saida HTML. Se seu `controller` precisa tratar requisições um pouco diferente, isso não é um problema, este é apenas o jeito mais comum de um `controller` trabalhar.
 
-Um `controller` pode então ser pensado o como um intermediário entre um modelo e uma `view`. Isso faz com que os dados do modelo fiquem disponíveis para a view para que possa ser mostrado ao usuário, e salva ou atualiza dados do usuario no modelo.
+Um `controller` pode então ser pensado como um intermediário entre um modelo e uma `view`. Isso faz com que os dados do modelo fiquem disponíveis para a view para que possa ser mostrado ao usuário, e salva ou atualiza dados do usuario no modelo.
 
 OBS: Para mais detalhes sobre processo de roteamento, veja [Rails Routing from the Outside In](routing.html)
 
