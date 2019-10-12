@@ -29,7 +29,7 @@ Executando Código Antes do Rails
 --------------------------------
 
 Em situações raras que sua aplicação necessita executar código antes que o
-próprio Rails tenha sido carregado, coloque este código acima da chamanda 
+próprio Rails tenha sido carregado, coloque este código acima da chamada 
 `require 'rails/all'` no arquivo `config/application.rb`.
 
 
