@@ -187,11 +187,11 @@ of the files and folders that Rails created by default:
 |.gitignore|This file tells git which files (or patterns) it should ignore. See [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) for more info about ignoring files.
 |.ruby-version|This file contains the default Ruby version.|
 
-Hello, Rails!
+Olá, Rails!
 -------------
 
-To begin with, let's get some text up on screen quickly. To do this, you need to
-get your Rails application server running.
+Para começarmos, vamos rapidamente fazer algum texto aparecer na tela. Para fazer isso, você precisa
+colocar a sua servidor de aplicações Rails para rodar.
 
 ### Starting up the Web Server
 
