@@ -825,7 +825,7 @@ Variável de ambiente *EDITOR*. Uma linha específica _n_ também pode ser forne
 ### Sair
 
 Para sair do debugger, use o comando `quit` (abreviado para `q`). Ou digite `q!`
-para ignorar a mensagem `Really quit? (y/n)` e sai incondicionalmente.
+para ignorar a mensagem `Really quit? (y/n)` e sair incondicionalmente.
 
 Uma saída simples tenta finalizar todos as *threads* em vigor. Portanto, seu servidor
 será parado e você precisará iniciá-lo novamente.
