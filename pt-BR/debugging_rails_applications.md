@@ -766,7 +766,7 @@ Successfully created breakpoint with id 1
 ```
 
 Use `info breakpoints` para listar os breakpoints. Se você fornecer um número, ele listará
-esse breakpoint correspondente. Caso contrário, ele listará todos os breakpoints.
+esse *breakpoint* correspondente. Caso contrário, ele listará todos os breakpoints.
 
 ```
 (byebug) info breakpoints
