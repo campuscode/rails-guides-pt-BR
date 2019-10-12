@@ -706,7 +706,7 @@ do método atual, então o `byebug` retornará à próxima linha do método cham
 ```
 
 Se usarmos `step` na mesma situação, o` byebug` irá literalmente para a próxima
-Instrução Ruby a ser executada - neste caso, o método `week` do Active Support.
+instrução Ruby a ser executada - neste caso, o método `week` do Active Support.
 
 ```
 (byebug) step
