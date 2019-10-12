@@ -4,7 +4,7 @@
 Configurando Aplicações Rails
 =============================
 
-Este guia cobre a configuração e funcionaidades de inicialização disponíveis
+Este guia cobre a configuração e funcionalidades de inicialização disponíveis
 para aplicações Rails.
 
 Após ler esse guia, você vai saber:
