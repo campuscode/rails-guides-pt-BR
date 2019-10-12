@@ -516,7 +516,7 @@ As variáveis disponíveis são as mesmas que se você estivesse executando o c�
 linha.  Afinal, é isso que é o *debugging*.
 
 Você também pode usar os comandos `up [n]` e `down [n]` para alterar o contexto
-_n_ *frames* acima ou abaixo da *stack*, respectivamente. _n_ assume como padrão o número um. Acima nesse
+_n_ *frames* acima ou abaixo da *stack*, respectivamente. _n_ assume como padrão o número um. Acima, nesse
 caso, é para *stack frames* com números mais altos, e abaixo é para *stack frames*
 com números mais baixos.
 
