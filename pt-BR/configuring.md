@@ -36,7 +36,7 @@ próprio Rails tenha sido carregado, coloque este código acima da chamada
 Configurando Componentes Rails
 ------------------------------
 
-Em geral, o trabalho de configurar o Rails significa configrar os componentes do
+Em geral, o trabalho de configurar o Rails significa configurar os componentes do
 Rails, assim como configurar o Rails em si. O arquivo de configuração
 `config/application.rb` e arquivos de configuração específicos de ambiente (como
 o arquivo `config/environments/production.rb`).
