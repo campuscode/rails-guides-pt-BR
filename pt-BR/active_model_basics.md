@@ -17,12 +17,12 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-Introduction
+Introdução
 ------------
 
-Active Model is a library containing various modules used in developing
-classes that need some features present on Active Record.
-Some of these modules are explained below.
+_Active Model_ é uma biblioteca contendo vários módulos usados para desenvolver
+classes que precisam de alguma funcionalidade presente no _Active Record_.
+Alguns desses módulos são explicados abaixo.
 
 ### Attribute Methods
 
