@@ -297,7 +297,7 @@ usar este guia para aprender como passar do código que você escreveu para o c�
 
 ### Instalação
 
-Você pode usar a gem `byebug` para definir pontos de interrupção e percorrer o código em execução no
+Você pode usar a gem `byebug` para definir *breakpoints* e percorrer o código em execução no
 Rails. Para instalá-lo, basta executar:
 
 ```bash
@@ -620,7 +620,7 @@ Vamos pedir para que o `byebug` nos ajude com isso.
 
 ```
 
-Essa é uma ótima maneira de inspecionar os valores das variáveis do contexto atuais. Por
+Essa é uma ótima maneira de inspecionar os valores das variáveis do contexto atual. Por
 exemplo, para verificar se não temos variáveis locais definidas atualmente:
 
 ```
@@ -824,7 +824,7 @@ Variável de ambiente *EDITOR*. Uma linha específica _n_ também pode ser forne
 
 ### Sair
 
-Para sair do debugger, use o comando `quit` (abreviado para `q`). Ou digite `q!`
+Para sair do *debugger*, use o comando `quit` (abreviado para `q`). Ou digite `q!`
 para ignorar a mensagem `Really quit? (y/n)` e sai incondicionalmente.
 
 Uma saída simples tenta finalizar todos as *threads* em vigor. Portanto, seu servidor
