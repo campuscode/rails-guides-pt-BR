@@ -775,7 +775,7 @@ Num Enb What
 ```
 
 Para deletar os *breakpoints*: use o comando `delete n` para remover o *breakpoint*
-de número _n_. Se nenhum número for especificado, ele excluirá todos os breakpoints que estão
+de número _n_. Se nenhum número for especificado, ele excluirá todos os *breakpoints* que estão
 ativos no momento.
 
 ```
