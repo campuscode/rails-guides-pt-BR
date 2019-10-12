@@ -39,7 +39,9 @@ Configurando Componentes Rails
 Em geral, o trabalho de configurar o Rails significa configurar os componentes do
 Rails, assim como configurar o Rails em si. O arquivo de configuração
 `config/application.rb` e arquivos de configuração específicos de ambiente (como
-o arquivo `config/environments/production.rb`).
+o arquivo `config/environments/production.rb`) permitem definir diversas
+configurações que serão passadas para todos os componentes.
+
 
 Por exemplo, você pode adicionar a configuração abaixo ao arquivo
 `config/application.rb`
