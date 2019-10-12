@@ -473,7 +473,7 @@ para inspecionar os *frames* da *stack*, avaliar variáveis da perspectiva do
 programa depurado e saiba o local em que programa depurado está parado.
 
 A qualquer momento, você pode chamar o comando `backtrace` (ou seu *alias* `where`) para exibir
-o *backtrace* da aplicação. Isso pode ser muito muito útil para saber como você
+o *backtrace* da aplicação. Isso pode ser muito útil para saber como você
 chegou aonde está. Se você já se perguntou como chegou a algum lugar no seu código,
 o `backtrace` fornecerá a resposta.
 
