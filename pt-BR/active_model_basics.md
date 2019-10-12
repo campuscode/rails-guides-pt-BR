@@ -57,12 +57,12 @@ person.reset_age     # => 0
 person.age_highest?  # => false
 ```
 
-### Callbacks
+### _Callbacks_
 
-`ActiveModel::Callbacks` gives Active Record style callbacks. This provides an
-ability to define callbacks which run at appropriate times.
-After defining callbacks, you can wrap them with before, after, and around
-custom methods.
+_`ActiveModel::Callbacks`_ fornece _callbacks_ no estilo _Active Record_. Isso 
+provê a habilidade de definir _callbacks_ que rodam em horas apropriadas.
+Após definir os _callbacks_, você pode envolvê-los com _before_, _after_, 
+e _around_ em métodos customizados.
 
 ```ruby
 class Person
@@ -74,12 +74,12 @@ class Person
 
   def update
     run_callbacks(:update) do
-      # This method is called when update is called on an object.
+      # Esse método é chamado quando _update_ é chamado em um objeto.
     end
   end
 
   def reset_me
-    # This method is called when update is called on an object as a before_update callback is defined.
+    # Esse método é chamado quando _update_ é chamado em um objeto, pois um _callback_ _before_update_ foi definido.
   end
 end
 ```
