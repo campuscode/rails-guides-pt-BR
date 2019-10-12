@@ -193,26 +193,26 @@ Olá, Rails!
 Para começarmos, vamos rapidamente fazer algum texto aparecer na tela. Para fazer isso, você precisa
 colocar a seu servidor de aplicações Rails para rodar.
 
-### Starting up the Web Server
+### Iniciando o Servidor Web
 
-You actually have a functional Rails application already. To see it, you need to
-start a web server on your development machine. You can do this by running the
-following in the `blog` directory:
+Na verdade, você já tem uma aplicação Rails funcional. Para vê-la, você precisa
+iniciar um servidor web na sua máquina de desenvolvimento. Você pode fazer isso executando o
+seguinte dentro do diretório `blog`:
 
 ```bash
 $ rails server
 ```
 
-TIP: If you are using Windows, you have to pass the scripts under the `bin`
-folder directly to the Ruby interpreter e.g. `ruby bin\rails server`.
+DICA: Se você está usando Windows, você precisa passar os scripts dentro da pasta `bin`
+diretamente para o interpretador Ruby e.g. `ruby bin\rails server`.
 
-TIP: JavaScript asset compression requires you
-have a JavaScript runtime available on your system, in the absence
-of a runtime you will see an `execjs` error during asset compilation.
-Usually macOS and Windows come with a JavaScript runtime installed.
-`therubyrhino` is the recommended runtime for JRuby users and is added by
-default to the `Gemfile` in apps generated under JRuby. You can investigate
-all the supported runtimes at [ExecJS](https://github.com/rails/execjs#readme).
+DICA: A compressão de _assets_ JavaScript necessitam que você
+tenha o _runtime_ JavaScript disponível no seu sistema, caso um _runtime_
+esteja ausente você irá ver um erro `execjs` durante a compilação de _assets_.
+Normalmente macOS e Windows vêm com um _runtime_ JavaScript instalado.
+`therubyrhino` é o _runtime_ recomendado para usuários JRuby e é adicionado por
+padrão para o `Gemfile` nos _apps_ gerados pelo JRuby. Você pode investigar
+todos os _runtimes_ suportados em [ExecJS](https://github.com/rails/execjs#readme).
 
 This will fire up Puma, a web server distributed with Rails by default. To see
 your application in action, open a browser window and navigate to
