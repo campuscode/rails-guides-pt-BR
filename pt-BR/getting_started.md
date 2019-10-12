@@ -191,7 +191,7 @@ Olá, Rails!
 -------------
 
 Para começarmos, vamos rapidamente fazer algum texto aparecer na tela. Para fazer isso, você precisa
-colocar a sua servidor de aplicações Rails para rodar.
+colocar a seu servidor de aplicações Rails para rodar.
 
 ### Starting up the Web Server
 
