@@ -22,13 +22,17 @@ After reading this guide, you will know:
 O que um `Controller` faz?
 --------------------------
 
-Action Controller is the C in [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). After the router has determined which controller to use for a request, the controller is responsible for making sense of the request, and producing the appropriate output. Luckily, Action Controller does most of the groundwork for you and uses smart conventions to make this as straightforward as possible.
+`ActionController` é o _C_ em [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller).
+Após o `router` determinar qual _controller_ usar para a requisição, o _controller_ será responsavel por entender a requisição e retornar a reposta apropriada. Por sorte, `ActionController` faz a maior parte do trabalho fundamental pra você e usa convenções inteligentes pra fazer esse processo ser tão intuitivo quanto possível.
 
-For most conventional [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) applications, the controller will receive the request (this is invisible to you as the developer), fetch or save data from a model, and use a view to create HTML output. If your controller needs to do things a little differently, that's not a problem, this is just the most common way for a controller to work.
+Para a maior parte das aplicações [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer),
+o `controller` receberá a requisição (o que é "invisível" a você como dev), busca e/ou salva dados de um Modelo, e usa a `view` para criar a saida HTML. Se seu `controller` precisa tratar requisições um pouco diferente, isso não é um problema, este é apenas o jeito mais comum de um `controller` trabalhar.
 
-A controller can thus be thought of as a middleman between models and views. It makes the model data available to the view so it can display that data to the user, and it saves or updates user data to the model.
+Um `controller` pode então ser pensado o como um intermediário entre um modelo e uma `view`. Isso faz com que os dados do modelo fiquem disponíveis para a view para que possa ser mostrado ao usuário, e salva ou atualiza dados do usuario no modelo.
 
 NOTE: For more details on the routing process, see [Rails Routing from the Outside In](routing.html).
+
+OBS: Para mais detalhes no processamento de roteamento, veja [Rails Routing from the Outside In](routing.html)
 
 Controller Naming Convention
 ----------------------------
