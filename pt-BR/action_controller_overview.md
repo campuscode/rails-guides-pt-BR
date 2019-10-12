@@ -29,7 +29,7 @@ o `controller` receberá a requisição (o que é "invisível" a você como dev)
 
 Um `controller` pode então ser pensado o como um intermediário entre um modelo e uma `view`. Isso faz com que os dados do modelo fiquem disponíveis para a view para que possa ser mostrado ao usuário, e salva ou atualiza dados do usuario no modelo.
 
-OBS: Para mais detalhes no processamento de roteamento, veja [Rails Routing from the Outside In](routing.html)
+OBS: Para mais detalhes sobre processo de roteamento, veja [Rails Routing from the Outside In](routing.html)
 
 Controller Naming Convention
 ----------------------------
