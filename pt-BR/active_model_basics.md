@@ -109,13 +109,13 @@ person.to_key              # => nil
 person.to_param            # => nil
 ```
 
-### Dirty
+### _Dirty_
 
-An object becomes dirty when it has gone through one or more changes to its
-attributes and has not been saved. `ActiveModel::Dirty` gives the ability to
-check whether an object has been changed or not. It also has attribute based
-accessor methods. Let's consider a Person class with attributes `first_name`
-and `last_name`:
+Um objeto se torna "sujo" quando passou por uma ou mais mudanças em seus
+atributos e não foi salvo. _`ActiveModel::Dirty`_ fornece a habilidade de 
+verificar se um objeto foi modificado ou não. Ele também tem métodos assessores
+baseados em atributos. Vamos considerar uma classe _Person_ com os atributos 
+_`first_name`_ e _`last_name`_:
 
 ```ruby
 class Person
@@ -147,7 +147,7 @@ class Person
 end
 ```
 
-#### Querying object directly for its list of all changed attributes.
+#### Consultando diretamente o objeto para listar todos os atributos modificados.
 
 ```ruby
 person = Person.new
@@ -156,23 +156,23 @@ person.changed? # => false
 person.first_name = "First Name"
 person.first_name # => "First Name"
 
-# returns true if any of the attributes have unsaved changes.
+# retorna _true_ se qualquer atributo possuir mudanças não salvas.
 person.changed? # => true
 
-# returns a list of attributes that have changed before saving.
+# retorna uma lista de atributos que foram modificados antes de salvar.
 person.changed # => ["first_name"]
 
-# returns a Hash of the attributes that have changed with their original values.
+# retorna um _Hash_ de atributos modificados e seus valores originais.
 person.changed_attributes # => {"first_name"=>nil}
 
-# returns a Hash of changes, with the attribute names as the keys, and the
-# values as an array of the old and new values for that field.
+# retorna um _Hash_ das modificações, com os nomes dos atributos como chaves, 
+# e os valores como um _array_ de valores novos e antigos daquele campo.
 person.changes # => {"first_name"=>[nil, "First Name"]}
 ```
 
-#### Attribute based accessor methods
+#### Métodos assessores baseados em atributos
 
-Track whether the particular attribute has been changed or not.
+Rastreia se um atributo em particular foi modificado ou não.
 
 ```ruby
 # attr_name_changed?
@@ -180,15 +180,15 @@ person.first_name # => "First Name"
 person.first_name_changed? # => true
 ```
 
-Track the previous value of the attribute.
+Rastreia o valor anterior do atributo.
 
 ```ruby
 # attr_name_was accessor
 person.first_name_was # => nil
 ```
 
-Track both previous and current value of the changed attribute. Returns an array
-if changed, otherwise returns nil.
+Rastreia ambos os valores anterior e atual do atributo modificado. Retorna um 
+_array_ se foi modificado, caso contrário retorna _nil_
 
 ```ruby
 # attr_name_change
