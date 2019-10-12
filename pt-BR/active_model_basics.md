@@ -24,11 +24,11 @@ _Active Model_ é uma biblioteca contendo vários módulos usados para desenvolv
 classes que precisam de alguma funcionalidade presente no _Active Record_.
 Alguns desses módulos são explicados abaixo.
 
-### Attribute Methods
+### _Attribute Methods_
 
-The `ActiveModel::AttributeMethods` module can add custom prefixes and suffixes
-on methods of a class. It is used by defining the prefixes and suffixes and
-which methods on the object will use them.
+O módulo _`ActiveModel::AttributeMethods`_ pode adicionar prefixos e sufixos 
+customizados em métodos de uma classe. Ele é usado definindo os prefixos e 
+sufixos, e quais os métodos do objeto que vão usá-los.
 
 ```ruby
 class Person
