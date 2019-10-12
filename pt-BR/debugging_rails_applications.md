@@ -473,7 +473,7 @@ para inspecionar os *frames* da *stack*, avaliar variáveis da perspectiva do
 programa depurado e saiba o local em que programa depurado está parado.
 
 A qualquer momento, você pode chamar o comando `backtrace` (ou seu *alias* `where`) para exibir
-o *backtrace* da aplicação. Isso pode ser muito muito útil para saber como você
+o *backtrace* da aplicação. Isso pode ser muito útil para saber como você
 chegou aonde está. Se você já se perguntou como chegou a algum lugar no seu código,
 o `backtrace` fornecerá a resposta.
 
@@ -516,7 +516,7 @@ As variáveis disponíveis são as mesmas que se você estivesse executando o c�
 linha.  Afinal, é isso que é o *debugging*.
 
 Você também pode usar os comandos `up [n]` e `down [n]` para alterar o contexto
-_n_ *frames* acima ou abaixo da *stack*, respectivamente. _n_ assume como padrão o número um. Acima nesse
+_n_ *frames* acima ou abaixo da *stack*, respectivamente. _n_ assume como padrão o número um. Acima, nesse
 caso, é para *stack frames* com números mais altos, e abaixo é para *stack frames*
 com números mais baixos.
 
@@ -598,7 +598,7 @@ Agora `@articles` está incluído nas variáveis de instância, porque a linha q
 foi executada.
 
 DICA: Você também pode entrar no modo **irb** com o comando `irb` (é claro!).
-Isso iniciará uma sessão irb dentro do contexto que você a chamou.
+Isso iniciará uma sessão irb dentro do contexto em que você a chamou.
 
 O método `var` é a maneira mais conveniente de mostrar variáveis e seus valores.
 Vamos pedir para que o `byebug` nos ajude com isso.
@@ -706,7 +706,7 @@ do método atual, então o `byebug` retornará à próxima linha do método cham
 ```
 
 Se usarmos `step` na mesma situação, o` byebug` irá literalmente para a próxima
-Instrução Ruby a ser executada - neste caso, o método `week` do Active Support.
+instrução Ruby a ser executada - neste caso, o método `week` do Active Support.
 
 ```
 (byebug) step
@@ -766,7 +766,7 @@ Successfully created breakpoint with id 1
 ```
 
 Use `info breakpoints` para listar os breakpoints. Se você fornecer um número, ele listará
-esse breakpoint correspondente. Caso contrário, ele listará todos os breakpoints.
+esse *breakpoint* correspondente. Caso contrário, ele listará todos os breakpoints.
 
 ```
 (byebug) info breakpoints
@@ -775,7 +775,7 @@ Num Enb What
 ```
 
 Para deletar os *breakpoints*: use o comando `delete n` para remover o *breakpoint*
-de número _n_. Se nenhum número for especificado, ele excluirá todos os breakpoints que estão
+de número _n_. Se nenhum número for especificado, ele excluirá todos os *breakpoints* que estão
 ativos no momento.
 
 ```
@@ -820,7 +820,7 @@ de *frame* for fornecido, ele será executado até que o *frame* especificado re
 Dois comandos permitem abrir o código do *debugger* em um editor:
 
 * `edit [file: n]`: edita o arquivo chamado _file_ usando o editor especificado pelo
-Variável de ambiente *EDITOR*. Uma linha específica _n_ também pode ser fornecida.
+variável de ambiente *EDITOR*. Uma linha específica _n_ também pode ser fornecida.
 
 ### Sair
 
