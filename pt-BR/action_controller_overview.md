@@ -19,7 +19,7 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-What Does a Controller Do?
+O que um `Controller` faz?
 --------------------------
 
 Action Controller is the C in [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). After the router has determined which controller to use for a request, the controller is responsible for making sense of the request, and producing the appropriate output. Luckily, Action Controller does most of the groundwork for you and uses smart conventions to make this as straightforward as possible.
