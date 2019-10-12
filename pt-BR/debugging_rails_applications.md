@@ -598,7 +598,7 @@ Agora `@articles` está incluído nas variáveis de instância, porque a linha q
 foi executada.
 
 DICA: Você também pode entrar no modo **irb** com o comando `irb` (é claro!).
-Isso iniciará uma sessão irb dentro do contexto que você a chamou.
+Isso iniciará uma sessão irb dentro do contexto em que você a chamou.
 
 O método `var` é a maneira mais conveniente de mostrar variáveis e seus valores.
 Vamos pedir para que o `byebug` nos ajude com isso.
