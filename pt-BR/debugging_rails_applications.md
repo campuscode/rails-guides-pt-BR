@@ -820,7 +820,7 @@ de *frame* for fornecido, ele será executado até que o *frame* especificado re
 Dois comandos permitem abrir o código do *debugger* em um editor:
 
 * `edit [file: n]`: edita o arquivo chamado _file_ usando o editor especificado pelo
-Variável de ambiente *EDITOR*. Uma linha específica _n_ também pode ser fornecida.
+variável de ambiente *EDITOR*. Uma linha específica _n_ também pode ser fornecida.
 
 ### Sair
 
