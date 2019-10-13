@@ -796,7 +796,7 @@ tenham efeito no seu programa.
 
 O comando `catch exception-name` (ou apenas `cat exception-name`) pode ser usado para
 interceptar uma exceção do tipo _exception-name_ quando, de outra forma, não haveria
-um manipulador para isso.
+um *handler* para isso.
 
 Para listar todos os pontos de captura ativos, use `catch`.
 
