@@ -104,7 +104,7 @@ $ rails console
 
 Criando e salvando um novo *record* irá mandar uma operação SQL de 
 `INSERT` para o seu banco de dados. Atualizando um registro 
-existente irá mandar uma operação SQL de *`UPDATE`* no lugar. 
+existente irá mandar uma operação SQL de `UPDATE` no lugar. 
 Validações são tipicamente realizadas antes que esses comandos sejam 
 enviados para seu banco de dados. Se alguma validação falhar, o objeto será
 marcados como inválido e o *Active Record* não irá executar as
