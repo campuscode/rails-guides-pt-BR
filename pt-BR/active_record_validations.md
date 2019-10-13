@@ -218,7 +218,7 @@ end
 retornam `true` se algum erro for encontrado no objeto, e `false` 
 caso contrário.
 
-### *`errors[]`*
+### `errors[]`
 
 Para verificar se um determinado atributo de um objeto é válido, você pode 
 usar *`errors[:attribute]`*. Isso retorna um *array* com todos os 
