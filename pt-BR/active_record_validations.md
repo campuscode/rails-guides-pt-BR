@@ -161,7 +161,7 @@ validações. Se essas validações produzirem um erro, o Rails não salva
 o objeto.
 
 Você também pode executar essas validações por si só. `valid?` ativa suas validações, 
-e retorna *true* se nenhum erro for encontrado no objeto, e *false* 
+retornando `true`, se nenhum erro for encontrado no objeto, ou `false`, 
 caso contrário.
 Como dito acima:
 
