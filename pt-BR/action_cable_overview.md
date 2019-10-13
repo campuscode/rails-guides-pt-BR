@@ -8,7 +8,7 @@ para incorporar funcionalidades de tempo real em sua aplicação Rails.
 
 Ao ler este guia você aprenderá:
 
-* O quê é um Action Cable e sua integração backend e frontend
+* O que é um *Action Cable* e sua integração *backend* e *frontend*
 * Como configurar um *Action Cable*
 * Como configurar canais
 * Configuração de *Deployment* e Arquitetura para rodar a *Action Cable*
