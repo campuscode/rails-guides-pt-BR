@@ -108,7 +108,7 @@ existente irá mandar uma operação SQL de `UPDATE` no lugar.
 Validações são tipicamente realizadas antes que esses comandos sejam 
 enviados para seu banco de dados. Se alguma validação falhar, o objeto será
 marcados como inválido e o *Active Record* não irá executar as
-operações de *`INSERT`* ou *`UPDATE`*. Isso evita que um dado
+operações de `INSERT` ou `UPDATE`. Isso evita que um dado
 inválido seja armazenado no banco de dados. Você pode escolher validações
 específicas que atuem quando um objeto for criado, salvo, ou editado. 
 
