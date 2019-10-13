@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Working with JavaScript in Rails
@@ -537,7 +538,7 @@ var token = document.getElementsByName('csrf-token')[0].content
 ```
 
 You can then submit this token as a X-CSRF-Token in your header for your
-Ajax requst.  You do not need to add a CSRF for GET requests, only non-GET 
+Ajax requst.  You do not need to add a CSRF for GET requests, only non-GET
 requests.
 
 You can read more about about Cross-Site Request Forgery in [Security](https://guides.rubyonrails.org/security.html#cross-site-request-forgery-csrf)
