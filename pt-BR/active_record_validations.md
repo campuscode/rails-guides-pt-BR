@@ -227,7 +227,7 @@ especificado, um *array* vazia é exibida.
 
 Esse método só é útil **após** as validações terem sido executadas, porque ele só 
 inspeciona as coleções de erros e não aciona nenhuma validação em si. É 
-diferente do método *`ActiveRecord::Base#invalid?`* explicado acima porque 
+diferente do método `ActiveRecord::Base#invalid?` explicado acima porque 
 não verifica ao todo se um objeto é válido. Apenas verifica se existem 
 erros em um determinado atributo do objeto.
 
