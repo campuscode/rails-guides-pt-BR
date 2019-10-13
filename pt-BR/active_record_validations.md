@@ -148,7 +148,7 @@ de dados independente da sua validez. Eles devem ser usados com cuidado.
 * `update_columns`
 * `update_counters`
 
-Note que *`save`* também tem a habilidade de pular validações se for 
+Note que `save` também tem a habilidade de pular validações se for 
 estabelecido *`validate: false`* como argumento. Essa técnica deve ser
 usada com cuidado.
 
