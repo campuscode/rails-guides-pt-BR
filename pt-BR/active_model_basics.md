@@ -196,10 +196,9 @@ person.first_name_change # => [nil, "First Name"]
 person.last_name_change # => nil
 ```
 
-### Validations
+### _Validations_
 
-The `ActiveModel::Validations` module adds the ability to validate objects
-like in Active Record.
+O módulo `ActiveModel::Validations` adiciona a habilidade de validar objetos como no Active Record.
 
 ```ruby
 class Person
