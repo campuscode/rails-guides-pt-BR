@@ -128,7 +128,7 @@ forem válidos no banco de dados:
 * `update!`
 
 As versões *bang* (ex: `save!`) levantam uma exceção se o objeto for 
-inválido. As versões normais não fazem isso: *`save`* e *`update`* retornam *`false`*,
+inválido. As versões normais não fazem isso: `save` e `update` retornam `false`,
 e *`create`* retorna o objeto.
 
 ### Pulando Validações
