@@ -246,10 +246,9 @@ Person.model_name.route_key           # => "people"
 Person.model_name.singular_route_key  # => "person"
 ```
 
-### Model
+### _Model_
 
-`ActiveModel::Model` adds the ability for a class to work with Action Pack and
-Action View right out of the box.
+`ActiveModel::Model` permite que uma classe funcione imediatamente com _Action Pack_ e _Action View_.
 
 ```ruby
 class EmailContact
@@ -266,15 +265,15 @@ class EmailContact
 end
 ```
 
-When including `ActiveModel::Model` you get some features like:
+Ao incluir _`ActiveModel::Model`_, você terá funcionalidades como:
 
-- model name introspection
-- conversions
-- translations
-- validations
+- introspecção de nome de um _model_
+- conversões
+- traduções
+- validações
 
-It also gives you the ability to initialize an object with a hash of attributes,
-much like any Active Record object.
+Ele também fornece a habilidade de inicializar um objeto com um _hash_ de 
+atributos, como qualquer objeto _Active Record_.
 
 ```ruby
 email_contact = EmailContact.new(name: 'David',
@@ -286,9 +285,9 @@ email_contact.valid?     # => true
 email_contact.persisted? # => false
 ```
 
-Any class that includes `ActiveModel::Model` can be used with `form_for`,
-`render` and any other Action View helper methods, just like Active Record
-objects.
+Qualquer classe que incluir _`ActiveModel::Model`_ pode ser usada com _`form_for`_, 
+_`render`_ e quaisquer outros métodos auxiliares da _Action View_, como qualquer 
+objeto _Active Record_.
 
 ### Serialization
 
