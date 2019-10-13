@@ -585,7 +585,7 @@ comando posteriormente neste guia).
 (byebug)
 ```
 
-E, em seguida, chame novamente o instance_variables:
+E, em seguida, chame novamente o `instance_variables`:
 
 ```
 (byebug) instance_variables
