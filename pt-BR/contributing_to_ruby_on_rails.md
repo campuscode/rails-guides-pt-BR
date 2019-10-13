@@ -20,65 +20,51 @@ README](https://github.com/rails/rails/blob/master/README.md), everyone interact
 
 --------------------------------------------------------------------------------
 
-Reporting an Issue
+Relatar um Issue
 ------------------
 
-Ruby on Rails uses [GitHub Issue Tracking](https://github.com/rails/rails/issues) to track issues (primarily bugs and contributions of new code). If you've found a bug in Ruby on Rails, this is the place to start. You'll need to create a (free) GitHub account in order to submit an issue, to comment on them, or to create pull requests.
+O Ruby on Rails usa o [Rastreamento de Issues (Issue Tracking) do GitHub](https://github.com/rails/rails/issues) para rastrear problemas (principalmente erros e contribuições de código novo). e você encontrou um bug no Ruby on Rails, este é o lugar para começar. Você precisará criar uma conta (gratuita) do GitHub para enviar um issue, comentar sobre eles ou criar pull requests.
 
-NOTE: Bugs in the most recent released version of Ruby on Rails are likely to get the most attention. Also, the Rails core team is always interested in feedback from those who can take the time to test _edge Rails_ (the code for the version of Rails that is currently under development). Later in this guide, you'll find out how to get edge Rails for testing.
+NOTA: Os erros na versão mais recente do Ruby on Rails provavelmente receberão mais atenção. Além disso, a equipe principal do Rails está sempre interessada no feedback daqueles que podem dedicar algum tempo para testar o "edge Rails"  (o código para a versão do Rails que está atualmente em desenvolvimento). Mais adiante neste guia, você descobrirá como obter o Edge Rails para testes.
 
-### Creating a Bug Report
+### Criando um relatório de bug
 
-If you've found a problem in Ruby on Rails which is not a security risk, do a search on GitHub under [Issues](https://github.com/rails/rails/issues) in case it has already been reported. If you are unable to find any open GitHub issues addressing the problem you found, your next step will be to [open a new one](https://github.com/rails/rails/issues/new). (See the next section for reporting security issues.)
+Se você encontrou um problema no Ruby on Rails que não é um risco de segurança, faça uma pesquisa no GitHub [Issues](https://github.com/rails/rails/issues), caso já tenha sido relatado. Se você não conseguir encontrar nenhum issue aberto do GitHub que resolva o problema encontrado, sua próxima etapa será [abrir um novo](https://github.com/rails/rails/issues/new). (Consulte a próxima seção para relatar problemas de segurança.)
 
-Your issue report should contain a title and a clear description of the issue at the bare minimum. You should include as much relevant information as possible and should at least post a code sample that demonstrates the issue. It would be even better if you could include a unit test that shows how the expected behavior is not occurring. Your goal should be to make it easy for yourself - and others - to reproduce the bug and figure out a fix.
 
-Then, don't get your hopes up! Unless you have a "Code Red, Mission Critical, the World is Coming to an End" kind of bug, you're creating this issue report in the hope that others with the same problem will be able to collaborate with you on solving it. Do not expect that the issue report will automatically see any activity or that others will jump to fix it. Creating an issue like this is mostly to help yourself start on the path of fixing the problem and for others to confirm it with an "I'm having this problem too" comment.
+O relatório do problema (issue report) deve conter um título e uma descrição clara do problema, no mínimo. Você deve incluir o máximo de informações relevantes possível e, pelo menos, postar um exemplo de código que demonstre o problema. Seria ainda melhor se você pudesse incluir um teste de unidade que mostra como o comportamento esperado não está ocorrendo. Seu objetivo deve ser tornar fácil para você - e outras pessoas - reproduzir o bug e descobrir uma correção.
 
-### Create an Executable Test Case
+Então, não tenha muitas esperanças! A menos que você tenha um tipo de bug "Código Vermelho, Missão Crítica, o Mundo Está Chegando ao Fim", você está criando este relatório de problemas na esperança de que outras pessoas com o mesmo problema possam colaborar com você para resolvê-lo. Não espere que o relatório de problemas veja automaticamente qualquer atividade ou que outras pessoas pulem para corrigi-lo. A criação de um issue como esse serve principalmente para ajudar você a começar o caminho para corrigir o problema e para que outros o confirmem com um comentário "Estou tendo esse problema também".
 
-Having a way to reproduce your issue will be very helpful for others to help confirm, investigate, and ultimately fix your issue. You can do this by providing an executable test case. To make this process easier, we have prepared several bug report templates for you to use as a starting point:
+### Criar um caso de teste executável
 
-* Template for Active Record (models, database) issues: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_master.rb)
-* Template for testing Active Record (migration) issues: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_master.rb)
-* Template for Action Pack (controllers, routing) issues: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_master.rb)
-* Template for Active Job issues: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_master.rb)
-* Generic template for other issues: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_master.rb)
+Ter uma maneira de reproduzir seu problema será muito útil para que outras pessoas ajudem a confirmar, investigar e, finalmente, corrigi-lo. Você pode fazer isso fornecendo um caso de teste executável. Para facilitar esse processo, preparamos vários modelos de relatório de erros para você usar como ponto de partida:
 
-These templates include the boilerplate code to set up a test case against either a released version of Rails (`*_gem.rb`) or edge Rails (`*_master.rb`).
+* Modelo de issue para registro ativo (modelos, banco de dados): [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_master.rb)
+* Modelo de issue para registro ativo (modelos, banco de dados): [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_master.rb)
+* Modelo de issue para Action Pack (controladores, roteamento): [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_master.rb)
+* Modelo de issue do trabalho ativo: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_master.rb)
+* Modelo de issue genérico para outros problemas: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_master.rb)
 
-Simply copy the content of the appropriate template into a `.rb` file and make the necessary changes to demonstrate the issue. You can execute it by running `ruby the_file.rb` in your terminal. If all goes well, you should see your test case failing.
+Esses modelos incluem o código padrão para configurar um caso de teste contra uma versão lançada do Rails (`*_gem.rb`) ou edge Rails (`*_master.rb`).
 
-You can then share your executable test case as a [gist](https://gist.github.com), or simply paste the content into the issue description.
+Simplesmente copie o conteúdo do modelo apropriado em um arquivo `.rb` e faça as alterações necessárias para demonstrar o problema. Você pode executá-lo executando  `ruby the_file.rb` no seu terminal. Se tudo correr bem, você verá seu caso de teste falhando.
 
-### Special Treatment for Security Issues
+Você pode compartilhar seu caso de teste executável como um [gist](https://gist.github.com) ou simplesmente colar o conteúdo na descrição do problema.
 
-WARNING: Please do not report security vulnerabilities with public GitHub issue reports. The [Rails security policy page](https://rubyonrails.org/security) details the procedure to follow for security issues.
 
-### What about Feature Requests?
+### Tratamento especial para problemas de segurança
 
-Please don't put "feature request" items into GitHub Issues. If there's a new
-feature that you want to see added to Ruby on Rails, you'll need to write the
-code yourself - or convince someone else to partner with you to write the code.
-Later in this guide, you'll find detailed instructions for proposing a patch to
-Ruby on Rails. If you enter a wish list item in GitHub Issues with no code, you
-can expect it to be marked "invalid" as soon as it's reviewed.
+ATENÇÃO: Não relate vulnerabilidades de segurança com relatórios públicos de issues do GitHub.  A [página de política de segurança do Rails](https://rubyonrails.org/security) detalha o procedimento a seguir para problemas de segurança.
 
-Sometimes, the line between 'bug' and 'feature' is a hard one to draw.
-Generally, a feature is anything that adds new behavior, while a bug is
-anything that causes incorrect behavior. Sometimes,
-the core team will have to make a judgment call. That said, the distinction
-generally just affects which release your patch will get in to; we love feature
-submissions! They just won't get backported to maintenance branches.
+### E as Feature Requests?
 
-If you'd like feedback on an idea for a feature before doing the work to make
-a patch, please send an email to the [rails-core mailing
-list](https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core). You
-might get no response, which means that everyone is indifferent. You might find
-someone who's also interested in building that feature. You might get a "This
-won't be accepted." But it's the proper place to discuss new ideas. GitHub
-Issues are not a particularly good venue for the sometimes long and involved
-discussions new features require.
+Por favor, não coloque itens de "feature requests" nos issue do GitHub. Se houver um novo recurso que você deseja ver adicionado ao Ruby on Rails, você precisará escrever o código por conta própria - ou convencer alguém a fazer parceria com você para escrever o código. Mais adiante neste guia, você encontrará instruções detalhadas para propor um patch para o Ruby on Rails. Se você inserir um item da lista de desejos nos Problemas do GitHub sem código, poderá esperar que ele seja marcado como "inválido" assim que for revisado.
+
+Às vezes, a linha entre 'bug' e 'feature' é difícil de traçar. Geralmente, um recurso é qualquer coisa que adiciona novo comportamento, enquanto um bug é qualquer coisa que causa comportamento incorreto. Às vezes, a equipe principal precisa fazer um julgamento. Dito isto, a distinção geralmente afeta apenas a qual lançamento o seu patch entrará; adoramos envios de recursos! Eles simplesmente não serão transportados para a manutenção de branches.
+
+
+Se você deseja obter feedback sobre uma ideia para um recurso antes de fazer o trabalho para fazer um patch, envie um email para a [lista de discussão do rails-core](https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core). Você pode não receber resposta, o que significa que todos são indiferentes. Você pode encontrar alguém que também esteja interessado em criar esse recurso. Você pode receber um "Isso não será aceito". Mas é o lugar certo para discutir novas idéias. Os issues do GitHub não são um local particularmente bom para as discussões às vezes longas e envolvidas que os feature requests exigem.
 
 
 Helping to Resolve Existing Issues
