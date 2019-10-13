@@ -117,7 +117,7 @@ de dados. Alguns métodos irão acionar validações, mas alguns não vão. Isso
 significa que é possível salvar um objeto inválido no banco de dados se você
 não tomar cuidado.
 
-Os seguintes métodos irão acionar validações, e só vão salvar objetos que 
+Os métodos a seguir acionam validações e só vão salvar objetos que 
 forem válidos no banco de dados: 
 
 * `create`
