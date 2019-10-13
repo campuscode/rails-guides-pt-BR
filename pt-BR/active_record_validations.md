@@ -247,7 +247,7 @@ Erros de Validações](#trabalhando-com-erros-de-validações).
 
 Para checar quais validações falharam em um atributo inválido, você pode usar 
 `errors.details[:attribute]`. Isso retorna um *array* de *hashes*
-com uma chave *`:error`* para conseguir o símbolo do validador:
+com uma chave `:error` para conseguir o símbolo do validador:
 
 ```ruby
 class Person < ApplicationRecord
