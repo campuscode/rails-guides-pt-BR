@@ -69,7 +69,7 @@ e contras:
   que possível, é uma boa prática manter seus *controllers* leves, o que irá
   tornar a sua aplicação prazerosa de se trabalhar com o passar do tempo.
 
-Escolhe esse em alguns casos específicos. É da opinião da equipe do Rails que as
+Escolha essa opção de validação em alguns casos específicos. É da opinião da equipe do Rails que as
 validações de *model* são mais apropriadas na maior parte das circunstâncias.
 
 ### Quando as validações ocorrem?
