@@ -77,7 +77,7 @@ validações de *model* são mais apropriadas na maior parte das circunstâncias
 Existem dois tipos de objetos de *Active Record*: aqueles que correspondem
 a uma linha no seu banco de dados e aqueles que não correspondem. Quando você cria
 um objeto novo, por exemplo, usando o método `new`, esse objeto ainda não existe no
-banco de dados. Uma vez que você chame o *`save`* sob esse objeto ele será salvo na
+banco de dados. Uma vez que você chame o `save` sob esse objeto ele será salvo na
 tabela apropriada no seu banco de dados. O *Active Record* usa o método de
 instância *`new_record?`* para determinar se o objeto já existe no banco de dados ou
 não.
