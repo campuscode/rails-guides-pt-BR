@@ -221,7 +221,7 @@ caso contrário.
 ### `errors[]`
 
 Para verificar se um determinado atributo de um objeto é válido, você pode 
-usar *`errors[:attribute]`*. Isso retorna um *array* com todos os 
+usar `errors[:attribute]`. Isso retorna um *array* com todos os 
 erros para o *`:attribute`*. Se não houver nenhum erro para o atributo 
 especificado, um *array* vazia é exibida.
 
