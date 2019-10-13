@@ -259,7 +259,7 @@ end
 >> person.errors.details[:name] # => [{error: :blank}]
 ```
 
-O uso de *`details`*  juntamente com validadores é tratado na seção 
+O uso de `details` juntamente com validadores é tratado na seção 
 [Trabalhando com Erros de Validações](#trabalhando-com-erros-de-validações).
 
 Validation Helpers
