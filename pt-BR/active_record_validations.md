@@ -243,7 +243,7 @@ end
 Nós vamos cobrir os erros das validações em maior detalhe na seção [Trabalhando com 
 Erros de Validações](#trabalhando-com-erros-de-validações).
 
-### *`errors.details`*
+### `errors.details`
 
 Para checar quais validações falharam em um atributo inválido, você pode usar 
 `errors.details[:attribute]`. Isso retorna um *array* de *hashes*
