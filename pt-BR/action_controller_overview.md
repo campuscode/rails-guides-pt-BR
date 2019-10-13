@@ -30,7 +30,7 @@ A controller can thus be thought of as a middleman between models and views. It 
 
 NOTE: For more details on the routing process, see [Rails Routing from the Outside In](routing.html).
 
-Controller Naming Convention
+Convenção de Nomear *Controllers*
 ----------------------------
 
 The naming convention of controllers in Rails favors pluralization of the last word in the controller's name, although it is not strictly required (e.g. `ApplicationController`). For example, `ClientsController` is preferable to `ClientController`, `SiteAdminsController` is preferable to `SiteAdminController` or `SitesAdminsController`, and so on.
