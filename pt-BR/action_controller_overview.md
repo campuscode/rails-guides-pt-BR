@@ -4,18 +4,18 @@
 Action Controller Overview
 ==========================
 
-Nesse guia você irá aprender como `controllers` trabalham e como eles se encaixam no ciclo de requestes da sua aplicação.
+Nesse guia você irá aprender como `controllers` trabalham e como eles se encaixam no ciclo de requisições da sua aplicação.
 
 Depois de ler este guia, você irá saber:
 
-* Como seguir o fluxo de um requeste através de um controller.
-* Como restringir parametros passados ao seu controller.
+* Como seguir o fluxo de uma requisição através de um controller.
+* Como restringir parâmetros passados ao seu *controller*.
 * Como e Porque salvar dados na sessão ou nos `cookies`.
-* Como trabalhar com filtros para executar codigo durante o processamento de um request.
+* Como trabalhar com filtros para executar código durante o processamento de uma requisição.
 * Como utilizar o autenticador http nativo do `ActionController`.
 * Como transmitir dados diretamente ao navegador do usuário.
-* Como filtrar parametros sensíveis para que não apareçam no log da aplicação.
-* Como lidar com erros que podem surgir durante o processamento de um request.
+* Como filtrar parâmetros sensíveis para que não apareçam no log da aplicação.
+* Como lidar com erros que podem surgir durante o processamento de uma requisição.
 --------------------------------------------------------------------------------
 
 What Does a Controller Do?
