@@ -179,7 +179,7 @@ pode ser acessado através do método de instância `errors.messages`, que
 retorna uma coleção de erros. Por definição, um objeto é válido se essa coleção 
 estiver vazia após serem executadas as validações.
 
-Note que um objeto instanciado como *`new`* não irá informar nenhum erro mesmo que 
+Note que um objeto instanciado com `new` não informará nenhum erro mesmo que 
 ele seja tecnicamente inválido, porque as validações são executadas automaticamente
 apenas quando o objeto é salvo, como quando acontecem com os métodos *`create`* 
 ou *`save`*.
