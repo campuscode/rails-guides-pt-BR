@@ -129,7 +129,7 @@ forem válidos no banco de dados:
 
 As versões *bang* (ex: `save!`) levantam uma exceção se o objeto for 
 inválido. As versões normais não fazem isso: `save` e `update` retornam `false`,
-e *`create`* retorna o objeto.
+e `create` retorna o objeto.
 
 ### Pulando Validações
 
