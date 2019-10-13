@@ -182,7 +182,7 @@ estiver vazia após serem executadas as validações.
 Note que um objeto instanciado com `new` não informará nenhum erro mesmo que 
 ele seja tecnicamente inválido, porque as validações são executadas automaticamente
 apenas quando o objeto é salvo, como acontece com os métodos `create` 
-ou *`save`*.
+ou `save`.
 
 ```ruby
 class Person < ApplicationRecord
