@@ -225,7 +225,7 @@ usar *`errors[:attribute]`*. Isso retorna um *array* com todos os
 erros para o *`:attribute`*. Se não houver nenhum erro para o atributo 
 especificado, um *array* vazia é exibida.
 
-Esse método só é útil após as validações terem sido executadas, porque só 
+Esse método só é útil **após** as validações terem sido executadas, porque ele só 
 inspeciona as coleções de erros e não aciona nenhuma validação em si. É 
 diferente do método *`ActiveRecord::Base#invalid?`* explicado acima porque 
 não verifica ao todo se um objeto é válido. Apenas verifica se existem 
