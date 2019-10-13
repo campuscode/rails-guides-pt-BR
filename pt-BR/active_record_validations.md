@@ -176,7 +176,7 @@ Person.create(name: nil).valid? # => false
 
 Depois do *Active Record* executar as validações, qualquer erro encontrado
 pode ser acessado através do método de instância `errors.messages`, que
-retorna uma coleção de erros. Por definição, um objeto é válida se essa coleção 
+retorna uma coleção de erros. Por definição, um objeto é válido se essa coleção 
 estiver vazia após serem executadas as validações.
 
 Note que um objeto instanciado como *`new`* não irá informar nenhum erro mesmo que 
