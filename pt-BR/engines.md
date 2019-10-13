@@ -3,7 +3,7 @@
 Começando com Engines
 ============================
 
-Neste guia você irá aprender sobre engines e como elas podem ser utilizadas para prover funcionalidades adicionais para suas aplicações de host através uma interface bem facil de usar e limpa.
+Neste guia você irá aprender sobre engines e como elas podem ser utilizadas para prover funcionalidades adicionais para suas aplicações de host através de uma interface limpa e muito fácil de usar.
 
 Após ler este guia, você saberá:
 
