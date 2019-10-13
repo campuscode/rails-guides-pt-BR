@@ -154,7 +154,7 @@ usada com cuidado.
 
 * `save(validate: false)`
 
-### *`valid?`* e *`invalid?`*
+### `valid?` e `invalid?`
 
 Antes de salvar um objeto do *Active Record*, Rails executa suas
 validações. Se essas validações produzirem um erro, o Rails não salva
