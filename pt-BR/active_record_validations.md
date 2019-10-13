@@ -81,7 +81,7 @@ banco de dados. Uma vez que você chame o `save` sob esse objeto ele será salvo
 tabela apropriada no seu banco de dados. O *Active Record* usa o método de
 instância `new_record?` para determinar se o objeto já existe no banco de dados ou
 não.
-Considere a seguinte *class* do *Active Record*: 
+Considere a seguinte classe do *Active Record*: 
 
 ```ruby
 class Person < ApplicationRecord
