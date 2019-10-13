@@ -88,7 +88,7 @@ class Person < ApplicationRecord
 end
 ```
 
-Podemos ver como ela funciona olhando para o resultado no *`rails console`*:
+Podemos ver como ela funciona olhando para o resultado no `rails console`:
 
 ```ruby
 $ rails console
