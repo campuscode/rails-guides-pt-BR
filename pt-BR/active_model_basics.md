@@ -223,11 +223,11 @@ person.token = nil
 person.valid?                        # => raises ActiveModel::StrictValidationFailed
 ```
 
-### Naming
+### _Naming_
 
-`ActiveModel::Naming` adds a number of class methods which make naming and routing
-easier to manage. The module defines the `model_name` class method which
-will define a number of accessors using some `ActiveSupport::Inflector` methods.
+`ActiveModel::Naming` adiciona diversos métodos de classe que facilitam a gestão 
+de nomear e rotear. Esse módulo define o método de classe _`model_name`_ que
+define assessores usando alguns métodos do _`ActiveSupport::Inflector`_.
 
 ```ruby
 class Person
