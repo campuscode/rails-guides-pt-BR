@@ -408,10 +408,10 @@ para um formato mais legível. Esse formato é definido nos arquivos _locale_.
 Person.human_attribute_name('name') # => "Nome"
 ```
 
-### Lint Tests
+### _Lint Tests_
 
-`ActiveModel::Lint::Tests` allows you to test whether an object is compliant with
-the Active Model API.
+_`ActiveModel::Lint::Tests`_ permite testar se um objeto é compatível com a 
+_API_ do _Active Model_.
 
 * `app/models/person.rb`
 
@@ -449,9 +449,9 @@ Finished in 0.024899s, 240.9735 runs/s, 1204.8677 assertions/s.
 6 runs, 30 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-An object is not required to implement all APIs in order to work with
-Action Pack. This module only intends to provide guidance in case you want all
-features out of the box.
+Não é obrigatório que um objeto implemente todas as _APIs_ para funcionar com o 
+_Action Pack_. Esse módulo serve como um guia, caso você queira todas as 
+funcionalidades de imediato.
 
 ### SecurePassword
 
