@@ -289,11 +289,11 @@ Qualquer classe que incluir _`ActiveModel::Model`_ pode ser usada com _`form_for
 _`render`_ e quaisquer outros métodos auxiliares da _Action View_, como qualquer 
 objeto _Active Record_.
 
-### Serialization
+### _Serialization_
 
-`ActiveModel::Serialization` provides basic serialization for your object.
-You need to declare an attributes Hash which contains the attributes you want to
-serialize. Attributes must be strings, not symbols.
+_`ActiveModel::Serialization`_ provê serialização básica para seu objeto.
+Você precisa declarar um _Hash_ de atributos que contém os atributos que você 
+deseja serializar. Atributos devem ser _strings_ e não _symbols_.
 
 ```ruby
 class Person
@@ -307,7 +307,7 @@ class Person
 end
 ```
 
-Now you can access a serialized Hash of your object using the `serializable_hash` method.
+Agora você pode acessar um _Hash_ serializado do seu objeto usando o método _`serializable_hash`_.
 
 ```ruby
 person = Person.new
@@ -316,16 +316,17 @@ person.name = "Bob"
 person.serializable_hash   # => {"name"=>"Bob"}
 ```
 
-#### ActiveModel::Serializers
+#### _ActiveModel::Serializers_
 
-Active Model also provides the `ActiveModel::Serializers::JSON` module
-for JSON serializing / deserializing. This module automatically includes the
-previously discussed `ActiveModel::Serialization` module.
+O _Active Model_ também fornece o módulo _`ActiveModel::Serializers::Json`_ 
+para serializar/desserializar _JSON_. Esse módulo inclui automaticamente o 
+módulo _`ActiveModel::Serialization`_, discutido previamente.
 
-##### ActiveModel::Serializers::JSON
+##### _ActiveModel::Serializers::JSON_
 
-To use `ActiveModel::Serializers::JSON` you only need to change the
-module you are including from `ActiveModel::Serialization` to `ActiveModel::Serializers::JSON`.
+Para usar o _`ActiveModel::Serializers::JSON`_, é necessário apenas alterar o 
+módulo que você está incluindo de _`ActiveModel::Serialization`_ para 
+`ActiveModel::Serializers::JSON`.
 
 ```ruby
 class Person
@@ -339,8 +340,8 @@ class Person
 end
 ```
 
-The `as_json` method, similar to `serializable_hash`, provides a Hash representing
-the model.
+O método _`as_json`_, assim como o _`serializable_hash`_, provê um _Hash_ 
+representando o _model_.
 
 ```ruby
 person = Person.new
@@ -349,8 +350,8 @@ person.name = "Bob"
 person.as_json # => {"name"=>"Bob"}
 ```
 
-You can also define the attributes for a model from a JSON string.
-However, you need to define the `attributes=` method on your class:
+Você também pode definir os atributos para um _model_ a partir de um _JSON_.
+Porém, você precisa definir um método _`attributes=`_ na sua classe:
 
 ```ruby
 class Person
@@ -370,7 +371,7 @@ class Person
 end
 ```
 
-Now it is possible to create an instance of `Person` and set attributes using `from_json`.
+Agora é possível criar uma instância de _`Person`_ e incluir atributos usando _`from_json`_.
 
 ```ruby
 json = { name: 'Bob' }.to_json
