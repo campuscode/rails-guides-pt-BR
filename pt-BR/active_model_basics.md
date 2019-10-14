@@ -1,19 +1,19 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Model Basics
-===================
+Básico do _Active Model_
+========================
 
-This guide should provide you with all you need to get started using model
-classes. Active Model allows for Action Pack helpers to interact with
-plain Ruby objects. Active Model also helps build custom ORMs for use
-outside of the Rails framework.
+Esse guia deve oferecer tudo que você precisa para começar a usar classes
+_model_. _Active Model_ permite que auxiliares do _Action Pack_ interajam 
+com objetos _Ruby_ simples. _Active Model_ também ajuda a construir _ORMs_ 
+customizados para utilizar fora do _framework_ _Rails_.
 
-After reading this guide, you will know:
+Após ler este guia, você saberá:
 
-* How an Active Record model behaves.
-* How Callbacks and validations work.
-* How serializers work.
-* How Active Model integrates with the Rails internationalization (i18n) framework.
+* Como um modelo _Active Record_ se comporta.
+* Como _Callbacks_ e validações funcionam.
+* Como serializadores funcionam.
+* Como o _Active Model_ integra com o _framework_ de internacionalização (i18n) do _Rails_.
 
 --------------------------------------------------------------------------------
 
