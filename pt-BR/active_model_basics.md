@@ -380,10 +380,10 @@ person.from_json(json) # => #<Person:0x00000100c773f0 @name="Bob">
 person.name            # => "Bob"
 ```
 
-### Translation
+### _Translation_
 
-`ActiveModel::Translation` provides integration between your object and the Rails
-internationalization (i18n) framework.
+_`ActiveModel::Translation`_ fornece integração entre seu objeto e o _framework_ 
+de internacionalização (i18n) do _Rails_.
 
 ```ruby
 class Person
@@ -391,8 +391,8 @@ class Person
 end
 ```
 
-With the `human_attribute_name` method, you can transform attribute names into a
-more human-readable format. The human-readable format is defined in your locale file(s).
+Com o método _`human_attribute_name`_, você pode transformar nomes de atributos 
+para um formato mais legível. Esse formato é definido nos arquivos _locale_.
 
 * config/locales/app.pt-BR.yml
 
