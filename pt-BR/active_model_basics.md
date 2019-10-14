@@ -453,26 +453,26 @@ Não é obrigatório que um objeto implemente todas as _APIs_ para funcionar com
 _Action Pack_. Esse módulo serve como um guia, caso você queira todas as 
 funcionalidades de imediato.
 
-### SecurePassword
+### _SecurePassword_
 
-`ActiveModel::SecurePassword` provides a way to securely store any
-password in an encrypted form. When you include this module, a
-`has_secure_password` class method is provided which defines
-a `password` accessor with certain validations on it by default.
+_`ActiveModel::SecurePassword`_ oferece uma maneira segura para armazenar uma 
+senha de maneira criptografada. Quando você inclui esse módulo, é fornecido o 
+método de classe _`has_secure_password`_, que define um assessor _`password`_
+com certas validações por padrão.
 
-#### Requirements
+#### Requisitos
 
-`ActiveModel::SecurePassword` depends on [`bcrypt`](https://github.com/codahale/bcrypt-ruby 'BCrypt'),
-so include this gem in your `Gemfile` to use `ActiveModel::SecurePassword` correctly.
-In order to make this work, the model must have an accessor named `XXX_digest`.
-Where `XXX` is the attribute name of your desired password.
-The following validations are added automatically:
+_`ActiveModel::SecurePassword`_ depende de [`bcrypt`](https://github.com/codahale/bcrypt-ruby 'BCrypt'), 
+portanto inclua essa _gem_ em seu _`Gemfile`_ para usar o _`ActiveModel::SecurePassword`_ corretamente.
+Para fazer isso funcionar, o _model_ deve possuir um assessor chamado _`XXX_digest`_, onde `XXX` 
+é o nome desejado do atributo da sua senha.
+As seguintes validações são adicionadas automaticamente:
 
-1. Password should be present.
-2. Password should be equal to its confirmation (provided `XXX_confirmation` is passed along).
-3. The maximum length of a password is 72 (required by `bcrypt` on which ActiveModel::SecurePassword depends)
+1. A senha é obrigatória.
+2. A senha deve ser igual à sua confirmação (contanto que _`XXX_confirmation`_ seja passado junto).
+3. O tamanho máximo da senha é 72 (requisito do _`bcrypt`_, do qual `_ActiveModel::SecurePassword_` depende)
 
-#### Examples
+#### Exemplos
 
 ```ruby
 class Person
@@ -485,23 +485,23 @@ end
 
 person = Person.new
 
-# When password is blank.
+# Quando a senha está em branco.
 person.valid? # => false
 
-# When the confirmation doesn't match the password.
+# Quando a confirmação não está igual à senha.
 person.password = 'aditya'
 person.password_confirmation = 'nomatch'
 person.valid? # => false
 
-# When the length of password exceeds 72.
+# Quando o tamanho da senha excede 72.
 person.password = person.password_confirmation = 'a' * 100
 person.valid? # => false
 
-# When only password is supplied with no password_confirmation.
+# Quando apenas a senha é fornecida, sem _password_confirmation_.
 person.password = 'aditya'
 person.valid? # => true
 
-# When all validations are passed.
+# Quando todas as validações passam.
 person.password = person.password_confirmation = 'aditya'
 person.valid? # => true
 
