@@ -76,58 +76,56 @@ DICA: Os exemplos à seguir usam `$` para representar seu *prompt* de terminal e
 sistema operacional UNIX, embora ele tenha sido customizado para parecer diferente.
 Se você está utilizando Windows, seu *prompt* será parecido com algo como `c:\source_code>`
 
-### Installing Rails
+### Instalando o Rails
 
-Before you install Rails, you should check to make sure that your system has the
-proper prerequisites installed. These include Ruby and SQLite3.
+Antes de você instalar o Rails, você deve validar para ter certeza que seu sistema
+tem os pré requisitos necessários instalados. Esses incluem Ruby e SQLite3.
 
-Open up a command line prompt. On macOS open Terminal.app, on Windows choose
-"Run" from your Start menu and type 'cmd.exe'. Any commands prefaced with a
-dollar sign `$` should be run in the command line. Verify that you have a
-current version of Ruby installed:
+Abra o *prompt* de linha de comando. No *macOS* abra o *Terminal.app*, no *Windows*
+escolha *executar* no menu inicial e digite 'cmd.exe'. Qualquer comando que antecede
+o sinal de dólar `$` deverá ser rodado em linha de comando. Verifique se você tem a
+versão atual do Ruby instalado:
 
 ```bash
 $ ruby -v
 ruby 2.5.0
 ```
 
-Rails requires Ruby version 2.5.0 or later. If the version number returned is
-less than that number, you'll need to install a fresh copy of Ruby.
+Rails necessita da versão Ruby 2.5.0 ou mais atual. Se o número da versão retornada
+for menor que este número, você precisará instalar uma versão do Ruby mais atual.
 
-TIP: To quickly install Ruby and Ruby on Rails on your system in Windows, you can use
-[Rails Installer](http://railsinstaller.org). For more installation methods for most
-Operating Systems take a look at [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
+DICA: Para instalar o Ruby e o Ruby on Rails mais rápido no seu sistema operacional Windows,
+você pode usar o [Rails Installer](http://railsinstaller.org). Para mais informações de instalação
+de outros Sistemas Operacionais, dê uma olhada em [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
 
-If you are working on Windows, you should also install the
+Se você está utilizando o Windowns, você deve também instalar o
 [Ruby Installer Development Kit](https://rubyinstaller.org/downloads/).
 
-You will also need an installation of the SQLite3 database.
-Many popular UNIX-like OSes ship with an acceptable version of SQLite3.
-On Windows, if you installed Rails through Rails Installer, you
-already have SQLite installed. Others can find installation instructions
-at the [SQLite3 website](https://www.sqlite.org).
-Verify that it is correctly installed and in your PATH:
+Você também precisará instalar o banco de dados SQLite3.
+Muitos sistemas operacionais populares semelhantes ao UNIX são fornecidos com uma versão compatível do SQLite3.
+No Windows, se você instalou o Rails pelo instalador do Rails, você
+já possui o SQLite instalado. Você também podem achar mais instruções de instalação em [SQLite3 website](https://www.sqlite.org).
+Verifique se está corretamente instalado e no seu *PATH*
 
 ```bash
 $ sqlite3 --version
 ```
 
-The program should report its version.
+O programa deverá reportar sua versão.
 
-To install Rails, use the `gem install` command provided by RubyGems:
+Para instalar o Rails, use o comando `gem install` fornecido pelo RubyGems:
 
 ```bash
 $ gem install rails
 ```
 
-To verify that you have everything installed correctly, you should be able to
-run the following:
+Para verificar se você tem tudo instalado corretamente, você deve rodar o comando à seguir:
 
 ```bash
 $ rails --version
 ```
 
-If it says something like "Rails 6.0.0", you are ready to continue.
+Se esse comando retornar algo como "Rails 6.0.0", você está pronto para continuar.
 
 ### Creating the Blog Application
 
