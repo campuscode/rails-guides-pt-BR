@@ -37,7 +37,7 @@ development with Rails.
 O que é o Rails?
 --------------
 
-Rails é framework de desenvolvimento de aplicações web escrito na linguagem de programção Ruby.
+Rails é um *framework* de desenvolvimento de aplicações *web* escrito na linguagem de programação Ruby.
 Foi desenvolvido para facilitar o desenvolvimento de aplicações web, fazendo suposições sobre tudo que o desenvolvedor precisa para começar. Permitindo que você escreva menos código, enquanto realiza mais do que em muitas outras liguagens ou frameworks. Desenvolvedores experientes em Rails, também dizem que desenvolver aplicações web ficou mais divertido.
 
 Rails é um software opinativo. Assumindo que há uma "melhor" maneira para fazer as coisas, e foi projetado para encorajar essa maneira - e, em alguns casos para desencorajar alternativas. Se você aprender o "Rails Way", provavelmente terá um grande aumento de produtividade. Se você insistir nos velhos hábitos de outras linguagens, tentando usar os padrões que você aprendeu em outro lugar, você pode ter uma experiência menos feliz.
