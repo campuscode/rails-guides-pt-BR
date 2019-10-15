@@ -24,7 +24,7 @@ Com o advento dos *frameworks client-side*, mais desenvolvedores estão usando o
 um *back-end* compartilhado entre suas aplicações web e outros aplicativos nativos.
 
 Por exemplo, o Twitter usa sua [API pública](https://developer.twitter.com/) em sua aplicação web,
-que é um site estático que consome as informações por um JSON.
+que é um site estático que consome recursos via JSON.
 
 Em vez de usar o Rails para gerar HTML que se comunica com o servidor através de formulários e links,
 muitos desenvolvedores estão tratando suas aplicações web apenas como uma API, separadamente do HTML com JavaScript que apenas consome uma API JSON.
