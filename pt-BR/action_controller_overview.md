@@ -30,7 +30,7 @@ Um *controller* pode então ser pensado como um intermediário entre um *model* 
 
 OBS: Para mais detalhes sobre processo de roteamento, veja [Rails Routing from the Outside In](routing.html)
 
-Controller Naming Convention
+Convenção de Nomenclatura do *Controller*
 ----------------------------
 A convenção de nomenclatura dos *controllers* no Rails favorece a pluralização da última palavra do nome do *controller*, embora não seja estritamente necessário (ex: `ApplicationController`). Por exemplo, `ClientsController` é recomendado ao invés de `ClientController`, `SiteAdminsController` é recomendado ao invés de `SiteAdminController` ou `SitesAdminsController`, e assim por diante.
 
