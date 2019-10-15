@@ -29,7 +29,7 @@ que é um site estático que consome recursos via JSON.
 Em vez de usar o Rails para gerar HTML que se comunica com o servidor através de formulários e links,
 muitos desenvolvedores estão tratando suas aplicações web apenas como uma API, separadamente do HTML com JavaScript que apenas consome uma API JSON.
 
-Esse guia aborda a construção de um aplicativo Rails que fornece um JSON para um cliente, incluindo frameworks client-side.
+Esse guia aborda a construção de um aplicativo Rails que fornece dados em JSON para um cliente, incluindo frameworks *client-side*.
 
 
 Why Use Rails for JSON APIs?
