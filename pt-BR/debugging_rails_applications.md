@@ -282,7 +282,7 @@ The contents of the block, and therefore the string interpolation, are only
 evaluated if debug is enabled. This performance savings are only really
 noticeable with large amounts of logging, but it's a good practice to employ.
 
-Debugging com a gem `byebug`
+*Debug* com a gem `byebug`
 ---------------------------------
 
 Quando seu código está se comportando de maneiras inesperadas, você pode tentar imprimir em *logs* ou
