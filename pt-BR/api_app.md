@@ -354,33 +354,26 @@ config.middleware.delete ::Rack::Sendfile
 Keep in mind that removing these middlewares will remove support for certain
 features in Action Controller.
 
-Choosing Controller Modules
+Escolhendo os módulos da *Controller*
 ---------------------------
 
-An API application (using `ActionController::API`) comes with the following
-controller modules by default:
+Uma aplicação API (utilizando `ActionController::API`) vem com os seguintes módulos da controller por padrão:
 
-- `ActionController::UrlFor`: Makes `url_for` and similar helpers available.
-- `ActionController::Redirecting`: Support for `redirect_to`.
-- `AbstractController::Rendering` and `ActionController::ApiRendering`: Basic support for rendering.
-- `ActionController::Renderers::All`: Support for `render :json` and friends.
-- `ActionController::ConditionalGet`: Support for `stale?`.
-- `ActionController::BasicImplicitRender`: Makes sure to return an empty response, if there isn't an explicit one.
-- `ActionController::StrongParameters`: Support for parameters filtering in combination with Active Model mass assignment.
-- `ActionController::DataStreaming`: Support for `send_file` and `send_data`.
-- `AbstractController::Callbacks`: Support for `before_action` and
-  similar helpers.
-- `ActionController::Rescue`: Support for `rescue_from`.
-- `ActionController::Instrumentation`: Support for the instrumentation
-  hooks defined by Action Controller (see [the instrumentation
-  guide](active_support_instrumentation.html#action-controller) for
-more information regarding this).
-- `ActionController::ParamsWrapper`: Wraps the parameters hash into a nested hash,
-  so that you don't have to specify root elements sending POST requests for instance.
-- `ActionController::Head`: Support for returning a response with no content, only headers
+- `ActionController::UrlFor`: Faz com que `url_for` e helpers similares sejam disponíveis.
+- `ActionController::Redirecting`: Suporte para `redirect_to`.
+- `AbstractController::Rendering` e `ActionController::ApiRendering`: Suporte básico para renderização.
+- `ActionController::Renderers::All`: Suporte para `render :json` e similares.
+- `ActionController::ConditionalGet`: Suporte para `stale?`.
+- `ActionController::BasicImplicitRender`: Certifica-se de retornar uma resposta vazia, se não houver uma explícita.
+- `ActionController::StrongParameters`: Suporte para filtragem de parâmetros em conjunto com a atribuição do ActiveModel.
+- `ActionController::DataStreaming`: Suporte para `send_file` e `send_data`.
+- `AbstractController::Callbacks`: Suporte para `before_action` e helpers similares.
+- `ActionController::Rescue`: Suporte para `rescue_from`.
+- `ActionController::Instrumentation`: Suporte para ganchos de instrumentação definidos pela Action Controller (veja [o guia da instrumentação](active_support_instrumentation.html#action-controller) para mais informações a respeito disso)
+- `ActionController::ParamsWrapper`: Agrupa o hash dos parâmetros em um hash encadeado, para que você não precise especificar elementos raiz enviando requisições POST, por exemplo.
+- `ActionController::Head`: Suporte para o retorno de uma resposta sem conteúdo, apenas *headers*
 
-Other plugins may add additional modules. You can get a list of all modules
-included into `ActionController::API` in the rails console:
+Outros plugins podem adicionar mais módulos. Você pode obter uma lista de todos os módulos incluídos no `ActionController::API` no console do rails:
 
 ```bash
 $ rails c
@@ -394,33 +387,29 @@ $ rails c
     ActionView::ViewPaths]
 ```
 
-### Adding Other Modules
+### Adicionando Outros Módulos
 
-All Action Controller modules know about their dependent modules, so you can feel
-free to include any modules into your controllers, and all dependencies will be
-included and set up as well.
+Todos os módulos do Action Controller conhecem seus módulos dependentes. Assim, você pode incluir qualquer módulo em seus controllers, e todas as dependências serão
+incluídas e configurados também.
 
-Some common modules you might want to add:
+Alguns módulos comuns que você pode querer adicionar:
 
-- `AbstractController::Translation`: Support for the `l` and `t` localization
-  and translation methods.
-- Support for basic, digest, or token HTTP authentication:
+- `AbstractController::Translation`: Suporte para `l` e `t`, métodos de localização e tradução
+- Suporte para autenticações HTTP basic, digest ou por token:
   * `ActionController::HttpAuthentication::Basic::ControllerMethods`,
   * `ActionController::HttpAuthentication::Digest::ControllerMethods`,
   * `ActionController::HttpAuthentication::Token::ControllerMethods`
-- `ActionView::Layouts`: Support for layouts when rendering.
-- `ActionController::MimeResponds`: Support for `respond_to`.
-- `ActionController::Cookies`: Support for `cookies`, which includes
-  support for signed and encrypted cookies. This requires the cookies middleware.
-- `ActionController::Caching`: Support view caching for the API controller. Please notice that
-  you will need to manually specify cache store inside the controller like:
+- `ActionView::Layouts`: Suporte para layouts ao renderizar.
+- `ActionController::MimeResponds`: Suporte para `respond_to`.
+- `ActionController::Cookies`: Suporte para `cookies`, que inclui suporte para cookies assinados e criptografados. Isso requer um middleware de cookies
+- `ActionController::Caching`: Suporte para cache da *view* do controller da API. Importe lembrar que você precisará especificar manualmente o armazenamento em cache dentro do controller, como por exemplo:
   ```ruby
   class ApplicationController < ActionController::API
     include ::ActionController::Caching
     self.cache_store = :mem_cache_store
   end
   ```
-  Rails does *not* pass this configuration automatically.
+  O Rails *não* faz essa configuração automaticamente
 
-The best place to add a module is in your `ApplicationController`, but you can
-also add modules to individual controllers.
+O melhor lugar para adicionar um módulo é em sua `ApplicationController`, mas 
+você também pode adicionar módulos em controllers individuais.
