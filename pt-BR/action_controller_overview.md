@@ -32,13 +32,11 @@ OBS: Para mais detalhes sobre processo de roteamento, veja [Rails Routing from t
 
 Controller Naming Convention
 ----------------------------
+A convenção de nomenclatura dos *controllers* no Rails favorece a pluralização da última palavra do nome do *controller*, embora não seja estritamente necessário (ex: `ApplicationController`). Por exemplo, `ClientsController` é recomendado ao invés de `ClientController`, `SiteAdminsController` é recomendado ao invés de `SiteAdminController` ou `SitesAdminsController`, e assim por diante.
 
-The naming convention of controllers in Rails favors pluralization of the last word in the controller's name, although it is not strictly required (e.g. `ApplicationController`). For example, `ClientsController` is preferable to `ClientController`, `SiteAdminsController` is preferable to `SiteAdminController` or `SitesAdminsController`, and so on.
+Seguindo essa convenção será possível utilizar o gerador de rotas padrão (ex: `resources`, etc) sem precisar qualificar cada `:path` ou `:controller`, e manterá consistente o uso dos auxiliares de rotas em todo o seu projeto. Veja [Layouts & Guia de Renderização](layouts_and_rendering.html) para mais detalhes.
 
-Following this convention will allow you to use the default route generators (e.g. `resources`, etc) without needing to qualify each `:path` or `:controller`, and will keep named route helpers' usage consistent throughout your application. See [Layouts & Rendering Guide](layouts_and_rendering.html) for more details.
-
-NOTE: The controller naming convention differs from the naming convention of models, which are expected to be named in singular form.
-
+OBS: A convenção de nomenclatura dos *controllers* difere da convenção de nomenclatura dos *models*, que devem ser nomeados na forma singular.
 
 Methods and Actions
 -------------------
