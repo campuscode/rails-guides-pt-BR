@@ -20,7 +20,7 @@ elas querem dizer que fornecem  uma API acessível junto a suas aplicações web
 Por exemplo, o GitHub fornece [uma API](https://developer.github.com) que você
 pode usar nas suas próprias aplicações personalizadas.
 
-Com o advento dos frameworks client-side,mais desenvolvedores estão usando o Rails para construir
+Com o advento dos *frameworks client-side*, mais desenvolvedores estão usando o Rails para construir
 um back-end compartilhado entre suas aplicações web e outros aplicativos nativos.
 
 Por exemplo, o Twitter usa sua [API pública](https://developer.twitter.com/) em sua aplicação web,
