@@ -127,63 +127,64 @@ $ rails --version
 
 Se esse comando retornar algo como "Rails 6.0.0", você está pronto para continuar.
 
-### Creating the Blog Application
+### Criando a Aplicação Blog
 
-Rails comes with a number of scripts called generators that are designed to make
-your development life easier by creating everything that's necessary to start
-working on a particular task. One of these is the new application generator,
-which will provide you with the foundation of a fresh Rails application so that
-you don't have to write it yourself.
+Rails vem com vários scripts chamados *generators* que são projetos para tornar
+sua vida de desenvolvedor fácil, criando tudo que é necessário para começar a
+trabalhar em uma tarefa em particular. Um desses é o *generator* de nova aplicação,
+que irá te fornecer a base de uma nova aplicação em Rails para que você não precise
+escrever tudo sozinho.
 
-To use this generator, open a terminal, navigate to a directory where you have
-rights to create files, and type:
+Para utilizar esse *generator*, abra um termial, navegue para um diretório onde
+você tenha permissão para criar arquivos, e digite:
 
 ```bash
 $ rails new blog
 ```
 
-This will create a Rails application called Blog in a `blog` directory and
-install the gem dependencies that are already mentioned in `Gemfile` using
-`bundle install`.
+Este comando irá criar uma aplicação em Rails chamada Blog em um diretório `blog`
+e irá instalar as dependências das *gems* que já foram mencionadas no `Gemfile`
+usando `bundle install`.
 
-NOTE: If you're using Windows Subsystem for Linux then there are currently some
-limitations on file system notifications that mean you should disable the `spring`
-and `listen` gems which you can do by running `rails new blog --skip-spring --skip-listen`.
+OBS: Se você está utilizando um subsistema Windows para Linux então existem
+algumas limitações nas notificações dos arquivos do sistema que significa que você
+deve disabilitar as gems `spring` e `listen` que poderá ser feito rodando o comando
+`rails new blog --skip-spring --skip-listen`.
 
-TIP: You can see all of the command line options that the Rails application
-builder accepts by running `rails new -h`.
+DICA: Você pode ver todas as opções de linha de comando que a aplicação Rails
+aceita rodando o comando `rails new -h`.
 
-After you create the blog application, switch to its folder:
+Depois de criar a aplicação blog, entre em sua pasta:
 
 ```bash
 $ cd blog
 ```
 
-The `blog` directory has a number of auto-generated files and folders that make
-up the structure of a Rails application. Most of the work in this tutorial will
-happen in the `app` folder, but here's a basic rundown on the function of each
-of the files and folders that Rails created by default:
+A pasta `blog` tem vários arquivos auto-gerados e pastas que compõem a estrutura
+de uma aplicação Rails. A maior parte da execução deste tutorial será feito na
+pasta `app`, mas à seguir teremos um resumo básico das funções de cada um dos arquivos e pastas
+que o Rails gerou por padrão:
 
-| File/Folder | Purpose |
+| Arquivo/Pasta | Objetivo |
 | ----------- | ------- |
-|app/|Contains the controllers, models, views, helpers, mailers, channels, jobs, and assets for your application. You'll focus on this folder for the remainder of this guide.|
-|bin/|Contains the rails script that starts your app and can contain other scripts you use to setup, update, deploy, or run your application.|
-|config/|Configure your application's routes, database, and more. This is covered in more detail in [Configuring Rails Applications](configuring.html).|
-|config.ru|Rack configuration for Rack based servers used to start the application. For more information about Rack, see the [Rack website](https://rack.github.io/).|
-|db/|Contains your current database schema, as well as the database migrations.|
-|Gemfile<br>Gemfile.lock|These files allow you to specify what gem dependencies are needed for your Rails application. These files are used by the Bundler gem. For more information about Bundler, see the [Bundler website](https://bundler.io).|
-|lib/|Extended modules for your application.|
-|log/|Application log files.|
-|package.json|This file allows you to specify what npm dependencies are needed for your Rails application. This file is used by Yarn. For more information about Yarn, see the [Yarn website](https://yarnpkg.com/lang/en/).|
-|public/|The only folder seen by the world as-is. Contains static files and compiled assets.|
-|Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Rails. Rather than changing `Rakefile`, you should add your own tasks by adding files to the `lib/tasks` directory of your application.|
-|README.md|This is a brief instruction manual for your application. You should edit this file to tell others what your application does, how to set it up, and so on.|
-|storage/|Active Storage files for Disk Service. This is covered in [Active Storage Overview](active_storage_overview.html).|
-|test/|Unit tests, fixtures, and other test apparatus. These are covered in [Testing Rails Applications](testing.html).|
-|tmp/|Temporary files (like cache and pid files).|
-|vendor/|A place for all third-party code. In a typical Rails application this includes vendored gems.|
-|.gitignore|This file tells git which files (or patterns) it should ignore. See [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) for more info about ignoring files.
-|.ruby-version|This file contains the default Ruby version.|
+|app/|Contém os *controllers*, *models*, *views*, *helpers*, *mailers*, *channels*, *jobs*, e *assets* para sua aplicação. Você irá se concentrar nesse diretório pelo restante desse guia.|
+|bin/|Contém os scripts do rails que inicializa sua aplicação e contém outros scripts que você utiliza para configurar, atualizar, colocar em produção ou rodar sua aplicação.|
+|config/|Configure as rotas, banco de dados entre outros de sua aplicação. Este conteúdo é abordado com mais detalhes em [Configuring Rails Applications](configuring.html).|
+|config.ru|Configuração *Rack* para servidores baseados em *Rack* usados ​​para iniciar a aplicação. Para mais informações sobre o *Rack*, consulte [Rack website](https://rack.github.io/).|
+|db/|Contém o schema do seu banco de dados atual, assim como as *migrations* do banco de dados.|
+|Gemfile<br>Gemfile.lock|Esses arquivos permitem que você especifique quais dependências de *gem* são necessárias na sua aplicação Rails. Esses arquivos são usados pela *gem* Bundler. Para mais informações sobre o Bundler, acesse [Bundler website](https://bundler.io).|
+|lib/|Módulos extendidos da sua aplicação.|
+|log/|Arquivos de log da aplicação.|
+|package.json|Este arquivo permite que você especifique quais dependências npm são necessárias para sua aplicação Rails. Este arquivo é usado pelo Yarn. Para mais informações do Yarn, acesse [Yarn website](https://yarnpkg.com/lang/en/).|
+|public/|O único diretório visto pelo mundo. Contém arquivos estáticos e *assets* compilados.|
+|Rakefile|Este arquivo localiza e carrega tarefas que podem ser rodadas por linhas de comando. As tarefas são definidas nos componentes do Rails. Ao invés de editar o `Rakefile`, você deve criar suas próprias tarefas adicionando os arquivos no diretório `lib/tasks` da sua aplicação.|
+|README.md|Este é um manual de instruções para sua aplicação. Você deve editar este arquivo para informar o que seu aplicativo faz, como configurá-lo e assim por diante.|
+|storage/|Arquivos de armazenamento ativo do serviço de disco. Mais informações em [Active Storage Overview](active_storage_overview.html).|
+|test/|Testes unitários, *fixtures*, e outros tipos de testes. Mais informações em [Testing Rails Applications](testing.html).|
+|tmp/|Arquivos temporários (como cache e arquivos *pid*).|
+|vendor/|Diretório com todos os códigos de terceiros. Em uma típica aplicação Rails inclui *vendored gems*.|
+|.gitignore|Este arquivo diz ao git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.
+|.ruby-version|Este arquivo contém a versão padrão do Ruby.|
 
 Hello, Rails!
 -------------
