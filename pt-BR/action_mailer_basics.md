@@ -655,14 +655,12 @@ end
 Action Mailer Callbacks
 -----------------------
 
-Action Mailer allows for you to specify a `before_action`, `after_action` and
+Action Mailer permite que você especifique o `before_action`, `after_action` e
 `around_action`.
 
-* Filters can be specified with a block or a symbol to a method in the mailer
-  class similar to controllers.
+* Filtros podem ser especificados com um bloco ou um symbol para um  método no Mailer, similar a um controller
 
-* You could use a `before_action` to populate the mail object with defaults,
-  delivery_method_options or insert default headers and attachments.
+* Você pode usar um `before_action` para preencher o objeto de email com valores padrões, delivery_method_options ou inserir *headers* e anexos padrões. 
 
 ```ruby
 class InvitationsMailer < ApplicationMailer
@@ -686,8 +684,7 @@ class InvitationsMailer < ApplicationMailer
 end
 ```
 
-* You could use an `after_action` to do similar setup as a `before_action` but
-  using instance variables set in your mailer action.
+* Você pode usar um `after_action` para fazer uma configuração semelhante a um` before_action`, mas usando variáveis de instância definidas em sua action do mailer.
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -727,7 +724,7 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-* Mailer Filters abort further processing if body is set to a non-nil value.
+* Os filtros do mailer abortam o processamento adicional se o *body* estiver definido com um valor não nulo.
 
 Using Action Mailer Helpers
 ---------------------------
