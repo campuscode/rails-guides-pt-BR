@@ -65,7 +65,6 @@ Como alternativa, chamar `to_yaml` em qualquer objeto o converte para YAML. Voc�
 </p>
 ```
 
-The above code will render something like this:
 O código acima vai renderizar algo como isso:
 
 ```yaml
@@ -280,33 +279,32 @@ The contents of the block, and therefore the string interpolation, are only
 evaluated if debug is enabled. This performance savings are only really
 noticeable with large amounts of logging, but it's a good practice to employ.
 
-Debugging with the `byebug` gem
+*Debug* com a gem `byebug`
 ---------------------------------
 
-When your code is behaving in unexpected ways, you can try printing to logs or
-the console to diagnose the problem. Unfortunately, there are times when this
-sort of error tracking is not effective in finding the root cause of a problem.
-When you actually need to journey into your running source code, the debugger
-is your best companion.
+Quando seu código está se comportando de maneiras inesperadas, você pode tentar imprimir em *logs* ou
+no console para diagnosticar o problema. Infelizmente, há momentos em que esse
+tipo de rastreamento de erros não é eficaz para encontrar a raiz de um problema.
+Quando você realmente precisa acessar seu código-fonte em execução, o *debugger*
+é o seu melhor companheiro.
 
-The debugger can also help you if you want to learn about the Rails source code
-but don't know where to start. Just debug any request to your application and
-use this guide to learn how to move from the code you have written into the
-underlying Rails code.
+O *debugger* também pode ajudá-lo se você quiser aprender sobre o código-fonte do Rails,
+mas não sabe por onde começar. Basta fazer o *debugging* de qualquer requisição da sua aplicação e
+usar este guia para aprender como passar do código que você escreveu para o código Rails subjacente.
 
-### Setup
+### Instalação
 
-You can use the `byebug` gem to set breakpoints and step through live code in
-Rails. To install it, just run:
+Você pode usar a gem `byebug` para definir *breakpoints* e percorrer o código em execução no
+Rails. Para instalá-lo, basta executar:
 
 ```bash
 $ gem install byebug
 ```
 
-Inside any Rails application you can then invoke the debugger by calling the
-`byebug` method.
+Dentro de qualquer aplicação Rails, você pode invocar o *debugger* chamando o
+método `byebug`.
 
-Here's an example:
+Aqui está um exemplo:
 
 ```ruby
 class PeopleController < ApplicationController
@@ -317,13 +315,13 @@ class PeopleController < ApplicationController
 end
 ```
 
-### The Shell
+### O Shell
 
-As soon as your application calls the `byebug` method, the debugger will be
-started in a debugger shell inside the terminal window where you launched your
-application server, and you will be placed at the debugger's prompt `(byebug)`.
-Before the prompt, the code around the line that is about to be run will be
-displayed and the current line will be marked by '=>', like this:
+Assim que sua aplicação chamar o método `byebug`, o *debugger* será
+iniciado em um *debugger shell* do seu terminal onde você iniciou seu
+servidor da aplicação, e você será colocado no prompt do *debugger* `(byebug)`.
+Antes do prompt, o código ao redor da linha que está prestes a ser executada será
+exibido e a linha atual será marcada por '=>', assim:
 
 ```
 [1, 10] in /PathTo/project/app/controllers/articles_controller.rb
@@ -341,11 +339,11 @@ displayed and the current line will be marked by '=>', like this:
 (byebug)
 ```
 
-If you got there by a browser request, the browser tab containing the request
-will be hung until the debugger has finished and the trace has finished
-processing the entire request.
+Se você chegou ali por uma requisição do navegador, a aba do navegador que contém a requisição
+ficará suspensa até que o *debugger* termine e que o rastreio tenha terminado
+o processamento da requisição inteira.
 
-For example:
+Por exemplo:
 
 ```bash
 => Booting Puma
@@ -375,8 +373,8 @@ Processing by ArticlesController#index as HTML
 (byebug)
 ```
 
-Now it's time to explore your application. A good place to start is
-by asking the debugger for help. Type: `help`
+Agora é hora de explorar sua aplicação. Um bom lugar para começar é
+pedindo ajuda ao *debugger*. Digite: `help`
 
 ```
 (byebug) help
@@ -422,7 +420,7 @@ by asking the debugger for help. Type: `help`
 (byebug)
 ```
 
-To see the previous ten lines you should type `list-` (or `l-`).
+Para ver as dez linhas anteriores, você deve digitar `list-` (ou `l-`).
 
 ```
 (byebug) l-
@@ -440,9 +438,9 @@ To see the previous ten lines you should type `list-` (or `l-`).
    10     respond_to do |format|
 ```
 
-This way you can move inside the file and see the code above the line where you
-added the `byebug` call. Finally, to see where you are in the code again you can
-type `list=`
+Dessa forma, você pode mover-se dentro do arquivo e ver o código acima da linha em que
+adicionou a chamada `byebug`. Finalmente, para ver onde você está no código novamente, você pode
+digitar `list=`
 
 ```
 (byebug) list=
@@ -461,20 +459,20 @@ type `list=`
 (byebug)
 ```
 
-### The Context
+### O Contexto
 
-When you start debugging your application, you will be placed in different
-contexts as you go through the different parts of the stack.
+Quando você inicia o *debugging* da sua aplicação, você será colocado em diferentes
+contextos conforme você percorre as diferentes partes da *stack*.
 
-The debugger creates a context when a stopping point or an event is reached. The
-context has information about the suspended program which enables the debugger
-to inspect the frame stack, evaluate variables from the perspective of the
-debugged program, and know the place where the debugged program is stopped.
+O *debugger* cria um contexto quando um ponto de parada ou um evento é alcançado. O
+contexto contém informações sobre o programa suspenso, o que habilita o *debugger*
+para inspecionar os *frames* da *stack*, avaliar variáveis da perspectiva do
+programa depurado e saiba o local em que programa depurado está parado.
 
-At any time you can call the `backtrace` command (or its alias `where`) to print
-the backtrace of the application. This can be very helpful to know how you got
-where you are. If you ever wondered about how you got somewhere in your code,
-then `backtrace` will supply the answer.
+A qualquer momento, você pode chamar o comando `backtrace` (ou seu *alias* `where`) para exibir
+o *backtrace* da aplicação. Isso pode ser muito útil para saber como você
+chegou aonde está. Se você já se perguntou como chegou a algum lugar no seu código,
+o `backtrace` fornecerá a resposta.
 
 ```
 (byebug) where
@@ -489,10 +487,10 @@ then `backtrace` will supply the answer.
 ...
 ```
 
-The current frame is marked with `-->`. You can move anywhere you want in this
-trace (thus changing the context) by using the `frame n` command, where _n_ is
-the specified frame number. If you do that, `byebug` will display your new
-context.
+O *frame* atual é marcado com `-->`. Você pode se mover para qualquer lugar que desejar nesse
+*trace* (mudando assim o contexto) usando o comando `frame n`, em que _n_ é
+o número do *frame* especificado. Se você fizer isso, o `byebug` exibirá seu novo
+contexto.
 
 ```
 (byebug) frame 2
@@ -511,37 +509,36 @@ context.
 (byebug)
 ```
 
-The available variables are the same as if you were running the code line by
-line. After all, that's what debugging is.
+As variáveis disponíveis são as mesmas que se você estivesse executando o código linha por
+linha.  Afinal, é isso que é o *debugging*.
 
-You can also use `up [n]` and `down [n]` commands in order to change the context
-_n_ frames up or down the stack respectively. _n_ defaults to one. Up in this
-case is towards higher-numbered stack frames, and down is towards lower-numbered
-stack frames.
+Você também pode usar os comandos `up [n]` e `down [n]` para alterar o contexto
+_n_ *frames* acima ou abaixo da *stack*, respectivamente. _n_ assume como padrão o número um. Acima, nesse
+caso, é para *stack frames* com números mais altos, e abaixo é para *stack frames*
+com números mais baixos.
 
 ### Threads
 
-The debugger can list, stop, resume, and switch between running threads by using
-the `thread` command (or the abbreviated `th`). This command has a handful of
-options:
+O *debugger* pode listar, parar, continuar e alternar entre threads em execução usando
+o comando `thread` (ou o abreviado `th`). Esse comando possui várias opções:
 
-* `thread`: shows the current thread.
-* `thread list`: is used to list all threads and their statuses. The current
-thread is marked with a plus (+) sign.
-* `thread stop n`: stops thread _n_.
-* `thread resume n`: resumes thread _n_.
-* `thread switch n`: switches the current thread context to _n_.
+* `thread`: mostra a thread atual.
+* `thread list`: é usado para listar todas as threads e seus status. A thread
+atual é marcada com o sinal de mais (+). 
+* `thread stop n`: interrompe a thread _n_.
+* `thread resume n`: retoma a thread _n_.
+* `thread switch n`: alterna o contexto da thread atual para _n_.
 
-This command is very helpful when you are debugging concurrent threads and need
-to verify that there are no race conditions in your code.
+Esse comando é muito útil quando você está fazendo o *debugging*
+para verificar se não há condições do seu código continuar rodando.
 
-### Inspecting Variables
+### Inspecionando Variáveis
 
-Any expression can be evaluated in the current context. To evaluate an
-expression, just type it!
+Qualquer expressão pode ser avaliada no contexto atual. Para avaliar uma
+expressão, apenas digite-a!
 
-This example shows how you can print the instance variables defined within the
-current context:
+Este exemplo mostra como você pode imprimir as variáveis de instância definidas no 
+contexto atual:
 
 ```
 [3, 12] in /PathTo/project/app/controllers/articles_controller.rb
@@ -562,10 +559,10 @@ current context:
  :@_config]
 ```
 
-As you may have figured out, all of the variables that you can access from a
-controller are displayed. This list is dynamically updated as you execute code.
-For example, run the next line using `next` (you'll learn more about this
-command later in this guide).
+Como você já deve ter percebido, todas as variáveis que você pode acessar pelo
+*controller* são exibidas. Esta lista é atualizada dinamicamente à medida que você executa o código.
+Por exemplo, execute a próxima linha usando `next` (você aprenderá mais sobre este
+comando posteriormente neste guia).
 
 ```
 (byebug) next
@@ -585,7 +582,7 @@ command later in this guide).
 (byebug)
 ```
 
-And then ask again for the instance_variables:
+E, em seguida, chame novamente o `instance_variables`:
 
 ```
 (byebug) instance_variables
@@ -594,14 +591,14 @@ And then ask again for the instance_variables:
  :@_config, :@articles]
 ```
 
-Now `@articles` is included in the instance variables, because the line defining
-it was executed.
+Agora `@articles` está incluído nas variáveis de instância, porque a linha que o definiu
+foi executada.
 
-TIP: You can also step into **irb** mode with the command `irb` (of course!).
-This will start an irb session within the context you invoked it.
+DICA: Você também pode entrar no modo **irb** com o comando `irb` (é claro!).
+Isso iniciará uma sessão irb dentro do contexto em que você a chamou.
 
-The `var` method is the most convenient way to show variables and their values.
-Let's have `byebug` help us with it.
+O método `var` é a maneira mais conveniente de mostrar variáveis e seus valores.
+Vamos pedir para que o `byebug` nos ajude com isso.
 
 ```
 (byebug) help var
@@ -620,15 +617,15 @@ Let's have `byebug` help us with it.
 
 ```
 
-This is a great way to inspect the values of the current context variables. For
-example, to check that we have no local variables currently defined:
+Essa é uma ótima maneira de inspecionar os valores das variáveis do contexto atual. Por
+exemplo, para verificar se não temos variáveis locais definidas atualmente:
 
 ```
 (byebug) var local
 (byebug)
 ```
 
-You can also inspect for an object method this way:
+Você também pode inspecionar um método de objeto desta maneira:
 
 ```
 (byebug) var instance Article.new
@@ -644,30 +641,30 @@ You can also inspect for an object method this way:
 @transaction_state = nil
 ```
 
-You can also use `display` to start watching variables. This is a good way of
-tracking the values of a variable while the execution goes on.
+Você também pode usar o `display` para começar a observar as variáveis. Esta é uma boa maneira de
+rastrear os valores de uma variável enquanto a execução continua.
 
 ```
 (byebug) display @articles
 1: @articles = nil
 ```
 
-The variables inside the displayed list will be printed with their values after
-you move in the stack. To stop displaying a variable use `undisplay n` where
-_n_ is the variable number (1 in the last example).
+As variáveis dentro da lista exibida serão impressas com seus valores depois 
+que você se mover na *stack*. Para parar de exibir uma variável, use `undisplay n` onde
+_n_ é o número da variável (1 no último exemplo).
 
-### Step by Step
+### Passo-a-passo
 
-Now you should know where you are in the running trace and be able to print the
-available variables. But let's continue and move on with the application
-execution.
+Agora você deve saber onde está no *trace* em execução e poder imprimir as
+variáveis disponíveis. Mas vamos continuar e seguir em frente com a execução 
+da aplicação.
 
-Use `step` (abbreviated `s`) to continue running your program until the next
-logical stopping point and return control to the debugger. `next` is similar to
-`step`, but while `step` stops at the next line of code executed, doing just a
-single step, `next` moves to the next line without descending inside methods.
+Use `step` (abreviado` s`) para continuar executando o programa até o próximo
+ponto de parada lógica e retornar o controle ao *debugger*. `next` é semelhante a
+`step`, mas enquanto `step` pára na próxima linha de código executada, executando apenas um
+único passo, `next` se move para a próxima linha sem descer nos métodos.
 
-For example, consider the following situation:
+Por exemplo, considere a seguinte situação:
 
 ```
 Started GET "/" for 127.0.0.1 at 2014-04-11 13:39:23 +0200
@@ -684,10 +681,9 @@ Processing by ArticlesController#index as HTML
 (byebug)
 ```
 
-If we use `next`, we won't go deep inside method calls. Instead, `byebug` will
-go to the next line within the same context. In this case, it is the last line
-of the current method, so `byebug` will return to the next line of the caller
-method.
+Se usarmos o `next`, não entraremos em detalhes nas chamadas de método. Em vez disso, o `byebug` irá
+para a próxima linha dentro do mesmo contexto. Nesse caso, é a última linha
+do método atual, então o `byebug` retornará à próxima linha do método chamador.
 
 ```
 (byebug) next
@@ -706,8 +702,8 @@ method.
 (byebug)
 ```
 
-If we use `step` in the same situation, `byebug` will literally go to the next
-Ruby instruction to be executed -- in this case, Active Support's `week` method.
+Se usarmos `step` na mesma situação, o` byebug` irá literalmente para a próxima
+instrução Ruby a ser executada - neste caso, o método `week` do Active Support.
 
 ```
 (byebug) step
@@ -726,27 +722,27 @@ Ruby instruction to be executed -- in this case, Active Support's `week` method.
 (byebug)
 ```
 
-This is one of the best ways to find bugs in your code.
+Essa é uma das melhores maneiras de encontrar erros no seu código.
 
-TIP: You can also use `step n` or `next n` to move forward `n` steps at once.
+DICA: Você também pode usar o `step n` ou o `next n` para avançar `n` passos de uma vez.
 
 ### Breakpoints
 
-A breakpoint makes your application stop whenever a certain point in the program
-is reached. The debugger shell is invoked in that line.
+Um *breakpoint* interrompe sua aplicação sempre que um determinado ponto do programa
+é atingido. O *shell* do *debugger* é chamado nessa linha.
 
-You can add breakpoints dynamically with the command `break` (or just `b`).
-There are 3 possible ways of adding breakpoints manually:
+Você pode adicionar *breakpoints* dinamicamente com o comando `break` (ou apenas `b`).
+Existem três maneiras possíveis de adicionar *breakpoints* manualmente:
 
-* `break n`: set breakpoint in line number _n_ in the current source file.
-* `break file:n [if expression]`: set breakpoint in line number _n_ inside
-file named _file_. If an _expression_ is given it must evaluated to _true_ to
-fire up the debugger.
-* `break class(.|\#)method [if expression]`: set breakpoint in _method_ (. and
-\# for class and instance method respectively) defined in _class_. The
-_expression_ works the same way as with file:n.
+* `break n`: define um *breakpoint* na linha de número _n_ no arquivo fonte atual.
+* `break file:n [if expression]`: define um *breakpoint* na linha de número _n_ dentro
+do arquivo chamado _file_. Se uma _expression_ for dada, ela deve ser avaliada como _true_ para
+iniciar o *debugger*.
+* `break class(.|\#)method [if expression]`: define um breakpoint no _method_ (. e
+\# para classe e método de instância, respectivamente) definido em _class_. O
+_expression_ funciona da mesma maneira que com o `file:n`.
 
-For example, in the previous situation
+Por exemplo, na situação anterior
 
 ```
 [4, 13] in /PathToProject/app/controllers/articles_controller.rb
@@ -766,8 +762,8 @@ Successfully created breakpoint with id 1
 
 ```
 
-Use `info breakpoints` to list breakpoints. If you supply a number, it lists
-that breakpoint. Otherwise it lists all breakpoints.
+Use `info breakpoints` para listar os breakpoints. Se você fornecer um número, ele listará
+esse *breakpoint* correspondente. Caso contrário, ele listará todos os breakpoints.
 
 ```
 (byebug) info breakpoints
@@ -775,9 +771,9 @@ Num Enb What
 1   y   at /PathToProject/app/controllers/articles_controller.rb:11
 ```
 
-To delete breakpoints: use the command `delete n` to remove the breakpoint
-number _n_. If no number is specified, it deletes all breakpoints that are
-currently active.
+Para deletar os *breakpoints*: use o comando `delete n` para remover o *breakpoint*
+de número _n_. Se nenhum número for especificado, ele excluirá todos os *breakpoints* que estão
+ativos no momento.
 
 ```
 (byebug) delete 1
@@ -785,55 +781,55 @@ currently active.
 No breakpoints.
 ```
 
-You can also enable or disable breakpoints:
+Você também pode ativar ou desativar os *breakpoints*:
 
-* `enable breakpoints [n [m [...]]]`: allows a specific breakpoint list or all
-breakpoints to stop your program. This is the default state when you create a
-breakpoint.
-* `disable breakpoints [n [m [...]]]`: make certain (or all) breakpoints have
-no effect on your program.
+* `enable breakpoints [n [m [...]]]`: fornece uma lista de *breakpoints* específicos ou todos
+os *breakpoints* para interromper seu programa. Este é o estado padrão quando você cria um
+*breakpoint*.
+* `disable breakpoints [n [m [...]]]`: garante que certos (ou todos) *breakpoints* não
+tenham efeito no seu programa.
 
-### Catching Exceptions
+### Captura de Exceções
 
-The command `catch exception-name` (or just `cat exception-name`) can be used to
-intercept an exception of type _exception-name_ when there would otherwise be no
-handler for it.
+O comando `catch exception-name` (ou apenas `cat exception-name`) pode ser usado para
+interceptar uma exceção do tipo _exception-name_ quando, de outra forma, não haveria
+um *handler* para isso.
 
-To list all active catchpoints use `catch`.
+Para listar todos os pontos de captura ativos, use `catch`.
 
-### Resuming Execution
+### Continuando a execução
 
-There are two ways to resume execution of an application that is stopped in the
-debugger:
+Existem duas maneiras de retomar a execução de uma aplicação que está parada no
+*debugger*:
 
-* `continue [n]`: resumes program execution at the address where your script last
-stopped; any breakpoints set at that address are bypassed. The optional argument
-`n` allows you to specify a line number to set a one-time breakpoint which is
-deleted when that breakpoint is reached.
-* `finish [n]`: execute until the selected stack frame returns. If no frame
-number is given, the application will run until the currently selected frame
-returns. The currently selected frame starts out the most-recent frame or 0 if
-no frame positioning (e.g up, down, or frame) has been performed. If a frame
-number is given it will run until the specified frame returns.
+* `continue [n]`: retoma a execução do programa no local em que o seu script parou
+pela última vez; quaisquer *breakpoints* definidos nesse local são ignorados. O argumento opcional
+`n` permite especificar um número de linha para definir um *breakpoint* único que é
+excluído quando esse *breakpoint* é atingido.
+* `finish [n]`: executa até a *stack frame* selecionada retornar. Se nenhum número
+de *frame* for fornecido, a aplicação será executada até o *frame* atualmente selecionado
+retornar. O *frame* atualmente selecionado inicia o *frame* mais recente ou 0 se
+nenhum posicionamento de *frame* (por exemplo, para cima, para baixo ou *frame*) foi executado. Se um número
+de *frame* for fornecido, ele será executado até que o *frame* especificado retorne.
 
-### Editing
+### Edição
 
-Two commands allow you to open code from the debugger into an editor:
+Dois comandos permitem abrir o código do *debugger* em um editor:
 
-* `edit [file:n]`: edit file named _file_ using the editor specified by the
-EDITOR environment variable. A specific line _n_ can also be given.
+* `edit [file: n]`: edita o arquivo chamado _file_ usando o editor especificado pelo
+variável de ambiente *EDITOR*. Uma linha específica _n_ também pode ser fornecida.
 
-### Quitting
+### Sair
 
-To exit the debugger, use the `quit` command (abbreviated to `q`). Or, type `q!`
-to bypass the `Really quit? (y/n)` prompt and exit unconditionally.
+Para sair do *debugger*, use o comando `quit` (abreviado para `q`). Ou digite `q!`
+para ignorar a mensagem `Really quit? (y/n)` e sai incondicionalmente.
 
-A simple quit tries to terminate all threads in effect. Therefore your server
-will be stopped and you will have to start it again.
+Uma saída simples tenta finalizar todos as *threads* em vigor. Portanto, seu servidor
+será parado e você precisará iniciá-lo novamente.
 
-### Settings
+### Configurações
 
-`byebug` has a few available options to tweak its behavior:
+O `byebug` possui algumas opções disponíveis para ajustar seu comportamento:
 
 ```
 (byebug) help set

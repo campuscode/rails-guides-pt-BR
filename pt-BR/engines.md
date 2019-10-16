@@ -1,21 +1,19 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Getting Started with Engines
+Introdução às *Engines*
 ============================
 
-In this guide you will learn about engines and how they can be used to provide
-additional functionality to their host applications through a clean and very
-easy-to-use interface.
+Neste guia você irá aprender sobre *engines* e como elas podem ser utilizadas para prover funcionalidades adicionais para suas aplicações hospedeiras através de uma interface bem limpa e fácil de usar.
 
-After reading this guide, you will know:
+Após ler este guia, você saberá:
 
-* What makes an engine.
-* How to generate an engine.
-* How to build features for the engine.
-* How to hook the engine into an application.
-* How to override engine functionality in the application.
-* Avoid loading Rails frameworks with Load and Configuration Hooks
+* O que compõe uma *engine*.
+* Como gerar uma *engine*.
+* Como construir as funcionalidades para a *engine*.
+* Como conectar a *engine* em uma aplicação.
+* Como substituir a funcionalidade de uma *engine* na aplicação.
+* Evitar carregar frameworks Rails com *Load* e *Hooks* de Configuração.
 
 --------------------------------------------------------------------------------
 
