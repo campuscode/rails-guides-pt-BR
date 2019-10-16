@@ -63,22 +63,22 @@ O Rails vai usar essa configuração em particular no Active Record.
 ### Configuração Geral do Rails
 
 Esses métodos de configuração devem ser enviados para objetos do tipo
-`Rails::Railtie`, como uma sublclasse de `Rails::Engine` ou
+`Rails::Railtie`, como uma subclasse de `Rails::Engine` ou
 `Rails::Application`.
 
-* `config.after_initialize` recebe um bloco que seré executado _após_ a inicializaçao da aplicação
+* `config.after_initialize` recebe um bloco que será executado _após_ a inicializaçao da aplicação
 Rails. Isso inclui a inicialização do *framework* em si, *engines*  e todos *initializers*  definidos em
 `config/initializers`. Perceba que esse bloco _será_ executado em tarefas
 *rake*. Essa opção é útil para configurações feitas por outros *initializers*:
 
-    ```ruby
-    config.after_initialize do
-      ActionView::Base.sanitized_allowed_tags.delete 'div'
-    end
-    ```
+```ruby
+config.after_initialize do
+  ActionView::Base.sanitized_allowed_tags.delete 'div'
+end
+```
 
 * `config.asset_host` define o *host* para os *assets*. Essa opção é útil quando
-  CDNs são usados para hospedar *assets*, or para quando você deseja contornar
+  CDNs são usados para hospedar *assets*, ou para quando você deseja contornar
 restrições de concorrência embutidas em navegadores usando diferentes *aliases*
 de domínios. Essa é uma versão encurtada de `config.action_controller.asset_host`.
 
@@ -96,8 +96,8 @@ carregar automaticamente constantes. O padrão são todos diretórios abaixo de
 * `config.add_autoload_paths_to_load_path` determina se os caminhos de auto carregamento devem ser adicionados
 para `$LOAD_PATH`. Esta marcação é `true` por padrão, mas é recomendado que seja
 definida como `false` no recém lançado modo `:zeitwerk`, em
-`config/application.rb`, *Zeitwerk* usa caminhos absolutos internamente e
-aplicações executadas no modo `:zeitwerk` não necessitam de `require_dependency`, então *models*, *controllers*, *jobs*, *etc* não 
+`config/application.rb`. O modo *Zeitwerk* usa caminhos absolutos internamente e
+aplicações executadas neste  modo não necessitam de `require_dependency`, então *models*, *controllers*, *jobs*, *etc* não 
 precisam estar no `$LOAD_PATH`. Ao ser definido como `false`, previne o Ruby de
 verificar estes diretórios quando resolver chamadas de `require` com caminhos
 relativos e reduz o processamento e o consumo de memória RAM do `Bootsnap`, já
@@ -123,46 +123,68 @@ teste e `false` é o padrão no modo de produção. Para um controle mais refina
 defina como `false` e implemente o método `local_request?` em seus *controllers*
 para especificar que requisições devem prover informações de *debug* em erros.
 
-* `config.console` allows you to set class that will be used as console you run `rails console`. It's best to run it in `console` block:
+* `config.console`  permite que você defina qual classe deve ser usada quando executar `rails console`. É melhor que seja executada dentre de um bloco `console`: 
 
     ```ruby
     console do
-      # this block is called only when running console,
-      # so we can safely require pry here
+      # este bloco só é chamado quando o console estiver executando,
+      # então podemos requerer o pry de forma segura
       require "pry"
       config.console = Pry
     end
     ```
 
-* `config.disable_sandbox` controls whether or not someone can start a console in sandbox mode. This is helpful to avoid a long running session of sandbox console, that could lead a database server to run out of memory. Defaults to false.
+* `config.disable_sandbox` controla se o *console* pode ser iniciado ou não no
+  modo *sandbox*. Esta configuração é útil para evitar sessões muito longas de console em
+modo *sandbox*, o que poderia levar o servidor de banco de dados a ficar sem
+memória. O padrão é *false*.
 
-* `config.eager_load` when `true`, eager loads all registered `config.eager_load_namespaces`. This includes your application, engines, Rails frameworks, and any other registered namespace.
+* `config.eager_load` quando `true`, todos *namespaces* definidos em `config.eager_load_namespaces` são carregados de forma ativa (*eager load*).
+Isto inclui a sua aplicação, *engines*, frameworks do Rails e qualquer outra
+*namespace* definida.
 
-* `config.eager_load_namespaces` registers namespaces that are eager loaded when `config.eager_load` is `true`. All namespaces in the list must respond to the `eager_load!` method.
+* `config.eager_load_namespaces` define todas *namespaces* que serão carregadas ativamente (*eager load*) quando `config.eager_load` estiver definido como `true`.
+Todas *namespaces* na lista devem responder ao método `eager_load!`.
 
-* `config.eager_load_paths` accepts an array of paths from which Rails will eager load on boot if cache classes is enabled. Defaults to every folder in the `app` directory of the application.
+* `config.eager_load_paths` recebe um *array* de caminhos de onde o Rails deve carregar ativamente na inicialização se o cache de classes está ativo.
+O padrão é para todas as pastas dentro do diretório `app` da aplicação.
 
-* `config.enable_dependency_loading`: when true, enables autoloading, even if the application is eager loaded and `config.cache_classes` is set as true. Defaults to false.
+* `config.enable_dependency_loading`: quando definido como verdadeiro, habilita o autocarreagmento, mesmo se a aplicação está carregada ativamente
+e `config.cache_classes` está defenido como *true*. O padrão é *false*
 
-* `config.encoding` sets up the application-wide encoding. Defaults to UTF-8.
+* `config.encoding` define o *encoding* para toda a aplicação. O padrão é UTF-8.
 
-* `config.exceptions_app` sets the exceptions application invoked by the ShowException middleware when an exception happens. Defaults to `ActionDispatch::PublicExceptions.new(Rails.public_path)`.
+* `config.exceptions_app` define a aplicação invocada pelo *middleware*
+  `ShowException` quando uma exceção acontece. O padrão é `ActionDispatch::PublicExceptions.new(Rails.public_path)`.
 
-* `config.debug_exception_response_format` sets the format used in responses when errors occur in development mode. Defaults to `:api` for API only apps and `:default` for normal apps.
+* `config.debug_exception_response_format` define o formato usado nas respostas quando errors acontecem em modo desenvolvimento.
+O padrão é `:api` para aplicações somente API e `:default` para aplicações
+regulares.
 
-* `config.file_watcher` is the class used to detect file updates in the file system when `config.reload_classes_only_on_change` is `true`. Rails ships with `ActiveSupport::FileUpdateChecker`, the default, and `ActiveSupport::EventedFileUpdateChecker` (this one depends on the [listen](https://github.com/guard/listen) gem). Custom classes must conform to the `ActiveSupport::FileUpdateChecker` API.
+* `config.file_watcher` é a classe usada para detectar atualizações nos arquivos
+  quando `config.reload_classes_only_on_change` está definido como `true`. Rails é distribuído com a classe `ActiveSupport::FileUpdateChecker`, 
+que é o padrão, e com `ActiveSupport::EventedFileUpdateChecker` (que depende da gem [listen](https://github.com/guard/listen)).
+Classes customizadas devem respeitar a API de `ActiveSupport::FileUpdateChecker`.
 
-* `config.filter_parameters` used for filtering out the parameters that
-you don't want shown in the logs, such as passwords or credit card
-numbers. It also filters out sensitive values of database columns when call `#inspect` on an Active Record object. By default, Rails filters out passwords by adding `Rails.application.config.filter_parameters += [:password]` in `config/initializers/filter_parameter_logging.rb`. Parameters filter works by partial matching regular expression.
+* `config.filter_parameters` é usado para filtrar os parametros que você não
+  deseja exibir nos logs, tais como senhas ou números de cartões de crédito.
+Essa configuraçnao também filtra valores sensíveis de colunas de bancos de dados
+quando o método `#inspect` é enviado a um objeto de Active Record. Por padrnao o
+Rails filtra senhas ao adicionar  `Rails.application.config.filter_parameters += [:password]` em `config/initializers/filter_parameter_logging.rb`. 
+O filtro de parametros funciona através da equivalência parcial de expressões
+regulares.
 
-* `config.force_ssl` forces all requests to be served over HTTPS by using the `ActionDispatch::SSL` middleware, and sets `config.action_mailer.default_url_options` to be `{ protocol: 'https' }`. This can be configured by setting `config.ssl_options` - see the [ActionDispatch::SSL documentation](https://api.rubyonrails.org/classes/ActionDispatch/SSL.html) for details.
+* `config.force_ssl` impõe que todas requisições sejam tratadas através de HTTPS utilizando o *middleware* `ActionDispatch::SSL`, e define o valor de `config.action_mailer.default_url_options` como `{ protocol: 'https' }`. 
+Essa configuração pode ser feita através de `config.ssl_options` - veja [a documentação de ActionDispatch::SSL](https://api.rubyonrails.org/classes/ActionDispatch/SSL.html) para mais detalhes.
 
-* `config.log_formatter` defines the formatter of the Rails logger. This option defaults to an instance of `ActiveSupport::Logger::SimpleFormatter` for all modes. If you are setting a value for `config.logger` you must manually pass the value of your formatter to your logger before it is wrapped in an `ActiveSupport::TaggedLogging` instance, Rails will not do it for you.
+* `config.log_formatter` define o formatador do *logger* do Rails. O valor
+  padrão é uma instancia de `ActiveSupport::Logger::SimpleFormatter` para todos os modos. 
+Se você definir um valor para `config.logger` você deve enviar o valor do seu
+formatador manualmente, antes que ele seja acondicionado em uma instancia de `ActiveSupport::TaggedLogging`, o Rails não fará isso por você.
 
-* `config.log_level` defines the verbosity of the Rails logger. This option
-defaults to `:debug` for all environments. The available log levels are: `:debug`,
-`:info`, `:warn`, `:error`, `:fatal`, and `:unknown`.
+* `config.log_level` define a verbosidade do *logger* do Rails. O padrão dessa
+  opção é `:debug` para todos ambientes. Os níveis disponíveis são `:debug`,
+`:info`, `:warn`, `:error`, `:fatal`, e `:unknown`.
 
 * `config.log_tags` accepts a list of: methods that the `request` object responds to, a `Proc` that accepts the `request` object, or something that responds to `to_s`. This makes it easy to tag log lines with debug information like subdomain and request id - both very helpful in debugging multi-user production applications.
 
