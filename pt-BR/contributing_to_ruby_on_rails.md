@@ -20,7 +20,7 @@ README](https://github.com/rails/rails/blob/master/README.md), everyone interact
 
 --------------------------------------------------------------------------------
 
-Relatar um Issue
+Relatar uma Issue
 ------------------
 
 O Ruby on Rails usa o [Rastreamento de Issues (Issue Tracking) do GitHub](https://github.com/rails/rails/issues) para rastrear problemas (principalmente erros e contribuições de código novo). e você encontrou um bug no Ruby on Rails, este é o lugar para começar. Você precisará criar uma conta (gratuita) do GitHub para enviar um issue, comentar sobre eles ou criar pull requests.
