@@ -20,33 +20,33 @@ README](https://github.com/rails/rails/blob/master/README.md), everyone interact
 
 --------------------------------------------------------------------------------
 
-Relatar uma Issue
+Relatar uma *Issue*
 ------------------
 
 O Ruby on Rails usa o [Rastreamento de *Issues* (Issue Tracking) do GitHub](https://github.com/rails/rails/issues) para rastrear problemas (principalmente *bugs* e contribuições de código novo). Se você encontrou um *bug* no Ruby on Rails, este é o lugar para começar. Você precisará criar uma conta (gratuita) do GitHub para enviar uma *issue*, comentar sobre elas ou criar *pull requests*.
 
-NOTA: Os erros na versão mais recente do Ruby on Rails provavelmente receberão mais atenção. Além disso, a equipe principal do Rails está sempre interessada no feedback daqueles que podem dedicar algum tempo para testar o "edge Rails"  (o código para a versão do Rails que está atualmente em desenvolvimento). Mais adiante neste guia, você descobrirá como obter o Edge Rails para testes.
+NOTA: Os *bugs* na versão mais recente do Ruby on Rails provavelmente receberão mais atenção. Além disso, a equipe principal do Rails está sempre interessada no feedback daqueles que podem dedicar algum tempo para testar o  Rails Instável(ou Edge Rails, o código para a versão do Rails que está atualmente em desenvolvimento). Mais adiante neste guia, você descobrirá como obter o Rails Instável para testes.
 
 ### Criando um Relatório de *Bug*
 
-Se você encontrou um problema no Ruby on Rails que não é um risco de segurança, faça uma pesquisa no GitHub em [Issues](https://github.com/rails/rails/issues), caso já tenha sido relatado. Se você não conseguir encontrar nenhuma *issue* aberta no GitHub que resolva o problema encontrado, sua próxima etapa será [abrir uma nova](https://github.com/rails/rails/issues/new). (Consulte a próxima seção para relatar problemas de segurança.)
+Se você encontrou um problema no Ruby on Rails que não é um risco de segurança, faça uma pesquisa no GitHub em [*Issues*](https://github.com/rails/rails/issues), caso já tenha sido relatado. Se você não conseguir encontrar nenhuma *issue* aberta no GitHub que resolva o problema encontrado, sua próxima etapa será [abrir uma nova](https://github.com/rails/rails/issues/new). (Consulte a próxima seção para relatar problemas de segurança.)
 
 
-O relatório do problema (issue report) deve conter um título e uma descrição clara do problema, no mínimo. Você deve incluir o máximo de informações relevantes possível e, pelo menos, postar um exemplo de código que demonstre o problema. Seria ainda melhor se você pudesse incluir um teste de unidade que mostra como o comportamento esperado não está ocorrendo. Seu objetivo deve ser tornar fácil para você - e outras pessoas - reproduzir o bug e descobrir uma correção.
+O relatório do problema (*issue report*) deve conter um título e uma descrição clara do problema, no mínimo. Você deve incluir o máximo de informações relevantes possível e, pelo menos, postar um exemplo de código que demonstre o problema. Seria ainda melhor se você pudesse incluir um teste de unidade que mostra como o comportamento esperado não está ocorrendo. Seu objetivo deve ser tornar fácil para você - e outras pessoas - reproduzir o bug e descobrir uma correção.
 
-Então, não tenha muitas esperanças! A menos que você tenha um tipo de bug "Código Vermelho, Missão Crítica, o Mundo Está Chegando ao Fim", você está criando este relatório de problemas na esperança de que outras pessoas com o mesmo problema possam colaborar com você para resolvê-lo. Não espere que o relatório de problemas veja automaticamente qualquer atividade ou que outras pessoas pulem para corrigi-lo. A criação de uma *issue* como esse serve principalmente para ajudar você a começar o caminho para corrigir o problema e para que outros o confirmem com um comentário "Estou tendo esse problema também".
+Então, não tenha muitas esperanças! A menos que você tenha um *bug* do tipo "Código Vermelho, Estado Crítico", você está criando este relatório de problemas na esperança de que outras pessoas com o mesmo problema possam colaborar com você para resolvê-lo. Não espere que o relatório de problemas veja automaticamente qualquer atividade ou que outras pessoas pulem para corrigi-lo. A criação de uma *issue* como esse serve principalmente para ajudar você a começar o caminho para corrigir o problema e para que outros o confirmem com um comentário "Estou tendo esse problema também".
 
 ### Criar um Caso de Teste Executável
 
-Ter uma maneira de reproduzir seu problema será muito útil para que outras pessoas ajudem a confirmar, investigar e, finalmente, corrigi-lo. Você pode fazer isso fornecendo um caso de teste executável. Para facilitar esse processo, preparamos vários modelos de relatório de erros para você usar como ponto de partida:
+Ter uma maneira de reproduzir seu problema será muito útil para que outras pessoas ajudem a confirmar, investigar e, finalmente, corrigi-lo. Você pode fazer isso fornecendo um caso de teste executável. Para facilitar esse processo, preparamos vários modelos de relatório de *bugs* para você usar como ponto de partida:
 
-* Modelo de issue para registro ativo (modelos, banco de dados): [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_master.rb)
-* Modelo de issue para registro ativo (modelos, banco de dados): [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_master.rb)
-* Modelo de issue para Action Pack (controladores, roteamento): [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_master.rb)
-* Modelo de issue do trabalho ativo: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_master.rb)
-* Modelo de issue genérico para outros problemas: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_master.rb)
+* Modelo de *issue* para registro ativo (modelos, banco de dados): [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_master.rb)
+* Modelo de *issue* para registro ativo (modelos, banco de dados): [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_master.rb)
+* Modelo de *issue* para Action Pack (controladores, roteamento): [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_master.rb)
+* Modelo de *issue* do trabalho ativo: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_master.rb)
+* Modelo de *issue* genérico para outros problemas: [gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_master.rb)
 
-Esses modelos incluem o código padrão para configurar um caso de teste contra uma versão lançada do Rails (`*_gem.rb`) ou edge Rails (`*_master.rb`).
+Esses modelos incluem o código padrão para configurar um caso de teste contra uma versão lançada do Rails (`*_gem.rb`) ou Rails Instável (`*_master.rb`).
 
 Simplesmente copie o conteúdo do modelo apropriado em um arquivo `.rb` e faça as alterações necessárias para demonstrar o problema. Você pode executá-lo executando  `ruby the_file.rb` no seu terminal. Se tudo correr bem, você verá seu caso de teste falhando.
 
