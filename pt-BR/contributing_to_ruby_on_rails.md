@@ -29,7 +29,7 @@ NOTA: Os erros na versão mais recente do Ruby on Rails provavelmente receberão
 
 ### Criando um Relatório de *Bug*
 
-Se você encontrou um problema no Ruby on Rails que não é um risco de segurança, faça uma pesquisa no GitHub [Issues](https://github.com/rails/rails/issues), caso já tenha sido relatado. Se você não conseguir encontrar nenhum issue aberto do GitHub que resolva o problema encontrado, sua próxima etapa será [abrir um novo](https://github.com/rails/rails/issues/new). (Consulte a próxima seção para relatar problemas de segurança.)
+Se você encontrou um problema no Ruby on Rails que não é um risco de segurança, faça uma pesquisa no GitHub em [Issues](https://github.com/rails/rails/issues), caso já tenha sido relatado. Se você não conseguir encontrar nenhuma *issue* aberta no GitHub que resolva o problema encontrado, sua próxima etapa será [abrir uma nova](https://github.com/rails/rails/issues/new). (Consulte a próxima seção para relatar problemas de segurança.)
 
 
 O relatório do problema (issue report) deve conter um título e uma descrição clara do problema, no mínimo. Você deve incluir o máximo de informações relevantes possível e, pelo menos, postar um exemplo de código que demonstre o problema. Seria ainda melhor se você pudesse incluir um teste de unidade que mostra como o comportamento esperado não está ocorrendo. Seu objetivo deve ser tornar fácil para você - e outras pessoas - reproduzir o bug e descobrir uma correção.
