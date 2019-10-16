@@ -27,7 +27,7 @@ O Ruby on Rails usa o [Rastreamento de *Issues* (Issue Tracking) do GitHub](http
 
 NOTA: Os erros na versão mais recente do Ruby on Rails provavelmente receberão mais atenção. Além disso, a equipe principal do Rails está sempre interessada no feedback daqueles que podem dedicar algum tempo para testar o "edge Rails"  (o código para a versão do Rails que está atualmente em desenvolvimento). Mais adiante neste guia, você descobrirá como obter o Edge Rails para testes.
 
-### Criando um relatório de bug
+### Criando um Relatório de *Bug*
 
 Se você encontrou um problema no Ruby on Rails que não é um risco de segurança, faça uma pesquisa no GitHub [Issues](https://github.com/rails/rails/issues), caso já tenha sido relatado. Se você não conseguir encontrar nenhum issue aberto do GitHub que resolva o problema encontrado, sua próxima etapa será [abrir um novo](https://github.com/rails/rails/issues/new). (Consulte a próxima seção para relatar problemas de segurança.)
 
