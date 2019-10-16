@@ -36,7 +36,7 @@ O relatório do problema (issue report) deve conter um título e uma descrição
 
 Então, não tenha muitas esperanças! A menos que você tenha um tipo de bug "Código Vermelho, Missão Crítica, o Mundo Está Chegando ao Fim", você está criando este relatório de problemas na esperança de que outras pessoas com o mesmo problema possam colaborar com você para resolvê-lo. Não espere que o relatório de problemas veja automaticamente qualquer atividade ou que outras pessoas pulem para corrigi-lo. A criação de um issue como esse serve principalmente para ajudar você a começar o caminho para corrigir o problema e para que outros o confirmem com um comentário "Estou tendo esse problema também".
 
-### Criar um caso de teste executável
+### Criar um Caso de Teste Executável
 
 Ter uma maneira de reproduzir seu problema será muito útil para que outras pessoas ajudem a confirmar, investigar e, finalmente, corrigi-lo. Você pode fazer isso fornecendo um caso de teste executável. Para facilitar esse processo, preparamos vários modelos de relatório de erros para você usar como ponto de partida:
 
