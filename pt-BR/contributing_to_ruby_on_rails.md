@@ -25,7 +25,7 @@ Relatar uma *Issue*
 
 O Ruby on Rails usa o [Rastreamento de *Issues* (Issue Tracking) do GitHub](https://github.com/rails/rails/issues) para rastrear problemas (principalmente *bugs* e contribuições de código novo). Se você encontrou um *bug* no Ruby on Rails, este é o lugar para começar. Você precisará criar uma conta (gratuita) do GitHub para enviar uma *issue*, comentar sobre elas ou criar *pull requests*.
 
-NOTA: Os *bugs* na versão mais recente do Ruby on Rails provavelmente receberão mais atenção. Além disso, a equipe principal do Rails está sempre interessada no feedback daqueles que podem dedicar algum tempo para testar o  Rails Instável(ou Edge Rails, o código para a versão do Rails que está atualmente em desenvolvimento). Mais adiante neste guia, você descobrirá como obter o Rails Instável para testes.
+NOTA: Os *bugs* na versão mais recente do Ruby on Rails provavelmente receberão mais atenção. Além disso, a equipe principal do Rails está sempre interessada no feedback daqueles que podem dedicar algum tempo para testar o  Rails Instável(ou *Edge Rails*, o código para a versão do Rails que está atualmente em desenvolvimento). Mais adiante neste guia, você descobrirá como obter o Rails Instável para testes.
 
 ### Criando um Relatório de *Bug*
 
