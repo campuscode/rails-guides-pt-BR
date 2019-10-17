@@ -412,4 +412,4 @@ Alguns módulos comuns que você pode querer adicionar:
   O Rails *não* faz essa configuração automaticamente
 
 O melhor lugar para adicionar um módulo é em sua `ApplicationController`, mas 
-você também pode adicionar módulos em controllers individuais.
+você também pode adicionar módulos em *controllers* individuais.
