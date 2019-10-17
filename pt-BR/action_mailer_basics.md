@@ -732,7 +732,7 @@ end
 Usando os helpers do Action Mailer
 ---------------------------
 
-O Action Mailer agora herda apenas do `AbstractController`, para que você tenha acesso aos mesmos helpers genéricos que no Action Controller.
+O *Action Mailer* agora herda apenas do `AbstractController`, para que você tenha acesso aos mesmos *helpers* genéricos que no *Action Controller*.
 
 Action Mailer Configuration
 ---------------------------
