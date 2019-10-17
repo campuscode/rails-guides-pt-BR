@@ -186,12 +186,23 @@ formatador manualmente, antes que ele seja acondicionado em uma instancia de `Ac
   opção é `:debug` para todos ambientes. Os níveis disponíveis são `:debug`,
 `:info`, `:warn`, `:error`, `:fatal`, e `:unknown`.
 
-* `config.log_tags` accepts a list of: methods that the `request` object responds to, a `Proc` that accepts the `request` object, or something that responds to `to_s`. This makes it easy to tag log lines with debug information like subdomain and request id - both very helpful in debugging multi-user production applications.
+* `config.log_tags` aceita uma lista de: mmétodos que o objeto `request`
+  responde, uma `Proc` que aceita um objeto de `request`, ou algo que responda
+ao método `to_s`. Isto torna fácil adicionar linhas ao *log* com informações
+sobre o *debug*, como subdomínios e *ids* de requisições - ambos muito úteis
+para *debugar* aplicações multi-usuário em produção.
 
-* `config.logger` is the logger that will be used for `Rails.logger` and any related Rails logging such as `ActiveRecord::Base.logger`. It defaults to an instance of `ActiveSupport::TaggedLogging` that wraps an instance of `ActiveSupport::Logger` which outputs a log to the `log/` directory. You can supply a custom logger, to get full compatibility you must follow these guidelines:
-  * To support a formatter, you must manually assign a formatter from the `config.log_formatter` value to the logger.
-  * To support tagged logs, the log instance must be wrapped with `ActiveSupport::TaggedLogging`.
-  * To support silencing, the logger must include `ActiveSupport::LoggerSilence`  module. The `ActiveSupport::Logger` class already includes these modules.
+
+* `config.logger` é o *logger* que será usado pelo `Rails.logger` e qualquer
+  outro *log* relacionado ao Rails, tal como `ActiveRecord::Base.logger`. 
+O padrão é uma instancia de `ActiveSupport::TaggedLogging` que envolve uma instancia de `ActiveSupport::Logger`, que registra a saída do *log* no diretório `log/`.
+Você pode informar um *logger* personalizado, para obter compatibilidade total
+você deve seguir esses requisitos:
+ * Para suportar um formatador, você deve atribuir manualmente o formatador de
+   `config.log_formatter` para o *logger*.
+ * Para suportar *logs* com etiquetaas (*tags*), a instancia do *log* deve ser
+   envolvida com `ActiveSupport::TaggedLogging`
+ * Para suportar o silenciamento, o *logger* deve incluir o módulo `ActiveSupport::LoggerSilence`. A classe `ActiveSupport::Logger` já inclui esse módulo.
 
     ```ruby
     class MyLogger < ::Logger
@@ -203,29 +214,53 @@ formatador manualmente, antes que ele seja acondicionado em uma instancia de `Ac
     config.logger      = ActiveSupport::TaggedLogging.new(mylogger)
     ```
 
-* `config.middleware` allows you to configure the application's middleware. This is covered in depth in the [Configuring Middleware](#configuring-middleware) section below.
+* `config.middleware` permite configurar o *middleware* da aplicação. Esse tópico é coberto em detalhes em [Configurando o Middleware](#configuring-middleware).
 
-* `config.reload_classes_only_on_change` enables or disables reloading of classes only when tracked files change. By default tracks everything on autoload paths and is set to `true`. If `config.cache_classes` is `true`, this option is ignored.
+* `config.reload_classes_only_on_change` habilita ou desabilita a recarga de
+  classes somente quando arquivos monitorados são modificados. Por padrão são
+monitorados todos caminhos de auto carregamento (*autoload*). Se
+`config.cache_classes` está definido como `true`, essa opção é ignorada. 
 
-* `config.credentials.content_path` configures lookup path for encrypted credentials.
 
-* `config.credentials.key_path` configures lookup path for encryption key.
+* `config.credentials.content_path` configura o caminho para busca por credenciais encriptadas.
 
-* `secret_key_base` is used for specifying a key which allows sessions for the application to be verified against a known secure key to prevent tampering. Applications get a random generated key in test and development environments, other environments should set one in `config/credentials.yml.enc`.
+* `config.credentials.key_path` configura o caminho para busca por chaves de
+  criptografia.
 
-* `config.public_file_server.enabled` configures Rails to serve static files from the public directory. This option defaults to `true`, but in the production environment it is set to `false` because the server software (e.g. NGINX or Apache) used to run the application should serve static files instead. If you are running or testing your app in production mode using WEBrick (it is not recommended to use WEBrick in production) set the option to `true`. Otherwise, you won't be able to use page caching and request for files that exist under the public directory.
+* `secret_key_base` é usado para especificar uma chave que permite que sessões
+  da aplicação sejam verificadas conrta uma chave segura conhecida, para
+prevenir falsificações (*tampering*). Aplicações recebem uma chave gerada
+aleatoriamente nos ambientes de desenvolvimento e teste, outros ambientes devem
+definir uma chave em `config/credentials.yml.enc`.
 
-* `config.session_store` specifies what class to use to store the session. Possible values are `:cookie_store` which is the default, `:mem_cache_store`, and `:disabled`. The last one tells Rails not to deal with sessions. Defaults to a cookie store with application name as the session key. Custom session stores can also be specified:
+* `config.public_file_server.enabled` configura o Rails para servir arquivos estáticos a partir do diretório `public`.
+O padrão é `true`, mas no ambiente de produção é definido como `false` porque o
+software servidor (como NGINX ou Apache) usado para executar a aplicação deve
+servir os arquivos estáticos. Se você esta executando ou testando sua aplicação
+no modo produção usando WEBrick (não é recomendado usar WEBrick em produção)
+defina a opção como `true`. De outra forma, você não será capaz de usar o
+cacheamento de paginas e requisições para arquivos que existam no diretório
+`public`.
+
+* `config.session_store` define que classe usar para armazenar a sessão. Os
+  valores possíveis são `:cookie_store`, que é o padrão, `:mem_cache_store` e
+`:disabled`. O último indica que o Rails não deve tratar de sessões. O padrão
+armazena cookies com o nome da aplicação como a chave da sessão. Armazenadores
+personalizados de sessão também podem ser definidos:
 
     ```ruby
     config.session_store :my_custom_store
     ```
 
-    This custom store must be defined as `ActionDispatch::Session::MyCustomStore`.
+    Esse armazenamento personalizado deve ser definido como `ActionDispatch::Session::MyCustomStore`.
 
-* `config.time_zone` sets the default time zone for the application and enables time zone awareness for Active Record.
+* `config.time_zone` define o fuso horário para a aplicação e torna o *Active Record* ciente deste fuso horário.
 
-* `config.autoloader` sets the autoloading mode. This option defaults to `:zeitwerk` if `6.0` is specified in `config.load_defaults`. Applications can still use the classic autoloader by setting this value to `:classic` after loading the framework defaults:
+* `config.autoloader` configura o modo de autocarregamento. O padrão da opção é
+  `:zeitwerk` se em `config.load_defaults` o valor for `6.0`. Aplicações ainda
+podem usar o autocarregador clássico ao definir o valor dessa configuração
+como `:classic` após carregar os valores padrão do *framework*:
+
 
     ```ruby
     config.load_defaults "6.0"
