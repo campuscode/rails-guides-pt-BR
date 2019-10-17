@@ -30,7 +30,7 @@ Mailers tem:
 
 * *Actions*, e também, *views* associadas que aparecem em `app/views`.
 * Variáveis de instância acessíveis nas *views*.
-* A capacidade de utilizar layouts e partials.
+* A capacidade de utilizar *layouts* e *partials*.
 * A capacidade de acessar um hash de parâmetros.
 
 Sending Emails
