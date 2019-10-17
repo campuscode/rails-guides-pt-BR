@@ -190,26 +190,26 @@ of the files and folders that Rails created by default:
 Olá, Rails!
 -------------
 
-Para começarmos, vamos rapidamente fazer algum texto aparecer na tela. Para fazer isso, você precisa
+Para começar, vamos exibir rapidamente algum texto na tela. Para isso, você precisa
 colocar a seu servidor de aplicações Rails para rodar.
 
 ### Iniciando o Servidor Web
 
 Na verdade, você já tem uma aplicação Rails funcional. Para vê-la, você precisa
 iniciar um servidor web na sua máquina de desenvolvimento. Você pode fazer isso executando o
-seguinte dentro do diretório `blog`:
+seguinte comando dentro do diretório `blog`:
 
 ```bash
 $ rails server
 ```
 
-DICA: Se você está usando Windows, você precisa passar os scripts dentro da pasta `bin`
+DICA: Se você estiver utilizando o Windows, precisará passar os scripts dentro da pasta `bin`
 diretamente para o interpretador Ruby e.g. `ruby bin\rails server`.
 
-DICA: A compressão de _assets_ JavaScript necessitam que você
-tenha o _runtime_ JavaScript disponível no seu sistema, caso um _runtime_
-esteja ausente você irá ver um erro `execjs` durante a compilação de _assets_.
-Normalmente macOS e Windows vêm com um _runtime_ JavaScript instalado.
+DICA: A compactação de _assets_ JavaScript requer que você
+tenha o _runtime_ JavaScript disponível no seu sistema, caso contrário,
+você verá um erro `execjs` durante a compilação de _assets_.
+Normalmente, macOS e Windows vêm com um _runtime_ JavaScript instalado.
 `therubyrhino` é o _runtime_ recomendado para usuários JRuby e é adicionado por
 padrão para o `Gemfile` nos _apps_ gerados pelo JRuby. Você pode investigar
 todos os _runtimes_ suportados em [ExecJS](https://github.com/rails/execjs#readme).
