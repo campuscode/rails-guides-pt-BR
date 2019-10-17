@@ -20,7 +20,7 @@ After reading this guide, you will know:
 Introdução
 ------------
 
-Action Mailer permite que você envie emails direto da sua aplicação usando as 
+*Action Mailer* permite que você envie emails direto da sua aplicação usando as 
 classes e views *Mailer*
 
 #### Mailers são semelhantes a controllers
