@@ -369,7 +369,7 @@ Uma aplicação API (utilizando `ActionController::API`) vem com os seguintes m�
 - `ActionController::DataStreaming`: Suporte para `send_file` e `send_data`.
 - `AbstractController::Callbacks`: Suporte para `before_action` e helpers similares.
 - `ActionController::Rescue`: Suporte para `rescue_from`.
-- `ActionController::Instrumentation`: Suporte para ganchos de instrumentação definidos pela Action Controller (veja [o guia da instrumentação](active_support_instrumentation.html#action-controller) para mais informações a respeito disso)
+- `ActionController::Instrumentation`: Suporte para ganchos de instrumentação definidos pela *Action Controller* (veja [o guia da instrumentação](active_support_instrumentation.html#action-controller) para mais informações a respeito disso)
 - `ActionController::ParamsWrapper`: Agrupa o hash dos parâmetros em um hash encadeado, para que você não precise especificar elementos raiz enviando requisições POST, por exemplo.
 - `ActionController::Head`: Suporte para o retorno de uma resposta sem conteúdo, apenas *headers*
 
