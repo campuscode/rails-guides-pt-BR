@@ -28,7 +28,7 @@ classes e views *Mailer*
 Eles herdam do `ActionMailer::Base` e se encontram na `app/mailers`. Os Mailers também funcionam de maneira muito semelhante aos controllers. Alguns exemplos de semelhanças são mostrados abaixo.
 Mailers tem:
 
-* Actions, e também, views associadas que aparecem em `app/views`.
+* *Actions*, e também, *views* associadas que aparecem em `app/views`.
 * Variáveis de instância acessíveis nas views.
 * A capacidade de utilizar layouts e partials.
 * A capacidade de acessar um hash de parâmetros.
