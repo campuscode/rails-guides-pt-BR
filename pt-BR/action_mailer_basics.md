@@ -29,7 +29,7 @@ Eles herdam do `ActionMailer::Base` e se encontram na `app/mailers`. Os Mailers 
 Mailers tem:
 
 * *Actions*, e também, *views* associadas que aparecem em `app/views`.
-* Variáveis de instância acessíveis nas views.
+* Variáveis de instância acessíveis nas *views*.
 * A capacidade de utilizar layouts e partials.
 * A capacidade de acessar um hash de parâmetros.
 
