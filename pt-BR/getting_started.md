@@ -335,21 +335,15 @@ action and is rendering the view correctly.
 
 TIP: For more information about routing, refer to [Rails Routing from the Outside In](routing.html).
 
-Getting Up and Running
+Iniciando
 ----------------------
 
-Now that you've seen how to create a controller, an action, and a view, let's
-create something with a bit more substance.
+Agora que você já viu como criar um *controller*, uma *action*, e uma *view*, vamos criar algo um pouco mais relevante.
 
-In the Blog application, you will now create a new _resource_. A resource is the
-term used for a collection of similar objects, such as articles, people, or
-animals.
-You can create, read, update, and destroy items for a resource and these
-operations are referred to as _CRUD_ operations.
+Na aplicação do Blog você irá criar um novo *resource*. *Resource* é um termo utilizado para uma coleção de objetos similares, como artigos, pessoas ou animais.
+Você pode criar, visualizar, editar e deletar dados de um *resource* e essas ações são definidas como operações *CRUD*.
 
-Rails provides a `resources` method which can be used to declare a standard REST
-resource. You need to add the _article resource_ to the
-`config/routes.rb` so the file will look as follows:
+O Rails te fornece um método `resources` que pode ser usado para declarar um recurso padrão *REST*. Você precisa adicionar o *article resource* no `config/routes.rb` e o arquivo ficará como a seguir:
 
 ```ruby
 Rails.application.routes.draw do
@@ -361,10 +355,8 @@ Rails.application.routes.draw do
 end
 ```
 
-If you run `rails routes`, you'll see that it has defined routes for all the
-standard RESTful actions.  The meaning of the prefix column (and other columns)
-will be seen later, but for now notice that Rails has inferred the
-singular form `article` and makes meaningful use of the distinction.
+Se você rodar `rails routes`, você verá que ele definiu rotas para todas as ações padrão *RESTful*.
+O significado do prefixo da coluna (e de outras colunas) será visto mais a diante, mas por equanto, observe que o Rails entende `article` de forma singular e faz o uso significativo da distinção.
 
 ```bash
 $ rails routes
@@ -381,14 +373,11 @@ welcome_index GET    /welcome/index(.:format)     welcome#index
          root GET    /                            welcome#index
 ```
 
-In the next section, you will add the ability to create new articles in your
-application and be able to view them. This is the "C" and the "R" from CRUD:
-create and read. The form for doing this will look like this:
+Na próxima sessão, você será capaz de criar novos artigos em sua aplicação e poderá visualizá-los. Este é o "C" e o "R" do *CRUD*: criação e visualização. O formulário para fazer isso ficará assim:
 
 ![The new article form](images/getting_started/new_article.png)
 
-It will look a little basic for now, but that's ok. We'll look at improving the
-styling for it afterwards.
+Por equanto ele está um pouco simples, mas tudo bem. Nós iremos melhorar o estilo mais a diante.
 
 ### Laying down the groundwork
 
