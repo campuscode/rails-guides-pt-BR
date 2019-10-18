@@ -63,7 +63,7 @@ The Rails philosophy includes two major guiding principles:
 
 Criando um novo projeto Rails
 ----------------------------
-A melhor maneira de ler este guia é seguí-lo passo a passo. Todos as etapas são
+A melhor maneira de ler este guia é seguí-lo passo a passo. Todas as etapas são
 essenciais para rodar este exemplo de aplicação e nenhum código ou passos
 adicionais são necessários.
 
@@ -151,46 +151,50 @@ o comando `bundle install`.
 
 NOTE: Se você está usando *Windows Subsystem for Linux* então você está sob
 algumas limitações de notificações do sistema de arquivos, o que significa que
-você deve desabilitar o as gems `spring` e `listen`.
+você deve desabilitar as gems `spring` e `listen`, o que você pode fazer rodando
+`rails new blog --skip-spring --skip-listen`.
 
-NOTE: If you're using Windows Subsystem for Linux then there are currently some
-limitations on file system notifications that mean you should disable the `spring`
-and `listen` gems which you can do by running `rails new blog --skip-spring --skip-listen`.
+TIP: Você pode ver todas as opções de comandos que o construtor de
+Aplitações Rails aceita, rodando `rails new -h`.
 
-TIP: You can see all of the command line options that the Rails application
-builder accepts by running `rails new -h`.
-
-After you create the blog application, switch to its folder:
+Após criar a aplicação blog, navegue para o seu diretório:
 
 ```bash
 $ cd blog
 ```
+
+O diretório `blog` possui vários arquivos gerados automaticameente e pastas que
+compõem a estrutura da Aplicação Rails. Neste tutorial, a maior parte do
+trabalho vai acontecer na pasta `app`, mas abaixo segue um resumo básico das
+funções de cada arquivo e pasta que o Rails cria por padrão:
 
 The `blog` directory has a number of auto-generated files and folders that make
 up the structure of a Rails application. Most of the work in this tutorial will
 happen in the `app` folder, but here's a basic rundown on the function of each
 of the files and folders that Rails created by default:
 
-| File/Folder | Purpose |
+
+| Arquivo/Pasta | Propósito |
 | ----------- | ------- |
-|app/|Contains the controllers, models, views, helpers, mailers, channels, jobs, and assets for your application. You'll focus on this folder for the remainder of this guide.|
-|bin/|Contains the rails script that starts your app and can contain other scripts you use to setup, update, deploy, or run your application.|
-|config/|Configure your application's routes, database, and more. This is covered in more detail in [Configuring Rails Applications](configuring.html).|
-|config.ru|Rack configuration for Rack based servers used to start the application. For more information about Rack, see the [Rack website](https://rack.github.io/).|
-|db/|Contains your current database schema, as well as the database migrations.|
-|Gemfile<br>Gemfile.lock|These files allow you to specify what gem dependencies are needed for your Rails application. These files are used by the Bundler gem. For more information about Bundler, see the [Bundler website](https://bundler.io).|
-|lib/|Extended modules for your application.|
-|log/|Application log files.|
-|package.json|This file allows you to specify what npm dependencies are needed for your Rails application. This file is used by Yarn. For more information about Yarn, see the [Yarn website](https://yarnpkg.com/lang/en/).|
-|public/|The only folder seen by the world as-is. Contains static files and compiled assets.|
-|Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Rails. Rather than changing `Rakefile`, you should add your own tasks by adding files to the `lib/tasks` directory of your application.|
-|README.md|This is a brief instruction manual for your application. You should edit this file to tell others what your application does, how to set it up, and so on.|
-|storage/|Active Storage files for Disk Service. This is covered in [Active Storage Overview](active_storage_overview.html).|
-|test/|Unit tests, fixtures, and other test apparatus. These are covered in [Testing Rails Applications](testing.html).|
-|tmp/|Temporary files (like cache and pid files).|
-|vendor/|A place for all third-party code. In a typical Rails application this includes vendored gems.|
-|.gitignore|This file tells git which files (or patterns) it should ignore. See [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) for more info about ignoring files.
-|.ruby-version|This file contains the default Ruby version.|
+|app/|Contém os *controllers*, *models*, *views*, *helpers*, *mailers*, *channels*, *jobs*, e *assets* para sua aplicação. Seu foco será essa pasta até o final deste guia.|
+|bin/|Contém o script do Rails que inicia seu *app* e pode conter outros scripts utilizados para configurar, atualizar, implantar (*deploy*) ou rodar sua aplicação.
+|config/|Configure as rotas da sua aplicação, banco de dados e mais. Esse é melhor detalhado em [Configurando Aplicações Rails](configuring.html)
+|config.ru|Configuração de Rack para servidores baseados em Rack utilizados para iniciar a aplicação. Para mais informações sobre Rack, veja [Rack website](https://rack.github.io/).|
+|db/|Contém o *schema* atual do seu banco de dados, assim como as migrações do banco.|
+|Gemfile<br>Gemfile.lock|Estes arquivos permitem especificar as dependências de gems da sua aplicação Rails. Os arquivos são utilizados pela gem Bundler. Para mais informações sobre o Bundler, veja [Bundler website](https://bundler.io).|
+|lib/|Módulos que estendem sua aplicação.|
+|log/| Arquivos de *log* da aplicação.|
+|package.json|Este arquivo permite que você especifique as dependências npm da sua aplicação Rails. Este arquivo é utilizado pelo Yarn. Para mais informações sobre o Yarn, veja [Yarn website](https://yarnpkg.com/lang/en/).|
+|public/|A única pasta vista pelo mundo como ela é. Contém arquivos estáticos e *assets* compilados.|
+|Rakefile|Este arquivo localiza e carrega tarefas que podem rodar por meio da linha de comando. As definições de tarefas são definidas pelos componentes do Rails. Ao invés de modificar o `Rakefile`, você deve adicionar suas próprias tarefas adicionando arquivos ao diretório `lib/tasks` da sua aplicação.|
+|README.md|Um conciso manual de instruções da sua aplicação. Você deve editar este arquivo para contar a outras pessoas o que sua aplicação faz, como configurá-la etc.|
+|storage/|Arquivos do *Active Storage* para o *Disk Service*. Isso é explicado em [Visão Geral do Active Storage](active_storage_overview.html).|
+|test/|Testes unitários, *fixtures*, e outras ferramentas de testes. Isso é explicado em [Testando Aplicações Rails](testing.html).|
+|tmp/|Arquivos temporários (como *cache* e arquivos pid).|
+|vendor/|Local para código de terceiros. Em uma aplicação Rails típica, inclui *vendored* gems (gems que passaram pela instalação no comando `bundle install --deployment`).|
+|.gitignore|Este arquivo alerta o git sobre quais arquivos (ou padrões) ele deve ignorar. Veja [GitHub - Ignorando arquivos](https://help.github.com/articles/ignoring-files) para mais informações sobre como ignorar arquivos.
+|.ruby-version|Este arquivo contém a versão padrão do Ruby.|
+
 
 Hello, Rails!
 -------------
