@@ -171,7 +171,7 @@ que o Rails gerou por padrão:
 |bin/|Contém o script do Rails que inicializa sua aplicação e contém outros scripts que você utiliza para configurar, atualizar, colocar em produção ou executar sua aplicação.|
 |config/|Configure as rotas, banco de dados entre outros de sua aplicação. Este conteúdo é abordado com mais detalhes em [Configuring Rails Applications](configuring.html).|
 |config.ru|Configuração *Rack* para servidores baseados em *Rack* usados ​​para iniciar a aplicação. Para mais informações sobre o *Rack*, consulte [Rack website](https://rack.github.io/).|
-|db/|Contém o schema do seu banco de dados atual, assim como as *migrations* do banco de dados.|
+|db/|Contém o *schema* do seu banco de dados atual, assim como as *migrations* do banco de dados.|
 |Gemfile<br>Gemfile.lock|Esses arquivos permitem que você especifique quais dependências de *gem* são necessárias na sua aplicação Rails. Esses arquivos são usados pela *gem* Bundler. Para mais informações sobre o Bundler, acesse [o website do Bundler](https://bundler.io).|
 |lib/|Módulos extendidos da sua aplicação.|
 |log/|Arquivos de log da aplicação.|
