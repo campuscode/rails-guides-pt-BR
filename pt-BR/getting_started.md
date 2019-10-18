@@ -135,7 +135,7 @@ trabalhar em uma tarefa em particular. Um desses é o *generator* de nova aplica
 que irá te fornecer a base de uma nova aplicação em Rails para que você não precise
 escrever tudo sozinho.
 
-Para utilizar esse *generator*, abra um termial, navegue para um diretório onde
+Para utilizar esse *generator*, abra um terminal, navegue para um diretório onde
 você tenha permissão para criar arquivos, e digite:
 
 ```bash
