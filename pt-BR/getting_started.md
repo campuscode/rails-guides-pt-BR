@@ -183,7 +183,7 @@ que o Rails gerou por padrão:
 |test/|Testes unitários, *fixtures*, e outros tipos de testes. Mais informações em [Testing Rails Applications](testing.html).|
 |tmp/|Arquivos temporários (como cache e arquivos *pid*).|
 |vendor/|Diretório com todos os códigos de terceiros. Em uma típica aplicação Rails inclui *vendored gems*.|
-|.gitignore|Este arquivo diz ao git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.
+|.gitignore|Este arquivo diz ao Git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.
 |.ruby-version|Este arquivo contém a versão padrão do Ruby.|
 
 Hello, Rails!
