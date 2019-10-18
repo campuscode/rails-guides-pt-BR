@@ -728,11 +728,10 @@ end
 
 * Mailer Filters abort further processing if body is set to a non-nil value.
 
-Using Action Mailer Helpers
+Usando os *helpers* do *Action Mailer*
 ---------------------------
 
-Action Mailer now just inherits from `AbstractController`, so you have access to
-the same generic helpers as you do in Action Controller.
+O *Action Mailer* agora herda apenas do `AbstractController`, para que você tenha acesso aos mesmos *helpers* genéricos que no *Action Controller*.
 
 Action Mailer Configuration
 ---------------------------
