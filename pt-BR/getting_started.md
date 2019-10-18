@@ -129,7 +129,7 @@ Se esse comando retornar algo como "Rails 6.0.0", você está pronto para contin
 
 ### Criando a Aplicação Blog
 
-Rails vem com vários scripts chamados *generators* que são projetos para tornar
+Rails vem com vários scripts chamados *generators* que são projetados para tornar
 sua vida de desenvolvedor fácil, criando tudo que é necessário para começar a
 trabalhar em uma tarefa em particular. Um desses é o *generator* de nova aplicação,
 que irá te fornecer a base de uma nova aplicação em Rails para que você não precise
