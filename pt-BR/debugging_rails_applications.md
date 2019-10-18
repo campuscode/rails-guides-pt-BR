@@ -182,7 +182,7 @@ class ArticlesController < ApplicationController
 end
 ```
 
-Segue um exemplo de um log gerado quando a ação deste controller é executada:
+Segue um exemplo de um log gerado quando a ação deste *controller* é executada:
 
 ```
 Started POST "/articles" for 127.0.0.1 at 2018-10-18 20:09:23 -0400
