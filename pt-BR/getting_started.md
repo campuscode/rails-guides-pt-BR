@@ -214,18 +214,19 @@ Normalmente, macOS e Windows vêm com um _runtime_ JavaScript instalado.
 padrão para o `Gemfile` nos _apps_ gerados pelo JRuby. Você pode investigar
 todos os _runtimes_ suportados em [ExecJS](https://github.com/rails/execjs#readme).
 
-This will fire up Puma, a web server distributed with Rails by default. To see
-your application in action, open a browser window and navigate to
-<http://localhost:3000>. You should see the Rails default information page:
+Esse comando irá abrir o Puma, um servidor web que vem junto com o Rails por padrão. Para
+ver a sua aplicação em funcionamento, abra uma janela no seu navegador e acesse
+<http://localhost:3000>. Você deve ver a pagina padrão de informação do Rails:
 
-![Welcome aboard screenshot](images/getting_started/rails_welcome.png)
+![Tela de boas-vindas](images/getting_started/rails_welcome.png)
 
-TIP: To stop the web server, hit Ctrl+C in the terminal window where it's
-running. To verify the server has stopped you should see your command prompt
-cursor again. For most UNIX-like systems including macOS this will be a
-dollar sign `$`. In development mode, Rails does not generally require you to
-restart the server; changes you make in files will be automatically picked up by
-the server.
+
+DICA: Para fechar o servidor web, aperte Ctrl+C na janela do terminal onde
+ele está executando. Para confirmar se o servidor fechou você deve se o
+cursor do prompt de comando reapareceu. Para a maioria dos sistemas similares ao UNIX (incluindo o macOS) esse
+cursor será o símbolo de dinheiro `$`. No modo de desenvolvimento, o Rails não requer geralmente que você
+reinicie o servidor; mudanças que você faça nos arquivos serão automaticamente percebidas
+pelo servidor.
 
 The "Welcome aboard" page is the _smoke test_ for a new Rails application: it
 makes sure that you have your software configured correctly enough to serve a
