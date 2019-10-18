@@ -73,7 +73,7 @@ Seguindo este guia, você irá criar um projeto em *Rails* chamado de
 você precisa ter certeza de ter o *Rails* instalado.
 
 DICA: Os exemplos à seguir usam `$` para representar seu *prompt* de terminal em um
-sistema operacional UNIX, embora ele tenha sido customizado para parecer diferente.
+sistema operacional baseado em UNIX, mesmo que ele tenha sido customizado para parecer diferente.
 Se você está utilizando Windows, seu *prompt* será parecido com algo como `c:\source_code>`
 
 ### Instalando o Rails
