@@ -191,7 +191,7 @@ Olá, Rails!
 -------------
 
 Para começar, vamos exibir rapidamente algum texto na tela. Para isso, você precisa
-colocar a seu servidor de aplicações Rails para rodar.
+colocar o seu servidor de aplicações Rails em execução.
 
 ### Iniciando o Servidor Web
 
@@ -211,7 +211,7 @@ tenha o _runtime_ JavaScript disponível no seu sistema, caso contrário,
 você verá um erro `execjs` durante a compilação de _assets_.
 Normalmente, macOS e Windows vêm com um _runtime_ JavaScript instalado.
 `therubyrhino` é o _runtime_ recomendado para usuários JRuby e é adicionado por
-padrão para o `Gemfile` nos _apps_ gerados pelo JRuby. Você pode investigar
+padrão ao `Gemfile` nos _apps_ gerados pelo JRuby. Você pode conferir
 todos os _runtimes_ suportados em [ExecJS](https://github.com/rails/execjs#readme).
 
 Esse comando irá abrir o Puma, um servidor web que vem junto com o Rails por padrão. Para
