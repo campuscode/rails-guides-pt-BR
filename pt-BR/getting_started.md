@@ -1494,32 +1494,33 @@ TIP: In general, Rails encourages using resources objects instead of
 declaring routes manually. For more information about routing, see
 [Rails Routing from the Outside In](routing.html).
 
-Adding a Second Model
----------------------
+Adicionando um Segundo Model
+----------------------------
 
-It's time to add a second model to the application. The second model will handle
-comments on articles.
+É hora de adicionar um segundo *model* a aplicação.O segundo model vai lidar com
+comentários em artigos.
 
-### Generating a Model
+### Gerando um Model
 
-We're going to see the same generator that we used before when creating
-the `Article` model. This time we'll create a `Comment` model to hold a
-reference to an article. Run this command in your terminal:
+Nós veremos o mesmo *generator* que usamos antes quando criamos o *model*
+`Article`. Desta vez vamos criar um model `Comment` que contém a referência para
+um artigo. Rode esse comando no seu terminal:
 
 ```bash
 $ rails generate model Comment commenter:string body:text article:references
 ```
 
-This command will generate four files:
+Este comando vai gerar quatro arquivos:
 
-| File                                         | Purpose                                                                                                |
+
+| Arquivo                                      | Propósito                                                                                                |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| db/migrate/20140120201010_create_comments.rb | Migration to create the comments table in your database (your name will include a different timestamp) |
-| app/models/comment.rb                        | The Comment model                                                                                      |
-| test/models/comment_test.rb                  | Testing harness for the comment model                                                                 |
-| test/fixtures/comments.yml                   | Sample comments for use in testing                                                                     |
+| db/migrate/20140120201010_create_comments.rb | Migração para criar a tabela de comentários no seu banco de dados (o nome incluirá um *timestamp* diferente) |
+| app/models/comment.rb                        | O *model* Comment                                                                                      |
+| test/models/comment_test.rb                  | Aparelhagem de testes para o *model* de comentário                                                                 |
+| test/fixtures/comments.yml                   | Exemplo de comentários para uso em testes                                                                     |
 
-First, take a look at `app/models/comment.rb`:
+Primeiro, veja o arquivo `app/models/comment.rb`:
 
 ```ruby
 class Comment < ApplicationRecord
@@ -1527,9 +1528,9 @@ class Comment < ApplicationRecord
 end
 ```
 
-This is very similar to the `Article` model that you saw earlier. The difference
-is the line `belongs_to :article`, which sets up an Active Record _association_.
-You'll learn a little about associations in the next section of this guide.
+Isso é muito semelhante ao *model* `Artigo` que vimos antes. A diferença está na
+linha `belongs_to : article`, o que configura uma associação no *Active Record*.
+Você vai aprender um pouco sobre associações na próxima seção deste guia.
 
 The (`:references`) keyword used in the bash command is a special data type for models.
 It creates a new column on your database table with the provided model name appended with an `_id`
