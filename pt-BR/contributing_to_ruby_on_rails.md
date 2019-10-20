@@ -9,7 +9,7 @@ Esse guia aborda algumas maneiras de como _você_ pode se tornar uma parte do de
 Depois de ler este guia, você saberá:
 
 * Como usar o GitHub para relatar problemas.
-* Como clonar a branch master e executar uma série de testes.
+* Como clonar a *branch* master e executar uma série de testes.
 * Como ajudar a resolver problemas já existentes.
 * Como contribuir na documentação do Ruby on Rails.
 * Como contribuir no código fonte do Ruby on Rails.
