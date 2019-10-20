@@ -16,7 +16,7 @@ Depois de ler este guia, você saberá:
 
 Ruby on Rails não é um "framework de qualquer um." Ao longo dos anos, milhares de pessoas contribuíram para o Ruby on Rails, desde as mais simples implementações até para as maiores mudanças na arquitetura ou documentação - tudo isso com o objetivo de fazer um Ruby on Rails melhor para todos. Mesmo que você ainda não se sinta pronto para escrever um código ou documentação, existem várias outras maneiras pelas quais você pode contribuir, desde relatar problemas até testar *patches*.
 
-Como mentionado em [Rails'README](https://github.com/rails/rails/blob/master/README.md), espera-se que todos que interajam no Rails e nas bases de código de seus sub-projetos, *issue trackers*, *chat rooms* e listas de discussão sigam o [código de conduta](https://rubyonrails.org/conduct/) do Rails.
+Como mencionado em [Rails'README](https://github.com/rails/rails/blob/master/README.md), espera-se que todos que interajam no Rails e nas bases de código de seus sub-projetos, *issue trackers*, *chat rooms* e listas de discussão sigam o [código de conduta](https://rubyonrails.org/conduct/) do Rails.
 
 --------------------------------------------------------------------------------
 
