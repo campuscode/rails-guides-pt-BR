@@ -243,7 +243,7 @@ com uma _action_ chamada "index", exatamente assim:
 $ rails generate controller Welcome index
 ```
 
-Rails irá criar vários arquivos e uma rota para você.
+O Rails criará vários arquivos e uma rota para você.
 
 ```bash
 create  app/controllers/welcome_controller.rb
@@ -277,7 +277,7 @@ todo o código existente no arquivo e substitua pela linha de código abaixo:
 Agora que criamos o _controller_ e a _view_, precisamos informar ao Rails quando
 queremos que "Olá, Rails" seja exibido. No nosso caso, queremos que seja exibido
 quando navegarmos para a URL raiz de nosso site, <http://localhost:3000>. No
-momento, "Boas vindas a bordo" é que está ocupando esse lugar.
+momento, "Boas vindas a bordo" é que está preenchendo esse lugar.
 
 Em seguida, você deve informar ao Rails onde está localizada a sua página
 inicial.
