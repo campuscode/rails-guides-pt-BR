@@ -794,7 +794,7 @@ You can change your Gmail settings [here](https://www.google.com/settings/securi
 then you will need to set an [app password](https://myaccount.google.com/apppasswords) and use that instead of your regular password. Alternatively, you can
 use another ESP to send email by replacing 'smtp.gmail.com' above with the address of your provider.
 
-Testes do Mailer
+Testes de *Mailer*
 --------------
 
 Você encontrará instruções detalhadas de como testar seus *mailers* no 
