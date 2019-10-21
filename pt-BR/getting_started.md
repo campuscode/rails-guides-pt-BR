@@ -335,7 +335,7 @@ action and is rendering the view correctly.
 
 TIP: For more information about routing, refer to [Rails Routing from the Outside In](routing.html).
 
-Iniciando
+Iniciando e Executando
 ----------------------
 
 Agora que você já viu como criar um *controller*, uma *action*, e uma *view*, vamos criar algo um pouco mais relevante.
