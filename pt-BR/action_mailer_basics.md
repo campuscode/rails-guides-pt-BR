@@ -655,7 +655,7 @@ end
 Action Mailer Callbacks
 -----------------------
 
-Action Mailer permite que você especifique o `before_action`, `after_action` e
+*Action Mailer* permite que você especifique o `before_action`, `after_action` e
 `around_action`.
 
 * Filtros podem ser especificados com um bloco ou um symbol para um  método no Mailer, similar a um controller
