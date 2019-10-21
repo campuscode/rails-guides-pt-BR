@@ -320,13 +320,12 @@ class PeopleController < ApplicationController
 end
 ```
 
-### The Shell
+### O *Shell*
 
-As soon as your application calls the `byebug` method, the debugger will be
-started in a debugger shell inside the terminal window where you launched your
-application server, and you will be placed at the debugger's prompt `(byebug)`.
-Before the prompt, the code around the line that is about to be run will be
-displayed and the current line will be marked by '=>', like this:
+Assim que a sua aplicação chamar o método `*byebug*`, o *debugger* será iniciado no *debugger shell* 
+dentro do terminal do qual você iniciou o server da sua aplicação, e você recebera o *prompt* `(byebug)`. 
+Antes do *prompt*, o código ao redor da linha que está prestes a ser executada será exibido, e a próxima
+linha a ser executada será marcada por '=>', da seguinte maneira: 
 
 ```
 [1, 10] in /PathTo/project/app/controllers/articles_controller.rb
@@ -344,11 +343,11 @@ displayed and the current line will be marked by '=>', like this:
 (byebug)
 ```
 
-If you got there by a browser request, the browser tab containing the request
-will be hung until the debugger has finished and the trace has finished
-processing the entire request.
+Se você chegou neste ponto por um *request* do navegador, a aba do navegador contendo
+o *request* ficara pendente até o *debugger* terminar e o *trace* terminar de processar 
+todo o *request*.
 
-For example:
+Por exemplo: 
 
 ```bash
 => Booting Puma
@@ -378,8 +377,9 @@ Processing by ArticlesController#index as HTML
 (byebug)
 ```
 
-Now it's time to explore your application. A good place to start is
-by asking the debugger for help. Type: `help`
+Agora é hora de explorar a sua aplicação. Um bom jeito de começar é 
+pedindo ajuda ao *debugger*. Digite: `*help*`
+
 
 ```
 (byebug) help
@@ -425,7 +425,7 @@ by asking the debugger for help. Type: `help`
 (byebug)
 ```
 
-To see the previous ten lines you should type `list-` (or `l-`).
+Para ver as dez linhas anteriores você deve digitar `list-` (ou `l-`).
 
 ```
 (byebug) l-
@@ -443,9 +443,8 @@ To see the previous ten lines you should type `list-` (or `l-`).
    10     respond_to do |format|
 ```
 
-This way you can move inside the file and see the code above the line where you
-added the `byebug` call. Finally, to see where you are in the code again you can
-type `list=`
+Destá maneira você pode se mover dentro do arquivo e ver o código acima da linha onde foi adicionado `byebug`.
+Finalmente, para ver onde você está em seu código, digite `list=` 
 
 ```
 (byebug) list=
