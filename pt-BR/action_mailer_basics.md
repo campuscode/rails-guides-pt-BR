@@ -724,7 +724,7 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-* Os filtros do mailer abortam o processamento adicional se o *body* estiver definido com um valor não nulo.
+* Os filtros do *mailer* interrompem o processamento adicional se o *body* estiver definido com um valor não nulo.
 
 Using Action Mailer Helpers
 ---------------------------
