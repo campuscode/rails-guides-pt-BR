@@ -213,37 +213,37 @@ dollar sign `$`. In development mode, Rails does not generally require you to
 restart the server; changes you make in files will be automatically picked up by
 the server.
 
-The "Welcome aboard" page is the _smoke test_ for a new Rails application: it
-makes sure that you have your software configured correctly enough to serve a
-page.
+A página de "Boas vindas a bordo" é o _smoke test_ (teste de sanidade) para uma
+nova aplicação Rails: garante que o seu software esteja configurado
+corretamente, o suficiente para gerar uma página.
 
-### Say "Hello", Rails
+### Diga "Olá", Rails
 
-To get Rails saying "Hello", you need to create at minimum a _controller_ and a
+Para que o Rails diga "Olá", você precisa criar no mínimo um _controller_ e uma
 _view_.
 
-A controller's purpose is to receive specific requests for the application.
-_Routing_ decides which controller receives which requests. Often, there is more
-than one route to each controller, and different routes can be served by
-different _actions_. Each action's purpose is to collect information to provide
-it to a view.
+O objetivo de um _controller_ é receber requisições específicas para a
+aplicação. O _Rounting_ (roteamento) decide qual _controller_ recebe quais
+requisições. Muitas vezes, há mais de uma rota para cada _controller_, e
+diferentes rotas podem ser providas por diferentes _actions_. O objetivo de cada
+_action_ é coletar informações para fornecer para uma _view_.
 
-A view's purpose is to display this information in a human readable format. An
-important distinction to make is that it is the _controller_, not the view,
-where information is collected. The view should just display that information.
-By default, view templates are written in a language called eRuby (Embedded
-Ruby) which is processed by the request cycle in Rails before being sent to the
-user.
+O objetivo de uma _view_ é exibir essas informações em um formato legível para
+humanos. Uma diferença importante a ser feita é que é no _controller_, não na
+_view_, onde as informações são coletadas. A _view_ deve apenas exibir essas
+informações. Por padrão, os _templates_ de _view_ são escritos em uma linguagem
+chamada eRuby (_Embedded Ruby_) que é processada pelo ciclo da requisição no
+Rail antes de ser enviada para o usuário.
 
-To create a new controller, you will need to run the "controller" generator and
-tell it you want a controller called "Welcome" with an action called "index",
-just like this:
+Para criar um novo _controller_, você precisará executar o gerador de
+_controller_ e informar que você deseja um _controller_ chamado "Welcome"
+com uma _action_ chamada "index", exatamente assim:
 
 ```bash
 $ rails generate controller Welcome index
 ```
 
-Rails will create several files and a route for you.
+Rails irá criar vários arquivos e uma rota para você.
 
 ```bash
 create  app/controllers/welcome_controller.rb
@@ -261,28 +261,28 @@ invoke    scss
 create      app/assets/stylesheets/welcome.scss
 ```
 
-Most important of these are of course the controller, located at
-`app/controllers/welcome_controller.rb` and the view, located at
+O mais importante deles é, certamente, o _controller_, localizado em
+`app/controllers/welcome_controller.rb` e a _view_, localizada em
 `app/views/welcome/index.html.erb`.
 
-Open the `app/views/welcome/index.html.erb` file in your text editor. Delete all
-of the existing code in the file, and replace it with the following single line
-of code:
+Abra o arquivo `app/views/welcome/index.html.erb` em seu editor de texto. Exclua
+todo o código existente no arquivo e substitua pela linha de código abaixo:
 
 ```html
-<h1>Hello, Rails!</h1>
+<h1>Olá, Rails!</h1>
 ```
 
-### Setting the Application Home Page
+### Configuração da Página Inicial da Aplicação
 
-Now that we have made the controller and view, we need to tell Rails when we
-want "Hello, Rails!" to show up. In our case, we want it to show up when we
-navigate to the root URL of our site, <http://localhost:3000>. At the moment,
-"Welcome aboard" is occupying that spot.
+Agora que criamos o _controller_ e a _view_, precisamos informar ao Rails quando
+queremos que "Olá, Rails" seja exibido. No nosso caso, queremos que seja exibido
+quando navegarmos para a URL raiz de nosso site, <http://localhost:3000>. No
+momento, "Boas vindas a bordo" é que está ocupando esse lugar.
 
-Next, you have to tell Rails where your actual home page is located.
+Em seguida, você deve informar ao Rails onde está localizada a sua página
+inicial.
 
-Open the file `config/routes.rb` in your editor.
+Abra o arquivo `config/routes.rb` em seu editor de texto.
 
 ```ruby
 Rails.application.routes.draw do
@@ -292,12 +292,13 @@ Rails.application.routes.draw do
 end
 ```
 
-This is your application's _routing file_ which holds entries in a special
-[DSL (domain-specific language)](https://en.wikipedia.org/wiki/Domain-specific_language)
-that tells Rails how to connect incoming requests to
-controllers and actions.
-Edit this file by adding the line of code `root 'welcome#index'`.
-It should look something like the following:
+Este é o arquivo _routing_ (arquivo de roteamento) da sua aplicação que contém
+as entradas em um
+[DSL (domain-specific language)](https://en.wikipedia.org/wiki/Domain-specific_language) especial
+que informa ao Rails como conectar requisições de entrada com _controllers_ e
+_actions_.
+Edite este arquivo adicionando a linha de código `root 'welcome#index'`.
+Deve ser algo parecido com o seguinte:
 
 ```ruby
 Rails.application.routes.draw do
@@ -307,19 +308,21 @@ Rails.application.routes.draw do
 end
 ```
 
-`root 'welcome#index'` tells Rails to map requests to the root of the
-application to the welcome controller's index action and `get 'welcome/index'`
-tells Rails to map requests to <http://localhost:3000/welcome/index> to the
-welcome controller's index action. This was created earlier when you ran the
-controller generator (`rails generate controller Welcome index`).
+`root 'welcome#index'` informa ao Rails para mapear as requisições para a raiz
+da aplicação para o _controller_ "welcome", _action_ "index" e `get
+'welcoment/index'` informa ao Rails para mapear as requisições para
+<http://localhost:3000/welcome/index> para o _controller_ "welcome", _action_
+"index". Isso foi criado anteriormente quando você executou o gerador de
+_controller_ (`rails generate controller Welcome index`).
 
-Launch the web server again if you stopped it to generate the controller (`rails
-server`) and navigate to <http://localhost:3000> in your browser. You'll see the
-"Hello, Rails!" message you put into `app/views/welcome/index.html.erb`,
-indicating that this new route is indeed going to `WelcomeController`'s `index`
-action and is rendering the view correctly.
+Inicie o servidor *web* novamente se você o interrompeu para gerar o _controller_ 
+(`rails server`) e navegue até <http://localhost:3000> no seu navegador. Você
+verá a mensagem "Olá, Rails!", a mesma que você colocou em
+`app/views/welcome/index.html.erb`, indicando que essa nova rota de fato vai
+para a _action_ `index` de `WelcomeController` e está renderizando a _view_
+corretamente.
 
-TIP: For more information about routing, refer to [Rails Routing from the Outside In](routing.html).
+DICA: Para mais informações sobre roteamento, consulte [Roteamento do Rails de Fora para Dentro](routing.html).
 
 Getting Up and Running
 ----------------------
