@@ -684,7 +684,7 @@ class InvitationsMailer < ApplicationMailer
 end
 ```
 
-* Você pode usar um `after_action` para fazer uma configuração semelhante a um` before_action`, mas usando variáveis de instância definidas em sua action do mailer.
+* Você pode usar um `after_action` para fazer uma configuração semelhante ao `before_action`, mas usando variáveis de instância definidas em sua *action* do *mailer*.
 
 ```ruby
 class UserMailer < ApplicationMailer
