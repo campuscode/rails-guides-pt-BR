@@ -373,7 +373,7 @@ welcome_index GET    /welcome/index(.:format)     welcome#index
          root GET    /                            welcome#index
 ```
 
-Na próxima sessão, você será capaz de criar novos artigos em sua aplicação e poderá visualizá-los. Este é o "C" e o "R" do *CRUD*: criação e visualização. O formulário para fazer isso ficará assim:
+Na próxima seção, você adicionará a funcionalidade para criar e visualizar novos artigos em sua aplicação. Este é o "C" e o "R" do *CRUD*: *create* (criação) e *read* (leitura). O formulário para fazer isso ficará assim:
 
 ![The new article form](images/getting_started/new_article.png)
 
