@@ -1688,7 +1688,7 @@ para que possamos criar um novo comentários:
 
 Isso adiciona na página *show* do `Article` um formulário que cria um novo
 comentário chamando a *action* `create` no `CommentsController`. O `form_with`
-aqui usa um *array* que vai construir um rota aninhada, como `/articles/1/comments`.
+aqui usa um *array* que vai construir uma rota aninhada, como `/articles/1/comments`.
 
 Vamos ligar a *action* `create` em `app/controllers/comments_controller.rb`:
 
