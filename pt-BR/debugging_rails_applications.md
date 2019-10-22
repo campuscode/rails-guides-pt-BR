@@ -323,7 +323,7 @@ end
 ### O *Shell*
 
 Assim que a sua aplicação chamar o método `*byebug*`, o *debugger* será iniciado no *debugger shell* 
-dentro do terminal do qual você iniciou o server da sua aplicação, e você recebera o *prompt* `(byebug)`. 
+dentro do terminal do qual você iniciou o server da sua aplicação, e você receberá o *prompt* do *debugger*. 
 Antes do *prompt*, o código ao redor da linha que está prestes a ser executada será exibido, e a próxima
 linha a ser executada será marcada por '=>', da seguinte maneira: 
 
@@ -443,7 +443,7 @@ Para ver as dez linhas anteriores você deve digitar `list-` (ou `l-`).
    10     respond_to do |format|
 ```
 
-Destá maneira você pode se mover dentro do arquivo e ver o código acima da linha onde foi adicionado `byebug`.
+Desta maneira você pode se mover dentro do arquivo e ver o código acima da linha onde foi adicionado `byebug`.
 Finalmente, para ver onde você está em seu código, digite `list=` 
 
 ```
