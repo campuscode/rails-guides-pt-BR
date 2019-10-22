@@ -223,7 +223,7 @@ Para que o Rails diga "Olá", você precisa criar no mínimo um _controller_ e u
 _view_.
 
 O objetivo de um _controller_ é receber requisições específicas para a
-aplicação. O _Rounting_ (roteamento) decide qual _controller_ recebe quais
+aplicação. O _Routing_ (roteamento) decide qual _controller_ recebe quais
 requisições. Muitas vezes, há mais de uma rota para cada _controller_, e
 diferentes rotas podem ser providas por diferentes _actions_. O objetivo de cada
 _action_ é coletar informações para fornecer para uma _view_.
@@ -261,7 +261,7 @@ invoke    scss
 create      app/assets/stylesheets/welcome.scss
 ```
 
-O mais importante deles é, certamente, o _controller_, localizado em
+Os mais importantes são, certamente, o _controller_, localizado em
 `app/controllers/welcome_controller.rb` e a _view_, localizada em
 `app/views/welcome/index.html.erb`.
 
@@ -310,7 +310,7 @@ end
 
 `root 'welcome#index'` informa ao Rails para mapear as requisições para a raiz
 da aplicação para o _controller_ "welcome", _action_ "index" e `get
-'welcoment/index'` informa ao Rails para mapear as requisições para
+'welcome/index'` informa ao Rails para mapear as requisições para
 <http://localhost:3000/welcome/index> para o _controller_ "welcome", _action_
 "index". Isso foi criado anteriormente quando você executou o gerador de
 _controller_ (`rails generate controller Welcome index`).
@@ -322,7 +322,7 @@ verá a mensagem "Olá, Rails!", a mesma que você colocou em
 para a _action_ `index` de `WelcomeController` e está renderizando a _view_
 corretamente.
 
-DICA: Para mais informações sobre roteamento, consulte [Roteamento do Rails de Fora para Dentro](routing.html).
+TIP: Para mais informações sobre roteamento, consulte [Roteamento do Rails de Fora para Dentro](routing.html).
 
 Getting Up and Running
 ----------------------
