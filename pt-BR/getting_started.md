@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Getting Started with Rails
@@ -34,157 +35,143 @@ Be aware that some resources, while still excellent, cover versions of Ruby as o
 1.6, and commonly 1.8, and will not include some syntax that you will see in day-to-day
 development with Rails.
 
-What is Rails?
+O que é o Rails?
 --------------
 
-Rails is a web application development framework written in the Ruby programming language.
-It is designed to make programming web applications easier by making assumptions
-about what every developer needs to get started. It allows you to write less
-code while accomplishing more than many other languages and frameworks.
-Experienced Rails developers also report that it makes web application
-development more fun.
+Rails é um *framework* de desenvolvimento de aplicações *web* escrito na linguagem de programação Ruby.
+Foi projetado para facilitar o desenvolvimento de aplicações *web*, criando premissas sobre tudo que uma pessoa desenvolvedora precisa para começar. Permite que você escreva menos código, enquanto realiza mais do que em muitas outras linguagens ou *frameworks.* Pessoas desenvolvedoras experientes em Rails, também dizem que desenvolver aplicações web ficou mais divertido.
 
-Rails is opinionated software. It makes the assumption that there is a "best"
-way to do things, and it's designed to encourage that way - and in some cases to
-discourage alternatives. If you learn "The Rails Way" you'll probably discover a
-tremendous increase in productivity. If you persist in bringing old habits from
-other languages to your Rails development, and trying to use patterns you
-learned elsewhere, you may have a less happy experience.
+Rails é um software opinativo. Assumindo que há uma "melhor" maneira para fazer as coisas, e foi projetado para encorajar essa maneira - e, em alguns casos para desencorajar alternativas. Se você aprender o "Rails Way", provavelmente terá um grande aumento de produtividade. Se você insistir nos velhos hábitos de outras linguagens, tentando usar os padrões que você aprendeu em outro lugar, você pode ter uma experiência menos feliz.
 
-The Rails philosophy includes two major guiding principles:
+A filosofia do Rails possui dois princípios fundamentais:
 
-* **Don't Repeat Yourself:** DRY is a principle of software development which
-  states that "Every piece of knowledge must have a single, unambiguous, authoritative
-  representation within a system." By not writing the same information over and over
-  again, our code is more maintainable, more extensible, and less buggy.
-* **Convention Over Configuration:** Rails has opinions about the best way to do many
-  things in a web application, and defaults to this set of conventions, rather than
-  require that you specify minutiae through endless configuration files.
+* **Não repita a si mesmo:** DRY(don't repeat yourself) é um conceito de desenvolvimento de software que estabelece que "Todo conhecimento deve possuir uma representação única, de autoridade e livre de ambiguidades em todo o sistema.". Ao não escrever as mesmas informações repetidamente, o código fica mais facil de manter, de expandir, e com menos bugs.
+* **Convenção sobre configuração:** Rails possui convenções sobre as melhores maneiras de fazer muitas coisas em uma aplicação web, devido a essas convenções você não precisa especificar minúcias através de arquivos de configuração infinitos.
 
-Creating a New Rails Project
-----------------------------
-The best way to read this guide is to follow it step by step. All steps are
-essential to run this example application and no additional code or steps are
-needed.
 
-By following along with this guide, you'll create a Rails project called
-`blog`, a (very) simple weblog. Before you can start building the application,
-you need to make sure that you have Rails itself installed.
+Criando um Novo Projeto em Rails
+---------------------------------
+A melhor forma de ler esse guia é seguir o passo à passo. Todos os passos são
+essenciais para rodar a aplicação de exemplo e nenhum código ou passos adicionais
+serão necessários.
 
-TIP: The examples below use `$` to represent your terminal prompt in a UNIX-like OS,
-though it may have been customized to appear differently. If you are using Windows,
-your prompt will look something like `c:\source_code>`
+Seguindo este guia, você irá criar um projeto em *Rails* chamado de
+`blog`, um *weblog* (muito) simples. Antes de você começar a construir a aplicação,
+você precisa ter certeza de ter o *Rails* instalado.
 
-### Installing Rails
+DICA: Os exemplos à seguir usam `$` para representar seu *prompt* de terminal em um
+sistema operacional baseado em UNIX, mesmo que ele tenha sido customizado para parecer diferente.
+Se você está utilizando Windows, seu *prompt* será parecido com algo como `c:\source_code>`
 
-Before you install Rails, you should check to make sure that your system has the
-proper prerequisites installed. These include Ruby and SQLite3.
+### Instalando o Rails
 
-Open up a command line prompt. On macOS open Terminal.app, on Windows choose
-"Run" from your Start menu and type 'cmd.exe'. Any commands prefaced with a
-dollar sign `$` should be run in the command line. Verify that you have a
-current version of Ruby installed:
+Antes de você instalar o Rails, você deve validar para ter certeza que seu sistema
+tem os pré requisitos necessários instalados. Esses incluem Ruby e SQLite3.
+
+Abra o *prompt* de linha de comando. No *macOS* abra o *Terminal.app*, no *Windows*
+escolha *executar* no menu inicial e digite 'cmd.exe'. Qualquer comando que antecede
+o sinal de dólar `$` deverá ser rodado em linha de comando. Verifique se você tem a
+versão atual do Ruby instalado:
 
 ```bash
 $ ruby -v
 ruby 2.5.0
 ```
 
-Rails requires Ruby version 2.5.0 or later. If the version number returned is
-less than that number, you'll need to install a fresh copy of Ruby.
+Rails necessita da versão Ruby 2.5.0 ou mais atual. Se o número da versão retornada
+for menor que este número, você precisará instalar uma versão do Ruby mais atual.
 
-TIP: To quickly install Ruby and Ruby on Rails on your system in Windows, you can use
-[Rails Installer](http://railsinstaller.org). For more installation methods for most
-Operating Systems take a look at [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
+DICA: Para instalar o Ruby e o Ruby on Rails mais rápido no seu sistema operacional Windows,
+você pode usar o [Rails Installer](http://railsinstaller.org). Para mais informações de instalação
+de outros Sistemas Operacionais, dê uma olhada em [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
 
-If you are working on Windows, you should also install the
+Se você está utilizando o Windowns, você deve também instalar o
 [Ruby Installer Development Kit](https://rubyinstaller.org/downloads/).
 
-You will also need an installation of the SQLite3 database.
-Many popular UNIX-like OSes ship with an acceptable version of SQLite3.
-On Windows, if you installed Rails through Rails Installer, you
-already have SQLite installed. Others can find installation instructions
-at the [SQLite3 website](https://www.sqlite.org).
-Verify that it is correctly installed and in your PATH:
+Você também precisará instalar o banco de dados SQLite3.
+Muitos sistemas operacionais populares semelhantes ao UNIX são fornecidos com uma versão compatível do SQLite3.
+No Windows, se você instalou o Rails pelo instalador do Rails, você
+já possui o SQLite instalado. Você também podem achar mais instruções de instalação em [SQLite3 website](https://www.sqlite.org).
+Verifique se está corretamente instalado e no seu *PATH*
 
 ```bash
 $ sqlite3 --version
 ```
 
-The program should report its version.
+O programa deverá reportar sua versão.
 
-To install Rails, use the `gem install` command provided by RubyGems:
+Para instalar o Rails, use o comando `gem install` fornecido pelo RubyGems:
 
 ```bash
 $ gem install rails
 ```
 
-To verify that you have everything installed correctly, you should be able to
-run the following:
+Para verificar se você tem tudo instalado corretamente, você deve rodar o comando à seguir:
 
 ```bash
 $ rails --version
 ```
 
-If it says something like "Rails 6.0.0", you are ready to continue.
+Se esse comando retornar algo como "Rails 6.0.0", você está pronto para continuar.
 
-### Creating the Blog Application
+### Criando a Aplicação Blog
 
-Rails comes with a number of scripts called generators that are designed to make
-your development life easier by creating everything that's necessary to start
-working on a particular task. One of these is the new application generator,
-which will provide you with the foundation of a fresh Rails application so that
-you don't have to write it yourself.
+Rails vem com vários scripts chamados *generators* que são projetados para tornar
+sua vida de desenvolvedor fácil, criando tudo que é necessário para começar a
+trabalhar em uma tarefa em particular. Um desses é o *generator* de nova aplicação,
+que irá te fornecer a base de uma nova aplicação em Rails para que você não precise
+escrever tudo sozinho.
 
-To use this generator, open a terminal, navigate to a directory where you have
-rights to create files, and type:
+Para utilizar esse *generator*, abra um terminal, navegue para um diretório onde
+você tenha permissão para criar arquivos, e digite:
 
 ```bash
 $ rails new blog
 ```
 
-This will create a Rails application called Blog in a `blog` directory and
-install the gem dependencies that are already mentioned in `Gemfile` using
-`bundle install`.
+Este comando irá criar uma aplicação em Rails chamada Blog em um diretório `blog`
+e irá instalar as dependências das *gems* que já foram mencionadas no `Gemfile`
+usando `bundle install`.
 
-NOTE: If you're using Windows Subsystem for Linux then there are currently some
-limitations on file system notifications that mean you should disable the `spring`
-and `listen` gems which you can do by running `rails new blog --skip-spring --skip-listen`.
+OBS: Se você está utilizando um subsistema Windows para Linux então existem
+algumas limitações nas notificações dos arquivos do sistema que significa que você
+deve disabilitar as gems `spring` e `listen` que poderá ser feito rodando o comando
+`rails new blog --skip-spring --skip-listen`.
 
-TIP: You can see all of the command line options that the Rails application
-builder accepts by running `rails new -h`.
+DICA: Você pode ver todas as opções de linha de comando que a aplicação Rails
+aceita rodando o comando `rails new -h`.
 
-After you create the blog application, switch to its folder:
+Depois de criar a aplicação blog, entre em sua pasta:
 
 ```bash
 $ cd blog
 ```
 
-The `blog` directory has a number of auto-generated files and folders that make
-up the structure of a Rails application. Most of the work in this tutorial will
-happen in the `app` folder, but here's a basic rundown on the function of each
-of the files and folders that Rails created by default:
+A pasta `blog` tem vários arquivos auto-gerados e pastas que compõem a estrutura
+de uma aplicação Rails. A maior parte da execução deste tutorial será feito na
+pasta `app`, mas à seguir teremos um resumo básico das funções de cada um dos arquivos e pastas
+que o Rails gerou por padrão:
 
-| File/Folder | Purpose |
+| Arquivo/Pasta | Objetivo |
 | ----------- | ------- |
-|app/|Contains the controllers, models, views, helpers, mailers, channels, jobs, and assets for your application. You'll focus on this folder for the remainder of this guide.|
-|bin/|Contains the rails script that starts your app and can contain other scripts you use to setup, update, deploy, or run your application.|
-|config/|Configure your application's routes, database, and more. This is covered in more detail in [Configuring Rails Applications](configuring.html).|
-|config.ru|Rack configuration for Rack based servers used to start the application. For more information about Rack, see the [Rack website](https://rack.github.io/).|
-|db/|Contains your current database schema, as well as the database migrations.|
-|Gemfile<br>Gemfile.lock|These files allow you to specify what gem dependencies are needed for your Rails application. These files are used by the Bundler gem. For more information about Bundler, see the [Bundler website](https://bundler.io).|
-|lib/|Extended modules for your application.|
-|log/|Application log files.|
-|package.json|This file allows you to specify what npm dependencies are needed for your Rails application. This file is used by Yarn. For more information about Yarn, see the [Yarn website](https://yarnpkg.com/lang/en/).|
-|public/|The only folder seen by the world as-is. Contains static files and compiled assets.|
-|Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Rails. Rather than changing `Rakefile`, you should add your own tasks by adding files to the `lib/tasks` directory of your application.|
-|README.md|This is a brief instruction manual for your application. You should edit this file to tell others what your application does, how to set it up, and so on.|
-|storage/|Active Storage files for Disk Service. This is covered in [Active Storage Overview](active_storage_overview.html).|
-|test/|Unit tests, fixtures, and other test apparatus. These are covered in [Testing Rails Applications](testing.html).|
-|tmp/|Temporary files (like cache and pid files).|
-|vendor/|A place for all third-party code. In a typical Rails application this includes vendored gems.|
-|.gitignore|This file tells git which files (or patterns) it should ignore. See [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) for more info about ignoring files.
-|.ruby-version|This file contains the default Ruby version.|
+|app/|Contém os *controllers*, *models*, *views*, *helpers*, *mailers*, *channels*, *jobs*, e *assets* para sua aplicação. Você irá se concentrar nesse diretório pelo restante desse guia.|
+|bin/|Contém o script do Rails que inicializa sua aplicação e contém outros scripts que você utiliza para configurar, atualizar, colocar em produção ou executar sua aplicação.|
+|config/|Configure as rotas, banco de dados entre outros de sua aplicação. Este conteúdo é abordado com mais detalhes em [Configuring Rails Applications](configuring.html).|
+|config.ru|Configuração *Rack* para servidores baseados em *Rack* usados ​​para iniciar a aplicação. Para mais informações sobre o *Rack*, consulte [Rack website](https://rack.github.io/).|
+|db/|Contém o *schema* do seu banco de dados atual, assim como as *migrations* do banco de dados.|
+|Gemfile<br>Gemfile.lock|Esses arquivos permitem que você especifique quais dependências de *gem* são necessárias na sua aplicação Rails. Esses arquivos são usados pela *gem* Bundler. Para mais informações sobre o Bundler, acesse [o website do Bundler](https://bundler.io).|
+|lib/|Módulos extendidos da sua aplicação.|
+|log/|Arquivos de *log* da aplicação.|
+|package.json|Este arquivo permite que você especifique quais dependências *npm* são necessárias para sua aplicação Rails. Este arquivo é usado pelo Yarn. Para mais informações do Yarn, acesse [o website do Yarn](https://yarnpkg.com/lang/en/).|
+|public/|O único diretório visto pelo mundo. Contém arquivos estáticos e *assets* compilados.|
+|Rakefile|Este arquivo localiza e carrega tarefas que podem ser rodadas por linhas de comando. As tarefas são definidas nos componentes do Rails. Ao invés de editar o `Rakefile`, você deve criar suas próprias tarefas adicionando os arquivos no diretório `lib/tasks` da sua aplicação.|
+|README.md|Este é um manual de instruções para sua aplicação. Você deve editar este arquivo para informar o que seu aplicativo faz, como configurá-lo e assim por diante.|
+|storage/|Arquivos de armazenamento ativo do serviço de disco. Mais informações em [Active Storage Overview](active_storage_overview.html).|
+|test/|Testes unitários, *fixtures*, e outros tipos de testes. Mais informações em [Testing Rails Applications](testing.html).|
+|tmp/|Arquivos temporários (como cache e arquivos *pid*).|
+|vendor/|Diretório com todos os códigos de terceiros. Em uma típica aplicação Rails inclui *vendored gems*.|
+|.gitignore|Este arquivo diz ao Git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.
+|.ruby-version|Este arquivo contém a versão padrão do Ruby.|
 
 Hello, Rails!
 -------------

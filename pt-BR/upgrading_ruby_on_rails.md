@@ -1,54 +1,53 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Upgrading Ruby on Rails
+Atualizando o Ruby on Rails
 =======================
 
-This guide provides steps to be followed when you upgrade your applications to a newer version of Ruby on Rails. These steps are also available in individual release guides.
+Este guia fornece os passos a serem seguidos quando você for atualizar suas aplicações
+para uma versão mais nova do Ruby on Rails. Estes passos também estão disponíveis em guias de *releases* individuais.
 
 --------------------------------------------------------------------------------
 
-General Advice
+Conselho Geral
 --------------
 
-Before attempting to upgrade an existing application, you should be sure you have a good reason to upgrade. You need to balance several factors: the need for new features, the increasing difficulty of finding support for old code, and your available time and skills, to name a few.
+Antes de tentar atualizar uma aplicação existente, você deve ter certeza que possui uma boa razão para fazê-lo. Então tenha em mente alguns fatores: a necessidade de novas funcionalidades, a crescente dificuldade de encontrar suporte para código mais antigo, seu tempo disponível e habilidades, entre outros.
 
-### Test Coverage
+### Cobertura de Testes
 
-The best way to be sure that your application still works after upgrading is to have good test coverage before you start the process. If you don't have automated tests that exercise the bulk of your application, you'll need to spend time manually exercising all the parts that have changed. In the case of a Rails upgrade, that will mean every single piece of functionality in the application. Do yourself a favor and make sure your test coverage is good _before_ you start an upgrade.
+A melhor maneira de garantir que sua aplicação ainda funciona após a atualização é possuir uma boa cobertura de testes antes de começar o processo. Se você não tiver testes automatizados para a maior parte de sua aplicação, será necessário gastar algum tempo realizando testes manuais de todas as partes alteradas. No caso da atualização do Rails, isso significa cada umas das funcionalidades dentro da aplicação. Faça a si mesmo um favor e tenha certeza de ter uma boa cobertura de teste **antes** de iniciar uma atualização.
 
-### The Upgrade Process
+### O Processo de Atualização
 
-When changing Rails versions, it's best to move slowly, one minor version at a time, in order to make good use of the deprecation warnings. Rails version numbers are in the form Major.Minor.Patch. Major and Minor versions are allowed to make changes to the public API, so this may cause errors in your application. Patch versions only include bug fixes, and don't change any public API.
+Quando estiver atualizando a versão do Rails, o melhor é ir devagar, uma versão *Minor* por vez, para fazer bom uso dos avisos de depreciação. As versões do Rails são numeradas da maneira *Major*.*Minor*.*Patch*. Versões *Major* e *Minor* têm permissão para alterar API pública, isso pode causar erros em sua aplicação. Versões *Patch* incluem apenas correções de *bug*, e não alteram nenhuma API pública.
 
-The process should go as follows:
+O processo deve correr da seguinte maneira:
 
-1. Write tests and make sure they pass.
-2. Move to the latest patch version after your current version.
-3. Fix tests and deprecated features.
-4. Move to the latest patch version of the next minor version.
+1. Escreva os testes e garanta que eles passem.
+2. Atualize para a última versão *Patch* após a versão atual de seu projeto.
+3. Conserte os testes e funcionalidades depreciadas.
+4. Atualize para a última versão *Patch* da versão *Minor* seguinte.
 
-Repeat this process until you reach your target Rails version. Each time you move versions, you will need to change the Rails version number in the `Gemfile` (and possibly other gem versions) and run `bundle update`. Then run the Update task mentioned below to update configuration files, then run your tests.
+Repita este processo até chegar na versão desejada do Rails. Cada vez que você mudar entre versões, você precisará alterar a versão do Rails no `Gemfile` (possivelmente também as versões de outras *gems*) e executar um `bundle update`. Após, execute a tarefa de atualização mencionada abaixo para atualizar arquivos de configuração, então execute os testes.
 
-You can find a list of all released Rails versions [here](https://rubygems.org/gems/rails/versions).
+Você pode encontrar a lista com todas as versões liberadas do Rails [aqui](https://rubygems.org/gems/rails/versions)
 
-### Ruby Versions
+### Versões do Ruby
 
-Rails generally stays close to the latest released Ruby version when it's released:
+Rails geralmente se mantém próximo à versão mais recente do Ruby quando é liberado:
 
-* Rails 6 requires Ruby 2.5.0 or newer.
-* Rails 5 requires Ruby 2.2.2 or newer.
-* Rails 4 prefers Ruby 2.0 and requires 1.9.3 or newer.
-* Rails 3.2.x is the last branch to support Ruby 1.8.7.
-* Rails 3 and above require Ruby 1.8.7 or higher. Support for all of the previous Ruby versions has been dropped officially. You should upgrade as early as possible.
+* Rails 6 requer Ruby 2.5.0 ou posterior.
+* Rails 5 requer Ruby 2.2.2 ou posterior.
+* Rails 4 prefere Ruby 2.0 e requer 1.9.3 ou posterior.
+* Rails 3.2.x é a última *branch* a suportar Ruby 1.8.7.
+* Rails 3 e posteriores requerem Ruby 1.8.7 ou posteriores. O suporte para todas as versões anteriores do Ruby foi descontinuado. Você deve atualizar o quanto antes.
 
-TIP: Ruby 1.8.7 p248 and p249 have marshalling bugs that crash Rails. Ruby Enterprise Edition has these fixed since the release of 1.8.7-2010.02. On the 1.9 front, Ruby 1.9.1 is not usable because it outright segfaults, so if you want to use 1.9.x, jump straight to 1.9.3 for smooth sailing.
+Dica: O Ruby 1.8.7 p248 e p249 possuem *bugs* que travam o Rails. Ruby *Enterprise Edition* possui correções para esses erros desde a versão 1.8.7-2010.02. Na Versão 1.9, Ruby 1.9.1 não é utilizável pois ela falha logo de início devido a problemas de memória, então se você quiser utilizar a versão 1.9.x, pule diretamente para 1.9.3 para evitar problemas.
 
-### The Update Task
+### A Tarefa de Atualização
 
-Rails provides the `app:update` command (`rake rails:update` on 4.2 and earlier). After updating the Rails version
-in the `Gemfile`, run this command.
-This will help you with the creation of new files and changes of old files in an
-interactive session.
+Rails fornece o comando `app:update` (`rake rails:update` na versão 4.2 e anteriores). Execute este comando após atualizar a versão do Rails no `Gemfile`. Isto lhe ajudará na criação de novos arquivos e na alteração de arquivos antigos em uma sessão interativa.
 
 ```bash
 $ rails app:update
@@ -64,13 +63,13 @@ Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
 ...
 ```
 
-Don't forget to review the difference, to see if there were any unexpected changes.
+Não esqueça de revisar a diferença, para verificar se houveram mudanças inesperadas.
 
-### Configure Framework Defaults
+### Configurar Padrões de Framework
 
-The new Rails version might have different configuration defaults than the previous version. However, after following the steps described above, your application would still run with configuration defaults from the *previous* Rails version. That's because the value for `config.load_defaults` in `config/application.rb` has not been changed yet.
+A nova versão do Rails pode ter configurações padrão diferentes da versão anterior. No entanto, após seguir os passos descritos acima, sua aplicação ainda estaria rodando com configurações padrão da versão **anterior** do Rails. Isso porque o valor para `config.load_defaults` em `config/application.rb` ainda não foi alterado.
 
-To allow you to upgrade to new defaults one by one, the update task has created a file `config/initializers/new_framework_defaults.rb`. Once your application is ready to run with new defaults, you can remove this file and flip the `config.load_defaults` value.
+Para permitir que você atualize para novos padrões um a um, a tarefa de atualização cria um arquivo `config/initializers/new_framework_defaults.rb`. Uma vez que a aplicação esteja pronta para rodar com as novas configurações padrão, você pode remover este arquivo e trocar o valor de `config.load_defaults`.
 
 
 Upgrading from Rails 5.2 to Rails 6.0

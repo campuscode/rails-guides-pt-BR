@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Using Rails for API-only Applications
@@ -11,8 +12,7 @@ In this guide you will learn:
 * How to decide which modules to use in your controller
 
 --------------------------------------------------------------------------------
-
-What is an API Application?
+O que é uma Aplicação API?
 ---------------------------
 
 Tradicionalmente, quando as pessoas dizem que usam o Rails como uma "API",

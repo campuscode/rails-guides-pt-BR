@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Action Mailer Basics
@@ -16,22 +17,21 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-Introduction
+Introdução
 ------------
 
-Action Mailer allows you to send emails from your application using mailer classes
-and views.
+*Action Mailer* permite que você envie emails direto da sua aplicação usando as 
+classes e views *Mailer*
 
-#### Mailers are similar to controllers
+#### Mailers são semelhantes a controllers
 
-They inherit from `ActionMailer::Base` and live in `app/mailers`. Mailers also work
-very similarly to controllers. Some examples of similarities are enumerated below.
-Mailers have:
+Eles herdam do `ActionMailer::Base` e se encontram na `app/mailers`. Os Mailers também funcionam de maneira muito semelhante aos controllers. Alguns exemplos de semelhanças são mostrados abaixo.
+Mailers tem:
 
-* Actions, and also, associated views that appear in `app/views`.
-* Instance variables that are accessible in views.
-* The ability to utilise layouts and partials.
-* The ability to access a params hash.
+* *Actions*, e também, *views* associadas que aparecem em `app/views`.
+* Variáveis de instância acessíveis nas *views*.
+* A capacidade de utilizar *layouts* e *partials*.
+* A capacidade de acessar um hash de parâmetros.
 
 Sending Emails
 --------------
@@ -728,11 +728,10 @@ end
 
 * Mailer Filters abort further processing if body is set to a non-nil value.
 
-Using Action Mailer Helpers
+Usando os *helpers* do *Action Mailer*
 ---------------------------
 
-Action Mailer now just inherits from `AbstractController`, so you have access to
-the same generic helpers as you do in Action Controller.
+O *Action Mailer* agora herda apenas do `AbstractController`, para que você tenha acesso aos mesmos *helpers* genéricos que no *Action Controller*.
 
 Action Mailer Configuration
 ---------------------------
