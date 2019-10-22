@@ -436,7 +436,7 @@ Com o método `new` definido em `ArticlesController`, se você atualizar
 ![Template is missing for articles/new]
 (images/getting_started/template_is_missing_articles_new.png)
 
-Você está recebendo esse erro agora porque o Rails espera que ações simples como esta tenham visualizações associadas a elas para exibir suas informações. Sem visualização disponível, o Rails gerará uma exceção.
+Você está recebendo esse erro agora porque o Rails espera que *actions* como esta tenham *views* associadas a elas para exibir suas informações. Sem uma *view* disponível, o Rails gerará uma exceção.
 
 Vamos ver a mensagem de erro completa novamente:
 
