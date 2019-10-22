@@ -1651,7 +1651,7 @@ Como em qualquer blog, nossos leitores vão criar seus comentários diretamente
 depois de lerem o artigo e, uma vez que adicionarem o comentário, serão enviados
 de volta para a página *show* do artigo para verem o comentário agora listado.
 Por essa razão, nosso `CommentsController` está aqui para fornecer um método que
-cria comentários e deleta comentários spam quando chegarem.
+cria comentários e deleta comentários *spam* quando chegarem.
 
 Então, primeiro nós vamos ligar o *show template* para Artigos (`app/views/articles/show.html.erb`)
 para que possamos criar um novo comentários:
