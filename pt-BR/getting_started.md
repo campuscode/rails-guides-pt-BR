@@ -1611,7 +1611,7 @@ TIP: Para mais informações sobre associações do *Active Record*, veja o guia
 
 ### Adicionando a Rota para Comentários
 
-Da mesma forma que com o *controller* `welcome`, nós vamos precisar adicionar a
+Da mesma forma que o *controller* `welcome`, nós vamos precisar adicionar a
 rota para que o Rails saiba para onde queremos navegar para encontrar
 `comments`. Abra o arquivo `config/routes.rb` novamente e o edite da seguinte
 maneira:
