@@ -949,8 +949,6 @@ end
 É possível associar `:if` e `:unless` com um objeto `Proc` que será chamado.
 O uso de um objeto `Proc` permite escrever uma condição em apenas uma linha
 ao invés de em um método separado.
-Esta opção é mais adequada para *one-liners*.
-
 
 ```ruby
 class Account < ApplicationRecord
