@@ -403,7 +403,7 @@ $ rails generate controller Articles
 ```
 
 Se você abrir o recém-criado `app/controllers/articles_controller.rb`
-recém-criado, verá um *controller* vazio:
+verá um *controller* vazio:
 
 ```ruby
 class ArticlesController < ApplicationController
