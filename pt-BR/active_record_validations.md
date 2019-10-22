@@ -979,7 +979,7 @@ class User < ApplicationRecord
 end
 ```
 
-Todas as validações dentro do bloco `with_options` teram automaticamente passado pela validação  `if: :is_admin?`
+Todas as validações dentro do bloco `with_options` terão automaticamente passado a condição `if: :is_admin?`
 
 ### Combinando Validações com Condicionais
 
