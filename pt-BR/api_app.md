@@ -143,7 +143,7 @@ Esse comando fará três coisas principais para você:
 - Configura sua aplicação para começar com um conjunto mais limitado de *middlewares* que o normal.
 Especificamente, não serão incluídos *middlewares* para aplicações web (como suporte a *cookies*) por padrão.
 - Faz com que o `ApplicationController` herde do `ActionController::API` ao invés do `ActionController::Base`.
-Como nos middlewares, isso exclui qualquer *Action Controller* ou Módulo que forneçam funcionalidades usadas primordialmente pelo navegador.
+Como nos *middlewares*, isso exclui qualquer *Action Controller* ou Módulo que forneçam funcionalidades usadas primordialmente pelo navegador.
 - Configura os geradores para não gerar *views*, *helpers*, e *assets* quando você criar um novo recurso.
 
 ### Alterando uma aplicação existente
