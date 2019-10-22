@@ -459,7 +459,7 @@ Agora vá em frente e crie um novo arquivo em *app/views/articles/new.html.erb* 
 <h1>New Article</h1>
 ```
 
-Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem um título. A rota, o *controller*, a ação e a visualização estão funcionando harmoniosamente! É hora de criar o formulário para um novo artigo.
+Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem um título. A rota, o *controller*, a *action* e a *view* estão funcionando harmoniosamente! É hora de criar o formulário para um novo artigo.
 
 ### The first form
 
