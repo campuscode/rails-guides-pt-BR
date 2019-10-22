@@ -402,8 +402,8 @@ Este erro ocorre porque a rota precisa ter um *controller* definido para atender
 $ rails generate controller Articles
 ```
 
-Se você abrir `app/controllers/articles_controller.rb`
-recém-criado, verá um *controller* vazio:
+Se você abrir o recém-criado `app/controllers/articles_controller.rb`
+verá um *controller* vazio:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -413,13 +413,13 @@ end
 Um *controller* é uma classe definida para herdar de `ApplicationController`.
 É dentro dessa classe que você define os métodos que se tornarão as ações desse *controller*. Essas ações executarão operações *CRUD* nos artigos em nosso sistema.
 
-NOTA: Existem métodos `públicos`, `privados` e `protegidos` no Ruby, mas apenas métodos `públicos` podem ser ações nos *controllers*. Para mais detalhes, consulte  [Programação Ruby](http://www.ruby-doc.org/docs/ProgrammingRuby/).
+NOTE: Existem métodos `public`, `private` e `protected` no Ruby, mas apenas métodos `public` podem ser ações nos *controllers*. Para mais detalhes, consulte  [Programação Ruby](http://www.ruby-doc.org/docs/ProgrammingRuby/).
 
 Se você atualizar <http://localhost:3000/articles/new> agora, receberá um novo erro:
 
 ![Unknown action new for ArticlesController!](images/getting_started/unknown_action_new_for_articles.png)
 
-Este erro indica que o Rails não consegue encontrar a ação `new` dentro do `ArticlesController` que você acabou de gerar. Isso ocorre porque quando os *controllers* são gerados no Rails, eles estão vazios por padrão, a menos que você diga as ações que você deseja durante o processo de geração.
+Este erro indica que o Rails não consegue encontrar a ação `new` dentro do `ArticlesController` que você acabou de gerar. Isso ocorre porque quando os *controllers* são gerados no Rails, eles estão vazios por padrão, a menos que você diga as ações que deseja durante o processo de geração.
 
 Para definir manualmente uma ação dentro de um *controller*, tudo o que você precisa fazer é definir um novo método dentro do *controller*. Abra `app/controllers/articles_controller.rb` e, dentro da classe `ArticlesController`, defina o método `new` para que agora seu *controller* fique assim:
 
@@ -436,14 +436,14 @@ Com o método `new` definido em `ArticlesController`, se você atualizar
 ![Template is missing for articles/new]
 (images/getting_started/template_is_missing_articles_new.png)
 
-Você está recebendo esse erro agora porque o Rails espera que ações simples como esta tenham visualizações associadas a elas para exibir suas informações. Sem visualização disponível, o Rails gerará uma exceção.
+Você está recebendo esse erro agora porque o Rails espera que *actions* como esta tenham *views* associadas a elas para exibir suas informações. Sem uma *view* disponível, o Rails gerará uma exceção.
 
 Vamos ver a mensagem de erro completa novamente:
 
 >ArticlesController#new  está faltando um *template* para o formato da requisição: *text/html*
 
 >NOTA!
->Como dito, o Rails espera que uma ação renderize um *template* com o mesmo nome, contido em uma pasta com o nome de seu *controller*. Se esse *controller* for uma *API* que responde com 204 (sem conteúdo), e que não requer um *template*, então esse erro ocorrerá ao tentar acessá-lo pelo navegador pois esperamos que um modelo HTML seja renderizado para essas requisições. Se esse for o caso, continue.
+>Como dito, o Rails espera que uma ação renderize um *template* com o mesmo nome, contido em uma pasta com o nome de seu *controller*. Se esse *controller* for uma *API* que responde com 204 (sem conteúdo), e que não requer um *template*, então esse erro ocorrerá ao tentar acessá-lo pelo navegador pois esperamos que um *template* HTML seja renderizado para essas requisições. Se esse for o caso, continue.
 
 A mensagem identifica qual *template* está ausente. Nesse caso, é o *template* `articles/new`. O Rails procurará primeiro esse *template*. Se não for encontrado, ele tentará carregar um *template* chamado `application/new`, porque o `ArticlesController` herda do `ApplicationController`.
 
@@ -459,7 +459,7 @@ Agora vá em frente e crie um novo arquivo em *app/views/articles/new.html.erb* 
 <h1>New Article</h1>
 ```
 
-Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem um título. A rota, o *controller*, a ação e a visualização estão funcionando harmoniosamente! É hora de criar o formulário para um novo artigo.
+Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem um título. A rota, o *controller*, a *action* e a *view* estão funcionando harmoniosamente! É hora de criar o formulário para um novo artigo.
 
 ### The first form
 
