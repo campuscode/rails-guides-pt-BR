@@ -1,6 +1,16 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
+
+Esse guia introduz técnicas de debugação para aplicações de Ruby on Rails
+
+Após ler esse guia, você saberá:
+
+* O proposito de debugar
+* Como encontrar problemas nas suas aplicações que testes não estão identificando
+* As diferentes maneiras de debugar
+* Como analisar o *stack trace*
+=======
 *Debug* de Aplicações Rails
 ============================
 
@@ -125,7 +135,9 @@ Rails.logger = Logger.new(STDOUT)
 Rails.logger = Log4r::Logger.new("Application Log")
 ```
 
+
 DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de registro é criado com o nome do ambiente no qual a aplicação está sendo executada.
+
 
 ### Níveis de Log
 
@@ -143,17 +155,17 @@ Isso é útil quando você quer criar logs em ambientes diferentes de desenvolvi
 
 DICA: O nível de log padrão do Rails é `debug` em todos os ambientes de desenvolvimento.
 
-### Sending Messages
+### Enviando Mensagens
 
-To write in the current log use the `logger.(debug|info|warn|error|fatal|unknown)` method from within a controller, model, or mailer:
+Para enviar uma mensagem para o log ativo, use o método `logger.(debug|info|warn|error|fatal|unknown)` de dentro de um *controller*, *model* ou *mailer*: 
 
 ```ruby
-logger.debug "Person attributes hash: #{@person.attributes.inspect}"
-logger.info "Processing the request..."
-logger.fatal "Terminating application, raised unrecoverable error!!!"
+logger.debug "Hash com atributos de 'Person': #{@person.attributes.inspect}"
+logger.info "Processando informações..."
+logger.fatal "Encerrando aplicação, erro irrecuperavel!!!"
 ```
 
-Here's an example of a method instrumented with extra logging:
+Segue um exemplo de um método instrumentado com um log extra:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -161,12 +173,12 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    logger.debug "New article: #{@article.attributes.inspect}"
-    logger.debug "Article should be valid: #{@article.valid?}"
+    logger.debug "Novo Artigo: #{@article.attributes.inspect}"
+    logger.debug "Artigo deve ser valido: #{@article.valid?}"
 
     if @article.save
-      logger.debug "The article was saved and now the user is going to be redirected..."
-      redirect_to @article, notice: 'Article was successfully created.'
+      logger.debug "O Artigo foi salvo e agora o usuario será redirecionado..."
+      redirect_to @article, notice: 'Artigo criado com sucesso'
     else
       render :new
     end
@@ -181,7 +193,7 @@ class ArticlesController < ApplicationController
 end
 ```
 
-Here's an example of the log generated when this controller action is executed:
+Segue um exemplo de um log gerado quando a ação deste *controller* é executada:
 
 ```
 Started POST "/articles" for 127.0.0.1 at 2018-10-18 20:09:23 -0400
@@ -200,7 +212,7 @@ Redirected to http://localhost:3000/articles/1
 Completed 302 Found in 4ms (ActiveRecord: 0.8ms)
 ```
 
-Adding extra logging like this makes it easy to search for unexpected or unusual behavior in your logs. If you add extra logging, be sure to make sensible use of log levels to avoid filling your production logs with useless trivia.
+A adição deste tipo de log facilita a busca por comportamentos não esperados ou não usuais. Se você adicionar logs extras, tenha certeza de utilizar os níveis de log de maneira adequada, para evitar encher seus logs do ambiente de produção com trivialidades inúteis.
 
 ### Verbose Query Logs
 
