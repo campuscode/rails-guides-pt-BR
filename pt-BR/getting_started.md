@@ -402,7 +402,7 @@ Este erro ocorre porque a rota precisa ter um *controller* definido para atender
 $ rails generate controller Articles
 ```
 
-Se você abrir `app/controllers/articles_controller.rb`
+Se você abrir o recém-criado `app/controllers/articles_controller.rb`
 recém-criado, verá um *controller* vazio:
 
 ```ruby
