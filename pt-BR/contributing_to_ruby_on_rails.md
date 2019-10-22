@@ -1,23 +1,22 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Contributing to Ruby on Rails
+Contribuindo para o Ruby on Rails
 =============================
 
-This guide covers ways in which _you_ can become a part of the ongoing development of Ruby on Rails.
+Esse guia aborda algumas maneiras de como _você_ pode se tornar uma parte do desenvolvimento contínuo do Ruby on Rails.
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
-* How to use GitHub to report issues.
-* How to clone master and run the test suite.
-* How to help resolve existing issues.
-* How to contribute to the Ruby on Rails documentation.
-* How to contribute to the Ruby on Rails code.
+* Como usar o GitHub para relatar problemas.
+* Como clonar a *branch* master e executar uma série de testes.
+* Como ajudar a resolver problemas já existentes.
+* Como contribuir na documentação do Ruby on Rails.
+* Como contribuir no código fonte do Ruby on Rails.
 
-Ruby on Rails is not "someone else's framework." Over the years, thousands of people have contributed to Ruby on Rails ranging from a single character to massive architectural changes or significant documentation - all with the goal of making Ruby on Rails better for everyone. Even if you don't feel up to writing code or documentation yet, there are a variety of other ways that you can contribute, from reporting issues to testing patches.
+Ruby on Rails não é um "framework de qualquer um." Ao longo dos anos, milhares de pessoas contribuíram para o Ruby on Rails, desde as mais simples implementações até as maiores mudanças na arquitetura ou documentação - tudo isso com o objetivo de fazer um Ruby on Rails melhor para todos. Mesmo que você ainda não se sinta pronto para escrever um código ou documentação, existem várias outras maneiras pelas quais você pode contribuir, desde relatar problemas até testar *patches*.
 
-As mentioned in [Rails'
-README](https://github.com/rails/rails/blob/master/README.md), everyone interacting in Rails and its sub-projects' codebases, issue trackers, chat rooms, and mailing lists is expected to follow the Rails [code of conduct](https://rubyonrails.org/conduct/).
+Como mencionado em [Rails'README](https://github.com/rails/rails/blob/master/README.md), espera-se que todos que interajam no Rails e nas bases de código de seus sub-projetos, *issue trackers*, *chat rooms* e listas de discussão sigam o [código de conduta](https://rubyonrails.org/conduct/) do Rails.
 
 --------------------------------------------------------------------------------
 
