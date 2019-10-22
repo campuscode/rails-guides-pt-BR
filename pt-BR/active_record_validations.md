@@ -42,7 +42,7 @@ banco de dados. Por exemplo, pode ser importante para sua aplicação garantir
 que todo usuário forneça um endereço de e-mail e endereço de correspondência
 válidos. Validações de *model* são a melhor maneira de garantir que só
 dados válidos sejam salvos em seu banco de dados. Eles são bancos de dados
-agnóticos, não podem ser contornador por usuários, e são fáceis de manter e
+agnósticos, não podem ser contornados por usuários, e são fáceis de manter e
 de testar. Rails faz que elas sejam fáceis de usar, e fornece ajudantes
 *build-in* para necessidades comuns, e também permite que você crie seus
 próprios métodos de validação.
