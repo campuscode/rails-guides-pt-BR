@@ -1578,7 +1578,7 @@ Associações do *Active Record* permitem declarar facilmente a relação entre 
 *models*. No caso de comentários e artigos, você poderia descrever a relação
 da seguinte maneira:
 
-* Cada comentário pertecena a um artigo.
+* Cada comentário pertece a um artigo.
 * Um artigo pode possuir muito comentários.
 
 De fato, essa sintaxe é muito similar à utilizada pelo Rails para declarar essa
