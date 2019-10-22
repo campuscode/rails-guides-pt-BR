@@ -1564,7 +1564,7 @@ $ rails db:migrate
 ```
 
 O Rails é inteligente o suficiente para executar somente as migrações que ainda
-não foram rodadas contra o banco de dados atual, assim neste caso você verá:
+não foram rodadas no banco de dados atual, assim neste caso você verá:
 
 ```bash
 ==  CreateComments: migrating =================================================
