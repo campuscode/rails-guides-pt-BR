@@ -1497,7 +1497,7 @@ declaring routes manually. For more information about routing, see
 Adicionando um Segundo Model
 ----------------------------
 
-É hora de adicionar um segundo *model* a aplicação.O segundo model vai lidar com
+É hora de adicionar um segundo *model* à aplicação. O segundo *model* vai lidar com
 comentários em artigos.
 
 ### Gerando um Model
