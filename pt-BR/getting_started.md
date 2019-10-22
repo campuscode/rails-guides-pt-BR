@@ -1602,7 +1602,7 @@ end
 ```
 
 Estas duas declarações habilitam uma boa parte de comportamento automático. Por
-exemplo, se você possui uma instancia da variável `@article` que contém um
+exemplo, se você possui uma instância da variável `@article` que contém um
 artigo, você pode recuperar todos os comentários pertencentes àquele artigo na
 forma de um *array* usando `@article.comments`.
 
