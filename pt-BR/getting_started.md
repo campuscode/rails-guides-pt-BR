@@ -1648,7 +1648,7 @@ Isso cria quatro arquivos e um diretório vazio:
 | app/assets/stylesheets/comments.scss         | *Cascading style sheet* (CSS) para o *controller*    |
 
 Como em qualquer blog, nossos leitores vão criar seus comentários diretamente
-depois de lerem o artigo e, uma vez que adicionaram o comentário, serão enviados
+depois de lerem o artigo e, uma vez que adicionarem o comentário, serão enviados
 de volta para a página *show* do artigo par verem o comentário agora listado.
 Por essa razão, nosso `CommentsController` está aqui para fornecer um método que
 cria comentários e deleta comentários spam quando chegarem.
