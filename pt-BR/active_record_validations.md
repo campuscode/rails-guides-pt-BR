@@ -922,7 +922,7 @@ Validação com Condicional
 ----------------------
 
 As vezes fará sentido validar um objeto apenas quando uma determinada condição acontecer.
-Você pode fazer isso usando `:if` e `:unless`, que podem ser usandos como um *symbol*,
+Você pode fazer isso usando `:if` e `:unless`, que podem ser usados como um *symbol*,
 uma `Proc` ou um `Array`. Você pode usar o `:if` quando quiser especificar quando uma
 validação **deve** ocorrer.
 Se você quiser especificar quando uma validação **não deve** ocorrer, você pode usar o `:unless`.
