@@ -413,7 +413,7 @@ end
 Um *controller* é uma classe definida para herdar de `ApplicationController`.
 É dentro dessa classe que você define os métodos que se tornarão as ações desse *controller*. Essas ações executarão operações *CRUD* nos artigos em nosso sistema.
 
-NOTA: Existem métodos `públicos`, `privados` e `protegidos` no Ruby, mas apenas métodos `públicos` podem ser ações nos *controllers*. Para mais detalhes, consulte  [Programação Ruby](http://www.ruby-doc.org/docs/ProgrammingRuby/).
+NOTE: Existem métodos `public`, `private` e `protected` no Ruby, mas apenas métodos `public` podem ser ações nos *controllers*. Para mais detalhes, consulte  [Programação Ruby](http://www.ruby-doc.org/docs/ProgrammingRuby/).
 
 Se você atualizar <http://localhost:3000/articles/new> agora, receberá um novo erro:
 
