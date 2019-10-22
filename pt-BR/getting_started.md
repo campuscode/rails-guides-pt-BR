@@ -443,7 +443,7 @@ Vamos ver a mensagem de erro completa novamente:
 >ArticlesController#new  está faltando um *template* para o formato da requisição: *text/html*
 
 >NOTA!
->Como dito, o Rails espera que uma ação renderize um *template* com o mesmo nome, contido em uma pasta com o nome de seu *controller*. Se esse *controller* for uma *API* que responde com 204 (sem conteúdo), e que não requer um *template*, então esse erro ocorrerá ao tentar acessá-lo pelo navegador pois esperamos que um modelo HTML seja renderizado para essas requisições. Se esse for o caso, continue.
+>Como dito, o Rails espera que uma ação renderize um *template* com o mesmo nome, contido em uma pasta com o nome de seu *controller*. Se esse *controller* for uma *API* que responde com 204 (sem conteúdo), e que não requer um *template*, então esse erro ocorrerá ao tentar acessá-lo pelo navegador pois esperamos que um *template* HTML seja renderizado para essas requisições. Se esse for o caso, continue.
 
 A mensagem identifica qual *template* está ausente. Nesse caso, é o *template* `articles/new`. O Rails procurará primeiro esse *template*. Se não for encontrado, ele tentará carregar um *template* chamado `application/new`, porque o `ArticlesController` herda do `ApplicationController`.
 
