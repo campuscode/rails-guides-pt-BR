@@ -1503,7 +1503,7 @@ comentários em artigos.
 ### Gerando um Model
 
 Nós veremos o mesmo *generator* que usamos antes quando criamos o *model*
-`Article` (artigo, inglês). Desta vez vamos criar um model `Comment` (comentário)
+`Article` (artigo, inglês). Desta vez vamos criar um *model* `Comment` (comentário)
 que contém a referência para um artigo. Rode esse comando no seu terminal:
 
 ```bash
