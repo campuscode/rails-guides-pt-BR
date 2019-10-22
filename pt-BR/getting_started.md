@@ -1622,7 +1622,7 @@ resources :articles do
 end
 ```
 
-Isso cria `comments` como um _recurso aninhado_ dentro de `article`. Essa é
+Isso cria `comments` como um recurso aninhado (_nested resource_) dentro de `article`. Essa é
 outra parte do processo para recuperar as relações hierárquicas que existem  entre
 artigos e comentários.
 
