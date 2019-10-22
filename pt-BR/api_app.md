@@ -127,7 +127,7 @@ to be most of it.
 Configuração básica
 -----------------------
 
-Se você estiver contruindo uma aplicação Rails que será uma API, você pode começar
+Se você estiver construindo uma aplicação Rails que será uma API, você pode começar
 com um subconjunto mais limitado do Rails e adicionar recursos, conforme necessário.
 
 ### Criando uma nova aplicação
