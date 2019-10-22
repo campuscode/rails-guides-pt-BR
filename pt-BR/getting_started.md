@@ -1538,7 +1538,7 @@ nome fornecido ao *model* anexada a um `_id` que contém um valor do tipo
 *integer*. Para compreender melhor, analise o arquivo `db/schema.rb` depois de
 rodar a *migration*.
 
-Em adição ao *model*, o Rails também gerou a *migration* para criar a tabela
+Além do *model*, o Rails também gerou a *migration* para criar a tabela
 correspondente no banco de dados:
 
 ```ruby
