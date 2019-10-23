@@ -402,7 +402,7 @@ Alguns módulos comuns que você pode querer adicionar:
 - `ActionView::Layouts`: Suporte para layouts ao renderizar.
 - `ActionController::MimeResponds`: Suporte para `respond_to`.
 - `ActionController::Cookies`: Suporte para `cookies`, que inclui suporte para cookies assinados e criptografados. Isso requer um middleware de cookies
-- `ActionController::Caching`: Suporte para cache da *view* do controller da API. Importe lembrar que você precisará especificar manualmente o armazenamento em cache dentro do controller, como por exemplo:
+- `ActionController::Caching`: Suporte para cache da *view* do *controller* da API. Lembre-se que você precisará especificar manualmente o armazenamento em cache dentro do *controller*, como por exemplo:
   ```ruby
   class ApplicationController < ActionController::API
     include ::ActionController::Caching
