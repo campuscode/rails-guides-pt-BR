@@ -373,7 +373,7 @@ Uma aplicação API (utilizando `ActionController::API`) vem com os seguintes m�
 - `ActionController::ParamsWrapper`: Agrupa o hash dos parâmetros em um hash encadeado, para que você não precise especificar elementos raiz enviando requisições POST, por exemplo.
 - `ActionController::Head`: Suporte para o retorno de uma resposta sem conteúdo, apenas *headers*
 
-Outros plugins podem adicionar mais módulos. Você pode obter uma lista de todos os módulos incluídos no `ActionController::API` no console do rails:
+Outros plugins podem adicionar mais módulos. Você pode obter uma lista de todos os módulos incluídos no `ActionController::API` no console do Rails:
 
 ```bash
 $ rails c
