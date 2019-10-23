@@ -1772,18 +1772,18 @@ right places.
 
 ![Article with Comments](images/getting_started/article_with_comments.png)
 
-Refactoring
+Refatorando
 -----------
 
-Now that we have articles and comments working, take a look at the
-`app/views/articles/show.html.erb` template. It is getting long and awkward. We
-can use partials to clean it up.
+Agora que nossos artigos e comentários funcionam, dê uma olhada no template
+`app/views/articles/show.html.erb`. Ele está ficando longo e esquisito. Nós
+podemos usar partials (parciais) para melhorá-lo.
 
-### Rendering Partial Collections
+### Renderizando coleções parciais
 
-First, we will make a comment partial to extract showing all the comments for
-the article. Create the file `app/views/comments/_comment.html.erb` and put the
-following into it:
+Primeiramente, nós vamos criar uma partial para extrair a exibição de todos os
+comentários para o artigo. Crie o arquivo `app/views/comments/_comment.html.erb`
+e insira o código a seguir:
 
 ```html+erb
 <p>
@@ -1797,8 +1797,7 @@ following into it:
 </p>
 ```
 
-Then you can change `app/views/articles/show.html.erb` to look like the
-following:
+Então você pode mudar `app/views/articles/show.html.erb` para o seguinte código:
 
 ```html+erb
 <p>
@@ -1833,11 +1832,11 @@ following:
 <%= link_to 'Back', articles_path %>
 ```
 
-This will now render the partial in `app/views/comments/_comment.html.erb` once
-for each comment that is in the `@article.comments` collection. As the `render`
-method iterates over the `@article.comments` collection, it assigns each
-comment to a local variable named the same as the partial, in this case
-`comment`, which is then available in the partial for us to show.
+Isso fará com que a partial seja renderizada em `app/views/comments/_comment.html.erb`
+uma vez para cada comentário na coleção `@article.comments`. Como o método
+`render` itera sobre a coleção `@article.comments`, ele designa cada comentário
+para uma variavel local nomeada como a partial, nesse caso `comment`, que então
+fica disponível para ser exibida na partial.
 
 ### Rendering a Partial Form
 
