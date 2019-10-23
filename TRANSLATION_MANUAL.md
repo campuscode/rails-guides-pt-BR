@@ -4,7 +4,7 @@ Este manual apresenta os padrões adotados para a tradução do Rails Guides,
 visando auxiliar o trabalho de todas as pessoas que colaboram com este projeto.
 Vamos procurar atualizar o manual continuamente e frequentemente. Consulte este
 material sempre que abrir uma nova *issue* de tradução.  Este é um trabalho
-coletivo, desenvolvido por todos os colaboradores envolvidos no projeto.
+coletivo, desenvolvido por todas as pessoas envolvidas no projeto.
 
 Sugestões e comentários são bem-vindos.
 
