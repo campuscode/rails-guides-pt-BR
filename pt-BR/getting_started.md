@@ -1494,32 +1494,33 @@ TIP: In general, Rails encourages using resources objects instead of
 declaring routes manually. For more information about routing, see
 [Rails Routing from the Outside In](routing.html).
 
-Adding a Second Model
----------------------
+Adicionando um Segundo Model
+----------------------------
 
-It's time to add a second model to the application. The second model will handle
-comments on articles.
+É hora de adicionar um segundo *model* à aplicação. O segundo *model* vai lidar com
+comentários em artigos.
 
-### Generating a Model
+### Gerando um Model
 
-We're going to see the same generator that we used before when creating
-the `Article` model. This time we'll create a `Comment` model to hold a
-reference to an article. Run this command in your terminal:
+Nós veremos o mesmo *generator* que usamos antes quando criamos o *model*
+`Article` (artigo, inglês). Desta vez vamos criar um *model* `Comment` (comentário)
+que contém a referência para um artigo. Rode esse comando no seu terminal:
 
 ```bash
 $ rails generate model Comment commenter:string body:text article:references
 ```
 
-This command will generate four files:
+Este comando vai gerar quatro arquivos:
 
-| File                                         | Purpose                                                                                                |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| db/migrate/20140120201010_create_comments.rb | Migration to create the comments table in your database (your name will include a different timestamp) |
-| app/models/comment.rb                        | The Comment model                                                                                      |
-| test/models/comment_test.rb                  | Testing harness for the comment model                                                                 |
-| test/fixtures/comments.yml                   | Sample comments for use in testing                                                                     |
 
-First, take a look at `app/models/comment.rb`:
+| Arquivo                                      | Propósito                                                                                                       |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------|
+| db/migrate/20140120201010_create_comments.rb | *Migration* para criar a tabela de comentários no seu banco de dados (o nome incluirá um *timestamp* diferente) |
+| app/models/comment.rb                        | O *model* Comment                                                                                               |
+| test/models/comment_test.rb                  | Aparelhagem de testes para o *model* de comentário                                                              |
+| test/fixtures/comments.yml                   | Exemplo de comentários para uso em testes                                                                       |
+
+Primeiro, veja o arquivo `app/models/comment.rb`:
 
 ```ruby
 class Comment < ApplicationRecord
@@ -1527,17 +1528,18 @@ class Comment < ApplicationRecord
 end
 ```
 
-This is very similar to the `Article` model that you saw earlier. The difference
-is the line `belongs_to :article`, which sets up an Active Record _association_.
-You'll learn a little about associations in the next section of this guide.
+Isso é muito semelhante ao *model* `Article` que vimos antes. A diferença está na
+linha `belongs_to : article`, o que configura uma associação no *Active Record*.
+Você vai aprender um pouco sobre associações na próxima seção deste guia.
 
-The (`:references`) keyword used in the bash command is a special data type for models.
-It creates a new column on your database table with the provided model name appended with an `_id`
-that can hold integer values. To get a better understanding, analyze the
-`db/schema.rb` file after running the migration.
+A palavra-chave (`:references`) usada no comando `bash` é um tipo especial de
+dado para *models*. Ela cria uma nova coluna na tabela do banco de dados com o
+nome fornecido ao *model* anexada a um `_id` que contém um valor do tipo
+*integer*. Para compreender melhor, analise o arquivo `db/schema.rb` depois de
+rodar a *migration*.
 
-In addition to the model, Rails has also made a migration to create the
-corresponding database table:
+Além do *model*, o Rails também gerou a *migration* para criar a tabela
+correspondente no banco de dados:
 
 ```ruby
 class CreateComments < ActiveRecord::Migration[6.0]
@@ -1552,17 +1554,17 @@ class CreateComments < ActiveRecord::Migration[6.0]
   end
 end
 ```
-
-The `t.references` line creates an integer column called `article_id`, an index
-for it, and a foreign key constraint that points to the `id` column of the `articles`
-table. Go ahead and run the migration:
+A linha `t.references` cria uma coluna com valores do tipo *integer* chamada
+`article_id`, um índice para ela e uma restrição de chave estrangeira (*foreign key*)
+que aponta para a coluna `id` da tabela `articles`. Vá em frente e rode a
+*migration*:
 
 ```bash
 $ rails db:migrate
 ```
 
-Rails is smart enough to only execute the migrations that have not already been
-run against the current database, so in this case you will just see:
+O Rails é inteligente o suficiente para executar somente as migrações que ainda
+não foram rodadas no banco de dados atual, assim neste caso você verá:
 
 ```bash
 ==  CreateComments: migrating =================================================
@@ -1570,28 +1572,26 @@ run against the current database, so in this case you will just see:
    -> 0.0115s
 ==  CreateComments: migrated (0.0119s) ========================================
 ```
+### Associando Models
 
-### Associating Models
+Associações do *Active Record* permitem declarar facilmente a relação entre dois
+*models*. No caso de comentários e artigos, você poderia descrever a relação
+da seguinte maneira:
 
-Active Record associations let you easily declare the relationship between two
-models. In the case of comments and articles, you could write out the
-relationships this way:
+* Cada comentário pertece a um artigo.
+* Um artigo pode possuir muitos comentários.
 
-* Each comment belongs to one article.
-* One article can have many comments.
-
-In fact, this is very close to the syntax that Rails uses to declare this
-association. You've already seen the line of code inside the `Comment` model
-(app/models/comment.rb) that makes each comment belong to an Article:
+De fato, essa sintaxe é muito similar à utilizada pelo Rails para declarar essa
+associação. Você já viu a linha de código dentro do *model* `Comment`
+(`app/models/comment.rb`) que faz com que cada comentário pertença a um Artigo:
 
 ```ruby
 class Comment < ApplicationRecord
   belongs_to :article
 end
 ```
-
-You'll need to edit `app/models/article.rb` to add the other side of the
-association:
+Você vai precisar editar o arquivo `app/models/article.rb` para adicionar o outro lado da
+associação:
 
 ```ruby
 class Article < ApplicationRecord
@@ -1601,19 +1601,20 @@ class Article < ApplicationRecord
 end
 ```
 
-These two declarations enable a good bit of automatic behavior. For example, if
-you have an instance variable `@article` containing an article, you can retrieve
-all the comments belonging to that article as an array using
-`@article.comments`.
+Estas duas declarações habilitam uma boa parte de comportamento automático. Por
+exemplo, se você possui uma instância da variável `@article` que contém um
+artigo, você pode recuperar todos os comentários pertencentes àquele artigo na
+forma de um *array* usando `@article.comments`.
 
-TIP: For more information on Active Record associations, see the [Active Record
-Associations](association_basics.html) guide.
+TIP: Para mais informações sobre associações do *Active Record*, veja o guia
+[Associações no Active Record](association_basics.html).
 
-### Adding a Route for Comments
+### Adicionando a Rota para Comentários
 
-As with the `welcome` controller, we will need to add a route so that Rails
-knows where we would like to navigate to see `comments`. Open up the
-`config/routes.rb` file again, and edit it as follows:
+Da mesma forma que o *controller* `welcome`, nós vamos precisar adicionar a
+rota para que o Rails saiba para onde queremos navegar para encontrar
+`comments`. Abra o arquivo `config/routes.rb` novamente e o edite da seguinte
+maneira:
 
 ```ruby
 resources :articles do
@@ -1621,40 +1622,39 @@ resources :articles do
 end
 ```
 
-This creates `comments` as a _nested resource_ within `articles`. This is
-another part of capturing the hierarchical relationship that exists between
-articles and comments.
+Isso cria `comments` como um recurso aninhado (_nested resource_) dentro de `article`. Essa é
+outra parte do processo para recuperar as relações hierárquicas que existem  entre
+artigos e comentários.
 
-TIP: For more information on routing, see the [Rails Routing](routing.html)
-guide.
+TIP: Para mais informações sobre rotas, veja o guia [Roteamento no Rails](routing.html) 
 
-### Generating a Controller
+### Gerando um Controller
 
-With the model in hand, you can turn your attention to creating a matching
-controller. Again, we'll use the same generator we used before:
+Com o *model* em mãos, você pode voltar sua atenção para a criação do
+*controller* correspondente. Mais uma vez, você vai usar o *generator* usado
+anteriormente:
 
 ```bash
 $ rails generate controller Comments
 ```
+Isso cria quatro arquivos e um diretório vazio:
 
-This creates four files and one empty directory:
+| Arquivo/Diretório                            | Propósito                                            |
+| -------------------------------------------- | ---------------------------------------------------- |
+| app/controllers/comments_controller.rb       | O *controller* de comentários                        |
+| app/views/comments/                          | *Views* do *controller* são armazenadas aqui         |
+| test/controllers/comments_controller_test.rb | O teste para o *controller*                          |
+| app/helpers/comments_helper.rb               | Arquivo de *helpers* da *view*                       |
+| app/assets/stylesheets/comments.scss         | *Cascading style sheet* (CSS) para o *controller*    |
 
-| File/Directory                               | Purpose                                  |
-| -------------------------------------------- | ---------------------------------------- |
-| app/controllers/comments_controller.rb       | The Comments controller                  |
-| app/views/comments/                          | Views of the controller are stored here  |
-| test/controllers/comments_controller_test.rb | The test for the controller              |
-| app/helpers/comments_helper.rb               | A view helper file                       |
-| app/assets/stylesheets/comments.scss         | Cascading style sheet for the controller |
+Como em qualquer blog, nossos leitores vão criar seus comentários diretamente
+depois de lerem o artigo e, uma vez que adicionarem o comentário, serão enviados
+de volta para a página *show* do artigo para verem o comentário agora listado.
+Por essa razão, nosso `CommentsController` está aqui para fornecer um método que
+cria comentários e deleta comentários *spam* quando chegarem.
 
-Like with any blog, our readers will create their comments directly after
-reading the article, and once they have added their comment, will be sent back
-to the article show page to see their comment now listed. Due to this, our
-`CommentsController` is there to provide a method to create comments and delete
-spam comments when they arrive.
-
-So first, we'll wire up the Article show template
-(`app/views/articles/show.html.erb`) to let us make a new comment:
+Então, primeiro nós vamos ligar o *show template* para Artigos (`app/views/articles/show.html.erb`)
+para que possamos criar um novo comentários:
 
 ```html+erb
 <p>
@@ -1686,11 +1686,11 @@ So first, we'll wire up the Article show template
 <%= link_to 'Back', articles_path %>
 ```
 
-This adds a form on the `Article` show page that creates a new comment by
-calling the `CommentsController` `create` action. The `form_with` call here uses
-an array, which will build a nested route, such as `/articles/1/comments`.
+Isso adiciona na página *show* do `Article` um formulário que cria um novo
+comentário chamando a *action* `create` no `CommentsController`. O `form_with`
+aqui usa um *array* que vai construir uma rota aninhada, como `/articles/1/comments`.
 
-Let's wire up the `create` in `app/controllers/comments_controller.rb`:
+Vamos ligar a *action* `create` em `app/controllers/comments_controller.rb`:
 
 ```ruby
 class CommentsController < ApplicationController
@@ -1706,23 +1706,22 @@ class CommentsController < ApplicationController
     end
 end
 ```
+Você verá um pouco mais de complexidade aqui do que no *controller* para
+artigos. Esse é o efeito colateral do aninhamento que você configurou. Cada
+requisição para um comentário deve lembrar o artigo ao qual o comentário está
+anexado, para que a chamada inicial do método `find` do *model* `Article`
+encontre o artigo em questão.
 
-You'll see a bit more complexity here than you did in the controller for
-articles. That's a side-effect of the nesting that you've set up. Each request
-for a comment has to keep track of the article to which the comment is attached,
-thus the initial call to the `find` method of the `Article` model to get the
-article in question.
+Além disso, o código aproveita-se de alguns métodos disponíveis para uma
+associação. Nós usamos o método `create` em `@article.comments` para criar e
+salvar um comentário. Isso vai automaticamente conectar o comentário para que
+ele pertença àquele artigo em particular.
 
-In addition, the code takes advantage of some of the methods available for an
-association. We use the `create` method on `@article.comments` to create and
-save the comment. This will automatically link the comment so that it belongs to
-that particular article.
-
-Once we have made the new comment, we send the user back to the original article
-using the `article_path(@article)` helper. As we have already seen, this calls
-the `show` action of the `ArticlesController` which in turn renders the
-`show.html.erb` template. This is where we want the comment to show, so let's
-add that to the `app/views/articles/show.html.erb`.
+Uma vez que temos um novo comentário, nós enviamos o usuário de volta ao artigo
+original usando o helper `article_path(@article)`. Como já vimos
+anteriormente, isso chama a *action* `show` do `ArticlesController` que por sua
+vez renderiza o *template* `show.html.erb`. É aqui que queremos que o comentário
+apareça, então vamos adicionar isso ao arquivo `app/views/articles/show.html.erb`.
 
 ```html+erb
 <p>
@@ -1767,8 +1766,8 @@ add that to the `app/views/articles/show.html.erb`.
 <%= link_to 'Back', articles_path %>
 ```
 
-Now you can add articles and comments to your blog and have them show up in the
-right places.
+Agora podemos adicionar artigos e comentários ao seu blog e mostrá-los nos
+lugares certos.
 
 ![Article with Comments](images/getting_started/article_with_comments.png)
 
