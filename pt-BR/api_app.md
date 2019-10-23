@@ -357,7 +357,7 @@ features in Action Controller.
 Escolhendo os módulos da *Controller*
 ---------------------------
 
-Uma aplicação API (utilizando `ActionController::API`) vem com os seguintes módulos da **controller** por padrão:
+Uma aplicação API (utilizando `ActionController::API`) vem com os seguintes módulos do *controller* por padrão:
 
 - `ActionController::UrlFor`: Faz com que `url_for` e helpers similares sejam disponíveis.
 - `ActionController::Redirecting`: Suporte para `redirect_to`.
