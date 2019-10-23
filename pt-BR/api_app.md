@@ -394,7 +394,7 @@ incluídas e configurados também.
 
 Alguns módulos comuns que você pode querer adicionar:
 
-- `AbstractController::Translation`: Suporte para `l` e `t`, métodos de localização e tradução
+- `AbstractController::Translation`: Suporte para os métodos de localização e tradução `l` e `t`
 - Suporte para autenticações HTTP basic, digest ou por token:
   * `ActionController::HttpAuthentication::Basic::ControllerMethods`,
   * `ActionController::HttpAuthentication::Digest::ControllerMethods`,
