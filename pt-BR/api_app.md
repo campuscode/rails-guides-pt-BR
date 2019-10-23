@@ -390,7 +390,7 @@ $ rails c
 ### Adicionando Outros Módulos
 
 Todos os módulos do *Action Controller* conhecem seus módulos dependentes. Assim, você pode incluir qualquer módulo em seus controllers, e todas as dependências serão
-incluídas e configurados também.
+incluídas e configuradas também.
 
 Alguns módulos comuns que você pode querer adicionar:
 
