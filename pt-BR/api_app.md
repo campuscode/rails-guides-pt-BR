@@ -354,7 +354,7 @@ config.middleware.delete ::Rack::Sendfile
 Keep in mind that removing these middlewares will remove support for certain
 features in Action Controller.
 
-Escolhendo os módulos da *Controller*
+Escolhendo os módulos do *controller*
 ---------------------------
 
 Uma aplicação API (utilizando `ActionController::API`) vem com os seguintes módulos do *controller* por padrão:
