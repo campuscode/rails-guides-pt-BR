@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Action Controller Overview
@@ -18,26 +19,24 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-What Does a Controller Do?
+O que um *Controller* faz?
 --------------------------
 
-Action Controller is the C in [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). After the router has determined which controller to use for a request, the controller is responsible for making sense of the request, and producing the appropriate output. Luckily, Action Controller does most of the groundwork for you and uses smart conventions to make this as straightforward as possible.
+*ActionController* é o _C_ em [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). Após o `router` determinar qual _controller_ usar para a requisição, o _controller_ será responsável por entender a requisição e retornar a resposta apropriada. Por sorte, *ActionController* faz a maior parte do trabalho fundamental pra você e usa convenções inteligentes pra fazer esse processo ser tão intuitivo quanto possível.
 
-For most conventional [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) applications, the controller will receive the request (this is invisible to you as the developer), fetch or save data from a model, and use a view to create HTML output. If your controller needs to do things a little differently, that's not a problem, this is just the most common way for a controller to work.
+Para a maior parte das aplicações [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer),o *controller* receberá a requisição (o que é "invisível" a você que está desenvolvendo), busca e/ou salva dados de um *model*, e usa a *view* para criar a saída HTML. Se seu *controller* precisa tratar requisições um pouco diferente, isso não é um problema, este é apenas o jeito mais comum de um *controller* trabalhar.
 
-A controller can thus be thought of as a middleman between models and views. It makes the model data available to the view so it can display that data to the user, and it saves or updates user data to the model.
+Um *controller* pode então ser pensado como um intermediário entre um *model* e uma *view*. Isso faz com que os dados do *model* fiquem disponíveis para a *view* para que possa ser mostrado ao usuário, e ele salva ou atualiza dados do usuário no *model*.
 
-NOTE: For more details on the routing process, see [Rails Routing from the Outside In](routing.html).
+OBS: Para mais detalhes sobre processo de roteamento, veja [Rails Routing from the Outside In](routing.html)
 
-Controller Naming Convention
+Convenção para Nomeclatura de *Controllers*
 ----------------------------
+A convenção para nomenclatura de *controllers* no Rails favorece a pluralização da última palavra do nome do *controller*, embora não seja estritamente necessário (ex: `ApplicationController`). Por exemplo, `ClientsController` é recomendado ao invés de `ClientController`, `SiteAdminsController` é recomendado ao invés de `SiteAdminController` ou `SitesAdminsController`, e assim por diante.
 
-The naming convention of controllers in Rails favors pluralization of the last word in the controller's name, although it is not strictly required (e.g. `ApplicationController`). For example, `ClientsController` is preferable to `ClientController`, `SiteAdminsController` is preferable to `SiteAdminController` or `SitesAdminsController`, and so on.
+Seguindo essa convenção será possível utilizar o gerador de rotas padrão (ex: `resources`, etc) sem precisar configurar cada `:path` ou `:controller`, e ainda manter consistente o uso dos auxiliares de rotas em todo o seu projeto. Veja [Layouts & Guia de Renderização](layouts_and_rendering.html) para mais detalhes.
 
-Following this convention will allow you to use the default route generators (e.g. `resources`, etc) without needing to qualify each `:path` or `:controller`, and will keep named route helpers' usage consistent throughout your application. See [Layouts & Rendering Guide](layouts_and_rendering.html) for more details.
-
-NOTE: The controller naming convention differs from the naming convention of models, which are expected to be named in singular form.
-
+OBS: A convenção para nomenclatura de *controllers* difere da convenção para nomenclatura de *models*, que devem ser nomeados na forma singular.
 
 Methods and Actions
 -------------------

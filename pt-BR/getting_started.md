@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Getting Started with Rails
@@ -34,157 +35,143 @@ Be aware that some resources, while still excellent, cover versions of Ruby as o
 1.6, and commonly 1.8, and will not include some syntax that you will see in day-to-day
 development with Rails.
 
-What is Rails?
+O que é o Rails?
 --------------
 
-Rails is a web application development framework written in the Ruby programming language.
-It is designed to make programming web applications easier by making assumptions
-about what every developer needs to get started. It allows you to write less
-code while accomplishing more than many other languages and frameworks.
-Experienced Rails developers also report that it makes web application
-development more fun.
+Rails é um *framework* de desenvolvimento de aplicações *web* escrito na linguagem de programação Ruby.
+Foi projetado para facilitar o desenvolvimento de aplicações *web*, criando premissas sobre tudo que uma pessoa desenvolvedora precisa para começar. Permite que você escreva menos código, enquanto realiza mais do que em muitas outras linguagens ou *frameworks.* Pessoas desenvolvedoras experientes em Rails, também dizem que desenvolver aplicações web ficou mais divertido.
 
-Rails is opinionated software. It makes the assumption that there is a "best"
-way to do things, and it's designed to encourage that way - and in some cases to
-discourage alternatives. If you learn "The Rails Way" you'll probably discover a
-tremendous increase in productivity. If you persist in bringing old habits from
-other languages to your Rails development, and trying to use patterns you
-learned elsewhere, you may have a less happy experience.
+Rails é um software opinativo. Assumindo que há uma "melhor" maneira para fazer as coisas, e foi projetado para encorajar essa maneira - e, em alguns casos para desencorajar alternativas. Se você aprender o "Rails Way", provavelmente terá um grande aumento de produtividade. Se você insistir nos velhos hábitos de outras linguagens, tentando usar os padrões que você aprendeu em outro lugar, você pode ter uma experiência menos feliz.
 
-The Rails philosophy includes two major guiding principles:
+A filosofia do Rails possui dois princípios fundamentais:
 
-* **Don't Repeat Yourself:** DRY is a principle of software development which
-  states that "Every piece of knowledge must have a single, unambiguous, authoritative
-  representation within a system." By not writing the same information over and over
-  again, our code is more maintainable, more extensible, and less buggy.
-* **Convention Over Configuration:** Rails has opinions about the best way to do many
-  things in a web application, and defaults to this set of conventions, rather than
-  require that you specify minutiae through endless configuration files.
+* **Não repita a si mesmo:** DRY(don't repeat yourself) é um conceito de desenvolvimento de software que estabelece que "Todo conhecimento deve possuir uma representação única, de autoridade e livre de ambiguidades em todo o sistema.". Ao não escrever as mesmas informações repetidamente, o código fica mais facil de manter, de expandir, e com menos bugs.
+* **Convenção sobre configuração:** Rails possui convenções sobre as melhores maneiras de fazer muitas coisas em uma aplicação web, devido a essas convenções você não precisa especificar minúcias através de arquivos de configuração infinitos.
 
-Creating a New Rails Project
-----------------------------
-The best way to read this guide is to follow it step by step. All steps are
-essential to run this example application and no additional code or steps are
-needed.
 
-By following along with this guide, you'll create a Rails project called
-`blog`, a (very) simple weblog. Before you can start building the application,
-you need to make sure that you have Rails itself installed.
+Criando um Novo Projeto em Rails
+---------------------------------
+A melhor forma de ler esse guia é seguir o passo à passo. Todos os passos são
+essenciais para rodar a aplicação de exemplo e nenhum código ou passos adicionais
+serão necessários.
 
-TIP: The examples below use `$` to represent your terminal prompt in a UNIX-like OS,
-though it may have been customized to appear differently. If you are using Windows,
-your prompt will look something like `c:\source_code>`
+Seguindo este guia, você irá criar um projeto em *Rails* chamado de
+`blog`, um *weblog* (muito) simples. Antes de você começar a construir a aplicação,
+você precisa ter certeza de ter o *Rails* instalado.
 
-### Installing Rails
+DICA: Os exemplos à seguir usam `$` para representar seu *prompt* de terminal em um
+sistema operacional baseado em UNIX, mesmo que ele tenha sido customizado para parecer diferente.
+Se você está utilizando Windows, seu *prompt* será parecido com algo como `c:\source_code>`
 
-Before you install Rails, you should check to make sure that your system has the
-proper prerequisites installed. These include Ruby and SQLite3.
+### Instalando o Rails
 
-Open up a command line prompt. On macOS open Terminal.app, on Windows choose
-"Run" from your Start menu and type 'cmd.exe'. Any commands prefaced with a
-dollar sign `$` should be run in the command line. Verify that you have a
-current version of Ruby installed:
+Antes de você instalar o Rails, você deve validar para ter certeza que seu sistema
+tem os pré requisitos necessários instalados. Esses incluem Ruby e SQLite3.
+
+Abra o *prompt* de linha de comando. No *macOS* abra o *Terminal.app*, no *Windows*
+escolha *executar* no menu inicial e digite 'cmd.exe'. Qualquer comando que antecede
+o sinal de dólar `$` deverá ser rodado em linha de comando. Verifique se você tem a
+versão atual do Ruby instalado:
 
 ```bash
 $ ruby -v
 ruby 2.5.0
 ```
 
-Rails requires Ruby version 2.5.0 or later. If the version number returned is
-less than that number, you'll need to install a fresh copy of Ruby.
+Rails necessita da versão Ruby 2.5.0 ou mais atual. Se o número da versão retornada
+for menor que este número, você precisará instalar uma versão do Ruby mais atual.
 
-TIP: To quickly install Ruby and Ruby on Rails on your system in Windows, you can use
-[Rails Installer](http://railsinstaller.org). For more installation methods for most
-Operating Systems take a look at [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
+DICA: Para instalar o Ruby e o Ruby on Rails mais rápido no seu sistema operacional Windows,
+você pode usar o [Rails Installer](http://railsinstaller.org). Para mais informações de instalação
+de outros Sistemas Operacionais, dê uma olhada em [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
 
-If you are working on Windows, you should also install the
+Se você está utilizando o Windowns, você deve também instalar o
 [Ruby Installer Development Kit](https://rubyinstaller.org/downloads/).
 
-You will also need an installation of the SQLite3 database.
-Many popular UNIX-like OSes ship with an acceptable version of SQLite3.
-On Windows, if you installed Rails through Rails Installer, you
-already have SQLite installed. Others can find installation instructions
-at the [SQLite3 website](https://www.sqlite.org).
-Verify that it is correctly installed and in your PATH:
+Você também precisará instalar o banco de dados SQLite3.
+Muitos sistemas operacionais populares semelhantes ao UNIX são fornecidos com uma versão compatível do SQLite3.
+No Windows, se você instalou o Rails pelo instalador do Rails, você
+já possui o SQLite instalado. Você também podem achar mais instruções de instalação em [SQLite3 website](https://www.sqlite.org).
+Verifique se está corretamente instalado e no seu *PATH*
 
 ```bash
 $ sqlite3 --version
 ```
 
-The program should report its version.
+O programa deverá reportar sua versão.
 
-To install Rails, use the `gem install` command provided by RubyGems:
+Para instalar o Rails, use o comando `gem install` fornecido pelo RubyGems:
 
 ```bash
 $ gem install rails
 ```
 
-To verify that you have everything installed correctly, you should be able to
-run the following:
+Para verificar se você tem tudo instalado corretamente, você deve rodar o comando à seguir:
 
 ```bash
 $ rails --version
 ```
 
-If it says something like "Rails 6.0.0", you are ready to continue.
+Se esse comando retornar algo como "Rails 6.0.0", você está pronto para continuar.
 
-### Creating the Blog Application
+### Criando a Aplicação Blog
 
-Rails comes with a number of scripts called generators that are designed to make
-your development life easier by creating everything that's necessary to start
-working on a particular task. One of these is the new application generator,
-which will provide you with the foundation of a fresh Rails application so that
-you don't have to write it yourself.
+Rails vem com vários scripts chamados *generators* que são projetados para tornar
+sua vida de desenvolvedor fácil, criando tudo que é necessário para começar a
+trabalhar em uma tarefa em particular. Um desses é o *generator* de nova aplicação,
+que irá te fornecer a base de uma nova aplicação em Rails para que você não precise
+escrever tudo sozinho.
 
-To use this generator, open a terminal, navigate to a directory where you have
-rights to create files, and type:
+Para utilizar esse *generator*, abra um terminal, navegue para um diretório onde
+você tenha permissão para criar arquivos, e digite:
 
 ```bash
 $ rails new blog
 ```
 
-This will create a Rails application called Blog in a `blog` directory and
-install the gem dependencies that are already mentioned in `Gemfile` using
-`bundle install`.
+Este comando irá criar uma aplicação em Rails chamada Blog em um diretório `blog`
+e irá instalar as dependências das *gems* que já foram mencionadas no `Gemfile`
+usando `bundle install`.
 
-NOTE: If you're using Windows Subsystem for Linux then there are currently some
-limitations on file system notifications that mean you should disable the `spring`
-and `listen` gems which you can do by running `rails new blog --skip-spring --skip-listen`.
+OBS: Se você está utilizando um subsistema Windows para Linux então existem
+algumas limitações nas notificações dos arquivos do sistema que significa que você
+deve disabilitar as gems `spring` e `listen` que poderá ser feito rodando o comando
+`rails new blog --skip-spring --skip-listen`.
 
-TIP: You can see all of the command line options that the Rails application
-builder accepts by running `rails new -h`.
+DICA: Você pode ver todas as opções de linha de comando que a aplicação Rails
+aceita rodando o comando `rails new -h`.
 
-After you create the blog application, switch to its folder:
+Depois de criar a aplicação blog, entre em sua pasta:
 
 ```bash
 $ cd blog
 ```
 
-The `blog` directory has a number of auto-generated files and folders that make
-up the structure of a Rails application. Most of the work in this tutorial will
-happen in the `app` folder, but here's a basic rundown on the function of each
-of the files and folders that Rails created by default:
+A pasta `blog` tem vários arquivos auto-gerados e pastas que compõem a estrutura
+de uma aplicação Rails. A maior parte da execução deste tutorial será feito na
+pasta `app`, mas à seguir teremos um resumo básico das funções de cada um dos arquivos e pastas
+que o Rails gerou por padrão:
 
-| File/Folder | Purpose |
+| Arquivo/Pasta | Objetivo |
 | ----------- | ------- |
-|app/|Contains the controllers, models, views, helpers, mailers, channels, jobs, and assets for your application. You'll focus on this folder for the remainder of this guide.|
-|bin/|Contains the rails script that starts your app and can contain other scripts you use to setup, update, deploy, or run your application.|
-|config/|Configure your application's routes, database, and more. This is covered in more detail in [Configuring Rails Applications](configuring.html).|
-|config.ru|Rack configuration for Rack based servers used to start the application. For more information about Rack, see the [Rack website](https://rack.github.io/).|
-|db/|Contains your current database schema, as well as the database migrations.|
-|Gemfile<br>Gemfile.lock|These files allow you to specify what gem dependencies are needed for your Rails application. These files are used by the Bundler gem. For more information about Bundler, see the [Bundler website](https://bundler.io).|
-|lib/|Extended modules for your application.|
-|log/|Application log files.|
-|package.json|This file allows you to specify what npm dependencies are needed for your Rails application. This file is used by Yarn. For more information about Yarn, see the [Yarn website](https://yarnpkg.com/lang/en/).|
-|public/|The only folder seen by the world as-is. Contains static files and compiled assets.|
-|Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Rails. Rather than changing `Rakefile`, you should add your own tasks by adding files to the `lib/tasks` directory of your application.|
-|README.md|This is a brief instruction manual for your application. You should edit this file to tell others what your application does, how to set it up, and so on.|
-|storage/|Active Storage files for Disk Service. This is covered in [Active Storage Overview](active_storage_overview.html).|
-|test/|Unit tests, fixtures, and other test apparatus. These are covered in [Testing Rails Applications](testing.html).|
-|tmp/|Temporary files (like cache and pid files).|
-|vendor/|A place for all third-party code. In a typical Rails application this includes vendored gems.|
-|.gitignore|This file tells git which files (or patterns) it should ignore. See [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) for more info about ignoring files.
-|.ruby-version|This file contains the default Ruby version.|
+|app/|Contém os *controllers*, *models*, *views*, *helpers*, *mailers*, *channels*, *jobs*, e *assets* para sua aplicação. Você irá se concentrar nesse diretório pelo restante desse guia.|
+|bin/|Contém o script do Rails que inicializa sua aplicação e contém outros scripts que você utiliza para configurar, atualizar, colocar em produção ou executar sua aplicação.|
+|config/|Configure as rotas, banco de dados entre outros de sua aplicação. Este conteúdo é abordado com mais detalhes em [Configuring Rails Applications](configuring.html).|
+|config.ru|Configuração *Rack* para servidores baseados em *Rack* usados ​​para iniciar a aplicação. Para mais informações sobre o *Rack*, consulte [Rack website](https://rack.github.io/).|
+|db/|Contém o *schema* do seu banco de dados atual, assim como as *migrations* do banco de dados.|
+|Gemfile<br>Gemfile.lock|Esses arquivos permitem que você especifique quais dependências de *gem* são necessárias na sua aplicação Rails. Esses arquivos são usados pela *gem* Bundler. Para mais informações sobre o Bundler, acesse [o website do Bundler](https://bundler.io).|
+|lib/|Módulos extendidos da sua aplicação.|
+|log/|Arquivos de *log* da aplicação.|
+|package.json|Este arquivo permite que você especifique quais dependências *npm* são necessárias para sua aplicação Rails. Este arquivo é usado pelo Yarn. Para mais informações do Yarn, acesse [o website do Yarn](https://yarnpkg.com/lang/en/).|
+|public/|O único diretório visto pelo mundo. Contém arquivos estáticos e *assets* compilados.|
+|Rakefile|Este arquivo localiza e carrega tarefas que podem ser rodadas por linhas de comando. As tarefas são definidas nos componentes do Rails. Ao invés de editar o `Rakefile`, você deve criar suas próprias tarefas adicionando os arquivos no diretório `lib/tasks` da sua aplicação.|
+|README.md|Este é um manual de instruções para sua aplicação. Você deve editar este arquivo para informar o que seu aplicativo faz, como configurá-lo e assim por diante.|
+|storage/|Arquivos de armazenamento ativo do serviço de disco. Mais informações em [Active Storage Overview](active_storage_overview.html).|
+|test/|Testes unitários, *fixtures*, e outros tipos de testes. Mais informações em [Testing Rails Applications](testing.html).|
+|tmp/|Arquivos temporários (como cache e arquivos *pid*).|
+|vendor/|Diretório com todos os códigos de terceiros. Em uma típica aplicação Rails inclui *vendored gems*.|
+|.gitignore|Este arquivo diz ao Git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.
+|.ruby-version|Este arquivo contém a versão padrão do Ruby.|
 
 Hello, Rails!
 -------------
@@ -1507,32 +1494,33 @@ TIP: In general, Rails encourages using resources objects instead of
 declaring routes manually. For more information about routing, see
 [Rails Routing from the Outside In](routing.html).
 
-Adding a Second Model
----------------------
+Adicionando um Segundo Model
+----------------------------
 
-It's time to add a second model to the application. The second model will handle
-comments on articles.
+É hora de adicionar um segundo *model* à aplicação. O segundo *model* vai lidar com
+comentários em artigos.
 
-### Generating a Model
+### Gerando um Model
 
-We're going to see the same generator that we used before when creating
-the `Article` model. This time we'll create a `Comment` model to hold a
-reference to an article. Run this command in your terminal:
+Nós veremos o mesmo *generator* que usamos antes quando criamos o *model*
+`Article` (artigo, inglês). Desta vez vamos criar um *model* `Comment` (comentário)
+que contém a referência para um artigo. Rode esse comando no seu terminal:
 
 ```bash
 $ rails generate model Comment commenter:string body:text article:references
 ```
 
-This command will generate four files:
+Este comando vai gerar quatro arquivos:
 
-| File                                         | Purpose                                                                                                |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| db/migrate/20140120201010_create_comments.rb | Migration to create the comments table in your database (your name will include a different timestamp) |
-| app/models/comment.rb                        | The Comment model                                                                                      |
-| test/models/comment_test.rb                  | Testing harness for the comment model                                                                 |
-| test/fixtures/comments.yml                   | Sample comments for use in testing                                                                     |
 
-First, take a look at `app/models/comment.rb`:
+| Arquivo                                      | Propósito                                                                                                       |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------|
+| db/migrate/20140120201010_create_comments.rb | *Migration* para criar a tabela de comentários no seu banco de dados (o nome incluirá um *timestamp* diferente) |
+| app/models/comment.rb                        | O *model* Comment                                                                                               |
+| test/models/comment_test.rb                  | Aparelhagem de testes para o *model* de comentário                                                              |
+| test/fixtures/comments.yml                   | Exemplo de comentários para uso em testes                                                                       |
+
+Primeiro, veja o arquivo `app/models/comment.rb`:
 
 ```ruby
 class Comment < ApplicationRecord
@@ -1540,17 +1528,18 @@ class Comment < ApplicationRecord
 end
 ```
 
-This is very similar to the `Article` model that you saw earlier. The difference
-is the line `belongs_to :article`, which sets up an Active Record _association_.
-You'll learn a little about associations in the next section of this guide.
+Isso é muito semelhante ao *model* `Article` que vimos antes. A diferença está na
+linha `belongs_to : article`, o que configura uma associação no *Active Record*.
+Você vai aprender um pouco sobre associações na próxima seção deste guia.
 
-The (`:references`) keyword used in the bash command is a special data type for models.
-It creates a new column on your database table with the provided model name appended with an `_id`
-that can hold integer values. To get a better understanding, analyze the
-`db/schema.rb` file after running the migration.
+A palavra-chave (`:references`) usada no comando `bash` é um tipo especial de
+dado para *models*. Ela cria uma nova coluna na tabela do banco de dados com o
+nome fornecido ao *model* anexada a um `_id` que contém um valor do tipo
+*integer*. Para compreender melhor, analise o arquivo `db/schema.rb` depois de
+rodar a *migration*.
 
-In addition to the model, Rails has also made a migration to create the
-corresponding database table:
+Além do *model*, o Rails também gerou a *migration* para criar a tabela
+correspondente no banco de dados:
 
 ```ruby
 class CreateComments < ActiveRecord::Migration[6.0]
@@ -1565,17 +1554,17 @@ class CreateComments < ActiveRecord::Migration[6.0]
   end
 end
 ```
-
-The `t.references` line creates an integer column called `article_id`, an index
-for it, and a foreign key constraint that points to the `id` column of the `articles`
-table. Go ahead and run the migration:
+A linha `t.references` cria uma coluna com valores do tipo *integer* chamada
+`article_id`, um índice para ela e uma restrição de chave estrangeira (*foreign key*)
+que aponta para a coluna `id` da tabela `articles`. Vá em frente e rode a
+*migration*:
 
 ```bash
 $ rails db:migrate
 ```
 
-Rails is smart enough to only execute the migrations that have not already been
-run against the current database, so in this case you will just see:
+O Rails é inteligente o suficiente para executar somente as migrações que ainda
+não foram rodadas no banco de dados atual, assim neste caso você verá:
 
 ```bash
 ==  CreateComments: migrating =================================================
@@ -1583,28 +1572,26 @@ run against the current database, so in this case you will just see:
    -> 0.0115s
 ==  CreateComments: migrated (0.0119s) ========================================
 ```
+### Associando Models
 
-### Associating Models
+Associações do *Active Record* permitem declarar facilmente a relação entre dois
+*models*. No caso de comentários e artigos, você poderia descrever a relação
+da seguinte maneira:
 
-Active Record associations let you easily declare the relationship between two
-models. In the case of comments and articles, you could write out the
-relationships this way:
+* Cada comentário pertece a um artigo.
+* Um artigo pode possuir muitos comentários.
 
-* Each comment belongs to one article.
-* One article can have many comments.
-
-In fact, this is very close to the syntax that Rails uses to declare this
-association. You've already seen the line of code inside the `Comment` model
-(app/models/comment.rb) that makes each comment belong to an Article:
+De fato, essa sintaxe é muito similar à utilizada pelo Rails para declarar essa
+associação. Você já viu a linha de código dentro do *model* `Comment`
+(`app/models/comment.rb`) que faz com que cada comentário pertença a um Artigo:
 
 ```ruby
 class Comment < ApplicationRecord
   belongs_to :article
 end
 ```
-
-You'll need to edit `app/models/article.rb` to add the other side of the
-association:
+Você vai precisar editar o arquivo `app/models/article.rb` para adicionar o outro lado da
+associação:
 
 ```ruby
 class Article < ApplicationRecord
@@ -1614,19 +1601,20 @@ class Article < ApplicationRecord
 end
 ```
 
-These two declarations enable a good bit of automatic behavior. For example, if
-you have an instance variable `@article` containing an article, you can retrieve
-all the comments belonging to that article as an array using
-`@article.comments`.
+Estas duas declarações habilitam uma boa parte de comportamento automático. Por
+exemplo, se você possui uma instância da variável `@article` que contém um
+artigo, você pode recuperar todos os comentários pertencentes àquele artigo na
+forma de um *array* usando `@article.comments`.
 
-TIP: For more information on Active Record associations, see the [Active Record
-Associations](association_basics.html) guide.
+TIP: Para mais informações sobre associações do *Active Record*, veja o guia
+[Associações no Active Record](association_basics.html).
 
-### Adding a Route for Comments
+### Adicionando a Rota para Comentários
 
-As with the `welcome` controller, we will need to add a route so that Rails
-knows where we would like to navigate to see `comments`. Open up the
-`config/routes.rb` file again, and edit it as follows:
+Da mesma forma que o *controller* `welcome`, nós vamos precisar adicionar a
+rota para que o Rails saiba para onde queremos navegar para encontrar
+`comments`. Abra o arquivo `config/routes.rb` novamente e o edite da seguinte
+maneira:
 
 ```ruby
 resources :articles do
@@ -1634,40 +1622,39 @@ resources :articles do
 end
 ```
 
-This creates `comments` as a _nested resource_ within `articles`. This is
-another part of capturing the hierarchical relationship that exists between
-articles and comments.
+Isso cria `comments` como um recurso aninhado (_nested resource_) dentro de `article`. Essa é
+outra parte do processo para recuperar as relações hierárquicas que existem  entre
+artigos e comentários.
 
-TIP: For more information on routing, see the [Rails Routing](routing.html)
-guide.
+TIP: Para mais informações sobre rotas, veja o guia [Roteamento no Rails](routing.html) 
 
-### Generating a Controller
+### Gerando um Controller
 
-With the model in hand, you can turn your attention to creating a matching
-controller. Again, we'll use the same generator we used before:
+Com o *model* em mãos, você pode voltar sua atenção para a criação do
+*controller* correspondente. Mais uma vez, você vai usar o *generator* usado
+anteriormente:
 
 ```bash
 $ rails generate controller Comments
 ```
+Isso cria quatro arquivos e um diretório vazio:
 
-This creates four files and one empty directory:
+| Arquivo/Diretório                            | Propósito                                            |
+| -------------------------------------------- | ---------------------------------------------------- |
+| app/controllers/comments_controller.rb       | O *controller* de comentários                        |
+| app/views/comments/                          | *Views* do *controller* são armazenadas aqui         |
+| test/controllers/comments_controller_test.rb | O teste para o *controller*                          |
+| app/helpers/comments_helper.rb               | Arquivo de *helpers* da *view*                       |
+| app/assets/stylesheets/comments.scss         | *Cascading style sheet* (CSS) para o *controller*    |
 
-| File/Directory                               | Purpose                                  |
-| -------------------------------------------- | ---------------------------------------- |
-| app/controllers/comments_controller.rb       | The Comments controller                  |
-| app/views/comments/                          | Views of the controller are stored here  |
-| test/controllers/comments_controller_test.rb | The test for the controller              |
-| app/helpers/comments_helper.rb               | A view helper file                       |
-| app/assets/stylesheets/comments.scss         | Cascading style sheet for the controller |
+Como em qualquer blog, nossos leitores vão criar seus comentários diretamente
+depois de lerem o artigo e, uma vez que adicionarem o comentário, serão enviados
+de volta para a página *show* do artigo para verem o comentário agora listado.
+Por essa razão, nosso `CommentsController` está aqui para fornecer um método que
+cria comentários e deleta comentários *spam* quando chegarem.
 
-Like with any blog, our readers will create their comments directly after
-reading the article, and once they have added their comment, will be sent back
-to the article show page to see their comment now listed. Due to this, our
-`CommentsController` is there to provide a method to create comments and delete
-spam comments when they arrive.
-
-So first, we'll wire up the Article show template
-(`app/views/articles/show.html.erb`) to let us make a new comment:
+Então, primeiro nós vamos ligar o *show template* para Artigos (`app/views/articles/show.html.erb`)
+para que possamos criar um novo comentários:
 
 ```html+erb
 <p>
@@ -1699,11 +1686,11 @@ So first, we'll wire up the Article show template
 <%= link_to 'Back', articles_path %>
 ```
 
-This adds a form on the `Article` show page that creates a new comment by
-calling the `CommentsController` `create` action. The `form_with` call here uses
-an array, which will build a nested route, such as `/articles/1/comments`.
+Isso adiciona na página *show* do `Article` um formulário que cria um novo
+comentário chamando a *action* `create` no `CommentsController`. O `form_with`
+aqui usa um *array* que vai construir uma rota aninhada, como `/articles/1/comments`.
 
-Let's wire up the `create` in `app/controllers/comments_controller.rb`:
+Vamos ligar a *action* `create` em `app/controllers/comments_controller.rb`:
 
 ```ruby
 class CommentsController < ApplicationController
@@ -1719,23 +1706,22 @@ class CommentsController < ApplicationController
     end
 end
 ```
+Você verá um pouco mais de complexidade aqui do que no *controller* para
+artigos. Esse é o efeito colateral do aninhamento que você configurou. Cada
+requisição para um comentário deve lembrar o artigo ao qual o comentário está
+anexado, para que a chamada inicial do método `find` do *model* `Article`
+encontre o artigo em questão.
 
-You'll see a bit more complexity here than you did in the controller for
-articles. That's a side-effect of the nesting that you've set up. Each request
-for a comment has to keep track of the article to which the comment is attached,
-thus the initial call to the `find` method of the `Article` model to get the
-article in question.
+Além disso, o código aproveita-se de alguns métodos disponíveis para uma
+associação. Nós usamos o método `create` em `@article.comments` para criar e
+salvar um comentário. Isso vai automaticamente conectar o comentário para que
+ele pertença àquele artigo em particular.
 
-In addition, the code takes advantage of some of the methods available for an
-association. We use the `create` method on `@article.comments` to create and
-save the comment. This will automatically link the comment so that it belongs to
-that particular article.
-
-Once we have made the new comment, we send the user back to the original article
-using the `article_path(@article)` helper. As we have already seen, this calls
-the `show` action of the `ArticlesController` which in turn renders the
-`show.html.erb` template. This is where we want the comment to show, so let's
-add that to the `app/views/articles/show.html.erb`.
+Uma vez que temos um novo comentário, nós enviamos o usuário de volta ao artigo
+original usando o helper `article_path(@article)`. Como já vimos
+anteriormente, isso chama a *action* `show` do `ArticlesController` que por sua
+vez renderiza o *template* `show.html.erb`. É aqui que queremos que o comentário
+apareça, então vamos adicionar isso ao arquivo `app/views/articles/show.html.erb`.
 
 ```html+erb
 <p>
@@ -1780,8 +1766,8 @@ add that to the `app/views/articles/show.html.erb`.
 <%= link_to 'Back', articles_path %>
 ```
 
-Now you can add articles and comments to your blog and have them show up in the
-right places.
+Agora podemos adicionar artigos e comentários ao seu blog e mostrá-los nos
+lugares certos.
 
 ![Article with Comments](images/getting_started/article_with_comments.png)
 

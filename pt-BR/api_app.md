@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Using Rails for API-only Applications
@@ -11,28 +12,25 @@ In this guide you will learn:
 * How to decide which modules to use in your controller
 
 --------------------------------------------------------------------------------
-
-What is an API Application?
+O que é uma Aplicação API?
 ---------------------------
 
-Traditionally, when people said that they used Rails as an "API", they meant
-providing a programmatically accessible API alongside their web application.
-For example, GitHub provides [an API](https://developer.github.com) that you
-can use from your own custom clients.
+Tradicionalmente, quando as pessoas dizem que usam o Rails como uma "API",
+elas querem dizer que fornecem  uma API acessível junto a suas aplicações web.
+Por exemplo, o GitHub fornece [uma API](https://developer.github.com) que você
+pode usar nas suas próprias aplicações personalizadas.
 
-With the advent of client-side frameworks, more developers are using Rails to
-build a back-end that is shared between their web application and other native
-applications.
+Com o advento dos *frameworks client-side*, mais desenvolvedores estão usando o Rails para construir
+um *back-end* compartilhado entre suas aplicações web e outros aplicativos nativos.
 
-For example, Twitter uses its [public API](https://developer.twitter.com/) in its web
-application, which is built as a static site that consumes JSON resources.
+Por exemplo, o Twitter usa sua [API pública](https://developer.twitter.com/) em sua aplicação web,
+que é um site estático que consome recursos via JSON.
 
-Instead of using Rails to generate HTML that communicates with the server
-through forms and links, many developers are treating their web application as
-just an API client delivered as HTML with JavaScript that consumes a JSON API.
+Em vez de usar o Rails para gerar HTML que se comunica com o servidor através de formulários e links,
+muitos desenvolvedores estão tratando suas aplicações web apenas como uma API, separadamente do HTML com JavaScript que apenas consome uma API JSON.
 
-This guide covers building a Rails application that serves JSON resources to an
-API client, including client-side frameworks.
+Esse guia aborda a construção de um aplicativo Rails que fornece dados em JSON para um cliente, incluindo frameworks *client-side*.
+
 
 Why Use Rails for JSON APIs?
 ----------------------------

@@ -43,6 +43,9 @@ podem saber que você iniciou uma tradução. Lembre-se de marcar no texto do
 Pull Request as issues que planeja traduzir
 (campuscode/rails-guides-pt-BR#numero-da-issue).
 
+1. Consulte o [Manual de Tradução](https://github.com/campuscode/rails-guides-pt-BR/blob/master/TRANSLATION_MANUAL.md)
+no qual apresentamos os padrões adotados para esse projeto.
+
 1. Faça a tradução do capítulo fazendo commits durante o processo. Ao final,
 retire o WIP do Pull Request (ou o Draft) para que todos saibam que você
 terminou a tradução.

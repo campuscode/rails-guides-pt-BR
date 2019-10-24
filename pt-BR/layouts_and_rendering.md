@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Layouts and Rendering in Rails
@@ -411,7 +412,7 @@ If a template with the specified format does not exist an `ActionView::MissingTe
 ##### The `:variants` Option
 
 This tells Rails to look for template variations of the same format.
-You can specify a list of variants by passing the `:variants` option with a symbol or an array. 
+You can specify a list of variants by passing the `:variants` option with a symbol or an array.
 
 An example of use would be this.
 
@@ -438,11 +439,11 @@ end
 private
 
 def determine_variant
-  variant = nil 
+  variant = nil
   # some code to determine the variant(s) to use
   variant = :mobile if session[:use_mobile]
-  
-  variant    
+
+  variant
 end
 ```
 
