@@ -921,7 +921,7 @@ Person.new.valid?  # => TokenGenerationException: Token can't be blank
 Validação com Condicional
 ----------------------
 
-As vezes fará sentido validar um objeto apenas quando uma determinada condição acontecer.
+Às vezes fará sentido validar um objeto apenas quando uma determinada condição for satisfeita.
 Você pode fazer isso usando `:if` e `:unless`, que podem ser usados como um *symbol*,
 uma `Proc` ou um `Array`. Você pode usar o `:if` quando quiser especificar quando uma
 validação **deve** ocorrer.
