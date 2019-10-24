@@ -263,32 +263,33 @@ end
 O uso de `details` juntamente com validadores é tratado na seção 
 [Trabalhando com Erros de Validações](#trabalhando-com-erros-de-validações).
 
-Validation Helpers
+Helpers de Validação
 ------------------
 
-Active Record offers many pre-defined validation helpers that you can use
-directly inside your class definitions. These helpers provide common validation
-rules. Every time a validation fails, an error message is added to the object's
-`errors` collection, and this message is associated with the attribute being
-validated.
+O Active Record oferece vários *helpers* de validação pré-definidos que você
+pode utilizar dentro das suas definições de classes. Esses *helpers*
+providenciam regras de validações comuns. Toda vez que uma validação falha, uma
+mensagem de erro é adicionada a coleção `errors` do objeto, e sua mensagem é
+associada com o atributo que está sendo validado.
 
-Each helper accepts an arbitrary number of attribute names, so with a single
-line of code you can add the same kind of validation to several attributes.
+Cada *helper* aceita um número arbitrário de nomes de atributos, então com uma
+única linha de código você consegue adicionar o mesmo tipo de validação para
+vários atributos.
 
-All of them accept the `:on` and `:message` options, which define when the
-validation should be run and what message should be added to the `errors`
-collection if it fails, respectively. The `:on` option takes one of the values
-`:create` or `:update`. There is a default error
-message for each one of the validation helpers. These messages are used when
-the `:message` option isn't specified. Let's take a look at each one of the
-available helpers.
+Todas as validações aceitam as opções `:on` e `:message`, que definem quando
+as validações devem ser utilizadas e qual a mensagem que será adicionada a
+coleção `errors` caso ela falhe, respectivamente. A opção `:on` utiliza-se de
+um dos valores `:create` ou `:update`. Existe uma mensagem padrão de erro para
+cada um dos *helpers* de validação. Essas mensagens são utilizadas quando a
+opção `:message` não é especificada. Vamos dar uma olhada em cada um dos
+*helpers* disponíveis.
 
 ### `acceptance`
 
-This method validates that a checkbox on the user interface was checked when a
-form was submitted. This is typically used when the user needs to agree to your
-application's terms of service, confirm that some text is read, or any similar
-concept.
+Esse método valida se um *checkbox* em uma interface de usuário foi marcada
+quando um formulário foi submetido. Tipicamente isso é utilizado quando o
+usuário necessita de concordar com os termos de serviço de sua aplicação,
+confirmar que algum texto foi lido, ou qualquer conceito similar.
 
 ```ruby
 class Person < ApplicationRecord
@@ -296,9 +297,9 @@ class Person < ApplicationRecord
 end
 ```
 
-This check is performed only if `terms_of_service` is not `nil`.
-The default error message for this helper is _"must be accepted"_.
-You can also pass custom message via the `message` option.
+Essa verificação só é feita se `terms_of_service` não é `nil`.
+A mensagem padrão de erro para esse *helper* é _"must be accepted"_.
+Você também pode passar uma mensagem customizada com a opção de `message`.
 
 ```ruby
 class Person < ApplicationRecord
@@ -306,9 +307,10 @@ class Person < ApplicationRecord
 end
 ```
 
-It can also receive an `:accept` option, which determines the allowed values
-that will be considered as accepted. It defaults to `['1', true]` and can be
-easily changed.
+O método também pode receber uma opção de `:accept`, que determina os valores
+que serão considerados como aceito. Ele tem como padrão os valores `['1', true]`
+e pode ser facilmente mudado.
+
 
 ```ruby
 class Person < ApplicationRecord
@@ -317,17 +319,17 @@ class Person < ApplicationRecord
 end
 ```
 
-This validation is very specific to web applications and this
-'acceptance' does not need to be recorded anywhere in your database. If you
-don't have a field for it, the helper will just create a virtual attribute. If
-the field does exist in your database, the `accept` option must be set to
-or include `true` or else the validation will not run.
+Essa validação é bem específica para aplicações web e a "aceitação" não precisa
+ser gravada em lugar nenhum do seu banco de dados. Se você não tem um campo para
+isso o *helper* criara um atributo virtual. Se o campo existe no seu banco de
+dados a opção `accept` deve ser definida como `true` ou a validação não irá
+acontecer.
 
 ### `validates_associated`
 
-You should use this helper when your model has associations with other models
-and they also need to be validated. When you try to save your object, `valid?`
-will be called upon each one of the associated objects.
+Você deve usar esse *helper* quando seu modelo tiver associações com outros
+modelos que também precisam ser validados. Quando você tentar salvar seu objeto,
+`valid?` será chamado para cada um dos seus objetos associados.
 
 ```ruby
 class Library < ApplicationRecord
@@ -336,21 +338,21 @@ class Library < ApplicationRecord
 end
 ```
 
-This validation will work with all of the association types.
+Essa validação funcionará com todos os tipos de associação.
 
-CAUTION: Don't use `validates_associated` on both ends of your associations.
-They would call each other in an infinite loop.
+ATENÇÃO: Não utilize `validates_associated` nos dois lados de suas associações.
+Eles vão chamar umas as outras em um loop infinito.
 
-The default error message for `validates_associated` is _"is invalid"_. Note
-that each associated object will contain its own `errors` collection; errors do
-not bubble up to the calling model.
+A mensagem padrão de erro para `validates_associated` é _"is invalid"_. Repare
+que cada objeto associado terá sua própria coleção de `errors`; erros não irão
+se juntar no modelo onde a validação foi chamada.
 
 ### `confirmation`
 
-You should use this helper when you have two text fields that should receive
-exactly the same content. For example, you may want to confirm an email address
-or a password. This validation creates a virtual attribute whose name is the
-name of the field that has to be confirmed with "_confirmation" appended.
+Você deve utilizar esse *helper* quando você tem dois campos de texto que devem
+receber exatamente o mesmo conteudo. Por exemplo, você pode querer confirmar um
+endereço de email ou uma senha. Essa validação cria um atributo virtual onde o
+nome é o nome do atributo que deve ser confirmado com "\_confirmation" anexado.
 
 ```ruby
 class Person < ApplicationRecord
@@ -358,7 +360,7 @@ class Person < ApplicationRecord
 end
 ```
 
-In your view template you could use something like
+No seu *template* de *view* você pode utilizar algo como
 
 ```erb
 <%= text_field :person, :email %>
@@ -369,6 +371,10 @@ This check is performed only if `email_confirmation` is not `nil`. To require
 confirmation, make sure to add a presence check for the confirmation attribute
 (we'll take a look at `presence` later on in this guide):
 
+Essa checagem só é feita se o `email_confirmation` não é `nil`. Para requisitar
+uma confirmação tenhha certeza que adicionou uma checagem de presença para o
+atributo de confirmação (nós iremos ver `presence` em breve nesse guia):
+
 ```ruby
 class Person < ApplicationRecord
   validates :email, confirmation: true
@@ -376,9 +382,9 @@ class Person < ApplicationRecord
 end
 ```
 
-There is also a `:case_sensitive` option that you can use to define whether the
-confirmation constraint will be case sensitive or not. This option defaults to
-true.
+Também existe a opção `:case_sensitive` caso você queira definir se a restrição
+de confirmação deve ser sensível a letras maiúsculas e minúsculas. Essa opção
+por padrão é verdadeira.
 
 ```ruby
 class Person < ApplicationRecord
@@ -386,12 +392,12 @@ class Person < ApplicationRecord
 end
 ```
 
-The default error message for this helper is _"doesn't match confirmation"_.
+A mensagem padrão de erro para esse *helper* é _"doesn't match confirmation"_.
 
 ### `exclusion`
 
-This helper validates that the attributes' values are not included in a given
-set. In fact, this set can be any enumerable object.
+Esse *helper* valida os atributos que não estão incluídos dada uma coleção. Na
+verdade, essa coleção pode ser qualquer objeto enumerável.
 
 ```ruby
 class Account < ApplicationRecord
@@ -400,19 +406,19 @@ class Account < ApplicationRecord
 end
 ```
 
-The `exclusion` helper has an option `:in` that receives the set of values that
-will not be accepted for the validated attributes. The `:in` option has an
-alias called `:within` that you can use for the same purpose, if you'd like to.
-This example uses the `:message` option to show how you can include the
-attribute's value. For full options to the message argument please see the
-[message documentation](#message).
+O *helper* de `exclusion` tem a opção `:in` que recebe uma coleção de valores
+que não serão aceitas para os atributos validados. A opção `:in` tem um atalho
+chamado `:within` que pode ser utilizado para o mesmo propósito, caso queira.
+Esse exemplo usa a opção `:message` para mostrar como você pode incluir o valor
+do atributo na mensagem de erro. Para uma lista completa das opções do argumento
+de mensagem por favor veja a [documentação da mensagem](#message).
 
-The default error message is _"is reserved"_.
+A mensagem de erro padrão é _"is reserved"_.
 
 ### `format`
 
-This helper validates the attributes' values by testing whether they match a
-given regular expression, which is specified using the `:with` option.
+Esse *helper* valida os valores dos atributos testando se eles correspondem uma
+expressão regular dada, que é especificada com a opção `:with`.
 
 ```ruby
 class Product < ApplicationRecord
@@ -421,14 +427,15 @@ class Product < ApplicationRecord
 end
 ```
 
-Alternatively, you can require that the specified attribute does _not_ match the regular expression by using the `:without` option.
+Alternativamente, você pode requerer que um atributo específico _não_
+corresponde com a expressão regular usando a opção `:without`.
 
-The default error message is _"is invalid"_.
+A mensagem de erro padrão é _"is invalid"_.
 
 ### `inclusion`
 
-This helper validates that the attributes' values are included in a given set.
-In fact, this set can be any enumerable object.
+Esse *helper* valida os atributos que estão incluídos dada uma coleção. Na
+verdade, essa coleção pode ser qualquer objeto enumerável.
 
 ```ruby
 class Coffee < ApplicationRecord
@@ -437,13 +444,15 @@ class Coffee < ApplicationRecord
 end
 ```
 
-The `inclusion` helper has an option `:in` that receives the set of values that
-will be accepted. The `:in` option has an alias called `:within` that you can
-use for the same purpose, if you'd like to. The previous example uses the
-`:message` option to show how you can include the attribute's value. For full
-options please see the [message documentation](#message).
+O *helper* de `inclusion` tem a opção `:in` que recebe uma coleção de valores
+que não serão aceitas para os atributos validados. A opção `:in` tem um atalho
+chamado `:within` que pode ser utilizado para o mesmo propósito, caso queira.
+Esse exemplo usa a opção `:message` para mostrar como você pode incluir o valor
+do atributo na mensagem de erro. Para uma lista completa das opções do argumento
+de mensagem por favor veja a [documentação da mensagem](#message).
 
-The default error message for this helper is _"is not included in the list"_.
+
+A mensagem de erro padrão para esse *helper* é _"is not included in the list"_.
 
 ### `length`
 
