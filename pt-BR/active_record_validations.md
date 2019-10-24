@@ -53,7 +53,7 @@ cliente e valições no nível do *controller*. Este é um sumário dos prós
 e contras:
 
 * Restrições no banco de dados e/ou procedimentos armazenados tornam as validações
-  dependententes do banco de dados e podem tornar o processo de testar e a manutenção
+  dependentes do banco de dados e podem tornar o processo de testar e a manutenção
   mais difíceis. No entanto, se seu banco de dados é usado por outras aplicações, pode
   ser uma boa ideia usar algumas restrições diretamente no banco de dados. Adicionalmente,
   validações no nível de banco de dados são seguras para lidar com algumas coisas
