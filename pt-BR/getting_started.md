@@ -292,7 +292,7 @@ Rails.application.routes.draw do
 end
 ```
 
-Este é o arquivo _routing_ (arquivo de roteamento) da sua aplicação que contém
+Este é o arquivo _routing_ (roteamento) da sua aplicação que contém
 as entradas em um
 [DSL (domain-specific language)](https://en.wikipedia.org/wiki/Domain-specific_language) especial
 que informa ao Rails como conectar requisições de entrada com _controllers_ e
