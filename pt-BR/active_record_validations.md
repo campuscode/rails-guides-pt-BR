@@ -216,7 +216,7 @@ end
 ```
 
 `invalid?` é simplesmente o inverso de `valid?`. Desencadeia suas validações e
-retornam `true` se algum erro for encontrado no objeto, e `false`
+retorna `true` se algum erro for encontrado no objeto, e `false`
 caso contrário.
 
 ### `errors[]`
