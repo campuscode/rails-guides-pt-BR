@@ -1,7 +1,7 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-*Active Record* Validações
+Validações do *Active Record*
 =========================
 
 Este guia te ensina a validar os estados dos objetos antes deles serem incluídos no
