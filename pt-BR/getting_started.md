@@ -172,45 +172,45 @@ que o Rails gerou por padrão:
 |.gitignore|Este arquivo diz ao Git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.
 |.ruby-version|Este arquivo contém a versão padrão do Ruby.|
 
-Hello, Rails!
--------------
+Olá, Rails!
+-----------
 
-To begin with, let's get some text up on screen quickly. To do this, you need to
-get your Rails application server running.
+Para começar vamos colocar um texto na tela rapidamente. Para fazer isso, você
+precisa que seu servidor de aplicação Rails esteja em execução.
 
-### Starting up the Web Server
+### Inicializando o Servidor Web
 
-You actually have a functional Rails application already. To see it, you need to
-start a web server on your development machine. You can do this by running the
-following in the `blog` directory:
+Você já tem uma aplicação Rails funcional. Para vê-la você deve iniciar um
+servidor web em sua máquina de desenvolvimento. Você pode fazer isso executando
+o seguinte comando no diretório `blog`:
 
 ```bash
 $ rails server
 ```
 
-TIP: If you are using Windows, you have to pass the scripts under the `bin`
-folder directly to the Ruby interpreter e.g. `ruby bin\rails server`.
+TIP: Se você está usando Windows, deve executar os scripts do diretório
+`bin` para o interpretador do Ruby: `ruby bin\rails server`.
 
-TIP: JavaScript asset compression requires you
-have a JavaScript runtime available on your system, in the absence
-of a runtime you will see an `execjs` error during asset compilation.
-Usually macOS and Windows come with a JavaScript runtime installed.
-`therubyrhino` is the recommended runtime for JRuby users and is added by
-default to the `Gemfile` in apps generated under JRuby. You can investigate
-all the supported runtimes at [ExecJS](https://github.com/rails/execjs#readme).
+TIP: A compressão de *assets* JavaScript requer que você tenha um executor
+disponível em seu sistema operacional. Na ausência de um executor você verá um
+erro de `execjs` durante a compilação dos *assets*. Geralmente o macOS e o Windows possuem um executor JavaScript instalado por
+padrão. `therubyrhino` é o executor recomendado para usuários de JRuby e vem no
+`Gemfile` por padrão em aplicações geradas com JRuby. Você pode avaliar todos
+executores em [ExecJS](https://github.com/rails/execjs#readme).
 
-This will fire up Puma, a web server distributed with Rails by default. To see
-your application in action, open a browser window and navigate to
-<http://localhost:3000>. You should see the Rails default information page:
+A execução do comando irá iniciar o Puma, um servidor web distribuído com o
+Rails por padrão. Para ver sua aplicação em execução, abra um navegador e
+navegue para <http://localhost:3000>.  Você deve ver a página padrão com informações do Rails:
 
-![Welcome aboard screenshot](images/getting_started/rails_welcome.png)
+![Captura de tela de boas vindas do Rails](images/getting_started/rails_welcome.png)
 
-TIP: To stop the web server, hit Ctrl+C in the terminal window where it's
-running. To verify the server has stopped you should see your command prompt
-cursor again. For most UNIX-like systems including macOS this will be a
-dollar sign `$`. In development mode, Rails does not generally require you to
-restart the server; changes you make in files will be automatically picked up by
-the server.
+TIP: Para interromper a execução do servidor Web, pressione Ctrl+C na janela do
+terminal em que o servidor está sendo executado. Para verificar se o servidor
+realmente foi interrompido, você deve ver o cursor do `prompt` novamente. Para a
+maioria dos sistemas baseados em UNIX, incluindo o macOS, o cursor é
+representando por um sinal de `$`. Em modo de desenvolvimento, o Rails
+geralmente não exige que você reinicie o servidor; mudanças feitas nos arquivos
+da aplicaçnao serão automaticamente aplicadas no servidor.
 
 A página de "Boas vindas a bordo" é o _smoke test_ (teste de sanidade) para uma
 nova aplicação Rails: garante que o seu software esteja configurado
