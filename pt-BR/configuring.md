@@ -4,7 +4,7 @@
 Configurando Aplicações Rails
 =============================
 
-Este guia cobre a configuração e funcionalidades de inicialização disponíveis
+Este guia cobre as configurações e funcionalidades de inicialização disponíveis
 para aplicações Rails.
 
 Após ler esse guia, você vai saber:
@@ -28,7 +28,7 @@ O Rails oferece quatro opções padrão para adicionar código para a inicializa
 Executando Código Antes do Rails
 --------------------------------
 
-Em situações raras que sua aplicação necessita executar código antes que o
+Em raras situações em que sua aplicação necessita executar código antes que o
 próprio Rails tenha sido carregado, coloque este código acima da chamada 
 `require 'rails/all'` no arquivo `config/application.rb`.
 
@@ -36,7 +36,7 @@ próprio Rails tenha sido carregado, coloque este código acima da chamada
 Configurando Componentes Rails
 ------------------------------
 
-Em geral, o trabalho de configurar o Rails significa configurar os componentes do
+Em geral, o ato de configurar o Rails significa configurar os componentes do
 Rails, assim como configurar o Rails em si. O arquivo de configuração
 `config/application.rb` e arquivos de configuração específicos de ambiente (como
 o arquivo `config/environments/production.rb`) permitem definir diversas
@@ -44,7 +44,7 @@ configurações que serão passadas para todos os componentes.
 
 
 Por exemplo, você pode adicionar a configuração abaixo ao arquivo
-`config/application.rb`
+`config/application.rb`:
 
 ```ruby
 config.time_zone = 'Brasilia'
@@ -60,84 +60,147 @@ config.active_record.schema_format = :ruby
 
 O Rails vai usar essa configuração em particular no Active Record.
 
-### Rails General Configuration
+### Configuração Geral do Rails
 
-These configuration methods are to be called on a `Rails::Railtie` object, such as a subclass of `Rails::Engine` or `Rails::Application`.
+Esses métodos de configuração devem ser enviados para objetos do tipo
+`Rails::Railtie`, como uma subclasse de `Rails::Engine` ou
+`Rails::Application`.
 
-* `config.after_initialize` takes a block which will be run _after_ Rails has finished initializing the application. That includes the initialization of the framework itself, engines, and all the application's initializers in `config/initializers`. Note that this block _will_ be run for rake tasks. Useful for configuring values set up by other initializers:
+* `config.after_initialize` recebe um bloco que será executado _após_ a inicialização da aplicação Rails. Isso inclui a inicialização do *framework* em si, *engines*  e todos *initializers*  definidos em
+`config/initializers`. Perceba que esse bloco _será_ executado em tarefas
+*rake*. Essa opção é útil para configurações feitas por outros *initializers*:
 
-    ```ruby
-    config.after_initialize do
-      ActionView::Base.sanitized_allowed_tags.delete 'div'
-    end
-    ```
+```ruby
+config.after_initialize do
+  ActionView::Base.sanitized_allowed_tags.delete 'div'
+end
+```
 
-* `config.asset_host` sets the host for the assets. Useful when CDNs are used for hosting assets, or when you want to work around the concurrency constraints built-in in browsers using different domain aliases. Shorter version of `config.action_controller.asset_host`.
+* `config.asset_host` define o *host* para os *assets*. Essa opção é útil quando
+  CDNs são usados para hospedar *assets*, ou para quando você deseja contornar
+restrições de concorrência embutidas em navegadores usando diferentes *aliases*
+de domínios. Essa é uma versão encurtada de `config.action_controller.asset_host`.
 
-* `config.autoload_once_paths` accepts an array of paths from which Rails will autoload constants that won't be wiped per request. Relevant if `config.cache_classes` is `false`, which is the case in development mode by default. Otherwise, all autoloading happens only once. All elements of this array must also be in `autoload_paths`. Default is an empty array.
+* `config.autoload_once_paths` aceita um *array* de caminhos de onde o Rails
+  deve carregar automaticamente constantes que não serão removidas por uma
+requisição. Essa configuração é relevante se `config.cache_classes` está definido como
+`false`, que é o padrão no modo de desenvolvimento. De outra forma,
+todo auto carregamento acontece somente uma vez. Todos elementos desse array
+devem estar também em `autoload_paths`. O valor padrão é um *array* vazio.
 
-* `config.autoload_paths` accepts an array of paths from which Rails will autoload constants. Default is all directories under `app`. It is no longer recommended to adjust this. See [Autoloading and Reloading Constants](autoloading_and_reloading_constants.html#autoload-paths-and-eager-load-paths)
+* `config.autoload_paths` aceita um *array* de caminhos de onde o Rails deve
+carregar automaticamente constantes. O padrão são todos diretórios abaixo de
+`app`. Não é mais recomendado ajustar essa configuração. Veja mais em [Auto carregamento e Recarregando Constantes](autoloading_and_reloading_constants.html#autoload-paths-and-eager-load-paths)
 
-* `config.add_autoload_paths_to_load_path` says whether autoload paths have to be added to `$LOAD_PATH`. This flag is `true` by default, but it is recommended to be set to `false` in `:zeitwerk` mode early, in `config/application.rb`. Zeitwerk uses absolute paths internally, and applications running in `:zeitwerk` mode do not need `require_dependency`, so models, controllers, jobs, etc. do not need to be in `$LOAD_PATH`. Setting this to `false` saves Ruby from checking these directories when resolving `require` calls with relative paths, and saves Bootsnap work and RAM, since it does not need to build an index for them.
+* `config.add_autoload_paths_to_load_path` determina se os caminhos de auto carregamento devem ser adicionados para `$LOAD_PATH`. Esta configuração é `true` por padrão, mas é recomendado que seja
+definida como `false` no recém lançado modo `:zeitwerk`, em
+`config/application.rb`. O modo *Zeitwerk* usa caminhos absolutos internamente e
+aplicações executadas neste  modo não necessitam de `require_dependency`, então *models*, *controllers*, *jobs*, *etc* não 
+precisam estar no `$LOAD_PATH`. Ao ser definido como `false`, previne o Ruby de
+verificar estes diretórios quando resolver chamadas de `require` com caminhos
+relativos e reduz o processamento e o consumo de memória RAM do `Bootsnap`, já
+que ele não precisa construir um índice para eles.
 
-* `config.cache_classes` controls whether or not application classes and modules should be reloaded on each request. Defaults to `false` in development mode, and `true` in test and production modes.
+* `config.cache_classes` controla quando as classes e módulos da aplicação devem ser recarregados em cada requisição.
+O padrão é `false` no modo desenvolvimento e `true` nos modos de teste e produção.
 
-* `config.beginning_of_week` sets the default beginning of week for the
-application. Accepts a valid week day symbol (e.g. `:monday`).
+* `config.beginning_of_week` configura o começo da semana para a aplicação. O
+  valor deve ser um *symbol* com um dia da semana válido (por ex: `:monday`).
 
-* `config.cache_store` configures which cache store to use for Rails caching. Options include one of the symbols `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, `:redis_cache_store`, or an object that implements the cache API. Defaults to `:file_store`.
+* `config.cache_store` configura qual armazenamento de *cache* o Rails deve utilizar. As opções
+incluem um dos *symbols*: `:memory_store`, `:file_store`, `:mem_cache_store`, `:null_store`, `:redis_cache_store`, 
+ou um objeto que implementa a API de cache. O padrão é `:file_store`.
 
-* `config.colorize_logging` specifies whether or not to use ANSI color codes when logging information. Defaults to `true`.
+* `config.colorize_logging` determina quando utilizar ou não códigos de cores ANSI ao registrar informações no *log*. O padrão é `true`.
 
-* `config.consider_all_requests_local` is a flag. If `true` then any error will cause detailed debugging information to be dumped in the HTTP response, and the `Rails::Info` controller will show the application runtime context in `/rails/info/properties`. `true` by default in development and test environments, and `false` in production mode. For finer-grained control, set this to `false` and implement `local_request?` in controllers to specify which requests should provide debugging information on errors.
+* `config.consider_all_requests_local` quando `true` adiciona
+  informações detalhadas de *debug* de erros à resposta HTTP, e o *controller*
+`Rails::Info` irá exibir o contexto de execução da aplicação em
+`/rails/info/properties`. `true` é o padrão nos ambientes de desenvolvimento e
+teste e `false` é o padrão no modo de produção. Para um controle mais refinado,
+defina como `false` e implemente o método `local_request?` em seus *controllers*
+para especificar que requisições devem prover informações de *debug* em erros.
 
-* `config.console` allows you to set class that will be used as console you run `rails console`. It's best to run it in `console` block:
+* `config.console`  permite que você defina qual classe deve ser usada quando executar `rails console`. É melhor que seja executada dentre de um bloco `console`: 
 
     ```ruby
     console do
-      # this block is called only when running console,
-      # so we can safely require pry here
+      # este bloco só é chamado quando o console estiver executando,
+      # então podemos requerer o pry de forma segura
       require "pry"
       config.console = Pry
     end
     ```
 
-* `config.disable_sandbox` controls whether or not someone can start a console in sandbox mode. This is helpful to avoid a long running session of sandbox console, that could lead a database server to run out of memory. Defaults to false.
+* `config.disable_sandbox` controla se o *console* pode ser iniciado ou não no
+  modo *sandbox*. Esta configuração é útil para evitar sessões muito longas de console em
+modo *sandbox*, o que poderia levar o servidor de banco de dados a ficar sem
+memória. O padrão é *false*.
 
-* `config.eager_load` when `true`, eager loads all registered `config.eager_load_namespaces`. This includes your application, engines, Rails frameworks, and any other registered namespace.
+* `config.eager_load` quando `true`, todos *namespaces* definidos em `config.eager_load_namespaces` são carregados de forma ativa (*eager load*).
+Isto inclui a sua aplicação, *engines*, frameworks do Rails e qualquer outra
+*namespace* definida.
 
-* `config.eager_load_namespaces` registers namespaces that are eager loaded when `config.eager_load` is `true`. All namespaces in the list must respond to the `eager_load!` method.
+* `config.eager_load_namespaces` define todas *namespaces* que serão carregadas ativamente (*eager load*) quando `config.eager_load` estiver definido como `true`.
+Todas *namespaces* na lista devem responder ao método `eager_load!`.
 
-* `config.eager_load_paths` accepts an array of paths from which Rails will eager load on boot if cache classes is enabled. Defaults to every folder in the `app` directory of the application.
+* `config.eager_load_paths` recebe um *array* de caminhos de onde o Rails deve carregar ativamente durante a inicialização se o cache de classes está ativo.
+O padrão são todas as pastas dentro do diretório `app`.
 
-* `config.enable_dependency_loading`: when true, enables autoloading, even if the application is eager loaded and `config.cache_classes` is set as true. Defaults to false.
+* `config.enable_dependency_loading`: quando definido como `true`, habilita o autocarregamento mesmo que a aplicação esteja carregada ativamente (*eager load*)
+e que `config.cache_classes` esteja definido como `true`. O padrão é `false`
 
-* `config.encoding` sets up the application-wide encoding. Defaults to UTF-8.
+* `config.encoding` define o *encoding* para toda a aplicação. O padrão é UTF-8.
 
-* `config.exceptions_app` sets the exceptions application invoked by the ShowException middleware when an exception happens. Defaults to `ActionDispatch::PublicExceptions.new(Rails.public_path)`.
+* `config.exceptions_app` define a aplicação invocada pelo *middleware*
+  `ShowException` quando uma exceção acontece. O padrão é `ActionDispatch::PublicExceptions.new(Rails.public_path)`.
 
-* `config.debug_exception_response_format` sets the format used in responses when errors occur in development mode. Defaults to `:api` for API only apps and `:default` for normal apps.
+* `config.debug_exception_response_format` define o formato usado nas respostas quando errors acontecem em modo desenvolvimento.
+O padrão é `:api` para aplicações somente API e `:default` para aplicações
+regulares.
 
-* `config.file_watcher` is the class used to detect file updates in the file system when `config.reload_classes_only_on_change` is `true`. Rails ships with `ActiveSupport::FileUpdateChecker`, the default, and `ActiveSupport::EventedFileUpdateChecker` (this one depends on the [listen](https://github.com/guard/listen) gem). Custom classes must conform to the `ActiveSupport::FileUpdateChecker` API.
+* `config.file_watcher` é a classe usada para detectar atualizações nos arquivos
+  quando `config.reload_classes_only_on_change` está definido como `true`. Rails é distribuído com a classe `ActiveSupport::FileUpdateChecker`, 
+que é o padrão, e com `ActiveSupport::EventedFileUpdateChecker` (que depende da gem [listen](https://github.com/guard/listen)).
+Classes customizadas devem respeitar a API de `ActiveSupport::FileUpdateChecker`.
 
-* `config.filter_parameters` used for filtering out the parameters that
-you don't want shown in the logs, such as passwords or credit card
-numbers. It also filters out sensitive values of database columns when call `#inspect` on an Active Record object. By default, Rails filters out passwords by adding `Rails.application.config.filter_parameters += [:password]` in `config/initializers/filter_parameter_logging.rb`. Parameters filter works by partial matching regular expression.
+* `config.filter_parameters` é usado para filtrar os parâmetros que você não
+  deseja exibir nos *logs*, tais como senhas ou números de cartões de crédito.
+Essa configuração também filtra valores sensíveis de colunas de bancos de dados
+quando o método `#inspect` é enviado a um objeto de *Active Record*. Por padrão o
+Rails filtra senhas ao adicionar  `Rails.application.config.filter_parameters += [:password]` em `config/initializers/filter_parameter_logging.rb`. 
+O filtro de parâmetros funciona através da equivalência parcial de expressões
+regulares.
 
-* `config.force_ssl` forces all requests to be served over HTTPS by using the `ActionDispatch::SSL` middleware, and sets `config.action_mailer.default_url_options` to be `{ protocol: 'https' }`. This can be configured by setting `config.ssl_options` - see the [ActionDispatch::SSL documentation](https://api.rubyonrails.org/classes/ActionDispatch/SSL.html) for details.
+* `config.force_ssl` impõe que todas requisições sejam tratadas através de HTTPS utilizando o *middleware* `ActionDispatch::SSL`, e define o valor de `config.action_mailer.default_url_options` como `{ protocol: 'https' }`. 
+Essa configuração pode ser feita através de `config.ssl_options` - veja [a documentação de ActionDispatch::SSL](https://api.rubyonrails.org/classes/ActionDispatch/SSL.html) para mais detalhes.
 
-* `config.log_formatter` defines the formatter of the Rails logger. This option defaults to an instance of `ActiveSupport::Logger::SimpleFormatter` for all modes. If you are setting a value for `config.logger` you must manually pass the value of your formatter to your logger before it is wrapped in an `ActiveSupport::TaggedLogging` instance, Rails will not do it for you.
+* `config.log_formatter` define o formatador do *logger* do Rails. O valor
+  padrão é uma instância de `ActiveSupport::Logger::SimpleFormatter` para todos os modos. 
+Se você definir um valor para `config.logger` você deve enviar o valor do seu
+formatador manualmente, antes que ele seja acondicionado em uma instância de `ActiveSupport::TaggedLogging`, o Rails não fará isso por você.
 
-* `config.log_level` defines the verbosity of the Rails logger. This option
-defaults to `:debug` for all environments. The available log levels are: `:debug`,
-`:info`, `:warn`, `:error`, `:fatal`, and `:unknown`.
+* `config.log_level` define a verbosidade do *logger* do Rails. O padrão dessa
+  opção é `:debug` para todos ambientes. Os níveis disponíveis são `:debug`,
+`:info`, `:warn`, `:error`, `:fatal`, e `:unknown`.
 
-* `config.log_tags` accepts a list of: methods that the `request` object responds to, a `Proc` that accepts the `request` object, or something that responds to `to_s`. This makes it easy to tag log lines with debug information like subdomain and request id - both very helpful in debugging multi-user production applications.
+* `config.log_tags` aceita uma lista de: mmétodos que o objeto `request`
+  responde, uma `Proc` que aceita um objeto de `request`, ou algo que responda
+ao método `to_s`. Isto torna fácil adicionar linhas ao *log* com informações
+sobre o *debug*, como subdomínios e *ids* de requisições - ambos muito úteis
+para *debugar* aplicações multi-usuário em produção.
 
-* `config.logger` is the logger that will be used for `Rails.logger` and any related Rails logging such as `ActiveRecord::Base.logger`. It defaults to an instance of `ActiveSupport::TaggedLogging` that wraps an instance of `ActiveSupport::Logger` which outputs a log to the `log/` directory. You can supply a custom logger, to get full compatibility you must follow these guidelines:
-  * To support a formatter, you must manually assign a formatter from the `config.log_formatter` value to the logger.
-  * To support tagged logs, the log instance must be wrapped with `ActiveSupport::TaggedLogging`.
-  * To support silencing, the logger must include `ActiveSupport::LoggerSilence`  module. The `ActiveSupport::Logger` class already includes these modules.
+
+* `config.logger` é o *logger* que será usado pelo `Rails.logger` e qualquer
+  outro *log* relacionado ao Rails, tal como `ActiveRecord::Base.logger`. 
+O padrão é uma instância de `ActiveSupport::TaggedLogging` que envolve uma instância de `ActiveSupport::Logger`, que registra a saída do *log* no diretório `log/`.
+Você pode informar um *logger* personalizado mas para obter compatibilidade total
+você deve seguir esses requisitos:
+ * Para suportar um formatador, você deve atribuir manualmente o formatador definido em
+   `config.log_formatter` para o *logger*.
+ * Para suportar *logs* com etiquetaas (*tags*), a instância do *log* deve ser
+   envolvida com `ActiveSupport::TaggedLogging`
+ * Para suportar o silenciamento, o *logger* deve incluir o módulo `ActiveSupport::LoggerSilence`. A classe `ActiveSupport::Logger` já inclui esse módulo.
 
     ```ruby
     class MyLogger < ::Logger
@@ -149,29 +212,52 @@ defaults to `:debug` for all environments. The available log levels are: `:debug
     config.logger      = ActiveSupport::TaggedLogging.new(mylogger)
     ```
 
-* `config.middleware` allows you to configure the application's middleware. This is covered in depth in the [Configuring Middleware](#configuring-middleware) section below.
+* `config.middleware` permite configurar o *middleware* da aplicação. Esse tópico é coberto em detalhes em [Configurando o Middleware](#configuring-middleware).
 
-* `config.reload_classes_only_on_change` enables or disables reloading of classes only when tracked files change. By default tracks everything on autoload paths and is set to `true`. If `config.cache_classes` is `true`, this option is ignored.
+* `config.reload_classes_only_on_change` habilita ou desabilita a recarga de
+  classes somente quando arquivos monitorados são modificados. Por padrão são
+monitorados todos caminhos de auto carregamento (*autoload*). Se
+`config.cache_classes` está definido como `true` essa opção é ignorada. 
 
-* `config.credentials.content_path` configures lookup path for encrypted credentials.
 
-* `config.credentials.key_path` configures lookup path for encryption key.
+* `config.credentials.content_path` configura o caminho para busca por credenciais criptografadas.
 
-* `secret_key_base` is used for specifying a key which allows sessions for the application to be verified against a known secure key to prevent tampering. Applications get a random generated key in test and development environments, other environments should set one in `config/credentials.yml.enc`.
+* `config.credentials.key_path` configura o caminho para busca por chaves de
+  criptografia.
 
-* `config.public_file_server.enabled` configures Rails to serve static files from the public directory. This option defaults to `true`, but in the production environment it is set to `false` because the server software (e.g. NGINX or Apache) used to run the application should serve static files instead. If you are running or testing your app in production mode using WEBrick (it is not recommended to use WEBrick in production) set the option to `true`. Otherwise, you won't be able to use page caching and request for files that exist under the public directory.
+* `secret_key_base` é usado para especificar uma chave que permite que sessões
+  da aplicação sejam verificadas contra uma chave segura conhecida prevenindo falsificações (*tampering*). Aplicações recebem uma chave gerada
+aleatoriamente nos ambientes de desenvolvimento e teste, outros ambientes devem
+definir uma chave em `config/credentials.yml.enc`.
 
-* `config.session_store` specifies what class to use to store the session. Possible values are `:cookie_store` which is the default, `:mem_cache_store`, and `:disabled`. The last one tells Rails not to deal with sessions. Defaults to a cookie store with application name as the session key. Custom session stores can also be specified:
+* `config.public_file_server.enabled` configura o Rails para servir arquivos estáticos a partir do diretório `public`.
+O padrão é `true`, mas no ambiente de produção é definido como `false` porque o
+software servidor (como NGINX ou Apache) usado para executar a aplicação deve
+servir os arquivos estáticos. Se você esta executando ou testando sua aplicação
+no modo de produção usando WEBrick (não é recomendado usar WEBrick em produção)
+defina a opção como `true`. De outra forma, você não será capaz de usar o
+cacheamento de páginas e requisições para arquivos que existam no diretório
+`public`.
+
+* `config.session_store` define que classe usar para armazenar a sessão. Os
+  valores possíveis são `:cookie_store`, que é o padrão, `:mem_cache_store` e
+`:disabled`. O último indica que o Rails não deve tratar de sessões. O padrão
+armazena *cookies* com o nome da aplicação como a chave da sessão. Armazenadores
+personalizados de sessão também podem ser definidos:
 
     ```ruby
     config.session_store :my_custom_store
     ```
 
-    This custom store must be defined as `ActionDispatch::Session::MyCustomStore`.
+    Esse armazenador personalizado deve ser definido como `ActionDispatch::Session::MyCustomStore`.
 
-* `config.time_zone` sets the default time zone for the application and enables time zone awareness for Active Record.
+* `config.time_zone` define o fuso horário para a aplicação e torna o *Active Record* ciente deste fuso horário.
 
-* `config.autoloader` sets the autoloading mode. This option defaults to `:zeitwerk` if `6.0` is specified in `config.load_defaults`. Applications can still use the classic autoloader by setting this value to `:classic` after loading the framework defaults:
+* `config.autoloader` configura o modo de autocarregamento. O padrão é
+  `:zeitwerk` se em `config.load_defaults` o valor for `6.0`. Aplicações ainda
+podem usar o autocarregador clássico ao definir o valor dessa configuração
+como `:classic` após carregar os valores padrões do *framework*:
+
 
     ```ruby
     config.load_defaults "6.0"
