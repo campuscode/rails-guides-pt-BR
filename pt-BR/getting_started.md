@@ -16,22 +16,22 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-Sobre o Guia
+Premissas do Guia
 -----------------
 
 Este guia é projetado para iniciantes que desejam começar uma aplicação Rails do
 zero. Ela não assume que você tenha nenhuma experiência anterior com Rails.
 
-Rails é um framework para aplicações web que roda em cima da linguagem de programação
-Ruby. Se você não tem nenhuma experiência com Ruby, você vai achar a curva de
-aprendizado bastante ingrime começando direto com Rails. Existem diversas
-listas organizadas de materiais online para aprender Ruby:
+Rails é um framework para aplicações web que é executado em cima da linguagem
+de programação Ruby. Se você não tem nenhuma experiência com Ruby, você vai
+achar a curva de aprendizado bastante íngrime começando direto com Rails.
+Existem diversas listas organizadas de materiais online para aprender Ruby:
 
 * [Site Oficial da Linguagem de Programação Ruby](https://www.ruby-lang.org/en/documentation/)
 * [Lista de Livros Grátis de Programação](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
 
 Fique atento que alguns materiais, apesar de excelentes, envolvem versões antigas
-do Ruby chegando a 1.6, e comummente 1.8, e não incluem parte da sintaxe que você
+do Ruby chegando a 1.6, e frequentemente 1.8, e não incluem parte da sintaxe que você
 vai ver no seu dia-a-dia desenvolvendo com Rails.
 
 O que é o Rails?
@@ -172,45 +172,45 @@ que o Rails gerou por padrão:
 |.gitignore|Este arquivo diz ao Git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.
 |.ruby-version|Este arquivo contém a versão padrão do Ruby.|
 
-Hello, Rails!
--------------
+Olá, Rails!
+-----------
 
-To begin with, let's get some text up on screen quickly. To do this, you need to
-get your Rails application server running.
+Para começar vamos colocar um texto na tela rapidamente. Para fazer isso, você
+precisa que seu servidor de aplicação Rails esteja em execução.
 
-### Starting up the Web Server
+### Inicializando o Servidor Web
 
-You actually have a functional Rails application already. To see it, you need to
-start a web server on your development machine. You can do this by running the
-following in the `blog` directory:
+Você já tem uma aplicação Rails funcional. Para vê-la você deve iniciar um
+servidor web em sua máquina de desenvolvimento. Você pode fazer isso executando
+o seguinte comando no diretório `blog`:
 
 ```bash
 $ rails server
 ```
 
-TIP: If you are using Windows, you have to pass the scripts under the `bin`
-folder directly to the Ruby interpreter e.g. `ruby bin\rails server`.
+TIP: Se você está usando Windows, deve executar os scripts do diretório
+`bin` para o interpretador do Ruby: `ruby bin\rails server`.
 
-TIP: JavaScript asset compression requires you
-have a JavaScript runtime available on your system, in the absence
-of a runtime you will see an `execjs` error during asset compilation.
-Usually macOS and Windows come with a JavaScript runtime installed.
-`therubyrhino` is the recommended runtime for JRuby users and is added by
-default to the `Gemfile` in apps generated under JRuby. You can investigate
-all the supported runtimes at [ExecJS](https://github.com/rails/execjs#readme).
+TIP: A compressão de *assets* JavaScript requer que você tenha um executor
+disponível em seu sistema operacional. Na ausência de um executor você verá um
+erro de `execjs` durante a compilação dos *assets*. Geralmente o macOS e o Windows possuem um executor JavaScript instalado por
+padrão. `therubyrhino` é o executor recomendado para usuários de JRuby e vem no
+`Gemfile` por padrão em aplicações geradas com JRuby. Você pode avaliar todos
+executores em [ExecJS](https://github.com/rails/execjs#readme).
 
-This will fire up Puma, a web server distributed with Rails by default. To see
-your application in action, open a browser window and navigate to
-<http://localhost:3000>. You should see the Rails default information page:
+A execução do comando irá iniciar o Puma, um servidor web distribuído com o
+Rails por padrão. Para ver sua aplicação em execução, abra um navegador e
+navegue para <http://localhost:3000>.  Você deve ver a página padrão com informações do Rails:
 
-![Welcome aboard screenshot](images/getting_started/rails_welcome.png)
+![Captura de tela de boas vindas do Rails](images/getting_started/rails_welcome.png)
 
-TIP: To stop the web server, hit Ctrl+C in the terminal window where it's
-running. To verify the server has stopped you should see your command prompt
-cursor again. For most UNIX-like systems including macOS this will be a
-dollar sign `$`. In development mode, Rails does not generally require you to
-restart the server; changes you make in files will be automatically picked up by
-the server.
+TIP: Para interromper a execução do servidor Web, pressione Ctrl+C na janela do
+terminal em que o servidor está sendo executado. Para verificar se o servidor
+realmente foi interrompido, você deve ver o cursor do `prompt` novamente. Para a
+maioria dos sistemas baseados em UNIX, incluindo o macOS, o cursor é
+representando por um sinal de `$`. Em modo de desenvolvimento, o Rails
+geralmente não exige que você reinicie o servidor; mudanças feitas nos arquivos
+da aplicaçnao serão automaticamente aplicadas no servidor.
 
 A página de "Boas vindas a bordo" é o _smoke test_ (teste de sanidade) para uma
 nova aplicação Rails: garante que o seu software esteja configurado
@@ -1916,26 +1916,26 @@ class Article < ApplicationRecord
 end
 ```
 
-Security
+Segurança
 --------
 
-### Basic Authentication
+### Autenticação Básica
 
-If you were to publish your blog online, anyone would be able to add, edit and
-delete articles or delete comments.
+Se fosse fosse publicar o seu blog online, qualquer um poderia adicionar, editar
+e deletar seus artigos ou comentários.
 
-Rails provides a very simple HTTP authentication system that will work nicely in
-this situation.
+O Rails disponibiliza um sistema de autenticação HTTP simples que irá funcionar
+tranquilamente nesta situação.
 
-In the `ArticlesController` we need to have a way to block access to the
-various actions if the person is not authenticated. Here we can use the Rails
-`http_basic_authenticate_with` method, which allows access to the requested
-action if that method allows it.
+No `ArticlesController` nós precisamos que tenha um meio de bloquear o acesso à
+várias ações se uma pessoa não estiver autenticada. Aqui podemos usar o método
+`http_basic_authenticate_with`, que permite o acesso para a ação requisitada se
+o método deixar.
 
-To use the authentication system, we specify it at the top of our
-`ArticlesController` in `app/controllers/articles_controller.rb`. In our case,
-we want the user to be authenticated on every action except `index` and `show`,
-so we write that:
+Para usar o sistema de autenticação, nós especificamos no topo do nosso
+`ArticlesController` em `app/controllers/articles_controller.rb`. No nosso caso,
+nós queremos que o usuário esteja autenticado em todas as ações, exceto `index`
+e `show`, então nós colocamos isso:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -1948,9 +1948,9 @@ class ArticlesController < ApplicationController
 
   # snippet for brevity
 ```
-
-We also want to allow only authenticated users to delete comments, so in the
-`CommentsController` (`app/controllers/comments_controller.rb`) we write:
+Nós também queremos autorizar somente usuários autenticados a deletar
+comentários, então em `CommentsController`
+(`app/controllers/comments_controller.rb`) nós colocamos:
 
 ```ruby
 class CommentsController < ApplicationController
@@ -1965,69 +1965,72 @@ class CommentsController < ApplicationController
   # snippet for brevity
 ```
 
-Now if you try to create a new article, you will be greeted with a basic HTTP
-Authentication challenge:
+Agora se você tentar criar um novo artigo, você deverá preencher um formulário de autenticação:
 
-![Basic HTTP Authentication Challenge](images/getting_started/challenge.png)
+![Formulário de Autenticação](images/getting_started/challenge.png)
 
-Other authentication methods are available for Rails applications. Two popular
-authentication add-ons for Rails are the
-[Devise](https://github.com/plataformatec/devise) rails engine and
-the [Authlogic](https://github.com/binarylogic/authlogic) gem,
-along with a number of others.
+Outros métodos de autenticação estão disponíveis para aplicações Rails. Dois
+*add-ons* de autenticação populares para Rails são o
+[Devise](https://github.com/plataformatec/devise) e o
+[Authlogic](https://github.com/binarylogic/authlogic) entre outros.
 
 
-### Other Security Considerations
+### Outras Considerações de Segurança
 
-Security, especially in web applications, is a broad and detailed area. Security
-in your Rails application is covered in more depth in
-the [Ruby on Rails Security Guide](security.html).
-
-
-What's Next?
-------------
-
-Now that you've seen your first Rails application, you should feel free to
-update it and experiment on your own.
-
-Remember, you don't have to do everything without help. As you need assistance
-getting up and running with Rails, feel free to consult these support
-resources:
-
-* The [Ruby on Rails Guides](index.html)
-* The [Ruby on Rails Tutorial](https://www.railstutorial.org/book)
-* The [Ruby on Rails mailing list](https://groups.google.com/group/rubyonrails-talk)
-* The [#rubyonrails](irc://irc.freenode.net/#rubyonrails) channel on irc.freenode.net
+Segurança, especialmente em aplicações web, é uma area ampla e detalhada. O
+tópico de segurança aplicações Rails é coberto com mais detalhes em
+[Guia de Segurança Ruby on Rails](security.html).
 
 
-Configuration Gotchas
+O que vem depois?
+-----------------
+
+Agora que você criou sua primeira aplicação Rails, sinta-se à vontade para
+atualizar e experimentar por conta própria.
+
+Lembre-se, você não precisa fazer tudo sem ajuda. Se você precisa de
+assistência para começar a desenvolver com Rails, sinta-se à vontade para
+consultar estes recursos:
+
+* O [Guia Rails](index.html)
+* O [Ruby on Rails Guides](https://guides.rubyonrails.org)
+* O [Ruby on Rails Tutorial](https://www.railstutorial.org/book)
+* A [lista de discussão do Ruby on Rails](https://groups.google.com/group/rubyonrails-talk)
+* O canal [#rubyonrails](irc://irc.freenode.net/#rubyonrails) no irc.freenode.net
+
+
+Dicas de Configuração
 ---------------------
 
-The easiest way to work with Rails is to store all external data as UTF-8. If
-you don't, Ruby libraries and Rails will often be able to convert your native
-data into UTF-8, but this doesn't always work reliably, so you're better off
-ensuring that all external data is UTF-8.
+O caminho mais fácil para se trabalhar com o Rails é armazenar todos os dados
+externos como UTF-8. Se não fizer assim, as bibliotecas Ruby e o Rails vão, na
+maioria das vezes, conseguir converter seus dados nativos em UTF-8, porém não
+é sempre que isso funciona corretamente, então é melhor que você assegure que
+todos seus dados externos estão em UTF-8.
 
-If you have made a mistake in this area, the most common symptom is a black
-diamond with a question mark inside appearing in the browser. Another common
-symptom is characters like "Ã¼" appearing instead of "ü". Rails takes a number
-of internal steps to mitigate common causes of these problems that can be
-automatically detected and corrected. However, if you have external data that is
-not stored as UTF-8, it can occasionally result in these kinds of issues that
-cannot be automatically detected by Rails and corrected.
+Caso tenha cometido um erro nessa parte, o sintoma mais comum é o aparecimento
+de um diamante preto com um ponto de interrogação dentro no seu navegador. Outro
+sintoma comum é o aparecimento de caracteres como "Ã¼" ao invés de "ü". O Rails
+executa um número de passos internos para mitigar causas comuns desses problemas
+que possam ser detectadas e corrigidas automaticamente. Porém, caso você possua
+dados externos que não estão armazenados como UTF-8, eles poderão ocasionalmente
+resultar em problemas que não podem ser detectados e nem resolvidos de forma
+automática pelo Rails.
 
-Two very common sources of data that are not UTF-8:
+Duas fontes muito comuns de dados que não estão em UTF-8 são:
 
-* Your text editor: Most text editors (such as TextMate), default to saving
-  files as UTF-8. If your text editor does not, this can result in special
-  characters that you enter in your templates (such as é) to appear as a diamond
-  with a question mark inside in the browser. This also applies to your i18n
-  translation files. Most editors that do not already default to UTF-8 (such as
-  some versions of Dreamweaver) offer a way to change the default to UTF-8. Do
-  so.
-* Your database: Rails defaults to converting data from your database into UTF-8
-  at the boundary. However, if your database is not using UTF-8 internally, it
-  may not be able to store all characters that your users enter. For instance,
-  if your database is using Latin-1 internally, and your user enters a Russian,
-  Hebrew, or Japanese character, the data will be lost forever once it enters
-  the database. If possible, use UTF-8 as the internal storage of your database.
+* Seu editor de texto: A maioria dos editores de texto (como o TextMate), salvam
+  os arquivos em UTF-8 de forma padrão. Caso o seu editor de texto não salve,
+  isso pode resultar em caracteres especiais inseridos por você nos seus
+  _templates_ (como por exemplo: é) aparecerem no navegador como um diamante
+  com um ponto de interrogação dentro. Isso também se aplica aos seus arquivos
+  de tradução i18n. Muitos editores que não salvam em UTF-8 por padrão (como
+  algumas versões do Dreamweaver) oferecem uma forma de alterar o padrão para
+  UTF-8. Faça isso.
+* Seu banco de dados: o Rails converte seus dados do banco de dados em UTF-8
+  de forma padrão. Porém, se seu banco de dados não está utilizando UTF-8
+  internamente, pode ser que não consiga armazenar todos os caracteres que seus
+  usuários insiram. Por exemplo, se seu banco de dados está utilizando Latin-1
+  internamente, e seu usuário insira um caractere russo, hebraico ou japonês,
+  os dados serão perdidos para sempre assim que entrarem no banco de dados. Se
+  possível, utilize UTF-8 como padrão de armazenamento para o seu banco de dados.
