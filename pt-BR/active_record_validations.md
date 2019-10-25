@@ -350,7 +350,7 @@ se juntar no modelo onde a validação foi chamada.
 ### `confirmation`
 
 Você deve utilizar esse *helper* quando você tem dois campos de texto que devem
-receber exatamente o mesmo conteudo. Por exemplo, você pode querer confirmar um
+receber exatamente o mesmo conteúdo. Por exemplo, você pode querer confirmar um
 endereço de email ou uma senha. Essa validação cria um atributo virtual onde o
 nome é o nome do atributo que deve ser confirmado com "\_confirmation" anexado.
 
