@@ -675,7 +675,7 @@ para exemplos de restrições únicas que referenciam esse grupo de colunas
 
 Há também uma opção `:case_sensitive` que você pode usar para definir se a
 restrição de exclusividade fará distinção entre maiúsculas e minúsculas.
-Esta opção é padrão para *true*.
+O padrão desta opção é _true_.
 
 ```ruby
 class Person < ApplicationRecord
