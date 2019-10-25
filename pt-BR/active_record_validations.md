@@ -447,7 +447,7 @@ The default error message for this helper is _"is not included in the list"_.
 
 ### `length`
 
-Esse helper valida o tamanho dos valores dos atributos. Ele disponibiliza uma
+Esse *helper* valida o tamanho dos valores dos atributos. Ele disponibiliza uma
 variedade de opções, então você pode especificar o tamanho das restrições de
 maneiras diferentes.
 
