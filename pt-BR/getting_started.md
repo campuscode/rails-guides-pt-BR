@@ -192,7 +192,7 @@ $ rails server
 TIP: Se você está usando Windows, deve executar os scripts do diretório
 `bin` para o interpretador do Ruby: `ruby bin\rails server`.
 
-DICA: A compressão de *assets* JavaScript requer que você tenha um executor
+TIP: A compressão de *assets* JavaScript requer que você tenha um executor
 disponível em seu sistema operacional. Na ausência de um executor você verá um
 error de `execjs` durante a compilação dos *assets*. Geralmente o macOS e o Windows possuem um executor JavaScript instalado por
 padrão. `therubyrhino` é o executor recomendado para usuários de JRuby e vem no
