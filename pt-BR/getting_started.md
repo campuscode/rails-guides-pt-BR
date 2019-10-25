@@ -2031,7 +2031,7 @@ Outros métodos de autenticação estão disponíveis para aplicações Rails. D
 ### Outras Considerações de Segurança
 
 Segurança, especialmente em aplicações web, é uma area ampla e detalhada. O
-tópico de segurança em sua aplicação Rails é mais aprofundada em
+tópico de segurança aplicações Rails é coberto com mais detalhes em
 [Guia de Segurança Ruby on Rails](security.html).
 
 
