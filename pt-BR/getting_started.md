@@ -1968,7 +1968,7 @@ end
 Segurança
 --------
 
-### Autenticação Basica
+### Autenticação Básica
 
 Se fosse fosse publicar o seu blog online, qualquer um poderia adicionar, editar
 e deletar seus artigos ou comentários.
