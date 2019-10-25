@@ -2011,13 +2011,14 @@ resources:
 * The [#rubyonrails](irc://irc.freenode.net/#rubyonrails) channel on irc.freenode.net
 
 
-Configuration Gotchas
+Dicas de Configuração
 ---------------------
 
-The easiest way to work with Rails is to store all external data as UTF-8. If
-you don't, Ruby libraries and Rails will often be able to convert your native
-data into UTF-8, but this doesn't always work reliably, so you're better off
-ensuring that all external data is UTF-8.
+O caminho mais fácil para se trabalhar com o Rails é armazenar todos os dados
+externos como UTF-8. Se não fizer assim, as bibliotecas Ruby e o Rails vão, na
+maioria das vezes, conseguir converter seus dados nativos em UTF-8, porém não
+é sempre que isso funciona corretamente, então é melhor que você assegure que
+todos seus dados externos estão em UTF-8.
 
 If you have made a mistake in this area, the most common symptom is a black
 diamond with a question mark inside appearing in the browser. Another common
