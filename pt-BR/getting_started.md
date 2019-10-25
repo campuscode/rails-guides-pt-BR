@@ -2028,11 +2028,11 @@ Outros métodos de autenticação estão disponíveis para aplicações Rails. D
 [Authlogic](https://github.com/binarylogic/authlogic), e também varias outras.
 
 
-### Other Security Considerations
+### Outras Considerações de Segurança
 
-Security, especially in web applications, is a broad and detailed area. Security
-in your Rails application is covered in more depth in
-the [Ruby on Rails Security Guide](security.html).
+Segurança, especialmente em aplicações web, é uma area ampla e detalhada. O
+tópico de segurança em sua aplicação Rails é mais aprofundada em
+[Guia de Segurança Ruby on Rails](security.html).
 
 
 What's Next?
