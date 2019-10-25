@@ -17,15 +17,16 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-What is Active Record?
+O que é Active Record?
 ----------------------
 
-Active Record is the M in [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) - the
-model - which is the layer of the system responsible for representing business
-data and logic. Active Record facilitates the creation and use of business
-objects whose data requires persistent storage to a database. It is an
-implementation of the Active Record pattern which itself is a description of an
-Object Relational Mapping system.
+*Active Record* é o M em [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) - o
+*model* - que é a camada do sistema responsável pela representação da lógica e
+dados de negócio. O *Active Record* facilita a criação e uso de objetos de
+negócio cujos dados precisam ser persistidos num banco. Essa é uma implementação
+do padrão do *Active Record* que por si só é a descrição de um sistema de
+Mapeamento Objeto-Relacional (*Object Relational Mapping*)
+
 
 ### The Active Record Pattern
 
