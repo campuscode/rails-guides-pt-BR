@@ -1998,34 +1998,38 @@ resources:
 * The [#rubyonrails](irc://irc.freenode.net/#rubyonrails) channel on irc.freenode.net
 
 
-Configuration Gotchas
+Dicas de Configuração
 ---------------------
 
-The easiest way to work with Rails is to store all external data as UTF-8. If
-you don't, Ruby libraries and Rails will often be able to convert your native
-data into UTF-8, but this doesn't always work reliably, so you're better off
-ensuring that all external data is UTF-8.
+O caminho mais fácil para se trabalhar com o Rails é armazenar todos os dados
+externos como UTF-8. Se não fizer assim, as bibliotecas Ruby e o Rails vão, na
+maioria das vezes, conseguir converter seus dados nativos em UTF-8, porém não
+é sempre que isso funciona corretamente, então é melhor que você assegure que
+todos seus dados externos estão em UTF-8.
 
-If you have made a mistake in this area, the most common symptom is a black
-diamond with a question mark inside appearing in the browser. Another common
-symptom is characters like "Ã¼" appearing instead of "ü". Rails takes a number
-of internal steps to mitigate common causes of these problems that can be
-automatically detected and corrected. However, if you have external data that is
-not stored as UTF-8, it can occasionally result in these kinds of issues that
-cannot be automatically detected by Rails and corrected.
+Caso tenha cometido um erro nessa parte, o sintoma mais comum é o aparecimento
+de um diamante preto com um ponto de interrogação dentro no seu navegador. Outro
+sintoma comum é o aparecimento de caracteres como "Ã¼" ao invés de "ü". O Rails
+executa um número de passos internos para mitigar causas comuns desses problemas
+que possam ser detectadas e corrigidas automaticamente. Porém, caso você possua
+dados externos que não estão armazenados como UTF-8, eles poderão ocasionalmente
+resultar em problemas que não podem ser detectados e nem resolvidos de forma
+automática pelo Rails.
 
-Two very common sources of data that are not UTF-8:
+Duas fontes muito comuns de dados que não estão em UTF-8 são:
 
-* Your text editor: Most text editors (such as TextMate), default to saving
-  files as UTF-8. If your text editor does not, this can result in special
-  characters that you enter in your templates (such as é) to appear as a diamond
-  with a question mark inside in the browser. This also applies to your i18n
-  translation files. Most editors that do not already default to UTF-8 (such as
-  some versions of Dreamweaver) offer a way to change the default to UTF-8. Do
-  so.
-* Your database: Rails defaults to converting data from your database into UTF-8
-  at the boundary. However, if your database is not using UTF-8 internally, it
-  may not be able to store all characters that your users enter. For instance,
-  if your database is using Latin-1 internally, and your user enters a Russian,
-  Hebrew, or Japanese character, the data will be lost forever once it enters
-  the database. If possible, use UTF-8 as the internal storage of your database.
+* Seu editor de texto: A maioria dos editores de texto (como o TextMate), salvam
+  os arquivos em UTF-8 de forma padrão. Caso o seu editor de texto não salve,
+  isso pode resultar em caracteres especiais inseridos por você nos seus
+  _templates_ (como por exemplo: é) aparecerem no navegador como um diamante
+  com um ponto de interrogação dentro. Isso também se aplica aos seus arquivos
+  de tradução i18n. Muitos editores que não salvam em UTF-8 por padrão (como
+  algumas versões do Dreamweaver) oferecem uma forma de alterar o padrão para
+  UTF-8. Faça isso.
+* Seu banco de dados: o Rails converte seus dados do banco de dados em UTF-8
+  de forma padrão. Porém, se seu banco de dados não está utilizando UTF-8
+  internamente, pode ser que não consiga armazenar todos os caracteres que seus
+  usuários insiram. Por exemplo, se seu banco de dados está utilizando Latin-1
+  internamente, e seu usuário insira um caractere russo, hebraico ou japonês,
+  os dados serão perdidos para sempre assim que entrarem no banco de dados. Se
+  possível, utilize UTF-8 como padrão de armazenamento para o seu banco de dados.
