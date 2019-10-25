@@ -434,7 +434,7 @@ A mensagem de erro padrão é _"is invalid"_.
 
 ### `inclusion`
 
-Esse *helper* valida os atributos que estão incluídos dada uma coleção. Na
+Esse *helper* valida os atributos que estão incluídos em uma coleção. Na
 verdade, essa coleção pode ser qualquer objeto enumerável.
 
 ```ruby
