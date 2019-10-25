@@ -411,7 +411,7 @@ que não serão aceitas para os atributos validados. A opção `:in` tem um atal
 chamado `:within` que pode ser utilizado para o mesmo propósito, caso queira.
 Esse exemplo usa a opção `:message` para mostrar como você pode incluir o valor
 do atributo na mensagem de erro. Para uma lista completa das opções do argumento
-de mensagem por favor veja a [documentação da mensagem](#message).
+de mensagem por favor veja a [documentação sobre mensagens](#message).
 
 A mensagem de erro padrão é _"is reserved"_.
 
