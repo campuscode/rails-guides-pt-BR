@@ -1777,11 +1777,11 @@ Refatorando
 
 Agora que nossos artigos e comentários funcionam, dê uma olhada no template
 `app/views/articles/show.html.erb`. Ele está ficando longo e esquisito. Nós
-podemos usar partials (parciais) para melhorá-lo.
+podemos usar *partials* (*views* parciais) para melhorá-lo.
 
-### Renderizando Coleções de Partials
+### Renderizando Coleções de *Partials*
 
-Primeiramente, nós vamos criar uma partial para extrair a exibição de todos os
+Primeiramente, nós vamos criar uma *partial* para extrair a exibição de todos os
 comentários para o artigo. Crie o arquivo `app/views/comments/_comment.html.erb`
 e insira o código a seguir:
 
@@ -1832,15 +1832,15 @@ Então você pode mudar `app/views/articles/show.html.erb` para o seguinte códi
 <%= link_to 'Back', articles_path %>
 ```
 
-Isso fará com que a partial seja renderizada em `app/views/comments/_comment.html.erb`
+Isso fará com que a *partial* seja renderizada em `app/views/comments/_comment.html.erb`
 uma vez para cada comentário na coleção `@article.comments`. Como o método
 `render` itera sobre a coleção `@article.comments`, ele designa cada comentário
-para uma variavel local nomeada como a partial, nesse caso `comment`, que então
-fica disponível para ser exibida na partial.
+para uma variável local nomeada como a *partial*, nesse caso `comment`, que então
+fica disponível para ser exibida na *partial*.
 
-### Renderizando um Formulário com Partial
+### Renderizando um Formulário com *Partial*
 
-Agora vamos mover aquela nova seção de comentários para sua própria partial.
+Agora vamos mover aquela nova seção de comentários para sua própria *partial*.
 Novamente, crie o arquivo `app/viewscomments/_form.html.erb` contendo:
 
 ```html+erb
@@ -1882,12 +1882,12 @@ Então deixe o arquivo `app/views/articles/show.html.erb` assim:
 <%= link_to 'Back', articles_path %>
 ```
 
-O segundo render apenas define o template de partial que queremos renderizar,
+O segundo *render* apenas define o template de *partial* que queremos renderizar,
 `comments/form`. O Rails é inteligente o suficiente para entender a barra nessa
 string e perceber que você quer renderizar o arquivo `_form.html.erb` no
 diretório `app/views/comments`.
 
-O objeto `@article` está disponível para todas as partials renderizadas na view
+O objeto `@article` está disponível para todas as *partials* renderizadas na view
 porque o definimos como uma variável de instância.
 
 Deleting Comments
