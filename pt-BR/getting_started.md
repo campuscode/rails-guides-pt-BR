@@ -2014,13 +2014,9 @@ class CommentsController < ApplicationController
   # snippet for brevity
 ```
 
-Now if you try to create a new article, you will be greeted with a basic HTTP
-Authentication challenge:
+Agora se você tentar criar um novo artigo, você deverá preencher um formulário de autenticação:
 
-Agora se você tentar criar um novo artigo, você será recebido com um desafio de
-autenticação HTTP básico:
-
-![Desafio de autenticação HTTP básico](images/getting_started/challenge.png)
+![Formulário de Autenticação](images/getting_started/challenge.png)
 
 Outros métodos de autenticação estão disponíveis para aplicações Rails. Dois
 *add-ons* de autenticação populares para Rails são o
