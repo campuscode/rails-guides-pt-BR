@@ -205,7 +205,7 @@ navegue para <http://localhost:3000>.  Você deve ver a página padrão com info
 
 ![Captura de tela de boas vindas do Rails](images/getting_started/rails_welcome.png)
 
-DICA: Para interromper a execução do servidor Web, presione Ctrl+C na janela do
+TIP: Para interromper a execução do servidor Web, pressione Ctrl+C na janela do
 terminal em que o servidor está sendo executado. Para verificar se o servidor
 realmente foi interrompido, você deve ver o cursor do `prompt` novamente. Para a
 maioria dos sistemas baseados em UNIX, incluindo o macOS, o cursor é
