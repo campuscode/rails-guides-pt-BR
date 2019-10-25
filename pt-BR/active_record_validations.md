@@ -372,7 +372,7 @@ confirmation, make sure to add a presence check for the confirmation attribute
 (we'll take a look at `presence` later on in this guide):
 
 Essa checagem só é feita se o `email_confirmation` não é `nil`. Para requisitar
-uma confirmação tenhha certeza que adicionou uma checagem de presença para o
+uma confirmação tenha certeza que adicionou uma checagem de presença para o
 atributo de confirmação (nós iremos ver `presence` em breve nesse guia):
 
 ```ruby
