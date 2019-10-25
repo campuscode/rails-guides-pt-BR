@@ -550,7 +550,7 @@ A mensagem de erro padrão é  _"is not a number"_.
 
 Esse *helper* que os atributos especificados não estão vazios. Ele utiliza o
 método `blank?` para verificar se o valor é `nil` ou uma *string* em branco,
-isso é, uma *string* que está vazia ou só contém caracteres em branco.
+isso é, uma *string* que está vazia ou só contém espaços.
 
 ```ruby
 class Person < ApplicationRecord
