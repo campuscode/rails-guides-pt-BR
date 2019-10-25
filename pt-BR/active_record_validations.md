@@ -641,7 +641,7 @@ A mensagem padrão de erro é _"must be blank"_.
 Este *helper* valida que o valor do atributo é único antes de o objeto ser
 salvo. Ele não cria uma restrição de exclusividade no banco de dados, portanto
 pode acontecer de duas conexões diferentes ao banco de dados criarem dois
-registros com o mesmo valor para uma coluna que você pretende ser exclusiva.
+registros com o mesmo valor para uma coluna que você pretende tornar exclusiva.
 Para evitar isso, você deve criar um índice exclusivo nessa coluna no seu banco
 de dados.
 
