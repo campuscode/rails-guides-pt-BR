@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Action Mailer Basics
@@ -16,22 +17,21 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-Introduction
+Introdução
 ------------
 
-Action Mailer allows you to send emails from your application using mailer classes
-and views.
+*Action Mailer* permite que você envie emails direto da sua aplicação usando as 
+classes e views *Mailer*
 
-#### Mailers are similar to controllers
+#### Mailers são semelhantes a controllers
 
-They inherit from `ActionMailer::Base` and live in `app/mailers`. Mailers also work
-very similarly to controllers. Some examples of similarities are enumerated below.
-Mailers have:
+Eles herdam do `ActionMailer::Base` e se encontram na `app/mailers`. Os Mailers também funcionam de maneira muito semelhante aos controllers. Alguns exemplos de semelhanças são mostrados abaixo.
+Mailers tem:
 
-* Actions, and also, associated views that appear in `app/views`.
-* Instance variables that are accessible in views.
-* The ability to utilise layouts and partials.
-* The ability to access a params hash.
+* *Actions*, e também, *views* associadas que aparecem em `app/views`.
+* Variáveis de instância acessíveis nas *views*.
+* A capacidade de utilizar *layouts* e *partials*.
+* A capacidade de acessar um hash de parâmetros.
 
 Sending Emails
 --------------
@@ -654,14 +654,12 @@ end
 Action Mailer Callbacks
 -----------------------
 
-Action Mailer allows for you to specify a `before_action`, `after_action` and
+*Action Mailer* permite que você especifique o `before_action`, `after_action` e
 `around_action`.
 
-* Filters can be specified with a block or a symbol to a method in the mailer
-  class similar to controllers.
+* Filtros podem ser especificados com um bloco ou um *symbol* para um  método no *Mailer*, similar a um *controller*
 
-* You could use a `before_action` to populate the mail object with defaults,
-  delivery_method_options or insert default headers and attachments.
+* Você pode usar um `before_action` para preencher o objeto de email com valores padrões, `delivery_method_options` ou inserir *headers* e anexos padrões. 
 
 ```ruby
 class InvitationsMailer < ApplicationMailer
@@ -685,8 +683,7 @@ class InvitationsMailer < ApplicationMailer
 end
 ```
 
-* You could use an `after_action` to do similar setup as a `before_action` but
-  using instance variables set in your mailer action.
+* Você pode usar um `after_action` para fazer uma configuração semelhante ao `before_action`, mas usando variáveis de instância definidas em sua *action* do *mailer*.
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -726,13 +723,12 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-* Mailer Filters abort further processing if body is set to a non-nil value.
+* Os filtros do *mailer* interrompem o processamento adicional se o *body* estiver definido com um valor não nulo.
 
-Using Action Mailer Helpers
+Usando os *helpers* do *Action Mailer*
 ---------------------------
 
-Action Mailer now just inherits from `AbstractController`, so you have access to
-the same generic helpers as you do in Action Controller.
+O *Action Mailer* agora herda apenas do `AbstractController`, para que você tenha acesso aos mesmos *helpers* genéricos que no *Action Controller*.
 
 Action Mailer Configuration
 ---------------------------
@@ -793,11 +789,11 @@ You can change your Gmail settings [here](https://www.google.com/settings/securi
 then you will need to set an [app password](https://myaccount.google.com/apppasswords) and use that instead of your regular password. Alternatively, you can
 use another ESP to send email by replacing 'smtp.gmail.com' above with the address of your provider.
 
-Mailer Testing
+Testes de *Mailer*
 --------------
 
-You can find detailed instructions on how to test your mailers in the
-[testing guide](testing.html#testing-your-mailers).
+Você encontrará instruções detalhadas de como testar seus *mailers* no 
+[guia de teste](testing.html#testing-your-mailers).
 
 Intercepting and Observing Emails
 -------------------

@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Using Rails for API-only Applications
@@ -11,28 +12,25 @@ In this guide you will learn:
 * How to decide which modules to use in your controller
 
 --------------------------------------------------------------------------------
-
-What is an API Application?
+O que é uma Aplicação API?
 ---------------------------
 
-Traditionally, when people said that they used Rails as an "API", they meant
-providing a programmatically accessible API alongside their web application.
-For example, GitHub provides [an API](https://developer.github.com) that you
-can use from your own custom clients.
+Tradicionalmente, quando as pessoas dizem que usam o Rails como uma "API",
+elas querem dizer que fornecem  uma API acessível junto a suas aplicações web.
+Por exemplo, o GitHub fornece [uma API](https://developer.github.com) que você
+pode usar nas suas próprias aplicações personalizadas.
 
-With the advent of client-side frameworks, more developers are using Rails to
-build a back-end that is shared between their web application and other native
-applications.
+Com o advento dos *frameworks client-side*, mais desenvolvedores estão usando o Rails para construir
+um *back-end* compartilhado entre suas aplicações web e outros aplicativos nativos.
 
-For example, Twitter uses its [public API](https://developer.twitter.com/) in its web
-application, which is built as a static site that consumes JSON resources.
+Por exemplo, o Twitter usa sua [API pública](https://developer.twitter.com/) em sua aplicação web,
+que é um site estático que consome recursos via JSON.
 
-Instead of using Rails to generate HTML that communicates with the server
-through forms and links, many developers are treating their web application as
-just an API client delivered as HTML with JavaScript that consumes a JSON API.
+Em vez de usar o Rails para gerar HTML que se comunica com o servidor através de formulários e links,
+muitos desenvolvedores estão tratando suas aplicações web apenas como uma API, separadamente do HTML com JavaScript que apenas consome uma API JSON.
 
-This guide covers building a Rails application that serves JSON resources to an
-API client, including client-side frameworks.
+Esse guia aborda a construção de um aplicativo Rails que fornece dados em JSON para um cliente, incluindo frameworks *client-side*.
+
 
 Why Use Rails for JSON APIs?
 ----------------------------
@@ -124,70 +122,63 @@ when configuring Active Record.
 are still applicable even if you remove the view layer, but the answer turns out
 to be most of it.
 
-The Basic Configuration
+Configuração básica
 -----------------------
 
-If you're building a Rails application that will be an API server first and
-foremost, you can start with a more limited subset of Rails and add in features
-as needed.
+Se você estiver construindo uma aplicação Rails que será uma API, você pode começar
+com um subconjunto mais limitado do Rails e adicionar recursos, conforme necessário.
 
-### Creating a new application
+### Criando uma nova aplicação
 
-You can generate a new api Rails app:
+Você pode gerar uma nova API Rails:
 
 ```bash
 $ rails new my_api --api
 ```
 
-This will do three main things for you:
+Esse comando fará três coisas principais para você:  
 
-- Configure your application to start with a more limited set of middleware
-  than normal. Specifically, it will not include any middleware primarily useful
-  for browser applications (like cookies support) by default.
-- Make `ApplicationController` inherit from `ActionController::API` instead of
-  `ActionController::Base`. As with middleware, this will leave out any Action
-  Controller modules that provide functionalities primarily used by browser
-  applications.
-- Configure the generators to skip generating views, helpers, and assets when
-  you generate a new resource.
+- Configura sua aplicação para começar com um conjunto mais limitado de *middlewares* que o normal.
+Especificamente, não serão incluídos *middlewares* para aplicações web (como suporte a *cookies*) por padrão.
+- Faz com que o `ApplicationController` herde do `ActionController::API` ao invés do `ActionController::Base`.
+Como nos *middlewares*, isso exclui qualquer *Action Controller* ou Módulo que forneçam funcionalidades usadas primordialmente pelo navegador.
+- Configura os geradores para não gerar *views*, *helpers*, e *assets* quando você criar um novo recurso.
 
-### Changing an existing application
+### Alterando uma aplicação existente
 
-If you want to take an existing application and make it an API one, read the
-following steps.
+Se você deseja usar uma aplicação que já existe e transformá-la em API, siga os passos a seguir.
 
-In `config/application.rb` add the following line at the top of the `Application`
-class definition:
+Em `config/application.rb` adicione a seguinte linha no começo da classe `Application`:
 
 ```ruby
 config.api_only = true
 ```
 
-In `config/environments/development.rb`, set `config.debug_exception_response_format`
-to configure the format used in responses when errors occur in development mode.
+Em `config/environments/development.rb`, defina `config.debug_exception_response_format`
+para configurar o formato usado nas respostas quando ocorrer um erro no modo de desenvolvimento.
 
-To render an HTML page with debugging information, use the value `:default`.
+Para renderizar uma página HTML com as informações de *debugging*, use o valor `:default`.
 
 ```ruby
 config.debug_exception_response_format = :default
 ```
 
-To render debugging information preserving the response format, use the value `:api`.
+Para renderizar as informações de *debugging* preservando o formato da resposta, use o valor `:api`.
 
 ```ruby
 config.debug_exception_response_format = :api
 ```
 
-By default, `config.debug_exception_response_format` is set to `:api`, when `config.api_only` is set to true.
+Por padrão, `config.debug_exception_response_format` está definido para `:api`, quando `config.api_only` está com o valor *true*.
 
-Finally, inside `app/controllers/application_controller.rb`, instead of:
+Finalmente, no arquivo `app/controllers/application_controller.rb`, ao invés de
 
 ```ruby
 class ApplicationController < ActionController::Base
 end
 ```
 
-do:
+troque por:
 
 ```ruby
 class ApplicationController < ActionController::API
@@ -362,33 +353,26 @@ config.middleware.delete ::Rack::Sendfile
 Keep in mind that removing these middlewares will remove support for certain
 features in Action Controller.
 
-Choosing Controller Modules
+Escolhendo os módulos do *controller*
 ---------------------------
 
-An API application (using `ActionController::API`) comes with the following
-controller modules by default:
+Uma aplicação API (utilizando `ActionController::API`) vem com os seguintes módulos do *controller* por padrão:
 
-- `ActionController::UrlFor`: Makes `url_for` and similar helpers available.
-- `ActionController::Redirecting`: Support for `redirect_to`.
-- `AbstractController::Rendering` and `ActionController::ApiRendering`: Basic support for rendering.
-- `ActionController::Renderers::All`: Support for `render :json` and friends.
-- `ActionController::ConditionalGet`: Support for `stale?`.
-- `ActionController::BasicImplicitRender`: Makes sure to return an empty response, if there isn't an explicit one.
-- `ActionController::StrongParameters`: Support for parameters filtering in combination with Active Model mass assignment.
-- `ActionController::DataStreaming`: Support for `send_file` and `send_data`.
-- `AbstractController::Callbacks`: Support for `before_action` and
-  similar helpers.
-- `ActionController::Rescue`: Support for `rescue_from`.
-- `ActionController::Instrumentation`: Support for the instrumentation
-  hooks defined by Action Controller (see [the instrumentation
-  guide](active_support_instrumentation.html#action-controller) for
-more information regarding this).
-- `ActionController::ParamsWrapper`: Wraps the parameters hash into a nested hash,
-  so that you don't have to specify root elements sending POST requests for instance.
-- `ActionController::Head`: Support for returning a response with no content, only headers
+- `ActionController::UrlFor`: Faz com que `url_for` e helpers similares sejam disponíveis.
+- `ActionController::Redirecting`: Suporte para `redirect_to`.
+- `AbstractController::Rendering` e `ActionController::ApiRendering`: Suporte básico para renderização.
+- `ActionController::Renderers::All`: Suporte para `render :json` e similares.
+- `ActionController::ConditionalGet`: Suporte para `stale?`.
+- `ActionController::BasicImplicitRender`: Certifica-se de retornar uma resposta vazia, se não houver uma explícita.
+- `ActionController::StrongParameters`: Suporte para filtragem de parâmetros em conjunto com a atribuição do ActiveModel.
+- `ActionController::DataStreaming`: Suporte para `send_file` e `send_data`.
+- `AbstractController::Callbacks`: Suporte para `before_action` e helpers similares.
+- `ActionController::Rescue`: Suporte para `rescue_from`.
+- `ActionController::Instrumentation`: Suporte para ganchos de instrumentação definidos pela *Action Controller* (veja [o guia da instrumentação](active_support_instrumentation.html#action-controller) para mais informações a respeito disso)
+- `ActionController::ParamsWrapper`: Agrupa o hash dos parâmetros em um hash encadeado, para que você não precise especificar elementos raiz enviando requisições POST, por exemplo.
+- `ActionController::Head`: Suporte para o retorno de uma resposta sem conteúdo, apenas *headers*
 
-Other plugins may add additional modules. You can get a list of all modules
-included into `ActionController::API` in the rails console:
+Outros plugins podem adicionar mais módulos. Você pode obter uma lista de todos os módulos incluídos no `ActionController::API` no console do Rails:
 
 ```bash
 $ rails c
@@ -402,33 +386,29 @@ $ rails c
     ActionView::ViewPaths]
 ```
 
-### Adding Other Modules
+### Adicionando Outros Módulos
 
-All Action Controller modules know about their dependent modules, so you can feel
-free to include any modules into your controllers, and all dependencies will be
-included and set up as well.
+Todos os módulos do *Action Controller* conhecem seus módulos dependentes. Assim, você pode incluir qualquer módulo em seus controllers, e todas as dependências serão
+incluídas e configuradas também.
 
-Some common modules you might want to add:
+Alguns módulos comuns que você pode querer adicionar:
 
-- `AbstractController::Translation`: Support for the `l` and `t` localization
-  and translation methods.
-- Support for basic, digest, or token HTTP authentication:
+- `AbstractController::Translation`: Suporte para os métodos de localização e tradução `l` e `t`
+- Suporte para autenticações HTTP basic, digest ou por token:
   * `ActionController::HttpAuthentication::Basic::ControllerMethods`,
   * `ActionController::HttpAuthentication::Digest::ControllerMethods`,
   * `ActionController::HttpAuthentication::Token::ControllerMethods`
-- `ActionView::Layouts`: Support for layouts when rendering.
-- `ActionController::MimeResponds`: Support for `respond_to`.
-- `ActionController::Cookies`: Support for `cookies`, which includes
-  support for signed and encrypted cookies. This requires the cookies middleware.
-- `ActionController::Caching`: Support view caching for the API controller. Please notice that
-  you will need to manually specify cache store inside the controller like:
+- `ActionView::Layouts`: Suporte para layouts ao renderizar.
+- `ActionController::MimeResponds`: Suporte para `respond_to`.
+- `ActionController::Cookies`: Suporte para `cookies`, que inclui suporte para cookies assinados e criptografados. Isso requer um middleware de cookies
+- `ActionController::Caching`: Suporte para cache da *view* do *controller* da API. Lembre-se que você precisará especificar manualmente o armazenamento em cache dentro do *controller*, como por exemplo:
   ```ruby
   class ApplicationController < ActionController::API
     include ::ActionController::Caching
     self.cache_store = :mem_cache_store
   end
   ```
-  Rails does *not* pass this configuration automatically.
+  O Rails *não* faz essa configuração automaticamente
 
-The best place to add a module is in your `ApplicationController`, but you can
-also add modules to individual controllers.
+O melhor lugar para adicionar um módulo é em sua `ApplicationController`, mas 
+você também pode adicionar módulos em *controllers* individuais.
