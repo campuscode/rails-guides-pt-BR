@@ -1965,26 +1965,26 @@ class Article < ApplicationRecord
 end
 ```
 
-Security
+Segurança
 --------
 
-### Basic Authentication
+### Autenticação Basica
 
-If you were to publish your blog online, anyone would be able to add, edit and
-delete articles or delete comments.
+Se fosse fosse publicar o seu blog online, qualquer um poderia adicionar, editar
+e deletar seus artigos ou comentários.
 
-Rails provides a very simple HTTP authentication system that will work nicely in
-this situation.
+O Rails disponibiliza um sistema de autenticação HTTP simples que irá funcionar
+tranquilamente nesta situação.
 
-In the `ArticlesController` we need to have a way to block access to the
-various actions if the person is not authenticated. Here we can use the Rails
-`http_basic_authenticate_with` method, which allows access to the requested
-action if that method allows it.
+No `ArticlesController` nós precisamos que tenha um meio de bloquear o acesso à
+várias ações se uma pessoa não estiver autenticada. Aqui podemos usar o método
+`http_basic_authenticate_with`, que permite o acesso para a ação requisitada se
+o método deixar.
 
-To use the authentication system, we specify it at the top of our
-`ArticlesController` in `app/controllers/articles_controller.rb`. In our case,
-we want the user to be authenticated on every action except `index` and `show`,
-so we write that:
+Para usar o sistema de autenticação, nós especificamos no topo do nosso
+`ArticlesController` em `app/controllers/articles_controller.rb`. No nosso caso,
+nós queremos que o usuário esteja autenticado em todas as ações, exceto `index`
+e `show`, então nós colocamos isso:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -1997,9 +1997,9 @@ class ArticlesController < ApplicationController
 
   # snippet for brevity
 ```
-
-We also want to allow only authenticated users to delete comments, so in the
-`CommentsController` (`app/controllers/comments_controller.rb`) we write:
+Nós também queremos autorizar somente usuários autenticados a deletar
+comentários, então em `CommentsController`
+(`app/controllers/comments_controller.rb`) nós colocamos:
 
 ```ruby
 class CommentsController < ApplicationController
@@ -2017,13 +2017,15 @@ class CommentsController < ApplicationController
 Now if you try to create a new article, you will be greeted with a basic HTTP
 Authentication challenge:
 
-![Basic HTTP Authentication Challenge](images/getting_started/challenge.png)
+Agora se você tentar criar um novo artigo, você será recebido com um desafio de
+autenticação HTTP básico:
 
-Other authentication methods are available for Rails applications. Two popular
-authentication add-ons for Rails are the
-[Devise](https://github.com/plataformatec/devise) rails engine and
-the [Authlogic](https://github.com/binarylogic/authlogic) gem,
-along with a number of others.
+![Desafio de autenticação HTTP básico](images/getting_started/challenge.png)
+
+Outros métodos de autenticação estão disponíveis para aplicações Rails. Dois
+*add-ons* de autenticação populares para Rails são o
+[Devise](https://github.com/plataformatec/devise) e o
+[Authlogic](https://github.com/binarylogic/authlogic), e também varias outras.
 
 
 ### Other Security Considerations
