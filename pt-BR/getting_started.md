@@ -377,7 +377,7 @@ Na próxima seção, você adicionará a funcionalidade para criar e visualizar 
 
 ![The new article form](images/getting_started/new_article.png)
 
-Por equanto ele está um pouco simples, mas tudo bem. Nós iremos melhorar o estilo mais a diante.
+Por enquanto está um pouco simples, mas tudo bem. Nós iremos melhorar o estilo mais adiante.
 
 ### Laying down the groundwork
 
