@@ -1841,38 +1841,38 @@ diretório `app/views/comments`.
 O objeto `@article` está disponível para todas as *partials* renderizadas na view
 porque o definimos como uma variável de instância.
 
-Deleting Comments
+Deletando Comentários
 -----------------
 
-Another important feature of a blog is being able to delete spam comments. To do
-this, we need to implement a link of some sort in the view and a `destroy`
-action in the `CommentsController`.
+Outra importante *feature* de um blog é excluir comentários de spam. Para fazer
+isto, nós precisamos implementar um link de alguma *view* e uma *action*
+`destroy` no `CommentsController`.
 
-So first, let's add the delete link in the
-`app/views/comments/_comment.html.erb` partial:
+Primeiro, vamos adicionar o link *delete* na *partial*
+`app/views/comments/_comment.html.erb`:
 
 ```html+erb
 <p>
-  <strong>Commenter:</strong>
+  <strong>Autor do comentário:</strong>
   <%= comment.commenter %>
 </p>
 
 <p>
-  <strong>Comment:</strong>
+  <strong>Comentário:</strong>
   <%= comment.body %>
 </p>
 
 <p>
-  <%= link_to 'Destroy Comment', [comment.article, comment],
+  <%= link_to 'Destruir comentário', [comment.article, comment],
                method: :delete,
-               data: { confirm: 'Are you sure?' } %>
+               data: { confirm: 'Você tem certeza?' } %>
 </p>
 ```
 
-Clicking this new "Destroy Comment" link will fire off a `DELETE
-/articles/:article_id/comments/:id` to our `CommentsController`, which can then
-use this to find the comment we want to delete, so let's add a `destroy` action
-to our controller (`app/controllers/comments_controller.rb`):
+Clicar neste novo link "Destruir comentário" será disparado um `DELETE
+/articles/:article_id/comments/:id` ao nosso `CommentsController`, que
+pode ser usar isso para encontrar o comentário que queremos excluir, então vamos adicionar
+uma ação `destroy` ao nosso *controller* (`app/controllers/comments_controller.rb`):
 
 ```ruby
 class CommentsController < ApplicationController
@@ -1896,17 +1896,17 @@ class CommentsController < ApplicationController
 end
 ```
 
-The `destroy` action will find the article we are looking at, locate the comment
-within the `@article.comments` collection, and then remove it from the
-database and send us back to the show action for the article.
+A *action* `destroy` vai encontrar o artigo que estamos vendo, localizar o
+comentário na *collection* `@article.comments`, removê-lo do seu banco de
+dados e nos enviar de volta para a *action* `show` do artigo.
 
 
-### Deleting Associated Objects
+### Excluindo objetos associados
 
-If you delete an article, its associated comments will also need to be
-deleted, otherwise they would simply occupy space in the database. Rails allows
-you to use the `dependent` option of an association to achieve this. Modify the
-Article model, `app/models/article.rb`, as follows:
+Se você excluir um artigo, os comentários (comments) associados também precisarão ser
+excluídos, caso contrário, eles simplesmente ocupariam espaço no banco de dados.
+O Rails permite que você use a opção `dependent` de uma associação para conseguir isso.
+Modifique o Modelo de artigo (article), `app/models/article.rb`, da seguinte forma:
 
 ```ruby
 class Article < ApplicationRecord
