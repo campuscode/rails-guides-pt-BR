@@ -1,20 +1,20 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Record Basics
+Básico do Active Record
 ====================
 
-This guide is an introduction to Active Record.
+Este guia é uma introdução ao *Active Record*.
 
-After reading this guide, you will know:
+Depois de ler este guia, você vai saber:
 
-* What Object Relational Mapping and Active Record are and how they are used in
-  Rails.
-* How Active Record fits into the Model-View-Controller paradigm.
-* How to use Active Record models to manipulate data stored in a relational
-  database.
-* Active Record schema naming conventions.
-* The concepts of database migrations, validations, and callbacks.
+* O que são Mapeamento Objeto-Relacional (*Object Relational Mapping*) e Active Record, e
+como eles são utilizados no Rails.
+* Como o *Active Record* se encaixa no paradigma *Model-View-Controller*.
+* Como usar *models* do *Active Record* para manipular dados armazenados em
+  bancos de dados relacionais.
+* Convenções de nomes no *schema* do *Active Record*.
+* Os conceitos de migrações em bancos de dados, validações e *callbacks*.
 
 --------------------------------------------------------------------------------
 
@@ -26,8 +26,7 @@ O que é Active Record?
 dados de negócio. O *Active Record* facilita a criação e uso de objetos de
 negócio cujos dados precisam ser persistidos num banco. Essa é uma implementação
 do padrão do *Active Record* que por si só é a descrição de um sistema de
-Mapeamento Objeto-Relacional (*Object Relational Mapping*)
-
+Mapeamento Objeto-Relacional (*Object Relational Mapping*).
 
 ### The Active Record Pattern
 
