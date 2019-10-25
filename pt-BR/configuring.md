@@ -166,7 +166,7 @@ Classes customizadas devem respeitar a API de `ActiveSupport::FileUpdateChecker`
 
 * `config.filter_parameters` é usado para filtrar os parâmetros que você não
   deseja exibir nos *logs*, tais como senhas ou números de cartões de crédito.
-Essa configuraçnao também filtra valores sensíveis de colunas de bancos de dados
+Essa configuração também filtra valores sensíveis de colunas de bancos de dados
 quando o método `#inspect` é enviado a um objeto de *Active Record*. Por padrão o
 Rails filtra senhas ao adicionar  `Rails.application.config.filter_parameters += [:password]` em `config/initializers/filter_parameter_logging.rb`. 
 O filtro de parâmetros funciona através da equivalência parcial de expressões
@@ -236,7 +236,7 @@ software servidor (como NGINX ou Apache) usado para executar a aplicação deve
 servir os arquivos estáticos. Se você esta executando ou testando sua aplicação
 no modo de produção usando WEBrick (não é recomendado usar WEBrick em produção)
 defina a opção como `true`. De outra forma, você não será capaz de usar o
-cacheamento de paginas e requisições para arquivos que existam no diretório
+cacheamento de páginas e requisições para arquivos que existam no diretório
 `public`.
 
 * `config.session_store` define que classe usar para armazenar a sessão. Os
@@ -256,7 +256,7 @@ personalizados de sessão também podem ser definidos:
 * `config.autoloader` configura o modo de autocarregamento. O padrão é
   `:zeitwerk` se em `config.load_defaults` o valor for `6.0`. Aplicações ainda
 podem usar o autocarregador clássico ao definir o valor dessa configuração
-como `:classic` após carregar os valores padrão do *framework*:
+como `:classic` após carregar os valores padrões do *framework*:
 
 
     ```ruby
