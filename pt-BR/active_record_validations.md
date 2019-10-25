@@ -669,7 +669,7 @@ Se você deseja criar uma restrição no banco de dados para previnir possiveis
 violações em uma validação de exclusividade usando a opção de `:scope`, você
 deve criar uma indexação única em ambas as colunas em seu banco de dados. Veja
 [o manual do MySQL](https://dev.mysql.com/doc/refman/5.7/en/multiple-column-indexes.html)
-para mais detalhes sobre indexação de multiplas colunas ou
+para mais detalhes sobre indexação de múltiplas colunas ou
 [o manual do Postgres](https://www.postgresql.org/docs/current/static/ddl-constraints.html)
 para exemplos de restrições únicas que referenciam esse grupo de colunas
 
