@@ -156,7 +156,7 @@ que o Rails gerou por padrão:
 |app/|Contém os *controllers*, *models*, *views*, *helpers*, *mailers*, *channels*, *jobs*, e *assets* para sua aplicação. Você irá se concentrar nesse diretório pelo restante desse guia.|
 |bin/|Contém o script do Rails que inicializa sua aplicação e contém outros scripts que você utiliza para configurar, atualizar, colocar em produção ou executar sua aplicação.|
 |config/|Configure as rotas, banco de dados entre outros de sua aplicação. Este conteúdo é abordado com mais detalhes em [Configuring Rails Applications](configuring.html).|
-|config.ru|Configuração *Rack* para servidores baseados em *Rack* usados ​​para iniciar a aplicação. Para mais informações sobre o *Rack*, consulte [Rack website](https://rack.github.io/).|
+|config.ru|Configuração *Rack* para servidores baseados em *Rack* usados para iniciar a aplicação. Para mais informações sobre o *Rack*, consulte [Rack website](https://rack.github.io/).|
 |db/|Contém o *schema* do seu banco de dados atual, assim como as *migrations* do banco de dados.|
 |Gemfile<br>Gemfile.lock|Esses arquivos permitem que você especifique quais dependências de *gem* são necessárias na sua aplicação Rails. Esses arquivos são usados pela *gem* Bundler. Para mais informações sobre o Bundler, acesse [o website do Bundler](https://bundler.io).|
 |lib/|Módulos extendidos da sua aplicação.|
@@ -361,7 +361,7 @@ welcome_index GET    /welcome/index(.:format)     welcome#index
          root GET    /                            welcome#index
 ```
 
-Na próxima seção, você adicionará a funcionalidade para criar e visualizar novos artigos em sua aplicação. Este é o "C" e o "R" do *CRUD*: *create* (criação) e *read* (leitura). O formulário para fazer isso ficará assim:
+Na próxima seção, você adicionará a funcionalidade para criar e visualizar novos artigos (articles) em sua aplicação. Este é o "C" e o "R" do *CRUD*: *create* (criação) e *read* (leitura). O formulário para fazer isso ficará assim:
 
 ![The new article form](images/getting_started/new_article.png)
 
@@ -438,40 +438,41 @@ Agora vá em frente e crie um novo arquivo em *app/views/articles/new.html.erb* 
 
 Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem um título. A rota, o *controller*, a *action* e a *view* estão funcionando harmoniosamente! É hora de criar o formulário para um novo artigo.
 
-### The first form
+### O primeiro formulário
 
-To create a form within this template, you will use a *form
-builder*. The primary form builder for Rails is provided by a helper
-method called `form_with`. To use this method, add this code into
+Para criar um formulário nesse template, você utilizará um constriutor de formulários (*form builder)*.
+O construtor de formulários do Rails é fornecido por um método auxiliar
+chamado `form_with`. Para usar esse método, adicione esse código ao
 `app/views/articles/new.html.erb`:
 
 ```html+erb
 <%= form_with scope: :article, local: true do |form| %>
   <p>
-    <%= form.label :title %><br>
+    <%= form.label :title, 'Título' %><br>
     <%= form.text_field :title %>
   </p>
 
   <p>
-    <%= form.label :text %><br>
+    <%= form.label :text, 'Texto' %><br>
     <%= form.text_area :text %>
   </p>
 
   <p>
-    <%= form.submit %>
+    <%= form.submit 'Enviar' %>
   </p>
 <% end %>
 ```
 
-If you refresh the page now, you'll see the exact same form from our example above.
-Building forms in Rails is really just that easy!
+Se você atualizar a página agora, verá exatamente o mesmo formulário do nosso
+exemplo acima. Construir formulários no Rails é realmente assim tão fácil!
 
-When you call `form_with`, you pass it an identifying scope for this
-form. In this case, it's the symbol `:article`. This tells the `form_with`
-helper what this form is for. Inside the block for this method, the
-`FormBuilder` object - represented by `form` - is used to build two labels and two
-text fields, one each for the title and text of an article. Finally, a call to
-`submit` on the `form` object will create a submit button for the form.
+Quando você chama `form_with`, passa um escopo de identificação para esse
+form. Nesse caso, é o *symbol* `:article`. Isso informa o `form_with`
+para que serve este formulário. Dentro do bloco para esse método, o
+O objeto `FormBuilder` - representado por `form` - é usado para criar dois
+*labels* (rótulos) e dois *text fields* (campos de texto), um para o título e
+outro para o texto de um artigo. Finalmente, uma chamada para
+O `submit` no objeto `form` criará um botão de envio para o formulário.
 
 There's one problem with this form though. If you inspect the HTML that is
 generated, by viewing the source of the page, you will see that the `action`
