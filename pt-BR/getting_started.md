@@ -356,7 +356,7 @@ end
 ```
 
 Se você executar `rails routes`, você verá que foram definidas rotas para todas as *actions* padrão *RESTful*.
-O significado do prefixo da coluna (e de outras colunas) será visto mais a diante, mas por equanto, observe que o Rails entende `article` de forma singular e faz o uso significativo da distinção.
+O significado do prefixo da coluna (e de outras colunas) será visto mais adiante, mas por enquanto, observe que o Rails entende `article` de forma singular e faz o uso significativo da distinção.
 
 ```bash
 $ rails routes
