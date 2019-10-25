@@ -12,7 +12,7 @@ Depois de ler este guia, você irá saber:
 * Como restringir parâmetros passados ao seu *controller*.
 * Como e Porque salvar dados na sessão ou nos `cookies`.
 * Como trabalhar com filtros para executar código durante o processamento de uma requisição.
-* Como utilizar o autenticador http nativo do `ActionController`.
+* Como utilizar o autenticador HTTP nativo do `ActionController`.
 * Como transmitir dados diretamente ao navegador do usuário.
 * Como filtrar parâmetros sensíveis para que não apareçam no log da aplicação.
 * Como lidar com erros que podem surgir durante o processamento de uma requisição.
