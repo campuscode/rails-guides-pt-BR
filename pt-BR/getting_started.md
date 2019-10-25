@@ -189,7 +189,7 @@ o seguinte comando no diretório `blog`:
 $ rails server
 ```
 
-DICA: Se você está usando Windows, você deve executar os scripts do diretório
+TIP: Se você está usando Windows, deve executar os scripts do diretório
 `bin` para o interpretador do Ruby: `ruby bin\rails server`.
 
 DICA: A compressão de *assets* JavaScript requer que você tenha um executor
