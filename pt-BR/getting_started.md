@@ -1982,20 +1982,21 @@ tópico de segurança aplicações Rails é coberto com mais detalhes em
 [Guia de Segurança Ruby on Rails](security.html).
 
 
-What's Next?
-------------
+O que vem depois?
+-----------------
 
-Now that you've seen your first Rails application, you should feel free to
-update it and experiment on your own.
+Agora que você criou sua primeira aplicação Rails, sinta-se à vontade para
+atualizar e experimentar por conta própria.
 
-Remember, you don't have to do everything without help. As you need assistance
-getting up and running with Rails, feel free to consult these support
-resources:
+Lembre-se, você não precisa fazer tudo sem ajuda. Se você precisa de
+assistência para começar a desenvolver com Rails, sinta-se à vontade para
+consultar estes recursos:
 
-* The [Ruby on Rails Guides](index.html)
-* The [Ruby on Rails Tutorial](https://www.railstutorial.org/book)
-* The [Ruby on Rails mailing list](https://groups.google.com/group/rubyonrails-talk)
-* The [#rubyonrails](irc://irc.freenode.net/#rubyonrails) channel on irc.freenode.net
+* O [Guia Rails](index.html)
+* O [Ruby on Rails Guides](https://guides.rubyonrails.org)
+* O [Ruby on Rails Tutorial](https://www.railstutorial.org/book)
+* A [lista de discussão do Ruby on Rails](https://groups.google.com/group/rubyonrails-talk)
+* O canal [#rubyonrails](irc://irc.freenode.net/#rubyonrails) no irc.freenode.net
 
 
 Dicas de Configuração
