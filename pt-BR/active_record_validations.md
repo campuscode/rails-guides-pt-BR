@@ -626,7 +626,7 @@ class Order < ApplicationRecord
 end
 ```
 
-Se você validar a ausencia de um objeto associado através de um relacionamento
+Se você validar a ausência de um objeto associado através de um relacionamento
 `has_one` ou` has_many`, ele verificará se o objeto não está `present?` nem
 `marked_for_destruction?`.
 
