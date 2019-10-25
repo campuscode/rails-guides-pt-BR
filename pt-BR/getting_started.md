@@ -1869,10 +1869,11 @@ Primeiro, vamos adicionar o link *delete* na *partial*
 </p>
 ```
 
-Clicking this new "Destroy Comment" link will fire off a `DELETE
-/articles/:article_id/comments/:id` to our `CommentsController`, which can then
-use this to find the comment we want to delete, so let's add a `destroy` action
-to our controller (`app/controllers/comments_controller.rb`):
+Ao clicar neste novo link chamado "Destroy Comment" será disparado um `DELETE
+/articles/:article_id/comments/:id` para nosso `CommentsController`, que
+pode usar isso para encontrar o comentário que queremos excluir, então vamos
+adicionar uma *action* `destroy` ao nosso *controller*
+(`app/controllers/comments_controller.rb`):
 
 ```ruby
 class CommentsController < ApplicationController
@@ -1896,9 +1897,9 @@ class CommentsController < ApplicationController
 end
 ```
 
-The `destroy` action will find the article we are looking at, locate the comment
-within the `@article.comments` collection, and then remove it from the
-database and send us back to the show action for the article.
+A *action* `destroy` vai encontrar o artigo que estamos vendo, localizar o
+comentário na *collection* `@article.comments`, removê-lo do seu banco de
+dados e nos enviar de volta para a *action* `show` do artigo.
 
 
 ### Deleting Associated Objects
