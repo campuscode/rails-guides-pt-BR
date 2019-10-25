@@ -2031,16 +2031,18 @@ automática pelo Rails.
 
 Duas fontes muito comuns de dados que não estão em UTF-8 são:
 
-* Your text editor: Most text editors (such as TextMate), default to saving
-  files as UTF-8. If your text editor does not, this can result in special
-  characters that you enter in your templates (such as é) to appear as a diamond
-  with a question mark inside in the browser. This also applies to your i18n
-  translation files. Most editors that do not already default to UTF-8 (such as
-  some versions of Dreamweaver) offer a way to change the default to UTF-8. Do
-  so.
-* Your database: Rails defaults to converting data from your database into UTF-8
-  at the boundary. However, if your database is not using UTF-8 internally, it
-  may not be able to store all characters that your users enter. For instance,
-  if your database is using Latin-1 internally, and your user enters a Russian,
-  Hebrew, or Japanese character, the data will be lost forever once it enters
-  the database. If possible, use UTF-8 as the internal storage of your database.
+* Seu editor de texto: A maioria dos editores de texto (como o TextMate), salvam
+  os arquivos em UTF-8 de forma padrão. Caso o seu editor de texto não salve,
+  isso pode resultar em caracteres especiais inseridos por você nos seus
+  _templates_ (como por exemplo: é) aparecerem no navegador como um diamante
+  com um ponto de interrogação dentro. Isso também se aplica aos seus arquivos
+  de tradução i18n. Muitos editores que não salvam em UTF-8 por padrão (como
+  algumas versões do Dreamweaver) oferecem uma forma de alterar o padrão para
+  UTF-8. Faça isso.
+* Seu banco de dados: o Rails converte seus dados do banco de dados em UTF-8
+  de forma padrão. Porém, se seu banco de dados não está utilizando UTF-8
+  internamente, pode ser que não consiga armazenar todos os caracteres que seus
+  usuários insiram. Por exemplo, se seu banco de dados está utilizando Latin-1
+  internamente, e seu usuário insira um caractere russo, hebraico ou japonês,
+  os dados serão perdidos para sempre assim que entrarem no banco de dados. Se
+  possível, utilize UTF-8 como padrão de armazenamento para o seu banco de dados.
