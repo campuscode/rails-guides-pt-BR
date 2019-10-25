@@ -630,7 +630,7 @@ Se você validar a ausência de um objeto associado através de um relacionament
 `has_one` ou` has_many`, ele verificará se o objeto não está `present?` nem
 `marked_for_destruction?`.
 
-Como `false.present?` é false, se você quer validar a ausencia de um campo
+Como `false.present?` é _false_, se você quer validar a ausência de um campo
 booleano você deve usar `validates :field_name,
 exclusion: { in: [true, false] }`.
 
