@@ -16,22 +16,22 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-Sobre o Guia
+Premissas do Guia
 -----------------
 
 Este guia é projetado para iniciantes que desejam começar uma aplicação Rails do
 zero. Ela não assume que você tenha nenhuma experiência anterior com Rails.
 
-Rails é um framework para aplicações web que roda em cima da linguagem de programação
-Ruby. Se você não tem nenhuma experiência com Ruby, você vai achar a curva de 
-aprendizado bastante ingrime começando direto com Rails. Existem diversas 
-listas organizadas de materiais online para aprender Ruby:
+Rails é um framework para aplicações web que é executado em cima da linguagem
+de programação Ruby. Se você não tem nenhuma experiência com Ruby, você vai
+achar a curva de aprendizado bastante íngrime começando direto com Rails.
+Existem diversas listas organizadas de materiais online para aprender Ruby:
 
 * [Site Oficial da Linguagem de Programação Ruby](https://www.ruby-lang.org/en/documentation/)
 * [Lista de Livros Grátis de Programação](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
 
-Fique atento que alguns materiais, apesar de excelentes, envolvem versões antigas 
-do Ruby chegando a 1.6, e comummente 1.8, e não incluem parte da sintaxe que você 
+Fique atento que alguns materiais, apesar de excelentes, envolvem versões antigas
+do Ruby chegando a 1.6, e frequentemente 1.8, e não incluem parte da sintaxe que você
 vai ver no seu dia-a-dia desenvolvendo com Rails.
 
 O que é o Rails?
@@ -314,7 +314,7 @@ da aplicação para o _controller_ "welcome", _action_ "index" e `get
 "index". Isso foi criado anteriormente quando você executou o gerador de
 _controller_ (`rails generate controller Welcome index`).
 
-Inicie o servidor *web* novamente se você o interrompeu para gerar o _controller_ 
+Inicie o servidor *web* novamente se você o interrompeu para gerar o _controller_
 (`rails server`) e navegue até <http://localhost:3000> no seu navegador. Você
 verá a mensagem "Olá, Rails!", a mesma que você colocou em
 `app/views/welcome/index.html.erb`, indicando que essa nova rota de fato vai
@@ -1589,7 +1589,7 @@ Isso cria `comments` como um recurso aninhado (_nested resource_) dentro de `art
 outra parte do processo para recuperar as relações hierárquicas que existem  entre
 artigos e comentários.
 
-TIP: Para mais informações sobre rotas, veja o guia [Roteamento no Rails](routing.html) 
+TIP: Para mais informações sobre rotas, veja o guia [Roteamento no Rails](routing.html)
 
 ### Gerando um Controller
 
