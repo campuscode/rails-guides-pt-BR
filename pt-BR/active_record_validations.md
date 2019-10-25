@@ -135,7 +135,7 @@ e `create` retorna o objeto.
 ### Pulando Validações
 
 Os seguintes métodos pulam validações, e irão salvar o objeto no banco
-de dados independente da sua validez. Eles devem ser usados com cuidado.
+de dados independente da sua validade. Eles devem ser usados com cuidado.
 
 * `decrement!`
 * `decrement_counter`
