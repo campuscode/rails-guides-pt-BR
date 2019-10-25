@@ -2025,7 +2025,7 @@ autenticação HTTP básico:
 Outros métodos de autenticação estão disponíveis para aplicações Rails. Dois
 *add-ons* de autenticação populares para Rails são o
 [Devise](https://github.com/plataformatec/devise) e o
-[Authlogic](https://github.com/binarylogic/authlogic), e também varias outras.
+[Authlogic](https://github.com/binarylogic/authlogic) entre outros.
 
 
 ### Outras Considerações de Segurança
