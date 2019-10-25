@@ -10,7 +10,7 @@ Depois de ler este guia, você vai saber:
 
 * Como instalar o Rails, criar uma nova aplicação Rails e conectar sua
   aplicação com um banco de dados.
-* O estrutura geral de uma aplicação Rails.
+* A estrutura geral de uma aplicação Rails.
 * Os princípios básicos do MVC (**Model**, **View**, **Controller**) e design **RESTful**.
 * Como gerar rapidamente as peças iniciais de uma aplicação Rails.
 
