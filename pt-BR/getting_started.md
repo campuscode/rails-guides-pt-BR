@@ -199,7 +199,7 @@ padrão. `therubyrhino` é o executor recomendado para usuários de JRuby e vem 
 `Gemfile` por padrão em aplicações geradas com JRuby. Você pode avaliar todos
 executores em [ExecJS](https://github.com/rails/execjs#readme).
 
-A execução do comando irá iniciar o Puma, um servidore web distribuído com o
+A execução do comando irá iniciar o Puma, um servidor web distribuído com o
 Rails por padrão. Para ver sua aplicação em execução, abra um navegador e
 navegue para <http://localhost:3000>.  Você deve ver a página padrão com informações do Rails:
 
