@@ -1,7 +1,7 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-*Active Record* Validações
+Validações do *Active Record*
 =========================
 
 Este guia te ensina a validar os estados dos objetos antes deles serem incluídos no
@@ -42,18 +42,18 @@ banco de dados. Por exemplo, pode ser importante para sua aplicação garantir
 que todo usuário forneça um endereço de e-mail e endereço de correspondência
 válidos. Validações de *model* são a melhor maneira de garantir que só
 dados válidos sejam salvos em seu banco de dados. Eles são bancos de dados
-agnóticos, não podem ser contornador por usuários, e são fáceis de manter e
+agnósticos, não podem ser contornados por usuários, e são fáceis de manter e
 de testar. Rails faz que elas sejam fáceis de usar, e fornece ajudantes
 *build-in* para necessidades comuns, e também permite que você crie seus
 próprios métodos de validação.
 
 Exitem outros modos de validar dados antes deles serem salvos no seu banco de
 dados, incluindo restrições nativas do banco de dados, validações no lado do
-cliente e valições no nível do *controller*. Este é um sumário dos prós
+cliente e validações no nível do *controller*. Este é um sumário dos prós
 e contras:
 
 * Restrições no banco de dados e/ou procedimentos armazenados tornam as validações
-  dependententes do banco de dados e podem tornar o processo de testar e a manutenção
+  dependentes do banco de dados e podem tornar o processo de testar e a manutenção
   mais difíceis. No entanto, se seu banco de dados é usado por outras aplicações, pode
   ser uma boa ideia usar algumas restrições diretamente no banco de dados. Adicionalmente,
   validações no nível de banco de dados são seguras para lidar com algumas coisas
@@ -103,7 +103,7 @@ $ rails console
 => false
 ```
 
-Criando e salvando um novo *record* irá mandar uma operação SQL de
+Ao criar e salvar um novo *record* será enviada uma operação SQL de
 `INSERT` para o seu banco de dados. Atualizando um registro
 existente irá mandar uma operação SQL de `UPDATE` no lugar.
 Validações são tipicamente realizadas antes que esses comandos sejam
@@ -135,7 +135,7 @@ e `create` retorna o objeto.
 ### Pulando Validações
 
 Os seguintes métodos pulam validações, e irão salvar o objeto no banco
-de dados independente da sua validez. Eles devem ser usados com cuidado.
+de dados independente da sua validade. Eles devem ser usados com cuidado.
 
 * `decrement!`
 * `decrement_counter`
@@ -216,7 +216,7 @@ end
 ```
 
 `invalid?` é simplesmente o inverso de `valid?`. Desencadeia suas validações e
-retornam `true` se algum erro for encontrado no objeto, e `false`
+retorna `true` se algum erro for encontrado no objeto, e `false`
 caso contrário.
 
 ### `errors[]`
@@ -927,21 +927,21 @@ end
 Person.new.valid?  # => TokenGenerationException: Token can't be blank
 ```
 
-Conditional Validation
+Validação com Condicional
 ----------------------
 
-Sometimes it will make sense to validate an object only when a given predicate
-is satisfied. You can do that by using the `:if` and `:unless` options, which
-can take a symbol, a `Proc` or an `Array`. You may use the `:if`
-option when you want to specify when the validation **should** happen. If you
-want to specify when the validation **should not** happen, then you may use the
-`:unless` option.
+Às vezes fará sentido validar um objeto apenas quando uma determinada condição for satisfeita.
+Você pode fazer isso usando `:if` e `:unless`, que podem ser usados como um *symbol*,
+uma `Proc` ou um `Array`. Você pode usar o `:if` quando quiser especificar quando uma
+validação **deve** ocorrer.
+Se você quiser especificar quando uma validação **não deve** ocorrer, você pode usar o `:unless`.
 
-### Using a Symbol with `:if` and `:unless`
 
-You can associate the `:if` and `:unless` options with a symbol corresponding
-to the name of a method that will get called right before validation happens.
-This is the most commonly used option.
+### Usando um *Symbol* com `:if` e `:unless`
+
+Você pode associar o `:if` e `:unless` com um *symbol* correspondente ao nome do método
+que será chamado logo antes da validação acontecer.
+Essa é a opção mais usada.
 
 ```ruby
 class Order < ApplicationRecord
@@ -953,12 +953,11 @@ class Order < ApplicationRecord
 end
 ```
 
-### Using a Proc with `:if` and `:unless`
+### Usando uma *Proc* com `:if` e `:unless`
 
-It is possible to associate `:if` and `:unless` with a `Proc` object
-which will be called. Using a `Proc` object gives you the ability to write an
-inline condition instead of a separate method. This option is best suited for
-one-liners.
+É possível associar `:if` e `:unless` com um objeto `Proc` que será chamado.
+O uso de um objeto `Proc` permite escrever uma condição em apenas uma linha
+ao invés de em um método separado.
 
 ```ruby
 class Account < ApplicationRecord
@@ -967,17 +966,16 @@ class Account < ApplicationRecord
 end
 ```
 
-As `Lambdas` are a type of `Proc`, they can also be used to write inline
-conditions in a shorter way.
+Como as `Lambdas` são tipos de `Proc`, elas também podem ser usadas para escrever condições em apenas uma linha de forma mais curta.
 
 ```ruby
 validates :password, confirmation: true, unless: -> { password.blank? }
 ```
 
-### Grouping Conditional validations
+### Agrupando Validações com Condicionais
 
-Sometimes it is useful to have multiple validations use one condition. It can
-be easily achieved using `with_options`.
+Às vezes, é útil ter várias validações usando a mesma condição.
+Isso pode ser feito facilmente usando  `with_options`.
 
 ```ruby
 class User < ApplicationRecord
@@ -988,14 +986,12 @@ class User < ApplicationRecord
 end
 ```
 
-All validations inside of the `with_options` block will have automatically
-passed the condition `if: :is_admin?`
+Todas as validações dentro do bloco `with_options` terão automaticamente passado a condição `if: :is_admin?`
 
-### Combining Validation Conditions
+### Combinando Validações com Condicionais
 
-On the other hand, when multiple conditions define whether or not a validation
-should happen, an `Array` can be used. Moreover, you can apply both `:if` and
-`:unless` to the same validation.
+Por outro lado, quando várias condições definem se uma validação deve ou não acontecer,
+podemos usar um `Array`. Além disso, você pode usar ambos `:if` e `:unless` para a mesma validação.
 
 ```ruby
 class Computer < ApplicationRecord
@@ -1005,8 +1001,8 @@ class Computer < ApplicationRecord
 end
 ```
 
-The validation only runs when all the `:if` conditions and none of the
-`:unless` conditions are evaluated to `true`.
+A validação é executada apenas quando todas as condições `:if`
+e nenhuma das condições `:unless` resultarem em `true`.
 
 Performing Custom Validations
 -----------------------------

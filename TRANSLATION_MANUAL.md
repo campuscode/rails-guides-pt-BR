@@ -50,6 +50,7 @@ os *cookies*.
 os *initializers*.
 os *generators*.
 o *middleware*.
+a *partial*.
 
 ### Algumas sugestões de tradução para termos específicos
 

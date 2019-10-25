@@ -327,6 +327,7 @@ class PeopleController < ApplicationController
 end
 ```
 
+
 ### O Shell
 
 Assim que sua aplicação chamar o método `byebug`, o *debugger* será
@@ -334,6 +335,7 @@ iniciado em um *debugger shell* do seu terminal onde você iniciou seu
 servidor da aplicação, e você será colocado no prompt do *debugger* `(byebug)`.
 Antes do prompt, o código ao redor da linha que está prestes a ser executada será
 exibido e a linha atual será marcada por '=>', assim:
+
 
 ```
 [1, 10] in /PathTo/project/app/controllers/articles_controller.rb
@@ -351,11 +353,13 @@ exibido e a linha atual será marcada por '=>', assim:
 (byebug)
 ```
 
+
 Se você chegou ali por uma requisição do navegador, a aba do navegador que contém a requisição
 ficará suspensa até que o *debugger* termine e que o rastreio tenha terminado
 o processamento da requisição inteira.
 
 Por exemplo:
+
 
 ```bash
 => Booting Puma
@@ -385,8 +389,10 @@ Processing by ArticlesController#index as HTML
 (byebug)
 ```
 
+
 Agora é hora de explorar sua aplicação. Um bom lugar para começar é
 pedindo ajuda ao *debugger*. Digite: `help`
+
 
 ```
 (byebug) help
@@ -432,7 +438,9 @@ pedindo ajuda ao *debugger*. Digite: `help`
 (byebug)
 ```
 
+
 Para ver as dez linhas anteriores, você deve digitar `list-` (ou `l-`).
+
 
 ```
 (byebug) l-
@@ -450,9 +458,11 @@ Para ver as dez linhas anteriores, você deve digitar `list-` (ou `l-`).
    10     respond_to do |format|
 ```
 
+
 Dessa forma, você pode mover-se dentro do arquivo e ver o código acima da linha em que
 adicionou a chamada `byebug`. Finalmente, para ver onde você está no código novamente, você pode
 digitar `list=`
+
 
 ```
 (byebug) list=
