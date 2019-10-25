@@ -59,18 +59,16 @@ to:
 * Validate models before they get persisted to the database.
 * Perform database operations in an object-oriented fashion.
 
-Convention over Configuration in Active Record
+Convenção sobre Configuração no Active Record
 ----------------------------------------------
-
-When writing applications using other programming languages or frameworks, it
-may be necessary to write a lot of configuration code. This is particularly true
-for ORM frameworks in general. However, if you follow the conventions adopted by
-Rails, you'll need to write very little configuration (in some cases no
-configuration at all) when creating Active Record models. The idea is that if
-you configure your applications in the very same way most of the time then this
-should be the default way. Thus, explicit configuration would be needed
-only in those cases where you can't follow the standard convention.
-
+Ao escrever aplicações usando outras linguagens de programação ou estruturas,
+talvez seja necessário escrever muito código de configuração. Isto é particularmente
+verdade para estrutura ORM em geral. No entanto, se você seguir as convenções 
+adotadas do Rails, você precisará escrever pouquíssima configuração(em alguns casos,
+nenhuma configuração) ao criar *models* no *Active Record*. A idéia é que se você configura
+suas aplicações da mesma maneira na maioria das vezes, então este deve ser o caminho padrão.
+Assim, seria necessária uma configuração explícita somente nos casos onde você não pode seguir
+a convenção padrão.
 ### Naming Conventions
 
 By default, Active Record uses some naming conventions to find out how the
