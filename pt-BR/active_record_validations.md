@@ -288,7 +288,7 @@ opção `:message` não é especificada. Vamos dar uma olhada em cada um dos
 
 Esse método valida se um *checkbox* em uma interface de usuário foi marcada
 quando um formulário foi submetido. Tipicamente isso é utilizado quando o
-usuário necessita de concordar com os termos de serviço de sua aplicação,
+usuário necessita concordar com os termos de serviço de sua aplicação,
 confirmar que algum texto foi lido, ou qualquer conceito similar.
 
 ```ruby
