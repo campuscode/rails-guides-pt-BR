@@ -445,7 +445,7 @@ end
 ```
 
 O *helper* de `inclusion` tem a opção `:in` que recebe uma coleção de valores
-que não serão aceitas para os atributos validados. A opção `:in` tem um atalho
+que serão aceitas para os atributos validados. A opção `:in` tem um atalho
 chamado `:within` que pode ser utilizado para o mesmo propósito, caso queira.
 Esse exemplo usa a opção `:message` para mostrar como você pode incluir o valor
 do atributo na mensagem de erro. Para uma lista completa das opções do argumento
