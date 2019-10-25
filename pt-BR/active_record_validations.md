@@ -498,7 +498,7 @@ disponibilizar ou uma mensagem personalizada ou usar `presence` antes do
 
 ### `numericality`
 
-Esse *helper* válida se seus atributos contém somente valores numéricos. Por
+Esse *helper* valida se seus atributos contém somente valores numéricos. Por
 padrão, ele vai corresponder um símbolo opcional seguido de um inteiro ou um
 número decimal. Para especificar que somente números inteiros são permitidos
 mude `:only_integer` para verdadeiro.
