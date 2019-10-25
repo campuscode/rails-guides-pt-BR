@@ -396,7 +396,7 @@ A mensagem padrão de erro para esse *helper* é _"doesn't match confirmation"_.
 
 ### `exclusion`
 
-Esse *helper* valida os atributos que não estão incluídos dada uma coleção. Na
+Esse *helper* valida os atributos que não estão incluídos em uma coleção. Na
 verdade, essa coleção pode ser qualquer objeto enumerável.
 
 ```ruby
