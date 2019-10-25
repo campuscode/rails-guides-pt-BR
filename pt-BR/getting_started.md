@@ -1853,26 +1853,26 @@ Primeiro, vamos adicionar o link *delete* na *partial*
 
 ```html+erb
 <p>
-  <strong>Commenter:</strong>
+  <strong>Autor do comentário:</strong>
   <%= comment.commenter %>
 </p>
 
 <p>
-  <strong>Comment:</strong>
+  <strong>Comentário:</strong>
   <%= comment.body %>
 </p>
 
 <p>
-  <%= link_to 'Destroy Comment', [comment.article, comment],
+  <%= link_to 'Destruir comentário', [comment.article, comment],
                method: :delete,
-               data: { confirm: 'Are you sure?' } %>
+               data: { confirm: 'Você tem certeza?' } %>
 </p>
 ```
 
-Clicking this new "Destroy Comment" link will fire off a `DELETE
-/articles/:article_id/comments/:id` to our `CommentsController`, which can then
-use this to find the comment we want to delete, so let's add a `destroy` action
-to our controller (`app/controllers/comments_controller.rb`):
+Clicar neste novo link "Destruir comentário" disparará um `DELETE
+/articles/:article_id/comments/:id` ao nosso `CommentsController`, que
+pode ser usar isso para encontrar o comentário que queremos excluir, então vamos adicionar
+uma ação `destroy` ao nosso *controller* (`app/controllers/comments_controller.rb`):
 
 ```ruby
 class CommentsController < ApplicationController
@@ -1896,17 +1896,17 @@ class CommentsController < ApplicationController
 end
 ```
 
-The `destroy` action will find the article we are looking at, locate the comment
-within the `@article.comments` collection, and then remove it from the
-database and send us back to the show action for the article.
+A *action* `destroy` encontrará o artigo que estamos vendo, localizará o comentário
+na coleção `@article.comments` e irá removelo do
+banco de dados e nos enviar de volta à ação `show` do artigo (*article*).
 
 
-### Deleting Associated Objects
+### Excluindo objetos associados
 
-If you delete an article, its associated comments will also need to be
-deleted, otherwise they would simply occupy space in the database. Rails allows
-you to use the `dependent` option of an association to achieve this. Modify the
-Article model, `app/models/article.rb`, as follows:
+Se você excluir um artigo, os comentários (comments) associados também precisarão ser
+excluídos, caso contrário, eles simplesmente ocupariam espaço no banco de dados.
+O Rails permite que você use a opção `dependent` de uma associação para conseguir isso.
+Modifique o Modelo de artigo (article), `app/models/article.rb`, da seguinte forma:
 
 ```ruby
 class Article < ApplicationRecord
