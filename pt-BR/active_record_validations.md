@@ -4,7 +4,7 @@
 *Active Record* Validações
 =========================
 
-Este guia te ensina a validar os estados dos objetos antes deles serem incluídos no 
+Este guia te ensina a validar os estados dos objetos antes deles serem incluídos no
 banco de dados usando as validações do *Active Record*.
 
 Depois de ler este guia, você saberá:
@@ -43,27 +43,27 @@ que todo usuário forneça um endereço de e-mail e endereço de correspondênci
 válidos. Validações de *model* são a melhor maneira de garantir que só
 dados válidos sejam salvos em seu banco de dados. Eles são bancos de dados
 agnóticos, não podem ser contornador por usuários, e são fáceis de manter e
-de testar. Rails faz que elas sejam fáceis de usar, e fornece ajudantes 
-*build-in* para necessidades comuns, e também permite que você crie seus 
+de testar. Rails faz que elas sejam fáceis de usar, e fornece ajudantes
+*build-in* para necessidades comuns, e também permite que você crie seus
 próprios métodos de validação.
 
 Exitem outros modos de validar dados antes deles serem salvos no seu banco de
-dados, incluindo restrições nativas do banco de dados, validações no lado do 
+dados, incluindo restrições nativas do banco de dados, validações no lado do
 cliente e valições no nível do *controller*. Este é um sumário dos prós
 e contras:
 
 * Restrições no banco de dados e/ou procedimentos armazenados tornam as validações
-  dependententes do banco de dados e podem tornar o processo de testar e a manutenção 
-  mais difíceis. No entanto, se seu banco de dados é usado por outras aplicações, pode 
-  ser uma boa ideia usar algumas restrições diretamente no banco de dados. Adicionalmente, 
+  dependententes do banco de dados e podem tornar o processo de testar e a manutenção
+  mais difíceis. No entanto, se seu banco de dados é usado por outras aplicações, pode
+  ser uma boa ideia usar algumas restrições diretamente no banco de dados. Adicionalmente,
   validações no nível de banco de dados são seguras para lidar com algumas coisas
   (como singularidade em tabelas muito utilizadas) que seriam difíceis de
   implementar de outra forma.
-* Validações no lado do cliente são úteis, mas no geral não são seguras quando 
+* Validações no lado do cliente são úteis, mas no geral não são seguras quando
   utilizadas sozinhas. Se elas forem implementadas usando JavaScript, elas podem
   ser contornadas se o JavaScript estiver desligado no navegador do usuário. No
   entanto se forem combinadas com outras técnicas, essas validações podem ser um
-  método mais conveniente de fornecer ao usuário um retorno imediato enquanto 
+  método mais conveniente de fornecer ao usuário um retorno imediato enquanto
   eles navegam no seu site.
 * Utilizar validações no nível do *controller* pode ser tentador,
   mas frequentemente se tornam pesadas e de manutenção e testagem difíceis. Sempre
@@ -82,7 +82,7 @@ banco de dados. Uma vez que você chame o `save` sob esse objeto ele será salvo
 tabela apropriada no seu banco de dados. O *Active Record* usa o método de
 instância `new_record?` para determinar se o objeto já existe no banco de dados ou
 não.
-Considere a seguinte classe do *Active Record*: 
+Considere a seguinte classe do *Active Record*:
 
 ```ruby
 class Person < ApplicationRecord
@@ -103,23 +103,23 @@ $ rails console
 => false
 ```
 
-Criando e salvando um novo *record* irá mandar uma operação SQL de 
-`INSERT` para o seu banco de dados. Atualizando um registro 
-existente irá mandar uma operação SQL de `UPDATE` no lugar. 
-Validações são tipicamente realizadas antes que esses comandos sejam 
+Criando e salvando um novo *record* irá mandar uma operação SQL de
+`INSERT` para o seu banco de dados. Atualizando um registro
+existente irá mandar uma operação SQL de `UPDATE` no lugar.
+Validações são tipicamente realizadas antes que esses comandos sejam
 enviados para seu banco de dados. Se alguma validação falhar, o objeto será
 marcados como inválido e o *Active Record* não irá executar as
 operações de `INSERT` ou `UPDATE`. Isso evita que um dado
 inválido seja armazenado no banco de dados. Você pode escolher validações
-específicas que atuem quando um objeto for criado, salvo, ou editado. 
+específicas que atuem quando um objeto for criado, salvo, ou editado.
 
 ADVERTÊNCIA: Existem muitos modos de alterar o estado de um objeto no banco
 de dados. Alguns métodos irão acionar validações, mas alguns não vão. Isso
 significa que é possível salvar um objeto inválido no banco de dados se você
 não tomar cuidado.
 
-Os métodos a seguir acionam validações e só vão salvar objetos que 
-forem válidos no banco de dados: 
+Os métodos a seguir acionam validações e só vão salvar objetos que
+forem válidos no banco de dados:
 
 * `create`
 * `create!`
@@ -128,13 +128,13 @@ forem válidos no banco de dados:
 * `update`
 * `update!`
 
-As versões *bang* (ex: `save!`) levantam uma exceção se o objeto for 
+As versões *bang* (ex: `save!`) levantam uma exceção se o objeto for
 inválido. As versões normais não fazem isso: `save` e `update` retornam `false`,
 e `create` retorna o objeto.
 
 ### Pulando Validações
 
-Os seguintes métodos pulam validações, e irão salvar o objeto no banco 
+Os seguintes métodos pulam validações, e irão salvar o objeto no banco
 de dados independente da sua validez. Eles devem ser usados com cuidado.
 
 * `decrement!`
@@ -149,7 +149,7 @@ de dados independente da sua validez. Eles devem ser usados com cuidado.
 * `update_columns`
 * `update_counters`
 
-Note que `save` também tem a habilidade de pular validações se for 
+Note que `save` também tem a habilidade de pular validações se for
 estabelecido `validate: false` como argumento. Essa técnica deve ser
 usada com cuidado.
 
@@ -161,8 +161,8 @@ Antes de salvar um objeto do *Active Record*, Rails executa suas
 validações. Se essas validações produzirem um erro, o Rails não salva
 o objeto.
 
-Você também pode executar essas validações por si só. `valid?` ativa suas validações, 
-retornando `true`, se nenhum erro for encontrado no objeto, ou `false`, 
+Você também pode executar essas validações por si só. `valid?` ativa suas validações,
+retornando `true`, se nenhum erro for encontrado no objeto, ou `false`,
 caso contrário.
 Como dito acima:
 
@@ -177,12 +177,12 @@ Person.create(name: nil).valid? # => false
 
 Depois do *Active Record* executar as validações, qualquer erro encontrado
 pode ser acessado através do método de instância `errors.messages`, que
-retorna uma coleção de erros. Por definição, um objeto é válido se essa coleção 
+retorna uma coleção de erros. Por definição, um objeto é válido se essa coleção
 estiver vazia após serem executadas as validações.
 
-Note que um objeto instanciado com `new` não informará nenhum erro mesmo que 
+Note que um objeto instanciado com `new` não informará nenhum erro mesmo que
 ele seja tecnicamente inválido, porque as validações são executadas automaticamente
-apenas quando o objeto é salvo, como acontece com os métodos `create` 
+apenas quando o objeto é salvo, como acontece com os métodos `create`
 ou `save`.
 
 ```ruby
@@ -216,20 +216,20 @@ end
 ```
 
 `invalid?` é simplesmente o inverso de `valid?`. Desencadeia suas validações e
-retornam `true` se algum erro for encontrado no objeto, e `false` 
+retornam `true` se algum erro for encontrado no objeto, e `false`
 caso contrário.
 
 ### `errors[]`
 
-Para verificar se um determinado atributo de um objeto é válido, você pode 
-usar `errors[:attribute]`. Isso retorna um *array* com todos os 
-erros para o `:attribute`. Se não houver nenhum erro para o atributo 
+Para verificar se um determinado atributo de um objeto é válido, você pode
+usar `errors[:attribute]`. Isso retorna um *array* com todos os
+erros para o `:attribute`. Se não houver nenhum erro para o atributo
 especificado, um *array* vazio é exibido.
 
-Esse método só é útil **após** as validações terem sido executadas, porque ele só 
-inspeciona as coleções de erros e não aciona nenhuma validação em si. É 
-diferente do método `ActiveRecord::Base#invalid?` explicado acima porque 
-não verifica ao todo se um objeto é válido. Apenas verifica se existem 
+Esse método só é útil **após** as validações terem sido executadas, porque ele só
+inspeciona as coleções de erros e não aciona nenhuma validação em si. É
+diferente do método `ActiveRecord::Base#invalid?` explicado acima porque
+não verifica ao todo se um objeto é válido. Apenas verifica se existem
 erros em um determinado atributo do objeto.
 
 ```ruby
@@ -241,12 +241,12 @@ end
 >> Person.create.errors[:name].any? # => true
 ```
 
-Nós vamos cobrir os erros das validações em maior detalhe na seção [Trabalhando com 
+Nós vamos cobrir os erros das validações em maior detalhe na seção [Trabalhando com
 Erros de Validações](#trabalhando-com-erros-de-validações).
 
 ### `errors.details`
 
-Para checar quais validações falharam em um atributo inválido, você pode usar 
+Para checar quais validações falharam em um atributo inválido, você pode usar
 `errors.details[:attribute]`. Isso retorna um *array* de *hashes*
 com uma chave `:error` para conseguir o símbolo do validador:
 
@@ -260,7 +260,7 @@ end
 >> person.errors.details[:name] # => [{error: :blank}]
 ```
 
-O uso de `details` juntamente com validadores é tratado na seção 
+O uso de `details` juntamente com validadores é tratado na seção
 [Trabalhando com Erros de Validações](#trabalhando-com-erros-de-validações).
 
 Validation Helpers
@@ -498,10 +498,10 @@ disponibilizar ou uma mensagem personalizada ou usar `presence` antes do
 
 ### `numericality`
 
-Esse *helper* valida se seus atributos contém somente valores numéricos. Por
-padrão, ele vai corresponder um símbolo opcional seguido de um inteiro ou um
-número decimal. Para especificar que somente números inteiros são permitidos
-mude `:only_integer` para verdadeiro.
+Esse *helper* válida se seus atributos contém somente valores numéricos. Por
+padrão, ele vai corresponder um número inteiro ou decimal precedido de um sinal
+opcional de negativo ou positivo (+ ou -). Para especificar que somente números
+inteiros são permitidos mude `:only_integer` para verdadeiro.
 
 Se você mudar `:only_integer` para `verdadeiro`, então ele vai usar
 
@@ -536,9 +536,9 @@ adicionar restrições aos valores aceitáveis:
   equal to %{count}"_.
 * `:other_than` - Especifica que o valor deve ser diferente que o valor
   informado. A mensagem padrão para esse erro é _"must be other than %{count}"_.
-* `:odd` - Especifica que o valor deve ser ímpar se colocado como verdadeiro.
+* `:odd` - Especifica que o valor deve ser ímpar se definido como verdadeiro.
   A mensagem padrão para esse erro é _"must be odd"_.
-* `:even` - Especifica que o valor deve ser par se colocado como verdadeiro. A
+* `:even` - Especifica que o valor deve ser par se definido como verdadeiro. A
   mensagem padrão para esse erro é _"must be even"_.
 
 NOTA: Por padrão, `numericality` não permite valores `nil`. Você pode utilizar
@@ -768,11 +768,6 @@ end
 ```
 
 ### `validates_each`
-
-This helper validates attributes against a block. It doesn't have a predefined
-validation function. You should create one using a block, and every attribute
-passed to `validates_each` will be tested against it. In the following example,
-we don't want names and surnames to begin with lower case.
 
 Este *helper* valida atributos em relação a um bloco. Não possui uma função de
 validação predefinida. Você deve criar um usando um bloco, e todos os atributos
