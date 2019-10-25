@@ -1,39 +1,38 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Getting Started with Rails
-==========================
+Começando com Rails
+===================
 
-This guide covers getting up and running with Ruby on Rails.
+Este guia aborda a instalação e a execução do Ruby on Rails.
 
-After reading this guide, you will know:
+Depois de ler este guia, você vai saber:
 
-* How to install Rails, create a new Rails application, and connect your
-  application to a database.
-* The general layout of a Rails application.
-* The basic principles of MVC (Model, View, Controller) and RESTful design.
-* How to quickly generate the starting pieces of a Rails application.
+* Como instalar o Rails, criar uma nova aplicação Rails e conectar sua
+  aplicação com um banco de dados.
+* A estrutura geral de uma aplicação Rails.
+* Os princípios básicos do MVC (**Model**, **View**, **Controller**) e design **RESTful**.
+* Como gerar rapidamente as peças iniciais de uma aplicação Rails.
 
 --------------------------------------------------------------------------------
 
-Guide Assumptions
+Premissas do Guia
 -----------------
 
-This guide is designed for beginners who want to get started with a Rails
-application from scratch. It does not assume that you have any prior experience
-with Rails.
+Este guia é projetado para iniciantes que desejam começar uma aplicação Rails do
+zero. Ela não assume que você tenha nenhuma experiência anterior com Rails.
 
-Rails is a web application framework running on the Ruby programming language.
-If you have no prior experience with Ruby, you will find a very steep learning
-curve diving straight into Rails. There are several curated lists of online resources
-for learning Ruby:
+Rails é um framework para aplicações web que é executado em cima da linguagem
+de programação Ruby. Se você não tem nenhuma experiência com Ruby, você vai
+achar a curva de aprendizado bastante íngrime começando direto com Rails.
+Existem diversas listas organizadas de materiais online para aprender Ruby:
 
-* [Official Ruby Programming Language website](https://www.ruby-lang.org/en/documentation/)
-* [List of Free Programming Books](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
+* [Site Oficial da Linguagem de Programação Ruby](https://www.ruby-lang.org/en/documentation/)
+* [Lista de Livros Grátis de Programação](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
 
-Be aware that some resources, while still excellent, cover versions of Ruby as old as
-1.6, and commonly 1.8, and will not include some syntax that you will see in day-to-day
-development with Rails.
+Fique atento que alguns materiais, apesar de excelentes, envolvem versões antigas
+do Ruby chegando a 1.6, e frequentemente 1.8, e não incluem parte da sintaxe que você
+vai ver no seu dia-a-dia desenvolvendo com Rails.
 
 O que é o Rails?
 --------------
@@ -173,77 +172,77 @@ que o Rails gerou por padrão:
 |.gitignore|Este arquivo diz ao Git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.
 |.ruby-version|Este arquivo contém a versão padrão do Ruby.|
 
-Hello, Rails!
--------------
+Olá, Rails!
+-----------
 
-To begin with, let's get some text up on screen quickly. To do this, you need to
-get your Rails application server running.
+Para começar vamos colocar um texto na tela rapidamente. Para fazer isso, você
+precisa que seu servidor de aplicação Rails esteja em execução.
 
-### Starting up the Web Server
+### Inicializando o Servidor Web
 
-You actually have a functional Rails application already. To see it, you need to
-start a web server on your development machine. You can do this by running the
-following in the `blog` directory:
+Você já tem uma aplicação Rails funcional. Para vê-la você deve iniciar um
+servidor web em sua máquina de desenvolvimento. Você pode fazer isso executando
+o seguinte comando no diretório `blog`:
 
 ```bash
 $ rails server
 ```
 
-TIP: If you are using Windows, you have to pass the scripts under the `bin`
-folder directly to the Ruby interpreter e.g. `ruby bin\rails server`.
+TIP: Se você está usando Windows, deve executar os scripts do diretório
+`bin` para o interpretador do Ruby: `ruby bin\rails server`.
 
-TIP: JavaScript asset compression requires you
-have a JavaScript runtime available on your system, in the absence
-of a runtime you will see an `execjs` error during asset compilation.
-Usually macOS and Windows come with a JavaScript runtime installed.
-`therubyrhino` is the recommended runtime for JRuby users and is added by
-default to the `Gemfile` in apps generated under JRuby. You can investigate
-all the supported runtimes at [ExecJS](https://github.com/rails/execjs#readme).
+TIP: A compressão de *assets* JavaScript requer que você tenha um executor
+disponível em seu sistema operacional. Na ausência de um executor você verá um
+erro de `execjs` durante a compilação dos *assets*. Geralmente o macOS e o Windows possuem um executor JavaScript instalado por
+padrão. `therubyrhino` é o executor recomendado para usuários de JRuby e vem no
+`Gemfile` por padrão em aplicações geradas com JRuby. Você pode avaliar todos
+executores em [ExecJS](https://github.com/rails/execjs#readme).
 
-This will fire up Puma, a web server distributed with Rails by default. To see
-your application in action, open a browser window and navigate to
-<http://localhost:3000>. You should see the Rails default information page:
+A execução do comando irá iniciar o Puma, um servidor web distribuído com o
+Rails por padrão. Para ver sua aplicação em execução, abra um navegador e
+navegue para <http://localhost:3000>.  Você deve ver a página padrão com informações do Rails:
 
-![Welcome aboard screenshot](images/getting_started/rails_welcome.png)
+![Captura de tela de boas vindas do Rails](images/getting_started/rails_welcome.png)
 
-TIP: To stop the web server, hit Ctrl+C in the terminal window where it's
-running. To verify the server has stopped you should see your command prompt
-cursor again. For most UNIX-like systems including macOS this will be a
-dollar sign `$`. In development mode, Rails does not generally require you to
-restart the server; changes you make in files will be automatically picked up by
-the server.
+TIP: Para interromper a execução do servidor Web, pressione Ctrl+C na janela do
+terminal em que o servidor está sendo executado. Para verificar se o servidor
+realmente foi interrompido, você deve ver o cursor do `prompt` novamente. Para a
+maioria dos sistemas baseados em UNIX, incluindo o macOS, o cursor é
+representando por um sinal de `$`. Em modo de desenvolvimento, o Rails
+geralmente não exige que você reinicie o servidor; mudanças feitas nos arquivos
+da aplicaçnao serão automaticamente aplicadas no servidor.
 
-The "Welcome aboard" page is the _smoke test_ for a new Rails application: it
-makes sure that you have your software configured correctly enough to serve a
-page.
+A página de "Boas vindas a bordo" é o _smoke test_ (teste de sanidade) para uma
+nova aplicação Rails: garante que o seu software esteja configurado
+corretamente, o suficiente para gerar uma página.
 
-### Say "Hello", Rails
+### Diga "Olá", Rails
 
-To get Rails saying "Hello", you need to create at minimum a _controller_ and a
+Para que o Rails diga "Olá", você precisa criar no mínimo um _controller_ e uma
 _view_.
 
-A controller's purpose is to receive specific requests for the application.
-_Routing_ decides which controller receives which requests. Often, there is more
-than one route to each controller, and different routes can be served by
-different _actions_. Each action's purpose is to collect information to provide
-it to a view.
+O objetivo de um _controller_ é receber requisições específicas para a
+aplicação. O _Routing_ (roteamento) decide qual _controller_ recebe quais
+requisições. Muitas vezes, há mais de uma rota para cada _controller_, e
+diferentes rotas podem ser providas por diferentes _actions_. O objetivo de cada
+_action_ é coletar informações para fornecer para uma _view_.
 
-A view's purpose is to display this information in a human readable format. An
-important distinction to make is that it is the _controller_, not the view,
-where information is collected. The view should just display that information.
-By default, view templates are written in a language called eRuby (Embedded
-Ruby) which is processed by the request cycle in Rails before being sent to the
-user.
+O objetivo de uma _view_ é exibir essas informações em um formato legível para
+humanos. Uma diferença importante a ser feita é que é no _controller_, não na
+_view_, onde as informações são coletadas. A _view_ deve apenas exibir essas
+informações. Por padrão, os _templates_ de _view_ são escritos em uma linguagem
+chamada eRuby (_Embedded Ruby_) que é processada pelo ciclo da requisição no
+Rail antes de ser enviada para o usuário.
 
-To create a new controller, you will need to run the "controller" generator and
-tell it you want a controller called "Welcome" with an action called "index",
-just like this:
+Para criar um novo _controller_, você precisará executar o gerador de
+_controller_ e informar que você deseja um _controller_ chamado "Welcome"
+com uma _action_ chamada "index", exatamente assim:
 
 ```bash
 $ rails generate controller Welcome index
 ```
 
-Rails will create several files and a route for you.
+O Rails criará vários arquivos e uma rota para você.
 
 ```bash
 create  app/controllers/welcome_controller.rb
@@ -261,28 +260,28 @@ invoke    scss
 create      app/assets/stylesheets/welcome.scss
 ```
 
-Most important of these are of course the controller, located at
-`app/controllers/welcome_controller.rb` and the view, located at
+Os mais importantes são, certamente, o _controller_, localizado em
+`app/controllers/welcome_controller.rb` e a _view_, localizada em
 `app/views/welcome/index.html.erb`.
 
-Open the `app/views/welcome/index.html.erb` file in your text editor. Delete all
-of the existing code in the file, and replace it with the following single line
-of code:
+Abra o arquivo `app/views/welcome/index.html.erb` em seu editor de texto. Exclua
+todo o código existente no arquivo e substitua pela linha de código abaixo:
 
 ```html
-<h1>Hello, Rails!</h1>
+<h1>Olá, Rails!</h1>
 ```
 
-### Setting the Application Home Page
+### Configuração da Página Inicial da Aplicação
 
-Now that we have made the controller and view, we need to tell Rails when we
-want "Hello, Rails!" to show up. In our case, we want it to show up when we
-navigate to the root URL of our site, <http://localhost:3000>. At the moment,
-"Welcome aboard" is occupying that spot.
+Agora que criamos o _controller_ e a _view_, precisamos informar ao Rails quando
+queremos que "Olá, Rails" seja exibido. No nosso caso, queremos que seja exibido
+quando navegarmos para a URL raiz de nosso site, <http://localhost:3000>. No
+momento, "Boas vindas a bordo" é que está preenchendo esse lugar.
 
-Next, you have to tell Rails where your actual home page is located.
+Em seguida, você deve informar ao Rails onde está localizada a sua página
+inicial.
 
-Open the file `config/routes.rb` in your editor.
+Abra o arquivo `config/routes.rb` em seu editor de texto.
 
 ```ruby
 Rails.application.routes.draw do
@@ -292,12 +291,13 @@ Rails.application.routes.draw do
 end
 ```
 
-This is your application's _routing file_ which holds entries in a special
-[DSL (domain-specific language)](https://en.wikipedia.org/wiki/Domain-specific_language)
-that tells Rails how to connect incoming requests to
-controllers and actions.
-Edit this file by adding the line of code `root 'welcome#index'`.
-It should look something like the following:
+Este é o arquivo _routing_ (roteamento) da sua aplicação que contém
+as entradas em um
+[DSL (domain-specific language)](https://en.wikipedia.org/wiki/Domain-specific_language) especial
+que informa ao Rails como conectar requisições de entrada com _controllers_ e
+_actions_.
+Edite este arquivo adicionando a linha de código `root 'welcome#index'`.
+Deve ser algo parecido com o seguinte:
 
 ```ruby
 Rails.application.routes.draw do
@@ -307,35 +307,31 @@ Rails.application.routes.draw do
 end
 ```
 
-`root 'welcome#index'` tells Rails to map requests to the root of the
-application to the welcome controller's index action and `get 'welcome/index'`
-tells Rails to map requests to <http://localhost:3000/welcome/index> to the
-welcome controller's index action. This was created earlier when you ran the
-controller generator (`rails generate controller Welcome index`).
+`root 'welcome#index'` informa ao Rails para mapear as requisições para a raiz
+da aplicação para o _controller_ "welcome", _action_ "index" e `get
+'welcome/index'` informa ao Rails para mapear as requisições para
+<http://localhost:3000/welcome/index> para o _controller_ "welcome", _action_
+"index". Isso foi criado anteriormente quando você executou o gerador de
+_controller_ (`rails generate controller Welcome index`).
 
-Launch the web server again if you stopped it to generate the controller (`rails
-server`) and navigate to <http://localhost:3000> in your browser. You'll see the
-"Hello, Rails!" message you put into `app/views/welcome/index.html.erb`,
-indicating that this new route is indeed going to `WelcomeController`'s `index`
-action and is rendering the view correctly.
+Inicie o servidor *web* novamente se você o interrompeu para gerar o _controller_
+(`rails server`) e navegue até <http://localhost:3000> no seu navegador. Você
+verá a mensagem "Olá, Rails!", a mesma que você colocou em
+`app/views/welcome/index.html.erb`, indicando que essa nova rota de fato vai
+para a _action_ `index` de `WelcomeController` e está renderizando a _view_
+corretamente.
 
-TIP: For more information about routing, refer to [Rails Routing from the Outside In](routing.html).
+TIP: Para mais informações sobre roteamento, consulte [Roteamento do Rails de Fora para Dentro](routing.html).
 
-Getting Up and Running
+Iniciando e Executando
 ----------------------
 
-Now that you've seen how to create a controller, an action, and a view, let's
-create something with a bit more substance.
+Agora que você já viu como criar um *controller*, uma *action*, e uma *view*, vamos criar algo um pouco mais relevante.
 
-In the Blog application, you will now create a new _resource_. A resource is the
-term used for a collection of similar objects, such as articles, people, or
-animals.
-You can create, read, update, and destroy items for a resource and these
-operations are referred to as _CRUD_ operations.
+Na aplicação do Blog você irá criar um novo *resource*. *Resource* é um termo utilizado para uma coleção de objetos similares, como artigos, pessoas ou animais.
+Você pode criar, visualizar, editar e deletar dados de um *resource* e essas ações são definidas como operações *CRUD*.
 
-Rails provides a `resources` method which can be used to declare a standard REST
-resource. You need to add the _article resource_ to the
-`config/routes.rb` so the file will look as follows:
+O Rails te fornece um método `resources` que pode ser usado para declarar um recurso padrão *REST*. Você precisa adicionar o *article resource* no `config/routes.rb` e o arquivo ficará como a seguir:
 
 ```ruby
 Rails.application.routes.draw do
@@ -347,10 +343,8 @@ Rails.application.routes.draw do
 end
 ```
 
-If you run `rails routes`, you'll see that it has defined routes for all the
-standard RESTful actions.  The meaning of the prefix column (and other columns)
-will be seen later, but for now notice that Rails has inferred the
-singular form `article` and makes meaningful use of the distinction.
+Se você executar `rails routes`, você verá que foram definidas rotas para todas as *actions* padrão *RESTful*.
+O significado do prefixo da coluna (e de outras colunas) será visto mais adiante, mas por enquanto, observe que o Rails entende `article` de forma singular e faz o uso significativo da distinção.
 
 ```bash
 $ rails routes
@@ -367,65 +361,44 @@ welcome_index GET    /welcome/index(.:format)     welcome#index
          root GET    /                            welcome#index
 ```
 
-In the next section, you will add the ability to create new articles in your
-application and be able to view them. This is the "C" and the "R" from CRUD:
-create and read. The form for doing this will look like this:
+Na próxima seção, você adicionará a funcionalidade para criar e visualizar novos artigos em sua aplicação. Este é o "C" e o "R" do *CRUD*: *create* (criação) e *read* (leitura). O formulário para fazer isso ficará assim:
 
 ![The new article form](images/getting_started/new_article.png)
 
-It will look a little basic for now, but that's ok. We'll look at improving the
-styling for it afterwards.
+Por enquanto está um pouco simples, mas tudo bem. Nós iremos melhorar o estilo mais adiante.
 
-### Laying down the groundwork
+### Preparando a base
 
-Firstly, you need a place within the application to create a new article. A
-great place for that would be at `/articles/new`. With the route already
-defined, requests can now be made to `/articles/new` in the application.
-Navigate to <http://localhost:3000/articles/new> and you'll see a routing
-error:
+Primeiramente, você precisa de um lugar na aplicação para criar um novo artigo. Um ótimo lugar seria em `/articles/new`. Com a rota já definida, agora é possível fazer requisições para `/articles/new` na aplicação. Acesse <http://localhost:3000/articles/new> e você verá um erro de rota:
 
 ![Another routing error, uninitialized constant ArticlesController](images/getting_started/routing_error_no_controller.png)
 
-This error occurs because the route needs to have a controller defined in order
-to serve the request. The solution to this particular problem is simple: create
-a controller called `ArticlesController`. You can do this by running this
-command:
+Este erro ocorre porque a rota precisa ter um *controller* definido para atender à requisição. A solução para esse problema específico é simples: crie um *controller* chamado `ArticlesController`. Você pode fazer isso executando este comando:
 
 ```bash
 $ rails generate controller Articles
 ```
 
-If you open up the newly generated `app/controllers/articles_controller.rb`
-you'll see a fairly empty controller:
+Se você abrir o recém-criado `app/controllers/articles_controller.rb`
+verá um *controller* vazio:
 
 ```ruby
 class ArticlesController < ApplicationController
 end
 ```
 
-A controller is simply a class that is defined to inherit from
-`ApplicationController`.
-It's inside this class that you'll define methods that will become the actions
-for this controller. These actions will perform CRUD operations on the articles
-within our system.
+Um *controller* é uma classe definida para herdar de `ApplicationController`.
+É dentro dessa classe que você define os métodos que se tornarão as ações desse *controller*. Essas ações executarão operações *CRUD* nos artigos em nosso sistema.
 
-NOTE: There are `public`, `private` and `protected` methods in Ruby,
-but only `public` methods can be actions for controllers.
-For more details check out [Programming Ruby](http://www.ruby-doc.org/docs/ProgrammingRuby/).
+NOTE: Existem métodos `public`, `private` e `protected` no Ruby, mas apenas métodos `public` podem ser ações nos *controllers*. Para mais detalhes, consulte  [Programação Ruby](http://www.ruby-doc.org/docs/ProgrammingRuby/).
 
-If you refresh <http://localhost:3000/articles/new> now, you'll get a new error:
+Se você atualizar <http://localhost:3000/articles/new> agora, receberá um novo erro:
 
 ![Unknown action new for ArticlesController!](images/getting_started/unknown_action_new_for_articles.png)
 
-This error indicates that Rails cannot find the `new` action inside the
-`ArticlesController` that you just generated. This is because when controllers
-are generated in Rails they are empty by default, unless you tell it
-your desired actions during the generation process.
+Este erro indica que o Rails não consegue encontrar a ação `new` dentro do `ArticlesController` que você acabou de gerar. Isso ocorre porque quando os *controllers* são gerados no Rails, eles estão vazios por padrão, a menos que você diga as ações que deseja durante o processo de geração.
 
-To manually define an action inside a controller, all you need to do is to
-define a new method inside the controller. Open
-`app/controllers/articles_controller.rb` and inside the `ArticlesController`
-class, define the `new` method so that your controller now looks like this:
+Para definir manualmente uma ação dentro de um *controller*, tudo o que você precisa fazer é definir um novo método dentro do *controller*. Abra `app/controllers/articles_controller.rb` e, dentro da classe `ArticlesController`, defina o método `new` para que agora seu *controller* fique assim:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -434,57 +407,36 @@ class ArticlesController < ApplicationController
 end
 ```
 
-With the `new` method defined in `ArticlesController`, if you refresh
-<http://localhost:3000/articles/new> you'll see another error:
+Com o método `new` definido em `ArticlesController`, se você atualizar
+<http://localhost:3000/articles/new> verá um outro erro:
 
 ![Template is missing for articles/new]
 (images/getting_started/template_is_missing_articles_new.png)
 
-You're getting this error now because Rails expects plain actions like this one
-to have views associated with them to display their information. With no view
-available, Rails will raise an exception.
+Você está recebendo esse erro agora porque o Rails espera que *actions* como esta tenham *views* associadas a elas para exibir suas informações. Sem uma *view* disponível, o Rails gerará uma exceção.
 
-Let's look at the full error message again:
+Vamos ver a mensagem de erro completa novamente:
 
->ArticlesController#new is missing a template for request formats: text/html
+>ArticlesController#new  está faltando um *template* para o formato da requisição: *text/html*
 
->NOTE!
->Unless told otherwise, Rails expects an action to render a template with the same name, contained in a folder named after its controller. If this controller is an API responding with 204 (No Content), which does not require a template, then this error will occur when trying to access it via browser, since we expect an HTML template to be rendered for such requests. If that's the case, carry on.
+>NOTA!
+>Como dito, o Rails espera que uma ação renderize um *template* com o mesmo nome, contido em uma pasta com o nome de seu *controller*. Se esse *controller* for uma *API* que responde com 204 (sem conteúdo), e que não requer um *template*, então esse erro ocorrerá ao tentar acessá-lo pelo navegador pois esperamos que um *template* HTML seja renderizado para essas requisições. Se esse for o caso, continue.
 
-The message identifies which template is missing. In this case, it's the
-`articles/new` template. Rails will first look for this template. If not found,
-then it will attempt to load a template called `application/new`, because the
-`ArticlesController` inherits from `ApplicationController`.
+A mensagem identifica qual *template* está ausente. Nesse caso, é o *template* `articles/new`. O Rails procurará primeiro esse *template*. Se não for encontrado, ele tentará carregar um *template* chamado `application/new`, porque o `ArticlesController` herda do `ApplicationController`.
 
-Next the message contains `request.formats` which specifies the format of
-template to be served in response. It is set to `text/html` as we requested
-this page via browser, so Rails is looking for an HTML template.
+Em seguida, a mensagem contém `request.formats` que especifica o formato do *template* a ser exibido em resposta. Ele está definido como `text/html`, conforme solicitamos esta página pelo navegador, portanto o Rails está procurando um *template* HTML.
 
-The simplest template that would work in this case would be one located at
-`app/views/articles/new.html.erb`. The extension of this file name is important:
-the first extension is the _format_ of the template, and the second extension
-is the _handler_ that will be used to render the template. Rails is attempting
-to find a template called `articles/new` within `app/views` for the
-application. The format for this template can only be `html` and the default
-handler for HTML is `erb`. Rails uses other handlers for other formats.
-`builder` handler is used to build XML templates and `coffee` handler uses
-CoffeeScript to build JavaScript templates. Since you want to create a new
-HTML form, you will be using the `ERB` language which is designed to embed Ruby
-in HTML.
+O *template* mais simples que funcionaria nesse caso seria o localizado em `app/views/articles/new.html.erb`. A extensão desse nome de arquivo é importante: a primeira extensão é o formato do *template* e a segunda extensão é o *handler* (tratadores) que será usado para renderizar o *template*. O Rails está tentando encontrar um *template* chamado `articles/new` em `app/views` para a aplicação. O formato para este *template* pode ser apenas `html` e o *handler* padrão para HTML é `erb`. O Rails usa outros *handlers* para outros formatos. O *handler* de `builder` é usado para criar *templates* XML e o *handler* de `coffee` usa o CoffeeScript para criar *templates* JavaScript. Como você deseja criar um novo formulário HTML, você usará a linguagem `ERB` projetada para incorporar Ruby em HTML.
 
-Therefore the file should be called `articles/new.html.erb` and needs to be
-located inside the `app/views` directory of the application.
+Portanto, o arquivo deve se chamar `articles/new.html.erb` e precisa estar localizado dentro do diretório `app/views` da aplicação.
 
-Go ahead now and create a new file at `app/views/articles/new.html.erb` and
-write this content in it:
+Agora vá em frente e crie um novo arquivo em *app/views/articles/new.html.erb* e escreva este conteúdo:
 
 ```html
 <h1>New Article</h1>
 ```
 
-When you refresh <http://localhost:3000/articles/new> you'll now see that the
-page has a title. The route, controller, action, and view are now working
-harmoniously! It's time to create the form for a new article.
+Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem um título. A rota, o *controller*, a *action* e a *view* estão funcionando harmoniosamente! É hora de criar o formulário para um novo artigo.
 
 ### The first form
 
@@ -1626,7 +1578,7 @@ Isso cria `comments` como um recurso aninhado (_nested resource_) dentro de `art
 outra parte do processo para recuperar as relações hierárquicas que existem  entre
 artigos e comentários.
 
-TIP: Para mais informações sobre rotas, veja o guia [Roteamento no Rails](routing.html) 
+TIP: Para mais informações sobre rotas, veja o guia [Roteamento no Rails](routing.html)
 
 ### Gerando um Controller
 
@@ -1771,18 +1723,18 @@ lugares certos.
 
 ![Article with Comments](images/getting_started/article_with_comments.png)
 
-Refactoring
+Refatorando
 -----------
 
-Now that we have articles and comments working, take a look at the
-`app/views/articles/show.html.erb` template. It is getting long and awkward. We
-can use partials to clean it up.
+Agora que nossos artigos e comentários funcionam, dê uma olhada no template
+`app/views/articles/show.html.erb`. Ele está ficando longo e esquisito. Nós
+podemos usar *partials* (*views* parciais) para melhorá-lo.
 
-### Rendering Partial Collections
+### Renderizando Coleções de *Partials*
 
-First, we will make a comment partial to extract showing all the comments for
-the article. Create the file `app/views/comments/_comment.html.erb` and put the
-following into it:
+Primeiramente, nós vamos criar uma *partial* para extrair a exibição de todos os
+comentários para o artigo. Crie o arquivo `app/views/comments/_comment.html.erb`
+e insira o código a seguir:
 
 ```html+erb
 <p>
@@ -1796,8 +1748,7 @@ following into it:
 </p>
 ```
 
-Then you can change `app/views/articles/show.html.erb` to look like the
-following:
+Então você pode mudar `app/views/articles/show.html.erb` para o seguinte código:
 
 ```html+erb
 <p>
@@ -1832,16 +1783,16 @@ following:
 <%= link_to 'Back', articles_path %>
 ```
 
-This will now render the partial in `app/views/comments/_comment.html.erb` once
-for each comment that is in the `@article.comments` collection. As the `render`
-method iterates over the `@article.comments` collection, it assigns each
-comment to a local variable named the same as the partial, in this case
-`comment`, which is then available in the partial for us to show.
+Isso fará com que a *partial* seja renderizada em `app/views/comments/_comment.html.erb`
+uma vez para cada comentário na coleção `@article.comments`. Como o método
+`render` itera sobre a coleção `@article.comments`, ele designa cada comentário
+para uma variável local nomeada como a *partial*, nesse caso `comment`, que então
+fica disponível para ser exibida na *partial*.
 
-### Rendering a Partial Form
+### Renderizando um Formulário com *Partial*
 
-Let us also move that new comment section out to its own partial. Again, you
-create a file `app/views/comments/_form.html.erb` containing:
+Agora vamos mover aquela nova seção de comentários para sua própria *partial*.
+Novamente, crie o arquivo `app/viewscomments/_form.html.erb` contendo:
 
 ```html+erb
 <%= form_with(model: [ @article, @article.comments.build ], local: true) do |form| %>
@@ -1859,7 +1810,7 @@ create a file `app/views/comments/_form.html.erb` containing:
 <% end %>
 ```
 
-Then you make the `app/views/articles/show.html.erb` look like the following:
+Então deixe o arquivo `app/views/articles/show.html.erb` assim:
 
 ```html+erb
 <p>
@@ -1882,46 +1833,46 @@ Then you make the `app/views/articles/show.html.erb` look like the following:
 <%= link_to 'Back', articles_path %>
 ```
 
-The second render just defines the partial template we want to render,
-`comments/form`. Rails is smart enough to spot the forward slash in that
-string and realize that you want to render the `_form.html.erb` file in
-the `app/views/comments` directory.
+O segundo *render* apenas define o template de *partial* que queremos renderizar,
+`comments/form`. O Rails é inteligente o suficiente para entender a barra nessa
+string e perceber que você quer renderizar o arquivo `_form.html.erb` no
+diretório `app/views/comments`.
 
-The `@article` object is available to any partials rendered in the view because
-we defined it as an instance variable.
+O objeto `@article` está disponível para todas as *partials* renderizadas na view
+porque o definimos como uma variável de instância.
 
-Deleting Comments
+Deletando Comentários
 -----------------
 
-Another important feature of a blog is being able to delete spam comments. To do
-this, we need to implement a link of some sort in the view and a `destroy`
-action in the `CommentsController`.
+Outra importante *feature* de um blog é excluir comentários de spam. Para fazer
+isto, nós precisamos implementar um link de alguma *view* e uma *action*
+`destroy` no `CommentsController`.
 
-So first, let's add the delete link in the
-`app/views/comments/_comment.html.erb` partial:
+Primeiro, vamos adicionar o link *delete* na *partial*
+`app/views/comments/_comment.html.erb`:
 
 ```html+erb
 <p>
-  <strong>Commenter:</strong>
+  <strong>Autor do comentário:</strong>
   <%= comment.commenter %>
 </p>
 
 <p>
-  <strong>Comment:</strong>
+  <strong>Comentário:</strong>
   <%= comment.body %>
 </p>
 
 <p>
-  <%= link_to 'Destroy Comment', [comment.article, comment],
+  <%= link_to 'Destruir comentário', [comment.article, comment],
                method: :delete,
-               data: { confirm: 'Are you sure?' } %>
+               data: { confirm: 'Você tem certeza?' } %>
 </p>
 ```
 
-Clicking this new "Destroy Comment" link will fire off a `DELETE
-/articles/:article_id/comments/:id` to our `CommentsController`, which can then
-use this to find the comment we want to delete, so let's add a `destroy` action
-to our controller (`app/controllers/comments_controller.rb`):
+Clicar neste novo link "Destruir comentário" será disparado um `DELETE
+/articles/:article_id/comments/:id` ao nosso `CommentsController`, que
+pode ser usar isso para encontrar o comentário que queremos excluir, então vamos adicionar
+uma ação `destroy` ao nosso *controller* (`app/controllers/comments_controller.rb`):
 
 ```ruby
 class CommentsController < ApplicationController
@@ -1945,17 +1896,17 @@ class CommentsController < ApplicationController
 end
 ```
 
-The `destroy` action will find the article we are looking at, locate the comment
-within the `@article.comments` collection, and then remove it from the
-database and send us back to the show action for the article.
+A *action* `destroy` vai encontrar o artigo que estamos vendo, localizar o
+comentário na *collection* `@article.comments`, removê-lo do seu banco de
+dados e nos enviar de volta para a *action* `show` do artigo.
 
 
-### Deleting Associated Objects
+### Excluindo objetos associados
 
-If you delete an article, its associated comments will also need to be
-deleted, otherwise they would simply occupy space in the database. Rails allows
-you to use the `dependent` option of an association to achieve this. Modify the
-Article model, `app/models/article.rb`, as follows:
+Se você excluir um artigo, os comentários (comments) associados também precisarão ser
+excluídos, caso contrário, eles simplesmente ocupariam espaço no banco de dados.
+O Rails permite que você use a opção `dependent` de uma associação para conseguir isso.
+Modifique o Modelo de artigo (article), `app/models/article.rb`, da seguinte forma:
 
 ```ruby
 class Article < ApplicationRecord
@@ -1965,26 +1916,26 @@ class Article < ApplicationRecord
 end
 ```
 
-Security
+Segurança
 --------
 
-### Basic Authentication
+### Autenticação Básica
 
-If you were to publish your blog online, anyone would be able to add, edit and
-delete articles or delete comments.
+Se fosse fosse publicar o seu blog online, qualquer um poderia adicionar, editar
+e deletar seus artigos ou comentários.
 
-Rails provides a very simple HTTP authentication system that will work nicely in
-this situation.
+O Rails disponibiliza um sistema de autenticação HTTP simples que irá funcionar
+tranquilamente nesta situação.
 
-In the `ArticlesController` we need to have a way to block access to the
-various actions if the person is not authenticated. Here we can use the Rails
-`http_basic_authenticate_with` method, which allows access to the requested
-action if that method allows it.
+No `ArticlesController` nós precisamos que tenha um meio de bloquear o acesso à
+várias ações se uma pessoa não estiver autenticada. Aqui podemos usar o método
+`http_basic_authenticate_with`, que permite o acesso para a ação requisitada se
+o método deixar.
 
-To use the authentication system, we specify it at the top of our
-`ArticlesController` in `app/controllers/articles_controller.rb`. In our case,
-we want the user to be authenticated on every action except `index` and `show`,
-so we write that:
+Para usar o sistema de autenticação, nós especificamos no topo do nosso
+`ArticlesController` em `app/controllers/articles_controller.rb`. No nosso caso,
+nós queremos que o usuário esteja autenticado em todas as ações, exceto `index`
+e `show`, então nós colocamos isso:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -1997,9 +1948,9 @@ class ArticlesController < ApplicationController
 
   # snippet for brevity
 ```
-
-We also want to allow only authenticated users to delete comments, so in the
-`CommentsController` (`app/controllers/comments_controller.rb`) we write:
+Nós também queremos autorizar somente usuários autenticados a deletar
+comentários, então em `CommentsController`
+(`app/controllers/comments_controller.rb`) nós colocamos:
 
 ```ruby
 class CommentsController < ApplicationController
@@ -2014,69 +1965,72 @@ class CommentsController < ApplicationController
   # snippet for brevity
 ```
 
-Now if you try to create a new article, you will be greeted with a basic HTTP
-Authentication challenge:
+Agora se você tentar criar um novo artigo, você deverá preencher um formulário de autenticação:
 
-![Basic HTTP Authentication Challenge](images/getting_started/challenge.png)
+![Formulário de Autenticação](images/getting_started/challenge.png)
 
-Other authentication methods are available for Rails applications. Two popular
-authentication add-ons for Rails are the
-[Devise](https://github.com/plataformatec/devise) rails engine and
-the [Authlogic](https://github.com/binarylogic/authlogic) gem,
-along with a number of others.
+Outros métodos de autenticação estão disponíveis para aplicações Rails. Dois
+*add-ons* de autenticação populares para Rails são o
+[Devise](https://github.com/plataformatec/devise) e o
+[Authlogic](https://github.com/binarylogic/authlogic) entre outros.
 
 
-### Other Security Considerations
+### Outras Considerações de Segurança
 
-Security, especially in web applications, is a broad and detailed area. Security
-in your Rails application is covered in more depth in
-the [Ruby on Rails Security Guide](security.html).
-
-
-What's Next?
-------------
-
-Now that you've seen your first Rails application, you should feel free to
-update it and experiment on your own.
-
-Remember, you don't have to do everything without help. As you need assistance
-getting up and running with Rails, feel free to consult these support
-resources:
-
-* The [Ruby on Rails Guides](index.html)
-* The [Ruby on Rails Tutorial](https://www.railstutorial.org/book)
-* The [Ruby on Rails mailing list](https://groups.google.com/group/rubyonrails-talk)
-* The [#rubyonrails](irc://irc.freenode.net/#rubyonrails) channel on irc.freenode.net
+Segurança, especialmente em aplicações web, é uma area ampla e detalhada. O
+tópico de segurança aplicações Rails é coberto com mais detalhes em
+[Guia de Segurança Ruby on Rails](security.html).
 
 
-Configuration Gotchas
+O que vem depois?
+-----------------
+
+Agora que você criou sua primeira aplicação Rails, sinta-se à vontade para
+atualizar e experimentar por conta própria.
+
+Lembre-se, você não precisa fazer tudo sem ajuda. Se você precisa de
+assistência para começar a desenvolver com Rails, sinta-se à vontade para
+consultar estes recursos:
+
+* O [Guia Rails](index.html)
+* O [Ruby on Rails Guides](https://guides.rubyonrails.org)
+* O [Ruby on Rails Tutorial](https://www.railstutorial.org/book)
+* A [lista de discussão do Ruby on Rails](https://groups.google.com/group/rubyonrails-talk)
+* O canal [#rubyonrails](irc://irc.freenode.net/#rubyonrails) no irc.freenode.net
+
+
+Dicas de Configuração
 ---------------------
 
-The easiest way to work with Rails is to store all external data as UTF-8. If
-you don't, Ruby libraries and Rails will often be able to convert your native
-data into UTF-8, but this doesn't always work reliably, so you're better off
-ensuring that all external data is UTF-8.
+O caminho mais fácil para se trabalhar com o Rails é armazenar todos os dados
+externos como UTF-8. Se não fizer assim, as bibliotecas Ruby e o Rails vão, na
+maioria das vezes, conseguir converter seus dados nativos em UTF-8, porém não
+é sempre que isso funciona corretamente, então é melhor que você assegure que
+todos seus dados externos estão em UTF-8.
 
-If you have made a mistake in this area, the most common symptom is a black
-diamond with a question mark inside appearing in the browser. Another common
-symptom is characters like "Ã¼" appearing instead of "ü". Rails takes a number
-of internal steps to mitigate common causes of these problems that can be
-automatically detected and corrected. However, if you have external data that is
-not stored as UTF-8, it can occasionally result in these kinds of issues that
-cannot be automatically detected by Rails and corrected.
+Caso tenha cometido um erro nessa parte, o sintoma mais comum é o aparecimento
+de um diamante preto com um ponto de interrogação dentro no seu navegador. Outro
+sintoma comum é o aparecimento de caracteres como "Ã¼" ao invés de "ü". O Rails
+executa um número de passos internos para mitigar causas comuns desses problemas
+que possam ser detectadas e corrigidas automaticamente. Porém, caso você possua
+dados externos que não estão armazenados como UTF-8, eles poderão ocasionalmente
+resultar em problemas que não podem ser detectados e nem resolvidos de forma
+automática pelo Rails.
 
-Two very common sources of data that are not UTF-8:
+Duas fontes muito comuns de dados que não estão em UTF-8 são:
 
-* Your text editor: Most text editors (such as TextMate), default to saving
-  files as UTF-8. If your text editor does not, this can result in special
-  characters that you enter in your templates (such as é) to appear as a diamond
-  with a question mark inside in the browser. This also applies to your i18n
-  translation files. Most editors that do not already default to UTF-8 (such as
-  some versions of Dreamweaver) offer a way to change the default to UTF-8. Do
-  so.
-* Your database: Rails defaults to converting data from your database into UTF-8
-  at the boundary. However, if your database is not using UTF-8 internally, it
-  may not be able to store all characters that your users enter. For instance,
-  if your database is using Latin-1 internally, and your user enters a Russian,
-  Hebrew, or Japanese character, the data will be lost forever once it enters
-  the database. If possible, use UTF-8 as the internal storage of your database.
+* Seu editor de texto: A maioria dos editores de texto (como o TextMate), salvam
+  os arquivos em UTF-8 de forma padrão. Caso o seu editor de texto não salve,
+  isso pode resultar em caracteres especiais inseridos por você nos seus
+  _templates_ (como por exemplo: é) aparecerem no navegador como um diamante
+  com um ponto de interrogação dentro. Isso também se aplica aos seus arquivos
+  de tradução i18n. Muitos editores que não salvam em UTF-8 por padrão (como
+  algumas versões do Dreamweaver) oferecem uma forma de alterar o padrão para
+  UTF-8. Faça isso.
+* Seu banco de dados: o Rails converte seus dados do banco de dados em UTF-8
+  de forma padrão. Porém, se seu banco de dados não está utilizando UTF-8
+  internamente, pode ser que não consiga armazenar todos os caracteres que seus
+  usuários insiram. Por exemplo, se seu banco de dados está utilizando Latin-1
+  internamente, e seu usuário insira um caractere russo, hebraico ou japonês,
+  os dados serão perdidos para sempre assim que entrarem no banco de dados. Se
+  possível, utilize UTF-8 como padrão de armazenamento para o seu banco de dados.
