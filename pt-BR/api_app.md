@@ -122,70 +122,63 @@ when configuring Active Record.
 are still applicable even if you remove the view layer, but the answer turns out
 to be most of it.
 
-The Basic Configuration
+Configuração básica
 -----------------------
 
-If you're building a Rails application that will be an API server first and
-foremost, you can start with a more limited subset of Rails and add in features
-as needed.
+Se você estiver construindo uma aplicação Rails que será uma API, você pode começar
+com um subconjunto mais limitado do Rails e adicionar recursos, conforme necessário.
 
-### Creating a new application
+### Criando uma nova aplicação
 
-You can generate a new api Rails app:
+Você pode gerar uma nova API Rails:
 
 ```bash
 $ rails new my_api --api
 ```
 
-This will do three main things for you:
+Esse comando fará três coisas principais para você:  
 
-- Configure your application to start with a more limited set of middleware
-  than normal. Specifically, it will not include any middleware primarily useful
-  for browser applications (like cookies support) by default.
-- Make `ApplicationController` inherit from `ActionController::API` instead of
-  `ActionController::Base`. As with middleware, this will leave out any Action
-  Controller modules that provide functionalities primarily used by browser
-  applications.
-- Configure the generators to skip generating views, helpers, and assets when
-  you generate a new resource.
+- Configura sua aplicação para começar com um conjunto mais limitado de *middlewares* que o normal.
+Especificamente, não serão incluídos *middlewares* para aplicações web (como suporte a *cookies*) por padrão.
+- Faz com que o `ApplicationController` herde do `ActionController::API` ao invés do `ActionController::Base`.
+Como nos *middlewares*, isso exclui qualquer *Action Controller* ou Módulo que forneçam funcionalidades usadas primordialmente pelo navegador.
+- Configura os geradores para não gerar *views*, *helpers*, e *assets* quando você criar um novo recurso.
 
-### Changing an existing application
+### Alterando uma aplicação existente
 
-If you want to take an existing application and make it an API one, read the
-following steps.
+Se você deseja usar uma aplicação que já existe e transformá-la em API, siga os passos a seguir.
 
-In `config/application.rb` add the following line at the top of the `Application`
-class definition:
+Em `config/application.rb` adicione a seguinte linha no começo da classe `Application`:
 
 ```ruby
 config.api_only = true
 ```
 
-In `config/environments/development.rb`, set `config.debug_exception_response_format`
-to configure the format used in responses when errors occur in development mode.
+Em `config/environments/development.rb`, defina `config.debug_exception_response_format`
+para configurar o formato usado nas respostas quando ocorrer um erro no modo de desenvolvimento.
 
-To render an HTML page with debugging information, use the value `:default`.
+Para renderizar uma página HTML com as informações de *debugging*, use o valor `:default`.
 
 ```ruby
 config.debug_exception_response_format = :default
 ```
 
-To render debugging information preserving the response format, use the value `:api`.
+Para renderizar as informações de *debugging* preservando o formato da resposta, use o valor `:api`.
 
 ```ruby
 config.debug_exception_response_format = :api
 ```
 
-By default, `config.debug_exception_response_format` is set to `:api`, when `config.api_only` is set to true.
+Por padrão, `config.debug_exception_response_format` está definido para `:api`, quando `config.api_only` está com o valor *true*.
 
-Finally, inside `app/controllers/application_controller.rb`, instead of:
+Finalmente, no arquivo `app/controllers/application_controller.rb`, ao invés de
 
 ```ruby
 class ApplicationController < ActionController::Base
 end
 ```
 
-do:
+troque por:
 
 ```ruby
 class ApplicationController < ActionController::API
