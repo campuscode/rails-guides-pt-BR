@@ -28,36 +28,40 @@ negócio cujos dados precisam ser persistidos num banco. Essa é uma implementa�
 do padrão do *Active Record* que por si só é a descrição de um sistema de
 Mapeamento Objeto-Relacional (*Object Relational Mapping*).
 
-### The Active Record Pattern
+### O Padrão Active Record
 
-[Active Record was described by Martin Fowler](https://www.martinfowler.com/eaaCatalog/activeRecord.html)
-in his book _Patterns of Enterprise Application Architecture_. In
-Active Record, objects carry both persistent data and behavior which
-operates on that data. Active Record takes the opinion that ensuring
-data access logic as part of the object will educate users of that
-object on how to write to and read from the database.
+[O *Active Record* foi descrito por Martin Fowler](https://www.martinfowler.com/eaaCatalog/activeRecord.html)
+no seu livro *Patterns of Enterprise Application Architecture*. No *Active
+Record*, objetos possuem ambos dados persistentes e comportamento que opera
+nesse dado. A filosofia do *Active Record* consiste em assegurar que lógica de acesso a dados seja
+parte do objeto, e que o uso deste objeto vai permitir deduzir como escrever e ler o
+banco de dados.
 
-### Object Relational Mapping
+### Mapeamento Objeto-Relacional (*Object Relational Mapping*)
 
-[Object Relational Mapping](https://en.wikipedia.org/wiki/Object-relational_mapping), commonly referred to as its abbreviation ORM, is
-a technique that connects the rich objects of an application to tables in
-a relational database management system. Using ORM, the properties and
-relationships of the objects in an application can be easily stored and
-retrieved from a database without writing SQL statements directly and with less
-overall database access code.
+[Mapeamento
+Objeto-Relacional](https://pt.wikipedia.org/wiki/Mapeamento_objeto-relacional),
+comumente referido na sua abreviação ORM, é a técnica que conecta os objetos de
+uma aplicação a tabelas em uma tabela de um banco de dados relacional de um sistema de
+gerenciamento. Usando ORM, as propriedades e relações entre objetos e a
+aplicação podem facilmente ser armazenadas e recuperadas do banco de dados sem a
+necessidade de escrever comandos SQL diretamente e com menos código de acesso ao
+banco de maneira geral.
 
-NOTE: Basic knowledge of relational database management systems (RDBMS) and structured query language (SQL) is helpful in order to fully understand Active Record. Please refer to [this tutorial](https://www.w3schools.com/sql/default.asp) (or [this one](http://www.sqlcourse.com/)) or study them by other means if you would like to learn more.
+NOTE: Conhecimentos básicos de sistemas de gerenciamento de bancos de dados
+relacionais (sigla em inglês: RDBMS) e *structured query language* (SQL) são
+úteis para compreender inteiramente o *Active Record*. Por favor, refira a [este tutorial](https://www.w3schools.com/sql/default.asp) (ou [este](http://www.sqlcourse.com/)) ou estude por outros meios se quiser aprender mais.
 
-### Active Record as an ORM Framework
+### Active Record como um Framework ORM
 
-Active Record gives us several mechanisms, the most important being the ability
-to:
+Active Record fornece diversos mecanismos, sendo o mais importante a habilidade
+de:
 
-* Represent models and their data.
-* Represent associations between these models.
-* Represent inheritance hierarchies through related models.
-* Validate models before they get persisted to the database.
-* Perform database operations in an object-oriented fashion.
+* Representar *models* e seus dados.
+* Representar associações entre estes *models*.
+* Representar hierarquia de heranças pelos *models*.
+* Validar *models* antes que sejam persistidos no banco de dados.
+* Executar operações nos bancos de dados de maneira orientada a objetos.
 
 Convention over Configuration in Active Record
 ----------------------------------------------
