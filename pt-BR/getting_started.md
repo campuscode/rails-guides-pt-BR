@@ -1,18 +1,18 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Getting Started with Rails
-==========================
+Começando com Rails
+===================
 
-This guide covers getting up and running with Ruby on Rails.
+Este guia aborda a instalação e a execução do Ruby on Rails.
 
-After reading this guide, you will know:
+Depois de ler este guia, você vai saber:
 
-* How to install Rails, create a new Rails application, and connect your
-  application to a database.
-* The general layout of a Rails application.
-* The basic principles of MVC (Model, View, Controller) and RESTful design.
-* How to quickly generate the starting pieces of a Rails application.
+* Como instalar o Rails, criar uma nova aplicação Rails e conectar sua
+  aplicação com um banco de dados.
+* A estrutura geral de uma aplicação Rails.
+* Os princípios básicos do MVC (**Model**, **View**, **Controller**) e design **RESTful**.
+* Como gerar rapidamente as peças iniciais de uma aplicação Rails.
 
 --------------------------------------------------------------------------------
 
