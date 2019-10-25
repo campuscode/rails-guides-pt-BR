@@ -2030,6 +2030,6 @@ Duas fontes muito comuns de dados que não estão em UTF-8 são:
   de forma padrão. Porém, se seu banco de dados não está utilizando UTF-8
   internamente, pode ser que não consiga armazenar todos os caracteres que seus
   usuários insiram. Por exemplo, se seu banco de dados está utilizando Latin-1
-  internamente, e seu usuário insira um caractere russo, hebraico ou japonês,
+  internamente, e seu usuário inserir um caractere russo, hebraico ou japonês,
   os dados serão perdidos para sempre assim que entrarem no banco de dados. Se
   possível, utilize UTF-8 como padrão de armazenamento para o seu banco de dados.
