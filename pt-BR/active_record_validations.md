@@ -321,7 +321,7 @@ end
 
 Essa validação é bem específica para aplicações web e a "aceitação" não precisa
 ser gravada em lugar nenhum do seu banco de dados. Se você não tem um campo para
-isso o *helper* criara um atributo virtual. Se o campo existe no seu banco de
+isso o *helper* criará um atributo virtual. Se o campo existe no seu banco de
 dados a opção `accept` deve ser definida como `true` ou a validação não irá
 acontecer.
 
