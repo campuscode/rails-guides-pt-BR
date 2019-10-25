@@ -49,7 +49,7 @@ próprios métodos de validação.
 
 Exitem outros modos de validar dados antes deles serem salvos no seu banco de
 dados, incluindo restrições nativas do banco de dados, validações no lado do
-cliente e valições no nível do *controller*. Este é um sumário dos prós
+cliente e validações no nível do *controller*. Este é um sumário dos prós
 e contras:
 
 * Restrições no banco de dados e/ou procedimentos armazenados tornam as validações
