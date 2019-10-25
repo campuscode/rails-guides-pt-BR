@@ -194,7 +194,7 @@ TIP: Se você está usando Windows, deve executar os scripts do diretório
 
 TIP: A compressão de *assets* JavaScript requer que você tenha um executor
 disponível em seu sistema operacional. Na ausência de um executor você verá um
-error de `execjs` durante a compilação dos *assets*. Geralmente o macOS e o Windows possuem um executor JavaScript instalado por
+erro de `execjs` durante a compilação dos *assets*. Geralmente o macOS e o Windows possuem um executor JavaScript instalado por
 padrão. `therubyrhino` é o executor recomendado para usuários de JRuby e vem no
 `Gemfile` por padrão em aplicações geradas com JRuby. Você pode avaliar todos
 executores em [ExecJS](https://github.com/rails/execjs#readme).
