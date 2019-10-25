@@ -1,23 +1,28 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Record Associations
+Associações Active Record
 ==========================
 
-This guide covers the association features of Active Record.
+Esse guia cobre os recursos de associação do _Active Record_.
 
-After reading this guide, you will know:
+Após ler esse guia, você saberá:
 
-* How to declare associations between Active Record models.
-* How to understand the various types of Active Record associations.
-* How to use the methods added to your models by creating associations.
+* Como declarar associações entre modelos _Active Record_.
+* Como entender os vários tipos de associações _Active Record_.
+* Como usar os métodos adicionados em seus modelos ao criar associações.
 
 --------------------------------------------------------------------------------
 
-Why Associations?
+Por Que Associações?
 -----------------
 
-In Rails, an _association_ is a connection between two Active Record models. Why do we need associations between models? Because they make common operations simpler and easier in your code. For example, consider a simple Rails application that includes a model for authors and a model for books. Each author can have many books. Without associations, the model declarations would look like this:
+Em Rails, uma _associação_ é uma conexão entre dois modelos _Active Record_.
+Por que precisamos de associações entre modelos? Porque eles tornam as operações
+comuns mais simples e fáceis de entender em seu código. Por exemplo, considere
+um aplicativo Rails simples que inclua um modelo para autores e um modelo para
+livros. Cada autor pode ter vários livros. Sem associações, as declarações do
+modelo seriam assim:
 
 ```ruby
 class Author < ApplicationRecord
@@ -27,13 +32,15 @@ class Book < ApplicationRecord
 end
 ```
 
-Now, suppose we wanted to add a new book for an existing author. We'd need to do something like this:
+Agora, suponha que queremos adicionar um novo livro para um autor existente.
+Nós precisaríamos fazer algo assim:
 
 ```ruby
 @book = Book.create(published_at: Time.now, author_id: @author.id)
 ```
 
-Or consider deleting an author, and ensuring that all of its books get deleted as well:
+Ou considere excluir um autor, garantindo que todos os seus livros vão ser
+excluidos também:
 
 ```ruby
 @books = Book.where(author_id: @author.id)
@@ -43,7 +50,9 @@ end
 @author.destroy
 ```
 
-With Active Record associations, we can streamline these - and other - operations by declaratively telling Rails that there is a connection between the two models. Here's the revised code for setting up authors and books:
+Com as associações do Active Record, podemos otimizar essas - e outras -
+operações declarando ao Rails que há uma conexão entre os dois modelos. Aqui
+está o código revisado para configurar autores e livros:
 
 ```ruby
 class Author < ApplicationRecord
@@ -55,19 +64,22 @@ class Book < ApplicationRecord
 end
 ```
 
-With this change, creating a new book for a particular author is easier:
+Com essa alteração, é mais fácil criar um novo livro para um autor específico:
 
 ```ruby
 @book = @author.books.create(published_at: Time.now)
 ```
 
-Deleting an author and all of its books is *much* easier:
+Excluir um autor e todos os seus livros é *muito* mais fácil:
 
 ```ruby
 @author.destroy
 ```
 
-To learn more about the different types of associations, read the next section of this guide. That's followed by some tips and tricks for working with associations, and then by a complete reference to the methods and options for associations in Rails.
+Para saber mais sobre os diferentes tipos de associações, leia a próxima seção
+deste guia. Em seguida há algumas dicas e truques para trabalhar com associações
+e, em seguida, uma referência completa dos métodos e opções para associações no
+Rails.
 
 The Types of Associations
 -------------------------
