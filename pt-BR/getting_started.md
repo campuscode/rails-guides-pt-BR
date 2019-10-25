@@ -1853,27 +1853,26 @@ Primeiro, vamos adicionar o link *delete* na *partial*
 
 ```html+erb
 <p>
-  <strong>Commenter:</strong>
+  <strong>Autor do comentário:</strong>
   <%= comment.commenter %>
 </p>
 
 <p>
-  <strong>Comment:</strong>
+  <strong>Comentário:</strong>
   <%= comment.body %>
 </p>
 
 <p>
-  <%= link_to 'Destroy Comment', [comment.article, comment],
+  <%= link_to 'Destruir comentário', [comment.article, comment],
                method: :delete,
-               data: { confirm: 'Are you sure?' } %>
+               data: { confirm: 'Você tem certeza?' } %>
 </p>
 ```
 
-Ao clicar neste novo link chamado "Destroy Comment" será disparado um `DELETE
-/articles/:article_id/comments/:id` para nosso `CommentsController`, que
-pode usar isso para encontrar o comentário que queremos excluir, então vamos
-adicionar uma *action* `destroy` ao nosso *controller*
-(`app/controllers/comments_controller.rb`):
+Clicar neste novo link "Destruir comentário" será disparado um `DELETE
+/articles/:article_id/comments/:id` ao nosso `CommentsController`, que
+pode ser usar isso para encontrar o comentário que queremos excluir, então vamos adicionar
+uma ação `destroy` ao nosso *controller* (`app/controllers/comments_controller.rb`):
 
 ```ruby
 class CommentsController < ApplicationController
@@ -1902,12 +1901,12 @@ comentário na *collection* `@article.comments`, removê-lo do seu banco de
 dados e nos enviar de volta para a *action* `show` do artigo.
 
 
-### Deleting Associated Objects
+### Excluindo objetos associados
 
-If you delete an article, its associated comments will also need to be
-deleted, otherwise they would simply occupy space in the database. Rails allows
-you to use the `dependent` option of an association to achieve this. Modify the
-Article model, `app/models/article.rb`, as follows:
+Se você excluir um artigo, os comentários (comments) associados também precisarão ser
+excluídos, caso contrário, eles simplesmente ocupariam espaço no banco de dados.
+O Rails permite que você use a opção `dependent` de uma associação para conseguir isso.
+Modifique o Modelo de artigo (article), `app/models/article.rb`, da seguinte forma:
 
 ```ruby
 class Article < ApplicationRecord
