@@ -617,7 +617,7 @@ class LineItem < ApplicationRecord
 end
 ```
 
-Para validar registros associados cuja ausencia é necessária, você deve
+Para validar registros associados cuja ausência é necessária, você deve
 especificar a opção `:inverse_of` para a associação:
 
 ```ruby
