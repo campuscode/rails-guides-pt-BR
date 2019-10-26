@@ -35,22 +35,22 @@ Termos técnicos de origem do idioma inglês, referentes a elementos fundamentai
 de aplicações Rails, não devem ser traduzidos. Não traduza, coloque apenas
 *itálico*:
 
-o *model*.
-a *view*.
-o *controller*.
-o *template*.
-o *helper*.
-o *logger*.
-a *stack trace*.
-os *assets*.
-o *Shell*.
-o *debugger*.
-o *backtrace*.
-os *cookies*.
-os *initializers*.
-os *generators*.
-o *middleware*.
-a *partial*.
+* o *model*.
+* a *view*.
+* o *controller*.
+* o *template*.
+* o *helper*.
+* o *logger*.
+* a *stack trace*.
+* os *assets*.
+* o *Shell*.
+* o *debugger*.
+* o *backtrace*.
+* os *cookies*.
+* os *initializers*.
+* os *generators*.
+* o *middleware*.
+* a *partial*.
 
 ### Algumas sugestões de tradução para termos específicos
 
