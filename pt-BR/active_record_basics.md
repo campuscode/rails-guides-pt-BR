@@ -131,21 +131,20 @@ to Active Record instances:
 
 NOTE: While these column names are optional, they are in fact reserved by Active Record. Steer clear of reserved keywords unless you want the extra functionality. For example, `type` is a reserved keyword used to designate a table using Single Table Inheritance (STI). If you are not using STI, try an analogous keyword like "context", that may still accurately describe the data you are modeling.
 
-Creating Active Record Models
+Criando Models do Active Record
 -----------------------------
 
-It is very easy to create Active Record models. All you have to do is to
-subclass the `ApplicationRecord` class and you're good to go:
+É muito fácil criar *models* do *Active Record*. Tudo que você precisa fazer é
+subclassificar a classe `ApplicationRecord` e estará tudo pronto:  
 
 ```ruby
 class Product < ApplicationRecord
 end
 ```
 
-This will create a `Product` model, mapped to a `products` table at the
-database. By doing this you'll also have the ability to map the columns of each
-row in that table with the attributes of the instances of your model. Suppose
-that the `products` table was created using an SQL (or one of its extensions) statement like:
+Isso criará o *model* `Product`, mapeado em uma tabela `produts` na base de dados. Fazendo isso, você também
+possuirá a habilidade de mapear as colunas de cada linha da tabela com os atributos das instâncias do seu 
+*model*. Suponha que a tabela `products` foi criada usando uma declaração SQL (ou uma de suas extensões) como:
 
 ```sql
 CREATE TABLE products (
@@ -155,9 +154,9 @@ CREATE TABLE products (
 );
 ```
 
-Schema above declares a table with two columns: `id` and `name`. Each row of
-this table represents a certain product with these two parameters. Thus, you
-would be able to write code like the following:
+O esquema acima declara uma tabela com duas colunas: `id` e `name`. Cada uma das 
+linhas dessa tabela representam um certo produto com dois parâmetros. Portanto,
+você será capaz de escrever códigos como o seguinte:
 
 ```ruby
 p = Product.new
