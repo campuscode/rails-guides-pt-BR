@@ -27,8 +27,8 @@ de programação Ruby. Se você não tem nenhuma experiência com Ruby, você va
 achar a curva de aprendizado bastante íngrime começando direto com Rails.
 Existem diversas listas organizadas de materiais online para aprender Ruby:
 
-* [Site Oficial da Linguagem de Programação Ruby](https://www.ruby-lang.org/en/documentation/)
-* [Lista de Livros Grátis de Programação](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
+* [Site Oficial da Linguagem de Programação Ruby (Em inglês)](https://www.ruby-lang.org/en/documentation/)
+* [Lista de Livros Grátis de Programação (Em inglês)](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
 
 Fique atento que alguns materiais, apesar de excelentes, envolvem versões antigas
 do Ruby chegando a 1.6, e frequentemente 1.8, e não incluem parte da sintaxe que você
