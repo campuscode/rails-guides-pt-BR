@@ -1229,18 +1229,18 @@ And here's how our app looks so far:
 
 ![Index action with edit link](images/getting_started/index_action_with_edit_link.png)
 
-### Using partials to clean up duplication in views
+### Usando _partials_ para limpar duplicações em _views_
 
-Our `edit` page looks very similar to the `new` page; in fact, they
-both share the same code for displaying the form. Let's remove this
-duplication by using a view partial. By convention, partial files are
-prefixed with an underscore.
+Nossa página `edit` se parece muito com a página `new`; na verdade,
+ambos compartilham o mesmo código para exibir o formulário. Vamos remover esta
+duplicação usando uma _view_ _partial_. Por convenção, arquivos de _partials_
+são prefixado com um _underline_.
 
-TIP: You can read more about partials in the
-[Layouts and Rendering in Rails](layouts_and_rendering.html) guide.
+DICA: Você pode ler mais sobre _partials_ em
+[Layouts e Renderizando no Rails](layouts_and_rendering.html) guide.
 
-Create a new file `app/views/articles/_form.html.erb` with the following
-content:
+Crie um novo arquivo `app/views/articles/_form.html.erb` com o conteudo a
+seguir:
 
 ```html+erb
 <%= form_with model: @article, local: true do |form| %>
@@ -1276,16 +1276,16 @@ content:
 <% end %>
 ```
 
-Everything except for the `form_with` declaration remained the same.
-The reason we can use this shorter, simpler `form_with` declaration
-to stand in for either of the other forms is that `@article` is a *resource*
-corresponding to a full set of RESTful routes, and Rails is able to infer
-which URI and method to use.
-For more information about this use of `form_with`, see [Resource-oriented style]
-(https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with-label-Resource-oriented+style).
+Tudo exceto a declaração `form_with` permaneceu igual.
+A razão pela qual podemos usar a declaração `form_with` mais curta e simples
+para substituir qualquer outro formulário é que `@article` é um *resource*
+correspondente a um conjunto completo de rotas RESTful, e o Rails pode inferir
+qual URI e método a ser usado.
+Para obter mais informações sobre esse uso do `form_with`, consulte
+[Estilo orientado a recursos](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with-label-Resource-oriented+style).
 
-Now, let's update the `app/views/articles/new.html.erb` view to use this new
-partial, rewriting it completely:
+Agora, vamos atualizar a _view_ `app/views/articles/new.html.erb` para usar a
+nova _partial_, reescrevendo ela completamente:
 
 ```html+erb
 <h1>New article</h1>
@@ -1295,7 +1295,7 @@ partial, rewriting it completely:
 <%= link_to 'Back', articles_path %>
 ```
 
-Then do the same for the `app/views/articles/edit.html.erb` view:
+Depois, faremos o mesmo em `app/views/articles/edit.html.erb`:
 
 ```html+erb
 <h1>Edit article</h1>
@@ -1305,29 +1305,29 @@ Then do the same for the `app/views/articles/edit.html.erb` view:
 <%= link_to 'Back', articles_path %>
 ```
 
-### Deleting Articles
+### Deletando Artigos
 
-We're now ready to cover the "D" part of CRUD, deleting articles from the
-database. Following the REST convention, the route for
-deleting articles as per output of `rails routes` is:
+Nós estamos prontos para cobrir a parte "D" de um CRUD, remover artigos da base
+de dados. Seguindo a convenção REST, a rota para deletar artigos, de acordo com
+o retorno do comando `rails routes` é:
 
 ```ruby
 DELETE /articles/:id(.:format)      articles#destroy
 ```
 
-The `delete` routing method should be used for routes that destroy
-resources. If this was left as a typical `get` route, it could be possible for
-people to craft malicious URLs like this:
+O método `delete` roteado deve ser usado para rotas que destroem recursos. Se
+esta ação for deixada em uma simples rota `get`, pode ser possível pessoas
+maliciosas criarem url como esta:
 
 ```html
 <a href='http://example.com/articles/1/destroy'>look at this cat!</a>
 ```
 
-We use the `delete` method for destroying resources, and this route is mapped
-to the `destroy` action inside `app/controllers/articles_controller.rb`, which
-doesn't exist yet. The `destroy` method is generally the last CRUD action in
-the controller, and like the other public CRUD actions, it must be placed
-before any `private` or `protected` methods. Let's add it:
+Utilizamos o método `delete` para destruir recursos, e essa rota é mapeada
+à ação `destroy` dentro de`app/controllers/articles_controller.rb`, que
+ainda não existe. O método `destroy` é geralmente a última ação CRUD no
+o `controller` e, como as outras ações públicas de CRUD, ele deve ser colocado
+antes de qualquer método `private` ou` protected`. Vamos adicioná-lo:
 
 ```ruby
 def destroy
@@ -1338,8 +1338,8 @@ def destroy
 end
 ```
 
-The complete `ArticlesController` in the
-`app/controllers/articles_controller.rb` file should now look like this:
+O `ArticlesController` completo em `app/controllers/articles_controller.rb` se
+parece como isso:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -1393,12 +1393,12 @@ class ArticlesController < ApplicationController
 end
 ```
 
-You can call `destroy` on Active Record objects when you want to delete
-them from the database. Note that we don't need to add a view for this
-action since we're redirecting to the `index` action.
+Você pode chamar `destroy` nos objetos do Active Record quando desejar excluir
+eles do banco de dados. Observe que não precisamos adicionar uma visualização para esta
+ação, pois estamos redirecionando para a ação `index`.
 
-Finally, add a 'Destroy' link to your `index` action template
-(`app/views/articles/index.html.erb`) to wrap everything together.
+Por fim, adicione um link "Destroy" ao seu modelo de ação "index"
+(`app/views/articles/index.html.erb`) para agrupar todos juntos.
 
 ```html+erb
 <h1>Listing Articles</h1>
@@ -1424,27 +1424,28 @@ Finally, add a 'Destroy' link to your `index` action template
 </table>
 ```
 
-Here we're using `link_to` in a different way. We pass the named route as the
-second argument, and then the options as another argument. The `method: :delete`
-and `data: { confirm: 'Are you sure?' }` options are used as HTML5 attributes so
-that when the link is clicked, Rails will first show a confirm dialog to the
-user, and then submit the link with method `delete`.  This is done via the
-JavaScript file `rails-ujs` which is automatically included in your
-application's layout (`app/views/layouts/application.html.erb`) when you
-generated the application. Without this file, the confirmation dialog box won't
-appear.
+Aqui estamos usando o `link_to` de uma maneira diferente. Passamos a rota nomeada como
+segundo argumento e, em seguida, as opções como outro argumento. As opções
+`method: :delete` e `data: { confirm: 'Are you sure?' }` são usadas como
+atributos HTML5, portanto quando o link é clicado, o Rails primeiro mostra uma
+caixa de diálogo de confirmação para o usuário e, em seguida, envia o link com
+o método `delete`. Isso é feito através do Arquivo JavaScript `rails-ujs`,
+que é automaticamente incluído no layout do aplicativo
+(`app/views/layouts/application.html.erb`) quando foi gerado.
+Sem esse arquivo, a caixa de diálogo de confirmação não será exibida.
 
-![Confirm Dialog](images/getting_started/confirm_dialog.png)
+![Dialogo de Confirmação](images/getting_started/confirm_dialog.png)
 
-TIP: Learn more about Unobtrusive JavaScript on
-[Working With JavaScript in Rails](working_with_javascript_in_rails.html) guide.
+Dica: Aprenda mais sobre JavaScript discreto em
+[Trabalhando Com JavaScript Com Rails](working_with_javascript_in_rails.html) guide.
 
+Parabêns, agora você pode criar, mostrar, listar, atualizar e destruir artigos.
 Congratulations, you can now create, show, list, update, and destroy
 articles.
 
-TIP: In general, Rails encourages using resources objects instead of
-declaring routes manually. For more information about routing, see
-[Rails Routing from the Outside In](routing.html).
+DICA: Em geral, o Rails encoraja usar `resources objects` em contrapartida de
+declarar as rotas manualmente. Para mais informação sobre roteamento, veja em
+[Roteamento do Rails de Dentro à Fora](routing.html).
 
 Adicionando um Segundo Model
 ----------------------------
