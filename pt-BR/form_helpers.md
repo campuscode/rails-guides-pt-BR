@@ -1,37 +1,35 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Action View Form Helpers
-========================
+Auxiliares de formulário de exibição de ação 
 
-Forms in web applications are an essential interface for user input. However, form markup can quickly become tedious to write and maintain because of the need to handle form control naming and its numerous attributes. Rails does away with this complexity by providing view helpers for generating form markup. However, since these helpers have different use cases, developers need to know the differences between the helper methods before putting them to use.
+Formulários em uma aplicação web é uma inteface essencial para interação do usuário com o sistema. No entanto, pode se tornar entendiante gravar e manter este tipo de marcação devido à necessidade de lidar com a nomeação de controle de formulário e seus inúmeros atributos. O Rails acaba com  essa complexidade pois há um assistente de exibição que gera uma marcação de formulário. Mas para um uso correto, como há casos de uso diferentes, é necessário que os desenvolvedores conheçam as diferenças entre os métodos auxiliares antes de usa-los.
 
-After reading this guide, you will know:
+Depois de ler este guia você saberá: 
 
-* How to create search forms and similar kind of generic forms not representing any specific model in your application.
-* How to make model-centric forms for creating and editing specific database records.
-* How to generate select boxes from multiple types of data.
-* What date and time helpers Rails provides.
-* What makes a file upload form different.
-* How to post forms to external resources and specify setting an `authenticity_token`.
-* How to build complex forms.
+*Como criar formulários de pesquisa e tipos de semelhantes de formulários genéricos que não representam nenhuma classe específica da sua aplicação. 
+*Como criar formulários centrados no modelo pra criar e editar registros específicos no banco de dados.
+*Como gerar caixas de selação de vários tipos de dados.
+*Que data e hora os ajudantes do Rails fornecem.
+*O que torna um formulário de upload de arquivo diferente.
+*Como publicar formulários de recursos externos e especificar a criação de um token de autenticidade (authentic_token).
+*Como criar formulários complexos.
+-------------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
+NOTE: Este guia não pretende ser uma documentação completa dos auxiliares de formulários disponíveis e seus argumentos. Por favor para obter uma  referência completa visite [a documentação da API do Rails](https://api.rubyonrails.org/). 
 
-NOTE: This guide is not intended to be a complete documentation of available form helpers and their arguments. Please visit [the Rails API documentation](https://api.rubyonrails.org/) for a complete reference.
+Trabalhando com formulários basicos.
+------------------------------------------------
 
-Dealing with Basic Forms
-------------------------
-
-The main form helper is `form_with`.
+O principal auxiliar de formulário é o `form_with` .
 
 ```erb
 <%= form_with do %>
-  Form contents
+  Conteúdo de formulário 
 <% end %>
 ```
 
-When called without arguments like this, it creates a form tag which, when submitted, will POST to the current page. For instance, assuming the current page is a home page, the generated HTML will look like this:
+Quando chamado se nenhum argumento para preenchimento como este, é criado uma tag de formulário que, quando enviado, será enviado par página atual. Por exemplo, supondo que a página atual seja a inicial, o HTML gerado teraá a seguinte aparência: 
 
 ```html
 <form accept-charset="UTF-8" action="/" data-remote="true" method="post">
@@ -40,19 +38,18 @@ When called without arguments like this, it creates a form tag which, when submi
 </form>
 ```
 
-You'll notice that the HTML contains an `input` element with type `hidden`. This `input` is important, because non-GET form cannot be successfully submitted without it.
-The hidden input element with the name `authenticity_token` is a security feature of Rails called **cross-site request forgery protection**, and form helpers generate it for every non-GET form (provided that this security feature is enabled). You can read more about this in the [Securing Rails Applications](security.html#cross-site-request-forgery-csrf) guide.
+Irá notar que o HTML contém um elemento `input` com tipo `hidden`. Esse `input` é importante, isto porqeu o formulário não GET não pode ser enviado com êxito sem ele. O elemento de entrada oculto com o nome `authenticity_token` é um recurso de segurança do  Rails chamado proteção contra falsificação de solicitação entre sites, e os auxiliares de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Poderá ler mais sobre isto no guia [segurança em  aplicações Rails](security.html#cross-site-request-forgery-csrf). 
 
-### A Generic Search Form
+### Formulário de pesquisa genérica 
 
-One of the most basic forms you see on the web is a search form. This form contains:
+Um dos formulários mais básicos que você vê na web é um formulários de pesquisa. Este formulário contém.
 
-* a form element with "GET" method,
-* a label for the input,
-* a text input element, and
-* a submit element.
+* Um elemento de formulário com o método GET.
+* Uma etiqueta para entrada.
+* Um elemento de entrada de texto.
+* Um elemento de envio.
 
-To create this form you will use `form_with`, `label_tag`, `text_field_tag`, and `submit_tag`, respectively. Like this:
+Para criar este formulário você irá usar `form_with`, `label_tag`, `text_field_tag`, e `submit_tag`, respectivamente. Como o exemplo abaixo: 
 
 ```erb
 <%= form_with(url: "/search", method: "get") do %>
@@ -62,7 +59,7 @@ To create this form you will use `form_with`, `label_tag`, `text_field_tag`, and
 <% end %>
 ```
 
-This will generate the following HTML:
+Isso irá gerar o seguinte HTML:
 
 ```html
 <form accept-charset="UTF-8" action="/search" data-remote="true" method="get">
@@ -72,9 +69,9 @@ This will generate the following HTML:
 </form>
 ```
 
-TIP: Passing `url: my_specified_path` to `form_with` tells the form where to make the request. However, as explained below, you can also pass ActiveRecord objects to the form.
+TIP: Passando `url: my_speccified_path` para `form_with` informa ao formulário ode fazer a solicitação. No entanto, conforme explicado abaixo, você também pode passar objetos ActiveRecord para o formulário. 
 
-TIP: For every form input, an ID attribute is generated from its name (`"q"` in above example). These IDs can be very useful for CSS styling or manipulation of form controls with JavaScript.
+TIP: Para cada entrada de formulário, um atributo de ID é gerado a partir de seu nome("q" no exemplo acima). Esses IDs podem ser muito úteis 
 
 IMPORTANT: Use "GET" as the method for search forms. This allows users to bookmark a specific search and get back to it. More generally Rails encourages you to use the right HTTP verb for an action.
 
