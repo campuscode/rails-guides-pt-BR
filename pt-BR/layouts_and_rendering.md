@@ -1,35 +1,35 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Layouts and Rendering in Rails
+Layouts e Renderização no Rails
 ==============================
 
-This guide covers the basic layout features of Action Controller and Action View.
+Este guia aborda os recursos básicos de layout do _Action Controller_ e da _Action View_.
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
-* How to use the various rendering methods built into Rails.
-* How to create layouts with multiple content sections.
-* How to use partials to DRY up your views.
-* How to use nested layouts (sub-templates).
+* Como usar os vários métodos de renderização embutidos no Rails.
+* Como criar layouts com várias seções de conteúdo.
+* Como usar _partials_ para enxugar suas _views_.
+* Como usar _nested layouts_ (sub-templates).
 
---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 
-Overview: How the Pieces Fit Together
+Visão Geral: Como as peças se encaixam
 -------------------------------------
 
-This guide focuses on the interaction between Controller and View in the Model-View-Controller triangle. As you know, the Controller is responsible for orchestrating the whole process of handling a request in Rails, though it normally hands off any heavy code to the Model. But then, when it's time to send a response back to the user, the Controller hands things off to the View. It's that handoff that is the subject of this guide.
+Este guia concentra-se na interação entre o _Controller_ e _View_ no triângulo _Model-View-Controller_. Como você sabe, o _Controller_ é responsável por orquestrar todo o processo de como lidar com uma requisição no Rails, embora normalmente entregue qualquer código pesado ao _Model_. Porém, na hora de enviar uma resposta de volta ao usuário, o _Controller_ transfere as informações para a _View_. É essa transferência que é o assunto deste guia.
 
-In broad strokes, this involves deciding what should be sent as the response and calling an appropriate method to create that response. If the response is a full-blown view, Rails also does some extra work to wrap the view in a layout and possibly to pull in partial views. You'll see all of those paths later in this guide.
+Em linhas gerais, isso envolve decidir o que deve ser enviado como resposta e chamar um método apropriado para criar essa resposta. Se a resposta for uma _view_ completa, o Rails também fará um trabalho extra para encapsular a _view_ em um layout e, possivelmente, obter as _partials_. Você verá todos esses caminhos posteriormente neste guia.
 
-Creating Responses
+Criando respostas
 ------------------
 
-From the controller's point of view, there are three ways to create an HTTP response:
+Do ponto de vista do _controller_, há três maneiras de criar uma resposta HTTP:
 
-* Call `render` to create a full response to send back to the browser
-* Call `redirect_to` to send an HTTP redirect status code to the browser
-* Call `head` to create a response consisting solely of HTTP headers to send back to the browser
+* Chamar `render` para criar uma resposta completa e enviar de volta ao navegador
+* Chamar `redirect_to` para enviar um _status code_ HTTP de redirecionamento para o navegador
+* Chamar `head` para criar uma resposta que consiste apenas em cabeçalhos HTTP para enviar de volta ao navegador
 
 ### Rendering by Default: Convention Over Configuration in Action
 
