@@ -1063,13 +1063,13 @@ you attempt to do just that on the new article form
 
 ![Form With Errors](images/getting_started/form_with_errors.png)
 
-### Updating Articles
+### Atualizando Artigos
 
-We've covered the "CR" part of CRUD. Now let's focus on the "U" part, updating
-articles.
+Cobrimos a parte "CR" do CRUD. Agora vamos nos concentrar na parte "U", atualizando
+artigos.
 
-The first step we'll take is adding an `edit` action to the `ArticlesController`,
-generally between the `new` and `create` actions, as shown:
+O primeiro passo que vamos dar é adicionar uma ação `edit` ao `ArticlesController`,
+geralmente entre as ações `new` e` create`:
 
 ```ruby
 def new
@@ -1091,9 +1091,9 @@ def create
 end
 ```
 
-The view will contain a form similar to the one we used when creating
-new articles. Create a file called `app/views/articles/edit.html.erb` and make
-it look as follows:
+A _view_ conterá um formulário semelhante ao que usamos para criar novos artigos.
+Crie um arquivo chamado `app/views/articles/edit.html.erb` e deixe-o como
+mostrado em seguida:
 
 ```html+erb
 <h1>Edit article</h1>
@@ -1133,24 +1133,24 @@ it look as follows:
 <%= link_to 'Back', articles_path %>
 ```
 
-This time we point the form to the `update` action, which is not defined yet
-but will be very soon.
+Desta vez, apontamos o formulário para a _action_ `update`, que ainda não foi
+definida, mas em breve será.
 
-Passing the article object to the `form_with` method will automatically set the URL for
-submitting the edited article form. This option tells Rails that we want this
-form to be submitted via the `PATCH` HTTP method, which is the HTTP method you're
-expected to use to **update** resources according to the REST protocol.
+Passar o objeto artigo para o método `form_with` definirá automaticamente o URL para
+enviar o formulário do artigo editado. Esta opção informa ao Rails que o formulário
+deve ser enviado pelo método HTTP `PATCH`, que é o método HTTP que espera ser
+utilizado para o **update** dos nossos _resources_ de acordo com o protocolo REST.
 
-Also, passing a model object to `form_with`, like `model: @article` in the edit
-view above, will cause form helpers to fill in form fields with the corresponding
-values of the object.  Passing in a symbol scope such as `scope: :article`, as
-was done in the new view, only creates empty form fields.
-More details can be found in [form_with documentation]
+Além disso, passando um _model_ para `form_with`, como `model: @article` na
+_view_ _edit_ acima, fará com que os _helpers_ do _form_ preencham os campos com
+os valores correspondentes do objeto. Passando um _symbol_ de _scope_ como `scope: :article`,
+como foi feito na nova _view_, apenas exibirá os campos do formulário vazios.
+Mais detalhes podem ser encontrados em [Documentação form_with]
 (https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
 
-Next, we need to create the `update` action in
+Agora, precisamos criar a _action_ `update` no _controller_
 `app/controllers/articles_controller.rb`.
-Add it between the `create` action and the `private` method:
+Adicione-a entre os metodos `create` e `private`:
 
 ```ruby
 def create
@@ -1179,21 +1179,21 @@ private
   end
 ```
 
-The new method, `update`, is used when you want to update a record
-that already exists, and it accepts a hash containing the attributes
-that you want to update. As before, if there was an error updating the
-article we want to show the form back to the user.
+O novo método, `update`, é usado quando você deseja atualizar um registro
+que já existe, ele aceita um hash contendo os atributos que você deseja atualizar.
+Como antes, se houve um erro ao atualizar o artigo, queremos mostrar o
+formulário de volta ao usuário.
 
-We reuse the `article_params` method that we defined earlier for the create
-action.
+Nós podemos reutilizar o método `article_params` que definimos anteriormente
+para a _action_ _create_
 
-TIP: It is not necessary to pass all the attributes to `update`. For example,
-if `@article.update(title: 'A new title')` was called, Rails would only update
-the `title` attribute, leaving all other attributes untouched.
+TIP: Não é necessário passar todos os atributos para o `update`. Por exemplo,
+se `@article.update(title: 'A new title')` for chamado, o Rails vai apenas
+atualizar o atributo `title`, deixando todos os outros atrubutos como estavam.
 
-Finally, we want to show a link to the `edit` action in the list of all the
-articles, so let's add that now to `app/views/articles/index.html.erb` to make
-it appear next to the "Show" link:
+Finalmente, nós queremos mostrar o _link_ para a _action `edit`_ na lista dos
+artigos, então vamos adiciona-lo agora no arquivo
+`app/views/articles/index.html.erb` para aparecer logo após o _link_ de "Show":
 
 ```html+erb
 <table>
@@ -1214,9 +1214,8 @@ it appear next to the "Show" link:
 </table>
 ```
 
-And we'll also add one to the `app/views/articles/show.html.erb` template as
-well, so that there's also an "Edit" link on an article's page. Add this at the
-bottom of the template:
+E também iremos adicionar em `app/views/articles/show.html.erb`, assim podemos
+ter um _link_ para "Edit" na página de um artigo. Adicione no fim do seu modelo:
 
 ```html+erb
 ...
@@ -1225,9 +1224,9 @@ bottom of the template:
 <%= link_to 'Back', articles_path %>
 ```
 
-And here's how our app looks so far:
+E aqui como nossa aplicação está até agora:
 
-![Index action with edit link](images/getting_started/index_action_with_edit_link.png)
+![Índice action com link edit](images/getting_started/index_action_with_edit_link.png)
 
 ### Usando _partials_ para limpar duplicações em _views_
 
