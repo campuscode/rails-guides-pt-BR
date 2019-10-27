@@ -1232,7 +1232,7 @@ And here's how our app looks so far:
 ### Usando _partials_ para limpar duplicações em _views_
 
 Nossa página `edit` se parece muito com a página `new`; na verdade,
-ambos compartilham o mesmo código para exibir o formulário. Vamos remover esta
+ambas compartilham o mesmo código para exibir o formulário. Vamos remover esta
 duplicação usando uma _view_ _partial_. Por convenção, arquivos de _partials_
 são prefixado com um _underline_.
 
