@@ -1234,10 +1234,10 @@ And here's how our app looks so far:
 Nossa página `edit` se parece muito com a página `new`; na verdade,
 ambas compartilham o mesmo código para exibir o formulário. Vamos remover esta
 duplicação usando uma _view_ _partial_. Por convenção, arquivos de _partials_
-são prefixado com um _underline_.
+são prefixados com um _underline_.
 
-DICA: Você pode ler mais sobre _partials_ em
-[Layouts e Renderizando no Rails](layouts_and_rendering.html) guide.
+TIP: Você pode ler mais sobre _partials_ no
+guia [Layouts e Renderização no Rails](layouts_and_rendering.html).
 
 Crie um novo arquivo `app/views/articles/_form.html.erb` com o conteudo a
 seguir:
@@ -1285,7 +1285,7 @@ Para obter mais informações sobre esse uso do `form_with`, consulte
 [Estilo orientado a recursos](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with-label-Resource-oriented+style).
 
 Agora, vamos atualizar a _view_ `app/views/articles/new.html.erb` para usar a
-nova _partial_, reescrevendo ela completamente:
+nova _partial_, reescrevendo-a completamente:
 
 ```html+erb
 <h1>New article</h1>
@@ -1316,8 +1316,8 @@ DELETE /articles/:id(.:format)      articles#destroy
 ```
 
 O método `delete` roteado deve ser usado para rotas que destroem recursos. Se
-esta ação for deixada em uma simples rota `get`, pode ser possível pessoas
-maliciosas criarem url como esta:
+esta ação for deixada em uma simples rota `get`, pode ser possível que pessoas
+criem urls maliciosas como esta:
 
 ```html
 <a href='http://example.com/articles/1/destroy'>look at this cat!</a>
@@ -1339,7 +1339,7 @@ end
 ```
 
 O `ArticlesController` completo em `app/controllers/articles_controller.rb` se
-parece como isso:
+parece com isso:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -1393,11 +1393,11 @@ class ArticlesController < ApplicationController
 end
 ```
 
-Você pode chamar `destroy` nos objetos do Active Record quando desejar excluir
-eles do banco de dados. Observe que não precisamos adicionar uma visualização para esta
-ação, pois estamos redirecionando para a ação `index`.
+Você pode chamar o `destroy` nos objetos do *Active Record* quando desejar excluí-los
+do banco de dados. Observe que não precisamos adicionar uma visualização para esta
+*action*, pois estamos redirecionando para a ação `index`.
 
-Por fim, adicione um link "Destroy" ao seu modelo de ação "index"
+Por fim, adicione um link "Destroy" no *template* da sua *action* `index`
 (`app/views/articles/index.html.erb`) para agrupar todos juntos.
 
 ```html+erb
@@ -1430,21 +1430,21 @@ segundo argumento e, em seguida, as opções como outro argumento. As opções
 atributos HTML5, portanto quando o link é clicado, o Rails primeiro mostra uma
 caixa de diálogo de confirmação para o usuário e, em seguida, envia o link com
 o método `delete`. Isso é feito através do Arquivo JavaScript `rails-ujs`,
-que é automaticamente incluído no layout do aplicativo
+que é automaticamente incluído no *layout* da aplicação
 (`app/views/layouts/application.html.erb`) quando foi gerado.
 Sem esse arquivo, a caixa de diálogo de confirmação não será exibida.
 
 ![Dialogo de Confirmação](images/getting_started/confirm_dialog.png)
 
-Dica: Aprenda mais sobre JavaScript discreto em
-[Trabalhando Com JavaScript Com Rails](working_with_javascript_in_rails.html) guide.
+TIP: Aprenda mais sobre JavaScript discreto no guia
+[Trabalhando Com JavaScript Com Rails](working_with_javascript_in_rails.html).
 
 Parabêns, agora você pode criar, mostrar, listar, atualizar e destruir artigos.
 Congratulations, you can now create, show, list, update, and destroy
 articles.
 
-DICA: Em geral, o Rails encoraja usar `resources objects` em contrapartida de
-declarar as rotas manualmente. Para mais informação sobre roteamento, veja em
+TIP: Em geral, o Rails encoraja usar o método `resources` em objetos, ao invés de
+declarar as rotas manualmente. Para mais informação sobre roteamento, veja
 [Roteamento do Rails de Dentro à Fora](routing.html).
 
 Adicionando um Segundo Model
