@@ -20,9 +20,9 @@ Por Que Associações?
 Em Rails, uma _associação_ é uma conexão entre dois *models* em _Active Record_.
 Por que precisamos de associações entre *models*? Porque eles tornam as operações
 comuns mais simples e fáceis de entender em seu código. Por exemplo, considere
-um aplicativo Rails simples que inclua um modelo para autores e um modelo para
+uma aplicação Rails simples que inclua um *model* para autores e um *model* para
 livros. Cada autor pode ter vários livros. Sem associações, as declarações do
-modelo seriam assim:
+*model* seriam assim:
 
 ```ruby
 class Author < ApplicationRecord
@@ -39,8 +39,8 @@ Nós precisaríamos fazer algo assim:
 @book = Book.create(published_at: Time.now, author_id: @author.id)
 ```
 
-Ou considere excluir um autor, garantindo que todos os seus livros vão ser
-excluidos também:
+Ou considere excluir um autor, garantindo que todos os seus livros serão
+excluídos também:
 
 ```ruby
 @books = Book.where(author_id: @author.id)
@@ -50,8 +50,8 @@ end
 @author.destroy
 ```
 
-Com as associações do Active Record, podemos otimizar essas - e outras -
-operações declarando ao Rails que há uma conexão entre os dois modelos. Aqui
+Com as associações do *Active Record*, podemos otimizar essas - e outras -
+operações declarando ao Rails que há uma conexão entre os dois *models*. Aqui
 está o código revisado para configurar autores e livros:
 
 ```ruby
@@ -70,7 +70,7 @@ Com essa alteração, é mais fácil criar um novo livro para um autor específi
 @book = @author.books.create(published_at: Time.now)
 ```
 
-Excluir um autor e todos os seus livros é *muito* mais fácil:
+Excluir um autor e todos os seus livros é **muito** mais fácil:
 
 ```ruby
 @author.destroy
