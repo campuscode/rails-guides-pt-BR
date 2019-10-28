@@ -168,7 +168,7 @@ puts p.name # "Some Book"
 Sobrepondo Conveções de Nomes
 ---------------------------------
 
-E se você precisar seguir diferentes convenções de nomes or usar sua aplicação
+E se você precisar seguir convenções diferentes ou usar sua aplicação
 Rails com um banco de dados legado? Sem problemas, você pode facilmente sobrepor
 as convenções padrão.
 
