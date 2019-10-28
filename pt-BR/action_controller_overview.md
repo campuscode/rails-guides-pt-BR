@@ -64,18 +64,18 @@ The [Layouts & Rendering Guide](layouts_and_rendering.html) explains this in mor
 
 Only public methods are callable as actions. It is a best practice to lower the visibility of methods (with `private` or `protected`) which are not intended to be actions, like auxiliary methods or filters.
 
-Parameters
+Parâmetros
 ----------
 
-You will probably want to access data sent in by the user or other parameters in your controller actions. There are two kinds of parameters possible in a web application. The first are parameters that are sent as part of the URL, called query string parameters. The query string is everything after "?" in the URL. The second type of parameter is usually referred to as POST data. This information usually comes from an HTML form which has been filled in by the user. It's called POST data because it can only be sent as part of an HTTP POST request. Rails does not make any distinction between query string parameters and POST parameters, and both are available in the `params` hash in your controller:
+Você provavelmente vai querer acessar os dados enviados pelo usuário ou outros parâmetros nas *actions* do seu *controller*. Existem dois tipos de parâmetros possíveis numa aplicação *web*. O primeiro são os parâmetros que são enviados como parte da URL, chamados parâmetros de *query string*. A *query string* é tudo o que vem após o "?" na URL. O segundo tipo de parâmetro é geralmente referido como os dados de POST. Essa informação geralmente vem de um formulário HTML que foi preenchido pelo usuário. Se chamam dados de POST porque estes dados somente podem ser enviados como parte de uma requisição HTTP usando o verbo POST. O Rails não faz distinção sobre parâmetros de *query string* e parâmetros de POST, ambos são acessíveis por meio do *hash* `params` no seu *controller*:
 
 ```ruby
 class ClientsController < ApplicationController
-  # This action uses query string parameters because it gets run
-  # by an HTTP GET request, but this does not make any difference
-  # to the way in which the parameters are accessed. The URL for
-  # this action would look like this in order to list activated
-  # clients: /clients?status=activated
+  # Essa action usa parâmetros de query string porque ela é
+  # executada através de uma requisição HTTP GET, mas isso
+  # não faz nenhuma diferença para a maneira como os parâmetros
+  # são acessados. A URL para essa action seria desse jeito
+  # para mostrar os clientes ativos: /clients?status=activated
   def index
     if params[:status] == "activated"
       @clients = Client.activated
@@ -84,40 +84,38 @@ class ClientsController < ApplicationController
     end
   end
 
-  # This action uses POST parameters. They are most likely coming
-  # from an HTML form which the user has submitted. The URL for
-  # this RESTful request will be "/clients", and the data will be
-  # sent as part of the request body.
+  # Essa action usa parâmetros de POST. Eles provavelmente estão
+  # vindo de um formulário HTML que o usuário submeteu. A URL
+  # para essa requisição RESTful será "/clients", e os dados
+  # serão enviados como parte do corpo da requisição.
   def create
     @client = Client.new(params[:client])
     if @client.save
       redirect_to @client
     else
-      # This line overrides the default rendering behavior, which
-      # would have been to render the "create" view.
+      # Essa linha sobrescreve o método padrão de renderização,
+      # que seria chamado para renderizar a *view* "*create*"
       render "new"
     end
   end
 end
 ```
 
-### Hash and Array Parameters
+### Hash e Parâmetros de Array
 
-The `params` hash is not limited to one-dimensional keys and values. It can contain nested arrays and hashes. To send an array of values, append an empty pair of square brackets "[]" to the key name:
+O *hash* `params` não é limitado a um vetor unidimensional de chaves e valores. Ele pode conter *arrays* e *hashes* aninhados. Para enviar um *array* de valores, concatene um par de colchetes vazio "[]" ao nome da chave:
 
 ```
 GET /clients?ids[]=1&ids[]=2&ids[]=3
 ```
 
-NOTE: The actual URL in this example will be encoded as "/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3" as the "[" and "]" characters are not allowed in URLs. Most of the time you don't have to worry about this because the browser will encode it for you, and Rails will decode it automatically, but if you ever find yourself having to send those requests to the server manually you should keep this in mind.
+NOTA: A URL efetiva neste neste exemplo será codificada como "/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3", visto que os caracteres "[" e "]" não são permitidos em URLs. Na maioria do tempo você não precisa se preocupar com isso porque o navegador irá codificar os dados para você, e o Rails vai decodificá-los automaticamente, porém se por acaso você se encontrar na situação de ter que enviar este tipo de requisição ao servidor manualmente você deve ter em mente essa questão.
 
-The value of `params[:ids]` will now be `["1", "2", "3"]`. Note that parameter values are always strings; Rails makes no attempt to guess or cast the type.
+O valor de `params[:ids]` será neste caso `["1", "2", "3"]`. Note que os valores de parâmetros são sempre *strings*; o Rails não tenta adivinhar ou converter o tipo.
 
-NOTE: Values such as `[nil]` or `[nil, nil, ...]` in `params` are replaced
-with `[]` for security reasons by default. See [Security Guide](security.html#unsafe-query-generation)
-for more information.
+NOTA: Valores como `[nil]` ou `[nil, nil, ...]` em `params` são substituídos por `[]` por motivos de segurança por padrão. Veja o [Guia de Segurança](security.html#unsafe-query-generation) para mais informações.
 
-To send a hash, you include the key name inside the brackets:
+Para enviar um *hash*, você inclui o nome da chave dentro dos colchetes:
 
 ```html
 <form accept-charset="UTF-8" action="/clients" method="post">
@@ -128,9 +126,9 @@ To send a hash, you include the key name inside the brackets:
 </form>
 ```
 
-When this form is submitted, the value of `params[:client]` will be `{ "name" => "Acme", "phone" => "12345", "address" => { "postcode" => "12345", "city" => "Carrot City" } }`. Note the nested hash in `params[:client][:address]`.
+Quando esse formulário é enviado o valor de `params[:client]` será `{ "name" => "Acme", "phone" => "12345", "address" => { "postcode" => "12345", "city" => "Carrot City" } }`. Repare o *hash* aninhado em `params[:client][:address]`.
 
-The `params` object acts like a Hash, but lets you use symbols and strings interchangeably as keys.
+O objeto `params` atua como um *hash*, mas permite que você use *symbols* e *strings* indistintamente como chaves.
 
 ### JSON parameters
 
