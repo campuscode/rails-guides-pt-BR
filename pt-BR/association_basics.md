@@ -8,7 +8,7 @@ Esse guia cobre os recursos de associação do _Active Record_.
 
 Após ler esse guia, você saberá:
 
-* Como declarar associações entre modelos _Active Record_.
+* Como declarar associações entre *models* do _Active Record_.
 * Como entender os vários tipos de associações _Active Record_.
 * Como usar os métodos adicionados em seus modelos ao criar associações.
 
