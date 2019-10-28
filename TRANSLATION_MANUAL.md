@@ -51,6 +51,7 @@ de aplicações Rails, não devem ser traduzidos. Não traduza, coloque apenas
 * os *generators*.
 * o *middleware*.
 * a *partial*.
+* o *symbol*.
 
 ### Algumas sugestões de tradução para termos específicos
 
