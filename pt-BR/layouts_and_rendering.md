@@ -278,9 +278,9 @@ since an attacker could use this action to access security sensitive files in yo
 
 TIP: `send_file` is often a faster and better option if a layout isn't required.
 
-#### Options for `render`
+#### Opções para `render`
 
-Calls to the `render` method generally accept five options:
+As chamadas para o método `render` geralmente aceitam seis opções:
 
 * `:content_type`
 * `:layout`
@@ -289,147 +289,147 @@ Calls to the `render` method generally accept five options:
 * `:formats`
 * `:variants`
 
-##### The `:content_type` Option
+##### A opção `:content_type`
 
-By default, Rails will serve the results of a rendering operation with the MIME content-type of `text/html` (or `application/json` if you use the `:json` option, or `application/xml` for the `:xml` option.). There are times when you might like to change this, and you can do so by setting the `:content_type` option:
+Por padrão, o Rails exibirá os resultados de uma renderização com o tipo de conteúdo MIME como `text/html` (ou `application/json` se você usar a opção `:json` ou` application/xml` para a opção `:xml`.). Há momentos em que você pode alterar isso, e pode fazê-lo definindo a opção `:content_type`:
 
 ```ruby
 render template: "feed", content_type: "application/rss"
 ```
 
-##### The `:layout` Option
+##### A opção `:layout`
 
-With most of the options to `render`, the rendered content is displayed as part of the current layout. You'll learn more about layouts and how to use them later in this guide.
+Com a maioria das opções para `render`, o conteúdo renderizado é exibido como parte do layout atual. Você aprenderá mais sobre layouts e como usá-los posteriormente neste guia.
 
-You can use the `:layout` option to tell Rails to use a specific file as the layout for the current action:
+Você pode usar a opção `:layout` para que o Rails use um arquivo específico como o layout da _action_ atual:
 
 ```ruby
 render layout: "special_layout"
 ```
 
-You can also tell Rails to render with no layout at all:
+Você também pode dizer ao Rails para renderizar sem nenhum layout:
 
 ```ruby
 render layout: false
 ```
 
-##### The `:location` Option
+##### A opção `:location`
 
-You can use the `:location` option to set the HTTP `Location` header:
+Você pode usar a opção `:location` para definir o cabeçalho HTTP `Location`:
 
 ```ruby
 render xml: photo, location: photo_url(photo)
 ```
 
-##### The `:status` Option
+##### A opção `:status`
 
-Rails will automatically generate a response with the correct HTTP status code (in most cases, this is `200 OK`). You can use the `:status` option to change this:
+O Rails gerará automaticamente uma resposta com o código de status HTTP correto (na maioria dos casos, isso é `200 OK`). Você pode usar a opção `:status` para alterar isso:
 
 ```ruby
 render status: 500
 render status: :forbidden
 ```
 
-Rails understands both numeric status codes and the corresponding symbols shown below.
+O Rails entende os códigos númericos de status e os símbolos correspondentes mostrados abaixo.
 
-| Response Class      | HTTP Status Code | Symbol                           |
-| ------------------- | ---------------- | -------------------------------- |
-| **Informational**   | 100              | :continue                        |
-|                     | 101              | :switching_protocols             |
-|                     | 102              | :processing                      |
-| **Success**         | 200              | :ok                              |
-|                     | 201              | :created                         |
-|                     | 202              | :accepted                        |
-|                     | 203              | :non_authoritative_information   |
-|                     | 204              | :no_content                      |
-|                     | 205              | :reset_content                   |
-|                     | 206              | :partial_content                 |
-|                     | 207              | :multi_status                    |
-|                     | 208              | :already_reported                |
-|                     | 226              | :im_used                         |
-| **Redirection**     | 300              | :multiple_choices                |
-|                     | 301              | :moved_permanently               |
-|                     | 302              | :found                           |
-|                     | 303              | :see_other                       |
-|                     | 304              | :not_modified                    |
-|                     | 305              | :use_proxy                       |
-|                     | 307              | :temporary_redirect              |
-|                     | 308              | :permanent_redirect              |
-| **Client Error**    | 400              | :bad_request                     |
-|                     | 401              | :unauthorized                    |
-|                     | 402              | :payment_required                |
-|                     | 403              | :forbidden                       |
-|                     | 404              | :not_found                       |
-|                     | 405              | :method_not_allowed              |
-|                     | 406              | :not_acceptable                  |
-|                     | 407              | :proxy_authentication_required   |
-|                     | 408              | :request_timeout                 |
-|                     | 409              | :conflict                        |
-|                     | 410              | :gone                            |
-|                     | 411              | :length_required                 |
-|                     | 412              | :precondition_failed             |
-|                     | 413              | :payload_too_large               |
-|                     | 414              | :uri_too_long                    |
-|                     | 415              | :unsupported_media_type          |
-|                     | 416              | :range_not_satisfiable           |
-|                     | 417              | :expectation_failed              |
-|                     | 421              | :misdirected_request             |
-|                     | 422              | :unprocessable_entity            |
-|                     | 423              | :locked                          |
-|                     | 424              | :failed_dependency               |
-|                     | 426              | :upgrade_required                |
-|                     | 428              | :precondition_required           |
-|                     | 429              | :too_many_requests               |
-|                     | 431              | :request_header_fields_too_large |
-|                     | 451              | :unavailable_for_legal_reasons   |
-| **Server Error**    | 500              | :internal_server_error           |
-|                     | 501              | :not_implemented                 |
-|                     | 502              | :bad_gateway                     |
-|                     | 503              | :service_unavailable             |
-|                     | 504              | :gateway_timeout                 |
-|                     | 505              | :http_version_not_supported      |
-|                     | 506              | :variant_also_negotiates         |
-|                     | 507              | :insufficient_storage            |
-|                     | 508              | :loop_detected                   |
-|                     | 510              | :not_extended                    |
-|                     | 511              | :network_authentication_required |
+| Classe da Resposta  | Código de Status HTTP      | Símbolo                          |
+| ------------------- | -------------------------- | -------------------------------- |
+| **Informational**   | 100                        | :continue                        |
+|                     | 101                        | :switching_protocols             |
+|                     | 102                        | :processing                      |
+| **Success**         | 200                        | :ok                              |
+|                     | 201                        | :created                         |
+|                     | 202                        | :accepted                        |
+|                     | 203                        | :non_authoritative_information   |
+|                     | 204                        | :no_content                      |
+|                     | 205                        | :reset_content                   |
+|                     | 206                        | :partial_content                 |
+|                     | 207                        | :multi_status                    |
+|                     | 208                        | :already_reported                |
+|                     | 226                        | :im_used                         |
+| **Redirection**     | 300                        | :multiple_choices                |
+|                     | 301                        | :moved_permanently               |
+|                     | 302                        | :found                           |
+|                     | 303                        | :see_other                       |
+|                     | 304                        | :not_modified                    |
+|                     | 305                        | :use_proxy                       |
+|                     | 307                        | :temporary_redirect              |
+|                     | 308                        | :permanent_redirect              |
+| **Client Error**    | 400                        | :bad_request                     |
+|                     | 401                        | :unauthorized                    |
+|                     | 402                        | :payment_required                |
+|                     | 403                        | :forbidden                       |
+|                     | 404                        | :not_found                       |
+|                     | 405                        | :method_not_allowed              |
+|                     | 406                        | :not_acceptable                  |
+|                     | 407                        | :proxy_authentication_required   |
+|                     | 408                        | :request_timeout                 |
+|                     | 409                        | :conflict                        |
+|                     | 410                        | :gone                            |
+|                     | 411                        | :length_required                 |
+|                     | 412                        | :precondition_failed             |
+|                     | 413                        | :payload_too_large               |
+|                     | 414                        | :uri_too_long                    |
+|                     | 415                        | :unsupported_media_type          |
+|                     | 416                        | :range_not_satisfiable           |
+|                     | 417                        | :expectation_failed              |
+|                     | 421                        | :misdirected_request             |
+|                     | 422                        | :unprocessable_entity            |
+|                     | 423                        | :locked                          |
+|                     | 424                        | :failed_dependency               |
+|                     | 426                        | :upgrade_required                |
+|                     | 428                        | :precondition_required           |
+|                     | 429                        | :too_many_requests               |
+|                     | 431                        | :request_header_fields_too_large |
+|                     | 451                        | :unavailable_for_legal_reasons   |
+| **Server Error**    | 500                        | :internal_server_error           |
+|                     | 501                        | :not_implemented                 |
+|                     | 502                        | :bad_gateway                     |
+|                     | 503                        | :service_unavailable             |
+|                     | 504                        | :gateway_timeout                 |
+|                     | 505                        | :http_version_not_supported      |
+|                     | 506                        | :variant_also_negotiates         |
+|                     | 507                        | :insufficient_storage            |
+|                     | 508                        | :loop_detected                   |
+|                     | 510                        | :not_extended                    |
+|                     | 511                        | :network_authentication_required |
 
-NOTE:  If you try to render content along with a non-content status code
-(100-199, 204, 205, or 304), it will be dropped from the response.
+NOTE: Se você tentar renderizar um conteúdo junto com um código de status que não tem conteúdo
+(100-199, 204, 205 ou 304), o contéudo será descartado da resposta.
 
-##### The `:formats` Option
+##### A opção `:formats`
 
-Rails uses the format specified in the request (or `:html` by default). You can
-change this passing the `:formats` option with a symbol or an array:
+O Rails usa o formato especificado na solicitação (ou `:html` por padrão). Você pode
+mudar isso passando a opção `:formats` com um símbolo ou um _array_:
 
 ```ruby
 render formats: :xml
 render formats: [:json, :xml]
 ```
 
-If a template with the specified format does not exist an `ActionView::MissingTemplate` error is raised.
+Se um template com o formato especificado não existir, será gerado um erro `ActionView::MissingTemplate`.
 
-##### The `:variants` Option
+##### A opção `:variants`
 
-This tells Rails to look for template variations of the same format.
-You can specify a list of variants by passing the `:variants` option with a symbol or an array.
+Isso diz ao Rails para procurar variações de template do mesmo formato.
+Você pode especificar uma lista de variações passando a opção `:variants` com um símbolo ou um _array_.
 
-An example of use would be this.
+Um exemplo de uso seria este.
 
 ```ruby
 # called in HomeController#index
 render variants: [:mobile, :desktop]
 ```
 
-With this set of variants Rails will look for the following set of templates and use the first that exists.
+Com esse conjunto de variantes, o Rails procurará o conjunto de modelos a seguir e usará o primeiro que encontrar.
 
 - `app/views/home/index.html+mobile.erb`
 - `app/views/home/index.html+desktop.erb`
 - `app/views/home/index.html.erb`
 
-If a template with the specified format does not exist an `ActionView::MissingTemplate` error is raised.
+Se um template com o formato especificado não existir, será gerado um erro `ActionView::MissingTemplate`.
 
-Instead of setting the variant on the render call you may also set it on the request object in your controller action.
+Em vez de definir a variação na chamada da renderização, você também pode configurá-la no objeto de solicitação na _action_ do _controller_.
 
 ```ruby
 def index
@@ -447,13 +447,13 @@ def determine_variant
 end
 ```
 
-#### Finding Layouts
+#### Localizando Layouts
 
-To find the current layout, Rails first looks for a file in `app/views/layouts` with the same base name as the controller. For example, rendering actions from the `PhotosController` class will use `app/views/layouts/photos.html.erb` (or `app/views/layouts/photos.builder`). If there is no such controller-specific layout, Rails will use `app/views/layouts/application.html.erb` or `app/views/layouts/application.builder`. If there is no `.erb` layout, Rails will use a `.builder` layout if one exists. Rails also provides several ways to more precisely assign specific layouts to individual controllers and actions.
+Para encontrar o layout atual, o Rails primeiro procura por um arquivo em `app/views/layouts` com o mesmo nome base que o _controller_. Por exemplo, renderizar _actions_ da classe `PhotosController` usam `app/views/layouts/photos.html.erb` (ou `app/views/layouts/photos.builder`). Se não houver esse layout específico do _controller_, o Rails usará `app/views/layouts/application.html.erb` ou` app/views/layouts/application.builder`. Se não houver um layout `.erb`, o Rails usará um layout` .builder`, se houver. O Rails também fornece várias maneiras de atribuir layouts específicos com mais precisão a _controllers_ e _actions_ individuais.
 
-##### Specifying Layouts for Controllers
+##### Especificando Layouts para Controllers
 
-You can override the default layout conventions in your controllers by using the `layout` declaration. For example:
+Você pode substituir as convenções de layout padrão em seus _controllers_ usando a declaração `layout`. Por exemplo:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -462,9 +462,9 @@ class ProductsController < ApplicationController
 end
 ```
 
-With this declaration, all of the views rendered by the `ProductsController` will use `app/views/layouts/inventory.html.erb` as their layout.
+Com esta declaração, todas as _views_ renderizadas pelo `ProductsController` usarão` app/views/layouts/inventário.html.erb` como layout.
 
-To assign a specific layout for the entire application, use a `layout` declaration in your `ApplicationController` class:
+Para atribuir um layout específico para toda a aplicação, declare um `layout` na sua classe` ApplicationController`:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -473,11 +473,11 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-With this declaration, all of the views in the entire application will use `app/views/layouts/main.html.erb` for their layout.
+Com esta declaração, todas as _views_, em toda a aplicação, usarão `app/views/layouts/main.html.erb` para seu layout.
 
-##### Choosing Layouts at Runtime
+##### Escolhendo Layouts em Tempo de Execução
 
-You can use a symbol to defer the choice of layout until a request is processed:
+Você pode usar um símbolo para adiar a escolha do layout até que uma requisição seja processada:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -495,9 +495,9 @@ class ProductsController < ApplicationController
 end
 ```
 
-Now, if the current user is a special user, they'll get a special layout when viewing a product.
+Agora, se o usuário atual for um usuário especial, ele receberá um layout especial ao visualizar um produto.
 
-You can even use an inline method, such as a Proc, to determine the layout. For example, if you pass a Proc object, the block you give the Proc will be given the `controller` instance, so the layout can be determined based on the current request:
+Você pode até usar um método _inline_, como um Proc, para determinar o layout. Por exemplo, se você passar um objeto Proc, o bloco que você fornecer ao Proc receberá a instância `controller`, para que o layout possa ser determinado com base na solicitação atual:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -505,9 +505,9 @@ class ProductsController < ApplicationController
 end
 ```
 
-##### Conditional Layouts
+##### Layouts Condicionais
 
-Layouts specified at the controller level support the `:only` and `:except` options. These options take either a method name, or an array of method names, corresponding to method names within the controller:
+Os layouts especificados no nível do _controller_ suportam as opções `:only` e`:except`. Essas opções recebem um nome de método ou um _array_ de nomes de métodos que correspondem aos nomes de métodos no _controller_:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -515,11 +515,11 @@ class ProductsController < ApplicationController
 end
 ```
 
-With this declaration, the `product` layout would be used for everything but the `rss` and `index` methods.
+Com esta declaração, o layout de `product` seria usado para tudo, menos os métodos` rss` e `index`.
 
-##### Layout Inheritance
+##### Herança de Layout
 
-Layout declarations cascade downward in the hierarchy, and more specific layout declarations always override more general ones. For example:
+As declarações de layout cascateam na hierarquia, e as declarações de layout mais específicas sempre substituem as mais gerais. Por exemplo:
 
 * `application_controller.rb`
 
@@ -562,17 +562,17 @@ Layout declarations cascade downward in the hierarchy, and more specific layout 
     end
     ```
 
-In this application:
+Nesta aplicação:
 
-* In general, views will be rendered in the `main` layout
-* `ArticlesController#index` will use the `main` layout
-* `SpecialArticlesController#index` will use the `special` layout
-* `OldArticlesController#show` will use no layout at all
-* `OldArticlesController#index` will use the `old` layout
+* Em geral, as _views_ serão renderizadas no layout `main`
+* O `ArticlesController#index` usará o layout `main`
+* `SpecialArticlesController#index` usará o layout `special`
+* `OldArticlesController#show` não usará nenhum layout
+* `OldArticlesController#index` usará o layout `old`
 
-##### Template Inheritance
+##### Herança de Template
 
-Similar to the Layout Inheritance logic, if a template or partial is not found in the conventional path, the controller will look for a template or partial to render in its inheritance chain. For example:
+Similar à lógica de herança de layout, se um *template* ou _partial_ não for encontrado no caminho convencional, o _controller_ procurará um *template* ou _partial_ para renderizar em sua cadeia de herança. Por exemplo:
 
 ```ruby
 # in app/controllers/application_controller
@@ -590,13 +590,13 @@ class Admin::ProductsController < AdminController
 end
 ```
 
-The lookup order for an `admin/products#index` action will be:
+A ordem de busca para uma _action_ `admin/products#index` será:
 
 * `app/views/admin/products/`
 * `app/views/admin/`
 * `app/views/application/`
 
-This makes `app/views/application/` a great place for your shared partials, which can then be rendered in your ERB as such:
+Isso torna o `app/views/application/` um ótimo lugar para suas _partials_ compartilhadas, que podem ser renderizadas no seu ERB da seguinte forma:
 
 ```erb
 <%# app/views/admin/products/index.html.erb %>
@@ -606,11 +606,11 @@ This makes `app/views/application/` a great place for your shared partials, whic
 There are no items in this list <em>yet</em>.
 ```
 
-#### Avoiding Double Render Errors
+#### Como evitar erros de renderização dupla
 
-Sooner or later, most Rails developers will see the error message "Can only render or redirect once per action". While this is annoying, it's relatively easy to fix. Usually it happens because of a fundamental misunderstanding of the way that `render` works.
+Mais cedo ou mais tarde, a maioria das pessoas desenvolvedoras Rails verá a mensagem de erro "Só pode renderizar ou redirecionar uma vez por ação" ("Can only render or redirect once per action"). Embora isso seja irritante, é relativamente fácil de corrigir. Geralmente isso ocorre devido a um mal-entendido sobre o modo como o `render` funciona.
 
-For example, here's some code that will trigger this error:
+Por exemplo, aqui está um código que acionará esse erro:
 
 ```ruby
 def show
@@ -622,7 +622,7 @@ def show
 end
 ```
 
-If `@book.special?` evaluates to `true`, Rails will start the rendering process to dump the `@book` variable into the `special_show` view. But this will _not_ stop the rest of the code in the `show` action from running, and when Rails hits the end of the action, it will start to render the `regular_show` view - and throw an error. The solution is simple: make sure that you have only one call to `render` or `redirect` in a single code path. One thing that can help is `and return`. Here's a patched version of the method:
+Se `@book.special?` for avaliado como `true`, o Rails iniciará o processo de renderização para despejar a variável `@book` na _view_ `special_show`. Mas isso _não_ interrompe a execução do restante do código na _action_ `show`, e quando o Rails chegar ao final da ação, ele começará a renderizar a _view_ `regular_show` - e gerará um erro. A solução é simples: verifique se você tem apenas uma chamada para `render` ou `redirect` em um único fluxo de código. Uma coisa que pode ajudar é `and return`. Aqui está uma versão corrigida do método:
 
 ```ruby
 def show
@@ -634,9 +634,9 @@ def show
 end
 ```
 
-Make sure to use `and return` instead of `&& return` because `&& return` will not work due to the operator precedence in the Ruby Language.
+Certifique-se de usar `and return` em vez de `&& return`, porque `&& return` não funcionará devido à precedência do operador na linguagem Ruby.
 
-Note that the implicit render done by ActionController detects if `render` has been called, so the following will work without errors:
+Observe que a renderização implícita feita pelo `ActionController` detecta se `render` foi chamado, portanto, o seguinte código funcionará sem erros:
 
 ```ruby
 def show
@@ -646,8 +646,7 @@ def show
   end
 end
 ```
-
-This will render a book with `special?` set with the `special_show` template, while other books will render with the default `show` template.
+Isso renderizará um livro com `special?` configurado com o *template* `special_show`, enquanto outros livros serão renderizados com o template padrão `show`.
 
 ### Using `redirect_to`
 
