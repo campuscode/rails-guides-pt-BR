@@ -438,12 +438,9 @@ Agora vá em frente e crie um novo arquivo em *app/views/articles/new.html.erb* 
 
 Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem um título. A rota, o *controller*, a *action* e a *view* estão funcionando harmoniosamente! É hora de criar o formulário para um novo artigo.
 
-### The first form
+### O primeiro formulário
 
-To create a form within this template, you will use a *form
-builder*. The primary form builder for Rails is provided by a helper
-method called `form_with`. To use this method, add this code into
-`app/views/articles/new.html.erb`:
+Para criar um formulário com este template, você vai usar um construtor de formulário (*form builder*). O *form builder* principal do Rails é disponibilizado por um *helper* chamado `form_with`. Para utilizá-lo, adicione o código abaixo no arquivo `app/views/articles/new.html.erb`:
 
 ```html+erb
 <%= form_with scope: :article, local: true do |form| %>
@@ -463,21 +460,13 @@ method called `form_with`. To use this method, add this code into
 <% end %>
 ```
 
-If you refresh the page now, you'll see the exact same form from our example above.
-Building forms in Rails is really just that easy!
+Se você atualizar a página agora, você vai ver o mesmo formulário do nosso exemplo acima.
+Construir formulários no Rails é tão simples assim!
 
-When you call `form_with`, you pass it an identifying scope for this
-form. In this case, it's the symbol `:article`. This tells the `form_with`
-helper what this form is for. Inside the block for this method, the
-`FormBuilder` object - represented by `form` - is used to build two labels and two
-text fields, one each for the title and text of an article. Finally, a call to
-`submit` on the `form` object will create a submit button for the form.
+Quando você chama o `form_with`, você passa para ele a identificação do escopo para esse formulário.
+Neste caso, o *symbol* `:article`. Isso mostra ao `form_with` para qual escopo é o formulário em questão. Dentro do bloco deste método, o objeto `FormBuilder` - representado pelo `form` - é usado para construir dois titulos e dois campos textos, para cada titulo e texto de um artigo. Finalmente, uma chamada ao `submit` do objeto `form` irá criar um botão de submissão do formulário.
 
-There's one problem with this form though. If you inspect the HTML that is
-generated, by viewing the source of the page, you will see that the `action`
-attribute for the form is pointing at `/articles/new`. This is a problem because
-this route goes to the very page that you're on right at the moment, and that
-route should only be used to display the form for a new article.
+Porém, existe um problema com este formulário. Se você inspecionar o HTML que foi gerado, visualizando o código-fonte da págia, você vai ver que o atributo *action* do formulário está apontando para `/articles/new`. Isso é um problema porque esta rota vai exatamente para a mesma página que você está no momento, e essa rota deveria ser usada apenas para exibir o formulário para um novo artigo.
 
 The form needs to use a different URL in order to go somewhere else.
 This can be done quite simply with the `:url` option of `form_with`.
