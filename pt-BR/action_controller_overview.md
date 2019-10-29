@@ -351,27 +351,26 @@ in mind. It is not meant as a silver bullet to handle all of your
 parameter filtering problems. However, you can easily mix the API with your
 own code to adapt to your situation.
 
-Session
--------
+Sessão
+------
 
-Your application has a session for each user in which you can store small amounts of data that will be persisted between requests. The session is only available in the controller and the view and can use one of a number of different storage mechanisms:
+Sua aplicação possui uma sessão para cada usuário, na qual pode-se armazenar quantidades pequenas de dados que serão persistidos entre as requisições. A sessão fica disponível apenas no *controller* e na *view* e pode utilizar um dentre vários mecanismos diferentes de armazenamento:
 
-* `ActionDispatch::Session::CookieStore` - Stores everything on the client.
-* `ActionDispatch::Session::CacheStore` - Stores the data in the Rails cache.
-* `ActionDispatch::Session::ActiveRecordStore` - Stores the data in a database using Active Record. (require `activerecord-session_store` gem).
-* `ActionDispatch::Session::MemCacheStore` - Stores the data in a memcached cluster (this is a legacy implementation; consider using CacheStore instead).
+* `ActionDispatch::Session::CookieStore` - Armazena tudo no cliente.
+* `ActionDispatch::Session::CacheStore` - Armazena os dados no *cache* do Rails.
+* `ActionDispatch::Session::ActiveRecordStore` - Armazena os dados em um banco de dados utilizando o *Active Record*. (a gem `activerecord-session_store` é necessária).
+* `ActionDispatch::Session::MemCacheStore` - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o *CacheStore* como alternativa)
 
-All session stores use a cookie to store a unique ID for each session (you must use a cookie, Rails will not allow you to pass the session ID in the URL as this is less secure).
+Todos os armazenamentos de sessão utilizam um *cookie* para armazenar um ID único para cada sessão (você deve utilizar um *cookie*, o Rails não permitirá que você passe o ID da sessão na URL, pois isso é menos seguro).
 
-For most stores, this ID is used to look up the session data on the server, e.g. in a database table. There is one exception, and that is the default and recommended session store - the CookieStore - which stores all session data in the cookie itself (the ID is still available to you if you need it). This has the advantage of being very lightweight and it requires zero setup in a new application in order to use the session. The cookie data is cryptographically signed to make it tamper-proof. And it is also encrypted so anyone with access to it can't read its contents. (Rails will not accept it if it has been edited).
+Para a maioria dos armazenamentos, esse ID é utilizado para procurar os dados da sessão no servidor, por exemplo, em uma tabela do banco de dados. Há apenas uma exceção, que é o armazenamento de sessão recomendado por padrão - o *CookieStore* - que armazena todos os dados da sessão no próprio *cookie* (o ID ainda estará disponível para você, se você precisar). A vantagem é a de ser muito leve e requer zero configuração em uma nova aplicação para utilizar a sessão. Os dados do *cookie* são assinados criptograficamente para torná-los invioláveis, e também é criptografado para que qualquer pessoa com acesso não leia o seu conteúdo. (O Rails não aceitará se estiver sido editado).
+O *CookieStore* pode armazenar cerca de 4kB de dados - muito menos que os demais - mas geralmente é o suficiente. O armazenamento de grandes quantidades de dados na sessão não é recomendado, independentemente de qual armazenamento de sessão sua aplicação utiliza. Você deve evitar armazenar objetos complexos (qualquer coisa que não sejam objetos Ruby básicos, o exemplo mais comum são instâncias de modelo) na sessão, pois o servidor pode não ser capaz de remontá-los entre as requisições, o que resultará em um erro.
 
-The CookieStore can store around 4kB of data - much less than the others - but this is usually enough. Storing large amounts of data in the session is discouraged no matter which session store your application uses. You should especially avoid storing complex objects (anything other than basic Ruby objects, the most common example being model instances) in the session, as the server might not be able to reassemble them between requests, which will result in an error.
+Se as suas sessões de usuário não armazenam dados críticos ou não precisam durar por longos períodos (por exemplo, se você apenas utiliza o *flash* para mensagens), considere o uso do `ActionDispatch::Session::CacheStore`. Isso armazenará as sessões utilizando a implementação de *cache* que você configurou para a sua aplicação. A vantagem é que você pode utilizar sua infraestrutura de *cache* existente para armazenar sessões sem precisar de nenhuma configuração ou administração adicional. A desvantagem é que as sessões serão temporárias e poderão desaparecer a qualquer momento.
 
-If your user sessions don't store critical data or don't need to be around for long periods (for instance if you just use the flash for messaging), you can consider using `ActionDispatch::Session::CacheStore`. This will store sessions using the cache implementation you have configured for your application. The advantage of this is that you can use your existing cache infrastructure for storing sessions without requiring any additional setup or administration. The downside, of course, is that the sessions will be ephemeral and could disappear at any time.
+Leia mais sobre armazenamento de sessão no [Guia de Segurança](security.html).
 
-Read more about session storage in the [Security Guide](security.html).
-
-If you need a different session storage mechanism, you can change it in an initializer:
+Se você precisar de um mecanismo diferente de sessão de armazenamento, você poderá alterá-lo no *initializer*:
 
 ```ruby
 # Use the database for sessions instead of the cookie-based default,
@@ -380,21 +379,21 @@ If you need a different session storage mechanism, you can change it in an initi
 # Rails.application.config.session_store :active_record_store
 ```
 
-Rails sets up a session key (the name of the cookie) when signing the session data. These can also be changed in an initializer:
+O Rails configura uma chave de sessão (o nome do *cookie*) ao assinar os dados da sessão. Estes também podem ser alterados no *initializer*:
 
 ```ruby
 # Be sure to restart your server when you modify this file.
 Rails.application.config.session_store :cookie_store, key: '_your_app_session'
 ```
 
-You can also pass a `:domain` key and specify the domain name for the cookie:
+Você também pode passar uma chave `:domain` e especificar o nome do domínio para o *cookie*:
 
 ```ruby
 # Be sure to restart your server when you modify this file.
 Rails.application.config.session_store :cookie_store, key: '_your_app_session', domain: ".example.com"
 ```
 
-Rails sets up (for the CookieStore) a secret key used for signing the session data in `config/credentials.yml.enc`. This can be changed with `rails credentials:edit`.
+O Rails configura (para o *CookieStore*) uma chave secreta utilizada para assinar os dados da sessão em `config/credentials.yml.enc`. Isso pode ser alterado com o comando `rails credentials:edit`.
 
 ```ruby
 # aws:
@@ -405,15 +404,15 @@ Rails sets up (for the CookieStore) a secret key used for signing the session da
 secret_key_base: 492f...
 ```
 
-NOTE: Changing the secret_key_base when using the `CookieStore` will invalidate all existing sessions.
+NOTE: Alterar a secret_key_base ao utilizar o `CookieStore` invalidará todas as sessões existentes.
 
-### Accessing the Session
+### Acessando a Sessão
 
-In your controller you can access the session through the `session` instance method.
+No seu *controller*, você pode acessar a sessão através do método de instância `session`.
 
-NOTE: Sessions are lazily loaded. If you don't access sessions in your action's code, they will not be loaded. Hence you will never need to disable sessions, just not accessing them will do the job.
+NOTE: As sessões são *lazy loading* (carregamento lento). Se você não acessá-las no código da sua *action*, elas não serão carregadas. Portanto, você nunca precisará desativar as sessões, basta apenas não acessá-las.
 
-Session values are stored using key/value pairs like a hash:
+Os valores da sessão são armazenados utilizando pares de chave/valor como em um *hash*:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -431,7 +430,7 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-To store something in the session, just assign it to the key like a hash:
+Para armazenar algo na sessão, basta atribuí-lo à chave como em um *hash*:
 
 ```ruby
 class LoginsController < ApplicationController
@@ -447,7 +446,7 @@ class LoginsController < ApplicationController
 end
 ```
 
-To remove something from the session, delete the key/value pair:
+Para remover algo da sessão, exclua o par de chave/valor:
 
 ```ruby
 class LoginsController < ApplicationController
@@ -462,7 +461,7 @@ class LoginsController < ApplicationController
 end
 ```
 
-To reset the entire session, use `reset_session`.
+Para redefinir a sessão inteira, utilize `reset_session`.
 
 ### The Flash
 
