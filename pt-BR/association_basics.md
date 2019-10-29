@@ -10,7 +10,7 @@ Após ler esse guia, você saberá:
 
 * Como declarar associações entre *models* do _Active Record_.
 * Como entender os vários tipos de associações _Active Record_.
-* Como usar os métodos adicionados em seus modelos ao criar associações.
+* Como usar os métodos adicionados em seus *models* ao criar associações.
 
 --------------------------------------------------------------------------------
 
@@ -78,7 +78,7 @@ Excluir um autor e todos os seus livros é **muito** mais fácil:
 
 Para saber mais sobre os diferentes tipos de associações, leia a próxima seção
 deste guia. Em seguida há algumas dicas e truques para trabalhar com associações
-e, em seguida, uma referência completa dos métodos e opções para associações no
+e, na sequência, uma referência completa dos métodos e opções para associações no
 Rails.
 
 The Types of Associations
