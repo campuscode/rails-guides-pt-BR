@@ -502,7 +502,7 @@ Com o formulário e sua rota definidos, você será capaz de preencher o formul�
 ![Unknown action create for ArticlesController]
 (images/getting_started/unknown_action_create_for_articles.png)
 
-Agora você precisa adicionar a *action* create dentro do `ArticlesController` para que isso funcione.
+Agora você precisa adicionar a *action* `create` dentro do `ArticlesController` para que isso funcione.
 
 NOTE: Por padrão o `form_with` submete formulários usando Ajax, evitando assim o redirecionamento da página inteira. Para tornar este guia mais fácil de entender, por hora, nós desabilitamos isso ao utilizar o `local: true`.
 
