@@ -607,17 +607,18 @@ TIP: Active Record is smart enough to automatically map column names to model
 attributes, which means you don't have to declare attributes inside Rails
 models, as that will be done automatically by Active Record.
 
-### Running a Migration
+### Executando uma *Migration*
 
-As we've just seen, `rails generate model` created a _database migration_ file
-inside the `db/migrate` directory. Migrations are Ruby classes that are
-designed to make it simple to create and modify database tables. Rails uses
-rake commands to run migrations, and it's possible to undo a migration after
-it's been applied to your database. Migration filenames include a timestamp to
-ensure that they're processed in the order that they were created.
+Como acabamos de ver, `rails generate model` cria um arquivo _database migration_
+no diretório `db/migrate`. *Migrations* são classes ruby designadas para simplificar
+a criação e modificação de tabelas no banco de dados. O rails usa
+comandos *rake* para executar a *migration*, e é possível desfazê-la
+depois de ser aplicada ao seu banco de dados. Os nomes dos arquivos das *Migrations* incluem
+um *timestamp* ("carimbo de hora" em inglês) para assegurar que elas serão processadas
+na ordem em que foram criadas.
 
-If you look in the `db/migrate/YYYYMMDDHHMMSS_create_articles.rb` file
-(remember, yours will have a slightly different name), here's what you'll find:
+Se você olhar no arquivo `db/migrate/YYYYMMDDHHMMSS_create_articles.rb`
+(lembre-se, o seu pode ter o nome um pouco diferente), você encontrará:
 
 ```ruby
 class CreateArticles < ActiveRecord::Migration[6.0]
@@ -632,24 +633,24 @@ class CreateArticles < ActiveRecord::Migration[6.0]
 end
 ```
 
-The above migration creates a method named `change` which will be called when
-you run this migration. The action defined in this method is also reversible,
-which means Rails knows how to reverse the change made by this migration,
-in case you want to reverse it later. When you run this migration it will create
-an `articles` table with one string column and a text column. It also creates
-two timestamp fields to allow Rails to track article creation and update times.
+A *migration* acima cria um método chamado `change` que será chamado quando esta
+*migration* for executada. A ação definida neste método também é reversível,
+o que significa que o Rails sabe como reverter a alteração, caso você queira. Quando você executar esta *migration*, será
+criada uma tabela `articles` com uma coluna do tipo string e uma coluna do tipo text.
+Também serão criados dois campos de *timestamp*, para permitir que o Rails monitore
+quando um `Article` for criado ou atualizado.
 
-TIP: For more information about migrations, refer to [Active Record Migrations]
+TIP: Para mais informações sobre *migrations*, veja [Active Record Migrations]
 (active_record_migrations.html).
 
-At this point, you can use a rails command to run the migration:
+Agora, você pode usar um comando rails para executar a *migration*:
 
 ```bash
 $ rails db:migrate
 ```
 
-Rails will execute this migration command and tell you it created the Articles
-table.
+O Rails irá executar este comando de *migration* e dizer que a tabela de `Articles`
+foi criada.
 
 ```bash
 ==  CreateArticles: migrating ==================================================
@@ -658,11 +659,11 @@ table.
 ==  CreateArticles: migrated (0.0020s) =========================================
 ```
 
-NOTE. Because you're working in the development environment by default, this
-command will apply to the database defined in the `development` section of your
-`config/database.yml` file. If you would like to execute migrations in another
-environment, for instance in production, you must explicitly pass it when
-invoking the command: `rails db:migrate RAILS_ENV=production`.
+NOTE. Por padrão você está trabalhando em ambiente de desenvolvimento,
+por este motivo, este comando irá aplicar a *migration* no banco de dados definido na seção
+`development` do seu arquivo `config/database.yml`. Se você quiser executar a
+*migrations* em outro ambiente, para instância em produção, você deve especificar
+quando chamar o comando: `rails db:migrate RAILS_ENV=production`
 
 ### Saving data in the controller
 
