@@ -22,7 +22,7 @@ Premissas do Guia
 Este guia é projetado para iniciantes que desejam começar uma aplicação Rails do
 zero. Ele não assume que você tenha nenhuma experiência anterior com Rails.
 
-Rails é um framework para aplicações web que é executado em cima da linguagem
+O Rails é um _framework_ para aplicações web que é executado em cima da linguagem
 de programação Ruby. Se você não tem nenhuma experiência com Ruby, você vai
 achar a curva de aprendizado bastante íngrime começando direto com Rails.
 Existem diversas listas organizadas de materiais online para aprender Ruby:
