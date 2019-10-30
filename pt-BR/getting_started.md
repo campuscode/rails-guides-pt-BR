@@ -77,7 +77,7 @@ $ ruby -v
 ruby 2.5.0
 ```
 
-Rails necessita da versão Ruby 2.5.0 ou mais atual. Se o número da versão retornada
+O Rails necessita da versão Ruby 2.5.0 ou mais atual. Se o número da versão retornada
 for menor que este número, você precisará instalar uma versão do Ruby mais atual.
 
 TIP: Para instalar o Ruby e o Ruby on Rails mais rápido no seu sistema operacional Windows,
