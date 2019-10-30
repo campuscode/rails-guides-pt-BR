@@ -464,7 +464,7 @@ Se você atualizar a página, você vai ver o mesmo formulário do nosso exemplo
 Construir formulários no Rails é tão simples assim!
 
 Quando você chama o `form_with`, você passa para ele a identificação do escopo para esse formulário.
-Neste caso, o *symbol* `:article`. Isso mostra ao `form_with` para qual escopo é o formulário em questão. Dentro do bloco deste método, o objeto `FormBuilder` - representado pelo `form` - é usado para construir dois titulos e dois campos textos, para cada titulo e texto de um artigo. Finalmente, uma chamada ao `submit` do objeto `form` irá criar um botão de submissão do formulário.
+Neste caso, o *symbol* `:article`. Isso mostra ao `form_with` para qual escopo é o formulário em questão. Dentro do bloco deste método, o objeto `FormBuilder` - representado pelo `form` - é usado para construir dois títulos e dois campos textos, para cada título e texto de um artigo. Finalmente, uma chamada ao `submit` do objeto `form` criará um botão de submissão do formulário.
 
 Porém, existe um problema com este formulário. Se você inspecionar o HTML que foi gerado, visualizando o código-fonte da págia, você vai ver que o atributo *action* do formulário está apontando para `/articles/new`. Isso é um problema porque esta rota vai exatamente para a mesma página que você está no momento, e essa rota deveria ser usada apenas para exibir o formulário para um novo artigo.
 
