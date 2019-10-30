@@ -468,7 +468,7 @@ Neste caso, o *symbol* `:article`. Isso mostra ao `form_with` para qual escopo �
 
 Porém, existe um problema com este formulário. Se você inspecionar o HTML que foi gerado, visualizando o código-fonte da página, você verá que o atributo *action* do formulário está apontando para `/articles/new`. Isso é um problema porque esta rota vai exatamente para a mesma página que você está no momento, e essa rota deveria ser usada apenas para exibir o formulário para um novo artigo.
 
-O formulário precisa usar uma URL diferente para que consigar ir para outro lugar. Isso pode ser feito de forma simples com a opção `:url` do `form_with`. Normalment no Rails, a *action* que é usada para novas submissões de formários é chamada "create", então o formulário precisa apontar para esta ação.
+O formulário precisa usar uma URL diferente para que consigar ir para outro lugar. Isso pode ser feito de forma simples com a opção `:url` do `form_with`. Normalmente, no Rails, a *action* que é usada para novas submissões de formulários é chamada "create", então o formulário precisa apontar para esta ação.
 
 Altere a linha do `form_with` dentro de `app/views/articles/new.html.erb` para ficar da seguinte forma:
 
