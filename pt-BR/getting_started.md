@@ -504,7 +504,7 @@ Com o formulário e sua rota definidos, você será capaz de preencher o formul�
 
 Agora você precisa adicionar a *action* `create` dentro do `ArticlesController` para que isso funcione.
 
-NOTE: Por padrão o `form_with` submete formulários usando Ajax, evitando assim o redirecionamento da página inteira. Para tornar este guia mais fácil de entender, por hora, nós desabilitamos isso ao utilizar o `local: true`.
+NOTE: Por padrão o `form_with` submete formulários usando Ajax, evitando assim o redirecionamento da página inteira. Para tornar este guia mais fácil de entender, por ora, nós desabilitamos isso ao utilizar o `local: true`.
 
 ### Creating articles
 
