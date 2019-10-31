@@ -2456,62 +2456,64 @@ Single Table Inheritance
 ------------------------
 
 As vezes é desejável compartilhar atributos e comportamento entre _models_.
-Vamos dizer que temos _models_ de Carro, Motocicleta e Bicicleta. Queremos
-compartilhar os atributos de `cor` e `preço` e também alguns métodos para
+Vamos dizer que temos _models_ `Car`, `Motorcycle` e `Bicycle`. Queremos
+compartilhar os atributos de `color` e `price` e também alguns métodos para
 estes atributos, mas ainda mantendo comportamentos específicos para cada um
 deles, incluindo _controllers_ separados.
 
-Rails makes this quite easy. First, let's generate the base Vehicle model:
+Rails deixa isso bem fácil. Primeiro, vamos gerar o _model_ de base, `Vehicle`:
 
 ```bash
 $ rails generate model vehicle type:string color:string price:decimal{10.2}
 ```
 
-Did you note we are adding a "type" field? Since all models will be saved in a
-single database table, Rails will save in this column the name of the model that
-is being saved. In our example, this can be "Car", "Motorcycle" or "Bicycle."
-STI won't work without a "type" field in the table.
+Você notou que estamos adicionando um atributo `type`? Dado que todos os _models_
+vão ser armazenados em uma única tabela, Rails vai armazenar o nome do _model_
+nesse atributo. No nosso exemplo, as possibilidades são `Car`, `Motorcycle` ou
+`Bicycle`. STI não funciona sem um atributo `type` na tabela.
 
-Next, we will generate the three models that inherit from Vehicle. For this,
-we can use the `--parent=PARENT` option, which will generate a model that
-inherits from the specified parent and without equivalent migration (since the
-table already exists).
+Em seguida, vamos gerar os três _models_ que herdam de `Vehicle`. Para isso podemos
+usar a opção `--parent=PARENT` que vai gerar um _model_ que herda do "_parent_"
+especificado e sem uma _migration_ equivalente (dado que a tabela já existe).
 
-For example, to generate the Car model:
+Por exemplo, para gerar o _model_ `Car`:
 
 ```bash
 $ rails generate model car --parent=Vehicle
 ```
 
-The generated model will look like this:
+O _model_ gerado vai parecer com:
 
 ```ruby
 class Car < Vehicle
 end
 ```
 
-This means that all behavior added to Vehicle is available for Car too, as
-associations, public methods, etc.
+Isso significa que todo o comportamento adicionado à classe `Vehicle` estará
+disponível também na classe `Car`, incluindo as associações, métodos publicos,
+etc.
 
-Creating a car will save it in the `vehicles` table with "Car" as the `type` field:
+Criar um carro vai armazená-lo na tabela `vehicles` e popular o atributo `type`
+com o valor "_Car_":
 
 ```ruby
 Car.create(color: 'Red', price: 10000)
 ```
 
-will generate the following SQL:
+vai gerar o seguinte SQL:
 
 ```sql
 INSERT INTO "vehicles" ("type", "color", "price") VALUES ('Car', 'Red', 10000)
 ```
 
-Querying car records will just search for vehicles that are cars:
+Em uma busca por registros de carros vai simplesmente buscar veiculos que são
+do tipo _Car_.
 
 ```ruby
 Car.all
 ```
 
-will run a query like:
+vai rodar a seguinte _query_:
 
 ```sql
 SELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."type" IN ('Car')
