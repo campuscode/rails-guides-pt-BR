@@ -541,7 +541,7 @@ adicionar restrições aos valores aceitáveis:
 * `:even` - Especifica que o valor deve ser par se definido como verdadeiro. A
   mensagem padrão para esse erro é _"must be even"_.
 
-NOTA: Por padrão, `numericality` não permite valores `nil`. Você pode utilizar
+NOTE: Por padrão, `numericality` não permite valores `nil`. Você pode utilizar
 `allow_nil: true` para permitir isso.
 
 A mensagem de erro padrão é  _"is not a number"_.
@@ -683,7 +683,7 @@ class Person < ApplicationRecord
 end
 ```
 
-AVISO: Observe que alguns bancos de dados estão configurados para executar
+WARNING: Observe que alguns bancos de dados estão configurados para executar
 pesquisas que não diferenciam maiúsculas de minúsculas.
 
 A mensagem de erro padrão é _"has already been taken"_.
@@ -706,7 +706,7 @@ class Person < ApplicationRecord
 end
 ```
 
-NOTA: Os erros adicionados ao `record.errors[:base]` estão relacionados ao
+NOTE: Os erros adicionados ao `record.errors[:base]` estão relacionados ao
 estado do registro como um todo, e não a um atributo específico.
 
 O *helper* `validates_with` pega uma classe ou uma lista de classes para usar
