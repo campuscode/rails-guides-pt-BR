@@ -142,7 +142,7 @@ class Product < ApplicationRecord
 end
 ```
 
-Isso criará o *model* `Product`, mapeado em uma tabela `produtcs` na base de dados. Fazendo isso, você também
+Isso criará o *model* `Product`, mapeado em uma tabela `products` na base de dados. Fazendo isso, você também
 possuirá a habilidade de mapear as colunas de cada linha da tabela com os atributos das instâncias do seu 
 *model*. Suponha que a tabela `products` foi criada usando uma declaração SQL (ou uma de suas extensões) como:
 
