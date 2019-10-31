@@ -2461,7 +2461,7 @@ compartilhar os atributos de `color` e `price` e também alguns métodos para
 estes atributos, mas ainda mantendo comportamentos específicos para cada um
 deles, incluindo _controllers_ separados.
 
-Rails deixa isso bem fácil. Primeiro, vamos gerar o _model_ de base, `Vehicle`:
+O Rails deixa isso bem fácil. Primeiro, vamos gerar o _model_ de base, `Vehicle`:
 
 ```bash
 $ rails generate model vehicle type:string color:string price:decimal{10.2}
