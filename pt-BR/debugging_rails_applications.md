@@ -147,7 +147,7 @@ TIP: O nível de *log* padrão do Rails é `debug` em todos os ambientes de dese
 
 ### Enviando Mensagens
 
-Para enviar uma mensagem para o log ativo, use o método `logger.(debug|info|warn|error|fatal|unknown)` de dentro de um *controller*, *model* ou *mailer*:
+Para enviar uma mensagem para o *log* ativo, use o método `logger.(debug|info|warn|error|fatal|unknown)` de dentro de um *controller*, *model* ou *mailer*:
 
 ```ruby
 logger.debug "Hash com atributos de 'Person': #{@person.attributes.inspect}"
