@@ -20,9 +20,9 @@ Premissas do Guia
 -----------------
 
 Este guia é projetado para iniciantes que desejam começar uma aplicação Rails do
-zero. Ela não assume que você tenha nenhuma experiência anterior com Rails.
+zero. Ele não assume que você tenha nenhuma experiência anterior com Rails.
 
-Rails é um framework para aplicações web que é executado em cima da linguagem
+O Rails é um _framework_ para aplicações web que é executado em cima da linguagem
 de programação Ruby. Se você não tem nenhuma experiência com Ruby, você vai
 achar a curva de aprendizado bastante íngrime começando direto com Rails.
 Existem diversas listas organizadas de materiais online para aprender Ruby:
@@ -44,8 +44,8 @@ Rails é um software opinativo. Assumindo que há uma "melhor" maneira para faze
 
 A filosofia do Rails possui dois princípios fundamentais:
 
-* **Não repita a si mesmo:** DRY(don't repeat yourself) é um conceito de desenvolvimento de software que estabelece que "Todo conhecimento deve possuir uma representação única, de autoridade e livre de ambiguidades em todo o sistema.". Ao não escrever as mesmas informações repetidamente, o código fica mais facil de manter, de expandir, e com menos bugs.
-* **Convenção sobre configuração:** Rails possui convenções sobre as melhores maneiras de fazer muitas coisas em uma aplicação web, devido a essas convenções você não precisa especificar minúcias através de arquivos de configuração infinitos.
+* **Não repita a si mesmo:** DRY (don't repeat yourself) é um conceito de desenvolvimento de software que estabelece que "Todo conhecimento deve possuir uma representação única, de autoridade e livre de ambiguidades em todo o sistema.". Ao não escrever as mesmas informações repetidamente, o código fica mais fácil de manter, de expandir e com menos _bugs_.
+* **Convenção sobre configuração:** O Rails possui convenções sobre as melhores maneiras de fazer muitas coisas em uma aplicação web, devido a essas convenções você não precisa especificar detalhes através de arquivos de configuração infinitos.
 
 
 Criando um Novo Projeto em Rails
@@ -58,7 +58,7 @@ Seguindo este guia, você irá criar um projeto em *Rails* chamado de
 `blog`, um *weblog* (muito) simples. Antes de você começar a construir a aplicação,
 você precisa ter certeza de ter o *Rails* instalado.
 
-DICA: Os exemplos à seguir usam `$` para representar seu *prompt* de terminal em um
+TIP: Os exemplos à seguir usam `$` para representar seu *prompt* de terminal em um
 sistema operacional baseado em UNIX, mesmo que ele tenha sido customizado para parecer diferente.
 Se você está utilizando Windows, seu *prompt* será parecido com algo como `c:\source_code>`
 
@@ -77,10 +77,10 @@ $ ruby -v
 ruby 2.5.0
 ```
 
-Rails necessita da versão Ruby 2.5.0 ou mais atual. Se o número da versão retornada
+O Rails necessita da versão Ruby 2.5.0 ou mais atual. Se o número da versão retornada
 for menor que este número, você precisará instalar uma versão do Ruby mais atual.
 
-DICA: Para instalar o Ruby e o Ruby on Rails mais rápido no seu sistema operacional Windows,
+TIP: Para instalar o Ruby e o Ruby on Rails mais rápido no seu sistema operacional Windows,
 você pode usar o [Rails Installer](http://railsinstaller.org). Para mais informações de instalação
 de outros Sistemas Operacionais, dê uma olhada em [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/).
 
@@ -115,7 +115,7 @@ Se esse comando retornar algo como "Rails 6.0.0", você está pronto para contin
 
 ### Criando a Aplicação Blog
 
-Rails vem com vários scripts chamados *generators* que são projetados para tornar
+O Rails vem com vários scripts chamados *generators* que são projetados para tornar
 sua vida de desenvolvedor fácil, criando tudo que é necessário para começar a
 trabalhar em uma tarefa em particular. Um desses é o *generator* de nova aplicação,
 que irá te fornecer a base de uma nova aplicação em Rails para que você não precise
@@ -132,12 +132,12 @@ Este comando irá criar uma aplicação em Rails chamada Blog em um diretório `
 e irá instalar as dependências das *gems* que já foram mencionadas no `Gemfile`
 usando `bundle install`.
 
-OBS: Se você está utilizando um subsistema Windows para Linux então existem
+NOTE: Se você está utilizando um subsistema Windows para Linux então existem
 algumas limitações nas notificações dos arquivos do sistema que significa que você
-deve disabilitar as gems `spring` e `listen` que poderá ser feito rodando o comando
+deve desabilitar as gems `spring` e `listen`, o que poderá ser feito rodando o comando
 `rails new blog --skip-spring --skip-listen`.
 
-DICA: Você pode ver todas as opções de linha de comando que a aplicação Rails
+TIP: Você pode ver todas as opções de linha de comando que a aplicação Rails
 aceita rodando o comando `rails new -h`.
 
 Depois de criar a aplicação blog, entre em sua pasta:
