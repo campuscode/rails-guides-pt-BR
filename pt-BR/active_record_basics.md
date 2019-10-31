@@ -207,26 +207,15 @@ NOTE: Active Record does not support using non-primary key columns named `id`.
 CRUD: Lendo e Escrevendo Dados
 ------------------------------
 
-CRUD is an acronym for the four verbs we use to operate on data: **C**reate,
-**R**ead, **U**pdate and **D**elete. Active Record automatically creates methods
-to allow an application to read and manipulate data stored within its tables.
-
 CRUD é um acrônimo para os quatro verbos que usamos para operar com dados: ***C**reate*, 
 ***R**ead*, ***U**pdate* e ***D**elete*. O *Active Record* irá criar, automáticamente, métodos que 
 permitem uma aplicação ler e manipular dados armazenados em suas tabelas.
 
 ### *Create*
 
-Active Record objects can be created from a hash, a block, or have their
-attributes manually set after creation. The `new` method will return a new
-object while `create` will return the object and save it to the database.
-
 Os objetos do *Active Record* pode ser criados a partir de um *hash*, um bloco ou 
 ter seus atributos definidos manualmente após a criação. O método `new` irá retornar 
 um novo objeto, enquanto `create` irá retornar um objeto e salvá-lo na base de dados.
-
-For example, given a model `User` with attributes of `name` and `occupation`,
-the `create` method call will create and save a new record into the database:
 
 Por exemplo, dado um *model* `User` com os atributos `name` e `occupation`, 
 chamando o método `create` irá criar e salvar um novo registro na base de dados:
@@ -234,8 +223,6 @@ chamando o método `create` irá criar e salvar um novo registro na base de dado
 ```ruby
 user = User.create(name: "David", occupation: "Code Artist")
 ```
-
-Using the `new` method, an object can be instantiated without being saved:
 
 Usando o método `new`, um objeto pode ser instanciado sem ser salvo:
 
@@ -245,12 +232,7 @@ user.name = "David"
 user.occupation = "Code Artist"
 ```
 
-A call to `user.save` will commit the record to the database.
-
 Chamando `user.save` irá enviar o registro para a base de dados.
-
-Finally, if a block is provided, both `create` and `new` will yield the new
-object to that block for initialization:
 
 Finalmente, se um block for fornecido, ambos `create` e `new` produzirão 
 o novo objeto daquele bloco para a inicialização:
@@ -262,10 +244,7 @@ user = User.new do |u|
 end
 ```
 
-### Read
-
-Active Record provides a rich API for accessing data within a database. Below
-are a few examples of different data access methods provided by Active Record.
+### *Read*
 
 O *Active Record* provê um API rico para acessar os dados na base de dados. Abaixo 
 temos alguns exemplos de diferentes métodos para acessar os dados providos pelo
@@ -291,18 +270,12 @@ david = User.find_by(name: 'David')
 users = User.where(name: 'David', occupation: 'Code Artist').order(created_at: :desc)
 ```
 
-You can learn more about querying an Active Record model in the [Active Record
-Query Interface](active_record_querying.html) guide.
-
 Você pode aprender mais sobre como consultar um *model* do *Active Record* no guia 
 [Interface de Consulta do *Active Record*](active_record_querying.html).
 
-### Update
+### *Update*
 
-Once an Active Record object has been retrieved, its attributes can be modified
-and it can be saved to the database.
-
-Uma vez que o objeto do *Active Record* tenha sido recuperado, seus atributos podem
+Uma vez que o objeto do *Active Record* for recuperado, seus atributos podem
 ser modificados e salvos na base de dados.
 
 ```ruby
@@ -310,9 +283,6 @@ user = User.find_by(name: 'David')
 user.name = 'Dave'
 user.save
 ```
-
-A shorthand for this is to use a hash mapping attribute names to the desired
-value, like so:
 
 Um atalho para isso seria usar *hash* mapeando o nome dos atributos para o valor
 desejado, como a seguir:
@@ -322,22 +292,15 @@ user = User.find_by(name: 'David')
 user.update(name: 'Dave')
 ```
 
-This is most useful when updating several attributes at once. If, on the other
-hand, you'd like to update several records in bulk, you may find the
-`update_all` class method useful:
-
 Isto é mais útil quando atualizamos diversos atributos de uma vez. Se, por outro lado, 
 você gostaria de atualizar diversos registros em massa, você pode achar o método da
-classe `update_all`  útil:
+classe `update_all` útil:
 
 ```ruby
 User.update_all "max_login_attempts = 3, must_change_password = 'true'"
 ```
 
-### Delete
-
-Likewise, once retrieved an Active Record object can be destroyed which removes
-it from the database.
+### *Delete*
 
 Da mesma forma, uma vez recuparado um objeto do *Active Record*, o mesmo pode ser
 destruído, que o remove da base de dados.
@@ -346,9 +309,6 @@ destruído, que o remove da base de dados.
 user = User.find_by(name: 'David')
 user.destroy
 ```
-
-If you'd like to delete several records in bulk, you may use `destroy_by`
-or `destroy_all` method:
 
 Se você quer excluir diversos registros em massa, você pode utilizar os métodos
 `destroy_by` ou `destroy_all`:
