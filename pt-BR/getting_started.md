@@ -582,30 +582,32 @@ This action is now displaying the parameters for the article that are coming in
 from the form. However, this isn't really all that helpful. Yes, you can see the
 parameters but nothing in particular is being done with them.
 
-### Creating the Article model
+### Criando um  *model* para o `Article` (artigo, inglês)
 
-Models in Rails use a singular name, and their corresponding database tables
-use a plural name. Rails provides a generator for creating models, which most
-Rails developers tend to use when creating new models. To create the new model,
-run this command in your terminal:
+O *model*, no rails, utiliza o nome no singular, e a sua tabela correspondente no
+banco de dados utiliza o nome no plural. O Rails fornece um gerador para criar
+*models* via linha de comando, o que é utilizado pela maioria das pessoas desenvolvedoras
+na hora de criar novos *models*.
+
+Para criar um *model*, execute a linha de comando abaixo:
 
 ```bash
 $ rails generate model Article title:string text:text
 ```
 
-With that command we told Rails that we want an `Article` model, together
-with a _title_ attribute of type string, and a _text_ attribute
-of type text. Those attributes are automatically added to the `articles`
-table in the database and mapped to the `Article` model.
+Com esse comando nós dizemos ao Rails que queremos criar um *model* chamado `Article`,
+com um atributo chamado _title_ do tipo string, e um atributo _text_ do tipo text.
+Esses atributos serão automaticamente adicionados à tabela `articles` no banco de dados,
+e mapeadas no *model* `Article`.
 
-Rails responded by creating a bunch of files. For now, we're only interested
-in `app/models/article.rb` and `db/migrate/20140120191729_create_articles.rb`
-(your name could be a bit different). The latter is responsible for creating
-the database structure, which is what we'll look at next.
+O Rails irá criar um monte de arquivos. Por enquanto, nós estamos apenas
+interessados no `app/models/article.rb` e `db/migrate/20140120191729_create_articles.rb`
+(o nome pode ficar um pouco diferente). O último é responsável por criar a estrutura
+do banco de dados, o que é a próxima coisa que iremos olhar.
 
-TIP: Active Record is smart enough to automatically map column names to model
-attributes, which means you don't have to declare attributes inside Rails
-models, as that will be done automatically by Active Record.
+TIP: O *Active Record* é inteligente o suficiente para automaticamente mapear
+o nome das colunas para os atributos do *model*, o que significa que você
+não precisa declará-los dentro do  *model*, já que o *Active Record* faz automaticamente.
 
 ### Running a Migration
 
