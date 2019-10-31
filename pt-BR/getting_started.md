@@ -611,7 +611,7 @@ models, as that will be done automatically by Active Record.
 
 Como acabamos de ver, `rails generate model` cria um arquivo _database migration_
 no diretório `db/migrate`. *Migrations* são classes ruby designadas para simplificar
-a criação e modificação de tabelas no banco de dados. O rails usa
+a criação e modificação de tabelas no banco de dados. O Rails usa
 comandos *rake* para executar a *migration*, e é possível desfazê-la
 depois de ser aplicada ao seu banco de dados. Os nomes dos arquivos das *Migrations* incluem
 um *timestamp* ("carimbo de hora" em inglês) para assegurar que elas serão processadas
@@ -661,7 +661,7 @@ foi criada.
 
 NOTE. Por padrão você está trabalhando em ambiente de desenvolvimento,
 por este motivo, este comando irá aplicar a *migration* no banco de dados definido na seção
-`development` do seu arquivo `config/database.yml`. Se você quiser executar a
+`development` do seu arquivo `config/database.yml`. Se você quiser executar as
 *migrations* em outro ambiente, para instância em produção, você deve especificar
 quando chamar o comando: `rails db:migrate RAILS_ENV=production`
 
