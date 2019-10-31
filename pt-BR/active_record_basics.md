@@ -164,16 +164,16 @@ p.name = "Some Book"
 puts p.name # "Some Book"
 ```
 
-Overriding the Naming Conventions
+Sobrepondo Conveções de Nomes
 ---------------------------------
 
-What if you need to follow a different naming convention or need to use your
-Rails application with a legacy database? No problem, you can easily override
-the default conventions.
+E se você precisar seguir convenções diferentes ou usar sua aplicação
+Rails com um banco de dados legado? Sem problemas, você pode facilmente sobrepor
+as convenções padrão.
 
-`ApplicationRecord` inherits from `ActiveRecord::Base`, which defines a
-number of helpful methods. You can use the `ActiveRecord::Base.table_name=`
-method to specify the table name that should be used:
+`ApplicationRecord` herda de `ActiveRecord::Base`, que define vários métodos
+úteis. Você pode usar o método `ActiveRecord::Base.table_name=` para especificar
+o nome da tabela que deve ser usada:
 
 ```ruby
 class Product < ApplicationRecord
@@ -181,9 +181,9 @@ class Product < ApplicationRecord
 end
 ```
 
-If you do so, you will have to define manually the class name that is hosting
-the fixtures (my_products.yml) using the `set_fixture_class` method in your test
-definition:
+Se assim o fizer, você tem que definir manualmente o nome da classe que hospeda
+as *fixtures* (my_products.yml) usando o método `set_fixture_class` na definição
+do seu teste:
 
 ```ruby
 class ProductTest < ActiveSupport::TestCase
@@ -193,8 +193,8 @@ class ProductTest < ActiveSupport::TestCase
 end
 ```
 
-It's also possible to override the column that should be used as the table's
-primary key using the `ActiveRecord::Base.primary_key=` method:
+É possível sobrepor a coluna que deve ser usada como chave primária da tabela
+usando o método `ActiveRecord::Base.primary_key=` method:
 
 ```ruby
 class Product < ApplicationRecord
@@ -202,7 +202,8 @@ class Product < ApplicationRecord
 end
 ```
 
-NOTE: Active Record does not support using non-primary key columns named `id`.
+NOTE: O *Active Record* não suporta o uso de colunas que não são do tipo chave
+primária nomeadas `id`.
 
 CRUD: Reading and Writing Data
 ------------------------------
