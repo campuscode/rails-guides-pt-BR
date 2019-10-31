@@ -321,11 +321,10 @@ User.destroy_by(name: 'David')
 User.destroy_all
 ```
 
-Validations
+Validações
 -----------
 
-Active Record allows you to validate the state of a model before it gets written
-into the database. There are several methods that you can use to check your
+O Active Record nos permite validar o estado de um model antes de ser escrito no banco de dados. There are several methods that you can use to check your
 models and validate that an attribute value is not empty, is unique and not
 already in the database, follows a specific format, and many more.
 
