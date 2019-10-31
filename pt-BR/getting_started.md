@@ -495,7 +495,7 @@ welcome_index GET    /welcome/index(.:format)     welcome#index
          root GET    /                            welcome#index
 ```
 
-O *helper* `articles_path` diz ao Rails para pontar o formulário para o padrão de URI associado com o prefixo `articles`; e o formulário vai (por padrão) enviar uma requisição `POST` para esta rota. Isto esta associado com a *action* `create` do `controller` atual, no caso o `ArticlesController`.
+O *helper* `articles_path` diz ao Rails para apontar o formulário para o padrão de URI associado com o prefixo `articles`; e o formulário vai (por padrão) enviar uma requisição `POST` para esta rota. Isto esta associado com a *action* `create` do `controller` atual, no caso o `ArticlesController`.
 
 Com o formulário e sua rota definidos, você será capaz de preencher o formulário e clicar no botão *submit* para iniciar o processo de criação de um novo artigo, então vá em frente e faça isso. Quando você enviar, você verá um erro familiar:
 
