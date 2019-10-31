@@ -461,7 +461,7 @@ Para criar um formulário com este template, você vai usar um construtor de for
 ```
 
 Se você atualizar a página, você vai ver o mesmo formulário do nosso exemplo acima.
-Construir formulários no Rails é tão simples assim!
+Construir formulários no Rails é simples assim!
 
 Quando você chama o `form_with`, você passa para ele a identificação do escopo para esse formulário.
 Neste caso, o *symbol* `:article`. Isso mostra ao `form_with` para qual escopo é o formulário em questão. Dentro do bloco deste método, o objeto `FormBuilder` - representado pelo `form` - é usado para construir dois títulos e dois campos textos, para cada título e texto de um artigo. Finalmente, uma chamada ao `submit` do objeto `form` criará um botão de submissão do formulário.
