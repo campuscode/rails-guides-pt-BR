@@ -126,7 +126,7 @@ Rails.logger = Log4r::Logger.new("Application Log")
 ```
 
 
-TIP: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de registro é criado com o nome do ambiente no qual a aplicação está sendo executada.
+TIP: Por padrão, cada *log* é criado em `Rails.root/log/` e o arquivo de registro é criado com o nome do ambiente no qual a aplicação está sendo executada.
 
 
 ### Níveis de Log
