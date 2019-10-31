@@ -22,7 +22,7 @@ Premissas do Guia
 Este guia é projetado para iniciantes que desejam começar uma aplicação Rails do
 zero. Ele não assume que você tenha nenhuma experiência anterior com Rails.
 
-Rails é um framework para aplicações web que é executado em cima da linguagem
+O Rails é um _framework_ para aplicações web que é executado em cima da linguagem
 de programação Ruby. Se você não tem nenhuma experiência com Ruby, você vai
 achar a curva de aprendizado bastante íngrime começando direto com Rails.
 Existem diversas listas organizadas de materiais online para aprender Ruby:
@@ -586,7 +586,7 @@ parameters but nothing in particular is being done with them.
 
 O *model*, no rails, utiliza o nome no singular, e a sua tabela correspondente no
 banco de dados utiliza o nome no plural. O Rails fornece um gerador para criar
-models via linha de comando, o que é utilizado pela maioria dos desenvolvedores
+*models* via linha de comando, o que é utilizado pela maioria das pessoas desenvolvedoras
 na hora de criar novos *models*.
 
 Para criar um *model*, execute a linha de comando abaixo:
@@ -607,7 +607,7 @@ do banco de dados, o que é a próxima coisa que iremos olhar.
 
 TIP: O *Active Record* é inteligente o suficiente para automaticamente mapear
 o nome das colunas para os atributos do *model*, o que significa que você
-não precisa declará-los dentro do  *model*, já que o *active record* faz automaticamente.
+não precisa declará-los dentro do  *model*, já que o *Active Record* faz automaticamente.
 
 ### Running a Migration
 
