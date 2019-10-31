@@ -703,7 +703,7 @@ capaz de criar um `article`. Tente! Você verá um erro parecido com esse:
 
 O Rails tem diversas *features* de segurança que te ajudam a construir uma aplicação segura,
 e você está lidando com uma delas agora. Esta se chama [strong parameters](action_controller_overview.html#strong-parameters) (parâmetros fortes),
-o que nos obrigam a dizer ao Rails exatamente quais parâmetros estão permitidos
+que nos obrigam a dizer ao Rails exatamente quais parâmetros estão permitidos
 nas *actions* do *controller*.
 
 Porquê é necessário? A habilidade de salvar todos os parâmetros do controller no
@@ -712,20 +712,20 @@ mas essa conveniência pode ser utilizada de forma maliciosa. E se um *request*
 para o servidor for trabalhado para fazer parecer um novo formulário de `artcle`,
 mas também incluir campus extras com valores que violam a integridade da sua aplicação?
 Isso possibilitaria a entrada/atribuição de dados ruins no seu *model* e banco
-de dados junto com dados bons - Podendo, potencialmente, quebrar sua aplicação ou pior.
+de dados junto com dados bons - Podendo, potencialmente, quebrar sua aplicação ou algo pior.
 
 Nós definimos quais são os parâmetros permitidos para prevenir atribuições de
-dados indesejados. Nesse caso, queremos permitir e requerer os parâmetros `title`
+dados indesejados. Nesse caso, queremos permitir e exigir os parâmetros `title`
 e `text` para uso válido do `create`. A sintaxe para isso utiliza `require` e
 `permit`. A alteração irá envolver uma linha na *action* `create`.
 
 ```ruby
   @article = Article.new(params.require(:article).permit(:title, :text))
 ```
-Frequentemente refatoramos o código para trazer esta alteração para dentro de
+Frequentemente refatoramos o código para trazer esta alteração para dentro do
 seu próprio método, para que possa ser reutilizado por diferentes *actions* no
 mesmo *controller*, por exemplo `create` e `update`. Além do problema de atribuição
-de dados ruins, o método frequentemente é colocado como privado, para termos
+de dados inconsistentes, o método frequentemente é colocado como privado, para termos
 certeza que não será possível chamá-lo fora do seu contexto. Aqui está o resultado:
 
 ```ruby
