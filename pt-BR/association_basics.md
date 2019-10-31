@@ -2468,7 +2468,7 @@ $ rails generate model vehicle type:string color:string price:decimal{10.2}
 ```
 
 Você notou que estamos adicionando um atributo `type`? Dado que todos os _models_
-vão ser armazenados em uma única tabela, Rails vai armazenar o nome do _model_
+serão armazenados em uma única tabela, o Rails vai armazenar o nome do _model_
 nesse atributo. No nosso exemplo, as possibilidades são `Car`, `Motorcycle` ou
 `Bicycle`. STI não funciona sem um atributo `type` na tabela.
 
