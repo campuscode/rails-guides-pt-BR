@@ -38,10 +38,10 @@ Seguindo essa convenção será possível utilizar o gerador de rotas padrão (e
 
 OBS: A convenção para nomenclatura de *controllers* difere da convenção para nomenclatura de *models*, que devem ser nomeados na forma singular.
 
-Methods and Actions
+Métodos e Actions
 -------------------
 
-A controller is a Ruby class which inherits from `ApplicationController` and has methods just like any other class. When your application receives a request, the routing will determine which controller and action to run, then Rails creates an instance of that controller and runs the method with the same name as the action.
+Um *controller* é uma classe do Ruby que herda de `ApplicationController` e tem métodos como qualquer outra classe. Quando a sua aplicação recebe uma requisição, o roteamento irá determinar qual *controller* e qual *action* serão executados, e então o Rails irá criar uma instância desse *controller* e executará o método que possui o mesmo nome da *action*.
 
 ```ruby
 class ClientsController < ApplicationController
@@ -50,7 +50,7 @@ class ClientsController < ApplicationController
 end
 ```
 
-As an example, if a user goes to `/clients/new` in your application to add a new client, Rails will create an instance of `ClientsController` and call its `new` method. Note that the empty method from the example above would work just fine because Rails will by default render the `new.html.erb` view unless the action says otherwise. By creating a new `Client`, the `new` method can make a `@client` instance variable accessible in the view:
+Como exemplo, se um usuário acessar `/clients/new` na sua aplicação para adicionar um novo cliente, o Rails irá criar uma instância de `ClientsController` e irá chamar o método `new` dele. Repare que o método vazio do exemplo acima funcionaria normalmente porque o Rails por padrão vai renderizar a *view* `new.html.erb` a menos que a `action` indique outro caminho. Ao criar um novo `Client` o método `new` pode tornar uma variável de instância `@client` acessível na `view`.
 
 ```ruby
 def new
@@ -58,11 +58,11 @@ def new
 end
 ```
 
-The [Layouts & Rendering Guide](layouts_and_rendering.html) explains this in more detail.
+O [Guia de Layouts e Renderização](layouts_and_rendering.html) explica essa etapa mais detalhadamente.
 
-`ApplicationController` inherits from `ActionController::Base`, which defines a number of helpful methods. This guide will cover some of these, but if you're curious to see what's in there, you can see all of them in the [API documentation](https://api.rubyonrails.org/classes/ActionController.html) or in the source itself.
+`ApplicationController` herda de `ActionController::Base`, que define uma quantidade de métodos úteis. Este guia irá cobrir alguns destes métodos, mas se você estiver com curiosidade para ver o que há neles, você pode ver todos eles na [Documentação da API](https://api.rubyonrails.org/classes/ActionController.html) ou no próprio código fonte.
 
-Only public methods are callable as actions. It is a best practice to lower the visibility of methods (with `private` or `protected`) which are not intended to be actions, like auxiliary methods or filters.
+Apenas métodos públicos são executáveis como *actions*. É uma boa prática diminuir a visibilidade de métodos (utilizando `private` ou `protected`) que não foram designados para serem *actions*, como métodos auxiliares ou filtros.
 
 Parameters
 ----------
