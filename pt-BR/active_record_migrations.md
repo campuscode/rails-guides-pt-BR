@@ -4,17 +4,15 @@
 Active Record Migrations
 ========================
 
-Migrations are a feature of Active Record that allows you to evolve your
-database schema over time. Rather than write schema modifications in pure SQL,
-migrations allow you to use an easy Ruby DSL to describe changes to your
-tables.
+*Migrations* são uma funcionalidade do *Active Record* que nos permite expandir nosso esquema do banco de dados com o tempo. Ao invés de escrever modificações no esquema em SQL puro,
+*migrations* nos permite usar uma *Ruby DSL* simples para descrever as mudanças em nossas tabelas.
 
-After reading this guide, you will know:
+Depois de ler esse guia, você saberá:
 
-* The generators you can use to create them.
-* The methods Active Record provides to manipulate your database.
-* The rails commands that manipulate migrations and your schema.
-* How migrations relate to `schema.rb`.
+* Os *generators* que você pode usar para criar as *migrations*.
+* Os métodos que o *Active Record* provê para manipular seu banco de dados.
+* Os comandos *rails* que manipulam *migrations* e o esquema do seu banco.
+* Como *migrations* e `schema.rb` se relacionam.
 
 --------------------------------------------------------------------------------
 
