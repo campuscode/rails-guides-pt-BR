@@ -428,7 +428,7 @@ O `ActiveModel::SecurePassword` fornece uma maneira de armazenar com segurança 
 
 O `ActiveModel::SecurePassword` depende de [` bcrypt`](https://github.com/codahale/bcrypt-ruby 'BCrypt'),
 portanto, inclua esta `gem` no seu `Gemfile` para usar o` ActiveModel::SecurePassword` corretamente.
-Para fazer isso funcionar, o modelo deve ter um acessador chamado `XXX_digest`.
+Para fazer isso funcionar, o *model* deve ter um acessador chamado `XXX_digest`.
 Onde `XXX` é o nome do atributo da sua senha desejada.
 As seguintes validações são adicionadas automaticamente:
 
