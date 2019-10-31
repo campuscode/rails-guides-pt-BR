@@ -456,8 +456,9 @@ A mensagem de erro padrão para esse *helper* é _"is not included in the list"_
 
 ### `length`
 
-This helper validates the length of the attributes' values. It provides a
-variety of options, so you can specify length constraints in different ways:
+Esse *helper* valida o tamanho dos valores dos atributos. Ele disponibiliza uma
+variedade de opções, então você pode especificar o tamanho das restrições de
+maneiras diferentes.
 
 ```ruby
 class Person < ApplicationRecord
@@ -470,17 +471,19 @@ end
 
 The possible length constraint options are:
 
-* `:minimum` - The attribute cannot have less than the specified length.
-* `:maximum` - The attribute cannot have more than the specified length.
-* `:in` (or `:within`) - The attribute length must be included in a given
-  interval. The value for this option must be a range.
-* `:is` - The attribute length must be equal to the given value.
+As possíveis opções de restrições de tamanho são:
 
-The default error messages depend on the type of length validation being
-performed. You can personalize these messages using the `:wrong_length`,
-`:too_long`, and `:too_short` options and `%{count}` as a placeholder for the
-number corresponding to the length constraint being used. You can still use the
-`:message` option to specify an error message.
+* `:minimum` - O atributo não pode ser menor que o tamanho especificado.
+* `:maximum` - O atributo não pode ser maior que o tamanho especificado.
+* `:in` (or `:within`) - O tamanho do atributo deve estar dentro do alcance de
+  um intervalo dado. O valor dessa opção deve ser um intervalo.
+* `:is` - O tamanho do atributo deve ser igual ao valor passado.
+
+O valor padrão da mensagem de erro depende do tipo de validação sendo usado.
+Você pode personalizar essas mensagens usando as opções `:wrong_length`,
+`:too_long` e `:muito curto` e `%{count}` como um espaço reservado para o número
+correspondente ao do tamanho da restrição sendo utilizada. Você ainda pode
+utilizar a opção `:message` para especificar uma mensagem de erro.
 
 ```ruby
 class Person < ApplicationRecord
@@ -495,21 +498,28 @@ provide a personalized message or use `presence: true` instead. When
 `:in` or `:within` have a lower limit of 1, you should either provide a
 personalized message or call `presence` prior to `length`.
 
+Note que as mensagens de erro padrão estão em plural (por exemplo: "is too short
+(minimum is %{count} characters)"). Por essa razão, quando `:minimum` é 1 você
+deve disponibilizar uma mensagem personalizada ou utilizar `presence: true` no
+lugar. Quando `:in` ou `:within` tem um limite menor que 1, você deve
+disponibilizar ou uma mensagem personalizada ou usar `presence` antes do
+`length`.
+
 ### `numericality`
 
-This helper validates that your attributes have only numeric values. By
-default, it will match an optional sign followed by an integral or floating
-point number. To specify that only integral numbers are allowed set
-`:only_integer` to true.
+Esse *helper* válida se seus atributos contém somente valores numéricos. Por
+padrão, ele vai corresponder um número inteiro ou decimal precedido de um sinal
+opcional de negativo ou positivo (+ ou -). Para especificar que somente números
+inteiros são permitidos mude `:only_integer` para verdadeiro.
 
-If you set `:only_integer` to `true`, then it will use the
+Se você mudar `:only_integer` para `verdadeiro`, então ele vai usar
 
 ```ruby
 /\A[+-]?\d+\z/
 ```
 
-regular expression to validate the attribute's value. Otherwise, it will try to
-convert the value to a number using `Float`.
+como expressão regular para validar o valor do atributo. Se não, ele vai tentar
+converter o valor para um número usando a classe `Float`.
 
 ```ruby
 class Player < ApplicationRecord
@@ -518,38 +528,38 @@ class Player < ApplicationRecord
 end
 ```
 
-Besides `:only_integer`, this helper also accepts the following options to add
-constraints to acceptable values:
+Além de `:only_integer`, esse *helper* também aceita as seguintes opções para
+adicionar restrições aos valores aceitáveis:
 
-* `:greater_than` - Specifies the value must be greater than the supplied
-  value. The default error message for this option is _"must be greater than
-  %{count}"_.
-* `:greater_than_or_equal_to` - Specifies the value must be greater than or
-  equal to the supplied value. The default error message for this option is
-  _"must be greater than or equal to %{count}"_.
-* `:equal_to` - Specifies the value must be equal to the supplied value. The
-  default error message for this option is _"must be equal to %{count}"_.
-* `:less_than` - Specifies the value must be less than the supplied value. The
-  default error message for this option is _"must be less than %{count}"_.
-* `:less_than_or_equal_to` - Specifies the value must be less than or equal to
-  the supplied value. The default error message for this option is _"must be
-  less than or equal to %{count}"_.
-* `:other_than` - Specifies the value must be other than the supplied value.
-  The default error message for this option is _"must be other than %{count}"_.
-* `:odd` - Specifies the value must be an odd number if set to true. The
-  default error message for this option is _"must be odd"_.
-* `:even` - Specifies the value must be an even number if set to true. The
-  default error message for this option is _"must be even"_.
+* `:greater_than` - Especifica que o valor deve ser maior que o valor informado.
+  A mensagem padrão para esse erro é _"must be greater than %{count}"_.
+* `:greater_than_or_equal_to` - Especifica que o valor deve ser maior ou igual
+  que o valor informado. A mensagem padrão para esse erro é _"must be greater
+  than or equal to %{count}"_.
+* `:equal_to` - Especifica que o valor deve ser igual que o valor informado.
+  A mensagem padrão para esse erro é _"must be equal to %{count}"_.
+* `:less_than` - Especifica que o valor deve ser menor que o valor informado.
+  A mensagem padrão para esse erro é _"must be less than %{count}"_.
+* `:less_than_or_equal_to` - Especifica que o valor deve ser menor ou igual que
+  o valor informado. A mensagem padrão para esse erro é _"must be less than or
+  equal to %{count}"_.
+* `:other_than` - Especifica que o valor deve ser diferente que o valor
+  informado. A mensagem padrão para esse erro é _"must be other than %{count}"_.
+* `:odd` - Especifica que o valor deve ser ímpar se definido como verdadeiro.
+  A mensagem padrão para esse erro é _"must be odd"_.
+* `:even` - Especifica que o valor deve ser par se definido como verdadeiro. A
+  mensagem padrão para esse erro é _"must be even"_.
 
-NOTE: By default, `numericality` doesn't allow `nil` values. You can use `allow_nil: true` option to permit it.
+NOTE: Por padrão, `numericality` não permite valores `nil`. Você pode utilizar
+`allow_nil: true` para permitir isso.
 
-The default error message is _"is not a number"_.
+A mensagem de erro padrão é  _"is not a number"_.
 
 ### `presence`
 
-This helper validates that the specified attributes are not empty. It uses the
-`blank?` method to check if the value is either `nil` or a blank string, that
-is, a string that is either empty or consists of whitespace.
+Esse *helper* que os atributos especificados não estão vazios. Ele utiliza o
+método `blank?` para verificar se o valor é `nil` ou uma *string* em branco,
+isso é, uma *string* que está vazia ou só contém espaços.
 
 ```ruby
 class Person < ApplicationRecord
@@ -557,10 +567,10 @@ class Person < ApplicationRecord
 end
 ```
 
-If you want to be sure that an association is present, you'll need to test
-whether the associated object itself is present, and not the foreign key used
-to map the association. This way, it is not only checked that the foreign key
-is not empty but also that the referenced object exists.
+Se você quer ter certeza que uma associação está presente, você precisará testar
+se o objeto associado por ele mesmo está presente, e não a chave estrangeira
+utilizada para mapear a associação. Dessa maneira, não só é checado que a chave
+estrangeira existe como também se o objeto referenciado existe.
 
 ```ruby
 class LineItem < ApplicationRecord
@@ -569,8 +579,8 @@ class LineItem < ApplicationRecord
 end
 ```
 
-In order to validate associated records whose presence is required, you must
-specify the `:inverse_of` option for the association:
+Para validar registros associados cuja presença é necessária, você deve
+especificar a opção `:inverse_of` para a associação:
 
 ```ruby
 class Order < ApplicationRecord
@@ -578,26 +588,26 @@ class Order < ApplicationRecord
 end
 ```
 
-If you validate the presence of an object associated via a `has_one` or
-`has_many` relationship, it will check that the object is neither `blank?` nor
+Se você validar a presença de um objeto associado através de um relacionamento
+`has_one` ou` has_many`, ele verificará se o objeto não está `blank?` nem
 `marked_for_destruction?`.
 
-Since `false.blank?` is true, if you want to validate the presence of a boolean
-field you should use one of the following validations:
+Como `false.blank?` é verdadeiro, se você deseja validar a presença de um valor
+booleano no campo, você deve usar uma das seguintes validações:
 
 ```ruby
 validates :boolean_field_name, inclusion: { in: [true, false] }
 validates :boolean_field_name, exclusion: { in: [nil] }
 ```
 
-By using one of these validations, you will ensure the value will NOT be `nil`
-which would result in a `NULL` value in most cases.
+Ao usar uma dessas validações, você garantirá que o valor NÃO será `nil`
+o que resultaria em um valor `NULL` na maioria dos casos.
 
 ### `absence`
 
-This helper validates that the specified attributes are absent. It uses the
-`present?` method to check if the value is not either nil or a blank string, that
-is, a string that is either empty or consists of whitespace.
+Este *helper* valida que os atributos especificados estão ausentes. Ele usa o
+método `present?` para verificar se o valor não é `nil` ou uma *string* em
+branco, isso é, uma *string* que está vazia ou só contém caracteres em branco.
 
 ```ruby
 class Person < ApplicationRecord
@@ -605,9 +615,9 @@ class Person < ApplicationRecord
 end
 ```
 
-If you want to be sure that an association is absent, you'll need to test
-whether the associated object itself is absent, and not the foreign key used
-to map the association.
+Se você quer ter certeza que uma associação está ausente, você precisará testar
+se o objeto associado por ele mesmo está ausente, e não a chave estrangeira
+utilizada para mapear a associação.
 
 ```ruby
 class LineItem < ApplicationRecord
@@ -616,8 +626,8 @@ class LineItem < ApplicationRecord
 end
 ```
 
-In order to validate associated records whose absence is required, you must
-specify the `:inverse_of` option for the association:
+Para validar registros associados cuja ausência é necessária, você deve
+especificar a opção `:inverse_of` para a associação:
 
 ```ruby
 class Order < ApplicationRecord
@@ -625,22 +635,24 @@ class Order < ApplicationRecord
 end
 ```
 
-If you validate the absence of an object associated via a `has_one` or
-`has_many` relationship, it will check that the object is neither `present?` nor
+Se você validar a ausência de um objeto associado através de um relacionamento
+`has_one` ou` has_many`, ele verificará se o objeto não está `present?` nem
 `marked_for_destruction?`.
 
-Since `false.present?` is false, if you want to validate the absence of a boolean
-field you should use `validates :field_name, exclusion: { in: [true, false] }`.
+Como `false.present?` é _false_, se você quer validar a ausência de um campo
+booleano você deve usar `validates :field_name,
+exclusion: { in: [true, false] }`.
 
-The default error message is _"must be blank"_.
+A mensagem padrão de erro é _"must be blank"_.
 
 ### `uniqueness`
 
-This helper validates that the attribute's value is unique right before the
-object gets saved. It does not create a uniqueness constraint in the database,
-so it may happen that two different database connections create two records
-with the same value for a column that you intend to be unique. To avoid that,
-you must create a unique index on that column in your database.
+Este *helper* valida que o valor do atributo é único antes de o objeto ser
+salvo. Ele não cria uma restrição de exclusividade no banco de dados, portanto
+pode acontecer de duas conexões diferentes ao banco de dados criarem dois
+registros com o mesmo valor para uma coluna que você pretende tornar exclusiva.
+Para evitar isso, você deve criar um índice exclusivo nessa coluna no seu banco
+de dados.
 
 ```ruby
 class Account < ApplicationRecord
@@ -648,11 +660,11 @@ class Account < ApplicationRecord
 end
 ```
 
-The validation happens by performing an SQL query into the model's table,
-searching for an existing record with the same value in that attribute.
+A validação ocorre executando uma consulta SQL na tabela do modelo, procurando
+um registro existente com o mesmo valor nesse atributo.
 
-There is a `:scope` option that you can use to specify one or more attributes that
-are used to limit the uniqueness check:
+Existe uma opção `:scope` que você pode usar para especificar um ou mais
+atributos usados para limitar a verificação de exclusividade:
 
 ```ruby
 class Holiday < ApplicationRecord
@@ -662,9 +674,17 @@ end
 ```
 Should you wish to create a database constraint to prevent possible violations of a uniqueness validation using the `:scope` option, you must create a unique index on both columns in your database. See [the MySQL manual](https://dev.mysql.com/doc/refman/5.7/en/multiple-column-indexes.html) for more details about multiple column indexes or [the PostgreSQL manual](https://www.postgresql.org/docs/current/static/ddl-constraints.html) for examples of unique constraints that refer to a group of columns.
 
-There is also a `:case_sensitive` option that you can use to define whether the
-uniqueness constraint will be case sensitive or not. This option defaults to
-true.
+Se você deseja criar uma restrição no banco de dados para previnir possiveis
+violações em uma validação de exclusividade usando a opção de `:scope`, você
+deve criar uma indexação única em ambas as colunas em seu banco de dados. Veja
+[o manual do MySQL](https://dev.mysql.com/doc/refman/5.7/en/multiple-column-indexes.html)
+para mais detalhes sobre indexação de múltiplas colunas ou
+[o manual do Postgres](https://www.postgresql.org/docs/current/static/ddl-constraints.html)
+para exemplos de restrições únicas que referenciam esse grupo de colunas
+
+Há também uma opção `:case_sensitive` que você pode usar para definir se a
+restrição de exclusividade fará distinção entre maiúsculas e minúsculas.
+O padrão desta opção é _true_.
 
 ```ruby
 class Person < ApplicationRecord
@@ -672,14 +692,14 @@ class Person < ApplicationRecord
 end
 ```
 
-WARNING. Note that some databases are configured to perform case-insensitive
-searches anyway.
+WARNING: Observe que alguns bancos de dados estão configurados para executar
+pesquisas que não diferenciam maiúsculas de minúsculas.
 
-The default error message is _"has already been taken"_.
+A mensagem de erro padrão é _"has already been taken"_.
 
 ### `validates_with`
 
-This helper passes the record to a separate class for validation.
+Esse *helper* passa o registro para uma classe separada para ser feita a validação.
 
 ```ruby
 class GoodnessValidator < ActiveModel::Validator
@@ -695,19 +715,23 @@ class Person < ApplicationRecord
 end
 ```
 
-NOTE: Errors added to `record.errors[:base]` relate to the state of the record
-as a whole, and not to a specific attribute.
+NOTE: Os erros adicionados ao `record.errors[:base]` estão relacionados ao
+estado do registro como um todo, e não a um atributo específico.
 
-The `validates_with` helper takes a class, or a list of classes to use for
-validation. There is no default error message for `validates_with`. You must
-manually add errors to the record's errors collection in the validator class.
+O *helper* `validates_with` pega uma classe ou uma lista de classes para usar
+na validação. Não há mensagem de erro padrão para `validates_with`. Você deve
+adicionar manualmente erros à coleção de erros do registro na classe validadora.
 
-To implement the validate method, you must have a `record` parameter defined,
-which is the record to be validated.
+Para implementar o método validador, você deve ter um parâmetro `record`
+definido, que é o registro a ser validado.
 
 Like all other validations, `validates_with` takes the `:if`, `:unless` and
 `:on` options. If you pass any other options, it will send those options to the
 validator class as `options`:
+
+Como todas as outras validações, `validates_with` utiliza as opções`:if`,
+`:unless` e `:on`. Se você passar outras opções, essas opções serão enviadas
+para a classe validadora como `options`:
 
 ```ruby
 class GoodnessValidator < ActiveModel::Validator
@@ -723,12 +747,12 @@ class Person < ApplicationRecord
 end
 ```
 
-Note that the validator will be initialized *only once* for the whole application
-life cycle, and not on each validation run, so be careful about using instance
-variables inside it.
+Observe que o validador será inicializado *apenas uma vez* durante todo o ciclo
+de vida do aplicativo, e não em cada execução de validação, portanto, tenha
+cuidado ao usar variáveis de instância nele.
 
-If your validator is complex enough that you want instance variables, you can
-easily use a plain old Ruby object instead:
+Se o seu validador for suficientemente complexo para que você deseje variáveis
+de instância, você poderá facilmente usar um objeto Ruby puro no lugar:
 
 ```ruby
 class Person < ApplicationRecord
@@ -754,10 +778,10 @@ end
 
 ### `validates_each`
 
-This helper validates attributes against a block. It doesn't have a predefined
-validation function. You should create one using a block, and every attribute
-passed to `validates_each` will be tested against it. In the following example,
-we don't want names and surnames to begin with lower case.
+Este *helper* valida atributos em relação a um bloco. Não possui uma função de
+validação predefinida. Você deve criar um usando um bloco, e todos os atributos
+passados para `validates_each` serão testados contra ele. No exemplo a seguir,
+não queremos que nomes e sobrenomes comecem com letras minúsculas.
 
 ```ruby
 class Person < ApplicationRecord
@@ -767,10 +791,10 @@ class Person < ApplicationRecord
 end
 ```
 
-The block receives the record, the attribute's name, and the attribute's value.
-You can do anything you like to check for valid data within the block. If your
-validation fails, you should add an error message to the model, therefore
-making it invalid.
+O bloco recebe o registro, o nome do atributo e o valor do atributo. Você pode
+fazer o que quiser para verificar dados válidos dentro do bloco. Se sua
+validação falhar, você deverá adicionar uma mensagem de erro ao modelo,
+tornando-o inválido.
 
 Common Validation Options
 -------------------------
