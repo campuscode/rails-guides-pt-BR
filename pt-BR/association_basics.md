@@ -2490,7 +2490,7 @@ end
 ```
 
 Isso significa que todo o comportamento adicionado à classe `Vehicle` estará
-disponível também na classe `Car`, incluindo as associações, métodos publicos,
+disponível também na classe `Car`, incluindo as associações, métodos públicos,
 etc.
 
 Criar um carro vai armazená-lo na tabela `vehicles` e popular o atributo `type`
