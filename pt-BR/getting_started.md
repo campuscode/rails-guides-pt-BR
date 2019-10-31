@@ -27,8 +27,8 @@ de programação Ruby. Se você não tem nenhuma experiência com Ruby, você va
 achar a curva de aprendizado bastante íngrime começando direto com Rails.
 Existem diversas listas organizadas de materiais online para aprender Ruby:
 
-* [Site Oficial da Linguagem de Programação Ruby](https://www.ruby-lang.org/en/documentation/)
-* [Lista de Livros Grátis de Programação](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
+* [Site Oficial da Linguagem de Programação Ruby (Em inglês)](https://www.ruby-lang.org/en/documentation/)
+* [Lista de Livros Grátis de Programação (Em inglês)](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
 
 Fique atento que alguns materiais, apesar de excelentes, envolvem versões antigas
 do Ruby chegando a 1.6, e frequentemente 1.8, e não incluem parte da sintaxe que você
@@ -156,7 +156,7 @@ que o Rails gerou por padrão:
 |app/|Contém os *controllers*, *models*, *views*, *helpers*, *mailers*, *channels*, *jobs*, e *assets* para sua aplicação. Você irá se concentrar nesse diretório pelo restante desse guia.|
 |bin/|Contém o script do Rails que inicializa sua aplicação e contém outros scripts que você utiliza para configurar, atualizar, colocar em produção ou executar sua aplicação.|
 |config/|Configure as rotas, banco de dados entre outros de sua aplicação. Este conteúdo é abordado com mais detalhes em [Configuring Rails Applications](configuring.html).|
-|config.ru|Configuração *Rack* para servidores baseados em *Rack* usados ​​para iniciar a aplicação. Para mais informações sobre o *Rack*, consulte [Rack website](https://rack.github.io/).|
+|config.ru|Configuração *Rack* para servidores baseados em *Rack* usados para iniciar a aplicação. Para mais informações sobre o *Rack*, consulte [Rack website](https://rack.github.io/).|
 |db/|Contém o *schema* do seu banco de dados atual, assim como as *migrations* do banco de dados.|
 |Gemfile<br>Gemfile.lock|Esses arquivos permitem que você especifique quais dependências de *gem* são necessárias na sua aplicação Rails. Esses arquivos são usados pela *gem* Bundler. Para mais informações sobre o Bundler, acesse [o website do Bundler](https://bundler.io).|
 |lib/|Módulos extendidos da sua aplicação.|
@@ -361,7 +361,7 @@ welcome_index GET    /welcome/index(.:format)     welcome#index
          root GET    /                            welcome#index
 ```
 
-Na próxima seção, você adicionará a funcionalidade para criar e visualizar novos artigos em sua aplicação. Este é o "C" e o "R" do *CRUD*: *create* (criação) e *read* (leitura). O formulário para fazer isso ficará assim:
+Na próxima seção, você adicionará a funcionalidade para criar e visualizar novos artigos (articles) em sua aplicação. Este é o "C" e o "R" do *CRUD*: *create* (criação) e *read* (leitura). O formulário para fazer isso ficará assim:
 
 ![The new article form](images/getting_started/new_article.png)
 
@@ -2033,6 +2033,6 @@ Duas fontes muito comuns de dados que não estão em UTF-8 são:
   de forma padrão. Porém, se seu banco de dados não está utilizando UTF-8
   internamente, pode ser que não consiga armazenar todos os caracteres que seus
   usuários insiram. Por exemplo, se seu banco de dados está utilizando Latin-1
-  internamente, e seu usuário insira um caractere russo, hebraico ou japonês,
+  internamente, e seu usuário inserir um caractere russo, hebraico ou japonês,
   os dados serão perdidos para sempre assim que entrarem no banco de dados. Se
   possível, utilize UTF-8 como padrão de armazenamento para o seu banco de dados.
