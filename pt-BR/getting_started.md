@@ -440,7 +440,7 @@ Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem 
 
 ### O primeiro formulário
 
-Para criar um formulário com este template, você vai usar um construtor de formulário (*form builder*). O *form builder* principal do Rails é disponibilizado por um *helper* chamado `form_with`. Para utilizá-lo, adicione o código abaixo no arquivo `app/views/articles/new.html.erb`:
+Para criar um formulário com este template, você vai usar um construtor de formulário (*form builder*). O construtor de formulários do Rails é disponibilizado por um método *helper* chamado `form_with`. Para utilizá-lo, adicione o código abaixo no arquivo `app/views/articles/new.html.erb`:
 
 ```html+erb
 <%= form_with scope: :article, local: true do |form| %>
