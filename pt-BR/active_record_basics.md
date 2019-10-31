@@ -359,13 +359,13 @@ transparently executing code when those events occur, like when you create a new
 record, update it, destroy it, and so on. You can learn more about callbacks in
 the [Active Record Callbacks guide](active_record_callbacks.html).
 
-Migrations
+*Migrations*
 ----------
 
-Rails provides a domain-specific language for managing a database schema called
-migrations. Migrations are stored in files which are executed against any
-database that Active Record supports using `rake`. Here's a migration that
-creates a table:
+Rails fornece uma linguagem de domínio específico para gerenciar o esquema da base de
+dados, chamado de *migrations*. *Migrations* são armazenadas em arquivos que são executados
+diante qualquer base de dados que o *Active Record* suporta utilizando o `rake`. Aqui está
+uma *migration* que cria uma tabela: 
 
 ```ruby
 class CreatePublications < ActiveRecord::Migration[5.0]
@@ -385,10 +385,10 @@ class CreatePublications < ActiveRecord::Migration[5.0]
 end
 ```
 
-Rails keeps track of which files have been committed to the database and
-provides rollback features. To actually create the table, you'd run `rails db:migrate`
-and to roll it back, `rails db:rollback`.
+Rails mantém o controle de quais arquivos foram enviados à base de dados e fornece
+ferramentas de reversão. Para realmente criar uma tabela, você deverá executar
+`rails db:migrate` e para reverter, `rails db:rollback`
 
-Note that the above code is database-agnostic: it will run in MySQL,
-PostgreSQL, Oracle, and others. You can learn more about migrations in the
-[Active Record Migrations guide](active_record_migrations.html).
+Note que o código acima é uma base de dados agnóstica: irá rodar em MySQL,
+PostgreSQL, Oracle, entre outros. Você pode aprender mais sobre *migrations*
+em [Guia de *Migrations* do *Active Record*](active_record_migrations.html).
