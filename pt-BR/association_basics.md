@@ -2506,8 +2506,8 @@ vai gerar o seguinte SQL:
 INSERT INTO "vehicles" ("type", "color", "price") VALUES ('Car', 'Red', 10000)
 ```
 
-Em uma busca por registros de carros vai simplesmente buscar veiculos que são
-do tipo _Car_.
+A _query_ (consulta) por registros de carros vai simplesmente buscar veiculos que
+são do tipo _Car_.
 
 ```ruby
 Car.all
