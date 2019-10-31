@@ -2455,10 +2455,11 @@ Extensions can refer to the internals of the association proxy using these three
 Single Table Inheritance
 ------------------------
 
-Sometimes, you may want to share fields and behavior between different models.
-Let's say we have Car, Motorcycle, and Bicycle models. We will want to share
-the `color` and `price` fields and some methods for all of them, but having some
-specific behavior for each, and separated controllers too.
+As vezes é desejável compartilhar atributos e comportamento entre _models_.
+Vamos dizer que temos _models_ de Carro, Motocicleta e Bicicleta. Queremos
+compartilhar os atributos de `cor` e `preço` e também alguns métodos para
+estes atributos, mas ainda mantendo comportamentos específicos para cada um
+deles, incluindo _controllers_ separados.
 
 Rails makes this quite easy. First, let's generate the base Vehicle model:
 
