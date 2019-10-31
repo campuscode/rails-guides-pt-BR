@@ -1063,13 +1063,13 @@ you attempt to do just that on the new article form
 
 ![Form With Errors](images/getting_started/form_with_errors.png)
 
-### Updating Articles
+### Atualizando Artigos
 
-We've covered the "CR" part of CRUD. Now let's focus on the "U" part, updating
-articles.
+Cobrimos a parte "CR" do CRUD. Agora vamos nos concentrar na parte "U", atualizando
+artigos.
 
-The first step we'll take is adding an `edit` action to the `ArticlesController`,
-generally between the `new` and `create` actions, as shown:
+O primeiro passo que vamos dar é adicionar uma ação `edit` ao `ArticlesController`,
+geralmente entre as ações `new` e` create`:
 
 ```ruby
 def new
@@ -1091,9 +1091,9 @@ def create
 end
 ```
 
-The view will contain a form similar to the one we used when creating
-new articles. Create a file called `app/views/articles/edit.html.erb` and make
-it look as follows:
+A _view_ conterá um formulário semelhante ao que usamos para criar novos artigos.
+Crie um arquivo chamado `app/views/articles/edit.html.erb` e deixe-o como
+mostrado em seguida:
 
 ```html+erb
 <h1>Edit article</h1>
@@ -1133,24 +1133,24 @@ it look as follows:
 <%= link_to 'Back', articles_path %>
 ```
 
-This time we point the form to the `update` action, which is not defined yet
-but will be very soon.
+Desta vez, apontamos o formulário para a _action_ `update`, que ainda não foi
+definida, mas em breve será.
 
-Passing the article object to the `form_with` method will automatically set the URL for
-submitting the edited article form. This option tells Rails that we want this
-form to be submitted via the `PATCH` HTTP method, which is the HTTP method you're
-expected to use to **update** resources according to the REST protocol.
+Passar o objeto artigo para o método `form_with` definirá automaticamente o URL para
+enviar o formulário do artigo editado. Esta opção informa ao Rails que o formulário
+deve ser enviado pelo método HTTP `PATCH`, que é o método HTTP que espera ser
+utilizado para o **update** dos nossos _resources_ de acordo com o protocolo REST.
 
-Also, passing a model object to `form_with`, like `model: @article` in the edit
-view above, will cause form helpers to fill in form fields with the corresponding
-values of the object.  Passing in a symbol scope such as `scope: :article`, as
-was done in the new view, only creates empty form fields.
-More details can be found in [form_with documentation]
+Além disso, passando um _model_ para `form_with`, como `model: @article` na
+_view_ _edit_ acima, fará com que os _helpers_ do _form_ preencham os campos com
+os valores correspondentes do objeto. Passando um _symbol_ de _scope_ como `scope: :article`,
+como foi feito na nova _view_, apenas exibirá os campos do formulário vazios.
+Mais detalhes podem ser encontrados em [Documentação form_with]
 (https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
 
-Next, we need to create the `update` action in
+Agora, precisamos criar a _action_ `update` no _controller_
 `app/controllers/articles_controller.rb`.
-Add it between the `create` action and the `private` method:
+Adicione-a entre os metodos `create` e `private`:
 
 ```ruby
 def create
@@ -1179,21 +1179,21 @@ private
   end
 ```
 
-The new method, `update`, is used when you want to update a record
-that already exists, and it accepts a hash containing the attributes
-that you want to update. As before, if there was an error updating the
-article we want to show the form back to the user.
+O novo método, `update`, é usado quando você deseja atualizar um registro
+que já existe, ele aceita um hash contendo os atributos que você deseja atualizar.
+Como antes, se houve um erro ao atualizar o artigo, queremos mostrar o
+formulário de volta ao usuário.
 
-We reuse the `article_params` method that we defined earlier for the create
-action.
+Nós podemos reutilizar o método `article_params` que definimos anteriormente
+para a _action_ _create_
 
-TIP: It is not necessary to pass all the attributes to `update`. For example,
-if `@article.update(title: 'A new title')` was called, Rails would only update
-the `title` attribute, leaving all other attributes untouched.
+TIP: Não é necessário passar todos os atributos para o `update`. Por exemplo,
+se `@article.update(title: 'A new title')` for chamado, o Rails vai apenas
+atualizar o atributo `title`, deixando todos os outros atrubutos como estavam.
 
-Finally, we want to show a link to the `edit` action in the list of all the
-articles, so let's add that now to `app/views/articles/index.html.erb` to make
-it appear next to the "Show" link:
+Finalmente, nós queremos mostrar o _link_ para a _action `edit`_ na lista dos
+artigos, então vamos adiciona-lo agora no arquivo
+`app/views/articles/index.html.erb` para aparecer logo após o _link_ de "Show":
 
 ```html+erb
 <table>
@@ -1214,9 +1214,8 @@ it appear next to the "Show" link:
 </table>
 ```
 
-And we'll also add one to the `app/views/articles/show.html.erb` template as
-well, so that there's also an "Edit" link on an article's page. Add this at the
-bottom of the template:
+E também iremos adicionar em `app/views/articles/show.html.erb`, assim podemos
+ter um _link_ para "Edit" na página de um artigo. Adicione no fim do seu modelo:
 
 ```html+erb
 ...
@@ -1225,22 +1224,22 @@ bottom of the template:
 <%= link_to 'Back', articles_path %>
 ```
 
-And here's how our app looks so far:
+E aqui como nossa aplicação está até agora:
 
-![Index action with edit link](images/getting_started/index_action_with_edit_link.png)
+![Índice action com link edit](images/getting_started/index_action_with_edit_link.png)
 
-### Using partials to clean up duplication in views
+### Usando _partials_ para limpar duplicações em _views_
 
-Our `edit` page looks very similar to the `new` page; in fact, they
-both share the same code for displaying the form. Let's remove this
-duplication by using a view partial. By convention, partial files are
-prefixed with an underscore.
+Nossa página `edit` se parece muito com a página `new`; na verdade,
+ambas compartilham o mesmo código para exibir o formulário. Vamos remover esta
+duplicação usando uma _view_ _partial_. Por convenção, arquivos de _partials_
+são prefixados com um _underline_.
 
-TIP: You can read more about partials in the
-[Layouts and Rendering in Rails](layouts_and_rendering.html) guide.
+TIP: Você pode ler mais sobre _partials_ no
+guia [Layouts e Renderização no Rails](layouts_and_rendering.html).
 
-Create a new file `app/views/articles/_form.html.erb` with the following
-content:
+Crie um novo arquivo `app/views/articles/_form.html.erb` com o conteudo a
+seguir:
 
 ```html+erb
 <%= form_with model: @article, local: true do |form| %>
@@ -1276,16 +1275,16 @@ content:
 <% end %>
 ```
 
-Everything except for the `form_with` declaration remained the same.
-The reason we can use this shorter, simpler `form_with` declaration
-to stand in for either of the other forms is that `@article` is a *resource*
-corresponding to a full set of RESTful routes, and Rails is able to infer
-which URI and method to use.
-For more information about this use of `form_with`, see [Resource-oriented style]
-(https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with-label-Resource-oriented+style).
+Tudo exceto a declaração `form_with` permaneceu igual.
+A razão pela qual podemos usar a declaração `form_with` mais curta e simples
+para substituir qualquer outro formulário é que `@article` é um *resource*
+correspondente a um conjunto completo de rotas RESTful, e o Rails pode inferir
+qual URI e método a ser usado.
+Para obter mais informações sobre esse uso do `form_with`, consulte
+[Estilo orientado a recursos](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with-label-Resource-oriented+style).
 
-Now, let's update the `app/views/articles/new.html.erb` view to use this new
-partial, rewriting it completely:
+Agora, vamos atualizar a _view_ `app/views/articles/new.html.erb` para usar a
+nova _partial_, reescrevendo-a completamente:
 
 ```html+erb
 <h1>New article</h1>
@@ -1295,7 +1294,7 @@ partial, rewriting it completely:
 <%= link_to 'Back', articles_path %>
 ```
 
-Then do the same for the `app/views/articles/edit.html.erb` view:
+Depois, faremos o mesmo em `app/views/articles/edit.html.erb`:
 
 ```html+erb
 <h1>Edit article</h1>
@@ -1305,29 +1304,29 @@ Then do the same for the `app/views/articles/edit.html.erb` view:
 <%= link_to 'Back', articles_path %>
 ```
 
-### Deleting Articles
+### Deletando Artigos
 
-We're now ready to cover the "D" part of CRUD, deleting articles from the
-database. Following the REST convention, the route for
-deleting articles as per output of `rails routes` is:
+Nós estamos prontos para cobrir a parte "D" de um CRUD, remover artigos da base
+de dados. Seguindo a convenção REST, a rota para deletar artigos, de acordo com
+o retorno do comando `rails routes` é:
 
 ```ruby
 DELETE /articles/:id(.:format)      articles#destroy
 ```
 
-The `delete` routing method should be used for routes that destroy
-resources. If this was left as a typical `get` route, it could be possible for
-people to craft malicious URLs like this:
+O método `delete` roteado deve ser usado para rotas que destroem recursos. Se
+esta ação for deixada em uma simples rota `get`, pode ser possível que pessoas
+criem urls maliciosas como esta:
 
 ```html
 <a href='http://example.com/articles/1/destroy'>look at this cat!</a>
 ```
 
-We use the `delete` method for destroying resources, and this route is mapped
-to the `destroy` action inside `app/controllers/articles_controller.rb`, which
-doesn't exist yet. The `destroy` method is generally the last CRUD action in
-the controller, and like the other public CRUD actions, it must be placed
-before any `private` or `protected` methods. Let's add it:
+Utilizamos o método `delete` para destruir recursos, e essa rota é mapeada
+à ação `destroy` dentro de`app/controllers/articles_controller.rb`, que
+ainda não existe. O método `destroy` é geralmente a última ação CRUD no
+o `controller` e, como as outras ações públicas de CRUD, ele deve ser colocado
+antes de qualquer método `private` ou` protected`. Vamos adicioná-lo:
 
 ```ruby
 def destroy
@@ -1338,8 +1337,8 @@ def destroy
 end
 ```
 
-The complete `ArticlesController` in the
-`app/controllers/articles_controller.rb` file should now look like this:
+O `ArticlesController` completo em `app/controllers/articles_controller.rb` se
+parece com isso:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -1393,12 +1392,12 @@ class ArticlesController < ApplicationController
 end
 ```
 
-You can call `destroy` on Active Record objects when you want to delete
-them from the database. Note that we don't need to add a view for this
-action since we're redirecting to the `index` action.
+Você pode chamar o `destroy` nos objetos do *Active Record* quando desejar excluí-los
+do banco de dados. Observe que não precisamos adicionar uma visualização para esta
+*action*, pois estamos redirecionando para a ação `index`.
 
-Finally, add a 'Destroy' link to your `index` action template
-(`app/views/articles/index.html.erb`) to wrap everything together.
+Por fim, adicione um link "Destroy" no *template* da sua *action* `index`
+(`app/views/articles/index.html.erb`) para agrupar todos juntos.
 
 ```html+erb
 <h1>Listing Articles</h1>
@@ -1424,27 +1423,28 @@ Finally, add a 'Destroy' link to your `index` action template
 </table>
 ```
 
-Here we're using `link_to` in a different way. We pass the named route as the
-second argument, and then the options as another argument. The `method: :delete`
-and `data: { confirm: 'Are you sure?' }` options are used as HTML5 attributes so
-that when the link is clicked, Rails will first show a confirm dialog to the
-user, and then submit the link with method `delete`.  This is done via the
-JavaScript file `rails-ujs` which is automatically included in your
-application's layout (`app/views/layouts/application.html.erb`) when you
-generated the application. Without this file, the confirmation dialog box won't
-appear.
+Aqui estamos usando o `link_to` de uma maneira diferente. Passamos a rota nomeada como
+segundo argumento e, em seguida, as opções como outro argumento. As opções
+`method: :delete` e `data: { confirm: 'Are you sure?' }` são usadas como
+atributos HTML5, portanto quando o link é clicado, o Rails primeiro mostra uma
+caixa de diálogo de confirmação para o usuário e, em seguida, envia o link com
+o método `delete`. Isso é feito através do Arquivo JavaScript `rails-ujs`,
+que é automaticamente incluído no *layout* da aplicação
+(`app/views/layouts/application.html.erb`) quando foi gerado.
+Sem esse arquivo, a caixa de diálogo de confirmação não será exibida.
 
-![Confirm Dialog](images/getting_started/confirm_dialog.png)
+![Dialogo de Confirmação](images/getting_started/confirm_dialog.png)
 
-TIP: Learn more about Unobtrusive JavaScript on
-[Working With JavaScript in Rails](working_with_javascript_in_rails.html) guide.
+TIP: Aprenda mais sobre JavaScript discreto no guia
+[Trabalhando Com JavaScript Com Rails](working_with_javascript_in_rails.html).
 
+Parabêns, agora você pode criar, mostrar, listar, atualizar e destruir artigos.
 Congratulations, you can now create, show, list, update, and destroy
 articles.
 
-TIP: In general, Rails encourages using resources objects instead of
-declaring routes manually. For more information about routing, see
-[Rails Routing from the Outside In](routing.html).
+TIP: Em geral, o Rails encoraja usar o método `resources` em objetos, ao invés de
+declarar as rotas manualmente. Para mais informação sobre roteamento, veja
+[Roteamento do Rails de Dentro à Fora](routing.html).
 
 Adicionando um Segundo Model
 ----------------------------
