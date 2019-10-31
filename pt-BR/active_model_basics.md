@@ -380,7 +380,7 @@ Person.human_attribute_name('name') # => "Nome"
 
 ### Lint Tests
 
-O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a API do modelo ativo.
+O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a API do *model* ativo.
 
 * `app/models/person.rb`
 
