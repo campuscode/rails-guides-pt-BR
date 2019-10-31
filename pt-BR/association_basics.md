@@ -2455,7 +2455,7 @@ Extensions can refer to the internals of the association proxy using these three
 Single Table Inheritance
 ------------------------
 
-As vezes é desejável compartilhar atributos e comportamento entre _models_.
+Às vezes é desejável compartilhar atributos e comportamento entre _models_.
 Vamos dizer que temos _models_ `Car`, `Motorcycle` e `Bicycle`. Queremos
 compartilhar os atributos de `color` e `price` e também alguns métodos para
 estes atributos, mas ainda mantendo comportamentos específicos para cada um
