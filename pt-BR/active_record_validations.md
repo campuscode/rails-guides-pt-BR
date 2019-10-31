@@ -340,7 +340,7 @@ end
 
 Essa validação funcionará com todos os tipos de associação.
 
-ATENÇÃO: Não utilize `validates_associated` nos dois lados de suas associações.
+CAUTION: Não utilize `validates_associated` nos dois lados de suas associações.
 Eles vão chamar umas as outras em um loop infinito.
 
 A mensagem padrão de erro para `validates_associated` é _"is invalid"_. Repare
