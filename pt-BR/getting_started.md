@@ -477,7 +477,6 @@ Altere a linha do `form_with` dentro de `app/views/articles/new.html.erb` para f
 ```
 
 Neste exemplo, o *helper* `articles_path` é passado para a opção `:url`.
-
 Para saber o que o Rails fará com isso, veja novamente o resultado do `rails routes`:
 
 ```bash
