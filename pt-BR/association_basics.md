@@ -2513,7 +2513,7 @@ do tipo _Car_.
 Car.all
 ```
 
-vai rodar a seguinte _query_:
+vai executar a seguinte _query_:
 
 ```sql
 SELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."type" IN ('Car')
