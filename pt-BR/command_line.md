@@ -13,7 +13,7 @@ Depois de ler este guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-OBS: Esse tutorial considera que você já tenha um conhecimento básico de Rails, ou tenha lido o [Começando com o Rails](getting_started.html).
+NOTE: Esse tutorial considera que você já tenha um conhecimento básico de Rails, ou tenha lido o [Começando com o Rails](getting_started.html).
 
 Noções Básicas de Linha de Comando
 -------------------
