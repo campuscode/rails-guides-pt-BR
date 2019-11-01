@@ -109,11 +109,11 @@ O *hash* `params` não é limitado a um vetor unidimensional de chaves e valores
 GET /clients?ids[]=1&ids[]=2&ids[]=3
 ```
 
-NOTA: A URL efetiva neste neste exemplo será codificada como "/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3", visto que os caracteres "[" e "]" não são permitidos em URLs. Na maioria do tempo você não precisa se preocupar com isso porque o navegador irá codificar os dados para você, e o Rails vai decodificá-los automaticamente, porém se por acaso você se encontrar na situação de ter que enviar este tipo de requisição ao servidor manualmente você deve ter em mente essa questão.
+NOTE: A URL efetiva neste neste exemplo será codificada como "/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3", visto que os caracteres "[" e "]" não são permitidos em URLs. Na maioria do tempo você não precisa se preocupar com isso porque o navegador irá codificar os dados para você, e o Rails vai decodificá-los automaticamente, porém se por acaso você se encontrar na situação de ter que enviar este tipo de requisição ao servidor manualmente você deve ter em mente essa questão.
 
 O valor de `params[:ids]` será neste caso `["1", "2", "3"]`. Note que os valores de parâmetros são sempre *strings*; o Rails não tenta adivinhar ou converter o tipo.
 
-NOTA: Valores como `[nil]` ou `[nil, nil, ...]` em `params` são substituídos por `[]` por motivos de segurança por padrão. Veja o [Guia de Segurança](security.html#unsafe-query-generation) para mais informações.
+NOTE: Valores como `[nil]` ou `[nil, nil, ...]` em `params` são substituídos por `[]` por motivos de segurança por padrão. Veja o [Guia de Segurança](security.html#unsafe-query-generation) para mais informações.
 
 Para enviar um *hash*, você inclui o nome da chave dentro dos colchetes:
 
@@ -130,33 +130,33 @@ Quando esse formulário é enviado o valor de `params[:client]` será `{ "name" 
 
 O objeto `params` atua como um *hash*, mas permite que você use *symbols* e *strings* indistintamente como chaves.
 
-### JSON parameters
+### Parâmetros JSON
 
-If you're writing a web service application, you might find yourself more comfortable accepting parameters in JSON format. If the "Content-Type" header of your request is set to "application/json", Rails will automatically load your parameters into the `params` hash, which you can access as you would normally.
+Se você está construindo uma aplicação *web*, você pode achar mais confortável receber parâmetros no formato JSON. Se o *header* "Content-Type" da sua requisição estiver definido como "application/json" o Rails vai automaticamente carregar os seus parâmetros no *hash* `params`, que você pode acessar como acessaria normalmente.
 
-So for example, if you are sending this JSON content:
+Então por exemplo, se você estiver enviando este conteúdo JSON:
 
 ```json
 { "company": { "name": "acme", "address": "123 Carrot Street" } }
 ```
 
-Your controller will receive `params[:company]` as `{ "name" => "acme", "address" => "123 Carrot Street" }`.
+O seu *controller* vai receber `params[:company]` no formato `{ "name" => "acme", "address" => "123 Carrot Street" }`.
 
-Also, if you've turned on `config.wrap_parameters` in your initializer or called `wrap_parameters` in your controller, you can safely omit the root element in the JSON parameter. In this case, the parameters will be cloned and wrapped with a key chosen based on your controller's name. So the above JSON request can be written as:
+Além disso, se você tiver ativado `config.wrap_parameters` no seu inicializador ou chamado `wrap_parameters` no seu *controller*, você pode omitir o elemento raiz no seu parâmetro JSON. Neste caso, os parâmetros serão clonados e enpacotados sob uma chave baseada no nome do seu *controller*. Então a requisição JSON acima pode ser escrita como:
 
 ```json
 { "name": "acme", "address": "123 Carrot Street" }
 ```
 
-And, assuming that you're sending the data to `CompaniesController`, it would then be wrapped within the `:company` key like this:
+E, assumindo que você está enviando os dados para `CompaniesController`, eles serão então encapsulados na chave `:company` desta maneira:
 
 ```ruby
 { name: "acme", address: "123 Carrot Street", company: { name: "acme", address: "123 Carrot Street" } }
 ```
 
-You can customize the name of the key or specific parameters you want to wrap by consulting the [API documentation](https://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html)
+Você pode customizar o nome da chave ou parâmetros específicos que você quer envelopar consultando a [documentação da API](https://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html)
 
-NOTE: Support for parsing XML parameters has been extracted into a gem named `actionpack-xml_parser`.
+NOTE: Suporte para interpretar parâmetros XML foi extraído para uma *gem* chamada `actionpack-xml_parser`.
 
 ### Routing Parameters
 
