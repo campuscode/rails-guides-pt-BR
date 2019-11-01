@@ -4,16 +4,16 @@
 Rotas do Rails de Fora pra Dentro
 =================================
 
-Esse guia cobre os recursos de roteamento que os usuarios podem utilizar no Rails.
+Esse guia cobre os recursos de roteamento que os usuários podem utilizar no Rails.
 
-Após ler esse guia você saberá:
+Após ler esse guia, você saberá:
 
 * Como interpretar o código em `config/routes.rb`.
 * Como construir suas próprias rotas, seja usando o formato preferido de
   `resources` ou o método `match`.
 * Como declarar parâmetros de rota, que são passados para ações do _controller_.
 * Como criar automaticamente caminhos e URLs usando _helpers_ de rota.
-* Técnicas avançadas, como criar restrições e montar _endpoints Rack_.
+* Técnicas avançadas como criar restrições e montar _endpoints Rack_.
 
 --------------------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ Quando sua aplicação Rails recebe uma requisição para:
 GET /patients/17
 ```
 
-ele pergunta para o roteador para corresponder ela para uma ação de _controller_.
+ela solicita ao roteador que corresponda com uma ação do _controller_.
 Se a primeira rota correspondente for:
 
 ```ruby
@@ -43,9 +43,9 @@ get '/patients/:id', to: 'patients#show'
 a requisição é direcionada para o _controller_ `patients` na ação `show`
 com `{ id: '17' }` em `params`.
 
-NOTA: Rails usa _snake_case_ para nomes de _controller_ no roteamento, se você
-tem um _controller_ com varias palavras como `MonsterTrucksController`, você
-deve usar `monster_trucks#show` por exemplo.
+NOTE: O Rails usa _snake_case_ para nomes de _controller_ no roteamento, se você
+tem um _controller_ com várias palavras como `MonsterTrucksController`, você
+deve usar `monster_trucks#show`, por exemplo.
 
 ### Gerando Caminhos e URLs a partir do código
 
@@ -67,10 +67,10 @@ e isso na _view_ correspondente:
 ```
 
 então seu roteador irá gerar o caminho `/patients/17`. Isso reduz a fragilidade
-da sua _view_ e faz seu código mais simples de entender. Oberse que o _id_ não
+da sua _view_ e faz seu código mais simples de entender. Observe que o _id_ não
 não precisa ser especificado no _helper_ da rota.
 
-### Configuring the Rails Router
+### Configurando o Roteador do Rails
 
 As rotas para sua aplicação ou _engine_ estão dentro do arquivo `config/routes.rb`
 e tipicamente se parecem com isso:
@@ -88,10 +88,10 @@ end
 ```
 
 Como isso é um arquivo padrão do Ruby você pode utilizar de todos os seus recursos
-para te ajudar a definir suas rotas, porém seja cuidadoso com nomes de variaveis
+para te ajudar a definir suas rotas, porém tenha cautela com nomes de variáveis
 já que ela pode conflitar com os métodos DSL do roteador.
 
-NOTA: O bloco `Rails.application.routes.draw do ... end` que encapsula suas
+NOTE: O bloco `Rails.application.routes.draw do ... end` que encapsula suas
 definições de rotas é necessário para estabelecer o escopo do roteador DSL e não
 deve ser deletado.
 
