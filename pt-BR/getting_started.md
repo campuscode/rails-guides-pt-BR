@@ -811,19 +811,19 @@ Visit <http://localhost:3000/articles/new> and give it a try!
 
 ![Show action for articles](images/getting_started/show_action_for_articles.png)
 
-### Listing all articles
+### Listando todos os artigos
 
-We still need a way to list all our articles, so let's do that.
-The route for this as per output of `rails routes` is:
+Nós ainda precisaremos de um jeito para listar todos nossos artigos, então vamos fazer isso..
+A rota para isso conforme a saída de `rails routes` é 
 
 ```
 articles GET    /articles(.:format)          articles#index
 ```
 
-Add the corresponding `index` action for that route inside the
-`ArticlesController` in the `app/controllers/articles_controller.rb` file.
-When we write an `index` action, the usual practice is to place it as the
-first method in the controller. Let's do it:
+Adicione a correspondente action  `index` para essa rota dentro de
+`ArticlesController` no arquivo `app/controllers/articles_controller.rb` 
+Quando escrevemos uma ação `index` , a prática usual é colocar isso como
+o primeiro método no controller. Vamos fazer issso:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -841,7 +841,7 @@ class ArticlesController < ApplicationController
   # snippet for brevity
 ```
 
-And then finally, add the view for this action, located at
+E então finalmente, adicione a view para essa action,localizada em
 `app/views/articles/index.html.erb`:
 
 ```html+erb
@@ -864,8 +864,8 @@ And then finally, add the view for this action, located at
 </table>
 ```
 
-Now if you go to <http://localhost:3000/articles> you will see a list of all the
-articles that you have created.
+Agora se você acessar <http://localhost:3000/articles> você verá uma lista de todos os os
+artigos que você criou.
 
 ### Adding links
 
