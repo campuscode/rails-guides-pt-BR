@@ -28,7 +28,7 @@ Para a maior parte das aplicações [RESTful](https://en.wikipedia.org/wiki/Repr
 
 Um *controller* pode então ser pensado como um intermediário entre um *model* e uma *view*. Isso faz com que os dados do *model* fiquem disponíveis para a *view* para que possa ser mostrado ao usuário, e ele salva ou atualiza dados do usuário no *model*.
 
-OBS: Para mais detalhes sobre processo de roteamento, veja [Rails Routing from the Outside In](routing.html)
+NOTE: Para mais detalhes sobre processo de roteamento, veja [Rails Routing from the Outside In](routing.html)
 
 Convenção para Nomeclatura de *Controllers*
 ----------------------------
@@ -36,7 +36,7 @@ A convenção para nomenclatura de *controllers* no Rails favorece a pluralizaç
 
 Seguindo essa convenção será possível utilizar o gerador de rotas padrão (ex: `resources`, etc) sem precisar configurar cada `:path` ou `:controller`, e ainda manter consistente o uso dos auxiliares de rotas em todo o seu projeto. Veja [Layouts & Guia de Renderização](layouts_and_rendering.html) para mais detalhes.
 
-OBS: A convenção para nomenclatura de *controllers* difere da convenção para nomenclatura de *models*, que devem ser nomeados na forma singular.
+NOTE: A convenção para nomenclatura de *controllers* difere da convenção para nomenclatura de *models*, que devem ser nomeados na forma singular.
 
 Métodos e Actions
 -------------------

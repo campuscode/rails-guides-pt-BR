@@ -1,16 +1,6 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-
-Esse guia introduz técnicas de debugação para aplicações de Ruby on Rails
-
-Após ler esse guia, você saberá:
-
-* O proposito de debugar
-* Como encontrar problemas nas suas aplicações que testes não estão identificando
-* As diferentes maneiras de debugar
-* Como analisar o *stack trace*
-=======
 *Debug* de Aplicações Rails
 ============================
 
@@ -136,7 +126,7 @@ Rails.logger = Log4r::Logger.new("Application Log")
 ```
 
 
-DICA: Por padrão, cada log é criado em `Rails.root/log/` e o arquivo de registro é criado com o nome do ambiente no qual a aplicação está sendo executada.
+TIP: Por padrão, cada *log* é criado em `Rails.root/log/` e o arquivo de registro é criado com o nome do ambiente no qual a aplicação está sendo executada.
 
 
 ### Níveis de Log
@@ -151,13 +141,13 @@ config.log_level = :warn # Em qualquer inicializador de ambiente, ou
 Rails.logger.level = 0 # a qualquer momento
 ```
 
-Isso é útil quando você quer criar logs em ambientes diferentes de desenvolvimento ou homologação sem sobrecarregar os registros do seu aplicativo com informação desnecessária.
+Isso é útil quando você quer criar *logs* em ambientes diferentes de desenvolvimento ou homologação sem sobrecarregar os registros do seu aplicativo com informação desnecessária.
 
-DICA: O nível de log padrão do Rails é `debug` em todos os ambientes de desenvolvimento.
+TIP: O nível de *log* padrão do Rails é `debug` em todos os ambientes de desenvolvimento.
 
 ### Enviando Mensagens
 
-Para enviar uma mensagem para o log ativo, use o método `logger.(debug|info|warn|error|fatal|unknown)` de dentro de um *controller*, *model* ou *mailer*: 
+Para enviar uma mensagem para o *log* ativo, use o método `logger.(debug|info|warn|error|fatal|unknown)` de dentro de um *controller*, *model* ou *mailer*:
 
 ```ruby
 logger.debug "Hash com atributos de 'Person': #{@person.attributes.inspect}"
@@ -546,7 +536,7 @@ o comando `thread` (ou o abreviado `th`). Esse comando possui várias opções:
 
 * `thread`: mostra a thread atual.
 * `thread list`: é usado para listar todas as threads e seus status. A thread
-atual é marcada com o sinal de mais (+). 
+atual é marcada com o sinal de mais (+).
 * `thread stop n`: interrompe a thread _n_.
 * `thread resume n`: retoma a thread _n_.
 * `thread switch n`: alterna o contexto da thread atual para _n_.
@@ -559,7 +549,7 @@ para verificar se não há condições do seu código continuar rodando.
 Qualquer expressão pode ser avaliada no contexto atual. Para avaliar uma
 expressão, apenas digite-a!
 
-Este exemplo mostra como você pode imprimir as variáveis de instância definidas no 
+Este exemplo mostra como você pode imprimir as variáveis de instância definidas no
 contexto atual:
 
 ```
@@ -616,7 +606,7 @@ E, em seguida, chame novamente o `instance_variables`:
 Agora `@articles` está incluído nas variáveis de instância, porque a linha que o definiu
 foi executada.
 
-DICA: Você também pode entrar no modo **irb** com o comando `irb` (é claro!).
+TIP: Você também pode entrar no modo **irb** com o comando `irb` (é claro!).
 Isso iniciará uma sessão irb dentro do contexto em que você a chamou.
 
 O método `var` é a maneira mais conveniente de mostrar variáveis e seus valores.
@@ -671,14 +661,14 @@ rastrear os valores de uma variável enquanto a execução continua.
 1: @articles = nil
 ```
 
-As variáveis dentro da lista exibida serão impressas com seus valores depois 
+As variáveis dentro da lista exibida serão impressas com seus valores depois
 que você se mover na *stack*. Para parar de exibir uma variável, use `undisplay n` onde
 _n_ é o número da variável (1 no último exemplo).
 
 ### Passo-a-passo
 
 Agora você deve saber onde está no *trace* em execução e poder imprimir as
-variáveis disponíveis. Mas vamos continuar e seguir em frente com a execução 
+variáveis disponíveis. Mas vamos continuar e seguir em frente com a execução
 da aplicação.
 
 Use `step` (abreviado` s`) para continuar executando o programa até o próximo
@@ -746,7 +736,7 @@ instrução Ruby a ser executada - neste caso, o método `week` do Active Suppor
 
 Essa é uma das melhores maneiras de encontrar erros no seu código.
 
-DICA: Você também pode usar o `step n` ou o `next n` para avançar `n` passos de uma vez.
+TIP: Você também pode usar o `step n` ou o `next n` para avançar `n` passos de uma vez.
 
 ### Breakpoints
 

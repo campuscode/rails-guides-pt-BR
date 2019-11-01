@@ -213,7 +213,7 @@ person.valid?                        # => raises ActiveModel::StrictValidationFa
 ```
 ### Nomeação
 
-`ActiveModel::Naming` adiciona vários métodos de classe que tornam a nomeação e o roteamento mais fácil de administrar. O módulo define o método da classe `model_name` que definirá vários acessadores usando alguns métodos do `ActiveSupport :: Inflector`.
+`ActiveModel::Naming` adiciona vários métodos de classe que tornam a nomeação e o roteamento mais fácil de administrar. O módulo define o método da classe `model_name` que definirá vários acessadores usando alguns métodos do `ActiveSupport::Inflector`.
 
 
 ```ruby
@@ -232,9 +232,9 @@ Person.model_name.i18n_key            # => :person
 Person.model_name.route_key           # => "people"
 Person.model_name.singular_route_key  # => "person"
 ```
-### Modelo
+### *Model*
 
-O `ActiveModel :: Model` adiciona a capacidade de uma classe trabalhar com o *Action Pack* e *Action View* imediatamente.
+O `ActiveModel::Model` adiciona a capacidade de uma classe trabalhar com o *Action Pack* e *Action View* imediatamente.
 
 
 ```ruby
@@ -251,9 +251,9 @@ class EmailContact
   end
 end
 ```
-Ao incluir o `ActiveModel :: Model`, você obtém alguns recursos como:
+Ao incluir o `ActiveModel::Model`, você obtém alguns recursos como:
 
-- introspecção do nome do modelo
+- introspecção do nome de *model*
 - conversões
 - traduções
 - validações
@@ -270,11 +270,11 @@ email_contact.valid?     # => true
 email_contact.persisted? # => false
 ```
 
-Qualquer classe que inclua `ActiveModel :: Model` pode ser usada com `form_for`, `render` e quaisquer outros métodos auxiliares do *Action View*, assim como o *Active Record* objetos.
+Qualquer classe que inclua `ActiveModel::Model` pode ser usada com `form_for`, `render` e quaisquer outros métodos auxiliares do *Action View*, assim como o *Active Record* objetos.
 
 ### Serialização
 
-O `ActiveModel :: Serialization` fornece serialização básica para o seu objeto. Você precisa declarar um Hash de atributos que contém os atributos que deseja serializar. Os atributos devem ser cadeias, não símbolos.
+O `ActiveModel::Serialization` fornece serialização básica para o seu objeto. Você precisa declarar um Hash de atributos que contém os atributos que deseja serializar. Os atributos devem ser cadeias, não símbolos.
 
 ```ruby
 class Person
@@ -298,11 +298,11 @@ person.serializable_hash   # => {"name"=>"Bob"}
 
 #### ActiveModel::Serializers
 
-O Active Model também fornece o módulo `ActiveModel :: Serializers :: JSON` para serialização / desserialização JSON. Este módulo inclui automaticamente o módulo `ActiveModel :: Serialization` discutido anteriormente.
+O Active Model também fornece o módulo `ActiveModel::Serializers::JSON` para serialização / desserialização JSON. Este módulo inclui automaticamente o módulo `ActiveModel::Serialization` discutido anteriormente.
 
 ##### ActiveModel::Serializers::JSON
 
-Para usar o `ActiveModel :: Serializers :: JSON`, você só precisa alterar o módulo que você está incluindo de `ActiveModel :: Serialization` para` ActiveModel :: Serializers :: JSON`.
+Para usar o `ActiveModel::Serializers::JSON`, você só precisa alterar o módulo que você está incluindo de `ActiveModel::Serialization` para` ActiveModel::Serializers::JSON`.
 
 ```ruby
 class Person
@@ -354,7 +354,7 @@ person.name            # => "Bob"
 
 ### Tradução
 
-O `ActiveModel :: Translation` fornece integração entre seu objeto e o Rails internacionalização (i18n).
+O `ActiveModel::Translation` fornece integração entre seu objeto e o Rails internacionalização (i18n).
 
 ```ruby
 class Person
@@ -380,7 +380,7 @@ Person.human_attribute_name('name') # => "Nome"
 
 ### Lint Tests
 
-O `ActiveModel :: Lint :: Tests` permite testar se um objeto é compatível com a API do modelo ativo.
+O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a API do *model* ativo.
 
 * `app/models/person.rb`
 
@@ -422,19 +422,19 @@ Não é necessário um objeto para implementar todas as APIs para trabalhar com 
 
 ### SecurePassword
 
-O `ActiveModel :: SecurePassword` fornece uma maneira de armazenar com segurança qualquer senha de forma criptografada. Quando você inclui este módulo, é fornecido o método da classe `has_secure_password` que define um acessador de `senha` com certas validações por padrão.
+O `ActiveModel::SecurePassword` fornece uma maneira de armazenar com segurança qualquer senha de forma criptografada. Quando você inclui este módulo, é fornecido o método da classe `has_secure_password` que define um acessador de `senha` com certas validações por padrão.
 
 #### Requerimentos
 
-O `ActiveModel :: SecurePassword` depende de [` bcrypt`](https://github.com/codahale/bcrypt-ruby 'BCrypt'),
-portanto, inclua esta `gem` no seu `Gemfile` para usar o` ActiveModel :: SecurePassword` corretamente.
-Para fazer isso funcionar, o modelo deve ter um acessador chamado `XXX_digest`.
+O `ActiveModel::SecurePassword` depende de [`bcrypt`](https://github.com/codahale/bcrypt-ruby 'BCrypt'),
+portanto, inclua esta `gem` no seu `Gemfile` para usar o` ActiveModel::SecurePassword` corretamente.
+Para fazer isso funcionar, o *model* deve ter um acessador chamado `XXX_digest`.
 Onde `XXX` é o nome do atributo da sua senha desejada.
 As seguintes validações são adicionadas automaticamente:
 
 1. A senha deve estar presente.
 2. A senha deve ser igual à sua confirmação (desde que `XXX_confirmation` seja passada adiante).
-3. O tamanho máximo de uma senha é 72 (exigido pelo `bcrypt` do qual o ActiveModel :: SecurePassword depende)
+3. O tamanho máximo de uma senha é 72 (exigido pelo `bcrypt` do qual o ActiveModel::SecurePassword depende)
 
 #### Exemplos
 
