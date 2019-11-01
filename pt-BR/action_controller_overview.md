@@ -556,7 +556,7 @@ end
 Cookies
 -------
 
-Your application can store small amounts of data on the client - called cookies - that will be persisted across requests and even sessions. Rails provides easy access to cookies via the `cookies` method, which - much like the `session` - works like a hash:
+Sua Aplicação pode armazemar pequenas quantidades de dados no cliente - chamados de *cookies* - que serão mantidas entre requisições e até as sessões. O Rails fornece um fácil acesso para os *cookies* através do método `cookies`, que - assim como a `session` - funciona como um hash:
 
 ```ruby
 class CommentsController < ApplicationController
