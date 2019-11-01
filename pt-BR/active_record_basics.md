@@ -208,7 +208,7 @@ CRUD: Lendo e Escrevendo Dados
 ------------------------------
 
 CRUD é um acrônimo para os quatro verbos que usamos para operar com dados: ***C**reate*, 
-***R**ead*, ***U**pdate* e ***D**elete*. O *Active Record* irá criar, automáticamente, métodos que 
+***R**ead*, ***U**pdate* e ***D**elete*. O *Active Record* irá criar, automaticamente, métodos que 
 permitem uma aplicação ler e manipular dados armazenados em suas tabelas.
 
 ### *Create*
