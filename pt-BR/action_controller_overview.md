@@ -404,7 +404,7 @@ O Rails configura (para o *CookieStore*) uma chave secreta utilizada para assina
 secret_key_base: 492f...
 ```
 
-NOTE: Alterar a secret_key_base ao utilizar o `CookieStore` invalidará todas as sessões existentes.
+NOTE: Alterar a `secret_key_base` ao utilizar o `CookieStore` invalidará todas as sessões existentes.
 
 ### Acessando a Sessão
 
