@@ -364,7 +364,7 @@ Sua aplicação possui uma sessão para cada usuário, na qual pode-se armazenar
 Todos os armazenamentos de sessão utilizam um *cookie* para armazenar um ID único para cada sessão (você deve utilizar um *cookie*, o Rails não permitirá que você passe o ID da sessão na URL, pois isso é menos seguro).
 
 Para a maioria dos armazenamentos, esse ID é utilizado para procurar os dados da sessão no servidor, por exemplo, em uma tabela do banco de dados. Há apenas uma exceção, que é o armazenamento de sessão recomendado por padrão - o *CookieStore* - que armazena todos os dados da sessão no próprio *cookie* (o ID ainda estará disponível para você, se você precisar). A vantagem é a de ser muito leve e requer zero configuração em uma nova aplicação para utilizar a sessão. Os dados do *cookie* são assinados criptograficamente para torná-los invioláveis, e também é criptografado para que qualquer pessoa com acesso não leia o seu conteúdo. (O Rails não aceitará se estiver sido editado).
-O *CookieStore* pode armazenar cerca de 4kB de dados - muito menos que os demais - mas geralmente é o suficiente. O armazenamento de grandes quantidades de dados na sessão não é recomendado, independentemente de qual armazenamento de sessão sua aplicação utiliza. Você deve evitar armazenar objetos complexos (qualquer coisa que não sejam objetos Ruby básicos, o exemplo mais comum são instâncias de modelo) na sessão, pois o servidor pode não ser capaz de remontá-los entre as requisições, o que resultará em um erro.
+O *CookieStore* pode armazenar cerca de 4kB de dados - muito menos que os demais - mas geralmente é o suficiente. O armazenamento de grandes quantidades de dados na sessão não é recomendado, independentemente de qual armazenamento de sessão sua aplicação utiliza. Você deve evitar armazenar objetos complexos (qualquer coisa que não sejam objetos Ruby básicos, o exemplo mais comum são instâncias de um *model*) na sessão, pois o servidor pode não ser capaz de remontá-los entre as requisições, o que resultará em um erro.
 
 Se as suas sessões de usuário não armazenam dados críticos ou não precisam durar por longos períodos (por exemplo, se você apenas utiliza o *flash* para mensagens), considere o uso do `ActionDispatch::Session::CacheStore`. Isso armazenará as sessões utilizando a implementação de *cache* que você configurou para a sua aplicação. A vantagem é que você pode utilizar sua infraestrutura de *cache* existente para armazenar sessões sem precisar de nenhuma configuração ou administração adicional. A desvantagem é que as sessões serão temporárias e poderão desaparecer a qualquer momento.
 
@@ -410,7 +410,7 @@ NOTE: Alterar a `secret_key_base` ao utilizar o `CookieStore` invalidará todas 
 
 No seu *controller*, você pode acessar a sessão através do método de instância `session`.
 
-NOTE: As sessões são *lazy loading* (carregamento lento). Se você não acessá-las no código da sua *action*, elas não serão carregadas. Portanto, você nunca precisará desativar as sessões, basta apenas não acessá-las.
+NOTE: As sessões são [*lazy loading*](https://pt.wikipedia.org/wiki/Lazy_loading) (carregamento lento). Se você não acessá-las no código da sua *action*, elas não serão carregadas. Portanto, você nunca precisará desativar as sessões, basta apenas não acessá-las.
 
 Os valores da sessão são armazenados utilizando pares de chave/valor como em um *hash*:
 
