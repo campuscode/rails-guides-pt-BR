@@ -353,11 +353,12 @@ guide](active_record_validations.html).
 Callbacks
 ---------
 
-Active Record callbacks allow you to attach code to certain events in the
-life-cycle of your models. This enables you to add behavior to your models by
-transparently executing code when those events occur, like when you create a new
-record, update it, destroy it, and so on. You can learn more about callbacks in
-the [Active Record Callbacks guide](active_record_callbacks.html).
+Os *callbacks* de um *Active Record* permitem que você vincule códigos para
+alguns eventos no ciclo de vida de seus modelos. Isso permite que você adicione
+comportamentos para seus modelos executando códigos de forma transparente quando
+estes eventos acontecem, como quando você cria um novo registro, atualiza, destrói,
+e outros. Você pode aprender mais sobre *callbacks* no 
+[Guia de *callbacks* do *Active Record*](active_record_callbacks.html).
 
 Migrations
 ----------
