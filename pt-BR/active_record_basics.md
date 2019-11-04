@@ -207,7 +207,7 @@ NOTE: Active Record does not support using non-primary key columns named `id`.
 CRUD: Lendo e Escrevendo Dados
 ------------------------------
 
-CRUD é um acrônimo para os quatro verbos que usamos para operar com dados: ***C**reate*, 
+CRUD é um acrônimo para os quatro verbos que utilizamos na operação dos dados: ***C**reate* (criar), 
 ***R**ead*, ***U**pdate* e ***D**elete*. O *Active Record* irá criar, automáticamente, métodos que 
 permitem uma aplicação ler e manipular dados armazenados em suas tabelas.
 
