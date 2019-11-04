@@ -246,7 +246,7 @@ end
 
 ### *Read*
 
-O *Active Record* provê um API rico para acessar os dados na base de dados. Abaixo 
+O *Active Record* fornece uma API rica para acessar dados no banco de dados. Abaixo 
 temos alguns exemplos de diferentes métodos para acessar os dados providos pelo
 *Active Record*.
 
