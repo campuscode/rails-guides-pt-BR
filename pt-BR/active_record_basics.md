@@ -218,7 +218,7 @@ ter seus atributos definidos manualmente após a criação. O método `new` reto
 um novo objeto, enquanto `create` retornará o objeto e o salvará no banco de dados.
 
 Por exemplo, dado um *model* `User` com os atributos `name` e `occupation`, 
-chamando o método `create` irá criar e salvar um novo registro na base de dados:
+chamando o método `create` criará e salvará um novo registro no banco de dados:
 
 ```ruby
 user = User.create(name: "David", occupation: "Code Artist")
