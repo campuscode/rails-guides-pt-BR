@@ -234,7 +234,7 @@ user.occupation = "Code Artist"
 
 Chamando `user.save` irá enviar o registro para a base de dados.
 
-Finalmente, se um block for fornecido, ambos `create` e `new` produzirão 
+Finalmente, se um bloco for fornecido, ambos `create` e `new` produzirão 
 o novo objeto daquele bloco para a inicialização:
 
 ```ruby
