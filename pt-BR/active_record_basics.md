@@ -215,7 +215,7 @@ permitem uma aplicação ler e manipular dados armazenados em suas tabelas.
 
 Os objetos do *Active Record* podem ser criados a partir de um *hash*, um bloco ou 
 ter seus atributos definidos manualmente após a criação. O método `new` retornará 
-um novo objeto, enquanto `create` irá retornar um objeto e salvá-lo na base de dados.
+um novo objeto, enquanto `create` retornará o objeto e o salvará no banco de dados.
 
 Por exemplo, dado um *model* `User` com os atributos `name` e `occupation`, 
 chamando o método `create` irá criar e salvar um novo registro na base de dados:
