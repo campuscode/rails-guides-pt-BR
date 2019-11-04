@@ -710,7 +710,7 @@ Por que é necessário? A habilidade de salvar todos os parâmetros do controlle
 *model* de uma só vez deixa o trabalho de quem está programando mais fácil,
 mas essa conveniência pode ser utilizada de forma maliciosa. E se um *request*
 para o servidor for trabalhado para fazer parecer um novo formulário de `artcle`,
-mas também incluir campus extras com valores que violam a integridade da sua aplicação?
+mas também incluir campos extras com valores que violam a integridade da sua aplicação?
 Isso possibilitaria a entrada/atribuição de dados ruins no seu *model* e banco
 de dados junto com dados bons - Podendo, potencialmente, quebrar sua aplicação ou algo pior.
 
