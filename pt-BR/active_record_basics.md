@@ -310,7 +310,7 @@ user = User.find_by(name: 'David')
 user.destroy
 ```
 
-Se você quer excluir diversos registros em massa, você pode utilizar os métodos
+Se você deseja excluir diversos registros em massa, você pode utilizar os métodos
 `destroy_by` ou `destroy_all`:
 
 ```ruby
