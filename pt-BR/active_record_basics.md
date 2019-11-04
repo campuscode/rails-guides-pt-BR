@@ -302,7 +302,7 @@ User.update_all "max_login_attempts = 3, must_change_password = 'true'"
 
 ### *Delete*
 
-Da mesma forma, uma vez recuparado um objeto do *Active Record*, o mesmo pode ser
+Da mesma forma, uma vez recuperado um objeto do *Active Record*, o mesmo pode ser
 destruído, que o remove da base de dados.
 
 ```ruby
