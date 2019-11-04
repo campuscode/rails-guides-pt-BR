@@ -717,7 +717,7 @@ de dados junto com dados bons - Podendo, potencialmente, quebrar sua aplicação
 Nós definimos quais são os parâmetros permitidos para prevenir atribuições de
 dados indesejados. Nesse caso, queremos permitir e exigir os parâmetros `title`
 e `text` para uso válido do `create`. A sintaxe para isso utiliza `require` e
-`permit`. A alteração irá envolver uma linha na *action* `create`.
+`permit`. A alteração envolverá uma linha na *action* `create`.
 
 ```ruby
   @article = Article.new(params.require(:article).permit(:title, :text))
