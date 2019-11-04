@@ -712,7 +712,7 @@ mas essa conveniência pode ser utilizada de forma maliciosa. E se um *request*
 para o servidor for trabalhado para fazer parecer um novo formulário de `artcle`,
 mas também incluir campos extras com valores que violam a integridade da sua aplicação?
 Isso possibilitaria a entrada/atribuição de dados ruins no seu *model* e banco
-de dados junto com dados bons - Podendo, potencialmente, quebrar sua aplicação ou algo pior.
+de dados junto com dados bons - podendo, potencialmente, quebrar sua aplicação ou algo pior.
 
 Nós definimos quais são os parâmetros permitidos para prevenir atribuições de
 dados indesejados. Nesse caso, queremos permitir e exigir os parâmetros `title`
