@@ -247,7 +247,7 @@ end
 ### *Read*
 
 O *Active Record* fornece uma API rica para acessar dados no banco de dados. Abaixo 
-temos alguns exemplos de diferentes métodos para acessar os dados providos pelo
+temos alguns exemplos de diferentes métodos para acessar os dados fornecidos pelo
 *Active Record*.
 
 ```ruby
