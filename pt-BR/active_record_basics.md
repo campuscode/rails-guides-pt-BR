@@ -213,7 +213,7 @@ permitem uma aplicação ler e manipular dados armazenados em suas tabelas.
 
 ### *Create*
 
-Os objetos do *Active Record* pode ser criados a partir de um *hash*, um bloco ou 
+Os objetos do *Active Record* podem ser criados a partir de um *hash*, um bloco ou 
 ter seus atributos definidos manualmente após a criação. O método `new` irá retornar 
 um novo objeto, enquanto `create` irá retornar um objeto e salvá-lo na base de dados.
 
