@@ -636,7 +636,7 @@ end
 A *migration* acima cria um método chamado `change` que será chamado quando esta
 *migration* for executada. A ação definida neste método também é reversível,
 o que significa que o Rails sabe como reverter a alteração, caso você queira. Quando você executar esta *migration*, será
-criada uma tabela `articles` com uma coluna do tipo string e uma coluna do tipo text.
+criada uma tabela `articles` com uma coluna do tipo string e uma coluna do tipo *text*.
 Também serão criados dois campos de *timestamp*, para permitir que o Rails monitore
 quando um `Article` for criado ou atualizado.
 
