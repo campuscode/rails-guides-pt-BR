@@ -158,19 +158,19 @@ Você pode customizar o nome da chave ou parâmetros específicos que você quer
 
 NOTE: Suporte para interpretar parâmetros XML foi extraído para uma *gem* chamada `actionpack-xml_parser`.
 
-### Routing Parameters
+### Parâmetros de Rota
 
-The `params` hash will always contain the `:controller` and `:action` keys, but you should use the methods `controller_name` and `action_name` instead to access these values. Any other parameters defined by the routing, such as `:id`, will also be available. As an example, consider a listing of clients where the list can show either active or inactive clients. We can add a route which captures the `:status` parameter in a "pretty" URL:
+O *hash* `params` sempre irá conter as chaves `:controller` e `:action`, mas você deve usar os métodos `nome_do_controller` e `nome_da_action` para acessar estes valores. Quaisquer outros parâmetros definidos pela rota, como `:id`, também estarão disponíveis. Por exemplo, considere uma listagem de clientes onde a lista pode mostrar os clientes ativos e inativos. Nós podemos adicionar uma rota que captura o parâmetro `:status` numa URL "normalizada":
 
 ```ruby
 get '/clients/:status', to: 'clients#index', foo: 'bar'
 ```
 
-In this case, when a user opens the URL `/clients/active`, `params[:status]` will be set to "active". When this route is used, `params[:foo]` will also be set to "bar", as if it were passed in the query string. Your controller will also receive `params[:action]` as "index" and `params[:controller]` as "clients".
+Neste caso, quando um usuário abrir a URL `/clients/active`, `params[:status]` estará definido como "active". Quando esta rota é usada, `params[:foo]` também será definido como "bar", como se tivesse sido enviado por meio da *query string*. O seu *controller* também irá receber `params[:action]` com o valor "index" e `params[:controller]` com o valor "clients".
 
 ### `default_url_options`
 
-You can set global default parameters for URL generation by defining a method called `default_url_options` in your controller. Such a method must return a hash with the desired defaults, whose keys must be symbols:
+Você pode determinar parâmetros padrão globais para a geração de URLs definindo um método chamado `default_url_options` no seu *controller*. Este método deve retornar um *hash* com os dados padrão desejados, cujas chaves devem ser símbolos:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -180,11 +180,11 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-These options will be used as a starting point when generating URLs, so it's possible they'll be overridden by the options passed to `url_for` calls.
+Estas opções serão usadas como um ponto de partida na geração de URLs, então é possível que elas sejam sobrescritas pelas opções passadas para chamadas a `url_for`.
 
-If you define `default_url_options` in `ApplicationController`, as in the example above, these defaults will be used for all URL generation. The method can also be defined in a specific controller, in which case it only affects URLs generated there.
+Se você definir `default_url_options` em `ApplicationController`, como no exemplo acima, estes padrões irão ser usados para todas as gerações de URL. O método pode também ser definido num *controller* específico, neste caso afetando somente as URLs geradas a partir desse escopo.
 
-In a given request, the method is not actually called for every single generated URL; for performance reasons, the returned hash is cached, there is at most one invocation per request.
+Numa requisição o método não é de fato chamado para toda URL gerada; por questões de performance o *hash* retornado é cacheado. Há no máximo uma invocação por requisição.
 
 ### Strong Parameters
 
