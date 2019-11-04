@@ -135,7 +135,7 @@ Criando Models do Active Record
 -----------------------------
 
 É muito fácil criar *models* do *Active Record*. Tudo que você precisa fazer é
-subclassificar a classe `ApplicationRecord` e estará tudo pronto:  
+criar uma classe que herda de `ApplicationRecord` e estará tudo pronto:  
 
 ```ruby
 class Product < ApplicationRecord
