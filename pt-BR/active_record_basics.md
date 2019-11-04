@@ -285,7 +285,7 @@ user.name = 'Dave'
 user.save
 ```
 
-Um atalho para isso seria usar *hash* mapeando o nome dos atributos para o valor
+Um atalho para isso seria usar um *hash* mapeando o nome dos atributos para o valor
 desejado, como a seguir:
 
 ```ruby
