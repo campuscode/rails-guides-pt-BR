@@ -662,7 +662,7 @@ foi criada.
 NOTE. Por padrão você está trabalhando em ambiente de desenvolvimento,
 por este motivo, este comando irá aplicar a *migration* no banco de dados definido na seção
 `development` do seu arquivo `config/database.yml`. Se você quiser executar as
-*migrations* em outro ambiente, para instância em produção, você deve especificar
+*migrations* em outro ambiente, em produção por exemplo, você deve especificar
 quando chamar o comando: `rails db:migrate RAILS_ENV=production`
 
 ### Saving data in the controller
