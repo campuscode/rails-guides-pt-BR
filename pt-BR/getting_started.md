@@ -706,7 +706,7 @@ e você está lidando com uma delas agora. Esta se chama [strong parameters](act
 que nos obrigam a dizer ao Rails exatamente quais parâmetros estão permitidos
 nas *actions* do *controller*.
 
-Porquê é necessário? A habilidade de salvar todos os parâmetros do controller no
+Por que é necessário? A habilidade de salvar todos os parâmetros do controller no
 *model* de uma só vez deixa o trabalho de quem está programando mais fácil,
 mas essa conveniência pode ser utilizada de forma maliciosa. E se um *request*
 para o servidor for trabalhado para fazer parecer um novo formulário de `artcle`,
