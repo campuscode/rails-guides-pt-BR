@@ -276,7 +276,7 @@ Você pode aprender mais sobre como consultar um *model* do *Active Record* no g
 ### *Update*
 
 Uma vez que o objeto do *Active Record* for recuperado, seus atributos podem
-ser modificados e salvos na base de dados.
+ser modificados e salvos no banco de dados.
 
 ```ruby
 user = User.find_by(name: 'David')
