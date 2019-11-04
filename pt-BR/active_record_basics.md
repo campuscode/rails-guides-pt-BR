@@ -232,7 +232,7 @@ user.name = "David"
 user.occupation = "Code Artist"
 ```
 
-Chamando `user.save` irá enviar o registro para a base de dados.
+Uma chamada para `user.save` salvará o registro no banco de dados.
 
 Finalmente, se um block for fornecido, ambos `create` e `new` produzirão 
 o novo objeto daquele bloco para a inicialização:
