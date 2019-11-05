@@ -31,30 +31,30 @@ From the controller's point of view, there are three ways to create an HTTP resp
 * Call `redirect_to` to send an HTTP redirect status code to the browser
 * Call `head` to create a response consisting solely of HTTP headers to send back to the browser
 
-### Rendering by Default: Convention Over Configuration in Action
+### Renderização por padrão: Convenção sobre configuração em ação
 
-You've heard that Rails promotes "convention over configuration". Default rendering is an excellent example of this. By default, controllers in Rails automatically render views with names that correspond to valid routes. For example, if you have this code in your `BooksController` class:
+Você já ouviu falar que o Rails promove "convenção sobre configuração". A renderização padrão é um excelente exemplo disso. Por padrão, os _controllers_ no Rails renderizam automaticamente _views_ com nomes que correspondem a rotas válidas. Por exemplo, se você tiver esse código na classe `BooksController`:
 
 ```ruby
 class BooksController < ApplicationController
 end
 ```
 
-And the following in your routes file:
+E o seguinte no seu arquivo de rotas:
 
 ```ruby
 resources :books
 ```
 
-And you have a view file `app/views/books/index.html.erb`:
+E você tem um arquivo de exibição `app/views/books/index.html.erb`:
 
 ```html+erb
-<h1>Books are coming soon!</h1>
+<h1>Os livros chegarão em breve!</h1>
 ```
 
-Rails will automatically render `app/views/books/index.html.erb` when you navigate to `/books` and you will see "Books are coming soon!" on your screen.
+O Rails renderizará automaticamente `app/views/books/index.html.erb` quando você navegar para `/books` e verá "Os livros chegarão em breve!" na sua tela.
 
-However a coming soon screen is only minimally useful, so you will soon create your `Book` model and add the index action to `BooksController`:
+No entanto, uma tela em breve é apenas minimamente útil; portanto, em breve você criará o seu modelo `Book` e adicionará a _action_ _index_ ao `BooksController`:
 
 ```ruby
 class BooksController < ApplicationController
@@ -64,9 +64,9 @@ class BooksController < ApplicationController
 end
 ```
 
-Note that we don't have explicit render at the end of the index action in accordance with "convention over configuration" principle. The rule is that if you do not explicitly render something at the end of a controller action, Rails will automatically look for the `action_name.html.erb` template in the controller's view path and render it. So in this case, Rails will render the `app/views/books/index.html.erb` file.
+Observe que não temos _render_ explícito no final da _action_ _index_, de acordo com o princípio "convenção sobre configuração". A regra é que, se você não renderizar explicitamente algo no final de uma _action_ do _controller_, o Rails procurará automaticamente o _template_ `action_name.html.erb` no caminho da _view_ do _controller_ e o renderizará. Portanto, neste caso, o Rails renderizará o arquivo `app/views/books/index.html.erb`.
 
-If we want to display the properties of all the books in our view, we can do so with an ERB template like this:
+Se queremos exibir as propriedades de todos os livros em nossa _view_, podemos fazer isso com um template ERB como este:
 
 ```html+erb
 <h1>Listing Books</h1>
@@ -98,17 +98,17 @@ If we want to display the properties of all the books in our view, we can do so 
 <%= link_to "New book", new_book_path %>
 ```
 
-NOTE: The actual rendering is done by nested classes of the module [`ActionView::Template::Handlers`](https://api.rubyonrails.org/classes/ActionView/Template/Handlers.html). This guide does not dig into that process, but it's important to know that the file extension on your view controls the choice of template handler.
+NOTE: A renderização real é feita por classes aninhadas do módulo [`ActionView::Template::Handlers`](https://api.rubyonrails.org/classes/ActionView/Template/Handlers.html). Este guia não analisa esse processo, mas é importante saber que a extensão do arquivo na sua _view_ controla a escolha do manipulador de templates.
 
-### Using `render`
+### Usando `render`
 
-In most cases, the `ActionController::Base#render` method does the heavy lifting of rendering your application's content for use by a browser. There are a variety of ways to customize the behavior of `render`. You can render the default view for a Rails template, or a specific template, or a file, or inline code, or nothing at all. You can render text, JSON, or XML. You can specify the content type or HTTP status of the rendered response as well.
+Na maioria dos casos, o método `ActionController::Base#render` faz o trabalho pesado de renderizar o conteúdo do aplicativo para ser utilizado por um navegador. Existem várias maneiras de personalizar o comportamento do `render`. Você pode renderizar a _view_ padrão de um template do Rails, ou de um template específico, ou de um arquivo, ou código embutido, ou nada. Você pode renderizar text, JSON ou XML. Você também pode especificar o tipo de conteúdo ou o status HTTP da resposta renderizada.
 
-TIP: If you want to see the exact results of a call to `render` without needing to inspect it in a browser, you can call `render_to_string`. This method takes exactly the same options as `render`, but it returns a string instead of sending a response back to the browser.
+TIP: Se você deseja ver os resultados exatos de uma chamada para `render` sem precisar inspecioná-la em um navegador, você pode chamar` render_to_string`. Este método usa exatamente as mesmas opções que o `render`, mas retorna uma string em vez de enviar uma resposta de volta ao navegador.
 
-#### Rendering an Action's View
+#### Renderizando a _View_ de uma _Action_
 
-If you want to render the view that corresponds to a different template within the same controller, you can use `render` with the name of the view:
+Se você deseja renderizar a _view_ que corresponde a um modelo diferente dentro do mesmo _controller_, você pode usar `render` com o nome da _view_:
 
 ```ruby
 def update
@@ -121,9 +121,9 @@ def update
 end
 ```
 
-If the call to `update` fails, calling the `update` action in this controller will render the `edit.html.erb` template belonging to the same controller.
+Se a chamada para `update` falhar, a _action_ `update` neste _controller_ renderizará o template `edit.html.erb` pertencente ao mesmo _controller_.
 
-If you prefer, you can use a symbol instead of a string to specify the action to render:
+Se preferir, você pode usar um símbolo em vez de uma _string_ para especificar a _action_ a ser renderizada:
 
 ```ruby
 def update
@@ -136,25 +136,25 @@ def update
 end
 ```
 
-#### Rendering an Action's Template from Another Controller
+#### Renderizando o template de uma _Action_ de outro _Controller_
 
-What if you want to render a template from an entirely different controller from the one that contains the action code? You can also do that with `render`, which accepts the full path (relative to `app/views`) of the template to render. For example, if you're running code in an `AdminProductsController` that lives in `app/controllers/admin`, you can render the results of an action to a template in `app/views/products` this way:
+E se você quiser renderizar um template de um _controller_ totalmente diferente daquele que contém o código da _action_? Você também pode fazer isso com `render`, que aceita o caminho completo (relativo a `app/views`) do template a ser renderizado. Por exemplo, se você estiver executando o código em `AdminProductsController` que fica em` app/controllers/admin`, você pode renderizar os resultados de uma _action_ em um template em `app/views/products` desta maneira:
 
 ```ruby
 render "products/show"
 ```
 
-Rails knows that this view belongs to a different controller because of the embedded slash character in the string. If you want to be explicit, you can use the `:template` option (which was required on Rails 2.2 and earlier):
+O Rails sabe que essa _view_ pertence a um _controller_ diferente devido ao caractere de barra contido na string. Se você quer ser explícito, você pode usar a opção `:template` (necessária no Rails 2.2 e versões anteriores):
 
 ```ruby
 render template: "products/show"
 ```
 
-#### Wrapping it up
+#### Resumindo
 
-The above three ways of rendering (rendering another template within the controller, rendering a template within another controller, and rendering an arbitrary file on the file system) are actually variants of the same action.
+As três maneiras acima de renderizar (renderizar outro template dentro do _controller_, renderizar um template dentro de outro _controller_ e renderizar um arquivo arbitrário no sistema de arquivos) são na verdade variantes da mesma ação.
 
-In fact, in the BooksController class, inside of the update action where we want to render the edit template if the book does not update successfully, all of the following render calls would all render the `edit.html.erb` template in the `views/books` directory:
+De fato, na classe _BooksController_, dentro da _action_ update na qual queremos renderizar o template _edit_, se o livro não for atualizado com êxito, todas as seguintes chamadas de `render` renderizarão o _template_ `edit.html.erb` no diretório `views/books`:
 
 ```ruby
 render :edit
@@ -165,118 +165,118 @@ render "books/edit"
 render template: "books/edit"
 ```
 
-Which one you use is really a matter of style and convention, but the rule of thumb is to use the simplest one that makes sense for the code you are writing.
+Qual deles você usa é realmente uma questão de estilo e convenção, mas a regra geral é usar o mais simples que faça sentido para o código que você está escrevendo.
 
-#### Using `render` with `:inline`
+#### Usando `render` com `:inline`
 
-The `render` method can do without a view completely, if you're willing to use the `:inline` option to supply ERB as part of the method call. This is perfectly valid:
+O método `render` pode ficar completamente sem uma _view_ se você estiver disposto a usar a opção `:inline` para fornecer um ERB como parte da chamada do método. Isso é perfeitamente válido:
 
 ```ruby
 render inline: "<% products.each do |p| %><p><%= p.name %></p><% end %>"
 ```
 
-WARNING: There is seldom any good reason to use this option. Mixing ERB into your controllers defeats the MVC orientation of Rails and will make it harder for other developers to follow the logic of your project. Use a separate erb view instead.
+WARNING: Raramente existe uma boa razão para usar esta opção. Misturar ERB em seus _controllers_ anula o MVC do Rails e torna mais difícil para outros desenvolvedores seguir a lógica do seu projeto. De preferência, use uma _view_ erb separada.
 
-By default, inline rendering uses ERB. You can force it to use Builder instead with the `:type` option:
+Por padrão, a renderização _inline_ usa o ERB. Como alternativa, você pode forçá-lo a usar Builder com a opção `:type`:
 
 ```ruby
 render inline: "xml.p {'Horrid coding practice!'}", type: :builder
 ```
 
-#### Rendering Text
+#### Renderização de texto
 
-You can send plain text - with no markup at all - back to the browser by using
-the `:plain` option to `render`:
+Você pode enviar texto sem formatação - sem nenhuma marcação - de volta ao navegador usando
+a opção `:plain` em` render`:
 
 ```ruby
 render plain: "OK"
 ```
 
-TIP: Rendering pure text is most useful when you're responding to Ajax or web
-service requests that are expecting something other than proper HTML.
+TIP: A renderização de texto puro é mais útil quando você está respondendo solicitações Ajax ou serviços Web
+que esperam algo diferente de HTML adequado.
 
-NOTE: By default, if you use the `:plain` option, the text is rendered without
-using the current layout. If you want Rails to put the text into the current
-layout, you need to add the `layout: true` option and use the `.text.erb`
-extension for the layout file.
+NOTE: Por padrão, se você usar a opção `:plain`, o texto será renderizado sem
+usar o layout atual. Se você deseja que o Rails coloque o texto no layout
+atual, você precisa adicionar a opção `layout: true` e usar a extensão` .text.erb`
+para o arquivo de layout.
 
-#### Rendering HTML
+#### Renderização de HTML
 
-You can send an HTML string back to the browser by using the `:html` option to
-`render`:
+Você pode enviar uma _string_ HTML de volta ao navegador usando a opção `:html`
+ em `render`:
 
 ```ruby
 render html: helpers.tag.strong('Not Found')
 ```
 
-TIP: This is useful when you're rendering a small snippet of HTML code.
-However, you might want to consider moving it to a template file if the markup
-is complex.
+TIP: Isso é útil quando você renderiza um pequeno trecho de código HTML.
+No entanto, você deve considerar movê-lo para um arquivo de template se a marcação
+for complexa.
 
-NOTE: When using `html:` option, HTML entities will be escaped if the string is not composed with `html_safe`-aware APIs.
+NOTE: Ao usar a opção `html:`, as entidades HTML serão escapadas se a _string_ não for composta por APIs compatíveis com `html_safe`.
 
-#### Rendering JSON
+#### Renderizando JSON
 
-JSON is a JavaScript data format used by many Ajax libraries. Rails has built-in support for converting objects to JSON and rendering that JSON back to the browser:
+JSON é um formato de dados JavaScript usado por muitas bibliotecas Ajax. O Rails possui suporte interno para converter objetos em JSON e renderizar esse JSON de volta ao navegador:
 
 ```ruby
 render json: @product
 ```
 
-TIP: You don't need to call `to_json` on the object that you want to render. If you use the `:json` option, `render` will automatically call `to_json` for you.
+TIP: Você não precisa chamar `to_json` no objeto que deseja renderizar. Se você usar a opção `:json`, o `render` chamará automaticamente `to_json` para você.
 
-#### Rendering XML
+#### Renderizando XML
 
-Rails also has built-in support for converting objects to XML and rendering that XML back to the caller:
+O Rails também possui suporte interno para converter objetos em XML e renderizar esse XML de volta para quem o chamou:
 
 ```ruby
 render xml: @product
 ```
 
-TIP: You don't need to call `to_xml` on the object that you want to render. If you use the `:xml` option, `render` will automatically call `to_xml` for you.
+TIP: Você não precisa chamar `to_xml` no objeto que deseja renderizar. Se você usar a opção `:xml`, o` render` automaticamente chamará `to_xml` para você.
 
-#### Rendering Vanilla JavaScript
+#### Renderizando Vanilla JavaScript
 
-Rails can render vanilla JavaScript:
+O Rails pode renderizar JavaScript convencional:
 
 ```ruby
 render js: "alert('Hello Rails');"
 ```
 
-This will send the supplied string to the browser with a MIME type of `text/javascript`.
+Isso enviará a _string_ fornecida ao navegador com um _MIME type_ de `text/javascript`.
 
-#### Rendering raw body
+#### Renderizando conteúdo bruto
 
-You can send a raw content back to the browser, without setting any content
-type, by using the `:body` option to `render`:
+Você pode enviar um conteúdo bruto de volta ao navegador, sem definir nenhum tipo de
+conteúdo, usando a opção `:body` em `render`:
 
 ```ruby
 render body: "raw"
 ```
 
-TIP: This option should be used only if you don't care about the content type of
-the response. Using `:plain` or `:html` might be more appropriate most of the
-time.
+TIP: essa opção deve ser usada apenas se você não se importar com o tipo de conteúdo
+da resposta. Usando `:plain` ou `:html` é mais apropriado na maior parte do
+tempo.
 
-NOTE: Unless overridden, your response returned from this render option will be
-`text/plain`, as that is the default content type of Action Dispatch response.
+NOTE: A menos que substituído, sua resposta retornada dessa opção de renderização será
+`text/plain`, pois esse é o tipo de conteúdo padrão da resposta do Action Dispatch.
 
-#### Rendering raw file
+#### Renderizando arquivo bruto
 
-Rails can render a raw file from an absolute path. This is useful for
-conditionally rendering static files like error pages.
+O Rails pode renderizar um arquivo bruto a partir de um caminho absoluto. Isso é útil para
+condicionalmente renderizar arquivos estáticos, como páginas de erro.
 
 ```ruby
 render file: "#{Rails.root}/public/404.html", layout: false
 ```
 
-This renders the raw file (it doesn't support ERB or other handlers). By
-default it is rendered within the current layout.
+Isso renderiza o arquivo bruto (não suporta ERB ou outros manipuladores). Por
+o padrão é renderizado no layout atual.
 
-WARNING: Using the `:file` option in combination with users input can lead to security problems
-since an attacker could use this action to access security sensitive files in your file system.
+WARNING: Usar a opção `:file` em combinação com a entrada de dados dos usuários pode levar a problemas de segurança,
+pois um invasor pode usar esta _action_ para acessar arquivos confidenciais de segurança em seu sistema de arquivos.
 
-TIP: `send_file` is often a faster and better option if a layout isn't required.
+TIP: `send_file` geralmente é uma opção mais rápida e melhor se um layout não for necessário.
 
 #### Options for `render`
 
