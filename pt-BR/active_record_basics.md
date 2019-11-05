@@ -294,7 +294,7 @@ user.update(name: 'Dave')
 ```
 
 Isto é mais útil quando atualizamos diversos atributos de uma vez. Se, por outro lado, 
-você gostaria de atualizar diversos registros em massa, você pode achar o método da
+você gostaria de atualizar diversos registros em massa, você pode achar o método de
 classe `update_all` útil:
 
 ```ruby
