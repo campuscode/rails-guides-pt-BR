@@ -186,33 +186,25 @@ Se você definir `default_url_options` em `ApplicationController`, como no exemp
 
 Numa requisição o método não é de fato chamado para toda URL gerada; por questões de performance o *hash* retornado é cacheado. Há no máximo uma invocação por requisição.
 
-### Strong Parameters
+### Parâmetros Fortes
 
-With strong parameters, Action Controller parameters are forbidden to
-be used in Active Model mass assignments until they have been
-permitted. This means that you'll have to make a conscious decision about
-which attributes to permit for mass update. This is a better security
-practice to help prevent accidentally allowing users to update sensitive
-model attributes.
+Com parâmetros fortes (*strong parameters*), os parâmetros do *Action Controller* são proibidos de serem usados nas atribuições em massa no *Active Model* até que sejam deliberadamente permitidos. Isso significa que você tem que tomar uma decisão consciente sobre quais atributos podem ser permitidos para um *update* em massa. Esta é uma prática mais segura para ajudar a prevenir que acidentalmente os usuários atualizem atributos sensíveis do *model*.
 
-In addition, parameters can be marked as required and will flow through a
-predefined raise/rescue flow that will result in a 400 Bad Request being
-returned if not all required parameters are passed in.
+Além disso, os parâmetros podem ser marcados como obrigatórios e irão seguir por um fluxo de erro e tratamento predefinido que irá resultar num código 400 *Bad Request* sendo retornado caso todos os parâmetros obrigatórios não forem informados.
 
 ```ruby
 class PeopleController < ActionController::Base
-  # This will raise an ActiveModel::ForbiddenAttributesError exception
-  # because it's using mass assignment without an explicit permit
-  # step.
+  # Isso vai lançar uma exceção do tipo ActiveModel::ForbiddenAttributesError
+  # porque está usando atribuição em massa sem passar pela etapa de permitir
+  # explicitamente os parâmetros.
   def create
     Person.create(params[:person])
   end
 
-  # This will pass with flying colors as long as there's a person key
-  # in the parameters, otherwise it'll raise an
-  # ActionController::ParameterMissing exception, which will get
-  # caught by ActionController::Base and turned into a 400 Bad
-  # Request error.
+  # Isso irá passar contanto que exista uma chave de *person* nos parâmetros,
+  # caso contrário o código irá lançar uma exceção do tipo
+  # ActionController::ParameterMissing, que será capturada pelo
+  # ActionController::Base e transformada num erro 400 Bad Request.
   def update
     person = current_account.people.find(params[:id])
     person.update!(person_params)
@@ -220,10 +212,11 @@ class PeopleController < ActionController::Base
   end
 
   private
-    # Using a private method to encapsulate the permissible parameters
-    # is just a good pattern since you'll be able to reuse the same
-    # permit list between create and update. Also, you can specialize
-    # this method with per-user checking of permissible attributes.
+    # Usar um método privado para encapsular os parâmetros permissíveis
+    # é um bom padrão visto que que você poderá reusar a mesma lista
+    # para as actions create e update. Você também pode especificar
+    # este método com a checagem de atributos permitidos de acordo com
+    # cada usuário.
     def person_params
       params.require(:person).permit(:name, :age)
     end
