@@ -326,7 +326,7 @@ Validações
 
 O *Active Redord* permite que você valide o estado de um *model* antes que ele
 seja gravado no banco de dados. Existem diversos métodos que você pode usar para
-verificar seus modelos e validar que o valor de um atributo não é vazio, é único
+verificar seus *models* e validar que o valor de um atributo não é vazio, é único
 e já não existe no banco de dados, segue um formato específico, e muito mais.
 
 A validação é uma questão muito importante a se considerar quando se está persistindo
