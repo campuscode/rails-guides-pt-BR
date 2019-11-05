@@ -962,7 +962,7 @@ Bloqueando registros para alteração
 
 O bloqueio é útil para prevenir condições de corrida ao alterar registros no banco de dados e para garantir alterações atômicas.
 
-Active Record provê dois mecanismos de bloqueio:
+O Active Record provê dois mecanismos de bloqueio:
 
 * Bloqueio otimista
 * Bloqueio pessimista
@@ -973,7 +973,7 @@ O bloqueio otimista permite que múltiplos usuários acessem o mesmo registro pa
 
 **Coluna de bloqueio otimista**
 
-Para usar o bloqueio otimista, a tabela precisa ter uma coluna chamada `lock_version` do tipo inteiro. Cada vez que o registro é alterado, Active Record incrementa o valor na coluna `lock_version`. Se uma requisição de alteração é feita com um valor menor no campo `lock_version` do que o valor que está atualmente na coluna `lock_version` no banco de dados, a requisição de alteração falhará com um `ActiveRecord::StaleObjectError`. Por exemplo:
+Para usar o bloqueio otimista, a tabela precisa ter uma coluna chamada `lock_version` do tipo inteiro. Cada vez que o registro é alterado, o Active Record incrementa o valor na coluna `lock_version`. Se uma requisição de alteração é feita com um valor menor no campo `lock_version` do que o valor que está atualmente na coluna `lock_version` no banco de dados, a requisição de alteração falhará com um `ActiveRecord::StaleObjectError`. Por exemplo:
 
 ```ruby
 c1 = Client.find(1)
@@ -1000,7 +1000,7 @@ end
 
 ### Bloqueio pessimista
 
-O bloqueio pessimista usa um mecansimo de bloqueio fornecido pelo bando de dados subjacente. Ao usar `lock` quando uma relation é criada, obtém-se um bloqueio exclusivo nas linhas selecionadas. Relations usando `lock` são normalmente executadas dentro de uma transação para permitir condições de deadlock.
+O bloqueio pessimista usa um mecansimo de bloqueio fornecido pelo banco de dados subjacente. Ao usar `lock` quando uma *relation* (objeto do tipo ActiveRecord::Relation) é criada, obtém-se um bloqueio exclusivo nas linhas selecionadas. Relations usando `lock` são normalmente executadas dentro de uma transação para permitir condições de deadlock.
 
 Por exemplo:
 
@@ -1021,7 +1021,7 @@ Item Update (0.4ms)   UPDATE `items` SET `updated_at` = '2009-02-07 18:05:56', `
 SQL (0.8ms)   COMMIT
 ```
 
-Você também pode passar SQL diretamente para o meodo `lock` para permitir diferentes tipos de bloqueio. Por exemplo, MySQL tem uma expressão chamada `LOCK IN SHARE MODE` que permite bloquear um registro mas ainda assim permitir que outras consultas o leiam. Para especificar esta expressão, basta passá-la ao método `lock`:
+Você também pode passar SQL diretamente para o método `lock` para permitir diferentes tipos de bloqueio. Por exemplo, MySQL tem uma expressão chamada `LOCK IN SHARE MODE` que permite bloquear um registro mas ainda assim permitir que outras consultas o leiam. Para especificar esta expressão, basta passá-la ao método `lock`:
 
 ```ruby
 Item.transaction do
@@ -1030,7 +1030,7 @@ Item.transaction do
 end
 ```
 
-Se você já tem uma instãncia do seu modelo, você pode iniciar uma transação e obter o bloqueio de uma vez só usando o código seguinte:
+Se você já tem uma instância do seu modelo, você pode iniciar uma transação e obter o bloqueio de uma vez só usando o código seguinte:
 
 ```ruby
 item = Item.first
