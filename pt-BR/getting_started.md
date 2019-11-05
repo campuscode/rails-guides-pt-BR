@@ -666,12 +666,12 @@ command will apply to the database defined in the `development` section of your
 environment, for instance in production, you must explicitly pass it when
 invoking the command: `rails db:migrate RAILS_ENV=production`.
 
-### Saving data in the controller
+### Salvando dados no *Controller*
 
-Back in `ArticlesController`, we need to change the `create` action
-to use the new `Article` model to save the data in the database.
-Open `app/controllers/articles_controller.rb` and change the `create` action to
-look like this:
+De volta no `ArticlesController`, precisamos alterar a *action* `create`
+para utilizar o novo *model* `Article` para salvar os dados no banco de dados.
+Abra `app/controllers/articles_controller.rb` e altere a *action* `create` da
+seguinte forma:
 
 ```ruby
 def create
@@ -682,51 +682,53 @@ def create
 end
 ```
 
-Here's what's going on: every Rails model can be initialized with its
-respective attributes, which are automatically mapped to the respective
-database columns. In the first line we do just that (remember that
-`params[:article]` contains the attributes we're interested in). Then,
-`@article.save` is responsible for saving the model in the database. Finally,
-we redirect the user to the `show` action, which we'll define later.
+O que está acontecendo: todo *model* Rails pode ser inicializado com seus respectivos
+atributos, os quais são automaticamente mapeados para suas respectivas colunas
+no banco de dados. Na primeira linha fazemos apenas isso (lembre-se que
+`params[:article]` contém os atributos que estamos interessados). Então,
+`@article.save` é responsável por salvar o *model* no banco de dados. Finalmente,
+redirecionaremos o usuário para *action* `show`, que definiremos mais tarde.
 
-TIP: You might be wondering why the `A` in `Article.new` is capitalized above, whereas most other references to articles in this guide have used lowercase. In this context, we are referring to the class named `Article` that is defined in `app/models/article.rb`. Class names in Ruby must begin with a capital letter.
+TIP: Você deve estar pensando qual o motivo de usar `A` maiúsculo no `Article.new`,
+quando a maior parte deste guia usou letra minúscula. Neste contexto,
+estamos nos referindo a classe `Article` definida no arquivo `app/models/article.rb`.
+Nome de classe em Ruby deve começar sempre com letra maiúscula.
 
-TIP: As we'll see later, `@article.save` returns a boolean indicating whether
-the article was saved or not.
+TIP: Como veremos mais tarde, `@article.save` retorna um booleano
+indicando se o `article` foi salvo ou não.
 
-If you now go to <http://localhost:3000/articles/new> you'll *almost* be able
-to create an article. Try it! You should get an error that looks like this:
+Se você for agora para <http://localhost:3000/articles/new> você *quase* será
+capaz de criar um `article`. Tente! Você verá um erro parecido com esse:
 
 ![Forbidden attributes for new article]
 (images/getting_started/forbidden_attributes_for_new_article.png)
 
-Rails has several security features that help you write secure applications,
-and you're running into one of them now. This one is called [strong parameters](action_controller_overview.html#strong-parameters),
-which requires us to tell Rails exactly which parameters are allowed into our
-controller actions.
+O Rails tem diversas *features* de segurança que te ajudam a construir uma aplicação segura,
+e você está lidando com uma delas agora. Esta se chama [strong parameters](action_controller_overview.html#strong-parameters) (parâmetros fortes),
+que nos obrigam a dizer ao Rails exatamente quais parâmetros estão permitidos
+nas *actions* do *controller*.
 
-Why do you have to bother? The ability to grab and automatically assign all
-controller parameters to your model in one shot makes the programmer's job
-easier, but this convenience also allows malicious use. What if a request to
-the server was crafted to look like a new article form submit but also included
-extra fields with values that violated your application's integrity? They would
-be 'mass assigned' into your model and then into the database along with the
-good stuff - potentially breaking your application or worse.
+Por que é necessário? A habilidade de salvar todos os parâmetros do controller no
+*model* de uma só vez deixa o trabalho de quem está programando mais fácil,
+mas essa conveniência pode ser utilizada de forma maliciosa. E se um *request*
+para o servidor for trabalhado para fazer parecer um novo formulário de `article`,
+mas também incluir campos extras com valores que violam a integridade da sua aplicação?
+Isso possibilitaria a entrada/atribuição de dados ruins no seu *model* e banco
+de dados junto com dados bons - podendo, potencialmente, quebrar sua aplicação ou algo pior.
 
-We have to define our permitted controller parameters to prevent wrongful mass
-assignment. In this case, we want to both allow and require the `title` and
-`text` parameters for valid use of `create`. The syntax for this introduces
-`require` and `permit`. The change will involve one line in the `create`
-action:
+Nós definimos quais são os parâmetros permitidos para prevenir atribuições de
+dados indesejados. Nesse caso, queremos permitir e exigir os parâmetros `title`
+e `text` para uso válido do `create`. A sintaxe para isso utiliza `require` e
+`permit`. A alteração envolverá uma linha na *action* `create`.
 
 ```ruby
   @article = Article.new(params.require(:article).permit(:title, :text))
 ```
-
-This is often factored out into its own method so it can be reused by multiple
-actions in the same controller, for example `create` and `update`. Above and
-beyond mass assignment issues, the method is often made `private` to make sure
-it can't be called outside its intended context. Here is the result:
+Frequentemente refatoramos o código para trazer esta alteração para dentro do
+seu próprio método, para que possa ser reutilizado por diferentes *actions* no
+mesmo *controller*, por exemplo `create` e `update`. Além do problema de atribuição
+de dados inconsistentes, o método frequentemente é colocado como privado, para termos
+certeza que não será possível chamá-lo fora do seu contexto. Aqui está o resultado:
 
 ```ruby
 def create
@@ -742,8 +744,8 @@ private
   end
 ```
 
-TIP: For more information, refer to the reference above and
-[this blog article about Strong Parameters]
+TIP: Para mais informações, veja a referência acima e
+[este artigo sobre *Strong Parameters*]
 (https://weblog.rubyonrails.org/2012/3/21/strong-parameters/).
 
 ### Showing Articles
