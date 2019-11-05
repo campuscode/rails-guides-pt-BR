@@ -81,10 +81,10 @@ deste guia. Em seguida há algumas dicas e truques para trabalhar com associaç�
 e, na sequência, uma referência completa dos métodos e opções para associações no
 Rails.
 
-The Types of Associations
+Os Tipos de Associações
 -------------------------
 
-Rails supports six types of associations:
+O Rails suporta seis tipos de associações:
 
 * `belongs_to`
 * `has_one`
