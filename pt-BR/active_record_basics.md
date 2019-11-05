@@ -252,22 +252,22 @@ temos alguns exemplos de diferentes métodos para acessar os dados fornecidos pe
 *Active Record*.
 
 ```ruby
-# return a collection with all users
+# retorna uma coleção com todos os usuários
 users = User.all
 ```
 
 ```ruby
-# return the first user
+# retorna o primeiro usuário da lista
 user = User.first
 ```
 
 ```ruby
-# return the first user named David
+# retorna o primeiro usuário com o nome David
 david = User.find_by(name: 'David')
 ```
 
 ```ruby
-# find all users named David who are Code Artists and sort by created_at in reverse chronological order
+# encontra todos os usuários com o nome David que são Code Artists e os ordena por created_at em ordem cronológica inversa
 users = User.where(name: 'David', occupation: 'Code Artist').order(created_at: :desc)
 ```
 
@@ -315,10 +315,10 @@ Se você deseja excluir diversos registros em massa, você pode utilizar os mét
 `destroy_by` ou `destroy_all`:
 
 ```ruby
-# find and delete all users named David
+# encontra e deleta todos os usuários com o nome David
 User.destroy_by(name: 'David')
 
-# delete all users
+# deleta todos os usuários
 User.destroy_all
 ```
 
