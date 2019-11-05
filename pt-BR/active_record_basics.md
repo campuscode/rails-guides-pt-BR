@@ -330,7 +330,7 @@ verificar seus modelos e validar que o valor de um atributo não é vazio, é ú
 e já não existe no banco de dados, segue um formato específico, e muito mais.
 
 A validação é uma questão muito importante a se considerar quando se está persistindo
-no banco de dados, então os métodos `save` e `update` consideram quando executados:
+no banco de dados, então os métodos `save` e `update` levam isso em conta quando executados:
 eles retornam `false` quando a validação falha e eles de fato não performam nenhuma
 operação no banco de dados. Eles tem uma versão com exclamação (que são `save!`
 e `update!`), que são mais rigorosos e retornam a exceção `ActiveRecord::RecordInvalid`
