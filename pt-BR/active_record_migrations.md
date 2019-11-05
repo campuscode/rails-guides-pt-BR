@@ -1049,20 +1049,20 @@ end
 This is generally a much cleaner way to set up the database of a blank
 application.
 
-Old Migrations
---------------
+*Migrations* Antigas
+--------------------
 
-The `db/schema.rb` or `db/structure.sql` is a snapshot of the current state of your
-database and is the authoritative source for rebuilding that database. This
-makes it possible to delete old migration files.
+Os arquivos `db/schema.rb` ou `db/structure.sql` refletem o estado atual do seu
+banco de dados e são a fonte oficial para reconstruí-lo. Isto torna possível
+excluir arquivos antigos de *migration*.
 
-When you delete migration files in the `db/migrate/` directory, any environment
-where `rails db:migrate` was run when those files still existed will hold a reference
-to the migration timestamp specific to them inside an internal Rails database
-table named `schema_migrations`. This table is used to keep track of whether
-migrations have been executed in a specific environment.
+Quando você exclui arquivos de *migration* no diretório `db/migrate`, qualquer
+ambiente no qual `rails db:migrate` foi executado quando estes arquivos ainda
+existiam irá manter uma referência às suas *timestamps* específicas dentro de uma
+tabela interna do Rails chamada `schema_migrations`. Esta tabela é usada para manter
+um acompanhamento de quais *migrations* foram executadas em um ambiente específico.
 
-If you run the `rails db:migrate:status` command, which displays the status
-(up or down) of each migration, you should see `********** NO FILE **********`
-displayed next to any deleted migration file which was once executed on a
-specific environment but can no longer be found in the `db/migrate/` directory.
+Se você executar o comando `rails db:migrate:status`, que mostra o estado (*up* ou
+*down*) de cada *migration*, você verá o texto `********** NO FILE **********`
+próximo a cada arquivo de *migration* excluído que foi anteriormente executado
+em um ambiente específico mas não se encontra mais no diretório `db/migrate/`.
