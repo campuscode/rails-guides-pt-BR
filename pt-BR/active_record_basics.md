@@ -21,7 +21,7 @@ como eles são utilizados no Rails.
 O que é Active Record?
 ----------------------
 
-*Active Record* é o M em [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) - o
+*Active Record* é o M em [MVC](https://pt.wikipedia.org/wiki/MVC) - o
 *model* - que é a camada do sistema responsável pela representação da lógica e
 dados de negócio. O *Active Record* facilita a criação e uso de objetos de
 negócio cujos dados precisam ser persistidos num banco. Essa é uma implementação
