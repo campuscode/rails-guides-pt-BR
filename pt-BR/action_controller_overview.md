@@ -859,10 +859,10 @@ NOTE: In the above case it would make more sense to use the `content_type` sette
 Autenticações HTTP
 ------------------
 
-Rails comes with two built-in HTTP authentication mechanisms:
+O Rails vem com dois mecanismos de autenticação HTTP embutidos:
 
 * Autenticação *Basic*
-* Autenticação *Digest* Authentication*
+* Autenticação *Digest*
 
 ### Autenticação HTTP *Basic*
 
@@ -878,7 +878,7 @@ Com isso, você pode criar *controllers* com *namespaces* que herdam de `AdminsC
 
 ### Autenticação HTTP *Digest*
 
-A autenticação HTTP *digest* é superior à autenticação *basic* porque ela não requer que o cliente uma senha sem criptografia pela rede (embora a autenticação HTTP *basic* seja segura via HTTPS). Usar a autenticação *digest* com Rails é bem fácil e requer apenas o uso de um método, `authenticate_or_request_with_http_digest`.
+A autenticação HTTP *digest* é superior à autenticação *basic* porque ela não requer que o cliente envie uma senha sem criptografia pela rede (embora a autenticação HTTP *basic* seja segura via HTTPS). Usar a autenticação *digest* com Rails é bem fácil e requer apenas o uso de um método, `authenticate_or_request_with_http_digest`.
 
 ```ruby
 class AdminsController < ApplicationController
