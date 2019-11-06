@@ -855,17 +855,17 @@ response.headers["Content-Type"] = "application/pdf"
 
 NOTE: In the above case it would make more sense to use the `content_type` setter directly.
 
-HTTP Authentications
---------------------
+Autenticações HTTP
+------------------
 
-Rails comes with two built-in HTTP authentication mechanisms:
+O Rails vem com dois mecanismos de autenticação HTTP embutidos:
 
-* Basic Authentication
-* Digest Authentication
+* Autenticação *Basic*
+* Autenticação *Digest*
 
-### HTTP Basic Authentication
+### Autenticação HTTP *Basic*
 
-HTTP basic authentication is an authentication scheme that is supported by the majority of browsers and other HTTP clients. As an example, consider an administration section which will only be available by entering a username and a password into the browser's HTTP basic dialog window. Using the built-in authentication is quite easy and only requires you to use one method, `http_basic_authenticate_with`.
+Autenticação HTTP *basic* é um esquema de autenticação que é suportado pela maioria dos navegadores e outros clientes HTTP. Como um exemplo, considere uma página de administração que será acessável apenas informando um nome de usuário e uma senha na janela de autenticação HTTP *basic* do navegador. Usar a autenticação embutida é bem fácil e apenas requer que você use um método, `http_basic_authenticate_with`.
 
 ```ruby
 class AdminsController < ApplicationController
@@ -873,11 +873,11 @@ class AdminsController < ApplicationController
 end
 ```
 
-With this in place, you can create namespaced controllers that inherit from `AdminsController`. The filter will thus be run for all actions in those controllers, protecting them with HTTP basic authentication.
+Com isso, você pode criar *controllers* com *namespaces* que herdam de `AdminsController`. O filtro vai, assim, ser executado para todas as ações nos *controllers*, protegendo-os com a autenticação HTTP *basic*.
 
-### HTTP Digest Authentication
+### Autenticação HTTP *Digest*
 
-HTTP digest authentication is superior to the basic authentication as it does not require the client to send an unencrypted password over the network (though HTTP basic authentication is safe over HTTPS). Using digest authentication with Rails is quite easy and only requires using one method, `authenticate_or_request_with_http_digest`.
+A autenticação HTTP *digest* é superior à autenticação *basic* porque ela não requer que o cliente envie uma senha sem criptografia pela rede (embora a autenticação HTTP *basic* seja segura via HTTPS). Usar a autenticação *digest* com Rails é bem fácil e requer apenas o uso de um método, `authenticate_or_request_with_http_digest`.
 
 ```ruby
 class AdminsController < ApplicationController
@@ -895,7 +895,7 @@ class AdminsController < ApplicationController
 end
 ```
 
-As seen in the example above, the `authenticate_or_request_with_http_digest` block takes only one argument - the username. And the block returns the password. Returning `false` or `nil` from the `authenticate_or_request_with_http_digest` will cause authentication failure.
+Como visto no exemplo acima, o bloco `authenticate_or_request_with_http_digest` recebe apenas um argumento - o nome de usuário. E o bloco retorna a senha. Retornar `false` ou `nil` em `authenticate_or_request_with_http_digest` causará falha de autenticação.
 
 Streaming and File Downloads
 ----------------------------
