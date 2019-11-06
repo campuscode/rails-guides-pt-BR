@@ -545,7 +545,7 @@ end
 ```
 
 Se você re-enviar o formulário agora, você ainda não verá nenhuma mudança na página. Não se preocupe!
-Isto é porque, por padrão, o Rails retorna a resposta `204 No Content` para uma `action` se não especificarmos qual resposta ele deve retornar. Nós apenas adicionamos a *action* `create` mas não especificamos nada sobre como a resposta deve ser. Neste caso, a *action* create deve salvar nosso novo artigo no banco de dados.
+Isto é porque, por padrão, o Rails retorna a resposta `204 No Content` para uma `action` se não especificarmos qual resposta ele deve retornar. Nós apenas adicionamos a *action* `create` mas não especificamos nada sobre como a resposta deve ser. Neste caso, a *action* `create` deve salvar nosso novo artigo no banco de dados.
 
 Quando um formulário é enviado, os campos do formulário são enviados ao Rails como _parameters_ (parâmetros). Estes parâmetros podem ser então referenciados dentro das *actions* do controller, normalmente para executar uma tarefa específica. Para ver como estes parâmetros são, altere a *action* `create` para isto:
 
