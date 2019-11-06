@@ -445,17 +445,17 @@ Para criar um formulário com este template, você vai usar um construtor de for
 ```html+erb
 <%= form_with scope: :article, local: true do |form| %>
   <p>
-    <%= form.label :title %><br>
+    <%= form.label :title, 'Título' %><br>
     <%= form.text_field :title %>
   </p>
 
   <p>
-    <%= form.label :text %><br>
+    <%= form.label :text, 'Texto' %><br>
     <%= form.text_area :text %>
   </p>
 
   <p>
-    <%= form.submit %>
+    <%= form.submit, 'Enviar' %>
   </p>
 <% end %>
 ```
