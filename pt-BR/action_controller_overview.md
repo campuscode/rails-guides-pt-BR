@@ -618,7 +618,7 @@ Também é possível passar um *serializer* personalizado que responda a `load` 
 Rails.application.config.action_dispatch.cookies_serializer = MyCustomSerializer
 ```
 
-Ao usar o *serializer*`: json` ou`: hybrid`, lembre-se de que nem todos os
+Ao usar o *serializer* `:json` ou `:hybrid`, lembre-se de que nem todos os
 os objetos Ruby podem ser serializados como JSON. Por exemplo, objetos `Date` e` Time`
 serão serializados como strings, e os `Hash`es terão suas chaves transformadas em string também.
 
