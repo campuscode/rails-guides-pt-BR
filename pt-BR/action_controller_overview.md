@@ -223,53 +223,40 @@ class PeopleController < ActionController::Base
 end
 ```
 
-#### Permitted Scalar Values
+#### Valores Escalares Permitidos
 
-Given
+Dado o seguinte código:
 
 ```ruby
 params.permit(:id)
 ```
 
-the key `:id` will be permitted for inclusion if it appears in `params` and
-it has a permitted scalar value associated. Otherwise, the key is going
-to be filtered out, so arrays, hashes, or any other objects cannot be
-injected.
+a chave `:id` será permitida para inclusão se ela aparecer em `params` e ela tiver um valor escalar permitido associado a ela. Caso contrário a chave será filtrada, então *arrays*, *hashes*, ou quaisquer outros objetos não poderão ser adicionados.
 
-The permitted scalar types are `String`, `Symbol`, `NilClass`,
-`Numeric`, `TrueClass`, `FalseClass`, `Date`, `Time`, `DateTime`,
-`StringIO`, `IO`, `ActionDispatch::Http::UploadedFile`, and
-`Rack::Test::UploadedFile`.
+Os tipos escalares permitidos são `String`, `Symbol`, `NilClass`, `Numeric`, `TrueClass`, `FalseClass`, `Date`, `Time`, `DateTime`, `StringIO`, `IO`, `ActionDispatch::Http::UploadedFile`, e `Rack::Test::UploadedFile`.
 
-To declare that the value in `params` must be an array of permitted
-scalar values, map the key to an empty array:
+Para declarar que o valor em `params` deve ser um *array* de valores escalares permitidos, mapeie a chave para um *array* vazio.
 
 ```ruby
 params.permit(id: [])
 ```
 
-Sometimes it is not possible or convenient to declare the valid keys of
-a hash parameter or its internal structure. Just map to an empty hash:
+Às vezes não é possível ou conveniente declarar as chaves válidas de um parâmetro de *hash* ou sua estrutura interna. Apenas mapeie para um *hash* vazio:
 
 ```ruby
 params.permit(preferences: {})
 ```
 
-but be careful because this opens the door to arbitrary input. In this
-case, `permit` ensures values in the returned structure are permitted
-scalars and filters out anything else.
+entretanto fique atento porque isso abre a porta para *input* arbitrário. Neste caso, `permit` garante que os valores na estrutura retornada são valores escalares permitidos e faz a filtragem de tudo o que houver além deles.
 
-To permit an entire hash of parameters, the `permit!` method can be
-used:
+Para permitir um *hash* completo de parâmetros, o método `permit!` pode ser usado:
 
 ```ruby
 params.require(:log_entry).permit!
 ```
 
-This marks the `:log_entry` parameters hash and any sub-hash of it as
-permitted and does not check for permitted scalars, anything is accepted.
-Extreme care should be taken when using `permit!`, as it will allow all current
-and future model attributes to be mass-assigned.
+Este código marca o *hash* de parâmetros `:log_entry` e qualquer *sub-hash* dele como valores permitidos e não verifica por escalares permitidos, sendo qualquer coisa a partir dele aceita.
+Extremo cuidado deve ser considerado ao usar o método `permit!`, visto que ele irá permitir que todos os atuais e futuros atributos do `model` sejam preenchidos em massa.
 
 #### Nested Parameters
 
