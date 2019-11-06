@@ -607,7 +607,7 @@ aplicações antigas que usam *cookies*, o `:marshal` é usado quando a opção
 `serializer` não está especificada.
 
 Você também pode definir esta opção como `:hybrid`, nesse caso o Rails desserializaria
-de forma transparente os *cookies* (`Marshal`-serializados) existentes ao ler e reescrevê-los
+de forma transparente os *cookies* (serializados no formato `Marshal`) existentes ao ler e reescrevê-los
 no formaro `JSON`. Isso é útil para migrar aplicações existentes para o
 *serializer* `:json`.
 
