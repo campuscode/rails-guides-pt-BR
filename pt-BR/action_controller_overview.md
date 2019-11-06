@@ -561,7 +561,7 @@ Sua Aplicação pode armazemar pequenas quantidades de dados no cliente - chamad
 ```ruby
 class CommentsController < ApplicationController
   def new
-    # Auto-fill the commenter's name if it has been stored in a cookie
+    # Preencher automaticamente o nome de quem comentou se ele estiver armazenado em um cookie
     @comment = Comment.new(author: cookies[:commenter_name])
   end
 
@@ -570,10 +570,10 @@ class CommentsController < ApplicationController
     if @comment.save
       flash[:notice] = "Thanks for your comment!"
       if params[:remember_name]
-        # Remember the commenter's name.
+        # Lembrar o nome de quem fez o comentário
         cookies[:commenter_name] = @comment.author
       else
-        # Delete cookie for the commenter's name cookie, if any.
+        # Deletar o cookie do nome de quem fez o comentário, caso exista.
         cookies.delete(:commenter_name)
       end
       redirect_to @comment.article
