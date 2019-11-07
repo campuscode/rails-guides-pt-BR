@@ -391,4 +391,4 @@ ferramentas de reversão. Para realmente criar uma tabela, você deverá executa
 
 Note que o código acima é um banco de dados agnóstico: irá rodar em MySQL,
 PostgreSQL, Oracle, entre outros. Você pode aprender mais sobre *migrations*
-em [Guia de *Migrations* do *Active Record*](active_record_migrations.html).
+no [Guia de *Migrations* do *Active Record*](active_record_migrations.html).
