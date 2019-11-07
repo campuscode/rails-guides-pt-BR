@@ -389,6 +389,6 @@ O Rails mantém o controle de quais arquivos foram enviados ao banco de dados e 
 ferramentas de reversão. Para realmente criar uma tabela, você deverá executar
 `rails db:migrate` e para reverter, `rails db:rollback`
 
-Note que o código acima é um banco de dados agnóstico: irá rodar em MySQL,
+Observe que o código acima é agnóstico em relação a banco de dados: irá rodar em MySQL,
 PostgreSQL, Oracle, entre outros. Você pode aprender mais sobre *migrations*
 no [Guia de *Migrations* do *Active Record*](active_record_migrations.html).
