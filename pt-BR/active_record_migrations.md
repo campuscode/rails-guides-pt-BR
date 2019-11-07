@@ -12,7 +12,7 @@ Depois de ler esse guia, você entenderá:
 
 * Os *generators* que você pode usar para criar as *migrations*.
 * Os métodos que o *Active Record* provê para manipular seu banco de dados.
-* Os comandos *rails* que manipulam *migrations* e o esquema do seu banco.
+* Os comandos `rails` que manipulam *migrations* e o esquema do seu banco.
 * Como *migrations* e `schema.rb` se relacionam.
 
 --------------------------------------------------------------------------------
