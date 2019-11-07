@@ -272,7 +272,8 @@ users = User.where(name: 'David', occupation: 'Code Artist').order(created_at: :
 ```
 
 Você pode aprender mais sobre como consultar um *model* do *Active Record* no guia 
-[Interface de Consulta do *Active Record*](active_record_querying.html).
+[Active Record
+Query Interface](active_record_querying.html).
 
 ### *Update*
 
