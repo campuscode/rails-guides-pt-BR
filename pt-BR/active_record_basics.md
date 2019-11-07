@@ -362,7 +362,7 @@ the [Active Record Callbacks guide](active_record_callbacks.html).
 Migrations
 ----------
 
-Rails fornece uma Linguagem de Domínio Específico (DSL) para gerenciar o *schema* do banco de
+O Rails fornece uma Linguagem de Domínio Específico (DSL) para gerenciar o *schema* do banco de
 dados, chamada de *migrations*. *Migrations* são armazenadas em arquivos que são executados
 diante qualquer banco de dados que o *Active Record* suporta utilizando o `rake`. Aqui está
 uma *migration* que cria uma tabela: 
