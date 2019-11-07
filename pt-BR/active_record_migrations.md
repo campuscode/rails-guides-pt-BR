@@ -48,7 +48,7 @@ Antes desta *migration* ser executada, não há sequer a tabela. Depois, a tabel
 Em banco de dados que suportem transações com declarações que alterem o esquema,
 *migrations* são incluídas na transação. Se o banco de dados não suportar esses tipos de declarações, então, quando uma *migration* falhar, as partes dela que tiveram sucesso não serão desfeitas. Você terá que desfazer as mudanças que fez manualmente.
 
-NOTE: Há certos tipos de comandos(*queries*) que não podem ser executadas a partir de uma transação. Se o seu adaptador de conexão suporta transações DDL você pode usar `disable_ddl_transaction!` para desabilitá-las para uma única *migration*.
+NOTE: Há certos tipos de *queries* que não podem ser executadas dentro de uma transação. Se o seu adaptador de conexão suporta transações DDL você pode usar `disable_ddl_transaction!` para desabilitá-las para uma única *migration*.
 
 Se você quiser que uma *migration* faça algo que o *Active Record* não sabe como reverter, pode usar `reversible`:
 
