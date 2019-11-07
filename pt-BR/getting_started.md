@@ -438,62 +438,46 @@ Agora vá em frente e crie um novo arquivo em *app/views/articles/new.html.erb* 
 
 Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem um título. A rota, o *controller*, a *action* e a *view* estão funcionando harmoniosamente! É hora de criar o formulário para um novo artigo.
 
-### The first form
+### O primeiro formulário
 
-To create a form within this template, you will use a *form
-builder*. The primary form builder for Rails is provided by a helper
-method called `form_with`. To use this method, add this code into
-`app/views/articles/new.html.erb`:
+Para criar um formulário com este template, você vai usar um construtor de formulário (*form builder*). O construtor de formulários do Rails é disponibilizado por um método *helper* chamado `form_with`. Para utilizá-lo, adicione o código abaixo no arquivo `app/views/articles/new.html.erb`:
 
 ```html+erb
 <%= form_with scope: :article, local: true do |form| %>
   <p>
-    <%= form.label :title %><br>
+    <%= form.label :title, 'Título' %><br>
     <%= form.text_field :title %>
   </p>
 
   <p>
-    <%= form.label :text %><br>
+    <%= form.label :text, 'Texto' %><br>
     <%= form.text_area :text %>
   </p>
 
   <p>
-    <%= form.submit %>
+    <%= form.submit, 'Enviar' %>
   </p>
 <% end %>
 ```
 
-If you refresh the page now, you'll see the exact same form from our example above.
-Building forms in Rails is really just that easy!
+Se você atualizar a página, você vai ver o mesmo formulário do nosso exemplo acima.
+Construir formulários no Rails é simples assim!
 
-When you call `form_with`, you pass it an identifying scope for this
-form. In this case, it's the symbol `:article`. This tells the `form_with`
-helper what this form is for. Inside the block for this method, the
-`FormBuilder` object - represented by `form` - is used to build two labels and two
-text fields, one each for the title and text of an article. Finally, a call to
-`submit` on the `form` object will create a submit button for the form.
+Quando você chama o `form_with`, você passa para ele a identificação do escopo para esse formulário.
+Neste caso, o *symbol* `:article`. Isso mostra ao `form_with` para qual escopo é o formulário em questão. Dentro do bloco deste método, o objeto `FormBuilder` - representado pelo `form` - é usado para construir dois títulos e dois campos textos, um para cada título (*labels*) e texto (*text fields*) de um artigo. Finalmente, uma chamada ao `submit` do objeto `form` criará um botão de submissão do formulário.
 
-There's one problem with this form though. If you inspect the HTML that is
-generated, by viewing the source of the page, you will see that the `action`
-attribute for the form is pointing at `/articles/new`. This is a problem because
-this route goes to the very page that you're on right at the moment, and that
-route should only be used to display the form for a new article.
+Porém, existe um problema com este formulário. Se você inspecionar o HTML que foi gerado, visualizando o código-fonte da página, você verá que o atributo `action` do formulário está apontando para `/articles/new`. Isso é um problema porque esta rota vai exatamente para a mesma página que você está no momento, e essa rota deveria ser usada apenas para exibir o formulário para um novo artigo.
 
-The form needs to use a different URL in order to go somewhere else.
-This can be done quite simply with the `:url` option of `form_with`.
-Typically in Rails, the action that is used for new form submissions
-like this is called "create", and so the form should be pointed to that action.
+O formulário precisa usar uma URL diferente para que consigar ir para outro lugar. Isso pode ser feito de forma simples com a opção `:url` do `form_with`. Normalmente, no Rails, a *action* que é usada para novas submissões de formulários é chamada "create", então o formulário precisa apontar para esta ação.
 
-Edit the `form_with` line inside `app/views/articles/new.html.erb` to look like
-this:
+Altere a linha do `form_with` dentro de `app/views/articles/new.html.erb` para ficar da seguinte forma:
 
 ```html+erb
 <%= form_with scope: :article, url: articles_path, local: true do |form| %>
 ```
 
-In this example, the `articles_path` helper is passed to the `:url` option.
-To see what Rails will do with this, we look back at the output of
-`rails routes`:
+Neste exemplo, o *helper* `articles_path` é passado para a opção `:url`.
+Para saber o que o Rails fará com isso, veja novamente o resultado do `rails routes`:
 
 ```bash
 $ rails routes
@@ -510,25 +494,16 @@ welcome_index GET    /welcome/index(.:format)     welcome#index
          root GET    /                            welcome#index
 ```
 
-The `articles_path` helper tells Rails to point the form to the URI Pattern
-associated with the `articles` prefix; and the form will (by default) send a
-`POST` request to that route. This is associated with the `create` action of
-the current controller, the `ArticlesController`.
+O *helper* `articles_path` diz ao Rails para apontar o formulário para o padrão de URI associado com o prefixo `articles`; e o formulário vai (por padrão) enviar uma requisição `POST` para esta rota. Isto esta associado com a *action* `create` do `controller` atual, no caso o `ArticlesController`.
 
-With the form and its associated route defined, you will be able to fill in the
-form and then click the submit button to begin the process of creating a new
-article, so go ahead and do that. When you submit the form, you should see a
-familiar error:
+Com o formulário e sua rota definidos, você será capaz de preencher o formulário e clicar no botão *submit* para iniciar o processo de criação de um novo artigo, então vá em frente e faça isso. Quando você enviar, você verá um erro familiar:
 
 ![Unknown action create for ArticlesController]
 (images/getting_started/unknown_action_create_for_articles.png)
 
-You now need to create the `create` action within the `ArticlesController` for
-this to work.
+Agora você precisa adicionar a *action* `create` dentro do `ArticlesController` para que isso funcione.
 
-NOTE: By default `form_with` submits forms using Ajax thereby skipping full page
-redirects. To make this guide easier to get into we've disabled that with
-`local: true` for now.
+NOTE: Por padrão o `form_with` submete formulários usando Ajax, evitando assim o redirecionamento da página inteira. Para tornar este guia mais fácil de entender, por ora, nós desabilitamos isso ao utilizar o `local: true`.
 
 ### Creating articles
 
