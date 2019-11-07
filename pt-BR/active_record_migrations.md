@@ -8,7 +8,7 @@ Active Record Migrations
 
 TIP: Para conhecer mais sobre DSLs, veja [https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico](https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico)
 
-Depois de ler esse guia, você entenderá:
+Depois de ler esse guia, você vai saber:
 
 * Os *generators* que você pode usar para criar as *migrations*.
 * Os métodos que o *Active Record* provê para manipular seu banco de dados.
