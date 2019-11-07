@@ -258,9 +258,9 @@ params.require(:log_entry).permit!
 Este código marca o *hash* de parâmetros `:log_entry` e qualquer *sub-hash* dele como valores permitidos e não verifica por escalares permitidos, sendo qualquer coisa a partir dele aceita.
 Extremo cuidado deve ser considerado ao usar o método `permit!`, visto que ele irá permitir que todos os atuais e futuros atributos do `model` sejam preenchidos em massa.
 
-#### Nested Parameters
+#### Parâmetros Aninhados
 
-You can also use `permit` on nested parameters, like:
+Você também pode usar `permit` em parâmetros aninhados, da seguinte forma:
 
 ```ruby
 params.permit(:name, { emails: [] },
@@ -268,13 +268,7 @@ params.permit(:name, { emails: [] },
                          { family: [ :name ], hobbies: [] }])
 ```
 
-This declaration permits the `name`, `emails`, and `friends`
-attributes. It is expected that `emails` will be an array of permitted
-scalar values, and that `friends` will be an array of resources with
-specific attributes: they should have a `name` attribute (any
-permitted scalar values allowed), a `hobbies` attribute as an array of
-permitted scalar values, and a `family` attribute which is restricted
-to having a `name` (any permitted scalar values allowed here, too).
+Esta declaração permite o preenchimento dos atributos `name`, `emails`, e `friends`. É esperado que `emails` seja um *array* de valores permitidos escalares, e que `friends` seja um *array* de recursos com atributos específicos: deve possuir um atributo `name` (com quaisquer valores escalares permitidos), um atributo `hobbies` como um *array* de valores permitidos escalares, e um atributo `family` que é restrito a ter um `name` (com qualquer valor escalar permitido também). 
 
 #### More Examples
 
