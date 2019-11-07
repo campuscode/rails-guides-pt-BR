@@ -270,45 +270,34 @@ params.permit(:name, { emails: [] },
 
 Esta declaração permite o preenchimento dos atributos `name`, `emails`, e `friends`. É esperado que `emails` seja um *array* de valores permitidos escalares, e que `friends` seja um *array* de recursos com atributos específicos: deve possuir um atributo `name` (com quaisquer valores escalares permitidos), um atributo `hobbies` como um *array* de valores permitidos escalares, e um atributo `family` que é restrito a ter um `name` (com qualquer valor escalar permitido também). 
 
-#### More Examples
+#### Mais Exemplos
 
-You may want to also use the permitted attributes in your `new`
-action. This raises the problem that you can't use `require` on the
-root key because, normally, it does not exist when calling `new`:
+Você pode também querer usar os atributos permitidos na sua *action* `new`. Isso traz o problema que você não pode chamar `require` na chave raiz porque normalmente ela não existe no momento da chamada de `new`
 
 ```ruby
-# using `fetch` you can supply a default and use
-# the Strong Parameters API from there.
+# usando fetch você pode fornecer um valor padrão e visualizar
+# a API de Parâmetros Fortes a partir dele.
 params.fetch(:blog, {}).permit(:title, :author)
 ```
 
-The model class method `accepts_nested_attributes_for` allows you to
-update and destroy associated records. This is based on the `id` and `_destroy`
-parameters:
+O método da classe *model* `accepts_nested_attributes_for` te permite atualizar e destruir outros *models* associados. Isso é baseado nos parâmetros `id` e `_destroy`:
 
 ```ruby
-# permit :id and :_destroy
+# permite :id e :_destroy
 params.require(:author).permit(:name, books_attributes: [:title, :id, :_destroy])
 ```
 
-Hashes with integer keys are treated differently, and you can declare
-the attributes as if they were direct children. You get these kinds of
-parameters when you use `accepts_nested_attributes_for` in combination
-with a `has_many` association:
+*Hashes* com chaves de valor do tipo inteiro são tratados de maneira diferente, e você pode declarar os atributos como se eles fossem atributos filhos imediatos. Você obtém estes tipos de parâmetros quando você usa `accepts_nested_attributes_for` combinado com uma associação `has_many`:
 
 ```ruby
-# To permit the following data:
+# Para permitir os seguintes dados:
 # {"book" => {"title" => "Some Book",
 #             "chapters_attributes" => { "1" => {"title" => "First Chapter"},
 #                                        "2" => {"title" => "Second Chapter"}}}}
-
 params.require(:book).permit(:title, chapters_attributes: [:title])
 ```
 
-Imagine a scenario where you have parameters representing a product
-name and a hash of arbitrary data associated with that product, and
-you want to permit the product name attribute and also the whole
-data hash:
+Imagine um cenário onde você tem parâmetros representando um nome de produto e um *hash* de dados arbitrários associado a esse produto, e você queira permitir o preenchimento do atributo de nome do produto e também o *hash* de dados:
 
 ```ruby
 def product_params
@@ -316,12 +305,9 @@ def product_params
 end
 ```
 
-#### Outside the Scope of Strong Parameters
+#### Fora do Escopo de Parâmetros Fortes
 
-The strong parameter API was designed with the most common use cases
-in mind. It is not meant as a silver bullet to handle all of your
-parameter filtering problems. However, you can easily mix the API with your
-own code to adapt to your situation.
+A API de parâmetros fortes foi desenhada com os casos mais comuns em mente. Não houve a intenção de torná-la uma bala prateada para lidar com todos os seus problemas de filtragem de parâmetros. Entretanto, você pode facilmente misturar a API com seu próprio código para se adaptar à sua situação.
 
 Session
 -------
