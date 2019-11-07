@@ -1,29 +1,32 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Record Query Interface
+Interface de Consulta do *Active Record*
 =============================
 
-This guide covers different ways to retrieve data from the database using Active Record.
+Este guia cobre diferentes maneiras de recuparar dados de um banco de dados utilizando o *Active Record*
 
-After reading this guide, you will know:
+Após ler esse guia, você saberá:
 
-* How to find records using a variety of methods and conditions.
-* How to specify the order, retrieved attributes, grouping, and other properties of the found records.
-* How to use eager loading to reduce the number of database queries needed for data retrieval.
-* How to use dynamic finder methods.
-* How to use method chaining to use multiple Active Record methods together.
-* How to check for the existence of particular records.
-* How to perform various calculations on Active Record models.
-* How to run EXPLAIN on relations.
+* Como encontrar registros usando uma variedade de métodos e condições.
+* Como especificar a ordem, os atributos recuperados, agrupamento e outras propriedades dos registros encontrados.
+* Como usar o *eager loading* para reduzir o número de consultas necessárias no banco de dados para recuperar os dados.
+* Como utilizar métodos localizadores dinâmicos.
+* Como utilizar encadeamento de métodos para usar múltiplos métodos do *Active Record* em conjunto.
+* Como checar a existência de determinados registros.
+* Como executar diversos cálculos nos *models* do *Active Record*.
+* Como executar o *EXPLAIN* nas relações.
 
 --------------------------------------------------------------------------------
 
-If you're used to using raw SQL to find database records, then you will generally find that there are better ways to carry out the same operations in Rails. Active Record insulates you from the need to use SQL in most cases.
+Se você está acostumado com SQL puro para encontrar registros no banco de dados, então você provavelmente encontrará
+maneiras melhores de realizar as mesmas operações no Rails. O *Active Record* te isola da necessidade de usar o SQL
+na maioria dos casos.
 
-Code examples throughout this guide will refer to one or more of the following models:
+Os exemplos de código ao longo desse guia irão se referir à um ou mais dos seguintes modelos:
 
-TIP: All of the following models use `id` as the primary key, unless specified otherwise.
+TIP: Todos os modelos seguintes utilizam `id` como *primary key* (chave primária), a não ser quando especificado o
+contrário.
 
 ```ruby
 class Client < ApplicationRecord
@@ -51,7 +54,9 @@ class Role < ApplicationRecord
 end
 ```
 
-Active Record will perform queries on the database for you and is compatible with most database systems, including MySQL, MariaDB, PostgreSQL, and SQLite. Regardless of which database system you're using, the Active Record method format will always be the same.
+O *Active Record* irá executar consultas no banco de dados para você e é compatível com a maioria dos sistemas de banco de dados,
+incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato método do *Active Record* 
+será sempre o mesmo.
 
 Retrieving Objects from the Database
 ------------------------------------
