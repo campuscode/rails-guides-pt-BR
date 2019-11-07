@@ -385,7 +385,7 @@ class CreatePublications < ActiveRecord::Migration[5.0]
 end
 ```
 
-Rails mantém o controle de quais arquivos foram enviados ao banco de dados e fornece
+O Rails mantém o controle de quais arquivos foram enviados ao banco de dados e fornece
 ferramentas de reversão. Para realmente criar uma tabela, você deverá executar
 `rails db:migrate` e para reverter, `rails db:rollback`
 
