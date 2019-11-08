@@ -590,7 +590,7 @@ O Rails também fornece um *cookie jar* assinado e um *cookie jar* criptografado
 dados sensíveis. O *cookie jar* assinado anexa uma assinaura criptográfica nos
 valores do *cookie* para proteger sua integridade. O *cookie jar* criptografado, criptografa os
 valores além de assiná-los, para que eles não possam ser lidos pelo usuário final.
-Consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html)
+Consulte a [documentação da API (em inglês)](https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html)
 para mais detalhes.
 
 Esses *cookie jars* especiais usam um *serializer* para serializar os valores atribuídos em
