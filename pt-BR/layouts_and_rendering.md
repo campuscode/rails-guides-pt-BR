@@ -649,40 +649,40 @@ end
 
 This will render a book with `special?` set with the `special_show` template, while other books will render with the default `show` template.
 
-### Using `redirect_to`
+### Usando `redirect_to`
 
-Another way to handle returning responses to an HTTP request is with `redirect_to`. As you've seen, `render` tells Rails which view (or other asset) to use in constructing a response. The `redirect_to` method does something completely different: it tells the browser to send a new request for a different URL. For example, you could redirect from wherever you are in your code to the index of photos in your application with this call:
+Outra maneira de lidar com o retorno das respostas de uma requisição HTTP é com `redirect_to`. Como você viu, `render` diz ao Rails qual _view_ (ou outro _asset_) deve ser usado na construção de uma resposta. O método `redirect_to` faz algo completamente diferente: diz ao navegador para enviar uma nova requisição para uma URL diferente. Por exemplo, você pode redirecionar de onde quer que esteja no seu código para o _index_ de fotos em sua aplicação com esta chamada:
 
 ```ruby
 redirect_to photos_url
 ```
 
-You can use `redirect_back` to return the user to the page they just came from.
-This location is pulled from the `HTTP_REFERER` header which is not guaranteed
-to be set by the browser, so you must provide the `fallback_location`
-to use in this case.
+Você pode usar o `redirect_back` para retornar o usuário à página de onde eles vieram.
+Este local é extraído do cabeçalho `HTTP_REFERER`, que não garante
+que esteja definido pelo navegador, portanto, você deve fornecer o `fallback_location`
+para usar neste caso.
 
 ```ruby
 redirect_back(fallback_location: root_path)
 ```
 
-NOTE: `redirect_to` and `redirect_back` do not halt and return immediately from method execution, but simply set HTTP responses. Statements occurring after them in a method will be executed. You can halt by an explicit `return` or some other halting mechanism, if needed.
+NOTE: `redirect_to` e `redirect_back` não param e retornam imediatamente da execução do método, mas simplesmente definem as respostas HTTP. As instruções que ocorrerem depois deles em um método serão executadas. Você pode parar a execução com um `return` explícito ou algum outro mecanismo de parada, se necessário.
 
-#### Getting a Different Redirect Status Code
+#### Obtendo um Código de Status de Redirecionamento Diferente
 
-Rails uses HTTP status code 302, a temporary redirect, when you call `redirect_to`. If you'd like to use a different status code, perhaps 301, a permanent redirect, you can use the `:status` option:
+O Rails usa o código de status HTTP 302, um redirecionamento temporário, quando você chama `redirect_to`. Se você quiser usar um código de status diferente, talvez 301, um redirecionamento permanente, use a opção `:status`:
 
 ```ruby
 redirect_to photos_path, status: 301
 ```
 
-Just like the `:status` option for `render`, `:status` for `redirect_to` accepts both numeric and symbolic header designations.
+Assim como a opção `:status` para` render`, `:status` para `redirect_to` aceita designações numéricas e simbólicas de cabeçalho .
 
-#### The Difference Between `render` and `redirect_to`
+#### A Diferença entre `render` e` redirect_to`
 
-Sometimes inexperienced developers think of `redirect_to` as a sort of `goto` command, moving execution from one place to another in your Rails code. This is _not_ correct. Your code stops running and waits for a new request from the browser. It just happens that you've told the browser what request it should make next, by sending back an HTTP 302 status code.
+Às vezes, pessoas desenvolvedoras inexperientes pensam no `redirect_to` como uma espécie de comando `goto`, movendo a execução de um lugar para outro no seu código Rails. Isso _não_ está correto. Seu código para de ser executado e aguarda uma nova requisição do navegador. Acontece que você informou ao navegador qual requisição deve acontecer em seguida, enviando de volta um código de status HTTP 302.
 
-Consider these actions to see the difference:
+Considere estas ações para ver a diferença:
 
 ```ruby
 def index
@@ -697,7 +697,7 @@ def show
 end
 ```
 
-With the code in this form, there will likely be a problem if the `@book` variable is `nil`. Remember, a `render :action` doesn't run any code in the target action, so nothing will set up the `@books` variable that the `index` view will probably require. One way to fix this is to redirect instead of rendering:
+Com o código neste formulário, provavelmente haverá um problema se a variável `@book` for `nil`. Lembre-se de que um `render: action` não executa nenhum código na _action_ de destino, então nada configurará a variável `@books` que a _view_ do `index` provavelmente exigirá. Uma maneira de corrigir isso é redirecionar em vez de renderizar:
 
 ```ruby
 def index
@@ -712,11 +712,11 @@ def show
 end
 ```
 
-With this code, the browser will make a fresh request for the index page, the code in the `index` method will run, and all will be well.
+Com esse código, o navegador fará uma nova requisição para a página de índice, o código no método `index` será executado e tudo ficará bem.
 
-The only downside to this code is that it requires a round trip to the browser: the browser requested the show action with `/books/1` and the controller finds that there are no books, so the controller sends out a 302 redirect response to the browser telling it to go to `/books/`, the browser complies and sends a new request back to the controller asking now for the `index` action, the controller then gets all the books in the database and renders the index template, sending it back down to the browser which then shows it on your screen.
+A única desvantagem desse código é que ele requer que o navegador faça uma volta: o navegador solicitou a _action_ _show_ com `/books/1` e o _controller_ descobre que não há livros, portanto o _controller_ envia uma resposta de redirecionamento 302 para o navegador dizendo para ele ir para `/books/`, o navegador obedece e envia uma nova requisição de volta ao _controller_ solicitando agora a _action_ `index`, o _controller_ obtém todos os livros no banco de dados e renderiza o template de _index_, enviando-o de volta para o navegador, que o exibe na tela.
 
-While in a small application, this added latency might not be a problem, it is something to think about if response time is a concern. We can demonstrate one way to handle this with a contrived example:
+Enquanto em uma aplicação pequena essa latência adicional pode não ser um problema, é algo para se pensar se o tempo de resposta é uma preocupação. Podemos demonstrar uma maneira de lidar com isso com um exemplo:
 
 ```ruby
 def index
@@ -733,17 +733,17 @@ def show
 end
 ```
 
-This would detect that there are no books with the specified ID, populate the `@books` instance variable with all the books in the model, and then directly render the `index.html.erb` template, returning it to the browser with a flash alert message to tell the user what happened.
+Isso detectaria que não há livros com o ID especificado, define a variável de instância `@books` com todos os livros no modelo e depois renderiza diretamente o template `index.html.erb`, retornando-o ao navegador com um mensagem de alerta _flash_ para informar ao usuário o que aconteceu.
 
-### Using `head` To Build Header-Only Responses
+### Usando `head` para criar respostas com apenas o cabeçalho (_Header-Only_)
 
-The `head` method can be used to send responses with only headers to the browser. The `head` method accepts a number or symbol (see [reference table](#the-status-option)) representing an HTTP status code. The options argument is interpreted as a hash of header names and values. For example, you can return only an error header:
+O método `head` pode ser usado para enviar respostas apenas com cabeçalhos para o navegador. O método `head` aceita um número ou símbolo (consulte [tabela de referência] (#a-opção-status)) representando um código de status HTTP. O argumento de _options_ é interpretado como um hash de nomes e valores de cabeçalho. Por exemplo, você pode retornar apenas um cabeçalho de erro:
 
 ```ruby
 head :bad_request
 ```
 
-This would produce the following header:
+Isso produziria o seguinte cabeçalho:
 
 ```
 HTTP/1.1 400 Bad Request
@@ -756,13 +756,13 @@ Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
 Cache-Control: no-cache
 ```
 
-Or you can use other HTTP headers to convey other information:
+Ou você pode usar outros cabeçalhos HTTP para transmitir outras informações:
 
 ```ruby
 head :created, location: photo_path(@photo)
 ```
 
-Which would produce:
+O que produziria:
 
 ```
 HTTP/1.1 201 Created
