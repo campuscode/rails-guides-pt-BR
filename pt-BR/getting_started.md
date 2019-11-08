@@ -557,7 +557,7 @@ end
 
 O método `render` está recebendo uma simples *hash* com a chave `:plain` e o valor `params[:article].inspect`. O método `params` é o objeto que representa os parâmetros (ou campos) enviados pelo formulário. O método `params` retorna um objeto `ActionController::Parameters`, que permite você acessar as chaves do *hash* usando *strings* ou *symbols*. Neste caso, os únicos parâmetros que importam são os recebidos pelo formulário.
 
-TIP: Certifique-se de ter um bom entendimento sobre o método `params`, pois você o usará frequentemente. Vamos considerar uma URL de exemplo: **http://www.example.com/?username=dhh&email=dhh@email.com**. Neste URL, o `params[:username]` será igual a "dhh" e o `params[:email]` será igual a "dhh@email.com".
+TIP: Certifique-se de ter um bom entendimento sobre o método `params`, pois você o usará frequentemente. Vamos considerar uma URL de exemplo: **http://www.example.com/?username=dhh&email=dhh@email.com**. Nesta URL, o `params[:username]` será igual a "dhh" e o `params[:email]` será igual a "dhh@email.com".
 
 Se você reenviar o formulário novamente, você verá algo parecido com isso:
 
