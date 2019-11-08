@@ -565,7 +565,7 @@ Se você reenviar o formulário novamente, você verá algo parecido com isso:
 <ActionController::Parameters {"title"=>"First Article!", "text"=>"This is my first article."} permitted: false>
 ```
 
-A *action* agora está exibindo os parâmetros para o artigo que estão sendo enviados pelo formulário. Porém, isto não é realmente útil. Sim você pode ver os parâmetros mas nada em particular está sendo feito com eles.
+A *action* agora está exibindo os parâmetros para o artigo que estão sendo enviados pelo formulário. Porém, isto não é realmente útil. Sim, você pode ver os parâmetros mas nada em particular está sendo feito com eles.
 
 ### Creating the Article model
 
