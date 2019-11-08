@@ -58,12 +58,13 @@ O *Active Record* irá executar consultas no banco de dados para você e é comp
 incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato método do *Active Record* 
 será sempre o mesmo.
 
-Retrieving Objects from the Database
+Recuperando Objetos do Banco de Dados
 ------------------------------------
 
-To retrieve objects from the database, Active Record provides several finder methods. Each finder method allows you to pass arguments into it to perform certain queries on your database without writing raw SQL.
+Para recuperar objetos do banco de dados, o *Active Record* fornece diversos métodos de localização. Cada método de localização permite que você
+passe argumentos para o mesmo para executar determinada consulta no seu banco de dados sem a necessidade de escrever SQL puro. 
 
-The methods are:
+Os métodos são:
 
 * `annotate`
 * `find`
@@ -93,14 +94,15 @@ The methods are:
 * `select`
 * `where`
 
-Finder methods that return a collection, such as `where` and `group`, return an instance of `ActiveRecord::Relation`.  Methods that find a single entity, such as `find` and `first`, return a single instance of the model.
+Métodos de localização que retornam uma coleção, como o `where` e `group`, retornam uma instância do `ActiveRecord::Relation`.
+Os métodos que localizam uma única entidade, como o `find` e o `first`, retornam uma única instância do *model*.
 
-The primary operation of `Model.find(options)` can be summarized as:
+A principal operação do `Model.find(options)` pode ser resumida como:
 
-* Convert the supplied options to an equivalent SQL query.
-* Fire the SQL query and retrieve the corresponding results from the database.
-* Instantiate the equivalent Ruby object of the appropriate model for every resulting row.
-* Run `after_find` and then `after_initialize` callbacks, if any.
+* Converter as opções fornecidas em uma consulta equivalente no SQL.
+* Disparar uma consulta SQL e recuperar os resultados correspondentes no banco de dados.
+* Instanciar o objeto Ruby equivalente do *model* apropriado para cada linha resultante.
+* Executar `after_find` e, em seguida, retornos de chamada com `after_initialize`, se houver.
 
 ### Retrieving a Single Object
 
