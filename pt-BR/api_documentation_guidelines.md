@@ -4,7 +4,7 @@
 Orientações para Documentação de API
 ====================================
 
-Este guia apresenta as orientações para documentação da API Ruby on Rails. 
+Este guia apresenta as orientações para documentação da API Ruby on Rails.
 
 Após ler este guia, você saberá:
 
@@ -18,18 +18,16 @@ RDoc
 
 A [documentação da API Rails](https://api.rubyonrails.org) é gerada com 
 [RDoc](https://ruby.github.io/rdoc/). Para gerá-la, certifique-se que você está
-no diretório root do rails, digite `bundle install` e execute:
+no diretório raiz do Rails, execute `bundle install` e, em seguida:
 
 ```bash
   bundle exec rake rdoc
 ```
 
-Os arquivos HTML resultantes podem ser encontrados no diretório ./doc/rdoc. 
+Os arquivos HTML gerados podem ser encontrados no diretório ./doc/rdoc.
 
-Por favor consulte a documentação RDoc para ajuda com a 
-[marcação](https://ruby.github.io/rdoc/RDoc/Markup.html),
-e adicionalmente leve em consideração esses [direcionamentos 
-adicionais](https://ruby.github.io/rdoc/RDoc/Parser/Ruby.html).
+Por favor consulte a documentação RDoc para ajuda com a [marcação](https://ruby.github.io/rdoc/RDoc/Markup.html),
+e leve em consideração esses [direcionamentos adicionais](https://ruby.github.io/rdoc/RDoc/Parser/Ruby.html).
 
 Wording
 -------
