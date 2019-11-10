@@ -1,23 +1,24 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-The Rails Command Line
+Linhas de Comando do Rails
 ======================
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
-* How to create a Rails application.
-* How to generate models, controllers, database migrations, and unit tests.
-* How to start a development server.
-* How to experiment with objects through an interactive shell.
+* Como criar uma aplicação Rails.
+* Como gerar *models*, *controllers, *migrations* de banco de dados e testes de unidade.
+* Como iniciar um servidor e desenvolvimento.
+* Como fazer experimentos com objetos por meio de um *shell* interativo.
 
 --------------------------------------------------------------------------------
 
-NOTE: This tutorial assumes you have basic Rails knowledge from reading the [Getting Started with Rails Guide](getting_started.html).
+NOTE: Esse tutorial considera que você já tenha um conhecimento básico de Rails, ou tenha lido o [Começando com o Rails](getting_started.html).
 
-Command Line Basics
+Noções Básicas de Linha de Comando
 -------------------
 
-There are a few commands that are absolutely critical to your everyday usage of Rails. In the order of how much you'll probably use them are:
+Existem alguns comandos essenciais para o uso cotidiano do Rails. Na ordem de quanto você provavelmente irá utilizá-los são:
 
 * `rails console`
 * `rails server`
@@ -29,45 +30,45 @@ There are a few commands that are absolutely critical to your everyday usage of 
 * `rails dbconsole`
 * `rails new app_name`
 
-You can get a list of rails commands available to you, which will often depend on your current directory, by typing `rails --help`. Each command has a description, and should help you find the thing you need.
+Você pode obter uma lista dos comandos do Rails disponíveis, que geralmente depende de seu diretório atual, escrevendo `rails --help`. Cada comando possui uma descrição, que deverá ajudá-lo a encontrar o que precisa.
 
 ```bash
 $ rails --help
 Usage: rails COMMAND [ARGS]
 
-The most common rails commands are:
- generate    Generate new code (short-cut alias: "g")
- console     Start the Rails console (short-cut alias: "c")
- server      Start the Rails server (short-cut alias: "s")
+Os comandos de Rails mais comuns são:
+ generate    Gera um novo código (tecla de atalho: "g")
+ console     Inicia um console Rails (tecla de atalho: "c")
+ server      Inicia um servidor Rails (tecla de atalho: "s")
  ...
 
-All commands can be run with -h (or --help) for more information.
+Todos os comandos podem ser executados com -h (ou --help) para mais informações.
 
-In addition to those commands, there are:
- about                               List versions of all Rails ...
- assets:clean[keep]                  Remove old compiled assets
- assets:clobber                      Remove compiled assets
- assets:environment                  Load asset compile environment
- assets:precompile                   Compile all the assets ...
+Além desses comandos, existem:
+ about                               Lista a versão de todos os Rails ...
+ assets:clean[keep]                  Remove os *assets* compilados antigos
+ assets:clobber                      Remove os *assets* compilados
+ assets:environment                  Carrega o ambiente de compilação de *assets*
+ assets:precompile                   Compila todos os *assets* ...
  ...
- db:fixtures:load                    Loads fixtures into the ...
- db:migrate                          Migrate the database ...
- db:migrate:status                   Display status of migrations
- db:rollback                         Rolls the schema back to ...
- db:schema:cache:clear               Clears a db/schema_cache.yml file
- db:schema:cache:dump                Creates a db/schema_cache.yml file
- db:schema:dump                      Creates a db/schema.rb file ...
- db:schema:load                      Loads a schema.rb file ...
- db:seed                             Loads the seed data ...
- db:structure:dump                   Dumps the database structure ...
- db:structure:load                   Recreates the databases ...
- db:version                          Retrieves the current schema ...
+ db:fixtures:load                    Carrega *fixtures* no ...
+ db:migrate                          Migra o banco de dados ...
+ db:migrate:status                   Mostra o status da migração
+ db:rollback                         Retorna o *schema* de volta para ...
+ db:schema:cache:clear               Limpa um arquivo db/schema_cache.yml
+ db:schema:cache:dump                Cria um arquivo db/schema_cache.yml
+ db:schema:dump                      Cria um arquivo db/schema.rb ...
+ db:schema:load                      Carrega um arquivo schema.rb ...
+ db:seed                             Carrega os dados da seed ...
+ db:structure:dump                   Exporta a estrutura do banco de dados ...
+ db:structure:load                   Recria os bancos de dados ...
+ db:version                          Recupera o *schema* atual ...
  ...
- restart                             Restart app by touching ...
- tmp:create                          Creates tmp directories ...
+ restart                             Reinicia o aplicativo tocando em ...
+ tmp:create                          Cria diretórios tmp ...
 ```
 
-Let's create a simple Rails application to step through each of these commands in context.
+Vamos criar uma aplicação Rails simples passando por cada um destes comandos.
 
 ### `rails new`
 

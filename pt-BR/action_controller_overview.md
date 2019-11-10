@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Action Controller Overview
@@ -18,31 +19,29 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-What Does a Controller Do?
+O que um *Controller* faz?
 --------------------------
 
-Action Controller is the C in [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). After the router has determined which controller to use for a request, the controller is responsible for making sense of the request, and producing the appropriate output. Luckily, Action Controller does most of the groundwork for you and uses smart conventions to make this as straightforward as possible.
+*ActionController* é o _C_ em [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). Após o `router` determinar qual _controller_ usar para a requisição, o _controller_ será responsável por entender a requisição e retornar a resposta apropriada. Por sorte, *ActionController* faz a maior parte do trabalho fundamental pra você e usa convenções inteligentes pra fazer esse processo ser tão intuitivo quanto possível.
 
-For most conventional [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) applications, the controller will receive the request (this is invisible to you as the developer), fetch or save data from a model, and use a view to create HTML output. If your controller needs to do things a little differently, that's not a problem, this is just the most common way for a controller to work.
+Para a maior parte das aplicações [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer),o *controller* receberá a requisição (o que é "invisível" a você que está desenvolvendo), busca e/ou salva dados de um *model*, e usa a *view* para criar a saída HTML. Se seu *controller* precisa tratar requisições um pouco diferente, isso não é um problema, este é apenas o jeito mais comum de um *controller* trabalhar.
 
-A controller can thus be thought of as a middleman between models and views. It makes the model data available to the view so it can display that data to the user, and it saves or updates user data to the model.
+Um *controller* pode então ser pensado como um intermediário entre um *model* e uma *view*. Isso faz com que os dados do *model* fiquem disponíveis para a *view* para que possa ser mostrado ao usuário, e ele salva ou atualiza dados do usuário no *model*.
 
-NOTE: For more details on the routing process, see [Rails Routing from the Outside In](routing.html).
+NOTE: Para mais detalhes sobre processo de roteamento, veja [Rails Routing from the Outside In](routing.html)
 
-Controller Naming Convention
+Convenção para Nomeclatura de *Controllers*
 ----------------------------
+A convenção para nomenclatura de *controllers* no Rails favorece a pluralização da última palavra do nome do *controller*, embora não seja estritamente necessário (ex: `ApplicationController`). Por exemplo, `ClientsController` é recomendado ao invés de `ClientController`, `SiteAdminsController` é recomendado ao invés de `SiteAdminController` ou `SitesAdminsController`, e assim por diante.
 
-The naming convention of controllers in Rails favors pluralization of the last word in the controller's name, although it is not strictly required (e.g. `ApplicationController`). For example, `ClientsController` is preferable to `ClientController`, `SiteAdminsController` is preferable to `SiteAdminController` or `SitesAdminsController`, and so on.
+Seguindo essa convenção será possível utilizar o gerador de rotas padrão (ex: `resources`, etc) sem precisar configurar cada `:path` ou `:controller`, e ainda manter consistente o uso dos auxiliares de rotas em todo o seu projeto. Veja [Layouts & Guia de Renderização](layouts_and_rendering.html) para mais detalhes.
 
-Following this convention will allow you to use the default route generators (e.g. `resources`, etc) without needing to qualify each `:path` or `:controller`, and will keep named route helpers' usage consistent throughout your application. See [Layouts & Rendering Guide](layouts_and_rendering.html) for more details.
+NOTE: A convenção para nomenclatura de *controllers* difere da convenção para nomenclatura de *models*, que devem ser nomeados na forma singular.
 
-NOTE: The controller naming convention differs from the naming convention of models, which are expected to be named in singular form.
-
-
-Methods and Actions
+Métodos e Actions
 -------------------
 
-A controller is a Ruby class which inherits from `ApplicationController` and has methods just like any other class. When your application receives a request, the routing will determine which controller and action to run, then Rails creates an instance of that controller and runs the method with the same name as the action.
+Um *controller* é uma classe do Ruby que herda de `ApplicationController` e tem métodos como qualquer outra classe. Quando a sua aplicação recebe uma requisição, o roteamento irá determinar qual *controller* e qual *action* serão executados, e então o Rails irá criar uma instância desse *controller* e executará o método que possui o mesmo nome da *action*.
 
 ```ruby
 class ClientsController < ApplicationController
@@ -51,7 +50,7 @@ class ClientsController < ApplicationController
 end
 ```
 
-As an example, if a user goes to `/clients/new` in your application to add a new client, Rails will create an instance of `ClientsController` and call its `new` method. Note that the empty method from the example above would work just fine because Rails will by default render the `new.html.erb` view unless the action says otherwise. By creating a new `Client`, the `new` method can make a `@client` instance variable accessible in the view:
+Como exemplo, se um usuário acessar `/clients/new` na sua aplicação para adicionar um novo cliente, o Rails irá criar uma instância de `ClientsController` e irá chamar o método `new` dele. Repare que o método vazio do exemplo acima funcionaria normalmente porque o Rails por padrão vai renderizar a *view* `new.html.erb` a menos que a `action` indique outro caminho. Ao criar um novo `Client` o método `new` pode tornar uma variável de instância `@client` acessível na `view`.
 
 ```ruby
 def new
@@ -59,11 +58,11 @@ def new
 end
 ```
 
-The [Layouts & Rendering Guide](layouts_and_rendering.html) explains this in more detail.
+O [Guia de Layouts e Renderização](layouts_and_rendering.html) explica essa etapa mais detalhadamente.
 
-`ApplicationController` inherits from `ActionController::Base`, which defines a number of helpful methods. This guide will cover some of these, but if you're curious to see what's in there, you can see all of them in the [API documentation](https://api.rubyonrails.org/classes/ActionController.html) or in the source itself.
+`ApplicationController` herda de `ActionController::Base`, que define uma quantidade de métodos úteis. Este guia irá cobrir alguns destes métodos, mas se você estiver com curiosidade para ver o que há neles, você pode ver todos eles na [Documentação da API](https://api.rubyonrails.org/classes/ActionController.html) ou no próprio código fonte.
 
-Only public methods are callable as actions. It is a best practice to lower the visibility of methods (with `private` or `protected`) which are not intended to be actions, like auxiliary methods or filters.
+Apenas métodos públicos são executáveis como *actions*. É uma boa prática diminuir a visibilidade de métodos (utilizando `private` ou `protected`) que não foram designados para serem *actions*, como métodos auxiliares ou filtros.
 
 Parameters
 ----------
@@ -352,27 +351,26 @@ in mind. It is not meant as a silver bullet to handle all of your
 parameter filtering problems. However, you can easily mix the API with your
 own code to adapt to your situation.
 
-Session
--------
+Sessão
+------
 
-Your application has a session for each user in which you can store small amounts of data that will be persisted between requests. The session is only available in the controller and the view and can use one of a number of different storage mechanisms:
+Sua aplicação possui uma sessão para cada usuário, na qual pode-se armazenar quantidades pequenas de dados que serão persistidos entre as requisições. A sessão fica disponível apenas no *controller* e na *view* e pode utilizar um dentre vários mecanismos diferentes de armazenamento:
 
-* `ActionDispatch::Session::CookieStore` - Stores everything on the client.
-* `ActionDispatch::Session::CacheStore` - Stores the data in the Rails cache.
-* `ActionDispatch::Session::ActiveRecordStore` - Stores the data in a database using Active Record. (require `activerecord-session_store` gem).
-* `ActionDispatch::Session::MemCacheStore` - Stores the data in a memcached cluster (this is a legacy implementation; consider using CacheStore instead).
+* `ActionDispatch::Session::CookieStore` - Armazena tudo no cliente.
+* `ActionDispatch::Session::CacheStore` - Armazena os dados no *cache* do Rails.
+* `ActionDispatch::Session::ActiveRecordStore` - Armazena os dados em um banco de dados utilizando o *Active Record*. (a gem `activerecord-session_store` é necessária).
+* `ActionDispatch::Session::MemCacheStore` - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o *CacheStore* como alternativa)
 
-All session stores use a cookie to store a unique ID for each session (you must use a cookie, Rails will not allow you to pass the session ID in the URL as this is less secure).
+Todos os armazenamentos de sessão utilizam um *cookie* para armazenar um ID único para cada sessão (você deve utilizar um *cookie*, o Rails não permitirá que você passe o ID da sessão na URL, pois isso é menos seguro).
 
-For most stores, this ID is used to look up the session data on the server, e.g. in a database table. There is one exception, and that is the default and recommended session store - the CookieStore - which stores all session data in the cookie itself (the ID is still available to you if you need it). This has the advantage of being very lightweight and it requires zero setup in a new application in order to use the session. The cookie data is cryptographically signed to make it tamper-proof. And it is also encrypted so anyone with access to it can't read its contents. (Rails will not accept it if it has been edited).
+Para a maioria dos armazenamentos, esse ID é utilizado para procurar os dados da sessão no servidor, por exemplo, em uma tabela do banco de dados. Há apenas uma exceção, que é o armazenamento de sessão recomendado por padrão - o *CookieStore* - que armazena todos os dados da sessão no próprio *cookie* (o ID ainda estará disponível para você, se você precisar). A vantagem é a de ser muito leve e requer zero configuração em uma nova aplicação para utilizar a sessão. Os dados do *cookie* são assinados criptograficamente para torná-los invioláveis, e também é criptografado para que qualquer pessoa com acesso não leia o seu conteúdo. (O Rails não aceitará se estiver sido editado).
+O *CookieStore* pode armazenar cerca de 4kB de dados - muito menos que os demais - mas geralmente é o suficiente. O armazenamento de grandes quantidades de dados na sessão não é recomendado, independentemente de qual armazenamento de sessão sua aplicação utiliza. Você deve evitar armazenar objetos complexos (qualquer coisa que não sejam objetos Ruby básicos, o exemplo mais comum são instâncias de um *model*) na sessão, pois o servidor pode não ser capaz de remontá-los entre as requisições, o que resultará em um erro.
 
-The CookieStore can store around 4kB of data - much less than the others - but this is usually enough. Storing large amounts of data in the session is discouraged no matter which session store your application uses. You should especially avoid storing complex objects (anything other than basic Ruby objects, the most common example being model instances) in the session, as the server might not be able to reassemble them between requests, which will result in an error.
+Se as suas sessões de usuário não armazenam dados críticos ou não precisam durar por longos períodos (por exemplo, se você apenas utiliza o *flash* para mensagens), considere o uso do `ActionDispatch::Session::CacheStore`. Isso armazenará as sessões utilizando a implementação de *cache* que você configurou para a sua aplicação. A vantagem é que você pode utilizar sua infraestrutura de *cache* existente para armazenar sessões sem precisar de nenhuma configuração ou administração adicional. A desvantagem é que as sessões serão temporárias e poderão desaparecer a qualquer momento.
 
-If your user sessions don't store critical data or don't need to be around for long periods (for instance if you just use the flash for messaging), you can consider using `ActionDispatch::Session::CacheStore`. This will store sessions using the cache implementation you have configured for your application. The advantage of this is that you can use your existing cache infrastructure for storing sessions without requiring any additional setup or administration. The downside, of course, is that the sessions will be ephemeral and could disappear at any time.
+Leia mais sobre armazenamento de sessão no [Guia de Segurança](security.html).
 
-Read more about session storage in the [Security Guide](security.html).
-
-If you need a different session storage mechanism, you can change it in an initializer:
+Se você precisar de um mecanismo diferente de sessão de armazenamento, você poderá alterá-lo no *initializer*:
 
 ```ruby
 # Use the database for sessions instead of the cookie-based default,
@@ -381,21 +379,21 @@ If you need a different session storage mechanism, you can change it in an initi
 # Rails.application.config.session_store :active_record_store
 ```
 
-Rails sets up a session key (the name of the cookie) when signing the session data. These can also be changed in an initializer:
+O Rails configura uma chave de sessão (o nome do *cookie*) ao assinar os dados da sessão. Estes também podem ser alterados no *initializer*:
 
 ```ruby
 # Be sure to restart your server when you modify this file.
 Rails.application.config.session_store :cookie_store, key: '_your_app_session'
 ```
 
-You can also pass a `:domain` key and specify the domain name for the cookie:
+Você também pode passar uma chave `:domain` e especificar o nome do domínio para o *cookie*:
 
 ```ruby
 # Be sure to restart your server when you modify this file.
 Rails.application.config.session_store :cookie_store, key: '_your_app_session', domain: ".example.com"
 ```
 
-Rails sets up (for the CookieStore) a secret key used for signing the session data in `config/credentials.yml.enc`. This can be changed with `rails credentials:edit`.
+O Rails configura (para o *CookieStore*) uma chave secreta utilizada para assinar os dados da sessão em `config/credentials.yml.enc`. Isso pode ser alterado com o comando `rails credentials:edit`.
 
 ```ruby
 # aws:
@@ -406,15 +404,15 @@ Rails sets up (for the CookieStore) a secret key used for signing the session da
 secret_key_base: 492f...
 ```
 
-NOTE: Changing the secret_key_base when using the `CookieStore` will invalidate all existing sessions.
+NOTE: Alterar a `secret_key_base` ao utilizar o `CookieStore` invalidará todas as sessões existentes.
 
-### Accessing the Session
+### Acessando a Sessão
 
-In your controller you can access the session through the `session` instance method.
+No seu *controller*, você pode acessar a sessão através do método de instância `session`.
 
-NOTE: Sessions are lazily loaded. If you don't access sessions in your action's code, they will not be loaded. Hence you will never need to disable sessions, just not accessing them will do the job.
+NOTE: As sessões são [*lazy loading*](https://pt.wikipedia.org/wiki/Lazy_loading) (carregamento lento). Se você não acessá-las no código da sua *action*, elas não serão carregadas. Portanto, você nunca precisará desativar as sessões, basta apenas não acessá-las.
 
-Session values are stored using key/value pairs like a hash:
+Os valores da sessão são armazenados utilizando pares de chave/valor como em um *hash*:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -432,7 +430,7 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-To store something in the session, just assign it to the key like a hash:
+Para armazenar algo na sessão, basta atribuí-lo à chave como em um *hash*:
 
 ```ruby
 class LoginsController < ApplicationController
@@ -448,7 +446,7 @@ class LoginsController < ApplicationController
 end
 ```
 
-To remove something from the session, delete the key/value pair:
+Para remover algo da sessão, exclua o par de chave/valor:
 
 ```ruby
 class LoginsController < ApplicationController
@@ -463,7 +461,7 @@ class LoginsController < ApplicationController
 end
 ```
 
-To reset the entire session, use `reset_session`.
+Para redefinir a sessão inteira, utilize `reset_session`.
 
 ### The Flash
 
@@ -857,17 +855,17 @@ response.headers["Content-Type"] = "application/pdf"
 
 NOTE: In the above case it would make more sense to use the `content_type` setter directly.
 
-HTTP Authentications
---------------------
+Autenticações HTTP
+------------------
 
-Rails comes with two built-in HTTP authentication mechanisms:
+O Rails vem com dois mecanismos de autenticação HTTP embutidos:
 
-* Basic Authentication
-* Digest Authentication
+* Autenticação *Basic*
+* Autenticação *Digest*
 
-### HTTP Basic Authentication
+### Autenticação HTTP *Basic*
 
-HTTP basic authentication is an authentication scheme that is supported by the majority of browsers and other HTTP clients. As an example, consider an administration section which will only be available by entering a username and a password into the browser's HTTP basic dialog window. Using the built-in authentication is quite easy and only requires you to use one method, `http_basic_authenticate_with`.
+Autenticação HTTP *basic* é um esquema de autenticação que é suportado pela maioria dos navegadores e outros clientes HTTP. Como um exemplo, considere uma página de administração que será acessável apenas informando um nome de usuário e uma senha na janela de autenticação HTTP *basic* do navegador. Usar a autenticação embutida é bem fácil e apenas requer que você use um método, `http_basic_authenticate_with`.
 
 ```ruby
 class AdminsController < ApplicationController
@@ -875,11 +873,11 @@ class AdminsController < ApplicationController
 end
 ```
 
-With this in place, you can create namespaced controllers that inherit from `AdminsController`. The filter will thus be run for all actions in those controllers, protecting them with HTTP basic authentication.
+Com isso, você pode criar *controllers* com *namespaces* que herdam de `AdminsController`. O filtro vai, assim, ser executado para todas as ações nos *controllers*, protegendo-os com a autenticação HTTP *basic*.
 
-### HTTP Digest Authentication
+### Autenticação HTTP *Digest*
 
-HTTP digest authentication is superior to the basic authentication as it does not require the client to send an unencrypted password over the network (though HTTP basic authentication is safe over HTTPS). Using digest authentication with Rails is quite easy and only requires using one method, `authenticate_or_request_with_http_digest`.
+A autenticação HTTP *digest* é superior à autenticação *basic* porque ela não requer que o cliente envie uma senha sem criptografia pela rede (embora a autenticação HTTP *basic* seja segura via HTTPS). Usar a autenticação *digest* com Rails é bem fácil e requer apenas o uso de um método, `authenticate_or_request_with_http_digest`.
 
 ```ruby
 class AdminsController < ApplicationController
@@ -897,7 +895,7 @@ class AdminsController < ApplicationController
 end
 ```
 
-As seen in the example above, the `authenticate_or_request_with_http_digest` block takes only one argument - the username. And the block returns the password. Returning `false` or `nil` from the `authenticate_or_request_with_http_digest` will cause authentication failure.
+Como visto no exemplo acima, o bloco `authenticate_or_request_with_http_digest` recebe apenas um argumento - o nome de usuário. E o bloco retorna a senha. Retornar `false` ou `nil` em `authenticate_or_request_with_http_digest` causará falha de autenticação.
 
 Streaming and File Downloads
 ----------------------------

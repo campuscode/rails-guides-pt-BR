@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Active Record Query Interface
@@ -956,23 +957,23 @@ client.save
 
 As `client` is explicitly set to be a readonly object, the above code will raise an `ActiveRecord::ReadOnlyRecord` exception when calling `client.save` with an updated value of _visits_.
 
-Locking Records for Update
---------------------------
+Bloqueando registros para alteração
+-----------------------------------
 
-Locking is helpful for preventing race conditions when updating records in the database and ensuring atomic updates.
+O bloqueio é útil para prevenir condições de corrida ao alterar registros no banco de dados e para garantir alterações atômicas.
 
-Active Record provides two locking mechanisms:
+O Active Record provê dois mecanismos de bloqueio:
 
-* Optimistic Locking
-* Pessimistic Locking
+* Bloqueio otimista
+* Bloqueio pessimista
 
-### Optimistic Locking
+### Bloqueio Otimista
 
-Optimistic locking allows multiple users to access the same record for edits, and assumes a minimum of conflicts with the data. It does this by checking whether another process has made changes to a record since it was opened. An `ActiveRecord::StaleObjectError` exception is thrown if that has occurred and the update is ignored.
+O bloqueio otimista permite que múltiplos usuários acessem o mesmo registro para edição e presume um mínimo de conflitos com os dados. Isto é feito verificando se outro processo fez mudanças em um registro desde que ele foi aberto. Uma exceção `ActiveRecord::StaleObjectError` é disparada se isso ocorreu e a alteração é ignorada.
 
-**Optimistic locking column**
+**Coluna de bloqueio otimista**
 
-In order to use optimistic locking, the table needs to have a column called `lock_version` of type integer. Each time the record is updated, Active Record increments the `lock_version` column. If an update request is made with a lower value in the `lock_version` field than is currently in the `lock_version` column in the database, the update request will fail with an `ActiveRecord::StaleObjectError`. Example:
+Para usar o bloqueio otimista, a tabela precisa ter uma coluna chamada `lock_version` do tipo inteiro. Cada vez que o registro é alterado, o Active Record incrementa o valor na coluna `lock_version`. Se uma requisição de alteração é feita com um valor menor no campo `lock_version` do que o valor que está atualmente na coluna `lock_version` no banco de dados, a requisição de alteração falhará com um `ActiveRecord::StaleObjectError`. Por exemplo:
 
 ```ruby
 c1 = Client.find(1)
@@ -981,15 +982,15 @@ c2 = Client.find(1)
 c1.first_name = "Michael"
 c1.save
 
-c2.name = "should fail"
-c2.save # Raises an ActiveRecord::StaleObjectError
+c2.name = "vai falhar"
+c2.save # Dispara um ActiveRecord::StaleObjectError
 ```
 
-You're then responsible for dealing with the conflict by rescuing the exception and either rolling back, merging, or otherwise apply the business logic needed to resolve the conflict.
+Você fica então responsável por lidar com o conflito tratando a exceção e desfazendo as alterações, agrupando-as ou aplicando a lógica de negócio necessária para resolver o conflito.
 
-This behavior can be turned off by setting `ActiveRecord::Base.lock_optimistically = false`.
+Este comportamento pode ser desativado definindo `ActiveRecord::Base.lock_optimistically = false`.
 
-To override the name of the `lock_version` column, `ActiveRecord::Base` provides a class attribute called `locking_column`:
+Para usar outro nome para a coluna `lock_version`, `ActiveRecord::Base` oferece um atributo de classe chamado `locking_column`:
 
 ```ruby
 class Client < ApplicationRecord
@@ -997,11 +998,11 @@ class Client < ApplicationRecord
 end
 ```
 
-### Pessimistic Locking
+### Bloqueio pessimista
 
-Pessimistic locking uses a locking mechanism provided by the underlying database. Using `lock` when building a relation obtains an exclusive lock on the selected rows. Relations using `lock` are usually wrapped inside a transaction for preventing deadlock conditions.
+O bloqueio pessimista usa um mecansimo de bloqueio fornecido pelo banco de dados subjacente. Ao usar `lock` quando uma *relation* (objeto do tipo ActiveRecord::Relation) é criada, obtém-se um bloqueio exclusivo nas linhas selecionadas. Relations usando `lock` são normalmente executadas dentro de uma transação para permitir condições de deadlock.
 
-For example:
+Por exemplo:
 
 ```ruby
 Item.transaction do
@@ -1011,7 +1012,7 @@ Item.transaction do
 end
 ```
 
-The above session produces the following SQL for a MySQL backend:
+A sessão acima produz o seguinte SQL para um banco de dados MySQL:
 
 ```sql
 SQL (0.2ms)   BEGIN
@@ -1020,7 +1021,7 @@ Item Update (0.4ms)   UPDATE `items` SET `updated_at` = '2009-02-07 18:05:56', `
 SQL (0.8ms)   COMMIT
 ```
 
-You can also pass raw SQL to the `lock` method for allowing different types of locks. For example, MySQL has an expression called `LOCK IN SHARE MODE` where you can lock a record but still allow other queries to read it. To specify this expression just pass it in as the lock option:
+Você também pode passar SQL diretamente para o método `lock` para permitir diferentes tipos de bloqueio. Por exemplo, MySQL tem uma expressão chamada `LOCK IN SHARE MODE` que permite bloquear um registro mas ainda assim permitir que outras consultas o leiam. Para especificar esta expressão, basta passá-la ao método `lock`:
 
 ```ruby
 Item.transaction do
@@ -1029,13 +1030,13 @@ Item.transaction do
 end
 ```
 
-If you already have an instance of your model, you can start a transaction and acquire the lock in one go using the following code:
+Se você já tem uma instância do seu modelo, você pode iniciar uma transação e obter o bloqueio de uma vez só usando o código seguinte:
 
 ```ruby
 item = Item.first
 item.with_lock do
-  # This block is called within a transaction,
-  # item is already locked.
+  # Este bloco é chamado dentro de uma transação,
+  # o item já está bloqueado.
   item.increment!(:views)
 end
 ```

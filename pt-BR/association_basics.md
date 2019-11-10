@@ -1,22 +1,28 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Record Associations
+Associações Active Record
 ==========================
 
-This guide covers the association features of Active Record.
+Esse guia cobre os recursos de associação do _Active Record_.
 
-After reading this guide, you will know:
+Após ler esse guia, você saberá:
 
-* How to declare associations between Active Record models.
-* How to understand the various types of Active Record associations.
-* How to use the methods added to your models by creating associations.
+* Como declarar associações entre *models* do _Active Record_.
+* Como entender os vários tipos de associações _Active Record_.
+* Como usar os métodos adicionados em seus *models* ao criar associações.
 
 --------------------------------------------------------------------------------
 
-Why Associations?
+Por Que Associações?
 -----------------
 
-In Rails, an _association_ is a connection between two Active Record models. Why do we need associations between models? Because they make common operations simpler and easier in your code. For example, consider a simple Rails application that includes a model for authors and a model for books. Each author can have many books. Without associations, the model declarations would look like this:
+Em Rails, uma _associação_ é uma conexão entre dois *models* em _Active Record_.
+Por que precisamos de associações entre *models*? Porque eles tornam as operações
+comuns mais simples e fáceis de entender em seu código. Por exemplo, considere
+uma aplicação Rails simples que inclua um *model* para autores e um *model* para
+livros. Cada autor pode ter vários livros. Sem associações, as declarações do
+*model* seriam assim:
 
 ```ruby
 class Author < ApplicationRecord
@@ -26,13 +32,15 @@ class Book < ApplicationRecord
 end
 ```
 
-Now, suppose we wanted to add a new book for an existing author. We'd need to do something like this:
+Agora, suponha que queremos adicionar um novo livro para um autor existente.
+Nós precisaríamos fazer algo assim:
 
 ```ruby
 @book = Book.create(published_at: Time.now, author_id: @author.id)
 ```
 
-Or consider deleting an author, and ensuring that all of its books get deleted as well:
+Ou considere excluir um autor, garantindo que todos os seus livros serão
+excluídos também:
 
 ```ruby
 @books = Book.where(author_id: @author.id)
@@ -42,7 +50,9 @@ end
 @author.destroy
 ```
 
-With Active Record associations, we can streamline these - and other - operations by declaratively telling Rails that there is a connection between the two models. Here's the revised code for setting up authors and books:
+Com as associações do *Active Record*, podemos otimizar essas - e outras -
+operações declarando ao Rails que há uma conexão entre os dois *models*. Aqui
+está o código revisado para configurar autores e livros:
 
 ```ruby
 class Author < ApplicationRecord
@@ -54,19 +64,22 @@ class Book < ApplicationRecord
 end
 ```
 
-With this change, creating a new book for a particular author is easier:
+Com essa alteração, é mais fácil criar um novo livro para um autor específico:
 
 ```ruby
 @book = @author.books.create(published_at: Time.now)
 ```
 
-Deleting an author and all of its books is *much* easier:
+Excluir um autor e todos os seus livros é **muito** mais fácil:
 
 ```ruby
 @author.destroy
 ```
 
-To learn more about the different types of associations, read the next section of this guide. That's followed by some tips and tricks for working with associations, and then by a complete reference to the methods and options for associations in Rails.
+Para saber mais sobre os diferentes tipos de associações, leia a próxima seção
+deste guia. Em seguida há algumas dicas e truques para trabalhar com associações
+e, na sequência, uma referência completa dos métodos e opções para associações no
+Rails.
 
 The Types of Associations
 -------------------------
@@ -2454,62 +2467,65 @@ Extensions can refer to the internals of the association proxy using these three
 Single Table Inheritance
 ------------------------
 
-Sometimes, you may want to share fields and behavior between different models.
-Let's say we have Car, Motorcycle, and Bicycle models. We will want to share
-the `color` and `price` fields and some methods for all of them, but having some
-specific behavior for each, and separated controllers too.
+Às vezes é desejável compartilhar atributos e comportamento entre _models_.
+Vamos dizer que temos _models_ `Car`, `Motorcycle` e `Bicycle`. Queremos
+compartilhar os atributos de `color` e `price` e também alguns métodos para
+estes atributos, mas ainda mantendo comportamentos específicos para cada um
+deles, incluindo _controllers_ separados.
 
-Rails makes this quite easy. First, let's generate the base Vehicle model:
+O Rails deixa isso bem fácil. Primeiro, vamos gerar o _model_ de base, `Vehicle`:
 
 ```bash
 $ rails generate model vehicle type:string color:string price:decimal{10.2}
 ```
 
-Did you note we are adding a "type" field? Since all models will be saved in a
-single database table, Rails will save in this column the name of the model that
-is being saved. In our example, this can be "Car", "Motorcycle" or "Bicycle."
-STI won't work without a "type" field in the table.
+Você notou que estamos adicionando um atributo `type`? Dado que todos os _models_
+serão armazenados em uma única tabela, o Rails vai armazenar o nome do _model_
+nesse atributo. No nosso exemplo, as possibilidades são `Car`, `Motorcycle` ou
+`Bicycle`. STI não funciona sem um atributo `type` na tabela.
 
-Next, we will generate the three models that inherit from Vehicle. For this,
-we can use the `--parent=PARENT` option, which will generate a model that
-inherits from the specified parent and without equivalent migration (since the
-table already exists).
+Em seguida, vamos gerar os três _models_ que herdam de `Vehicle`. Para isso podemos
+usar a opção `--parent=PARENT` que vai gerar um _model_ que herda do "_parent_"
+especificado e sem uma _migration_ equivalente (dado que a tabela já existe).
 
-For example, to generate the Car model:
+Por exemplo, para gerar o _model_ `Car`:
 
 ```bash
 $ rails generate model car --parent=Vehicle
 ```
 
-The generated model will look like this:
+O _model_ gerado vai parecer com:
 
 ```ruby
 class Car < Vehicle
 end
 ```
 
-This means that all behavior added to Vehicle is available for Car too, as
-associations, public methods, etc.
+Isso significa que todo o comportamento adicionado à classe `Vehicle` estará
+disponível também na classe `Car`, incluindo as associações, métodos públicos,
+etc.
 
-Creating a car will save it in the `vehicles` table with "Car" as the `type` field:
+Criar um carro vai armazená-lo na tabela `vehicles` e popular o atributo `type`
+com o valor "_Car_":
 
 ```ruby
 Car.create(color: 'Red', price: 10000)
 ```
 
-will generate the following SQL:
+vai gerar o seguinte SQL:
 
 ```sql
 INSERT INTO "vehicles" ("type", "color", "price") VALUES ('Car', 'Red', 10000)
 ```
 
-Querying car records will just search for vehicles that are cars:
+A _query_ (consulta) por registros de carros vai simplesmente buscar veiculos que
+são do tipo _Car_.
 
 ```ruby
 Car.all
 ```
 
-will run a query like:
+vai executar a seguinte _query_:
 
 ```sql
 SELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."type" IN ('Car')

@@ -6,11 +6,11 @@ O Guia Rails nasceu da vontade de trazer mais pessoas para a comunidade, mas sem
 a barreira da língua inglesa. É uma forma de difundir o conhecimento e estimular
 a criação de materiais em português.
 
-Neste repositório buscamos ajuda na tradução do https://guides.rubyonrails.org/
+Neste repositório buscamos ajuda na tradução do [guides.rubyonrails.org](https://guides.rubyonrails.org/)
 para pt-BR, já que lá temos uma excelente fonte de estudo e documentação de
 Ruby on Rails.
 
-Você pode ver o conteúdo já traduzido em http://guiarails.com.br/
+Você pode ver o conteúdo já traduzido em [guiarails.com.br](https://guiarails.com.br/)
 
 ## Como ajudar
 
@@ -37,11 +37,14 @@ em inglês. Vamos usar de exemplo a página `active_record_basics.md`.
 1. Faça um Fork do projeto e clone para a sua máquina.
 
 1. Ao iniciar a tradução, crie um Branch referente à sua tradução e abra um Pull
-Request [link da documentação](https://help.github.com/en/articles/creating-a-pull-request)]
+Request ([link da documentação](https://help.github.com/en/articles/creating-a-pull-request))
 com a palavra WIP (Work in Progress) antes do título ou em Draft. Assim todos
 podem saber que você iniciou uma tradução. Lembre-se de marcar no texto do
 Pull Request as issues que planeja traduzir
 (campuscode/rails-guides-pt-BR#numero-da-issue).
+
+1. Consulte o [Manual de Tradução](https://github.com/campuscode/rails-guides-pt-BR/blob/master/TRANSLATION_MANUAL.md)
+no qual apresentamos os padrões adotados para esse projeto.
 
 1. Faça a tradução do capítulo fazendo commits durante o processo. Ao final,
 retire o WIP do Pull Request (ou o Draft) para que todos saibam que você
