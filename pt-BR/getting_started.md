@@ -505,11 +505,9 @@ Agora você precisa adicionar a *action* `create` dentro do `ArticlesController`
 
 NOTE: Por padrão o `form_with` submete formulários usando Ajax, evitando assim o redirecionamento da página inteira. Para tornar este guia mais fácil de entender, por ora, nós desabilitamos isso ao utilizar o `local: true`.
 
-### Creating articles
+### Criando artigos
 
-To make the "Unknown action" go away, you can define a `create` action within
-the `ArticlesController` class in `app/controllers/articles_controller.rb`,
-underneath the `new` action, as shown:
+Para fazer este "Unknown action" desaparecer, você pode definir a *action* `create` dentro da classe `ArticlesController` em `app/controllers/articles_controller.rb`, logo após a *action* `new`, como vemos a seguir:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -521,16 +519,10 @@ class ArticlesController < ApplicationController
 end
 ```
 
-If you re-submit the form now, you may not see any change on the page. Don't worry!
-This is because Rails by default returns `204 No Content` response for an action if
-we don't specify what the response should be. We just added the `create` action
-but didn't specify anything about how the response should be. In this case, the
-`create` action should save our new article to the database.
+Se você re-enviar o formulário agora, você ainda não verá nenhuma mudança na página. Não se preocupe!
+Isto é porque, por padrão, o Rails retorna a resposta `204 No Content` para uma `action` se não especificarmos qual resposta ele deve retornar. Nós apenas adicionamos a *action* `create` mas não especificamos nada sobre como a resposta deve ser. Neste caso, a *action* `create` deve salvar nosso novo artigo no banco de dados.
 
-When a form is submitted, the fields of the form are sent to Rails as
-_parameters_. These parameters can then be referenced inside the controller
-actions, typically to perform a particular task. To see what these parameters
-look like, change the `create` action to this:
+Quando um formulário é enviado, os campos do formulário são enviados ao Rails como _parameters_ (parâmetros). Estes parâmetros podem ser então referenciados dentro das *actions* do controller, normalmente para executar uma tarefa específica. Para ver como estes parâmetros são, altere a *action* `create` para isto:
 
 ```ruby
 def create
@@ -538,24 +530,17 @@ def create
 end
 ```
 
-The `render` method here is taking a very simple hash with a key of `:plain` and
-value of `params[:article].inspect`. The `params` method is the object which
-represents the parameters (or fields) coming in from the form. The `params`
-method returns an `ActionController::Parameters` object, which
-allows you to access the keys of the hash using either strings or symbols. In
-this situation, the only parameters that matter are the ones from the form.
+O método `render` está recebendo uma simples *hash* com a chave `:plain` e o valor `params[:article].inspect`. O método `params` é o objeto que representa os parâmetros (ou campos) enviados pelo formulário. O método `params` retorna um objeto `ActionController::Parameters`, que permite você acessar as chaves do *hash* usando *strings* ou *symbols*. Neste caso, os únicos parâmetros que importam são os recebidos pelo formulário.
 
-TIP: Ensure you have a firm grasp of the `params` method, as you'll use it fairly regularly. Let's consider an example URL: **http://www.example.com/?username=dhh&email=dhh@email.com**. In this URL, `params[:username]` would equal "dhh" and `params[:email]` would equal "dhh@email.com".
+TIP: Certifique-se de ter um bom entendimento sobre o método `params`, pois você o usará frequentemente. Vamos considerar uma URL de exemplo: **http://www.example.com/?username=dhh&email=dhh@email.com**. Nesta URL, o `params[:username]` será igual a "dhh" e o `params[:email]` será igual a "dhh@email.com".
 
-If you re-submit the form one more time, you'll see something that looks like the following:
+Se você reenviar o formulário novamente, você verá algo parecido com isso:
 
 ```ruby
 <ActionController::Parameters {"title"=>"First Article!", "text"=>"This is my first article."} permitted: false>
 ```
 
-This action is now displaying the parameters for the article that are coming in
-from the form. However, this isn't really all that helpful. Yes, you can see the
-parameters but nothing in particular is being done with them.
+A *action* agora está exibindo os parâmetros para o artigo que estão sendo enviados pelo formulário. Porém, isto não é realmente útil. Sim, você pode ver os parâmetros mas nada em particular está sendo feito com eles.
 
 ### Criando um  *model* para o `Article` (artigo, inglês)
 
