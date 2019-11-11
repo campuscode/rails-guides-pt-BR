@@ -572,12 +572,12 @@ Client.where(locked: true).or(Client.where(orders_count: [1,3,5]))
 SELECT * FROM clients WHERE (clients.locked = 1 OR clients.orders_count IN (1,3,5))
 ```
 
-Ordenando
+Ordering
 --------
 
-Para recuperar registros do banco de dados em uma ordem específica, você pode usar o método de `order`.
+To retrieve records from the database in a specific order, you can use the `order` method.
 
-Por exemplo, se você deseja obter um conjunto de registros e  ordená-los em ordem crescente pelo campo `created_at` na sua tabela:
+For example, if you're getting a set of records and want to order them in ascending order by the `created_at` field in your table:
 
 ```ruby
 Client.order(:created_at)
@@ -585,8 +585,7 @@ Client.order(:created_at)
 Client.order("created_at")
 ```
 
-
-Você também pode especificar `ASC` ou` DESC`:
+You could specify `ASC` or `DESC` as well:
 
 ```ruby
 Client.order(created_at: :desc)
@@ -598,8 +597,7 @@ Client.order("created_at DESC")
 Client.order("created_at ASC")
 ```
 
-
-Ou ordenar por campos diversos:
+Or ordering by multiple fields:
 
 ```ruby
 Client.order(orders_count: :asc, created_at: :desc)
@@ -611,14 +609,14 @@ Client.order("orders_count ASC, created_at DESC")
 Client.order("orders_count ASC", "created_at DESC")
 ```
 
-Se você quiser chamar `order` várias vezes, as ordens subsequentes serão anexados à primeira:
+If you want to call `order` multiple times, subsequent orders will be appended to the first:
 
 ```ruby
 Client.order("orders_count ASC").order("created_at DESC")
 # SELECT * FROM clients ORDER BY orders_count ASC, created_at DESC
 ```
 
-WARNING:Na maioria dos sistemas de banco de dados, ao selecionar campos com `distinct` de um conjunto de resultados usando métodos como` select`, `pluck` e` ids`; o método `order` gerará uma exceção `ActiveRecord::StatementInvalid`, a menos que o(s) campo(s) usados ​​na cláusula `order` estejam incluídos na lista de seleção. Consulte a próxima seção para selecionar campos do conjunto de resultados.
+WARNING: In most database systems, on selecting fields with `distinct` from a result set using methods like `select`, `pluck` and `ids`; the `order` method will raise an `ActiveRecord::StatementInvalid` exception unless the field(s) used in `order` clause are included in the select list. See the next section for selecting fields from the result set.
 
 Selecting Specific Fields
 -------------------------
