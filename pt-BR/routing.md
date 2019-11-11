@@ -25,7 +25,7 @@ _controller_ ou de um aplicativo _Rack_. Também pode gerar caminhos e URLs,
 evitando a necessidade de codificar sequências de caracteres em suas
 visualizações.
 
-### Conectando URLs em código
+### Conectando URLs ao código
 
 Quando sua aplicação Rails recebe uma requisição para:
 
@@ -89,10 +89,10 @@ end
 
 Como isso é um arquivo padrão do Ruby você pode utilizar de todos os seus recursos
 para te ajudar a definir suas rotas, porém tenha cautela com nomes de variáveis
-já que ela pode conflitar com os métodos DSL do roteador.
+já que ela pode conflitar com os métodos da DSL do roteador.
 
 NOTE: O bloco `Rails.application.routes.draw do ... end` que encapsula suas
-definições de rotas é necessário para estabelecer o escopo do roteador DSL e não
+definições de rotas é necessário para estabelecer o escopo do roteador da DSL e não
 deve ser deletado.
 
 Resource Routing: the Rails Default
