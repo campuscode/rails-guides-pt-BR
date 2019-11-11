@@ -89,7 +89,7 @@ end
 
 Como isso é um arquivo padrão do Ruby você pode utilizar de todos os seus recursos
 para te ajudar a definir suas rotas, porém tenha cautela com nomes de variáveis
-já que ela pode conflitar com os métodos da DSL do roteador.
+já que ela pode conflitar com os métodos da [DSL](https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico) do roteador.
 
 NOTE: O bloco `Rails.application.routes.draw do ... end` que encapsula suas
 definições de rotas é necessário para estabelecer o escopo do roteador da DSL e não
