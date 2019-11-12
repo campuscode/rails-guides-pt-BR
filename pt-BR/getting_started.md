@@ -838,7 +838,6 @@ class ArticlesController < ApplicationController
   def new
   end
 
-  # snippet for brevity
 ```
 
 E então, finalmente, adicione a *view* para essa *action*, localizada em
