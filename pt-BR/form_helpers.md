@@ -1,14 +1,15 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Auxiliares de formulário de exibição de ação 
+Action View Form Helpers 
+========================
 
-Formulários em uma aplicação web é uma inteface essencial para interação do usuário com o sistema. No entanto, pode se tornar entendiante gravar e manter este tipo de marcação devido à necessidade de lidar com a nomeação de controle de formulário e seus inúmeros atributos. O Rails acaba com  essa complexidade pois há um assistente de exibição que gera uma marcação de formulário. Mas para um uso correto, como há casos de uso diferentes, é necessário que os desenvolvedores conheçam as diferenças entre os métodos auxiliares antes de usa-los.
+Formulários em uma aplicação web são uma inteface essencial para interação do usuário com o sistema. No entanto, pode se tornar entendiante manter este tipo de marcação devido à necessidade de lidar com a nomenclatura e controles de formulários e seus inúmeros atributos. O Rails acaba com  essa complexidade pois há um assistente de exibição que gera uma marcação de formulário. Mas para um uso correto, como há casos de uso diferentes, é necessário que os desenvolvedores conheçam as diferenças entre os métodos auxiliares antes de usa-los.
 
 Depois de ler este guia você saberá: 
 
-*Como criar formulários de pesquisa e tipos de semelhantes de formulários genéricos que não representam nenhuma classe específica da sua aplicação. 
-*Como criar formulários centrados no modelo pra criar e editar registros específicos no banco de dados.
+*Como criar formulários de pesquisa e tipos de semelhantes de formulários genéricos que não representam *model* específico da sua aplicação. 
+*Como criar formulários centrados em *models* pra criar e editar registros específicos no banco de dados.
 *Como gerar caixas de selação de vários tipos de dados.
 *Que data e hora os ajudantes do Rails fornecem.
 *O que torna um formulário de upload de arquivo diferente.
@@ -21,15 +22,15 @@ NOTE: Este guia não pretende ser uma documentação completa dos auxiliares de 
 Trabalhando com formulários basicos.
 ------------------------------------------------
 
-O principal auxiliar de formulário é o `form_with` .
+O principal auxiliar de formulário (*form helper*) é o `form_with` .
 
 ```erb
 <%= form_with do %>
-  Conteúdo de formulário 
+  Conteúdo do formulário 
 <% end %>
 ```
 
-Quando chamado se nenhum argumento para preenchimento como este, é criado uma tag de formulário que, quando enviado, será enviado par página atual. Por exemplo, supondo que a página atual seja a inicial, o HTML gerado teraá a seguinte aparência: 
+Quando chamado sem nenhum argumento como este, é criado uma *tag* de formulário que, quando enviado, enviará uma requisição HTTP usando o verbo POST para a  página atual. Por exemplo, supondo que a página atual seja a inicial, o HTML gerado teraá a seguinte aparência: 
 
 ```html
 <form accept-charset="UTF-8" action="/" data-remote="true" method="post">
@@ -38,11 +39,11 @@ Quando chamado se nenhum argumento para preenchimento como este, é criado uma t
 </form>
 ```
 
-Irá notar que o HTML contém um elemento `input` com tipo `hidden`. Esse `input` é importante, isto porqeu o formulário não GET não pode ser enviado com êxito sem ele. O elemento de entrada oculto com o nome `authenticity_token` é um recurso de segurança do  Rails chamado proteção contra falsificação de solicitação entre sites, e os auxiliares de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Poderá ler mais sobre isto no guia [segurança em  aplicações Rails](security.html#cross-site-request-forgery-csrf). 
+Note que o HTML contém um elemento `input` com tipo `hidden`. Esse `input` é importante, porque o formulário não usa o verbo HTTP de então não pode ser enviado com êxito sem ele. Este elemento oculto com o nome `authenticity_token` é um recurso de segurança do  Rails chamado **proteção contra falsificação de solicitação entre sites** ([**cross-site request forgery protection**](https://pt.wikipedia.org/wiki/Cross-site_request_forgery)), e os auxiliares de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Poderá ler mais sobre isto no guia [segurança em  aplicações Rails](security.html#cross-site-request-forgery-csrf). 
 
 ### Formulário de pesquisa genérica 
 
-Um dos formulários mais básicos que você vê na web é um formulários de pesquisa. Este formulário contém.
+Um dos formulários mais básicos que você vê na web é um formulários de pesquisa. Este formulário contém:
 
 * Um elemento de formulário com o método GET.
 * Uma etiqueta para entrada.
