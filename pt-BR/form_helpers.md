@@ -73,7 +73,7 @@ TIP: Passando `url: my_speccified_path` para `form_with` informa ao formulário 
 
 TIP: Para cada entrada de formulário, um atributo de ID é gerado a partir de seu nome("q" no exemplo acima). Esses IDs podem ser muito úteis 
 
-IMPORTANT: Use "GET" as the method for search forms. This allows users to bookmark a specific search and get back to it. More generally Rails encourages you to use the right HTTP verb for an action.
+IMPORTANT: Use "GET" como o método para buscas em formulários. Isso permitirá aos usuários marcar uma busca específica e voltar a ela. De forma geral o rails recomenda que você use o verbo correto para a ação desejada.
 
 ### Helpers for Generating Form Elements
 
