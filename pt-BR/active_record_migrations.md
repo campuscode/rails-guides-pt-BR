@@ -40,7 +40,7 @@ class CreateProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-Esse *migration* adiciona uma tabela chamada `products` com uma coluna do tipo string chamada `name` e uma coluna do tipo text chamada `description`. Uma coluna do tipo chave primária chamada `id` também será adicionada implicitamente, pois ela é a chave primária padrão para todos os *models* de *Active Record*. A macro `timestamps` adiciona duas colunas, `created_at` e `updated_at`. Essas colunas especiais são automaticamente gerenciadas pelo Active Record, se existirem.
+Essa *migration* adiciona uma tabela chamada `products` com uma coluna do tipo *string* chamada `name` e uma coluna do tipo *text* chamada `description`. Uma coluna do tipo chave primária chamada `id` também será adicionada implicitamente, pois ela é a chave primária padrão para todos os *models* de *Active Record*. A macro `timestamps` adiciona duas colunas, `created_at` e `updated_at`. Essas colunas especiais são automaticamente gerenciadas pelo *Active Record*, se existirem.
 
 Note que nós definimos as mudanças que queremos que aconteçam no futuro.
 Antes desta *migration* ser executada, não há sequer a tabela. Depois, a tabela será criada. O *Active Record* também sabe como reverter essa *migration*: se a desfizermos, ele removerá a tabela.
