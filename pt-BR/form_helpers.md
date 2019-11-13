@@ -127,12 +127,9 @@ Assim como `check_box_tag` o segundo parâmetro para `radio_button_tag` é o val
 
 NOTE: Sempre use etiquetas para a caixa de seleção e botões de opção. Eles associam o texto a uma opção específica e, ao expandir a região clicável, facilita o clique dos usuários nas entradas.
 
-### Other Helpers of Interest
+### Outros auxiliares interessantes
 
-Other form controls worth mentioning are textareas, password fields,
-hidden fields, search fields, telephone fields, date fields, time fields,
-color fields, datetime-local fields, month fields, week fields,
-URL fields, email fields, number fields, and range fields:
+Outros controles de formulários que vale a pena falar são áreas de texto, campos de senha, campos ocultos, campos de pesquisa, campos telefônicos, campos de data, campos de hora, campos de cores, campos locais de data e hora, campos de mês, mês, semana, URL, campo de email, número e campos de intervalo:
 
 ```erb
 <%= text_area_tag(:message, "Hi, nice site", size: "24x6") %>
@@ -152,7 +149,7 @@ URL fields, email fields, number fields, and range fields:
 <%= range_field(:product, :discount, in: 1..100) %>
 ```
 
-Output:
+Resultado:
 
 ```html
 <textarea id="message" name="message" cols="24" rows="6">Hi, nice site</textarea>
@@ -172,17 +169,12 @@ Output:
 <input id="product_discount" max="100" min="1" name="product[discount]" type="range" />
 ```
 
-Hidden inputs are not shown to the user but instead hold data like any textual input. Values inside them can be changed with JavaScript.
+Entradas ocultas não são mostradas ao usuário, mas retêm dados como qualquer entrada de texto. Os valores dentro deles podem ser alterados com JavaScript.
 
-IMPORTANT: The search, telephone, date, time, color, datetime, datetime-local,
-month, week, URL, email, number, and range inputs are HTML5 controls.
-If you require your app to have a consistent experience in older browsers,
-you will need an HTML5 polyfill (provided by CSS and/or JavaScript).
-There is definitely [no shortage of solutions for this](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills), although a popular tool at the moment is
-[Modernizr](https://modernizr.com/), which provides a simple way to add functionality based on the presence of
-detected HTML5 features.
+IMPORTANT: As entradas de pesquisa, telefone, data, hora, cor, data e hora local e data, mês, semana, URL, email, número e intervalo são controles HTML5. Se você precisar que sua aplicação tenha uma experiência consistente em navegadores antigos, precisará de um polyfill HTML5(fornecido por css e/ou JavaScript). Definiticamente, [não faltam soluções disponíveis](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills), embora uma ferramenta popular no momento seja o [Modernizr](https://modernizr.com/), que fornece uma maneira simples de adicionar funcionalidade com base na presença de recursos HTML5 detectados.
 
-TIP: If you're using password input fields (for any purpose), you might want to configure your application to prevent those parameters from being logged. You can learn about this in the [Securing Rails Applications](security.html#logging) guide.
+TIP: Se você estiver usando campos de entradas de senha (para qualquer finalidade), comvêm configurar sua aplicação para impedir que esses parâmetros sejam registrados. Você pode aprender sobre este assunto no guia [Protegendo aplicações Rails](security.html#logging)
+
 
 Dealing with Model Objects
 --------------------------
