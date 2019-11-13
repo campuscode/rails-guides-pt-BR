@@ -23,7 +23,7 @@ Visão Geral de Migration
 *Migrations* são uma forma conveniente de
 [alterar nosso esquema de banco de dados com o tempo](https://en.wikipedia.org/wiki/Schema_migration) de uma forma fácil e consistente. Elas usam uma *Ruby DSL* para que você não precise escrever SQL puro, permitindo que seu esquema e as alterações sejam independentes do banco de dados utilizado.
 
-Vocẽ pode pensar em cada *migration* como sendo uma nova 'versão' do banco de dados. Um esquema é vazio no início, e após cada *migration* ele é modificado para adicionar ou remover tabelas, colunas, ou entradas de dados. O *Active Record* sabe como atualizar seu esquema nessa linha do tempo, trazendo-o de qualquer ponto em que ele esteja no histórico, para a última versão. O *Active Record* também irá atualizar seu arquivo `db/schema.rb` para igualar a estrutura mais atualizada do seu banco de dados.
+Vocẽ pode pensar em cada *migration* como sendo uma nova 'versão' do banco de dados. Um esquema é vazio no início, e após cada *migration* ele é modificado para adicionar ou remover tabelas, colunas, ou entradas de dados. O *Active Record* sabe como atualizar seu esquema nessa linha do tempo, trazendo-o de qualquer ponto em que ele esteja no histórico, para a última versão. O *Active Record* também atualizará seu arquivo `db/schema.rb` para igualar a estrutura mais atualizada do seu banco de dados.
 
 Aqui temos um exemplo de uma *migration*:
 
