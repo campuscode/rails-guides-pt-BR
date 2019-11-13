@@ -45,7 +45,7 @@ Essa *migration* adiciona uma tabela chamada `products` com uma coluna do tipo *
 Note que nós definimos as mudanças que queremos que aconteçam no futuro.
 Antes desta *migration* ser executada, não há sequer a tabela. Depois, a tabela será criada. O *Active Record* também sabe como reverter essa *migration*: se a desfizermos, ele removerá a tabela.
 
-Em banco de dados que suportem transações com declarações que alterem o esquema,
+Em bancos de dados que suportem transações com declarações que alterem o esquema,
 *migrations* são incluídas na transação. Se o banco de dados não suportar esses tipos de declarações, então, quando uma *migration* falhar, as partes dela que tiveram sucesso não serão desfeitas. Você terá que desfazer as mudanças que fez manualmente.
 
 NOTE: Há certos tipos de *queries* que não podem ser executadas dentro de uma transação. Se o seu adaptador de conexão suporta transações DDL você pode usar `disable_ddl_transaction!` para desabilitá-las para uma única *migration*.
