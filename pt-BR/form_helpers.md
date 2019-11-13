@@ -75,23 +75,15 @@ TIP: Para cada entrada de formulário, um atributo de ID é gerado a partir de s
 
 IMPORTANT: Use "GET" como o método para buscas em formulários. Isso permitirá aos usuários marcar uma busca específica e voltar a ela. De forma geral o rails recomenda que você use o verbo correto para a ação desejada.
 
-### Helpers for Generating Form Elements
+### Auxiliares para gerar elementos de formulário
 
-Rails provides a series of helpers for generating form elements such as
-checkboxes, text fields, and radio buttons. These basic helpers, with names
-ending in `_tag` (such as `text_field_tag` and `check_box_tag`), generate just a
-single `<input>` element. The first parameter to these is always the name of the
-input. When the form is submitted, the name will be passed along with the form
-data, and will make its way to the `params` in the controller with the
-value entered by the user for that field. For example, if the form contains
-`<%= text_field_tag(:query) %>`, then you would be able to get the value of this
-field in the controller with `params[:query]`.
+O Rails fornece  uma série de auxiliares para gerar elementos de formulário, como caixas de seleção, campos de texto e botões de opção. Esses auxilires básicos, com nomes terminados em `_tag`(como `texte_field` e `check_box_tag`), geram apenas um único elemento `<input>`. O primeiro parâmetro para estes será sempre o nome da entrada. Quando o formulário for enviado, o nome será passado junto com os dados do formulário e será direcionado para `params` o controlador com o valor inserido pelo usuário para esse campo. Por exemplo, se o formulário contiver `<%= text_field_tag(:query) %>`, podendo obter o valor deste campo no controlador com `params[:query]` .
 
-When naming inputs, Rails uses certain conventions that make it possible to submit parameters with non-scalar values such as arrays or hashes, which will also be accessible in `params`. You can read more about them in chapter [Understanding Parameter Naming Conventions](#understanding-parameter-naming-conventions) of this guide. For details on the precise usage of these helpers, please refer to the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
+Ao nomear entradas, o Rails usa certas convenções que possibilitam enviar parâmetros com valores não escalares, como matrizes ou hashes, que também estarão acessíveis `params`. Poderá ser lido mais sobre eles no capítulo [Noções básicas sobre convenções de nomenclatura de parâmetros](#understanding-parameter-naming-conventions) deste guia. Para detalhes de como usar com precisão esses auxiliares, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
 
-#### Checkboxes
+#### Caixas de seleção
 
-Checkboxes are form controls that give the user a set of options they can enable or disable:
+As caixas de seleção são controles de formulário que fornecem ao usuário um conjunto de opções que podem ser ativados ou desativados pelo usuário.
 
 ```erb
 <%= check_box_tag(:pet_dog) %>
@@ -100,7 +92,7 @@ Checkboxes are form controls that give the user a set of options they can enable
 <%= label_tag(:pet_cat, "I own a cat") %>
 ```
 
-This generates the following:
+Isso gera o seguinte:
 
 ```html
 <input id="pet_dog" name="pet_dog" type="checkbox" value="1" />
@@ -109,11 +101,11 @@ This generates the following:
 <label for="pet_cat">I own a cat</label>
 ```
 
-The first parameter to `check_box_tag`, of course, is the name of the input. The second parameter, naturally, is the value of the input. This value will be included in the form data (and be present in `params`) when the checkbox is checked.
+O primeiro parâmetro para `check_box_tag`, é claro, é o nome da entrada. O segundo parâmetro, naturalmente, é o valor da entrada. Este valor será incluído nos dados do formulário (e está presente em `params`) quando a caixa de seleção estiver marcada.
 
-#### Radio Buttons
+#### Botões de opção
 
-Radio buttons, while similar to checkboxes, are controls that specify a set of options in which they are mutually exclusive (i.e., the user can only pick one):
+Os botões de opção embora semelhantes às caixas de seleção, são controles que especificam um conjunto de opções mutuamente exclusivos(ou seja, o usuário pode escolher apenas uma).
 
 ```erb
 <%= radio_button_tag(:age, "child") %>
@@ -122,7 +114,7 @@ Radio buttons, while similar to checkboxes, are controls that specify a set of o
 <%= label_tag(:age_adult, "I am over 21") %>
 ```
 
-Output:
+Resultado:
 
 ```html
 <input id="age_child" name="age" type="radio" value="child" />
@@ -131,11 +123,9 @@ Output:
 <label for="age_adult">I am over 21</label>
 ```
 
-As with `check_box_tag`, the second parameter to `radio_button_tag` is the value of the input. Because these two radio buttons share the same name (`age`), the user will only be able to select one of them, and `params[:age]` will contain either `"child"` or `"adult"`.
+Assim como `check_box_tag` o segundo parâmetro para `radio_button_tag` é o valor da entrada. Como esse dois botções compartilham o mesmo nome (`age`), o usuário poderá selecionar apenas um deles e `params[:age]` receberá `"child"` ou `"adult"`.
 
-NOTE: Always use labels for checkbox and radio buttons. They associate text with a specific option and,
-by expanding the clickable region,
-make it easier for users to click the inputs.
+NOTE: Sempre use etiquetas para a caixa de seleção e botões de opção. Eles associam o texto a uma opção específica e, ao expandir a região clicável, facilita o clique dos usuários nas entradas.
 
 ### Other Helpers of Interest
 
