@@ -327,21 +327,21 @@ User.destroy_by(name: 'David')
 User.destroy_all
 ```
 
-Validations
+Validações
 -----------
 
-Active Record allows you to validate the state of a model before it gets written
-into the database. There are several methods that you can use to check your
-models and validate that an attribute value is not empty, is unique and not
-already in the database, follows a specific format, and many more.
+O *Active Record* permite que você valide o estado de um *model* antes que ele
+seja gravado no banco de dados. Existem diversos métodos que você pode usar para
+verificar seus *models* e validar que o valor de um atributo não é vazio, é único
+e já não existe no banco de dados, segue um formato específico, e muito mais.
 
-Validation is a very important issue to consider when persisting to the database, so
-the methods `save` and `update` take it into account when
-running: they return `false` when validation fails and they don't actually
-perform any operations on the database. All of these have a bang counterpart (that
-is, `save!` and `update!`), which are stricter in that
-they raise the exception `ActiveRecord::RecordInvalid` if validation fails.
-A quick example to illustrate:
+A validação é uma questão muito importante a se considerar quando se está persistindo
+no banco de dados, então os métodos `save` e `update` levam isso em conta quando executados:
+eles retornam `false` quando a validação falha e eles de fato não performam nenhuma
+operação no banco de dados. Eles tem uma versão com *bang* (exclamação) (que são `save!`
+e `update!`), que são mais rigorosos e retornam a exceção `ActiveRecord::RecordInvalid`
+se a validação falha.
+Um rápido exemplo para ilustrar:
 
 ```ruby
 class User < ApplicationRecord
@@ -353,8 +353,7 @@ user.save  # => false
 user.save! # => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
 ```
 
-You can learn more about validations in the [Active Record Validations
-guide](active_record_validations.html).
+Você pode aprender mais sobre validações no [Guia de Validaçes de Active Record (em inglês)](active_record_validations.html).
 
 Callbacks
 ---------
