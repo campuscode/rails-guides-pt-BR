@@ -202,7 +202,7 @@ A execução do comando irá iniciar o Puma, um servidor web distribuído com o
 Rails por padrão. Para ver sua aplicação em execução, abra um navegador e
 navegue para <http://localhost:3000>.  Você deve ver a página padrão com informações do Rails:
 
-![Captura de tela de boas vindas do Rails](images/getting_started/rails_welcome.png)
+![Captura de tela escrito Yay! Você está no Rails(em inglês)](images/getting_started/rails_welcome.png)
 
 TIP: Para interromper a execução do servidor Web, pressione Ctrl+C na janela do
 terminal em que o servidor está sendo executado. Para verificar se o servidor
@@ -212,7 +212,7 @@ representando por um sinal de `$`. Em modo de desenvolvimento, o Rails
 geralmente não exige que você reinicie o servidor; mudanças feitas nos arquivos
 da aplicaçnao serão automaticamente aplicadas no servidor.
 
-A página de "Boas vindas a bordo" é o _smoke test_ (teste de sanidade) para uma
+A página de "Yay! Você está no Rails! (Yay! You're on Rails!)" é o _smoke test_ (teste de sanidade) para uma
 nova aplicação Rails: garante que o seu software esteja configurado
 corretamente, o suficiente para gerar uma página.
 
@@ -276,7 +276,7 @@ todo o código existente no arquivo e substitua pela linha de código abaixo:
 Agora que criamos o _controller_ e a _view_, precisamos informar ao Rails quando
 queremos que "Olá, Rails" seja exibido. No nosso caso, queremos que seja exibido
 quando navegarmos para a URL raiz de nosso site, <http://localhost:3000>. No
-momento, "Boas vindas a bordo" é que está preenchendo esse lugar.
+momento, "Yay! Você está no Rails!" é que está preenchendo esse lugar.
 
 Em seguida, você deve informar ao Rails onde está localizada a sua página
 inicial.
