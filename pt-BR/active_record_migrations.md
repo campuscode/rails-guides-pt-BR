@@ -4,7 +4,7 @@
 Active Record Migrations
 ========================
 
-*Migrations* são uma funcionalidade do *Active Record* que permitem expandir nosso esquema do banco de dados com o tempo. Ao invés de escrever modificações no esquema em SQL puro,*migrations* permitem o uso de uma Linguagem Específica de Domínio (DSL) em *Ruby* para descrever as mudanças em nossas tabelas.
+*Migrations* são uma funcionalidade do *Active Record* que permitem expandir nosso esquema do banco de dados com o tempo. Ao invés de escrever modificações no esquema em SQL puro,*migrations* permitem o uso de uma [Linguagem Específica de Domínio (DSL)](https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico) em *Ruby* para descrever as mudanças em nossas tabelas.
 
 TIP: Para conhecer mais sobre DSLs, veja [https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico](https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico)
 
