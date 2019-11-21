@@ -554,12 +554,12 @@ end
 Cookies
 -------
 
-Your application can store small amounts of data on the client - called cookies - that will be persisted across requests and even sessions. Rails provides easy access to cookies via the `cookies` method, which - much like the `session` - works like a hash:
+Sua Aplicação pode armazemar pequenas quantidades de dados no cliente - chamados de *cookies* - que serão mantidas entre requisições e até as sessões. O Rails fornece um fácil acesso para os *cookies* através do método `cookies`, que - assim como a `session` - funciona como um hash:
 
 ```ruby
 class CommentsController < ApplicationController
   def new
-    # Auto-fill the commenter's name if it has been stored in a cookie
+    # Preencher automaticamente o nome de quem comentou se ele estiver armazenado em um cookie
     @comment = Comment.new(author: cookies[:commenter_name])
   end
 
@@ -568,10 +568,10 @@ class CommentsController < ApplicationController
     if @comment.save
       flash[:notice] = "Thanks for your comment!"
       if params[:remember_name]
-        # Remember the commenter's name.
+        # Lembrar o nome de quem fez o comentário
         cookies[:commenter_name] = @comment.author
       else
-        # Delete cookie for the commenter's name cookie, if any.
+        # Deletar o cookie do nome de quem fez o comentário, caso exista.
         cookies.delete(:commenter_name)
       end
       redirect_to @comment.article
@@ -582,43 +582,43 @@ class CommentsController < ApplicationController
 end
 ```
 
-Note that while for session values you set the key to `nil`, to delete a cookie value you should use `cookies.delete(:key)`.
+Perceba que enquanto para valores de sessão você define a chave como `nil`, para deletar um valor de *cookie* você deve usar ` cookies.delete(:key)`.
 
-Rails also provides a signed cookie jar and an encrypted cookie jar for storing
-sensitive data. The signed cookie jar appends a cryptographic signature on the
-cookie values to protect their integrity. The encrypted cookie jar encrypts the
-values in addition to signing them, so that they cannot be read by the end user.
-Refer to the [API documentation](https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html)
-for more details.
+O Rails também fornece um *cookie jar* assinado e um *cookie jar* criptografado para amazenar
+dados sensíveis. O *cookie jar* assinado anexa uma assinaura criptográfica nos
+valores do *cookie* para proteger sua integridade. O *cookie jar* criptografado, criptografa os
+valores além de assiná-los, para que eles não possam ser lidos pelo usuário final.
+Consulte a [documentação da API (em inglês)](https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html)
+para mais detalhes.
 
-These special cookie jars use a serializer to serialize the assigned values into
-strings and deserializes them into Ruby objects on read.
+Esses *cookie jars* especiais usam um *serializer* para serializar os valores atribuídos em
+strings e desserializa-os em objetos Ruby na leitura.
 
-You can specify what serializer to use:
+Você pode especificar qual *serializer* usar:
 
 ```ruby
 Rails.application.config.action_dispatch.cookies_serializer = :json
 ```
 
-The default serializer for new applications is `:json`. For compatibility with
-old applications with existing cookies, `:marshal` is used when `serializer`
-option is not specified.
+O *serializer* padrão para novas aplicações é `:json`. Para compatibilidade com
+aplicações antigas que usam *cookies*, o `:marshal` é usado quando a opção
+`serializer` não está especificada.
 
-You may also set this option to `:hybrid`, in which case Rails would transparently
-deserialize existing (`Marshal`-serialized) cookies on read and re-write them in
-the `JSON` format. This is useful for migrating existing applications to the
-`:json` serializer.
+Você também pode definir esta opção como `:hybrid`, nesse caso o Rails desserializaria
+de forma transparente os *cookies* (serializados no formato `Marshal`) existentes ao ler e reescrevê-los
+no formaro `JSON`. Isso é útil para migrar aplicações existentes para o
+*serializer* `:json`.
 
-It is also possible to pass a custom serializer that responds to `load` and
+Também é possível passar um *serializer* personalizado que responda a `load` e
 `dump`:
 
 ```ruby
 Rails.application.config.action_dispatch.cookies_serializer = MyCustomSerializer
 ```
 
-When using the `:json` or `:hybrid` serializer, you should beware that not all
-Ruby objects can be serialized as JSON. For example, `Date` and `Time` objects
-will be serialized as strings, and `Hash`es will have their keys stringified.
+Ao usar o *serializer* `:json` ou `:hybrid`, lembre-se de que nem todos os
+os objetos Ruby podem ser serializados como JSON. Por exemplo, objetos `Date` e` Time`
+serão serializados como strings, e os `Hash`es terão suas chaves transformadas em string também.
 
 ```ruby
 class CookiesController < ApplicationController
@@ -633,12 +633,11 @@ class CookiesController < ApplicationController
 end
 ```
 
-It's advisable that you only store simple data (strings and numbers) in cookies.
-If you have to store complex objects, you would need to handle the conversion
-manually when reading the values on subsequent requests.
+É aconselhável que você armazene apenas dados simples (strings e números) nos *cookies*.
+Se você precisar armazenar objetos complexos, precisará lidar com a conversão
+manualmente ao ler os valores em requisições subsequentes.
 
-If you use the cookie session store, this would apply to the `session` and
-`flash` hash as well.
+Se você usar o *cookie* de armazenamento de sessão, isso também se aplicaria aos *hashes* `session` e `flash`.
 
 Rendering XML and JSON data
 ---------------------------
