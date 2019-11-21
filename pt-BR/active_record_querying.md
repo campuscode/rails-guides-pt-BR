@@ -104,62 +104,64 @@ A principal operação do `Model.find(options)` pode ser resumida como:
 * Instanciar o objeto Ruby equivalente do *model* apropriado para cada linha resultante.
 * Executar `after_find` e, em seguida, retornos de chamada com `after_initialize`, se houver.
 
-### Retrieving a Single Object
+### Retornando um Único Objeto
 
-Active Record provides several different ways of retrieving a single object.
+O *Active Record* possui diferentes formas de retornar um único objeto.
 
 #### `find`
 
-Using the `find` method, you can retrieve the object corresponding to the specified _primary key_ that matches any supplied options. For example:
+Utilizando o método `find`, você pode retornar o objeto correspondente à *primary key* especificada que corresponde às opções fornecidas.
+Por exemplo:
 
 ```ruby
-# Find the client with primary key (id) 10.
+# Encontra o cliente com a primary key (id) 10.
 client = Client.find(10)
 # => #<Client id: 10, first_name: "Ryan">
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients WHERE (clients.id = 10) LIMIT 1
 ```
 
-The `find` method will raise an `ActiveRecord::RecordNotFound` exception if no matching record is found.
+O método `find` irá levantar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro correspondente for encontrado.
 
-You can also use this method to query for multiple objects. Call the `find` method and pass in an array of primary keys. The return will be an array containing all of the matching records for the supplied _primary keys_. For example:
+Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de *primary keys*. 
+Será retornado um array contendo todos os registros correspondentes para as *primary keys* fornecidas. Por exemplo:
 
 ```ruby
-# Find the clients with primary keys 1 and 10.
+# Encontra os clientes com as primary keys 1 e 10. 
 clients = Client.find([1, 10]) # Or even Client.find(1, 10)
 # => [#<Client id: 1, first_name: "Lifo">, #<Client id: 10, first_name: "Ryan">]
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients WHERE (clients.id IN (1,10))
 ```
 
-WARNING: The `find` method will raise an `ActiveRecord::RecordNotFound` exception unless a matching record is found for **all** of the supplied primary keys.
+WARNING: O método `find` irá levantar uma excecão `ActiveRecord::RecordNotFound` a não ser que um registro correspondente seja encontrado para **todas** as primary keys fornecidas.
 
 #### `take`
 
-The `take` method retrieves a record without any implicit ordering. For example:
+O método `take` retorna um registro sem nenhuma ordem implícita. Por exemplo:
 
 ```ruby
 client = Client.take
 # => #<Client id: 1, first_name: "Lifo">
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients LIMIT 1
 ```
 
-The `take` method returns `nil` if no record is found and no exception will be raised.
+O método `take` retorna `nil` se nenhum registro for encontrado e nenhuma exceção será levantada. 
 
-You can pass in a numerical argument to the `take` method to return up to that number of results. For example
+Você pode passar um argumento numérico para o método `take` para retornar o mesmo número em resultados. Por exemplo:
 
 ```ruby
 clients = Client.take(2)
@@ -169,36 +171,37 @@ clients = Client.take(2)
 # ]
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients LIMIT 2
 ```
 
-The `take!` method behaves exactly like `take`, except that it will raise `ActiveRecord::RecordNotFound` if no matching record is found.
+O método `take!` se comparta exatamente como o `take`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` caso não encontre nenhum registro correspondente.
 
-TIP: The retrieved record may vary depending on the database engine.
+TIP: O registro retornado pode variar dependendo do mecanismo do banco de dados.
 
 #### `first`
 
-The `first` method finds the first record ordered by primary key (default). For example:
+O méetodo `first` encontra o primeiro registro ordenado pela *primary key* (padrão). Por exemplo:
 
 ```ruby
 client = Client.first
 # => #<Client id: 1, first_name: "Lifo">
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients ORDER BY clients.id ASC LIMIT 1
 ```
 
-The `first` method returns `nil` if no matching record is found and no exception will be raised.
+O método `first` retorna `nil` se não for encontrado nenhum registro correspondente e não levantará exceção.
 
-If your [default scope](active_record_querying.html#applying-a-default-scope) contains an order method, `first` will return the first record according to this ordering.
+Se o seu [default scope](active_record_querying.html#applying-a-default-scope) contém um método de ordenação, `first` irá retornar o primeiro
+registro de acordo com essa ordenação.
 
-You can pass in a numerical argument to the `first` method to return up to that number of results. For example
+Você pode passar um argumento número para o métoddo `first` para retornar o mesmo número em resultados. Por exemplo:
 
 ```ruby
 clients = Client.first(3)
@@ -209,47 +212,49 @@ clients = Client.first(3)
 # ]
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients ORDER BY clients.id ASC LIMIT 3
 ```
 
-On a collection that is ordered using `order`, `first` will return the first record ordered by the specified attribute for `order`.
+Em uma coleção ordenada utilizando o `order`, `first` irá retornar o primeiro registro que foi ordenado com o atributo especificado em `order`.
 
 ```ruby
 client = Client.order(:first_name).first
 # => #<Client id: 2, first_name: "Fifo">
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients ORDER BY clients.first_name ASC LIMIT 1
 ```
 
-The `first!` method behaves exactly like `first`, except that it will raise `ActiveRecord::RecordNotFound` if no matching record is found.
+O método `first!` se comporta exatamente como o `first`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
+correspondente for encontrado.
 
 #### `last`
 
-The `last` method finds the last record ordered by primary key (default). For example:
+O método `last` encontra o último registro ordenado pela *primary key* (padrão). Por exemplo:
 
 ```ruby
 client = Client.last
 # => #<Client id: 221, first_name: "Russel">
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients ORDER BY clients.id DESC LIMIT 1
 ```
 
-The `last` method returns `nil` if no matching record is found and no exception will be raised.
+O método `last` retorna `nil` se não encontrar nenhum registro correspondente e nenhuma exceção será levantada. 
 
-If your [default scope](active_record_querying.html#applying-a-default-scope) contains an order method, `last` will return the last record according to this ordering.
+Se o seu [default scope](active_record_querying.html#applying-a-default-scope) contém um método de ordenação, `last` irá retornar
+o último registro de acordo com essa ordenação.
 
-You can pass in a numerical argument to the `last` method to return up to that number of results. For example
+Você pode passar um argumento número para o método `last` para retornar o mesmo número em resultados. Por exemplo:
 
 ```ruby
 clients = Client.last(3)
@@ -260,30 +265,31 @@ clients = Client.last(3)
 # ]
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients ORDER BY clients.id DESC LIMIT 3
 ```
 
-On a collection that is ordered using `order`, `last` will return the last record ordered by the specified attribute for `order`.
+Em uma coleção ordenada utilizando o `order`, `last` irá retornar o último registro que foi ordenado com o atributo especificado em `order`.
 
 ```ruby
 client = Client.order(:first_name).last
 # => #<Client id: 220, first_name: "Sara">
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria:
 
 ```sql
 SELECT * FROM clients ORDER BY clients.first_name DESC LIMIT 1
 ```
 
-The `last!` method behaves exactly like `last`, except that it will raise `ActiveRecord::RecordNotFound` if no matching record is found.
+O método `last!` se comporta exatamente como o `last`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
+correspondente for encontrado.
 
 #### `find_by`
 
-The `find_by` method finds the first record matching some conditions. For example:
+O método `find_by` irá retornar o primeiro registro que corresponde às condições. Por exemplo:
 
 ```ruby
 Client.find_by first_name: 'Lifo'
@@ -293,49 +299,59 @@ Client.find_by first_name: 'Jon'
 # => nil
 ```
 
-It is equivalent to writing:
+É equivalente à escrever:
 
 ```ruby
 Client.where(first_name: 'Lifo').take
 ```
 
-The SQL equivalent of the above is:
+O equivalente ao de cima, em SQL, seria
 
 ```sql
 SELECT * FROM clients WHERE (clients.first_name = 'Lifo') LIMIT 1
 ```
 
-The `find_by!` method behaves exactly like `find_by`, except that it will raise `ActiveRecord::RecordNotFound` if no matching record is found. For example:
+O método `find_by` se comporta exatamente como o `find_by`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
+correspondente for encontrado. Por exemplo:
 
 ```ruby
 Client.find_by! first_name: 'does not exist'
 # => ActiveRecord::RecordNotFound
 ```
 
-This is equivalent to writing:
+Isto é equivalente à escrever:
 
 ```ruby
 Client.where(first_name: 'does not exist').take!
 ```
 
-### Retrieving Multiple Objects in Batches
+### Retornando Múltiplos Objetos em Lotes
 
-We often need to iterate over a large set of records, as when we send a newsletter to a large set of users, or when we export data.
+Nós frequentemente precisamos iterar sobre um grande número de registros, seja quando precisamos enviar *newsletter* para
+um grande número de usuários, ou quando vamos exportar dados.
 
-This may appear straightforward:
+Isso pode parecer simples:
 
 ```ruby
-# This may consume too much memory if the table is big.
+# Isso pode consumir muita memória se a tabela for grande. 
 User.all.each do |user|
   NewsMailer.weekly(user).deliver_now
 end
 ```
 
-But this approach becomes increasingly impractical as the table size increases, since `User.all.each` instructs Active Record to fetch _the entire table_ in a single pass, build a model object per row, and then keep the entire array of model objects in memory. Indeed, if we have a large number of records, the entire collection may exceed the amount of memory available.
+Mas essa abordagem se torna cada vez mais impraticável à medida que o tamanho da tabela aumenta, pois o `User.all.each`
+instrui o *Active Record à buscar a **tabela inteira** em uma única passagem, cria um modelo de objeto por linha e
+mantém todo o array de objetos de modelo na memória. De fato, se você tem um grande número de registros, a coleção inteira
+pode exceder a quantidade de memória disponível.
 
-Rails provides two methods that address this problem by dividing records into memory-friendly batches for processing. The first method, `find_each`, retrieves a batch of records and then yields _each_ record to the block individually as a model. The second method, `find_in_batches`, retrieves a batch of records and then yields _the entire batch_ to the block as an array of models.
 
-TIP: The `find_each` and `find_in_batches` methods are intended for use in the batch processing of a large number of records that wouldn't fit in memory all at once. If you just need to loop over a thousand records the regular find methods are the preferred option.
+O Rails fornece dois métodos para solucionar esse problema, dividindo os registros em lotes *memory-friendly* para o processamento.
+O primeiro método, `find_each`, retornar um lote de registros e depois submete _cada_ registro individualmente para um bloco como um modelo.
+O segundo método, `find_in_batches`, retorna um lote de registros e depois submete _o lote inteiro_ ao bloco como um array de modelos.
+ 
+TIP: Os métodos `find_each` e `find_in_batches` são destinados ao uso no processamento em lotes de grandes numéros de registros
+que não irão caber na memória de uma só vez. Se você apenas precisa fazer um  *loop* em milhares de registros, os métodos
+regulares do `find` são a opção preferida.
 
 #### `find_each`
 
