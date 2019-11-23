@@ -55,7 +55,7 @@ end
 ```
 
 O *Active Record* irá executar consultas no banco de dados para você e é compatível com a maioria dos sistemas de banco de dados,
-incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato método do *Active Record* 
+incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato do método do *Active Record* 
 será sempre o mesmo.
 
 Recuperando Objetos do Banco de Dados
@@ -177,13 +177,13 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients LIMIT 2
 ```
 
-O método `take!` se comparta exatamente como o `take`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` caso não encontre nenhum registro correspondente.
+O método `take!` se comporta exatamente como o `take`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` caso não encontre nenhum registro correspondente.
 
 TIP: O registro retornado pode variar dependendo do mecanismo do banco de dados.
 
 #### `first`
 
-O méetodo `first` encontra o primeiro registro ordenado pela *primary key* (padrão). Por exemplo:
+O método `first` encontra o primeiro registro ordenado pela *primary key* (padrão). Por exemplo:
 
 ```ruby
 client = Client.first
@@ -340,14 +340,13 @@ end
 ```
 
 Mas essa abordagem se torna cada vez mais impraticável à medida que o tamanho da tabela aumenta, pois o `User.all.each`
-instrui o *Active Record à buscar a **tabela inteira** em uma única passagem, cria um modelo de objeto por linha e
-mantém todo o array de objetos de modelo na memória. De fato, se você tem um grande número de registros, a coleção inteira
+instrui o *Active Record* à buscar a **tabela inteira** em uma única passagem, cria um *model* de objeto por linha e
+mantém todo o array de objetos de *model* na memória. De fato, se você tem um grande número de registros, a coleção inteira
 pode exceder a quantidade de memória disponível.
 
-
 O Rails fornece dois métodos para solucionar esse problema, dividindo os registros em lotes *memory-friendly* para o processamento.
-O primeiro método, `find_each`, retornar um lote de registros e depois submete _cada_ registro individualmente para um bloco como um modelo.
-O segundo método, `find_in_batches`, retorna um lote de registros e depois submete _o lote inteiro_ ao bloco como um array de modelos.
+O primeiro método, `find_each`, retorna um lote de registros e depois submete _cada_ registro individualmente para um bloco como um *model*.
+O segundo método, `find_in_batches`, retorna um lote de registros e depois submete _o lote inteiro_ ao bloco como um array de *models*.
  
 TIP: Os métodos `find_each` e `find_in_batches` são destinados ao uso no processamento em lotes de grandes numéros de registros
 que não irão caber na memória de uma só vez. Se você apenas precisa fazer um  *loop* em milhares de registros, os métodos
@@ -355,7 +354,8 @@ regulares do `find` são a opção preferida.
 
 #### `find_each`
 
-The `find_each` method retrieves records in batches and then yields _each_ one to the block. In the following example, `find_each` retrieves users in batches of 1000 and yields them to the block one by one:
+O método `find_each` retorna os registros em lotes e depois aloca _cada_ um no bloco. No exemplo a seguir, `find_each` retorna
+*users* em lotes de 1000 e os aloca no bloco um à um:
 
 ```ruby
 User.find_each do |user|
@@ -363,9 +363,9 @@ User.find_each do |user|
 end
 ```
 
-This process is repeated, fetching more batches as needed, until all of the records have been processed.
+Esse processo é repetido, buscando mais lotes sempre que preciso, até que todos os registros tenham sido processados.
 
-`find_each` works on model classes, as seen above, and also on relations:
+`find_each` funciona com classes de *model*, como visto acima, assim como relações:
 
 ```ruby
 User.where(weekly_subscriber: true).find_each do |user|
@@ -373,20 +373,20 @@ User.where(weekly_subscriber: true).find_each do |user|
 end
 ```
 
-as long as they have no ordering, since the method needs to force an order
-internally to iterate.
+contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar. 
 
-If an order is present in the receiver the behaviour depends on the flag
-`config.active_record.error_on_ignored_order`. If true, `ArgumentError` is
-raised, otherwise the order is ignored and a warning issued, which is the
-default. This can be overridden with the option `:error_on_ignore`, explained
-below.
+Se houver uma ordem presente no receptor, o comportamento depende da *flag* `config.active_record.error_on_ignored_order`.
+Se verdadeiro, `ArgumentError` é levantado, caso contrário a ordem será ignorada e um aviso gerado, que é o padrão. Isto pode
+ser substituído com a opção `:error_on_ignore`, explicado abaixo.
 
 ##### Options for `find_each`
 
+##### Opções para `find_each`
+
 **`:batch_size`**
 
-The `:batch_size` option allows you to specify the number of records to be retrieved in each batch, before being passed individually to the block. For example, to retrieve records in batches of 5000:
+A opção `:batch_size` permite que você especifique o número de registros à serem retornados em cada lote, antes de serem passados, individualmente, para o bloco.
+Por exemplo, para retornar registros de um lote de 5000: 
 
 ```ruby
 User.find_each(batch_size: 5000) do |user|
@@ -396,9 +396,11 @@ end
 
 **`:start`**
 
-By default, records are fetched in ascending order of the primary key. The `:start` option allows you to configure the first ID of the sequence whenever the lowest ID is not the one you need. This would be useful, for example, if you wanted to resume an interrupted batch process, provided you saved the last processed ID as a checkpoint.
+Por padrão, os registros são buscados em ordem ascendente de *primary key*. A opção `:start` permite que você configure o primeiro ID da sequência sempre que o menor
+ID não seja o que você precisa. Isto pode ser útil, por exemplo, se você quer retomar um processo interrompido de lotes, desde que você
+tenha salvo o último ID processado como ponto de retorno.
 
-For example, to send newsletters only to users with the primary key starting from 2000:
+Por exemplo, para enviar *newsletters* apenas para os usuários com a *primary key* começando com 2000:
 
 ```ruby
 User.find_each(start: 2000) do |user|
@@ -408,10 +410,10 @@ end
 
 **`:finish`**
 
-Similar to the `:start` option, `:finish` allows you to configure the last ID of the sequence whenever the highest ID is not the one you need.
-This would be useful, for example, if you wanted to run a batch process using a subset of records based on `:start` and `:finish`.
+Similar à opção `:start`, `:finish` permite que você configure o último ID da sequência sempre que o maior ID não seja o que você necessite.
+Isso pode ser útil, por exemplo, se você quer executar um processo de lotes utilizando subconjuntos de registros baseados no `:start` e `:finish`
 
-For example, to send newsletters only to users with the primary key starting from 2000 up to 10000:
+Por exemplo, para enviar *newsletters* apenas para os usuários com a *primary key* começando em 2000 e indo até 10000:
 
 ```ruby
 User.find_each(start: 2000, finish: 10000) do |user|
@@ -419,27 +421,28 @@ User.find_each(start: 2000, finish: 10000) do |user|
 end
 ```
 
-Another example would be if you wanted multiple workers handling the same
-processing queue. You could have each worker handle 10000 records by setting the
-appropriate `:start` and `:finish` options on each worker.
+Outro exemplo seria se você queira múltiplos *workers* manipulando a mesma fila de processamento. Você pode ter cada *worker*
+lidando com 10000 registros atribuindo a opção `:start` e `finish` apropriadas para cada *worker*
 
 **`:error_on_ignore`**
 
-Overrides the application config to specify if an error should be raised when an
-order is present in the relation.
+Sobrescreve as configurações da aplicação para especificar se um erro deve ser levantado quando a ordem está presente
+na relação.
 
 #### `find_in_batches`
 
-The `find_in_batches` method is similar to `find_each`, since both retrieve batches of records. The difference is that `find_in_batches` yields _batches_ to the block as an array of models, instead of individually. The following example will yield to the supplied block an array of up to 1000 invoices at a time, with the final block containing any remaining invoices:
+O método `find_in_batches` é similar ao `find_each`, pois ambos retornam lotes de registros. A diferença é que o `find_in_batches` fornece _lotes_ ao bloco como um array de *models*,
+em vez de individualmente. O exemplo à seguir irá produzir ao bloco fornecido um array com até 1000 notas fiscais de uma vez,
+com o bloco final contendo qualquer nota fiscal remanescente:
 
 ```ruby
-# Give add_invoices an array of 1000 invoices at a time.
+# Fornece à add_invoices um array com 1000 notas fiscais de uma vez. 
 Invoice.find_in_batches do |invoices|
   export.add_invoices(invoices)
 end
 ```
 
-`find_in_batches` works on model classes, as seen above, and also on relations:
+`find_in_batches` funcional com classes de *model*, como visto acima, e também com relações:
 
 ```ruby
 Invoice.pending.find_in_batches do |invoices|
@@ -447,12 +450,11 @@ Invoice.pending.find_in_batches do |invoices|
 end
 ```
 
-as long as they have no ordering, since the method needs to force an order
-internally to iterate.
+contanto que não há ordenação, pois o método irá forçar uma ordem interna para a iteração.
 
-##### Options for `find_in_batches`
+##### Opções para`find_in_batches`
 
-The `find_in_batches` method accepts the same options as `find_each`.
+O método `find_in_batches` aceita as mesmas opção que o `find_each`
 
 Conditions
 ----------
