@@ -25,7 +25,7 @@ na maioria dos casos.
 
 Os exemplos de código ao longo desse guia irão se referir à um ou mais dos seguintes modelos:
 
-TIP: Todos os modelos seguintes utilizam `id` como *primary key* (chave primária), a não ser quando especificado o
+TIP: Todos os *models* seguintes utilizam `id` como *primary key* (chave primária), a não ser quando especificado o
 contrário.
 
 ```ruby
