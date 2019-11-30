@@ -922,7 +922,7 @@ incluindo a presença ou exclusividade de colunas, seu formato e a
 existência de objetos associados. As validações são abordadas em detalhes em Active
 Record Validations](active_record_validations.html).
 
-Com a validação agora em vigor, quando você chama `@article.save` em um
+Com a validação agora em atividade, quando você chama `@article.save` em um
 artigo inválido, a expressã retornará `false`. Se você abrir o arquivo
 `app/controllers/articles_controller.rb` novamente, você notará que não
 verificamos o resultado da chamada `@article.save` dentro da *action* `create`.
