@@ -750,7 +750,7 @@ Algumas coisas a serem observadas. Usamos `Article.find` para encontrar o artigo
 interessado, passando `params[:id]` para obter o parâmetro `:id` da requisição. 
 Também usamos uma variável de instância (prefixada com `@`) para conter um
 referência ao objeto do artigo. Fazemos isso porque o Rails passará todas as variáveis de instância
-para a *vie*.
+para a *view*.
 
 Agora, crie um novo arquivo `app/views/articles/show.html.erb` com o seguinte
 conteúdo:
