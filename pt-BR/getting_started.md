@@ -890,7 +890,7 @@ TIP: No modo de desenvolvimento (que é o que você está trabalhando por padrã
 recarrega sua aplicação com todas as solicitações do navegador; portanto, não é necessário parar
 e reinicie o servidor da web quando uma alteração for feita.
 
-### Adicionando Algumas Vaidações
+### Adicionando Algumas Validações
 
 O arquivo de *model* `app/models/article.rb` é o mais simples possível:
 
