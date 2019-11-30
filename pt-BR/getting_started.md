@@ -883,7 +883,7 @@ artigo podem voltar e exibir a lista inteira novamente:
 ```
 
 TIP: Se você deseja vincular a uma *action* no mesmo *controller*, não precisa
-especifique a opção `:controller`, pois o Rails usará o *controller* atual por
+especificar a opção `:controller`, pois o Rails usará o *controller* atual por
 padrão.
 
 TIP: No modo de desenvolvimento (que é o que você está trabalhando por padrão), o Rails
