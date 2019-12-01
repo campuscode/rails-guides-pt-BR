@@ -4,19 +4,18 @@
 Action Controller Overview
 ==========================
 
-In this guide you will learn how controllers work and how they fit into the request cycle in your application.
+Nesse guia você irá aprender como `controllers` trabalham e como eles se encaixam no ciclo de requisições da sua aplicação.
 
-After reading this guide, you will know:
+Depois de ler este guia, você irá saber:
 
-* How to follow the flow of a request through a controller.
-* How to restrict parameters passed to your controller.
-* How and why to store data in the session or cookies.
-* How to work with filters to execute code during request processing.
-* How to use Action Controller's built-in HTTP authentication.
-* How to stream data directly to the user's browser.
-* How to filter sensitive parameters so they do not appear in the application's log.
-* How to deal with exceptions that may be raised during request processing.
-
+* Como seguir o fluxo de uma requisição através de um *controller*.
+* Como restringir parâmetros passados ao seu *controller*.
+* Como e porque salvar dados na sessão ou nos `cookies`.
+* Como trabalhar com filtros para executar código durante o processamento de uma requisição.
+* Como utilizar o autenticador HTTP nativo do `ActionController`.
+* Como transmitir dados diretamente ao navegador do usuário.
+* Como filtrar parâmetros sensíveis para que não apareçam no *log* da aplicação.
+* Como lidar com erros que podem surgir durante o processamento de uma requisição.
 --------------------------------------------------------------------------------
 
 O que um *Controller* faz?
@@ -351,27 +350,26 @@ in mind. It is not meant as a silver bullet to handle all of your
 parameter filtering problems. However, you can easily mix the API with your
 own code to adapt to your situation.
 
-Session
--------
+Sessão
+------
 
-Your application has a session for each user in which you can store small amounts of data that will be persisted between requests. The session is only available in the controller and the view and can use one of a number of different storage mechanisms:
+Sua aplicação possui uma sessão para cada usuário, na qual pode-se armazenar quantidades pequenas de dados que serão persistidos entre as requisições. A sessão fica disponível apenas no *controller* e na *view* e pode utilizar um dentre vários mecanismos diferentes de armazenamento:
 
-* `ActionDispatch::Session::CookieStore` - Stores everything on the client.
-* `ActionDispatch::Session::CacheStore` - Stores the data in the Rails cache.
-* `ActionDispatch::Session::ActiveRecordStore` - Stores the data in a database using Active Record. (require `activerecord-session_store` gem).
-* `ActionDispatch::Session::MemCacheStore` - Stores the data in a memcached cluster (this is a legacy implementation; consider using CacheStore instead).
+* `ActionDispatch::Session::CookieStore` - Armazena tudo no cliente.
+* `ActionDispatch::Session::CacheStore` - Armazena os dados no *cache* do Rails.
+* `ActionDispatch::Session::ActiveRecordStore` - Armazena os dados em um banco de dados utilizando o *Active Record*. (a gem `activerecord-session_store` é necessária).
+* `ActionDispatch::Session::MemCacheStore` - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o *CacheStore* como alternativa)
 
-All session stores use a cookie to store a unique ID for each session (you must use a cookie, Rails will not allow you to pass the session ID in the URL as this is less secure).
+Todos os armazenamentos de sessão utilizam um *cookie* para armazenar um ID único para cada sessão (você deve utilizar um *cookie*, o Rails não permitirá que você passe o ID da sessão na URL, pois isso é menos seguro).
 
-For most stores, this ID is used to look up the session data on the server, e.g. in a database table. There is one exception, and that is the default and recommended session store - the CookieStore - which stores all session data in the cookie itself (the ID is still available to you if you need it). This has the advantage of being very lightweight and it requires zero setup in a new application in order to use the session. The cookie data is cryptographically signed to make it tamper-proof. And it is also encrypted so anyone with access to it can't read its contents. (Rails will not accept it if it has been edited).
+Para a maioria dos armazenamentos, esse ID é utilizado para procurar os dados da sessão no servidor, por exemplo, em uma tabela do banco de dados. Há apenas uma exceção, que é o armazenamento de sessão recomendado por padrão - o *CookieStore* - que armazena todos os dados da sessão no próprio *cookie* (o ID ainda estará disponível para você, se você precisar). A vantagem é a de ser muito leve e requer zero configuração em uma nova aplicação para utilizar a sessão. Os dados do *cookie* são assinados criptograficamente para torná-los invioláveis, e também é criptografado para que qualquer pessoa com acesso não leia o seu conteúdo. (O Rails não aceitará se estiver sido editado).
+O *CookieStore* pode armazenar cerca de 4kB de dados - muito menos que os demais - mas geralmente é o suficiente. O armazenamento de grandes quantidades de dados na sessão não é recomendado, independentemente de qual armazenamento de sessão sua aplicação utiliza. Você deve evitar armazenar objetos complexos (qualquer coisa que não sejam objetos Ruby básicos, o exemplo mais comum são instâncias de um *model*) na sessão, pois o servidor pode não ser capaz de remontá-los entre as requisições, o que resultará em um erro.
 
-The CookieStore can store around 4kB of data - much less than the others - but this is usually enough. Storing large amounts of data in the session is discouraged no matter which session store your application uses. You should especially avoid storing complex objects (anything other than basic Ruby objects, the most common example being model instances) in the session, as the server might not be able to reassemble them between requests, which will result in an error.
+Se as suas sessões de usuário não armazenam dados críticos ou não precisam durar por longos períodos (por exemplo, se você apenas utiliza o *flash* para mensagens), considere o uso do `ActionDispatch::Session::CacheStore`. Isso armazenará as sessões utilizando a implementação de *cache* que você configurou para a sua aplicação. A vantagem é que você pode utilizar sua infraestrutura de *cache* existente para armazenar sessões sem precisar de nenhuma configuração ou administração adicional. A desvantagem é que as sessões serão temporárias e poderão desaparecer a qualquer momento.
 
-If your user sessions don't store critical data or don't need to be around for long periods (for instance if you just use the flash for messaging), you can consider using `ActionDispatch::Session::CacheStore`. This will store sessions using the cache implementation you have configured for your application. The advantage of this is that you can use your existing cache infrastructure for storing sessions without requiring any additional setup or administration. The downside, of course, is that the sessions will be ephemeral and could disappear at any time.
+Leia mais sobre armazenamento de sessão no [Guia de Segurança](security.html).
 
-Read more about session storage in the [Security Guide](security.html).
-
-If you need a different session storage mechanism, you can change it in an initializer:
+Se você precisar de um mecanismo diferente de sessão de armazenamento, você poderá alterá-lo no *initializer*:
 
 ```ruby
 # Use the database for sessions instead of the cookie-based default,
@@ -380,21 +378,21 @@ If you need a different session storage mechanism, you can change it in an initi
 # Rails.application.config.session_store :active_record_store
 ```
 
-Rails sets up a session key (the name of the cookie) when signing the session data. These can also be changed in an initializer:
+O Rails configura uma chave de sessão (o nome do *cookie*) ao assinar os dados da sessão. Estes também podem ser alterados no *initializer*:
 
 ```ruby
 # Be sure to restart your server when you modify this file.
 Rails.application.config.session_store :cookie_store, key: '_your_app_session'
 ```
 
-You can also pass a `:domain` key and specify the domain name for the cookie:
+Você também pode passar uma chave `:domain` e especificar o nome do domínio para o *cookie*:
 
 ```ruby
 # Be sure to restart your server when you modify this file.
 Rails.application.config.session_store :cookie_store, key: '_your_app_session', domain: ".example.com"
 ```
 
-Rails sets up (for the CookieStore) a secret key used for signing the session data in `config/credentials.yml.enc`. This can be changed with `rails credentials:edit`.
+O Rails configura (para o *CookieStore*) uma chave secreta utilizada para assinar os dados da sessão em `config/credentials.yml.enc`. Isso pode ser alterado com o comando `rails credentials:edit`.
 
 ```ruby
 # aws:
@@ -405,15 +403,15 @@ Rails sets up (for the CookieStore) a secret key used for signing the session da
 secret_key_base: 492f...
 ```
 
-NOTE: Changing the secret_key_base when using the `CookieStore` will invalidate all existing sessions.
+NOTE: Alterar a `secret_key_base` ao utilizar o `CookieStore` invalidará todas as sessões existentes.
 
-### Accessing the Session
+### Acessando a Sessão
 
-In your controller you can access the session through the `session` instance method.
+No seu *controller*, você pode acessar a sessão através do método de instância `session`.
 
-NOTE: Sessions are lazily loaded. If you don't access sessions in your action's code, they will not be loaded. Hence you will never need to disable sessions, just not accessing them will do the job.
+NOTE: As sessões são [*lazy loading*](https://pt.wikipedia.org/wiki/Lazy_loading) (carregamento lento). Se você não acessá-las no código da sua *action*, elas não serão carregadas. Portanto, você nunca precisará desativar as sessões, basta apenas não acessá-las.
 
-Session values are stored using key/value pairs like a hash:
+Os valores da sessão são armazenados utilizando pares de chave/valor como em um *hash*:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -431,7 +429,7 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-To store something in the session, just assign it to the key like a hash:
+Para armazenar algo na sessão, basta atribuí-lo à chave como em um *hash*:
 
 ```ruby
 class LoginsController < ApplicationController
@@ -447,7 +445,7 @@ class LoginsController < ApplicationController
 end
 ```
 
-To remove something from the session, delete the key/value pair:
+Para remover algo da sessão, exclua o par de chave/valor:
 
 ```ruby
 class LoginsController < ApplicationController
@@ -462,7 +460,7 @@ class LoginsController < ApplicationController
 end
 ```
 
-To reset the entire session, use `reset_session`.
+Para redefinir a sessão inteira, utilize `reset_session`.
 
 ### The Flash
 
@@ -556,12 +554,12 @@ end
 Cookies
 -------
 
-Your application can store small amounts of data on the client - called cookies - that will be persisted across requests and even sessions. Rails provides easy access to cookies via the `cookies` method, which - much like the `session` - works like a hash:
+Sua Aplicação pode armazemar pequenas quantidades de dados no cliente - chamados de *cookies* - que serão mantidas entre requisições e até as sessões. O Rails fornece um fácil acesso para os *cookies* através do método `cookies`, que - assim como a `session` - funciona como um hash:
 
 ```ruby
 class CommentsController < ApplicationController
   def new
-    # Auto-fill the commenter's name if it has been stored in a cookie
+    # Preencher automaticamente o nome de quem comentou se ele estiver armazenado em um cookie
     @comment = Comment.new(author: cookies[:commenter_name])
   end
 
@@ -570,10 +568,10 @@ class CommentsController < ApplicationController
     if @comment.save
       flash[:notice] = "Thanks for your comment!"
       if params[:remember_name]
-        # Remember the commenter's name.
+        # Lembrar o nome de quem fez o comentário
         cookies[:commenter_name] = @comment.author
       else
-        # Delete cookie for the commenter's name cookie, if any.
+        # Deletar o cookie do nome de quem fez o comentário, caso exista.
         cookies.delete(:commenter_name)
       end
       redirect_to @comment.article
@@ -584,43 +582,43 @@ class CommentsController < ApplicationController
 end
 ```
 
-Note that while for session values you set the key to `nil`, to delete a cookie value you should use `cookies.delete(:key)`.
+Perceba que enquanto para valores de sessão você define a chave como `nil`, para deletar um valor de *cookie* você deve usar ` cookies.delete(:key)`.
 
-Rails also provides a signed cookie jar and an encrypted cookie jar for storing
-sensitive data. The signed cookie jar appends a cryptographic signature on the
-cookie values to protect their integrity. The encrypted cookie jar encrypts the
-values in addition to signing them, so that they cannot be read by the end user.
-Refer to the [API documentation](https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html)
-for more details.
+O Rails também fornece um *cookie jar* assinado e um *cookie jar* criptografado para amazenar
+dados sensíveis. O *cookie jar* assinado anexa uma assinaura criptográfica nos
+valores do *cookie* para proteger sua integridade. O *cookie jar* criptografado, criptografa os
+valores além de assiná-los, para que eles não possam ser lidos pelo usuário final.
+Consulte a [documentação da API (em inglês)](https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html)
+para mais detalhes.
 
-These special cookie jars use a serializer to serialize the assigned values into
-strings and deserializes them into Ruby objects on read.
+Esses *cookie jars* especiais usam um *serializer* para serializar os valores atribuídos em
+strings e desserializa-os em objetos Ruby na leitura.
 
-You can specify what serializer to use:
+Você pode especificar qual *serializer* usar:
 
 ```ruby
 Rails.application.config.action_dispatch.cookies_serializer = :json
 ```
 
-The default serializer for new applications is `:json`. For compatibility with
-old applications with existing cookies, `:marshal` is used when `serializer`
-option is not specified.
+O *serializer* padrão para novas aplicações é `:json`. Para compatibilidade com
+aplicações antigas que usam *cookies*, o `:marshal` é usado quando a opção
+`serializer` não está especificada.
 
-You may also set this option to `:hybrid`, in which case Rails would transparently
-deserialize existing (`Marshal`-serialized) cookies on read and re-write them in
-the `JSON` format. This is useful for migrating existing applications to the
-`:json` serializer.
+Você também pode definir esta opção como `:hybrid`, nesse caso o Rails desserializaria
+de forma transparente os *cookies* (serializados no formato `Marshal`) existentes ao ler e reescrevê-los
+no formaro `JSON`. Isso é útil para migrar aplicações existentes para o
+*serializer* `:json`.
 
-It is also possible to pass a custom serializer that responds to `load` and
+Também é possível passar um *serializer* personalizado que responda a `load` e
 `dump`:
 
 ```ruby
 Rails.application.config.action_dispatch.cookies_serializer = MyCustomSerializer
 ```
 
-When using the `:json` or `:hybrid` serializer, you should beware that not all
-Ruby objects can be serialized as JSON. For example, `Date` and `Time` objects
-will be serialized as strings, and `Hash`es will have their keys stringified.
+Ao usar o *serializer* `:json` ou `:hybrid`, lembre-se de que nem todos os
+os objetos Ruby podem ser serializados como JSON. Por exemplo, objetos `Date` e` Time`
+serão serializados como strings, e os `Hash`es terão suas chaves transformadas em string também.
 
 ```ruby
 class CookiesController < ApplicationController
@@ -635,12 +633,11 @@ class CookiesController < ApplicationController
 end
 ```
 
-It's advisable that you only store simple data (strings and numbers) in cookies.
-If you have to store complex objects, you would need to handle the conversion
-manually when reading the values on subsequent requests.
+É aconselhável que você armazene apenas dados simples (strings e números) nos *cookies*.
+Se você precisar armazenar objetos complexos, precisará lidar com a conversão
+manualmente ao ler os valores em requisições subsequentes.
 
-If you use the cookie session store, this would apply to the `session` and
-`flash` hash as well.
+Se você usar o *cookie* de armazenamento de sessão, isso também se aplicaria aos *hashes* `session` e `flash`.
 
 Rendering XML and JSON data
 ---------------------------
@@ -856,17 +853,17 @@ response.headers["Content-Type"] = "application/pdf"
 
 NOTE: In the above case it would make more sense to use the `content_type` setter directly.
 
-HTTP Authentications
---------------------
+Autenticações HTTP
+------------------
 
-Rails comes with two built-in HTTP authentication mechanisms:
+O Rails vem com dois mecanismos de autenticação HTTP embutidos:
 
-* Basic Authentication
-* Digest Authentication
+* Autenticação *Basic*
+* Autenticação *Digest*
 
-### HTTP Basic Authentication
+### Autenticação HTTP *Basic*
 
-HTTP basic authentication is an authentication scheme that is supported by the majority of browsers and other HTTP clients. As an example, consider an administration section which will only be available by entering a username and a password into the browser's HTTP basic dialog window. Using the built-in authentication is quite easy and only requires you to use one method, `http_basic_authenticate_with`.
+Autenticação HTTP *basic* é um esquema de autenticação que é suportado pela maioria dos navegadores e outros clientes HTTP. Como um exemplo, considere uma página de administração que será acessável apenas informando um nome de usuário e uma senha na janela de autenticação HTTP *basic* do navegador. Usar a autenticação embutida é bem fácil e apenas requer que você use um método, `http_basic_authenticate_with`.
 
 ```ruby
 class AdminsController < ApplicationController
@@ -874,11 +871,11 @@ class AdminsController < ApplicationController
 end
 ```
 
-With this in place, you can create namespaced controllers that inherit from `AdminsController`. The filter will thus be run for all actions in those controllers, protecting them with HTTP basic authentication.
+Com isso, você pode criar *controllers* com *namespaces* que herdam de `AdminsController`. O filtro vai, assim, ser executado para todas as ações nos *controllers*, protegendo-os com a autenticação HTTP *basic*.
 
-### HTTP Digest Authentication
+### Autenticação HTTP *Digest*
 
-HTTP digest authentication is superior to the basic authentication as it does not require the client to send an unencrypted password over the network (though HTTP basic authentication is safe over HTTPS). Using digest authentication with Rails is quite easy and only requires using one method, `authenticate_or_request_with_http_digest`.
+A autenticação HTTP *digest* é superior à autenticação *basic* porque ela não requer que o cliente envie uma senha sem criptografia pela rede (embora a autenticação HTTP *basic* seja segura via HTTPS). Usar a autenticação *digest* com Rails é bem fácil e requer apenas o uso de um método, `authenticate_or_request_with_http_digest`.
 
 ```ruby
 class AdminsController < ApplicationController
@@ -896,7 +893,7 @@ class AdminsController < ApplicationController
 end
 ```
 
-As seen in the example above, the `authenticate_or_request_with_http_digest` block takes only one argument - the username. And the block returns the password. Returning `false` or `nil` from the `authenticate_or_request_with_http_digest` will cause authentication failure.
+Como visto no exemplo acima, o bloco `authenticate_or_request_with_http_digest` recebe apenas um argumento - o nome de usuário. E o bloco retorna a senha. Retornar `false` ou `nil` em `authenticate_or_request_with_http_digest` causará falha de autenticação.
 
 Streaming and File Downloads
 ----------------------------

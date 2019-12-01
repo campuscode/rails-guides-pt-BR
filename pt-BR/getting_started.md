@@ -202,7 +202,7 @@ A execução do comando irá iniciar o Puma, um servidor web distribuído com o
 Rails por padrão. Para ver sua aplicação em execução, abra um navegador e
 navegue para <http://localhost:3000>.  Você deve ver a página padrão com informações do Rails:
 
-![Captura de tela de boas vindas do Rails](images/getting_started/rails_welcome.png)
+![Captura de tela escrito Yay! Você está no Rails(em inglês)](images/getting_started/rails_welcome.png)
 
 TIP: Para interromper a execução do servidor Web, pressione Ctrl+C na janela do
 terminal em que o servidor está sendo executado. Para verificar se o servidor
@@ -212,7 +212,7 @@ representando por um sinal de `$`. Em modo de desenvolvimento, o Rails
 geralmente não exige que você reinicie o servidor; mudanças feitas nos arquivos
 da aplicaçnao serão automaticamente aplicadas no servidor.
 
-A página de "Boas vindas a bordo" é o _smoke test_ (teste de sanidade) para uma
+A página de "Yay! Você está no Rails! (Yay! You're on Rails!)" é o _smoke test_ (teste de sanidade) para uma
 nova aplicação Rails: garante que o seu software esteja configurado
 corretamente, o suficiente para gerar uma página.
 
@@ -276,7 +276,7 @@ todo o código existente no arquivo e substitua pela linha de código abaixo:
 Agora que criamos o _controller_ e a _view_, precisamos informar ao Rails quando
 queremos que "Olá, Rails" seja exibido. No nosso caso, queremos que seja exibido
 quando navegarmos para a URL raiz de nosso site, <http://localhost:3000>. No
-momento, "Boas vindas a bordo" é que está preenchendo esse lugar.
+momento, "Yay! Você está no Rails!" é que está preenchendo esse lugar.
 
 Em seguida, você deve informar ao Rails onde está localizada a sua página
 inicial.
@@ -438,62 +438,46 @@ Agora vá em frente e crie um novo arquivo em *app/views/articles/new.html.erb* 
 
 Ao atualizar <http://localhost:3000/articles/new> você verá que a página tem um título. A rota, o *controller*, a *action* e a *view* estão funcionando harmoniosamente! É hora de criar o formulário para um novo artigo.
 
-### The first form
+### O primeiro formulário
 
-To create a form within this template, you will use a *form
-builder*. The primary form builder for Rails is provided by a helper
-method called `form_with`. To use this method, add this code into
-`app/views/articles/new.html.erb`:
+Para criar um formulário com este template, você vai usar um construtor de formulário (*form builder*). O construtor de formulários do Rails é disponibilizado por um método *helper* chamado `form_with`. Para utilizá-lo, adicione o código abaixo no arquivo `app/views/articles/new.html.erb`:
 
 ```html+erb
 <%= form_with scope: :article, local: true do |form| %>
   <p>
-    <%= form.label :title %><br>
+    <%= form.label :title, 'Título' %><br>
     <%= form.text_field :title %>
   </p>
 
   <p>
-    <%= form.label :text %><br>
+    <%= form.label :text, 'Texto' %><br>
     <%= form.text_area :text %>
   </p>
 
   <p>
-    <%= form.submit %>
+    <%= form.submit, 'Enviar' %>
   </p>
 <% end %>
 ```
 
-If you refresh the page now, you'll see the exact same form from our example above.
-Building forms in Rails is really just that easy!
+Se você atualizar a página, você vai ver o mesmo formulário do nosso exemplo acima.
+Construir formulários no Rails é simples assim!
 
-When you call `form_with`, you pass it an identifying scope for this
-form. In this case, it's the symbol `:article`. This tells the `form_with`
-helper what this form is for. Inside the block for this method, the
-`FormBuilder` object - represented by `form` - is used to build two labels and two
-text fields, one each for the title and text of an article. Finally, a call to
-`submit` on the `form` object will create a submit button for the form.
+Quando você chama o `form_with`, você passa para ele a identificação do escopo para esse formulário.
+Neste caso, o *symbol* `:article`. Isso mostra ao `form_with` para qual escopo é o formulário em questão. Dentro do bloco deste método, o objeto `FormBuilder` - representado pelo `form` - é usado para construir dois títulos e dois campos textos, um para cada título (*labels*) e texto (*text fields*) de um artigo. Finalmente, uma chamada ao `submit` do objeto `form` criará um botão de submissão do formulário.
 
-There's one problem with this form though. If you inspect the HTML that is
-generated, by viewing the source of the page, you will see that the `action`
-attribute for the form is pointing at `/articles/new`. This is a problem because
-this route goes to the very page that you're on right at the moment, and that
-route should only be used to display the form for a new article.
+Porém, existe um problema com este formulário. Se você inspecionar o HTML que foi gerado, visualizando o código-fonte da página, você verá que o atributo `action` do formulário está apontando para `/articles/new`. Isso é um problema porque esta rota vai exatamente para a mesma página que você está no momento, e essa rota deveria ser usada apenas para exibir o formulário para um novo artigo.
 
-The form needs to use a different URL in order to go somewhere else.
-This can be done quite simply with the `:url` option of `form_with`.
-Typically in Rails, the action that is used for new form submissions
-like this is called "create", and so the form should be pointed to that action.
+O formulário precisa usar uma URL diferente para que consigar ir para outro lugar. Isso pode ser feito de forma simples com a opção `:url` do `form_with`. Normalmente, no Rails, a *action* que é usada para novas submissões de formulários é chamada "create", então o formulário precisa apontar para esta ação.
 
-Edit the `form_with` line inside `app/views/articles/new.html.erb` to look like
-this:
+Altere a linha do `form_with` dentro de `app/views/articles/new.html.erb` para ficar da seguinte forma:
 
 ```html+erb
 <%= form_with scope: :article, url: articles_path, local: true do |form| %>
 ```
 
-In this example, the `articles_path` helper is passed to the `:url` option.
-To see what Rails will do with this, we look back at the output of
-`rails routes`:
+Neste exemplo, o *helper* `articles_path` é passado para a opção `:url`.
+Para saber o que o Rails fará com isso, veja novamente o resultado do `rails routes`:
 
 ```bash
 $ rails routes
@@ -510,31 +494,20 @@ welcome_index GET    /welcome/index(.:format)     welcome#index
          root GET    /                            welcome#index
 ```
 
-The `articles_path` helper tells Rails to point the form to the URI Pattern
-associated with the `articles` prefix; and the form will (by default) send a
-`POST` request to that route. This is associated with the `create` action of
-the current controller, the `ArticlesController`.
+O *helper* `articles_path` diz ao Rails para apontar o formulário para o padrão de URI associado com o prefixo `articles`; e o formulário vai (por padrão) enviar uma requisição `POST` para esta rota. Isto esta associado com a *action* `create` do `controller` atual, no caso o `ArticlesController`.
 
-With the form and its associated route defined, you will be able to fill in the
-form and then click the submit button to begin the process of creating a new
-article, so go ahead and do that. When you submit the form, you should see a
-familiar error:
+Com o formulário e sua rota definidos, você será capaz de preencher o formulário e clicar no botão *submit* para iniciar o processo de criação de um novo artigo, então vá em frente e faça isso. Quando você enviar, você verá um erro familiar:
 
 ![Unknown action create for ArticlesController]
 (images/getting_started/unknown_action_create_for_articles.png)
 
-You now need to create the `create` action within the `ArticlesController` for
-this to work.
+Agora você precisa adicionar a *action* `create` dentro do `ArticlesController` para que isso funcione.
 
-NOTE: By default `form_with` submits forms using Ajax thereby skipping full page
-redirects. To make this guide easier to get into we've disabled that with
-`local: true` for now.
+NOTE: Por padrão o `form_with` submete formulários usando Ajax, evitando assim o redirecionamento da página inteira. Para tornar este guia mais fácil de entender, por ora, nós desabilitamos isso ao utilizar o `local: true`.
 
-### Creating articles
+### Criando artigos
 
-To make the "Unknown action" go away, you can define a `create` action within
-the `ArticlesController` class in `app/controllers/articles_controller.rb`,
-underneath the `new` action, as shown:
+Para fazer este "Unknown action" desaparecer, você pode definir a *action* `create` dentro da classe `ArticlesController` em `app/controllers/articles_controller.rb`, logo após a *action* `new`, como vemos a seguir:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -546,16 +519,10 @@ class ArticlesController < ApplicationController
 end
 ```
 
-If you re-submit the form now, you may not see any change on the page. Don't worry!
-This is because Rails by default returns `204 No Content` response for an action if
-we don't specify what the response should be. We just added the `create` action
-but didn't specify anything about how the response should be. In this case, the
-`create` action should save our new article to the database.
+Se você re-enviar o formulário agora, você ainda não verá nenhuma mudança na página. Não se preocupe!
+Isto é porque, por padrão, o Rails retorna a resposta `204 No Content` para uma `action` se não especificarmos qual resposta ele deve retornar. Nós apenas adicionamos a *action* `create` mas não especificamos nada sobre como a resposta deve ser. Neste caso, a *action* `create` deve salvar nosso novo artigo no banco de dados.
 
-When a form is submitted, the fields of the form are sent to Rails as
-_parameters_. These parameters can then be referenced inside the controller
-actions, typically to perform a particular task. To see what these parameters
-look like, change the `create` action to this:
+Quando um formulário é enviado, os campos do formulário são enviados ao Rails como _parameters_ (parâmetros). Estes parâmetros podem ser então referenciados dentro das *actions* do controller, normalmente para executar uma tarefa específica. Para ver como estes parâmetros são, altere a *action* `create` para isto:
 
 ```ruby
 def create
@@ -563,24 +530,17 @@ def create
 end
 ```
 
-The `render` method here is taking a very simple hash with a key of `:plain` and
-value of `params[:article].inspect`. The `params` method is the object which
-represents the parameters (or fields) coming in from the form. The `params`
-method returns an `ActionController::Parameters` object, which
-allows you to access the keys of the hash using either strings or symbols. In
-this situation, the only parameters that matter are the ones from the form.
+O método `render` está recebendo uma simples *hash* com a chave `:plain` e o valor `params[:article].inspect`. O método `params` é o objeto que representa os parâmetros (ou campos) enviados pelo formulário. O método `params` retorna um objeto `ActionController::Parameters`, que permite você acessar as chaves do *hash* usando *strings* ou *symbols*. Neste caso, os únicos parâmetros que importam são os recebidos pelo formulário.
 
-TIP: Ensure you have a firm grasp of the `params` method, as you'll use it fairly regularly. Let's consider an example URL: **http://www.example.com/?username=dhh&email=dhh@email.com**. In this URL, `params[:username]` would equal "dhh" and `params[:email]` would equal "dhh@email.com".
+TIP: Certifique-se de ter um bom entendimento sobre o método `params`, pois você o usará frequentemente. Vamos considerar uma URL de exemplo: **http://www.example.com/?username=dhh&email=dhh@email.com**. Nesta URL, o `params[:username]` será igual a "dhh" e o `params[:email]` será igual a "dhh@email.com".
 
-If you re-submit the form one more time, you'll see something that looks like the following:
+Se você reenviar o formulário novamente, você verá algo parecido com isso:
 
 ```ruby
 <ActionController::Parameters {"title"=>"First Article!", "text"=>"This is my first article."} permitted: false>
 ```
 
-This action is now displaying the parameters for the article that are coming in
-from the form. However, this isn't really all that helpful. Yes, you can see the
-parameters but nothing in particular is being done with them.
+A *action* agora está exibindo os parâmetros para o artigo que estão sendo enviados pelo formulário. Porém, isto não é realmente útil. Sim, você pode ver os parâmetros mas nada em particular está sendo feito com eles.
 
 ### Criando um  *model* para o `Article` (artigo, inglês)
 
@@ -609,17 +569,18 @@ TIP: O *Active Record* é inteligente o suficiente para automaticamente mapear
 o nome das colunas para os atributos do *model*, o que significa que você
 não precisa declará-los dentro do  *model*, já que o *Active Record* faz automaticamente.
 
-### Running a Migration
+### Executando uma *Migration*
 
-As we've just seen, `rails generate model` created a _database migration_ file
-inside the `db/migrate` directory. Migrations are Ruby classes that are
-designed to make it simple to create and modify database tables. Rails uses
-rake commands to run migrations, and it's possible to undo a migration after
-it's been applied to your database. Migration filenames include a timestamp to
-ensure that they're processed in the order that they were created.
+Como acabamos de ver, `rails generate model` cria um arquivo _database migration_
+no diretório `db/migrate`. *Migrations* são classes ruby designadas para simplificar
+a criação e modificação de tabelas no banco de dados. O Rails usa
+comandos *rake* para executar a *migration*, e é possível desfazê-la
+depois de ser aplicada ao seu banco de dados. Os nomes dos arquivos das *Migrations* incluem
+um *timestamp* ("carimbo de hora" em inglês) para assegurar que elas serão processadas
+na ordem em que foram criadas.
 
-If you look in the `db/migrate/YYYYMMDDHHMMSS_create_articles.rb` file
-(remember, yours will have a slightly different name), here's what you'll find:
+Se você olhar no arquivo `db/migrate/YYYYMMDDHHMMSS_create_articles.rb`
+(lembre-se, o seu pode ter o nome um pouco diferente), você encontrará:
 
 ```ruby
 class CreateArticles < ActiveRecord::Migration[6.0]
@@ -634,24 +595,24 @@ class CreateArticles < ActiveRecord::Migration[6.0]
 end
 ```
 
-The above migration creates a method named `change` which will be called when
-you run this migration. The action defined in this method is also reversible,
-which means Rails knows how to reverse the change made by this migration,
-in case you want to reverse it later. When you run this migration it will create
-an `articles` table with one string column and a text column. It also creates
-two timestamp fields to allow Rails to track article creation and update times.
+A *migration* acima cria um método chamado `change` que será chamado quando esta
+*migration* for executada. A ação definida neste método também é reversível,
+o que significa que o Rails sabe como reverter a alteração, caso você queira. Quando você executar esta *migration*, será
+criada uma tabela `articles` com uma coluna do tipo string e uma coluna do tipo *text*.
+Também serão criados dois campos de *timestamp*, para permitir que o Rails monitore
+quando um `Article` for criado ou atualizado.
 
-TIP: For more information about migrations, refer to [Active Record Migrations]
+TIP: Para mais informações sobre *migrations*, veja [Active Record Migrations]
 (active_record_migrations.html).
 
-At this point, you can use a rails command to run the migration:
+Agora, você pode usar um comando rails para executar a *migration*:
 
 ```bash
 $ rails db:migrate
 ```
 
-Rails will execute this migration command and tell you it created the Articles
-table.
+O Rails irá executar este comando de *migration* e dizer que a tabela de `Articles`
+foi criada.
 
 ```bash
 ==  CreateArticles: migrating ==================================================
@@ -660,18 +621,18 @@ table.
 ==  CreateArticles: migrated (0.0020s) =========================================
 ```
 
-NOTE. Because you're working in the development environment by default, this
-command will apply to the database defined in the `development` section of your
-`config/database.yml` file. If you would like to execute migrations in another
-environment, for instance in production, you must explicitly pass it when
-invoking the command: `rails db:migrate RAILS_ENV=production`.
+NOTE. Por padrão você está trabalhando em ambiente de desenvolvimento,
+por este motivo, este comando irá aplicar a *migration* no banco de dados definido na seção
+`development` do seu arquivo `config/database.yml`. Se você quiser executar as
+*migrations* em outro ambiente, em produção por exemplo, você deve especificar
+quando chamar o comando: `rails db:migrate RAILS_ENV=production`
 
-### Saving data in the controller
+### Salvando dados no *Controller*
 
-Back in `ArticlesController`, we need to change the `create` action
-to use the new `Article` model to save the data in the database.
-Open `app/controllers/articles_controller.rb` and change the `create` action to
-look like this:
+De volta no `ArticlesController`, precisamos alterar a *action* `create`
+para utilizar o novo *model* `Article` para salvar os dados no banco de dados.
+Abra `app/controllers/articles_controller.rb` e altere a *action* `create` da
+seguinte forma:
 
 ```ruby
 def create
@@ -682,51 +643,53 @@ def create
 end
 ```
 
-Here's what's going on: every Rails model can be initialized with its
-respective attributes, which are automatically mapped to the respective
-database columns. In the first line we do just that (remember that
-`params[:article]` contains the attributes we're interested in). Then,
-`@article.save` is responsible for saving the model in the database. Finally,
-we redirect the user to the `show` action, which we'll define later.
+O que está acontecendo: todo *model* Rails pode ser inicializado com seus respectivos
+atributos, os quais são automaticamente mapeados para suas respectivas colunas
+no banco de dados. Na primeira linha fazemos apenas isso (lembre-se que
+`params[:article]` contém os atributos que estamos interessados). Então,
+`@article.save` é responsável por salvar o *model* no banco de dados. Finalmente,
+redirecionaremos o usuário para *action* `show`, que definiremos mais tarde.
 
-TIP: You might be wondering why the `A` in `Article.new` is capitalized above, whereas most other references to articles in this guide have used lowercase. In this context, we are referring to the class named `Article` that is defined in `app/models/article.rb`. Class names in Ruby must begin with a capital letter.
+TIP: Você deve estar pensando qual o motivo de usar `A` maiúsculo no `Article.new`,
+quando a maior parte deste guia usou letra minúscula. Neste contexto,
+estamos nos referindo a classe `Article` definida no arquivo `app/models/article.rb`.
+Nome de classe em Ruby deve começar sempre com letra maiúscula.
 
-TIP: As we'll see later, `@article.save` returns a boolean indicating whether
-the article was saved or not.
+TIP: Como veremos mais tarde, `@article.save` retorna um booleano
+indicando se o `article` foi salvo ou não.
 
-If you now go to <http://localhost:3000/articles/new> you'll *almost* be able
-to create an article. Try it! You should get an error that looks like this:
+Se você for agora para <http://localhost:3000/articles/new> você *quase* será
+capaz de criar um `article`. Tente! Você verá um erro parecido com esse:
 
 ![Forbidden attributes for new article]
 (images/getting_started/forbidden_attributes_for_new_article.png)
 
-Rails has several security features that help you write secure applications,
-and you're running into one of them now. This one is called [strong parameters](action_controller_overview.html#strong-parameters),
-which requires us to tell Rails exactly which parameters are allowed into our
-controller actions.
+O Rails tem diversas *features* de segurança que te ajudam a construir uma aplicação segura,
+e você está lidando com uma delas agora. Esta se chama [strong parameters](action_controller_overview.html#strong-parameters) (parâmetros fortes),
+que nos obrigam a dizer ao Rails exatamente quais parâmetros estão permitidos
+nas *actions* do *controller*.
 
-Why do you have to bother? The ability to grab and automatically assign all
-controller parameters to your model in one shot makes the programmer's job
-easier, but this convenience also allows malicious use. What if a request to
-the server was crafted to look like a new article form submit but also included
-extra fields with values that violated your application's integrity? They would
-be 'mass assigned' into your model and then into the database along with the
-good stuff - potentially breaking your application or worse.
+Por que é necessário? A habilidade de salvar todos os parâmetros do controller no
+*model* de uma só vez deixa o trabalho de quem está programando mais fácil,
+mas essa conveniência pode ser utilizada de forma maliciosa. E se um *request*
+para o servidor for trabalhado para fazer parecer um novo formulário de `article`,
+mas também incluir campos extras com valores que violam a integridade da sua aplicação?
+Isso possibilitaria a entrada/atribuição de dados ruins no seu *model* e banco
+de dados junto com dados bons - podendo, potencialmente, quebrar sua aplicação ou algo pior.
 
-We have to define our permitted controller parameters to prevent wrongful mass
-assignment. In this case, we want to both allow and require the `title` and
-`text` parameters for valid use of `create`. The syntax for this introduces
-`require` and `permit`. The change will involve one line in the `create`
-action:
+Nós definimos quais são os parâmetros permitidos para prevenir atribuições de
+dados indesejados. Nesse caso, queremos permitir e exigir os parâmetros `title`
+e `text` para uso válido do `create`. A sintaxe para isso utiliza `require` e
+`permit`. A alteração envolverá uma linha na *action* `create`.
 
 ```ruby
   @article = Article.new(params.require(:article).permit(:title, :text))
 ```
-
-This is often factored out into its own method so it can be reused by multiple
-actions in the same controller, for example `create` and `update`. Above and
-beyond mass assignment issues, the method is often made `private` to make sure
-it can't be called outside its intended context. Here is the result:
+Frequentemente refatoramos o código para trazer esta alteração para dentro do
+seu próprio método, para que possa ser reutilizado por diferentes *actions* no
+mesmo *controller*, por exemplo `create` e `update`. Além do problema de atribuição
+de dados inconsistentes, o método frequentemente é colocado como privado, para termos
+certeza que não será possível chamá-lo fora do seu contexto. Aqui está o resultado:
 
 ```ruby
 def create
@@ -742,8 +705,8 @@ private
   end
 ```
 
-TIP: For more information, refer to the reference above and
-[this blog article about Strong Parameters]
+TIP: Para mais informações, veja a referência acima e
+[este artigo sobre *Strong Parameters*]
 (https://weblog.rubyonrails.org/2012/3/21/strong-parameters/).
 
 ### Showing Articles
@@ -811,19 +774,19 @@ Visit <http://localhost:3000/articles/new> and give it a try!
 
 ![Show action for articles](images/getting_started/show_action_for_articles.png)
 
-### Listing all articles
+### Listando todos os artigos
 
-We still need a way to list all our articles, so let's do that.
-The route for this as per output of `rails routes` is:
+Nós ainda precisamos de um jeito para listar todos os nossos artigos, então vamos fazer isso.
+A rota para isso, conforme apresentado pela execução do comando `rails routes`, é:
 
 ```
 articles GET    /articles(.:format)          articles#index
 ```
 
-Add the corresponding `index` action for that route inside the
-`ArticlesController` in the `app/controllers/articles_controller.rb` file.
-When we write an `index` action, the usual practice is to place it as the
-first method in the controller. Let's do it:
+Adicione a *action* `index` correspondente a essa rota dentro do
+`ArticlesController` no arquivo `app/controllers/articles_controller.rb`. 
+Quando escrevemos uma *action* `index`, a prática usual é colocá-lo como
+o primeiro método no *controller*. Vamos fazer isso:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -838,10 +801,9 @@ class ArticlesController < ApplicationController
   def new
   end
 
-  # snippet for brevity
 ```
 
-And then finally, add the view for this action, located at
+E então, finalmente, adicione a *view* para essa *action*, localizada em
 `app/views/articles/index.html.erb`:
 
 ```html+erb
@@ -864,8 +826,8 @@ And then finally, add the view for this action, located at
 </table>
 ```
 
-Now if you go to <http://localhost:3000/articles> you will see a list of all the
-articles that you have created.
+Agora se você acessar <http://localhost:3000/articles> você verá uma lista de todos os
+artigos que você criou.
 
 ### Adding links
 

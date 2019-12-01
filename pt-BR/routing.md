@@ -1,69 +1,79 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Rails Routing from the Outside In
+Rotas do Rails de Fora pra Dentro
 =================================
 
-This guide covers the user-facing features of Rails routing.
+Esse guia cobre os recursos de roteamento que os usuários podem utilizar no Rails.
 
-After reading this guide, you will know:
+Após ler esse guia, você saberá:
 
-* How to interpret the code in `config/routes.rb`.
-* How to construct your own routes, using either the preferred resourceful style or the `match` method.
-* How to declare route parameters, which are passed onto controller actions.
-* How to automatically create paths and URLs using route helpers.
-* Advanced techniques such as creating constraints and mounting Rack endpoints.
+* Como interpretar o código em `config/routes.rb`.
+* Como construir suas próprias rotas, seja usando o formato preferido de
+  `resources` ou o método `match`.
+* Como declarar parâmetros de rota, que são passados para ações do _controller_.
+* Como criar automaticamente caminhos e URLs usando _helpers_ de rota.
+* Técnicas avançadas como criar restrições e montar _endpoints Rack_.
 
 --------------------------------------------------------------------------------
 
-The Purpose of the Rails Router
+O Propósito do Roteador do Rails
 -------------------------------
 
-The Rails router recognizes URLs and dispatches them to a controller's action, or to a Rack application. It can also generate paths and URLs, avoiding the need to hardcode strings in your views.
+O roteador do Rails organiza URLs e as direcionam para uma ação de um
+_controller_ ou de um aplicativo _Rack_. Também pode gerar caminhos e URLs,
+evitando a necessidade de codificar sequências de caracteres em suas
+visualizações.
 
-### Connecting URLs to Code
+### Conectando URLs ao código
 
-When your Rails application receives an incoming request for:
+Quando sua aplicação Rails recebe uma requisição para:
 
 ```
 GET /patients/17
 ```
 
-it asks the router to match it to a controller action. If the first matching route is:
+ela solicita ao roteador que corresponda com uma ação do _controller_.
+Se a primeira rota correspondente for:
 
 ```ruby
 get '/patients/:id', to: 'patients#show'
 ```
 
-the request is dispatched to the `patients` controller's `show` action with `{ id: '17' }` in `params`.
+a requisição é direcionada para o _controller_ `patients` na ação `show`
+com `{ id: '17' }` em `params`.
 
-NOTE: Rails uses snake_case for controller names here, if you have a multiple word controller like `MonsterTrucksController`, you want to use `monster_trucks#show` for example.
+NOTE: O Rails usa _snake_case_ para nomes de _controller_ no roteamento, se você
+tem um _controller_ com várias palavras como `MonsterTrucksController`, você
+deve usar `monster_trucks#show`, por exemplo.
 
-### Generating Paths and URLs from Code
+### Gerando Caminhos e URLs a partir do código
 
-You can also generate paths and URLs. If the route above is modified to be:
+Você também pode gerar caminhos e URLs. Se a rota acima for modificada para ser:
 
 ```ruby
 get '/patients/:id', to: 'patients#show', as: 'patient'
 ```
 
-and your application contains this code in the controller:
+e sua aplicação contém esse código no _controller_:
 
 ```ruby
 @patient = Patient.find(params[:id])
 ```
-
-and this in the corresponding view:
+e isso na _view_ correspondente:
 
 ```erb
 <%= link_to 'Patient Record', patient_path(@patient) %>
 ```
 
-then the router will generate the path `/patients/17`. This reduces the brittleness of your view and makes your code easier to understand. Note that the id does not need to be specified in the route helper.
+então seu roteador irá gerar o caminho `/patients/17`. Isso reduz a fragilidade
+da sua _view_ e faz seu código mais simples de entender. Observe que o _id_ não
+não precisa ser especificado no _helper_ da rota.
 
-### Configuring the Rails Router
+### Configurando o Roteador do Rails
 
-The routes for your application or engine live in the file `config/routes.rb` and typically looks like this:
+As rotas para sua aplicação ou _engine_ estão dentro do arquivo `config/routes.rb`
+e tipicamente se parecem com isso:
 
 ```ruby
 Rails.application.routes.draw do
@@ -77,9 +87,13 @@ Rails.application.routes.draw do
 end
 ```
 
-Since this is a regular Ruby source file you can use all of its features to help you define your routes but be careful with variable names as they can clash with the DSL methods of the router.
+Como isso é um arquivo padrão do Ruby você pode utilizar de todos os seus recursos
+para te ajudar a definir suas rotas, porém tenha cautela com nomes de variáveis
+já que ela pode conflitar com os métodos da [DSL](https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico) do roteador.
 
-NOTE: The `Rails.application.routes.draw do ... end` block that wraps your route definitions is required to establish the scope for the router DSL and must not be deleted.
+NOTE: O bloco `Rails.application.routes.draw do ... end` que encapsula suas
+definições de rotas é necessário para estabelecer o escopo do roteador da DSL e não
+deve ser deletado.
 
 Resource Routing: the Rails Default
 -----------------------------------

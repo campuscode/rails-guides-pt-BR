@@ -4,36 +4,26 @@
 Active Record Migrations
 ========================
 
-Migrations are a feature of Active Record that allows you to evolve your
-database schema over time. Rather than write schema modifications in pure SQL,
-migrations allow you to use an easy Ruby DSL to describe changes to your
-tables.
+*Migrations* são uma funcionalidade do *Active Record* que permitem expandir nosso esquema do banco de dados com o tempo. Ao invés de escrever modificações no esquema em SQL puro,*migrations* permitem o uso de uma [Linguagem Específica de Domínio (DSL)](https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico) em *Ruby* para descrever as mudanças em nossas tabelas.
 
-After reading this guide, you will know:
+Depois de ler esse guia, você vai saber:
 
-* The generators you can use to create them.
-* The methods Active Record provides to manipulate your database.
-* The rails commands that manipulate migrations and your schema.
-* How migrations relate to `schema.rb`.
+* Os *generators* que você pode usar para criar as *migrations*.
+* Os métodos que o *Active Record* provê para manipular seu banco de dados.
+* Os comandos `rails` que manipulam *migrations* e o esquema do seu banco.
+* Como *migrations* e `schema.rb` se relacionam.
 
 --------------------------------------------------------------------------------
 
-Migration Overview
-------------------
+Visão Geral de Migration
+----------------------------
 
-Migrations are a convenient way to
-[alter your database schema over time](https://en.wikipedia.org/wiki/Schema_migration)
-in a consistent and easy way. They use a Ruby DSL so that you don't have to
-write SQL by hand, allowing your schema and changes to be database independent.
+*Migrations* são uma forma conveniente de
+[alterar nosso esquema de banco de dados com o tempo](https://en.wikipedia.org/wiki/Schema_migration) de uma forma fácil e consistente. Elas usam uma *Ruby DSL* para que você não precise escrever SQL puro, permitindo que seu esquema e as alterações sejam independentes do banco de dados utilizado.
 
-You can think of each migration as being a new 'version' of the database. A
-schema starts off with nothing in it, and each migration modifies it to add or
-remove tables, columns, or entries. Active Record knows how to update your
-schema along this timeline, bringing it from whatever point it is in the
-history to the latest version. Active Record will also update your
-`db/schema.rb` file to match the up-to-date structure of your database.
+Você pode pensar em cada *migration* como sendo uma nova 'versão' do banco de dados. Um esquema é vazio no início, e após cada *migration* ele é modificado para adicionar ou remover tabelas, colunas, ou entradas de dados. O *Active Record* sabe como atualizar seu esquema nessa linha do tempo, trazendo-o de qualquer ponto em que ele esteja no histórico, para a última versão. O *Active Record* também atualizará seu arquivo `db/schema.rb` para igualar a estrutura mais atualizada do seu banco de dados.
 
-Here's an example of a migration:
+Aqui temos um exemplo de uma *migration*:
 
 ```ruby
 class CreateProducts < ActiveRecord::Migration[5.0]
@@ -48,29 +38,17 @@ class CreateProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-This migration adds a table called `products` with a string column called
-`name` and a text column called `description`. A primary key column called `id`
-will also be added implicitly, as it's the default primary key for all Active
-Record models. The `timestamps` macro adds two columns, `created_at` and
-`updated_at`. These special columns are automatically managed by Active Record
-if they exist.
+Essa *migration* adiciona uma tabela chamada `products` com uma coluna do tipo *string* chamada `name` e uma coluna do tipo *text* chamada `description`. Uma coluna do tipo chave primária chamada `id` também será adicionada implicitamente, pois ela é a chave primária padrão para todos os *models* de *Active Record*. A macro `timestamps` adiciona duas colunas, `created_at` e `updated_at`. Essas colunas especiais são automaticamente gerenciadas pelo *Active Record*, se existirem.
 
-Note that we define the change that we want to happen moving forward in time.
-Before this migration is run, there will be no table. After, the table will
-exist. Active Record knows how to reverse this migration as well: if we roll
-this migration back, it will remove the table.
+Note que nós definimos as mudanças que queremos que aconteçam no futuro.
+Antes desta *migration* ser executada, não há sequer a tabela. Depois, a tabela será criada. O *Active Record* também sabe como reverter essa *migration*: se a desfizermos, ele removerá a tabela.
 
-On databases that support transactions with statements that change the schema,
-migrations are wrapped in a transaction. If the database does not support this
-then when a migration fails the parts of it that succeeded will not be rolled
-back. You will have to rollback the changes that were made by hand.
+Em bancos de dados que suportem transações com declarações que alterem o esquema,
+*migrations* são incluídas na transação. Se o banco de dados não suportar esses tipos de declarações, então, quando uma *migration* falhar, as partes dela que tiveram sucesso não serão desfeitas. Você terá que desfazer as mudanças que fez manualmente.
 
-NOTE: There are certain queries that can't run inside a transaction. If your
-adapter supports DDL transactions you can use `disable_ddl_transaction!` to
-disable them for a single migration.
+NOTE: Há certos tipos de *queries* que não podem ser executadas dentro de uma transação. Se o seu adaptador de conexão suporta transações DDL você pode usar `disable_ddl_transaction!` para desabilitá-las para uma única *migration*.
 
-If you wish for a migration to do something that Active Record doesn't know how
-to reverse, you can use `reversible`:
+Se você quiser que uma *migration* faça algo que o *Active Record* não sabe como reverter, pode usar `reversible`:
 
 ```ruby
 class ChangeProductsPrice < ActiveRecord::Migration[5.0]
@@ -85,7 +63,7 @@ class ChangeProductsPrice < ActiveRecord::Migration[5.0]
 end
 ```
 
-Alternatively, you can use `up` and `down` instead of `change`:
+Alternativamente, você pode usar `up` e `down` ao invés de `change`:
 
 ```ruby
 class ChangeProductsPrice < ActiveRecord::Migration[5.0]
@@ -1049,20 +1027,20 @@ end
 This is generally a much cleaner way to set up the database of a blank
 application.
 
-Old Migrations
---------------
+*Migrations* Antigas
+--------------------
 
-The `db/schema.rb` or `db/structure.sql` is a snapshot of the current state of your
-database and is the authoritative source for rebuilding that database. This
-makes it possible to delete old migration files.
+Os arquivos `db/schema.rb` ou `db/structure.sql` refletem o estado atual do seu
+banco de dados e são a fonte oficial para reconstruí-lo. Isto torna possível
+excluir arquivos antigos de *migration*.
 
-When you delete migration files in the `db/migrate/` directory, any environment
-where `rails db:migrate` was run when those files still existed will hold a reference
-to the migration timestamp specific to them inside an internal Rails database
-table named `schema_migrations`. This table is used to keep track of whether
-migrations have been executed in a specific environment.
+Quando você exclui arquivos de *migration* no diretório `db/migrate`, qualquer
+ambiente no qual `rails db:migrate` foi executado quando estes arquivos ainda
+existiam irá manter uma referência às suas *timestamps* específicas dentro de uma
+tabela interna do Rails chamada `schema_migrations`. Esta tabela é usada para manter
+um acompanhamento de quais *migrations* foram executadas em um ambiente específico.
 
-If you run the `rails db:migrate:status` command, which displays the status
-(up or down) of each migration, you should see `********** NO FILE **********`
-displayed next to any deleted migration file which was once executed on a
-specific environment but can no longer be found in the `db/migrate/` directory.
+Se você executar o comando `rails db:migrate:status`, que mostra o estado (*up* ou
+*down*) de cada *migration*, você verá o texto `********** NO FILE **********`
+próximo a cada arquivo de *migration* excluído que foi anteriormente executado
+em um ambiente específico mas não se encontra mais no diretório `db/migrate/`.

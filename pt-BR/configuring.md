@@ -101,8 +101,8 @@ verificar estes diretórios quando resolver chamadas de `require` com caminhos
 relativos e reduz o processamento e o consumo de memória RAM do `Bootsnap`, já
 que ele não precisa construir um índice para eles.
 
-* `config.cache_classes` controla quando as classes e módulos da aplicação devem ser recarregados em cada requisição.
-O padrão é `false` no modo desenvolvimento e `true` nos modos de teste e produção.
+* `config.cache_classes` controla quando as classes e módulos da aplicação devem ser recarregados em caso de mudanças.
+O padrão é `false` no modo desenvolvimento e `true` no modo de produção. No modo de `test`, o padrão é `false` se o Spring estiver instalado, caso contrário é `true`.
 
 * `config.beginning_of_week` configura o começo da semana para a aplicação. O
   valor deve ser um *symbol* com um dia da semana válido (por ex: `:monday`).

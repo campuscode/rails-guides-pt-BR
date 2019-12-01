@@ -1,35 +1,33 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-API Documentation Guidelines
-============================
+Orientações para Documentação de API
+====================================
 
-This guide documents the Ruby on Rails API documentation guidelines.
+Este guia apresenta as orientações para documentação da API Ruby on Rails.
 
-After reading this guide, you will know:
+Após ler este guia, você saberá:
 
-* How to write effective prose for documentation purposes.
-* Style guidelines for documenting different kinds of Ruby code.
+* Como escrever um discurso eficaz para propósitos de documentação.
+* Orientações de estilo para documentar diferentes tipos de código em Ruby.
 
 --------------------------------------------------------------------------------
 
 RDoc
 ----
 
-The [Rails API documentation](https://api.rubyonrails.org) is generated with
-[RDoc](https://ruby.github.io/rdoc/). To generate it, make sure you are
-in the rails root directory, run `bundle install` and execute:
+A [documentação da API Rails](https://api.rubyonrails.org) é gerada com 
+[RDoc](https://ruby.github.io/rdoc/). Para gerá-la, certifique-se que você está
+no diretório raiz do Rails, execute `bundle install` e, em seguida:
 
 ```bash
   bundle exec rake rdoc
 ```
 
-Resulting HTML files can be found in the ./doc/rdoc directory.
+Os arquivos HTML gerados podem ser encontrados no diretório ./doc/rdoc.
 
-Please consult the RDoc documentation for help with the
-[markup](https://ruby.github.io/rdoc/RDoc/Markup.html),
-and also take into account these [additional
-directives](https://ruby.github.io/rdoc/RDoc/Parser/Ruby.html).
+Por favor consulte a documentação RDoc para ajuda com a [marcação](https://ruby.github.io/rdoc/RDoc/Markup.html),
+e leve em consideração esses [direcionamentos adicionais](https://ruby.github.io/rdoc/RDoc/Parser/Ruby.html).
 
 Wording
 -------
