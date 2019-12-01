@@ -93,13 +93,13 @@ O Rails suporta seis tipos de associações:
 * `has_one :through`
 * `has_and_belongs_to_many`
 
-Associations are implemented using macro-style calls, so that you can declaratively add features to your models. For example, by declaring that one model `belongs_to` another, you instruct Rails to maintain [Primary Key](https://en.wikipedia.org/wiki/Unique_key)-[Foreign Key](https://en.wikipedia.org/wiki/Foreign_key) information between instances of the two models, and you also get a number of utility methods added to your model.
+As associações são implementadas usando chamadas *macro-style*, para que você possa adicionar declarativamente recursos aos seus *models*. Por exemplo, declarando que um *model* `belongs_to` (pertence a outro), você instrui o Rails a manter [Primary Key](https://en.wikipedia.org/wiki/Unique_key)-[Foreign Key](https://en.wikipedia.org/wiki/Foreign_key) entre instâncias dos dois *models*, e você também obtém vários métodos úteis adicionados ao seu *model*.
 
-In the remainder of this guide, you'll learn how to declare and use the various forms of associations. But first, a quick introduction to the situations where each association type is appropriate.
+No restante deste guia, você aprenderá como declarar e usar as várias formas de associação. Mas primeiro, uma rápida introdução para as situações em que cada tipo de associação é apropriado.
 
-### The `belongs_to` Association
+### A Associação `belongs_to`
 
-A `belongs_to` association sets up a one-to-one connection with another model, such that each instance of the declaring model "belongs to" one instance of the other model. For example, if your application includes authors and books, and each book can be assigned to exactly one author, you'd declare the book model this way:
+Uma associação `belongs_to` configura uma conexão uma-para-um com outro *model*, de modo que cada instância do *model* declarante "pertença a" uma instância do outro *model*. Por exemplo, se sua aplicação incluir autores e livros, e cada livro puder ser atribuído a exatamente um autor, você declarará o *model* do livro da seguinte maneira:
 
 ```ruby
 class Book < ApplicationRecord
@@ -107,11 +107,11 @@ class Book < ApplicationRecord
 end
 ```
 
-![belongs_to Association Diagram](images/association_basics/belongs_to.png)
+![Diagrama de Associação belongs_to](images/association_basics/belongs_to.png)
 
-NOTE: `belongs_to` associations _must_ use the singular term. If you used the pluralized form in the above example for the `author` association in the `Book` model and tried to create the instance by `Book.create(authors: @author)`, you would be told that there was an "uninitialized constant Book::Authors". This is because Rails automatically infers the class name from the association name. If the association name is wrongly pluralized, then the inferred class will be wrongly pluralized too.
+NOTE: as associações `belongs_to` _devem_ usar o termo no singular. Se você usou o plural no exemplo acima para a associação `author` no *model* `Book` e tentou criar a instância com `Book.create(authors: @author)`, você seria informado de que existe uma "constante não inicializada `Book::Authors`". Isso ocorre porque o Rails deduz automaticamente o nome da classe a partir do nome da associação. Se o nome da associação estiver incorretamente no plural, a classe inferida também estará incorreta.
 
-The corresponding migration might look like this:
+A *migration* correpondente parecerá assim:
 
 ```ruby
 class CreateBooks < ActiveRecord::Migration[5.0]
@@ -130,9 +130,9 @@ class CreateBooks < ActiveRecord::Migration[5.0]
 end
 ```
 
-### The `has_one` Association
+### A associação `has_one`
 
-A `has_one` association also sets up a one-to-one connection with another model, but with somewhat different semantics (and consequences). This association indicates that each instance of a model contains or possesses one instance of another model. For example, if each supplier in your application has only one account, you'd declare the supplier model like this:
+Uma associação `has_one` também estabelece uma conexão one-para-one com outro *model*, mas com semânticas um pouco diferentes (e consequências). Essa associação indica que cada instância de um modelo contém ou possui uma instância de outro *model*. Por exemplo, se cada *supplier* em sua aplicação tiver apenas uma *account*, você declarará o *model* de *supplier* como este:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -140,9 +140,9 @@ class Supplier < ApplicationRecord
 end
 ```
 
-![has_one Association Diagram](images/association_basics/has_one.png)
+![Diagrama de Associação has_one](images/association_basics/has_one.png)
 
-The corresponding migration might look like this:
+A *migration* correpondente parecerá assim:
 
 ```ruby
 class CreateSuppliers < ActiveRecord::Migration[5.0]
@@ -161,9 +161,9 @@ class CreateSuppliers < ActiveRecord::Migration[5.0]
 end
 ```
 
-Depending on the use case, you might also need to create a unique index and/or
-a foreign key constraint on the supplier column for the accounts table. In this
-case, the column definition might look like this:
+Dependendo do caso de uso, também pode ser necessário criar um índice exclusivo e/ou
+uma restrição de *foreign key* na coluna do *supplier* para a tabela de *accounts*. Nesse
+caso, a definição da coluna parecerá assim:
 
 ```ruby
 create_table :accounts do |t|
