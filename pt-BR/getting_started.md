@@ -1019,7 +1019,6 @@ TIP: O Rails agrupa automaticamente os campos que contêm um erro com uma div
 com a classe `field_with_errors`. Você pode definir uma regra CSS destacá-los.
 
 Agora você receberá uma boa mensagem de erro ao tentar salvar um artigo sem título no nosso formulário de criação de artigo
-você tenta fazer isso no nosso formulário de artigo
 <http://localhost:3000/articles/new>:
 
 ![Form With Errors](images/getting_started/form_with_errors.png)
