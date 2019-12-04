@@ -888,7 +888,7 @@ padrão.
 
 TIP: No modo de desenvolvimento (que é o que você está trabalhando por padrão), o Rails
 recarrega sua aplicação com todas as solicitações do navegador, portanto, não é necessário parar
-e reinicie o servidor da web quando uma alteração for feita.
+e reiniciar o servidor web quando uma alteração for feita.
 
 ### Adicionando Algumas Validações
 
