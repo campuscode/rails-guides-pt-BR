@@ -746,7 +746,7 @@ class ArticlesController < ApplicationController
   end
 ```
 
-Algumas coisas a serem observadas. Usamos `Article.find` para encontrar o artigo que estamos
+Algumas coisas a serem observadas. Usamos `Article.find` para encontrar o artigo que nos
 interessado, passando `params[:id]` para obter o parâmetro `:id` da requisição. 
 Também usamos uma variável de instância (prefixada com `@`) para conter um
 referência ao objeto do artigo. Fazemos isso porque o Rails passará todas as variáveis de instância
