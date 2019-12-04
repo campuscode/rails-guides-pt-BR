@@ -748,7 +748,7 @@ class ArticlesController < ApplicationController
 
 Algumas coisas a serem observadas. Usamos `Article.find` para encontrar o artigo que nos
 interessa, passando `params[:id]` para obter o parâmetro `:id` da requisição. 
-Também usamos uma variável de instância (prefixada com `@`) para conter um
+Também usamos uma variável de instância (prefixada com `@`) para conter uma
 referência ao objeto do artigo. Fazemos isso porque o Rails passará todas as variáveis de instância
 para a *view*.
 
