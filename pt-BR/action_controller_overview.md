@@ -63,18 +63,18 @@ O [Guia de Layouts e Renderização](layouts_and_rendering.html) explica essa et
 
 Apenas métodos públicos são executáveis como *actions*. É uma boa prática diminuir a visibilidade de métodos (utilizando `private` ou `protected`) que não foram designados para serem *actions*, como métodos auxiliares ou filtros.
 
-Parameters
+Parâmetros
 ----------
 
-You will probably want to access data sent in by the user or other parameters in your controller actions. There are two kinds of parameters possible in a web application. The first are parameters that are sent as part of the URL, called query string parameters. The query string is everything after "?" in the URL. The second type of parameter is usually referred to as POST data. This information usually comes from an HTML form which has been filled in by the user. It's called POST data because it can only be sent as part of an HTTP POST request. Rails does not make any distinction between query string parameters and POST parameters, and both are available in the `params` hash in your controller:
+Você provavelmente vai querer acessar os dados enviados pelo usuário ou outros parâmetros nas *actions* do seu *controller*. Existem dois tipos de parâmetros possíveis numa aplicação *web*. O primeiro são os parâmetros que são enviados como parte da URL, chamados parâmetros de *query string*. A *query string* é tudo o que vem após o "?" na URL. O segundo tipo de parâmetro é geralmente referido como os dados de POST. Essa informação geralmente vem de um formulário HTML que foi preenchido pelo usuário. Se chamam dados de POST porque estes dados somente podem ser enviados como parte de uma requisição HTTP usando o verbo POST. O Rails não faz distinção sobre parâmetros de *query string* e parâmetros de POST, ambos são acessíveis por meio do *hash* `params` no seu *controller*:
 
 ```ruby
 class ClientsController < ApplicationController
-  # This action uses query string parameters because it gets run
-  # by an HTTP GET request, but this does not make any difference
-  # to the way in which the parameters are accessed. The URL for
-  # this action would look like this in order to list activated
-  # clients: /clients?status=activated
+  # Essa action usa parâmetros de query string porque ela é
+  # executada através de uma requisição HTTP GET, mas isso
+  # não faz nenhuma diferença para a maneira como os parâmetros
+  # são acessados. A URL para essa action seria desse jeito
+  # para mostrar os clientes ativos: /clients?status=activated
   def index
     if params[:status] == "activated"
       @clients = Client.activated
@@ -83,40 +83,38 @@ class ClientsController < ApplicationController
     end
   end
 
-  # This action uses POST parameters. They are most likely coming
-  # from an HTML form which the user has submitted. The URL for
-  # this RESTful request will be "/clients", and the data will be
-  # sent as part of the request body.
+  # Essa action usa parâmetros de POST. Eles provavelmente estão
+  # vindo de um formulário HTML que o usuário submeteu. A URL
+  # para essa requisição RESTful será "/clients", e os dados
+  # serão enviados como parte do corpo da requisição.
   def create
     @client = Client.new(params[:client])
     if @client.save
       redirect_to @client
     else
-      # This line overrides the default rendering behavior, which
-      # would have been to render the "create" view.
+      # Essa linha sobrescreve o método padrão de renderização,
+      # que seria chamado para renderizar a *view* "*create*"
       render "new"
     end
   end
 end
 ```
 
-### Hash and Array Parameters
+### Hash e Parâmetros de Array
 
-The `params` hash is not limited to one-dimensional keys and values. It can contain nested arrays and hashes. To send an array of values, append an empty pair of square brackets "[]" to the key name:
+O *hash* `params` não é limitado a um vetor unidimensional de chaves e valores. Ele pode conter *arrays* e *hashes* aninhados. Para enviar um *array* de valores, concatene um par de colchetes vazio "[]" ao nome da chave:
 
 ```
 GET /clients?ids[]=1&ids[]=2&ids[]=3
 ```
 
-NOTE: The actual URL in this example will be encoded as "/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3" as the "[" and "]" characters are not allowed in URLs. Most of the time you don't have to worry about this because the browser will encode it for you, and Rails will decode it automatically, but if you ever find yourself having to send those requests to the server manually you should keep this in mind.
+NOTE: A URL efetiva neste neste exemplo será codificada como "/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3", visto que os caracteres "[" e "]" não são permitidos em URLs. Na maioria do tempo você não precisa se preocupar com isso porque o navegador irá codificar os dados para você, e o Rails vai decodificá-los automaticamente, porém se por acaso você se encontrar na situação de ter que enviar este tipo de requisição ao servidor manualmente você deve ter em mente essa questão.
 
-The value of `params[:ids]` will now be `["1", "2", "3"]`. Note that parameter values are always strings; Rails makes no attempt to guess or cast the type.
+O valor de `params[:ids]` será neste caso `["1", "2", "3"]`. Note que os valores de parâmetros são sempre *strings*; o Rails não tenta adivinhar ou converter o tipo.
 
-NOTE: Values such as `[nil]` or `[nil, nil, ...]` in `params` are replaced
-with `[]` for security reasons by default. See [Security Guide](security.html#unsafe-query-generation)
-for more information.
+NOTE: Valores como `[nil]` ou `[nil, nil, ...]` em `params` são substituídos por `[]` por motivos de segurança por padrão. Veja o [Guia de Segurança](security.html#unsafe-query-generation) para mais informações.
 
-To send a hash, you include the key name inside the brackets:
+Para enviar um *hash*, você inclui o nome da chave dentro dos colchetes:
 
 ```html
 <form accept-charset="UTF-8" action="/clients" method="post">
@@ -127,51 +125,51 @@ To send a hash, you include the key name inside the brackets:
 </form>
 ```
 
-When this form is submitted, the value of `params[:client]` will be `{ "name" => "Acme", "phone" => "12345", "address" => { "postcode" => "12345", "city" => "Carrot City" } }`. Note the nested hash in `params[:client][:address]`.
+Quando esse formulário é enviado o valor de `params[:client]` será `{ "name" => "Acme", "phone" => "12345", "address" => { "postcode" => "12345", "city" => "Carrot City" } }`. Repare o *hash* aninhado em `params[:client][:address]`.
 
-The `params` object acts like a Hash, but lets you use symbols and strings interchangeably as keys.
+O objeto `params` atua como um *hash*, mas permite que você use *symbols* e *strings* indistintamente como chaves.
 
-### JSON parameters
+### Parâmetros JSON
 
-If you're writing a web service application, you might find yourself more comfortable accepting parameters in JSON format. If the "Content-Type" header of your request is set to "application/json", Rails will automatically load your parameters into the `params` hash, which you can access as you would normally.
+Se você está construindo uma aplicação *web*, você pode achar mais confortável receber parâmetros no formato JSON. Se o *header* "Content-Type" da sua requisição estiver definido como "application/json" o Rails vai automaticamente carregar os seus parâmetros no *hash* `params`, que você pode acessar como acessaria normalmente.
 
-So for example, if you are sending this JSON content:
+Então por exemplo, se você estiver enviando este conteúdo JSON:
 
 ```json
 { "company": { "name": "acme", "address": "123 Carrot Street" } }
 ```
 
-Your controller will receive `params[:company]` as `{ "name" => "acme", "address" => "123 Carrot Street" }`.
+O seu *controller* vai receber `params[:company]` no formato `{ "name" => "acme", "address" => "123 Carrot Street" }`.
 
-Also, if you've turned on `config.wrap_parameters` in your initializer or called `wrap_parameters` in your controller, you can safely omit the root element in the JSON parameter. In this case, the parameters will be cloned and wrapped with a key chosen based on your controller's name. So the above JSON request can be written as:
+Além disso, se você tiver ativado `config.wrap_parameters` no seu inicializador ou chamado `wrap_parameters` no seu *controller*, você pode omitir o elemento raiz no seu parâmetro JSON. Neste caso, os parâmetros serão clonados e enpacotados sob uma chave baseada no nome do seu *controller*. Então a requisição JSON acima pode ser escrita como:
 
 ```json
 { "name": "acme", "address": "123 Carrot Street" }
 ```
 
-And, assuming that you're sending the data to `CompaniesController`, it would then be wrapped within the `:company` key like this:
+E, assumindo que você está enviando os dados para `CompaniesController`, eles serão então encapsulados na chave `:company` desta maneira:
 
 ```ruby
 { name: "acme", address: "123 Carrot Street", company: { name: "acme", address: "123 Carrot Street" } }
 ```
 
-You can customize the name of the key or specific parameters you want to wrap by consulting the [API documentation](https://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html)
+Você pode customizar o nome da chave ou parâmetros específicos que você quer envelopar consultando a [documentação da API](https://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html)
 
-NOTE: Support for parsing XML parameters has been extracted into a gem named `actionpack-xml_parser`.
+NOTE: Suporte para interpretar parâmetros XML foi extraído para uma *gem* chamada `actionpack-xml_parser`.
 
-### Routing Parameters
+### Parâmetros de Rota
 
-The `params` hash will always contain the `:controller` and `:action` keys, but you should use the methods `controller_name` and `action_name` instead to access these values. Any other parameters defined by the routing, such as `:id`, will also be available. As an example, consider a listing of clients where the list can show either active or inactive clients. We can add a route which captures the `:status` parameter in a "pretty" URL:
+O *hash* `params` sempre irá conter as chaves `:controller` e `:action`, mas você deve usar os métodos `nome_do_controller` e `nome_da_action` para acessar estes valores. Quaisquer outros parâmetros definidos pela rota, como `:id`, também estarão disponíveis. Por exemplo, considere uma listagem de clientes onde a lista pode mostrar os clientes ativos e inativos. Nós podemos adicionar uma rota que captura o parâmetro `:status` numa URL "normalizada":
 
 ```ruby
 get '/clients/:status', to: 'clients#index', foo: 'bar'
 ```
 
-In this case, when a user opens the URL `/clients/active`, `params[:status]` will be set to "active". When this route is used, `params[:foo]` will also be set to "bar", as if it were passed in the query string. Your controller will also receive `params[:action]` as "index" and `params[:controller]` as "clients".
+Neste caso, quando um usuário abrir a URL `/clients/active`, `params[:status]` estará definido como "active". Quando esta rota é usada, `params[:foo]` também será definido como "bar", como se tivesse sido enviado por meio da *query string*. O seu *controller* também irá receber `params[:action]` com o valor "index" e `params[:controller]` com o valor "clients".
 
 ### `default_url_options`
 
-You can set global default parameters for URL generation by defining a method called `default_url_options` in your controller. Such a method must return a hash with the desired defaults, whose keys must be symbols:
+Você pode determinar parâmetros padrão globais para a geração de URLs definindo um método chamado `default_url_options` no seu *controller*. Este método deve retornar um *hash* com os dados padrão desejados, cujas chaves devem ser símbolos:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -181,39 +179,31 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-These options will be used as a starting point when generating URLs, so it's possible they'll be overridden by the options passed to `url_for` calls.
+Estas opções serão usadas como um ponto de partida na geração de URLs, então é possível que elas sejam sobrescritas pelas opções passadas para chamadas a `url_for`.
 
-If you define `default_url_options` in `ApplicationController`, as in the example above, these defaults will be used for all URL generation. The method can also be defined in a specific controller, in which case it only affects URLs generated there.
+Se você definir `default_url_options` em `ApplicationController`, como no exemplo acima, estes padrões irão ser usados para todas as gerações de URL. O método pode também ser definido num *controller* específico, neste caso afetando somente as URLs geradas a partir desse escopo.
 
-In a given request, the method is not actually called for every single generated URL; for performance reasons, the returned hash is cached, there is at most one invocation per request.
+Numa requisição o método não é de fato chamado para toda URL gerada; por questões de performance o *hash* retornado é cacheado. Há no máximo uma invocação por requisição.
 
-### Strong Parameters
+### Parâmetros Fortes
 
-With strong parameters, Action Controller parameters are forbidden to
-be used in Active Model mass assignments until they have been
-permitted. This means that you'll have to make a conscious decision about
-which attributes to permit for mass update. This is a better security
-practice to help prevent accidentally allowing users to update sensitive
-model attributes.
+Com parâmetros fortes (*strong parameters*), os parâmetros do *Action Controller* são proibidos de serem usados nas atribuições em massa no *Active Model* até que sejam deliberadamente permitidos. Isso significa que você tem que tomar uma decisão consciente sobre quais atributos podem ser permitidos para um *update* em massa. Esta é uma prática mais segura para ajudar a prevenir que acidentalmente os usuários atualizem atributos sensíveis do *model*.
 
-In addition, parameters can be marked as required and will flow through a
-predefined raise/rescue flow that will result in a 400 Bad Request being
-returned if not all required parameters are passed in.
+Além disso, os parâmetros podem ser marcados como obrigatórios e irão seguir por um fluxo de erro e tratamento predefinido que irá resultar num código 400 *Bad Request* sendo retornado caso todos os parâmetros obrigatórios não forem informados.
 
 ```ruby
 class PeopleController < ActionController::Base
-  # This will raise an ActiveModel::ForbiddenAttributesError exception
-  # because it's using mass assignment without an explicit permit
-  # step.
+  # Isso vai lançar uma exceção do tipo ActiveModel::ForbiddenAttributesError
+  # porque está usando atribuição em massa sem passar pela etapa de permitir
+  # explicitamente os parâmetros.
   def create
     Person.create(params[:person])
   end
 
-  # This will pass with flying colors as long as there's a person key
-  # in the parameters, otherwise it'll raise an
-  # ActionController::ParameterMissing exception, which will get
-  # caught by ActionController::Base and turned into a 400 Bad
-  # Request error.
+  # Isso irá passar contanto que exista uma chave de *person* nos parâmetros,
+  # caso contrário o código irá lançar uma exceção do tipo
+  # ActionController::ParameterMissing, que será capturada pelo
+  # ActionController::Base e transformada num erro 400 Bad Request.
   def update
     person = current_account.people.find(params[:id])
     person.update!(person_params)
@@ -221,67 +211,55 @@ class PeopleController < ActionController::Base
   end
 
   private
-    # Using a private method to encapsulate the permissible parameters
-    # is just a good pattern since you'll be able to reuse the same
-    # permit list between create and update. Also, you can specialize
-    # this method with per-user checking of permissible attributes.
+    # Usar um método privado para encapsular os parâmetros permissíveis
+    # é um bom padrão visto que que você poderá reusar a mesma lista
+    # para as actions create e update. Você também pode especificar
+    # este método com a checagem de atributos permitidos de acordo com
+    # cada usuário.
     def person_params
       params.require(:person).permit(:name, :age)
     end
 end
 ```
 
-#### Permitted Scalar Values
+#### Valores Escalares Permitidos
 
-Given
+Dado o seguinte código:
 
 ```ruby
 params.permit(:id)
 ```
 
-the key `:id` will be permitted for inclusion if it appears in `params` and
-it has a permitted scalar value associated. Otherwise, the key is going
-to be filtered out, so arrays, hashes, or any other objects cannot be
-injected.
+a chave `:id` será permitida para inclusão se ela aparecer em `params` e ela tiver um valor escalar permitido associado a ela. Caso contrário a chave será filtrada, então *arrays*, *hashes*, ou quaisquer outros objetos não poderão ser adicionados.
 
-The permitted scalar types are `String`, `Symbol`, `NilClass`,
-`Numeric`, `TrueClass`, `FalseClass`, `Date`, `Time`, `DateTime`,
-`StringIO`, `IO`, `ActionDispatch::Http::UploadedFile`, and
-`Rack::Test::UploadedFile`.
+Os tipos escalares permitidos são `String`, `Symbol`, `NilClass`, `Numeric`, `TrueClass`, `FalseClass`, `Date`, `Time`, `DateTime`, `StringIO`, `IO`, `ActionDispatch::Http::UploadedFile`, e `Rack::Test::UploadedFile`.
 
-To declare that the value in `params` must be an array of permitted
-scalar values, map the key to an empty array:
+Para declarar que o valor em `params` deve ser um *array* de valores escalares permitidos, mapeie a chave para um *array* vazio.
 
 ```ruby
 params.permit(id: [])
 ```
 
-Sometimes it is not possible or convenient to declare the valid keys of
-a hash parameter or its internal structure. Just map to an empty hash:
+Às vezes não é possível ou conveniente declarar as chaves válidas de um parâmetro de *hash* ou sua estrutura interna. Apenas mapeie para um *hash* vazio:
 
 ```ruby
 params.permit(preferences: {})
 ```
 
-but be careful because this opens the door to arbitrary input. In this
-case, `permit` ensures values in the returned structure are permitted
-scalars and filters out anything else.
+entretanto fique atento porque isso abre a porta para *input* arbitrário. Neste caso, `permit` garante que os valores na estrutura retornada são valores escalares permitidos e faz a filtragem de tudo o que houver além deles.
 
-To permit an entire hash of parameters, the `permit!` method can be
-used:
+Para permitir um *hash* completo de parâmetros, o método `permit!` pode ser usado:
 
 ```ruby
 params.require(:log_entry).permit!
 ```
 
-This marks the `:log_entry` parameters hash and any sub-hash of it as
-permitted and does not check for permitted scalars, anything is accepted.
-Extreme care should be taken when using `permit!`, as it will allow all current
-and future model attributes to be mass-assigned.
+Este código marca o *hash* de parâmetros `:log_entry` e qualquer *sub-hash* dele como valores permitidos e não verifica por escalares permitidos, sendo qualquer coisa a partir dele aceita.
+Extremo cuidado deve ser considerado ao usar o método `permit!`, visto que ele irá permitir que todos os atuais e futuros atributos do `model` sejam preenchidos em massa.
 
-#### Nested Parameters
+#### Parâmetros Aninhados
 
-You can also use `permit` on nested parameters, like:
+Você também pode usar `permit` em parâmetros aninhados, da seguinte forma:
 
 ```ruby
 params.permit(:name, { emails: [] },
@@ -289,53 +267,36 @@ params.permit(:name, { emails: [] },
                          { family: [ :name ], hobbies: [] }])
 ```
 
-This declaration permits the `name`, `emails`, and `friends`
-attributes. It is expected that `emails` will be an array of permitted
-scalar values, and that `friends` will be an array of resources with
-specific attributes: they should have a `name` attribute (any
-permitted scalar values allowed), a `hobbies` attribute as an array of
-permitted scalar values, and a `family` attribute which is restricted
-to having a `name` (any permitted scalar values allowed here, too).
+Esta declaração permite o preenchimento dos atributos `name`, `emails`, e `friends`. É esperado que `emails` seja um *array* de valores permitidos escalares, e que `friends` seja um *array* de recursos com atributos específicos: deve possuir um atributo `name` (com quaisquer valores escalares permitidos), um atributo `hobbies` como um *array* de valores permitidos escalares, e um atributo `family` que é restrito a ter um `name` (com qualquer valor escalar permitido também). 
 
-#### More Examples
+#### Mais Exemplos
 
-You may want to also use the permitted attributes in your `new`
-action. This raises the problem that you can't use `require` on the
-root key because, normally, it does not exist when calling `new`:
+Você pode também querer usar os atributos permitidos na sua *action* `new`. Isso traz o problema que você não pode chamar `require` na chave raiz porque normalmente ela não existe no momento da chamada de `new`
 
 ```ruby
-# using `fetch` you can supply a default and use
-# the Strong Parameters API from there.
+# usando fetch você pode fornecer um valor padrão e visualizar
+# a API de Parâmetros Fortes a partir dele.
 params.fetch(:blog, {}).permit(:title, :author)
 ```
 
-The model class method `accepts_nested_attributes_for` allows you to
-update and destroy associated records. This is based on the `id` and `_destroy`
-parameters:
+O método da classe *model* `accepts_nested_attributes_for` te permite atualizar e destruir outros *models* associados. Isso é baseado nos parâmetros `id` e `_destroy`:
 
 ```ruby
-# permit :id and :_destroy
+# permite :id e :_destroy
 params.require(:author).permit(:name, books_attributes: [:title, :id, :_destroy])
 ```
 
-Hashes with integer keys are treated differently, and you can declare
-the attributes as if they were direct children. You get these kinds of
-parameters when you use `accepts_nested_attributes_for` in combination
-with a `has_many` association:
+*Hashes* com chaves de valor do tipo inteiro são tratados de maneira diferente, e você pode declarar os atributos como se eles fossem atributos filhos imediatos. Você obtém estes tipos de parâmetros quando você usa `accepts_nested_attributes_for` combinado com uma associação `has_many`:
 
 ```ruby
-# To permit the following data:
+# Para permitir os seguintes dados:
 # {"book" => {"title" => "Some Book",
 #             "chapters_attributes" => { "1" => {"title" => "First Chapter"},
 #                                        "2" => {"title" => "Second Chapter"}}}}
-
 params.require(:book).permit(:title, chapters_attributes: [:title])
 ```
 
-Imagine a scenario where you have parameters representing a product
-name and a hash of arbitrary data associated with that product, and
-you want to permit the product name attribute and also the whole
-data hash:
+Imagine um cenário onde você tem parâmetros representando um nome de produto e um *hash* de dados arbitrários associado a esse produto, e você queira permitir o preenchimento do atributo de nome do produto e também o *hash* de dados:
 
 ```ruby
 def product_params
@@ -343,12 +304,9 @@ def product_params
 end
 ```
 
-#### Outside the Scope of Strong Parameters
+#### Fora do Escopo de Parâmetros Fortes
 
-The strong parameter API was designed with the most common use cases
-in mind. It is not meant as a silver bullet to handle all of your
-parameter filtering problems. However, you can easily mix the API with your
-own code to adapt to your situation.
+A API de parâmetros fortes foi desenhada com os casos mais comuns em mente. Não houve a intenção de torná-la uma bala prateada para lidar com todos os seus problemas de filtragem de parâmetros. Entretanto, você pode facilmente misturar a API com seu próprio código para se adaptar à sua situação.
 
 Sessão
 ------
