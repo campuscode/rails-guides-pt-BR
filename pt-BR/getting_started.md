@@ -709,32 +709,32 @@ TIP: Para mais informações, veja a referência acima e
 [este artigo sobre *Strong Parameters*]
 (https://weblog.rubyonrails.org/2012/3/21/strong-parameters/).
 
-### Showing Articles
+### Mostrando Artigos
 
-If you submit the form again now, Rails will complain about not finding the
-`show` action. That's not very useful though, so let's add the `show` action
-before proceeding.
+Se você enviar o formulário novamente agora, o Rails reclamará por não encontrar a
+*action* `show`. Isso não é muito útil, então vamos adicionar a *action* `show`
+antes de proceder.
 
-As we have seen in the output of `rails routes`, the route for `show` action is
-as follows:
+Como vimos na exibição de `rails routes`, a rota para a *action*` show` é
+do seguinte modo:
 
 ```
 article GET    /articles/:id(.:format)      articles#show
 ```
 
-The special syntax `:id` tells rails that this route expects an `:id`
-parameter, which in our case will be the id of the article.
+A sintaxe especial `:id` diz ao Rails que esta rota espera um parâmetro `:id`,
+que no nosso caso será o id (identificador) do artigo.
 
-As we did before, we need to add the `show` action in
-`app/controllers/articles_controller.rb` and its respective view.
+Como fizemos antes, precisamos adicionar a *action* `show` no
+`app/controllers/articles_controller.rb` e sua respectiva *view*.
 
-NOTE: A frequent practice is to place the standard CRUD actions in each
-controller in the following order: `index`, `show`, `new`, `edit`, `create`, `update`
-and `destroy`. You may use any order you choose, but keep in mind that these
-are public methods; as mentioned earlier in this guide, they must be placed
-before declaring `private` visibility in the controller.
+NOTE: Uma prática frequente é colocar as ações CRUD padrão em cada
+*controller* na seguinte ordem: `index`,` show`, `new`,` edit`, `create`,` update`
+e `destroy`. Você pode usar qualquer ordem que escolher, mas lembre-se de que esses
+são métodos públicos; conforme mencionado anteriormente neste guia, eles devem ser colocados
+antes de declarar visibilidade `private` no *controller*.
 
-Given that, let's add the `show` action, as follows:
+Dado isso, vamos adicionar a *action* `show`, da seguinte maneira:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -744,35 +744,33 @@ class ArticlesController < ApplicationController
 
   def new
   end
-
-  # snippet for brevity
 ```
 
-A couple of things to note. We use `Article.find` to find the article we're
-interested in, passing in `params[:id]` to get the `:id` parameter from the
-request. We also use an instance variable (prefixed with `@`) to hold a
-reference to the article object. We do this because Rails will pass all instance
-variables to the view.
+Algumas coisas a serem observadas. Usamos `Article.find` para encontrar o artigo que nos
+interessa, passando `params[:id]` para obter o parâmetro `:id` da requisição. 
+Também usamos uma variável de instância (prefixada com `@`) para conter uma
+referência ao objeto do artigo. Fazemos isso porque o Rails passará todas as variáveis de instância
+para a *view*.
 
-Now, create a new file `app/views/articles/show.html.erb` with the following
-content:
+Agora, crie um novo arquivo `app/views/articles/show.html.erb` com o seguinte
+conteúdo:
 
 ```html+erb
 <p>
-  <strong>Title:</strong>
+  <strong>Título:</strong>
   <%= @article.title %>
 </p>
 
 <p>
-  <strong>Text:</strong>
+  <strong>Texto:</strong>
   <%= @article.text %>
 </p>
 ```
 
-With this change, you should finally be able to create new articles.
-Visit <http://localhost:3000/articles/new> and give it a try!
+Com essa mudança, você deve finalmente conseguir criar novos artigos.
+Visite <http://localhost:3000/articles/new> e faça uma tentativa!
 
-![Show action for articles](images/getting_started/show_action_for_articles.png)
+![Imagem mostrando artigos](images/getting_started/show_action_for_articles.png)
 
 ### Listando todos os artigos
 
@@ -829,87 +827,87 @@ E então, finalmente, adicione a *view* para essa *action*, localizada em
 Agora se você acessar <http://localhost:3000/articles> você verá uma lista de todos os
 artigos que você criou.
 
-### Adding links
+### Adicionando links
 
-You can now create, show, and list articles. Now let's add some links to
-navigate through pages.
+Você pode agora criar, mostrar e listar artigos. Agora vamos adicionar links
+para navegação pelas páginas.
 
-Open `app/views/welcome/index.html.erb` and modify it as follows:
+Abra o arquivo `app/views/welcome/index.html.erb` e modifique-o da seguinte maneira:
 
 ```html+erb
-<h1>Hello, Rails!</h1>
-<%= link_to 'My Blog', controller: 'articles' %>
+<h1>Olá, Rails!</h1>
+<%= link_to 'Meu Blog', controller: 'articles' %>
 ```
 
-The `link_to` method is one of Rails' built-in view helpers. It creates a
-hyperlink based on text to display and where to go - in this case, to the path
-for articles.
+O método `link_to` é um dos *view helpers* (auxiliares de exibição) internos do Rails. Isso cria um
+hiperlink com base no texto a ser exibido e para onde ir - nesse caso, para o caminho
+dos artigos.
 
-Let's add links to the other views as well, starting with adding this
-"New Article" link to `app/views/articles/index.html.erb`, placing it above the
-`<table>` tag:
+Vamos adicionar links para as outras *views* também, começando com a adição deste
+link de "Novo artigo" em `app/views/articles/index.html.erb`, colocando-o acima da
+tag `<table>`:
 
 ```erb
-<%= link_to 'New article', new_article_path %>
+<%= link_to 'Novo artigo', new_article_path %>
 ```
 
-This link will allow you to bring up the form that lets you create a new article.
+Este link permitirá abrir o formulário para criar um novo artigo.
 
-Now, add another link in `app/views/articles/new.html.erb`, underneath the
-form, to go back to the `index` action:
+Agora, adicione outro link em `app/views/articles/new.html.erb`, abaixo do
+formulário para retornar à *action* `index`:
 
 ```erb
 <%= form_with scope: :article, url: articles_path, local: true do |form| %>
   ...
 <% end %>
 
-<%= link_to 'Back', articles_path %>
+<%= link_to 'Voltar', articles_path %>
 ```
 
-Finally, add a link to the `app/views/articles/show.html.erb` template to
-go back to the `index` action as well, so that people who are viewing a single
-article can go back and view the whole list again:
+Por fim, adicione um link à *view* `app/views/articles/show.html.erb` para
+voltar também à *action* `index ', assim as pessoas que estão visualizando um único
+artigo podem voltar e exibir a lista inteira novamente:
 
 ```html+erb
 <p>
-  <strong>Title:</strong>
+  <strong>Título:</strong>
   <%= @article.title %>
 </p>
 
 <p>
-  <strong>Text:</strong>
+  <strong>Texto:</strong>
   <%= @article.text %>
 </p>
 
-<%= link_to 'Back', articles_path %>
+<%= link_to 'Voltar', articles_path %>
 ```
 
-TIP: If you want to link to an action in the same controller, you don't need to
-specify the `:controller` option, as Rails will use the current controller by
-default.
+TIP: Se você deseja vincular a uma *action* no mesmo *controller*, não precisa
+especificar a opção `:controller`, pois o Rails usará o *controller* atual por
+padrão.
 
-TIP: In development mode (which is what you're working in by default), Rails
-reloads your application with every browser request, so there's no need to stop
-and restart the web server when a change is made.
+TIP: No modo de desenvolvimento (que é o que você está trabalhando por padrão), o Rails
+recarrega sua aplicação com todas as solicitações do navegador, portanto, não é necessário parar
+e reiniciar o servidor web quando uma alteração for feita.
 
-### Adding Some Validation
+### Adicionando Algumas Validações
 
-The model file, `app/models/article.rb` is about as simple as it can get:
+O arquivo de *model* `app/models/article.rb` é o mais simples possível:
 
 ```ruby
 class Article < ApplicationRecord
 end
 ```
 
-There isn't much to this file - but note that the `Article` class inherits from
-`ApplicationRecord`. `ApplicationRecord` inherits from `ActiveRecord::Base`
-which supplies a great deal of functionality to your Rails models for free,
-including basic database CRUD (Create, Read, Update, Destroy) operations, data
-validation, as well as sophisticated search support and the ability to relate
-multiple models to one another.
+Não há muito nesse arquivo - mas observe que a classe `Article` herda de
+`ApplicationRecord`. `ApplicationRecord` herda de `ActiveRecord::Base`
+que fornece uma grande funcionalidade aos seus *models* do Rails gratuitamente,
+incluindo operações básicas de CRUD (*Create* (Criar), *Read* (Ler), *Update* (Atualizar), *Destroy* (Remover)) do banco de dados,
+validação de dados, bem como suporte sofisticado à pesquisa e capacidade de relacionar
+vários *models* entre si.
 
-Rails includes methods to help you validate the data that you send to models.
-Open the `app/models/article.rb` file and edit it:
+O Rails inclui métodos para ajudá-lo a validar os dados que você envia aos *models*.
+Abra o arquivo `app/models/article.rb` e edite-o:
 
 ```ruby
 class Article < ApplicationRecord
@@ -918,19 +916,19 @@ class Article < ApplicationRecord
 end
 ```
 
-These changes will ensure that all articles have a title that is at least five
-characters long. Rails can validate a variety of conditions in a model,
-including the presence or uniqueness of columns, their format, and the
-existence of associated objects. Validations are covered in detail in [Active
+Essas alterações garantirão que todos os artigos tenham um título com pelo menos cinco
+caracteres. O Rails pode validar uma variedade de condições em um *model*,
+incluindo a presença ou exclusividade de colunas, seu formato e a
+existência de objetos associados. As validações são abordadas em detalhes em Active
 Record Validations](active_record_validations.html).
 
-With the validation now in place, when you call `@article.save` on an invalid
-article, it will return `false`. If you open
-`app/controllers/articles_controller.rb` again, you'll notice that we don't
-check the result of calling `@article.save` inside the `create` action.
-If `@article.save` fails in this situation, we need to show the form back to the
-user. To do this, change the `new` and `create` actions inside
-`app/controllers/articles_controller.rb` to these:
+Com a validação agora em atividade, quando você chama `@article.save` em um
+artigo inválido, a expressão retornará `false`. Se você abrir o arquivo
+`app/controllers/articles_controller.rb` novamente, você notará que não
+verificamos o resultado da chamada `@article.save` dentro da *action* `create`.
+Se `@article.save` falhar nessa situação, precisamos mostrar o formulário de volta ao
+usuário. Para fazer isso, altere as ações `new` e` create` dentro
+`app/controllers/articles_controller.rb` para estes:
 
 ```ruby
 def new
@@ -953,21 +951,21 @@ private
   end
 ```
 
-The `new` action is now creating a new instance variable called `@article`, and
-you'll see why that is in just a few moments.
+A ação `new` agora está criando uma nova variável de instância chamada `@article`, e
+você verá por que isso ocorre em apenas alguns momentos.
 
-Notice that inside the `create` action we use `render` instead of `redirect_to`
-when `save` returns `false`. The `render` method is used so that the `@article`
-object is passed back to the `new` template when it is rendered. This rendering
-is done within the same request as the form submission, whereas the
-`redirect_to` will tell the browser to issue another request.
+Observe que dentro da ação `create` usamos `render` em vez de `redirect_to`
+quando o `save` retorna `false`. O método `render` é usado para que o objeto `@article`
+seja enviado de volta para a *view* `new` quando ela é renderizada. Esta renderização
+é feita dentro da mesma solicitação que o envio do formulário, enquanto o
+`redirect_to` dirá ao navegador para realizar outra solicitação.
 
-If you reload
-<http://localhost:3000/articles/new> and
-try to save an article without a title, Rails will send you back to the
-form, but that's not very useful. You need to tell the user that
-something went wrong. To do that, you'll modify
-`app/views/articles/new.html.erb` to check for error messages:
+Se você recarregar
+<http://localhost:3000/articles/new> e
+tentar salvar um artigo sem título, o Rails te enviará de volta ao
+formulário, mas isso não é muito útil. Você precisa dizer ao usuário que
+algo deu errado. Para fazer isso, você pode modificar o arquivo
+`app/views/articles/new.html.erb` para verificar se há mensagens de erro:
 
 ```html+erb
 <%= form_with scope: :article, url: articles_path, local: true do |form| %>
@@ -975,8 +973,8 @@ something went wrong. To do that, you'll modify
   <% if @article.errors.any? %>
     <div id="error_explanation">
       <h2>
-        <%= pluralize(@article.errors.count, "error") %> prohibited
-        this article from being saved:
+        <%= pluralize(@article.errors.count, "erro") %> não permitiram
+        este artigo de ser salvo:
       </h2>
       <ul>
         <% @article.errors.full_messages.each do |msg| %>
@@ -987,42 +985,40 @@ something went wrong. To do that, you'll modify
   <% end %>
 
   <p>
-    <%= form.label :title %><br>
+    <%= form.label :title, 'Título' %><br>
     <%= form.text_field :title %>
   </p>
 
   <p>
-    <%= form.label :text %><br>
+    <%= form.label :text, 'Texto' %><br>
     <%= form.text_area :text %>
   </p>
 
   <p>
-    <%= form.submit %>
+    <%= form.submit, 'Enviar' %>
   </p>
 
 <% end %>
 
-<%= link_to 'Back', articles_path %>
+<%= link_to 'Voltar', articles_path %>
 ```
 
-A few things are going on. We check if there are any errors with
-`@article.errors.any?`, and in that case we show a list of all
-errors with `@article.errors.full_messages`.
+Algumas coisas estão acontecendo. Verificamos se há algum erro com
+`@article.errors.any?` e, nesse caso, mostramos uma lista de todos
+erros com `@article.errors.full_messages`.
 
-`pluralize` is a rails helper that takes a number and a string as its
-arguments. If the number is greater than one, the string will be automatically
-pluralized.
+`pluralize` é um auxiliar que recebe um número e uma string como
+argumentos. Se o número for maior que um, a sequência será automaticamente
+pluralizada.
 
-The reason why we added `@article = Article.new` in the `ArticlesController` is
-that otherwise `@article` would be `nil` in our view, and calling
-`@article.errors.any?` would throw an error.
+A razão pela qual adicionamos `@article = Article.new` no `ArticlesController` é
+que, caso contrário, `@article` seria `nil` em nossa *view*, e chamar
+`@article.errors.any?` geraria um erro.
 
-TIP: Rails automatically wraps fields that contain an error with a div
-with class `field_with_errors`. You can define a CSS rule to make them
-standout.
+TIP: O Rails agrupa automaticamente os campos que contêm um erro com uma div
+com a classe `field_with_errors`. Você pode definir uma regra CSS destacá-los.
 
-Now you'll get a nice error message when saving an article without a title when
-you attempt to do just that on the new article form
+Agora você receberá uma boa mensagem de erro ao tentar salvar um artigo sem título no nosso formulário de criação de artigo
 <http://localhost:3000/articles/new>:
 
 ![Form With Errors](images/getting_started/form_with_errors.png)
