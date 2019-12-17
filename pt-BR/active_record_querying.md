@@ -231,7 +231,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients ORDER BY clients.first_name ASC LIMIT 1
 ```
 
-O método `first!` se comporta exatamente como o `first`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
+O método `first!` se comporta exatamente como o `first`, exceto que irá gerar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
 correspondente for encontrado.
 
 #### `last`
