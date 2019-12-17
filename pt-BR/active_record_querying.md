@@ -311,7 +311,7 @@ O equivalente ao de cima, em SQL, seria
 SELECT * FROM clients WHERE (clients.first_name = 'Lifo') LIMIT 1
 ```
 
-O método `find_by` se comporta exatamente como o `find_by`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
+O método `find_by` se comporta exatamente como o `find_by`, exceto que irá gerar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
 correspondente for encontrado. Por exemplo:
 
 ```ruby
