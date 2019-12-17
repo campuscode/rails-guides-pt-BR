@@ -747,7 +747,7 @@ class ArticlesController < ApplicationController
 ```
 
 Algumas coisas a serem observadas. Usamos `Article.find` para encontrar o artigo que nos
-interessa, passando `params[:id]` para obter o parâmetro `:id` da requisição. 
+interessa, passando `params[:id]` para obter o parâmetro `:id` da requisição.
 Também usamos uma variável de instância (prefixada com `@`) para conter uma
 referência ao objeto do artigo. Fazemos isso porque o Rails passará todas as variáveis de instância
 para a *view*.
@@ -782,7 +782,7 @@ articles GET    /articles(.:format)          articles#index
 ```
 
 Adicione a *action* `index` correspondente a essa rota dentro do
-`ArticlesController` no arquivo `app/controllers/articles_controller.rb`. 
+`ArticlesController` no arquivo `app/controllers/articles_controller.rb`.
 Quando escrevemos uma *action* `index`, a prática usual é colocá-lo como
 o primeiro método no *controller*. Vamos fazer isso:
 
@@ -805,7 +805,7 @@ E então, finalmente, adicione a *view* para essa *action*, localizada em
 `app/views/articles/index.html.erb`:
 
 ```html+erb
-<h1>Listing articles</h1>
+<h1>Listing Articles</h1>
 
 <table>
   <tr>
@@ -1056,7 +1056,7 @@ Crie um arquivo chamado `app/views/articles/edit.html.erb` e deixe-o como
 mostrado em seguida:
 
 ```html+erb
-<h1>Edit article</h1>
+<h1>Edit Article</h1>
 
 <%= form_with(model: @article, local: true) do |form| %>
 
@@ -1247,7 +1247,7 @@ Agora, vamos atualizar a _view_ `app/views/articles/new.html.erb` para usar a
 nova _partial_, reescrevendo-a completamente:
 
 ```html+erb
-<h1>New article</h1>
+<h1>New Article</h1>
 
 <%= render 'form' %>
 
@@ -1257,7 +1257,7 @@ nova _partial_, reescrevendo-a completamente:
 Depois, faremos o mesmo em `app/views/articles/edit.html.erb`:
 
 ```html+erb
-<h1>Edit article</h1>
+<h1>Edit Article</h1>
 
 <%= render 'form' %>
 
@@ -1954,7 +1954,6 @@ consultar estes recursos:
 
 * O [Guia Rails](index.html)
 * O [Ruby on Rails Guides](https://guides.rubyonrails.org)
-* O [Ruby on Rails Tutorial](https://www.railstutorial.org/book)
 * A [lista de discussão do Ruby on Rails](https://groups.google.com/group/rubyonrails-talk)
 * O canal [#rubyonrails](irc://irc.freenode.net/#rubyonrails) no irc.freenode.net
 
