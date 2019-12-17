@@ -142,7 +142,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients WHERE (clients.id IN (1,10))
 ```
 
-WARNING: O método `find` irá levantar uma excecão `ActiveRecord::RecordNotFound` a não ser que um registro correspondente seja encontrado para **todas** as primary keys fornecidas.
+WARNING: O método `find` irá gerar uma excecão `ActiveRecord::RecordNotFound` a não ser que um registro correspondente seja encontrado para **todas** as primary keys fornecidas.
 
 #### `take`
 
