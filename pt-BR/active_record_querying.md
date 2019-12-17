@@ -284,7 +284,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients ORDER BY clients.first_name DESC LIMIT 1
 ```
 
-O método `last!` se comporta exatamente como o `last`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
+O método `last!` se comporta exatamente como o `last`, exceto que irá gerar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
 correspondente for encontrado.
 
 #### `find_by`
