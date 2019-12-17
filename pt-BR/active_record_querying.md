@@ -125,7 +125,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients WHERE (clients.id = 10) LIMIT 1
 ```
 
-O método `find` irá levantar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro correspondente for encontrado.
+O método `find` irá gerar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro correspondente for encontrado.
 
 Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de *primary keys*. 
 Será retornado um array contendo todos os registros correspondentes para as *primary keys* fornecidas. Por exemplo:
