@@ -196,7 +196,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients ORDER BY clients.id ASC LIMIT 1
 ```
 
-O método `first` retorna `nil` se não for encontrado nenhum registro correspondente e não levantará exceção.
+O método `first` retorna `nil` se não for encontrado nenhum registro correspondente e nenhuma exceção é gerada.
 
 Se o seu [default scope](active_record_querying.html#applying-a-default-scope) contém um método de ordenação, `first` irá retornar o primeiro
 registro de acordo com essa ordenação.
