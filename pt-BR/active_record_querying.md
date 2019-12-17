@@ -177,7 +177,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients LIMIT 2
 ```
 
-O método `take!` se comporta exatamente como o `take`, exceto que irá levantar uma exceção `ActiveRecord::RecordNotFound` caso não encontre nenhum registro correspondente.
+O método `take!` se comporta exatamente como o `take`, exceto que irá gerar uma exceção `ActiveRecord::RecordNotFound` caso não encontre nenhum registro correspondente.
 
 TIP: O registro retornado pode variar dependendo do mecanismo do banco de dados.
 
