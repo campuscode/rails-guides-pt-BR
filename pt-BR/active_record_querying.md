@@ -4,7 +4,7 @@
 Interface de Consulta do *Active Record*
 =============================
 
-Este guia cobre diferentes maneiras de recuparar dados de um banco de dados utilizando o *Active Record*
+Este guia cobre diferentes maneiras de recuperar dados de um banco de dados utilizando o *Active Record*
 
 Após ler esse guia, você saberá:
 
