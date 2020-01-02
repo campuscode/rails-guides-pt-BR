@@ -132,7 +132,7 @@ end
 
 ### A associação `has_one`
 
-Uma associação `has_one` também estabelece uma conexão one-para-one com outro *model*, mas com semânticas um pouco diferentes (e consequências). Essa associação indica que cada instância de um modelo contém ou possui uma instância de outro *model*. Por exemplo, se cada *supplier* em sua aplicação tiver apenas uma *account*, você declarará o *model* de *supplier* como este:
+Uma associação `has_one` também estabelece uma conexão one-para-one com outro *model*, mas com semânticas um pouco diferentes (e consequências). Essa associação indica que cada instância de um modelo contém ou possui uma instância de outro *model*. Por exemplo, se cada fornecedor em sua aplicação tiver apenas uma conta, você declarará o *model* de fornecedor como este:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -172,9 +172,9 @@ create_table :accounts do |t|
 end
 ```
 
-### The `has_many` Association
+### A Associação `has_many`
 
-A `has_many` association indicates a one-to-many connection with another model. You'll often find this association on the "other side" of a `belongs_to` association. This association indicates that each instance of the model has zero or more instances of another model. For example, in an application containing authors and books, the author model could be declared like this:
+Uma associação `has_many` indica uma conexão um-para-muitos com outro *model*. Você encontrará frequentemente essa associação no "outro lado" de uma associação `belongs_to`. Essa associação indica que cada instância do *model* possui zero ou mais instâncias de outro *model*. Por exemplo, em uma aplicação que contém *authors* e *books*, o *model* do *author* pode ser declarado assim:
 
 ```ruby
 class Author < ApplicationRecord
@@ -182,11 +182,11 @@ class Author < ApplicationRecord
 end
 ```
 
-NOTE: The name of the other model is pluralized when declaring a `has_many` association.
+NOTE: O nome do outro *model* é pluralizado ao declarar uma associação `has_many`.
 
-![has_many Association Diagram](images/association_basics/has_many.png)
+![Diagrama de Assocação has_many](images/association_basics/has_many.png)
 
-The corresponding migration might look like this:
+A *migration* correpondente parecerá assim:
 
 ```ruby
 class CreateAuthors < ActiveRecord::Migration[5.0]
@@ -205,9 +205,9 @@ class CreateAuthors < ActiveRecord::Migration[5.0]
 end
 ```
 
-### The `has_many :through` Association
+### A Associação `has_many :through`
 
-A `has_many :through` association is often used to set up a many-to-many connection with another model. This association indicates that the declaring model can be matched with zero or more instances of another model by proceeding _through_ a third model. For example, consider a medical practice where patients make appointments to see physicians. The relevant association declarations could look like this:
+Uma associação `has_many: through` é frequentemente usada para estabelecer uma conexão muitos-para-muitos com outro *model*. Essa associação indica que o *model*  declarado pode ser correspondido com zero ou mais instâncias de outro *model*, prosseguindo através (_through_) de um terceiro *model*. Por exemplo, considere uma prática médica em que os pacientes marcam consultas com médicos. As declarações de associação relevantes podem ter a seguinte aparência:
 
 ```ruby
 class Physician < ApplicationRecord
@@ -226,9 +226,9 @@ class Patient < ApplicationRecord
 end
 ```
 
-![has_many :through Association Diagram](images/association_basics/has_many_through.png)
+![Diagrama de Associação has_many :through](images/association_basics/has_many_through.png)
 
-The corresponding migration might look like this:
+A *migration* correpondente parecerá assim:
 
 ```ruby
 class CreateAppointments < ActiveRecord::Migration[5.0]
@@ -253,19 +253,19 @@ class CreateAppointments < ActiveRecord::Migration[5.0]
 end
 ```
 
-The collection of join models can be managed via the [`has_many` association methods](#has-many-association-reference).
-For example, if you assign:
+O conjunto da junção dos *models* pode ser gerenciada através dos [métodos de associação `has_many`](#has-many-association-reference).
+Por exemplo, se você atribuir:
 
 ```ruby
 physician.patients = patients
 ```
 
-Then new join models are automatically created for the newly associated objects.
-If some that existed previously are now missing, then their join rows are automatically deleted.
+Em seguida, novos *models* de junção são criados automaticamente para os objetos recém-associados.
+Se alguns que existiam anteriormente estão faltando agora, suas linhas de junção são excluídas automaticamente.
 
-WARNING: Automatic deletion of join models is direct, no destroy callbacks are triggered.
+WARNING: A exclusão automática de *models* de junção é direta, nenhum *callback* de destruição é acionado.
 
-The `has_many :through` association is also useful for setting up "shortcuts" through nested `has_many` associations. For example, if a document has many sections, and a section has many paragraphs, you may sometimes want to get a simple collection of all paragraphs in the document. You could set that up this way:
+A associação `has_many: through` também é útil para configurar "atalhos" através de associações aninhadas `has_many`. Por exemplo, se um documento possui muitas seções e uma seção com muitos parágrafos, você pode obter uma coleção simples de todos os parágrafos do documento. Você pode configurar dessa maneira:
 
 ```ruby
 class Document < ApplicationRecord
@@ -283,18 +283,18 @@ class Paragraph < ApplicationRecord
 end
 ```
 
-With `through: :sections` specified, Rails will now understand:
+Com `through: :section` especificado, o Rails agora entenderá:
 
 ```ruby
 @document.paragraphs
 ```
 
-### The `has_one :through` Association
+### A Associação `has_one :through`
 
-A `has_one :through` association sets up a one-to-one connection with another model. This association indicates
-that the declaring model can be matched with one instance of another model by proceeding _through_ a third model.
-For example, if each supplier has one account, and each account is associated with one account history, then the
-supplier model could look like this:
+Uma Associação `has_one :through` estabelece uma conexão um-para-um com outro `model`. Essa associação indica
+que o `model` declarante pode ser combinado com uma instância de outro `model`, prosseguindo através(_through_) de um teceiro `model`.
+Por exemplo, se cada `supplier` tiver uma `account`, e cada `account` estiver associada a um `account history`, então o
+`model supplier` poderia ficar assim:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -314,7 +314,7 @@ end
 
 ![has_one :through Association Diagram](images/association_basics/has_one_through.png)
 
-The corresponding migration might look like this:
+A *migration* correpondente parecerá assim:
 
 ```ruby
 class CreateAccountHistories < ActiveRecord::Migration[5.0]
@@ -339,9 +339,9 @@ class CreateAccountHistories < ActiveRecord::Migration[5.0]
 end
 ```
 
-### The `has_and_belongs_to_many` Association
+### A Associação `has_and_belongs_to_many`
 
-A `has_and_belongs_to_many` association creates a direct many-to-many connection with another model, with no intervening model. For example, if your application includes assemblies and parts, with each assembly having many parts and each part appearing in many assemblies, you could declare the models this way:
+Uma associação `has_and_belongs_to_many` cria uma conexão direta `many-to-many` com outro `model`, sem nenhum `model` intermediário. Por exemplo, se sua aplicação incluir `assemblies` e `parts`, com cada `assembly` tendo muitas `parts` e cada `part` aparecendo em muitas `assemblies`, você poderá declarar os `model` desta maneira:
 
 ```ruby
 class Assembly < ApplicationRecord
