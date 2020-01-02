@@ -202,7 +202,7 @@ Please refer to the [Changelog][action-pack] for detailed changes.
 
 *   Remove deprecated methods in `ActionDispatch::TestResponse`:
     `#success?` in favor of `#successful?`, `#missing?` in favor of `#not_found?`,
-    `#error?` in favor of `#server_error?`
+    `#error?` in favor of `#server_error?`.
     ([Commit](https://github.com/rails/rails/commit/13ddc92e079e59a0b894e31bf5bb4fdecbd235d1))
 
 ### Deprecations
@@ -300,6 +300,15 @@ Please refer to the [Changelog][action-view] for detailed changes.
 *   Deprecate calling private model methods from the `options_from_collection_for_select` view helper.
     ([Pull Request](https://github.com/rails/rails/pull/33547))
 
+*   Deprecate `ActionView::TemplateRender.render(file: )` handling relative paths.
+    Paths should now be absolute.
+    ([Pull Request](https://github.com/rails/rails/pull/35688))
+
+*   Deprecate single arity template handlers. The `call` method of
+    `ActionView::Template::Handlers` subclasses should now accept two parameters,
+    the view object and the source for the view object.
+    ([Pull Request](https://github.com/rails/rails/pull/35119))
+
 ### Notable changes
 
 *   Clear ActionView cache in development only on file changes, speeding up
@@ -336,6 +345,10 @@ Please refer to the [Changelog][action-view] for detailed changes.
 
 *   Add I18n key style support for locale keys to submit tags.
     ([Pull Request](https://github.com/rails/rails/pull/26799))
+
+*   `ActionView::TemplateRender.render(file: )` now renders the file directly,
+    without using any handlers, using the new `Template::RawFile` class.
+    ([Pull Request](https://github.com/rails/rails/pull/35688))
 
 Action Mailer
 -------------
@@ -768,7 +781,7 @@ Please refer to the [Changelog][active-support] for detailed changes.
     ([Pull Request](https://github.com/rails/rails/pull/34123))
 
 *   Deprecate `ActiveSupport::Multibyte::Unicode#normalize`
-    and `ActiveSuppport::Multibyte::Chars#normalize` in favor of
+    and `ActiveSupport::Multibyte::Chars#normalize` in favor of
     `String#unicode_normalize`.
     ([Pull Request](https://github.com/rails/rails/pull/34202))
 
@@ -777,7 +790,7 @@ Please refer to the [Changelog][active-support] for detailed changes.
     ([Pull Request](https://github.com/rails/rails/pull/34215))
 
 *   Deprecate `ActiveSupport::Multibyte::Unicode#pack_graphemes(array)`
-    and `ActiveSuppport::Multibyte::Unicode#unpack_graphemes(string)`
+    and `ActiveSupport::Multibyte::Unicode#unpack_graphemes(string)`
     in favor of `array.flatten.pack("U*")` and `string.scan(/\X/).map(&:codepoints)`,
     respectively.
     ([Pull Request](https://github.com/rails/rails/pull/34254))
