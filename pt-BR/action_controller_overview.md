@@ -267,7 +267,7 @@ params.permit(:name, { emails: [] },
                          { family: [ :name ], hobbies: [] }])
 ```
 
-Esta declaração permite o preenchimento dos atributos `name`, `emails`, e `friends`. É esperado que `emails` seja um *array* de valores permitidos escalares, e que `friends` seja um *array* de recursos com atributos específicos: deve possuir um atributo `name` (com quaisquer valores escalares permitidos), um atributo `hobbies` como um *array* de valores permitidos escalares, e um atributo `family` que é restrito a ter um `name` (com qualquer valor escalar permitido também). 
+Esta declaração permite o preenchimento dos atributos `name`, `emails`, e `friends`. É esperado que `emails` seja um *array* de valores permitidos escalares, e que `friends` seja um *array* de recursos com atributos específicos: deve possuir um atributo `name` (com quaisquer valores escalares permitidos), um atributo `hobbies` como um *array* de valores permitidos escalares, e um atributo `family` que é restrito a ter um `name` (com qualquer valor escalar permitido também).
 
 #### Mais Exemplos
 
@@ -597,10 +597,11 @@ manualmente ao ler os valores em requisições subsequentes.
 
 Se você usar o *cookie* de armazenamento de sessão, isso também se aplicaria aos *hashes* `session` e `flash`.
 
-Rendering XML and JSON data
+Renderizando dados XML e JSON
 ---------------------------
 
-ActionController makes it extremely easy to render `XML` or `JSON` data. If you've generated a controller using scaffolding, it would look something like this:
+O *ActionController* faz com que renderizar dados `XML` ou `JSON` seja extremamente fácil. Se você gerou um *controller*
+usando o *scaffold*, será algo mais ou menos assim:
 
 ```ruby
 class UsersController < ApplicationController
@@ -615,7 +616,8 @@ class UsersController < ApplicationController
 end
 ```
 
-You may notice in the above code that we're using `render xml: @users`, not `render xml: @users.to_xml`. If the object is not a String, then Rails will automatically invoke `to_xml` for us.
+Você pode observar que no código acima estamos usando `render xml: @users`, e não `render xml: @users.to_xml`. Se o objeto
+não é uma *String*, então o Rails automaticamente chama `to_xml` por nós.
 
 Filters
 -------
