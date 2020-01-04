@@ -67,11 +67,11 @@ Convenção sobre configuração no Active Record
 ----------------------------------------------
 
 Quando escrevemos aplicações usando outras linguagens de programação ou frameworks, pode
-ser necessário escreve muito código de configuração. Isto é particularmente verdadeiro para
+ser necessário escrever muito código de configuração. Isto é particularmente verdadeiro para
 frameworks ORM em geral. Entretanto, se você seguir as convenções adotadas pelo Rails, será
 necessário escrever pouco código de configuração (em alguns casos, nenhum) quando criar *models*
 do *Active Record*. A idéia por trás disso é que se você configura a sua aplicação da mesma
-forma na maior parte da vezes, ela deveria ser a forma padrão. Então, configuração explicita faz-se
+forma na maior parte da vezes, ela deveria ser a forma padrão. Então, configuração explícita faz-se
 necessária somente em casos que você não pode seguir a convenção padrão.
 
 ### Convenções para nomeação
@@ -133,7 +133,7 @@ comportamentos adicionais para instâncias do *Active Record*.
   `Artigo` que possui várias instâncias de `Comentario` vai cachear o número de
   comentários existentes para cada artigo.
 
-NOTA: Apesar de essas colunas serem opcionais, elas estão em fato reservadas pelo *Active Record*. Evite utilizar
+NOTE: Apesar de essas colunas serem opcionais, elas estão em fato reservadas pelo *Active Record*. Evite utilizar
 palavras-chave reservadas a não ser que você deseje a funcionalidade adicional. Por exemplo, `type` é uma
 palavra-chave reservada para designar que uma tabela está usando Herança de tabela única (STI). Se você não está
 utilizando STI, tente utilizar análogos como `context`, que ainda descrevem de forma correta o tipo de dado
