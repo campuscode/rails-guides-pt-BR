@@ -728,16 +728,16 @@ end
 
 Again, this is not an ideal example for this filter, because it's not run in the scope of the controller but gets the controller passed as an argument. The filter class must implement a method with the same name as the filter, so for the `before_action` filter the class must implement a `before` method, and so on. The `around` method must `yield` to execute the action.
 
-Request Forgery Protection
+Proteção de falsificação de requisição
 --------------------------
 
-Cross-site request forgery is a type of attack in which a site tricks a user into making requests on another site, possibly adding, modifying, or deleting data on that site without the user's knowledge or permission.
+Falsificação de requisições *cross-site* é um tipo de ataque no qual o site engana o usuário a fim de que ele faça requisições em outro site, possivelmente adicionando, alterando ou deletando informações naquela site sem o conhecimento ou a permissão do usuário.
 
-The first step to avoid this is to make sure all "destructive" actions (create, update, and destroy) can only be accessed with non-GET requests. If you're following RESTful conventions you're already doing this. However, a malicious site can still send a non-GET request to your site quite easily, and that's where the request forgery protection comes in. As the name says, it protects from forged requests.
+O primeiro passo para evitar isso é ter certeza que todas as ações "destrutivas" (criar, atualizar, e destruir) possam ser acessadas somente via requisições que não sejam *GET*. Se você está seguindo as convenções *RESTful* você já está fazendo isso. Contudo, sites maliciosos continuam podendo enviar requisições não *GET* para o seu site facilmente, e é aí que a proteção de falsificação de requisição entra. Como o nome diz, ela te protege de requisições falsas.
 
-The way this is done is to add a non-guessable token which is only known to your server to each request. This way, if a request comes in without the proper token, it will be denied access.
+A forma como isso é feito é adicionando um *token* não adivinhável que é conhecida pelo seu servidor para cada requisição. Desta forma, se uma requisição chega sem um token conhecido, o seu acesso será negado.
 
-If you generate a form like this:
+Se você gera um *form* desta forma:
 
 ```erb
 <%= form_with model: @user, local: true do |form| %>
@@ -746,7 +746,7 @@ If you generate a form like this:
 <% end %>
 ```
 
-You will see how the token gets added as a hidden field:
+Você perceberá como o *token* é adicionado como um campo invisível.
 
 ```html
 <form accept-charset="UTF-8" action="/users/1" method="post">
@@ -757,11 +757,11 @@ You will see how the token gets added as a hidden field:
 </form>
 ```
 
-Rails adds this token to every form that's generated using the [form helpers](form_helpers.html), so most of the time you don't have to worry about it. If you're writing a form manually or need to add the token for another reason, it's available through the method `form_authenticity_token`:
+O Rails adiciona esse *token* para cada *form* que é gerado usando o [*form helpers*](form_helpers.html), então na maior parte das vezes você não precisa se preocupar com isso. Se você está escrevendo um *form* manualmente ou precisa adicionar o *token* para outra sessão, ele está disponível por meio do método `form_authenticity_token`.
 
-The `form_authenticity_token` generates a valid authentication token. That's useful in places where Rails does not add it automatically, like in custom Ajax calls.
+O `form_authenticity_token` gera um *token* de autenticação válido. Isso é útil em lugar aonde o Rails não adiciona o mesmo automaticamente, como em chamadas Ajax personalizadas.
 
-The [Security Guide](security.html) has more about this and a lot of other security-related issues that you should be aware of when developing a web application.
+O [Guia de segurança](security.html) possui mais informações sobre isso e muitos outros problemas relacionados a segurança que você deve estar ciente quando desenvolve uma aplicação *web*.
 
 The Request and Response Objects
 --------------------------------
