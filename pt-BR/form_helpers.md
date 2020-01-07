@@ -4,9 +4,9 @@
 Action View Form Helpers 
 ========================
 
-Formulários em uma aplicação web são uma inteface essencial para interação do usuário com o sistema. No entanto, pode se tornar entendiante manter este tipo de marcação devido à necessidade de lidar com a nomenclatura e controles de formulários e seus inúmeros atributos. O Rails acaba com essa complexidade pois há um assistente de exibição que gera uma marcação de formulário. Mas para um uso correto, como há casos de uso diferentes, é necessário que os desenvolvedores conheçam as diferenças entre os métodos auxiliares antes de usa-los.
+Formulários em uma aplicação web são uma interface essencial para interação do usuário com o sistema. No entanto, pode-se tornar entendiante manter este tipo de marcação devido à necessidade de lidar com a nomenclatura e controles de formulários e seus inúmeros atributos. O Rails acaba com essa complexidade pois há um assistente de exibição que gera uma marcação de formulário. Mas para um uso correto, como há casos de uso diferentes, é necessário que os desenvolvedores conheçam as diferenças entre os métodos auxiliares antes de usá-los.
 
-Depois de ler este guia, você saberá: 
+Depois de ler este guia, você vai saber:
 
 * Como criar formulários de pesquisa e tipos de semelhantes de formulários genéricos que não representam *model* específico da sua aplicação. 
 * Como criar formulários centrados em *models* pra criar e editar registros específicos no banco de dados.
@@ -31,7 +31,7 @@ O principal auxiliar de formulário (*form helper*) é o `form_with` .
 <% end %>
 ```
 
-Quando chamado sem nenhum argumento como este, é criado uma *tag* de formulário que, quando enviado, fará uma requisição HTTP usando o verbo POST para a  página atual. Por exemplo, supondo que a página atual seja a inicial, o HTML gerado terá a seguinte aparência: 
+Quando chamado sem nenhum argumento como este, é criado uma *tag* de formulário que, quando enviado, fará uma requisição HTTP usando o verbo POST para a página atual. Por exemplo, supondo que a página atual seja a inicial, o HTML gerado terá a seguinte aparência:
 
 ```html
 <form accept-charset="UTF-8" action="/" data-remote="true" method="post">
@@ -46,7 +46,7 @@ Note que o HTML contém um elemento `input` com tipo `hidden`. Esse `input` é i
 
 Um dos formulários mais básicos que você vê na web é um formulários de pesquisa. Este formulário contém:
 
-* Um elemento de formulário com o método GET.
+* Um *input* de formulário com o método GET.
 * Um *label* para entrada.
 * Um *input* de entrada de texto.
 * Um *input* de envio.
@@ -79,7 +79,7 @@ IMPORTANT: Use "GET" como o método para buscas em formulários. Isso permitirá
 
 ### Helpers para gerar elementos de formulário
 
-O Rails fornece uma série de auxiliares para gerar elementos de formulário, como caixas de seleção, campos de texto e botões de opção. Esses auxilires básicos, com nomes terminados em `_tag`(como `texte_field` e `check_box_tag`), geram apenas um único elemento `<input>`. O primeiro parâmetro para estes será sempre o nome da entrada. Quando o formulário for enviado, o nome será passado junto com os dados do formulário e será direcionado para `params` o controlador com o valor inserido pelo usuário para esse campo. Por exemplo, se o formulário contiver `<%= text_field_tag(:query) %>`, podendo obter o valor deste campo no controlador com `params[:query]` .
+O Rails fornece  uma série de auxiliares para gerar elementos de formulário, como caixas de seleção, campos de texto e botões de opção. Esses auxiliares básicos, com nomes terminados em `_tag`(como `text_field` e `check_box_tag`), geram apenas um único elemento `<input>`. O primeiro parâmetro para estes será sempre o nome da entrada. Quando o formulário for enviado, o nome será passado junto com os dados do formulário e será direcionado para `params` o controlador com o valor inserido pelo usuário para esse campo. Por exemplo, se o formulário contiver `<%= text_field_tag(:query) %>`, podendo obter o valor deste campo no controlador com `params[:query]` .
 
 Ao nomear entradas, o Rails usa certas convenções que possibilitam enviar parâmetros com valores não escalares, como matrizes ou hashes, que também estarão acessíveis `params`. Poderá ser lido mais sobre eles no capítulo [Noções básicas sobre convenções de nomenclatura de parâmetros](#understanding-parameter-naming-conventions) deste guia. Para detalhes de como usar com precisão esses auxiliares, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
 
@@ -125,7 +125,7 @@ Resultado:
 <label for="age_adult">I am over 21</label>
 ```
 
-Assim como `check_box_tag` o segundo parâmetro para `radio_button_tag` é o valor da entrada. Como esses dois botões compartilham o mesmo nome (`age`), o usuário poderá selecionar apenas um deles, e `params[:age]` receberá `"child"` ou `"adult"`.
+Assim como `check_box_tag`, o segundo parâmetro para `radio_button_tag` é o valor da entrada. Como esses dois botões compartilham o mesmo nome (`age`), o usuário poderá selecionar apenas um deles, e `params[:age]` receberá `"child"` ou `"adult"`.
 
 NOTE: Sempre use *labels* para a caixa de seleção e botões de opção. Eles associam o texto a uma opção específica e, ao expandir a região clicável, facilita o clique dos usuários nas entradas.
 
