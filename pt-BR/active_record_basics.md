@@ -79,7 +79,7 @@ necessária somente em casos que você não pode seguir a convenção padrão.
 Por padrão, o *Active Record* usa algumas definições de nomeação para descobrir como
 o mapeamento entre *models* e tabelas do banco de dados será criado. O Rails irá pluralizar
 o nome da sua classe para encontrar a sua respectiva tabela no banco de dados. Sendo assim,
-para a classe `Livro`, você deverá ter uma tabela no banco de dados chamada **livros**.
+para a classe `Book` (livro), você deverá ter uma tabela no banco de dados chamada **books** (livros).
 Os mecanismos de pluralização do Rails são muito poderosos, sendo capazes de pluralizar (e
 singularizar) palavras regulares e irregulares. Quando usamos nomes de classes compostas por
 duas ou mais palavras, o nome do seu *model* deve seguir a convenção do *Ruby*,
@@ -87,19 +87,19 @@ utilizando *CamelCase*, enquanto a tabela deve separar as palavras utilizando o 
 Exemplos:
 
 * *Model* - Escrito no singular capitalizando a primeira letra de cada palavra
-(p. ex., `ClubeDoLivro`)
+(p. ex., `BookClub`)
 * Tabela no banco de dados - Escrito no plural separando cada palavra com sublinhado
-(p. ex. `clubes_do_livro`)
+(p. ex. `book_clubs`)
 
 | *Model* / Classe | Tabela / Schema |
 | ---------------- | --------------- |
-| `Artigo`         | `artigos`       |
-| `Item`           | `itens`         |
-| `Veado`          | `veados`        |
-| `Rato`           | `ratos`         |
-| `Pessoa`         | `pessoas`       |
+| `Article`        | `articles`      |
+| `LineItem`       | `line_items`    |
+| `Deer`           | `deers`         |
+| `Mouse`          | `mice`          |
+| `Person`         | `people`        |
 
-### Convenções de esquema
+### Convenções de *schema* (esquema)
 
 O *Active Record* utiliza convenções de nomeação para as colunas em tabelas
 de banco de dados, dependendo do seu propósito.
