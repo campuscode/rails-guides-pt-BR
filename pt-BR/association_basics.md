@@ -1,28 +1,26 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Associações Active Record
-==========================
+# Associações Active Record
 
 Esse guia cobre os recursos de associação do _Active Record_.
 
 Após ler esse guia, você saberá:
 
-* Como declarar associações entre *models* do _Active Record_.
-* Como entender os vários tipos de associações _Active Record_.
-* Como usar os métodos adicionados em seus *models* ao criar associações.
+- Como declarar associações entre _models_ do _Active Record_.
+- Como entender os vários tipos de associações _Active Record_.
+- Como usar os métodos adicionados em seus _models_ ao criar associações.
 
---------------------------------------------------------------------------------
+---
 
-Por Que Associações?
------------------
+## Por Que Associações?
 
-Em Rails, uma _associação_ é uma conexão entre dois *models* em _Active Record_.
-Por que precisamos de associações entre *models*? Porque eles tornam as operações
+Em Rails, uma _associação_ é uma conexão entre dois _models_ em _Active Record_.
+Por que precisamos de associações entre _models_? Porque eles tornam as operações
 comuns mais simples e fáceis de entender em seu código. Por exemplo, considere
-uma aplicação Rails simples que inclua um *model* para autores e um *model* para
+uma aplicação Rails simples que inclua um _model_ para autores e um _model_ para
 livros. Cada autor pode ter vários livros. Sem associações, as declarações do
-*model* seriam assim:
+_model_ seriam assim:
 
 ```ruby
 class Author < ApplicationRecord
@@ -50,8 +48,8 @@ end
 @author.destroy
 ```
 
-Com as associações do *Active Record*, podemos otimizar essas - e outras -
-operações declarando ao Rails que há uma conexão entre os dois *models*. Aqui
+Com as associações do _Active Record_, podemos otimizar essas - e outras -
+operações declarando ao Rails que há uma conexão entre os dois _models_. Aqui
 está o código revisado para configurar autores e livros:
 
 ```ruby
@@ -81,25 +79,24 @@ deste guia. Em seguida há algumas dicas e truques para trabalhar com associaç�
 e, na sequência, uma referência completa dos métodos e opções para associações no
 Rails.
 
-Os Tipos de Associações
--------------------------
+## Os Tipos de Associações
 
 O Rails suporta seis tipos de associações:
 
-* `belongs_to`
-* `has_one`
-* `has_many`
-* `has_many :through`
-* `has_one :through`
-* `has_and_belongs_to_many`
+- `belongs_to`
+- `has_one`
+- `has_many`
+- `has_many :through`
+- `has_one :through`
+- `has_and_belongs_to_many`
 
-As associações são implementadas usando chamadas *macro-style*, para que você possa adicionar declarativamente recursos aos seus *models*. Por exemplo, declarando que um *model* `belongs_to` (pertence a outro), você instrui o Rails a manter [Primary Key](https://en.wikipedia.org/wiki/Unique_key)-[Foreign Key](https://en.wikipedia.org/wiki/Foreign_key) entre instâncias dos dois *models*, e você também obtém vários métodos úteis adicionados ao seu *model*.
+As associações são implementadas usando chamadas _macro-style_, para que você possa adicionar declarativamente recursos aos seus _models_. Por exemplo, declarando que um _model_ `belongs_to` (pertence a outro), você instrui o Rails a manter [Primary Key](https://en.wikipedia.org/wiki/Unique_key)-[Foreign Key](https://en.wikipedia.org/wiki/Foreign_key) entre instâncias dos dois _models_, e você também obtém vários métodos úteis adicionados ao seu _model_.
 
 No restante deste guia, você aprenderá como declarar e usar as várias formas de associação. Mas primeiro, uma rápida introdução para as situações em que cada tipo de associação é apropriado.
 
 ### A Associação `belongs_to`
 
-Uma associação `belongs_to` configura uma conexão uma-para-um com outro *model*, de modo que cada instância do *model* declarante "pertença a" uma instância do outro *model*. Por exemplo, se sua aplicação incluir autores e livros, e cada livro puder ser atribuído a exatamente um autor, você declarará o *model* do livro da seguinte maneira:
+Uma associação `belongs_to` configura uma conexão uma-para-um com outro _model_, de modo que cada instância do _model_ declarante "pertença a" uma instância do outro _model_. Por exemplo, se sua aplicação incluir autores e livros, e cada livro puder ser atribuído a exatamente um autor, você declarará o _model_ do livro da seguinte maneira:
 
 ```ruby
 class Book < ApplicationRecord
@@ -109,9 +106,9 @@ end
 
 ![Diagrama de Associação belongs_to](images/association_basics/belongs_to.png)
 
-NOTE: as associações `belongs_to` _devem_ usar o termo no singular. Se você usou o plural no exemplo acima para a associação `author` no *model* `Book` e tentou criar a instância com `Book.create(authors: @author)`, você seria informado de que existe uma "constante não inicializada `Book::Authors`". Isso ocorre porque o Rails deduz automaticamente o nome da classe a partir do nome da associação. Se o nome da associação estiver incorretamente no plural, a classe inferida também estará incorreta.
+NOTE: as associações `belongs_to` _devem_ usar o termo no singular. Se você usou o plural no exemplo acima para a associação `author` no _model_ `Book` e tentou criar a instância com `Book.create(authors: @author)`, você seria informado de que existe uma "constante não inicializada `Book::Authors`". Isso ocorre porque o Rails deduz automaticamente o nome da classe a partir do nome da associação. Se o nome da associação estiver incorretamente no plural, a classe inferida também estará incorreta.
 
-A *migration* correpondente parecerá assim:
+A _migration_ correpondente parecerá assim:
 
 ```ruby
 class CreateBooks < ActiveRecord::Migration[5.0]
@@ -132,7 +129,7 @@ end
 
 ### A associação `has_one`
 
-Uma associação `has_one` também estabelece uma conexão one-para-one com outro *model*, mas com semânticas um pouco diferentes (e consequências). Essa associação indica que cada instância de um modelo contém ou possui uma instância de outro *model*. Por exemplo, se cada fornecedor em sua aplicação tiver apenas uma conta, você declarará o *model* de fornecedor como este:
+Uma associação `has_one` também estabelece uma conexão one-para-one com outro _model_, mas com semânticas um pouco diferentes (e consequências). Essa associação indica que cada instância de um modelo contém ou possui uma instância de outro _model_. Por exemplo, se cada fornecedor em sua aplicação tiver apenas uma conta, você declarará o _model_ de fornecedor como este:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -142,7 +139,7 @@ end
 
 ![Diagrama de Associação has_one](images/association_basics/has_one.png)
 
-A *migration* correpondente parecerá assim:
+A _migration_ correpondente parecerá assim:
 
 ```ruby
 class CreateSuppliers < ActiveRecord::Migration[5.0]
@@ -162,7 +159,7 @@ end
 ```
 
 Dependendo do caso de uso, também pode ser necessário criar um índice exclusivo e/ou
-uma restrição de *foreign key* na coluna do *supplier* para a tabela de *accounts*. Nesse
+uma restrição de _foreign key_ na coluna do _supplier_ para a tabela de _accounts_. Nesse
 caso, a definição da coluna parecerá assim:
 
 ```ruby
@@ -174,7 +171,7 @@ end
 
 ### A Associação `has_many`
 
-Uma associação `has_many` indica uma conexão um-para-muitos com outro *model*. Você encontrará frequentemente essa associação no "outro lado" de uma associação `belongs_to`. Essa associação indica que cada instância do *model* possui zero ou mais instâncias de outro *model*. Por exemplo, em uma aplicação que contém *authors* e *books*, o *model* do *author* pode ser declarado assim:
+Uma associação `has_many` indica uma conexão um-para-muitos com outro _model_. Você encontrará frequentemente essa associação no "outro lado" de uma associação `belongs_to`. Essa associação indica que cada instância do _model_ possui zero ou mais instâncias de outro _model_. Por exemplo, em uma aplicação que contém _authors_ e _books_, o _model_ do _author_ pode ser declarado assim:
 
 ```ruby
 class Author < ApplicationRecord
@@ -182,11 +179,11 @@ class Author < ApplicationRecord
 end
 ```
 
-NOTE: O nome do outro *model* é pluralizado ao declarar uma associação `has_many`.
+NOTE: O nome do outro _model_ é pluralizado ao declarar uma associação `has_many`.
 
 ![Diagrama de Assocação has_many](images/association_basics/has_many.png)
 
-A *migration* correpondente parecerá assim:
+A _migration_ correpondente parecerá assim:
 
 ```ruby
 class CreateAuthors < ActiveRecord::Migration[5.0]
@@ -207,7 +204,7 @@ end
 
 ### A Associação `has_many :through`
 
-Uma associação `has_many: through` é frequentemente usada para estabelecer uma conexão muitos-para-muitos com outro *model*. Essa associação indica que o *model*  declarado pode ser correspondido com zero ou mais instâncias de outro *model*, prosseguindo através (_through_) de um terceiro *model*. Por exemplo, considere uma prática médica em que os pacientes marcam consultas com médicos. As declarações de associação relevantes podem ter a seguinte aparência:
+Uma associação `has_many: through` é frequentemente usada para estabelecer uma conexão muitos-para-muitos com outro _model_. Essa associação indica que o _model_ declarado pode ser correspondido com zero ou mais instâncias de outro _model_, prosseguindo através (_through_) de um terceiro _model_. Por exemplo, considere uma prática médica em que os pacientes marcam consultas com médicos. As declarações de associação relevantes podem ter a seguinte aparência:
 
 ```ruby
 class Physician < ApplicationRecord
@@ -228,7 +225,7 @@ end
 
 ![Diagrama de Associação has_many :through](images/association_basics/has_many_through.png)
 
-A *migration* correpondente parecerá assim:
+A _migration_ correpondente parecerá assim:
 
 ```ruby
 class CreateAppointments < ActiveRecord::Migration[5.0]
@@ -253,17 +250,17 @@ class CreateAppointments < ActiveRecord::Migration[5.0]
 end
 ```
 
-O conjunto da junção dos *models* pode ser gerenciada através dos [métodos de associação `has_many`](#has-many-association-reference).
+O conjunto da junção dos _models_ pode ser gerenciada através dos [métodos de associação `has_many`](#has-many-association-reference).
 Por exemplo, se você atribuir:
 
 ```ruby
 physician.patients = patients
 ```
 
-Em seguida, novos *models* de junção são criados automaticamente para os objetos recém-associados.
+Em seguida, novos _models_ de junção são criados automaticamente para os objetos recém-associados.
 Se alguns que existiam anteriormente estão faltando agora, suas linhas de junção são excluídas automaticamente.
 
-WARNING: A exclusão automática de *models* de junção é direta, nenhum *callback* de destruição é acionado.
+WARNING: A exclusão automática de _models_ de junção é direta, nenhum _callback_ de destruição é acionado.
 
 A associação `has_many: through` também é útil para configurar "atalhos" através de associações aninhadas `has_many`. Por exemplo, se um documento possui muitas seções e uma seção com muitos parágrafos, você pode obter uma coleção simples de todos os parágrafos do documento. Você pode configurar dessa maneira:
 
@@ -314,7 +311,7 @@ end
 
 ![has_one :through Association Diagram](images/association_basics/has_one_through.png)
 
-A *migration* correpondente parecerá assim:
+A _migration_ correpondente parecerá assim:
 
 ```ruby
 class CreateAccountHistories < ActiveRecord::Migration[5.0]
@@ -355,7 +352,7 @@ end
 
 ![has_and_belongs_to_many Association Diagram](images/association_basics/habtm.png)
 
-The corresponding migration might look like this:
+A _migration_ correpondente parecerá assim:
 
 ```ruby
 class CreateAssembliesAndParts < ActiveRecord::Migration[5.0]
@@ -378,11 +375,11 @@ class CreateAssembliesAndParts < ActiveRecord::Migration[5.0]
 end
 ```
 
-### Choosing Between `belongs_to` and `has_one`
+### Escolhendo entre `belongs_to` and `has_one`
 
-If you want to set up a one-to-one relationship between two models, you'll need to add `belongs_to` to one, and `has_one` to the other. How do you know which is which?
+Se você deseja configurar um relacionamento um-para-um entre dois _models_, será necessário adicionar `belongs_to` para um e`has_one` ao outro. Como você sabe qual é qual?
 
-The distinction is in where you place the foreign key (it goes on the table for the class declaring the `belongs_to` association), but you should give some thought to the actual meaning of the data as well. The `has_one` relationship says that one of something is yours - that is, that something points back to you. For example, it makes more sense to say that a supplier owns an account than that an account owns a supplier. This suggests that the correct relationships are like this:
+A distinção é onde você coloca a _foreign key_ (ela aparece na tabela para a classe que declara a associação `belongs_to`), mas você deve pensar um pouco no significado real dos dados também. O relacionamento `has_one` diz que um de algo é seu - isto é, que algo aponta para você. Por exemplo, faz mais sentido dizer que um _suplier_ possui uma _account_ do que uma _account_ possui um _supplier_. Isso sugere que os relacionamentos corretos são assim:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -394,7 +391,7 @@ class Account < ApplicationRecord
 end
 ```
 
-The corresponding migration might look like this:
+A _migration_ correpondente parecerá assim:
 
 ```ruby
 class CreateSuppliers < ActiveRecord::Migration[5.2]
@@ -415,7 +412,7 @@ class CreateSuppliers < ActiveRecord::Migration[5.2]
 end
 ```
 
-NOTE: Using `t.bigint :supplier_id` makes the foreign key naming obvious and explicit. In current versions of Rails, you can abstract away this implementation detail by using `t.references :supplier` instead.
+NOTE: O uso de `t.bigint :supplier_id` torna a nomeação da _foreign key_ óbvia e explícita. Nas versões atuais do Rails, você pode abstrair esses detalhes de implementação usando `t.references :supplier`.
 
 ### Choosing Between `has_many :through` and `has_and_belongs_to_many`
 
@@ -537,16 +534,15 @@ class CreateEmployees < ActiveRecord::Migration[5.0]
 end
 ```
 
-Tips, Tricks, and Warnings
---------------------------
+## Tips, Tricks, and Warnings
 
 Here are a few things you should know to make efficient use of Active Record associations in your Rails applications:
 
-* Controlling caching
-* Avoiding name collisions
-* Updating the schema
-* Controlling association scope
-* Bi-directional associations
+- Controlling caching
+- Avoiding name collisions
+- Updating the schema
+- Controlling association scope
+- Bi-directional associations
 
 ### Controlling Caching
 
@@ -615,7 +611,7 @@ NOTE: If you wish to [enforce referential integrity at the database level](/acti
 
 If you create a `has_and_belongs_to_many` association, you need to explicitly create the joining table. Unless the name of the join table is explicitly specified by using the `:join_table` option, Active Record creates the name by using the lexical order of the class names. So a join between author and book models will give the default join table name of "authors_books" because "a" outranks "b" in lexical ordering.
 
-WARNING: The precedence between model names is calculated using the `<=>` operator for `String`. This means that if the strings are of different lengths, and the strings are equal when compared up to the shortest length, then the longer string is considered of higher lexical precedence than the shorter one. For example, one would expect the tables "paper_boxes" and "papers" to generate a join table name of "papers_paper_boxes" because of the length of the name "paper_boxes", but it in fact generates a join table name of "paper_boxes_papers" (because the underscore '\_' is lexicographically _less_ than 's' in common encodings).
+WARNING: The precedence between model names is calculated using the `<=>` operator for `String`. This means that if the strings are of different lengths, and the strings are equal when compared up to the shortest length, then the longer string is considered of higher lexical precedence than the shorter one. For example, one would expect the tables "paper*boxes" and "papers" to generate a join table name of "papers_paper_boxes" because of the length of the name "paper_boxes", but it in fact generates a join table name of "paper_boxes_papers" (because the underscore '\_' is lexicographically \_less* than 's' in common encodings).
 
 Whatever the name, you must manually generate the join table with an appropriate migration. For example, consider these associations:
 
@@ -742,8 +738,8 @@ a.first_name == b.author.first_name # => true
 
 Active Record supports automatic identification for most associations with standard names. However, Active Record will not automatically identify bi-directional associations that contain a scope or any of the following options:
 
-* `:through`
-* `:foreign_key`
+- `:through`
+- `:foreign_key`
 
 For example, consider the following model declarations:
 
@@ -789,8 +785,7 @@ a.first_name = 'David'
 a.first_name == b.writer.first_name # => true
 ```
 
-Detailed Association Reference
-------------------------------
+## Detailed Association Reference
 
 The following sections give the details of each type of association, including the methods that they add and the options that you can use when declaring an association.
 
@@ -802,12 +797,12 @@ The `belongs_to` association creates a one-to-one match with another model. In d
 
 When you declare a `belongs_to` association, the declaring class automatically gains 6 methods related to the association:
 
-* `association`
-* `association=(associate)`
-* `build_association(attributes = {})`
-* `create_association(attributes = {})`
-* `create_association!(attributes = {})`
-* `reload_association`
+- `association`
+- `association=(associate)`
+- `build_association(attributes = {})`
+- `create_association(attributes = {})`
+- `create_association!(attributes = {})`
+- `reload_association`
 
 In all of these methods, `association` is replaced with the symbol passed as the first argument to `belongs_to`. For example, given the declaration:
 
@@ -874,7 +869,6 @@ The `create_association` method returns a new object of the associated type. Thi
 
 Does the same as `create_association` above, but raises `ActiveRecord::RecordInvalid` if the record is invalid.
 
-
 #### Options for `belongs_to`
 
 While Rails uses intelligent defaults that will work well in most situations, there may be times when you want to customize the behavior of the `belongs_to` association reference. Such customizations can easily be accomplished by passing options and scope blocks when you create the association. For example, this association uses two such options:
@@ -888,17 +882,17 @@ end
 
 The `belongs_to` association supports these options:
 
-* `:autosave`
-* `:class_name`
-* `:counter_cache`
-* `:dependent`
-* `:foreign_key`
-* `:primary_key`
-* `:inverse_of`
-* `:polymorphic`
-* `:touch`
-* `:validate`
-* `:optional`
+- `:autosave`
+- `:class_name`
+- `:counter_cache`
+- `:dependent`
+- `:foreign_key`
+- `:primary_key`
+- `:inverse_of`
+- `:polymorphic`
+- `:touch`
+- `:validate`
+- `:optional`
 
 ##### `:autosave`
 
@@ -964,12 +958,13 @@ side of the association.
 Counter cache columns are added to the containing model's list of read-only attributes through `attr_readonly`.
 
 ##### `:dependent`
+
 If you set the `:dependent` option to:
 
-* `:destroy`, when the object is destroyed, `destroy` will be called on its
-associated objects.
-* `:delete`, when the object is destroyed, all its associated objects will be
-deleted directly from the database without calling their `destroy` method.
+- `:destroy`, when the object is destroyed, `destroy` will be called on its
+  associated objects.
+- `:delete`, when the object is destroyed, all its associated objects will be
+  deleted directly from the database without calling their `destroy` method.
 
 WARNING: You should not specify this option on a `belongs_to` association that is connected with a `has_many` association on the other class. Doing so can lead to orphaned records in your database.
 
@@ -1067,10 +1062,10 @@ end
 
 You can use any of the standard [querying methods](active_record_querying.html) inside the scope block. The following ones are discussed below:
 
-* `where`
-* `includes`
-* `readonly`
-* `select`
+- `where`
+- `includes`
+- `readonly`
+- `select`
 
 ##### `where`
 
@@ -1152,12 +1147,12 @@ The `has_one` association creates a one-to-one match with another model. In data
 
 When you declare a `has_one` association, the declaring class automatically gains 6 methods related to the association:
 
-* `association`
-* `association=(associate)`
-* `build_association(attributes = {})`
-* `create_association(attributes = {})`
-* `create_association!(attributes = {})`
-* `reload_association`
+- `association`
+- `association=(associate)`
+- `build_association(attributes = {})`
+- `create_association(attributes = {})`
+- `create_association!(attributes = {})`
+- `reload_association`
 
 In all of these methods, `association` is replaced with the symbol passed as the first argument to `has_one`. For example, given the declaration:
 
@@ -1234,18 +1229,19 @@ end
 
 The `has_one` association supports these options:
 
-* `:as`
-* `:autosave`
-* `:class_name`
-* `:dependent`
-* `:foreign_key`
-* `:inverse_of`
-* `:primary_key`
-* `:source`
-* `:source_type`
-* `:through`
-* `:touch`
-* `:validate`
+`:as`
+
+- `:autosave`
+- `:class_name`
+- `:dependent`
+- `:foreign_key`
+- `:inverse_of`
+- `:primary_key`
+- `:source`
+- `:source_type`
+- `:through`
+- `:touch`
+- `:validate`
 
 ##### `:as`
 
@@ -1269,11 +1265,11 @@ end
 
 Controls what happens to the associated object when its owner is destroyed:
 
-* `:destroy` causes the associated object to also be destroyed
-* `:delete` causes the associated object to be deleted directly from the database (so callbacks will not execute)
-* `:nullify` causes the foreign key to be set to `NULL`. Polymorphic type column is also nullified on polymorphic associations. Callbacks are not executed.
-* `:restrict_with_exception` causes an `ActiveRecord::DeleteRestrictionError` exception to be raised if there is an associated record
-* `:restrict_with_error` causes an error to be added to the owner if there is an associated object
+- `:destroy` causes the associated object to also be destroyed
+- `:delete` causes the associated object to be deleted directly from the database (so callbacks will not execute)
+- `:nullify` causes the foreign key to be set to `NULL`. Polymorphic type column is also nullified on polymorphic associations. Callbacks are not executed.
+- `:restrict_with_exception` causes an `ActiveRecord::DeleteRestrictionError` exception to be raised if there is an associated record
+- `:restrict_with_error` causes an error to be added to the owner if there is an associated object
 
 It's necessary not to set or leave `:nullify` option for those associations
 that have `NOT NULL` database constraints. If you don't set `dependent` to
@@ -1376,10 +1372,10 @@ end
 
 You can use any of the standard [querying methods](active_record_querying.html) inside the scope block. The following ones are discussed below:
 
-* `where`
-* `includes`
-* `readonly`
-* `select`
+- `where`
+- `includes`
+- `readonly`
+- `select`
 
 ##### `where`
 
@@ -1463,23 +1459,23 @@ The `has_many` association creates a one-to-many relationship with another model
 
 When you declare a `has_many` association, the declaring class automatically gains 17 methods related to the association:
 
-* `collection`
-* `collection<<(object, ...)`
-* `collection.delete(object, ...)`
-* `collection.destroy(object, ...)`
-* `collection=(objects)`
-* `collection_singular_ids`
-* `collection_singular_ids=(ids)`
-* `collection.clear`
-* `collection.empty?`
-* `collection.size`
-* `collection.find(...)`
-* `collection.where(...)`
-* `collection.exists?(...)`
-* `collection.build(attributes = {}, ...)`
-* `collection.create(attributes = {})`
-* `collection.create!(attributes = {})`
-* `collection.reload`
+- `collection`
+- `collection<<(object, ...)`
+- `collection.delete(object, ...)`
+- `collection.destroy(object, ...)`
+- `collection=(objects)`
+- `collection_singular_ids`
+- `collection_singular_ids=(ids)`
+- `collection.clear`
+- `collection.empty?`
+- `collection.size`
+- `collection.find(...)`
+- `collection.where(...)`
+- `collection.exists?(...)`
+- `collection.build(attributes = {}, ...)`
+- `collection.create(attributes = {})`
+- `collection.create!(attributes = {})`
+- `collection.reload`
 
 In all of these methods, `collection` is replaced with the symbol passed as the first argument to `has_many`, and `collection_singular` is replaced with the singularized version of that symbol. For example, given the declaration:
 
@@ -1668,18 +1664,18 @@ end
 
 The `has_many` association supports these options:
 
-* `:as`
-* `:autosave`
-* `:class_name`
-* `:counter_cache`
-* `:dependent`
-* `:foreign_key`
-* `:inverse_of`
-* `:primary_key`
-* `:source`
-* `:source_type`
-* `:through`
-* `:validate`
+- `:as`
+- `:autosave`
+- `:class_name`
+- `:counter_cache`
+- `:dependent`
+- `:foreign_key`
+- `:inverse_of`
+- `:primary_key`
+- `:source`
+- `:source_type`
+- `:through`
+- `:validate`
 
 ##### `:as`
 
@@ -1707,11 +1703,11 @@ This option can be used to configure a custom named `:counter_cache`. You only n
 
 Controls what happens to the associated objects when their owner is destroyed:
 
-* `:destroy` causes all the associated objects to also be destroyed
-* `:delete_all` causes all the associated objects to be deleted directly from the database (so callbacks will not execute)
-* `:nullify` causes the foreign key to be set to `NULL`. Polymorphic type column is also nullified on polymorphic associations. Callbacks are not executed.
-* `:restrict_with_exception` causes an `ActiveRecord::DeleteRestrictionError` exception to be raised if there are any associated records
-* `:restrict_with_error` causes an error to be added to the owner if there are any associated objects
+- `:destroy` causes all the associated objects to also be destroyed
+- `:delete_all` causes all the associated objects to be deleted directly from the database (so callbacks will not execute)
+- `:nullify` causes the foreign key to be set to `NULL`. Polymorphic type column is also nullified on polymorphic associations. Callbacks are not executed.
+- `:restrict_with_exception` causes an `ActiveRecord::DeleteRestrictionError` exception to be raised if there are any associated records
+- `:restrict_with_error` causes an error to be added to the owner if there are any associated objects
 
 The `:destroy` and `:delete_all` options also affect the semantics of the `collection.delete` and `collection=` methods by causing them to destroy associated objects when they are removed from the collection.
 
@@ -1759,7 +1755,6 @@ end
 Now if we execute `@todo = @user.todos.create` then the `@todo`
 record's `user_id` value will be the `guid` value of `@user`.
 
-
 ##### `:source`
 
 The `:source` option specifies the source association name for a `has_many :through` association. You only need to use this option if the name of the source association cannot be automatically inferred from the association name.
@@ -1802,16 +1797,16 @@ end
 
 You can use any of the standard [querying methods](active_record_querying.html) inside the scope block. The following ones are discussed below:
 
-* `where`
-* `extending`
-* `group`
-* `includes`
-* `limit`
-* `offset`
-* `order`
-* `readonly`
-* `select`
-* `distinct`
+- `where`
+- `extending`
+- `group`
+- `includes`
+- `limit`
+- `offset`
+- `order`
+- `readonly`
+- `select`
+- `distinct`
 
 ##### `where`
 
@@ -2012,23 +2007,23 @@ The `has_and_belongs_to_many` association creates a many-to-many relationship wi
 
 When you declare a `has_and_belongs_to_many` association, the declaring class automatically gains 17 methods related to the association:
 
-* `collection`
-* `collection<<(object, ...)`
-* `collection.delete(object, ...)`
-* `collection.destroy(object, ...)`
-* `collection=(objects)`
-* `collection_singular_ids`
-* `collection_singular_ids=(ids)`
-* `collection.clear`
-* `collection.empty?`
-* `collection.size`
-* `collection.find(...)`
-* `collection.where(...)`
-* `collection.exists?(...)`
-* `collection.build(attributes = {})`
-* `collection.create(attributes = {})`
-* `collection.create!(attributes = {})`
-* `collection.reload`
+- `collection`
+- `collection<<(object, ...)`
+- `collection.delete(object, ...)`
+- `collection.destroy(object, ...)`
+- `collection=(objects)`
+- `collection_singular_ids`
+- `collection_singular_ids=(ids)`
+- `collection.clear`
+- `collection.empty?`
+- `collection.size`
+- `collection.find(...)`
+- `collection.where(...)`
+- `collection.exists?(...)`
+- `collection.build(attributes = {})`
+- `collection.create(attributes = {})`
+- `collection.create!(attributes = {})`
+- `collection.reload`
 
 In all of these methods, `collection` is replaced with the symbol passed as the first argument to `has_and_belongs_to_many`, and `collection_singular` is replaced with the singularized version of that symbol. For example, given the declaration:
 
@@ -2065,7 +2060,6 @@ assemblies.reload
 If the join table for a `has_and_belongs_to_many` association has additional columns beyond the two foreign keys, these columns will be added as attributes to records retrieved via that association. Records returned with additional attributes will always be read-only, because Rails cannot save changes to those attributes.
 
 WARNING: The use of extra attributes on the join table in a `has_and_belongs_to_many` association is deprecated. If you require this sort of complex behavior on the table that joins two models in a many-to-many relationship, you should use a `has_many :through` association instead of `has_and_belongs_to_many`.
-
 
 ##### `collection`
 
@@ -2203,12 +2197,12 @@ end
 
 The `has_and_belongs_to_many` association supports these options:
 
-* `:association_foreign_key`
-* `:autosave`
-* `:class_name`
-* `:foreign_key`
-* `:join_table`
-* `:validate`
+- `:association_foreign_key`
+- `:autosave`
+- `:class_name`
+- `:foreign_key`
+- `:join_table`
+- `:validate`
 
 ##### `:association_foreign_key`
 
@@ -2272,16 +2266,16 @@ end
 
 You can use any of the standard [querying methods](active_record_querying.html) inside the scope block. The following ones are discussed below:
 
-* `where`
-* `extending`
-* `group`
-* `includes`
-* `limit`
-* `offset`
-* `order`
-* `readonly`
-* `select`
-* `distinct`
+- `where`
+- `extending`
+- `group`
+- `includes`
+- `limit`
+- `offset`
+- `order`
+- `readonly`
+- `select`
+- `distinct`
 
 ##### `where`
 
@@ -2377,10 +2371,10 @@ Normal callbacks hook into the life cycle of Active Record objects, allowing you
 
 Association callbacks are similar to normal callbacks, but they are triggered by events in the life cycle of a collection. There are four available association callbacks:
 
-* `before_add`
-* `after_add`
-* `before_remove`
-* `after_remove`
+- `before_add`
+- `after_add`
+- `before_remove`
+- `after_remove`
 
 You define association callbacks by adding options to the association declaration. For example:
 
@@ -2460,12 +2454,11 @@ end
 
 Extensions can refer to the internals of the association proxy using these three attributes of the `proxy_association` accessor:
 
-* `proxy_association.owner` returns the object that the association is a part of.
-* `proxy_association.reflection` returns the reflection object that describes the association.
-* `proxy_association.target` returns the associated object for `belongs_to` or `has_one`, or the collection of associated objects for `has_many` or `has_and_belongs_to_many`.
+- `proxy_association.owner` returns the object that the association is a part of.
+- `proxy_association.reflection` returns the reflection object that describes the association.
+- `proxy_association.target` returns the associated object for `belongs_to` or `has_one`, or the collection of associated objects for `has_many` or `has_and_belongs_to_many`.
 
-Single Table Inheritance
-------------------------
+## Single Table Inheritance
 
 Às vezes é desejável compartilhar atributos e comportamento entre _models_.
 Vamos dizer que temos _models_ `Car`, `Motorcycle` e `Bicycle`. Queremos
