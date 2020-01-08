@@ -663,7 +663,7 @@ Filtros "after" são similares aos filtros "before", mas porque a ação já foi
 
 Filtros "around" são responsáveis por executar as ações associadas por *yield*, simular a como os *middlewares* do Rack funcionam.
 
-Por exemplo, em um *website* aonde alterações possuem um fluxo de aprovação um administrador pode pré-visualizar as mesmas facilmente, aplicando as dentro de uma transação.
+Por exemplo, em um *website* aonde alterações possuem um fluxo de aprovação, um administrador pode pré-visualizar as mesmas facilmente, aplicando-as dentro de uma transação.
 
 ```ruby
 class ChangesController < ApplicationController
