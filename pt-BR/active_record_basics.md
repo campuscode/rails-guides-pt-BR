@@ -63,83 +63,87 @@ de:
 * Validar *models* antes que sejam persistidos no banco de dados.
 * Executar operações nos bancos de dados de maneira orientada a objetos.
 
-Convention over Configuration in Active Record
+Convenção sobre configuração no Active Record
 ----------------------------------------------
 
-When writing applications using other programming languages or frameworks, it
-may be necessary to write a lot of configuration code. This is particularly true
-for ORM frameworks in general. However, if you follow the conventions adopted by
-Rails, you'll need to write very little configuration (in some cases no
-configuration at all) when creating Active Record models. The idea is that if
-you configure your applications in the very same way most of the time then this
-should be the default way. Thus, explicit configuration would be needed
-only in those cases where you can't follow the standard convention.
+Quando escrevemos aplicações usando outras linguagens de programação ou frameworks, pode
+ser necessário escrever muito código de configuração. Isto é particularmente verdadeiro para
+frameworks ORM em geral. Entretanto, se você seguir as convenções adotadas pelo Rails, será
+necessário escrever pouco código de configuração (em alguns casos, nenhum) quando criar *models*
+do *Active Record*. A idéia por trás disso é que se você configura a sua aplicação da mesma
+forma na maior parte da vezes, ela deveria ser a forma padrão. Então, configuração explícita faz-se
+necessária somente em casos que você não pode seguir a convenção padrão.
 
-### Naming Conventions
+### Convenções para nomeação
 
-By default, Active Record uses some naming conventions to find out how the
-mapping between models and database tables should be created. Rails will
-pluralize your class names to find the respective database table. So, for
-a class `Book`, you should have a database table called **books**. The Rails
-pluralization mechanisms are very powerful, being capable of pluralizing (and
-singularizing) both regular and irregular words. When using class names composed
-of two or more words, the model class name should follow the Ruby conventions,
-using the CamelCase form, while the table name must contain the words separated
-by underscores. Examples:
+Por padrão, o *Active Record* usa algumas definições de nomeação para descobrir como
+o mapeamento entre *models* e tabelas do banco de dados será criado. O Rails irá pluralizar
+o nome da sua classe para encontrar a sua respectiva tabela no banco de dados. Sendo assim,
+para a classe `Book` (livro), você deverá ter uma tabela no banco de dados chamada **books** (livros).
+Os mecanismos de pluralização do Rails são muito poderosos, sendo capazes de pluralizar (e
+singularizar) palavras regulares e irregulares. Quando usamos nomes de classes compostas por
+duas ou mais palavras, o nome do seu *model* deve seguir a convenção do *Ruby*,
+utilizando *CamelCase*, enquanto a tabela deve separar as palavras utilizando o caracter sublinhado.
+Exemplos:
 
-* Model Class - Singular with the first letter of each word capitalized (e.g.,
-`BookClub`).
-* Database Table - Plural with underscores separating words (e.g., `book_clubs`).
+* *Model* - Escrito no singular capitalizando a primeira letra de cada palavra
+(p. ex., `BookClub`)
+* Tabela no banco de dados - Escrito no plural separando cada palavra com sublinhado
+(p. ex. `book_clubs`)
 
-| Model / Class    | Table / Schema |
-| ---------------- | -------------- |
-| `Article`        | `articles`     |
-| `LineItem`       | `line_items`   |
-| `Deer`           | `deers`        |
-| `Mouse`          | `mice`         |
-| `Person`         | `people`       |
+| *Model* / Classe | Tabela / Schema |
+| ---------------- | --------------- |
+| `Article`        | `articles`      |
+| `LineItem`       | `line_items`    |
+| `Deer`           | `deers`         |
+| `Mouse`          | `mice`          |
+| `Person`         | `people`        |
 
+### Convenções de *schema* (esquema)
 
-### Schema Conventions
+O *Active Record* utiliza convenções de nomeação para as colunas em tabelas
+de banco de dados, dependendo do seu propósito.
 
-Active Record uses naming conventions for the columns in database tables,
-depending on the purpose of these columns.
+* **Chaves estrangeiras** - Esses campos devem seguir o padrão de nomeação
+  `nome_da_tabela_no_singular_id` (p. ex., `item_id`, `pedido_id`). O
+  *Active Record* irá buscar por esses campos quando você criar associações
+  entre os seus *models*.
+* **Chaves primárias** - Por padrão, o *Active Record* utiliza uma coluna
+  do tipo inteiro chamada `id` como a chave primária da tabela (`bigint`
+  para PostgreSQL e MySQL, `integer` para SQLite). Quando você usa as
+  [*Migrations* do *Active Record*](active_record_migrations.html) para
+  criar suas tabelas, essa coluna será criada automaticamente.
 
-* **Foreign keys** - These fields should be named following the pattern
-  `singularized_table_name_id` (e.g., `item_id`, `order_id`). These are the
-  fields that Active Record will look for when you create associations between
-  your models.
-* **Primary keys** - By default, Active Record will use an integer column named
-  `id` as the table's primary key (`bigint` for PostgreSQL and MySQL, `integer`
-  for SQLite). When using [Active Record Migrations](active_record_migrations.html)
-  to create your tables, this column will be automatically created.
+Existem outros nomes de colunas opcionais que vão adicionar alguns
+comportamentos adicionais para instâncias do *Active Record*.
 
-There are also some optional column names that will add additional features
-to Active Record instances:
+* `created_at` - Automaticamente informado com a data e hora atual
+  de quando o registro foi criado.
+* `updated_at` - Automaticamente informado com a data e hora atual
+  de quando o registor foi criado ou atualizado.
+* `lock_version` - Adiciona [bloqueio otimista](
+  https://api.rubyonrails.org/classes/ActiveRecord/Locking.html) para
+  um *model*.
+* `type` - Especifica que um *model* utiliza [Herança de tabela única](
+  https://api.rubyonrails.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance).
+* `(nome_da_associacao)_type` - Armazena o tipo
+  [associação polimórfica](association_basics.html#polymorphic-associations).
+* `(nome_da_tabela)_count` - Usado para cachear o número de objetos vinculados
+  em uma associação. Por exemplo, uma coluna `comentarios_count` em uma classe
+  `Artigo` que possui várias instâncias de `Comentario` vai cachear o número de
+  comentários existentes para cada artigo.
 
-* `created_at` - Automatically gets set to the current date and time when the
-  record is first created.
-* `updated_at` - Automatically gets set to the current date and time whenever
-  the record is created or updated.
-* `lock_version` - Adds [optimistic
-  locking](https://api.rubyonrails.org/classes/ActiveRecord/Locking.html) to
-  a model.
-* `type` - Specifies that the model uses [Single Table
-  Inheritance](https://api.rubyonrails.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance).
-* `(association_name)_type` - Stores the type for
-  [polymorphic associations](association_basics.html#polymorphic-associations).
-* `(table_name)_count` - Used to cache the number of belonging objects on
-  associations. For example, a `comments_count` column in an `Article` class that
-  has many instances of `Comment` will cache the number of existent comments
-  for each article.
-
-NOTE: While these column names are optional, they are in fact reserved by Active Record. Steer clear of reserved keywords unless you want the extra functionality. For example, `type` is a reserved keyword used to designate a table using Single Table Inheritance (STI). If you are not using STI, try an analogous keyword like "context", that may still accurately describe the data you are modeling.
+NOTE: Apesar de essas colunas serem opcionais, elas estão em fato reservadas pelo *Active Record*. Evite utilizar
+palavras-chave reservadas a não ser que você deseje a funcionalidade adicional. Por exemplo, `type` é uma
+palavra-chave reservada para designar que uma tabela está usando Herança de tabela única (STI). Se você não está
+utilizando STI, tente utilizar análogos como `context`, que ainda descrevem de forma correta o tipo de dado
+que você está modelando.
 
 Criando Models do Active Record
 -----------------------------
 
 É muito fácil criar *models* do *Active Record*. Tudo que você precisa fazer é
-subclassificar a classe `ApplicationRecord` e estará tudo pronto:  
+subclassificar a classe `ApplicationRecord` e estará tudo pronto:
 
 ```ruby
 class Product < ApplicationRecord
@@ -147,7 +151,7 @@ end
 ```
 
 Isso criará o *model* `Product`, mapeado em uma tabela `products` na base de dados. Fazendo isso, você também
-possuirá a habilidade de mapear as colunas de cada linha da tabela com os atributos das instâncias do seu 
+possuirá a habilidade de mapear as colunas de cada linha da tabela com os atributos das instâncias do seu
 *model*. Suponha que a tabela `products` foi criada usando uma declaração SQL (ou uma de suas extensões) como:
 
 ```sql
@@ -158,7 +162,7 @@ CREATE TABLE products (
 );
 ```
 
-O esquema acima declara uma tabela com duas colunas: `id` e `name`. Cada uma das 
+O esquema acima declara uma tabela com duas colunas: `id` e `name`. Cada uma das
 linhas dessa tabela representa um certo produto com dois parâmetros. Portanto,
 você será capaz de escrever códigos como o seguinte:
 
@@ -212,17 +216,17 @@ primária nomeadas `id`.
 CRUD: Lendo e Escrevendo Dados
 ------------------------------
 
-CRUD é um acrônimo para os quatro verbos que utilizamos na operação dos dados: ***C**reate* (criar), 
+CRUD é um acrônimo para os quatro verbos que utilizamos na operação dos dados: ***C**reate* (criar),
 ***R**ead* (ler, consultar), ***U**pdate* (atualizar) e ***D**elete* (deletar, destruir). O *Active Record*
 criará, automaticamente, métodos que permitem uma aplicação ler e manipular dados armazenados em suas tabelas.
 
 ### *Create*
 
-Os objetos do *Active Record* podem ser criados a partir de um *hash*, um bloco ou 
-ter seus atributos definidos manualmente após a criação. O método `new` retornará 
+Os objetos do *Active Record* podem ser criados a partir de um *hash*, um bloco ou
+ter seus atributos definidos manualmente após a criação. O método `new` retornará
 um novo objeto, enquanto `create` retornará o objeto e o salvará no banco de dados.
 
-Por exemplo, dado um *model* `User` com os atributos `name` e `occupation`, 
+Por exemplo, dado um *model* `User` com os atributos `name` e `occupation`,
 chamando o método `create` criará e salvará um novo registro no banco de dados:
 
 ```ruby
@@ -239,7 +243,7 @@ user.occupation = "Code Artist"
 
 Uma chamada para `user.save` salvará o registro no banco de dados.
 
-Finalmente, se um bloco for fornecido, ambos `create` e `new` passarão 
+Finalmente, se um bloco for fornecido, ambos `create` e `new` passarão
 o novo objeto para aquele bloco executar a inicialização:
 
 ```ruby
@@ -251,7 +255,7 @@ end
 
 ### *Read*
 
-O *Active Record* fornece uma API rica para acessar dados no banco de dados. Abaixo 
+O *Active Record* fornece uma API rica para acessar dados no banco de dados. Abaixo
 temos alguns exemplos de diferentes métodos para acessar os dados fornecidos pelo
 *Active Record*.
 
@@ -275,7 +279,7 @@ david = User.find_by(name: 'David')
 users = User.where(name: 'David', occupation: 'Code Artist').order(created_at: :desc)
 ```
 
-Você pode aprender mais sobre como consultar um *model* do *Active Record* no guia 
+Você pode aprender mais sobre como consultar um *model* do *Active Record* no guia
 [Active Record
 Query Interface](active_record_querying.html).
 
@@ -298,7 +302,7 @@ user = User.find_by(name: 'David')
 user.update(name: 'Dave')
 ```
 
-Isto é mais útil quando atualizamos diversos atributos de uma vez. Se, por outro lado, 
+Isto é mais útil quando atualizamos diversos atributos de uma vez. Se, por outro lado,
 você gostaria de atualizar diversos registros em massa, você pode achar o método de
 classe `update_all` útil:
 
@@ -362,7 +366,7 @@ Os *callbacks* de um *Active Record* permitem que você vincule códigos para
 alguns eventos no ciclo de vida de seus modelos. Isso permite que você adicione
 comportamentos para seus modelos executando códigos de forma transparente quando
 estes eventos acontecem, como quando você cria um novo registro, atualiza, destrói,
-e outros. Você pode aprender mais sobre *callbacks* no 
+e outros. Você pode aprender mais sobre *callbacks* no
 [Guia de *callbacks* do *Active Record*](active_record_callbacks.html).
 
 Migrations
@@ -371,7 +375,7 @@ Migrations
 O Rails fornece uma Linguagem de Domínio Específico (DSL) para gerenciar o *schema* do banco de
 dados, chamada de *migrations*. As *Migrations* são armazenadas em arquivos que são executados
 diante de qualquer banco de dados que o *Active Record* suporta utilizando o `rake`. Aqui está
-uma *migration* que cria uma tabela: 
+uma *migration* que cria uma tabela:
 
 ```ruby
 class CreatePublications < ActiveRecord::Migration[5.0]
