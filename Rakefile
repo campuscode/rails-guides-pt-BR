@@ -21,7 +21,7 @@ namespace :guides do
     desc "Generate HTML guides"
     task :html do
       ENV["WARNINGS"] = "1" # authors can't disable this
-      ENV["RAILS_VERSION"] = "v6.0.2"
+      ENV["RAILS_VERSION"] = "v6.0.2.1"
       ENV["GUIDES_LANGUAGE"] = "pt-BR"
       system 'cp -r ./pt-BR rails/guides/source'
       ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
