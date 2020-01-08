@@ -735,9 +735,9 @@ Falsificação de requisições *cross-site* é um tipo de ataque no qual o site
 
 O primeiro passo para evitar isso é ter certeza que todas as ações "destrutivas" (criar, atualizar, e destruir) possam ser acessadas somente via requisições que não sejam *GET*. Se você está seguindo as convenções *RESTful* você já está fazendo isso. Contudo, sites maliciosos continuam podendo enviar requisições não *GET* para o seu site facilmente, e é aí que a proteção de falsificação de requisição entra. Como o nome diz, ela te protege de requisições falsas.
 
-A forma como isso é feito é adicionando um *token* não adivinhável que é conhecida pelo seu servidor para cada requisição. Desta forma, se uma requisição chega sem um token conhecido, o seu acesso será negado.
+A forma como isso é feito é adicionando um *token* não adivinhável que é conhecido apenas pelo seu servidor para cada requisição. Desta forma, se uma requisição chega sem um token conhecido, o seu acesso será negado.
 
-Se você gera um *form* desta forma:
+Se você gera um *form* como este:
 
 ```erb
 <%= form_with model: @user, local: true do |form| %>
