@@ -663,7 +663,7 @@ Filtros "after" são similares aos filtros "before", mas porque a ação já foi
 
 Filtros "around" são responsáveis por executar as ações associadas por *yield*, simular a como os *middlewares* do Rack funcionam.
 
-Por exemplo, em um *website* aonde alterações possuem um fluxo de aprovação um administrador pode pré visualizar as mesmas facilmente, aplicando as dentro de uma transação.
+Por exemplo, em um *website* aonde alterações possuem um fluxo de aprovação um administrador pode pré-visualizar as mesmas facilmente, aplicando as dentro de uma transação.
 
 ```ruby
 class ChangesController < ApplicationController
@@ -689,7 +689,7 @@ Você pode escolher não efetuar *yield* e montar a resposta você mesmo, o que 
 
 ### Outras formas de usar
 
-Enquanto a forma mais comum de se utilizar filtros é criando métodos privados e usando *_action para adiciona-los, existem duas outras formas para fazer a mesma coisa.
+Enquanto a forma mais comum de se utilizar filtros é criando métodos privados e usando *_action para adicioná-los, existem duas outras formas para fazer a mesma coisa.
 
 A primeira é utilizar um bloco diretamente com método *\_action. O bloco recebe o *controller* como um argumento. O filtro `require_login` acima pode ser reescrito para utilizar um bloco:
 
@@ -706,7 +706,7 @@ end
 
 Note nesse caso que o filtro utiliza `send`  porque o método `logged_in?` é privado e o filtro não é executado no escopo do *controller*. Essa não é a forma recomendada para implementar esse filtro em particular, mas ele pode ser útil em casos mais simples.
 
-A segunda forma é utilizar uma classe (na verdade, qualquer objeto que resposta os métodos corretos serve) para gerenciar a filtragem. Isto é útil em casos mais complexos que não são possíveis de serem implementados de uma forma de fácil leitura e reutilizados usando as outras duas abordagens. Por exemplo, você pode reescrever o filtro de login novamente utilizando uma classe:
+A segunda forma é utilizar uma classe (na verdade, qualquer objeto que responda aos métodos corretos serve) para gerenciar a filtragem. Isto é útil em casos mais complexos que não são possíveis de serem implementados de uma forma de fácil leitura e reutilizados usando as outras duas abordagens. Por exemplo, você pode reescrever o filtro de login novamente utilizando uma classe:
 
 ```ruby
 class ApplicationController < ActionController::Base
