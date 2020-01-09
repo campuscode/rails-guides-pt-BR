@@ -642,7 +642,7 @@ end
 ```
 Esse método simplesmente armazena uma mensagem de erro no *flash* e redireciona para o formulário de login se o usuário não estiver logado. Se um filtro "before" renderiza ou redireciona, a ação não será executada. Se filtros adicionais estão programados para executar após esse filtro, eles são cancelados também.
 
-Nesse exemplo o filtro é adicionado ao `ApplicationController` e dessa forma todos os *controllers* na aplicaçào irão herdar ele. Isso fará com que tudo na aplicação requera que o usuário esteja logado para que ele possa usar. Por razões óbvias (o usuário não conseguiria fazer o log in para começo de conversa!), nem todos os *controllers* devem requerer isso. Você pode evitar esse filtro de ser executado antes de ações em particular com `skip_before_action`:
+Nesse exemplo o filtro é adicionado ao `ApplicationController` e dessa forma todos os *controllers* na aplicação irão herdar ele. Isso fará com que tudo na aplicação requeira que o usuário esteja logado para que ele possa usar. Por razões óbvias (o usuário não conseguiria fazer o log in para começo de conversa!), nem todos os *controllers* devem requerer isso. Você pode evitar esse filtro de ser executado antes de ações em particular com `skip_before_action`:
 
 ```ruby
 class LoginsController < ApplicationController
@@ -650,7 +650,7 @@ class LoginsController < ApplicationController
 end
 ```
 
-Agora, as ações de `new` e `create` do `LoginsController` irão funcionar como antes sem requerer que o usuário esteja logado. A opção `:only` é usada para pular esse filtro somente para essas ações, e existe também a opção `:except` que funciona de maneira contrária. Essas opções podem ser utilizadas quando adicionamos filtros também, para que você possa adicionar um fltro que somente executa para as ações selecionadas.
+Agora, as ações de `new` e `create` do `LoginsController` irão funcionar como antes sem requerer que o usuário esteja logado. A opção `:only` é usada para pular esse filtro somente para essas ações, e existe também a opção `:except` que funciona de maneira contrária. Essas opções podem ser utilizadas quando adicionamos filtros também, para que você possa adicionar um filtro que somente executa para as ações selecionadas.
 
 NOTE: Chamar o mesmo filtro múltiplas vezes com diferentes opções não irá funcionar,
 já que a última definição do filtro irá sobreescrever as anteriores.
