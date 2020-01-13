@@ -600,8 +600,7 @@ Se você usar o *cookie* de armazenamento de sessão, isso também se aplicaria 
 Renderizando dados XML e JSON
 ---------------------------
 
-O *ActionController* faz com que renderizar dados `XML` ou `JSON` seja extremamente fácil. Se você gerou um *controller*
-usando o *scaffold*, será algo mais ou menos assim:
+O *ActionController* faz com que renderizar dados `XML` ou `JSON` seja extremamente fácil. Se você gerou um *controller* usando o *scaffold*, será algo mais ou menos assim:
 
 ```ruby
 class UsersController < ApplicationController
@@ -616,8 +615,7 @@ class UsersController < ApplicationController
 end
 ```
 
-Você pode observar que no código acima estamos usando `render xml: @users`, e não `render xml: @users.to_xml`. Se o objeto
-não é uma *String*, então o Rails automaticamente chama `to_xml` por nós.
+Você pode observar que no código acima estamos usando `render xml: @users`, e não `render xml: @users.to_xml`. Se o objeto não é uma *String*, então o Rails automaticamente chama `to_xml` por nós.
 
 Filters
 -------
