@@ -1,37 +1,37 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Action View Form Helpers
+Action View Form Helpers 
 ========================
 
-Forms in web applications are an essential interface for user input. However, form markup can quickly become tedious to write and maintain because of the need to handle form control naming and its numerous attributes. Rails does away with this complexity by providing view helpers for generating form markup. However, since these helpers have different use cases, developers need to know the differences between the helper methods before putting them to use.
+Formulários em uma aplicação web são uma interface essencial para interação do usuário com o sistema. No entanto, pode-se tornar entendiante manter este tipo de marcação devido à necessidade de lidar com a nomenclatura e controles de formulários e seus inúmeros atributos. O Rails acaba com essa complexidade pois há um assistente de exibição que gera uma marcação de formulário. Mas para um uso correto, como há casos de uso diferentes, é necessário que os desenvolvedores conheçam as diferenças entre os métodos auxiliares antes de usá-los.
 
-After reading this guide, you will know:
+Depois de ler este guia, você vai saber:
 
-* How to create search forms and similar kind of generic forms not representing any specific model in your application.
-* How to make model-centric forms for creating and editing specific database records.
-* How to generate select boxes from multiple types of data.
-* What date and time helpers Rails provides.
-* What makes a file upload form different.
-* How to post forms to external resources and specify setting an `authenticity_token`.
-* How to build complex forms.
+* Como criar formulários de pesquisa e tipos de semelhantes de formulários genéricos que não representam *model* específico da sua aplicação. 
+* Como criar formulários centrados em *models* pra criar e editar registros específicos no banco de dados.
+* Como gerar *select boxes* (caixas de seleção) de vários tipos de dados.
+* Que  helpers de data e hora do Rails fornecem.
+* O que torna um formulário de upload de arquivo diferente.
+* Como publicar formulários para recursos externos e especificar a configuração de um token de autenticidade (`authentic_token`).
+* Como criar formulários complexos.
+-------------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
 
-NOTE: This guide is not intended to be a complete documentation of available form helpers and their arguments. Please visit [the Rails API documentation](https://api.rubyonrails.org/) for a complete reference.
+NOTE: Este guia não pretende ser uma documentação completa dos métodos auxiliares de formulários (*form helpers*) disponíveis e seus argumentos. Por favor para obter uma  referência completa visite [a documentação da API do Rails](https://api.rubyonrails.org/). 
 
-Dealing with Basic Forms
-------------------------
+Trabalhando com formulários básicos.
+------------------------------------------------
 
-The main form helper is `form_with`.
+O principal auxiliar de formulário (*form helper*) é o `form_with` .
 
 ```erb
 <%= form_with do %>
-  Form contents
+  Conteúdo do formulário 
 <% end %>
 ```
 
-When called without arguments like this, it creates a form tag which, when submitted, will POST to the current page. For instance, assuming the current page is a home page, the generated HTML will look like this:
+Quando chamado sem nenhum argumento como este, é criado uma *tag* de formulário que, quando enviado, fará uma requisição HTTP usando o verbo POST para a página atual. Por exemplo, supondo que a página atual seja a inicial, o HTML gerado terá a seguinte aparência:
 
 ```html
 <form accept-charset="UTF-8" action="/" data-remote="true" method="post">
@@ -40,19 +40,18 @@ When called without arguments like this, it creates a form tag which, when submi
 </form>
 ```
 
-You'll notice that the HTML contains an `input` element with type `hidden`. This `input` is important, because non-GET form cannot be successfully submitted without it.
-The hidden input element with the name `authenticity_token` is a security feature of Rails called **cross-site request forgery protection**, and form helpers generate it for every non-GET form (provided that this security feature is enabled). You can read more about this in the [Securing Rails Applications](security.html#cross-site-request-forgery-csrf) guide.
+Note que o HTML contém um elemento `input` com tipo `hidden`. Esse `input` é importante, porque o formulário não usa o verbo HTTP de então não pode ser enviado com êxito sem ele. Este elemento oculto com o nome `authenticity_token` é um recurso de segurança do  Rails chamado **proteção contra falsificação de solicitação entre sites** ([**cross-site request forgery protection**](https://pt.wikipedia.org/wiki/Cross-site_request_forgery)), e os auxiliares de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Poderá ler mais sobre isto no guia [segurança em  aplicações Rails](security.html#cross-site-request-forgery-csrf). 
 
-### A Generic Search Form
+### Formulário de pesquisa genérica 
 
-One of the most basic forms you see on the web is a search form. This form contains:
+Um dos formulários mais básicos que você vê na web é um formulários de pesquisa. Este formulário contém:
 
-* a form element with "GET" method,
-* a label for the input,
-* a text input element, and
-* a submit element.
+* Um *input* de formulário com o método GET.
+* Um *label* para entrada.
+* Um *input* de entrada de texto.
+* Um *input* de envio.
 
-To create this form you will use `form_with`, `label_tag`, `text_field_tag`, and `submit_tag`, respectively. Like this:
+Para criar este formulário você irá usar `form_with`, `label_tag`, `text_field_tag`, e `submit_tag`, respectivamente. Como o exemplo abaixo: 
 
 ```erb
 <%= form_with(url: "/search", method: "get") do %>
@@ -62,7 +61,7 @@ To create this form you will use `form_with`, `label_tag`, `text_field_tag`, and
 <% end %>
 ```
 
-This will generate the following HTML:
+Isso irá gerar o seguinte HTML:
 
 ```html
 <form accept-charset="UTF-8" action="/search" data-remote="true" method="get">
@@ -72,29 +71,21 @@ This will generate the following HTML:
 </form>
 ```
 
-TIP: Passing `url: my_specified_path` to `form_with` tells the form where to make the request. However, as explained below, you can also pass ActiveRecord objects to the form.
+TIP: Passando `url: my_speccified_path` para `form_with` informa ao formulário ode fazer a solicitação. No entanto, conforme explicado abaixo, você também pode passar objetos ActiveRecord para o formulário. 
 
-TIP: For every form input, an ID attribute is generated from its name (`"q"` in above example). These IDs can be very useful for CSS styling or manipulation of form controls with JavaScript.
+TIP: Para cada entrada de formulário, um atributo de ID é gerado a partir de seu nome("q" no exemplo acima). Esses IDs podem ser muito úteis 
 
-IMPORTANT: Use "GET" as the method for search forms. This allows users to bookmark a specific search and get back to it. More generally Rails encourages you to use the right HTTP verb for an action.
+IMPORTANT: Use "GET" como o método para buscas em formulários. Isso permitirá aos usuários marcar uma busca específica e voltar a ela. De forma geral o rails recomenda que você use o verbo correto para a ação desejada.
 
-### Helpers for Generating Form Elements
+### Helpers para gerar elementos de formulário
 
-Rails provides a series of helpers for generating form elements such as
-checkboxes, text fields, and radio buttons. These basic helpers, with names
-ending in `_tag` (such as `text_field_tag` and `check_box_tag`), generate just a
-single `<input>` element. The first parameter to these is always the name of the
-input. When the form is submitted, the name will be passed along with the form
-data, and will make its way to the `params` in the controller with the
-value entered by the user for that field. For example, if the form contains
-`<%= text_field_tag(:query) %>`, then you would be able to get the value of this
-field in the controller with `params[:query]`.
+O Rails fornece  uma série de auxiliares para gerar elementos de formulário, como caixas de seleção, campos de texto e botões de opção. Esses auxiliares básicos, com nomes terminados em `_tag`(como `text_field` e `check_box_tag`), geram apenas um único elemento `<input>`. O primeiro parâmetro para estes será sempre o nome da entrada. Quando o formulário for enviado, o nome será passado junto com os dados do formulário e será direcionado para `params` o controlador com o valor inserido pelo usuário para esse campo. Por exemplo, se o formulário contiver `<%= text_field_tag(:query) %>`, podendo obter o valor deste campo no controlador com `params[:query]` .
 
-When naming inputs, Rails uses certain conventions that make it possible to submit parameters with non-scalar values such as arrays or hashes, which will also be accessible in `params`. You can read more about them in chapter [Understanding Parameter Naming Conventions](#understanding-parameter-naming-conventions) of this guide. For details on the precise usage of these helpers, please refer to the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
+Ao nomear entradas, o Rails usa certas convenções que possibilitam enviar parâmetros com valores não escalares, como matrizes ou hashes, que também estarão acessíveis `params`. Poderá ser lido mais sobre eles no capítulo [Noções básicas sobre convenções de nomenclatura de parâmetros](#understanding-parameter-naming-conventions) deste guia. Para detalhes de como usar com precisão esses auxiliares, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
 
-#### Checkboxes
+#### *Checkboxes* Caixas de seleção
 
-Checkboxes are form controls that give the user a set of options they can enable or disable:
+As caixas de seleção são controles de formulário que fornecem ao usuário um conjunto de opções que podem ser ativados ou desativados pelo usuário.
 
 ```erb
 <%= check_box_tag(:pet_dog) %>
@@ -103,7 +94,7 @@ Checkboxes are form controls that give the user a set of options they can enable
 <%= label_tag(:pet_cat, "I own a cat") %>
 ```
 
-This generates the following:
+Isso gera o seguinte:
 
 ```html
 <input id="pet_dog" name="pet_dog" type="checkbox" value="1" />
@@ -112,11 +103,11 @@ This generates the following:
 <label for="pet_cat">I own a cat</label>
 ```
 
-The first parameter to `check_box_tag`, of course, is the name of the input. The second parameter, naturally, is the value of the input. This value will be included in the form data (and be present in `params`) when the checkbox is checked.
+O primeiro parâmetro para `check_box_tag`, é claro, é o nome da entrada. O segundo parâmetro, naturalmente, é o valor da entrada. Este valor será incluído nos dados do formulário (e está presente em `params`) quando a caixa de seleção estiver marcada.
 
-#### Radio Buttons
+#### *Radio Buttons* Botões de opção
 
-Radio buttons, while similar to checkboxes, are controls that specify a set of options in which they are mutually exclusive (i.e., the user can only pick one):
+Os botões de opção embora semelhantes às caixas de seleção, são controles que especificam um conjunto de opções mutuamente exclusivos (ou seja, o usuário pode escolher apenas uma).
 
 ```erb
 <%= radio_button_tag(:age, "child") %>
@@ -125,7 +116,7 @@ Radio buttons, while similar to checkboxes, are controls that specify a set of o
 <%= label_tag(:age_adult, "I am over 21") %>
 ```
 
-Output:
+Resultado:
 
 ```html
 <input id="age_child" name="age" type="radio" value="child" />
@@ -134,18 +125,13 @@ Output:
 <label for="age_adult">I am over 21</label>
 ```
 
-As with `check_box_tag`, the second parameter to `radio_button_tag` is the value of the input. Because these two radio buttons share the same name (`age`), the user will only be able to select one of them, and `params[:age]` will contain either `"child"` or `"adult"`.
+Assim como `check_box_tag`, o segundo parâmetro para `radio_button_tag` é o valor da entrada. Como esses dois botões compartilham o mesmo nome (`age`), o usuário poderá selecionar apenas um deles, e `params[:age]` receberá `"child"` ou `"adult"`.
 
-NOTE: Always use labels for checkbox and radio buttons. They associate text with a specific option and,
-by expanding the clickable region,
-make it easier for users to click the inputs.
+NOTE: Sempre use *labels* para a caixa de seleção e botões de opção. Eles associam o texto a uma opção específica e, ao expandir a região clicável, facilita o clique dos usuários nas entradas.
 
-### Other Helpers of Interest
+### Outros auxiliares interessantes
 
-Other form controls worth mentioning are textareas, password fields,
-hidden fields, search fields, telephone fields, date fields, time fields,
-color fields, datetime-local fields, month fields, week fields,
-URL fields, email fields, number fields, and range fields:
+Outros controles de formulários que vale a pena falar são áreas de texto, campos de senha, campos ocultos, campos de pesquisa, campos telefônicos, campos de data, campos de hora, campos de cores, campos locais de data e hora, campos de mês, mês, semana, URL, campo de email, número e campos de intervalo:
 
 ```erb
 <%= text_area_tag(:message, "Hi, nice site", size: "24x6") %>
@@ -165,7 +151,7 @@ URL fields, email fields, number fields, and range fields:
 <%= range_field(:product, :discount, in: 1..100) %>
 ```
 
-Output:
+Resultado:
 
 ```html
 <textarea id="message" name="message" cols="24" rows="6">Hi, nice site</textarea>
@@ -185,17 +171,12 @@ Output:
 <input id="product_discount" max="100" min="1" name="product[discount]" type="range" />
 ```
 
-Hidden inputs are not shown to the user but instead hold data like any textual input. Values inside them can be changed with JavaScript.
+Entradas ocultas não são exibidas ao usuário, mas retêm dados como qualquer entrada de texto. Os valores dentro deles podem ser alterados com JavaScript.
 
-IMPORTANT: The search, telephone, date, time, color, datetime, datetime-local,
-month, week, URL, email, number, and range inputs are HTML5 controls.
-If you require your app to have a consistent experience in older browsers,
-you will need an HTML5 polyfill (provided by CSS and/or JavaScript).
-There is definitely [no shortage of solutions for this](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills), although a popular tool at the moment is
-[Modernizr](https://modernizr.com/), which provides a simple way to add functionality based on the presence of
-detected HTML5 features.
+IMPORTANT: As entradas de pesquisa, telefone, data, hora, cor, data e hora local e data, mês, semana, URL, email, número e intervalo são controles HTML5. Se você precisar que sua aplicação tenha uma experiência consistente em navegadores antigos, precisará de um polyfill HTML5 (fornecido por css e/ou JavaScript). Definiticamente, [não faltam soluções disponíveis](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills), embora uma ferramenta popular no momento seja o [Modernizr](https://modernizr.com/), que fornece uma maneira simples de adicionar funcionalidade com base na presença de recursos HTML5 detectados.
 
-TIP: If you're using password input fields (for any purpose), you might want to configure your application to prevent those parameters from being logged. You can learn about this in the [Securing Rails Applications](security.html#logging) guide.
+TIP: Se você estiver usando campos de entradas de senha (para qualquer finalidade), convêm configurar sua aplicação para impedir que esses parâmetros sejam registrados. Você pode aprender sobre este assunto no guia [Protegendo aplicações Rails](security.html#logging)
+
 
 Dealing with Model Objects
 --------------------------
