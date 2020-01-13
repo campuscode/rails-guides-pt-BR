@@ -15,13 +15,13 @@ Depois de ler este guia, você vai saber:
 * O que torna um formulário de upload de arquivo diferente.
 * Como publicar formulários para recursos externos e especificar a configuração de um token de autenticidade (`authentic_token`).
 * Como criar formulários complexos.
--------------------------------------------------------------------------------------
 
+-------------------------------------------------------------------------------------
 
 NOTE: Este guia não pretende ser uma documentação completa dos métodos auxiliares de formulários (*form helpers*) disponíveis e seus argumentos. Por favor para obter uma  referência completa visite [a documentação da API do Rails](https://api.rubyonrails.org/). 
 
 Trabalhando com formulários básicos.
-------------------------------------------------
+------------------------------------
 
 O principal auxiliar de formulário (*form helper*) é o `form_with` .
 
@@ -40,11 +40,11 @@ Quando chamado sem nenhum argumento como este, é criado uma *tag* de formulári
 </form>
 ```
 
-Note que o HTML contém um elemento `input` com tipo `hidden`. Esse `input` é importante, porque o formulário não usa o verbo HTTP de então não pode ser enviado com êxito sem ele. Este elemento oculto com o nome `authenticity_token` é um recurso de segurança do  Rails chamado **proteção contra falsificação de solicitação entre sites** ([**cross-site request forgery protection**](https://pt.wikipedia.org/wiki/Cross-site_request_forgery)), e os auxiliares de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Poderá ler mais sobre isto no guia [segurança em  aplicações Rails](security.html#cross-site-request-forgery-csrf). 
+Note que o HTML contém um elemento `input` do tipo `hidden`. Este `input` é importante porque o formulário não pode ser enviado com sucesso sem ele, exceto formulários com método GET. Esse elemento oculto com o nome `authenticity_token` é um recurso de segurança do Rails chamado **proteção contra falsificação de solicitação entre sites** ([**cross-site request forgery protection**](https://pt.wikipedia.org/wiki/Cross-site_request_forgery)), e os *helpers* de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Você poderá ler mais sobre isso no guia [Segurança em Aplicações Rails](security.html#cross-site-request-forgery-csrf).
 
 ### Formulário de pesquisa genérica 
 
-Um dos formulários mais básicos que você vê na web é um formulários de pesquisa. Este formulário contém:
+Um dos formulários mais básicos que você vê na web é um formulário de pesquisa. Este formulário contém:
 
 * Um *input* de formulário com o método GET.
 * Um *label* para entrada.
@@ -71,11 +71,11 @@ Isso irá gerar o seguinte HTML:
 </form>
 ```
 
-TIP: Passando `url: my_speccified_path` para `form_with` informa ao formulário ode fazer a solicitação. No entanto, conforme explicado abaixo, você também pode passar objetos ActiveRecord para o formulário. 
+TIP: Passando `url: my_speccified_path` para `form_with` indica ao formulário onde fazer a requisição. No entanto, conforme explicado abaixo, você também pode passar objetos ActiveRecord para o formulário. 
 
-TIP: Para cada entrada de formulário, um atributo de ID é gerado a partir de seu nome("q" no exemplo acima). Esses IDs podem ser muito úteis 
+TIP: Para cada entrada de formulário, um atributo ID é gerado a partir de seu nome("q" no exemplo acima). Esses IDs podem ser muito úteis para estilizar CSS ou manipular controles de formulário com JavaScript.
 
-IMPORTANT: Use "GET" como o método para buscas em formulários. Isso permitirá aos usuários marcar uma busca específica e voltar a ela. De forma geral o rails recomenda que você use o verbo correto para a ação desejada.
+IMPORTANT: Use "GET" como o método para buscas em formulários. Isso permitirá aos usuários marcar uma busca específica e depois retornar nessa mesma busca. De forma geral, o Rails recomenda que você utilize o verbo correto para a ação desejada.
 
 ### Helpers para gerar elementos de formulário
 
