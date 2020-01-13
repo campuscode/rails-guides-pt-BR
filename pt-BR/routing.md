@@ -1176,23 +1176,23 @@ video = Video.find_by(identifier: "Roman-Holiday")
 edit_video_path(video) # => "/videos/Roman-Holiday/edit"
 ```
 
-Inspecting and Testing Routes
+Inspecionando e Testando Rotas
 -----------------------------
 
-Rails offers facilities for inspecting and testing your routes.
+Rails oferece recursos para inspecionar e testar suas rotas.
 
-### Listing Existing Routes
+### Listando Rotas Existentes
 
-To get a complete list of the available routes in your application, visit `http://localhost:3000/rails/info/routes` in your browser while your server is running in the **development** environment. You can also execute the `rails routes` command in your terminal to produce the same output.
+Para obter uma lista completa de rotas disponíveis na sua aplicação, visite `http://localhost:3000/rails/info/routes` no browser quando o servidor estiver rodando em ambiente de desenvolvimento. Você pode também executar o comando `rails routes` no terminal para reproduzir o mesmo resultado.
 
-Both methods will list all of your routes, in the same order that they appear in `config/routes.rb`. For each route, you'll see:
+Ambos os métodos irão listas todas suas rotas, na mesma ordem que aparece em `config/routes.rb`. Para cada rota, você irá ver:
 
-* The route name (if any)
-* The HTTP verb used (if the route doesn't respond to all verbs)
-* The URL pattern to match
-* The routing parameters for the route
+* O Nome da rota (se houver)
+* O verbo HTTP usado (se a rota não responder a todos os verbos)
+* O padrão que a URL deve utilizar
+* Os parâmetros para a cada rota
 
-For example, here's a small section of the `rails routes` output for a RESTful route:
+Por exemplo, segue uma pequena parte da resposta `rails routes` para uma rota RESTful:
 
 ```
     users GET    /users(.:format)          users#index
@@ -1201,7 +1201,7 @@ For example, here's a small section of the `rails routes` output for a RESTful r
 edit_user GET    /users/:id/edit(.:format) users#edit
 ```
 
-You can also use the `--expanded` option to turn on the expanded table formatting mode.
+Você pode também utilizar a opção `--expanded` para ativar o modo de formatação por tabela expandida.
 
 ```
 $ rails routes --expanded
@@ -1228,7 +1228,7 @@ URI               | /users/:id/edit(.:format)
 Controller#Action | users#edit
 ```
 
-You can search through your routes with the grep option: -g. This outputs any routes that partially match the URL helper method name, the HTTP verb, or the URL path.
+Você pode procurar por rotas utilizando a opção grep: -g. Isso resulta qualquer rota que corresponda parcialmente ao nome do método da URL, o verbo HTTP, ou a URL.
 
 ```
 $ rails routes -g new_comment
@@ -1236,7 +1236,7 @@ $ rails routes -g POST
 $ rails routes -g admin
 ```
 
-If you only want to see the routes that map to a specific controller, there's the -c option.
+Se você quiser ver somente as rotas que mapeiam um controller especifico, existe a opção `-c`.
 
 ```
 $ rails routes -c users
@@ -1245,42 +1245,42 @@ $ rails routes -c Comments
 $ rails routes -c Articles::CommentsController
 ```
 
-TIP: You'll find that the output from `rails routes` is much more readable if you widen your terminal window until the output lines don't wrap.
+TIP: O resultado do comando `rails routes` fica muito mais legível se você ampliar a janela do seu terminal até que não haja quebra de linha.
 
-### Testing Routes
+### Testando Rotas
 
-Routes should be included in your testing strategy (just like the rest of your application). Rails offers three [built-in assertions](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html) designed to make testing routes simpler:
+Rotas deveriam ser incluidas na sua estratégia de testes (assim como resto da sua aplicação). Rails oferece três [validações nativas](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html) desenvolvidas para fazer os testes de rotas mais simples:
 
 * `assert_generates`
 * `assert_recognizes`
 * `assert_routing`
 
-#### The `assert_generates` Assertion
+#### A validação `assert_generates`
 
-`assert_generates` asserts that a particular set of options generate a particular path and can be used with default routes or custom routes. For example:
+`assert_generates` valida que um conjunto de opções em particular gera um caminho equivalente que pode ser usar com rota padrão ou rota customizada. Por exemplo:
 
 ```ruby
 assert_generates '/photos/1', { controller: 'photos', action: 'show', id: '1' }
 assert_generates '/about', controller: 'pages', action: 'about'
 ```
 
-#### The `assert_recognizes` Assertion
+#### A validação `assert_recognizes`
 
-`assert_recognizes` is the inverse of `assert_generates`. It asserts that a given path is recognized and routes it to a particular spot in your application. For example:
+`assert_recognizes` é o inverso de `assert_generates`. Valida que um dado caminho é reconhecido e roteia-o a um lugar determinado na sua aplicação. Por exemplo:
 
 ```ruby
 assert_recognizes({ controller: 'photos', action: 'show', id: '1' }, '/photos/1')
 ```
 
-You can supply a `:method` argument to specify the HTTP verb:
+Você pode passar um argumento `:method` para especificar um verbo HTTP:
 
 ```ruby
 assert_recognizes({ controller: 'photos', action: 'create' }, { path: 'photos', method: :post })
 ```
 
-#### The `assert_routing` Assertion
+#### A validação `assert_routing`
 
-The `assert_routing` assertion checks the route both ways: it tests that the path generates the options, and that the options generate the path. Thus, it combines the functions of `assert_generates` and `assert_recognizes`:
+A validação `assert_routing` testa a rota dos dois jeitos: Testa que um caminho gera opções, e que opções gera um caminho. Logo, Ela combina as validações `assert_generates` e `assert_recognizes`:
 
 ```ruby
 assert_routing({ path: 'photos', method: :post }, { controller: 'photos', action: 'create' })
