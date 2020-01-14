@@ -288,10 +288,10 @@ Com `through: :section` especificado, o Rails agora entenderá:
 
 ### A Associação `has_one :through`
 
-Uma Associação `has_one :through` estabelece uma conexão um-para-um com outro `model`. Essa associação indica
-que o `model` declarante pode ser combinado com uma instância de outro `model`, prosseguindo através(_through_) de um teceiro `model`.
-Por exemplo, se cada `supplier` tiver uma `account`, e cada `account` estiver associada a um `account history`, então o
-`model supplier` poderia ficar assim:
+Uma Associação `has_one :through` estabelece uma conexão um-para-um com outro _model_. Essa associação indica
+que o _model_ declarante pode ser combinado com uma instância de outro _model_, prosseguindo através(_through_) de um teceiro _model_.
+Por exemplo, se cada _supplier_ tiver uma _account_, e cada _account_ estiver associada a um _account history_, então o
+_model supplier_ poderia ficar assim:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -338,7 +338,7 @@ end
 
 ### A Associação `has_and_belongs_to_many`
 
-Uma associação `has_and_belongs_to_many` cria uma conexão direta `many-to-many` com outro `model`, sem nenhum `model` intermediário. Por exemplo, se sua aplicação incluir `assemblies` e `parts`, com cada `assembly` tendo muitas `parts` e cada `part` aparecendo em muitas `assemblies`, você poderá declarar os `model` desta maneira:
+Uma associação `has_and_belongs_to_many` cria uma conexão direta muitos-para-muitos com outro _model_, sem nenhum _model_ intermediário. Por exemplo, se sua aplicação incluir _assemblies_ e _parts_, com cada _assembly_ tendo muitas _parts_ e cada _part_ aparecendo em muitas _assemblies_, você poderá declarar os _model_ desta maneira:
 
 ```ruby
 class Assembly < ApplicationRecord
@@ -414,9 +414,10 @@ end
 
 NOTE: O uso de `t.bigint :supplier_id` torna a nomeação da _foreign key_ óbvia e explícita. Nas versões atuais do Rails, você pode abstrair esses detalhes de implementação usando `t.references :supplier`.
 
-### Choosing Between `has_many :through` and `has_and_belongs_to_many`
+### Escolhendo entre `has_many :through` e `has_and_belongs_to_many`
 
 Rails offers two different ways to declare a many-to-many relationship between models. The simpler way is to use `has_and_belongs_to_many`, which allows you to make the association directly:
+O Rails oferece duas maneiras diferentes de declarar um relacionamento muitos-para-muitos entre os models. A maneira mais simples é usar `has_and_belongs_to_many`, o que permite fazer a associação diretamente:
 
 ```ruby
 class Assembly < ApplicationRecord
