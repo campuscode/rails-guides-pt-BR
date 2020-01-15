@@ -416,8 +416,7 @@ NOTE: O uso de `t.bigint :supplier_id` torna a nomeação da _foreign key_ óbvi
 
 ### Escolhendo entre `has_many :through` e `has_and_belongs_to_many`
 
-Rails offers two different ways to declare a many-to-many relationship between models. The simpler way is to use `has_and_belongs_to_many`, which allows you to make the association directly:
-O Rails oferece duas maneiras diferentes de declarar um relacionamento muitos-para-muitos entre os models. A maneira mais simples é usar `has_and_belongs_to_many`, o que permite fazer a associação diretamente:
+O Rails oferece duas maneiras diferentes de declarar um relacionamento muitos-para-muitos entre os _models_. A maneira mais simples é usar `has_and_belongs_to_many`, o que permite fazer a associação diretamente:
 
 ```ruby
 class Assembly < ApplicationRecord
@@ -429,7 +428,7 @@ class Part < ApplicationRecord
 end
 ```
 
-The second way to declare a many-to-many relationship is to use `has_many :through`. This makes the association indirectly, through a join model:
+A segunda maneira de declara um relacionamento muitos-para-muito é usar `has_many :through`. Isso faz uma associação de forma indireta, através de um _model_ de junção:
 
 ```ruby
 class Assembly < ApplicationRecord
@@ -448,13 +447,13 @@ class Part < ApplicationRecord
 end
 ```
 
-The simplest rule of thumb is that you should set up a `has_many :through` relationship if you need to work with the relationship model as an independent entity. If you don't need to do anything with the relationship model, it may be simpler to set up a `has_and_belongs_to_many` relationship (though you'll need to remember to create the joining table in the database).
+A regra mais simples é que você deve configurar um relacionamento `has_many: through` se precisar trabalhar com o _models_ de relacionamento como uma entidade independente. Se você não precisar fazer nada com o _model_ de relacionamento, pode ser mais simples configurar um relacionamento `has_and_belongs_to_many` (embora seja necessário lembrar de criar a tabela de junção no banco de dados).
 
-You should use `has_many :through` if you need validations, callbacks, or extra attributes on the join model.
+Você deve usar `has_many: through` se precisar de validações, _callbacks_ ou atributos extras no _model_ de junção.
 
-### Polymorphic Associations
+### Associações Polimórficas
 
-A slightly more advanced twist on associations is the _polymorphic association_. With polymorphic associations, a model can belong to more than one other model, on a single association. For example, you might have a picture model that belongs to either an employee model or a product model. Here's how this could be declared:
+Uma mudança um pouco mais avançada nas associações é a _associação polimórfica_. Com associações polimórficas, um _model_ pode pertencer a mais de um outro _model_, em uma única associação. Por exemplo, você pode ter um _model_ de _picture_ que pertença a um _model_ de _employee_ ou a um _model_ de _product_. Veja como isso pode ser declarado:
 
 ```ruby
 class Picture < ApplicationRecord
@@ -470,11 +469,11 @@ class Product < ApplicationRecord
 end
 ```
 
-You can think of a polymorphic `belongs_to` declaration as setting up an interface that any other model can use. From an instance of the `Employee` model, you can retrieve a collection of pictures: `@employee.pictures`.
+Você pode pensar em uma declaração polimórfica `belongs_to` como uma configuração de interface que qualquer outro _model_ pode usar. Em uma instância do _model_ `Employee`, você pode recuperar uma coleção de _pictures_: `@employee.pictures`.
 
-Similarly, you can retrieve `@product.pictures`.
+Da mesma forma, você pode recuperar `@product.pictures`.
 
-If you have an instance of the `Picture` model, you can get to its parent via `@picture.imageable`. To make this work, you need to declare both a foreign key column and a type column in the model that declares the polymorphic interface:
+Se você tem uma instância do _model_ `Picture`, você pode chegar ao seu pai via `@picture.imageable`. Para fazer isso funcionar, você precisa declarar uma coluna de _foreign key_ e uma coluna de tipo no _model_ que declara a interface polimórfica:
 
 ```ruby
 class CreatePictures < ActiveRecord::Migration[5.2]
@@ -491,7 +490,7 @@ class CreatePictures < ActiveRecord::Migration[5.2]
 end
 ```
 
-This migration can be simplified by using the `t.references` form:
+Esta _migration_ pode ser simplificada usando a forma de `t.references`:
 
 ```ruby
 class CreatePictures < ActiveRecord::Migration[5.0]
@@ -505,11 +504,11 @@ class CreatePictures < ActiveRecord::Migration[5.0]
 end
 ```
 
-![Polymorphic Association Diagram](images/association_basics/polymorphic.png)
+![Diagrama de Associação Polimórfica](images/association_basics/polymorphic.png)
 
 ### Self Joins
 
-In designing a data model, you will sometimes find a model that should have a relation to itself. For example, you may want to store all employees in a single database model, but be able to trace relationships such as between manager and subordinates. This situation can be modeled with self-joining associations:
+Ao projetar um modelo de dados, algumas vezes você encontrará um _model_ que deve ter uma relação consigo mesmo. Por exemplo, você pode querer armazenar todos os _employees_ em um único modelo de banco de dados, mas conseguir rastrear relacionamentos como entre _manager_ e _subordinates_. Essa situação pode ser modelada com associações _self-joining_:
 
 ```ruby
 class Employee < ApplicationRecord
@@ -520,9 +519,9 @@ class Employee < ApplicationRecord
 end
 ```
 
-With this setup, you can retrieve `@employee.subordinates` and `@employee.manager`.
+Com esta configuração, você pode recuperar `@employee.subordinates` e `@employee.manager`.
 
-In your migrations/schema, you will add a references column to the model itself.
+Em suas _migrations_/_schema_, você adicionará uma coluna de referências ao próprio _model_.
 
 ```ruby
 class CreateEmployees < ActiveRecord::Migration[5.0]
