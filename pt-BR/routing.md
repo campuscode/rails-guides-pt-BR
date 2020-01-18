@@ -1189,7 +1189,7 @@ Ambos os métodos irão listas todas suas rotas, na mesma ordem que aparece em `
 
 * O Nome da rota (se houver)
 * O verbo HTTP usado (se a rota não responder a todos os verbos)
-* O padrão que a URL deve utilizar
+* O padrão ao qual a URL deve corresponder
 * Os parâmetros para a cada rota
 
 Por exemplo, segue uma pequena parte da resposta `rails routes` para uma rota RESTful:
