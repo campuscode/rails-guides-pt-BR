@@ -1,15 +1,15 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Layouts e Renderização no Rails
+*Layouts* e Renderização no Rails
 ==============================
 
-Este guia aborda os recursos básicos de layout do _Action Controller_ e da _Action View_.
+Este guia aborda os recursos básicos de *layout* do _Action Controller_ e da _Action View_.
 
 Depois de ler este guia, você saberá:
 
 * Como usar os vários métodos de renderização embutidos no Rails.
-* Como criar layouts com várias seções de conteúdo.
+* Como criar *layouts* com várias seções de conteúdo.
 * Como usar _partials_ para enxugar suas _views_.
 * Como usar _nested layouts_ (sub-templates).
 
@@ -20,7 +20,7 @@ Visão Geral: Como as peças se encaixam
 
 Este guia concentra-se na interação entre o _Controller_ e _View_ no triângulo _Model-View-Controller_. Como você sabe, o _Controller_ é responsável por orquestrar todo o processo de como lidar com uma requisição no Rails, embora normalmente entregue qualquer código pesado ao _Model_. Porém, na hora de enviar uma resposta de volta ao usuário, o _Controller_ transfere as informações para a _View_. É essa transferência que é o assunto deste guia.
 
-Em linhas gerais, isso envolve decidir o que deve ser enviado como resposta e chamar um método apropriado para criar essa resposta. Se a resposta for uma _view_ completa, o Rails também fará um trabalho extra para encapsular a _view_ em um layout e, possivelmente, obter as _partials_. Você verá todos esses caminhos posteriormente neste guia.
+Em linhas gerais, isso envolve decidir o que deve ser enviado como resposta e chamar um método apropriado para criar essa resposta. Se a resposta for uma _view_ completa, o Rails também fará um trabalho extra para encapsular a _view_ em um *layout* e, possivelmente, obter as _partials_. Você verá todos esses caminhos posteriormente neste guia.
 
 Criando respostas
 ------------------
@@ -196,9 +196,9 @@ TIP: A renderização de texto puro é mais útil quando você está respondendo
 que esperam algo diferente de HTML adequado.
 
 NOTE: Por padrão, se você usar a opção `:plain`, o texto será renderizado sem
-usar o layout atual. Se você deseja que o Rails coloque o texto no layout
+usar o *layout* atual. Se você deseja que o Rails coloque o texto no *layout*
 atual, você precisa adicionar a opção `layout: true` e usar a extensão` .text.erb`
-para o arquivo de layout.
+para o arquivo de *layout*.
 
 #### Renderização de HTML
 
@@ -271,12 +271,12 @@ render file: "#{Rails.root}/public/404.html", layout: false
 ```
 
 Isso renderiza o arquivo bruto (não suporta ERB ou outros manipuladores). Por
-o padrão é renderizado no layout atual.
+o padrão é renderizado no *layout* atual.
 
 WARNING: Usar a opção `:file` em combinação com a entrada de dados dos usuários pode levar a problemas de segurança,
 pois um invasor pode usar esta _action_ para acessar arquivos confidenciais de segurança em seu sistema de arquivos.
 
-TIP: `send_file` geralmente é uma opção mais rápida e melhor se um layout não for necessário.
+TIP: `send_file` geralmente é uma opção mais rápida e melhor se um *layout* não for necessário.
 
 #### Opções para `render`
 
@@ -299,15 +299,15 @@ render template: "feed", content_type: "application/rss"
 
 ##### A opção `:layout`
 
-Com a maioria das opções para `render`, o conteúdo renderizado é exibido como parte do layout atual. Você aprenderá mais sobre layouts e como usá-los posteriormente neste guia.
+Com a maioria das opções para `render`, o conteúdo renderizado é exibido como parte do *layout* atual. Você aprenderá mais sobre *layouts* e como usá-los posteriormente neste guia.
 
-Você pode usar a opção `:layout` para que o Rails use um arquivo específico como o layout da _action_ atual:
+Você pode usar a opção `:layout` para que o Rails use um arquivo específico como o *layout* da _action_ atual:
 
 ```ruby
 render layout: "special_layout"
 ```
 
-Você também pode dizer ao Rails para renderizar sem nenhum layout:
+Você também pode dizer ao Rails para renderizar sem nenhum *layout*:
 
 ```ruby
 render layout: false
@@ -447,13 +447,13 @@ def determine_variant
 end
 ```
 
-#### Localizando Layouts
+#### Localizando *Layouts*
 
-Para encontrar o layout atual, o Rails primeiro procura por um arquivo em `app/views/layouts` com o mesmo nome base que o _controller_. Por exemplo, renderizar _actions_ da classe `PhotosController` usam `app/views/layouts/photos.html.erb` (ou `app/views/layouts/photos.builder`). Se não houver esse layout específico do _controller_, o Rails usará `app/views/layouts/application.html.erb` ou` app/views/layouts/application.builder`. Se não houver um layout `.erb`, o Rails usará um layout` .builder`, se houver. O Rails também fornece várias maneiras de atribuir layouts específicos com mais precisão a _controllers_ e _actions_ individuais.
+Para encontrar o *layout* atual, o Rails primeiro procura por um arquivo em `app/views/layouts` com o mesmo nome base que o _controller_. Por exemplo, renderizar _actions_ da classe `PhotosController` usam `app/views/layouts/photos.html.erb` (ou `app/views/layouts/photos.builder`). Se não houver esse *layout* específico do _controller_, o Rails usará `app/views/layouts/application.html.erb` ou` app/views/layouts/application.builder`. Se não houver um *layout* `.erb`, o Rails usará um *layout*` .builder`, se houver. O Rails também fornece várias maneiras de atribuir *layouts* específicos com mais precisão a _controllers_ e _actions_ individuais.
 
-##### Especificando Layouts para Controllers
+##### Especificando *Layouts* para Controllers
 
-Você pode substituir as convenções de layout padrão em seus _controllers_ usando a declaração `layout`. Por exemplo:
+Você pode substituir as convenções de *layout* padrão em seus _controllers_ usando a declaração `layout`. Por exemplo:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -462,9 +462,9 @@ class ProductsController < ApplicationController
 end
 ```
 
-Com esta declaração, todas as _views_ renderizadas pelo `ProductsController` usarão` app/views/layouts/inventário.html.erb` como layout.
+Com esta declaração, todas as _views_ renderizadas pelo `ProductsController` usarão` app/views/layouts/inventário.html.erb` como *layout*.
 
-Para atribuir um layout específico para toda a aplicação, declare um `layout` na sua classe` ApplicationController`:
+Para atribuir um *layout* específico para toda a aplicação, declare um `layout` na sua classe` ApplicationController`:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -473,11 +473,11 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-Com esta declaração, todas as _views_, em toda a aplicação, usarão `app/views/layouts/main.html.erb` para seu layout.
+Com esta declaração, todas as _views_, em toda a aplicação, usarão `app/views/layouts/main.html.erb` para seu *layout*.
 
-##### Escolhendo Layouts em Tempo de Execução
+##### Escolhendo *Layouts* em Tempo de Execução
 
-Você pode usar um símbolo para adiar a escolha do layout até que uma requisição seja processada:
+Você pode usar um símbolo para adiar a escolha do *layout* até que uma requisição seja processada:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -495,9 +495,9 @@ class ProductsController < ApplicationController
 end
 ```
 
-Agora, se o usuário atual for um usuário especial, ele receberá um layout especial ao visualizar um produto.
+Agora, se o usuário atual for um usuário especial, ele receberá um *layout* especial ao visualizar um produto.
 
-Você pode até usar um método _inline_, como um Proc, para determinar o layout. Por exemplo, se você passar um objeto Proc, o bloco que você fornecer ao Proc receberá a instância `controller`, para que o layout possa ser determinado com base na solicitação atual:
+Você pode até usar um método _inline_, como um Proc, para determinar o *layout*. Por exemplo, se você passar um objeto Proc, o bloco que você fornecer ao Proc receberá a instância `controller`, para que o *layout* possa ser determinado com base na solicitação atual:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -505,9 +505,9 @@ class ProductsController < ApplicationController
 end
 ```
 
-##### Layouts Condicionais
+##### *Layouts* Condicionais
 
-Os layouts especificados no nível do _controller_ suportam as opções `:only` e`:except`. Essas opções recebem um nome de método ou um _array_ de nomes de métodos que correspondem aos nomes de métodos no _controller_:
+Os *layouts* especificados no nível do _controller_ suportam as opções `:only` e`:except`. Essas opções recebem um nome de método ou um _array_ de nomes de métodos que correspondem aos nomes de métodos no _controller_:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -515,11 +515,11 @@ class ProductsController < ApplicationController
 end
 ```
 
-Com esta declaração, o layout de `product` seria usado para tudo, menos os métodos` rss` e `index`.
+Com esta declaração, o *layout* de `product` seria usado para tudo, menos os métodos` rss` e `index`.
 
-##### Herança de Layout
+##### Herança de *Layout*
 
-As declarações de layout cascateam na hierarquia, e as declarações de layout mais específicas sempre substituem as mais gerais. Por exemplo:
+As declarações de *layout* cascateam na hierarquia, e as declarações de *layout* mais específicas sempre substituem as mais gerais. Por exemplo:
 
 * `application_controller.rb`
 
@@ -564,15 +564,15 @@ As declarações de layout cascateam na hierarquia, e as declarações de layout
 
 Nesta aplicação:
 
-* Em geral, as _views_ serão renderizadas no layout `main`
-* O `ArticlesController#index` usará o layout `main`
-* `SpecialArticlesController#index` usará o layout `special`
-* `OldArticlesController#show` não usará nenhum layout
-* `OldArticlesController#index` usará o layout `old`
+* Em geral, as _views_ serão renderizadas no *layout* `main`
+* O `ArticlesController#index` usará o *layout* `main`
+* `SpecialArticlesController#index` usará o *layout* `special`
+* `OldArticlesController#show` não usará nenhum *layout*
+* `OldArticlesController#index` usará o *layout* `old`
 
 ##### Herança de Template
 
-Similar à lógica de herança de layout, se um *template* ou _partial_ não for encontrado no caminho convencional, o _controller_ procurará um *template* ou _partial_ para renderizar em sua cadeia de herança. Por exemplo:
+Similar à lógica de herança de *layout*, se um *template* ou _partial_ não for encontrado no caminho convencional, o _controller_ procurará um *template* ou _partial_ para renderizar em sua cadeia de herança. Por exemplo:
 
 ```ruby
 # in app/controllers/application_controller

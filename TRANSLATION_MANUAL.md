@@ -40,6 +40,7 @@ de aplicações Rails, não devem ser traduzidos. Não traduza, coloque apenas
 * o *controller*.
 * o *template*.
 * o *helper*.
+* o *layout*.
 * o *logger*.
 * a *stack trace*.
 * os *assets*.
@@ -72,7 +73,7 @@ itálico se o contexto permitir. Exemplo:
 > "... scripts utilizados para configurar, atualizar, implantar (deploy) ou rodar sua aplicação."
 
 *Log*: pode ser usado o termo do inglês *em itálico*, mas também pode ser
-traduzido como registro. Avaliar cada caso para que o sentido permaneça correto 
+traduzido como registro. Avaliar cada caso para que o sentido permaneça correto
 e a leitura flua melhor. Exemplo:
 
 > When something is logged, it's printed into the corresponding log if the log
@@ -95,11 +96,10 @@ TIP: You can see all of the command line options that the Rails application buil
 accepts by running `rails new -h`.
 
 WARNING: There are many ways to change the state of an object in the database.
-Some methods will trigger validations, but some will not. This means that it's 
+Some methods will trigger validations, but some will not. This means that it's
 possible to save an object in the database in an invalid state if you aren't careful.
 ```
 
 O texto acima será renderizado como:
 
 ![alt text](https://campuscode-site.s3-sa-east-1.amazonaws.com/artigos/railsguides_manual.png "TIP, NOTE e WARNING")
-
