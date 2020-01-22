@@ -1069,7 +1069,7 @@ A excessão padrão do Rails apresenta a mensagem "500 Server Error" para todas 
 
 ### The Default 500 and 404 Templates
 
-By default a production application will render either a 404 or a 500 error message, in the development environment all unhandled exceptions are raised. These messages are contained in static HTML files in the public folder, in `404.html` and `500.html` respectively. You can customize these files to add some extra information and style, but remember that they are static HTML; i.e. you can't use ERB, SCSS, CoffeeScript, or layouts for them.
+Por padrão uma aplicação em produção irá renderizar uma mensagem em um template de erro 404 ou 500, no ambiente de produção todas as mensagens de erro são disparadas. Essas mensagens são armazenadas em templates estáticos de html na pasta *public*, em `404.html` e `500.html` respectivamente. Você pode customizar essas páginas e adcionar algumas estilizações, mas lembre-se elas são html estático; i.e. você não pode usar ERB, SCSS, CoffeeScript, ou layouts para elas.
 
 ### `rescue_from`
 
