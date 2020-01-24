@@ -1,15 +1,15 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Layouts e Renderização no Rails
+*Layouts* e Renderização no Rails
 ==============================
 
-Este guia aborda os recursos básicos de layout do _Action Controller_ e da _Action View_.
+Este guia aborda os recursos básicos de *layout* do _Action Controller_ e da _Action View_.
 
 Depois de ler este guia, você saberá:
 
 * Como usar os vários métodos de renderização embutidos no Rails.
-* Como criar layouts com várias seções de conteúdo.
+* Como criar *layouts* com várias seções de conteúdo.
 * Como usar _partials_ para enxugar suas _views_.
 * Como usar _nested layouts_ (sub-templates).
 
@@ -20,7 +20,7 @@ Visão Geral: Como as peças se encaixam
 
 Este guia concentra-se na interação entre o _Controller_ e _View_ no triângulo _Model-View-Controller_. Como você sabe, o _Controller_ é responsável por orquestrar todo o processo de como lidar com uma requisição no Rails, embora normalmente entregue qualquer código pesado ao _Model_. Porém, na hora de enviar uma resposta de volta ao usuário, o _Controller_ transfere as informações para a _View_. É essa transferência que é o assunto deste guia.
 
-Em linhas gerais, isso envolve decidir o que deve ser enviado como resposta e chamar um método apropriado para criar essa resposta. Se a resposta for uma _view_ completa, o Rails também fará um trabalho extra para encapsular a _view_ em um layout e, possivelmente, obter as _partials_. Você verá todos esses caminhos posteriormente neste guia.
+Em linhas gerais, isso envolve decidir o que deve ser enviado como resposta e chamar um método apropriado para criar essa resposta. Se a resposta for uma _view_ completa, o Rails também fará um trabalho extra para encapsular a _view_ em um *layout* e, possivelmente, obter as _partials_. Você verá todos esses caminhos posteriormente neste guia.
 
 Criando respostas
 ------------------
@@ -196,9 +196,9 @@ TIP: A renderização de texto puro é mais útil quando você está respondendo
 que esperam algo diferente de HTML adequado.
 
 NOTE: Por padrão, se você usar a opção `:plain`, o texto será renderizado sem
-usar o layout atual. Se você deseja que o Rails coloque o texto no layout
+usar o *layout* atual. Se você deseja que o Rails coloque o texto no *layout*
 atual, você precisa adicionar a opção `layout: true` e usar a extensão` .text.erb`
-para o arquivo de layout.
+para o arquivo de *layout*.
 
 #### Renderização de HTML
 
@@ -271,12 +271,12 @@ render file: "#{Rails.root}/public/404.html", layout: false
 ```
 
 Isso renderiza o arquivo bruto (não suporta ERB ou outros manipuladores). Por
-o padrão é renderizado no layout atual.
+o padrão é renderizado no *layout* atual.
 
 WARNING: Usar a opção `:file` em combinação com a entrada de dados dos usuários pode levar a problemas de segurança,
 pois um invasor pode usar esta _action_ para acessar arquivos confidenciais de segurança em seu sistema de arquivos.
 
-TIP: `send_file` geralmente é uma opção mais rápida e melhor se um layout não for necessário.
+TIP: `send_file` geralmente é uma opção mais rápida e melhor se um *layout* não for necessário.
 
 #### Opções para `render`
 
@@ -299,15 +299,15 @@ render template: "feed", content_type: "application/rss"
 
 ##### A opção `:layout`
 
-Com a maioria das opções para `render`, o conteúdo renderizado é exibido como parte do layout atual. Você aprenderá mais sobre layouts e como usá-los posteriormente neste guia.
+Com a maioria das opções para `render`, o conteúdo renderizado é exibido como parte do *layout* atual. Você aprenderá mais sobre *layouts* e como usá-los posteriormente neste guia.
 
-Você pode usar a opção `:layout` para que o Rails use um arquivo específico como o layout da _action_ atual:
+Você pode usar a opção `:layout` para que o Rails use um arquivo específico como o *layout* da _action_ atual:
 
 ```ruby
 render layout: "special_layout"
 ```
 
-Você também pode dizer ao Rails para renderizar sem nenhum layout:
+Você também pode dizer ao Rails para renderizar sem nenhum *layout*:
 
 ```ruby
 render layout: false
@@ -447,13 +447,13 @@ def determine_variant
 end
 ```
 
-#### Localizando Layouts
+#### Localizando *Layouts*
 
-Para encontrar o layout atual, o Rails primeiro procura por um arquivo em `app/views/layouts` com o mesmo nome base que o _controller_. Por exemplo, renderizar _actions_ da classe `PhotosController` usam `app/views/layouts/photos.html.erb` (ou `app/views/layouts/photos.builder`). Se não houver esse layout específico do _controller_, o Rails usará `app/views/layouts/application.html.erb` ou` app/views/layouts/application.builder`. Se não houver um layout `.erb`, o Rails usará um layout` .builder`, se houver. O Rails também fornece várias maneiras de atribuir layouts específicos com mais precisão a _controllers_ e _actions_ individuais.
+Para encontrar o *layout* atual, o Rails primeiro procura por um arquivo em `app/views/layouts` com o mesmo nome base que o _controller_. Por exemplo, renderizar _actions_ da classe `PhotosController` usam `app/views/layouts/photos.html.erb` (ou `app/views/layouts/photos.builder`). Se não houver esse *layout* específico do _controller_, o Rails usará `app/views/layouts/application.html.erb` ou` app/views/layouts/application.builder`. Se não houver um *layout* `.erb`, o Rails usará um *layout*` .builder`, se houver. O Rails também fornece várias maneiras de atribuir *layouts* específicos com mais precisão a _controllers_ e _actions_ individuais.
 
-##### Especificando Layouts para Controllers
+##### Especificando *Layouts* para Controllers
 
-Você pode substituir as convenções de layout padrão em seus _controllers_ usando a declaração `layout`. Por exemplo:
+Você pode substituir as convenções de *layout* padrão em seus _controllers_ usando a declaração `layout`. Por exemplo:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -462,9 +462,9 @@ class ProductsController < ApplicationController
 end
 ```
 
-Com esta declaração, todas as _views_ renderizadas pelo `ProductsController` usarão` app/views/layouts/inventário.html.erb` como layout.
+Com esta declaração, todas as _views_ renderizadas pelo `ProductsController` usarão` app/views/layouts/inventário.html.erb` como *layout*.
 
-Para atribuir um layout específico para toda a aplicação, declare um `layout` na sua classe` ApplicationController`:
+Para atribuir um *layout* específico para toda a aplicação, declare um `layout` na sua classe` ApplicationController`:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -473,11 +473,11 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-Com esta declaração, todas as _views_, em toda a aplicação, usarão `app/views/layouts/main.html.erb` para seu layout.
+Com esta declaração, todas as _views_, em toda a aplicação, usarão `app/views/layouts/main.html.erb` para seu *layout*.
 
-##### Escolhendo Layouts em Tempo de Execução
+##### Escolhendo *Layouts* em Tempo de Execução
 
-Você pode usar um símbolo para adiar a escolha do layout até que uma requisição seja processada:
+Você pode usar um símbolo para adiar a escolha do *layout* até que uma requisição seja processada:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -495,9 +495,9 @@ class ProductsController < ApplicationController
 end
 ```
 
-Agora, se o usuário atual for um usuário especial, ele receberá um layout especial ao visualizar um produto.
+Agora, se o usuário atual for um usuário especial, ele receberá um *layout* especial ao visualizar um produto.
 
-Você pode até usar um método _inline_, como um Proc, para determinar o layout. Por exemplo, se você passar um objeto Proc, o bloco que você fornecer ao Proc receberá a instância `controller`, para que o layout possa ser determinado com base na solicitação atual:
+Você pode até usar um método _inline_, como um Proc, para determinar o *layout*. Por exemplo, se você passar um objeto Proc, o bloco que você fornecer ao Proc receberá a instância `controller`, para que o *layout* possa ser determinado com base na solicitação atual:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -505,9 +505,9 @@ class ProductsController < ApplicationController
 end
 ```
 
-##### Layouts Condicionais
+##### *Layouts* Condicionais
 
-Os layouts especificados no nível do _controller_ suportam as opções `:only` e`:except`. Essas opções recebem um nome de método ou um _array_ de nomes de métodos que correspondem aos nomes de métodos no _controller_:
+Os *layouts* especificados no nível do _controller_ suportam as opções `:only` e`:except`. Essas opções recebem um nome de método ou um _array_ de nomes de métodos que correspondem aos nomes de métodos no _controller_:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -515,11 +515,11 @@ class ProductsController < ApplicationController
 end
 ```
 
-Com esta declaração, o layout de `product` seria usado para tudo, menos os métodos` rss` e `index`.
+Com esta declaração, o *layout* de `product` seria usado para tudo, menos os métodos` rss` e `index`.
 
-##### Herança de Layout
+##### Herança de *Layout*
 
-As declarações de layout cascateam na hierarquia, e as declarações de layout mais específicas sempre substituem as mais gerais. Por exemplo:
+As declarações de *layout* cascateam na hierarquia, e as declarações de *layout* mais específicas sempre substituem as mais gerais. Por exemplo:
 
 * `application_controller.rb`
 
@@ -564,15 +564,15 @@ As declarações de layout cascateam na hierarquia, e as declarações de layout
 
 Nesta aplicação:
 
-* Em geral, as _views_ serão renderizadas no layout `main`
-* O `ArticlesController#index` usará o layout `main`
-* `SpecialArticlesController#index` usará o layout `special`
-* `OldArticlesController#show` não usará nenhum layout
-* `OldArticlesController#index` usará o layout `old`
+* Em geral, as _views_ serão renderizadas no *layout* `main`
+* O `ArticlesController#index` usará o *layout* `main`
+* `SpecialArticlesController#index` usará o *layout* `special`
+* `OldArticlesController#show` não usará nenhum *layout*
+* `OldArticlesController#index` usará o *layout* `old`
 
 ##### Herança de Template
 
-Similar à lógica de herança de layout, se um *template* ou _partial_ não for encontrado no caminho convencional, o _controller_ procurará um *template* ou _partial_ para renderizar em sua cadeia de herança. Por exemplo:
+Similar à lógica de herança de *layout*, se um *template* ou _partial_ não for encontrado no caminho convencional, o _controller_ procurará um *template* ou _partial_ para renderizar em sua cadeia de herança. Por exemplo:
 
 ```ruby
 # in app/controllers/application_controller
@@ -775,18 +775,18 @@ Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
 Cache-Control: no-cache
 ```
 
-Structuring Layouts
+Estruturando *Layouts*
 -------------------
 
-When Rails renders a view as a response, it does so by combining the view with the current layout, using the rules for finding the current layout that were covered earlier in this guide. Within a layout, you have access to three tools for combining different bits of output to form the overall response:
+Quando o Rails renderiza a *view* como uma resposta, ele faz isso combinando a *view* com o *layout* atual, usando as regras pra achar o *layout* atual que foram mencionadas neste guia. Dentro de um *layout*, você tem acesso a três ferramentas para combinar pedaços diferentes de saídas para formar a resposta geral:
 
-* Asset tags
-* `yield` and `content_for`
-* Partials
+* *Asset tags*
+* `yield` e `content_for`
+* *Partials*
 
-### Asset Tag Helpers
+### *Helpers* de *Asset Tags*
 
-Asset tag helpers provide methods for generating HTML that link views to feeds, JavaScript, stylesheets, images, videos, and audios. There are six asset tag helpers available in Rails:
+*Helpers* de *Asset Tags* fornecem métodos para gerar HTML que liga *views* a *feeds*, JavaScript, *stylesheets*, imagens, vídeos, e áudios. Há seis *helpers* de *asset tags* disponíveis no Rails:
 
 * `auto_discovery_link_tag`
 * `javascript_include_tag`
@@ -795,137 +795,137 @@ Asset tag helpers provide methods for generating HTML that link views to feeds, 
 * `video_tag`
 * `audio_tag`
 
-You can use these tags in layouts or other views, although the `auto_discovery_link_tag`, `javascript_include_tag`, and `stylesheet_link_tag`, are most commonly used in the `<head>` section of a layout.
+Você pode usar essas *tags* em *layouts* ou outras *views*, embora os métodos `auto_discovery_link_tag`, `javascript_include_tag` e `stylesheet_link_tag` apareçam mais na seção `<head>` de um *layout*.
 
-WARNING: The asset tag helpers do _not_ verify the existence of the assets at the specified locations; they simply assume that you know what you're doing and generate the link.
+WARNING: Os *helpers* de *asset tags* _não_ verificam a existência dos *assets* nos endereços específicos; eles simplesmente presumem que você sabe o que está fazendo e geram o link.
 
-#### Linking to Feeds with the `auto_discovery_link_tag`
+#### Ligando a *Feeds* com o método `auto_discovery_link_tag`
 
-The `auto_discovery_link_tag` helper builds HTML that most browsers and feed readers can use to detect the presence of RSS, Atom, or JSON feeds. It takes the type of the link (`:rss`, `:atom`, or `:json`), a hash of options that are passed through to url_for, and a hash of options for the tag:
+O *helper* `auto_discovery_link_tag` monta HTML que a maioria dos navegadores e leitores de *feeds* conseguem usar para detectar a presenta de *feeds* RSS, Atom, ou JSON. Ele recebe o tipo de link (`:rss`, `:atom`, or `:json`), um *hash* de opções que são encaminhados para url_for, e um *hash* de opções para a *tag*:
 
 ```erb
 <%= auto_discovery_link_tag(:rss, {action: "feed"},
   {title: "RSS Feed"}) %>
 ```
 
-There are three tag options available for the `auto_discovery_link_tag`:
+Há três opções de *tags* disponíveis para o método `auto_discovery_link_tag`:
 
-* `:rel` specifies the `rel` value in the link. The default value is "alternate".
-* `:type` specifies an explicit MIME type. Rails will generate an appropriate MIME type automatically.
-* `:title` specifies the title of the link. The default value is the uppercase `:type` value, for example, "ATOM" or "RSS".
+* `:rel` especifica o valor `rel` no link. O valor padrão é "alternate".
+* `:type` especifica um *MIME type* explícito. O Rails criará um *MIME type* apropriado automaticamente.
+* `:title` especifica o título do link. O valor padrão é o valor definido em `:type` com letras maiúsculas, por exemplo, "ATOM" ou "RSS".
 
-#### Linking to JavaScript Files with the `javascript_include_tag`
+#### Ligando a Arquivos JavaScript com o Método `javascript_include_tag`
 
-The `javascript_include_tag` helper returns an HTML `script` tag for each source provided.
+O *helper* `javascript_include_tag` retorna uma tag HTML `script` para cada fonte fornecida.
 
-If you are using Rails with the [Asset Pipeline](asset_pipeline.html) enabled, this helper will generate a link to `/assets/javascripts/` rather than `public/javascripts` which was used in earlier versions of Rails. This link is then served by the asset pipeline.
+Se você está usando o Rails com a [*Asset Pipeline*](asset_pipeline.html) habilitada, este *helper* criará um link para `/assets/javascripts/` ao invés de `public/javascripts` que era usado em versões anteriores do Rails. Este link será disponibilizado pelo *asset pipeline*.
 
-A JavaScript file within a Rails application or Rails engine goes in one of three locations: `app/assets`, `lib/assets` or `vendor/assets`. These locations are explained in detail in the [Asset Organization section in the Asset Pipeline Guide](asset_pipeline.html#asset-organization).
+Um arquivo JavaScript dentro de uma aplicação ou *engine* Rails pode ir dentro de uma entre três possíveis pastas: `app/assets`, `lib/assets` ou `vendor/assets`. Estas pastas são explicadas com detalhes na seção [Organização de *Assets* no Guia de *Asset Pipeline*](asset_pipeline.html#asset-organization).
 
-You can specify a full path relative to the document root, or a URL, if you prefer. For example, to link to a JavaScript file that is inside a directory called `javascripts` inside of one of `app/assets`, `lib/assets` or `vendor/assets`, you would do this:
+Você pode especificar um caminho completo relativo à raiz do documento, ou uma URL, se você preferir. Por exemplo, pra ligar a um arquivo JavaScript que está dentro de um diretório chamado `javascripts` dentro de`app/assets`, `lib/assets` ou `vendor/assets`, você faria isto:
 
 ```erb
 <%= javascript_include_tag "main" %>
 ```
 
-Rails will then output a `script` tag such as this:
+O Rails criará então uma tag `script` tag como esta:
 
 ```html
 <script src='/assets/main.js'></script>
 ```
 
-The request to this asset is then served by the Sprockets gem.
+A requisição para este *asset* será então disponibilizada pela *gem* Sprockets.
 
-To include multiple files such as `app/assets/javascripts/main.js` and `app/assets/javascripts/columns.js` at the same time:
+Para incluir vários arquivos como `app/assets/javascripts/main.js` e `app/assets/javascripts/columns.js` ao mesmo tempo:
 
 ```erb
 <%= javascript_include_tag "main", "columns" %>
 ```
 
-To include `app/assets/javascripts/main.js` and `app/assets/javascripts/photos/columns.js`:
+Para incluir `app/assets/javascripts/main.js` e `app/assets/javascripts/photos/columns.js`:
 
 ```erb
 <%= javascript_include_tag "main", "/photos/columns" %>
 ```
 
-To include `http://example.com/main.js`:
+Para incluir `http://example.com/main.js`:
 
 ```erb
 <%= javascript_include_tag "http://example.com/main.js" %>
 ```
 
-#### Linking to CSS Files with the `stylesheet_link_tag`
+#### Ligando a Arquivos CSS com o método `stylesheet_link_tag`
 
-The `stylesheet_link_tag` helper returns an HTML `<link>` tag for each source provided.
+O *helper* `stylesheet_link_tag` retorna uma tag HTML `<link>` para cada fonte fornecida.
 
-If you are using Rails with the "Asset Pipeline" enabled, this helper will generate a link to `/assets/stylesheets/`. This link is then processed by the Sprockets gem. A stylesheet file can be stored in one of three locations: `app/assets`, `lib/assets` or `vendor/assets`.
+Se você está usando o Rails com a *"Asset Pipeline"* habilitada, este *helper* criará um link para `/assets/stylesheets/`. Este link então será processado pela *gem* Sprockets. Um arquivo de *stylesheet* pode ser armazenado em um de três endereços: `app/assets`, `lib/assets` ou `vendor/assets`.
 
-You can specify a full path relative to the document root, or a URL. For example, to link to a stylesheet file that is inside a directory called `stylesheets` inside of one of `app/assets`, `lib/assets` or `vendor/assets`, you would do this:
+Você pode especificar um caminho completo relativo à raiz do documento, ou uma URL. Por exemplo, para ligar a um arquivo de *stylesheet* que está dentro de um diretório chamado `stylesheets` dentro de `app/assets`, `lib/assets` ou `vendor/assets`, você faria isto:
 
 ```erb
 <%= stylesheet_link_tag "main" %>
 ```
 
-To include `app/assets/stylesheets/main.css` and `app/assets/stylesheets/columns.css`:
+Para incluir `app/assets/stylesheets/main.css` e `app/assets/stylesheets/columns.css`:
 
 ```erb
 <%= stylesheet_link_tag "main", "columns" %>
 ```
 
-To include `app/assets/stylesheets/main.css` and `app/assets/stylesheets/photos/columns.css`:
+Para incluir `app/assets/stylesheets/main.css` e `app/assets/stylesheets/photos/columns.css`:
 
 ```erb
 <%= stylesheet_link_tag "main", "photos/columns" %>
 ```
 
-To include `http://example.com/main.css`:
+Para incluir `http://example.com/main.css`:
 
 ```erb
 <%= stylesheet_link_tag "http://example.com/main.css" %>
 ```
 
-By default, the `stylesheet_link_tag` creates links with `media="screen" rel="stylesheet"`. You can override any of these defaults by specifying an appropriate option (`:media`, `:rel`):
+Por padrão, o método `stylesheet_link_tag` cria links com `media="screen" rel="stylesheet"`. Você pode sobrescrever qualquer um destes padrões especificando uma opção apropriada (`:media`, `:rel`):
 
 ```erb
 <%= stylesheet_link_tag "main_print", media: "print" %>
 ```
 
-#### Linking to Images with the `image_tag`
+#### Ligando a  Imagens com o método `image_tag`
 
-The `image_tag` helper builds an HTML `<img />` tag to the specified file. By default, files are loaded from `public/images`.
+O *helper* `image_tag` monta uma tag `<img />` que aponta para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/images`.
 
-WARNING: Note that you must specify the extension of the image.
+WARNING: Note que você deve especificar a extensão da imagem.
 
 ```erb
 <%= image_tag "header.png" %>
 ```
 
-You can supply a path to the image if you like:
+Você pode fornecer um caminho para a imagem se preferir:
 
 ```erb
 <%= image_tag "icons/delete.gif" %>
 ```
 
-You can supply a hash of additional HTML options:
+Você pode fornecer um *hash* de opções adicionais para o HTML:
 
 ```erb
 <%= image_tag "icons/delete.gif", {height: 45} %>
 ```
 
-You can supply alternate text for the image which will be used if the user has images turned off in their browser. If you do not specify an alt text explicitly, it defaults to the file name of the file, capitalized and with no extension. For example, these two image tags would return the same code:
+Você pode fornecer um texto alternativo para a imagem que será utilizado se a pessoa usuária estiver com imagens desabilitadas no navegador. Se você não especificar um texto alternativo de forma explícita, o valor padrão será o nome do arquivo, com a inicial maiúscula e sem extensão. Por exemplo, estas duas imagens devolvem o mesmo código:
 
 ```erb
 <%= image_tag "home.gif" %>
 <%= image_tag "home.gif", alt: "Home" %>
 ```
 
-You can also specify a special size tag, in the format "{width}x{height}":
+Você também pode especificar uma tag *size* especial, no formato "{largura}x{altura}":
 
 ```erb
 <%= image_tag "home.gif", size: "50x20" %>
 ```
 
-In addition to the above special tags, you can supply a final hash of standard HTML options, such as `:class`, `:id` or `:name`:
+Além da tag especial acima, você pode fornecer um *hash* final de opções HTML padrão, como `:class`, `:id` ou `:name`:
 
 ```erb
 <%= image_tag "home.gif", alt: "Go Home",
@@ -933,37 +933,37 @@ In addition to the above special tags, you can supply a final hash of standard H
                           class: "nav_bar" %>
 ```
 
-#### Linking to Videos with the `video_tag`
+#### Ligando a Vídeos com o método `video_tag`
 
-The `video_tag` helper builds an HTML 5 `<video>` tag to the specified file. By default, files are loaded from `public/videos`.
+O *helper* `video_tag` monta uma tag HTML 5 `<video>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/videos`.
 
 ```erb
 <%= video_tag "movie.ogg" %>
 ```
 
-Produces
+Produz
 
 ```erb
 <video src="/videos/movie.ogg" />
 ```
 
-Like an `image_tag` you can supply a path, either absolute, or relative to the `public/videos` directory. Additionally you can specify the `size: "#{width}x#{height}"` option just like an `image_tag`. Video tags can also have any of the HTML options specified at the end (`id`, `class` et al).
+Como o método `image_tag`, você pode fornecer um caminho absoluto ou relativo ao diretório `public/videos`. Além disso você pode especificar a opção `size: "#{width}x#{height}"` assim como no método `image_tag`. Tags de vídeo também podem ter qualquer uma das opções HTML especificadas no fim do método (`id`, `class` et al).
 
-The video tag also supports all of the `<video>` HTML options through the HTML options hash, including:
+O método `video_tag` também suporta todas as opções da tag HTML `<video>` através do *hash* de opções HTML, incluindo:
 
-* `poster: "image_name.png"`, provides an image to put in place of the video before it starts playing.
-* `autoplay: true`, starts playing the video on page load.
-* `loop: true`, loops the video once it gets to the end.
-* `controls: true`, provides browser supplied controls for the user to interact with the video.
-* `autobuffer: true`, the video will pre load the file for the user on page load.
+* `poster: "image_name.png"`, fornece uma imagem para colocar no lugar do vídeo antes de reproduzir.
+* `autoplay: true`, inicia a reprodução do vídeo quando a página é carregada.
+* `loop: true`, continua a reprodução do vídeo quando este chega no fim.
+* `controls: true`, habilita controles fornecidos pelo navegador de forma que a pessoa usuária possa interagir com o vídeo.
+* `autobuffer: true`, o vídeo será pré-carregado para a pessoa usuária quando a página carregar.
 
-You can also specify multiple videos to play by passing an array of videos to the `video_tag`:
+Você também pode especificar vários vídeos para reprodução consecutiva passando um *array* de vídeos para o método `video_tag`:
 
 ```erb
 <%= video_tag ["trailer.ogg", "movie.ogg"] %>
 ```
 
-This will produce:
+Isto irá produzir:
 
 ```erb
 <video>
@@ -972,31 +972,31 @@ This will produce:
 </video>
 ```
 
-#### Linking to Audio Files with the `audio_tag`
+#### Ligando a Arquivos de Áudio com o método `audio_tag`
 
-The `audio_tag` helper builds an HTML 5 `<audio>` tag to the specified file. By default, files are loaded from `public/audios`.
+O *helper* `audio_tag` monta uma tag HTML 5 `<audio>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/audios`.
 
 ```erb
 <%= audio_tag "music.mp3" %>
 ```
 
-You can supply a path to the audio file if you like:
+Você pode fornecer um caminho para o arquivo de áudio se preferir:
 
 ```erb
 <%= audio_tag "music/first_song.mp3" %>
 ```
 
-You can also supply a hash of additional options, such as `:id`, `:class` etc.
+Você também pode fornecer um *hash* de opções adicionais, como `:id`, `:class` etc.
 
-Like the `video_tag`, the `audio_tag` has special options:
+Como o método `video_tag`, o método `audio_tag` tem opções especiais:
 
-* `autoplay: true`, starts playing the audio on page load
-* `controls: true`, provides browser supplied controls for the user to interact with the audio.
-* `autobuffer: true`, the audio will pre load the file for the user on page load.
+* `autoplay: true`, inicia a reprodução do áudio quando a página é carregada.
+* `controls: true`, habilita controles fornecidos pelo navegador para a pessoa usuária interagir com o áudio.
+* `autobuffer: true`, o áudio será pré-carregado para a pessoa usuária quando a página carregar.
 
-### Understanding `yield`
+### Entendendo `yield`
 
-Within the context of a layout, `yield` identifies a section where content from the view should be inserted. The simplest way to use this is to have a single `yield`, into which the entire contents of the view currently being rendered is inserted:
+Dentro do contexto de um *layout*, `yield` identifica uma seção onde o conteúdo da *view* deve ser inserido. A maneira mais simples de utilizar isto é colocar um único `yield`, dentro do qual todo o conteúdo da *view* renderizada no momento é inserido:
 
 ```html+erb
 <html>
@@ -1008,7 +1008,7 @@ Within the context of a layout, `yield` identifies a section where content from 
 </html>
 ```
 
-You can also create a layout with multiple yielding regions:
+Você também pode criar um *layout* com várias regiões com `yield`:
 
 ```html+erb
 <html>
@@ -1021,11 +1021,11 @@ You can also create a layout with multiple yielding regions:
 </html>
 ```
 
-The main body of the view will always render into the unnamed `yield`. To render content into a named `yield`, you use the `content_for` method.
+O *body* principal da *view* sempre manda o conteúdo para dentro do `yield` sem nome. Para direcionar o conteúdo para as tags `yield` com nome, usa-se o método `content_for`.
 
-### Using the `content_for` Method
+### Usando o Método `content_for`
 
-The `content_for` method allows you to insert content into a named `yield` block in your layout. For example, this view would work with the layout that you just saw:
+O método `content_for` lhe permite inserir conteúdo dentro de um bloco `yield` com nome no seu *layout*. Por exmeplo, esta *view* funcionaria com o *layout* que você acabou de ver:
 
 ```html+erb
 <% content_for :head do %>
@@ -1035,7 +1035,7 @@ The `content_for` method allows you to insert content into a named `yield` block
 <p>Hello, Rails!</p>
 ```
 
-The result of rendering this page into the supplied layout would be this HTML:
+O resultado da renderização desta página dentro do *layout* fornecido seria este HTML:
 
 ```html+erb
 <html>
@@ -1048,31 +1048,31 @@ The result of rendering this page into the supplied layout would be this HTML:
 </html>
 ```
 
-The `content_for` method is very helpful when your layout contains distinct regions such as sidebars and footers that should get their own blocks of content inserted. It's also useful for inserting tags that load page-specific JavaScript or css files into the header of an otherwise generic layout.
+O método `content_for` ajuda muito quando o seu *layout* contém regiões distintas como *sidebars* e rodapés que precisam receber blocos de conteúdo próprios. Ele também é útil para inserir tags que carregam JavaScript ou arquivos css dentro do cabeçalho de um *layout* que seria genérico em outro cenário.
 
-### Using Partials
+### Usando *Partials*
 
-Partial templates - usually just called "partials" - are another device for breaking the rendering process into more manageable chunks. With a partial, you can move the code for rendering a particular piece of a response to its own file.
+Templates parciais - normalmente chamados de *"partials"* - são outro dispositivo para quebrar o processo de renderização em pedaços menores. Com uma *partial*, você pode mover o código para renderizar um pedaço específico de uma resposta para um arquivo próprio.
 
-#### Naming Partials
+#### Nomeando *Partials*
 
-To render a partial as part of a view, you use the `render` method within the view:
+Para renderizar uma *partial* como parte da *view*, usa-se o método `render` dentro da view:
 
 ```ruby
 <%= render "menu" %>
 ```
 
-This will render a file named `_menu.html.erb` at that point within the view being rendered. Note the leading underscore character: partials are named with a leading underscore to distinguish them from regular views, even though they are referred to without the underscore. This holds true even when you're pulling in a partial from another folder:
+Isto inclui o conteúdo de um arquivo chamado `_menu.html.erb` neste ponto dentro da view renderizada. Note o *underscore* inicial no nome do arquivo: *partials* recebem nomes com um *underscore* inicial para distingui-los de *views* regulares, mesmo sem usar esta notação em casos mais comuns. Isso continua sendo verdade mesmo quando você incluir uma *partial* de outro diretório:
 
 ```ruby
 <%= render "shared/menu" %>
 ```
 
-That code will pull in the partial from `app/views/shared/_menu.html.erb`.
+Este código puxará a *partial* de `app/views/shared/_menu`.
 
-#### Using Partials to Simplify Views
+#### Usando *Partials* para Simplificar *Views*
 
-One way to use partials is to treat them as the equivalent of subroutines: as a way to move details out of a view so that you can grasp what's going on more easily. For example, you might have a view that looked like this:
+Um jeito de usar *partials* é tratá-los como algo equivalente a sub-rotinas: como um jeito de mover detalhes fora da *view* de forma que você entenda o que está acontecendo de forma mais fácil. Por exemplo, você pode ter uma *view* que estava assim:
 
 ```erb
 <%= render "shared/ad_banner" %>
@@ -1085,14 +1085,9 @@ One way to use partials is to treat them as the equivalent of subroutines: as a 
 <%= render "shared/footer" %>
 ```
 
-Here, the `_ad_banner.html.erb` and `_footer.html.erb` partials could contain
-content that is shared by many pages in your application. You don't need to see
-the details of these sections when you're concentrating on a particular page.
+Aqui, os *partials* `_ad_banner.html.erb` e `_footer.html.erb` podem ter conteúdo que é compartilhado por muitas páginas na sua aplicação. Você não precisa ver os detalhes destas seções quando concentrar a atenção em uma página em particular.
 
-As seen in the previous sections of this guide, `yield` is a very powerful tool
-for cleaning up your layouts. Keep in mind that it's pure Ruby, so you can use
-it almost everywhere. For example, we can use it to DRY up form layout
-definitions for several similar resources:
+Como em seções anteriores deste guia, o `yield` é uma ferramenta muito poderosa para fazer faxina nos seus *layouts*. Tenha em mente que isto é Ruby puro, então é possível usar isto quase em qualquer lugar. Por exemplo, nós podemos usar o `yield` para remover a duplicação das definições do *layout* de formulário para vários recursos similares:
 
 * `users/index.html.erb`
 
@@ -1128,23 +1123,23 @@ definitions for several similar resources:
     <% end %>
     ```
 
-TIP: For content that is shared among all pages in your application, you can use partials directly from layouts.
+TIP: Para conteúdo que é compartilhado por todas as páginas da sua aplicação, você pode usar *partials* diretamente dos *layouts*.
 
-#### Partial Layouts
+#### *Layouts* Parciais
 
-A partial can use its own layout file, just as a view can use a layout. For example, you might call a partial like this:
+Uma *partial* pode usar seu próprio arquivo, assim como uma *view* pode usar um *layout*. Por exemplo, você pode chamar uma *partial* assim:
 
 ```erb
 <%= render partial: "link_area", layout: "graybar" %>
 ```
 
-This would look for a partial named `_link_area.html.erb` and render it using the layout `_graybar.html.erb`. Note that layouts for partials follow the same leading-underscore naming as regular partials, and are placed in the same folder with the partial that they belong to (not in the master `layouts` folder).
+Isto procura por uma *partial* chamado `_link_area.html.erb` e o renderiza usando o *layout* `_graybar.html.erb`. Note que *layouts* para *partials* seguem a mesma nomenclatura de *underscore* inicial que *partials* comuns, e ficam no mesmo diretório que a *partial* ao qual pertencem (não é o diretório principal `layouts`).
 
-Also note that explicitly specifying `:partial` is required when passing additional options such as `:layout`.
+Note também que é necessário especificar `:partial` de forma explícita quando passar opções adicionais como `:layout`.
 
-#### Passing Local Variables
+#### Passando Variáveis Locais
 
-You can also pass local variables into partials, making them even more powerful and flexible. For example, you can use this technique to reduce duplication between new and edit pages, while still keeping a bit of distinct content:
+Você também pode passar variáveis locais para os *partials*, tornando-os ainda mais poderosos e flexíveis. Por exemplo, você pode utilizar esta técnica para reduzir duplicação entre páginas *new* e *edit*, enquanto mantém um pouco de conteúdo distinto:
 
 * `new.html.erb`
 
@@ -1174,9 +1169,9 @@ You can also pass local variables into partials, making them even more powerful 
     <% end %>
     ```
 
-Although the same partial will be rendered into both views, Action View's submit helper will return "Create Zone" for the new action and "Update Zone" for the edit action.
+Mesmo com o mesma *partial* renderizado dentro das duas *views*, o *helper* `submit` retorna *"Create Zone"* para a ação *new* e *"Update Zone"* para a ação *edit*.
 
-To pass a local variable to a partial in only specific cases use the `local_assigns`.
+Para passar uma variável local para uma *partial* apenas em casos específicos usa-se `local_assigns`.
 
 * `index.html.erb`
 
@@ -1202,27 +1197,27 @@ To pass a local variable to a partial in only specific cases use the `local_assi
   <% end %>
   ```
 
-This way it is possible to use the partial without the need to declare all local variables.
+Desta forma é possível utilizar a *partial* sem necessidade de declarar todas as variáveis locais.
 
-Every partial also has a local variable with the same name as the partial (minus the leading underscore). You can pass an object in to this local variable via the `:object` option:
+Toda *partial* também tem uma variável local com o mesmo nome da *partial* (sem o *underscore* inicial). Você pode passar um objeto para esta variável local por via da opção `:object`.
 
 ```erb
 <%= render partial: "customer", object: @new_customer %>
 ```
 
-Within the `customer` partial, the `customer` variable will refer to `@new_customer` from the parent view.
+Dentro da *partial* `customer`, a variável `customer` refere a `@new_customer` a partir da *view* superior.
 
-If you have an instance of a model to render into a partial, you can use a shorthand syntax:
+Se você tem uma instância de um *model* para renderizar dentro de uma *partial*, você pode usar a sintaxe reduzida:
 
 ```erb
 <%= render @customer %>
 ```
 
-Assuming that the `@customer` instance variable contains an instance of the `Customer` model, this will use `_customer.html.erb` to render it and will pass the local variable `customer` into the partial which will refer to the `@customer` instance variable in the parent view.
+Presumindo que a variável de instância `@customer` contém uma instância do model `Customer`, isto utilizará `_customer.html.erb` para renderizá-la e passará a variável local `customer` dentro da *partial* que se refere à variável de instância `@customer` na *view* superior.
 
-#### Rendering Collections
+#### Renderizando Coleções
 
-Partials are very useful in rendering collections. When you pass a collection to a partial via the `:collection` option, the partial will be inserted once for each member in the collection:
+*Partials* são muito úteis para renderizar coleções. Quando você passa uma coleção para uma *partial* através da opção `:collection`, a *partial* será inserido uma vez para cada membro da coleção:
 
 * `index.html.erb`
 
@@ -1237,16 +1232,16 @@ Partials are very useful in rendering collections. When you pass a collection to
     <p>Product Name: <%= product.name %></p>
     ```
 
-When a partial is called with a pluralized collection, then the individual instances of the partial have access to the member of the collection being rendered via a variable named after the partial. In this case, the partial is `_product`, and within the `_product` partial, you can refer to `product` to get the instance that is being rendered.
+Quando uma *partial* é chamado com uma coleção pluralizada, então as instâncias individuais da *partial* tem acesso ao membro da coleção que é renderizado por via de uma variável nomeada com base na *partial*. Neste caso, a *partial* é `_product`, e dentro da *partial* `_product`, você pode referir a `product` para pegar a instância renderizada.
 
-There is also a shorthand for this. Assuming `@products` is a collection of `Product` instances, you can simply write this in the `index.html.erb` to produce the same result:
+Há também uma sintaxe reduzida para isto. Presumindo question `@products` é uma coleção de instâncias `Product`, você pode simplesmente escrever isto dentro de `index.html.erb` para produzir o mesmo resultado:
 
 ```html+erb
 <h1>Products</h1>
 <%= render @products %>
 ```
 
-Rails determines the name of the partial to use by looking at the model name in the collection. In fact, you can even create a heterogeneous collection and render it this way, and Rails will choose the proper partial for each member of the collection:
+O Rails determina o nome da *partial* a utilizar olhando para o nome do *model* na coleção. Aliás, você pode até criar uma coleção heterogênea e fazer a renderização deste jeito, e o Rails escolherá a *partial* apropriado para cada membro da coleção:
 
 * `index.html.erb`
 
@@ -1267,61 +1262,61 @@ Rails determines the name of the partial to use by looking at the model name in 
     <p>Employee: <%= employee.name %></p>
     ```
 
-In this case, Rails will use the customer or employee partials as appropriate for each member of the collection.
+Neste caso, o Rails utilizará os *partials* de cliente ou empregado nas situações apropriadas para cada membro da coleção.
 
-In the event that the collection is empty, `render` will return nil, so it should be fairly simple to provide alternative content.
+Caso a coleção esteja vazia, `render` retornará *nil*, então não deve haver dificuldades para fornecer conteúdo alternativo.
 
 ```html+erb
 <h1>Products</h1>
 <%= render(@products) || "There are no products available." %>
 ```
 
-#### Local Variables
+#### Variáveis Locais
 
-To use a custom local variable name within the partial, specify the `:as` option in the call to the partial:
+Para usar uma variável local personalizada dentro da *partial*, especifique a opção `:as` na chamada para a *partial*:
 
 ```erb
 <%= render partial: "product", collection: @products, as: :item %>
 ```
 
-With this change, you can access an instance of the `@products` collection as the `item` local variable within the partial.
+Com esta mudança, você pode acessar uma instância da coleção `@products` como a variável local `item` dentro da *partial*.
 
-You can also pass in arbitrary local variables to any partial you are rendering with the `locals: {}` option:
+Você também pode passar variáveis locais arbitrárias para qualquer *partial* que você renderizar com a opção `locals: {}`:
 
 ```erb
 <%= render partial: "product", collection: @products,
            as: :item, locals: {title: "Products Page"} %>
 ```
 
-In this case, the partial will have access to a local variable `title` with the value "Products Page".
+Neste caso, a *partial* terá acesso à variável local `title` com o valor *"Products Page"*.
 
-TIP: Rails also makes a counter variable available within a partial called by the collection, named after the title of the partial followed by `_counter`. For example, when rendering a collection `@products` the partial `_product.html.erb` can access the variable `product_counter` which indexes the number of times it has been rendered within the enclosing view. Note that it also applies for when the partial name was changed by using the `as:` option. For example, the counter variable for the code above would be `item_counter`.
+TIP: O Rails também cria uma variável de contagem disponível dentro de uma *partial* chamado pela coleção, que recebe um nome com base no título da *partial* seguido de `_counter`. Por exemplo, ao renderizar a coleção `@products` a *partial* `_product.html.erb` pode acessar a variável `product_counter` que registra o número de vezes que a *partial* foi renderizado dentro da *view* em questão. Note que isto também se aplica para quando o nome da *partial* sofre alterações através da opção `as:`. Por exemplo, a variável de contagem para o código acima seria `item_counter`.
 
-You can also specify a second partial to be rendered between instances of the main partial by using the `:spacer_template` option:
+Você também pode especificar um segunda *partial* para renderizar entre instâncias de uma *partial* principal usando a opção `:spacer_template`:
 
-#### Spacer Templates
+#### *Spacer Templates*
 
 ```erb
 <%= render partial: @products, spacer_template: "product_ruler" %>
 ```
 
-Rails will render the `_product_ruler` partial (with no data passed in to it) between each pair of `_product` partials.
+O Rails irá renderizar a *partial* `_product_ruler` (sem dados encaminhados pra ele) entre cada par de *partials* `_product`.
 
-#### Collection Partial Layouts
+#### *Layouts* Parciais de Coleção
 
-When rendering collections it is also possible to use the `:layout` option:
+É possível usar a opção `:layout` quando renderizar coleções:
 
 ```erb
 <%= render partial: "product", collection: @products, layout: "special_layout" %>
 ```
 
-The layout will be rendered together with the partial for each item in the collection. The current object and object_counter variables will be available in the layout as well, the same way they are within the partial.
+O *layout* será renderizado junto com a *partial* para cada item da coleção. As variáveis de objeto atual e *object_counter* ficam disponíveis no *layout* também, da mesma forma que ficam dentro da *partial*.
 
-### Using Nested Layouts
+### Usando *Layouts* Aninhados
 
-You may find that your application requires a layout that differs slightly from your regular application layout to support one particular controller. Rather than repeating the main layout and editing it, you can accomplish this by using nested layouts (sometimes called sub-templates). Here's an example:
+Pode ser que sua aplicação necessite de um *layout* que seja ligeiramente diferente do *layout* da aplicação para dar suporte a um *controller* em particular. Ao invés de repetir o *layout* principal e editá-lo, é possível fazer isso através de *layouts* aninhados (algumas vezes chamados de *sub-templates*). Segue um exemplo:
 
-Suppose you have the following `ApplicationController` layout:
+Suponha que você tem este *layout* de `ApplicationController`:
 
 * `app/views/layouts/application.html.erb`
 
@@ -1340,7 +1335,7 @@ Suppose you have the following `ApplicationController` layout:
     </html>
     ```
 
-On pages generated by `NewsController`, you want to hide the top menu and add a right menu:
+Nas páginas geradas pelo `NewsController`, você quer esconder o menu do topo e colocar um menu à direita:
 
 * `app/views/layouts/news.html.erb`
 
@@ -1356,6 +1351,6 @@ On pages generated by `NewsController`, you want to hide the top menu and add a 
     <%= render template: "layouts/application" %>
     ```
 
-That's it. The News views will use the new layout, hiding the top menu and adding a new right menu inside the "content" div.
+É isto. A view *News* irá utilizar o novo *layout*, com um menu no topo e com um menu novo à direita dentro da *div* "content".
 
-There are several ways of getting similar results with different sub-templating schemes using this technique. Note that there is no limit in nesting levels. One can use the `ActionView::render` method via `render template: 'layouts/news'` to base a new layout on the News layout. If you are sure you will not subtemplate the `News` layout, you can replace the `content_for?(:news_content) ? yield(:news_content) : yield` with simply `yield`.
+Há vários jeitos de conseguir resultados similares com esquemas diferentes de *sub-templates* através desta técnica. Note que não há limite no nível de aninhamento. É possível utilizar o método `ActionView::render` via `render template: 'layouts/news'` para criar um novo *layout* com base no *layout* News. Se você tem certeza que não criará outros templates a partir do *layout* `News`, você pode substituir o `content_for?(:news_content) ? yield(:news_content) : yield` com simplesmente `yield`.
