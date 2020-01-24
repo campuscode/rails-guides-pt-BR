@@ -537,47 +537,47 @@ class CreateEmployees < ActiveRecord::Migration[5.0]
 end
 ```
 
-Tips, Tricks, and Warnings
+Dicas, Truques e Avisos
 --------------------------
 
-Here are a few things you should know to make efficient use of Active Record associations in your Rails applications:
+Segue algumas coisas que você deve saber para utilizar as associações do *Active Record* nas suas aplicações Rails:
 
-* Controlling caching
-* Avoiding name collisions
-* Updating the schema
-* Controlling association scope
-* Bi-directional associations
+* Controlando o *caching*
+* Evitando colisões de nome
+* Atualizando o *schema*
+* Controlando o escopo de associação
+* Associações bidirecionais
 
-### Controlling Caching
+### Controlando o *Caching*
 
-All of the association methods are built around caching, which keeps the result of the most recent query available for further operations. The cache is even shared across methods. For example:
-
-```ruby
-author.books                 # retrieves books from the database
-author.books.size            # uses the cached copy of books
-author.books.empty?          # uses the cached copy of books
-```
-
-But what if you want to reload the cache, because data might have been changed by some other part of the application? Just call `reload` on the association:
+Todos os métodos de associação são construídos em torno de *caching*, o que mantém o resultado da *query* mais recente disponível para operações futuras. O *cache* é até compartilhado entre métodos. Por exemplo:
 
 ```ruby
-author.books                 # retrieves books from the database
-author.books.size            # uses the cached copy of books
-author.books.reload.empty?   # discards the cached copy of books
-                             # and goes back to the database
+author.books                 # retorna *books* do banco de dados
+author.books.size            # usa a versão salva em cache da busca por *books*
+author.books.empty?          # usa a versão salva em cache da busca por *books*
 ```
 
-### Avoiding Name Collisions
+Mas e se você quiser recarregar o *cache*, porque pode haver alterações nos dados devido a outra parte da aplicação? Simplesmente chame `reload` na associação:
 
-You are not free to use just any name for your associations. Because creating an association adds a method with that name to the model, it is a bad idea to give an association a name that is already used for an instance method of `ActiveRecord::Base`. The association method would override the base method and break things. For instance, `attributes` or `connection` are bad names for associations.
+```ruby
+author.books                 # retorna *books* do banco de dados
+author.books.size            # usa a versão salva em cache da busca por *books*
+author.books.reload.empty?   # descarta a resposta da busca salva em cache por *books*
+                             # e volta a olhar para o banco de dados
+```
 
-### Updating the Schema
+### Evitando Colisões de Nome
 
-Associations are extremely useful, but they are not magic. You are responsible for maintaining your database schema to match your associations. In practice, this means two things, depending on what sort of associations you are creating. For `belongs_to` associations you need to create foreign keys, and for `has_and_belongs_to_many` associations you need to create the appropriate join table.
+Não é possível usar simplesmente qualquer nome para suas associações. Considerando que ao criar uma associação adicionamos um método com o nome especificado ao *model*, é uma péssima ideia dar um nome para uma associação que já foi utilizado para um método de instância de `ActiveRecord::Base`. O método da associação sobrescreverá o método base e quebrará coisas. Por exemplo, `attributes` ou `connection` não são indicados como nomes para associações.
 
-#### Creating Foreign Keys for `belongs_to` Associations
+### Atualizando o *Schema*
 
-When you declare a `belongs_to` association, you need to create foreign keys as appropriate. For example, consider this model:
+Associações são extremamente úteis, mas não são mágica. Você fica responsável por manter o *schema* do seu banco de dados de forma que corresponda às suas associações. Na prática, isto significa duas coisas, dependendo do tipo de associação que você criar. Para associações `belongs_to` você precisa criar chaves estrangeiras, e para associações `has_and_belongs_to_many` você precisa criar a tabela de junção (*join table*) apropriada.
+
+#### Criando Chaves Estrangeiras para Associações `belongs_to`
+
+Quando você declara uma associação `belongs_to`, você precisa criar as chaves estrangeiras apropriadas. Por exemplo, considere este *model*:
 
 ```ruby
 class Book < ApplicationRecord
@@ -585,7 +585,7 @@ class Book < ApplicationRecord
 end
 ```
 
-This declaration needs to be backed up by a corresponding foreign key column in the books table. For a brand new table, the migration might look something like this:
+Esta declaração precisa do apoio de uma coluna de chave estrangeira apropriada na tabela *books*. Pra uma tabela recém criada, a migração pode parecer com isto:
 
 ```ruby
 class CreateBooks < ActiveRecord::Migration[5.0]
@@ -599,7 +599,7 @@ class CreateBooks < ActiveRecord::Migration[5.0]
 end
 ```
 
-Whereas for an existing table, it might look like this:
+Enquanto que para uma tabela existente, pode parecer com isto:
 
 ```ruby
 class AddAuthorToBooks < ActiveRecord::Migration[5.0]
@@ -609,15 +609,15 @@ class AddAuthorToBooks < ActiveRecord::Migration[5.0]
 end
 ```
 
-NOTE: If you wish to [enforce referential integrity at the database level](/active_record_migrations.html#foreign-keys), add the `foreign_key: true` option to the ‘reference’ column declarations above.
+NOTE: Se você quiser [impor integridade de referência no nível do banco de dados](/active_record_migrations.html#foreign-keys), acrescente a opção `foreign_key: true` à declaração da coluna *'reference'* acima.
 
-#### Creating Join Tables for `has_and_belongs_to_many` Associations
+#### Criando Tabelas de Junção para Associações `has_and_belongs_to_many`
 
-If you create a `has_and_belongs_to_many` association, you need to explicitly create the joining table. Unless the name of the join table is explicitly specified by using the `:join_table` option, Active Record creates the name by using the lexical order of the class names. So a join between author and book models will give the default join table name of "authors_books" because "a" outranks "b" in lexical ordering.
+Se você criar uma associação `has_and_belongs_to_many`, você precisa criar a tabela de junção de forma explícita. A menos que o nome da tabela de junção seja especificado de forma explícita através da opção `:join_table`, o *Active Record* cria o nome utilizando a ordem léxica dos nomes de classe. Dessa forma, uma junção entre os *models* *author* e *book* resulta no nome de tabela de junção padrão *"authors_books"* porque "a" precede "b" na ordenação léxica.
 
-WARNING: The precedence between model names is calculated using the `<=>` operator for `String`. This means that if the strings are of different lengths, and the strings are equal when compared up to the shortest length, then the longer string is considered of higher lexical precedence than the shorter one. For example, one would expect the tables "paper_boxes" and "papers" to generate a join table name of "papers_paper_boxes" because of the length of the name "paper_boxes", but it in fact generates a join table name of "paper_boxes_papers" (because the underscore '\_' is lexicographically _less_ than 's' in common encodings).
+WARNING: A precedência entre nomes de *model* é calculada usando o operador `<=>` para `String`. Isto significa que se os *strings* têm comprimentos diferentes, e os *strings* são iguais quando comparados até o menor comprimento, então o *string* mais comprido recebe uma precedência léxica maior que o mais curto. Por exemplo, à primeira vista você pode esperar que as tabelas *"paper_boxes"* e *"papers"* resultem numa tabela de junção chamada *"papers_paper_boxes"* por causa do comprimento do nome *"paper_boxes"*, mas em vez disso cria-se a tabela de junção chamada *"paper_boxes_papers"* (porque o *underscore* '\_' recebe um peso lexicográfico _menor_ que 's' em *encodings* comuns).
 
-Whatever the name, you must manually generate the join table with an appropriate migration. For example, consider these associations:
+Independente do nome, você deve gerar manualmente a tabela de junção com a migração apropriada. Por exemplo, considere estas associações:
 
 ```ruby
 class Assembly < ApplicationRecord
@@ -629,7 +629,7 @@ class Part < ApplicationRecord
 end
 ```
 
-These need to be backed up by a migration to create the `assemblies_parts` table. This table should be created without a primary key:
+Elas precisam do apoio de uma migração para criar a tabela `assemblies_parts`. Esta tabela deve ser criada sem a chave primária:
 
 ```ruby
 class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[5.2]
@@ -645,9 +645,9 @@ class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[5.2]
 end
 ```
 
-We pass `id: false` to `create_table` because that table does not represent a model. That's required for the association to work properly. If you observe any strange behavior in a `has_and_belongs_to_many` association like mangled model IDs, or exceptions about conflicting IDs, chances are you forgot that bit.
+Passamos `id: false` para `create_table` porque esta tabela não representa um *model*. Isto é necessário para a associação funcionar de maneira correta. Se você observar qualquer comportamento estranho numa associação `has_and_belongs_to_many` como IDs de *model* corrompidos, ou exceções envolvendo IDs em conflito, é provável que você tenha esquecido deste detalhe.
 
-You can also use the method `create_join_table`
+Você também pode utilizar o método `create_join_table`
 
 ```ruby
 class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[5.0]
@@ -660,9 +660,9 @@ class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[5.0]
 end
 ```
 
-### Controlling Association Scope
+### Controlando o Escopo de Associação
 
-By default, associations look for objects only within the current module's scope. This can be important when you declare Active Record models within a module. For example:
+Por padrão, associações procuram por objetos apenas dentro do escopo do *model* atual. Isto é relevante quando você declara *models* do *Active Record* dentro de um módulo. Por exemplo:
 
 ```ruby
 module MyApplication
@@ -678,7 +678,7 @@ module MyApplication
 end
 ```
 
-This will work fine, because both the `Supplier` and the `Account` class are defined within the same scope. But the following will _not_ work, because `Supplier` and `Account` are defined in different scopes:
+Isto funciona corretamente, porque tanto a classe `Supplier` quanto a classe `Account` são definidas dentro do mesmo escopo. Mas o próximo exemplo _não_ funcionará, porque `Supplier` e `Account` são definidos em escopos diferentes:
 
 ```ruby
 module MyApplication
@@ -696,7 +696,7 @@ module MyApplication
 end
 ```
 
-To associate a model with a model in a different namespace, you must specify the complete class name in your association declaration:
+Para associar um *model* a outro *model* em um *namespace* diferente, você deve especificar o nome completo da classe na declaração da sua associação:
 
 ```ruby
 module MyApplication
@@ -716,9 +716,9 @@ module MyApplication
 end
 ```
 
-### Bi-directional Associations
+### Associações Bidirecionais
 
-It's normal for associations to work in two directions, requiring declaration on two different models:
+É normal para associações funcionar em duas direções, necessitando de declarações em dois *models* diferentes:
 
 ```ruby
 class Author < ApplicationRecord
@@ -730,7 +730,7 @@ class Book < ApplicationRecord
 end
 ```
 
-Active Record will attempt to automatically identify that these two models share a bi-directional association based on the association name. In this way, Active Record will only load one copy of the `Author` object, making your application more efficient and preventing inconsistent data:
+O *Active Record* tentará identificar automaticamente que estes dois *models* compartilham uma associação bidirecional baseando-se no nome da associação. Desta forma, o *Active Record* carregará apenas uma cópia do objeto `Author`, tornando sua aplicação mais eficiente e evitando dados inconsistentes:
 
 ```ruby
 a = Author.first
@@ -740,12 +740,12 @@ a.first_name = 'David'
 a.first_name == b.author.first_name # => true
 ```
 
-Active Record supports automatic identification for most associations with standard names. However, Active Record will not automatically identify bi-directional associations that contain a scope or any of the following options:
+O *Active Record* tem suporte a identificação automática para a maioria das associações com nomes padrão. Contudo, o *Active Record* não identificará automaticamente associações bidirecionais que contém um escopo ou qualquer uma das opções abaixo:
 
 * `:through`
 * `:foreign_key`
 
-For example, consider the following model declarations:
+Por exemplo, considere as declarações de *models* abaixo:
 
 ```ruby
 class Author < ApplicationRecord
@@ -757,7 +757,7 @@ class Book < ApplicationRecord
 end
 ```
 
-Active Record will no longer automatically recognize the bi-directional association:
+O *Active Record* não reconhecerá mais a associação bidirecional:
 
 ```ruby
 a = Author.first
@@ -767,7 +767,7 @@ a.first_name = 'David'
 a.first_name == b.writer.first_name # => false
 ```
 
-Active Record provides the `:inverse_of` option so you can explicitly declare bi-directional associations:
+O *Active Record* fornece a opção `:inverse_of` para declarar associações bidirecionais de forma explícita:
 
 ```ruby
 class Author < ApplicationRecord
@@ -779,7 +779,7 @@ class Book < ApplicationRecord
 end
 ```
 
-By including the `:inverse_of` option in the `has_many` association declaration, Active Record will now recognize the bi-directional association:
+Ao incluir a opção `:inverse_of` na declaração da associação `has_many`, o *Active Record* agora reconhecerá a associação bidirecional:
 
 ```ruby
 a = Author.first
