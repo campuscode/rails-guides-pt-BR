@@ -226,7 +226,7 @@ end
 
 ![Diagrama de Associação has_many :through](images/association_basics/has_many_through.png)
 
-A _migration_ correpondente parecerá assim:
+A _migration_ correspondente parecerá assim:
 
 ```ruby
 class CreateAppointments < ActiveRecord::Migration[5.0]
