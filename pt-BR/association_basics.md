@@ -12,7 +12,7 @@ Após ler esse guia, você saberá:
 - Como entender os vários tipos de associações _Active Record_.
 - Como usar os métodos adicionados em seus _models_ ao criar associações.
 
----
+--------------------------------------------------------------------------------
 
 ## Por Que Associações?
 
