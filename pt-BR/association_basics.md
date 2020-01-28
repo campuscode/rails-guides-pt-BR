@@ -93,7 +93,7 @@ O Rails suporta seis tipos de associações:
 
 As associações são implementadas usando chamadas _macro-style_, para que você possa adicionar declarativamente recursos aos seus _models_. Por exemplo, ao declarar que um _model_ `belongs_to` (pertence a outro), você instrui o Rails a manter as informações de [Primary Key](https://pt.wikipedia.org/wiki/Chave_prim%C3%A1ria)-[Foreign Key](https://pt.wikipedia.org/wiki/Chave_estrangeira) (Chave primária-Chave Estrangeira) entre instâncias dos dois _models_, e também obtém vários métodos úteis adicionados ao seu _model_.
 
-No restante deste guia, você aprenderá como declarar e usar as várias formas de associação. Mas primeiro, uma rápida introdução para as situações em que cada tipo de associação é apropriado.
+No restante deste guia, você aprenderá como declarar e usar as várias formas de associação. Mas primeiro, uma rápida introdução para as situações em que cada tipo de associação é apropriada.
 
 ### A Associação `belongs_to`
 
