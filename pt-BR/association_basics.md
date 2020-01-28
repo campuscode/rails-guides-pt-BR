@@ -97,7 +97,7 @@ No restante deste guia, você aprenderá como declarar e usar as várias formas 
 
 ### A Associação `belongs_to`
 
-Uma associação `belongs_to` configura uma conexão uma-para-um com outro _model_, de modo que cada instância do _model_ declarante "pertença a" uma instância do outro _model_. Por exemplo, se sua aplicação incluir autores e livros, e cada livro puder ser atribuído a exatamente um autor, você declarará o _model_ do livro da seguinte maneira:
+Uma associação `belongs_to` configura uma conexão um-para-um com outro _model_, de modo que cada instância do _model_ declarante "pertença a" uma instância do outro _model_. Por exemplo, se sua aplicação incluir autores e livros, e cada livro pertencer a apenas um autor, você declarará o _model_ do livro da seguinte maneira:
 
 ```ruby
 class Book < ApplicationRecord
