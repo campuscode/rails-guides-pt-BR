@@ -130,7 +130,7 @@ end
 
 ### A associação `has_one`
 
-Uma associação `has_one` também estabelece uma conexão um-para-um com outro _model_, mas com semânticas um pouco diferentes (e consequências). Essa associação indica que cada instância de um modelo contém ou possui uma instância de outro _model_. Por exemplo, se cada fornecedor em sua aplicação tiver apenas uma conta, você declarará o _model_ de fornecedor como este:
+Uma associação `has_one` também estabelece uma conexão um-para-um com outro _model_, mas com semânticas um pouco diferentes (e consequências). Essa associação indica que cada instância de um _model_ contém ou possui uma instância de outro _model_. Por exemplo, se cada fornecedor em sua aplicação possuir apenas uma conta, você vai declarar o _model_ de fornecedor da seguinte maneira:
 
 ```ruby
 class Supplier < ApplicationRecord
