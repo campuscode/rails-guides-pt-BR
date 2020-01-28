@@ -8,9 +8,9 @@ Esse guia cobre os recursos de associação do _Active Record_.
 
 Após ler esse guia, você saberá:
 
-- Como declarar associações entre _models_ do _Active Record_.
-- Como entender os vários tipos de associações _Active Record_.
-- Como usar os métodos adicionados em seus _models_ ao criar associações.
+* Como declarar associações entre _models_ do _Active Record_.
+* Como entender os vários tipos de associações _Active Record_.
+* Como usar os métodos adicionados em seus _models_ ao criar associações.
 
 --------------------------------------------------------------------------------
 
@@ -84,12 +84,12 @@ Rails.
 
 O Rails suporta seis tipos de associações:
 
-- `belongs_to`
-- `has_one`
-- `has_many`
-- `has_many :through`
-- `has_one :through`
-- `has_and_belongs_to_many`
+* `belongs_to`
+* `has_one`
+* `has_many`
+* `has_many :through`
+* `has_one :through`
+* `has_and_belongs_to_many`
 
 As associações são implementadas usando chamadas _macro-style_, para que você possa adicionar declarativamente recursos aos seus _models_. Por exemplo, ao declarar que um _model_ `belongs_to` (pertence a outro), você instrui o Rails a manter as informações de [Primary Key](https://pt.wikipedia.org/wiki/Chave_prim%C3%A1ria)-[Foreign Key](https://pt.wikipedia.org/wiki/Chave_estrangeira) (Chave primária-Chave Estrangeira) entre instâncias dos dois _models_, e também obtém vários métodos úteis adicionados ao seu _model_.
 
@@ -963,9 +963,9 @@ Counter cache columns are added to the containing model's list of read-only attr
 ##### `:dependent`
 If you set the `:dependent` option to:
 
-- `:destroy`, when the object is destroyed, `destroy` will be called on its
+* `:destroy`, when the object is destroyed, `destroy` will be called on its
   associated objects.
-- `:delete`, when the object is destroyed, all its associated objects will be
+* `:delete`, when the object is destroyed, all its associated objects will be
   deleted directly from the database without calling their `destroy` method.
 
 WARNING: You should not specify this option on a `belongs_to` association that is connected with a `has_many` association on the other class. Doing so can lead to orphaned records in your database.
@@ -1231,8 +1231,7 @@ end
 
 The `has_one` association supports these options:
 
-`:as`
-
+* `:as`
 * `:autosave`
 * `:class_name`
 * `:dependent`
