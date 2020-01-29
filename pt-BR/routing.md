@@ -116,14 +116,14 @@ Quando sua aplicação Rails recebe uma requisição para:
 DELETE /photos/17
 ```
 
-ele pergunta ao roteador para enviar esta requisição para a _action_ no seu
+ela pede ao roteador para enviar esta requisição para a _action_ no seu
 respectivo _controller_. Se a primeira rota encontrada for:
 
 ```ruby
 resources :photos
 ```
 
-O Rails irá enviar esta request para a _action_ `destroy` no _controller_
+O Rails enviará esta requisição para a _action_ `destroy` no _controller_
 `photos` com `{ id: 17 }` no `params`
 
 ### CRUD, Verbos, e _Actions_
@@ -150,11 +150,11 @@ _controller_ `Photos`:
 | PATCH/PUT | /photos/:id      | photos#update     | update a specific photo                      |
 | DELETE    | /photos/:id      | photos#destroy    | delete a specific photo                      |
 
-NOTE: Por conta do roteadir utilizar os verbos HTTP e a URL para corresponder as requisições de entrada, quatro URLs equivalem a sete _actions_ diferentes.
+NOTE: Por conta do roteador utilizar os verbos HTTP e a URL para corresponder as requisições de entrada, quatro URLs equivalem a sete _actions_ diferentes.
 
-NOTE: Rotas rails são combinadas na ordem que são especificadas, portanto se você tem `resources :photos` acima de `get 'photos/poll'` a rota da _action_ `show` para a linha do `resources` será correspondida antes da linha `get`. Para resolver este problema, mova a linha `get` **acima** da linha `resources`, assim a rota será correspondida primeiro.
+NOTE: Rotas de aplicações Rails são combinadas na ordem que são especificadas, portanto, se você tem `resources :photos` acima de `get 'photos/poll'`, a rota da _action_ `show` para a linha do `resources` será correspondida antes da linha `get`. Para resolver este problema, mova a linha `get` **acima** da linha `resources`, assim a rota será equiparada primeiro.
 
-### _Path_ e _URL_ Helpers
+### Helpers _Path_ e _URL_
 
 Criando uma rota de _resource_ vai expor um número de _helpers_ para os _controllers_ em sua aplicação. No caso de `resources :photos`:
 
@@ -163,11 +163,11 @@ Criando uma rota de _resource_ vai expor um número de _helpers_ para os _contro
 * `edit_photo_path(:id)` retorna `/photos/:id/edit` (por exemplo, `edit_photo_path(10)` retorna `/photos/10/edit`)
 * `photo_path(:id)` retorna `/photos/:id` (por exemplo, `photo_path(10)` retorna `/photos/10`)
 
-Cada um desses _helpers_ tem uma `_url` _helper_ (assim como `photos_url`) que retorna o mesmo _path_ prefixado com o _host_ atual, porta e o prefixo do _path_.
+Cada um desses _helpers_ tem um _helper_ `_url`  (assim como `photos_url`) que retorna o mesmo _path_ prefixado com o _host_ atual, porta e o prefixo do _path_.
 
 ### Definindo Multiplos _Resources_ ao Mesmo tempo
 
-Se você precisa criar rotas para mais de um resource, você pode salvar um pouco de digitação definindo todos eles em uma unica chamada para `resources`:
+Se você precisa criar rotas para mais de um _resource_, você pode salvar um pouco de digitação definindo todos eles em uma unica chamada para `resources`:
 
 ```ruby
 resources :photos, :books, :videos
@@ -181,9 +181,9 @@ resources :books
 resources :videos
 ```
 
-### _Resources_ Singular
+### _Resources_ no Singular
 
-Algumas vezes você tem um _resource_ que clientes sempre vem sem referenciar um ID. Por exemplo, você gostaria que `/profile` sempre mostre o perfil do usuário que esta autenticado. Neste caso, você pode usar um _resource_ singular para  mapear `/profile` (em vez de `/profile/:id`) para a _action_ `show`:
+Algumas vezes você tem um _resource_ que clientes sempre veem sem referenciar um ID. Por exemplo, você gostaria que `/profile` sempre mostre o perfil do usuário que esta autenticado. Neste caso, você pode usar um _resource_ no singular para  mapear `/profile` (em vez de `/profile/:id`) para a _action_ `show`:
 
 ```ruby
 get 'profile', to: 'users#show'
@@ -221,11 +221,11 @@ Uma rota _resourceful_ singular gera estes _helpers_:
 * `edit_geocoder_path` returns `/geocoder/edit`
 * `geocoder_path` returns `/geocoder`
 
-Assim como com _resources_ plural, os mesmos _helpers_ serão terminando com `_url` tambem vão incluir o _host_, porta, e o prefixo do _path_.
+Assim como com _resources_ no plural, os mesmos _helpers_ que terminam com `_url` tambem vão incluir o _host_, porta, e o prefixo do _path_.
 
 ### Controller Namespaces e Routing
 
-Você pode querer organizar grupos de _controllers_ em um _namespace_. Mais comumente, você pode querer agrupar controllers administrativos sob um _namespace_ `Admin::`. Você deverá por esses _controllers_ sob o diretorio `app/controllers/admin`, e você pode agrupa-los em um _router_:
+Você pode querer organizar grupos de _controllers_ em um _namespace_. Mais comumente, você pode querer agrupar _controllers_ administrativos sob um _namespace_ `Admin::`. Você deverá por esses _controllers_ sob o diretório `app/controllers/admin`, e você pode agrupá-los em um _router_:
 
 ```ruby
 namespace :admin do
@@ -233,7 +233,7 @@ namespace :admin do
 end
 ```
 
-Isto irá criar um número de rotas para cada _controller_ de `articles` e `comments`. Para `Admin::ArticlesController`, o Rails ira criar:
+Isto criará um número de rotas para cada _controller_ de `articles` e `comments`. Para `Admin::ArticlesController`, o Rails vai criar:
 
 | HTTP Verb | Path                     | Controller#Action      | Named Route Helper           |
 | --------- | ------------------------ | ---------------------- | ---------------------------- |
@@ -245,7 +245,7 @@ Isto irá criar um número de rotas para cada _controller_ de `articles` e `comm
 | PATCH/PUT | /admin/articles/:id      | admin/articles#update  | admin_article_path(:id)      |
 | DELETE    | /admin/articles/:id      | admin/articles#destroy | admin_article_path(:id)      |
 
-Se você quiser rotear `/articles` (sem o prefixo `/admin`) para `Admin::ArticlesController`, você podera usar:
+Se você quiser rotear `/articles` (sem o prefixo `/admin`) para `Admin::ArticlesController`, você poderia usar:
 
 ```ruby
 scope module: 'admin' do
@@ -253,13 +253,13 @@ scope module: 'admin' do
 end
 ```
 
-ou, para um unico caso:
+ou, para um único caso:
 
 ```ruby
 resources :articles, module: 'admin'
 ```
 
-Se você quiser rotear `/admin/articles` para `ArticlesController` (Sem o prefixo do modulo `Admin::`), você podera usar:
+Se você quiser rotear `/admin/articles` para `ArticlesController` (Sem o prefixo do modulo `Admin::`), você poderia usar:
 
 ```ruby
 scope '/admin' do
@@ -272,7 +272,7 @@ ou, para um unico caso:
 resources :articles, path: '/admin/articles'
 ```
 
-Em cada um desses casos, a rota nomeada continua a mesma assim como se você não usar `scope`. No utimo exemplo, os _paths_ seguintes mapeiam para `ArticlesController`:
+Em cada um desses casos, a rota nomeada continua a mesma, como se você não tivesse usado `scope`. No último exemplo, os _paths_ seguintes mapeiam para `ArticlesController`:
 
 | HTTP Verb | Path                     | Controller#Action    | Named Route Helper     |
 | --------- | ------------------------ | -------------------- | ---------------------- |
@@ -284,11 +284,11 @@ Em cada um desses casos, a rota nomeada continua a mesma assim como se você nã
 | PATCH/PUT | /admin/articles/:id      | articles#update      | article_path(:id)      |
 | DELETE    | /admin/articles/:id      | articles#destroy     | article_path(:id)      |
 
-TIP: Se você precisar usar um namespace de controller diferente dentro de um bloco `namespace` você pode especificar um path absoluto de controller, e.g: `get '/foo', to: '/foo#index'`.
+TIP: Se você precisar usar um _namespace_ de _controller_ diferente dentro de um bloco `namespace` você pode especificar um _path_ absoluto de _controller_, e.g: `get '/foo', to: '/foo#index'`.
 
-### Nested Resources
+### Nested Resources (Recursos Aninhados)
 
-É Comum de termos _resources_ que são lógicamente filhos de outro _resiytces_. Por exemplo, supondo que sua aplicação tem esses _models_:
+É comum encontrarmos _resources_ que são "filhos" de outros. Por exemplo, supondo que sua aplicação tem esses _models_:
 
 ```ruby
 class Magazine < ApplicationRecord
@@ -300,7 +300,7 @@ class Ad < ApplicationRecord
 end
 ```
 
-_Nested routes_ permitem que você capture este relacionamento no seu roteamento. Neste caso, você poderia incluir esta delcaração de rota:
+_Nested routes_ (rotas aninhadas) permitem que você capture este relacionamento no seu roteamento. Neste caso, você poderia incluir esta delcaração de rota:
 
 ```ruby
 resources :magazines do
@@ -308,7 +308,7 @@ resources :magazines do
 end
 ```
 
-Em adição das rotas para _magazines_, esta declaração ira tambem adicionar rotas de _ads_ para um `AdsContriller`. As URLs de _ad_ vão precisar de um _magazine_:
+Em adição das rotas para _magazines_, esta declaração também adicionará rotas de _ads_ para um `AdsContriller`. As URLs de _ad_ vão precisar de um _magazine_:
 
 | HTTP Verb | Path                                 | Controller#Action | Used for                                                                   |
 | --------- | ------------------------------------ | ----------------- | -------------------------------------------------------------------------- |
@@ -320,7 +320,7 @@ Em adição das rotas para _magazines_, esta declaração ira tambem adicionar r
 | PATCH/PUT | /magazines/:magazine_id/ads/:id      | ads#update        | update a specific ad belonging to a specific magazine                      |
 | DELETE    | /magazines/:magazine_id/ads/:id      | ads#destroy       | delete a specific ad belonging to a specific magazine                      |
 
-Isto vai tambem criar _routing helpers_ como `magazine_ads_url` e `edit_magazine_ad_path`. Esses _helpers_ pegam uma instancia de _Magazine_ como o primeiro parametro (`magazine_ads_url(@magazine)`).
+Isto vai tambem criar _routing helpers_ como `magazine_ads_url` e `edit_magazine_ad_path`. Esses _helpers_ pegam uma instância de _Magazine_ como o primeiro parametro (`magazine_ads_url(@magazine)`).
 
 #### Limites para Nesting
 
@@ -340,13 +340,13 @@ _Resources_ profundamente aninhados ficam confusos. Neste caso, por exemplo, a a
 /publishers/1/magazines/2/photos/3
 ```
 
-O _helper_ correspondernte a essa rota seria `publisher_magazine_photo_url`, sendo necessário especificar os objetos de todos os três niveis. De fato, esta situação é confusa o bastante que um [artigo](http://weblog.jamisbuck.org/2007/2/5/nesting-resources) escrito por Jamis Buck propõe uma regra de ouro para um bom Ddesign no Rails:
+O _helper_ correspondente a essa rota seria `publisher_magazine_photo_url`, sendo necessário especificar os objetos de todos os três níveis. De fato, esta situação é confusa o bastante que um [artigo](http://weblog.jamisbuck.org/2007/2/5/nesting-resources) escrito por Jamis Buck propõe uma regra de ouro para um bom design no Rails:
 
-TIP: _Resources_ Não devem nunca ser aninhados mais de um nivel de profundidade.
+TIP: _Resources_ Não devem nunca ser aninhados mais de um nível de profundidade.
 
 #### Shallow Nesting
 
-Uma maneira de evitar um aninhamento profundo (assim como recomendado acima) é gerar uma coleção de _actions_ _scoped_ abaixo de um pai, assim para ter uma sensação de hierarquia, mas não aninhar as _actions_ do membro. Em outras palavras. para apenas construir _routes_ com o minimo de informação para identificar unicamente o _recurso_, como isto:
+Uma maneira de evitar um aninhamento profundo (como recomendado acima) é gerar uma coleção de _actions_ _scoped_ abaixo de um pai, assim para ter uma sensação de hierarquia, mas não aninhar as _actions_ do membro. Em outras palavras. para apenas construir _routes_ com o mínimo de informação para identificar unicamente o _recurso_, como isto:
 
 ```ruby
 resources :articles do
@@ -355,7 +355,7 @@ end
 resources :comments, only: [:show, :edit, :update, :destroy]
 ```
 
-Essa idéia encontra um equilíbrio entre rotas descritivas e aninhamento profundo. Existe uma sintax abreviada para conseguir exatamente isso, via a opção `:shallow`:
+Essa idéia encontra um equilíbrio entre rotas descritivas e aninhamento profundo. Existe uma sintaxe abreviada para conseguir exatamente isso, via a opção `:shallow`:
 
 ```ruby
 resources :articles do
@@ -363,7 +363,7 @@ resources :articles do
 end
 ```
 
-Isso vai gerar as mesmas rotas do primeiro exemplo, Você pode tambem especificar a opção `:shallow` no seu recurso pai, em cada caso todos os _resources_ aninhados serão rasos:
+Isso vai gerar as mesmas rotas do primeiro exemplo, Você pode também especificar a opção `:shallow` no seu recurso pai, em cada caso todos os _resources_ aninhados serão rasos:
 
 ```ruby
 resources :articles, shallow: true do
@@ -372,7 +372,7 @@ resources :articles, shallow: true do
   resources :drafts
 end
 ```
-O metodo `shallow` do DSL cria um _scope_ que dentro dele, todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:
+O metodo `shallow` do DSL cria um _scope_ em que todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:
 
 ```ruby
 shallow do
@@ -394,7 +394,7 @@ scope shallow_path: "sekret" do
 end
 ```
 
-O _resource_ _comments_ aqui tera gerado as seguintes rotas para sí:
+O _resource_ _comments_ aqui terá gerado as seguintes rotas para sí:
 
 | HTTP Verb | Path                                         | Controller#Action | Named Route Helper       |
 | --------- | -------------------------------------------- | ----------------- | ------------------------ |
@@ -406,7 +406,7 @@ O _resource_ _comments_ aqui tera gerado as seguintes rotas para sí:
 | PATCH/PUT | /sekret/comments/:id(.:format)               | comments#update   | comment_path             |
 | DELETE    | /sekret/comments/:id(.:format)               | comments#destroy  | comment_path             |
 
-A opção `:shallow_prefix` adiciona o parametro especificado para os _helpers_ da rota nomeada:
+A opção `:shallow_prefix` adiciona o parÂmetro especificado para os _helpers_ da rota nomeada:
 
 ```ruby
 scope shallow_prefix: "sekret" do
@@ -416,7 +416,7 @@ scope shallow_prefix: "sekret" do
 end
 ```
 
-O _resource_ _comments_ aqui tera gerado as seguintes rotas para si:
+O _resource_ _comments_ aqui terá gerado as seguintes rotas para si:
 
 | HTTP Verb | Path                                         | Controller#Action | Named Route Helper          |
 | --------- | -------------------------------------------- | ----------------- | --------------------------- |
@@ -428,9 +428,9 @@ O _resource_ _comments_ aqui tera gerado as seguintes rotas para si:
 | PATCH/PUT | /comments/:id(.:format)                      | comments#update   | sekret_comment_path         |
 | DELETE    | /comments/:id(.:format)                      | comments#destroy  | sekret_comment_path         |
 
-### Routing concerns
+### Roteamento com método concerns
 
-Routing concerns permitem você declarar rotas comuns que podem ser reutilizadas dentro de outros _resources_ e rotas. Para definier um _concern_:
+Roteamento com método concerns permitem você declarar rotas comuns que podem ser reutilizadas dentro de outros _resources_ e rotas. Para definier um _concern_:
 
 ```ruby
 concern :commentable do
@@ -463,7 +463,7 @@ resources :articles do
 end
 ```
 
-Alem disso você pode usa-los em qualquer lugar que você quiser dentro das rotas, por exemplo, em uma chamada `scope` ou `namespace`:
+Além disso você pode usá-los em qualquer lugar que você quiser dentro das rotas, por exemplo, em uma chamada `scope` ou `namespace`:
 
 ```ruby
 namespace :articles do
@@ -473,7 +473,7 @@ end
 
 ### Criando Paths e URLs De Objetos
 
-Além de usarmos os _routing helpers_, o Rails pode tambem criar _paths_ e _URLs_ de um _array_ de parameters. Por exemplo, imagine que você tem este grupo de rotas:
+Além de usarmos os _helpers_ de roteamento, o Rails pode também criar _paths_ e _URLs_ de um _array_ de parâmetros. Por exemplo, imagine que você tem este grupo de rotas:
 
 ```ruby
 resources :magazines do
@@ -481,19 +481,19 @@ resources :magazines do
 end
 ```
 
-Enquanto usando `magazine_ad_path`, você pode passar as instancias de `Magazine` e `Ad` em contrapartida a IDs numericos:
+Enquanto estiver usando `magazine_ad_path`, você pode passar as instâncias de `Magazine` e `Ad` em contrapartida a IDs numéricos:
 
 ```erb
 <%= link_to 'Ad details', magazine_ad_path(@magazine, @ad) %>
 ```
 
-Você pode tambem usar `url_for` com um grupo de objetos, e o Rails vai automaticamente determinar qual rota você quer:
+Você pode também usar `url_for` com um grupo de objetos, e o Rails vai automaticamente determinar qual rota você quer:
 
 ```erb
 <%= link_to 'Ad details', url_for([@magazine, @ad]) %>
 ```
 
-Neste caso, o Rails verá que `@magazine` é um `Magazine` e `@ad` é um `Ad` e vai portanto usar o _helper_ `magazine_ad_path`. em _helpers_ como `linl_to`, você pode especificar apenas o objeto no lugar da chamada `url_for` inteira:
+Neste caso, o Rails verá que `@magazine` é um `Magazine` e `@ad` é um `Ad` e vai portanto usar o _helper_ `magazine_ad_path`. em _helpers_ como `link_to`, você pode especificar apenas o objeto no lugar da chamada `url_for` inteira:
 
 ```erb
 <%= link_to 'Ad details', [@magazine, @ad] %>
@@ -505,21 +505,21 @@ Se você queria apenas o link da magazine:
 <%= link_to 'Magazine details', @magazine %>
 ```
 
-Para outras _actions_, você apenas precisa inserir o nome desta action como o primeiro elemento deste _array_:
+Para outras _actions_, você apenas precisa inserir o nome desta _action_ como o primeiro elemento deste _array_:
 
 ```erb
 <%= link_to 'Edit Ad', [:edit, @magazine, @ad] %>
 ```
 
-Isto permite você tratar instancias de seus _models_ como URLs, e é uma vantagem chave de usar o estilo _resourceful_.
+Isto permite você tratar instâncias de seus _models_ como URLs, e é uma vantagem chave de usar o estilo _resourceful_.
 
 ### Adicionando mais RESTful Actions
 
 Você não esta limitado as sete rotas que o _RESTful routing_ cria por padrão. Se você quiser, pode criar rotas adicionais  que aplicam a uma coleção ou membros individuais da coleção.
 
-#### Adicionando Member Routes
+#### Adicionando Rotas de Membros
 
-Para adicionar um _member route_, apenas adicione um bloco `member` em um bloco de _resource_:
+Para adicionar uma rota para um membro, apenas adicione um bloco `member` em um bloco de _resource_:
 
 ```ruby
 resources :photos do
@@ -530,9 +530,9 @@ end
 ```
 Isso vai reconhecer `/photos/1/preview` com GET, e rotear para a _action_ `preview` de `PhotosController`, com o valor do _resource id_  passado em `params[:id]`. Isso vai tambem criar os _helpers_ `preview_photo_url` e `preview_photo_path`.
 
-Dentro do bloco de _member routes_, cada nome de rota especifica o verbo HTTP
+Dentro do bloco de rotas para membros, cada nome de rota especifica o verbo HTTP
 que vai ser reconhecido. Você pode usar `get`, `patch`, `put`, `post` ou
-`delete` aqui. Se você não tiver multiplos `member` _routes_, você pode tambem
+`delete` aqui. Se você não tiver múltiplas rotas para membros, você pode também
 passar `:on` para a rota, eliminando o bloco:
 
 ```ruby
@@ -541,11 +541,11 @@ resources :photos do
 end
 ```
 
-Você pode deixar fora a opção `:on`, isso vai criar o mesmo _member route_ exceto que o valor do _resource id_ vai estar disponivel em `params[:photo_id]` ao invés de `params[:id]`. _Helpers_ de rota tambem vão ser renomeados de `preview_photo_url` para `photo_preview_url` e `photo_preview_path`.
+Você pode deixar fora a opção `:on`, isso vai criar o mesmo _member route_ exceto que o valor do _resource id_ estará disponível em `params[:photo_id]` ao invés de `params[:id]`. _Helpers_ de rota tambem serão renomeados de `preview_photo_url` para `photo_preview_url` e `photo_preview_path`.
 
 #### Adicionando Collection Routes
 
-Para adicionar uma _route_ para uma _collection_:
+Para adicionar uma rota para uma coleção:
 
 ```ruby
 resources :photos do
@@ -555,7 +555,7 @@ resources :photos do
 end
 ```
 
-Isto vai permitir que o Rails reconheça _paths_ como `/photos/search` com GET, e a rota para a _action_ `search` do `PhotosController`. Isto tambem ira criar os _helpers_ `search_photos_url` e `search_photos_path`.
+Isto vai permitir que o Rails reconheça _paths_ como `/photos/search` com GET, e a rota para a _action_ `search` do `PhotosController`. Isto também criará os _helpers_ `search_photos_url` e `search_photos_path`.
 
 Assim como em _member routes_, você pode passar `:on` para uma rota:
 
@@ -565,7 +565,7 @@ resources :photos do
 end
 ```
 
-NOTE: Se vocês estão definindo rotasde _resource_ adicionais com um _symbol_ como o primeiro argumento posicional, tenha em mente que não é igual a usar uma _string_. _Symbols_ inferem _actions_ do _controller_ enquanto _strings_ inferem _paths_.
+NOTE: Se vocês estão definindo rotas de _resource_ adicionais com um _symbol_ como o primeiro argumento posicional, tenha em mente que não é igual a usar uma _string_. _Symbols_ inferem _actions_ do _controller_ enquanto _strings_ inferem _paths_.
 
 #### Adicionando Rotas para Novas Actions Adicionais
 
@@ -579,7 +579,7 @@ end
 
 Isto vai permitir que o Rails reconheça _paths_ como `/comments/new/preview` com GET, e rotear para a _action_ `preview` do `CommentesController`. Isto também vai criar os _helpers_ `preview_new_comment_url` e `preview_new_comment_path`.
 
-TIP: Se você se encontrar adicionando muitas _actions_ extras para uma rota _resourceful_, é uma boa hora para parar e perguntar a você mesmo se você está disfarçando a presença de outro _resource_.
+TIP: Se você se encontrar adicionando muitas _actions_ extras para uma rota _resourceful_, é um bom momento para perguntar a si mesmo se você está mascarando a presença de outro _resource_.
 
 Non-Resourceful Routes
 ----------------------
