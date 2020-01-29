@@ -14,7 +14,8 @@ Após ler esse guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-## Por Que Associações?
+Por Que Associações?
+-----------------
 
 Em Rails, uma _associação_ é uma conexão entre dois _models_ em _Active Record_.
 Por que precisamos de associações entre _models_? Porque eles tornam as operações
