@@ -99,11 +99,11 @@ Roteando _Resources_: O padrão do Rails
 -----------------------------------
 
 O roteamento de _resources_ permite que você rapidamente declare todas as rotas
-comuns para um _controller_. Em contrapartida a declarar as rotas das _actions_
-`index`, `show`, `new`, `edit`, `create`, `update` e `destroy`, esta rota
-declara elas em uma única linha de código.
+comuns para um _controller_. Em contrapartida a declarar cada uma das rotas
+das _actions_ `index`, `show`, `new`, `edit`, `create`, `update` e `destroy`,
+uma rota de _resources_ declara todas elas em uma única linha de código.
 
-### _Resources_ na internet
+### _Resources_ na Web
 
 Navegadores solicitam páginas do Rails através de uma URL usando um método HTTP
 específico, como `GET`,` POST`, `PATCH`,` PUT` e `DELETE`. Cada método é uma
@@ -322,9 +322,9 @@ Em adição das rotas para _magazines_, esta declaração também adicionará ro
 
 Isto vai tambem criar _routing helpers_ como `magazine_ads_url` e `edit_magazine_ad_path`. Esses _helpers_ pegam uma instância de _Magazine_ como o primeiro parametro (`magazine_ads_url(@magazine)`).
 
-#### Limites para Nesting
+#### Limites para o Aninhamento
 
-Você pode "aninhar" _resources_ entre outros _resources_ aninhados se você desejar. Por exemplo:
+Você pode aninhar _resources_ entre outros _resources_ aninhados se você desejar. Por exemplo:
 
 ```ruby
 resources :publishers do
@@ -344,7 +344,7 @@ O _helper_ correspondente a essa rota seria `publisher_magazine_photo_url`, send
 
 TIP: _Resources_ Não devem nunca ser aninhados mais de um nível de profundidade.
 
-#### Shallow Nesting
+#### Shallow Nesting (Aninhamento raso)
 
 Uma maneira de evitar um aninhamento profundo (como recomendado acima) é gerar uma coleção de _actions_ _scoped_ abaixo de um pai, assim para ter uma sensação de hierarquia, mas não aninhar as _actions_ do membro. Em outras palavras. para apenas construir _routes_ com o mínimo de informação para identificar unicamente o _recurso_, como isto:
 
