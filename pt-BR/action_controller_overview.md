@@ -1073,11 +1073,11 @@ Por padrão uma aplicação em produção irá renderizar uma mensagem em um tem
 
 ### `rescue_from`
 
-If you want to do something a bit more elaborate when catching errors, you can use `rescue_from`, which handles exceptions of a certain type (or multiple types) in an entire controller and its subclasses.
+Se você quiser fazer algo mais elaborado quando estiver lidando com erros, você pode usar `rescue_from`, qu trata as excessões de um certo tipo (ou de vários tipos) em um controller inteiro e nas subclasses.
 
-When an exception occurs which is caught by a `rescue_from` directive, the exception object is passed to the handler. The handler can be a method or a `Proc` object passed to the `:with` option. You can also use a block directly instead of an explicit `Proc` object.
+Quando uma excessão acontece e é pega por uma diretiva `rescue_from`, o objeto da excessão é passado ao handler. O handler pode ser um método ou um objeto `Proc` passado com a opção `:with`. Você também pode usar um bloco diretamente ao invés de um objetco `Proc`.
 
-Here's how you can use `rescue_from` to intercept all `ActiveRecord::RecordNotFound` errors and do something with them.
+Aqui está um exemplo de como você pode usar `rescue_from` para interceptar todos os erros `ActiveRecord::RecordNotFound` e fazer algo com eles.
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -1091,7 +1091,7 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-Of course, this example is anything but elaborate and doesn't improve on the default exception handling at all, but once you can catch all those exceptions you're free to do whatever you want with them. For example, you could create custom exception classes that will be thrown when a user doesn't have access to a certain section of your application:
+É claro, que este exemplo não é nada elaborado e não melhora muito a forma original de lidar com os erros, mas uma vez que você capture todas essas excessões você é livre para fazer o que quiser com elas. Por exemplo, você pode criar uma excessão personalizada para quando o usuário não tem acesso a uma parte da aplicação:
 
 ```ruby
 class ApplicationController < ActionController::Base
