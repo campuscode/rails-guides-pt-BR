@@ -231,7 +231,7 @@ end
 ```
 
 Essa migração criará uma coluna `user_id` e o índice apropriado.
-Para mais opçõse `add_reference`, visite a [documentação da API](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference).
+Para mais opções `add_reference`, visite a [documentação da API](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference).
 
 Também existe um gerador que produzirá *join tables* se `JoinTable` fizer parte do nome:
 
