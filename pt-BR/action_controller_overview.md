@@ -1063,9 +1063,9 @@ Matching URLs will be marked as '[FILTERED]'.
 Rescue
 ------
 
-Muito provavelmente sua aplicação irá conter bugs ou enviar excessões que precisam ser tratadas. Por exemplo, se o usuário acessar um link que não possui uma fonte no banco de dados, o Active Record enviará `ActiveRecord::RecordNotFound` como excessão.
+Muito provavelmente sua aplicação irá conter bugs ou enviar exceções que precisam ser tratadas. Por exemplo, se o usuário acessar um link que não possui uma fonte no banco de dados, o Active Record enviará `ActiveRecord::RecordNotFound` como exceção.
 
-A excessão padrão do Rails apresenta a mensagem "500 Server Error" para todas as excessões. Se a requisição for feita localmente, um belo TRACEBACK e outras informações serão mostradas assim você pode verificar o que deu errado e tratar o problema. Se a requisição for remota o Rails apenas apresentará a mensagem "500 Server Error" para o usuário, ou um "404 Not Found" se houver um erro na rota ou o registro não puder ser encontrado. As vezes você pode querer customizar como esses erros são encontrados e como são apresentados ao usuário. Há diversos níveis de tratamento de excessões disponiveis em uma aplicação Rails:
+A exceção padrão do Rails apresenta a mensagem "500 Server Error" para todas as exceções. Se a requisição for feita localmente, um belo *traceback* e outras informações serão mostradas assim você pode verificar o que deu errado e tratar o problema. Se a requisição for remota o Rails apenas apresentará a mensagem "500 Server Error" para o usuário, ou um "404 Not Found" se houver um erro na rota ou o registro não puder ser encontrado. As vezes você pode querer customizar como esses erros são encontrados e como são apresentados ao usuário. Há diversos níveis de tratamento de excessões disponiveis em uma aplicação Rails:
 
 ### Os templates 404 e 500 padrão
 
@@ -1075,7 +1075,7 @@ Por padrão uma aplicação em produção irá renderizar uma mensagem em um tem
 
 Se você quiser fazer algo mais elaborado quando estiver lidando com erros, você pode usar `rescue_from`, qu trata as excessões de um certo tipo (ou de vários tipos) em um controller inteiro e nas subclasses.
 
-Quando uma excessão acontece e é pega por uma diretiva `rescue_from`, o objeto da excessão é passado ao handler. O handler pode ser um método ou um objeto `Proc` passado com a opção `:with`. Você também pode usar um bloco diretamente ao invés de um objetco `Proc`.
+Quando uma excessão acontece e é pega por uma diretiva `rescue_from`, o objeto da exceção é passado ao handler. O handler pode ser um método ou um objeto `Proc` passado com a opção `:with`. Você também pode usar um bloco diretamente ao invés de um objetco `Proc`.
 
 Aqui está um exemplo de como você pode usar `rescue_from` para interceptar todos os erros `ActiveRecord::RecordNotFound` e fazer algo com eles.
 
@@ -1091,7 +1091,7 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-É claro, que este exemplo não é nada elaborado e não melhora muito a forma original de lidar com os erros, mas uma vez que você capture todas essas excessões você é livre para fazer o que quiser com elas. Por exemplo, você pode criar uma excessão personalizada para quando o usuário não tem acesso a uma parte da aplicação:
+É claro, que este exemplo não é nada elaborado e não melhora muito a forma original de lidar com os erros, mas uma vez que você capture todas essas excessões você é livre para fazer o que quiser com elas. Por exemplo, você pode criar uma exceção personalizada para quando o usuário não tem acesso a uma parte da aplicação:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -1123,13 +1123,12 @@ class ClientsController < ApplicationController
 end
 ```
 
-WARNING: Using `rescue_from` with `Exception` or `StandardError` would cause serious side-effects as it prevents Rails from handling exceptions properly. As such, it is not recommended to do so unless there is a strong reason.
+AVISO: Ao usar `rescue_from` com `Exception` ou `StandardError` pode causar efeitos colaterais já que previne o Rails de lidar com as excessões apropriadamente. Dessa forma, não é recomendado fazer sem uma boa razão.
 
-NOTE: When running in the production environment, all
-`ActiveRecord::RecordNotFound` errors render the 404 error page. Unless you need
-a custom behavior you don't need to handle this.
+NOTA: Quando rodando em ambiente de desenvolvimento, todos os erros
+`ActiveRecord::RecordNotFound` renderizam uma página 404. A não ser que você precise de uma forma especifica de tratar isso você não precisa tratar isso.
 
-NOTE: Certain exceptions are only rescuable from the `ApplicationController` class, as they are raised before the controller gets initialized and the action gets executed.
+NOTA: Certas excessões são tratadas apenas pela classe `ApplicationController`, já que são acionadas antes do controller ser iniciado a exceção é executada.
 
 Force HTTPS protocol
 --------------------
