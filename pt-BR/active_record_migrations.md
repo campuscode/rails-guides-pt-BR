@@ -171,7 +171,7 @@ class RemovePartNumberFromProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-Você não não tem a limitação de apenas uma coluna ser gerada magicamente. Por exemplo:
+Você não tem a limitação de apenas uma coluna ser gerada magicamente. Por exemplo:
 
 ```bash
 $ rails generate migration AddDetailsToProducts part_number:string price:decimal
