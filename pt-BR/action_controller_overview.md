@@ -1073,7 +1073,7 @@ Por padrão uma aplicação em produção irá renderizar uma mensagem em um tem
 
 ### `rescue_from`
 
-Se você quiser fazer algo mais elaborado quando estiver lidando com erros, você pode usar `rescue_from`, que trata as excessões de um certo tipo (ou de vários tipos) em um controller inteiro e nas subclasses.
+Se você quiser fazer algo mais elaborado quando estiver lidando com erros, você pode usar `rescue_from`, que trata as exceções de um certo tipo (ou de vários tipos) em um controller inteiro e nas subclasses.
 
 Quando uma excessão acontece e é pega por uma diretiva `rescue_from`, o objeto da exceção é passado ao *handler*. O *handler* pode ser um método ou um objeto `Proc` passado com a opção `:with`. Você também pode usar um bloco diretamente ao invés de um objetco `Proc`.
 
