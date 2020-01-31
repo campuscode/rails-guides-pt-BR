@@ -109,7 +109,7 @@ end
 
 ![Diagrama de Associação belongs_to](images/association_basics/belongs_to.png)
 
-NOTE: as associações `belongs_to` _devem_ usar o termo no singular. Se você usou o plural no exemplo acima para a associação `author` no _model_ `Book` e tentou criar a instância com `Book.create(authors: @author)`, você seria informado de que existe uma "constante não inicializada `Book::Authors`". Isso ocorre porque o Rails deduz automaticamente o nome da classe a partir do nome da associação. Se o nome da associação estiver incorretamente no plural, a classe inferida também estará incorreta.
+NOTE: as associações `belongs_to` _devem_ usar o termo no singular. Se você usou o plural no exemplo acima para a associação `autor` no _model_ `Livro` e tentou criar a instância com `Book.create(authors: @author)`, você seria informado de que existe uma "constante não inicializada `Book::Authors`". Isso ocorre porque o Rails deduz automaticamente o nome da classe a partir do nome da associação. Se o nome da associação estiver incorretamente no plural, a classe inferida também estará incorreta.
 
 A _migration_ correpondente parecerá assim:
 
@@ -162,7 +162,7 @@ end
 ```
 
 Dependendo do caso de uso, também pode ser necessário criar um índice exclusivo e/ou
-uma restrição de _foreign key_ na coluna do _supplier_ para a tabela de _accounts_. Nesse
+uma restrição de _foreign key_ na coluna do fornecedor para a tabela de contas. Nesse
 caso, a definição da coluna parecerá assim:
 
 ```ruby
@@ -174,7 +174,7 @@ end
 
 ### A Associação `has_many`
 
-Uma associação `has_many` indica uma conexão um-para-muitos com outro _model_. Você encontrará frequentemente essa associação no "outro lado" de uma associação `belongs_to`. Essa associação indica que cada instância do _model_ possui zero ou mais instâncias de outro _model_. Por exemplo, em uma aplicação que contém _authors_ e _books_, o _model_ do _author_ pode ser declarado assim:
+Uma associação `has_many` indica uma conexão um-para-muitos com outro _model_. Você encontrará frequentemente essa associação no "outro lado" de uma associação `belongs_to`. Essa associação indica que cada instância do _model_ possui zero ou mais instâncias de outro _model_. Por exemplo, em uma aplicação que contém autores e livros, o _model_ do autor pode ser declarado assim:
 
 ```ruby
 class Author < ApplicationRecord
@@ -293,8 +293,8 @@ Com `through: :section` especificado, o Rails agora entenderá:
 
 Uma Associação `has_one :through` estabelece uma conexão um-para-um com outro _model_. Essa associação indica
 que o _model_ declarante pode ser combinado com uma instância de outro _model_, prosseguindo através(_through_) de um terceiro _model_.
-Por exemplo, se cada _supplier_ tiver uma _account_, e cada _account_ estiver associada a um _account history_, então o
-_model supplier_ poderia ficar assim:
+Por exemplo, se cada fornecedor tiver uma conta, e cada conta estiver associada a um histórico da conta, então o
+_model_ fornecedor poderia ficar assim:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -341,7 +341,7 @@ end
 
 ### A Associação `has_and_belongs_to_many`
 
-Uma associação `has_and_belongs_to_many` cria uma conexão direta muitos-para-muitos com outro _model_, sem nenhum _model_ intermediário. Por exemplo, se sua aplicação incluir _assemblies_ e _parts_, com cada _assembly_ tendo muitas _parts_ e cada _part_ aparecendo em muitas _assemblies_, você poderá declarar os _model_ desta maneira:
+Uma associação `has_and_belongs_to_many` cria uma conexão direta muitos-para-muitos com outro _model_, sem nenhum _model_ intermediário. Por exemplo, se sua aplicação incluir conjuntos e peças, com cada conjunto tendo muitas peças e cada peça aparecendo em muitos conjuntos, você poderá declarar os _model_ desta maneira:
 
 ```ruby
 class Assembly < ApplicationRecord
@@ -382,7 +382,7 @@ end
 
 Se você deseja configurar um relacionamento um-para-um entre dois _models_, será necessário adicionar `belongs_to` para um e `has_one` ao outro. Como você sabe qual é qual?
 
-A distinção é onde você coloca a _foreign key_ (ela aparece na tabela para a classe que declara a associação `belongs_to`), mas você deve pensar um pouco no significado real dos dados também. O relacionamento `has_one` diz que um de algo é seu - isto é, que algo aponta para você. Por exemplo, faz mais sentido dizer que um _suplier_ possui uma _account_ do que uma _account_ possui um _supplier_. Isso sugere que os relacionamentos corretos são assim:
+A distinção é onde você coloca a _foreign key_ (ela aparece na tabela para a classe que declara a associação `belongs_to`), mas você deve pensar um pouco no significado real dos dados também. O relacionamento `has_one` diz que um de algo é seu - isto é, que algo aponta para você. Por exemplo, faz mais sentido dizer que um fornecedor possui uma conta do que uma conta possui um fornecedor. Isso sugere que os relacionamentos corretos são assim:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -456,7 +456,7 @@ Você deve usar `has_many :through` se precisar de validações, _callbacks_ ou 
 
 ### Associações Polimórficas
 
-Uma mudança um pouco mais avançada nas associações é a _associação polimórfica_. Com associações polimórficas, um _model_ pode pertencer a mais de um outro _model_, em uma única associação. Por exemplo, você pode ter um _model_ de _picture_ que pertença a um _model_ de _employee_ ou a um _model_ de _product_. Veja como isso pode ser declarado:
+Uma mudança um pouco mais avançada nas associações é a _associação polimórfica_. Com associações polimórficas, um _model_ pode pertencer a mais de um outro _model_, em uma única associação. Por exemplo, você pode ter um _model_ de foto que pertença a um _model_ de funcionário ou a um _model_ de produto. Veja como isso pode ser declarado:
 
 ```ruby
 class Picture < ApplicationRecord
@@ -472,11 +472,11 @@ class Product < ApplicationRecord
 end
 ```
 
-Você pode pensar em uma declaração polimórfica `belongs_to` como uma configuração de interface que qualquer outro _model_ pode usar. Em uma instância do _model_ `Employee`, você pode recuperar uma coleção de _pictures_: `@employee.pictures`.
+Você pode pensar em uma declaração polimórfica `belongs_to` como uma configuração de interface que qualquer outro _model_ pode usar. Em uma instância do _model_ `Funcionário`, você pode recuperar uma coleção de fotos: `@employee.pictures`.
 
 Da mesma forma, você pode recuperar `@product.pictures`.
 
-Se você tem uma instância do _model_ `Picture`, você pode chegar ao seu pai via `@picture.imageable`. Para fazer isso funcionar, você precisa declarar uma coluna de _foreign key_ e uma coluna de tipo no _model_ que declara a interface polimórfica:
+Se você tem uma instância do _model_ `Fotos`, você pode chegar ao seu pai via `@picture.imageable`. Para fazer isso funcionar, você precisa declarar uma coluna de _foreign key_ e uma coluna de tipo no _model_ que declara a interface polimórfica:
 
 ```ruby
 class CreatePictures < ActiveRecord::Migration[5.2]
@@ -511,7 +511,7 @@ end
 
 ### Self Joins
 
-Ao projetar um modelo de dados, algumas vezes você encontrará um _model_ que deve ter uma relação consigo mesmo. Por exemplo, você pode querer armazenar todos os _employees_ em um único modelo de banco de dados, mas conseguir rastrear relacionamentos como entre _manager_ e _subordinates_. Essa situação pode ser modelada com associações _self-joining_:
+Ao projetar um modelo de dados, algumas vezes você encontrará um _model_ que deve ter uma relação consigo mesmo. Por exemplo, você pode querer armazenar todos os funcionários em um único modelo de banco de dados, mas conseguir rastrear relacionamentos como entre gerente e subordinados. Essa situação pode ser modelada com associações _self-joining_:
 
 ```ruby
 class Employee < ApplicationRecord
