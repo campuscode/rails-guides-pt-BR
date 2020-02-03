@@ -787,18 +787,18 @@ O objeto de requisição contém muitas informações úteis sobre a requisiçã
 
 O *Rails* armazena todos os parâmetros enviados com a requisição no *hash* `params`, não importando se eles foram enviados como parte da *query string* ou no corpo da requisição. O objeto de requisição tem três métodos de acesso que te fornecem acesso a estes parâmetros dependendo de onde eles vieram. O *hash* `query_parameters` contem os parâmetros que foram enviados por meio da *query_string* enquanto o *hash* `request_parameters` contem os parâmetros enviados através do corpo da requisição. O *hash* `path_parameters` contém os parâmetros que foram reconhecidos pelo roteamento como parte do caminho que leva ao *controller* e *action* sendo executados.
 
-### The `response` Object
+### O Objeto `response`
 
-The response object is not usually used directly, but is built up during the execution of the action and rendering of the data that is being sent back to the user, but sometimes - like in an after filter - it can be useful to access the response directly. Some of these accessor methods also have setters, allowing you to change their values. To get a full list of the available methods, refer to the [Rails API documentation](https://api.rubyonrails.org/classes/ActionDispatch/Response.html) and [Rack Documentation](https://www.rubydoc.info/github/rack/rack/Rack/Response).
+O objeto de resposta geralmente não é usado diretamente, mas é construído durante a execução da *action* e renderização dos dados que serão enviados de volta ao usuário, porém às vezes - como num filtro posterior - ele pode ser útil para acessar a resposta diretamente. Alguns destes métodos de acesso também possuem *setters*, lhe permitindo mudar seus valores. Para obter uma lista completa dos métodos disponíveis verifique a [documentação da API do Rails](https://api.rubyonrails.org/classes/ActionDispatch/Response.html) e a [documentação do Rack](https://www.rubydoc.info/github/rack/rack/Rack/Response);
 
-| Property of `response` | Purpose                                                                                             |
+| Propriedade de `response` | Propósito                                                                                             |
 | ---------------------- | --------------------------------------------------------------------------------------------------- |
-| body                   | This is the string of data being sent back to the client. This is most often HTML.                  |
-| status                 | The HTTP status code for the response, like 200 for a successful request or 404 for file not found. |
-| location               | The URL the client is being redirected to, if any.                                                  |
-| content_type           | The content type of the response.                                                                   |
-| charset                | The character set being used for the response. Default is "utf-8".                                  |
-| headers                | Headers used for the response.                                                                      |
+| body                   | Esta é a *string* de dados sendo enviada de volta ao usuário. Na maioria dos casos se trata de código HTML.    |
+| status                 | O código de *status* HTTP para a resposta, como um código 200 para uma requisição bem sucedida ou 404 para um arquivo não encontrado.    |
+| location               | A URL que o cliente estiver sendo redirecionado para, caso haja alguma.                 |
+| content_type           | O tipo de conteúdo da resposta.                                                         |
+| charset                | O conjunto de caracteres sendo utilizado na resposta. O valor padrão é "utf-8".         |
+| headers                | *Headers* utilizados para a resposta.                                                   |
 
 #### Setting Custom Headers
 
