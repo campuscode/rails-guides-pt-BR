@@ -1069,7 +1069,7 @@ A exceção padrão do Rails apresenta a mensagem "500 Server Error" para todas 
 
 ### Os *Templates* 404 e 500 Padrão
 
-Por padrão uma aplicação em produção irá renderizar uma mensagem em um template de erro 404 ou 500, no ambiente de produção todas as mensagens de erro são disparadas. Essas mensagens são armazenadas em templates estáticos de HTML na pasta *public*, em `404.html` e `500.html` respectivamente. Você pode customizar essas páginas e adcionar algumas estilizações, mas lembre-se elas são HTML estático; i.e. você não pode usar ERB, SCSS, CoffeeScript, ou layouts para elas.
+Por padrão uma aplicação em produção irá renderizar uma mensagem em um template de erro 404 ou 500, no ambiente de produção todas as mensagens de erro são disparadas. Essas mensagens são armazenadas em templates estáticos de HTML na pasta *public*, em `404.html` e `500.html` respectivamente. Você pode customizar essas páginas e adicionar algumas estilizações, mas lembre-se elas são HTML estático; i.e. você não pode usar ERB, SCSS, CoffeeScript, ou layouts para elas.
 
 ### `rescue_from`
 
