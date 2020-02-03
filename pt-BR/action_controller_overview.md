@@ -765,23 +765,23 @@ Os Objetos de Requisição e Resposta
 
 Em todo *controller* existem dois métodos de acesso apontando para os objetos de requisição e de resposta associados com o ciclo de requisição que estiver em execução no momento. O método `request` contém uma instância de `ActionDispatch::Request` e o método `response` retorna um objeto de resposta representando o que será enviado de volta ao cliente.
 
-### The `request` Object
+### O Objeto `request`
 
-The request object contains a lot of useful information about the request coming in from the client. To get a full list of the available methods, refer to the [Rails API documentation](https://api.rubyonrails.org/classes/ActionDispatch/Request.html) and [Rack Documentation](https://www.rubydoc.info/github/rack/rack/Rack/Request). Among the properties that you can access on this object are:
+O objeto de requisição contém muitas informações úteis sobre a requisição proveniente do cliente. Para obter uma lista completa dos métodos disponíveis verifique a [documentação da API do Rails](https://api.rubyonrails.org/classes/ActionDispatch/Request.html) e a [documentação do Rack](https://www.rubydoc.info/github/rack/rack/Rack/Request). Entre as propriedades que você pode acessar estão:
 
-| Property of `request`                     | Purpose                                                                          |
-| ----------------------------------------- | -------------------------------------------------------------------------------- |
-| host                                      | The hostname used for this request.                                              |
-| domain(n=2)                               | The hostname's first `n` segments, starting from the right (the TLD).            |
-| format                                    | The content type requested by the client.                                        |
-| method                                    | The HTTP method used for the request.                                            |
-| get?, post?, patch?, put?, delete?, head? | Returns true if the HTTP method is GET/POST/PATCH/PUT/DELETE/HEAD.               |
-| headers                                   | Returns a hash containing the headers associated with the request.               |
-| port                                      | The port number (integer) used for the request.                                  |
-| protocol                                  | Returns a string containing the protocol used plus "://", for example "http://". |
-| query_string                              | The query string part of the URL, i.e., everything after "?".                    |
-| remote_ip                                 | The IP address of the client.                                                    |
-| url                                       | The entire URL used for the request.                                             |
+| Propriedade de `request`                     | Propósito                                                                          |
+| ----------------------------------------- | --------------------------------------------------------------------------------  |
+| host                                      | O *hostname* utilizado para esta requisição.                                      |
+| domain(n=2)                               | Os primeiros `n` segmentos do *hostname*, iniciando pela direita (o domínio de primeiro nível).       |
+| format                                    | O tipo de conteúdo requisitado pelo cliente.                                      |
+| method                                    | O método HTTP utilizado para a requisição.                                        |
+| get?, post?, patch?, put?, delete?, head? | Retorna *true* se o método HTTP é GET/POST/PATCH/PUT/DELETE/HEAD.                 |
+| headers                                   | Retorna um *hash* contendo os *headers* associados com a requisição.              |
+| port                                      | O número (*integer*) da porta utilizada para a requisição.                        |
+| protocol                                  | Retorna uma *string* contendo o protocolo utilizado, além do trecho "://". Por exemplo: "http://". |
+| query_string                              | A *query string* da URL (todo o trecho após "?").                                 |
+| remote_ip                                 | O endereço IP do cliente.                                                         |
+| url                                       | A URL completa utilizada para a requisição.                                       |
 
 #### `path_parameters`, `query_parameters`, and `request_parameters`
 
