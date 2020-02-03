@@ -1067,7 +1067,7 @@ Muito provavelmente sua aplicação irá conter bugs ou enviar exceções que pr
 
 A exceção padrão do Rails apresenta a mensagem "500 Server Error" para todas as exceções. Se a requisição for feita localmente, um belo *traceback* e outras informações serão mostradas assim você pode verificar o que deu errado e tratar o problema. Se a requisição for remota o Rails apenas apresentará a mensagem "500 Server Error" para o usuário, ou um "404 Not Found" se houver um erro na rota ou o registro não puder ser encontrado. As vezes você pode querer customizar como esses erros são encontrados e como são apresentados ao usuário. Há diversos níveis de tratamento de excessões disponiveis em uma aplicação Rails:
 
-### Os templates 404 e 500 padrão
+### Os *Templates* 404 e 500 Padrão
 
 Por padrão uma aplicação em produção irá renderizar uma mensagem em um template de erro 404 ou 500, no ambiente de produção todas as mensagens de erro são disparadas. Essas mensagens são armazenadas em templates estáticos de HTML na pasta *public*, em `404.html` e `500.html` respectivamente. Você pode customizar essas páginas e adcionar algumas estilizações, mas lembre-se elas são HTML estático; i.e. você não pode usar ERB, SCSS, CoffeeScript, ou layouts para elas.
 
