@@ -116,7 +116,7 @@ NOTE: Valores como `[nil]` ou `[nil, nil, ...]` em `params` são substituídos p
 
 Para enviar um *hash*, você inclui o nome da chave dentro dos colchetes:
 
-```HTML
+```html
 <form accept-charset="UTF-8" action="/clients" method="post">
   <input type="text" name="client[name]" value="Acme" />
   <input type="text" name="client[phone]" value="12345" />
