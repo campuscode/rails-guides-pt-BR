@@ -783,9 +783,9 @@ O objeto de requisição contém muitas informações úteis sobre a requisiçã
 | remote_ip                                 | O endereço IP do cliente.                                                         |
 | url                                       | A URL completa utilizada para a requisição.                                       |
 
-#### `path_parameters`, `query_parameters`, and `request_parameters`
+#### `path_parameters`, `query_parameters`, e `request_parameters`
 
-Rails collects all of the parameters sent along with the request in the `params` hash, whether they are sent as part of the query string or the post body. The request object has three accessors that give you access to these parameters depending on where they came from. The `query_parameters` hash contains parameters that were sent as part of the query string while the `request_parameters` hash contains parameters sent as part of the post body. The `path_parameters` hash contains parameters that were recognized by the routing as being part of the path leading to this particular controller and action.
+O *Rails* armazena todos os parâmetros enviados com a requisição no *hash* `params`, não importando se eles foram enviados como parte da *query string* ou no corpo da requisição. O objeto de requisição tem três métodos de acesso que te fornecem acesso a estes parâmetros dependendo de onde eles vieram. O *hash* `query_parameters` contem os parâmetros que foram enviados por meio da *query_string* enquanto o *hash* `request_parameters` contem os parâmetros enviados através do corpo da requisição. O *hash* `path_parameters` contém os parâmetros que foram reconhecidos pelo roteamento como parte do caminho que leva ao *controller* e *action* sendo executados.
 
 ### The `response` Object
 
