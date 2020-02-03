@@ -265,7 +265,7 @@ Se alguns que existiam anteriormente estão faltando agora, suas linhas de junç
 
 WARNING: A exclusão automática de _models_ de junção é direta, nenhum _callback_ de destruição é acionado.
 
-A associação `has_many: through` também é útil para configurar "atalhos" através de associações aninhadas `has_many`. Por exemplo, se um documento possui muitas seções e uma seção com muitos parágrafos, você pode obter uma coleção simples de todos os parágrafos do documento. Você pode configurar dessa maneira:
+A associação `has_many :through` também é útil para configurar "atalhos" através de associações aninhadas `has_many`. Por exemplo, se um documento possui muitas seções e uma seção com muitos parágrafos, você pode obter uma coleção simples de todos os parágrafos do documento. Você pode configurar dessa maneira:
 
 ```ruby
 class Document < ApplicationRecord
