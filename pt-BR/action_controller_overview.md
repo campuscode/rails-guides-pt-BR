@@ -1123,7 +1123,7 @@ class ClientsController < ApplicationController
 end
 ```
 
-AVISO: Ao usar `rescue_from` com `Exception` ou `StandardError` pode causar efeitos colaterais já que previne o Rails de lidar com as excessões apropriadamente. Dessa forma, não é recomendado fazer sem uma boa razão.
+WARNING: Ao usar `rescue_from` com `Exception` ou `StandardError` pode causar efeitos colaterais já que previne o Rails de lidar com as exceções apropriadamente. Dessa forma, não é recomendado fazer sem uma boa razão.
 
 NOTA: Quando rodando em ambiente de desenvolvimento, todos os erros
 `ActiveRecord::RecordNotFound` renderizam uma página 404. A não ser que você precise de uma forma especifica de tratar isso você não precisa tratar isso.
