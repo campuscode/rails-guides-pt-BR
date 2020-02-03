@@ -1128,7 +1128,7 @@ WARNING: Ao usar `rescue_from` com `Exception` ou `StandardError` pode causar ef
 NOTA: Quando rodando em ambiente de desenvolvimento, todos os erros
 `ActiveRecord::RecordNotFound` renderizam uma página 404. A não ser que você precise de uma forma especifica de tratar isso você não precisa tratar isso.
 
-NOTA: Certas excessões são tratadas apenas pela classe `ApplicationController`, já que são acionadas antes do controller ser iniciado a exceção é executada.
+NOTE: Certas exceções são tratadas apenas pela classe `ApplicationController`, já que são acionadas antes do controller ser iniciado a exceção é executada.
 
 Force HTTPS protocol
 --------------------
