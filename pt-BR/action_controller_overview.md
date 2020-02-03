@@ -800,15 +800,15 @@ O objeto de resposta geralmente não é usado diretamente, mas é construído du
 | charset                | O conjunto de caracteres sendo utilizado na resposta. O valor padrão é "utf-8".         |
 | headers                | *Headers* utilizados para a resposta.                                                   |
 
-#### Setting Custom Headers
+#### Definindo *Headers* customizados
 
-If you want to set custom headers for a response then `response.headers` is the place to do it. The headers attribute is a hash which maps header names to their values, and Rails will set some of them automatically. If you want to add or change a header, just assign it to `response.headers` this way:
+Se você quer definir *headers* customizados para uma resposta então `response.headers` é o local indicado para ajustar isto. O atributo *headers* é um *hash* que mapeia os nomes dos *headers* para seus respectivos valores, e o Rails irá definir alguns deles automaticamente. Se você quiser adicionar ou modificar um *header*, basta sinalizá-lo para `response.headers` da seguinte maneira:
 
 ```ruby
 response.headers["Content-Type"] = "application/pdf"
 ```
 
-NOTE: In the above case it would make more sense to use the `content_type` setter directly.
+NOTE: No caso acima faria mais sentido utilizar o *setter* `content_type` diretamente.
 
 Autenticações HTTP
 ------------------
