@@ -760,10 +760,10 @@ O `form_authenticity_token` gera um *token* de autenticação válido. Isso é �
 
 O [Guia de segurança](security.html) possui mais informações sobre isso e muitos outros problemas relacionados a segurança que você deve estar ciente quando desenvolve uma aplicação *web*.
 
-The Request and Response Objects
+Os Objetos de Requisição e Resposta
 --------------------------------
 
-In every controller there are two accessor methods pointing to the request and the response objects associated with the request cycle that is currently in execution. The `request` method contains an instance of `ActionDispatch::Request` and the `response` method returns a response object representing what is going to be sent back to the client.
+Em todo *controller* existem dois métodos de acesso apontando para os objetos de requisição e de resposta associados com o ciclo de requisição que estiver em execução no momento. O método `request` contém uma instância de `ActionDispatch::Request` e o método `response` retorna um objeto de resposta representando o que será enviado de volta ao cliente.
 
 ### The `request` Object
 
