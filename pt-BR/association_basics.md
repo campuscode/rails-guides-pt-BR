@@ -678,7 +678,7 @@ module MyApplication
 end
 ```
 
-Isto funciona corretamente, porque tanto a classe `Supplier` quanto a classe `Account` são definidas dentro do mesmo escopo. Mas o próximo exemplo _não_ funcionará, porque `Supplier` e `Account` são definidos em escopos diferentes:
+Isto funciona corretamente, porque tanto a classe `Supplier` quanto a classe `Account` são definidas dentro do mesmo escopo. Mas o próximo exemplo __não__ funcionará, porque `Supplier` e `Account` são definidos em escopos diferentes:
 
 ```ruby
 module MyApplication
