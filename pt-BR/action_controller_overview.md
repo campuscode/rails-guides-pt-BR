@@ -1125,7 +1125,7 @@ end
 
 WARNING: Ao usar `rescue_from` com `Exception` ou `StandardError` pode causar efeitos colaterais já que previne o Rails de lidar com as exceções apropriadamente. Dessa forma, não é recomendado fazer sem uma boa razão.
 
-NOTA: Quando rodando em ambiente de desenvolvimento, todos os erros
+NOTE: Quando rodando em ambiente de desenvolvimento, todos os erros
 `ActiveRecord::RecordNotFound` renderizam uma página 404. A não ser que você precise de uma forma especifica de tratar isso você não precisa tratar isso.
 
 NOTE: Certas exceções são tratadas apenas pela classe `ApplicationController`, já que são acionadas antes do controller ser iniciado a exceção é executada.
