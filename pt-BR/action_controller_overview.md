@@ -1063,21 +1063,21 @@ Matching URLs will be marked as '[FILTERED]'.
 Rescue
 ------
 
-Most likely your application is going to contain bugs or otherwise throw an exception that needs to be handled. For example, if the user follows a link to a resource that no longer exists in the database, Active Record will throw the `ActiveRecord::RecordNotFound` exception.
+Muito provavelmente sua aplicação irá conter bugs ou enviar exceções que precisam ser tratadas. Por exemplo, se o usuário acessar um link que não possui uma fonte no banco de dados, o Active Record enviará `ActiveRecord::RecordNotFound` como exceção.
 
-Rails default exception handling displays a "500 Server Error" message for all exceptions. If the request was made locally, a nice traceback and some added information gets displayed so you can figure out what went wrong and deal with it. If the request was remote Rails will just display a simple "500 Server Error" message to the user, or a "404 Not Found" if there was a routing error or a record could not be found. Sometimes you might want to customize how these errors are caught and how they're displayed to the user. There are several levels of exception handling available in a Rails application:
+A exceção padrão do Rails apresenta a mensagem "500 Server Error" para todas as exceções. Se a requisição for feita localmente, um belo *traceback* e outras informações serão mostradas assim você pode verificar o que deu errado e tratar o problema. Se a requisição for remota o Rails apenas apresentará a mensagem "500 Server Error" para o usuário, ou um "404 Not Found" se houver um erro na rota ou o registro não puder ser encontrado. As vezes você pode querer customizar como esses erros são encontrados e como são apresentados ao usuário. Há diversos níveis de tratamento de excessões disponiveis em uma aplicação Rails:
 
-### The Default 500 and 404 Templates
+### Os *Templates* 404 e 500 Padrão
 
-By default a production application will render either a 404 or a 500 error message, in the development environment all unhandled exceptions are raised. These messages are contained in static HTML files in the public folder, in `404.html` and `500.html` respectively. You can customize these files to add some extra information and style, but remember that they are static HTML; i.e. you can't use ERB, SCSS, CoffeeScript, or layouts for them.
+Por padrão uma aplicação em produção irá renderizar uma mensagem em um template de erro 404 ou 500, no ambiente de produção todas as mensagens de erro são disparadas. Essas mensagens são armazenadas em templates estáticos de HTML na pasta *public*, em `404.html` e `500.html` respectivamente. Você pode customizar essas páginas e adicionar algumas estilizações, mas lembre-se elas são HTML estático; i.e. você não pode usar ERB, SCSS, CoffeeScript, ou layouts para elas.
 
 ### `rescue_from`
 
-If you want to do something a bit more elaborate when catching errors, you can use `rescue_from`, which handles exceptions of a certain type (or multiple types) in an entire controller and its subclasses.
+Se você quiser fazer algo mais elaborado quando estiver lidando com erros, você pode usar `rescue_from`, que trata as exceções de um certo tipo (ou de vários tipos) em um *controller* inteiro e nas subclasses.
 
-When an exception occurs which is caught by a `rescue_from` directive, the exception object is passed to the handler. The handler can be a method or a `Proc` object passed to the `:with` option. You can also use a block directly instead of an explicit `Proc` object.
+Quando uma exceção acontece e é pega por uma diretiva `rescue_from`, o objeto da exceção é passado ao *handler*. O *handler* pode ser um método ou um objeto `Proc` passado com a opção `:with`. Você também pode usar um bloco diretamente ao invés de um objeto `Proc`.
 
-Here's how you can use `rescue_from` to intercept all `ActiveRecord::RecordNotFound` errors and do something with them.
+Aqui está um exemplo de como você pode usar `rescue_from` para interceptar todos os erros `ActiveRecord::RecordNotFound` e fazer algo com eles.
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -1091,7 +1091,7 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-Of course, this example is anything but elaborate and doesn't improve on the default exception handling at all, but once you can catch all those exceptions you're free to do whatever you want with them. For example, you could create custom exception classes that will be thrown when a user doesn't have access to a certain section of your application:
+É claro, que este exemplo não é nada elaborado e não melhora muito a forma original de lidar com os erros, mas uma vez que você capture todas essas exceções você é livre para fazer o que quiser com elas. Por exemplo, você pode criar uma exceção personalizada para quando o usuário não tem acesso a uma parte da aplicação:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -1123,13 +1123,12 @@ class ClientsController < ApplicationController
 end
 ```
 
-WARNING: Using `rescue_from` with `Exception` or `StandardError` would cause serious side-effects as it prevents Rails from handling exceptions properly. As such, it is not recommended to do so unless there is a strong reason.
+WARNING: Ao usar `rescue_from` com `Exception` ou `StandardError` pode causar efeitos colaterais já que previne o Rails de lidar com as exceções apropriadamente. Dessa forma, não é recomendado fazer sem uma boa razão.
 
-NOTE: When running in the production environment, all
-`ActiveRecord::RecordNotFound` errors render the 404 error page. Unless you need
-a custom behavior you don't need to handle this.
+NOTE: Quando rodando em ambiente de desenvolvimento, todos os erros
+`ActiveRecord::RecordNotFound` renderizam uma página 404. A não ser que você precise de uma forma especifica de tratar isso você não precisa tratar isso.
 
-NOTE: Certain exceptions are only rescuable from the `ApplicationController` class, as they are raised before the controller gets initialized and the action gets executed.
+NOTE: Certas exceções são tratadas apenas pela classe `ApplicationController`, já que são acionadas antes do controller ser iniciado a exceção é executada.
 
 Force HTTPS protocol
 --------------------
