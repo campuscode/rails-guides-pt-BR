@@ -81,31 +81,31 @@ class ChangeProductsPrice < ActiveRecord::Migration[5.0]
 end
 ```
 
-Creating a Migration
+Criando uma *Migration*
 --------------------
 
-### Creating a Standalone Migration
+### Criando uma *Migration* Independente
 
-Migrations are stored as files in the `db/migrate` directory, one for each
-migration class. The name of the file is of the form
-`YYYYMMDDHHMMSS_create_products.rb`, that is to say a UTC timestamp
-identifying the migration followed by an underscore followed by the name
-of the migration. The name of the migration class (CamelCased version)
-should match the latter part of the file name. For example
-`20080906120000_create_products.rb` should define class `CreateProducts` and
-`20080906120001_add_details_to_products.rb` should define
-`AddDetailsToProducts`. Rails uses this timestamp to determine which migration
-should be run and in what order, so if you're copying a migration from another
-application or generate a file yourself, be aware of its position in the order.
+*Migrations* são armazenadas em arquivos no diretório `db/migrate`, um para cada classe de
+*migration*. O nome do arquivo tem o seguinte formato
+`YYYYMMDDHHMMSS_create_products.rb`, isto é uma *timestamp* (marcação de data/hora) em UTC identificando a 
+*migration* seguida por um underline seguido pelo 
+nome da *migration*. O nome da classe da migration 
+(em CamelCase) deve corresponder à última parte do nome do arquivo. Por exemplo
+`20080906120000_create_products.rb` deve definir a classe `CreateProducts` e
+`20080906120001_add_details_to_products.rb` deve definir
+`AddDetailsToProducts`. O Rails usa esse registro de data e hora para determinar qual *migration*
+deve ser executada e em que ordem, portanto, se você estiver copiando uma *migration* de outra
+aplicação ou gerar um arquivo você mesmo, esteja ciente de sua posição na ordem.
 
-Of course, calculating timestamps is no fun, so Active Record provides a
-generator to handle making it for you:
+Obviamente, calcular *timestamps* não é divertido, portanto, o *Active Record* fornece um
+gerador para fazer isso por você:
 
 ```bash
 $ rails generate migration AddPartNumberToProducts
 ```
 
-This will create an appropriately named empty migration:
+Isso criará uma *migration* vazia nomeada devidamente:
 
 ```ruby
 class AddPartNumberToProducts < ActiveRecord::Migration[5.0]
@@ -114,20 +114,20 @@ class AddPartNumberToProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-This generator can do much more than append a timestamp to the file name.
-Based on naming conventions and additional (optional) arguments it can
-also start fleshing out the migration.
+Esse gerador pode fazer muito mais do que acrescentar uma *timestamp* ao nome do arquivo.
+Com base em convenções de nomenclatura e argumentos (opcionais) adicionais, ele pode
+também começar a concretizar a *migration*.
 
-If the migration name is of the form "AddColumnToTable" or
-"RemoveColumnFromTable" and is followed by a list of column names and
-types then a migration containing the appropriate `add_column` and
-`remove_column` statements will be created.
+Se o nome da migração estiver no formato "AddColumnToTable" ou
+"RemoveColumnFromTable" e é seguido por uma lista de nomes de colunas e
+tipos de dados, então uma *migration* contendo as intruções `add_column` e
+`remove_column` serão criadas apropriadamente.
 
 ```bash
 $ rails generate migration AddPartNumberToProducts part_number:string
 ```
 
-will generate
+irá gerar
 
 ```ruby
 class AddPartNumberToProducts < ActiveRecord::Migration[5.0]
@@ -137,13 +137,13 @@ class AddPartNumberToProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-If you'd like to add an index on the new column, you can do that as well:
+Se você deseja adicionar um índice na nova coluna, você também pode fazer isso:
 
 ```bash
 $ rails generate migration AddPartNumberToProducts part_number:string:index
 ```
 
-will generate
+irá gerar
 
 ```ruby
 class AddPartNumberToProducts < ActiveRecord::Migration[5.0]
@@ -155,13 +155,13 @@ end
 ```
 
 
-Similarly, you can generate a migration to remove a column from the command line:
+Da mesma forma, você pode gerar uma *migration* para remover uma coluna via linha de comando:
 
 ```bash
 $ rails generate migration RemovePartNumberFromProducts part_number:string
 ```
 
-generates
+gera
 
 ```ruby
 class RemovePartNumberFromProducts < ActiveRecord::Migration[5.0]
@@ -171,13 +171,13 @@ class RemovePartNumberFromProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-You are not limited to one magically generated column. For example:
+Você não tem a limitação de apenas uma coluna ser gerada magicamente. Por exemplo:
 
 ```bash
 $ rails generate migration AddDetailsToProducts part_number:string price:decimal
 ```
 
-generates
+gera
 
 ```ruby
 class AddDetailsToProducts < ActiveRecord::Migration[5.0]
@@ -188,15 +188,15 @@ class AddDetailsToProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-If the migration name is of the form "CreateXXX" and is
-followed by a list of column names and types then a migration creating the table
-XXX with the columns listed will be generated. For example:
+Se o nome da migração estiver no formato "CreateXXX" e for
+seguido por uma lista de nomes e tipos de colunas, em seguida, uma *migration* criando a tabela
+XXX com as colunas listadas será gerado. Por exemplo:
 
 ```bash
 $ rails generate migration CreateProducts name:string part_number:string
 ```
 
-generates
+gera
 
 ```ruby
 class CreateProducts < ActiveRecord::Migration[5.0]
@@ -209,18 +209,18 @@ class CreateProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-As always, what has been generated for you is just a starting point. You can add
-or remove from it as you see fit by editing the
-`db/migrate/YYYYMMDDHHMMSS_add_details_to_products.rb` file.
+Como sempre, o que foi gerado para você é apenas um ponto de partida. Você pode adicionar
+ou remover conteúdo como achar melhor, editando o arquivo
+`db/migrate/YYYYMMDDHHMMSS_add_details_to_products.rb`.
 
-Also, the generator accepts column type as `references` (also available as
-`belongs_to`). For instance:
+Além disso, o gerador aceita o tipo de coluna `references` (também disponível como
+`belongs_to`). Por exemplo:
 
 ```bash
 $ rails generate migration AddUserRefToProducts user:references
 ```
 
-generates
+gera
 
 ```ruby
 class AddUserRefToProducts < ActiveRecord::Migration[5.0]
@@ -230,16 +230,16 @@ class AddUserRefToProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-This migration will create a `user_id` column and appropriate index.
-For more `add_reference` options, visit the [API documentation](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference).
+Essa migração criará uma coluna `user_id` e o índice apropriado.
+Para mais opções `add_reference`, visite a [documentação da API](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference).
 
-There is also a generator which will produce join tables if `JoinTable` is part of the name:
+Também existe um gerador que produzirá *join tables* se `JoinTable` fizer parte do nome:
 
 ```bash
 $ rails g migration CreateJoinTableCustomerProduct customer product
 ```
 
-will produce the following migration:
+produzirá a seguinte migração:
 
 ```ruby
 class CreateJoinTableCustomerProduct < ActiveRecord::Migration[5.0]
@@ -254,16 +254,16 @@ end
 
 ### Model Generators
 
-The model and scaffold generators will create migrations appropriate for adding
-a new model. This migration will already contain instructions for creating the
-relevant table. If you tell Rails what columns you want, then statements for
-adding these columns will also be created. For example, running:
+Os geradores de *model* e *scaffold* criarão migrações apropriadas para adicionar
+um novo *model*. Essa migração já irá conter as instruções para criar a
+tabela. Se você disser ao Rails quais colunas você deseja, as instruções para
+adicionar essas colunas também serão criadas. Por exemplo, executando:
 
 ```bash
 $ rails generate model Product name:string description:text
 ```
 
-will create a migration that looks like this
+criará uma migração que se parece com isso
 
 ```ruby
 class CreateProducts < ActiveRecord::Migration[5.0]
@@ -278,20 +278,20 @@ class CreateProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-You can append as many column name/type pairs as you want.
+Você pode utilizar quantos pares de nome/tipo de coluna desejar.
 
-### Passing Modifiers
+### Usando Modificadores
 
-Some commonly used [type modifiers](#column-modifiers) can be passed directly on
-the command line. They are enclosed by curly braces and follow the field type:
+Alguns [modificadores de tipo](#column-modifiers) podem utilizados diretamente via
+linha de comando. Eles são delimitados por chaves e vem após o tipo de campo:
 
-For instance, running:
+Por exemplo, executando:
 
 ```bash
 $ rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
 ```
 
-will produce a migration that looks like this
+produzirá uma migração que se parece com isso
 
 ```ruby
 class AddDetailsToProducts < ActiveRecord::Migration[5.0]
@@ -302,7 +302,7 @@ class AddDetailsToProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-TIP: Have a look at the generators help output for further details.
+TIP: Dê uma olhada no `--help` dos *generators* (geradores) obter mais detalhes.
 
 Writing a Migration
 -------------------
