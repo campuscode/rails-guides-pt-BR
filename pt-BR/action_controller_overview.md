@@ -760,55 +760,55 @@ O `form_authenticity_token` gera um *token* de autenticação válido. Isso é �
 
 O [Guia de segurança](security.html) possui mais informações sobre isso e muitos outros problemas relacionados a segurança que você deve estar ciente quando desenvolve uma aplicação *web*.
 
-The Request and Response Objects
+Os Objetos de Requisição e Resposta
 --------------------------------
 
-In every controller there are two accessor methods pointing to the request and the response objects associated with the request cycle that is currently in execution. The `request` method contains an instance of `ActionDispatch::Request` and the `response` method returns a response object representing what is going to be sent back to the client.
+Em todo *controller* existem dois métodos de acesso apontando para os objetos de requisição e de resposta associados com o ciclo de requisição que estiver em execução no momento. O método `request` contém uma instância de `ActionDispatch::Request` e o método `response` retorna um objeto de resposta representando o que será enviado de volta ao cliente.
 
-### The `request` Object
+### O Objeto `request`
 
-The request object contains a lot of useful information about the request coming in from the client. To get a full list of the available methods, refer to the [Rails API documentation](https://api.rubyonrails.org/classes/ActionDispatch/Request.html) and [Rack Documentation](https://www.rubydoc.info/github/rack/rack/Rack/Request). Among the properties that you can access on this object are:
+O objeto de requisição contém muitas informações úteis sobre a requisição proveniente do cliente. Para obter uma lista completa dos métodos disponíveis verifique a [documentação da API do Rails](https://api.rubyonrails.org/classes/ActionDispatch/Request.html) e a [documentação do Rack](https://www.rubydoc.info/github/rack/rack/Rack/Request). Entre as propriedades que você pode acessar estão:
 
-| Property of `request`                     | Purpose                                                                          |
-| ----------------------------------------- | -------------------------------------------------------------------------------- |
-| host                                      | The hostname used for this request.                                              |
-| domain(n=2)                               | The hostname's first `n` segments, starting from the right (the TLD).            |
-| format                                    | The content type requested by the client.                                        |
-| method                                    | The HTTP method used for the request.                                            |
-| get?, post?, patch?, put?, delete?, head? | Returns true if the HTTP method is GET/POST/PATCH/PUT/DELETE/HEAD.               |
-| headers                                   | Returns a hash containing the headers associated with the request.               |
-| port                                      | The port number (integer) used for the request.                                  |
-| protocol                                  | Returns a string containing the protocol used plus "://", for example "http://". |
-| query_string                              | The query string part of the URL, i.e., everything after "?".                    |
-| remote_ip                                 | The IP address of the client.                                                    |
-| url                                       | The entire URL used for the request.                                             |
+| Propriedade de `request`                     | Propósito                                                                          |
+| ----------------------------------------- | --------------------------------------------------------------------------------  |
+| host                                      | O *hostname* utilizado para esta requisição.                                      |
+| domain(n=2)                               | Os primeiros `n` segmentos do *hostname*, iniciando pela direita (o domínio de primeiro nível).       |
+| format                                    | O tipo de conteúdo requisitado pelo cliente.                                      |
+| method                                    | O método HTTP utilizado para a requisição.                                        |
+| get?, post?, patch?, put?, delete?, head? | Retorna *true* se o método HTTP é GET/POST/PATCH/PUT/DELETE/HEAD.                 |
+| headers                                   | Retorna um *hash* contendo os *headers* associados com a requisição.              |
+| port                                      | O número (*integer*) da porta utilizada para a requisição.                        |
+| protocol                                  | Retorna uma *string* contendo o protocolo utilizado, além do trecho "://". Por exemplo: "http://". |
+| query_string                              | A *query string* da URL (todo o trecho após "?").                                 |
+| remote_ip                                 | O endereço IP do cliente.                                                         |
+| url                                       | A URL completa utilizada para a requisição.                                       |
 
-#### `path_parameters`, `query_parameters`, and `request_parameters`
+#### `path_parameters`, `query_parameters`, e `request_parameters`
 
-Rails collects all of the parameters sent along with the request in the `params` hash, whether they are sent as part of the query string or the post body. The request object has three accessors that give you access to these parameters depending on where they came from. The `query_parameters` hash contains parameters that were sent as part of the query string while the `request_parameters` hash contains parameters sent as part of the post body. The `path_parameters` hash contains parameters that were recognized by the routing as being part of the path leading to this particular controller and action.
+O *Rails* armazena todos os parâmetros enviados com a requisição no *hash* `params`, não importando se eles foram enviados como parte da *query string* ou no corpo da requisição. O objeto de requisição tem três métodos de acesso que te fornecem acesso a estes parâmetros dependendo de onde eles vieram. O *hash* `query_parameters` contem os parâmetros que foram enviados por meio da *query_string* enquanto o *hash* `request_parameters` contem os parâmetros enviados através do corpo da requisição. O *hash* `path_parameters` contém os parâmetros que foram reconhecidos pelo roteamento como parte do caminho que leva ao *controller* e *action* sendo executados.
 
-### The `response` Object
+### O Objeto `response`
 
-The response object is not usually used directly, but is built up during the execution of the action and rendering of the data that is being sent back to the user, but sometimes - like in an after filter - it can be useful to access the response directly. Some of these accessor methods also have setters, allowing you to change their values. To get a full list of the available methods, refer to the [Rails API documentation](https://api.rubyonrails.org/classes/ActionDispatch/Response.html) and [Rack Documentation](https://www.rubydoc.info/github/rack/rack/Rack/Response).
+O objeto de resposta geralmente não é usado diretamente, mas é construído durante a execução da *action* e renderização dos dados que serão enviados de volta ao usuário, porém às vezes - como num filtro posterior - ele pode ser útil para acessar a resposta diretamente. Alguns destes métodos de acesso também possuem *setters*, lhe permitindo mudar seus valores. Para obter uma lista completa dos métodos disponíveis verifique a [documentação da API do Rails](https://api.rubyonrails.org/classes/ActionDispatch/Response.html) e a [documentação do Rack](https://www.rubydoc.info/github/rack/rack/Rack/Response);
 
-| Property of `response` | Purpose                                                                                             |
+| Propriedade de `response` | Propósito                                                                                             |
 | ---------------------- | --------------------------------------------------------------------------------------------------- |
-| body                   | This is the string of data being sent back to the client. This is most often HTML.                  |
-| status                 | The HTTP status code for the response, like 200 for a successful request or 404 for file not found. |
-| location               | The URL the client is being redirected to, if any.                                                  |
-| content_type           | The content type of the response.                                                                   |
-| charset                | The character set being used for the response. Default is "utf-8".                                  |
-| headers                | Headers used for the response.                                                                      |
+| body                   | Esta é a *string* de dados sendo enviada de volta ao usuário. Na maioria dos casos se trata de código HTML.    |
+| status                 | O código de *status* HTTP para a resposta, como um código 200 para uma requisição bem sucedida ou 404 para um arquivo não encontrado.    |
+| location               | A URL que o cliente estiver sendo redirecionado para, caso haja alguma.                 |
+| content_type           | O tipo de conteúdo da resposta.                                                         |
+| charset                | O conjunto de caracteres sendo utilizado na resposta. O valor padrão é "utf-8".         |
+| headers                | *Headers* utilizados para a resposta.                                                   |
 
-#### Setting Custom Headers
+#### Definindo *Headers* customizados
 
-If you want to set custom headers for a response then `response.headers` is the place to do it. The headers attribute is a hash which maps header names to their values, and Rails will set some of them automatically. If you want to add or change a header, just assign it to `response.headers` this way:
+Se você quer definir *headers* customizados para uma resposta então `response.headers` é o local indicado para ajustar isto. O atributo *headers* é um *hash* que mapeia os nomes dos *headers* para seus respectivos valores, e o Rails irá definir alguns deles automaticamente. Se você quiser adicionar ou modificar um *header*, basta sinalizá-lo para `response.headers` da seguinte maneira:
 
 ```ruby
 response.headers["Content-Type"] = "application/pdf"
 ```
 
-NOTE: In the above case it would make more sense to use the `content_type` setter directly.
+NOTE: No caso acima faria mais sentido utilizar o *setter* `content_type` diretamente.
 
 Autenticações HTTP
 ------------------
