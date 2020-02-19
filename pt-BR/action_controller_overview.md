@@ -852,18 +852,18 @@ end
 
 Como visto no exemplo acima, o bloco `authenticate_or_request_with_http_digest` recebe apenas um argumento - o nome de usuário. E o bloco retorna a senha. Retornar `false` ou `nil` em `authenticate_or_request_with_http_digest` causará falha de autenticação.
 
-*Streaming* e *downloads* de arquivos
+*Streaming* e *Downloads* de Arquivos
 ----------------------------
 
-As vezes você pode querer enviar um arquivo para o usuário ao invés de uma página HTML. Todos os _controllers_ no _Rails_ possuem os métodos `send_data` e `send_file`, que transmitem dados ao _browser_. O método `send_file` permite que você proveja o nome do arquivo no disco e seu conteúdo será transmistido.
+Às vezes você pode querer enviar um arquivo para o usuário ao invés de uma página HTML. Todos os _controllers_ no Rails possuem os métodos `send_data` e `send_file`, que transmitem dados ao navegador. O método `send_file` permite que você proveja o nome do arquivo no disco e seu conteúdo será transmitido.
 
-Para transmitir dados para o _browser_, use `send_data`:
+Para transmitir dados para o navegador, use `send_data`:
 
 ```ruby
 require "prawn"
 class ClientsController < ApplicationController
-  # Generates a PDF document with information on the client and
-  # returns it. The user will get the PDF as a file download.
+  # Gera um documento PDF com informações no navegador e 
+  # o retorna. O usuário receberá o documento PDF como um download.
   def download_pdf
     client = Client.find(params[:id])
     send_data generate_pdf(client),
@@ -883,7 +883,7 @@ class ClientsController < ApplicationController
 end
 ```
 
-A _action_ `download_pdf` no exemplo acima está chamando um método privado que na verdade cria o documento PDF e o retorna como uma _string_. Essa _string_ será então ser transmitida ao _browser_ como um arquivo para download o nome do arquivo será sugerido ao usuário. As vezes quando transmitindo arquivos aos usuários, você pode não querer que façam o download do arquivo. Usando imagens, por exemplo, que podem ser embutidas em páginas HTML. Para comunicar ao _browser_ que não é para fazer o download do arquivo, você pode utilizar a propriedade `inline` na opção `:disposition`. A propriedade oposta e padrão para essa opção é "_attachment_".
+A _action_ `download_pdf` no exemplo acima está chamando um método privado que na verdade cria o documento PDF e o retorna como uma _string_. Essa _string_ será então transmitida ao navegador como um arquivo para download e o nome do arquivo será sugerido ao usuário. Às vezes, quando arquivos são transmitidos aos usuários, você pode não querer que façam o download do arquivo. Imagens, por exemplo, podem ser embutidas em páginas HTML. Para comunicar ao navegador que não deve ser feito o download do arquivo, você pode utilizar a propriedade `inline` na opção `:disposition`. A propriedade oposta e padrão para essa opção é "_attachment_".
 
 ### Enviando Arquivos
 
@@ -891,7 +891,7 @@ Se você deseja enviar um arquivo que já existe no disco, utilize o método `se
 
 ```ruby
 class ClientsController < ApplicationController
-  # Stream a file that has already been generated and stored on disk.
+  # Transmite um arquivo que já foi gerado e salvo no disco.
   def download_pdf
     client = Client.find(params[:id])
     send_file("#{Rails.root}/files/clients/#{client.id}.pdf",
@@ -905,17 +905,17 @@ Esse método irá ler e transmitir o arquivo 4kb por vez, evitando carregar o ar
 
 Se a opção `:type` não for especificada, será presumido de acordo com a extensão especificada no `:filename`. Se o tipo do conteúdo (`content_type`) não estiver registrado para a extensão, será usado `application/octet-stream`.
 
-WARNING:  Tenha cuidado ao utilizar dados vindos do _browser_ ( _params_, _cookies_, etc.) para localizar um arquivo no disco, pois é um risco de segurança que pode permitir alguem a ter acesso a arquivos não permitidos.
+WARNING:  Tenha cuidado ao utilizar dados vindos do navegador ( _params_, _cookies_, etc.) para localizar um arquivo no disco, pois é um risco de segurança que pode permitir a alguém ter acesso a arquivos não permitidos.
 
-TIP: Não é recomendado que você transmita arquivos estáticos através do _Rails_, você pode ao invés mante-los em uma pasta publica no seu servidor _web_. É muito mais eficiente deixar os usários baixarem os arquivos diretamente utilizando _Apache_ ou outro servidor _web_, deixando a requisição desnecessariamente passar por todo o fluxo do _Rails_. 
+TIP: Não é recomendado que você transmita arquivos estáticos através do Rails, você pode, ao invés disso, mantê-los em uma pasta pública no seu servidor _web_. É muito mais eficiente deixar os usuários baixarem os arquivos diretamente utilizando _Apache_ ou outro servidor _web_, evitando que a requisição passe, sem necessidade, por todo o fluxo do Rails.
 
 ### _RESTful_ _Downloads_
 
-Apesar de o método `send_data` funcionar tranquilamente, se você está criando uma applicação _RESTful_, geralmente não é necessário ter _actions_ separadas para o _download_ de arquivos. Na terminologia _REST_, o arquivo PDF do exemplo acima pode ser considerado apenas uma outra representação do recurso do _browser_. _Rails_ provê um jeito fácil e prático de fazer "downloads _RESTful_". Veja como você pode re-escrever o exemplo para que o _download_ do PDF seja parte da _action_ `show`, sem qualquer tramissão:
+Apesar de o método `send_data` funcionar tranquilamente, se você está criando uma aplicação _RESTful_, geralmente não é necessário ter _actions_ separadas para o _download_ de arquivos. Na terminologia _REST_, o arquivo PDF do exemplo acima pode ser considerado apenas uma outra representação do recurso do navegador. Rails provê um jeito fácil e prático de fazer "downloads _RESTful_". Veja como você pode re-escrever o exemplo para que o _download_ do PDF seja parte da _action_ `show`, sem qualquer transmissão:
 
 ```ruby
 class ClientsController < ApplicationController
-  # The user can request to receive this resource as HTML or PDF.
+  # O usuário pode solicitar receber este recurso como HTML ou PDF.
   def show
     @client = Client.find(params[:id])
 
@@ -927,7 +927,7 @@ class ClientsController < ApplicationController
 end
 ```
 
-Para que este exemplo funcione, você deve adicionar o `MIME type` ao _Rails_. Isso pode ser feito adicionando a seguinte linha ao arquivo `config/initializers/mime_types.rb`:
+Para que este exemplo funcione, você deve adicionar o `MIME type` ao Rails. Isso pode ser feito adicionando a seguinte linha ao arquivo `config/initializers/mime_types.rb`:
 
 ```ruby
 Mime::Type.register "application/pdf", :pdf
@@ -943,11 +943,11 @@ GET /clients/1.pdf
 
 ### Transmissão Ao Vivo de Dado Arbitrários
 
-_Rails_ permite você que transmita mais do que apenas arquivos. Na verdade, você pode transmitir o que você desejar como um objeto de resposta. O modulo `ActionController::Live` permite você criar uma conexão persistente com o _browser_. Utilizando esse módulo, você é capaz de enviar dados arbitrários ao _browser_ sem depender de uma requisição _HTTP_.
+O Rails permite que você transmita mais do que apenas arquivos. Na verdade, você pode transmitir o que você desejar como um objeto de resposta. O modulo `ActionController::Live` permite a você criar uma conexão persistente com o navegador. Utilizando esse módulo, você é capaz de enviar dados arbitrários ao navegador sem depender de uma requisição _HTTP_.
 
 #### Implementando Transmissão Ao Vivo ( _Live Streaming_ )
 
-Inclua `ActionController::Live` dentro do seu classe _controller_ irá provêr a todas as _actions_ do seu _controller_ a habilidade de transmitir dados. Você pode mesclar o modulo da seguinte forma:
+Incluindo `ActionController::Live` dentro da sua classe _controller_ irá prover a todas as _actions_ do seu _controller_ a habilidade de transmitir dados. Você pode mesclar o modulo da seguinte forma:
 
 ```ruby
 class MyController < ActionController::Base
@@ -965,15 +965,15 @@ class MyController < ActionController::Base
 end
 ```
 
-O codigo acima manterá uma conexão constante com o _browser_ e mandará 100 mensagens de `"hello world\n"`, cada uma com um segundo de diferença. 
+O código acima manterá uma conexão constante com o navegador e mandará 100 mensagens de `"hello world\n"`, cada uma com um segundo de diferença. 
 
-Existem algumas coisas a serem notadas no exemplo acima. Nós precisamos ter certeza que a resposta da transmissão foi terminada. Esquecer de encerrar a transmissão deixará o socket aberto pra sempre. Nós também precisamos estabelecer o tipo de conteúdo (_`content_type`_) para `text/event-stream` antes de responder a transmissão. Isso pois _headers_ não podem ser escritos depois de uma resposta foi enviada (quando `response.committed?` retorna um valor _truthy_ ), que ocorre quando você escreve ou comita a resposta de uma transmissão.
+Existem algumas coisas a serem notadas no exemplo acima. Nós precisamos ter certeza de que a resposta da transmissão foi terminada. Esquecer de encerrar a transmissão deixará o *socket* aberto pra sempre. Nós também precisamos estabelecer o tipo de conteúdo (_`content_type`_) para `text/event-stream` antes de responder a transmissão. Isso é necessário, pois _headers_ não podem ser escritos depois que uma resposta foi enviada (quando `response.committed?` retorna um valor _truthy_ ), que ocorre quando você escreve ou envia (`commit`) a resposta de uma transmissão.
 
 #### Exemplo de Uso
 
-Vamos supor que você estivesse criando uma máquina Karaokê e um usuário quer achar a letra de uma música em particular. Cada música (`Song`) tem um número especīfico de linhas e cada linha tem um tempo especīfic (`num_beats`)  para termindar de ser cantada.
+Vamos supor que você estivesse criando uma máquina de Karaokê e um usuário quer achar a letra de uma música em particular. Cada música (`Song`) tem um número específico de linhas e cada linha tem um tempo (`num_beats`) para terminar de ser cantada.
 
-Se nó quiséssemos retornar as letras no estilo de Karaokê (mandar a linha só quando a linha anterior for terminada de cantar), então poderíamos usar `ActionController::Live` da seguinte forma:
+Se nós quiséssemos retornar as letras no estilo de Karaokê (mandar a linha só quando a linha anterior for terminada de cantar), então poderíamos usar `ActionController::Live` da seguinte forma:
 
 ```ruby
 class LyricsController < ActionController::Base
@@ -995,20 +995,20 @@ end
 
 O código acima envia a próxima linha apenas depois que a pessoa cantando completou a linha anterior.
 
-#### Considerações a Transmissão
+#### Considerações da Transmissão
 
-Transmitir dados arbitrários é uma ferramenta extremamente poderosa. Como mostrado nos exemplos anteriores, você pode escolher quando e o que enviar na resposta da transmissão. Entretanto, você deveria se atentar as seguintes coisas:
+Transmitir dados arbitrários é uma ferramenta extremamente poderosa. Como mostrado nos exemplos anteriores, você pode escolher quando e o que enviar na resposta da transmissão. Entretanto, você deveria se atentar aos seguintes pontos:
 
 * Cada transmissão cria uma nova _thread_ e copia sobre as variáveis locais da 
   _thread_, as variáveis da _thread_ original. Ter muitas variáveis locais em uma
-  _thread_ local pode impactar negativamente na performace. Da mesma forma, um 
-  grande número de _threads_ pode também piorar a performace.
+  _thread_ local pode impactar negativamente na performance. Da mesma forma, um 
+  grande número de _threads_ pode também piorar a performance.
 * Deixar de encerrar a transmissão deixará o _socket_ correspondente aberto para 
-  sempre.Certifique-se de chamar o método `close` sempre que estiver transmitindo
+  sempre. Certifique-se de chamar o método `close` sempre que estiver transmitindo
   dados.
 * Os servidores WEBrick armazena todas as respostas, então apenas incluir no 
   _controller_ `ActionController::Live` não irá funcionar. Você deve usar um 
-  servidor _web_ que não armazene automaticamente as respostas.
+  servidor web que não armazene automaticamente as respostas.
 
 Log Filtering
 -------------
