@@ -140,15 +140,15 @@ resources :photos
 cria sete rotas diferentes rotas em sua aplicação, todas mapeando para o
 _controller_ `Photos`:
 
-| HTTP Verb | Path             | Controller#Action | Used for                                     |
-| --------- | ---------------- | ----------------- | -------------------------------------------- |
-| GET       | /photos          | photos#index      | display a list of all photos                 |
-| GET       | /photos/new      | photos#new        | return an HTML form for creating a new photo |
-| POST      | /photos          | photos#create     | create a new photo                           |
-| GET       | /photos/:id      | photos#show       | display a specific photo                     |
-| GET       | /photos/:id/edit | photos#edit       | return an HTML form for editing a photo      |
-| PATCH/PUT | /photos/:id      | photos#update     | update a specific photo                      |
-| DELETE    | /photos/:id      | photos#destroy    | delete a specific photo                      |
+| HTTP Verb | Path             | Controller#Action | Usado para                                          |
+| --------- | ---------------- | ----------------- | --------------------------------------------------- |
+| GET       | /photos          | photos#index      | mostra uma lista de todas as fotos                  |
+| GET       | /photos/new      | photos#new        | retorna um formulário HTML para criar uma nova foto |
+| POST      | /photos          | photos#create     | cria uma nova foto                                  |
+| GET       | /photos/:id      | photos#show       | mostra uma foto específica                          |
+| GET       | /photos/:id/edit | photos#edit       | retorna um formulário HTML para editar uma foto     |
+| PATCH/PUT | /photos/:id      | photos#update     | atualiza uma foto específica                        |
+| DELETE    | /photos/:id      | photos#destroy    | deleta uma foto específica                          |
 
 NOTE: Por conta do roteador utilizar os verbos HTTP e a URL para corresponder as requisições de entrada, quatro URLs equivalem a sete _actions_ diferentes.
 
@@ -204,16 +204,16 @@ resolve('Geocoder') { [:geocoder] }
 
 cria seis rotas diferentes em sua aplicação, todas mapeando para o _controller_ `Geocoders`:
 
-| HTTP Verb | Path           | Controller#Action | Used for                                      |
-| --------- | -------------- | ----------------- | --------------------------------------------- |
-| GET       | /geocoder/new  | geocoders#new     | return an HTML form for creating the geocoder |
-| POST      | /geocoder      | geocoders#create  | create the new geocoder                       |
-| GET       | /geocoder      | geocoders#show    | display the one and only geocoder resource    |
-| GET       | /geocoder/edit | geocoders#edit    | return an HTML form for editing the geocoder  |
-| PATCH/PUT | /geocoder      | geocoders#update  | update the one and only geocoder resource     |
-| DELETE    | /geocoder      | geocoders#destroy | delete the geocoder resource                  |
+| HTTP Verb | Path           | Controller#Action | Usado para                                        |
+| --------- | -------------- | ----------------- | ------------------------------------------------- |
+| GET       | /geocoder/new  | geocoders#new     | retorna um formulário HTML para criar o geocoder  |
+| POST      | /geocoder      | geocoders#create  | cria o novo geocoder                              |
+| GET       | /geocoder      | geocoders#show    | mostra o único geocoder _resource_                |
+| GET       | /geocoder/edit | geocoders#edit    | retorna um formulário HTML para editar o geocoder |
+| PATCH/PUT | /geocoder      | geocoders#update  | atualiza o único geocoder _resource_              |
+| DELETE    | /geocoder      | geocoders#destroy | deleta o geocoder _resource_                      |
 
-NOTE: Because you might want to use the same controller for a singular route (`/account`) and a plural route (`/accounts/45`), singular resources map to plural controllers. So that, for example, `resource :photo` and `resources :photos` creates both singular and plural routes that map to the same controller (`PhotosController`).
+NOTE: Como você pode querer usar o mesmo _controller_ para uma _singular route_ (`/account`) e uma _plural route_ (`/accounts /45`), os _singular resources_ são mapeados para os _plural controllers_. Assim, por exemplo, `resource: photo` e` resources: photos` criam rotas singular e plural que são mapeadas para o mesmo controlador (`PhotosController`).
 
 Uma rota _resourceful_ singular gera estes _helpers_:
 
