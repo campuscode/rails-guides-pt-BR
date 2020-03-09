@@ -95,7 +95,7 @@ NOTE: O bloco `Rails.application.routes.draw do ... end` que encapsula suas
 definições de rotas é necessário para estabelecer o escopo do roteador da DSL e não
 deve ser deletado.
 
-Roteando _Resources_: O padrão do Rails
+Roteando _Resources_ (Recursos): O padrão do Rails
 -----------------------------------
 
 O roteamento de _resources_ permite que você rapidamente declare todas as rotas
@@ -107,7 +107,7 @@ uma rota de _resources_ declara todas elas em uma única linha de código.
 
 Navegadores solicitam páginas do Rails através de uma URL usando um método HTTP
 específico, como `GET`,` POST`, `PATCH`,` PUT` e `DELETE`. Cada método é uma
-solicitação para executar uma operação no recurso. Uma rota de recurso mapeia
+solicitação para executar uma operação no _resource_. Uma rota de _resource_ mapeia
 uma série de solicitações relacionadas a _actions_ em um único _controller_.
 
 Quando sua aplicação Rails recebe uma requisição para:
@@ -140,15 +140,15 @@ resources :photos
 cria sete rotas diferentes rotas em sua aplicação, todas mapeando para o
 _controller_ `Photos`:
 
-| HTTP Verb | Path             | Controller#Action | Usado para                                          |
-| --------- | ---------------- | ----------------- | --------------------------------------------------- |
-| GET       | /photos          | photos#index      | mostra uma lista de todas as fotos                  |
-| GET       | /photos/new      | photos#new        | retorna um formulário HTML para criar uma nova foto |
-| POST      | /photos          | photos#create     | cria uma nova foto                                  |
-| GET       | /photos/:id      | photos#show       | mostra uma foto específica                          |
-| GET       | /photos/:id/edit | photos#edit       | retorna um formulário HTML para editar uma foto     |
-| PATCH/PUT | /photos/:id      | photos#update     | atualiza uma foto específica                        |
-| DELETE    | /photos/:id      | photos#destroy    | deleta uma foto específica                          |
+| Verbo HTTP | Path             | Controller#Action | Usado para                                          |
+| ---------- | ---------------- | ----------------- | --------------------------------------------------- |
+| GET        | /photos          | photos#index      | mostra uma lista de todas as fotos                  |
+| GET        | /photos/new      | photos#new        | retorna um formulário HTML para criar uma nova foto |
+| POST       | /photos          | photos#create     | cria uma nova foto                                  |
+| GET        | /photos/:id      | photos#show       | mostra uma foto específica                          |
+| GET        | /photos/:id/edit | photos#edit       | retorna um formulário HTML para editar uma foto     |
+| PATCH/PUT  | /photos/:id      | photos#update     | atualiza uma foto específica                        |
+| DELETE     | /photos/:id      | photos#destroy    | deleta uma foto específica                          |
 
 NOTE: Por conta do roteador utilizar os verbos HTTP e a URL para corresponder as requisições de entrada, quatro URLs equivalem a sete _actions_ diferentes.
 
@@ -204,14 +204,14 @@ resolve('Geocoder') { [:geocoder] }
 
 cria seis rotas diferentes em sua aplicação, todas mapeando para o _controller_ `Geocoders`:
 
-| HTTP Verb | Path           | Controller#Action | Usado para                                        |
-| --------- | -------------- | ----------------- | ------------------------------------------------- |
-| GET       | /geocoder/new  | geocoders#new     | retorna um formulário HTML para criar o geocoder  |
-| POST      | /geocoder      | geocoders#create  | cria o novo geocoder                              |
-| GET       | /geocoder      | geocoders#show    | mostra o único geocoder _resource_                |
-| GET       | /geocoder/edit | geocoders#edit    | retorna um formulário HTML para editar o geocoder |
-| PATCH/PUT | /geocoder      | geocoders#update  | atualiza o único geocoder _resource_              |
-| DELETE    | /geocoder      | geocoders#destroy | deleta o geocoder _resource_                      |
+| Verbo HTTP | Path           | Controller#Action | Usado para                                        |
+| ---------- | -------------- | ----------------- | ------------------------------------------------- |
+| GET        | /geocoder/new  | geocoders#new     | retorna um formulário HTML para criar o geocoder  |
+| POST       | /geocoder      | geocoders#create  | cria o novo geocoder                              |
+| GET        | /geocoder      | geocoders#show    | mostra o único geocoder _resource_                |
+| GET        | /geocoder/edit | geocoders#edit    | retorna um formulário HTML para editar o geocoder |
+| PATCH/PUT  | /geocoder      | geocoders#update  | atualiza o único geocoder _resource_              |
+| DELETE     | /geocoder      | geocoders#destroy | deleta o geocoder _resource_                      |
 
 NOTE: Como você pode querer usar o mesmo _controller_ para uma _singular route_ (`/account`) e uma _plural route_ (`/accounts /45`), os _singular resources_ são mapeados para os _plural controllers_. Assim, por exemplo, `resource: photo` e` resources: photos` criam rotas singular e plural que são mapeadas para o mesmo controlador (`PhotosController`).
 
@@ -235,15 +235,15 @@ end
 
 Isto criará um número de rotas para cada _controller_ de `articles` e `comments`. Para `Admin::ArticlesController`, o Rails vai criar:
 
-| HTTP Verb | Path                     | Controller#Action      | Named Route Helper           |
-| --------- | ------------------------ | ---------------------- | ---------------------------- |
-| GET       | /admin/articles          | admin/articles#index   | admin_articles_path          |
-| GET       | /admin/articles/new      | admin/articles#new     | new_admin_article_path       |
-| POST      | /admin/articles          | admin/articles#create  | admin_articles_path          |
-| GET       | /admin/articles/:id      | admin/articles#show    | admin_article_path(:id)      |
-| GET       | /admin/articles/:id/edit | admin/articles#edit    | edit_admin_article_path(:id) |
-| PATCH/PUT | /admin/articles/:id      | admin/articles#update  | admin_article_path(:id)      |
-| DELETE    | /admin/articles/:id      | admin/articles#destroy | admin_article_path(:id)      |
+| Verbo HTTP | Path                     | Controller#Action      | Helper de rota nomeado       |
+| ---------- | ------------------------ | ---------------------- | ---------------------------- |
+| GET        | /admin/articles          | admin/articles#index   | admin_articles_path          |
+| GET        | /admin/articles/new      | admin/articles#new     | new_admin_article_path       |
+| POST       | /admin/articles          | admin/articles#create  | admin_articles_path          |
+| GET        | /admin/articles/:id      | admin/articles#show    | admin_article_path(:id)      |
+| GET        | /admin/articles/:id/edit | admin/articles#edit    | edit_admin_article_path(:id) |
+| PATCH/PUT  | /admin/articles/:id      | admin/articles#update  | admin_article_path(:id)      |
+| DELETE     | /admin/articles/:id      | admin/articles#destroy | admin_article_path(:id)      |
 
 Se você quiser rotear `/articles` (sem o prefixo `/admin`) para `Admin::ArticlesController`, você poderia usar:
 
@@ -274,16 +274,15 @@ resources :articles, path: '/admin/articles'
 
 Em cada um desses casos, a rota nomeada continua a mesma, como se você não tivesse usado `scope`. No último exemplo, os _paths_ seguintes mapeiam para `ArticlesController`:
 
-| HTTP Verb | Path                     | Controller#Action    | Named Route Helper     |
-| --------- | ------------------------ | -------------------- | ---------------------- |
-| GET       | /admin/articles          | articles#index       | articles_path          |
-| GET       | /admin/articles/new      | articles#new         | new_article_path       |
-| POST      | /admin/articles          | articles#create      | articles_path          |
-| GET       | /admin/articles/:id      | articles#show        | article_path(:id)      |
-| GET       | /admin/articles/:id/edit | articles#edit        | edit_article_path(:id) |
-| PATCH/PUT | /admin/articles/:id      | articles#update      | article_path(:id)      |
-| DELETE    | /admin/articles/:id      | articles#destroy     | article_path(:id)      |
-
+| Verbo HTTP | Path                     | Controller#Action    | Helper de rota nomeado |
+| ---------- | ------------------------ | -------------------- | ---------------------- |
+| GET        | /admin/articles          | articles#index       | articles_path          |
+| GET        | /admin/articles/new      | articles#new         | new_article_path       |
+| POST       | /admin/articles          | articles#create      | articles_path          |
+| GET        | /admin/articles/:id      | articles#show        | article_path(:id)      |
+| GET        | /admin/articles/:id/edit | articles#edit        | edit_article_path(:id) |
+| PATCH/PUT  | /admin/articles/:id      | articles#update      | article_path(:id)      |
+| DELETE     | /admin/articles/:id      | articles#destroy     | article_path(:id)      |
 TIP: Se você precisar usar um _namespace_ de _controller_ diferente dentro de um bloco `namespace` você pode especificar um _path_ absoluto de _controller_, e.g: `get '/foo', to: '/foo#index'`.
 
 ### Nested Resources (Recursos Aninhados)
@@ -310,15 +309,15 @@ end
 
 Em adição das rotas para _magazines_, esta declaração também adicionará rotas de _ads_ para um `AdsContriller`. As URLs de _ad_ vão precisar de um _magazine_:
 
-| HTTP Verb | Path                                 | Controller#Action | Used for                                                                   |
-| --------- | ------------------------------------ | ----------------- | -------------------------------------------------------------------------- |
-| GET       | /magazines/:magazine_id/ads          | ads#index         | display a list of all ads for a specific magazine                          |
-| GET       | /magazines/:magazine_id/ads/new      | ads#new           | return an HTML form for creating a new ad belonging to a specific magazine |
-| POST      | /magazines/:magazine_id/ads          | ads#create        | create a new ad belonging to a specific magazine                           |
-| GET       | /magazines/:magazine_id/ads/:id      | ads#show          | display a specific ad belonging to a specific magazine                     |
-| GET       | /magazines/:magazine_id/ads/:id/edit | ads#edit          | return an HTML form for editing an ad belonging to a specific magazine     |
-| PATCH/PUT | /magazines/:magazine_id/ads/:id      | ads#update        | update a specific ad belonging to a specific magazine                      |
-| DELETE    | /magazines/:magazine_id/ads/:id      | ads#destroy       | delete a specific ad belonging to a specific magazine                      |
+| Verbo HTTP | Path                                 | Controller#Action | Usado para                                                                                        |
+| ---------- | ------------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------- |
+| GET        | /magazines/:magazine_id/ads          | ads#index         | mostra a lista de todos os `ads` para um `magazine` específico                                    |
+| GET        | /magazines/:magazine_id/ads/new      | ads#new           | retorna um formulário HTML para a criação de um novo `ad` pertencente de um `magazine` específico |
+| POST       | /magazines/:magazine_id/ads          | ads#create        | cria um novo `ad` pertencente a um `magazine` específico                                          |
+| GET        | /magazines/:magazine_id/ads/:id      | ads#show          | exibe um `ad` pertencente a um `magazine` específico                                              |
+| GET        | /magazines/:magazine_id/ads/:id/edit | ads#edit          | retorna um formulário HTML para editar um `ad` pertencente a um `magazine` específico             |
+| PATCH/PUT  | /magazines/:magazine_id/ads/:id      | ads#update        | atualiza um `ad` específico pertencente a um `magazine` específico                                |
+| DELETE     | /magazines/:magazine_id/ads/:id      | ads#destroy       | deleta um `ad` específico pertencente a um `magazine` específico                                  |
 
 Isto vai também criar _routing helpers_ como `magazine_ads_url` e `edit_magazine_ad_path`. Esses _helpers_ pegam uma instância de _Magazine_ como o primeiro parâmetro (`magazine_ads_url(@magazine)`).
 
@@ -363,7 +362,7 @@ resources :articles do
 end
 ```
 
-Isso vai gerar as mesmas rotas do primeiro exemplo, Você pode também especificar a opção `:shallow` no seu recurso pai, em cada caso todos os _resources_ aninhados serão rasos:
+Isso vai gerar as mesmas rotas do primeiro exemplo, Você pode também especificar a opção `:shallow` no seu _resource_ pai, em cada caso todos os _resources_ aninhados serão rasos:
 
 ```ruby
 resources :articles, shallow: true do
@@ -396,7 +395,7 @@ end
 
 O _resource_ _comments_ aqui terá gerado as seguintes rotas para si:
 
-| HTTP Verb | Path                                         | Controller#Action | Named Route Helper       |
+| HTTP Verb | Path                                         | Controller#Action | Helper de rota nomeado   |
 | --------- | -------------------------------------------- | ----------------- | ------------------------ |
 | GET       | /articles/:article_id/comments(.:format)     | comments#index    | article_comments_path    |
 | POST      | /articles/:article_id/comments(.:format)     | comments#create   | article_comments_path    |
@@ -418,7 +417,7 @@ end
 
 O _resource_ _comments_ aqui terá gerado as seguintes rotas para si:
 
-| HTTP Verb | Path                                         | Controller#Action | Named Route Helper          |
+| HTTP Verb | Path                                         | Controller#Action | Helper de rota nomeado      |
 | --------- | -------------------------------------------- | ----------------- | --------------------------- |
 | GET       | /articles/:article_id/comments(.:format)     | comments#index    | article_comments_path       |
 | POST      | /articles/:article_id/comments(.:format)     | comments#create   | article_comments_path       |
@@ -442,7 +441,7 @@ concern :image_attachable do
 end
 ```
 
-Estes _concerns_ podem ser usados em recursos para evitar duplicação de códigos e compartilhar o mesmo comportamento por entre as rotas:
+Estes _concerns_ podem ser usados em _resources_ para evitar duplicação de códigos e compartilhar o mesmo comportamento por entre as rotas:
 
 ```ruby
 resources :messages, concerns: :commentable
