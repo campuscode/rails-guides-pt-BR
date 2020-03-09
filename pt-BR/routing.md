@@ -165,9 +165,9 @@ Criando uma rota de _resource_ vai expor um número de _helpers_ para os _contro
 
 Cada um desses _helpers_ tem um _helper_ `_url`  (assim como `photos_url`) que retorna o mesmo _path_ prefixado com o _host_ atual, porta e o prefixo do _path_.
 
-### Definindo Multiplos _Resources_ ao Mesmo tempo
+### Definindo Múltiplos _Resources_ ao Mesmo tempo
 
-Se você precisa criar rotas para mais de um _resource_, você pode salvar um pouco de digitação definindo todos eles em uma unica chamada para `resources`:
+Se você precisa criar rotas para mais de um _resource_, você pode salvar um pouco de digitação definindo todos eles em uma única chamada para `resources`:
 
 ```ruby
 resources :photos, :books, :videos
@@ -266,7 +266,7 @@ scope '/admin' do
   resources :articles, :comments
 end
 ```
-ou, para um unico caso:
+ou, para um único caso:
 
 ```ruby
 resources :articles, path: '/admin/articles'
@@ -300,7 +300,7 @@ class Ad < ApplicationRecord
 end
 ```
 
-_Nested routes_ (rotas aninhadas) permitem que você capture este relacionamento no seu roteamento. Neste caso, você poderia incluir esta delcaração de rota:
+_Nested routes_ (rotas aninhadas) permitem que você capture este relacionamento no seu roteamento. Neste caso, você poderia incluir esta declaração de rota:
 
 ```ruby
 resources :magazines do
@@ -320,7 +320,7 @@ Em adição das rotas para _magazines_, esta declaração também adicionará ro
 | PATCH/PUT | /magazines/:magazine_id/ads/:id      | ads#update        | update a specific ad belonging to a specific magazine                      |
 | DELETE    | /magazines/:magazine_id/ads/:id      | ads#destroy       | delete a specific ad belonging to a specific magazine                      |
 
-Isto vai tambem criar _routing helpers_ como `magazine_ads_url` e `edit_magazine_ad_path`. Esses _helpers_ pegam uma instância de _Magazine_ como o primeiro parametro (`magazine_ads_url(@magazine)`).
+Isto vai também criar _routing helpers_ como `magazine_ads_url` e `edit_magazine_ad_path`. Esses _helpers_ pegam uma instância de _Magazine_ como o primeiro parâmetro (`magazine_ads_url(@magazine)`).
 
 #### Limites para o Aninhamento
 
@@ -342,7 +342,7 @@ _Resources_ profundamente aninhados ficam confusos. Neste caso, por exemplo, a a
 
 O _helper_ correspondente a essa rota seria `publisher_magazine_photo_url`, sendo necessário especificar os objetos de todos os três níveis. De fato, esta situação é confusa o bastante que um [artigo](http://weblog.jamisbuck.org/2007/2/5/nesting-resources) escrito por Jamis Buck propõe uma regra de ouro para um bom design no Rails:
 
-TIP: _Resources_ Não devem nunca ser aninhados mais de um nível de profundidade.
+TIP: _Resources_ não devem nunca ser aninhados mais de um nível de profundidade.
 
 #### Shallow Nesting (Aninhamento raso)
 
@@ -355,7 +355,7 @@ end
 resources :comments, only: [:show, :edit, :update, :destroy]
 ```
 
-Essa idéia encontra um equilíbrio entre rotas descritivas e aninhamento profundo. Existe uma sintaxe abreviada para conseguir exatamente isso, via a opção `:shallow`:
+Essa ideia encontra um equilíbrio entre rotas descritivas e aninhamento profundo. Existe uma sintaxe abreviada para conseguir exatamente isso, via a opção `:shallow`:
 
 ```ruby
 resources :articles do
@@ -372,7 +372,7 @@ resources :articles, shallow: true do
   resources :drafts
 end
 ```
-O metodo `shallow` do DSL cria um _scope_ em que todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:
+O método `shallow` do DSL cria um _scope_ em que todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:
 
 ```ruby
 shallow do
@@ -384,7 +384,7 @@ shallow do
 end
 ```
 
-Existem duas opções no `scope` para customizar _shallow routes_. `:shallow_path` prefixa seus _paths_ membros com o parametro especificado:
+Existem duas opções no `scope` para customizar _shallow routes_. `:shallow_path` prefixa seus _paths_ membros com o parâmetro especificado:
 
 ```ruby
 scope shallow_path: "sekret" do
@@ -394,7 +394,7 @@ scope shallow_path: "sekret" do
 end
 ```
 
-O _resource_ _comments_ aqui terá gerado as seguintes rotas para sí:
+O _resource_ _comments_ aqui terá gerado as seguintes rotas para si:
 
 | HTTP Verb | Path                                         | Controller#Action | Named Route Helper       |
 | --------- | -------------------------------------------- | ----------------- | ------------------------ |
@@ -430,7 +430,7 @@ O _resource_ _comments_ aqui terá gerado as seguintes rotas para si:
 
 ### Roteamento com método concerns
 
-Roteamento com método concerns permitem você declarar rotas comuns que podem ser reutilizadas dentro de outros _resources_ e rotas. Para definier um _concern_:
+Roteamento com método concerns permitem você declarar rotas comuns que podem ser reutilizadas dentro de outros _resources_ e rotas. Para definir um _concern_:
 
 ```ruby
 concern :commentable do
@@ -471,7 +471,7 @@ namespace :articles do
 end
 ```
 
-### Criando Paths e URLs De Objetos
+### Criando Paths e URLs de Objetos
 
 Além de usarmos os _helpers_ de roteamento, o Rails pode também criar _paths_ e _URLs_ de um _array_ de parâmetros. Por exemplo, imagine que você tem este grupo de rotas:
 
