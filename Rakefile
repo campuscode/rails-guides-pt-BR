@@ -101,3 +101,11 @@ HELP
 end
 
 task default: "guides:help"
+
+namespace :assets do
+  task :precompile do
+    system('git apply rails.patch')
+    system('rake guides:generate:html')
+    system('cp $(find output/pt-BR -name "*.html") site')
+  end
+end
