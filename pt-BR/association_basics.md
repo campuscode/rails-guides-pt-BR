@@ -253,7 +253,7 @@ class CreateAppointments < ActiveRecord::Migration[5.0]
 end
 ```
 
-O conjunto da junção dos _models_ pode ser gerenciada através dos [métodos de associação `has_many`](#has-many-association-reference).
+O conjunto da junção dos _models_ pode ser gerenciada através dos [métodos de associação `has_many`](#referencia-da-associacao-has-many).
 Por exemplo, se você atribuir:
 
 ```ruby
@@ -1022,7 +1022,7 @@ end
 
 ##### `:polymorphic`
 
-Passar `true` para a opção `:polymorphic` indica que esta é uma associação polimórfica. Associações polimórficas foram discutidas com detalhes <a href="#polymorphic-associations">anteriormente neste guia</a>.
+Passar `true` para a opção `:polymorphic` indica que esta é uma associação polimórfica. Associações polimórficas foram discutidas com detalhes <a href="#associacoes-polimorficas">anteriormente neste guia</a>.
 
 ##### `:touch`
 
@@ -1250,7 +1250,7 @@ A associação `has_one` tem suporte para estas opções:
 
 ##### `:as`
 
-Configurar a opção `:as` indica que esta é uma associação polimórfica. Associações polimórficas foram discutidas com detalhes [anteriormente neste guia](#polymorphic-associations).
+Configurar a opção `:as` indica que esta é uma associação polimórfica. Associações polimórficas foram discutidas com detalhes [anteriormente neste guia](#associacoes-polimorficas).
 
 ##### `:autosave`
 
@@ -1337,7 +1337,7 @@ class DustJacket < ApplicationRecord; end
 
 ##### `:through`
 
-A opção `:through` específica um *model* de junção para realizar uma _query_ através dele. Associações `has_one :through` foram discutidas com detalhes [anteriormente neste guia](#the-has-one-through-association).
+A opção `:through` específica um *model* de junção para realizar uma _query_ através dele. Associações `has_one :through` foram discutidas com detalhes [anteriormente neste guia](#a-associacao-has-one-through).
 
 ##### `:touch`
 
@@ -1684,7 +1684,7 @@ A associação `has_many` tem suporte para estas opções:
 
 ##### `:as`
 
-Configurar a opção `:as` indica que esta é uma associação polimórfica, como discutido [anteriomente neste guia](#polymorphic-associations).
+Configurar a opção `:as` indica que esta é uma associação polimórfica, como discutido [anteriomente neste guia](#associacoes-polimorficas).
 
 ##### `:autosave`
 
@@ -1702,7 +1702,7 @@ end
 
 ##### `:counter_cache`
 
-Esta opção pode ser utilizada para configurar um `:counter_cache` personalizado. Você só precisa desta opção quando você personalizar o nome do seu `:counter_cache` na [associação belongs_to](#options-for-belongs-to).
+Esta opção pode ser utilizada para configurar um `:counter_cache` personalizado. Você só precisa desta opção quando você personalizar o nome do seu `:counter_cache` na [associação belongs_to](#opcoes-para-belongs-to).
 
 ##### `:dependent`
 
@@ -1785,7 +1785,7 @@ class Paperback < ApplicationRecord; end
 
 ##### `:through`
 
-A opção `:through` específica um *model* de junção para realizar uma _query_ através dele. Associações `has_many :through` fornecem uma maneira de implementar relações muitos-para-muitos, como discutido [anteriormente neste guia](#the-has-many-through-association).
+A opção `:through` específica um *model* de junção para realizar uma _query_ através dele. Associações `has_many :through` fornecem uma maneira de implementar relações muitos-para-muitos, como discutido [anteriormente neste guia](#a-associacao-has-many-through).
 
 ##### `:validate`
 

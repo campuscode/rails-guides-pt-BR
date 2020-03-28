@@ -736,7 +736,7 @@ Isso detectaria que não há livros com o ID especificado, define a variável de
 
 ### Usando `head` para criar respostas com apenas o cabeçalho (_Header-Only_)
 
-O método `head` pode ser usado para enviar respostas apenas com cabeçalhos para o navegador. O método `head` aceita um número ou símbolo (consulte [tabela de referência] (#a-opção-status)) representando um código de status HTTP. O argumento de _options_ é interpretado como um hash de nomes e valores de cabeçalho. Por exemplo, você pode retornar apenas um cabeçalho de erro:
+O método `head` pode ser usado para enviar respostas apenas com cabeçalhos para o navegador. O método `head` aceita um número ou símbolo (consulte [tabela de referência] (#a-opcao-status)) representando um código de status HTTP. O argumento de _options_ é interpretado como um hash de nomes e valores de cabeçalho. Por exemplo, você pode retornar apenas um cabeçalho de erro:
 
 ```ruby
 head :bad_request
