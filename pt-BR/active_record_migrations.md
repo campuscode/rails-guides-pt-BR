@@ -907,7 +907,7 @@ your database schema.
 It tends to be faster and less error prone to create a new instance of your
 application's database by loading the schema file via `rails db:schema:load`
 than it is to replay the entire migration history.
-[Old migrations](#old-migrations) may fail to apply correctly if those
+[*Migrations* Antigas](#migrations-antigas) may fail to apply correctly if those
 migrations use changing external dependencies or rely on application code which
 evolves separately from your migrations.
 

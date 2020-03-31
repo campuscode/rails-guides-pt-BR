@@ -1593,7 +1593,7 @@ which allow us to use multiple Active Record methods together in a simple and st
 
 You can chain methods in a statement when the previous method called returns an
 `ActiveRecord::Relation`, like `all`, `where`, and `joins`. Methods that return
-a single object (see [Retrieving a Single Object Section](#retrieving-a-single-object))
+a single object (see [a seção Retornando um Único Objeto](#retornando-um-unico-objeto))
 have to be at the end of the statement.
 
 There are some examples below. This guide won't cover all the possibilities, just a few as examples.

@@ -242,7 +242,7 @@ end
 ```
 
 Nós vamos cobrir os erros das validações em maior detalhe na seção [Trabalhando com
-Erros de Validações](#trabalhando-com-erros-de-validações).
+Erros de Validações](#working-with-validation-errors).
 
 ### `errors.details`
 
@@ -261,7 +261,7 @@ end
 ```
 
 O uso de `details` juntamente com validadores é tratado na seção
-[Trabalhando com Erros de Validações](#trabalhando-com-erros-de-validações).
+[Trabalhando com Erros de Validações](#working-with-validation-errors).
 
 Helpers de Validação
 ------------------
