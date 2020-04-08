@@ -1112,9 +1112,9 @@ NOTE: Quando rodando em ambiente de desenvolvimento, todos os erros
 
 NOTE: Certas exceções são tratadas apenas pela classe `ApplicationController`, já que são acionadas antes do controller ser iniciado a exceção é executada.
 
-Force HTTPS protocol
+Forçar protocolo HTTPS
 --------------------
 
-If you'd like to ensure that communication to your controller is only possible
-via HTTPS, you should do so by enabling the `ActionDispatch::SSL` middleware via
-`config.force_ssl` in your environment configuration.
+Se você quiser garantir que a comunicação com seu *controller* seja possível apenas
+via HTTPS, você deve fazer isso ativando o middleware `ActionDispatch::SSL` via
+`config.force_ssl` na configuração do seu ambiente.
