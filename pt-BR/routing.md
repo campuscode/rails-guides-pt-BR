@@ -597,7 +597,7 @@ Ao configurar uma rota regular, você fornece uma série de *symbols* que o Rail
 get 'photos(/:id)', to: 'photos#display'
 ```
 
-Se uma requisição para `/photos/1` for processado por esta rota (porque não corresponde a nenhuma rota anterior no arquivo), o resultado será invocar a *action* `display` do `PhotosController`, e tornar o parâmetro final `"1"` disponível como `params[:id]`. Esta rota também encaminhará uma requisição recebida de `/photos` para `PhotosController#display`, pois `:id` é um parâmetro opcional, indicado por parênteses.
+Se uma requisição para `/photos/1` for processada por esta rota (porque não corresponde a nenhuma rota anterior no arquivo), o resultado será invocar a *action* `display` do `PhotosController`, e tornar o parâmetro final `"1"` disponível como `params[:id]`. Esta rota também encaminhará uma requisição recebida de `/photos` para `PhotosController#display`, pois `:id` é um parâmetro opcional, indicado por parênteses.
 
 ### Segmentos Dinâmicos
 
@@ -607,7 +607,7 @@ Você pode configurar quantos segmentos dinâmicos em uma rota regular desejar. 
 get 'photos/:id/:user_id', to: 'photos#show'
 ```
 
-Uma requisição para o endereço `/photos/1/2` será enviado para a *action* `show` do `PhotosController`. `params[:id]` será `"1"` e `params[:user_id]` será `"2"`.
+Uma requisição para o endereço `/photos/1/2` será enviada para a *action* `show` do `PhotosController`. `params[:id]` será `"1"` e `params[:user_id]` será `"2"`.
 
 TIP: Por padrão, os segmentos dinâmicos não aceitam pontos - isso ocorre porque o ponto é usado como um separador para rotas formatadas. Se você precisar usar um ponto em um segmento dinâmico, adicione uma restrição que o substitua - por exemplo, `id: /[^\/]+/` permite qualquer coisa, exceto uma barra.
 
@@ -629,7 +629,7 @@ Os `params` também incluirão quaisquer parâmetros da *query string*. Por exem
 get 'photos/:id', to: 'photos#show'
 ```
 
-Um requisição para o caminho `/photos/1?user_id=2` será enviado para a *action* `show` do *controller* `Photos`. `params` será `{ controller: 'photos', action: 'show', id: '1', user_id: '2' }`.
+Uma requisição para o caminho `/photos/1?user_id=2` será enviada para a *action* `show` do *controller* `Photos`. `params` será `{ controller: 'photos', action: 'show', id: '1', user_id: '2' }`.
 
 ### Definindo Padrões
 
@@ -738,7 +738,7 @@ end
 
 NOTE: As restrições de requisição funcionam chamando um método no [Objeto `request`](action_controller_overview.html#o-objeto-request) com o mesmo nome que a chave de hash e, em seguida, compara o valor retornado com o valor de hash. Portanto, os valores de restrição devem corresponder ao tipo de retorno do método no objeto `request` correspondente. Por exemplo: `constraints: { subdomain: 'api' }` corresponderá a um subdomínio `api` conforme o esperado, no entanto, o uso de um símbolo `constraints: { subdomain: :api }` não será, porque `request.subdomain` retorna `'api'` como uma *String*.
 
-NOTE: Há uma exceção para a restrição `format`: embora seja um método no objeto `request`, também é um parâmetro opcional implícito em todos os endereços. Restrições de segmento têm precedência e a restrição de `format` é aplicada apenas quando aplicada através de um hash. Por exemplo, `get 'foo', constraints: { format: 'json' }` corresponderão a `GET /foo` porque o formato é opcional por padrão. No entanto, você pode [usar uma expressão lambda](#restricoes-avancadas) como em `get 'foo', constraints: lambda { |req| req.format == :json }` assim a rota corresponderá apenas a requisições JSON explícitas.
+NOTE: Há uma exceção para a restrição `format`: embora seja um método no objeto `request`, também é um parâmetro opcional implícito em todos os endereços. Restrições de segmento têm precedência e a restrição de `format` só é aplicada quando através de um hash. Por exemplo, `get 'foo', constraints: { format: 'json' }` corresponderão a `GET /foo` porque o formato é opcional por padrão. No entanto, você pode [usar uma expressão lambda](#restricoes-avancadas) como em `get 'foo', constraints: lambda { |req| req.format == :json }` assim a rota corresponderá apenas a requisições JSON explícitas.
 
 ### Restrições Avançadas
 
