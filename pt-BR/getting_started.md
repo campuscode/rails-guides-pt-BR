@@ -65,7 +65,14 @@ Se você está utilizando Windows, seu *prompt* será parecido com algo como `c:
 ### Instalando o Rails
 
 Antes de você instalar o Rails, você deve validar para ter certeza que seu sistema
-tem os pré requisitos necessários instalados. Esses incluem Ruby e SQLite3.
+tem os pré requisitos necessários instalados. Esses incluem:
+
+* Ruby 
+* SQLite3
+* Node.js
+* Yarn
+
+#### Instalando o Ruby
 
 Abra o *prompt* de linha de comando. No *macOS* abra o *Terminal.app*, no *Windows*
 escolha *executar* no menu inicial e digite 'cmd.exe'. Qualquer comando que antecede
@@ -87,6 +94,8 @@ de outros Sistemas Operacionais, dê uma olhada em [ruby-lang.org](https://www.r
 Se você está utilizando o Windowns, você deve também instalar o
 [Ruby Installer Development Kit](https://rubyinstaller.org/downloads/).
 
+#### Instalando o SQLite3
+
 Você também precisará instalar o banco de dados SQLite3.
 Muitos sistemas operacionais populares semelhantes ao UNIX são fornecidos com uma versão compatível do SQLite3.
 No Windows, se você instalou o Rails pelo instalador do Rails, você
@@ -98,6 +107,33 @@ $ sqlite3 --version
 ```
 
 O programa deverá reportar sua versão.
+
+#### Instalando o Node.js e Yarn
+
+Por fim, você precisará do Node.js e o Yarn instalados para gerenciar o JavaScript da sua aplicação.
+
+Encontre as instruções de instalação no [site do Node.js](https://nodejs.org/en/download/) e
+verifique se está instalado corretamente com o seguinte comando:
+
+```bash 
+$ node --version
+```
+
+A versão do Node.js deve ser impressa. Certifique-se de que é maior
+que 8.16.0.
+
+Para instalar o Yarn, siga as instruções de instalação
+instruções no [site do Yarn](https://classic.yarnpkg.com/en/docs/install).
+
+A execução deste comando deve imprimir a versão do Yarn:
+
+```bash
+$ yarn -v
+```
+
+Se aparecer algo como "1.22.0", o Yarn foi instalado corretamente.
+
+#### Instalando o Rails
 
 Para instalar o Rails, use o comando `gem install` fornecido pelo RubyGems:
 
@@ -1954,7 +1990,7 @@ consultar estes recursos:
 
 * O [Guia Rails](index.html)
 * O [Ruby on Rails Guides](https://guides.rubyonrails.org)
-* A [lista de discussão do Ruby on Rails](https://groups.google.com/group/rubyonrails-talk)
+* A [lista de discussão do Ruby on Rails](https://discuss.rubyonrails.org/c/rubyonrails-talk)
 * O canal [#rubyonrails](irc://irc.freenode.net/#rubyonrails) no irc.freenode.net
 
 

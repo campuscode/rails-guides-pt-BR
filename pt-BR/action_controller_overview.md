@@ -704,7 +704,13 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-Note nesse caso que o filtro utiliza `send`  porque o método `logged_in?` é privado e o filtro não é executado no escopo do *controller*. Essa não é a forma recomendada para implementar esse filtro em particular, mas ele pode ser útil em casos mais simples.
+Note nesse caso que o filtro utiliza `send` porque o método `logged_in?` é privado e o filtro não é executado no escopo do *controller*. Essa não é a forma recomendada para implementar esse filtro em particular, mas ele pode ser útil em casos mais simples.
+
+Especificamente para `around_action`, o bloco também acessa a `action`:
+
+```ruby
+around_action { |_controller, action| time(&action) }
+```
 
 A segunda forma é utilizar uma classe (na verdade, qualquer objeto que responda aos métodos corretos serve) para gerenciar a filtragem. Isto é útil em casos mais complexos que não são possíveis de serem implementados de uma forma de fácil leitura e reutilizados usando as outras duas abordagens. Por exemplo, você pode reescrever o filtro de login novamente utilizando uma classe:
 
