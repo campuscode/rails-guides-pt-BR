@@ -586,7 +586,7 @@ end
 
 O uso de `reversible` garantirá que as instruções também sejam executadas na
 ordem certa. Se o exemplo anterior de *migration* for revertido,
-o bloco `down` será executado depois da coluna `home_page_url` for removida e
+o bloco `down` será executado depois que a coluna `home_page_url` for removida e
 logo antes da tabela `distributors` for apagada.
 
 Às vezes sua *migration* fará algo que é simplesmente irreversível;
