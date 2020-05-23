@@ -469,7 +469,7 @@ O Rails irá gerar um nome para cada foreign key (chave estrangeira) começando 
 deterministicamente a partir do `from_table` e `column`.
 Existe uma opção `:name` para especificar um nome diferente se necessário.
 
-NOTE: O Active Record suporta apenas foreign keys (chaves estrangeiras) de coluna única. `execute` e
+NOTE: O Active Record suporta apenas *foreign keys* (chaves estrangeiras) de coluna única. `execute` e
 `structure.sql` são obrigados a usar foreign keys (chaves estrangeiras) compostas. Consulte
 [Schema Dumping e Você](#schema-dumping-and-you).
 
