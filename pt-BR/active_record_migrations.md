@@ -341,7 +341,7 @@ acrescentará `ENGINE=BLACKHOLE` à instrução SQL usada para criar a tabela.
 
 Você também pode passar a opção `:comment` com qualquer descrição para a tabela
 que serão armazenados no próprio bando de dados e poderão ser visualizados com ferramentas de administração
-de bando de dados, como MySQL Workbench ou PgAdmin III. É altamente recomendável especificar
+de banco de dados, como MySQL Workbench ou PgAdmin III. É altamente recomendável especificar
 comentários nas *migrations* para aplicações com grandes bancos de dados, pois ajuda as pessoas
 a entender o modelo de dados e gerar documentação.
 Atualmente, apenas os adaptadores MySQL e PostgreSQL suportam comentários.
