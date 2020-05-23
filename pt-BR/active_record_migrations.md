@@ -365,7 +365,7 @@ create_join_table :products, :categories, column_options: { null: true }
 ```
 
 Por padrão, o nome da tabela de *join* vem da união dos dois primeiros
-argumentos fornecidos para `create_join_table` em ordem alfabética;
+argumentos fornecidos para `create_join_table` em ordem alfabética.
 Para customizar o nome da table, forneça uma opção `:table_name`:
 
 ```ruby
