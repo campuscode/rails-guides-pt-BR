@@ -601,7 +601,7 @@ Você também pode usar o estilo antigo de *migration* usando os métodos `up` e
 em vez do método `change`.
 O método `up` deve descrever a transformação que você deseja fazer no seu
 *schema*, e o método `down` da sua *migration* deve reverter as
-transformações feitas pelo método `up`. Em outras palavas, o *schema* do bando de dados
+transformações feitas pelo método `up`. Em outras palavas, o *schema* do banco de dados
 deve permanecer inalterado se você fizer um `up` seguido por um `down`. Por exemplo, se você
 criar uma tabela em um método `up`, você deve apagá-la no método `down`. É
 aconselhável realizar as transformações precisamente na ordem inversa em que foram
