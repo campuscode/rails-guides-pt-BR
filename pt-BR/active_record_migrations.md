@@ -348,7 +348,7 @@ Atualmente, apenas os adaptadores MySQL e PostgreSQL suportam comentários.
 
 ### Criando uma Tabela de Junção (Join Table)
 
-O metódo de *migration* `create_join_table` cria uma tabela *join* HABTM (tem e pertence a
+O método de *migration* `create_join_table` cria uma tabela *join* HABTM (tem e pertence a
 muitos). Um uso comum seria:
 
 ```ruby
