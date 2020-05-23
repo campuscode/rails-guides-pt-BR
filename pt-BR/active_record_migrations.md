@@ -498,7 +498,7 @@ Product.connection.execute("UPDATE products SET price = 'free' WHERE 1=1")
 Para mais detalhes e exemplos de métodos individuais, consulte a documentação da API.
 Em particular, a documentação para
 [`ActiveRecord::ConnectionAdapters::SchemaStatements`](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html)
-(que fornece os métodos disponíveis nos métodos `change`,` up` e `down`),
+(que fornece os métodos disponíveis nos métodos `change`, `up` e `down`),
 [`ActiveRecord::ConnectionAdapters::TableDefinition`](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html)
 (que fornece os métodos disponíveis no objeto gerado por `create_table`)
 e
