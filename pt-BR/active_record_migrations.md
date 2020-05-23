@@ -639,7 +639,7 @@ class ExampleMigration < ActiveRecord::Migration[5.0]
 end
 ```
 
-Se sua *migration* é irreversível, você deve levandatar um
+Se sua *migration* é irreversível, você deve dar `raise` num
 `ActiveRecord::IrreversibleMigration` do seu método `down`. Se alguém tentar
 reveter sua *migration*, uma mensagem de erro será exibida dizendo que isso
 não pode ser feito.
