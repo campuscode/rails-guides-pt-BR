@@ -346,7 +346,7 @@ comentários nas *migrations* para aplicações com grandes bancos de dados, poi
 a entender o modelo de dados e gerar documentação.
 Atualmente, apenas os adaptadores MySQL e PostgreSQL suportam comentários.
 
-### Criando uma Tabela Join
+### Criando uma Tabela de Junção (Join Table)
 
 O metódo de *migration* `create_join_table` cria uma tabela *join* HABTM (tem e pertence a
 muitos). Um uso comum seria:
