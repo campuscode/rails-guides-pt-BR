@@ -342,7 +342,7 @@ acrescentará `ENGINE=BLACKHOLE` à instrução SQL usada para criar a tabela.
 Você também pode passar a opção `:comment` com qualquer descrição para a tabela
 que serão armazenados no próprio bando de dados e poderão ser visualizados com ferramentas de administração
 de banco de dados, como MySQL Workbench ou PgAdmin III. É altamente recomendável especificar
-comentários nas *migrations* para aplicações com grandes bancos de dados, pois ajuda as pessoas
+comentários nas *migrations* para aplicações com grandes bancos de dados, pois ajudam as pessoas
 a entender o modelo de dados e gerar documentação.
 Atualmente, apenas os adaptadores MySQL e PostgreSQL suportam comentários.
 
@@ -366,7 +366,7 @@ create_join_table :products, :categories, column_options: { null: true }
 
 Por padrão, o nome da tabela de *join* vem da união dos dois primeiros
 argumentos fornecidos para `create_join_table` em ordem alfabética.
-Para customizar o nome da table, forneça uma opção `:table_name`:
+Para customizar o nome da tabela, forneça uma opção `:table_name`:
 
 ```ruby
 create_join_table :products, :categories, table_name: :categorization
@@ -384,7 +384,7 @@ create_join_table :products, :categories do |t|
 end
 ```
 
-### Mudando tabelas
+### Mudando Tabelas
 
 Um primo próximo do `create_table` é `change_table`, usado para mudar tabelas
 existentes. É usado de maneira semelhante ao `create_table` mas o objeto
@@ -402,7 +402,7 @@ end
 remove as colunas `description` e `name`, cria uma coluna de string `part_number`
 e adiciona um índice nela. Finalmente renomeia a coluna `upccode`.
 
-### Mundado Colunas
+### Mudando Colunas
 
 Assim como o `remove_column` e `add_column`, o Rails fornece o método de
 *migration* `change_column`.
@@ -453,20 +453,20 @@ NOTE: `null` e `default` não podem ser especificados via linha de comando.
 
 ### Foreign Keys (Chaves Estrangeiras)
 
-Embora não seja necessário, você pode adicionar restrições de foreign key (chave estrageira) para
+Embora não seja necessário, você pode adicionar restrições de foreign key (chave estrangeira) para
 [garantir a integridade referencial](#active-record-and-referential-integrity).
 
 ```ruby
 add_foreign_key :articles, :authors
 ```
 
-Isso adiciona uma nova foreign key (chave estrangeira) à coluna `author_id` da tabela
+Isso adiciona uma nova *foreign key* (chave estrangeira) à coluna `author_id` da tabela
 `articles`. A chave referencia a coluna `id` para a tabela `authors`. Se os
 nomes da coluna não puderem ser derivados dos nomes das tabelas, você poderá usar as
 opções `:column` e `:primary_key`.
-O Rails irá gerar um nome para cada foreign key (chave estrangeira) começando com
+O Rails irá gerar um nome para cada *foreign key* (chave estrangeira) começando com
 `fk_rails_` seguido por 10 caracteres que são gerados
-deterministicamente a partir do `from_table` e `column`.
+especificamente a partir do `from_table` e `column`.
 Existe uma opção `:name` para especificar um nome diferente se necessário.
 
 NOTE: O Active Record suporta apenas *foreign keys* (chaves estrangeiras) de coluna única. `execute` e
