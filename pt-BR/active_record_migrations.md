@@ -322,7 +322,7 @@ create_table :products do |t|
 end
 ```
 
-Que cria uma tabela `produtos` com uma coluna chamada `nome` (e como discutido
+Que cria uma tabela `products` com uma coluna chamada `name` (e como discutido
 abaixo, uma coluna implícita `id`.
 
 Por padrão, o `create_table` criará uma chave primária chamada `id`. Você pode mudar
@@ -415,7 +415,7 @@ Isso muda a coluna `part_number` na tabela produtos para ser um campo `:text`.
 Note que o comando `change_column` é irreversível.
 
 Além do `change_column`, os métodos `change_column_null` e `change_column_default`
-são usados especificamente para alterar uma *not null constraint* e valores
+são usados especificamente para alterar uma restrição de não ser nulo e valores
 padrão de uma coluna.
 
 ```ruby
@@ -446,7 +446,7 @@ estiver usando um valor dinâmico (como uma data), o padrão será calculado
 apenas na primeira vez (ou seja, na data em que a *migration* é aplicada).
 * `comment`      Adiciona um comentário para a coluna.
 
-Alguns adaptadores podem suportar opções adicionais; consulte a documentação da API de um adaptador espécifico
+Alguns adaptadores podem suportar opções adicionais; consulte a documentação da API de um adaptador específico
 para maiores informações.
 
 NOTE: `null` e `default` não podem ser especificados via linha de comando.
@@ -464,6 +464,7 @@ Isso adiciona uma nova foreign key (chave estrangeira) à coluna `author_id` da 
 `articles`. A chave referencia a coluna `id` para a tabela `authors`. Se os
 nomes da coluna não puderem ser derivados dos nomes das tabelas, você poderá usar as
 opções `:column` e `:primary_key`.
+
 O Rails irá gerar um nome para cada foreign key (chave estrangeira) começando com
 `fk_rails_` seguido por 10 caracteres que são gerados
 deterministicamente a partir do `from_table` e `column`.
@@ -473,7 +474,7 @@ NOTE: O Active Record suporta apenas foreign keys (chaves estrangeiras) de colun
 `structure.sql` são obrigados a usar foreign keys (chaves estrangeiras) compostas. Consulte
 [Schema Dumping e Você](#schema-dumping-and-you).
 
-A remoção de uma foreign key (chave estrangeira) também é fácil:
+A remoção de uma foreign key (chave estrangeira) também é possível:
 
 ```ruby
 # let Active Record figure out the column name
@@ -538,7 +539,7 @@ automaticamente. Atualmente, o método `change` suporta apenas estas definiçõe
 `change_default` ou `remove`.
 
 `remove_column` é reversível se você fornecer o tipo de coluna como o terceiro
-argumento. Forneça também as opções da coluna original, caso contrário, o Rails poderá
+argumento. Forneça também as opções da coluna original, caso contrário, o Rails não poderá
 recriar a coluna exatamente ao reverter:
 
 ```ruby
