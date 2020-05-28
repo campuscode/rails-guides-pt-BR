@@ -341,14 +341,14 @@ acrescentará `ENGINE=BLACKHOLE` à instrução SQL usada para criar a tabela.
 
 Você também pode passar a opção `:comment` com qualquer descrição para a tabela
 que serão armazenados no próprio bando de dados e poderão ser visualizados com ferramentas de administração
-de bando de dados, como MySQL Workbench ou PgAdmin III. É altamente recomendável especificar
-comentários nas *migrations* para aplicações com grandes bancos de dados, pois ajuda as pessoas
+de banco de dados, como MySQL Workbench ou PgAdmin III. É altamente recomendável especificar
+comentários nas *migrations* para aplicações com grandes bancos de dados, pois ajudam as pessoas
 a entender o modelo de dados e gerar documentação.
 Atualmente, apenas os adaptadores MySQL e PostgreSQL suportam comentários.
 
-### Criando uma Tabela Join
+### Criando uma Tabela de Junção (Join Table)
 
-O metódo de *migration* `create_join_table` cria uma tabela *join* HABTM (tem e pertence a
+O método de *migration* `create_join_table` cria uma tabela *join* HABTM (tem e pertence a
 muitos). Um uso comum seria:
 
 ```ruby
@@ -365,8 +365,8 @@ create_join_table :products, :categories, column_options: { null: true }
 ```
 
 Por padrão, o nome da tabela de *join* vem da união dos dois primeiros
-argumentos fornecidos para `create_join_table` em ordem alfabética;
-Para customizar o nome da table, forneça uma opção `:table_name`:
+argumentos fornecidos para `create_join_table` em ordem alfabética.
+Para customizar o nome da tabela, forneça uma opção `:table_name`:
 
 ```ruby
 create_join_table :products, :categories, table_name: :categorization
@@ -384,7 +384,7 @@ create_join_table :products, :categories do |t|
 end
 ```
 
-### Mudando tabelas
+### Mudando Tabelas
 
 Um primo próximo do `create_table` é `change_table`, usado para mudar tabelas
 existentes. É usado de maneira semelhante ao `create_table` mas o objeto
@@ -402,7 +402,7 @@ end
 remove as colunas `description` e `name`, cria uma coluna de string `part_number`
 e adiciona um índice nela. Finalmente renomeia a coluna `upccode`.
 
-### Mundado Colunas
+### Mudando Colunas
 
 Assim como o `remove_column` e `add_column`, o Rails fornece o método de
 *migration* `change_column`.
@@ -453,24 +453,23 @@ NOTE: `null` e `default` não podem ser especificados via linha de comando.
 
 ### Foreign Keys (Chaves Estrangeiras)
 
-Embora não seja necessário, você pode adicionar restrições de foreign key (chave estrageira) para
+Embora não seja necessário, você pode adicionar restrições de foreign key (chave estrangeira) para
 [garantir a integridade referencial](#active-record-and-referential-integrity).
 
 ```ruby
 add_foreign_key :articles, :authors
 ```
 
-Isso adiciona uma nova foreign key (chave estrangeira) à coluna `author_id` da tabela
+Isso adiciona uma nova *foreign key* (chave estrangeira) à coluna `author_id` da tabela
 `articles`. A chave referencia a coluna `id` para a tabela `authors`. Se os
 nomes da coluna não puderem ser derivados dos nomes das tabelas, você poderá usar as
 opções `:column` e `:primary_key`.
-
-O Rails irá gerar um nome para cada foreign key (chave estrangeira) começando com
+O Rails irá gerar um nome para cada *foreign key* (chave estrangeira) começando com
 `fk_rails_` seguido por 10 caracteres que são gerados
-deterministicamente a partir do `from_table` e `column`.
+especificamente a partir do `from_table` e `column`.
 Existe uma opção `:name` para especificar um nome diferente se necessário.
 
-NOTE: O Active Record suporta apenas foreign keys (chaves estrangeiras) de coluna única. `execute` e
+NOTE: O Active Record suporta apenas *foreign keys* (chaves estrangeiras) de coluna única. `execute` e
 `structure.sql` são obrigados a usar foreign keys (chaves estrangeiras) compostas. Consulte
 [Schema Dumping e Você](#schema-dumping-and-you).
 
@@ -499,7 +498,7 @@ Product.connection.execute("UPDATE products SET price = 'free' WHERE 1=1")
 Para mais detalhes e exemplos de métodos individuais, consulte a documentação da API.
 Em particular, a documentação para
 [`ActiveRecord::ConnectionAdapters::SchemaStatements`](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html)
-(que fornece os métodos disponíveis nos métodos `change`,` up` e `down`),
+(que fornece os métodos disponíveis nos métodos `change`, `up` e `down`),
 [`ActiveRecord::ConnectionAdapters::TableDefinition`](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html)
 (que fornece os métodos disponíveis no objeto gerado por `create_table`)
 e
@@ -587,7 +586,7 @@ end
 
 O uso de `reversible` garantirá que as instruções também sejam executadas na
 ordem certa. Se o exemplo anterior de *migration* for revertido,
-o bloco `down` será executado depois da coluna `home_page_url` for removida e
+o bloco `down` será executado depois que a coluna `home_page_url` for removida e
 logo antes da tabela `distributors` for apagada.
 
 Às vezes sua *migration* fará algo que é simplesmente irreversível;
@@ -602,7 +601,7 @@ Você também pode usar o estilo antigo de *migration* usando os métodos `up` e
 em vez do método `change`.
 O método `up` deve descrever a transformação que você deseja fazer no seu
 *schema*, e o método `down` da sua *migration* deve reverter as
-transformações feitas pelo método `up`. Em outras palavas, o *schema* do bando de dados
+transformações feitas pelo método `up`. Em outras palavas, o *schema* do banco de dados
 deve permanecer inalterado se você fizer um `up` seguido por um `down`. Por exemplo, se você
 criar uma tabela em um método `up`, você deve apagá-la no método `down`. É
 aconselhável realizar as transformações precisamente na ordem inversa em que foram
@@ -640,7 +639,7 @@ class ExampleMigration < ActiveRecord::Migration[5.0]
 end
 ```
 
-Se sua *migration* é irreversível, você deve levandatar um
+Se sua *migration* é irreversível, você deve dar `raise` num
 `ActiveRecord::IrreversibleMigration` do seu método `down`. Se alguém tentar
 reveter sua *migration*, uma mensagem de erro será exibida dizendo que isso
 não pode ser feito.
