@@ -304,17 +304,17 @@ end
 
 TIP: Dê uma olhada no `--help` dos *generators* (geradores) obter mais detalhes.
 
-Writing a Migration
+Escrevendo uma *Migration*
 -------------------
 
-Once you have created your migration using one of the generators it's time to
-get to work!
+Depois de criar sua *migration* usando um dos geradores, é hora de
+começar os trabalhos!
 
-### Creating a Table
+### Criando uma Tabela 
 
-The `create_table` method is one of the most fundamental, but most of the time,
-will be generated for you from using a model or scaffold generator. A typical
-use would be
+O método `create_table` é um dos mais fundamentais, mas na maioria das vezes,
+ele será criado para você usando um gerador de *scaffold* ou *model*. Um uso
+típico seria:
 
 ```ruby
 create_table :products do |t|
@@ -322,14 +322,14 @@ create_table :products do |t|
 end
 ```
 
-which creates a `products` table with a column called `name` (and as discussed
-below, an implicit `id` column).
+Que cria uma tabela `products` com uma coluna chamada `name` (e como discutido
+abaixo, uma coluna implícita `id`.
 
-By default, `create_table` will create a primary key called `id`. You can change
-the name of the primary key with the `:primary_key` option (don't forget to
-update the corresponding model) or, if you don't want a primary key at all, you
-can pass the option `id: false`. If you need to pass database specific options
-you can place an SQL fragment in the `:options` option. For example:
+Por padrão, o `create_table` criará uma chave primária chamada `id`. Você pode mudar
+o nome da chave primária com a opção `:primary_key` (não esqueça de
+atualizar o *model* correspondente) ou, se você não quer uma chave primária, você
+pode passar a opção `id: false`. Se você precisa passar opções específicas do banco de dados 
+você pode colocar um fragmento SQL na opção `:option`. Por exemplo:
 
 ```ruby
 create_table :products, options: "ENGINE=BLACKHOLE" do |t|
@@ -337,45 +337,45 @@ create_table :products, options: "ENGINE=BLACKHOLE" do |t|
 end
 ```
 
-will append `ENGINE=BLACKHOLE` to the SQL statement used to create the table.
+acrescentará `ENGINE=BLACKHOLE` à instrução SQL usada para criar a tabela.
 
-Also you can pass the `:comment` option with any description for the table
-that will be stored in database itself and can be viewed with database administration
-tools, such as MySQL Workbench or PgAdmin III. It's highly recommended to specify
-comments in migrations for applications with large databases as it helps people
-to understand data model and generate documentation.
-Currently only the MySQL and PostgreSQL adapters support comments.
+Você também pode passar a opção `:comment` com qualquer descrição para a tabela
+que serão armazenados no próprio bando de dados e poderão ser visualizados com ferramentas de administração
+de banco de dados, como MySQL Workbench ou PgAdmin III. É altamente recomendável especificar
+comentários nas *migrations* para aplicações com grandes bancos de dados, pois ajudam as pessoas
+a entender o modelo de dados e gerar documentação.
+Atualmente, apenas os adaptadores MySQL e PostgreSQL suportam comentários.
 
-### Creating a Join Table
+### Criando uma Tabela de Junção (Join Table)
 
-The migration method `create_join_table` creates an HABTM (has and belongs to
-many) join table. A typical use would be:
+O método de *migration* `create_join_table` cria uma tabela *join* HABTM (tem e pertence a
+muitos). Um uso comum seria:
 
 ```ruby
 create_join_table :products, :categories
 ```
 
-which creates a `categories_products` table with two columns called
-`category_id` and `product_id`. These columns have the option `:null` set to
-`false` by default. This can be overridden by specifying the `:column_options`
-option:
+que cria uma tabela `categories_products` com duas colunas chamadas
+`category_id` e `product_id`. Essas colunas têm a opção `:null` definida como
+`false` por padrão. Isso pode ser substituído, especificando a opção
+`:column_options`:
 
 ```ruby
 create_join_table :products, :categories, column_options: { null: true }
 ```
 
-By default, the name of the join table comes from the union of the first two
-arguments provided to create_join_table, in alphabetical order.
-To customize the name of the table, provide a `:table_name` option:
+Por padrão, o nome da tabela de *join* vem da união dos dois primeiros
+argumentos fornecidos para `create_join_table` em ordem alfabética.
+Para customizar o nome da tabela, forneça uma opção `:table_name`:
 
 ```ruby
 create_join_table :products, :categories, table_name: :categorization
 ```
 
-creates a `categorization` table.
+cria uma tabela `categorization`.
 
-`create_join_table` also accepts a block, which you can use to add indices
-(which are not created by default) or additional columns:
+`create_join_table` também aceita um bloco, que você pode usar para adicionar índices
+(que não são criados por padrão) ou colunas adicionais:
 
 ```ruby
 create_join_table :products, :categories do |t|
@@ -384,11 +384,11 @@ create_join_table :products, :categories do |t|
 end
 ```
 
-### Changing Tables
+### Mudando Tabelas
 
-A close cousin of `create_table` is `change_table`, used for changing existing
-tables. It is used in a similar fashion to `create_table` but the object
-yielded to the block knows more tricks. For example:
+Um primo próximo do `create_table` é `change_table`, usado para mudar tabelas
+existentes. É usado de maneira semelhante ao `create_table` mas o objeto
+produzido no bloco conhece mais truques. Por exemplo:
 
 ```ruby
 change_table :products do |t|
@@ -399,82 +399,81 @@ change_table :products do |t|
 end
 ```
 
-removes the `description` and `name` columns, creates a `part_number` string
-column and adds an index on it. Finally it renames the `upccode` column.
+remove as colunas `description` e `name`, cria uma coluna de string `part_number`
+e adiciona um índice nela. Finalmente renomeia a coluna `upccode`.
 
-### Changing Columns
+### Mudando Colunas
 
-Like the `remove_column` and `add_column` Rails provides the `change_column`
-migration method.
+Assim como o `remove_column` e `add_column`, o Rails fornece o método de
+*migration* `change_column`.
 
 ```ruby
 change_column :products, :part_number, :text
 ```
 
-This changes the column `part_number` on products table to be a `:text` field.
-Note that `change_column` command is irreversible.
+Isso muda a coluna `part_number` na tabela produtos para ser um campo `:text`.
+Note que o comando `change_column` é irreversível.
 
-Besides `change_column`, the `change_column_null` and `change_column_default`
-methods are used specifically to change a not null constraint and default
-values of a column.
+Além do `change_column`, os métodos `change_column_null` e `change_column_default`
+são usados especificamente para alterar uma restrição de não ser nulo e valores
+padrão de uma coluna.
 
 ```ruby
 change_column_null :products, :name, false
 change_column_default :products, :approved, from: true, to: false
 ```
 
-This sets `:name` field on products to a `NOT NULL` column and the default
-value of the `:approved` field from true to false.
+Isso define o campo `:name` em produtos para uma coluna `NOT NULL` e o valor
+padrão do campo `:approved` de `true` para `false`.
 
-NOTE: You could also write the above `change_column_default` migration as
-`change_column_default :products, :approved, false`, but unlike the previous
-example, this would make your migration irreversible.
+NOTE: Você também pode escrever a *migration* `change_column_default` acima como
+`change_column_default :products, :approved, false`, mas diferente do exemplo
+anterior, isso tornaria sua *migration* irreversível.
 
-### Column Modifiers
+### Modificadores de Coluna
 
-Column modifiers can be applied when creating or changing a column:
+Modificadores de coluna podem ser aplicados ao criar ou alterar uma coluna:
 
-* `limit`        Sets the maximum size of the `string/text/binary/integer` fields.
-* `precision`    Defines the precision for the `decimal` fields, representing the
-total number of digits in the number.
-* `scale`        Defines the scale for the `decimal` fields, representing the
-number of digits after the decimal point.
-* `polymorphic`  Adds a `type` column for `belongs_to` associations.
-* `null`         Allows or disallows `NULL` values in the column.
-* `default`      Allows to set a default value on the column. Note that if you
-are using a dynamic value (such as a date), the default will only be calculated
-the first time (i.e. on the date the migration is applied).
-* `comment`      Adds a comment for the column.
+* `limit`        Define o tamanho máximo dos campos `string/text/binary/integer`.
+* `precision`    Define a precisão para os campos `decimal`, representando a
+quantidade total de dígitos no número.
+* `scale`        Define a escala para os campos `decimal`, representando o
+número de digitos após o ponto decimal.
+* `polymorphic`  Adiciona uma coluna `type` para a associação `belongs_to`.
+* `null`         Autoriza ou não valores `NULL` na coluna.
+* `default`      Permite definir um valor padrão na coluna. Note que se você
+estiver usando um valor dinâmico (como uma data), o padrão será calculado
+apenas na primeira vez (ou seja, na data em que a *migration* é aplicada).
+* `comment`      Adiciona um comentário para a coluna.
 
-Some adapters may support additional options; see the adapter specific API docs
-for further information.
+Alguns adaptadores podem suportar opções adicionais; consulte a documentação da API de um adaptador específico
+para maiores informações.
 
-NOTE: `null` and `default` cannot be specified via command line.
+NOTE: `null` e `default` não podem ser especificados via linha de comando.
 
-### Foreign Keys
+### Foreign Keys (Chaves Estrangeiras)
 
-While it's not required you might want to add foreign key constraints to
-[guarantee referential integrity](#active-record-and-referential-integrity).
+Embora não seja necessário, você pode adicionar restrições de foreign key (chave estrangeira) para
+[garantir a integridade referencial](#active-record-and-referential-integrity).
 
 ```ruby
 add_foreign_key :articles, :authors
 ```
 
-This adds a new foreign key to the `author_id` column of the `articles`
-table. The key references the `id` column of the `authors` table. If the
-column names cannot be derived from the table names, you can use the
-`:column` and `:primary_key` options.
+Isso adiciona uma nova *foreign key* (chave estrangeira) à coluna `author_id` da tabela
+`articles`. A chave referencia a coluna `id` para a tabela `authors`. Se os
+nomes da coluna não puderem ser derivados dos nomes das tabelas, você poderá usar as
+opções `:column` e `:primary_key`.
+O Rails irá gerar um nome para cada *foreign key* (chave estrangeira) começando com
+`fk_rails_` seguido por 10 caracteres que são gerados
+especificamente a partir do `from_table` e `column`.
+Existe uma opção `:name` para especificar um nome diferente se necessário.
 
-Rails will generate a name for every foreign key starting with
-`fk_rails_` followed by 10 characters which are deterministically
-generated from the `from_table` and `column`.
-There is a `:name` option to specify a different name if needed.
+NOTE: O Active Record suporta apenas *foreign keys* (chaves estrangeiras) de coluna única. `execute` e
+`structure.sql` são obrigados a usar foreign keys (chaves estrangeiras) compostas. Consulte
+[Schema Dumping e Você](#schema-dumping-and-you).
 
-NOTE: Active Record only supports single column foreign keys. `execute` and
-`structure.sql` are required to use composite foreign keys. See
-[Schema Dumping and You](#schema-dumping-and-you).
-
-Removing a foreign key is easy as well:
+A remoção de uma foreign key (chave estrangeira) também é possível:
 
 ```ruby
 # let Active Record figure out the column name
@@ -487,31 +486,31 @@ remove_foreign_key :accounts, column: :owner_id
 remove_foreign_key :accounts, name: :special_fk_name
 ```
 
-### When Helpers aren't Enough
+### Quando os Helpers não são Suficientes
 
-If the helpers provided by Active Record aren't enough you can use the `execute`
-method to execute arbitrary SQL:
+Se os *helpers* fornecidos pelo Active Record não forem suficientes, você poderá usar o método `execute`
+para executar SQL arbitrário:
 
 ```ruby
 Product.connection.execute("UPDATE products SET price = 'free' WHERE 1=1")
 ```
 
-For more details and examples of individual methods, check the API documentation.
-In particular the documentation for
+Para mais detalhes e exemplos de métodos individuais, consulte a documentação da API.
+Em particular, a documentação para
 [`ActiveRecord::ConnectionAdapters::SchemaStatements`](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html)
-(which provides the methods available in the `change`, `up` and `down` methods),
+(que fornece os métodos disponíveis nos métodos `change`, `up` e `down`),
 [`ActiveRecord::ConnectionAdapters::TableDefinition`](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html)
-(which provides the methods available on the object yielded by `create_table`)
-and
+(que fornece os métodos disponíveis no objeto gerado por `create_table`)
+e
 [`ActiveRecord::ConnectionAdapters::Table`](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/Table.html)
-(which provides the methods available on the object yielded by `change_table`).
+(que fornece os métodos disponíveis no objeto gerado por `change_table`).
 
-### Using the `change` Method
+### Usando o Método `change`
 
-The `change` method is the primary way of writing migrations. It works for the
-majority of cases, where Active Record knows how to reverse the migration
-automatically. Currently, the `change` method supports only these migration
-definitions:
+O método `change` é a principal maneira de escrever *migrations*. Funciona para a
+maioria dos casos, onde o *Active Record* sabe como reverter a *migration*
+automaticamente. Atualmente, o método `change` suporta apenas estas definições de
+*migrations*:
 
 * add_column
 * add_foreign_key
@@ -535,25 +534,25 @@ definitions:
 * rename_index
 * rename_table
 
-`change_table` is also reversible, as long as the block does not call `change`,
-`change_default` or `remove`.
+`change_table` também é reversível, desde que o bloco não chame `change`,
+`change_default` ou `remove`.
 
-`remove_column` is reversible if you supply the column type as the third
-argument. Provide the original column options too, otherwise Rails can't
-recreate the column exactly when rolling back:
+`remove_column` é reversível se você fornecer o tipo de coluna como o terceiro
+argumento. Forneça também as opções da coluna original, caso contrário, o Rails não poderá
+recriar a coluna exatamente ao reverter:
 
 ```ruby
 remove_column :posts, :slug, :string, null: false, default: ''
 ```
 
-If you're going to need to use any other methods, you should use `reversible`
-or write the `up` and `down` methods instead of using the `change` method.
+Se você precisar usar outros métodos, você deve usar `reversible`
+ou escrever os métodos `up` e `down` em vez de usar o médoto `change`.
 
-### Using `reversible`
+### Usando `reversible`
 
-Complex migrations may require processing that Active Record doesn't know how
-to reverse. You can use `reversible` to specify what to do when running a
-migration and what else to do when reverting it. For example:
+*Migrations* complexas podem exigir processamento que o *Active Record* não sabe como
+reverter. Você pode usar `reversible` para especificar o que fazer ao executar uma
+*migration* e o que mais fazer ao revertê-la. Por exemplo:
 
 ```ruby
 class ExampleMigration < ActiveRecord::Migration[5.0]
@@ -585,28 +584,28 @@ class ExampleMigration < ActiveRecord::Migration[5.0]
 end
 ```
 
-Using `reversible` will ensure that the instructions are executed in the
-right order too. If the previous example migration is reverted,
-the `down` block will be run after the `home_page_url` column is removed and
-right before the table `distributors` is dropped.
+O uso de `reversible` garantirá que as instruções também sejam executadas na
+ordem certa. Se o exemplo anterior de *migration* for revertido,
+o bloco `down` será executado depois que a coluna `home_page_url` for removida e
+logo antes da tabela `distributors` for apagada.
 
-Sometimes your migration will do something which is just plain irreversible; for
-example, it might destroy some data. In such cases, you can raise
-`ActiveRecord::IrreversibleMigration` in your `down` block. If someone tries
-to revert your migration, an error message will be displayed saying that it
-can't be done.
+Às vezes sua *migration* fará algo que é simplesmente irreversível;
+por exemplo, pode destruir alguns dados. Em alguns casos, você pode levantar o
+`ActiveRecord::IrreversibleMigration` no seu bloco `down`. Se alguém tentar
+reverter sua *migration*, uma mensagem de erro será exibida dizendo que isso
+não pode ser feito.
 
-### Using the `up`/`down` Methods
+### Usando os métodos `up`/`down`
 
-You can also use the old style of migration using `up` and `down` methods
-instead of the `change` method.
-The `up` method should describe the transformation you'd like to make to your
-schema, and the `down` method of your migration should revert the
-transformations done by the `up` method. In other words, the database schema
-should be unchanged if you do an `up` followed by a `down`. For example, if you
-create a table in the `up` method, you should drop it in the `down` method. It
-is wise to perform the transformations in precisely the reverse order they were
-made in the `up` method. The example in the `reversible` section is equivalent to:
+Você também pode usar o estilo antigo de *migration* usando os métodos `up` e `down`
+em vez do método `change`.
+O método `up` deve descrever a transformação que você deseja fazer no seu
+*schema*, e o método `down` da sua *migration* deve reverter as
+transformações feitas pelo método `up`. Em outras palavas, o *schema* do banco de dados
+deve permanecer inalterado se você fizer um `up` seguido por um `down`. Por exemplo, se você
+criar uma tabela em um método `up`, você deve apagá-la no método `down`. É
+aconselhável realizar as transformações precisamente na ordem inversa em que foram
+feitas no método `up`. O exemplo na seção `reversible` é equivalente a:
 
 ```ruby
 class ExampleMigration < ActiveRecord::Migration[5.0]
@@ -640,14 +639,15 @@ class ExampleMigration < ActiveRecord::Migration[5.0]
 end
 ```
 
-If your migration is irreversible, you should raise
-`ActiveRecord::IrreversibleMigration` from your `down` method. If someone tries
-to revert your migration, an error message will be displayed saying that it
-can't be done.
+Se sua *migration* é irreversível, você deve dar `raise` num
+`ActiveRecord::IrreversibleMigration` do seu método `down`. Se alguém tentar
+reveter sua *migration*, uma mensagem de erro será exibida dizendo que isso
+não pode ser feito.
 
-### Reverting Previous Migrations
+### Revertendo *Migrations* Anteriores
 
 You can use Active Record's ability to rollback migrations using the `revert` method:
+Você pode usar a capacidade do Active Record de reverter *migrations* usando o método `revert`:
 
 ```ruby
 require_relative '20121212123456_example_migration'
@@ -663,11 +663,11 @@ class FixupExampleMigration < ActiveRecord::Migration[5.0]
 end
 ```
 
-The `revert` method also accepts a block of instructions to reverse.
-This could be useful to revert selected parts of previous migrations.
-For example, let's imagine that `ExampleMigration` is committed and it
-is later decided it would be best to use Active Record validations,
-in place of the `CHECK` constraint, to verify the zipcode.
+O método `revert` também aceita um bloco de instruções para reverter.
+Isso pode ser útil para reverter partes selecionadas de *migrations* anteriores.
+Por exemplo, vamos imaginar que `ExampleMigration` seja executado e
+mais tarde decidimos que seria melhor usar as validações do Active Record,
+no lugar da *constraint* (restrição) `CHECK`, para verificar o CEP.
 
 ```ruby
 class DontUseConstraintForZipcodeValidationMigration < ActiveRecord::Migration[5.0]
@@ -697,15 +697,15 @@ class DontUseConstraintForZipcodeValidationMigration < ActiveRecord::Migration[5
 end
 ```
 
-The same migration could also have been written without using `revert`
-but this would have involved a few more steps: reversing the order
-of `create_table` and `reversible`, replacing `create_table`
-by `drop_table`, and finally replacing `up` by `down` and vice-versa.
-This is all taken care of by `revert`.
+A mesma *migration* também poderia ter sido escrita sem o uso do `revert`
+mas isso envolveria mais algumas etapas: reverter a ordem
+de `create_table` e `reversible`, substituindo `create_table`
+por `drop_table`, e finalmente mudando `up` para `down` e vice-versa.
+Tudo isso é resolvido por `revert`.
 
-NOTE: If you want to add check constraints like in the examples above,
-you will have to use `structure.sql` as dump method. See
-[Schema Dumping and You](#schema-dumping-and-you).
+NOTE: Se você quer adicionar verificadores de *constraints* (restrições) como nos exemplos acima,
+você terá que usar `structure.sql` como método *dump*. Consulte
+[Schema Dumping e Você](#schema-dumping-and-you).
 
 Running Migrations
 ------------------
