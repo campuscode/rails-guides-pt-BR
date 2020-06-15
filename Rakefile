@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative './lib/search_index'
+
 namespace :guides do
   desc 'Generate guides (for authors), use ONLY=foo to process just "foo.md"'
   task generate: "generate:html"
@@ -23,11 +25,13 @@ namespace :guides do
       ENV["WARNINGS"] = "1" # authors can't disable this
       ENV["RAILS_VERSION"] = "v6.0.3.4"
       ENV["GUIDES_LANGUAGE"] = "pt-BR"
+      system 'git apply rails.patch'
       system 'cp -r ./pt-BR rails/guides/source'
       ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
       system 'rm -rf output'
       system 'mv rails/guides/output output'
       system 'rm -rf rails/guides/source/pt-BR'
+      RailsGuides::SearchIndex.new.generate
     end
 
     desc "Generate .mobi file. The kindlegen executable must be in your PATH. You can get it for free from http://www.amazon.com/gp/feature.html?docId=1000765211"
@@ -104,7 +108,6 @@ task default: "guides:help"
 
 namespace :assets do
   task :precompile do
-    system('git apply rails.patch')
     system('rake guides:generate:html')
     system('cp $(find output/pt-BR -name "*.html") site')
   end
