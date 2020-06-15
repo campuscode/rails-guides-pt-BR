@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative './lib/search_index'
+
 namespace :guides do
   desc 'Generate guides (for authors), use ONLY=foo to process just "foo.md"'
   task generate: "generate:html"
@@ -28,6 +30,12 @@ namespace :guides do
       system 'rm -rf output'
       system 'mv rails/guides/output output'
       system 'rm -rf rails/guides/source/pt-BR'
+      output_dir = File.expand_path("./output/pt-BR", __dir__)
+      site_dir = File.expand_path("./site", __dir__)
+      source_dir = File.expand_path("./pt-BR", __dir__)
+      guides_to_generate = Dir.entries(source_dir).grep(/\.(?:erb|md)\z/)
+      RailsGuides::SearchIndex.new(output_dir, site_dir,
+                                   guides_to_generate).generate
     end
 
     desc "Generate .mobi file. The kindlegen executable must be in your PATH. You can get it for free from http://www.amazon.com/gp/feature.html?docId=1000765211"

@@ -11,3 +11,4 @@ gem "w3c_validators"
 gem "kindlerb", "~> 1.2.0"
 gem 'activesupport', '~> 6.0.3'
 gem 'actionpack', '~> 6.0.3'
+gem 'execjs'
