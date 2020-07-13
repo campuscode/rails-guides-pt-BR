@@ -10,7 +10,7 @@ facilidade!
 
 Apoós ler este guia, você saberá:
 
-* O basico de Ajax. 
+* O basico de *Ajax*. 
 * *Unobtrusive* JavaScript.
 * Como os *helpers* internos do rails ajudam você.
 * Como lidar com Ajax no lado do servidor.
@@ -19,44 +19,44 @@ Apoós ler este guia, você saberá:
 
 -------------------------------------------------------------------------------
 
-An Introduction to Ajax
+Uma introdução ao Ajax
 ------------------------
 
-In order to understand Ajax, you must first understand what a web browser does
-normally.
+Para entender o Ajax, você precisa entender primeiro o que o navegador faz normalmente.
 
-When you type `http://localhost:3000` into your browser's address bar and hit
-'Go', the browser (your 'client') makes a request to the server. It parses the
-response, then fetches all associated assets, like JavaScript files,
-stylesheets and images. It then assembles the page. If you click a link, it
-does the same process: fetch the page, fetch the assets, put it all together,
-show you the results. This is called the 'request response cycle'.
+Quando você digita `http://localhost:3000` na barra de endereço do navegador
+e clica no Enter, o navegador (seu cliente) faz uma requisição para o servidor.
+Ele analisa a resposta, traz todos os *assets* associados, como arquivos JavaScript,
+*stylesheets* e imagens. E então monta a página. Se você clica em um link, ele
+repete o mesmo processo: encontra a página, encontra os *assets*, coloca eles juntos
+e mostra o resultado. Isso é chamado de 'ciclo de requisição e resposta'.
 
-JavaScript can also make requests to the server, and parse the response. It
-also has the ability to update information on the page. Combining these two
-powers, a JavaScript writer can make a web page that can update just parts of
-itself, without needing to get the full page data from the server. This is a
-powerful technique that we call Ajax.
 
-Rails ships with CoffeeScript by default, and so the rest of the examples
-in this guide will be in CoffeeScript. All of these lessons, of course, apply
-to vanilla JavaScript as well.
+JavaScript também pode fazer requisições para o servidor, e analisar a resposta.
+Ele também tem a habilidade de atualizar informações na página. Combinando
+esses dois poderes, o JavaScript pode fazer uma página web que pode atualizar
+cada parte de si mesma, sem precisar pegar a página inteira do servidor.
+Essa é uma técnica poderosa que nós chamamos de Ajax.
 
-As an example, here's some CoffeeScript code that makes an Ajax request using
-the jQuery library:
+O Rails por padrão embarca com CoffeeScript, então o resto dos exemplos neste
+guia serão em CoffeeScript. Todos essas lições, naturalmente, também funcionam para
+o JavaScript Vanilla.
+
+Como exemplo, aqui está um código CoffeeScript que faz uma requisição Ajax
+usando a biblioteca jQuery:
 
 ```coffeescript
 $.ajax(url: "/test").done (html) ->
   $("#results").append html
 ```
 
-This code fetches data from "/test", and then appends the result to the `div`
-with an id of `results`.
+Este código pega os dados do "/test", e então anexa o resultado na `div` com
+o id `results`.
 
-Rails provides quite a bit of built-in support for building web pages with this
-technique. You rarely have to write this code yourself. The rest of this guide
-will show you how Rails can help you write websites in this way, but it's
-all built on top of this fairly simple technique.
+O Rails fornece muito suporte interno para a criação de páginas web
+com essa técnica. Você raramente terá de escrever esse código. O resto deste
+guia irá lhe mostrar como o Rails pode te ajudar a escrever páginas web
+desse modo, mas tudo isso é feito a partir dessa técnica muito simples.
 
 Unobtrusive JavaScript
 ----------------------
