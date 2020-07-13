@@ -1,21 +1,21 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Working with JavaScript in Rails
+Trabalhando com JavaScript no Rails
 ================================
 
-This guide covers the built-in Ajax/JavaScript functionality of Rails (and
-more); it will enable you to create rich and dynamic Ajax applications with
-ease!
+Este guia aborda as funcionalidades internas Ajax/javascript do Rails (e
+mais); Isso permitirá que você crie aplicações Ajax ricas e dinâmicas com
+facilidade!
 
-After reading this guide, you will know:
+Apoós ler este guia, você saberá:
 
-* The basics of Ajax.
-* Unobtrusive JavaScript.
-* How Rails' built-in helpers assist you.
-* How to handle Ajax on the server side.
-* The Turbolinks gem.
-* How to include your Cross-Site Request Forgery token in request headers
+* O basico de Ajax. 
+* *Unobtrusive* JavaScript.
+* Como os *helpers* internos do rails ajudam você.
+* Como lidar com Ajax no lado do servidor.
+* a *gem* Turbolinks.
+* Como incluir seu token de Falsa Requisição Entre Sites (CSRF) nos cabeçalhos da requisição
 
 -------------------------------------------------------------------------------
 
