@@ -14,7 +14,7 @@ Apoós ler este guia, você saberá:
 * *Unobtrusive* JavaScript.
 * Como os *helpers* internos do rails ajudam você.
 * Como lidar com Ajax no lado do servidor.
-* a *gem* Turbolinks.
+* A *gem* Turbolinks.
 * Como incluir seu token de Falsa Requisição Entre Sites (CSRF) nos cabeçalhos da requisição
 
 -------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ Uma introdução ao Ajax
 Para entender o Ajax, você precisa entender primeiro o que o navegador faz normalmente.
 
 Quando você digita `http://localhost:3000` na barra de endereço do navegador
-e clica no Enter, o navegador (seu cliente) faz uma requisição para o servidor.
+e clica no Enter, o navegador (seu 'cliente') faz uma requisição para o servidor.
 Ele analisa a resposta, traz todos os *assets* associados, como arquivos JavaScript,
 *stylesheets* e imagens. E então monta a página. Se você clica em um link, ele
 repete o mesmo processo: encontra a página, encontra os *assets*, coloca eles juntos
@@ -34,11 +34,11 @@ e mostra o resultado. Isso é chamado de 'ciclo de requisição e resposta'.
 
 JavaScript também pode fazer requisições para o servidor, e analisar a resposta.
 Ele também tem a habilidade de atualizar informações na página. Combinando
-esses dois poderes, o JavaScript pode fazer uma página web que pode atualizar
-cada parte de si mesma, sem precisar pegar a página inteira do servidor.
+esses dois poderes, o JavaScript permite que uma página web atualize partes
+do seu próprio conteúdo, sem precisar pegar a página inteira do servidor.
 Essa é uma técnica poderosa que nós chamamos de Ajax.
 
-O Rails por padrão embarca com CoffeeScript, então o resto dos exemplos neste
+O Rails é distribuído por padrão com CoffeeScript, então o resto dos exemplos neste
 guia serão em CoffeeScript. Todos essas lições, naturalmente, também funcionam para
 o JavaScript Vanilla.
 
