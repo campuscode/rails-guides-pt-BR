@@ -4,18 +4,18 @@
 Trabalhando com JavaScript no Rails
 ================================
 
-Este guia aborda as funcionalidades internas Ajax/javascript do Rails (e
+Este guia aborda as funcionalidades internas Ajax/JavaScript do Rails (e
 mais); Isso permitirá que você crie aplicações Ajax ricas e dinâmicas com
 facilidade!
 
-Apoós ler este guia, você saberá:
+Após ler este guia, você saberá:
 
-* O basico de *Ajax*. 
+* O básico de *Ajax*. 
 * *Unobtrusive* JavaScript.
-* Como os *helpers* internos do rails ajudam você.
+* Como os *helpers* internos do Rails ajudam você.
 * Como lidar com Ajax no lado do servidor.
 * A *gem* Turbolinks.
-* Como incluir seu token de Falsa Requisição Entre Sites (CSRF) nos cabeçalhos da requisição
+* Como incluir seu token de [Falsa Requisição Entre Sites (CSRF)](https://pt.wikipedia.org/wiki/Cross-site_request_forgery) nos cabeçalhos da requisição
 
 -------------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ Essa é uma técnica poderosa que nós chamamos de Ajax.
 
 O Rails é distribuído por padrão com CoffeeScript, então o resto dos exemplos neste
 guia serão em CoffeeScript. Todos essas lições, naturalmente, também funcionam para
-o JavaScript Vanilla.
+o JavaScript puro (*vanilla*).
 
 Como exemplo, aqui está um código CoffeeScript que faz uma requisição Ajax
 usando a biblioteca jQuery:
