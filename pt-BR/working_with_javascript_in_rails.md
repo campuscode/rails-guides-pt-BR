@@ -11,7 +11,7 @@ facilidade!
 Após ler este guia, você saberá:
 
 * O básico de *Ajax*. 
-* *Unobtrusive* JavaScript.
+* JavaScript não obstrusivo (*unobtrusive*).
 * Como os *helpers* internos do Rails ajudam você.
 * Como lidar com Ajax no lado do servidor.
 * A *gem* Turbolinks.
