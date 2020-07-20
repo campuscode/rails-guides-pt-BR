@@ -55,14 +55,14 @@ end
 ```
 
 O *Active Record* irá executar consultas no banco de dados para você e é compatível com a maioria dos sistemas de banco de dados,
-incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato do método do *Active Record* 
+incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato do método do *Active Record*
 será sempre o mesmo.
 
 Recuperando Objetos do Banco de Dados
 ------------------------------------
 
 Para recuperar objetos do banco de dados, o *Active Record* fornece diversos métodos de localização. Cada método de localização permite que você
-passe argumentos para o mesmo para executar determinada consulta no seu banco de dados sem a necessidade de escrever SQL puro. 
+passe argumentos para o mesmo para executar determinada consulta no seu banco de dados sem a necessidade de escrever SQL puro.
 
 Os métodos são:
 
@@ -127,11 +127,11 @@ SELECT * FROM clients WHERE (clients.id = 10) LIMIT 1
 
 O método `find` irá gerar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro correspondente for encontrado.
 
-Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de *primary keys*. 
+Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de *primary keys*.
 Será retornado um array contendo todos os registros correspondentes para as *primary keys* fornecidas. Por exemplo:
 
 ```ruby
-# Encontra os clientes com as primary keys 1 e 10. 
+# Encontra os clientes com as primary keys 1 e 10.
 clients = Client.find([1, 10]) # Or even Client.find(1, 10)
 # => [#<Client id: 1, first_name: "Lifo">, #<Client id: 10, first_name: "Ryan">]
 ```
@@ -159,7 +159,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients LIMIT 1
 ```
 
-O método `take` retorna `nil` se nenhum registro for encontrado e nenhuma exceção será levantada. 
+O método `take` retorna `nil` se nenhum registro for encontrado e nenhuma exceção será levantada.
 
 Você pode passar um argumento numérico para o método `take` para retornar o mesmo número em resultados. Por exemplo:
 
@@ -249,7 +249,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients ORDER BY clients.id DESC LIMIT 1
 ```
 
-O método `last` retorna `nil` se não encontrar nenhum registro correspondente e nenhuma exceção será levantada. 
+O método `last` retorna `nil` se não encontrar nenhum registro correspondente e nenhuma exceção será levantada.
 
 Se o seu [default scope](active_record_querying.html#applying-a-default-scope) contém um método de ordenação, `last` irá retornar
 o último registro de acordo com essa ordenação.
@@ -333,7 +333,7 @@ um grande número de usuários, ou quando vamos exportar dados.
 Isso pode parecer simples:
 
 ```ruby
-# Isso pode consumir muita memória se a tabela for grande. 
+# Isso pode consumir muita memória se a tabela for grande.
 User.all.each do |user|
   NewsMailer.weekly(user).deliver_now
 end
@@ -347,7 +347,7 @@ pode exceder a quantidade de memória disponível.
 O Rails fornece dois métodos para solucionar esse problema, dividindo os registros em lotes *memory-friendly* para o processamento.
 O primeiro método, `find_each`, retorna um lote de registros e depois submete _cada_ registro individualmente para um bloco como um *model*.
 O segundo método, `find_in_batches`, retorna um lote de registros e depois submete _o lote inteiro_ ao bloco como um array de *models*.
- 
+
 TIP: Os métodos `find_each` e `find_in_batches` são destinados ao uso no processamento em lotes de grandes numéros de registros
 que não irão caber na memória de uma só vez. Se você apenas precisa fazer um  *loop* em milhares de registros, os métodos
 regulares do `find` são a opção preferida.
@@ -373,7 +373,7 @@ User.where(weekly_subscriber: true).find_each do |user|
 end
 ```
 
-contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar. 
+contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar.
 
 Se houver uma ordem presente no receptor, o comportamento depende da *flag* `config.active_record.error_on_ignored_order`.
 Se verdadeiro, `ArgumentError` é levantado, caso contrário a ordem será ignorada e um aviso gerado, que é o padrão. Isto pode
@@ -386,7 +386,7 @@ ser substituído com a opção `:error_on_ignore`, explicado abaixo.
 **`:batch_size`**
 
 A opção `:batch_size` permite que você especifique o número de registros à serem retornados em cada lote, antes de serem passados, individualmente, para o bloco.
-Por exemplo, para retornar registros de um lote de 5000: 
+Por exemplo, para retornar registros de um lote de 5000:
 
 ```ruby
 User.find_each(batch_size: 5000) do |user|
@@ -436,7 +436,7 @@ em vez de individualmente. O exemplo à seguir irá produzir ao bloco fornecido 
 com o bloco final contendo qualquer nota fiscal remanescente:
 
 ```ruby
-# Fornece à add_invoices um array com 1000 notas fiscais de uma vez. 
+# Fornece à add_invoices um array com 1000 notas fiscais de uma vez.
 Invoice.find_in_batches do |invoices|
   export.add_invoices(invoices)
 end
@@ -1744,7 +1744,9 @@ nick.save
 Finding by SQL
 --------------
 
-If you'd like to use your own SQL to find records in a table you can use `find_by_sql`. The `find_by_sql` method will return an array of objects even if the underlying query returns just a single record. For example you could run this query:
+Se você gostaria de usar o seu próprio SQL, para encontrar dados em uma tabela,
+você pode usar `find_by_sql`. O método `find_by_sql` retornará uma lista de objetos
+mesmo que a consulta retorne apenas um único registro. Por exemplo, você pode executar esta consulta:
 
 ```ruby
 Client.find_by_sql("SELECT * FROM clients
@@ -1757,14 +1759,17 @@ Client.find_by_sql("SELECT * FROM clients
 # ]
 ```
 
-`find_by_sql` provides you with a simple way of making custom calls to the database and retrieving instantiated objects.
+`find_by_sql` fornece uma maneira simples de fazer consultas customizadas no banco
+de dados, retornando objetos instanciados.
 
 ### `select_all`
 
-`find_by_sql` has a close relative called `connection#select_all`. `select_all` will retrieve
-objects from the database using custom SQL just like `find_by_sql` but will not instantiate them.
-This method will return an instance of `ActiveRecord::Result` class and calling `to_a` on this
-object would return you an array of hashes where each hash indicates a record.
+O `find_by_sql` possui um parente próximo chamado `connection#select_all`.
+O `select_all` retornará objetos do banco de dados usando SQL customizado,
+assim como o `find_by_sql` mas não os instanciará.
+
+Este método retornará uma instância da classe `ActiveRecord::Result` e chamando
+`to_a` nesse objeto retornaria uma lista de hashes em que cada hash indica um registro.
 
 ```ruby
 Client.connection.select_all("SELECT first_name, created_at FROM clients WHERE id = '1'").to_a
@@ -1776,7 +1781,8 @@ Client.connection.select_all("SELECT first_name, created_at FROM clients WHERE i
 
 ### `pluck`
 
-`pluck` can be used to query single or multiple columns from the underlying table of a model. It accepts a list of column names as argument and returns an array of values of the specified columns with the corresponding data type.
+`pluck` pode ser usado para consultar uma ou várias colunas da tabela de um model.
+Esse método aceita uma lista de nomes de colunas como argumento e retorna uma lista de valores das colunas especificadas com o tipo de dados correspondente.
 
 ```ruby
 Client.where(active: true).pluck(:id)
@@ -1792,7 +1798,7 @@ Client.pluck(:id, :name)
 # => [[1, 'David'], [2, 'Jeremy'], [3, 'Jose']]
 ```
 
-`pluck` makes it possible to replace code like:
+`pluck` torna possível substituir código como:
 
 ```ruby
 Client.select(:id).map { |c| c.id }
@@ -1802,7 +1808,7 @@ Client.select(:id).map(&:id)
 Client.select(:id, :name).map { |c| [c.id, c.name] }
 ```
 
-with:
+por:
 
 ```ruby
 Client.pluck(:id)
@@ -1810,10 +1816,11 @@ Client.pluck(:id)
 Client.pluck(:id, :name)
 ```
 
-Unlike `select`, `pluck` directly converts a database result into a Ruby `Array`,
-without constructing `ActiveRecord` objects. This can mean better performance for
-a large or often-running query. However, any model method overrides will
-not be available. For example:
+
+Ao contrário do `select`, o `pluck`  converte diretamente um resultado do banco de dados para uma lista Ruby, sem construir objetos `ActiveRecord`.
+Isso pode significar melhor desempenho para uma consulta grande ou frequente.
+No entanto, qualquer método no model que sobrescreverá os padrões não estará disponível
+Por exemplo:
 
 ```ruby
 class Client < ApplicationRecord
@@ -1829,15 +1836,15 @@ Client.pluck(:name)
 # => ["David", "Jeremy", "Jose"]
 ```
 
-You are not limited to querying fields from a single table, you can query multiple tables as well.
+Você não está limitado a consultar campos de uma única tabela; você também pode consultar várias tabelas.
 
 ```
 Client.joins(:comments, :categories).pluck("clients.email, comments.title, categories.name")
 ```
 
-Furthermore, unlike `select` and other `Relation` scopes, `pluck` triggers an immediate
-query, and thus cannot be chained with any further scopes, although it can work with
-scopes already constructed earlier:
+
+Além disso, ao contrário do `select` e outros escopos de relacionamento `Relation`,
+o `pluck` dispara imediatamente a consulta, e, portanto, não pode ser encadeado com  escopos posteriores, embora funcione com escopos já construídos anteriormente:
 
 ```ruby
 Client.pluck(:name).limit(1)
@@ -1849,7 +1856,7 @@ Client.limit(1).pluck(:name)
 
 ### `ids`
 
-`ids` can be used to pluck all the IDs for the relation using the table's primary key.
+`ids` pode ser usado para obter todos os IDs da relação usando a chave primária da tabela.
 
 ```ruby
 Person.ids
