@@ -58,29 +58,30 @@ com essa técnica. Você raramente terá de escrever esse código. O resto deste
 guia irá lhe mostrar como o Rails pode te ajudar a escrever páginas web
 desse modo, mas tudo isso é feito a partir dessa técnica muito simples.
 
-Unobtrusive JavaScript
+JavaScript não obstrusivo (*unobtrusive*)
 ----------------------
 
-Rails uses a technique called "Unobtrusive JavaScript" to handle attaching
-JavaScript to the DOM. This is generally considered to be a best-practice
-within the frontend community, but you may occasionally read tutorials that
-demonstrate other ways.
+O Rails usa uma técnica chamada "JavaScript não obstrusivo (*unobtrusive*)"
+para lidar com a junção do JavaScript ao DOM. Essa costuma ser considerada
+a melhor prática entre a comunidade *frontend*, mas você pode ocasionalmente
+ler tutoriais que demonstram outros jeitos.
 
-Here's the simplest way to write JavaScript. You may see it referred to as
-'inline JavaScript':
+Aqui está o modo mais simples de escrever JavaScript. Você pode ver ele sendo
+referido como *'Inline JavaScript'*:
 
 ```html
 <a href="#" onclick="this.style.backgroundColor='#990000'">Paint it red</a>
 ```
-When clicked, the link background will become red. Here's the problem: what
-happens when we have lots of JavaScript we want to execute on a click?
+
+Quando clicar no link, ele ficará vermelho. Aqui está o problema: o que
+acontece quando queremos que mais JavaScript seja executado no clique?
 
 ```html
 <a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';">Paint it green</a>
 ```
 
-Awkward, right? We could pull the function definition out of the click handler,
-and turn it into CoffeeScript:
+Estranho, certo? Poderíamos retirar a definição da função do manipulador de cliques,
+e transformar em CoffeeScript:
 
 ```coffeescript
 @paintIt = (element, backgroundColor, textColor) ->
@@ -89,24 +90,23 @@ and turn it into CoffeeScript:
     element.style.color = textColor
 ```
 
-And then on our page:
+E então na nossa página:
 
 ```html
 <a href="#" onclick="paintIt(this, '#990000')">Paint it red</a>
 ```
 
-That's a little bit better, but what about multiple links that have the same
-effect?
+Esse é um pouco melhor, mas que tal múltiplos links com o mesmo efeito?
 
 ```html
 <a href="#" onclick="paintIt(this, '#990000')">Paint it red</a>
 <a href="#" onclick="paintIt(this, '#009900', '#FFFFFF')">Paint it green</a>
 <a href="#" onclick="paintIt(this, '#000099', '#FFFFFF')">Paint it blue</a>
 ```
-
-Not very DRY, eh? We can fix this by using events instead. We'll add a `data-*`
-attribute to our link, and then bind a handler to the click event of every link
-that has that attribute:
+Não muito [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself), ahn?
+Podemos corrigir usando eventos. Vamos adicionar o attributo `data-*` nos
+nossos links, e então vincular o manipulador ao evento clique de cada link
+que tenha esse atributo:
 
 ```coffeescript
 @paintIt = (element, backgroundColor, textColor) ->
@@ -128,17 +128,16 @@ $ ->
 <a href="#" data-background-color="#000099" data-text-color="#FFFFFF">Paint it blue</a>
 ```
 
-We call this 'unobtrusive' JavaScript because we're no longer mixing our
-JavaScript into our HTML. We've properly separated our concerns, making future
-change easy. We can easily add behavior to any link by adding the data
-attribute. We can run all of our JavaScript through a minimizer and
-concatenator. We can serve our entire JavaScript bundle on every page, which
-means that it'll get downloaded on the first page load and then be cached on
-every page after that. Lots of little benefits really add up.
+Nós chamamos isso de JavaScript 'unobtruso (*unobtrusive*)' porque nós não estamos mais
+misturando nosso JavaScript dentro do HTML. Estamos separando propriamente nossos interesses,
+facilitando mudanças futuras. Podemos facilmente adicionar comportamentos em qualquer link
+adicionando o atributo *data*. Podemos rodar todo nosso JavaScript através de um minimizador
+e concatenador. Podemos entregar todo nosso pacote JavaScript em cada página, o que significa
+que ele terá de ser baixado quando a primeira página carregar e então será salvo na memória
+cache (*cached*) em todas as páginas depois disso. Muitos pequenos beneficios realmente se somam.
 
-The Rails team strongly encourages you to write your CoffeeScript (and
-JavaScript) in this style, and you can expect that many libraries will also
-follow this pattern.
+O time Rails fortemente lhe encoraja a esrever seu CoffeeScript (e JavaScript) nesse estilo,
+e você pode esperar que muitas bibliotecas também seguirão esse padrão.
 
 Built-in Helpers
 ----------------
