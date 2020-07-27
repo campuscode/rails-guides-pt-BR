@@ -64,7 +64,7 @@ JavaScript não obstrusivo (*unobtrusive*)
 O Rails usa uma técnica chamada "JavaScript não obstrusivo (*unobtrusive*)"
 para lidar com a junção do JavaScript ao DOM. Essa costuma ser considerada
 a melhor prática entre a comunidade *frontend*, mas você pode ocasionalmente
-ler tutoriais que demonstram outros jeitos.
+ler tutoriais que demonstram de outras formas.
 
 Aqui está o modo mais simples de escrever JavaScript. Você pode ver ele sendo
 referido como *'Inline JavaScript'*:
