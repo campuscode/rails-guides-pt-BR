@@ -103,8 +103,8 @@ Esse é um pouco melhor, mas que tal múltiplos links com o mesmo efeito?
 <a href="#" onclick="paintIt(this, '#009900', '#FFFFFF')">Paint it green</a>
 <a href="#" onclick="paintIt(this, '#000099', '#FFFFFF')">Paint it blue</a>
 ```
-Não muito [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself), ahn?
-Podemos corrigir usando eventos. Vamos adicionar o attributo `data-*` nos
+Não muito [DRY](https://pt.wikipedia.org/wiki/Don%27t_repeat_yourself), ahn?
+Podemos corrigir usando eventos. Vamos adicionar o atributo `data-*` nos
 nossos links, e então vincular o manipulador ao evento clique de cada link
 que tenha esse atributo:
 
@@ -134,9 +134,9 @@ facilitando mudanças futuras. Podemos facilmente adicionar comportamentos em qu
 adicionando o atributo *data*. Podemos rodar todo nosso JavaScript através de um minimizador
 e concatenador. Podemos entregar todo nosso pacote JavaScript em cada página, o que significa
 que ele terá de ser baixado quando a primeira página carregar e então será salvo na memória
-cache (*cached*) em todas as páginas depois disso. Muitos pequenos beneficios realmente se somam.
+cache (*cached*) em todas as páginas depois disso. Muitos pequenos benefícios realmente se somam.
 
-O time Rails fortemente lhe encoraja a esrever seu CoffeeScript (e JavaScript) nesse estilo,
+O time Rails fortemente lhe encoraja a escrever seu CoffeeScript (e JavaScript) nesse estilo,
 e você pode esperar que muitas bibliotecas também seguirão esse padrão.
 
 Built-in Helpers
