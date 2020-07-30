@@ -994,4 +994,4 @@ Rather than rendering multiple sets of fields ahead of time you may wish to add 
 Usando _form_for_ e _form_tag_
 ---------------------------
 
-Antes do `form_with` ser introduzido no _Rails_ 5.1 sua funcionalidade costumava ser divida entre `form_tag` e `form_for`. Ambos estão agora depreciados (_soft-deprecated_). A documentação sobre seu uso pode ser encontrada na [versão antiga deste guia](https://guides.rubyonrails.org/v5.2/form_helpers.html).
+Antes do `form_with` ser introduzido no Rails 5.1 sua funcionalidade costumava ser divida entre `form_tag` e `form_for`. Ambos estão agora depreciados (_soft-deprecated_). A documentação sobre seu uso pode ser encontrada na [versão antiga deste guia](https://guides.rubyonrails.org/v5.2/form_helpers.html).
