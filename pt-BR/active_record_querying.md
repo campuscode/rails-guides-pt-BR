@@ -1749,12 +1749,12 @@ você pode usar `find_by_sql`. O método `find_by_sql` retornará uma lista de o
 mesmo que a consulta retorne apenas um único registro. Por exemplo, você pode executar esta consulta:
 
 ```ruby
-Client.find_by_sql("SELECT * FROM clients
-  INNER JOIN orders ON clients.id = orders.client_id
-  ORDER BY clients.created_at desc")
+Cliente.find_by_sql("SELECT * FROM clientes
+  INNER JOIN pedidos ON clientes.id = pedidos.cliente_id
+  ORDER BY cliente.dt_de_criacao desc")
 # =>  [
-#   #<Client id: 1, first_name: "Lucas" >,
-#   #<Client id: 2, first_name: "Jan" >,
+#   #<Cliente id: 1, primeiro_nome: "Lucas" >,
+#   #<Cliente id: 2, primeiro_nome: "Jan" >,
 #   ...
 # ]
 ```
@@ -1771,10 +1771,10 @@ Este método retornará uma instância da classe `ActiveRecord::Result` e chaman
 `to_a` nesse objeto retornaria uma lista de _hashes_ em que cada _hash_ indica um registro.
 
 ```ruby
-Client.connection.select_all("SELECT first_name, created_at FROM clients WHERE id = '1'").to_a
+Cliente.connection.select_all("SELECT primeiro_nome, dt_de_criacao FROM clientes WHERE id = '1'").to_a
 # => [
-#   {"first_name"=>"Rafael", "created_at"=>"2012-11-10 23:23:45.281189"},
-#   {"first_name"=>"Eileen", "created_at"=>"2013-12-09 11:22:35.221282"}
+#   {"primeiro_nome"=>"Rafael", "dt_de_criacao"=>"2012-11-10 23:23:45.281189"},
+#   {"primeiro_nome"=>"Eileen", "dt_de_criacao"=>"2013-12-09 11:22:35.221282"}
 # ]
 ```
 
@@ -1784,35 +1784,35 @@ Client.connection.select_all("SELECT first_name, created_at FROM clients WHERE i
 Esse método aceita uma lista de nomes de colunas como argumento e retorna uma lista de valores das colunas especificadas com o tipo de dados correspondente.
 
 ```ruby
-Client.where(active: true).pluck(:id)
-# SELECT id FROM clients WHERE active = 1
+Cliente.where(ativo: true).pluck(:id)
+# SELECT id FROM clientes WHERE ativo = 1
 # => [1, 2, 3]
 
-Client.distinct.pluck(:role)
-# SELECT DISTINCT role FROM clients
-# => ['admin', 'member', 'guest']
+Cliente.distinct.pluck(:funcao)
+# SELECT DISTINCT funcao FROM clientes
+# => ['admin', 'membro', 'convidada']
 
-Client.pluck(:id, :name)
-# SELECT clients.id, clients.name FROM clients
+Cliente.pluck(:id, :nome)
+# SELECT clientes.id, clientes.nome FROM clientes
 # => [[1, 'David'], [2, 'Jeremy'], [3, 'Jose']]
 ```
 
 `pluck` torna possível substituir código como:
 
 ```ruby
-Client.select(:id).map { |c| c.id }
-# or
-Client.select(:id).map(&:id)
-# or
-Client.select(:id, :name).map { |c| [c.id, c.name] }
+Cliente.select(:id).map { |c| c.id }
+# ou
+Cliente.select(:id).map(&:id)
+# ou
+Cliente.select(:id, :nome).map { |c| [c.id, c.nome] }
 ```
 
 por:
 
 ```ruby
-Client.pluck(:id)
-# or
-Client.pluck(:id, :name)
+Cliente.pluck(:id)
+# ou
+Cliente.pluck(:id, :nome)
 ```
 
 Ao contrário do `select`, o `pluck` converte diretamente um resultado do banco de dados para uma lista Ruby, sem construir objetos `ActiveRecord`.
@@ -1821,33 +1821,33 @@ No entanto, qualquer método no _model_ que sobrescreverá os padrões não esta
 Por exemplo:
 
 ```ruby
-class Client < ApplicationRecord
-  def name
-    "I am #{super}"
+class Cliente < ApplicationRecord
+  def nome
+    "Eu sou #{super}"
   end
 end
 
-Client.select(:name).map &:name
-# => ["I am David", "I am Jeremy", "I am Jose"]
+Cliente.select(:nome).map &:nome
+# => ["Eu sou David", "Eu sou Jeremy", "Eu sou Jose"]
 
-Client.pluck(:name)
+Cliente.pluck(:nome)
 # => ["David", "Jeremy", "Jose"]
 ```
 
 Você não está limitado a consultar campos de uma única tabela; você também pode consultar várias tabelas.
 
 ```
-Client.joins(:comments, :categories).pluck("clients.email, comments.title, categories.name")
+Cliente.joins(:comentarios, :categorias).pluck("clientes.email, comentarios.titulo, categorias.nome")
 ```
 
 Além disso, ao contrário do `select` e outros escopos de relacionamento `Relation`,
 o `pluck` dispara imediatamente a consulta, e, portanto, não pode ser encadeado com  escopos posteriores, embora funcione com escopos já construídos anteriormente:
 
 ```ruby
-Client.pluck(:name).limit(1)
+Cliente.pluck(:nome).limit(1)
 # => NoMethodError: undefined method `limit' for #<Array:0x007ff34d3ad6d8>
 
-Client.limit(1).pluck(:name)
+Cliente.limit(1).pluck(:nome)
 # => ["David"]
 ```
 
@@ -1856,17 +1856,17 @@ Client.limit(1).pluck(:name)
 `ids` pode ser usado para obter todos os IDs da relação usando a chave primária da tabela.
 
 ```ruby
-Person.ids
-# SELECT id FROM people
+Pessoa.ids
+# SELECT id FROM pessoas
 ```
 
 ```ruby
-class Person < ApplicationRecord
-  self.primary_key = "person_id"
+class Pessoa < ApplicationRecord
+  self.primary_key = "pessoa_id"
 end
 
 Person.ids
-# SELECT person_id FROM people
+# SELECT pessoa_id FROM pessoas
 ```
 
 Existence of Objects
