@@ -1767,7 +1767,6 @@ de dados, retornando objetos instanciados.
 O `find_by_sql` possui um parente próximo chamado `connection#select_all`.
 O `select_all` retornará objetos do banco de dados usando SQL customizado,
 assim como o `find_by_sql` mas não os instanciará.
-
 Este método retornará uma instância da classe `ActiveRecord::Result` e chamando
 `to_a` nesse objeto retornaria uma lista de _hashes_ em que cada _hash_ indica um registro.
 
