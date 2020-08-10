@@ -1769,7 +1769,7 @@ O `select_all` retornará objetos do banco de dados usando SQL customizado,
 assim como o `find_by_sql` mas não os instanciará.
 
 Este método retornará uma instância da classe `ActiveRecord::Result` e chamando
-`to_a` nesse objeto retornaria uma lista de hashes em que cada hash indica um registro.
+`to_a` nesse objeto retornaria uma lista de _hashes_ em que cada _hash_ indica um registro.
 
 ```ruby
 Client.connection.select_all("SELECT first_name, created_at FROM clients WHERE id = '1'").to_a
