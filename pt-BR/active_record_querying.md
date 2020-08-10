@@ -1841,7 +1841,6 @@ Você não está limitado a consultar campos de uma única tabela; você também
 Client.joins(:comments, :categories).pluck("clients.email, comments.title, categories.name")
 ```
 
-
 Além disso, ao contrário do `select` e outros escopos de relacionamento `Relation`,
 o `pluck` dispara imediatamente a consulta, e, portanto, não pode ser encadeado com  escopos posteriores, embora funcione com escopos já construídos anteriormente:
 
