@@ -1818,7 +1818,7 @@ Client.pluck(:id, :name)
 
 Ao contrário do `select`, o `pluck`  converte diretamente um resultado do banco de dados para uma lista Ruby, sem construir objetos `ActiveRecord`.
 Isso pode significar melhor desempenho para uma consulta grande ou frequente.
-No entanto, qualquer método no model que sobrescreverá os padrões não estará disponível
+No entanto, qualquer método no _model_ que sobrescreverá os padrões não estará disponível
 Por exemplo:
 
 ```ruby
