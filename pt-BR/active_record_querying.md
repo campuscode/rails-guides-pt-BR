@@ -1781,7 +1781,7 @@ Client.connection.select_all("SELECT first_name, created_at FROM clients WHERE i
 
 ### `pluck`
 
-`pluck` pode ser usado para consultar uma ou várias colunas da tabela de um model.
+`pluck` pode ser usado para consultar uma ou várias colunas da tabela de um _model_.
 Esse método aceita uma lista de nomes de colunas como argumento e retorna uma lista de valores das colunas especificadas com o tipo de dados correspondente.
 
 ```ruby
