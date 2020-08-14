@@ -1,14 +1,14 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Action View Form Helpers 
+Action View Form Helpers
 ========================
 
 Formulários em uma aplicação web são uma interface essencial para interação do usuário com o sistema. No entanto, pode-se tornar entendiante manter este tipo de marcação devido à necessidade de lidar com a nomenclatura e controles de formulários e seus inúmeros atributos. O Rails acaba com essa complexidade pois há um assistente de exibição que gera uma marcação de formulário. Mas para um uso correto, como há casos de uso diferentes, é necessário que os desenvolvedores conheçam as diferenças entre os métodos auxiliares antes de usá-los.
 
 Depois de ler este guia, você vai saber:
 
-* Como criar formulários de pesquisa e tipos de semelhantes de formulários genéricos que não representam *model* específico da sua aplicação. 
+* Como criar formulários de pesquisa e tipos de semelhantes de formulários genéricos que não representam *model* específico da sua aplicação.
 * Como criar formulários centrados em *models* pra criar e editar registros específicos no banco de dados.
 * Como gerar *select boxes* (caixas de seleção) de vários tipos de dados.
 * Que  helpers de data e hora do Rails fornecem.
@@ -18,7 +18,7 @@ Depois de ler este guia, você vai saber:
 
 -------------------------------------------------------------------------------------
 
-NOTE: Este guia não pretende ser uma documentação completa dos métodos auxiliares de formulários (*form helpers*) disponíveis e seus argumentos. Por favor para obter uma  referência completa visite [a documentação da API do Rails](https://api.rubyonrails.org/). 
+NOTE: Este guia não pretende ser uma documentação completa dos métodos auxiliares de formulários (*form helpers*) disponíveis e seus argumentos. Por favor para obter uma  referência completa visite [a documentação da API do Rails](https://api.rubyonrails.org/).
 
 Trabalhando com formulários básicos.
 ------------------------------------
@@ -27,7 +27,7 @@ O principal auxiliar de formulário (*form helper*) é o `form_with` .
 
 ```erb
 <%= form_with do %>
-  Conteúdo do formulário 
+  Conteúdo do formulário
 <% end %>
 ```
 
@@ -42,7 +42,7 @@ Quando chamado sem nenhum argumento como este, é criado uma *tag* de formulári
 
 Note que o HTML contém um elemento `input` do tipo `hidden`. Este `input` é importante porque o formulário não pode ser enviado com sucesso sem ele, exceto formulários com método GET. Esse elemento oculto com o nome `authenticity_token` é um recurso de segurança do Rails chamado **proteção contra falsificação de solicitação entre sites** ([**cross-site request forgery protection**](https://pt.wikipedia.org/wiki/Cross-site_request_forgery)), e os *helpers* de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Você poderá ler mais sobre isso no guia [Segurança em Aplicações Rails](security.html#cross-site-request-forgery-csrf).
 
-### Formulário de pesquisa genérica 
+### Formulário de pesquisa genérica
 
 Um dos formulários mais básicos que você vê na web é um formulário de pesquisa. Este formulário contém:
 
@@ -51,7 +51,7 @@ Um dos formulários mais básicos que você vê na web é um formulário de pesq
 * Um *input* de entrada de texto.
 * Um *input* de envio.
 
-Para criar este formulário você irá usar `form_with`, `label_tag`, `text_field_tag`, e `submit_tag`, respectivamente. Como o exemplo abaixo: 
+Para criar este formulário você irá usar `form_with`, `label_tag`, `text_field_tag`, e `submit_tag`, respectivamente. Como o exemplo abaixo:
 
 ```erb
 <%= form_with(url: "/search", method: "get") do %>
@@ -71,7 +71,7 @@ Isso irá gerar o seguinte HTML:
 </form>
 ```
 
-TIP: Passando `url: my_speccified_path` para `form_with` indica ao formulário onde fazer a requisição. No entanto, conforme explicado abaixo, você também pode passar objetos ActiveRecord para o formulário. 
+TIP: Passando `url: my_speccified_path` para `form_with` indica ao formulário onde fazer a requisição. No entanto, conforme explicado abaixo, você também pode passar objetos ActiveRecord para o formulário.
 
 TIP: Para cada entrada de formulário, um atributo ID é gerado a partir de seu nome("q" no exemplo acima). Esses IDs podem ser muito úteis para estilizar CSS ou manipular controles de formulário com JavaScript.
 
@@ -991,7 +991,7 @@ As a convenience you can instead pass the symbol `:all_blank` which will create 
 
 Rather than rendering multiple sets of fields ahead of time you may wish to add them only when a user clicks on an 'Add new address' button. Rails does not provide any built-in support for this. When generating new sets of fields you must ensure the key of the associated array is unique - the current JavaScript date (milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time)) is a common choice.
 
-Using form_for and form_tag
+Usando `form_for` e `form_tag`
 ---------------------------
 
-Before `form_with` was introduced in Rails 5.1 its functionality used to be split between `form_tag` and `form_for`. Both are now soft-deprecated. Documentation on their usage can be found in [older versions of this guide](https://guides.rubyonrails.org/v5.2/form_helpers.html).
+Antes do `form_with` ser introduzido no Rails 5.1 sua funcionalidade costumava ser divida entre `form_tag` e `form_for`. Ambos estão agora depreciados (_soft-deprecated_). A documentação sobre seu uso pode ser encontrada na [versão antiga deste guia](https://guides.rubyonrails.org/v5.2/form_helpers.html).
