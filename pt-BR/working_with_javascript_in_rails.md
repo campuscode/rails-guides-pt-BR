@@ -11,7 +11,7 @@ facilidade!
 Após ler este guia, você saberá:
 
 * O básico de *Ajax*. 
-* JavaScript não obstrusivo (*unobtrusive*).
+* JavaScript discreto (*unobtrusive*).
 * Como os *helpers* internos do Rails ajudam você.
 * Como lidar com Ajax no lado do servidor.
 * A *gem* Turbolinks.
@@ -58,10 +58,10 @@ com essa técnica. Você raramente terá de escrever esse código. O resto deste
 guia irá lhe mostrar como o Rails pode te ajudar a escrever páginas web
 desse modo, mas tudo isso é feito a partir dessa técnica muito simples.
 
-JavaScript não obstrusivo (*unobtrusive*)
+JavaScript discreto (*unobtrusive*)
 ----------------------
 
-O Rails usa uma técnica chamada "JavaScript não obstrusivo (*unobtrusive*)"
+O Rails usa uma técnica chamada "JavaScript discreto (*unobtrusive*)"
 para lidar com a junção do JavaScript ao DOM. Essa costuma ser considerada
 a melhor prática entre a comunidade *frontend*, mas você pode ocasionalmente
 ler tutoriais que demonstram de outras formas.
@@ -73,7 +73,7 @@ referido como *'Inline JavaScript'*:
 <a href="#" onclick="this.style.backgroundColor='#990000'">Paint it red</a>
 ```
 
-Quando clicar no link, ele ficará vermelho. Aqui está o problema: o que
+Ao clicar no link, ele ficará vermelho. Aqui está o problema: o que
 acontece quando queremos que mais JavaScript seja executado no clique?
 
 ```html
@@ -128,7 +128,7 @@ $ ->
 <a href="#" data-background-color="#000099" data-text-color="#FFFFFF">Paint it blue</a>
 ```
 
-Nós chamamos isso de JavaScript 'unobtruso (*unobtrusive*)' porque nós não estamos mais
+Nós chamamos isso de JavaScript 'discreto (*unobtrusive*)' porque nós não estamos mais
 misturando nosso JavaScript dentro do HTML. Estamos separando propriamente nossos interesses,
 facilitando mudanças futuras. Podemos facilmente adicionar comportamentos em qualquer link
 adicionando o atributo *data*. Podemos rodar todo nosso JavaScript através de um minimizador
