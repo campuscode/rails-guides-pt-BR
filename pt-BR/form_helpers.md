@@ -838,7 +838,7 @@ Sometimes when submitting data to an external resource, like a payment gateway, 
 Trabalhando com Formularios Complexos
 ----------------------
 
-Many apps grow beyond simple forms editing a single object. For example, when creating a `Person` you might want to allow the user to (on the same form) create multiple address records (home, work, etc.). When later editing that person the user should be able to add, remove, or amend addresses as necessary.
+Muitas aplicações vão além de uma edição de um único objeto em um formulário simples. Por exemplo, quando estamos criando um *model* `Person` você pode querer que o usuário permita (no mesmo formulário) criar multiplos registros de endereços(casa, trabalho, etc.). Mais tarde quando estivesse editando este formulário, seria possível adicionar, remover, ou corrigir os endereços relacionados caso fosse necessário.
 
 ### Configuring the Model
 
