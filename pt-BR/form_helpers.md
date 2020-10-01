@@ -343,161 +343,160 @@ When parsing POSTed data, Rails will take into account the special `_method` par
 
 IMPORTANT: All forms using `form_with` implement `remote: true` by default. These forms will submit data using an XHR (Ajax) request. To disable this include `local: true`. To dive deeper see [Working with JavaScript in Rails](working_with_javascript_in_rails.html#remote-elements) guide.
 
-Making Select Boxes with Ease
+Fazendo (*Select boxes*) caixas de seleção com facilidade
 -----------------------------
 
-Select boxes in HTML require a significant amount of markup (one `OPTION` element for each option to choose from), therefore it makes the most sense for them to be dynamically generated.
+As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente. 
 
-Here is what the markup might look like:
-
+Esta é a aparência da marcação:
 ```html
 <select name="city_id" id="city_id">
-  <option value="1">Lisbon</option>
-  <option value="2">Madrid</option>
-  <option value="3">Berlin</option>
+  <option value="1">Lisboa</option>
+  <option value="2">Madri</option>
+  <option value="3">Berlim</option>
 </select>
 ```
 
-Here you have a list of cities whose names are presented to the user. Internally the application only wants to handle their IDs so they are used as the options' value attribute. Let's see how Rails can help out here.
+Aqui você tem uma lista de cidades cujos nomes são apresentados ao usuário. Internamente, o aplicativo deseja apenas manipular seus IDs, para que sejam usados como o atributo de valor das opções. Vamos ver como o Rails pode ajudar aqui.
 
-### The Select and Option Tags
+### As tags de seleção (*Select*) e opção (*Option*)
 
-The most generic helper is `select_tag`, which - as the name implies - simply generates the `SELECT` tag that encapsulates an options string:
+O auxiliar mais genérico é `select_tag`, que - como o nome indica - simplesmente gera a tag `SELECT` que encapsula uma string de opções:
 
 ```erb
-<%= select_tag(:city_id, raw('<option value="1">Lisbon</option><option value="2">Madrid</option><option value="3">Berlin</option>')) %>
+<%= select_tag(:city_id, raw('<option value="1">Lisboa</option><option value="2">Madri</option><option value="3">Berlim</option>')) %>
 ```
 
-This is a start, but it doesn't dynamically create the option tags. You can generate option tags with the `options_for_select` helper:
+Isso é um começo, porém não cria dinamicamente as tags de opção. Você pode gerar tags de opção com o auxiliar `options_for_select`:
 
 ```html+erb
-<%= options_for_select([['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
+<%= options_for_select([['Lisboa', 1], ['Madri', 2], ['Berlim', 3]]) %>
 ```
 
-Output:
+Saída:
 
 ```html
-<option value="1">Lisbon</option>
-<option value="2">Madrid</option>
-<option value="3">Berlin</option>
+<option value="1">Lisboa</option>
+<option value="2">Madri</option>
+<option value="3">Berlim</option>
 ```
 
-The first argument to `options_for_select` is a nested array where each element has two elements: option text (city name) and option value (city id). The option value is what will be submitted to your controller. Often this will be the id of a corresponding database object but this does not have to be the case.
+O primeiro argumento para `options_for_select` é um *array* aninhado onde cada elemento tem dois elementos: texto da opção (nome da cidade) e valor da opção (id da cidade). O valor da opção é o que será enviado ao seu *controller*. Freqüentemente, esse será o id de um objeto de banco de dados correspondente, mas não precisa ser o caso.
 
-Knowing this, you can combine `select_tag` and `options_for_select` to achieve the desired, complete markup:
+Sabendo disso, é possível combinar `select_tag` e `options_for_select` para obter a marcação completa desejada:
 
 ```erb
 <%= select_tag(:city_id, options_for_select(...)) %>
 ```
 
-`options_for_select` allows you to pre-select an option by passing its value.
+`options_for_select` permite pré-selecionar uma opção passando seu valor.
 
 ```html+erb
-<%= options_for_select([['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]], 2) %>
+<%= options_for_select([['Lisboa', 1], ['Madri', 2], ['Berlim', 3]], 2) %>
 ```
 
-Output:
+Saída:
 
 ```html
-<option value="1">Lisbon</option>
-<option value="2" selected="selected">Madrid</option>
-<option value="3">Berlin</option>
+<option value="1">Lisboa</option>
+<option value="2" selected="selected">Madri</option>
+<option value="3">Berlim</option>
 ```
 
-Whenever Rails sees that the internal value of an option being generated matches this value, it will add the `selected` attribute to that option.
+Sempre que o Rails vê que o valor interno de uma opção sendo gerada corresponde a este valor, ele adicionará o atributo `selected` aquela opção.
 
-You can add arbitrary attributes to the options using hashes:
+É possível adicionar atributos arbitrários às opções usando hashes:
 
 ```html+erb
 <%= options_for_select(
   [
-    ['Lisbon', 1, { 'data-size' => '2.8 million' }],
-    ['Madrid', 2, { 'data-size' => '3.2 million' }],
-    ['Berlin', 3, { 'data-size' => '3.4 million' }]
+    ['Lisboa', 1, { 'data-size' => '2.8 million' }],
+    ['Madri', 2, { 'data-size' => '3.2 million' }],
+    ['Berlim', 3, { 'data-size' => '3.4 million' }]
   ], 2
 ) %>
 ```
 
-Output:
+Saída:
 
 ```html
-<option value="1" data-size="2.8 million">Lisbon</option>
-<option value="2" selected="selected" data-size="3.2 million">Madrid</option>
-<option value="3" data-size="3.4 million">Berlin</option>
+<option value="1" data-size="2.8 million">Lisboa</option>
+<option value="2" selected="selected" data-size="3.2 million">Madri</option>
+<option value="3" data-size="3.4 million">Berlim</option>
 ```
 
-### Select Boxes for Dealing with Model Objects
+### *Select Boxes* Caixas de seleção para lidar com objetos de modelo
 
-In most cases form controls will be tied to a specific model and as you might expect Rails provides helpers tailored for that purpose. Consistent with other form helpers, when dealing with a model object drop the `_tag` suffix from `select_tag`:
+Na maioria dos casos, os controles de formulário serão vinculados a um modelo específico e, como você pode esperar, o Rails fornece helpers personalizados para esse propósito. Consistente com outros *helpers* de formulário, ao lidar com um objeto de modelo elimine o sufixo `_tag` de` select_tag`:
 
-If your controller has defined `@person` and that person's city_id is 2:
+Se o *controller* definiu `@person` e o city_id dessa pessoa é 2:
 
 ```ruby
 @person = Person.new(city_id: 2)
 ```
 
 ```erb
-<%= select(:person, :city_id, [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
+<%= select(:person, :city_id, [['Lisboa', 1], ['Madri', 2], ['Berlim', 3]]) %>
 ```
 
-will produce output similar to
+produz uma saída semelhante a
 
 ```html
 <select name="person[city_id]" id="person_city_id">
-  <option value="1">Lisbon</option>
-  <option value="2" selected="selected">Madrid</option>
-  <option value="3">Berlin</option>
+  <option value="1">Lisboa</option>
+  <option value="2" selected="selected">Madri</option>
+  <option value="3">Berlim</option>
 </select>
 ```
 
-Notice that the third parameter, the options array, is the same kind of argument you pass to `options_for_select`. One advantage here is that you don't have to worry about pre-selecting the correct city if the user already has one - Rails will do this for you by reading from the `@person.city_id` attribute.
+Observe que o terceiro parâmetro, o *array* de opções, é o mesmo tipo de argumento que você passa para `options_for_select`. Uma vantagem aqui é que você não precisa se preocupar em pré-selecionar a cidade correta se o usuário já tiver uma - o Rails fará isso para você lendo o atributo `@person.city_id`.
 
-As with other helpers, if you were to use the `select` helper on a form builder scoped to the `@person` object, the syntax would be:
+Tal como acontece com outros auxiliares, se você fosse usar o *helper* `select` em um construtor de formulário com escopo para o objeto `@person`, a sintaxe seria:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
-  <%= person_form.select(:city_id, [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
+  <%= person_form.select(:city_id, [['Lisboa', 1], ['Madri', 2], ['Berlim', 3]]) %>
 <% end %>
 ```
 
-You can also pass a block to `select` helper:
+Você também pode passar um bloco para o *helper* `select`:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
   <%= person_form.select(:city_id) do %>
-    <% [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]].each do |c| %>
+    <% [['Lisboa', 1], ['Madri', 2], ['Berlim', 3]].each do |c| %>
       <%= content_tag(:option, c.first, value: c.last) %>
     <% end %>
   <% end %>
 <% end %>
 ```
 
-WARNING: If you are using `select` or similar helpers to set a `belongs_to` association you must pass the name of the foreign key (in the example above `city_id`), not the name of association itself.
+WARNING: Se você estiver usando `select` ou ajudantes semelhantes para definir uma associação `belongs_to`, você deve passar o nome da chave estrangeira (no exemplo acima `city_id`), não o nome da própria associação.
 
-WARNING: When `:include_blank` or `:prompt` are not present, `:include_blank` is forced true if the select attribute `required` is true, display `size` is one, and `multiple` is not true.
+WARNING: Quando `:include_blank` ou`:prompt` não estão presentes, `: include_blank` é forçado a *true* se o atributo de seleção `required` for *true*, display `size` é um e` multiple` não é *true*.
 
-### Option Tags from a Collection of Arbitrary Objects
+### Tags de opção (*options*) de uma coleção de objetos arbitrários
 
-Generating options tags with `options_for_select` requires that you create an array containing the text and value for each option. But what if you had a `City` model (perhaps an Active Record one) and you wanted to generate option tags from a collection of those objects? One solution would be to make a nested array by iterating over them:
+Gerar tags de opções com `options_for_select` requer que você crie um *array* contendo o texto e valor para cada opção. Mas e se você tivesse um *model* `City` (talvez um Active Record) e quisesse gerar tags de opção de uma coleção desses objetos? Uma solução seria fazer uma matriz aninhada iterando sobre eles:
 
 ```erb
 <% cities_array = City.all.map { |city| [city.name, city.id] } %>
 <%= options_for_select(cities_array) %>
 ```
 
-This is a perfectly valid solution, but Rails provides a less verbose alternative: `options_from_collection_for_select`. This helper expects a collection of arbitrary objects and two additional arguments: the names of the methods to read the option **value** and **text** from, respectively:
+Esta é uma solução perfeitamente válida, entretanto Rails fornece uma alternativa menos prolixa: `options_from_collection_for_select`. Este auxiliar espera uma coleção de objetos arbitrários e dois argumentos adicionais: os nomes dos métodos para ler a opção **value** e **text**, respectivamente:
 
 ```erb
 <%= options_from_collection_for_select(City.all, :id, :name) %>
 ```
 
-As the name implies, this only generates option tags. To generate a working select box you would need to use `collection_select`:
+Como o nome indica, isso só gera tags de opção. Para gerar uma *select box* funcional, você precisará usar `collection_select`:
 
 ```erb
 <%= collection_select(:person, :city_id, City.all, :id, :name) %>
 ```
 
-As with other helpers, if you were to use the `collection_select` helper on a form builder scoped to the `@person` object, the syntax would be:
+Como com outros *helpers*, se você fosse usar o *helper* `collection_select` em um construtor de formulário com escopo para o objeto `@person`, a sintaxe seria:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -505,19 +504,19 @@ As with other helpers, if you were to use the `collection_select` helper on a fo
 <% end %>
 ```
 
-NOTE: Pairs passed to `options_for_select` should have the text first and the value second, however with `options_from_collection_for_select` should have the value method first and the text method second.
+NOTE: Pares passados para `options_for_select` devem ter o texto primeiro e o valor depois, entretanto com `options_from_collection_for_select` devem ter o método do valor primeiro e o método do texto depois.
 
-### Time Zone and Country Select
+### Fuso horário e seleção de país
 
-To leverage time zone support in Rails, you have to ask your users what time zone they are in. Doing so would require generating select options from a list of pre-defined [`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html) objects using `collection_select`, but you can simply use the `time_zone_select` helper that already wraps this:
+Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus usuários em que fuso horário eles estão. Fazer isso exigiria a geração de opções selecionadas de uma lista de *[`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html)* objetos usando `collection_select`, mas você pode simplesmente usar o helper` time_zone_select` que já envolve isto:
 
 ```erb
 <%= time_zone_select(:person, :time_zone) %>
 ```
 
-There is also `time_zone_options_for_select` helper for a more manual (therefore more customizable) way of doing this. Read the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-time_zone_options_for_select) to learn about the possible arguments for these two methods.
+Existe também o *helper* `time_zone_options_for_select` para uma maneira mais manual (portanto mais customizável) de fazer isso. Leia a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-time_zone_options_for_select) para aprender sobre os possíveis argumentos para esses dois métodos.
 
-Rails _used_ to have a `country_select` helper for choosing countries, but this has been extracted to the [country_select plugin](https://github.com/stefanpenner/country_select).
+Rails _tinha_ um *helper* `country_select` para escolher os países, mas isso foi extraído para o [plugin country_select](https://github.com/stefanpenner/country_select).
 
 Using Date and Time Form Helpers
 --------------------------------
