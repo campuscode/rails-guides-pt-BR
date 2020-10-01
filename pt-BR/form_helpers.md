@@ -835,7 +835,7 @@ Sometimes when submitting data to an external resource, like a payment gateway, 
 <% end %>
 ```
 
-Building Complex Forms
+Trabalhando com Formularios Complexos
 ----------------------
 
 Many apps grow beyond simple forms editing a single object. For example, when creating a `Person` you might want to allow the user to (on the same form) create multiple address records (home, work, etc.). When later editing that person the user should be able to add, remove, or amend addresses as necessary.
