@@ -145,7 +145,7 @@ e você pode esperar que muitas bibliotecas também seguirão esse padrão.
 ### Elementos Remotos
 
 O Rails fornece um grupo de métodos *view helper* escritos em ruby para ajudar você
-na criação do HTML. as vezses, você quer adicionar um pouco de *Ajax* para esses elementos,
+na criação do HTML. As vezes, você quer adicionar um pouco de *Ajax* para esses elementos,
 e o Rails te da cobertura nesses casos.
 
 Por causa do JavaScript não obtrusivo (*unobtrusive*), os *"Ajax Helpers"* do rails
@@ -199,7 +199,7 @@ $(document).ready ->
 Obviamente, você irá querer ser um pouco mais sofisticado que isso, mas
 é um começo.
 
-OBSERVAÇÃO: A partir do Rails 5.1 e do novo `rails-ujs`, os parametros
+OBSERVAÇÃO: A partir do Rails 5.1 e do novo `rails-ujs`, os parâmetros
 `data, status, xhr` foram empacotados no `event.detail`. Para informações
 sobre o `jquery-ujs` usado anteriormente no Rails 5 e anteriores, leia a [wiki do `jquery-ujs`](https://github.com/rails/jquery-ujs/wiki/ajax)
 
@@ -220,7 +220,7 @@ que gera
 ```
 
 Você pode vincular os mesmos eventos *Ajax* do `form_with`. Aqui está um exemplo.
-Vamos assumir que nós temos um lista de artigos que podem ser deletadas com apenas
+Vamos assumir que nós temos uma lista de artigos que podem ser deletadas com apenas
 um clique. Iríamos gerar um HTML como este:
 
 ```erb
@@ -252,7 +252,7 @@ Isso gera
 </form>
 ```
 
-Uma vez que é apenas um `<form>`, todas as informações do `form_withh` também se aplicam.
+Uma vez que é apenas um `<form>`, todas as informações do `form_with` também se aplicam.
 
 ### Personalize elementos remotos
 
@@ -268,7 +268,7 @@ alguns links são na verdade ações que mudam dados no servidor, e devem ser ex
 requisições diferentes de GET. Esse atributo permite mudar tais links para um método explícito
 tais como "post", "put" ou "delete".
 
-O modo coom isso funciona é que, quando um link é ativado, ele constrói um formulário
+O modo como isso funciona é que, quando um link é ativado, ele constrói um formulário
 escondido no documento com o atributo *"action"* correspondendo ao valor *"href"* do
 link, e o método corresponde ao valor do `data-method`, e envia esse forumlário.
 
@@ -280,9 +280,9 @@ parâmetro `_method`. o Rails automaticamente detecta e compensa isso.
 #### `data-url` e `data-params`
 
 Certos elementos da sua página não estão atualmente referenciando a alguma URL, mas você pode querer
-que eles acionem chamadas Ajax. Especificando o o atributo `data-url` juntamente com o `data-remote`
+que eles acionem chamadas Ajax. Especificando o atributo `data-url` juntamente com o `data-remote`
 um irá disparar uma chamada Ajax para a URL dada. Você pode também
-especificar parametros extras através do atributo `data-params`.
+especificar parâmetros extras através do atributo `data-params`.
 
 Isso pode ser útil para disparar uma ação nos *check-boxes* por exemplo:
 
@@ -303,8 +303,8 @@ Você pode pedir uma confirmação extra do usuário adicionando o atributo
 `confirm()` em JavaScript contendo o texto do atributo. Se o usuário escolher
 cancelar, a ação não acontece.
 
-Adicionando esse atributo nos links disparará a mensagem no clique, e adicionando
-aos formulários disparará no *submit*. Por exemplo:
+Adicionando esse atributo nos links, será disparado a mensagem no clique, e adicionando
+aos formulários, será disparado no *submit*. Por exemplo:
 
 ```erb
 <%= link_to "Dangerous zone", dangerous_zone_path,
@@ -324,11 +324,11 @@ você **não** deve ter um `data-confirm` no formulário em si.
 A confirmação padrão usa a mensagem de confirmação JavaScript, mas você pode mudar
 isso pegando o evento `confirm`, o qual é disparado antes da janela de confirmação
 aparecer para o usuário. Para cancelar essa confirmação padrão, você tem que fazer o
-gerenciador de confirmação retorne *false*.
+gerenciador de confirmação retornar *false*.
 
 ### Desativando Automaticamente
 
-Também é possível disabilitar automaicamente um input enquanto o formuário está sendo
+Também é possível desabilitar automaicamente um input enquanto o formuário está sendo
 enviado usando o atributo `data-disable-with`. Isso evita acidentes de duplo cliques do
 usuário, o qual resultaria em uma dupla requisição HTTP que o `backend` pode não detectar
 como tal. O valor do atributo é o texto que se tornará o novo valor do botão quando está
@@ -358,7 +358,7 @@ Estas introduções causam pequenas mudanças para os eventos personalizados exe
 
 OBSERVAÇÃO: A assinatura de chamadas para os manipuladores de eventos do `UJS` mudaram.
 Diferente da versão com *jQuery*, todos os eventos personalizados retornam apenas um parametro: `event`.
-Nesse parâmetro, existe um atributo adicional o `detail` o qual contém um *array* de parametros extra.
+Nesse parâmetro, existe um atributo adicional, o `detail`, ao qual contém um *array* de parâmetros extra.
 
 | Nome do evento      | Parametros extra (event.detail) | Quando é executado                                          |
 |---------------------|---------------------------------|-------------------------------------------------------------|
@@ -378,7 +378,7 @@ document.body.addEventListener('ajax:success', function(event) {
   var data = detail[0], status = detail[1], xhr = detail[2];
 })
 ```
-OBSERVAÇÃO: A partir do Rails 5.1 e o novo `rails-ujs`, os parametros `data, status, xhr`
+OBSERVAÇÃO: A partir do Rails 5.1 e o novo `rails-ujs`, os parâmetros `data, status, xhr`
 foram empacotados dentro do `event.detail`. Para informações sobre o `jquery-ujs` anteriormente
 usado no Rails 5 e anteriores, leia a [wiki do `jquery-ujs`](https://github.com/rails/jquery-ujs/wiki/ajax).
 
