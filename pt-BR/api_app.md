@@ -32,95 +32,98 @@ muitos desenvolvedores estão tratando suas aplicações web apenas como uma API
 Esse guia aborda a construção de um aplicativo Rails que fornece dados em JSON para um cliente, incluindo frameworks *client-side*.
 
 
-Why Use Rails for JSON APIs?
+Porque Usar Rails para APIs JSON?
 ----------------------------
 
-The first question a lot of people have when thinking about building a JSON API
-using Rails is: "isn't using Rails to spit out some JSON overkill? Shouldn't I
-just use something like Sinatra?".
+A primeira questão que muitas pessoas tem quando estão pensando em construir uma
+API JSON utilizando Rails é: "Utilizar Rails para retornar alguns JSON não é
+overkill? Não deveriamos usar algo como Sinatra?"
 
-For very simple APIs, this may be true. However, even in very HTML-heavy
-applications, most of an application's logic lives outside of the view
-layer.
+Para APIs muito simles, isso pode ser verdade. Porem, até mesmo em aplicações
+com muito HTML, boa parte da lógica de uma aplicação está fora da camada de
+visualização.
 
-The reason most people use Rails is that it provides a set of defaults that
-allows developers to get up and running quickly, without having to make a lot of trivial
-decisions.
+A razão da maioria das pessoas usar o Rails é que ele fornece um conjunto de
+padrões que permitem desenvolvedores criarem e rodarem rápido, sem ter de fazer
+muitas decisões triviais.
 
-Let's take a look at some of the things that Rails provides out of the box that are
-still applicable to API applications.
+Vamos dar uma olhada em algumas das coisas que o Rails fornece "fora da caixa"
+que são aplicaveis para aplicações API.
 
-Handled at the middleware layer:
+Manipulado na camada de `middleware`:
 
-- Reloading: Rails applications support transparent reloading. This works even if
-  your application gets big and restarting the server for every request becomes
-  non-viable.
-- Development Mode: Rails applications come with smart defaults for development,
-  making development pleasant without compromising production-time performance.
-- Test Mode: Ditto development mode.
-- Logging: Rails applications log every request, with a level of verbosity
-  appropriate for the current mode. Rails logs in development include information
-  about the request environment, database queries, and basic performance
-  information.
-- Security: Rails detects and thwarts [IP spoofing
-  attacks](https://en.wikipedia.org/wiki/IP_address_spoofing) and handles
-  cryptographic signatures in a [timing
-  attack](https://en.wikipedia.org/wiki/Timing_attack) aware way. Don't know what
-  an IP spoofing attack or a timing attack is? Exactly.
-- Parameter Parsing: Want to specify your parameters as JSON instead of as a
-  URL-encoded String? No problem. Rails will decode the JSON for you and make
-  it available in `params`. Want to use nested URL-encoded parameters? That
-  works too.
-- Conditional GETs: Rails handles conditional `GET` (`ETag` and `Last-Modified`)
-  processing request headers and returning the correct response headers and status
-  code. All you need to do is use the
+- Recarregando: Aplicações Rails suportam recarregamento transparente. Isso
+  funciona até quando sua aplicação fica grande e reiniciar o servidor para
+  cada requisição fica inviavel.
+- Modo de Desenvolvimento: Aplicações Rails vem com padrões inteligentes para
+  desenvolvimento, fazendo desenvolver prazeroso sem comprometer performance e
+  tempo de produção.
+- Modo de Teste: Modo de desenvolvimento `Ditto`.
+- *Logging*: Aplicações Rails *logam* cada requisições, em um nivel de
+  verbosidade apropriada para seu modo atual. Os Logs do Rails em modo de
+  desenvolvimento incluem informações sobre o ambiente da requisição, queries da
+  base de dados e informações basicas de performance.
+- Segurança: O Rails detecta e impede [ataques de IP spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
+  e lida com assinaturas criptográficas em um [timming attack](https://en.wikipedia.org/wiki/Timing_attack)
+  de maneira consciente. Não sabe o que é um IP spoofing e um timming attack é?
+  Exato.
+- Análise de Parametros: Quer especificar seus parametros como JSON ao inves de
+  uma *String URL-encoded*? Sem problemas. O Rails vai decodificar o JSON para
+  você e disponibiliza-lo em `params`. Quer usar parametros *URL-encoded*
+  aninhados? Isto funciona tambem.
+- *GETs* condicionais: O Rails lida com GET condicional (`ETag` e `Last-Modified`)
+  processando os cabeçalhos de requisição e retornando os cabeçalhos corretos de
+  resposta e o código de status. Tudo que você precisa para isso é usar a
+  checagem
   [`stale?`](https://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F)
-  check in your controller, and Rails will handle all of the HTTP details for you.
-- HEAD requests: Rails will transparently convert `HEAD` requests into `GET` ones,
-  and return just the headers on the way out. This makes `HEAD` work reliably in
-  all Rails APIs.
+  em seu *controller*, e o Rails vai cuidar de todo os detalhes do HTTP para
+  você.
+- Requisições HEAD: O Rails vai converter de forma transparente requisições
+  `HEAD` em requisições `GET`, e retornar apenas os cabeçalhos no retorno. Isto
+  garante que `HEAD` funcione de forma confiável em todas as APIs Rails.
 
-While you could obviously build these up in terms of existing Rack middleware,
-this list demonstrates that the default Rails middleware stack provides a lot
-of value, even if you're "just generating JSON".
+Enquanto você poderia obviamente construir isto em termos de existir o
+middleware Rack, esta lista demonstra que o padrão de pilha middleware Rails
+fornece muito valor, até mesmo quando você está só "gerando JSON".
 
-Handled at the Action Pack layer:
+Controlado na camada *Action Pack*:
 
-- Resourceful Routing: If you're building a RESTful JSON API, you want to be
-  using the Rails router. Clean and conventional mapping from HTTP to controllers
-  means not having to spend time thinking about how to model your API in terms
-  of HTTP.
-- URL Generation: The flip side of routing is URL generation. A good API based
-  on HTTP includes URLs (see [the GitHub Gist API](https://developer.github.com/v3/gists/)
-  for an example).
-- Header and Redirection Responses: `head :no_content` and
-  `redirect_to user_url(current_user)` come in handy. Sure, you could manually
-  add the response headers, but why?
-- Caching: Rails provides page, action, and fragment caching. Fragment caching
-  is especially helpful when building up a nested JSON object.
-- Basic, Digest, and Token Authentication: Rails comes with out-of-the-box support
-  for three kinds of HTTP authentication.
-- Instrumentation: Rails has an instrumentation API that triggers registered
-  handlers for a variety of events, such as action processing, sending a file or
-  data, redirection, and database queries. The payload of each event comes with
-  relevant information (for the action processing event, the payload includes
-  the controller, action, parameters, request format, request method, and the
-  request's full path).
-- Generators: It is often handy to generate a resource and get your model,
-  controller, test stubs, and routes created for you in a single command for
-  further tweaking. Same for migrations and others.
-- Plugins: Many third-party libraries come with support for Rails that reduce
-  or eliminate the cost of setting up and gluing together the library and the
-  web framework. This includes things like overriding default generators, adding
-  Rake tasks, and honoring Rails choices (like the logger and cache back-end).
+- Rotas *Resourceful*: Se você está construindo uma API RESTful JSON, você
+  quer usar o *Rails router*. O mapeamento limpo e convencional de HTTP para
+  *controllers* significa não ter que gastar tempo pensando em como modelar sua
+  API em termos de HTTP.
+- Geração de URL: O outro lado do roteamento é a geração de URL. Uma boa API
+  baseada em HTTP inclui URLs (veja [o GitHub Gist API](https://developer.github.com/v3/gists/) como exemplo).
+- Respostas de Cabeçalho e Redirecionamento: `head :no_content` e
+  `redirect_to user_url(current_user)` são bem convenientes. Claro, você pode
+  adicionar cabeçalhos de respostas manualmente, mas porque?
+- *Caching*: O Rails fornece cache de pagina, ação e fragmento. Cache de
+  fragmento é especialmente útil quando construimos um objetos JSON aninhados.
+- Autenticações *Basic*, *Digest*, and *Token*: O Rails vem com um suporte para
+  todos os tres tipos de autenticação fora da caixa.
+- Instrumentação: O Rails tem uma instrumentação de API que desencadeia
+  manipuladores registrados para uma variedade de eventos, assim como
+  processamento de ação, enviando um arquivo ou dado, redirecionamento e
+  *queries* de base de dados. O *payload* de cada evento vem com informações
+  relevantes (para o processamento de ação, o *payload* inclui o *controller*,
+  *action*, *parameters*, *request format*, *request method* e o *request's full path*).
+- Geradores: É muitas vezes útil gerar um recurso e gerar para você *model*,
+  *controller*, *test stubs* e *routes* em um unico comando para futuros
+  ajustes. Mesmo para migrações entre outros.
+- Plugins: Muitas bibliotecas terceiras vem com suporte para Rails que reduz ou
+  elimina o custo de configuração e utilização junto da  biblioteca e o
+  framework web. Isso inclui coisas como subistituir geradores padrão,
+  adicionando *Rake tasks*, honrando as escolhas do Rails (como *logger* e
+  *cache back-end*).
 
-Of course, the Rails boot process also glues together all registered components.
-For example, the Rails boot process is what uses your `config/database.yml` file
-when configuring Active Record.
+Claro, o processo de *boot* do Rails tambem junta todos os componentes
+registrados.
+Por exemplo, o processo de *boot* do Rails é o que usa seu arquivo
+`config/database.yml` quando esta configurando seu `Active Record`.
 
-**The short version is**: you may not have thought about which parts of Rails
-are still applicable even if you remove the view layer, but the answer turns out
-to be most of it.
+**A versão curta é**: você pode não ter pensado em que partes do Rails
+continuam aplicaveis até mesmo se você remover a camada de *view*, mas a
+resposta é que a maioria delas.
 
 Configuração básica
 -----------------------
@@ -136,7 +139,7 @@ Você pode gerar uma nova API Rails:
 $ rails new my_api --api
 ```
 
-Esse comando fará três coisas principais para você:  
+Esse comando fará três coisas principais para você:
 
 - Configura sua aplicação para começar com um conjunto mais limitado de *middlewares* que o normal.
 Especificamente, não serão incluídos *middlewares* para aplicações web (como suporte a *cookies*) por padrão.
