@@ -1,4 +1,4 @@
-**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
+  **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Trabalhando com JavaScript no Rails
@@ -139,32 +139,32 @@ cache (*cached*) em todas as páginas depois disso. Muitos pequenos benefícios 
 O time Rails fortemente lhe encoraja a escrever seu CoffeeScript (e JavaScript) nesse estilo,
 e você pode esperar que muitas bibliotecas também seguirão esse padrão.
 
-Built-in Helpers
+*Helpers* incluídos
 ----------------
 
-### Remote elements
+### Elementos remotos
 
-Rails provides a bunch of view helper methods written in Ruby to assist you
-in generating HTML. Sometimes, you want to add a little Ajax to those elements,
-and Rails has got your back in those cases.
+O Rails fornece muitos métodos *helpers* para as *views*, escritos em Ruby
+para ajudar você a gerar HTML. As vezes, você quer adicionar um pouco de Ajax
+a esses elementos e o Rails te ajuda nesses casos.
 
-Because of Unobtrusive JavaScript, the Rails "Ajax helpers" are actually in two
-parts: the JavaScript half and the Ruby half.
+Por causa do JavaScript discreto (*unobtrusive*), os "*Helpers* Ajax" do Rails
+são na verdade, em duas partes: a do JavaScript e a do Ruby.
 
-Unless you have disabled the Asset Pipeline,
+A não ser que você tenha desativado o *Asset Pipeline*, o
 [rails-ujs](https://github.com/rails/rails/tree/master/actionview/app/assets/javascripts)
-provides the JavaScript half, and the regular Ruby view helpers add appropriate
-tags to your DOM.
+fornece a parte do JavaScript, enquanto os *helpers* de *view* adicionam
+as *tags* apropriados para o seu DOM.
 
-You can read below about the different events that are fired dealing with
-remote elements inside your application.
+Você pode ler abaixo os diferentes eventos que são disparados enquanto
+se lida com elementos remotos na sua aplicação.
 
 #### form_with
 
-[`form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
-is a helper that assists with writing forms. By default, `form_with` assumes that
-your form will be using Ajax. You can opt out of this behavior by
-passing the `:local` option `form_with`.
+O [`form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
+é um *helper* que ajuda na hora de escrever formulários. Por padrão, `form_with`
+assume que seu formulário vai usar Ajax. Você pode mudar esse comportamento
+passando a opção `:local` para `form_with`.
 
 ```erb
 <%= form_with(model: @article) do |f| %>
@@ -172,7 +172,7 @@ passing the `:local` option `form_with`.
 <% end %>
 ```
 
-This will generate the following HTML:
+Isso vai gerar o seguinte HTML:
 
 ```html
 <form action="/articles" accept-charset="UTF-8" method="post" data-remote="true">
@@ -180,12 +180,13 @@ This will generate the following HTML:
 </form>
 ```
 
-Note the `data-remote="true"`. Now, the form will be submitted by Ajax rather
-than by the browser's normal submit mechanism.
+Note o `data-remote="true"`. Agora o formulário vai ser submetido através de
+Ajax ao invés do mecanismo normal de submissão do navegador.
 
-You probably don't want to just sit there with a filled out `<form>`, though.
-You probably want to do something upon a successful submission. To do that,
-bind to the `ajax:success` event. On failure, use `ajax:error`. Check it out:
+Você provavelmente não vai querer ficar sentado esperando algo acontecer com
+seu `<form>` preenchido. Você provavelmente vai querer fazer algo
+quando a submissão der certo. Para fazer isso, comece a escutar o evento
+`ajax:success`. No caso de falha, use o `ajax:error`. Veja:
 
 ```coffeescript
 $(document).ready ->
@@ -195,33 +196,34 @@ $(document).ready ->
   ).on "ajax:error", (event) ->
     $("#new_article").append "<p>ERROR</p>"
 ```
+Obviamente você pode querer fazer algo um pouco mais sofisticado que isso,
+mas já é um começo.
 
-Obviously, you'll want to be a bit more sophisticated than that, but it's a
-start.
-
-NOTE: As of Rails 5.1 and the new `rails-ujs`, the parameters `data, status, xhr`
-have been bundled into `event.detail`. For information about the previously used
-`jquery-ujs` in Rails 5 and earlier, read the [`jquery-ujs` wiki](https://github.com/rails/jquery-ujs/wiki/ajax).
+NOTE: A partir do Rails 5.1 e do novo `rails-ujs`, os parâmetros `data, status, xhr`
+foram colocados dentro de `event.detail`. Para mais informações a respeito do
+`jquery-ujs` utilizado anteriormento no Rails 5 e anteriores, leia:
+[`jquery-ujs` wiki](https://github.com/rails/jquery-ujs/wiki/ajax).
 
 #### link_to
 
 [`link_to`](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
-is a helper that assists with generating links. It has a `:remote` option you
-can use like this:
+é um *helper* que ajuda a gerar links. Ele tem uma opção `:remote`
+que você pode usar desse jeito:
 
 ```erb
 <%= link_to "an article", @article, remote: true %>
 ```
 
-which generates
+que gera
 
 ```html
 <a href="/articles/1" data-remote="true">an article</a>
 ```
 
-You can bind to the same Ajax events as `form_with`. Here's an example. Let's
-assume that we have a list of articles that can be deleted with just one
-click. We would generate some HTML like this:
+Você pode escutar os eventos da mesma forma que com o `form_with`.
+Aqui está um exemplo. Vamos assumir que temos uma lista de artigos
+que pode ser deletada com apenas um clique. Poderíamos gerar o HTML
+desse jeito:
 
 ```erb
 <%= link_to "Delete article", @article, remote: true, method: :delete %>
@@ -237,21 +239,23 @@ $ ->
 
 #### button_to
 
-[`button_to`](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to) is a helper that helps you create buttons. It has a `:remote` option that you can call like this:
+[`button_to`](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to)
+é um *helper* que ajuda a criar botões. Ele tem a opção `:remote` que
+você pode chamar desse jeito:
 
 ```erb
 <%= button_to "An article", @article, remote: true %>
 ```
 
-this generates
+que gera
 
 ```html
 <form action="/articles/1" class="button_to" data-remote="true" method="post">
   <input type="submit" value="An article" />
 </form>
 ```
-
-Since it's just a `<form>`, all of the information on `form_with` also applies.
+Já que ele funciona exatamento como um `<form>`, todas as informaçãos do
+`form_with` também se aplicam.
 
 ### Customize remote elements
 
