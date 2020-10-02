@@ -872,27 +872,16 @@ generates the following output
 If you want Active Record to not output anything, then running `rails db:migrate
 VERBOSE=false` will suppress all output.
 
-Changing Existing Migrations
+Mudando *Migrations* Existentes
 ----------------------------
 
-Occasionally you will make a mistake when writing a migration. If you have
-already run the migration, then you cannot just edit the migration and run the
-migration again: Rails thinks it has already run the migration and so will do
-nothing when you run `rails db:migrate`. You must rollback the migration (for
-example with `rails db:rollback`), edit your migration, and then run
-`rails db:migrate` to run the corrected version.
+Ocasionalmente você cometerá um erro ao escrever uma *migration*. Se você já tiver rodado a *migration*, você não pode editar a *migration* e rodá-la novamente: o Rails pensa que já rodou a *migration*, então irá fazer nada quando você rodar `rails db:migrate`. Você deve reverter a *migration* (por exemplo com `rails db:rollback`), edite a *migration*, e então rode `rails db:migrate` para que a versão correta seja rodada.
 
-In general, editing existing migrations is not a good idea. You will be
-creating extra work for yourself and your co-workers and cause major headaches
-if the existing version of the migration has already been run on production
-machines. Instead, you should write a new migration that performs the changes
-you require. Editing a freshly generated migration that has not yet been
-committed to source control (or, more generally, which has not been propagated
-beyond your development machine) is relatively harmless.
+Em geral, a edição de *migrations* existentes não é uma boa ideia. Você criará trabalho extra para si mesmo e seus colegas de trabalho e causará dores de cabeça maiores se a versão existente da *migration* já tiver rodado nas máquinas de produção.  
 
-The `revert` method can be helpful when writing a new migration to undo
-previous migrations in whole or in part
-(see [Reverting Previous Migrations](#reverting-previous-migrations) above).
+Como alternativa, você deveria escrever uma nova *migration* que execute as mudanças que você requere. Editar uma *migration* recentemente gerada que ainda não foi commitada para o *source control* (ou, de forma geral, que não foi propagada além de sua máquina de desenvolvimento) é relativamente inofensivo.
+
+O método `revert` pode ajudar ao escrever uma nova *migration* para desfazer *migrations* anteriores no todo ou em partes (veja [Revertendo Migrations Anteriores](#reverting-previous-migrations) acima).
 
 Schema Dumping and You
 ----------------------
