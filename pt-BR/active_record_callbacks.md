@@ -15,21 +15,22 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-The Object Life Cycle
+O Ciclo de Vida do Objeto
 ---------------------
 
-During the normal operation of a Rails application, objects may be created, updated, and destroyed. Active Record provides hooks into this *object life cycle* so that you can control your application and its data.
+Durante uma operação normal de uma aplicação Rails,
+objetos podem ser criados, atualizados, e destruídos. *Active Record* fornece ganchos para este ciclo de vida do objeto para que você possa controlar sua aplicação e seus dados.
 
-Callbacks allow you to trigger logic before or after an alteration of an object's state.
+*Callbacks* permitem você desencadear a lógica antes ou depois de uma alteração do estado de um objeto.
 
-Callbacks Overview
+Visão geral de *Callbacks*
 ------------------
 
-Callbacks are methods that get called at certain moments of an object's life cycle. With callbacks it is possible to write code that will run whenever an Active Record object is created, saved, updated, deleted, validated, or loaded from the database.
+*Callbacks* são métodos que são chamados em certos momentos do ciclo de vida de um objeto. Com *callbacks* é possível escrever código que irá rodar sempre que um objeto *Active Record* é criado, salvo, atualizado, deletado, validado, ou carregado de um banco de dados.
 
-### Callback Registration
+### Registro de *Callback* 
 
-In order to use the available callbacks, you need to register them. You can implement the callbacks as ordinary methods and use a macro-style class method to register them as callbacks:
+Para usar os *callbacks* disponíveis, você precisa registrá-los. Você pode implementar os *callbacks* como métodos comuns e usar o método *macro-style* de uma classe para registrá-los como *callbacks*:
 
 ```ruby
 class User < ApplicationRecord
@@ -46,7 +47,7 @@ class User < ApplicationRecord
 end
 ```
 
-The macro-style class methods can also receive a block. Consider using this style if the code inside your block is so short that it fits in a single line:
+Os métodos *macro-style* de uma classe podem também receber um bloco. Considere usar esse estilo se o código dentro do seu bloco é tão curto que cabe em uma linha: 
 
 ```ruby
 class User < ApplicationRecord
@@ -59,6 +60,7 @@ end
 ```
 
 Callbacks can also be registered to only fire on certain life cycle events:
+*Callbacks* também podem ser registrados para rodar apenas em certos eventos do ciclo de vida:
 
 ```ruby
 class User < ApplicationRecord
@@ -78,14 +80,14 @@ class User < ApplicationRecord
 end
 ```
 
-It is considered good practice to declare callback methods as private. If left public, they can be called from outside of the model and violate the principle of object encapsulation.
+É considerado uma boa prática declarar métodos de *callback* como privados. Se deixados como públicos, podem ser chamados de fora do *model* e violar o princípio de encapsulamento de um objeto.
 
-Available Callbacks
+Callbacks Disponíveis
 -------------------
 
-Here is a list with all the available Active Record callbacks, listed in the same order in which they will get called during the respective operations:
+Aqui está uma lista uma lista com todos os *Active Record callbacks*, listados na mesma ordem na qual eles serão chamados durante as respectivas operações: 
 
-### Creating an Object
+### Criando um Objeto
 
 * `before_validation`
 * `after_validation`
@@ -97,7 +99,7 @@ Here is a list with all the available Active Record callbacks, listed in the sam
 * `after_save`
 * `after_commit/after_rollback`
 
-### Updating an Object
+### Atualizando um Objeto
 
 * `before_validation`
 * `after_validation`
@@ -109,28 +111,27 @@ Here is a list with all the available Active Record callbacks, listed in the sam
 * `after_save`
 * `after_commit/after_rollback`
 
-### Destroying an Object
+### Destruindo um Objeto 
 
 * `before_destroy`
 * `around_destroy`
 * `after_destroy`
 * `after_commit/after_rollback`
 
-WARNING. `after_save` runs both on create and update, but always _after_ the more specific callbacks `after_create` and `after_update`, no matter the order in which the macro calls were executed.
+WARNING. `after_save` roda tanto na criação quanto na atualização, mas sempre *depois* de *callbacks* mais específicos `after_create` e `after_update`, não importa a ordem que uma chamada macro foi executada.
 
-WARNING. Care should be taken in callbacks to avoid updating attributes. For example, avoid running `update(attribute: "value")` and similar code during callbacks. This can alter the state of the model and may result in unexpected side effects during commit. Instead, you should try to assign values in the `before_create` or earlier callbacks.
+WARNING. Deve-se tomar cuidado em *callbacks* para evitar atualizar atributos. Por exemplo, evite rodar `update(attribute: "value")` e código semelhante durante *callbacks*. Isto pode alterar o estado do *model* e pode resultar em efeitos colaterais inesperados durante o *commit*. Em vez disto, você deveria tentar atribuir valores no `before_create` ou *callbacks* recentes.
 
-NOTE: `before_destroy` callbacks should be placed before `dependent: :destroy`
-associations (or use the `prepend: true` option), to ensure they execute before
-the records are deleted by `dependent: :destroy`.
+NOTE: `before_destroy` *callbacks* devem ser posicionados antes de associações `dependent: :destroy` (ou use a opção `prepend: true`), para garantir que executem antes dos registros serem deletados pelo `dependent: :destroy`.
 
-### `after_initialize` and `after_find`
+### `after_initialize` e `after_find`
 
-The `after_initialize` callback will be called whenever an Active Record object is instantiated, either by directly using `new` or when a record is loaded from the database. It can be useful to avoid the need to directly override your Active Record `initialize` method.
+O *callback* `after_initialize` será chamado sempre que um objeto *Active Record* for instanciado, usando diretamente `new` ou quando um registro é carregado do banco de dados.
+Isto pode ser útil para evitar a necessidade de substituir diretamente seu método `initialize` do *Active Record*.
 
-The `after_find` callback will be called whenever Active Record loads a record from the database. `after_find` is called before `after_initialize` if both are defined.
+O *callback* `after_find` será chamado sempre que o *Active Record* carregar um registro do banco de dados. `after_find` é chamado antes de `after_initialize` se ambos estiverem definidos. 
 
-The `after_initialize` and `after_find` callbacks have no `before_*` counterparts, but they can be registered just like the other Active Record callbacks.
+Os *callbacks* `after_initialize` e `after_find` não possuem complementos `before_*`, mas podem ser registrados como os outros *callbacks* de *Active Record*.
 
 ```ruby
 class User < ApplicationRecord
@@ -155,7 +156,7 @@ You have initialized an object!
 
 ### `after_touch`
 
-The `after_touch` callback will be called whenever an Active Record object is touched.
+O *callback* `after_touch` será chamado sempre que um objeto *Active Record* for alcançado.
 
 ```ruby
 class User < ApplicationRecord
@@ -171,8 +172,7 @@ end
 You have touched an object
 => true
 ```
-
-It can be used along with `belongs_to`:
+Pode ser usado junto de `belongs_to`:
 
 ```ruby
 class Employee < ApplicationRecord
