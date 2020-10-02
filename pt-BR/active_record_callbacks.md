@@ -59,7 +59,6 @@ class User < ApplicationRecord
 end
 ```
 
-Callbacks can also be registered to only fire on certain life cycle events:
 *Callbacks* também podem ser registrados para rodar apenas em certos eventos do ciclo de vida:
 
 ```ruby
