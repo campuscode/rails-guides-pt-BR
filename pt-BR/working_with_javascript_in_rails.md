@@ -146,7 +146,7 @@ e você pode esperar que muitas bibliotecas também seguirão esse padrão.
 
 O Rails fornece muitos métodos *helpers* para as *views*, escritos em Ruby
 para ajudar você a gerar HTML. As vezes, você quer adicionar um pouco de Ajax
-a esses elementos e o Rails te ajuda nesses casos.
+a esses elementos e o Rails ajuda você nesses casos.
 
 Por causa do JavaScript discreto (*unobtrusive*), os "*Helpers* Ajax" do Rails
 são na verdade, em duas partes: a do JavaScript e a do Ruby.
@@ -154,7 +154,7 @@ são na verdade, em duas partes: a do JavaScript e a do Ruby.
 A não ser que você tenha desativado o *Asset Pipeline*, o
 [rails-ujs](https://github.com/rails/rails/tree/master/actionview/app/assets/javascripts)
 fornece a parte do JavaScript, enquanto os *helpers* de *view* adicionam
-as *tags* apropriados para o seu DOM.
+as *tags* apropriadas para o seu DOM.
 
 Você pode ler abaixo os diferentes eventos que são disparados enquanto
 se lida com elementos remotos na sua aplicação.
@@ -201,7 +201,7 @@ mas já é um começo.
 
 NOTE: A partir do Rails 5.1 e do novo `rails-ujs`, os parâmetros `data, status, xhr`
 foram colocados dentro de `event.detail`. Para mais informações a respeito do
-`jquery-ujs` utilizado anteriormento no Rails 5 e anteriores, leia:
+`jquery-ujs` utilizado anteriormente no Rails 5 e anteriores, leia:
 [`jquery-ujs` wiki](https://github.com/rails/jquery-ujs/wiki/ajax).
 
 #### link_to
@@ -222,7 +222,7 @@ que gera
 
 Você pode escutar os eventos da mesma forma que com o `form_with`.
 Aqui está um exemplo. Vamos assumir que temos uma lista de artigos
-que pode ser deletada com apenas um clique. Poderíamos gerar o HTML
+que pode ser deletada com apenas um clique. Podemos gerar o HTML
 desse jeito:
 
 ```erb
@@ -254,7 +254,7 @@ que gera
   <input type="submit" value="An article" />
 </form>
 ```
-Já que ele funciona exatamento como um `<form>`, todas as informaçãos do
+Já que ele funciona exatamento como um `<form>`, todas as informações do
 `form_with` também se aplicam.
 
 ### Customize remote elements
