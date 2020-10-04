@@ -446,8 +446,8 @@ A *partial* `app/views/users/_user.html.erb` contém o seguinte:
 A parte de cima da página *index* mostra os usuários. A parte debaixo
 fornece o formulário para criar um novo usuário.
 
-O formulário debaixo chamará a ação *`create`* no *`UsersController`*. por causa
-da opção *remote* definida como *true*, a requisição será enviada para o *`UsersController`*
+O formulário debaixo chamará a ação *`create`* no `UsersController`. por causa
+da opção *remote* definida como `true`, a requisição será enviada para o `UsersController`
 como uma requisição *Ajax*, procurando por JavaScript. Afim de atender a requisição,
 a ação *`create`* do seu *controller* ficaria assim:
 
@@ -470,12 +470,12 @@ a ação *`create`* do seu *controller* ficaria assim:
   end
 ```
 
-Observe o *`format.js`* no bloco *`respond_to`*: que permite o seu controller responder
+Observe o `format.js` no bloco `respond_to`: que permite o seu controller responder
 a sua requisição *Ajax*. Então você tem um correspondente arquivo *view*
 `app/views/users/create.js.erb` que gera o atual código JavaScript que será enviado
 e executado no lado do cliente.
 
-``erb
+```erb
 $("<%= escape_javascript(render @user) %>").appendTo("#users");
 ```
 
