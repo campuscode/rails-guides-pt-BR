@@ -881,7 +881,7 @@ Em geral, a edição de *migrations* existentes não é uma boa ideia. Você cri
 
 Como alternativa, você deveria escrever uma nova *migration* que execute as mudanças que você requere. Editar uma *migration* recentemente gerada e que ainda não foi feito um *commit* para o *source control* (ou, de forma geral, que não foi propagada além de sua máquina de desenvolvimento) é relativamente inofensivo.
 
-O método `revert` pode ajudar ao escrever uma nova *migration* para desfazer *migrations* anteriores no todo ou em partes (veja [Revertendo Migrations Anteriores](#reverting-previous-migrations) acima).
+O método `revert` pode ajudar ao escrever uma nova *migration* para desfazer *migrations* anteriores no todo ou em partes (veja [Revertendo *Migrations* Anteriores](#revertendo-migrations-anteriores) acima).
 
 Schema Dumping and You
 ----------------------
