@@ -151,9 +151,9 @@ e o Rails te da cobertura nesses casos.
 Por causa do JavaScript não obtrusivo (*unobtrusive*), os *"Ajax Helpers"* do rails
 estão atualmente em duas partes: metade JavaScript e metade Rails.
 
-A não ser que você desabilite o *Asse Pipeline*,
+A não ser que você desabilite a *Asset Pipeline*,
 [o *rails-ujs*](https://github.com/rails/rails/tree/master/actionview/app/assets/javascripts)
-fornece a metade JavaScript, e os regulares *view helpers* Ruby adicionam as *tags* apropriadas
+fornece a metade JavaScript, e os *view helpers* regulares em Ruby adicionam as *tags* apropriadas
 ao seu DOM.
 
 Você pode ler abaixo sobre a diferença dos eventos que são disparados lidando com
@@ -180,7 +180,7 @@ Isso irá gerar o seguinte HTML:
 </form>
 ```
 
-Veja o `data-remote="true"`. Agora, o formulário será enviado por ajax ao invés
+Veja o `data-remote="true"`. Agora, o formulário será enviado por *Ajax* ao invés
 do mecanismo normal de envio do browser.
 
 Você provavelmente não quer só ficar sentado com um `<form>` preenchido, entretanto.
@@ -263,17 +263,17 @@ para fazer isso.
 #### `data-method`
 
 Ativando *hyperlinks* sempre resultam em uma requisição HTTP GET. Seja como for, se
-sua aplicação é [RESTful](https://en.wikipedia.org/wiki/Representational_State_Transfer),
+sua aplicação é [RESTful](https://pt.wikipedia.org/wiki/REST),
 alguns links são na verdade ações que mudam dados no servidor, e devem ser executados com
 requisições diferentes de GET. Esse atributo permite mudar tais links para um método explícito
 tais como "post", "put" ou "delete".
 
 O modo como isso funciona é que, quando um link é ativado, ele constrói um formulário
 escondido no documento com o atributo *"action"* correspondendo ao valor *"href"* do
-link, e o método corresponde ao valor do `data-method`, e envia esse forumlário.
+link, e o método corresponde ao valor do `data-method`, e envia esse formulário.
 
-OBSERVAÇÃO: por causa dos envios de formulários com outros métodos HTTP além de
-GET e POST não são ampalmente suportados entre navegadores, todos os outros métodos
+NOTE: por causa dos envios de formulários com outros métodos HTTP além de
+GET e POST não são amplamente suportados entre navegadores, todos os outros métodos
 HTTP são na verdade enviados através de POST com o método pretendido indicado no
 parâmetro `_method`. o Rails automaticamente detecta e compensa isso.
 
@@ -328,7 +328,7 @@ gerenciador de confirmação retornar *false*.
 
 ### Desativando Automaticamente
 
-Também é possível desabilitar automaicamente um input enquanto o formuário está sendo
+Também é possível desabilitar automaticamente um input enquanto o formulário está sendo
 enviado usando o atributo `data-disable-with`. Isso evita acidentes de duplo cliques do
 usuário, o qual resultaria em uma dupla requisição HTTP que o `backend` pode não detectar
 como tal. O valor do atributo é o texto que se tornará o novo valor do botão quando está
@@ -352,15 +352,15 @@ Isso gera um formulário com:
 
 ### Manipuladores de eventos `Rails-ujs`
 
-Rails 5.1 introduziu o `rails-ujs` e removeram o jQquery como dependência.
+Rails 5.1 introduziu o `rails-ujs` e removeram o jQuery como dependência.
 Como resultado o JavaScript discreto (*unobtrusive (UJS)*) foi reescrito para operar sem *jQuery*.
 Estas introduções causam pequenas mudanças para os eventos personalizados executados durante a requisição:
 
-OBSERVAÇÃO: A assinatura de chamadas para os manipuladores de eventos do `UJS` mudaram.
-Diferente da versão com *jQuery*, todos os eventos personalizados retornam apenas um parametro: `event`.
+NOTE: A assinatura de chamadas para os manipuladores de eventos do `UJS` mudaram.
+Diferente da versão com jQuery, todos os eventos personalizados retornam apenas um parâmetro: `event`.
 Nesse parâmetro, existe um atributo adicional, o `detail`, ao qual contém um *array* de parâmetros extra.
 
-| Nome do evento      | Parametros extra (event.detail) | Quando é executado                                          |
+| Nome do evento      | Parâmetros extra (event.detail) | Quando é executado                                          |
 |---------------------|---------------------------------|-------------------------------------------------------------|
 | `ajax:before`       |                                 | Antes de toda regra de negócio no *ajax*.                   |
 | `ajax:beforeSend`   | [xhr, options]                  | Antes da requisição ser enviada.                            |
@@ -378,7 +378,7 @@ document.body.addEventListener('ajax:success', function(event) {
   var data = detail[0], status = detail[1], xhr = detail[2];
 })
 ```
-OBSERVAÇÃO: A partir do Rails 5.1 e o novo `rails-ujs`, os parâmetros `data, status, xhr`
+NOTE: A partir do Rails 5.1 e o novo `rails-ujs`, os parâmetros `data, status, xhr`
 foram empacotados dentro do `event.detail`. Para informações sobre o `jquery-ujs` anteriormente
 usado no Rails 5 e anteriores, leia a [wiki do `jquery-ujs`](https://github.com/rails/jquery-ujs/wiki/ajax).
 
@@ -390,11 +390,11 @@ O evento `ajax:before` pode manipular os dados do formulário antes da serializa
 evento `ajax:beforeSend` é útil para adicionar *headers* personalizados.
 
 Se você parar o evento `ajax:aborted:file`, o comportamento padrão de permitir
-que o navegador envie o formulário por meios normais (*i.e. non-Aja submission*)
-será cancelada e o fomulário não será enviado de nenhuma forma. Isso é útil para
+que o navegador envie o formulário por meios normais (i.e. requisição sem *Ajax*)
+será cancelada e o formulário não será enviado de nenhuma forma. Isso é útil para
 implementar seu próprio ambiente de *upload* de arquivos via *Ajax*.
 
-Observação, você deveria usar o `return false` para previnir eventos para o `jquery-ujs`
+Observação, você deveria usar o `return false` para prevenir eventos para o `jquery-ujs`
 e `e.preventDefault()` para o `rails-ujs`
 
 Server-Side Concerns
