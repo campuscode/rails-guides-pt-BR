@@ -1865,19 +1865,17 @@ Person.ids
 # SELECT person_id FROM people
 ```
 
-Existence of Objects
+Existência de Objetos
 --------------------
 
-If you simply want to check for the existence of the object there's a method called `exists?`.
-This method will query the database using the same query as `find`, but instead of returning an
-object or collection of objects it will return either `true` or `false`.
+Se você simplesmente quer checar a existência do objeto, existe um método chamado `exists?`.
+Este método irá consultar o banco de dados usando a mesma consulta que `find`, mas ao invés de retornar um objeto ou uma coleção de objetos, irá retornar `true` ou `false`.
 
 ```ruby
 Client.exists?(1)
 ```
 
-The `exists?` method also takes multiple values, but the catch is that it will return `true` if any
-one of those records exists.
+O método `exists?` também leva valores múltiplos, mas o problema é que retornará `true` se algum desses registros existirem.
 
 ```ruby
 Client.exists?(id: [1,2,3])
@@ -1885,22 +1883,21 @@ Client.exists?(id: [1,2,3])
 Client.exists?(name: ['John', 'Sergei'])
 ```
 
-It's even possible to use `exists?` without any arguments on a model or a relation.
+É até possível usar `exists?` sem algum argumento em um *model* ou relação.
 
 ```ruby
 Client.where(first_name: 'Ryan').exists?
 ```
 
-The above returns `true` if there is at least one client with the `first_name` 'Ryan' and `false`
-otherwise.
+O código acima retorna `true` se existir ao menos um cliente com o `first_name` 'Ryan' e `false` se estiver de outra forma.
 
 ```ruby
 Client.exists?
 ```
 
-The above returns `false` if the `clients` table is empty and `true` otherwise.
+O código acima retorna `false` se a tabela `clients` estiver e `true` se estiver de outra forma.
 
-You can also use `any?` and `many?` to check for existence on a model or relation.
+Você também pode usar `any?` e `many?` para verificar a existência de um *model* ou relação. 
 
 ```ruby
 # via a model
