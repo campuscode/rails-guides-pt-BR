@@ -361,7 +361,7 @@ Aqui você tem uma lista de cidades cujos nomes são apresentados ao usuário. I
 
 ### As Tags de Seleção (*Select*) e Opção (*Option*)
 
-O auxiliar mais genérico é `select_tag`, que - como o nome indica - simplesmente gera a tag `SELECT` que encapsula uma string de opções:
+O auxiliar mais genérico é `select_tag`, que - como o nome indica - simplesmente gera a tag `SELECT` que encapsula uma *string* de opções:
 
 ```erb
 <%= select_tag(:city_id, raw('<option value="1">Lisboa</option><option value="2">Madri</option><option value="3">Berlim</option>')) %>
