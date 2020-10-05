@@ -381,7 +381,7 @@ Saída:
 <option value="3">Berlim</option>
 ```
 
-O primeiro argumento para `options_for_select` é um *array* aninhado onde cada elemento tem dois elementos: texto da opção (nome da cidade) e valor da opção (id da cidade). O valor da opção é o que será enviado ao seu *controller*. Freqüentemente, esse será o id de um objeto de banco de dados correspondente, mas não precisa ser o caso.
+O primeiro argumento para `options_for_select` é um *array* aninhado onde cada elemento tem dois elementos: texto da opção (nome da cidade) e valor da opção (id da cidade). O valor da opção é o que será enviado ao seu *controller*. Frequentemente, esse será o id de um objeto de banco de dados correspondente, mas não precisa ser o caso.
 
 Sabendo disso, é possível combinar `select_tag` e `options_for_select` para obter a marcação completa desejada:
 
