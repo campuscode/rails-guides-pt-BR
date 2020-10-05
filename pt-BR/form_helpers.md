@@ -508,7 +508,7 @@ NOTE: Pares passados para `options_for_select` devem ter o texto primeiro e o va
 
 ### Fuso horário e seleção de país
 
-Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus usuários em que fuso horário eles estão. Fazer isso exigiria a geração de opções selecionadas de uma lista de *[`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html)* objetos usando `collection_select`, mas você pode simplesmente usar o helper` time_zone_select` que já envolve isto:
+Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus usuários em que fuso horário eles estão. Fazer isso exigiria a geração de opções selecionadas de uma lista de *[`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html)* objetos usando `collection_select`, mas você pode simplesmente usar o *helper* `time_zone_select` que já envolve isto:
 
 ```erb
 <%= time_zone_select(:person, :time_zone) %>
