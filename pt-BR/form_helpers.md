@@ -471,7 +471,7 @@ Você também pode passar um bloco para o *helper* `select`:
 <% end %>
 ```
 
-WARNING: Se você estiver usando `select` ou ajudantes semelhantes para definir uma associação `belongs_to`, você deve passar o nome da chave estrangeira (no exemplo acima `city_id`), não o nome da própria associação.
+WARNING: Se você estiver usando `select` ou *helpers* semelhantes para definir uma associação `belongs_to`, você deve passar o nome da chave estrangeira (no exemplo acima `city_id`), não o nome da própria associação.
 
 WARNING: Quando `:include_blank` ou`:prompt` não estão presentes, `: include_blank` é forçado a *true* se o atributo de seleção `required` for *true*, display `size` é um e` multiple` não é *true*.
 
