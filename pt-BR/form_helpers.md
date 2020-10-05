@@ -475,7 +475,7 @@ WARNING: Se você estiver usando `select` ou ajudantes semelhantes para definir 
 
 WARNING: Quando `:include_blank` ou`:prompt` não estão presentes, `: include_blank` é forçado a *true* se o atributo de seleção `required` for *true*, display `size` é um e` multiple` não é *true*.
 
-### Tags de opção (*options*) de uma coleção de objetos arbitrários
+### Tags de Opção (*Option Tags*) de uma Coleção de Objetos Arbitrários
 
 Gerar tags de opções com `options_for_select` requer que você crie um *array* contendo o texto e valor para cada opção. Mas e se você tivesse um *model* `City` (talvez um Active Record) e quisesse gerar tags de opção de uma coleção desses objetos? Uma solução seria fazer uma matriz aninhada iterando sobre eles:
 
