@@ -199,7 +199,7 @@ $(document).ready ->
 Obviamente, você irá querer ser um pouco mais sofisticado que isso, mas
 é um começo.
 
-OBSERVAÇÃO: A partir do Rails 5.1 e do novo `rails-ujs`, os parâmetros
+NOTE: A partir do Rails 5.1 e do novo `rails-ujs`, os parâmetros
 `data, status, xhr` foram empacotados no `event.detail`. Para informações
 sobre o `jquery-ujs` usado anteriormente no Rails 5 e anteriores, leia a [wiki do `jquery-ujs`](https://github.com/rails/jquery-ujs/wiki/ajax)
 
