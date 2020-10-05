@@ -359,7 +359,7 @@ Esta é a aparência da marcação:
 
 Aqui você tem uma lista de cidades cujos nomes são apresentados ao usuário. Internamente, o aplicativo deseja apenas manipular seus IDs, para que sejam usados como o atributo de valor das opções. Vamos ver como o Rails pode ajudar aqui.
 
-### As tags de seleção (*Select*) e opção (*Option*)
+### As Tags de Seleção (*Select*) e Opção (*Option*)
 
 O auxiliar mais genérico é `select_tag`, que - como o nome indica - simplesmente gera a tag `SELECT` que encapsula uma string de opções:
 
