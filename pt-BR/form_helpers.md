@@ -506,7 +506,7 @@ Como com outros *helpers*, se você fosse usar o *helper* `collection_select` em
 
 NOTE: Pares passados para `options_for_select` devem ter o texto primeiro e o valor depois, entretanto com `options_from_collection_for_select` devem ter o método do valor primeiro e o método do texto depois.
 
-### Fuso horário e seleção de país
+### Fuso horário e Seleção de País
 
 Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus usuários em que fuso horário eles estão. Fazer isso exigiria a geração de opções selecionadas de uma lista de *[`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html)* objetos usando `collection_select`, mas você pode simplesmente usar o *helper* `time_zone_select` que já envolve isto:
 
