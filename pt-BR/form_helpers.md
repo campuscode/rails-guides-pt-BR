@@ -425,7 +425,7 @@ Saída:
 <option value="3" data-size="3.4 million">Berlim</option>
 ```
 
-### *Select Boxes* Caixas de seleção para lidar com objetos de modelo
+### Caixas de Seleção (*Select Boxes*) com Objetos *Model*
 
 Na maioria dos casos, os controles de formulário serão vinculados a um *model* específico e, como você pode esperar, o Rails fornece helpers personalizados para esse propósito. Consistente com outros *helpers* de formulário, ao lidar com um objeto de *model* elimine o sufixo `_tag` de` select_tag`:
 
