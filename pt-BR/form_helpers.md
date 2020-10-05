@@ -343,7 +343,7 @@ When parsing POSTed data, Rails will take into account the special `_method` par
 
 IMPORTANT: All forms using `form_with` implement `remote: true` by default. These forms will submit data using an XHR (Ajax) request. To disable this include `local: true`. To dive deeper see [Working with JavaScript in Rails](working_with_javascript_in_rails.html#remote-elements) guide.
 
-Fazendo (*Select boxes*) caixas de seleção com facilidade
+Fazendo Caixas de Seleção (*Select Boxes*) com Facilidade
 -----------------------------
 
 As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente. 
