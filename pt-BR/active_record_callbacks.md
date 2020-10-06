@@ -84,7 +84,7 @@ end
 Callbacks Disponíveis
 -------------------
 
-Aqui está uma lista uma lista com todos os *Active Record callbacks*, listados na mesma ordem na qual eles serão chamados durante as respectivas operações: 
+Aqui está uma lista com todos os *Active Record callbacks*, listados na mesma ordem na qual eles serão chamados durante as respectivas operações: 
 
 ### Criando um Objeto
 
