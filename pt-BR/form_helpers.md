@@ -367,7 +367,7 @@ O auxiliar mais genérico é `select_tag`, que - como o nome indica - simplesmen
 <%= select_tag(:city_id, raw('<option value="1">Lisboa</option><option value="2">Madri</option><option value="3">Berlim</option>')) %>
 ```
 
-Isso é um começo, porém não cria dinamicamente as tags de opção. Você pode gerar tags de opção com o auxiliar `options_for_select`:
+Isso é um começo, porém não cria dinamicamente as tags de opção. Você pode gerar tags de opção com o *helper* `options_for_select`:
 
 ```html+erb
 <%= options_for_select([['Lisboa', 1], ['Madri', 2], ['Berlim', 3]]) %>
