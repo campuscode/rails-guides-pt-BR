@@ -504,7 +504,7 @@ Como com outros *helpers*, se você fosse usar o *helper* `collection_select` em
 <% end %>
 ```
 
-NOTE: Pares passados para `options_for_select` devem ter o texto primeiro e o valor depois, entretanto com `options_from_collection_for_select` devem ter o método do valor primeiro e o método do texto depois.
+NOTE: Pares passados para `options_for_select` devem ter o texto primeiro e o valor depois, entretanto, com `options_from_collection_for_select` devem ter o método do valor primeiro e o método do texto depois.
 
 ### Fuso horário e Seleção de País
 
