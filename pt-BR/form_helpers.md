@@ -451,7 +451,7 @@ produz uma saída semelhante a
 
 Observe que o terceiro parâmetro, o *array* de opções, é o mesmo tipo de argumento que você passa para `options_for_select`. Uma vantagem aqui é que você não precisa se preocupar em pré-selecionar a cidade correta se o usuário já tiver uma - o Rails fará isso para você lendo o atributo `@person.city_id`.
 
-Tal como acontece com outros auxiliares, se você fosse usar o *helper* `select` em um construtor de formulário com escopo para o objeto `@person`, a sintaxe seria:
+Tal como acontece com outros * helpers*, se você fosse usar o *helper* `select` em um construtor de formulário com escopo para o objeto `@person`, a sintaxe seria:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
