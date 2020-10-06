@@ -1895,7 +1895,7 @@ O código acima retorna `true` se existir ao menos um cliente com o `first_name`
 Client.exists?
 ```
 
-O código acima retorna `false` se a tabela `clients` estiver e `true` se estiver de outra forma.
+O código acima retorna `false` se a tabela `clients` estiver vazia e `true` caso não esteja.
 
 Você também pode usar `any?` e `many?` para verificar a existência de um *model* ou relação. 
 
