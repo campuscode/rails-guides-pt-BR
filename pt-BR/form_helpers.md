@@ -516,7 +516,7 @@ Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus 
 
 Existe também o *helper* `time_zone_options_for_select` para uma maneira mais manual (portanto mais customizável) de fazer isso. Leia a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-time_zone_options_for_select) para aprender sobre os possíveis argumentos para esses dois métodos.
 
-Rails _tinha_ um *helper* `country_select` para escolher os países, mas isso foi extraído para o [plugin country_select](https://github.com/stefanpenner/country_select).
+O Rails tinha um *helper* `country_select` para escolher os países, mas foi extraído para o [plugin country_select](https://github.com/stefanpenner/country_select).
 
 Using Date and Time Form Helpers
 --------------------------------
