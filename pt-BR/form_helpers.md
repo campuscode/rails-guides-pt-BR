@@ -429,7 +429,7 @@ Resultado:
 
 Na maioria dos casos, os controles de formulário serão vinculados a um *model* específico e, como você pode esperar, o Rails fornece *helpers* personalizados para esse propósito. Consistente com outros *helpers* de formulário, ao lidar com um objeto de *model* elimine o sufixo `_tag` de `select_tag`:
 
-Se o *controller* definiu `@person` e o city_id dessa pessoa é 2:
+Se o *controller* definiu `@person` e o `city_id` dessa pessoa é 2:
 
 ```ruby
 @person = Person.new(city_id: 2)
@@ -451,7 +451,7 @@ produz um resultado semelhante a
 
 Observe que o terceiro parâmetro, o *array* de opções, é o mesmo tipo de argumento que você passa para `options_for_select`. Uma vantagem aqui é que você não precisa se preocupar em pré-selecionar a cidade correta se o usuário já tiver uma - o Rails fará isso para você lendo o atributo `@person.city_id`.
 
-Tal como acontece com outros * helpers*, se você fosse usar o *helper* `select` em um construtor de formulário com escopo para o objeto `@person`, a sintaxe seria:
+Tal como acontece com outros *helpers*, se você fosse usar o *helper* `select` em um construtor de formulário com escopo para o objeto `@person`, a sintaxe seria:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -473,18 +473,18 @@ Você também pode passar um bloco para o *helper* `select`:
 
 WARNING: Se você estiver usando `select` ou *helpers* semelhantes para definir uma associação `belongs_to`, você deve passar o nome da chave estrangeira (no exemplo acima `city_id`), não o nome da própria associação.
 
-WARNING: Quando `:include_blank` ou`:prompt` não estão presentes, `: include_blank` é forçado a *true* se o atributo de seleção `required` for *true*, display `size` é um e` multiple` não é *true*.
+WARNING: Quando `:include_blank` ou `:prompt` não estão presentes, `:include_blank` é forçado a *true* se o atributo de seleção `required` for *true*, display `size` é um e `multiple` não é *true*.
 
 ### Tags de Opção (*Option Tags*) de uma Coleção de Objetos Arbitrários
 
-Gerar tags de opções com `options_for_select` requer que você crie um *array* contendo o texto e valor para cada opção. Mas e se você tivesse um *model* `City` (talvez um Active Record) e quisesse gerar tags de opção de uma coleção desses objetos? Uma solução seria fazer uma matriz aninhada iterando sobre eles:
+Gerar tags de opções com `options_for_select` requer que você crie um *array* contendo o texto e valor para cada opção. Mas e se você tivesse um *model* `City` (talvez um Active Record) e quisesse gerar tags de opção de uma coleção desses objetos? Uma solução seria fazer um *array* aninhada iterando sobre eles:
 
 ```erb
 <% cities_array = City.all.map { |city| [city.name, city.id] } %>
 <%= options_for_select(cities_array) %>
 ```
 
-Esta é uma solução perfeitamente válida, entretanto Rails fornece uma alternativa menos verbosa: `options_from_collection_for_select`. Este *helper* espera uma coleção de objetos arbitrários e dois argumentos adicionais: os nomes dos métodos para ler a opção **value** e **text**, respectivamente:
+Esta é uma solução perfeitamente válida, entretanto o Rails fornece uma alternativa menos verbosa: `options_from_collection_for_select`. Este *helper* espera uma coleção de objetos arbitrários e dois argumentos adicionais: os nomes dos métodos para ler a opção **value** e **text**, respectivamente:
 
 ```erb
 <%= options_from_collection_for_select(City.all, :id, :name) %>
@@ -508,7 +508,7 @@ NOTE: Pares passados para `options_for_select` devem ter o texto primeiro e o va
 
 ### Fuso horário e Seleção de País
 
-Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus usuários em que fuso horário eles estão. Fazer isso exigiria a geração de opções selecionadas de uma lista de *[`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html)* objetos usando `collection_select`, mas você pode simplesmente usar o *helper* `time_zone_select` que já envolve isto:
+Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus usuários em que fuso horário eles estão. Fazer isso exigiria a geração de opções selecionadas de uma lista de objetos *[`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html)* usando `collection_select`, mas você pode simplesmente usar o *helper* `time_zone_select` que já envolve isto:
 
 ```erb
 <%= time_zone_select(:person, :time_zone) %>
