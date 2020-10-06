@@ -14,7 +14,7 @@ Você pode ver o conteúdo já traduzido em [guiarails.com.br](https://guiarails
 
 ## Como ajudar
 
-Seja você é alguém que tem conhecimento em Rails ou ainda está aprendendo,
+Se você é alguém que tem conhecimento em Rails ou ainda está aprendendo,
 nossas boas-vindas!
 
 Abaixo deixamos alguns passos sobre como fazer contribuições:
