@@ -1889,7 +1889,7 @@ Client.exists?(name: ['John', 'Sergei'])
 Client.where(first_name: 'Ryan').exists?
 ```
 
-O código acima retorna `true` se existir ao menos um cliente com o `first_name` 'Ryan' e `false` se estiver de outra forma.
+O código acima retorna `true` se existir ao menos um cliente com o `first_name` 'Ryan' e `false` caso não exista.
 
 ```ruby
 Client.exists?
