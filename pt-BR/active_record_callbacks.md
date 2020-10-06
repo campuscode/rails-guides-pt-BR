@@ -26,7 +26,7 @@ objetos podem ser criados, atualizados e destruídos. O *Active Record* fornece 
 Visão geral de *Callbacks*
 ------------------
 
-*Callbacks* são métodos que são chamados em certos momentos do ciclo de vida de um objeto. Com *callbacks* é possível escrever código que irá rodar sempre que um objeto *Active Record* é criado, salvo, atualizado, deletado, validado, ou carregado de um banco de dados.
+*Callbacks* são métodos que são chamados em certos momentos do ciclo de vida de um objeto. Com *callbacks* é possível escrever código que rodará sempre que um objeto *Active Record* é criado, salvo, atualizado, deletado, validado ou carregado de um banco de dados.
 
 ### Registro de *Callback* 
 
