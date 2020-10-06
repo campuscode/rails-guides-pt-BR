@@ -19,7 +19,7 @@ O Ciclo de Vida do Objeto
 ---------------------
 
 Durante a operação normal de uma aplicação Rails,
-objetos podem ser criados, atualizados, e destruídos. *Active Record* fornece ganchos para este ciclo de vida do objeto para que você possa controlar sua aplicação e seus dados.
+objetos podem ser criados, atualizados e destruídos. O *Active Record* fornece *hooks* para este ciclo de vida do objeto para que você possa controlar sua aplicação e seus dados.
 
 *Callbacks* permitem você desencadear a lógica antes ou depois de uma alteração do estado de um objeto.
 
