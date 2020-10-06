@@ -134,7 +134,7 @@ O Ruby on Rails possui dois conjuntos principais de documentação: os guias, qu
 
 Você pode ajudar a melhorar os guias do Rails tornando-os mais coerentes, consistentes ou legíveis, adicionando informações ausentes, corrigindo erros factuais, corrigindo erros de digitação ou atualizando-os com os Rails mais recentes. 
 
-Para isso, faça alterações aos arquivos-fonte ds guias do Rails (localizados [aqui](https://github.com/rails/rails/tree/master/guides/source) no GitHub). Então abra um *Pull Request* para aplicar suas mudanças na *branch* principal (*master/main*).
+Para isso, faça alterações aos arquivos-fonte dos guias do Rails (localizados [aqui](https://github.com/rails/rails/tree/master/guides/source) no GitHub). Então abra um *Pull Request* para aplicar suas mudanças na *branch* principal (*master/main*).
 
 Ao trabalhar com a documentação, leve em consideração as [Diretrizes de Documentação da API](api_documentation_guidelines.html) e as [Diretrizes dos guias Ruby on Rails](ruby_on_rails_guides_guidelines.html).
 
