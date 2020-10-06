@@ -351,9 +351,9 @@ As caixas de seleção em HTML requerem uma quantidade significativa de marcaç�
 Esta é a aparência da marcação:
 ```html
 <select name="city_id" id="city_id">
-  <option value="1">Lisboa</option>
-  <option value="2">Madri</option>
-  <option value="3">Berlim</option>
+  <option value="1">Lisbon</option>
+  <option value="2">Madrid</option>
+  <option value="3">Berlin</option>
 </select>
 ```
 
@@ -364,21 +364,21 @@ Aqui você tem uma lista de cidades cujos nomes são apresentados ao usuário. I
 O *helper* mais genérico é `select_tag`, que - como o nome indica - simplesmente gera a tag `SELECT` que encapsula uma *string* de opções:
 
 ```erb
-<%= select_tag(:city_id, raw('<option value="1">Lisboa</option><option value="2">Madri</option><option value="3">Berlim</option>')) %>
+<%= select_tag(:city_id, raw('<option value="1">Lisbon</option><option value="2">Madrid</option><option value="3">Berlin</option>')) %>
 ```
 
 Isso é um começo, porém não cria dinamicamente as tags de opção. Você pode gerar tags de opção com o *helper* `options_for_select`:
 
 ```html+erb
-<%= options_for_select([['Lisboa', 1], ['Madri', 2], ['Berlim', 3]]) %>
+<%= options_for_select([['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
 ```
 
 Saída:
 
 ```html
-<option value="1">Lisboa</option>
-<option value="2">Madri</option>
-<option value="3">Berlim</option>
+<option value="1">Lisbon</option>
+<option value="2">Madrid</option>
+<option value="3">Berlin</option>
 ```
 
 O primeiro argumento para `options_for_select` é um *array* aninhado onde cada elemento tem dois elementos: texto da opção (nome da cidade) e valor da opção (id da cidade). O valor da opção é o que será enviado ao seu *controller*. Frequentemente, esse será o id de um objeto de banco de dados correspondente, mas não precisa ser o caso.
@@ -392,15 +392,15 @@ Sabendo disso, é possível combinar `select_tag` e `options_for_select` para ob
 `options_for_select` permite pré-selecionar uma opção passando seu valor.
 
 ```html+erb
-<%= options_for_select([['Lisboa', 1], ['Madri', 2], ['Berlim', 3]], 2) %>
+<%= options_for_select([['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]], 2) %>
 ```
 
 Saída:
 
 ```html
-<option value="1">Lisboa</option>
-<option value="2" selected="selected">Madri</option>
-<option value="3">Berlim</option>
+<option value="1">Lisbon</option>
+<option value="2" selected="selected">Madrid</option>
+<option value="3">Berlin</option>
 ```
 
 Sempre que o Rails vê que o valor interno de uma opção sendo gerada corresponde a este valor, ele adicionará o atributo `selected` aquela opção.
@@ -410,9 +410,9 @@ Sempre que o Rails vê que o valor interno de uma opção sendo gerada correspon
 ```html+erb
 <%= options_for_select(
   [
-    ['Lisboa', 1, { 'data-size' => '2.8 million' }],
-    ['Madri', 2, { 'data-size' => '3.2 million' }],
-    ['Berlim', 3, { 'data-size' => '3.4 million' }]
+    ['Lisbon', 1, { 'data-size' => '2.8 million' }],
+    ['Madrid', 2, { 'data-size' => '3.2 million' }],
+    ['Berlin', 3, { 'data-size' => '3.4 million' }]
   ], 2
 ) %>
 ```
@@ -420,9 +420,9 @@ Sempre que o Rails vê que o valor interno de uma opção sendo gerada correspon
 Saída:
 
 ```html
-<option value="1" data-size="2.8 million">Lisboa</option>
-<option value="2" selected="selected" data-size="3.2 million">Madri</option>
-<option value="3" data-size="3.4 million">Berlim</option>
+<option value="1" data-size="2.8 million">Lisbon</option>
+<option value="2" selected="selected" data-size="3.2 million">Madrid</option>
+<option value="3" data-size="3.4 million">Berlin</option>
 ```
 
 ### Caixas de Seleção (*Select Boxes*) com Objetos *Model*
@@ -436,16 +436,16 @@ Se o *controller* definiu `@person` e o city_id dessa pessoa é 2:
 ```
 
 ```erb
-<%= select(:person, :city_id, [['Lisboa', 1], ['Madri', 2], ['Berlim', 3]]) %>
+<%= select(:person, :city_id, [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
 ```
 
 produz uma saída semelhante a
 
 ```html
 <select name="person[city_id]" id="person_city_id">
-  <option value="1">Lisboa</option>
-  <option value="2" selected="selected">Madri</option>
-  <option value="3">Berlim</option>
+  <option value="1">Lisbon</option>
+  <option value="2" selected="selected">Madrid</option>
+  <option value="3">Berlin</option>
 </select>
 ```
 
@@ -455,7 +455,7 @@ Tal como acontece com outros * helpers*, se você fosse usar o *helper* `select`
 
 ```erb
 <%= form_with model: @person do |person_form| %>
-  <%= person_form.select(:city_id, [['Lisboa', 1], ['Madri', 2], ['Berlim', 3]]) %>
+  <%= person_form.select(:city_id, [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
 <% end %>
 ```
 
@@ -464,7 +464,7 @@ Você também pode passar um bloco para o *helper* `select`:
 ```erb
 <%= form_with model: @person do |person_form| %>
   <%= person_form.select(:city_id) do %>
-    <% [['Lisboa', 1], ['Madri', 2], ['Berlim', 3]].each do |c| %>
+    <% [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]].each do |c| %>
       <%= content_tag(:option, c.first, value: c.last) %>
     <% end %>
   <% end %>
