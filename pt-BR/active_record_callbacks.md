@@ -121,7 +121,7 @@ WARNING. `after_save` roda tanto na criação quanto na atualização, mas sempr
 
 WARNING. Deve-se tomar cuidado em *callbacks* para evitar atualizar atributos. Por exemplo, evite rodar `update(attribute: "value")` e código semelhante durante *callbacks*. Isto pode alterar o estado do *model* e pode resultar em efeitos colaterais inesperados durante o *commit*. Em vez disto, você deveria tentar atribuir valores no `before_create` ou *callbacks* recentes.
 
-NOTE: `before_destroy` *callbacks* devem ser posicionados antes de associações `dependent: :destroy` (ou use a opção `prepend: true`), para garantir que executem antes dos registros serem deletados pelo `dependent: :destroy`.
+NOTE: Os *callbacks* `before_destroy` devem ser posicionados antes de associações `dependent: :destroy` (ou use a opção `prepend: true`), para garantir que executem antes dos registros serem deletados pelo `dependent: :destroy`.
 
 ### `after_initialize` e `after_find`
 
