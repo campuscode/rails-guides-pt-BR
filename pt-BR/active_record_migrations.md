@@ -707,114 +707,118 @@ NOTE: Se você quer adicionar verificadores de *constraints* (restrições) como
 você terá que usar `structure.sql` como método *dump*. Consulte
 [Schema Dumping e Você](#schema-dumping-and-you).
 
-Running Migrations
+Executando as *Migrations*
 ------------------
 
-Rails provides a set of rails commands to run certain sets of migrations.
+O Rails fornece uma série de comandos para executar certos conjuntos de
+*migrations*.
 
-The very first migration related rails command you will use will probably be
-`rails db:migrate`. In its most basic form it just runs the `change` or `up`
-method for all the migrations that have not yet been run. If there are
-no such migrations, it exits. It will run these migrations in order based
-on the date of the migration.
+O primeiro comando rails relacionado à *migration* (migração) que você
+utilizará, provavelmente será `rails db:migrate`. Basicamente, ele executa o
+método `change` ou `up` para todas as *migrations* que ainda não foram
+executadas até o momento. Se não houver nenhuma dessas *migrations*, nada é executado. O
+comando executará as *migrations* com base na ordem da data da *migration*.
 
-Note that running the `db:migrate` command also invokes the `db:schema:dump` command, which
-will update your `db/schema.rb` file to match the structure of your database.
+Observe que ao executar o comando `db:migrate` também é chamado o comando
+`db:schema:dump`, que atualizará seu arquivo `db/schema.rb` para corresponder a
+estrutura do seu banco de dados.
 
-If you specify a target version, Active Record will run the required migrations
-(change, up, down) until it has reached the specified version. The version
-is the numerical prefix on the migration's filename. For example, to migrate
-to version 20080906120000 run:
+Se você especificar uma versão alvo, o *Active Record* executará as *migrations*
+necessárias (*change*, *up*, *down*) até atingir a versão especificada. A versão
+é o prefixo numérico do nome do arquivo da *migration*. Por exemplo, para migrar
+para a versão 20080906120000 execute:
 
 ```bash
 $ rails db:migrate VERSION=20080906120000
 ```
 
-If version 20080906120000 is greater than the current version (i.e., it is
-migrating upwards), this will run the `change` (or `up`) method
-on all migrations up to and
-including 20080906120000, and will not execute any later migrations. If
-migrating downwards, this will run the `down` method on all the migrations
-down to, but not including, 20080906120000.
+Se a versão 20080906120000 for maior que a versão atual (ou seja, está migrando
+para cima), será executado o método *change* (ou *up*) em todas as *migrations*
+até a 20080906120000 (incluindo ela na execução) e não será executada nenhuma *migration*
+posterior. Se estiver migrando para baixo, será executado o método *down* em
+todas as *migrations* até a 20080906120000, não incluindo ela na execução.
 
-### Rolling Back
+### Revertendo a *Migration*
 
-A common task is to rollback the last migration. For example, if you made a
-mistake in it and wish to correct it. Rather than tracking down the version
-number associated with the previous migration you can run:
+Uma tarefa comum é reverter a última *migration*. Por exemplo, se você cometeu
+um erro e deseja corrigí-lo. Ao invés de rastrear o número da versão associada
+à *migration* anterior, você pode executar:
 
 ```bash
 $ rails db:rollback
 ```
 
-This will rollback the latest migration, either by reverting the `change`
-method or by running the `down` method. If you need to undo
-several migrations you can provide a `STEP` parameter:
+Isso reverterá a *migration* mais recente, seja revertendo o método `change` ou
+executando o método `down`. Se precisar desfazer várias *migrations*, você pode
+passar um parâmetro `STEP`:
 
 ```bash
 $ rails db:rollback STEP=3
 ```
 
-will revert the last 3 migrations.
+vai reverter as últimas 3 *migrations*.
 
-The `db:migrate:redo` command is a shortcut for doing a rollback and then migrating
-back up again. As with the `db:rollback` command, you can use the `STEP` parameter
-if you need to go more than one version back, for example:
+O comando `db:migrate:redo` é um atalho para fazer um *rollback* e então refazer
+uma *migration* de volta. Assim como o comando `db:rollback`, você pode utilizar
+o parâmetro `STEP` se precisar voltar mais de uma versão, por exemplo:
 
 ```bash
 $ rails db:migrate:redo STEP=3
 ```
 
-Neither of these rails commands do anything you could not do with `db:migrate`. They
-are simply more convenient, since you do not need to explicitly specify the
-version to migrate to.
+Nenhum desses comandos do rails fazem nada do que você não pudesse fazer com o
+`db:migrate`. Eles são apenas mais convenientes, já que você não precisa
+especificar explicitamente a versão para a qual migrar.
 
-### Setup the Database
+### Setup do Banco de Dados
 
-The `rails db:setup` command will create the database, load the schema, and initialize
-it with the seed data.
+O comando `rails db:setup` vai criar o banco de dados, carregar o *schema* e
+inicializar com os dados iniciais.
 
-### Resetting the Database
+### Reinicializando o Banco de Dados
 
-The `rails db:reset` command will drop the database and set it up again. This is
-functionally equivalent to `rails db:drop db:setup`.
+O comando `rails db:reset` vai eliminar o banco de dados e configurá-lo
+novamente. Isso é funcionalmente equivalente ao comando `rails db:drop db:setup`.
 
-NOTE: This is not the same as running all the migrations. It will only use the
-contents of the current `db/schema.rb` or `db/structure.sql` file. If a migration can't be rolled back,
-`rails db:reset` may not help you. To find out more about dumping the schema see
-[Schema Dumping and You](#schema-dumping-and-you) section.
+NOTE: Isso não é o mesmo que executar todas as *migrations*. Ele usará apenas o
+conteúdo do arquivo atual `db/schema.rb` ou `db/structure.sql`. Se uma
+*migration* não pode ser revertida, o comando `rails db:reset` pode não ser
+útil. Para saber mais sobre como descartar o `schema`, consulte a seção [Schema
+Dumping e Você](#schema-dumping-and-you).
 
-### Running Specific Migrations
+### Executando *Migrations* Específicas
 
-If you need to run a specific migration up or down, the `db:migrate:up` and
-`db:migrate:down` commands will do that. Just specify the appropriate version and
-the corresponding migration will have its `change`, `up` or `down` method
-invoked, for example:
+Se você precisar executar uma *migration* específica para cima ou para baixo, os
+comandos `db:migrate:up` e `db:migration:down` farão isso. Basta especificar a
+versão correta e a *migration* correspondente terá o método `change`, `up` ou
+`down` chamado, por exemplo:
 
 ```bash
 $ rails db:migrate:up VERSION=20080906120000
 ```
 
-will run the 20080906120000 migration by running the `change` method (or the
-`up` method). This command will
-first check whether the migration is already performed and will do nothing if
-Active Record believes that it has already been run.
+vai executar a *migration* 20080906120000 executando o método `change` (ou o
+método `up`). Este comando verificará primeiro se a *migration* já foi realizada
+e não fará nada se o *Active Record* entender que já foi executada.
 
-### Running Migrations in Different Environments
+### Executando *Migrations* em Ambientes Diferentes
 
-By default running `rails db:migrate` will run in the `development` environment.
-To run migrations against another environment you can specify it using the
-`RAILS_ENV` environment variable while running the command. For example to run
-migrations against the `test` environment you could run:
+Por padrão, ao rodar o `rails db:migrate` ele será executado no ambiente
+`development` (desenvolvimento). Para executar as *migrations* em outro
+ambiente, você pode especificá-lo usando a variável de ambiente `RAILS_ENV`
+enquanto executa o comando. Por exemplo, para executar as *migrations*no
+ambiente `test` (teste), você pode executar:
 
 ```bash
 $ rails db:migrate RAILS_ENV=test
 ```
 
-### Changing the Output of Running Migrations
+### Alterando o Output (Saída) de *Migrations* em Execução
 
-By default migrations tell you exactly what they're doing and how long it took.
-A migration creating a table and adding an index might produce output like this
+Por padrão, as *migrations* informam exatamente o que estão fazendo e o quanto
+tempo levou.
+Uma *migration* criando uma tabela e adicionando um índice pode produzir um
+*output* como esse:
 
 ```bash
 ==  CreateProducts: migrating =================================================
@@ -823,15 +827,16 @@ A migration creating a table and adding an index might produce output like this
 ==  CreateProducts: migrated (0.0028s) ========================================
 ```
 
-Several methods are provided in migrations that allow you to control all this:
+Vários métodos são fornecidos nas *migrations* que permitem que você controle
+tudo isso:
 
-| Method               | Purpose
+| Método               | Objetivo
 | -------------------- | -------
-| suppress_messages    | Takes a block as an argument and suppresses any output generated by the block.
-| say                  | Takes a message argument and outputs it as is. A second boolean argument can be passed to specify whether to indent or not.
-| say_with_time        | Outputs text along with how long it took to run its block. If the block returns an integer it assumes it is the number of rows affected.
+| suppress_messages    | Pega um bloco como argumento e suprime qualquer *output* gerado pelo bloco.
+| say                  | Pega um argumento de mensagem e o exibe como está. Um segundo argumento booleano pode ser passado para especificar se deve ser indentado ou não.
+| say_with_time        | Produz um texto junto com o tempo que levou para executar seu bloco. Se o bloco retornar um inteiro, ele assume que é o número de linhas afetadas.
 
-For example, this migration:
+Por exemplo, esta *migration*
 
 ```ruby
 class CreateProducts < ActiveRecord::Migration[5.0]
@@ -857,7 +862,7 @@ class CreateProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-generates the following output
+gera o seguinte *output*
 
 ```bash
 ==  CreateProducts: migrating =================================================
@@ -869,8 +874,8 @@ generates the following output
 ==  CreateProducts: migrated (10.0054s) =======================================
 ```
 
-If you want Active Record to not output anything, then running `rails db:migrate
-VERBOSE=false` will suppress all output.
+Se você deseja que o *Active Record* não produza nada, execute `rails db:migrate
+VERBOSE=false` e isso irá suprimir todos os *outputs*
 
 Mudando *Migrations* Existentes
 ----------------------------
