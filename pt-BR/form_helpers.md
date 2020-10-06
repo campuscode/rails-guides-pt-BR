@@ -427,7 +427,7 @@ Saída:
 
 ### Caixas de Seleção (*Select Boxes*) com Objetos *Model*
 
-Na maioria dos casos, os controles de formulário serão vinculados a um *model* específico e, como você pode esperar, o Rails fornece helpers personalizados para esse propósito. Consistente com outros *helpers* de formulário, ao lidar com um objeto de *model* elimine o sufixo `_tag` de `select_tag`:
+Na maioria dos casos, os controles de formulário serão vinculados a um *model* específico e, como você pode esperar, o Rails fornece *helpers* personalizados para esse propósito. Consistente com outros *helpers* de formulário, ao lidar com um objeto de *model* elimine o sufixo `_tag` de `select_tag`:
 
 Se o *controller* definiu `@person` e o city_id dessa pessoa é 2:
 
