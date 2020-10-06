@@ -1875,7 +1875,7 @@ Este método irá consultar o banco de dados usando a mesma consulta que `find`,
 Client.exists?(1)
 ```
 
-O método `exists?` também leva valores múltiplos, mas o problema é que retornará `true` se algum desses registros existirem.
+O método `exists?` também assume valores múltiplos, mas o problema é que retornará `true` se algum desses registros existirem.
 
 ```ruby
 Client.exists?(id: [1,2,3])
