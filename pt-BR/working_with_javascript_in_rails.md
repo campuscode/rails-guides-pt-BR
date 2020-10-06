@@ -407,7 +407,7 @@ que suas requisições retornem JSON mais do que HTML. Vamos discutir o que
 ### Um Exemplo Simples
 
 Imagine que você tenha uma série de usuários que você gostaria de mostrar e
-fornecer um formulário nessa mesma página criar um novo usuário. A ação *index*
+fornecer um formulário nessa mesma página para criar um novo usuário. A ação *index*
 do seu *controller* se parece com isso:
 
 ```ruby
@@ -443,10 +443,10 @@ A *partial* `app/views/users/_user.html.erb` contém o seguinte:
 <li><%= user.name %></li>
 ```
 
-A parte de cima da página *index* mostra os usuários. A parte debaixo
+A parte de cima da página *index* mostra os usuários. A parte de baixo
 fornece o formulário para criar um novo usuário.
 
-O formulário debaixo chamará a ação *`create`* no `UsersController`. por causa
+O formulário de baixo chamará a ação *`create`* no `UsersController`. Por causa
 da opção *remote* definida como `true`, a requisição será enviada para o `UsersController`
 como uma requisição *Ajax*, procurando por JavaScript. Afim de atender a requisição,
 a ação *`create`* do seu *controller* ficaria assim:
