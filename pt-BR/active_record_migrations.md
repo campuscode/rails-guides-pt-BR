@@ -875,7 +875,7 @@ VERBOSE=false` will suppress all output.
 Mudando *Migrations* Existentes
 ----------------------------
 
-Ocasionalmente você cometerá um erro ao escrever uma *migration*. Se você já tiver rodado a *migration*, você não pode editar a *migration* e rodá-la novamente: o Rails pensa que já rodou a *migration*, então irá fazer nada quando você rodar `rails db:migrate`. Você deve reverter a *migration* (por exemplo com `rails db:rollback`), edite a *migration*, e então rode `rails db:migrate` para que a versão correta seja rodada.
+Ocasionalmente, você cometerá um erro ao escrever uma *migration*. Se você já executou a *migration*, você não pode editá-la e rodá-la novamente: o Rails assume que você já rodou a *migration*, então não irá fazer nada quando você executar o comando `rails db:migrate`. Você deve reverter a *migration* (por exemplo com `rails db:rollback`), editar a *migration*, e então rodar o comando `rails db:migrate` para que a versão correta seja executada.
 
 Em geral, a edição de *migrations* existentes não é uma boa ideia. Você criará trabalho extra para si mesmo e seus colegas de trabalho e causará dores de cabeça maiores se a versão existente da *migration* já tiver rodado nas máquinas de produção.  
 
