@@ -484,7 +484,7 @@ Gerar tags de opções com `options_for_select` requer que você crie um *array*
 <%= options_for_select(cities_array) %>
 ```
 
-Esta é uma solução perfeitamente válida, entretanto Rails fornece uma alternativa menos prolixa: `options_from_collection_for_select`. Este auxiliar espera uma coleção de objetos arbitrários e dois argumentos adicionais: os nomes dos métodos para ler a opção **value** e **text**, respectivamente:
+Esta é uma solução perfeitamente válida, entretanto Rails fornece uma alternativa menos verbosa: `options_from_collection_for_select`. Este *helper* espera uma coleção de objetos arbitrários e dois argumentos adicionais: os nomes dos métodos para ler a opção **value** e **text**, respectivamente:
 
 ```erb
 <%= options_from_collection_for_select(City.all, :id, :name) %>
