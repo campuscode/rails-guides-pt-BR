@@ -1,31 +1,30 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Interface de Consulta do *Active Record*
-=============================
+# Interface de Consulta do _Active Record_
 
-Este guia cobre diferentes maneiras de recuperar dados de um banco de dados utilizando o *Active Record*
+Este guia cobre diferentes maneiras de recuperar dados de um banco de dados utilizando o _Active Record_
 
 Após ler esse guia, você saberá:
 
-* Como encontrar registros usando uma variedade de métodos e condições.
-* Como especificar a ordem, os atributos recuperados, agrupamento e outras propriedades dos registros encontrados.
-* Como usar o *eager loading* para reduzir o número de consultas necessárias no banco de dados para recuperar os dados.
-* Como utilizar métodos localizadores dinâmicos.
-* Como utilizar encadeamento de métodos para usar múltiplos métodos do *Active Record* em conjunto.
-* Como checar a existência de determinados registros.
-* Como executar diversos cálculos nos *models* do *Active Record*.
-* Como executar o *EXPLAIN* nas relações.
+- Como encontrar registros usando uma variedade de métodos e condições.
+- Como especificar a ordem, os atributos recuperados, agrupamento e outras propriedades dos registros encontrados.
+- Como usar o _eager loading_ para reduzir o número de consultas necessárias no banco de dados para recuperar os dados.
+- Como utilizar métodos localizadores dinâmicos.
+- Como utilizar encadeamento de métodos para usar múltiplos métodos do _Active Record_ em conjunto.
+- Como checar a existência de determinados registros.
+- Como executar diversos cálculos nos _models_ do _Active Record_.
+- Como executar o _EXPLAIN_ nas relações.
 
---------------------------------------------------------------------------------
+---
 
 Se você está acostumado com SQL puro para encontrar registros no banco de dados, então você provavelmente encontrará
-maneiras melhores de realizar as mesmas operações no Rails. O *Active Record* te isola da necessidade de usar o SQL
+maneiras melhores de realizar as mesmas operações no Rails. O _Active Record_ te isola da necessidade de usar o SQL
 na maioria dos casos.
 
 Os exemplos de código ao longo desse guia irão se referir à um ou mais dos seguintes modelos:
 
-TIP: Todos os *models* seguintes utilizam `id` como *primary key* (chave primária), a não ser quando especificado o
+TIP: Todos os _models_ seguintes utilizam `id` como _primary key_ (chave primária), a não ser quando especificado o
 contrário.
 
 ```ruby
@@ -54,63 +53,62 @@ class Role < ApplicationRecord
 end
 ```
 
-O *Active Record* irá executar consultas no banco de dados para você e é compatível com a maioria dos sistemas de banco de dados,
-incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato do método do *Active Record* 
+O _Active Record_ irá executar consultas no banco de dados para você e é compatível com a maioria dos sistemas de banco de dados,
+incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato do método do _Active Record_
 será sempre o mesmo.
 
-Recuperando Objetos do Banco de Dados
-------------------------------------
+## Recuperando Objetos do Banco de Dados
 
-Para recuperar objetos do banco de dados, o *Active Record* fornece diversos métodos de localização. Cada método de localização permite que você
-passe argumentos para o mesmo para executar determinada consulta no seu banco de dados sem a necessidade de escrever SQL puro. 
+Para recuperar objetos do banco de dados, o _Active Record_ fornece diversos métodos de localização. Cada método de localização permite que você
+passe argumentos para o mesmo para executar determinada consulta no seu banco de dados sem a necessidade de escrever SQL puro.
 
 Os métodos são:
 
-* `annotate`
-* `find`
-* `create_with`
-* `distinct`
-* `eager_load`
-* `extending`
-* `extract_associated`
-* `from`
-* `group`
-* `having`
-* `includes`
-* `joins`
-* `left_outer_joins`
-* `limit`
-* `lock`
-* `none`
-* `offset`
-* `optimizer_hints`
-* `order`
-* `preload`
-* `readonly`
-* `references`
-* `reorder`
-* `reselect`
-* `reverse_order`
-* `select`
-* `where`
+- `annotate`
+- `find`
+- `create_with`
+- `distinct`
+- `eager_load`
+- `extending`
+- `extract_associated`
+- `from`
+- `group`
+- `having`
+- `includes`
+- `joins`
+- `left_outer_joins`
+- `limit`
+- `lock`
+- `none`
+- `offset`
+- `optimizer_hints`
+- `order`
+- `preload`
+- `readonly`
+- `references`
+- `reorder`
+- `reselect`
+- `reverse_order`
+- `select`
+- `where`
 
 Métodos de localização que retornam uma coleção, como o `where` e `group`, retornam uma instância do `ActiveRecord::Relation`.
-Os métodos que localizam uma única entidade, como o `find` e o `first`, retornam uma única instância do *model*.
+Os métodos que localizam uma única entidade, como o `find` e o `first`, retornam uma única instância do _model_.
 
 A principal operação do `Model.find(options)` pode ser resumida como:
 
-* Converter as opções fornecidas em uma consulta equivalente no SQL.
-* Disparar uma consulta SQL e recuperar os resultados correspondentes no banco de dados.
-* Instanciar o objeto Ruby equivalente do *model* apropriado para cada linha resultante.
-* Executar `after_find` e, em seguida, retornos de chamada com `after_initialize`, se houver.
+- Converter as opções fornecidas em uma consulta equivalente no SQL.
+- Disparar uma consulta SQL e recuperar os resultados correspondentes no banco de dados.
+- Instanciar o objeto Ruby equivalente do _model_ apropriado para cada linha resultante.
+- Executar `after_find` e, em seguida, retornos de chamada com `after_initialize`, se houver.
 
 ### Retornando um Único Objeto
 
-O *Active Record* possui diferentes formas de retornar um único objeto.
+O _Active Record_ possui diferentes formas de retornar um único objeto.
 
 #### `find`
 
-Utilizando o método `find`, você pode retornar o objeto correspondente à *primary key* especificada que corresponde às opções fornecidas.
+Utilizando o método `find`, você pode retornar o objeto correspondente à _primary key_ especificada que corresponde às opções fornecidas.
 Por exemplo:
 
 ```ruby
@@ -127,11 +125,11 @@ SELECT * FROM clients WHERE (clients.id = 10) LIMIT 1
 
 O método `find` irá gerar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro correspondente for encontrado.
 
-Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de *primary keys*. 
-Será retornado um array contendo todos os registros correspondentes para as *primary keys* fornecidas. Por exemplo:
+Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de _primary keys_.
+Será retornado um array contendo todos os registros correspondentes para as _primary keys_ fornecidas. Por exemplo:
 
 ```ruby
-# Encontra os clientes com as primary keys 1 e 10. 
+# Encontra os clientes com as primary keys 1 e 10.
 clients = Client.find([1, 10]) # Or even Client.find(1, 10)
 # => [#<Client id: 1, first_name: "Lifo">, #<Client id: 10, first_name: "Ryan">]
 ```
@@ -159,7 +157,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients LIMIT 1
 ```
 
-O método `take` retorna `nil` se nenhum registro for encontrado e nenhuma exceção será levantada. 
+O método `take` retorna `nil` se nenhum registro for encontrado e nenhuma exceção será levantada.
 
 Você pode passar um argumento numérico para o método `take` para retornar o mesmo número em resultados. Por exemplo:
 
@@ -183,7 +181,7 @@ TIP: O registro retornado pode variar dependendo do mecanismo do banco de dados.
 
 #### `first`
 
-O método `first` encontra o primeiro registro ordenado pela *primary key* (padrão). Por exemplo:
+O método `first` encontra o primeiro registro ordenado pela _primary key_ (padrão). Por exemplo:
 
 ```ruby
 client = Client.first
@@ -236,7 +234,7 @@ correspondente for encontrado.
 
 #### `last`
 
-O método `last` encontra o último registro ordenado pela *primary key* (padrão). Por exemplo:
+O método `last` encontra o último registro ordenado pela _primary key_ (padrão). Por exemplo:
 
 ```ruby
 client = Client.last
@@ -249,7 +247,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients ORDER BY clients.id DESC LIMIT 1
 ```
 
-O método `last` retorna `nil` se não encontrar nenhum registro correspondente e nenhuma exceção será levantada. 
+O método `last` retorna `nil` se não encontrar nenhum registro correspondente e nenhuma exceção será levantada.
 
 Se o seu [default scope](active_record_querying.html#applying-a-default-scope) contém um método de ordenação, `last` irá retornar
 o último registro de acordo com essa ordenação.
@@ -327,35 +325,35 @@ Client.where(first_name: 'does not exist').take!
 
 ### Retornando Múltiplos Objetos em Lotes
 
-Nós frequentemente precisamos iterar sobre um grande número de registros, seja quando precisamos enviar *newsletter* para
+Nós frequentemente precisamos iterar sobre um grande número de registros, seja quando precisamos enviar _newsletter_ para
 um grande número de usuários, ou quando vamos exportar dados.
 
 Isso pode parecer simples:
 
 ```ruby
-# Isso pode consumir muita memória se a tabela for grande. 
+# Isso pode consumir muita memória se a tabela for grande.
 User.all.each do |user|
   NewsMailer.weekly(user).deliver_now
 end
 ```
 
 Mas essa abordagem se torna cada vez mais impraticável à medida que o tamanho da tabela aumenta, pois o `User.all.each`
-instrui o *Active Record* à buscar a **tabela inteira** em uma única passagem, cria um *model* de objeto por linha e
-mantém todo o array de objetos de *model* na memória. De fato, se você tem um grande número de registros, a coleção inteira
+instrui o _Active Record_ à buscar a **tabela inteira** em uma única passagem, cria um _model_ de objeto por linha e
+mantém todo o array de objetos de _model_ na memória. De fato, se você tem um grande número de registros, a coleção inteira
 pode exceder a quantidade de memória disponível.
 
-O Rails fornece dois métodos para solucionar esse problema, dividindo os registros em lotes *memory-friendly* para o processamento.
-O primeiro método, `find_each`, retorna um lote de registros e depois submete _cada_ registro individualmente para um bloco como um *model*.
-O segundo método, `find_in_batches`, retorna um lote de registros e depois submete _o lote inteiro_ ao bloco como um array de *models*.
- 
+O Rails fornece dois métodos para solucionar esse problema, dividindo os registros em lotes _memory-friendly_ para o processamento.
+O primeiro método, `find_each`, retorna um lote de registros e depois submete _cada_ registro individualmente para um bloco como um _model_.
+O segundo método, `find_in_batches`, retorna um lote de registros e depois submete _o lote inteiro_ ao bloco como um array de _models_.
+
 TIP: Os métodos `find_each` e `find_in_batches` são destinados ao uso no processamento em lotes de grandes numéros de registros
-que não irão caber na memória de uma só vez. Se você apenas precisa fazer um  *loop* em milhares de registros, os métodos
+que não irão caber na memória de uma só vez. Se você apenas precisa fazer um _loop_ em milhares de registros, os métodos
 regulares do `find` são a opção preferida.
 
 #### `find_each`
 
 O método `find_each` retorna os registros em lotes e depois aloca _cada_ um no bloco. No exemplo a seguir, `find_each` retorna
-*users* em lotes de 1000 e os aloca no bloco um à um:
+_users_ em lotes de 1000 e os aloca no bloco um à um:
 
 ```ruby
 User.find_each do |user|
@@ -365,7 +363,7 @@ end
 
 Esse processo é repetido, buscando mais lotes sempre que preciso, até que todos os registros tenham sido processados.
 
-`find_each` funciona com classes de *model*, como visto acima, assim como relações:
+`find_each` funciona com classes de _model_, como visto acima, assim como relações:
 
 ```ruby
 User.where(weekly_subscriber: true).find_each do |user|
@@ -373,9 +371,9 @@ User.where(weekly_subscriber: true).find_each do |user|
 end
 ```
 
-contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar. 
+contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar.
 
-Se houver uma ordem presente no receptor, o comportamento depende da *flag* `config.active_record.error_on_ignored_order`.
+Se houver uma ordem presente no receptor, o comportamento depende da _flag_ `config.active_record.error_on_ignored_order`.
 Se verdadeiro, `ArgumentError` é levantado, caso contrário a ordem será ignorada e um aviso gerado, que é o padrão. Isto pode
 ser substituído com a opção `:error_on_ignore`, explicado abaixo.
 
@@ -386,7 +384,7 @@ ser substituído com a opção `:error_on_ignore`, explicado abaixo.
 **`:batch_size`**
 
 A opção `:batch_size` permite que você especifique o número de registros à serem retornados em cada lote, antes de serem passados, individualmente, para o bloco.
-Por exemplo, para retornar registros de um lote de 5000: 
+Por exemplo, para retornar registros de um lote de 5000:
 
 ```ruby
 User.find_each(batch_size: 5000) do |user|
@@ -396,11 +394,11 @@ end
 
 **`:start`**
 
-Por padrão, os registros são buscados em ordem ascendente de *primary key*. A opção `:start` permite que você configure o primeiro ID da sequência sempre que o menor
+Por padrão, os registros são buscados em ordem ascendente de _primary key_. A opção `:start` permite que você configure o primeiro ID da sequência sempre que o menor
 ID não seja o que você precisa. Isto pode ser útil, por exemplo, se você quer retomar um processo interrompido de lotes, desde que você
 tenha salvo o último ID processado como ponto de retorno.
 
-Por exemplo, para enviar *newsletters* apenas para os usuários com a *primary key* começando com 2000:
+Por exemplo, para enviar _newsletters_ apenas para os usuários com a _primary key_ começando com 2000:
 
 ```ruby
 User.find_each(start: 2000) do |user|
@@ -413,7 +411,7 @@ end
 Similar à opção `:start`, `:finish` permite que você configure o último ID da sequência sempre que o maior ID não seja o que você necessite.
 Isso pode ser útil, por exemplo, se você quer executar um processo de lotes utilizando subconjuntos de registros baseados no `:start` e `:finish`
 
-Por exemplo, para enviar *newsletters* apenas para os usuários com a *primary key* começando em 2000 e indo até 10000:
+Por exemplo, para enviar _newsletters_ apenas para os usuários com a _primary key_ começando em 2000 e indo até 10000:
 
 ```ruby
 User.find_each(start: 2000, finish: 10000) do |user|
@@ -421,8 +419,8 @@ User.find_each(start: 2000, finish: 10000) do |user|
 end
 ```
 
-Outro exemplo seria se você queira múltiplos *workers* manipulando a mesma fila de processamento. Você pode ter cada *worker*
-lidando com 10000 registros atribuindo a opção `:start` e `finish` apropriadas para cada *worker*
+Outro exemplo seria se você queira múltiplos _workers_ manipulando a mesma fila de processamento. Você pode ter cada _worker_
+lidando com 10000 registros atribuindo a opção `:start` e `finish` apropriadas para cada _worker_
 
 **`:error_on_ignore`**
 
@@ -431,18 +429,18 @@ na relação.
 
 #### `find_in_batches`
 
-O método `find_in_batches` é similar ao `find_each`, pois ambos retornam lotes de registros. A diferença é que o `find_in_batches` fornece _lotes_ ao bloco como um array de *models*,
+O método `find_in_batches` é similar ao `find_each`, pois ambos retornam lotes de registros. A diferença é que o `find_in_batches` fornece _lotes_ ao bloco como um array de _models_,
 em vez de individualmente. O exemplo à seguir irá produzir ao bloco fornecido um array com até 1000 notas fiscais de uma vez,
 com o bloco final contendo qualquer nota fiscal remanescente:
 
 ```ruby
-# Fornece à add_invoices um array com 1000 notas fiscais de uma vez. 
+# Fornece à add_invoices um array com 1000 notas fiscais de uma vez.
 Invoice.find_in_batches do |invoices|
   export.add_invoices(invoices)
 end
 ```
 
-`find_in_batches` funcional com classes de *model*, como visto acima, e também com relações:
+`find_in_batches` funcional com classes de _model_, como visto acima, e também com relações:
 
 ```ruby
 Invoice.pending.find_in_batches do |invoices|
@@ -456,8 +454,7 @@ contanto que não há ordenação, pois o método irá forçar uma ordem interna
 
 O método `find_in_batches` aceita as mesmas opção que o `find_each`
 
-Conditions
-----------
+## Conditions
 
 The `where` method allows you to specify conditions to limit the records returned, representing the `WHERE`-part of the SQL statement. Conditions can either be specified as a string, array, or hash.
 
@@ -579,7 +576,7 @@ SELECT * FROM clients WHERE (clients.orders_count IN (1,3,5))
 Client.where.not(locked: true)
 ```
 
-In other words, this query can be generated by calling `where` with no argument, then immediately chain with `not` passing `where` conditions.  This will generate SQL like this:
+In other words, this query can be generated by calling `where` with no argument, then immediately chain with `not` passing `where` conditions. This will generate SQL like this:
 
 ```sql
 SELECT * FROM clients WHERE (clients.locked != 1)
@@ -598,8 +595,7 @@ Client.where(locked: true).or(Client.where(orders_count: [1,3,5]))
 SELECT * FROM clients WHERE (clients.locked = 1 OR clients.orders_count IN (1,3,5))
 ```
 
-Ordenando
---------
+## Ordenando
 
 Para recuperar registros do banco de dados em uma ordem específica, você pode usar o método de `order`.
 
@@ -611,7 +607,7 @@ Client.order(:created_at)
 Client.order("created_at")
 ```
 
-Você também pode especificar `ASC` ou` DESC`:
+Você também pode especificar `ASC` ou`DESC`:
 
 ```ruby
 Client.order(created_at: :desc)
@@ -642,10 +638,9 @@ Client.order("orders_count ASC").order("created_at DESC")
 # SELECT * FROM clients ORDER BY orders_count ASC, created_at DESC
 ```
 
-WARNING: Na maioria dos sistemas de banco de dados, ao selecionar campos com `distinct` de um conjunto de resultados usando métodos como` select`, `pluck` e `ids`; o método `order` gerará uma exceção `ActiveRecord::StatementInvalid`, a menos que o(s) campo(s) usados ​​na cláusula `order` estejam incluídos na lista de seleção. Consulte a próxima seção para selecionar campos do conjunto de resultados.
+WARNING: Na maioria dos sistemas de banco de dados, ao selecionar campos com `distinct` de um conjunto de resultados usando métodos como`select`, `pluck` e `ids`; o método `order` gerará uma exceção `ActiveRecord::StatementInvalid`, a menos que o(s) campo(s) usados ​​na cláusula `order` estejam incluídos na lista de seleção. Consulte a próxima seção para selecionar campos do conjunto de resultados.
 
-Selecting Specific Fields
--------------------------
+## Selecting Specific Fields
 
 By default, `Model.find` selects all the fields from the result set using `select *`.
 
@@ -695,8 +690,7 @@ query.distinct(false)
 # => Returns all names, even if there are duplicates
 ```
 
-Limit and Offset
-----------------
+## Limit and Offset
 
 To apply `LIMIT` to the SQL fired by the `Model.find`, you can specify the `LIMIT` using `limit` and `offset` methods on the relation.
 
@@ -724,8 +718,7 @@ will return instead a maximum of 5 clients beginning with the 31st. The SQL look
 SELECT * FROM clients LIMIT 5 OFFSET 30
 ```
 
-Group
------
+## Group
 
 To apply a `GROUP BY` clause to the SQL fired by the finder, you can use the `group` method.
 
@@ -762,8 +755,7 @@ FROM "orders"
 GROUP BY status
 ```
 
-Having
-------
+## Having
 
 SQL uses the `HAVING` clause to specify conditions on the `GROUP BY` fields. You can add the `HAVING` clause to the SQL fired by the `Model.find` by adding the `having` method to the find.
 
@@ -783,10 +775,9 @@ GROUP BY date(created_at)
 HAVING sum(price) > 100
 ```
 
-This returns the date and total price for each order object, grouped by the day they were ordered and where the price is more than $100.
+This returns the date and total price for each order object, grouped by the day they were ordered and where the price is more than \$100.
 
-Overriding Conditions
----------------------
+## Overriding Conditions
 
 ### `unscope`
 
@@ -944,8 +935,7 @@ the SQL executed would be:
 SELECT * FROM articles WHERE `trashed` = 1 AND `trashed` = 0
 ```
 
-Null Relation
--------------
+## Null Relation
 
 The `none` method returns a chainable relation with no records. Any subsequent conditions chained to the returned relation will continue generating empty relations. This is useful in scenarios where you need a chainable response to a method or a scope that could return zero results.
 
@@ -969,8 +959,7 @@ def visible_articles
 end
 ```
 
-Readonly Objects
-----------------
+## Readonly Objects
 
 Active Record provides the `readonly` method on a relation to explicitly disallow modification of any of the returned objects. Any attempt to alter a readonly record will not succeed, raising an `ActiveRecord::ReadOnlyRecord` exception.
 
@@ -982,15 +971,14 @@ client.save
 
 As `client` is explicitly set to be a readonly object, the above code will raise an `ActiveRecord::ReadOnlyRecord` exception when calling `client.save` with an updated value of _visits_.
 
-Bloqueando registros para alteração
------------------------------------
+## Bloqueando registros para alteração
 
 O bloqueio é útil para prevenir condições de corrida ao alterar registros no banco de dados e para garantir alterações atômicas.
 
 O Active Record provê dois mecanismos de bloqueio:
 
-* Bloqueio otimista
-* Bloqueio pessimista
+- Bloqueio otimista
+- Bloqueio pessimista
 
 ### Bloqueio Otimista
 
@@ -1025,7 +1013,7 @@ end
 
 ### Bloqueio pessimista
 
-O bloqueio pessimista usa um mecansimo de bloqueio fornecido pelo banco de dados subjacente. Ao usar `lock` quando uma *relation* (objeto do tipo ActiveRecord::Relation) é criada, obtém-se um bloqueio exclusivo nas linhas selecionadas. Relations usando `lock` são normalmente executadas dentro de uma transação para permitir condições de deadlock.
+O bloqueio pessimista usa um mecansimo de bloqueio fornecido pelo banco de dados subjacente. Ao usar `lock` quando uma _relation_ (objeto do tipo ActiveRecord::Relation) é criada, obtém-se um bloqueio exclusivo nas linhas selecionadas. Relations usando `lock` são normalmente executadas dentro de uma transação para permitir condições de deadlock.
 
 Por exemplo:
 
@@ -1066,8 +1054,7 @@ item.with_lock do
 end
 ```
 
-Joining Tables
---------------
+## Joining Tables
 
 Active Record provides two finder methods for specifying `JOIN` clauses on the
 resulting SQL: `joins` and `left_outer_joins`.
@@ -1227,9 +1214,7 @@ LEFT OUTER JOIN posts ON posts.author_id = authors.id GROUP BY authors.id
 Which means: "return all authors with their count of posts, whether or not they
 have any posts at all"
 
-
-Eager Loading Associations
---------------------------
+## Eager Loading Associations
 
 Eager loading is the mechanism for loading the associated records of the objects returned by `Model.find` using as few queries as possible.
 
@@ -1323,8 +1308,7 @@ returned.
 NOTE: If an association is eager loaded as part of a join, any fields from a custom select clause will not be present on the loaded models.
 This is because it is ambiguous whether they should appear on the parent record, or the child.
 
-Scopes
-------
+## Scopes
 
 Scoping allows you to specify commonly-used queries which can be referenced as method calls on the association objects or models. With these scopes, you can use every method previously covered such as `where`, `joins` and `includes`. All scope bodies should return an `ActiveRecord::Relation` or `nil` to allow for further methods (such as other scopes) to be called on it.
 
@@ -1546,8 +1530,7 @@ Client.unscoped {
 }
 ```
 
-Dynamic Finders
----------------
+## Dynamic Finders
 
 For every field (also known as an attribute) you define in your table, Active Record provides a finder method. If you have a field called `first_name` on your `Client` model for example, you get `find_by_first_name` for free from Active Record. If you have a `locked` field on the `Client` model, you also get `find_by_locked` method.
 
@@ -1555,10 +1538,10 @@ You can specify an exclamation point (`!`) on the end of the dynamic finders to 
 
 If you want to find both by name and locked, you can chain these finders together by simply typing "`and`" between the fields. For example, `Client.find_by_first_name_and_locked("Ryan", true)`.
 
-Enums
------
+## Enums
 
-The `enum` macro maps an integer column to a set of possible values.
+O _macro_ `enum` mapeia uma coluna inteira para uma sequencia de valores
+possiveis
 
 ```ruby
 class Book < ApplicationRecord
@@ -1585,8 +1568,7 @@ book.available?   # => false
 Read the full documentation about enums
 [in the Rails API docs](https://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
 
-Understanding The Method Chaining
----------------------------------
+## Understanding The Method Chaining
 
 The Active Record pattern implements [Method Chaining](https://en.wikipedia.org/wiki/Method_chaining),
 which allow us to use multiple Active Record methods together in a simple and straightforward way.
@@ -1643,8 +1625,7 @@ NOTE: Note that if a query matches multiple records, `find_by` will
 fetch only the first one and ignore the others (see the `LIMIT 1`
 statement above).
 
-Find or Build a New Object
---------------------------
+## Find or Build a New Object
 
 It's common that you need to find a record or create it if it doesn't exist. You can do that with the `find_or_create_by` and `find_or_create_by!` methods.
 
@@ -1741,8 +1722,7 @@ nick.save
 # => true
 ```
 
-Finding by SQL
---------------
+## Finding by SQL
 
 If you'd like to use your own SQL to find records in a table you can use `find_by_sql`. The `find_by_sql` method will return an array of objects even if the underlying query returns just a single record. For example you could run this query:
 
@@ -1865,8 +1845,7 @@ Person.ids
 # SELECT person_id FROM people
 ```
 
-Existence of Objects
---------------------
+## Existence of Objects
 
 If you simply want to check for the existence of the object there's a method called `exists?`.
 This method will query the database using the same query as `find`, but instead of returning an
@@ -1920,8 +1899,7 @@ Article.first.categories.any?
 Article.first.categories.many?
 ```
 
-Calculations
-------------
+## Calculations
 
 This section uses count as an example method in this preamble, but the options described apply to all sub-sections.
 
@@ -2001,8 +1979,7 @@ Client.sum("orders_count")
 
 For options, please see the parent section, [Calculations](#calculations).
 
-Running EXPLAIN
----------------
+## Running EXPLAIN
 
 You can run EXPLAIN on the queries triggered by relations. For example,
 
@@ -2097,10 +2074,10 @@ under MySQL and MariaDB.
 Interpretation of the output of EXPLAIN is beyond the scope of this guide. The
 following pointers may be helpful:
 
-* SQLite3: [EXPLAIN QUERY PLAN](https://www.sqlite.org/eqp.html)
+- SQLite3: [EXPLAIN QUERY PLAN](https://www.sqlite.org/eqp.html)
 
-* MySQL: [EXPLAIN Output Format](https://dev.mysql.com/doc/refman/5.7/en/explain-output.html)
+- MySQL: [EXPLAIN Output Format](https://dev.mysql.com/doc/refman/5.7/en/explain-output.html)
 
-* MariaDB: [EXPLAIN](https://mariadb.com/kb/en/mariadb/explain/)
+- MariaDB: [EXPLAIN](https://mariadb.com/kb/en/mariadb/explain/)
 
-* PostgreSQL: [Using EXPLAIN](https://www.postgresql.org/docs/current/static/using-explain.html)
+- PostgreSQL: [Using EXPLAIN](https://www.postgresql.org/docs/current/static/using-explain.html)
