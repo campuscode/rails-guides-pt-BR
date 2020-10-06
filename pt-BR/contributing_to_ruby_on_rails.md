@@ -126,11 +126,13 @@ Once you're happy that the pull request contains a good change, comment on the G
 
 If your comment simply reads "+1", then odds are that other reviewers aren't going to take it too seriously. Show that you took the time to review the pull request.
 
-Contributing to the Rails Documentation
+<!-- Contributing to the Rails Documentation -->
+Contribuindo com a documentação do Rails
 ---------------------------------------
 
-Ruby on Rails has two main sets of documentation: the guides, which help you
-learn about Ruby on Rails, and the API, which serves as a reference.
+O Ruby on Rails possui dois conjuntos principais de documentação: os guias, que te ajudam a aprender sobre Ruby on Rails, e a API, que serve como referência.
+<!-- Ruby on Rails has two main sets of documentation: the guides, which help you
+learn about Ruby on Rails, and the API, which serves as a reference.-->
 
 You can help improve the Rails guides by making them more coherent, consistent, or readable, adding missing information, correcting factual errors, fixing typos, or bringing them up to date with the latest edge Rails.
 
