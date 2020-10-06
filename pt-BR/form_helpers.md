@@ -490,7 +490,7 @@ Esta é uma solução perfeitamente válida, entretanto Rails fornece uma altern
 <%= options_from_collection_for_select(City.all, :id, :name) %>
 ```
 
-Como o nome indica, isso só gera tags de opção. Para gerar uma *select box* funcional, você precisará usar `collection_select`:
+Como o nome indica, isso só gera *tags* de opção. Para gerar uma *select box* funcional, você precisará usar `collection_select`:
 
 ```erb
 <%= collection_select(:person, :city_id, City.all, :id, :name) %>
