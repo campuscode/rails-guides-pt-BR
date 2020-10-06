@@ -329,7 +329,7 @@ Rails works around this issue by emulating other methods over POST with a hidden
 form_with(url: search_path, method: "patch")
 ```
 
-Output:
+Resultado:
 
 ```html
 <form accept-charset="UTF-8" action="/search" data-remote="true" method="post">
@@ -373,7 +373,7 @@ Isso é um começo, porém o *helper* `select_tag` não cria as tags de opção 
 <%= options_for_select([['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
 ```
 
-Saída:
+Resultado:
 
 ```html
 <option value="1">Lisbon</option>
@@ -395,7 +395,7 @@ Sabendo disso, é possível combinar `select_tag` e `options_for_select` para ob
 <%= options_for_select([['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]], 2) %>
 ```
 
-Saída:
+Resultado:
 
 ```html
 <option value="1">Lisbon</option>
@@ -417,7 +417,7 @@ Sempre que o Rails vê que o valor interno de uma opção sendo gerada correspon
 ) %>
 ```
 
-Saída:
+Resultado:
 
 ```html
 <option value="1" data-size="2.8 million">Lisbon</option>
@@ -439,7 +439,7 @@ Se o *controller* definiu `@person` e o city_id dessa pessoa é 2:
 <%= select(:person, :city_id, [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
 ```
 
-produz uma saída semelhante a
+produz um resultado semelhante a
 
 ```html
 <select name="person[city_id]" id="person_city_id">
