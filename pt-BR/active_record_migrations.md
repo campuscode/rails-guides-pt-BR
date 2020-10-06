@@ -879,7 +879,7 @@ Ocasionalmente, você cometerá um erro ao escrever uma *migration*. Se você j�
 
 Em geral, a edição de *migrations* existentes não é uma boa ideia. Você criará trabalho extra para si mesmo e seus colegas de trabalho e causará dores de cabeça maiores se a versão existente da *migration* já tiver sido executada nas máquinas de produção.  
 
-Como alternativa, você deveria escrever uma nova *migration* que execute as mudanças que você requere. Editar uma *migration* recentemente gerada e que ainda não foi feito um *commit* para o *source control* (ou, de forma geral, que não foi propagada além de sua máquina de desenvolvimento) é relativamente inofensivo.
+Como alternativa, você deveria escrever uma nova *migration* que execute as mudanças necessárias. Editar uma *migration* recentemente gerada e que ainda não foi feito um *commit* para o *source control* (ou, de forma geral, que não foi propagada além de sua máquina de desenvolvimento) é relativamente inofensivo.
 
 O método `revert` pode ajudar ao escrever uma nova *migration* para desfazer *migrations* anteriores no todo ou em partes (veja [Revertendo *Migrations* Anteriores](#revertendo-migrations-anteriores) acima).
 
