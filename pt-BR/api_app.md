@@ -37,7 +37,7 @@ Por Que Usar Rails para APIs JSON?
 
 A primeira questão que muitas pessoas têm quando estão pensando em construir uma
 API JSON utilizando Rails é: "Utilizar Rails para retornar alguns JSON não é
-exagero? Não deveriamos usar algo como Sinatra?"
+exagero? Não deveríamos usar algo como Sinatra?"
 
 Para APIs muito simples, isso pode ser verdade. Porém, até mesmo em aplicações
 com muito HTML, boa parte da lógica de uma aplicação está fora da camada de
@@ -59,13 +59,13 @@ Manipulado na camada de `middleware`:
   desenvolvimento, tornando o desenvolvimento prazeroso sem comprometer performance e
   tempo de produção.
 - Modo de Teste: Modo de desenvolvimento `Ditto`.
-- *Logging*: Aplicações Rails *logam* cada requisição, em um nível de
+- *Logging*: Aplicações Rails criam *logs* cada requisição, em um nível de
   verbosidade apropriada para seu modo atual. Os Logs do Rails em modo de
   desenvolvimento incluem informações sobre o ambiente da requisição, queries da
   base de dados e informações básicas de performance.
-- Segurança: O Rails detecta e impede [ataques de IP spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
-  e lida com assinaturas criptográficas em um [timming attack](https://en.wikipedia.org/wiki/Timing_attack)
-  de maneira consciente. Não sabe o que é um IP spoofing e um timming attack é?
+- Segurança: O Rails detecta e impede [ataques de IP spoofing](https://pt.wikipedia.org/wiki/IP_spoofing)
+  e lida com assinaturas criptográficas em um [timming attack](https://pt.wikipedia.org/wiki/Ataque_de_temporiza%C3%A7%C3%A3o)
+  de maneira consciente. Não sabe o que é um *IP spoofing* e um *timming attack* é?
   Exato.
 - Análise de Parâmetros: Quer especificar seus parâmetros como JSON ao invés de
   uma *String URL-encoded*? Sem problemas. O Rails vai decodificar o JSON para
