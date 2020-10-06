@@ -479,51 +479,48 @@ code that will be sent and executed on the client side.
 $("<%= escape_javascript(render @user) %>").appendTo("#users");
 ```
 
-Turbolinks
+*Turbolinks*
 ----------
 
-Rails ships with the [Turbolinks library](https://github.com/turbolinks/turbolinks),
-which uses Ajax to speed up page rendering in most applications.
+O Rails vem com a [biblioteca *Turbolinks*](https://github.com/turbolinks/turbolinks),
+que utiliza Ajax para acelerar a renderização na maioria das aplicações.
 
-### How Turbolinks Works
+### Como o *Turbolinks* Funciona
 
-Turbolinks attaches a click handler to all `<a>` tags on the page. If your browser
-supports
-[PushState](https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history#The_pushState%28%29_method),
-Turbolinks will make an Ajax request for the page, parse the response, and
-replace the entire `<body>` of the page with the `<body>` of the response. It
-will then use PushState to change the URL to the correct one, preserving
-refresh semantics and giving you pretty URLs.
+O Turbolinks anexa um manipulador de cliques em todas as *tags* `<a>` da página. Se seu
+navegador tiver suporte ao [PushState](https://developer.mozilla.org/pt-BR/docs/Web/API/History_API#The_pushState),
+o Turbolinks fará uma requisição para a página, analisar a resposta, e trocar o `<body>`
+inteiro da página com o `<body>` da resposta. E então ele usará o *PushState* para mudar
+a URL para a correta, preservando a semantica da atualização e oferece a URLs bonitas.
 
-If you want to disable Turbolinks for certain links, add a `data-turbolinks="false"`
-attribute to the tag:
+Se você quiser desabilitar o *Turbolinks* para certos links, adicione o atributo
+`data-turbolinks="false"` para a *tag*:
 
 ```html
 <a href="..." data-turbolinks="false">No turbolinks here</a>.
 ```
 
-### Page Change Events
+### Eventos de Mudança de Página
 
-When writing CoffeeScript, you'll often want to do some sort of processing upon
-page load. With jQuery, you'd write something like this:
+Quando for escrever CoffeeScript, muitas vezes você vai querer fazer algum tipo de
+mudança no carregamento da página. Com jQuery, você escreveria assim:
 
 ```coffeescript
 $(document).ready ->
   alert "page has loaded!"
 ```
 
-However, because Turbolinks overrides the normal page loading process, the
-event that this relies upon will not be fired. If you have code that looks like
-this, you must change your code to do this instead:
+Contudo, por cause do *Turbolinks* sobreescrever o processo de carregamento da página,
+o evento no qual ele depende não será disparado. Se você tem um código que se parece com isso,
+você deve mudar seu código para fazer isso:
 
 ```coffeescript
 $(document).on "turbolinks:load", ->
   alert "page has loaded!"
 ```
 
-For more details, including other events you can bind to, check out [the
-Turbolinks
-README](https://github.com/turbolinks/turbolinks/blob/master/README.md).
+Para mais detalhes, incluindo outros eventos que você pode disparar, veja o *README
+do Turbolinks*(https://github.com/turbolinks/turbolinks/blob/master/README.md)
 
 Cross-Site Request Forgery (CSRF) token in Ajax
 ----
