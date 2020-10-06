@@ -32,14 +32,14 @@ muitos desenvolvedores estão tratando suas aplicações web apenas como uma API
 Esse guia aborda a construção de um aplicativo Rails que fornece dados em JSON para um cliente, incluindo frameworks *client-side*.
 
 
-Porque Usar Rails para APIs JSON?
+Por Que Usar Rails para APIs JSON?
 ----------------------------
 
-A primeira questão que muitas pessoas tem quando estão pensando em construir uma
+A primeira questão que muitas pessoas têm quando estão pensando em construir uma
 API JSON utilizando Rails é: "Utilizar Rails para retornar alguns JSON não é
-overkill? Não deveriamos usar algo como Sinatra?"
+exagero? Não deveriamos usar algo como Sinatra?"
 
-Para APIs muito simles, isso pode ser verdade. Porem, até mesmo em aplicações
+Para APIs muito simples, isso pode ser verdade. Porém, até mesmo em aplicações
 com muito HTML, boa parte da lógica de uma aplicação está fora da camada de
 visualização.
 
@@ -48,35 +48,35 @@ padrões que permitem desenvolvedores criarem e rodarem rápido, sem ter de faze
 muitas decisões triviais.
 
 Vamos dar uma olhada em algumas das coisas que o Rails fornece "fora da caixa"
-que são aplicaveis para aplicações API.
+que são aplicáveis para aplicações API.
 
 Manipulado na camada de `middleware`:
 
 - Recarregando: Aplicações Rails suportam recarregamento transparente. Isso
   funciona até quando sua aplicação fica grande e reiniciar o servidor para
-  cada requisição fica inviavel.
+  cada requisição fica inviável.
 - Modo de Desenvolvimento: Aplicações Rails vem com padrões inteligentes para
-  desenvolvimento, fazendo desenvolver prazeroso sem comprometer performance e
+  desenvolvimento, tornando o desenvolvimento prazeroso sem comprometer performance e
   tempo de produção.
 - Modo de Teste: Modo de desenvolvimento `Ditto`.
-- *Logging*: Aplicações Rails *logam* cada requisições, em um nivel de
+- *Logging*: Aplicações Rails *logam* cada requisição, em um nível de
   verbosidade apropriada para seu modo atual. Os Logs do Rails em modo de
   desenvolvimento incluem informações sobre o ambiente da requisição, queries da
-  base de dados e informações basicas de performance.
+  base de dados e informações básicas de performance.
 - Segurança: O Rails detecta e impede [ataques de IP spoofing](https://en.wikipedia.org/wiki/IP_address_spoofing)
   e lida com assinaturas criptográficas em um [timming attack](https://en.wikipedia.org/wiki/Timing_attack)
   de maneira consciente. Não sabe o que é um IP spoofing e um timming attack é?
   Exato.
-- Análise de Parametros: Quer especificar seus parametros como JSON ao inves de
+- Análise de Parâmetros: Quer especificar seus parâmetros como JSON ao invés de
   uma *String URL-encoded*? Sem problemas. O Rails vai decodificar o JSON para
-  você e disponibiliza-lo em `params`. Quer usar parametros *URL-encoded*
-  aninhados? Isto funciona tambem.
+  você e disponibilizá-lo em `params`. Quer usar parâmetros *URL-encoded*
+  aninhados? Isto funciona também.
 - *GETs* condicionais: O Rails lida com GET condicional (`ETag` e `Last-Modified`)
   processando os cabeçalhos de requisição e retornando os cabeçalhos corretos de
   resposta e o código de status. Tudo que você precisa para isso é usar a
   checagem
   [`stale?`](https://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F)
-  em seu *controller*, e o Rails vai cuidar de todo os detalhes do HTTP para
+  em seu *controller*, e o Rails vai cuidar de todos os detalhes do HTTP para
   você.
 - Requisições HEAD: O Rails vai converter de forma transparente requisições
   `HEAD` em requisições `GET`, e retornar apenas os cabeçalhos no retorno. Isto
@@ -96,11 +96,11 @@ Controlado na camada *Action Pack*:
   baseada em HTTP inclui URLs (veja [o GitHub Gist API](https://developer.github.com/v3/gists/) como exemplo).
 - Respostas de Cabeçalho e Redirecionamento: `head :no_content` e
   `redirect_to user_url(current_user)` são bem convenientes. Claro, você pode
-  adicionar cabeçalhos de respostas manualmente, mas porque?
-- *Caching*: O Rails fornece cache de pagina, ação e fragmento. Cache de
-  fragmento é especialmente útil quando construimos um objetos JSON aninhados.
+  adicionar cabeçalhos de respostas manualmente, mas por quê?
+- *Caching*: O Rails fornece cache de página, ação e fragmento. Cache de
+  fragmento é especialmente útil quando construímos objetos JSON aninhados.
 - Autenticações *Basic*, *Digest*, and *Token*: O Rails vem com um suporte para
-  todos os tres tipos de autenticação fora da caixa.
+  todos os três tipos de autenticação fora da caixa.
 - Instrumentação: O Rails tem uma instrumentação de API que desencadeia
   manipuladores registrados para uma variedade de eventos, assim como
   processamento de ação, enviando um arquivo ou dado, redirecionamento e
@@ -108,21 +108,21 @@ Controlado na camada *Action Pack*:
   relevantes (para o processamento de ação, o *payload* inclui o *controller*,
   *action*, *parameters*, *request format*, *request method* e o *request's full path*).
 - Geradores: É muitas vezes útil gerar um recurso e gerar para você *model*,
-  *controller*, *test stubs* e *routes* em um unico comando para futuros
+  *controller*, *test stubs* e *routes* em um único comando para futuros
   ajustes. Mesmo para migrações entre outros.
 - Plugins: Muitas bibliotecas terceiras vem com suporte para Rails que reduz ou
   elimina o custo de configuração e utilização junto da  biblioteca e o
-  framework web. Isso inclui coisas como subistituir geradores padrão,
+  framework web. Isso inclui coisas como substituir geradores padrão,
   adicionando *Rake tasks*, honrando as escolhas do Rails (como *logger* e
   *cache back-end*).
 
-Claro, o processo de *boot* do Rails tambem junta todos os componentes
+Claro, o processo de *boot* do Rails também junta todos os componentes
 registrados.
 Por exemplo, o processo de *boot* do Rails é o que usa seu arquivo
-`config/database.yml` quando esta configurando seu `Active Record`.
+`config/database.yml` quando está configurando seu `Active Record`.
 
 **A versão curta é**: você pode não ter pensado em que partes do Rails
-continuam aplicaveis até mesmo se você remover a camada de *view*, mas a
+continuam aplicáveis até mesmo se você remover a camada de *view*, mas a
 resposta é que a maioria delas.
 
 Configuração básica
