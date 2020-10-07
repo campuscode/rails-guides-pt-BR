@@ -139,32 +139,32 @@ cache (*cached*) em todas as páginas depois disso. Muitos pequenos benefícios 
 O time Rails fortemente lhe encoraja a escrever seu CoffeeScript (e JavaScript) nesse estilo,
 e você pode esperar que muitas bibliotecas também seguirão esse padrão.
 
-Built-in Helpers
+*Helpers* Internos
 ----------------
 
-### Remote elements
+### Elementos Remotos
 
-Rails provides a bunch of view helper methods written in Ruby to assist you
-in generating HTML. Sometimes, you want to add a little Ajax to those elements,
-and Rails has got your back in those cases.
+O Rails fornece um grupo de métodos *view helper* escritos em ruby para ajudar você
+na criação do HTML. As vezes, você quer adicionar um pouco de *Ajax* para esses elementos,
+e o Rails te da cobertura nesses casos.
 
-Because of Unobtrusive JavaScript, the Rails "Ajax helpers" are actually in two
-parts: the JavaScript half and the Ruby half.
+Por causa do JavaScript não obtrusivo (*unobtrusive*), os *"Ajax Helpers"* do rails
+estão atualmente em duas partes: metade JavaScript e metade Rails.
 
-Unless you have disabled the Asset Pipeline,
-[rails-ujs](https://github.com/rails/rails/tree/master/actionview/app/assets/javascripts)
-provides the JavaScript half, and the regular Ruby view helpers add appropriate
-tags to your DOM.
+A não ser que você desabilite a *Asset Pipeline*,
+[o *rails-ujs*](https://github.com/rails/rails/tree/master/actionview/app/assets/javascripts)
+fornece a metade JavaScript, e os *view helpers* regulares em Ruby adicionam as *tags* apropriadas
+ao seu DOM.
 
-You can read below about the different events that are fired dealing with
-remote elements inside your application.
+Você pode ler abaixo sobre a diferença dos eventos que são disparados lidando com
+elementos remotos dentro da sua aplicação.
 
 #### form_with
 
-[`form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
-is a helper that assists with writing forms. By default, `form_with` assumes that
-your form will be using Ajax. You can opt out of this behavior by
-passing the `:local` option `form_with`.
+[o `form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
+é um *helper* que auxilia na escrita de formulários. Por padrão, o `form_with` assume
+que seu formulário estará usando Ajax. Você pode desativar esse comportamento passando
+a opção *`:local`* no *`form_with`*
 
 ```erb
 <%= form_with(model: @article) do |f| %>
@@ -172,7 +172,7 @@ passing the `:local` option `form_with`.
 <% end %>
 ```
 
-This will generate the following HTML:
+Isso irá gerar o seguinte HTML:
 
 ```html
 <form action="/articles" accept-charset="UTF-8" method="post" data-remote="true">
@@ -180,12 +180,12 @@ This will generate the following HTML:
 </form>
 ```
 
-Note the `data-remote="true"`. Now, the form will be submitted by Ajax rather
-than by the browser's normal submit mechanism.
+Veja o `data-remote="true"`. Agora, o formulário será enviado por *Ajax* ao invés
+do mecanismo normal de envio do browser.
 
-You probably don't want to just sit there with a filled out `<form>`, though.
-You probably want to do something upon a successful submission. To do that,
-bind to the `ajax:success` event. On failure, use `ajax:error`. Check it out:
+Você provavelmente não quer só ficar sentado com um `<form>` preenchido, entretanto.
+Você provavelmente quer que algo aconteça após um envio bem-sucedido. Para fazer isso,
+vincule o evento `ajax:success`. Em caso de falha, use `ajax:error`. confira:
 
 ```coffeescript
 $(document).ready ->
@@ -196,38 +196,38 @@ $(document).ready ->
     $("#new_article").append "<p>ERROR</p>"
 ```
 
-Obviously, you'll want to be a bit more sophisticated than that, but it's a
-start.
+Obviamente, você irá querer ser um pouco mais sofisticado que isso, mas
+é um começo.
 
-NOTE: As of Rails 5.1 and the new `rails-ujs`, the parameters `data, status, xhr`
-have been bundled into `event.detail`. For information about the previously used
-`jquery-ujs` in Rails 5 and earlier, read the [`jquery-ujs` wiki](https://github.com/rails/jquery-ujs/wiki/ajax).
+NOTE: A partir do Rails 5.1 e do novo `rails-ujs`, os parâmetros
+`data, status, xhr` foram empacotados no `event.detail`. Para informações
+sobre o `jquery-ujs` usado anteriormente no Rails 5 e anteriores, leia a [wiki do `jquery-ujs`](https://github.com/rails/jquery-ujs/wiki/ajax)
 
 #### link_to
 
 [`link_to`](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
-is a helper that assists with generating links. It has a `:remote` option you
-can use like this:
+é um *helper* que ajuda na geração de links. Ele tem a opção `:remote`
+que você pode usar assim:
 
 ```erb
 <%= link_to "an article", @article, remote: true %>
 ```
 
-which generates
+que gera
 
 ```html
 <a href="/articles/1" data-remote="true">an article</a>
 ```
 
-You can bind to the same Ajax events as `form_with`. Here's an example. Let's
-assume that we have a list of articles that can be deleted with just one
-click. We would generate some HTML like this:
+Você pode vincular os mesmos eventos *Ajax* do `form_with`. Aqui está um exemplo.
+Vamos assumir que nós temos uma lista de artigos que podem ser deletadas com apenas
+um clique. Iríamos gerar um HTML como este:
 
 ```erb
 <%= link_to "Delete article", @article, remote: true, method: :delete %>
 ```
 
-and write some CoffeeScript like this:
+e escrever um pouco de CoffeeScript como este:
 
 ```coffeescript
 $ ->
@@ -237,13 +237,14 @@ $ ->
 
 #### button_to
 
-[`button_to`](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to) is a helper that helps you create buttons. It has a `:remote` option that you can call like this:
+[`button_to`](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to) é um *helper* que ajuda você a criar botões. Ele tem a opção `:remote` que você pode chamar assim:
+
 
 ```erb
 <%= button_to "An article", @article, remote: true %>
 ```
 
-this generates
+Isso gera
 
 ```html
 <form action="/articles/1" class="button_to" data-remote="true" method="post">
@@ -251,39 +252,39 @@ this generates
 </form>
 ```
 
-Since it's just a `<form>`, all of the information on `form_with` also applies.
+Uma vez que é apenas um `<form>`, todas as informações do `form_with` também se aplicam.
 
-### Customize remote elements
+### Personalize elementos remotos
 
-It is possible to customize the behavior of elements with a `data-remote`
-attribute without writing a line of JavaScript. You can specify extra `data-`
-attributes to accomplish this.
+É possível personalizar o comportamento dos elementos com o atributo `data-remote`
+sem escrever uma linha de JavaScript. Você pode especificar extras atributos `data-`
+para fazer isso.
 
 #### `data-method`
 
-Activating hyperlinks always results in an HTTP GET request. However, if your
-application is [RESTful](https://en.wikipedia.org/wiki/Representational_State_Transfer),
-some links are in fact actions that change data on the server, and must be
-performed with non-GET requests. This attribute allows marking up such links
-with an explicit method such as "post", "put" or "delete".
+Ativando *hyperlinks* sempre resultam em uma requisição HTTP GET. Seja como for, se
+sua aplicação é [RESTful](https://pt.wikipedia.org/wiki/REST),
+alguns links são na verdade ações que mudam dados no servidor, e devem ser executados com
+requisições diferentes de GET. Esse atributo permite mudar tais links para um método explícito
+tais como "post", "put" ou "delete".
 
-The way it works is that, when the link is activated, it constructs a hidden form
-in the document with the "action" attribute corresponding to "href" value of the
-link, and the method corresponding to `data-method` value, and submits that form.
+O modo como isso funciona é que, quando um link é ativado, ele constrói um formulário
+escondido no documento com o atributo *"action"* correspondendo ao valor *"href"* do
+link, e o método corresponde ao valor do `data-method`, e envia esse formulário.
 
-NOTE: Because submitting forms with HTTP methods other than GET and POST isn't
-widely supported across browsers, all other HTTP methods are actually sent over
-POST with the intended method indicated in the `_method` parameter. Rails
-automatically detects and compensates for this.
+NOTE: por causa dos envios de formulários com outros métodos HTTP além de
+GET e POST não são amplamente suportados entre navegadores, todos os outros métodos
+HTTP são na verdade enviados através de POST com o método pretendido indicado no
+parâmetro `_method`. o Rails automaticamente detecta e compensa isso.
 
-#### `data-url` and `data-params`
+#### `data-url` e `data-params`
 
-Certain elements of your page aren't actually referring to any URL, but you may want
-them to trigger Ajax calls. Specifying the `data-url` attribute along with
-the `data-remote` one will trigger an Ajax call to the given URL. You can also
-specify extra parameters through the `data-params` attribute.
+Certos elementos da sua página não estão atualmente referenciando a alguma URL, mas você pode querer
+que eles acionem chamadas Ajax. Especificando o atributo `data-url` juntamente com o `data-remote`
+um irá disparar uma chamada Ajax para a URL dada. Você pode também
+especificar parâmetros extras através do atributo `data-params`.
 
-This can be useful to trigger an action on check-boxes for instance:
+Isso pode ser útil para disparar uma ação nos *check-boxes* por exemplo:
 
 ```html
 <input type="checkbox" data-remote="true"
@@ -292,50 +293,50 @@ This can be useful to trigger an action on check-boxes for instance:
 
 #### `data-type`
 
-It is also possible to define the Ajax `dataType` explicitly while performing
-requests for `data-remote` elements, by way of the `data-type` attribute.
+Também é possível definir o Ajax `dataType` explicitamente enquanto desempenha
+requisições para os elementos `data-remote`, por meio do atributo `data-type`
 
 ### Confirmations
 
-You can ask for an extra confirmation of the user by adding a `data-confirm`
-attribute on links and forms. The user will be presented a JavaScript `confirm()`
-dialog containing the attribute's text. If the user chooses to cancel, the action
-doesn't take place.
+Você pode pedir uma confirmação extra do usuário adicionando o atributo
+`data-confirm` nos links e formulários. O usuário verá uma caixa de diálogo
+`confirm()` em JavaScript contendo o texto do atributo. Se o usuário escolher
+cancelar, a ação não acontece.
 
-Adding this attribute on links will trigger the dialog on click, and adding it
-on forms will trigger it on submit. For example:
+Adicionando esse atributo nos links, será disparado a mensagem no clique, e adicionando
+aos formulários, será disparado no *submit*. Por exemplo:
 
 ```erb
 <%= link_to "Dangerous zone", dangerous_zone_path,
   data: { confirm: 'Are you sure?' } %>
 ```
 
-This generates:
+Isso gera:
 
 ```html
 <a href="..." data-confirm="Are you sure?">Dangerous zone</a>
 ```
 
-The attribute is also allowed on form submit buttons. This allows you to customize
-the warning message depending on the button which was activated. In this case,
-you should **not** have `data-confirm` on the form itself.
+O atributo também está disponível no botão *submit* do formulário. Isso permite
+você customizar a mensagem de aviso dependendo do botão que foi ativado. Nesse caso,
+você **não** deve ter um `data-confirm` no formulário em si.
 
-The default confirmation uses a JavaScript confirm dialog, but you can customize
-this by listening to the `confirm` event, which is fired just before the confirmation
-window appears to the user. To cancel this default confirmation, have the confirm
-handler to return `false`.
+A confirmação padrão usa a mensagem de confirmação JavaScript, mas você pode mudar
+isso pegando o evento `confirm`, o qual é disparado antes da janela de confirmação
+aparecer para o usuário. Para cancelar essa confirmação padrão, você tem que fazer o
+gerenciador de confirmação retornar *false*.
 
-### Automatic disabling
+### Desativando Automaticamente
 
-It is also possible to automatically disable an input while the form is submitting
-by using the `data-disable-with` attribute. This is to prevent accidental
-double-clicks from the user, which could result in duplicate HTTP requests that
-the backend may not detect as such. The value of the attribute is the text that will
-become the new value of the button in its disabled state.
+Também é possível desabilitar automaticamente um input enquanto o formulário está sendo
+enviado usando o atributo `data-disable-with`. Isso evita acidentes de duplo cliques do
+usuário, o qual resultaria em uma dupla requisição HTTP que o `backend` pode não detectar
+como tal. O valor do atributo é o texto que se tornará o novo valor do botão quando está
+no estado desabilitado.
 
-This also works for links with `data-method` attribute.
+Isso também funciona para links com o atributo `data-method`.
 
-For example:
+Por exemplo:
 
 ```erb
 <%= form_with(model: @article.new) do |f| %>
@@ -343,33 +344,33 @@ For example:
 <%= end %>
 ```
 
-This generates a form with:
+Isso gera um formulário com:
 
 ```html
 <input data-disable-with="Saving..." type="submit">
 ```
 
-### Rails-ujs event handlers
+### Manipuladores de eventos `Rails-ujs`
 
-Rails 5.1 introduced rails-ujs and dropped jQuery as a dependency.
-As a result the Unobtrusive JavaScript (UJS) driver has been rewritten to operate without jQuery.
-These introductions cause small changes to `custom events` fired during the request:
+Rails 5.1 introduziu o `rails-ujs` e removeram o jQuery como dependência.
+Como resultado o JavaScript discreto (*unobtrusive (UJS)*) foi reescrito para operar sem *jQuery*.
+Estas introduções causam pequenas mudanças para os eventos personalizados executados durante a requisição:
 
-NOTE: Signature of calls to UJS's event handlers has changed.
-Unlike the version with jQuery, all custom events return only one parameter: `event`.
-In this parameter, there is an additional attribute `detail` which contains an array of extra parameters.
+NOTE: A assinatura de chamadas para os manipuladores de eventos do `UJS` mudaram.
+Diferente da versão com jQuery, todos os eventos personalizados retornam apenas um parâmetro: `event`.
+Nesse parâmetro, existe um atributo adicional, o `detail`, ao qual contém um *array* de parâmetros extra.
 
-| Event name          | Extra parameters (event.detail) | Fired                                                       |
+| Nome do evento      | Parâmetros extra (event.detail) | Quando é executado                                          |
 |---------------------|---------------------------------|-------------------------------------------------------------|
-| `ajax:before`       |                                 | Before the whole ajax business.                             |
-| `ajax:beforeSend`   | [xhr, options]                  | Before the request is sent.                                 |
-| `ajax:send`         | [xhr]                           | When the request is sent.                                   |
-| `ajax:stopped`      |                                 | When the request is stopped.                                |
-| `ajax:success`      | [response, status, xhr]         | After completion, if the response was a success.            |
-| `ajax:error`        | [response, status, xhr]         | After completion, if the response was an error.             |
-| `ajax:complete`     | [xhr, status]                   | After the request has been completed, no matter the outcome.|
+| `ajax:before`       |                                 | Antes de toda regra de negócio no *ajax*.                   |
+| `ajax:beforeSend`   | [xhr, options]                  | Antes da requisição ser enviada.                            |
+| `ajax:send`         | [xhr]                           | Quando a requisição é enviada.                              |
+| `ajax:stopped`      |                                 | Quando a requisição é parada.                               |
+| `ajax:success`      | [response, status, xhr]         | Após a conclusão, se a resposta foi bem sucedida.           |
+| `ajax:error`        | [response, status, xhr]         | Após a conclusão, se a resposta foi um erro.                |
+| `ajax:complete`     | [xhr, status]                   | Após a requisição ser concluída, não importa o resultado.   |
 
-Example usage:
+Exemplo de uso:
 
 ```html
 document.body.addEventListener('ajax:success', function(event) {
@@ -377,24 +378,24 @@ document.body.addEventListener('ajax:success', function(event) {
   var data = detail[0], status = detail[1], xhr = detail[2];
 })
 ```
+NOTE: A partir do Rails 5.1 e o novo `rails-ujs`, os parâmetros `data, status, xhr`
+foram empacotados dentro do `event.detail`. Para informações sobre o `jquery-ujs` anteriormente
+usado no Rails 5 e anteriores, leia a [wiki do `jquery-ujs`](https://github.com/rails/jquery-ujs/wiki/ajax).
 
-NOTE: As of Rails 5.1 and the new `rails-ujs`, the parameters `data, status, xhr`
-have been bundled into `event.detail`. For information about the previously used
-`jquery-ujs` in Rails 5 and earlier, read the [`jquery-ujs` wiki](https://github.com/rails/jquery-ujs/wiki/ajax).
+### Eventos Paravéis
 
-### Stoppable events
-You can stop execution of the Ajax request by running `event.preventDefault()`
-from the handlers methods `ajax:before` or `ajax:beforeSend`.
-The `ajax:before` event can manipulate form data before serialization and the
-`ajax:beforeSend` event is useful for adding custom request headers.
+Você pode parar a execução da requisição *Ajax* executando o `event.preventDefault()`
+a partir dos métodos `ajax:before` ou `ajax:beforeSend`.
+O evento `ajax:before` pode manipular os dados do formulário antes da serialização e o
+evento `ajax:beforeSend` é útil para adicionar *headers* personalizados.
 
-If you stop the `ajax:aborted:file` event, the default behavior of allowing the
-browser to submit the form via normal means (i.e. non-Ajax submission) will be
-canceled and the form will not be submitted at all. This is useful for
-implementing your own Ajax file upload workaround.
+Se você parar o evento `ajax:aborted:file`, o comportamento padrão de permitir
+que o navegador envie o formulário por meios normais (i.e. requisição sem *Ajax*)
+será cancelada e o formulário não será enviado de nenhuma forma. Isso é útil para
+implementar seu próprio ambiente de *upload* de arquivos via *Ajax*.
 
-Note, you should use `return false` to prevent event for `jquery-ujs` and
-`e.preventDefault()` for `rails-ujs`
+Observação, você deveria usar o `return false` para prevenir eventos para o `jquery-ujs`
+e `e.preventDefault()` para o `rails-ujs`
 
 Server-Side Concerns
 --------------------
