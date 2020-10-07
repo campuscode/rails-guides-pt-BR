@@ -518,10 +518,10 @@ Existe também o *helper* `time_zone_options_for_select` para uma maneira mais m
 
 O Rails tinha um *helper* `country_select` para escolher os países, mas foi extraído para o [plugin country_select](https://github.com/stefanpenner/country_select).
 
-Using Date and Time Form Helpers
+Usando *Form Helpers* para Data e Hora
 --------------------------------
 
-You can choose not to use the form helpers generating HTML5 date and time input fields and use the alternative date and time helpers. These date and time helpers differ from all the other form helpers in two important respects:
+Você pode optar por não usar o *helper* generating HTML5 date and time input fields and use the alternative date and time *helpers*. These date and time *helpers* differ from all the other form *helpers* in two important respects:
 
 * Dates and times are not representable by a single input element. Instead, you have several, one for each component (year, month, day etc.) and so there is no single value in your `params` hash with your date or time.
 * Other helpers use the `_tag` suffix to indicate whether a helper is a barebones helper or one that operates on model objects. With dates and times, `select_date`, `select_time` and `select_datetime` are the barebones helpers, `date_select`, `time_select` and `datetime_select` are the equivalent model object helpers.
