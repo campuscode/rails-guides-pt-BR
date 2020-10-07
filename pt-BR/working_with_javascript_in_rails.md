@@ -397,18 +397,19 @@ implementar seu próprio ambiente de *upload* de arquivos via *Ajax*.
 Observação, você deveria usar o `return false` para prevenir eventos para o `jquery-ujs`
 e `e.preventDefault()` para o `rails-ujs`
 
-Server-Side Concerns
+Preocupações Do Lado Do Servidor
 --------------------
 
-Ajax isn't just client-side, you also need to do some work on the server
-side to support it. Often, people like their Ajax requests to return JSON
-rather than HTML. Let's discuss what it takes to make that happen.
+Ajax não é só do lado do cliente, você também precisa trabalhar
+no lado do servidor para oferecer suporte, geralmente, as pessoas gostam
+que suas requisições retornem JSON mais do que HTML. Vamos discutir o que
+é preciso fazer para isso acontecer.
 
-### A Simple Example
+### Um Exemplo Simples
 
-Imagine you have a series of users that you would like to display and provide a
-form on that same page to create a new user. The index action of your
-controller looks like this:
+Imagine que você tenha uma série de usuários que você gostaria de mostrar e
+fornecer um formulário nessa mesma página para criar um novo usuário. A ação *index*
+do seu *controller* se parece com isso:
 
 ```ruby
 class UsersController < ApplicationController
@@ -419,7 +420,7 @@ class UsersController < ApplicationController
   # ...
 ```
 
-The index view (`app/views/users/index.html.erb`) contains:
+A *view index* (`app/views/users/index.html.erb`) contém:
 
 ```erb
 <b>Users</b>
@@ -437,20 +438,19 @@ The index view (`app/views/users/index.html.erb`) contains:
 <% end %>
 ```
 
-The `app/views/users/_user.html.erb` partial contains the following:
+A *partial* `app/views/users/_user.html.erb` contém o seguinte:
 
 ```erb
 <li><%= user.name %></li>
 ```
 
-The top portion of the index page displays the users. The bottom portion
-provides a form to create a new user.
+A parte de cima da página *index* mostra os usuários. A parte de baixo
+fornece o formulário para criar um novo usuário.
 
-The bottom form will call the `create` action on the `UsersController`. Because
-the form's remote option is set to true, the request will be posted to the
-`UsersController` as an Ajax request, looking for JavaScript. In order to
-serve that request, the `create` action of your controller would look like
-this:
+O formulário de baixo chamará a ação *`create`* no `UsersController`. Por causa
+da opção *remote* definida como `true`, a requisição será enviada para o `UsersController`
+como uma requisição *Ajax*, procurando por JavaScript. Afim de atender a requisição,
+a ação *`create`* do seu *controller* ficaria assim:
 
 ```ruby
   # app/controllers/users_controller.rb
@@ -471,10 +471,10 @@ this:
   end
 ```
 
-Notice the `format.js` in the `respond_to` block: that allows the controller to
-respond to your Ajax request. You then have a corresponding
-`app/views/users/create.js.erb` view file that generates the actual JavaScript
-code that will be sent and executed on the client side.
+Observe o `format.js` no bloco `respond_to`: que permite o seu controller responder
+a sua requisição *Ajax*. Então você tem um correspondente arquivo *view*
+`app/views/users/create.js.erb` que gera o atual código JavaScript que será enviado
+e executado no lado do cliente.
 
 ```erb
 $("<%= escape_javascript(render @user) %>").appendTo("#users");
