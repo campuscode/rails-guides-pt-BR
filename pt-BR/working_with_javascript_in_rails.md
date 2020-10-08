@@ -479,21 +479,21 @@ code that will be sent and executed on the client side.
 $("<%= escape_javascript(render @user) %>").appendTo("#users");
 ```
 
-*Turbolinks*
+Turbolinks
 ----------
 
-O Rails vem com a [biblioteca *Turbolinks*](https://github.com/turbolinks/turbolinks),
+O Rails vem com a [biblioteca Turbolinks](https://github.com/turbolinks/turbolinks),
 que utiliza Ajax para acelerar a renderização na maioria das aplicações.
 
-### Como o *Turbolinks* Funciona
+### Como o Turbolinks Funciona
 
 O Turbolinks anexa um manipulador de cliques em todas as *tags* `<a>` da página. Se seu
 navegador tiver suporte ao [PushState](https://developer.mozilla.org/pt-BR/docs/Web/API/History_API#The_pushState),
-o Turbolinks fará uma requisição para a página, analisar a resposta, e trocar o `<body>`
+o Turbolinks fará uma requisição para a página, analisará a resposta, e trocará o `<body>`
 inteiro da página com o `<body>` da resposta. E então ele usará o *PushState* para mudar
-a URL para a correta, preservando a semantica da atualização e oferece a URLs bonitas.
+a URL para a correta, preservando a semântica da atualização e retornando a URLs bonitas.
 
-Se você quiser desabilitar o *Turbolinks* para certos links, adicione o atributo
+Se você quiser desabilitar o Turbolinks para certos links, adicione o atributo
 `data-turbolinks="false"` para a *tag*:
 
 ```html
@@ -510,17 +510,17 @@ $(document).ready ->
   alert "page has loaded!"
 ```
 
-Contudo, por cause do *Turbolinks* sobreescrever o processo de carregamento da página,
+Contudo, como o Turbolinks sobreescreve o processo padrão de carregamento da página,
 o evento no qual ele depende não será disparado. Se você tem um código que se parece com isso,
-você deve mudar seu código para fazer isso:
+você deve mudar seu código para fazer isso no lugar:
 
 ```coffeescript
 $(document).on "turbolinks:load", ->
   alert "page has loaded!"
 ```
 
-Para mais detalhes, incluindo outros eventos que você pode disparar, veja o *README
-do Turbolinks*(https://github.com/turbolinks/turbolinks/blob/master/README.md)
+Para mais detalhes, incluindo outros eventos que você pode disparar, veja o [README
+do Turbolinks](https://github.com/turbolinks/turbolinks/blob/master/README.md)
 
 Cross-Site Request Forgery (CSRF) token in Ajax
 ----
