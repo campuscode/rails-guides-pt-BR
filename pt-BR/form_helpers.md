@@ -558,8 +558,8 @@ A opção `:prefix` é a chave utilizada para retornar a *hash* dos componentes 
 
 ### Objetos *Model Helpers*
 
-`select_date` não funciona muito bem com formulários que atualizam ou criam objetos *Active Record* , pois *Active Record* espera que cada elemento da *hash* `params` corresponda a um atributo.
-O objeto *model helpers* para dates e hora enviam parametros com nomes especiais; quando *Active Record* vê os parâmetros com devidos nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de colune. Por exemplo:
+O objeto `select_date` não funciona muito bem com formulários que atualizam ou criam objetos *Active Record* , pois *Active Record* espera que cada elemento da *hash* `params` corresponda a um atributo.
+Os objetos *model helpers* para dates e hora enviam parametros com nomes especiais; quando *Active Record* vê os parâmetros com devidos nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de colune. Por exemplo:
 
 ```erb
 <%= date_select :person, :birth_date %>
