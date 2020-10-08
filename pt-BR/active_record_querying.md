@@ -1917,7 +1917,7 @@ Article.first.categories.any?
 Article.first.categories.many?
 ```
 
-Calculations
+Cálculos
 ------------
 
 This section uses count as an example method in this preamble, but the options described apply to all sub-sections.
