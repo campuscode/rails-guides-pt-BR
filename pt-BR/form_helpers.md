@@ -525,13 +525,13 @@ Você pode optar por não usar os *helpers* de formulário que geram campos de d
 
 * Datas e horas não são representáveis ​​por um único elemento de entrada. Em vez disso, você tem vários, um para cada componente (ano, mês, dia, etc.) e, portanto, não há um valor único em seu hash `params` com sua data ou hora.
 
-* Outros *helpers* usam o sufixo `_tag` para indicar quando um *helper* é um  *barebone helper* ou um que trabalha em objetos *model*. Com datas e horas, `select_date`, `select_time` e `select_datetime` sao *barebones helpers*, `date_select`, `time_select` e `datetime_select` são os *helpers*.
+* Outros *helpers* usam o sufixo `_tag` para indicar quando um *helper* é um  *barebone helper* ou um que trabalha em objetos *model*. Com datas e horas, `select_date`, `select_time` e `select_datetime` são *barebones helpers*, `date_select`, `time_select` e `datetime_select` são os *helpers*.
 
 Ambas as famílias de *helpers* criarão uma série de caixas de seleção para os diferentes componentes (ano, mês, dia, etc.).
 
 ### *Barebones Helpers*
 
-A familia de *helpers& `select_*` usam como primeiro argumento, uma instância de  `Date`, `Time`, ou `DateTime` que é utilizada como o valor selecionado no momento. É possível omitir esse parâmetro, onde a data atual é utilizada. Por exemplo:
+A familia de *helpers* `select_*` usam como primeiro argumento, uma instância de `Date`, `Time`, ou `DateTime` que é utilizada como o valor selecionado no momento. É possível omitir esse parâmetro, onde a data atual é utilizada. Por exemplo:
 
 ```erb
 <%= select_date Date.today, prefix: :start_date %>
@@ -548,7 +548,7 @@ produz (com os valores das opções reais omitidos para simplificação)
 </select>
 ```
 
-As entradas acima resultariam em  um *hash* `params[:start_date]` com as *keys* `:year`, `:month`, `:day`. Para pegar objetos com `Date`, `Time`, ou `DateTime` atuais,você deve extrair os valores e passa-los para o construtor apropriado, por exemplo: 
+As entradas acima resultariam em um *hash* `params[:start_date]` com as chaves `:year`, `:month`, `:day`. Para pegar objetos com `Date`, `Time`, ou `DateTime` atuais,você deve extrair os valores e passá-los para o construtor apropriado, por exemplo: 
 
 ```ruby
 Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
@@ -559,7 +559,7 @@ A opção `:prefix` é a chave utilizada para retornar a *hash* dos componentes 
 ### Objetos *Model Helpers*
 
 O objeto `select_date` não funciona muito bem com formulários que atualizam ou criam objetos *Active Record* , pois *Active Record* espera que cada elemento da *hash* `params` corresponda a um atributo.
-Os objetos *model helpers* para datas e horas enviam parâmetros com nomes especiais; quando *Active Record* vê os parâmetros com devidos nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de colune. Por exemplo:
+Os objetos *model helpers* para datas e horas enviam parâmetros com nomes especiais; quando *Active Record* vê os parâmetros com estes nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de coluna. Por exemplo:
 
 ```erb
 <%= date_select :person, :birth_date %>
