@@ -1920,29 +1920,30 @@ Article.first.categories.many?
 Cálculos
 ------------
 
-This section uses count as an example method in this preamble, but the options described apply to all sub-sections.
+Essa seção usa *count* como exemplo de método nesse preâmbulo, mas as opções descritas se aplicam para todas as
+subseções.
 
-All calculation methods work directly on a model:
+Todos os métodos de cálculo funcionam diretamente em um *model*:
 
 ```ruby
 Client.count
 # SELECT COUNT(*) FROM clients
 ```
 
-Or on a relation:
+Ou em uma relação:
 
 ```ruby
 Client.where(first_name: 'Ryan').count
 # SELECT COUNT(*) FROM clients WHERE (first_name = 'Ryan')
 ```
 
-You can also use various finder methods on a relation for performing complex calculations:
+Você também pode utilizar vários métodos de busca em uma relação para fazer cálculos complexos: 
 
 ```ruby
 Client.includes("orders").where(first_name: 'Ryan', orders: { status: 'received' }).count
 ```
 
-Which will execute:
+O que vai executar:
 
 ```sql
 SELECT COUNT(DISTINCT clients.id) FROM clients
@@ -1950,53 +1951,60 @@ SELECT COUNT(DISTINCT clients.id) FROM clients
   WHERE (clients.first_name = 'Ryan' AND orders.status = 'received')
 ```
 
-### Count
+### Contar (*count*)
 
-If you want to see how many records are in your model's table you could call `Client.count` and that will return the number. If you want to be more specific and find all the clients with their age present in the database you can use `Client.count(:age)`.
+Se você quiser saber quantos registros estão na tabela do seu *model* você pode chamar `Client.count` e isso vai retornar um número.
+Se você quiser ser mais específico e encontrar todos os clientes que tem idade presente no banco de dados, você pode utilizar
+`Client.count(:age)`
 
-For options, please see the parent section, [Calculations](#calculations).
+Para mais opções, veja a seção pai, [Cálculos](#cálculos).
 
-### Average
+### Média (*average*)
 
-If you want to see the average of a certain number in one of your tables you can call the `average` method on the class that relates to the table. This method call will look something like this:
+Se você quiser saber a média de um certo número em uma das suas tabelas, você pode chamar o método `average`
+na sua classe que se relaciona com essa tabela. Essa chamada de método vai parecer desse jeito:
 
 ```ruby
 Client.average("orders_count")
 ```
 
-This will return a number (possibly a floating point number such as 3.14159265) representing the average value in the field.
+Isso vai retornar um número (possivelmente um número de ponto flutuante como 3.14159265) representando o valor médio
+desse campo.
 
-For options, please see the parent section, [Calculations](#calculations).
+Para mais opções, veja a seção pai, [Cálculos](#cálculos).
 
-### Minimum
+### Mínimo (*minimum*)
 
-If you want to find the minimum value of a field in your table you can call the `minimum` method on the class that relates to the table. This method call will look something like this:
+Se você quiser encontrar o valor mínimo de um campo na sua tabela, você pode chamar o método `minimum`
+na classe que se relaciona com a tabela. Essa chamada de método vai parecer desse jeito:
 
 ```ruby
 Client.minimum("age")
 ```
 
-For options, please see the parent section, [Calculations](#calculations).
+Para mais opções, veja a seção pai, [Cálculos](#cálculos).
 
-### Maximum
+### Máximo (*maximum*)
 
-If you want to find the maximum value of a field in your table you can call the `maximum` method on the class that relates to the table. This method call will look something like this:
+Se você quiser encontrar o valor máximo de um campo na sua tabela, você pode chamar o método `maximum`
+na classe que se relaciona com a tabela. Essa chamada de método vai parecer desse jeito:
 
 ```ruby
 Client.maximum("age")
 ```
 
-For options, please see the parent section, [Calculations](#calculations).
+Para mais opções, veja a seção pai, [Cálculos](#cálculos).
 
-### Sum
+### Soma (*sum*)
 
-If you want to find the sum of a field for all records in your table you can call the `sum` method on the class that relates to the table. This method call will look something like this:
+Se você quiser encontrar a soma de todos os registros na sua tabela, você pode chamar o método `sum`
+na classe que se relaciona com a tabela. Essa chamada de método vai parecer desse jeito:
 
 ```ruby
 Client.sum("orders_count")
 ```
 
-For options, please see the parent section, [Calculations](#calculations).
+Para mais opções, veja a seção pai, [Cálculos](#cálculos).
 
 Running EXPLAIN
 ---------------
