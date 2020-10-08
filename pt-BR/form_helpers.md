@@ -346,7 +346,7 @@ IMPORTANT: All forms using `form_with` implement `remote: true` by default. Thes
 Criando Caixas de Seleção (*Select Boxes*) com Facilidade
 -----------------------------
 
-As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente. 
+As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente.
 
 Esta é a aparência da marcação:
 ```html
@@ -682,42 +682,42 @@ The form builder used also determines what happens when you do
 
 If `f` is an instance of `ActionView::Helpers::FormBuilder` then this will render the `form` partial, setting the partial's object to the form builder. If the form builder is of class `LabellingFormBuilder` then the `labelling_form` partial would be rendered instead.
 
-Understanding Parameter Naming Conventions
+Entendendo Convenções de Nomeação de Parâmetros
 ------------------------------------------
 
-Values from forms can be at the top level of the `params` hash or nested in another hash. For example, in a standard `create` action for a Person model, `params[:person]` would usually be a hash of all the attributes for the person to create. The `params` hash can also contain arrays, arrays of hashes, and so on.
+Valores de formulários podem ficar no topo do *hash* `params` ou aninhados em outro *hash*. Por exemplo, numa ação `create` padrão para um *model* `Person`, `params[:person]` normalmente seria um *hash* de todos os atributos necessários para criar uma pessoa. O *hash* `params` também pode conter *arrays*, *arrays* de *hashes*, e por aí vai.
 
-Fundamentally HTML forms don't know about any sort of structured data, all they generate is name-value pairs, where pairs are just plain strings. The arrays and hashes you see in your application are the result of some parameter naming conventions that Rails uses.
+Fundamentalmente formulários HTML não tem conhecimento de nenhum tipo de dado estruturado, tudo que eles geram são pares de nomes e valores, onde os pares são *strings* simples. Os *arrays* e *hashes* que você vê na sua aplicação são o resultado de algumas convenções de nomeação que o Rails utiliza.
 
-### Basic Structures
+### Estruturas Básicas
 
-The two basic structures are arrays and hashes. Hashes mirror the syntax used for accessing the value in `params`. For example, if a form contains:
+As duas estruturas básicas são *arrays* e *hashes*. *Hashes* copiam a sintaxe utilizada para acessar o valor em `params`. Por exemplo, se um formulário contém:
 
 ```html
 <input id="person_name" name="person[name]" type="text" value="Henry"/>
 ```
 
-the `params` hash will contain
+o *hash* `params` conterá
 
 ```ruby
 {'person' => {'name' => 'Henry'}}
 ```
 
-and `params[:person][:name]` will retrieve the submitted value in the controller.
+e `params[:person][:name]` buscará o valor enviado dentro do *controller*.
 
-Hashes can be nested as many levels as required, for example:
+*Hashes* podem ser aninhados em quantos níveis for necessário, por exemplo:
 
 ```html
 <input id="person_address_city" name="person[address][city]" type="text" value="New York"/>
 ```
 
-will result in the `params` hash being
+resultará no *hash* `params` como
 
 ```ruby
 {'person' => {'address' => {'city' => 'New York'}}}
 ```
 
-Normally Rails ignores duplicate parameter names. If the parameter name contains an empty set of square brackets `[]` then they will be accumulated in an array. If you wanted users to be able to input multiple phone numbers, you could place this in the form:
+Normalmente o Rails ignora nomes de parâmetros duplicados. Se o parâmetro *name* contém um conjunto vazio de colchetes `[]` então eles serão acumulados em um *array*. Se você queria que os usuários pudessem informar vários números de telefone, você poderia colocar isto no formulário:
 
 ```html
 <input name="person[phone_number][]" type="text"/>
@@ -725,11 +725,11 @@ Normally Rails ignores duplicate parameter names. If the parameter name contains
 <input name="person[phone_number][]" type="text"/>
 ```
 
-This would result in `params[:person][:phone_number]` being an array containing the inputted phone numbers.
+Isto resultará em `params[:person][:phone_number]` como um *array* contendo os números de telefone informados.
 
-### Combining Them
+### Combinando os Conceitos
 
-We can mix and match these two concepts. One element of a hash might be an array as in the previous example, or you can have an array of hashes. For example, a form might let you create any number of addresses by repeating the following form fragment
+Podemos combinar estes dois conceitos. Um elemento de um *hash* pode ser um *array* como no exemplo anterior, ou você pode ter um *array* de *hashes*. Por exemplo, um formulário pode permitir a criação de um número arbitrário de *addresses* ao repetir o fragmento de formulário seguinte
 
 ```html
 <input name="person[addresses][][line1]" type="text"/>
@@ -740,17 +740,17 @@ We can mix and match these two concepts. One element of a hash might be an array
 <input name="person[addresses][][city]" type="text"/>
 ```
 
-This would result in `params[:person][:addresses]` being an array of hashes with keys `line1`, `line2`, and `city`.
+Isto resultará em `params[:person][:addresses]` como um *array* de *hashes* com as chaves `line1`, `line2`, e `city`.
 
-There's a restriction, however, while hashes can be nested arbitrarily, only one level of "arrayness" is allowed. Arrays can usually be replaced by hashes; for example, instead of having an array of model objects, one can have a hash of model objects keyed by their id, an array index, or some other parameter.
+Porém, há uma restrição. Enquanto os *hashes* podem ser aninhados de forma arbitrária, só é permitido um nível de *"arrayness"*. *Arrays* normalmente podem ser trocados por *hashes*; por exemplo, ao invés de usar um *array* de *model objects*, é possível usar um *hash* de *model objects* distinguidos pelo seu *id*, um índice do *array*, ou algum outro parâmetro.
 
-WARNING: Array parameters do not play well with the `check_box` helper. According to the HTML specification unchecked checkboxes submit no value. However it is often convenient for a checkbox to always submit a value. The `check_box` helper fakes this by creating an auxiliary hidden input with the same name. If the checkbox is unchecked only the hidden input is submitted and if it is checked then both are submitted but the value submitted by the checkbox takes precedence.
+WARNING: Parâmetros de *array* não funcionam bem com o *helper* `check_box`. De acordo com a especificação HTML *checkboxes* desmarcadas não enviam nenhum valor. Porém pode ser conveniente fazer com que uma *checkbox* sempre envie um valor. O *helper* `check_box` simula isto ao criar um *input* auxiliar com o mesmo nome. Se a *checkbox* estiver desmarcada apenas o *input* escondido será enviado e se estiver marcada então os dois serão enviados mas o valor da *checkbox* recebe uma prioridade maior.
 
-### Using Form Helpers
+### Utilizando *Form Helpers*
 
-The previous sections did not use the Rails form helpers at all. While you can craft the input names yourself and pass them directly to helpers such as `text_field_tag` Rails also provides higher level support. The two tools at your disposal here are the name parameter to `form_with` and `fields_for` and the `:index` option that helpers take.
+As seções anteriores não utilizavam os *form helpers* do Rails de maneira alguma. Embora você possa criar os nomes de *input* por conta própria e passá-los diretamente para *helpers* como `text_field_tag`, o Rails também fornece suporte em um nível maior. As duas ferramentas à sua disposição aqui são o nome de parâmetro para `form_with` e `fields_for` e a opção `:index` que os *helpers* recebem.
 
-You might want to render a form with a set of edit fields for each of a person's addresses. For example:
+Você pode querer renderizar um formulário com um conjunto de campos de edição pra cada *address* de uma `person`. Por exemplo:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -763,7 +763,7 @@ You might want to render a form with a set of edit fields for each of a person's
 <% end %>
 ```
 
-Assuming the person had two addresses, with ids 23 and 45 this would create output similar to this:
+Presumindo que a pessoa (person) tenha dois endereços (addresses), com *ids* 23 e 45 isto trará um resultado similar a este:
 
 ```html
 <form accept-charset="UTF-8" action="/people/1" data-remote="true" method="post">
@@ -774,22 +774,19 @@ Assuming the person had two addresses, with ids 23 and 45 this would create outp
 </form>
 ```
 
-This will result in a `params` hash that looks like
+Isto resultará em um *hash* `params` parecido com
 
 ```ruby
 {'person' => {'name' => 'Bob', 'address' => {'23' => {'city' => 'Paris'}, '45' => {'city' => 'London'}}}}
 ```
 
-Rails knows that all these inputs should be part of the person hash because you
-called `fields_for` on the first form builder. By specifying an `:index` option
-you're telling Rails that instead of naming the inputs `person[address][city]`
-it should insert that index surrounded by [] between the address and the city.
-This is often useful as it is then easy to locate which Address record
-should be modified. You can pass numbers with some other significance,
-strings or even `nil` (which will result in an array parameter being created).
+O Rails sabe que todos estes *inputs* devem ser parte do *hash* person porque você chamou `fields_for` no primeiro *builder* do formulário. Ao especificar uma opção `:index`
+você diz ao Rails que ao invés de nomear os *inputs* `person[address][city]`
+ele deve inserir aquele índice dentro de [] entre o *address* e a *city*.
+Isso geralmente é útil porque deixa mais fácil para saber qual registro *Address* deve ser modificado. Você pode passar números com algum outro significado,
+*strings* ou mesmo `nil` (que resultará em um *array* de parâmetros sendo criado).
 
-To create more intricate nestings, you can specify the first part of the input
-name (`person[address]` in the previous example) explicitly:
+Para criar aninhamentos mais complexos, você pode especificar a primeira parte do nome do *input* (`person[address]` no exemplo anterior) de forma explícita:
 
 ```erb
 <%= fields_for 'person[address][primary]', address, index: address.id do |address_form| %>
@@ -797,15 +794,15 @@ name (`person[address]` in the previous example) explicitly:
 <% end %>
 ```
 
-will create inputs like
+criará *inputs* como
 
 ```html
 <input id="person_address_primary_1_city" name="person[address][primary][1][city]" type="text" value="Bologna" />
 ```
 
-As a general rule the final input name is the concatenation of the name given to `fields_for`/`form_with`, the index value, and the name of the attribute. You can also pass an `:index` option directly to helpers such as `text_field`, but it is usually less repetitive to specify this at the form builder level rather than on individual input controls.
+Como uma regra geral o nome final do *input* é uma concatenação do nome passado para `fields_for`/`form_with`, o valor do índice, e o nome do atributo. Você também pode passar uma opção `:index` diretamente para os *helpers* como `text_field`, mas normalmente é menos repetitivo especificar isto dentro do *builder* do formulário ao invés de especificar nos controles individuais de *input*.
 
-As a shortcut you can append [] to the name and omit the `:index` option. This is the same as specifying `index: address.id` so
+Como um atalho você pode adicionar `[]` ao nome e omitir a opção `:index`. Isto é o mesmo que especificar `index: address.id` portanto
 
 ```erb
 <%= fields_for 'person[address][primary][]', address do |address_form| %>
@@ -813,7 +810,7 @@ As a shortcut you can append [] to the name and omit the `:index` option. This i
 <% end %>
 ```
 
-produces exactly the same output as the previous example.
+produz exatamente o mesmo resultado que o exemplo anterior.
 
 Forms to External Resources
 ---------------------------
