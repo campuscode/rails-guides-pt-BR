@@ -639,7 +639,11 @@ Once a file has been uploaded, there are a multitude of potential tasks, ranging
 Customizando os Construtores de Formulários
 -------------------------
 
-The object yielded by `form_with` and `fields_for` is an instance of [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html). Form builders encapsulate the notion of displaying form elements for a single object. While you can write helpers for your forms in the usual way, you can also create subclass `ActionView::Helpers::FormBuilder` and add the helpers there. For example:
+O objeto que é dado para o *yield* no `form_with` e `fields_for` é uma instância de
+[`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html).
+Construtores de Formulários encapsulam a noção de exibir os elementos do formulário para um único objeto.
+Enquanto você pode escrever *helpers* para seus formulários da forma usual, você também pode criar uma subclasse
+de `ActionView::Helpers::FormBuilder` e adicionar os *helpers* lá. Por exemplo:
 
 ```erb
 <%= form_with model: @person do |f| %>
@@ -647,7 +651,7 @@ The object yielded by `form_with` and `fields_for` is an instance of [`ActionVie
 <% end %>
 ```
 
-can be replaced with
+pode ser substituído por
 
 ```erb
 <%= form_with model: @person, builder: LabellingFormBuilder do |f| %>
@@ -655,7 +659,7 @@ can be replaced with
 <% end %>
 ```
 
-by defining a `LabellingFormBuilder` class similar to the following:
+Por meio da definição de uma classe `LabellingFormBuilder` parecida com a que segue:
 
 ```ruby
 class LabellingFormBuilder < ActionView::Helpers::FormBuilder
@@ -665,7 +669,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 end
 ```
 
-If you reuse this frequently you could define a `labeled_form_with` helper that automatically applies the `builder: LabellingFormBuilder` option:
+Se você reutilizar isso frequentemente, você pode definir um *helper* `labeled_form_with` que automaticamente
+aplica a opção `builder: LabellingFormBuilder`:
 
 ```ruby
 def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, &block)
@@ -674,13 +679,15 @@ def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, 
 end
 ```
 
-The form builder used also determines what happens when you do
+O construtor de formulários utilizado também determina o que acontece quando você escreve
 
 ```erb
 <%= render partial: f %>
 ```
 
-If `f` is an instance of `ActionView::Helpers::FormBuilder` then this will render the `form` partial, setting the partial's object to the form builder. If the form builder is of class `LabellingFormBuilder` then the `labelling_form` partial would be rendered instead.
+Se `f` for uma instância de `ActionView::Helpers::FormBuilder` então isso vai renderizar a *partial* `form`,
+passando o objeto da *partial* para o construtor de formulários. Se o construtor de formulário for da classe
+`LabellingFormBuilder` então a partial `labelling_form` é que seria renderizada.
 
 Understanding Parameter Naming Conventions
 ------------------------------------------
