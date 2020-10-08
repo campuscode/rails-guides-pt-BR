@@ -590,18 +590,18 @@ Ambas familias de *helpers* usam o mesmo core de funções parar gerar as tags *
 
 Como regra geral, você deve usar `date_select` ao trabalhar com objetos *model* e `select_date` em outros casos, como em um formulário de pesquisa que filtra resultados por data.
 
-### Individual Components
+### Componentes Individuais
 
-Occasionally you need to display just a single date component such as a year or a month. Rails provides a series of helpers for this, one for each component `select_year`, `select_month`, `select_day`, `select_hour`, `select_minute`, `select_second`. These helpers are fairly straightforward. By default they will generate an input field named after the time component (for example, "year" for `select_year`, "month" for `select_month` etc.) although this can be overridden with the `:field_name` option. The `:prefix` option works in the same way that it does for `select_date` and `select_time` and has the same default value.
+Ocasionalmente, você precisa exibir apenas um único componente de data, como um ano ou um mês. O Rails fornece uma série de *helpers* para isso, uma para cada componente `select_year`, `select_month`, `select_day`, `select_hour`, `select_minute`, `select_second`. Esses *helpers* são bastante diretos. Por padrão eles geram um campo de entrada com o nome do componente de tempo (por exemplo, *"year"* para `select_year`, *"month"* para `select_month` etc.) embora isso possa ser substituído com a opção  `:field_name`. A opção `:prefix` funciona da mesma maneira em que `select_date` e `select_time` com o mesmo valor padrão.
 
-The first parameter specifies which value should be selected and can either be an instance of a `Date`, `Time`, or `DateTime`, in which case the relevant component will be extracted, or a numerical value. For example:
+O primeiro parâmetro especifica quais valores devem ser selecionados e pode ser uma instância de  `Date`, `Time`, ou `DateTime`, no caso em que o componente relevante irá ser extraído, ou um valor numérico. Por exemplo:
 
 ```erb
 <%= select_year(2009) %>
 <%= select_year(Time.new(2009)) %>
 ```
 
-will produce the same output and the value chosen by the user can be retrieved by `params[:date][:year]`.
+irá produzir o mesmo resultado e o valor escolhido pode ser retornado por `params[:date][:year]`.
 
 Uploading Files
 ---------------
