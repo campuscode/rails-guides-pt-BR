@@ -126,7 +126,6 @@ Once you're happy that the pull request contains a good change, comment on the G
 
 If your comment simply reads "+1", then odds are that other reviewers aren't going to take it too seriously. Show that you took the time to review the pull request.
 
-
 Contribuindo com a documentação do Rails
 ---------------------------------------
 
