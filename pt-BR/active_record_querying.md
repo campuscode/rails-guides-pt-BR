@@ -1585,7 +1585,7 @@ book.available?   # => false
 Read the full documentation about enums
 [in the Rails API docs](https://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
 
-Understanding The Method Chaining
+Entendendo o Encadeamento de Métodos
 ---------------------------------
 
 The Active Record pattern implements [Method Chaining](https://en.wikipedia.org/wiki/Method_chaining),
