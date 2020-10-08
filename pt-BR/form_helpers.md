@@ -602,12 +602,12 @@ The first parameter specifies which value should be selected and can either be a
 
 will produce the same output and the value chosen by the user can be retrieved by `params[:date][:year]`.
 
-Uploading Files
+Enviando Arquivos
 ---------------
 
-A common task is uploading some sort of file, whether it's a picture of a person or a CSV file containing data to process. The most important thing to remember with file uploads is that the rendered form's enctype attribute **must** be set to "multipart/form-data". If you use `form_with` with `:model`, this is done automatically. If you use `form_with` without `:model`, you must set it yourself, as per the following example.
+Uma tarefa muito comum é fazer o envio de arquivos, seja a imagem de uma pessoa ou um arquivo CSV contendo dados a serem processados. O mais importante a se lembrar quando se faz envio de arquivos é que o atributo `enctype` do formulário renderizado **deve** ser "multipart/form-data". Se você usar `form_with` com `:model`, isso é feito automaticamente. Se você usar `form_with` sem `:model`, você deve colocar manualmente, assim como no exemplo a seguir.
 
-The following two forms both upload a file.
+Ambos formulários a seguir realizam o envio de um arquivo.
 
 ```erb
 <%= form_with(url: {action: :upload}, multipart: true) do %>
@@ -619,11 +619,11 @@ The following two forms both upload a file.
 <% end %>
 ```
 
-Rails provides the usual pair of helpers: the barebones `file_field_tag` and the model oriented `file_field`. As you would expect in the first case the uploaded file is in `params[:picture]` and in the second case in `params[:person][:picture]`.
+O Rails já disponibiliza dois *helpers*: o simples `file_field_tag` e o orientado a *model* `file_field`. No primeiro caso, o arquivo enviado está no `params[:picture]` e no segundo está em `params[:person][:picture]`, assim como esperado.
 
-### What Gets Uploaded
+### O que é enviado
 
-The object in the `params` hash is an instance of [`ActionDispatch::Http::UploadedFile`](https://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html). The following snippet saves the uploaded file in `#{Rails.root}/public/uploads` under the same name as the original file.
+O objeto em `params` é uma instancia de [`ActionDispatch::Http::UploadedFile`](https://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html). O trecho de código a seguir salva o arquivo enviado em `#{Rails.root}/public/uploads` contendo o mesmo nome do arquivo original.
 
 ```ruby
 def upload
@@ -634,7 +634,7 @@ def upload
 end
 ```
 
-Once a file has been uploaded, there are a multitude of potential tasks, ranging from where to store the files (on Disk, Amazon S3, etc), associating them with models, resizing image files, and generating thumbnails, etc. [Active Storage](active_storage_overview.html) is designed to assist with these tasks.
+Uma vez que o arquivo é enviado, há uma infinidade de tarefas em potencial, variando entre onde armazenar os arquivos (no Disco, Amazon S3, etc), associá-lo com models, redimencionar arquivos de imagem e gerar miniaturas, etc. O [Active Storage](active_storage_overview.html) é destinado a ajudar com essas tarefas.
 
 Customizing Form Builders
 -------------------------
