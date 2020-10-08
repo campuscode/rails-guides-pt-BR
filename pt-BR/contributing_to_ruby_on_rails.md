@@ -681,7 +681,7 @@ Once you have resolved all conflicts and made sure all the tests are passing, pu
 
 And then... think about your next contribution!
 
-Rails Contributors
+Contribuintes do Rails
 ------------------
 
-All contributions get credit in [Rails Contributors](https://contributors.rubyonrails.org).
+Todas as contribuições recebem crédito em [Contribuintes do Rails](https://contributors.rubyonrails.org).
