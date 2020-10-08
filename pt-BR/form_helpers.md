@@ -529,15 +529,15 @@ Você pode optar por não usar os *helpers* de formulário que geram campos de d
 
 Ambas as famílias de *helpers* criarão uma série de caixas de seleção para os diferentes componentes (ano, mês, dia, etc.).
 
-### Barebones Helpers
+### *Barebones Helpers*
 
-The `select_*` family of helpers take as their first argument an instance of `Date`, `Time`, or `DateTime` that is used as the currently selected value. You may omit this parameter, in which case the current date is used. For example:
+A familia de *helpers& `select_*` usam como primeiro argumento, uma instância de  `Date`, `Time`, ou `DateTime` que é utilizada como o valor selecionado no momento. É possível omitir esse parâmetro, onde a data atual é utilizada. Por exemplo:
 
 ```erb
 <%= select_date Date.today, prefix: :start_date %>
 ```
 
-outputs (with actual option values omitted for brevity)
+produz (com os valores das opções reais omitidos para simplificação)
 
 ```html
 <select id="start_date_year" name="start_date[year]">
@@ -548,13 +548,13 @@ outputs (with actual option values omitted for brevity)
 </select>
 ```
 
-The above inputs would result in `params[:start_date]` being a hash with keys `:year`, `:month`, `:day`. To get an actual `Date`, `Time`, or `DateTime` object you would have to extract these values and pass them to the appropriate constructor, for example:
+As entradas acima resultariam em  um *hash* `params[:start_date]` com as *keys* `:year`, `:month`, `:day`. Para pegar objetos com `Date`, `Time`, ou `DateTime` atuais,você deve extrair os valores e passa-los para o construtor apropriado, por exemplo: 
 
 ```ruby
 Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
 ```
 
-The `:prefix` option is the key used to retrieve the hash of date components from the `params` hash. Here it was set to `start_date`, if omitted it will default to `date`.
+A opção `:prefix` é a chave utilizada para retornar a *hash* dos componentes de datas da *hash* `params`. Aqui foi definido como `start_date`, se omitido o valor padrão será `date`.
 
 ### Model Object Helpers
 
