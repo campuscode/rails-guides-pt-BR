@@ -818,7 +818,7 @@ produces exactly the same output as the previous example.
 Forms to External Resources
 ---------------------------
 
-Rails' form helpers can also be used to build a form for posting data to an external resource. However, at times it can be necessary to set an `authenticity_token` for the resource; this can be done by passing an `authenticity_token: 'your_external_token'` parameter to the `form_with` options:
+Rails' form helpers can also be used to build a form for posting data to an external resource. Entretanto, em alguns momentos, pode ser necessário definir um `authenticity_token` for the resource; this can be done by passing an `authenticity_token: 'your_external_token'` parameter to the `form_with` options:
 
 ```erb
 <%= form_with url: 'http://farfar.away/form', authenticity_token: 'external_token' do %>
