@@ -521,12 +521,13 @@ O Rails tinha um *helper* `country_select` para escolher os países, mas foi ext
 Usando *Form Helpers* para Data e Hora
 --------------------------------
 
-Você pode optar por não usar o *helper* generating HTML5 date and time input fields and use the alternative date and time *helpers*. These date and time *helpers* differ from all the other form *helpers* in two important respects:
+Você pode optar por não usar os *helpers* de formulário que geram campos de data e hora em HTML5 e usar os *helpers* de data e hora alternativos. Esses *helpers* de data e hora diferem de todos os outros *helpers* de formulário em dois aspectos importantes:
 
-* Dates and times are not representable by a single input element. Instead, you have several, one for each component (year, month, day etc.) and so there is no single value in your `params` hash with your date or time.
-* Other helpers use the `_tag` suffix to indicate whether a helper is a barebones helper or one that operates on model objects. With dates and times, `select_date`, `select_time` and `select_datetime` are the barebones helpers, `date_select`, `time_select` and `datetime_select` are the equivalent model object helpers.
+* Datas e horas não são representáveis ​​por um único elemento de entrada. Em vez disso, você tem vários, um para cada componente (ano, mês, dia, etc.) e, portanto, não há um valor único em seu hash `params` com sua data ou hora.
 
-Both of these families of helpers will create a series of select boxes for the different components (year, month, day etc.).
+* Outros *helpers* usam o sufixo `_tag` para indicar quando um *helper* é um  *barebone helper* ou um que trabalha em objetos *model*. Com datas e horas, `select_date`, `select_time` e `select_datetime` sao *barebones helpers*, `date_select`, `time_select` e `datetime_select` são os *helpers*.
+
+Ambas as famílias de *helpers* criarão uma série de caixas de seleção para os diferentes componentes (ano, mês, dia, etc.).
 
 ### Barebones Helpers
 
