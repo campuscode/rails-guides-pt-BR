@@ -556,16 +556,16 @@ Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, pa
 
 A opção `:prefix` é a chave utilizada para retornar a *hash* dos componentes de datas da *hash* `params`. Aqui foi definido como `start_date`, se omitido o valor padrão será `date`.
 
-### Model Object Helpers
+### Objetos *Model Helpers*
 
-`select_date` does not work well with forms that update or create Active Record objects as Active Record expects each element of the `params` hash to correspond to one attribute.
-The model object helpers for dates and times submit parameters with special names; when Active Record sees parameters with such names it knows they must be combined with the other parameters and given to a constructor appropriate to the column type. For example:
+`select_date` não funciona muito bem com formulários que atualizam ou criam objetos *Active Record* , pois *Active Record* espera que cada elemento da *hash* `params` corresponda a um atributo.
+O objeto *model helpers* para dates e hora enviam parametros com nomes especiais; quando *Active Record* vê os parâmetros com devidos nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de colune. Por exemplo:
 
 ```erb
 <%= date_select :person, :birth_date %>
 ```
 
-outputs (with actual option values omitted for brevity)
+produz (com os valores das opções reais omitidos para simplificação)
 
 ```html
 <select id="person_birth_date_1i" name="person[birth_date(1i)]">
@@ -576,13 +576,13 @@ outputs (with actual option values omitted for brevity)
 </select>
 ```
 
-which results in a `params` hash like
+que produz um hash `params`
 
 ```ruby
 {'person' => {'birth_date(1i)' => '2008', 'birth_date(2i)' => '11', 'birth_date(3i)' => '22'}}
 ```
 
-When this is passed to `Person.new` (or `update`), Active Record spots that these parameters should all be used to construct the `birth_date` attribute and uses the suffixed information to determine in which order it should pass these parameters to functions such as `Date.civil`.
+Quando isso é passado para o `Person.new` (ou `update`), o *Active Record* mostra que todos esses parâmetros devem ser usados para construir o atributo `birth_date` e usa a informação no sufixo para determinar em que ordem deve passar esses parâmetros para funções como `Date.civil`.
 
 ### Common Options
 
