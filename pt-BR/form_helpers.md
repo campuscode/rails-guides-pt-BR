@@ -584,11 +584,11 @@ que produz um hash `params`
 
 Quando isso é passado para o `Person.new` (ou `update`), o *Active Record* mostra que todos esses parâmetros devem ser usados para construir o atributo `birth_date` e usa a informação no sufixo para determinar em que ordem deve passar esses parâmetros para funções como `Date.civil`.
 
-### Common Options
+### Opções Frequentes
 
-Both families of helpers use the same core set of functions to generate the individual select tags and so both accept largely the same options. In particular, by default Rails will generate year options 5 years either side of the current year. If this is not an appropriate range, the `:start_year` and `:end_year` options override this. For an exhaustive list of the available options, refer to the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html).
+Ambas familias de *helpers* usam o mesmo core de funções parar gerar as tags *select* individuais e ambas aceitam praticamente as mesmas opções. Em particular, por padrão o Rails gera opções de ano 5 anos em cada lado do ano atual. Se este intervalo não for suficiente, as opções `:start_year` e `:end_year` substituem esse intervalo. Para uma lista das opções completas disponível, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html).
 
-As a rule of thumb you should be using `date_select` when working with model objects and `select_date` in other cases, such as a search form which filters results by date.
+Como regra geral, você deve usar `date_select` ao trabalhar com objetos *model* e `select_date` em outros casos, como em um formulário de pesquisa que filtra resultados por data.
 
 ### Individual Components
 
