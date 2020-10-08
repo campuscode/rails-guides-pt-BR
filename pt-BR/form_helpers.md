@@ -529,9 +529,9 @@ Você pode optar por não usar os *helpers* de formulário que geram campos de d
 
 Ambas as famílias de *helpers* criarão uma série de caixas de seleção para os diferentes componentes (ano, mês, dia, etc.).
 
-### *Barebones Helpers*
+### *Helpers* Essenciais
 
-A familia de *helpers* `select_*` usam como primeiro argumento, uma instância de `Date`, `Time`, ou `DateTime` que é utilizada como o valor selecionado no momento. É possível omitir esse parâmetro, onde a data atual é utilizada. Por exemplo:
+A família de *helpers* `select_*` usam como primeiro argumento, uma instância de `Date`, `Time`, ou `DateTime` que é utilizada como o valor selecionado no momento. É possível omitir esse parâmetro, onde a data atual é utilizada. Por exemplo:
 
 ```erb
 <%= select_date Date.today, prefix: :start_date %>
@@ -556,10 +556,10 @@ Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, pa
 
 A opção `:prefix` é a chave utilizada para retornar a *hash* dos componentes de datas da *hash* `params`. Aqui foi definido como `start_date`, se omitido o valor padrão será `date`.
 
-### Objetos *Model Helpers*
+### *Helpers* para Objetos *Model*
 
 O objeto `select_date` não funciona muito bem com formulários que atualizam ou criam objetos *Active Record* , pois *Active Record* espera que cada elemento da *hash* `params` corresponda a um atributo.
-Os objetos *model helpers* para datas e horas enviam parâmetros com nomes especiais; quando *Active Record* vê os parâmetros com estes nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de coluna. Por exemplo:
+Os *helpers* para objetos *model* em datas e horas enviam parâmetros com nomes especiais; quando *Active Record* vê os parâmetros com estes nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de coluna. Por exemplo:
 
 ```erb
 <%= date_select :person, :birth_date %>
