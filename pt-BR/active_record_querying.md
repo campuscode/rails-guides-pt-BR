@@ -1937,7 +1937,7 @@ Client.where(first_name: 'Ryan').count
 # SELECT COUNT(*) FROM clients WHERE (first_name = 'Ryan')
 ```
 
-Você também pode utilizar vários métodos de busca em uma relação para fazer cálculos complexos: 
+Você também pode utilizar vários métodos de busca em uma relação para fazer cálculos complexos:
 
 ```ruby
 Client.includes("orders").where(first_name: 'Ryan', orders: { status: 'received' }).count
