@@ -524,7 +524,6 @@ Usando *Form Helpers* para Data e Hora
 Você pode optar por não usar os *helpers* de formulário que geram campos de data e hora em HTML5 e usar os *helpers* de data e hora alternativos. Esses *helpers* de data e hora diferem de todos os outros *helpers* de formulário em dois aspectos importantes:
 
 * Datas e horas não são representáveis por um único elemento de entrada. Em vez disso, você tem vários, um para cada componente (ano, mês, dia, etc.) e, portanto, não há um valor único em seu hash `params` com sua data ou hora.
-
 * Outros *helpers* usam o sufixo `_tag` para indicar quando um *helper* é um  *barebone helper* ou um que trabalha em objetos *model*. Com datas e horas, `select_date`, `select_time` e `select_datetime` são *helpers* essenciais, `date_select`, `time_select` e `datetime_select` são os *helpers* equivalentes.
 
 Ambas as famílias de *helpers* criarão uma série de caixas de seleção para os diferentes componentes (ano, mês, dia, etc.).
