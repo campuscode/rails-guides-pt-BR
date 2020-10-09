@@ -346,7 +346,7 @@ IMPORTANT: All forms using `form_with` implement `remote: true` by default. Thes
 Criando Caixas de Seleção (*Select Boxes*) com Facilidade
 -----------------------------
 
-As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente. 
+As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente.
 
 Esta é a aparência da marcação:
 ```html
@@ -623,7 +623,7 @@ O Rails já disponibiliza dois *helpers*: o simples `file_field_tag` e o orienta
 
 ### O que é enviado
 
-O objeto em `params` é uma instancia de [`ActionDispatch::Http::UploadedFile`](https://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html). O trecho de código a seguir salva o arquivo enviado em `#{Rails.root}/public/uploads` contendo o mesmo nome do arquivo original.
+O objeto em `params` é uma instância de [`ActionDispatch::Http::UploadedFile`](https://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html). O trecho de código a seguir salva o arquivo enviado em `#{Rails.root}/public/uploads` contendo o mesmo nome do arquivo original.
 
 ```ruby
 def upload
