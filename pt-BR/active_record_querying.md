@@ -1920,7 +1920,7 @@ Article.first.categories.many?
 Cálculos
 ------------
 
-Essa seção usa *count* como exemplo de método nesse preâmbulo, mas as opções descritas se aplicam para todas as
+Essa seção usa *count* como exemplo de método nessa introdução, mas as opções descritas se aplicam para todas as
 subseções.
 
 Todos os métodos de cálculo funcionam diretamente em um *model*:
