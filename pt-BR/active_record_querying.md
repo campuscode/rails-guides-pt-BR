@@ -1588,16 +1588,16 @@ Read the full documentation about enums
 Entendendo o Encadeamento de Métodos
 ---------------------------------
 
-O Active Record implementa o padrão [Encadeamento de Métodos](https://en.wikipedia.org/wiki/Method_chaining)
-(*method chaining*) que nos permite usar vários métodos do Active Record juntos de uma maneira simples e direta.
+O *Active Record* implementa o padrão [Encadeamento de Métodos](https://en.wikipedia.org/wiki/Method_chaining)
+(*method chaining*) que nos permite usar vários métodos do *Active Record* juntos de uma maneira simples e direta.
 
 Você pode encadear métodos numa sentença quando o método chamado anteriormente retorna
 uma `ActiveRecord::Relation`, como `all`, `where` e `joins`. Métodos que retornam um único objeto
 (veja [a seção Retornando um Único Objeto](#retornando-um-unico-objeto)) devem estar no fim da sentença.
 
 Há alguns exemplos abaixo. Esse guia não vai mostrar todas as possibilidades, só alguns exemplos.
-Quando um método Active Record é chamado, a consulta não é imediatamente gerada e mandada para o banco
-de dados, isso só acontece quando os dados são realmente necessários. Logo cada exemplo abaixo só gera
+Quando um método *Active Record* é chamado, a consulta não é imediatamente gerada e enviada para o banco
+de dados, isso só acontece quando os dados são realmente necessários. Logo, cada exemplo abaixo só gera
 uma consulta.
 
 ### Buscando dados filtrados de múltiplas tabelas
