@@ -518,25 +518,25 @@ Existe também o *helper* `time_zone_options_for_select` para uma maneira mais m
 
 O Rails tinha um *helper* `country_select` para escolher os países, mas foi extraído para o [plugin country_select](https://github.com/stefanpenner/country_select).
 
-Using Date and Time Form Helpers
+Usando *Form Helpers* para Data e Hora
 --------------------------------
 
-You can choose not to use the form helpers generating HTML5 date and time input fields and use the alternative date and time helpers. These date and time helpers differ from all the other form helpers in two important respects:
+Você pode optar por não usar os *helpers* de formulário que geram campos de data e hora em HTML5 e usar os *helpers* de data e hora alternativos. Esses *helpers* de data e hora diferem de todos os outros *helpers* de formulário em dois aspectos importantes:
 
-* Dates and times are not representable by a single input element. Instead, you have several, one for each component (year, month, day etc.) and so there is no single value in your `params` hash with your date or time.
-* Other helpers use the `_tag` suffix to indicate whether a helper is a barebones helper or one that operates on model objects. With dates and times, `select_date`, `select_time` and `select_datetime` are the barebones helpers, `date_select`, `time_select` and `datetime_select` are the equivalent model object helpers.
+* Datas e horas não são representáveis por um único elemento de entrada. Em vez disso, você tem vários, um para cada componente (ano, mês, dia, etc.) e, portanto, não há um valor único em seu hash `params` com sua data ou hora.
+* Outros *helpers* usam o sufixo `_tag` para indicar quando um *helper* é um  *barebone helper* ou um que trabalha em objetos *model*. Com datas e horas, `select_date`, `select_time` e `select_datetime` são *helpers* essenciais, `date_select`, `time_select` e `datetime_select` são os *helpers* equivalentes.
 
-Both of these families of helpers will create a series of select boxes for the different components (year, month, day etc.).
+Ambas as famílias de *helpers* criarão uma série de caixas de seleção para os diferentes componentes (ano, mês, dia, etc.).
 
-### Barebones Helpers
+### *Helpers* Essenciais
 
-The `select_*` family of helpers take as their first argument an instance of `Date`, `Time`, or `DateTime` that is used as the currently selected value. You may omit this parameter, in which case the current date is used. For example:
+A família de *helpers* `select_*` usam como primeiro argumento, uma instância de `Date`, `Time`, ou `DateTime` que é utilizada como o valor selecionado no momento. É possível omitir esse parâmetro, onde a data atual é utilizada. Por exemplo:
 
 ```erb
 <%= select_date Date.today, prefix: :start_date %>
 ```
 
-outputs (with actual option values omitted for brevity)
+produz (com os valores das opções reais omitidos para simplificação)
 
 ```html
 <select id="start_date_year" name="start_date[year]">
@@ -547,24 +547,24 @@ outputs (with actual option values omitted for brevity)
 </select>
 ```
 
-The above inputs would result in `params[:start_date]` being a hash with keys `:year`, `:month`, `:day`. To get an actual `Date`, `Time`, or `DateTime` object you would have to extract these values and pass them to the appropriate constructor, for example:
+As entradas acima resultariam em um *hash* `params[:start_date]` com as chaves `:year`, `:month`, `:day`. Para pegar objetos com `Date`, `Time`, ou `DateTime` atuais,você deve extrair os valores e passá-los para o construtor apropriado, por exemplo: 
 
 ```ruby
 Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
 ```
 
-The `:prefix` option is the key used to retrieve the hash of date components from the `params` hash. Here it was set to `start_date`, if omitted it will default to `date`.
+A opção `:prefix` é a chave utilizada para retornar a *hash* dos componentes de datas da *hash* `params`. Aqui foi definido como `start_date`, se omitido o valor padrão será `date`.
 
-### Model Object Helpers
+### *Helpers* para Objetos *Model*
 
-`select_date` does not work well with forms that update or create Active Record objects as Active Record expects each element of the `params` hash to correspond to one attribute.
-The model object helpers for dates and times submit parameters with special names; when Active Record sees parameters with such names it knows they must be combined with the other parameters and given to a constructor appropriate to the column type. For example:
+O objeto `select_date` não funciona muito bem com formulários que atualizam ou criam objetos *Active Record* , pois *Active Record* espera que cada elemento da *hash* `params` corresponda a um atributo.
+Os *helpers* para objetos *model* em datas e horas enviam parâmetros com nomes especiais; quando *Active Record* vê os parâmetros com estes nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de coluna. Por exemplo:
 
 ```erb
 <%= date_select :person, :birth_date %>
 ```
 
-outputs (with actual option values omitted for brevity)
+produz (com os valores das opções reais omitidos para simplificação)
 
 ```html
 <select id="person_birth_date_1i" name="person[birth_date(1i)]">
@@ -575,32 +575,32 @@ outputs (with actual option values omitted for brevity)
 </select>
 ```
 
-which results in a `params` hash like
+que produz um hash `params`
 
 ```ruby
 {'person' => {'birth_date(1i)' => '2008', 'birth_date(2i)' => '11', 'birth_date(3i)' => '22'}}
 ```
 
-When this is passed to `Person.new` (or `update`), Active Record spots that these parameters should all be used to construct the `birth_date` attribute and uses the suffixed information to determine in which order it should pass these parameters to functions such as `Date.civil`.
+Quando isso é passado para o `Person.new` (ou `update`), o *Active Record* mostra que todos esses parâmetros devem ser usados para construir o atributo `birth_date` e usa a informação no sufixo para determinar em que ordem deve passar esses parâmetros para funções como `Date.civil`.
 
-### Common Options
+### Opções Frequentes
 
-Both families of helpers use the same core set of functions to generate the individual select tags and so both accept largely the same options. In particular, by default Rails will generate year options 5 years either side of the current year. If this is not an appropriate range, the `:start_year` and `:end_year` options override this. For an exhaustive list of the available options, refer to the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html).
+Ambas familias de *helpers* usam o mesmo core de funções parar gerar as tags *select* individuais e ambas aceitam praticamente as mesmas opções. Em particular, por padrão o Rails gera opções de ano 5 anos em cada lado do ano atual. Se este intervalo não for suficiente, as opções `:start_year` e `:end_year` substituem esse intervalo. Para uma lista das opções completas disponível, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html).
 
-As a rule of thumb you should be using `date_select` when working with model objects and `select_date` in other cases, such as a search form which filters results by date.
+Como regra geral, você deve usar `date_select` ao trabalhar com objetos *model* e `select_date` em outros casos, como em um formulário de pesquisa que filtra resultados por data.
 
-### Individual Components
+### Componentes Individuais
 
-Occasionally you need to display just a single date component such as a year or a month. Rails provides a series of helpers for this, one for each component `select_year`, `select_month`, `select_day`, `select_hour`, `select_minute`, `select_second`. These helpers are fairly straightforward. By default they will generate an input field named after the time component (for example, "year" for `select_year`, "month" for `select_month` etc.) although this can be overridden with the `:field_name` option. The `:prefix` option works in the same way that it does for `select_date` and `select_time` and has the same default value.
+Ocasionalmente, você precisa exibir apenas um único componente de data, como um ano ou um mês. O Rails fornece uma série de *helpers* para isso, uma para cada componente `select_year`, `select_month`, `select_day`, `select_hour`, `select_minute`, `select_second`. Esses *helpers* são bastante diretos. Por padrão eles geram um campo de entrada com o nome do componente de tempo (por exemplo, *"year"* para `select_year`, *"month"* para `select_month` etc.) embora isso possa ser substituído com a opção  `:field_name`. A opção `:prefix` funciona da mesma maneira em que `select_date` e `select_time` com o mesmo valor padrão.
 
-The first parameter specifies which value should be selected and can either be an instance of a `Date`, `Time`, or `DateTime`, in which case the relevant component will be extracted, or a numerical value. For example:
+O primeiro parâmetro especifica quais valores devem ser selecionados e pode ser uma instância de  `Date`, `Time`, ou `DateTime`, no caso em que o componente relevante irá ser extraído, ou um valor numérico. Por exemplo:
 
 ```erb
 <%= select_year(2009) %>
 <%= select_year(Time.new(2009)) %>
 ```
 
-will produce the same output and the value chosen by the user can be retrieved by `params[:date][:year]`.
+irá produzir o mesmo resultado e o valor escolhido pode ser retornado por `params[:date][:year]`.
 
 Uploading Files
 ---------------
