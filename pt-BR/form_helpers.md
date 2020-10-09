@@ -525,7 +525,7 @@ Você pode optar por não usar os *helpers* de formulário que geram campos de d
 
 * Datas e horas não são representáveis ​​por um único elemento de entrada. Em vez disso, você tem vários, um para cada componente (ano, mês, dia, etc.) e, portanto, não há um valor único em seu hash `params` com sua data ou hora.
 
-* Outros *helpers* usam o sufixo `_tag` para indicar quando um *helper* é um  *barebone helper* ou um que trabalha em objetos *model*. Com datas e horas, `select_date`, `select_time` e `select_datetime` são *barebones helpers*, `date_select`, `time_select` e `datetime_select` são os *helpers*.
+* Outros *helpers* usam o sufixo `_tag` para indicar quando um *helper* é um  *barebone helper* ou um que trabalha em objetos *model*. Com datas e horas, `select_date`, `select_time` e `select_datetime` são *barebones helpers*, `date_select`, `time_select` e `datetime_select` são os *helpers* equivalentes.
 
 Ambas as famílias de *helpers* criarão uma série de caixas de seleção para os diferentes componentes (ano, mês, dia, etc.).
 
