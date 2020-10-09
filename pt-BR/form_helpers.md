@@ -178,7 +178,7 @@ IMPORTANT: As entradas de pesquisa, telefone, data, hora, cor, data e hora local
 TIP: Se você estiver usando campos de entradas de senha (para qualquer finalidade), convêm configurar sua aplicação para impedir que esses parâmetros sejam registrados. Você pode aprender sobre este assunto no guia [Protegendo aplicações Rails](security.html#logging)
 
 
-Dealing with Model Objects
+Lidando com Objetos *Model*
 --------------------------
 
 ### Model Object Helpers
