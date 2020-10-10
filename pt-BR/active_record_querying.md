@@ -1957,7 +1957,7 @@ Se você quiser saber quantos registros estão na tabela do seu *model* você po
 Se você quiser ser mais específico e encontrar todos os clientes que tem idade presente no banco de dados, você pode utilizar
 `Client.count(:age)`
 
-Para mais opções, veja a seção pai, [Cálculos](#cálculos).
+Para mais opções, veja a seção pai, [Cálculos](#calculos).
 
 ### Média (*average*)
 
@@ -1971,7 +1971,7 @@ Client.average("orders_count")
 Isso vai retornar um número (possivelmente um número de ponto flutuante como 3.14159265) representando o valor médio
 desse campo.
 
-Para mais opções, veja a seção pai, [Cálculos](#cálculos).
+Para mais opções, veja a seção pai, [Cálculos](#calculos).
 
 ### Mínimo (*minimum*)
 
@@ -1982,7 +1982,7 @@ na classe que se relaciona com a tabela. Essa chamada de método vai parecer des
 Client.minimum("age")
 ```
 
-Para mais opções, veja a seção pai, [Cálculos](#cálculos).
+Para mais opções, veja a seção pai, [Cálculos](#calculos).
 
 ### Máximo (*maximum*)
 
@@ -1993,7 +1993,7 @@ na classe que se relaciona com a tabela. Essa chamada de método vai parecer des
 Client.maximum("age")
 ```
 
-Para mais opções, veja a seção pai, [Cálculos](#cálculos).
+Para mais opções, veja a seção pai, [Cálculos](#calculos).
 
 ### Soma (*sum*)
 
@@ -2004,7 +2004,7 @@ na classe que se relaciona com a tabela. Essa chamada de método vai parecer des
 Client.sum("orders_count")
 ```
 
-Para mais opções, veja a seção pai, [Cálculos](#cálculos).
+Para mais opções, veja a seção pai, [Cálculos](#calculos).
 
 Running EXPLAIN
 ---------------
