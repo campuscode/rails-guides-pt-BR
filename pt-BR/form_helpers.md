@@ -815,10 +815,11 @@ As a shortcut you can append [] to the name and omit the `:index` option. This i
 
 produces exactly the same output as the previous example.
 
-Forms to External Resources
+Formulários para Recursos Externos
 ---------------------------
 
-Rails' form helpers can also be used to build a form for posting data to an external resource. Entretanto, em alguns momentos, pode ser necessário definir um `authenticity_token` for the resource; this can be done by passing an `authenticity_token: 'your_external_token'` parameter to the `form_with` options:
+Os *helpers* de formulários do Rails também podem ser usados para construir formulários para enviar dados para recursos externos. Entretanto em alguns momentos pode ser necessário definir um `authenticity_token` para o recurso; isso pode ser feito passando um parâmetro `authenticity_token: 'your_external_token'` para as opções do `form_with`
+
 
 ```erb
 <%= form_with url: 'http://farfar.away/form', authenticity_token: 'external_token' do %>
@@ -826,7 +827,7 @@ Rails' form helpers can also be used to build a form for posting data to an exte
 <% end %>
 ```
 
-Sometimes when submitting data to an external resource, like a payment gateway, the fields that can be used in the form are limited by an external API and it may be undesirable to generate an `authenticity_token`. To not send a token, simply pass `false` to the `:authenticity_token` option:
+Às vezes ao submeter dados para um recurso externo, como um gateway de pagamento, os campos que podem ser usado no formulário são limitados por uma API externa e pode ser indesejável gerar um `authenticity_token`. Para não enviar um token, simplesmente passe `false` para o parametro `:authenticity_token`:
 
 ```erb
 <%= form_with url: 'http://farfar.away/form', authenticity_token: false do %>
