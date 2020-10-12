@@ -471,7 +471,7 @@ Existe uma opção `:name` para especificar um nome diferente se necessário.
 
 NOTE: O Active Record suporta apenas *foreign keys* (chaves estrangeiras) de coluna única. `execute` e
 `structure.sql` são obrigados a usar foreign keys (chaves estrangeiras) compostas. Consulte
-[Schema Dumping e Você](#schema-dumping-and-you).
+[Schema Dumping e Você](#schema-dumping-e-voce).
 
 A remoção de uma foreign key (chave estrangeira) também é possível:
 
@@ -705,7 +705,7 @@ Tudo isso é resolvido por `revert`.
 
 NOTE: Se você quer adicionar verificadores de *constraints* (restrições) como nos exemplos acima,
 você terá que usar `structure.sql` como método *dump*. Consulte
-[Schema Dumping e Você](#schema-dumping-and-you).
+[Schema Dumping e Você](#schema-dumping-e-voce).
 
 Executando as *Migrations*
 ------------------
@@ -784,7 +784,7 @@ NOTE: Isso não é o mesmo que executar todas as *migrations*. Ele usará apenas
 conteúdo do arquivo atual `db/schema.rb` ou `db/structure.sql`. Se uma
 *migration* não pode ser revertida, o comando `rails db:reset` pode não ser
 útil. Para saber mais sobre como descartar o `schema`, consulte a seção [Schema
-Dumping e Você](#schema-dumping-and-you).
+Dumping e Você](#schema-dumping-e-voce).
 
 ### Executando *Migrations* Específicas
 
@@ -888,7 +888,7 @@ Como alternativa, você deveria escrever uma nova *migration* que execute as mud
 
 O método `revert` pode ajudar ao escrever uma nova *migration* para desfazer *migrations* anteriores no todo ou em partes (veja [Revertendo *Migrations* Anteriores](#revertendo-migrations-anteriores) acima).
 
-Schema Dumps e Você
+Schema Dumping e Você
 ----------------------
 
 ### Para que servem arquivos de Schema?
