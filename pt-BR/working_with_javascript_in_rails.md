@@ -526,7 +526,7 @@ For more details, including other events you can bind to, check out [the
 Turbolinks
 README](https://github.com/turbolinks/turbolinks/blob/master/README.md).
 
-token de Falsa Requisição Entre Sites (CSRF) no *Ajax*
+Token de Falsa Requisição Entre Sites (CSRF) em *Ajax*
 ----
 
 Ao usar outra biblioteca para fazer chamadas *Ajax*, é necessário adicionar
@@ -541,7 +541,7 @@ Você pode então enviar esse token como um *X-CSRF-Token* no seu *header*
 para requisições *Ajax*. Você não precisa adicionar o CSRF para requisições GET,
 apenas para requisições *non-GET*.
 
-Você pode ler mais sobre Falsa Requisição Entre Sites (CSRF) na [segurança](https://www.guiarails.com.br/working_with_javascript_in_rails.html#cross-site-request-forgery-csrf-token-in-ajax)
+Você pode ler mais sobre Falsa Requisição Entre Sites (CSRF) na [segurança](#cross-site-request-forgery-csrf-token-in-ajax)
 
 Outros recursos
 ---------------
