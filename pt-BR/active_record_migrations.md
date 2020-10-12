@@ -932,13 +932,11 @@ Quando o formato do *schema* é definido como `:sql`, a estrutura do banco de da
 
 Para carregar o *schema* de `db/structure.sql`, execute `rails db:structure:load`. O carregamento deste arquivo é realizado executando os comandos em SQL que ele contém. Por definição, isso irá criar uma cópia perfeita da estrutura do banco de dados.
 
-### Schema Dumps and Source Control
+### Schema Dumps e o Controle de Versão
 
-Because schema files are commonly used to create new databases, it is strongly
-recommended that you check your schema file into source control.
+Como os arquivos de *schema* são comumente utilizados para criar novos bancos de dados, é fortemente recomendado que você adicione seu arquivo de *schema* ao controle de versão.
 
-Merge conflicts can occur in your schema file when two branches modify schema.
-To resolve these conflicts run `rails db:migrate` to regenerate the schema file.
+Conflitos de *merge* podem acontecer no seu arquivo de *schema* quando duas *branches* o modificam. Para resolver estes conflitos execute `rails db:migrate` para gerar novamente o arquivo de *schema*.
 
 Active Record and Referential Integrity
 ---------------------------------------
