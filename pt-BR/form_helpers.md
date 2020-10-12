@@ -634,7 +634,7 @@ def upload
 end
 ```
 
-Uma vez que o arquivo é enviado, há uma infinidade de tarefas em potencial, variando entre onde armazenar os arquivos (no Disco, Amazon S3, etc), associá-lo com models, redimencionar arquivos de imagem e gerar miniaturas, etc. O [Active Storage](active_storage_overview.html) é destinado a ajudar com essas tarefas.
+Uma vez que o arquivo é enviado, há uma infinidade de tarefas em potencial, variando entre onde armazenar os arquivos (no Disco, Amazon S3, etc), associá-lo com models, redimensionar arquivos de imagem e gerar miniaturas, etc. O [Active Storage](active_storage_overview.html) é destinado a ajudar com essas tarefas.
 
 Customizing Form Builders
 -------------------------
