@@ -888,27 +888,17 @@ Como alternativa, você deveria escrever uma nova *migration* que execute as mud
 
 O método `revert` pode ajudar ao escrever uma nova *migration* para desfazer *migrations* anteriores no todo ou em partes (veja [Revertendo *Migrations* Anteriores](#revertendo-migrations-anteriores) acima).
 
-Schema Dumping and You
+Schema Dumps e Você
 ----------------------
 
-### What are Schema Files for?
+### Para que servem arquivos de Schema?
 
-Migrations, mighty as they may be, are not the authoritative source for your
-database schema. Your database remains the authoritative source. By default,
-Rails generates `db/schema.rb` which attempts to capture the current state of
-your database schema.
+*Migrations*, poderosas como podem ser, não são a fonte oficial para o *schema* do seu banco de dados. Seu banco de dados permanece sendo a fonte oficial. Por padrão, o Rails gera o arquivo `db/schema.rb` (um *schema dump*), que tenta capturar o estado atual do *schema* do seu banco de dados.
 
-It tends to be faster and less error prone to create a new instance of your
-application's database by loading the schema file via `rails db:schema:load`
-than it is to replay the entire migration history.
-[*Migrations* Antigas](#migrations-antigas) may fail to apply correctly if those
-migrations use changing external dependencies or rely on application code which
-evolves separately from your migrations.
+Costuma ser mais rápido e menos suscetível a erros criar uma nova instância do banco de dados da sua aplicação caregando o arquivo de *schema* por meio do comando `rails db:schema:load` ao invés de reexecutar todo o histórico de *migrations*.
+[*Migrations* Antigas](#migrations-antigas) podem falhar em sua execução se estas *migrations* usam dependências externas que estejam em constante mudança ou se dependem de um código de aplicação que evolui separadamente das suas *migrations*.
 
-Schema files are also useful if you want a quick look at what attributes an
-Active Record object has. This information is not in the model's code and is
-frequently spread across several migrations, but the information is nicely
-summed up in the schema file.
+Arquivos de *schema* também são úteis se você deseja verificar rapidamente quais atributos um objeto do tipo *Active Record* possui. Essa informação não está no código do *model* e é frequentemente espalhada em diversas *migrations*, mas a informação é facilmente acessível no arquivo de *schema*.
 
 ### Types of Schema Dumps
 
