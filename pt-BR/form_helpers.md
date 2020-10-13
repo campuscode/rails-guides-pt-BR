@@ -827,7 +827,7 @@ Os *helpers* de formulários do Rails também podem ser usados para construir fo
 <% end %>
 ```
 
-Às vezes ao submeter dados para um recurso externo, como um gateway de pagamento, os campos que podem ser usado no formulário são limitados por uma API externa e pode ser indesejável gerar um `authenticity_token`. Para não enviar um token, simplesmente passe `false` para o parametro `:authenticity_token`:
+Às vezes ao submeter dados para um recurso externo, como um *gateway* de pagamento, os campos que podem ser usado no formulário são limitados por uma API externa e pode ser indesejável gerar um `authenticity_token`. Para não enviar um token, simplesmente passe `false` para o parâmetro `:authenticity_token`:
 
 ```erb
 <%= form_with url: 'http://farfar.away/form', authenticity_token: false do %>
