@@ -2006,16 +2006,16 @@ Client.sum("orders_count")
 
 Para mais opções, veja a seção pai, [Cálculos](#calculos).
 
-Running EXPLAIN
+Executando o EXPLAIN
 ---------------
 
-You can run EXPLAIN on the queries triggered by relations. For example,
+Você pode executar o *EXPLAIN* nas *queries* disparadas por relações. Por exemplo,
 
 ```ruby
 User.where(id: 1).joins(:articles).explain
 ```
 
-may yield
+pode retornar
 
 ```
 EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`user_id` = `users`.`id` WHERE `users`.`id` = 1
@@ -2035,11 +2035,9 @@ EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`
 2 rows in set (0.00 sec)
 ```
 
-under MySQL and MariaDB.
+em MySQL e MariaDB.
 
-Active Record performs a pretty printing that emulates that of the
-corresponding database shell. So, the same query running with the
-PostgreSQL adapter would yield instead
+O *Active Record* exibe uma impressão que simula a do *shell* do banco de dados correspondente. Então, a mesma *query* sendo executada quando usado o adaptador de PostgreSQL poderá exibir o seguinte:
 
 ```
 EXPLAIN for: SELECT "users".* FROM "users" INNER JOIN "articles" ON "articles"."user_id" = "users"."id" WHERE "users"."id" = 1
@@ -2054,15 +2052,16 @@ EXPLAIN for: SELECT "users".* FROM "users" INNER JOIN "articles" ON "articles"."
 (6 rows)
 ```
 
-Eager loading may trigger more than one query under the hood, and some queries
-may need the results of previous ones. Because of that, `explain` actually
-executes the query, and then asks for the query plans. For example,
+O *Eager Loading* pode disparar mais que uma *query* por debaixo dos panos,
+e algumas *queries* podem necessitar de resultados prévios. Por causa disso,
+o `explain` na verdade executa a query, e somente depois solicita o que a *query* planeja.
+Por exemplo,
 
 ```ruby
 User.where(id: 1).includes(:articles).explain
 ```
 
-yields
+produz
 
 ```
 EXPLAIN for: SELECT `users`.* FROM `users`  WHERE `users`.`id` = 1
@@ -2095,12 +2094,12 @@ EXPLAIN for: SELECT `articles`.* FROM `articles`  WHERE `articles`.`user_id` IN 
 1 row in set (0.00 sec)
 ```
 
-under MySQL and MariaDB.
+em MySQL e MariaDB.
 
-### Interpreting EXPLAIN
+### Interpretando o EXPLAIN
 
-Interpretation of the output of EXPLAIN is beyond the scope of this guide. The
-following pointers may be helpful:
+A interpretação da saída do *EXPLAIN* está além do escopo deste guia. Os links
+a seguir podem servir de ajuda:
 
 * SQLite3: [EXPLAIN QUERY PLAN](https://www.sqlite.org/eqp.html)
 
