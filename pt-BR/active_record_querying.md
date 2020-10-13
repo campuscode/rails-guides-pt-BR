@@ -1585,22 +1585,22 @@ book.available?   # => false
 Read the full documentation about enums
 [in the Rails API docs](https://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
 
-Understanding The Method Chaining
+Entendendo o Encadeamento de Métodos
 ---------------------------------
 
-The Active Record pattern implements [Method Chaining](https://en.wikipedia.org/wiki/Method_chaining),
-which allow us to use multiple Active Record methods together in a simple and straightforward way.
+O *Active Record* implementa o padrão [Encadeamento de Métodos](https://en.wikipedia.org/wiki/Method_chaining)
+(*method chaining*) que nos permite usar vários métodos do *Active Record* juntos de uma maneira simples e direta.
 
-You can chain methods in a statement when the previous method called returns an
-`ActiveRecord::Relation`, like `all`, `where`, and `joins`. Methods that return
-a single object (see [a seção Retornando um Único Objeto](#retornando-um-unico-objeto))
-have to be at the end of the statement.
+Você pode encadear métodos numa sentença quando o método chamado anteriormente retorna
+uma `ActiveRecord::Relation`, como `all`, `where` e `joins`. Métodos que retornam um único objeto
+(veja [a seção Retornando um Único Objeto](#retornando-um-unico-objeto)) devem estar no fim da sentença.
 
-There are some examples below. This guide won't cover all the possibilities, just a few as examples.
-When an Active Record method is called, the query is not immediately generated and sent to the database,
-this just happens when the data is actually needed. So each example below generates a single query.
+Há alguns exemplos abaixo. Esse guia não vai mostrar todas as possibilidades, só alguns exemplos.
+Quando um método *Active Record* é chamado, a consulta não é imediatamente gerada e enviada para o banco
+de dados, isso só acontece quando os dados são realmente necessários. Logo, cada exemplo abaixo só gera
+uma consulta.
 
-### Retrieving filtered data from multiple tables
+### Buscando dados filtrados de múltiplas tabelas
 
 ```ruby
 Person
@@ -1609,7 +1609,7 @@ Person
   .where('comments.created_at > ?', 1.week.ago)
 ```
 
-The result should be something like this:
+O resultado deve ser algo parecido com isso:
 
 ```sql
 SELECT people.id, people.name, comments.text
@@ -1619,7 +1619,7 @@ INNER JOIN comments
 WHERE comments.created_at > '2015-01-01'
 ```
 
-### Retrieving specific data from multiple tables
+### Buscando dados específicos de múltiplas tabelas
 
 ```ruby
 Person
@@ -1628,7 +1628,7 @@ Person
   .find_by('people.name' => 'John') # this should be the last
 ```
 
-The above should generate:
+O comando acima deve gerar:
 
 ```sql
 SELECT people.id, people.name, companies.name
@@ -1639,9 +1639,9 @@ WHERE people.name = 'John'
 LIMIT 1
 ```
 
-NOTE: Note that if a query matches multiple records, `find_by` will
-fetch only the first one and ignore the others (see the `LIMIT 1`
-statement above).
+NOTE: Note que se uma consulta trouxer múltiplos registros, o
+método `find_by` irá retornar somente o primeiro e ignorar o
+restante (perceba a sentença `LIMIT 1` acima).
 
 Find or Build a New Object
 --------------------------
