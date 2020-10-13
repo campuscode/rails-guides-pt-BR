@@ -456,7 +456,7 @@ contanto que não há ordenação, pois o método irá forçar uma ordem interna
 
 O método `find_in_batches` aceita as mesmas opção que o `find_each`
 
-Conditions
+Codificações
 ----------
 
 The `where` method allows you to specify conditions to limit the records returned, representing the `WHERE`-part of the SQL statement. Conditions can either be specified as a string, array, or hash.
