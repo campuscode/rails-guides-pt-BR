@@ -523,27 +523,27 @@ $(document).on "turbolinks:load", ->
 Para mais detalhes, incluindo outros eventos que você pode disparar, veja o [README
 do Turbolinks](https://github.com/turbolinks/turbolinks/blob/master/README.md)
 
-Cross-Site Request Forgery (CSRF) token in Ajax
+Token de Falsa Requisição Entre Sites (CSRF) em *Ajax*
 ----
 
-When using another library to make Ajax calls, it is necessary to add
-the security token as a default header for Ajax calls in your library. To get
-the token:
+Ao usar outra biblioteca para fazer chamadas *Ajax*, é necessário adicionar
+o token de segurança como um *header* padrão para chamadas *Ajax* na sua biblioteca.
+Para pegar o token:
 
 ```javascript
 var token = document.getElementsByName('csrf-token')[0].content
 ```
 
-You can then submit this token as a X-CSRF-Token in your header for your
-Ajax requst.  You do not need to add a CSRF for GET requests, only non-GET
-requests.
+Você pode então enviar esse token como um *X-CSRF-Token* no seu *header*
+para requisições *Ajax*. Você não precisa adicionar o CSRF para requisições GET,
+apenas para requisições *non-GET*.
 
-You can read more about about Cross-Site Request Forgery in [Security](https://guides.rubyonrails.org/security.html#cross-site-request-forgery-csrf)
+Você pode ler mais sobre Falsa Requisição Entre Sites (CSRF) na [segurança](#cross-site-request-forgery-csrf-token-in-ajax)
 
-Other Resources
+Outros recursos
 ---------------
 
-Here are some helpful links to help you learn even more:
+Aqui estão alguns links úteis para te ajudar a aprender mais:
 
 * [jquery-ujs wiki](https://github.com/rails/jquery-ujs/wiki)
 * [jquery-ujs list of external articles](https://github.com/rails/jquery-ujs/wiki/External-articles)
