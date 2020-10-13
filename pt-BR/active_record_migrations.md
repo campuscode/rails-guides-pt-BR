@@ -724,7 +724,7 @@ Observe que ao executar o comando `db:migrate` também é chamado o comando
 estrutura do seu banco de dados.
 
 Se você especificar uma versão alvo, o *Active Record* executará as *migrations*
-necessárias (*change*, *up*, *down*) até atingir a versão especificada. A versão
+necessárias (`change`, `up`, `down`) até atingir a versão especificada. A versão
 é o prefixo numérico do nome do arquivo da *migration*. Por exemplo, para migrar
 para a versão 20080906120000 execute:
 
@@ -733,9 +733,9 @@ $ rails db:migrate VERSION=20080906120000
 ```
 
 Se a versão 20080906120000 for maior que a versão atual (ou seja, está migrando
-para cima), será executado o método *change* (ou *up*) em todas as *migrations*
+para cima), será executado o método `change` (ou `up`) em todas as *migrations*
 até a 20080906120000 (incluindo ela na execução) e não será executada nenhuma *migration*
-posterior. Se estiver migrando para baixo, será executado o método *down* em
+posterior. Se estiver migrando para baixo, será executado o método `down` em
 todas as *migrations* até a 20080906120000, não incluindo ela na execução.
 
 ### Revertendo a *Migration*
@@ -1034,7 +1034,7 @@ existiam irá manter uma referência às suas *timestamps* específicas dentro d
 tabela interna do Rails chamada `schema_migrations`. Esta tabela é usada para manter
 um acompanhamento de quais *migrations* foram executadas em um ambiente específico.
 
-Se você executar o comando `rails db:migrate:status`, que mostra o estado (*up* ou
-*down*) de cada *migration*, você verá o texto `********** NO FILE **********`
+Se você executar o comando `rails db:migrate:status`, que mostra o estado (`up` ou
+`down`) de cada *migration*, você verá o texto `********** NO FILE **********`
 próximo a cada arquivo de *migration* excluído que foi anteriormente executado
 em um ambiente específico mas não se encontra mais no diretório `db/migrate/`.
