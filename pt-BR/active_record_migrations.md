@@ -88,9 +88,9 @@ Criando uma *Migration*
 
 *Migrations* são armazenadas em arquivos no diretório `db/migrate`, um para cada classe de
 *migration*. O nome do arquivo tem o seguinte formato
-`YYYYMMDDHHMMSS_create_products.rb`, isto é uma *timestamp* (marcação de data/hora) em UTC identificando a 
-*migration* seguida por um underline seguido pelo 
-nome da *migration*. O nome da classe da migration 
+`YYYYMMDDHHMMSS_create_products.rb`, isto é uma *timestamp* (marcação de data/hora) em UTC identificando a
+*migration* seguida por um underline seguido pelo
+nome da *migration*. O nome da classe da migration
 (em CamelCase) deve corresponder à última parte do nome do arquivo. Por exemplo
 `20080906120000_create_products.rb` deve definir a classe `CreateProducts` e
 `20080906120001_add_details_to_products.rb` deve definir
@@ -310,7 +310,7 @@ Escrevendo uma *Migration*
 Depois de criar sua *migration* usando um dos geradores, é hora de
 começar os trabalhos!
 
-### Criando uma Tabela 
+### Criando uma Tabela
 
 O método `create_table` é um dos mais fundamentais, mas na maioria das vezes,
 ele será criado para você usando um gerador de *scaffold* ou *model*. Um uso
@@ -328,7 +328,7 @@ abaixo, uma coluna implícita `id`.
 Por padrão, o `create_table` criará uma chave primária chamada `id`. Você pode mudar
 o nome da chave primária com a opção `:primary_key` (não esqueça de
 atualizar o *model* correspondente) ou, se você não quer uma chave primária, você
-pode passar a opção `id: false`. Se você precisa passar opções específicas do banco de dados 
+pode passar a opção `id: false`. Se você precisa passar opções específicas do banco de dados
 você pode colocar um fragmento SQL na opção `:option`. Por exemplo:
 
 ```ruby
@@ -961,23 +961,14 @@ recommended that you check your schema file into source control.
 Merge conflicts can occur in your schema file when two branches modify schema.
 To resolve these conflicts run `rails db:migrate` to regenerate the schema file.
 
-Active Record and Referential Integrity
+*Active Record* e Integridade Referencial
 ---------------------------------------
 
-The Active Record way claims that intelligence belongs in your models, not in
-the database. As such, features such as triggers or constraints,
-which push some of that intelligence back into the database, are not heavily
-used.
+A maneira do *Active Record* trabalhar presume que a inteligência pertence aos seus *models*, não ao banco de dados. Desta forma, funcionalidades como *triggers* ou *constraints*, que enviam um pouco desta inteligência de volta para o banco de dados, não são usadas com frequência.
 
-Validations such as `validates :foreign_key, uniqueness: true` are one way in
-which models can enforce data integrity. The `:dependent` option on
-associations allows models to automatically destroy child objects when the
-parent is destroyed. Like anything which operates at the application level,
-these cannot guarantee referential integrity and so some people augment them
-with [foreign key constraints](#foreign-keys) in the database.
+Validações como `validates :foreign_key, uniqueness: true` são uma maneira pela qual os *models* podem impor integridade dos dados. A opção `:dependent` nas associações permite aos *models* destruir automaticamente objetos filhos quando o objeto pai é destruído. Como qualquer coisa que opera no nível da aplicação, estas validações não podem garantir integridade referencial e assim algumas pessoas as aprimoram com [vínculos de chaves estrangeiras](#foreign-keys) no banco de dados.
 
-Although Active Record does not provide all the tools for working directly with
-such features, the `execute` method can be used to execute arbitrary SQL.
+Embora o *Active Record* não forneça todas as ferramentas para trabalhar diretamente com estas funcionalidades, o método `execute` pode ser usado para executar SQL arbitrário.
 
 Migrations and Seed Data
 ------------------------
