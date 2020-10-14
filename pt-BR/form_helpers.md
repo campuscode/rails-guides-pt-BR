@@ -346,7 +346,7 @@ IMPORTANT: All forms using `form_with` implement `remote: true` by default. Thes
 Criando Caixas de Seleção (*Select Boxes*) com Facilidade
 -----------------------------
 
-As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente. 
+As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente.
 
 Esta é a aparência da marcação:
 ```html
@@ -518,25 +518,25 @@ Existe também o *helper* `time_zone_options_for_select` para uma maneira mais m
 
 O Rails tinha um *helper* `country_select` para escolher os países, mas foi extraído para o [plugin country_select](https://github.com/stefanpenner/country_select).
 
-Using Date and Time Form Helpers
+Usando *Form Helpers* para Data e Hora
 --------------------------------
 
-You can choose not to use the form helpers generating HTML5 date and time input fields and use the alternative date and time helpers. These date and time helpers differ from all the other form helpers in two important respects:
+Você pode optar por não usar os *helpers* de formulário que geram campos de data e hora em HTML5 e usar os *helpers* de data e hora alternativos. Esses *helpers* de data e hora diferem de todos os outros *helpers* de formulário em dois aspectos importantes:
 
-* Dates and times are not representable by a single input element. Instead, you have several, one for each component (year, month, day etc.) and so there is no single value in your `params` hash with your date or time.
-* Other helpers use the `_tag` suffix to indicate whether a helper is a barebones helper or one that operates on model objects. With dates and times, `select_date`, `select_time` and `select_datetime` are the barebones helpers, `date_select`, `time_select` and `datetime_select` are the equivalent model object helpers.
+* Datas e horas não são representáveis por um único elemento de entrada. Em vez disso, você tem vários, um para cada componente (ano, mês, dia, etc.) e, portanto, não há um valor único em seu hash `params` com sua data ou hora.
+* Outros *helpers* usam o sufixo `_tag` para indicar quando um *helper* é um  *barebone helper* ou um que trabalha em objetos *model*. Com datas e horas, `select_date`, `select_time` e `select_datetime` são *helpers* essenciais, `date_select`, `time_select` e `datetime_select` são os *helpers* equivalentes.
 
-Both of these families of helpers will create a series of select boxes for the different components (year, month, day etc.).
+Ambas as famílias de *helpers* criarão uma série de caixas de seleção para os diferentes componentes (ano, mês, dia, etc.).
 
-### Barebones Helpers
+### *Helpers* Essenciais
 
-The `select_*` family of helpers take as their first argument an instance of `Date`, `Time`, or `DateTime` that is used as the currently selected value. You may omit this parameter, in which case the current date is used. For example:
+A família de *helpers* `select_*` usam como primeiro argumento, uma instância de `Date`, `Time`, ou `DateTime` que é utilizada como o valor selecionado no momento. É possível omitir esse parâmetro, onde a data atual é utilizada. Por exemplo:
 
 ```erb
 <%= select_date Date.today, prefix: :start_date %>
 ```
 
-outputs (with actual option values omitted for brevity)
+produz (com os valores das opções reais omitidos para simplificação)
 
 ```html
 <select id="start_date_year" name="start_date[year]">
@@ -547,24 +547,24 @@ outputs (with actual option values omitted for brevity)
 </select>
 ```
 
-The above inputs would result in `params[:start_date]` being a hash with keys `:year`, `:month`, `:day`. To get an actual `Date`, `Time`, or `DateTime` object you would have to extract these values and pass them to the appropriate constructor, for example:
+As entradas acima resultariam em um *hash* `params[:start_date]` com as chaves `:year`, `:month`, `:day`. Para pegar objetos com `Date`, `Time`, ou `DateTime` atuais,você deve extrair os valores e passá-los para o construtor apropriado, por exemplo: 
 
 ```ruby
 Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
 ```
 
-The `:prefix` option is the key used to retrieve the hash of date components from the `params` hash. Here it was set to `start_date`, if omitted it will default to `date`.
+A opção `:prefix` é a chave utilizada para retornar a *hash* dos componentes de datas da *hash* `params`. Aqui foi definido como `start_date`, se omitido o valor padrão será `date`.
 
-### Model Object Helpers
+### *Helpers* para Objetos *Model*
 
-`select_date` does not work well with forms that update or create Active Record objects as Active Record expects each element of the `params` hash to correspond to one attribute.
-The model object helpers for dates and times submit parameters with special names; when Active Record sees parameters with such names it knows they must be combined with the other parameters and given to a constructor appropriate to the column type. For example:
+O objeto `select_date` não funciona muito bem com formulários que atualizam ou criam objetos *Active Record* , pois *Active Record* espera que cada elemento da *hash* `params` corresponda a um atributo.
+Os *helpers* para objetos *model* em datas e horas enviam parâmetros com nomes especiais; quando *Active Record* vê os parâmetros com estes nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de coluna. Por exemplo:
 
 ```erb
 <%= date_select :person, :birth_date %>
 ```
 
-outputs (with actual option values omitted for brevity)
+produz (com os valores das opções reais omitidos para simplificação)
 
 ```html
 <select id="person_birth_date_1i" name="person[birth_date(1i)]">
@@ -575,39 +575,39 @@ outputs (with actual option values omitted for brevity)
 </select>
 ```
 
-which results in a `params` hash like
+que produz um hash `params`
 
 ```ruby
 {'person' => {'birth_date(1i)' => '2008', 'birth_date(2i)' => '11', 'birth_date(3i)' => '22'}}
 ```
 
-When this is passed to `Person.new` (or `update`), Active Record spots that these parameters should all be used to construct the `birth_date` attribute and uses the suffixed information to determine in which order it should pass these parameters to functions such as `Date.civil`.
+Quando isso é passado para o `Person.new` (ou `update`), o *Active Record* mostra que todos esses parâmetros devem ser usados para construir o atributo `birth_date` e usa a informação no sufixo para determinar em que ordem deve passar esses parâmetros para funções como `Date.civil`.
 
-### Common Options
+### Opções Frequentes
 
-Both families of helpers use the same core set of functions to generate the individual select tags and so both accept largely the same options. In particular, by default Rails will generate year options 5 years either side of the current year. If this is not an appropriate range, the `:start_year` and `:end_year` options override this. For an exhaustive list of the available options, refer to the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html).
+Ambas familias de *helpers* usam o mesmo core de funções parar gerar as tags *select* individuais e ambas aceitam praticamente as mesmas opções. Em particular, por padrão o Rails gera opções de ano 5 anos em cada lado do ano atual. Se este intervalo não for suficiente, as opções `:start_year` e `:end_year` substituem esse intervalo. Para uma lista das opções completas disponível, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html).
 
-As a rule of thumb you should be using `date_select` when working with model objects and `select_date` in other cases, such as a search form which filters results by date.
+Como regra geral, você deve usar `date_select` ao trabalhar com objetos *model* e `select_date` em outros casos, como em um formulário de pesquisa que filtra resultados por data.
 
-### Individual Components
+### Componentes Individuais
 
-Occasionally you need to display just a single date component such as a year or a month. Rails provides a series of helpers for this, one for each component `select_year`, `select_month`, `select_day`, `select_hour`, `select_minute`, `select_second`. These helpers are fairly straightforward. By default they will generate an input field named after the time component (for example, "year" for `select_year`, "month" for `select_month` etc.) although this can be overridden with the `:field_name` option. The `:prefix` option works in the same way that it does for `select_date` and `select_time` and has the same default value.
+Ocasionalmente, você precisa exibir apenas um único componente de data, como um ano ou um mês. O Rails fornece uma série de *helpers* para isso, uma para cada componente `select_year`, `select_month`, `select_day`, `select_hour`, `select_minute`, `select_second`. Esses *helpers* são bastante diretos. Por padrão eles geram um campo de entrada com o nome do componente de tempo (por exemplo, *"year"* para `select_year`, *"month"* para `select_month` etc.) embora isso possa ser substituído com a opção  `:field_name`. A opção `:prefix` funciona da mesma maneira em que `select_date` e `select_time` com o mesmo valor padrão.
 
-The first parameter specifies which value should be selected and can either be an instance of a `Date`, `Time`, or `DateTime`, in which case the relevant component will be extracted, or a numerical value. For example:
+O primeiro parâmetro especifica quais valores devem ser selecionados e pode ser uma instância de  `Date`, `Time`, ou `DateTime`, no caso em que o componente relevante irá ser extraído, ou um valor numérico. Por exemplo:
 
 ```erb
 <%= select_year(2009) %>
 <%= select_year(Time.new(2009)) %>
 ```
 
-will produce the same output and the value chosen by the user can be retrieved by `params[:date][:year]`.
+irá produzir o mesmo resultado e o valor escolhido pode ser retornado por `params[:date][:year]`.
 
-Uploading Files
+Enviando Arquivos
 ---------------
 
-A common task is uploading some sort of file, whether it's a picture of a person or a CSV file containing data to process. The most important thing to remember with file uploads is that the rendered form's enctype attribute **must** be set to "multipart/form-data". If you use `form_with` with `:model`, this is done automatically. If you use `form_with` without `:model`, you must set it yourself, as per the following example.
+Uma tarefa muito comum é fazer o envio de arquivos, seja a imagem de uma pessoa ou um arquivo CSV contendo dados a serem processados. O mais importante a se lembrar quando se faz envio de arquivos é que o atributo `enctype` do formulário renderizado **deve** ser "multipart/form-data". Se você usar `form_with` com `:model`, isso é feito automaticamente. Se você usar `form_with` sem `:model`, você deve colocar manualmente, assim como no exemplo a seguir.
 
-The following two forms both upload a file.
+Ambos formulários a seguir realizam o envio de um arquivo.
 
 ```erb
 <%= form_with(url: {action: :upload}, multipart: true) do %>
@@ -619,11 +619,11 @@ The following two forms both upload a file.
 <% end %>
 ```
 
-Rails provides the usual pair of helpers: the barebones `file_field_tag` and the model oriented `file_field`. As you would expect in the first case the uploaded file is in `params[:picture]` and in the second case in `params[:person][:picture]`.
+O Rails já disponibiliza dois *helpers*: o simples `file_field_tag` e o orientado a *model* `file_field`. No primeiro caso, o arquivo enviado está no `params[:picture]` e no segundo está em `params[:person][:picture]`, assim como esperado.
 
-### What Gets Uploaded
+### O que é enviado
 
-The object in the `params` hash is an instance of [`ActionDispatch::Http::UploadedFile`](https://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html). The following snippet saves the uploaded file in `#{Rails.root}/public/uploads` under the same name as the original file.
+O objeto em `params` é uma instância de [`ActionDispatch::Http::UploadedFile`](https://api.rubyonrails.org/classes/ActionDispatch/Http/UploadedFile.html). O trecho de código a seguir salva o arquivo enviado em `#{Rails.root}/public/uploads` contendo o mesmo nome do arquivo original.
 
 ```ruby
 def upload
@@ -634,12 +634,16 @@ def upload
 end
 ```
 
-Once a file has been uploaded, there are a multitude of potential tasks, ranging from where to store the files (on Disk, Amazon S3, etc), associating them with models, resizing image files, and generating thumbnails, etc. [Active Storage](active_storage_overview.html) is designed to assist with these tasks.
+Uma vez que o arquivo é enviado, há uma infinidade de tarefas em potencial, variando entre onde armazenar os arquivos (no Disco, Amazon S3, etc), associá-lo com models, redimensionar arquivos de imagem e gerar miniaturas, etc. O [Active Storage](active_storage_overview.html) é destinado a ajudar com essas tarefas.
 
-Customizing Form Builders
+Customizando os Construtores de Formulários
 -------------------------
 
-The object yielded by `form_with` and `fields_for` is an instance of [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html). Form builders encapsulate the notion of displaying form elements for a single object. While you can write helpers for your forms in the usual way, you can also create subclass `ActionView::Helpers::FormBuilder` and add the helpers there. For example:
+O objeto que é dado para o *yield* no `form_with` e `fields_for` é uma instância de
+[`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html).
+Construtores de Formulários encapsulam a noção de exibir os elementos do formulário para um único objeto.
+Enquanto você pode escrever *helpers* para seus formulários da forma usual, você também pode criar uma subclasse
+de `ActionView::Helpers::FormBuilder` e adicionar os *helpers* lá. Por exemplo:
 
 ```erb
 <%= form_with model: @person do |f| %>
@@ -647,7 +651,7 @@ The object yielded by `form_with` and `fields_for` is an instance of [`ActionVie
 <% end %>
 ```
 
-can be replaced with
+pode ser substituído por
 
 ```erb
 <%= form_with model: @person, builder: LabellingFormBuilder do |f| %>
@@ -655,7 +659,7 @@ can be replaced with
 <% end %>
 ```
 
-by defining a `LabellingFormBuilder` class similar to the following:
+Por meio da definição de uma classe `LabellingFormBuilder` parecida com a que segue:
 
 ```ruby
 class LabellingFormBuilder < ActionView::Helpers::FormBuilder
@@ -665,7 +669,8 @@ class LabellingFormBuilder < ActionView::Helpers::FormBuilder
 end
 ```
 
-If you reuse this frequently you could define a `labeled_form_with` helper that automatically applies the `builder: LabellingFormBuilder` option:
+Se você reutilizar isso frequentemente, você pode definir um *helper* `labeled_form_with` que automaticamente
+aplica a opção `builder: LabellingFormBuilder`:
 
 ```ruby
 def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, &block)
@@ -674,50 +679,52 @@ def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, 
 end
 ```
 
-The form builder used also determines what happens when you do
+O construtor de formulários utilizado também determina o que acontece quando você escreve
 
 ```erb
 <%= render partial: f %>
 ```
 
-If `f` is an instance of `ActionView::Helpers::FormBuilder` then this will render the `form` partial, setting the partial's object to the form builder. If the form builder is of class `LabellingFormBuilder` then the `labelling_form` partial would be rendered instead.
+Se `f` for uma instância de `ActionView::Helpers::FormBuilder` então isso vai renderizar a *partial* `form`,
+passando o objeto da *partial* para o construtor de formulários. Se o construtor de formulário for da classe
+`LabellingFormBuilder` então a partial `labelling_form` é que seria renderizada.
 
-Understanding Parameter Naming Conventions
+Entendendo Convenções de Nomeação de Parâmetros
 ------------------------------------------
 
-Values from forms can be at the top level of the `params` hash or nested in another hash. For example, in a standard `create` action for a Person model, `params[:person]` would usually be a hash of all the attributes for the person to create. The `params` hash can also contain arrays, arrays of hashes, and so on.
+Valores de formulários podem ficar no topo do *hash* `params` ou aninhados em outro *hash*. Por exemplo, numa ação `create` padrão para um *model* `Person`, `params[:person]` normalmente seria um *hash* de todos os atributos necessários para criar uma pessoa. O *hash* `params` também pode conter *arrays*, *arrays* de *hashes*, e por aí vai.
 
-Fundamentally HTML forms don't know about any sort of structured data, all they generate is name-value pairs, where pairs are just plain strings. The arrays and hashes you see in your application are the result of some parameter naming conventions that Rails uses.
+Fundamentalmente formulários HTML não tem conhecimento de nenhum tipo de dado estruturado, tudo que eles geram são pares de nomes e valores, onde os pares são *strings* simples. Os *arrays* e *hashes* que você vê na sua aplicação são o resultado de algumas convenções de nomeação que o Rails utiliza.
 
-### Basic Structures
+### Estruturas Básicas
 
-The two basic structures are arrays and hashes. Hashes mirror the syntax used for accessing the value in `params`. For example, if a form contains:
+As duas estruturas básicas são *arrays* e *hashes*. *Hashes* copiam a sintaxe utilizada para acessar o valor em `params`. Por exemplo, se um formulário contém:
 
 ```html
 <input id="person_name" name="person[name]" type="text" value="Henry"/>
 ```
 
-the `params` hash will contain
+o *hash* `params` conterá
 
 ```ruby
 {'person' => {'name' => 'Henry'}}
 ```
 
-and `params[:person][:name]` will retrieve the submitted value in the controller.
+e `params[:person][:name]` buscará o valor enviado dentro do *controller*.
 
-Hashes can be nested as many levels as required, for example:
+*Hashes* podem ser aninhados em quantos níveis for necessário, por exemplo:
 
 ```html
 <input id="person_address_city" name="person[address][city]" type="text" value="New York"/>
 ```
 
-will result in the `params` hash being
+resultará no *hash* `params` como
 
 ```ruby
 {'person' => {'address' => {'city' => 'New York'}}}
 ```
 
-Normally Rails ignores duplicate parameter names. If the parameter name contains an empty set of square brackets `[]` then they will be accumulated in an array. If you wanted users to be able to input multiple phone numbers, you could place this in the form:
+Normalmente o Rails ignora nomes de parâmetros duplicados. Se o parâmetro *name* contém um conjunto vazio de colchetes `[]` então eles serão acumulados em um *array*. Se você queria que os usuários pudessem informar vários números de telefone, você poderia colocar isto no formulário:
 
 ```html
 <input name="person[phone_number][]" type="text"/>
@@ -725,11 +732,11 @@ Normally Rails ignores duplicate parameter names. If the parameter name contains
 <input name="person[phone_number][]" type="text"/>
 ```
 
-This would result in `params[:person][:phone_number]` being an array containing the inputted phone numbers.
+Isto resultará em `params[:person][:phone_number]` como um *array* contendo os números de telefone informados.
 
-### Combining Them
+### Combinando os Conceitos
 
-We can mix and match these two concepts. One element of a hash might be an array as in the previous example, or you can have an array of hashes. For example, a form might let you create any number of addresses by repeating the following form fragment
+Podemos combinar estes dois conceitos. Um elemento de um *hash* pode ser um *array* como no exemplo anterior, ou você pode ter um *array* de *hashes*. Por exemplo, um formulário pode permitir a criação de um número arbitrário de *addresses* ao repetir o fragmento de formulário seguinte
 
 ```html
 <input name="person[addresses][][line1]" type="text"/>
@@ -740,17 +747,17 @@ We can mix and match these two concepts. One element of a hash might be an array
 <input name="person[addresses][][city]" type="text"/>
 ```
 
-This would result in `params[:person][:addresses]` being an array of hashes with keys `line1`, `line2`, and `city`.
+Isto resultará em `params[:person][:addresses]` como um *array* de *hashes* com as chaves `line1`, `line2`, e `city`.
 
-There's a restriction, however, while hashes can be nested arbitrarily, only one level of "arrayness" is allowed. Arrays can usually be replaced by hashes; for example, instead of having an array of model objects, one can have a hash of model objects keyed by their id, an array index, or some other parameter.
+Porém, há uma restrição. Enquanto os *hashes* podem ser aninhados de forma arbitrária, só é permitido um nível de *"arrayness"*. *Arrays* normalmente podem ser trocados por *hashes*; por exemplo, ao invés de usar um *array* de *model objects*, é possível usar um *hash* de *model objects* distinguidos pelo seu *id*, um índice do *array*, ou algum outro parâmetro.
 
-WARNING: Array parameters do not play well with the `check_box` helper. According to the HTML specification unchecked checkboxes submit no value. However it is often convenient for a checkbox to always submit a value. The `check_box` helper fakes this by creating an auxiliary hidden input with the same name. If the checkbox is unchecked only the hidden input is submitted and if it is checked then both are submitted but the value submitted by the checkbox takes precedence.
+WARNING: Parâmetros de *array* não funcionam bem com o *helper* `check_box`. De acordo com a especificação HTML *checkboxes* desmarcadas não enviam nenhum valor. Porém pode ser conveniente fazer com que uma *checkbox* sempre envie um valor. O *helper* `check_box` simula isto ao criar um *input* auxiliar com o mesmo nome. Se a *checkbox* estiver desmarcada apenas o *input* escondido será enviado e se estiver marcada então os dois serão enviados mas o valor da *checkbox* recebe uma prioridade maior.
 
-### Using Form Helpers
+### Utilizando *Form Helpers*
 
-The previous sections did not use the Rails form helpers at all. While you can craft the input names yourself and pass them directly to helpers such as `text_field_tag` Rails also provides higher level support. The two tools at your disposal here are the name parameter to `form_with` and `fields_for` and the `:index` option that helpers take.
+As seções anteriores não utilizavam os *form helpers* do Rails de maneira alguma. Embora você possa criar os nomes de *input* por conta própria e passá-los diretamente para *helpers* como `text_field_tag`, o Rails também fornece suporte em um nível maior. As duas ferramentas à sua disposição aqui são o nome de parâmetro para `form_with` e `fields_for` e a opção `:index` que os *helpers* recebem.
 
-You might want to render a form with a set of edit fields for each of a person's addresses. For example:
+Você pode querer renderizar um formulário com um conjunto de campos de edição pra cada *address* de uma `person`. Por exemplo:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -763,7 +770,7 @@ You might want to render a form with a set of edit fields for each of a person's
 <% end %>
 ```
 
-Assuming the person had two addresses, with ids 23 and 45 this would create output similar to this:
+Presumindo que a pessoa (person) tenha dois endereços (addresses), com *ids* 23 e 45 isto trará um resultado similar a este:
 
 ```html
 <form accept-charset="UTF-8" action="/people/1" data-remote="true" method="post">
@@ -774,22 +781,19 @@ Assuming the person had two addresses, with ids 23 and 45 this would create outp
 </form>
 ```
 
-This will result in a `params` hash that looks like
+Isto resultará em um *hash* `params` parecido com
 
 ```ruby
 {'person' => {'name' => 'Bob', 'address' => {'23' => {'city' => 'Paris'}, '45' => {'city' => 'London'}}}}
 ```
 
-Rails knows that all these inputs should be part of the person hash because you
-called `fields_for` on the first form builder. By specifying an `:index` option
-you're telling Rails that instead of naming the inputs `person[address][city]`
-it should insert that index surrounded by [] between the address and the city.
-This is often useful as it is then easy to locate which Address record
-should be modified. You can pass numbers with some other significance,
-strings or even `nil` (which will result in an array parameter being created).
+O Rails sabe que todos estes *inputs* devem ser parte do *hash* person porque você chamou `fields_for` no primeiro *builder* do formulário. Ao especificar uma opção `:index`
+você diz ao Rails que ao invés de nomear os *inputs* `person[address][city]`
+ele deve inserir aquele índice dentro de [] entre o *address* e a *city*.
+Isso geralmente é útil porque deixa mais fácil para saber qual registro *Address* deve ser modificado. Você pode passar números com algum outro significado,
+*strings* ou mesmo `nil` (que resultará em um *array* de parâmetros sendo criado).
 
-To create more intricate nestings, you can specify the first part of the input
-name (`person[address]` in the previous example) explicitly:
+Para criar aninhamentos mais complexos, você pode especificar a primeira parte do nome do *input* (`person[address]` no exemplo anterior) de forma explícita:
 
 ```erb
 <%= fields_for 'person[address][primary]', address, index: address.id do |address_form| %>
@@ -797,15 +801,15 @@ name (`person[address]` in the previous example) explicitly:
 <% end %>
 ```
 
-will create inputs like
+criará *inputs* como
 
 ```html
 <input id="person_address_primary_1_city" name="person[address][primary][1][city]" type="text" value="Bologna" />
 ```
 
-As a general rule the final input name is the concatenation of the name given to `fields_for`/`form_with`, the index value, and the name of the attribute. You can also pass an `:index` option directly to helpers such as `text_field`, but it is usually less repetitive to specify this at the form builder level rather than on individual input controls.
+Como uma regra geral o nome final do *input* é uma concatenação do nome passado para `fields_for`/`form_with`, o valor do índice, e o nome do atributo. Você também pode passar uma opção `:index` diretamente para os *helpers* como `text_field`, mas normalmente é menos repetitivo especificar isto dentro do *builder* do formulário ao invés de especificar nos controles individuais de *input*.
 
-As a shortcut you can append [] to the name and omit the `:index` option. This is the same as specifying `index: address.id` so
+Como um atalho você pode adicionar `[]` ao nome e omitir a opção `:index`. Isto é o mesmo que especificar `index: address.id` portanto
 
 ```erb
 <%= fields_for 'person[address][primary][]', address do |address_form| %>
@@ -813,7 +817,7 @@ As a shortcut you can append [] to the name and omit the `:index` option. This i
 <% end %>
 ```
 
-produces exactly the same output as the previous example.
+produz exatamente o mesmo resultado que o exemplo anterior.
 
 Forms to External Resources
 ---------------------------
