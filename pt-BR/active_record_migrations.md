@@ -1006,7 +1006,7 @@ Para inserir dados depois que um banco de dados for criado, o Rails tem uma func
 end
 ```
 
-Isto é geralmente uma maneira mais limpa para preparar o banco de dados de uma aplicação em branco.
+Isto é, geralmente, uma maneira mais limpa para preparar o banco de dados de uma aplicação em branco.
 
 *Migrations* Antigas
 --------------------
