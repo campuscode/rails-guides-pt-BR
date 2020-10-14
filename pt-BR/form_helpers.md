@@ -178,30 +178,30 @@ IMPORTANT: As entradas de pesquisa, telefone, data, hora, cor, data e hora local
 TIP: Se você estiver usando campos de entradas de senha (para qualquer finalidade), convêm configurar sua aplicação para impedir que esses parâmetros sejam registrados. Você pode aprender sobre este assunto no guia [Protegendo aplicações Rails](security.html#logging)
 
 
-Lidando com Objetos *Model*
+Trabalhando com Objetos *Model*
 --------------------------
 
-### Model Object Helpers
+### *Helpers* de Objetos *Model*
 
-A particularly common task for a form is editing or creating a model object. While the `*_tag` helpers can certainly be used for this task they are somewhat verbose as for each tag you would have to ensure the correct parameter name is used and set the default value of the input appropriately. Rails provides helpers tailored to this task. These helpers lack the `_tag` suffix, for example `text_field`, `text_area`.
+Uma tarefa particularmente comum para um formulário é editar ou criar um objeto *model*. Enquanto os *helpers* `*_tag` possam ser usados para essa tarefa, eles são um pouco verbosos, pois para cada tag você teria que garantir que o nome do parâmetro correto seja usado e atribuir o valor padrão de entrada de maneira apropriada. O Rails fornece *helpers* personalizados para essa função. Esses *helpers* não possuem o sufixo `_tag`, por exemplo `text_field`, `text_area`.
 
-For these helpers the first argument is the name of an instance variable and the second is the name of a method (usually an attribute) to call on that object. Rails will set the value of the input control to the return value of that method for the object and set an appropriate input name. If your controller has defined `@person` and that person's name is Henry then a form containing:
+Para esses *helpers* o primeiro argumento é o nome de uma variável de instância e o segundo é o nome de um método (geralmente um atributo) para chamar esse objeto. O Rails vai definir o valor do controle de entrada para o valor de retorno daquele método para o objeto e definirá um nome de entrada apropriado. Se o seu controlador definiu `@person` e o nome dessa pessoa é Henry, um formulário contendo:
 
 ```erb
 <%= text_field(:person, :name) %>
 ```
 
-will produce output similar to
+produz uma saída semelhante à 
 
 ```erb
 <input id="person_name" name="person[name]" type="text" value="Henry" />
 ```
 
-Upon form submission the value entered by the user will be stored in `params[:person][:name]`.
+Após o envio do formulário, o valor inserido pelo usuário fica armazenado em `params[:person][:name]`.
 
-WARNING: You must pass the name of an instance variable, i.e. `:person` or `"person"`, not an actual instance of your model object.
+WARNING: Você deve passar o nome da instância da variável, i.e. `:person` ou `"person"`, não a instância atual do objeto *model*.
 
-Rails provides helpers for displaying the validation errors associated with a model object. These are covered in detail by the [Active Record Validations](active_record_validations.html#displaying-validation-errors-in-views) guide.
+O Rails fornece *helpers* para exibição de validação de erros associados ao objeto *model*. Esses são abordados em detalhes no guia de [Validação do *Active Record*](active_record_validations.html#displaying-validation-errors-in-views).
 
 ### Binding a Form to an Object
 
