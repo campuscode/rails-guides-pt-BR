@@ -1,159 +1,161 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-The Asset Pipeline
+O Asset Pipeline
 ==================
 
-This guide covers the asset pipeline.
+Este guia aborda o *asset pipeline*.
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
-* What the asset pipeline is and what it does.
-* How to properly organize your application assets.
-* The benefits of the asset pipeline.
-* How to add a pre-processor to the pipeline.
-* How to package assets with a gem.
+* O que o *asset pipeline* é e o que ele faz.
+* Como organizar apropriadamente seus *assets* da aplicação.
+* Os benefícios do *asset pipeline*.
+* Como adicionar um pre-processador ao *pipeline*.
+* Como empacotar os *assets* com uma *gem*.
 
 --------------------------------------------------------------------------------
 
-What is the Asset Pipeline?
+O que é o Asset Pipeline?
 ---------------------------
 
-The asset pipeline provides a framework to concatenate and minify or compress
-JavaScript and CSS assets. It also adds the ability to write these assets in
-other languages and pre-processors such as CoffeeScript, Sass, and ERB.
-It allows assets in your application to be automatically combined with assets
-from other gems.
+O *asset pipeline* fornece um *framework* para concatenar e minificar ou comprimir
+*assets* JavaScript e CSS. Ele também tem a habilidade de escrever esses *assets* em
+outras línguas e pré-processadores tais como CoffeeScript, Sass e ERB.
+Isso permite que os *assets* da sua aplicação sejam automaticamente combinados com
+*assets* de outras *gems*.
 
-The asset pipeline is implemented by the
-[sprockets-rails](https://github.com/rails/sprockets-rails) gem,
-and is enabled by default. You can disable it while creating a new application by
-passing the `--skip-sprockets` option.
+O *asset pipeline* é implementado pela gem
+[sprockets-rails](https://github.com/rails/sprockets-rails),
+e é habilitado por padrão. Você pode desabilitar enquanto está criando uma nova aplicação
+passando a opção `--skip-sprockets`.
 
 ```bash
 rails new appname --skip-sprockets
 ```
 
-Rails automatically adds the `sass-rails` gem to your `Gemfile`, which is used
-by Sprockets for asset compression:
+O Rails automaticamente adiciona a gem `sass-rails` no seu `Gemfile`, o qual é
+usado pelo Sprockets para comprimir o *asset*:
 
 ```ruby
 gem 'sass-rails'
 ```
 
-Using the `--skip-sprockets` option will prevent Rails from adding
-them to your `Gemfile`, so if you later want to enable
-the asset pipeline you will have to add those gems to your `Gemfile`. Also,
-creating an application with the `--skip-sprockets` option will generate
-a slightly different `config/application.rb` file, with a require statement
-for the sprockets railtie that is commented-out. You will have to remove
-the comment operator on that line to later enable the asset pipeline:
+Usando a opção `--skip-sprockets` previnirá que o rails adicione ao seu `Gemfile`,
+então se mais tarde você quiser habilitar o *asset pipeline* você terá que adicionar
+essas *gems* ao seu `Gemfile`. Além disso, criando uma aplicação com a opção `--skip-sprockets`
+gerará um arquivo `config/application.rb` levemente diferente, com a declaração de requerimento
+para o sprockets que está comentado. Você terá de remover o operador de comentário nessa linha
+para depois habilitar o *asset pipeline*:
 
 ```ruby
 # require "sprockets/railtie"
 ```
 
-To set asset compression methods, set the appropriate configuration options
-in `production.rb` - `config.assets.css_compressor` for your CSS and
-`config.assets.js_compressor` for your JavaScript:
+Para configurar os métodos de compactação do *asset*, coloque as opções de configuração
+apropriadas no `production.rb` - `config.assets.css_compressor` para o seu CSS e
+`config.assets.js_compressor` para seu JavaScript:
 
 ```ruby
 config.assets.css_compressor = :yui
 config.assets.js_compressor = :uglifier
 ```
 
-NOTE: The `sass-rails` gem is automatically used for CSS compression if included
-in the `Gemfile` and no `config.assets.css_compressor` option is set.
+NOTE: A *gem* `sass-rails` é automaticamente usada para a compactação de CSS se estiver
+incluída no `Gemfile` e nenhuma opção `config.assets.css_compressor` é definida.
 
 
-### Main Features
+### Principais Características
 
-The first feature of the pipeline is to concatenate assets, which can reduce the
-number of requests that a browser makes to render a web page. Web browsers are
-limited in the number of requests that they can make in parallel, so fewer
-requests can mean faster loading for your application.
+A primeira característica do *pipeline* é concatenar os *assets*, o qual pode
+reduzir o número de requisições que o navegador faz para renderizar a página web.
+Navegadores web são limitados no número de requisições que eles podem fazer em paralelo,
+portanto, menos solicitações podem significar carregamento mais rápido de sua aplicação.
 
-Sprockets concatenates all JavaScript files into one master `.js` file and all
-CSS files into one master `.css` file. As you'll learn later in this guide, you
-can customize this strategy to group files any way you like. In production,
-Rails inserts an SHA256 fingerprint into each filename so that the file is
-cached by the web browser. You can invalidate the cache by altering this
-fingerprint, which happens automatically whenever you change the file contents.
+O Sprockets concatena todos os arquivos JavaScript em um arquivo mestre `.js` e todos
+os arquivos CSS em um arquivo mestre `.css`. Como você aprenderá mais tarde neste guia,
+você pode mudar esta estratégia para agrupar arquivos da maneira que quiser. Em produção,
+o Rails insere uma impressão digital SHA256 dentro de cada nome de arquivo para que o arquivo
+seja armazenado em cache no navegador. Você pode invalidar o armazenamento cache alterando essa
+impressão digital, o qual acontece automaticamente sempre que você muda o conteúdo do arquivo.
 
-The second feature of the asset pipeline is asset minification or compression.
-For CSS files, this is done by removing whitespace and comments. For JavaScript,
-more complex processes can be applied. You can choose from a set of built in
-options or specify your own.
+A segunda característica do *asset pipeline* é a minificação ou compactação do *asset*.
+Para arquivos CSS, isso é fito removendo espaços em branco e comentários. Para JavaScript,
+mais processos complexos são aplicados. Você pode escolher entre um conjunto de opções ou
+especificar a sua própria.
 
-The third feature of the asset pipeline is it allows coding assets via a
-higher-level language, with precompilation down to the actual assets. Supported
-languages include Sass for CSS, CoffeeScript for JavaScript, and ERB for both by
-default.
+A terceira característica do *asset pipeline* é que permite a codificação dos
+*assets* por meio de uma línguagem de nível superior, com pré-compilação até os
+atuais *assets*. Línguagens suportadas incluem Sass para CSS, CoffeeScript para
+JavaScript, e ERB para ambos por padrão.
 
-### What is Fingerprinting and Why Should I Care?
+### O que é Impressão Digital e Por Que Eu Deveria Me Importar?
 
-Fingerprinting is a technique that makes the name of a file dependent on the
-contents of the file. When the file contents change, the filename is also
-changed. For content that is static or infrequently changed, this provides an
-easy way to tell whether two versions of a file are identical, even across
-different servers or deployment dates.
+Impressão digital é uma técnica que faz o nome do arquivo dependente do conteúdo
+do arquivo. Quando o conteúdo do arquivo muda, o nome do arquivo muda também.
+Para o conteúdo estático ou que muda com pouca frequência, ele tem uma forma
+mais fácil para dizer se duas versões do arquivo são identicas, mesmo através
+de diferentes servidores ou datas de desenvolvimento.
 
-When a filename is unique and based on its content, HTTP headers can be set to
-encourage caches everywhere (whether at CDNs, at ISPs, in networking equipment,
-or in web browsers) to keep their own copy of the content. When the content is
-updated, the fingerprint will change. This will cause the remote clients to
-request a new copy of the content. This is generally known as _cache busting_.
+Quando o nome do arquivo é único e baseado no seu conteúdo, os *headers* HTTP
+podem ser configurados para encorajar armazenamento caches em todo lugar (seja
+em CDNs, em ISPs, nos equipamentos de rede, ou nos navegadores web) para manter
+suas próprias cópias do conteúdo. Quando o conteúdo é atualizado, a impressão digital
+mudará. Isso fará com que os clientes remotos requisitem uma nova cópia do conteúdo.
+Isso é geralmente conhecido como _cache busting_.
 
-The technique Sprockets uses for fingerprinting is to insert a hash of the
-content into the name, usually at the end. For example a CSS file `global.css`
+A téquinica que o Sprockets usa para impressão digital é inserir um *hash* do
+conteúd no nome, geralmente no final. Por exemplo o arquivo CSS `global.css`
 
 ```
 global-908e25f4bf641868d8683022a5b62f54.css
 ```
 
-This is the strategy adopted by the Rails asset pipeline.
+Essa é a estratégia adotada pelo *asset pipeline* do Rails.
 
-Rails' old strategy was to append a date-based query string to every asset linked
-with a built-in helper. In the source the generated code looked like this:
+A antiga estratégia do Rails era anexar uma string de consulta baseada em data
+para cada *asset* vinculado com um *helper* interno. Em resumo o código gerado
+parecia com isso:
 
 ```
 /stylesheets/global.css?1309495796
 ```
 
-The query string strategy has several disadvantages:
+A estratégia de string de consulta tinha várias desvantagens:
 
-1. **Not all caches will reliably cache content where the filename only differs by
-query parameters**
+1. **Nem todos os caches irão armazenar o conteúdo onde o nome do arquivo se
+diferencia apenas por parametrôs de busca**
 
-    [Steve Souders recommends](https://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/),
- "...avoiding a querystring for cacheable resources". He found that in this
-case 5-20% of requests will not be cached. Query strings in particular do not
-work at all with some CDNs for cache invalidation.
+    [recommendação do Steve Souders](https://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/),
+ "...Evitando uma string de consulta para recursos de armazenamento de cache".
+Ele descobriu que nesse caso 5-20% das requisições não irão ser armazenadas em cache.
+Strings de consulta em particular nem sempre funcionam com alguns CDNs por invalidação de cache.
 
-2. **The file name can change between nodes in multi-server environments.**
+2. **O nome do arquivo pode mudar entre nós em ambientes de multi-servidores.**
 
-    The default query string in Rails 2.x is based on the modification time of
-the files. When assets are deployed to a cluster, there is no guarantee that the
-timestamps will be the same, resulting in different values being used depending
-on which server handles the request.
+    A string de consulta padrão no Rails 2.x é baseada na data de modificação dos
+arquivo. Quando os *assets* são implantados em um *cluster*, não há garantia que o
+*timestamps* será o mesmo, resultando em diferentes valores sendo usados dependendo
+de qual servidor lida com a requisição.
 
-3. **Too much cache invalidation**
+3. **Muita invalidação de cache**
 
-    When static assets are deployed with each new release of code, the mtime
-(time of last modification) of _all_ these files changes, forcing all remote
-clients to fetch them again, even when the content of those assets has not changed.
+    Quando *assets* estáticos são implementados com novas versões de código, o *mtime*
+(horário da ultima modificação) de _todos_ esses arquivos muda, forçando todos
+os clientes remotos a encontrarem eles de novo, mesmo quando o conteúdo desses
+*assets* não mudaram.
 
-Fingerprinting fixes these problems by avoiding query strings, and by ensuring
-that filenames are consistent based on their content.
+A Impressão digital resolve esses problemas evitando strings de consulta, e garantindo
+que o nome dos arquivos sejam coerentes com base no seu conteúdo.
 
-Fingerprinting is enabled by default for both the development and production
-environments. You can enable or disable it in your configuration through the
-`config.assets.digest` option.
+A impressão digiral é habilitada por padrão para ambos os ambientes desenvolvimento e
+produção. Você pode habilitar ou desabilitar isso na sua configuração através da opção
+`config.assets.digest`.
 
-More reading:
+Mais leitura:
 
-* [Optimize caching](https://developers.google.com/speed/docs/insights/LeverageBrowserCaching)
-* [Revving Filenames: don't use querystring](http://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/)
+* [Otimizar o armazenamento cache](https://developers.google.com/speed/docs/insights/LeverageBrowserCaching)
+* [Acelerando nome dos arquivos: não use strings de consulta](http://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/)
 
 
 How to Use the Asset Pipeline
