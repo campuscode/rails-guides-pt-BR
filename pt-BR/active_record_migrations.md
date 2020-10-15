@@ -888,12 +888,12 @@ Como alternativa, você deveria escrever uma nova *migration* que execute as mud
 
 O método `revert` pode ajudar ao escrever uma nova *migration* para desfazer *migrations* anteriores no todo ou em partes (veja [Revertendo *Migrations* Anteriores](#revertendo-migrations-anteriores) acima).
 
-Schema Dumping e Você
+*Schema Dumping* e Você
 ----------------------
 
 ### Para que servem arquivos de Schema?
 
-*Migrations*, poderosas como podem ser, não são a fonte oficial para o *schema* do seu banco de dados. Seu banco de dados permanece sendo a fonte oficial. Por padrão, o Rails gera o arquivo `db/schema.rb` (um *schema dump*), que tenta capturar o estado atual do *schema* do seu banco de dados.
+*Migrations*, poderosas como podem ser, não são a fonte oficial para o *schema* do seu banco de dados. Seu banco de dados permanece sendo a fonte oficial. Por padrão, o Rails gera o arquivo `db/schema.rb` (um [*schema dump*](https://pt.wikipedia.org/wiki/Dump_de_banco_de_dados)), que tenta capturar o estado atual do *schema* do seu banco de dados.
 
 Costuma ser mais rápido e menos suscetível a erros criar uma nova instância do banco de dados da sua aplicação caregando o arquivo de *schema* por meio do comando `rails db:schema:load` ao invés de reexecutar todo o histórico de *migrations*.
 [*Migrations* Antigas](#migrations-antigas) podem falhar em sua execução se estas *migrations* usam dependências externas que estejam em constante mudança ou se dependem de um código de aplicação que evolui separadamente das suas *migrations*.
