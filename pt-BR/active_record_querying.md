@@ -2015,7 +2015,7 @@ Você pode executar o *EXPLAIN* nas *queries* disparadas por relações. Por exe
 User.where(id: 1).joins(:articles).explain
 ```
 
-pode retornar
+pode produzir 
 
 ```
 EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`user_id` = `users`.`id` WHERE `users`.`id` = 1
@@ -2037,7 +2037,7 @@ EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`
 
 em MySQL e MariaDB.
 
-O *Active Record* exibe uma impressão que simula a do *shell* do banco de dados correspondente. Então, a mesma *query* sendo executada quando usado o adaptador de PostgreSQL poderá exibir o seguinte:
+O *Active Record* exibe uma impressão que simula a do *shell* do banco de dados correspondente. Então, a mesma *query* sendo executada quando usado o adaptador de PostgreSQL poderá produzir o seguinte:
 
 ```
 EXPLAIN for: SELECT "users".* FROM "users" INNER JOIN "articles" ON "articles"."user_id" = "users"."id" WHERE "users"."id" = 1
@@ -2054,7 +2054,7 @@ EXPLAIN for: SELECT "users".* FROM "users" INNER JOIN "articles" ON "articles"."
 
 O *Eager Loading* pode disparar mais que uma *query* por debaixo dos panos,
 e algumas *queries* podem necessitar de resultados prévios. Por causa disso,
-o `explain` na verdade executa a query, e somente depois solicita o que a *query* planeja.
+o `explain` na verdade executa a *query* e somente depois solicita o que a *query* planeja.
 Por exemplo,
 
 ```ruby
