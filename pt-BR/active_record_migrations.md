@@ -88,9 +88,9 @@ Criando uma *Migration*
 
 *Migrations* são armazenadas em arquivos no diretório `db/migrate`, um para cada classe de
 *migration*. O nome do arquivo tem o seguinte formato
-`YYYYMMDDHHMMSS_create_products.rb`, isto é uma *timestamp* (marcação de data/hora) em UTC identificando a 
-*migration* seguida por um underline seguido pelo 
-nome da *migration*. O nome da classe da migration 
+`YYYYMMDDHHMMSS_create_products.rb`, isto é uma *timestamp* (marcação de data/hora) em UTC identificando a
+*migration* seguida por um underline seguido pelo
+nome da *migration*. O nome da classe da migration
 (em CamelCase) deve corresponder à última parte do nome do arquivo. Por exemplo
 `20080906120000_create_products.rb` deve definir a classe `CreateProducts` e
 `20080906120001_add_details_to_products.rb` deve definir
@@ -310,7 +310,7 @@ Escrevendo uma *Migration*
 Depois de criar sua *migration* usando um dos geradores, é hora de
 começar os trabalhos!
 
-### Criando uma Tabela 
+### Criando uma Tabela
 
 O método `create_table` é um dos mais fundamentais, mas na maioria das vezes,
 ele será criado para você usando um gerador de *scaffold* ou *model*. Um uso
@@ -328,7 +328,7 @@ abaixo, uma coluna implícita `id`.
 Por padrão, o `create_table` criará uma chave primária chamada `id`. Você pode mudar
 o nome da chave primária com a opção `:primary_key` (não esqueça de
 atualizar o *model* correspondente) ou, se você não quer uma chave primária, você
-pode passar a opção `id: false`. Se você precisa passar opções específicas do banco de dados 
+pode passar a opção `id: false`. Se você precisa passar opções específicas do banco de dados
 você pode colocar um fragmento SQL na opção `:option`. Por exemplo:
 
 ```ruby
@@ -984,13 +984,10 @@ with [foreign key constraints](#foreign-keys) in the database.
 Although Active Record does not provide all the tools for working directly with
 such features, the `execute` method can be used to execute arbitrary SQL.
 
-Migrations and Seed Data
+Migrações e Dados de *Seed*
 ------------------------
 
-The main purpose of Rails' migration feature is to issue commands that modify the
-schema using a consistent process. Migrations can also be used
-to add or modify data. This is useful in an existing database that can't be destroyed
-and recreated, such as a production database.
+O propósito principal da funcionalidade de migração do Rails é enviar comandos que modificam o *schema* usando um processo consistente. Migrações também podem ser usadas para inserir ou modificar dados. Isto é útil em um banco de dados existente que não pode ser destruído e criado de novo, como por exemplo um banco de dados em produção.
 
 ```ruby
 class AddInitialProducts < ActiveRecord::Migration[5.0]
@@ -1006,11 +1003,7 @@ class AddInitialProducts < ActiveRecord::Migration[5.0]
 end
 ```
 
-To add initial data after a database is created, Rails has a built-in
-'seeds' feature that makes the process quick and easy. This is especially
-useful when reloading the database frequently in development and test environments.
-It's easy to get started with this feature: just fill up `db/seeds.rb` with some
-Ruby code, and run `rails db:seed`:
+Para inserir dados depois que um banco de dados for criado, o Rails tem uma funcionalidade padrão de *seeds* que torna o processo rápido e fácil. Isto é especialmente útil ao recarregar o banco de dados com frequência nos ambientes de teste e desenvolvimento. É fácil começar a usar esta funcionalidade: simplesmente preencha o arquivo `db/seeds.rb` com código Ruby, e execute `rails db:seed`:
 
 ```ruby
 5.times do |i|
@@ -1018,8 +1011,7 @@ Ruby code, and run `rails db:seed`:
 end
 ```
 
-This is generally a much cleaner way to set up the database of a blank
-application.
+Isto é, geralmente, uma maneira mais limpa para preparar o banco de dados de uma aplicação em branco.
 
 *Migrations* Antigas
 --------------------
