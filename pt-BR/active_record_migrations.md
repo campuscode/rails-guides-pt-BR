@@ -966,23 +966,14 @@ recommended that you check your schema file into source control.
 Merge conflicts can occur in your schema file when two branches modify schema.
 To resolve these conflicts run `rails db:migrate` to regenerate the schema file.
 
-Active Record and Referential Integrity
+*Active Record* e Integridade Referencial
 ---------------------------------------
 
-The Active Record way claims that intelligence belongs in your models, not in
-the database. As such, features such as triggers or constraints,
-which push some of that intelligence back into the database, are not heavily
-used.
+A maneira do *Active Record* trabalhar presume que a inteligência pertence aos seus *models*, não ao banco de dados. Desta forma, funcionalidades como *triggers* ou *constraints*, que enviam um pouco desta inteligência de volta para o banco de dados, não são usadas com frequência.
 
-Validations such as `validates :foreign_key, uniqueness: true` are one way in
-which models can enforce data integrity. The `:dependent` option on
-associations allows models to automatically destroy child objects when the
-parent is destroyed. Like anything which operates at the application level,
-these cannot guarantee referential integrity and so some people augment them
-with [foreign key constraints](#foreign-keys) in the database.
+Validações como `validates :foreign_key, uniqueness: true` são uma maneira pela qual os *models* podem impor integridade dos dados. A opção `:dependent` nas associações permite aos *models* destruir automaticamente objetos filhos quando o objeto pai é destruído. Como qualquer coisa que opera no nível da aplicação, estas validações não podem garantir integridade referencial e assim algumas pessoas as aprimoram com [vínculos de chaves estrangeiras](#foreign-keys) no banco de dados.
 
-Although Active Record does not provide all the tools for working directly with
-such features, the `execute` method can be used to execute arbitrary SQL.
+Embora o *Active Record* não forneça todas as ferramentas para trabalhar diretamente com estas funcionalidades, o método `execute` pode ser usado para executar SQL arbitrário.
 
 Migrações e Dados de *Seed*
 ------------------------
