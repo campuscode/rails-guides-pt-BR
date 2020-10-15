@@ -1,7 +1,7 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-O Asset Pipeline
+O *Asset Pipeline*
 ==================
 
 Este guia aborda o *asset pipeline*.
@@ -11,21 +11,21 @@ Depois de ler este guia, você saberá:
 * O que o *asset pipeline* é e o que ele faz.
 * Como organizar apropriadamente seus *assets* da aplicação.
 * Os benefícios do *asset pipeline*.
-* Como adicionar um pre-processador ao *pipeline*.
+* Como adicionar um pré-processador ao *pipeline*.
 * Como empacotar os *assets* com uma *gem*.
 
 --------------------------------------------------------------------------------
 
-O que é o Asset Pipeline?
+O que é o *Asset Pipeline*?
 ---------------------------
 
 O *asset pipeline* fornece um *framework* para concatenar e minificar ou comprimir
 *assets* JavaScript e CSS. Ele também tem a habilidade de escrever esses *assets* em
-outras línguas e pré-processadores tais como CoffeeScript, Sass e ERB.
+outras linguagens e pré-processadores tais como CoffeeScript, Sass e ERB.
 Isso permite que os *assets* da sua aplicação sejam automaticamente combinados com
 *assets* de outras *gems*.
 
-O *asset pipeline* é implementado pela gem
+O *asset pipeline* é implementado pela *gem*
 [sprockets-rails](https://github.com/rails/sprockets-rails),
 e é habilitado por padrão. Você pode desabilitar enquanto está criando uma nova aplicação
 passando a opção `--skip-sprockets`.
@@ -34,18 +34,18 @@ passando a opção `--skip-sprockets`.
 rails new appname --skip-sprockets
 ```
 
-O Rails automaticamente adiciona a gem `sass-rails` no seu `Gemfile`, o qual é
+O Rails automaticamente adiciona a *gem* `sass-rails` no seu `Gemfile`, o qual é
 usado pelo Sprockets para comprimir o *asset*:
 
 ```ruby
 gem 'sass-rails'
 ```
 
-Usando a opção `--skip-sprockets` previnirá que o rails adicione ao seu `Gemfile`,
+Usando a opção `--skip-sprockets` previnirá que o Rails adicione ao seu `Gemfile`,
 então se mais tarde você quiser habilitar o *asset pipeline* você terá que adicionar
 essas *gems* ao seu `Gemfile`. Além disso, criando uma aplicação com a opção `--skip-sprockets`
 gerará um arquivo `config/application.rb` levemente diferente, com a declaração de requerimento
-para o sprockets que está comentado. Você terá de remover o operador de comentário nessa linha
+para o *sprockets* que está comentado. Você terá de remover o operador de comentário nessa linha
 para depois habilitar o *asset pipeline*:
 
 ```ruby
@@ -68,24 +68,24 @@ incluída no `Gemfile` e nenhuma opção `config.assets.css_compressor` é defin
 ### Principais Características
 
 A primeira característica do *pipeline* é concatenar os *assets*, o qual pode
-reduzir o número de requisições que o navegador faz para renderizar a página web.
-Navegadores web são limitados no número de requisições que eles podem fazer em paralelo,
+reduzir o número de requisições que o navegador faz para renderizar uma página web.
+Os navegadores web são limitados no número de requisições que eles podem fazer em paralelo,
 portanto, menos solicitações podem significar carregamento mais rápido de sua aplicação.
 
-O Sprockets concatena todos os arquivos JavaScript em um arquivo mestre `.js` e todos
-os arquivos CSS em um arquivo mestre `.css`. Como você aprenderá mais tarde neste guia,
+O *Sprockets* concatena todos os arquivos JavaScript em um arquivo principal `.js` e todos
+os arquivos CSS em um arquivo principal `.css`. Como você aprenderá mais tarde neste guia,
 você pode mudar esta estratégia para agrupar arquivos da maneira que quiser. Em produção,
 o Rails insere uma impressão digital SHA256 dentro de cada nome de arquivo para que o arquivo
-seja armazenado em cache no navegador. Você pode invalidar o armazenamento cache alterando essa
+seja armazenado em cache no navegador. Você pode invalidar o armazenamento *cache* alterando essa
 impressão digital, o qual acontece automaticamente sempre que você muda o conteúdo do arquivo.
 
 A segunda característica do *asset pipeline* é a minificação ou compactação do *asset*.
-Para arquivos CSS, isso é fito removendo espaços em branco e comentários. Para JavaScript,
+Para arquivos CSS, isso é feito removendo espaços em branco e comentários. Para JavaScript,
 mais processos complexos são aplicados. Você pode escolher entre um conjunto de opções ou
 especificar a sua própria.
 
 A terceira característica do *asset pipeline* é que permite a codificação dos
-*assets* por meio de uma línguagem de nível superior, com pré-compilação até os
+*assets* por meio de uma línguagem de alto nível, com pré-compilação até os
 atuais *assets*. Línguagens suportadas incluem Sass para CSS, CoffeeScript para
 JavaScript, e ERB para ambos por padrão.
 
@@ -94,18 +94,18 @@ JavaScript, e ERB para ambos por padrão.
 Impressão digital é uma técnica que faz o nome do arquivo dependente do conteúdo
 do arquivo. Quando o conteúdo do arquivo muda, o nome do arquivo muda também.
 Para o conteúdo estático ou que muda com pouca frequência, ele tem uma forma
-mais fácil para dizer se duas versões do arquivo são identicas, mesmo através
+mais fácil para dizer se duas versões do arquivo são idênticas, mesmo através
 de diferentes servidores ou datas de desenvolvimento.
 
 Quando o nome do arquivo é único e baseado no seu conteúdo, os *headers* HTTP
-podem ser configurados para encorajar armazenamento caches em todo lugar (seja
+podem ser configurados para encorajar armazenamento *caches* em todo lugar (seja
 em CDNs, em ISPs, nos equipamentos de rede, ou nos navegadores web) para manter
 suas próprias cópias do conteúdo. Quando o conteúdo é atualizado, a impressão digital
 mudará. Isso fará com que os clientes remotos requisitem uma nova cópia do conteúdo.
 Isso é geralmente conhecido como _cache busting_.
 
-A téquinica que o Sprockets usa para impressão digital é inserir um *hash* do
-conteúd no nome, geralmente no final. Por exemplo o arquivo CSS `global.css`
+A técnica que o *Sprockets* usa para impressão digital é inserir um *hash* do
+conteúdo no nome, geralmente no final. Por exemplo o arquivo CSS `global.css`
 
 ```
 global-908e25f4bf641868d8683022a5b62f54.css
@@ -113,7 +113,7 @@ global-908e25f4bf641868d8683022a5b62f54.css
 
 Essa é a estratégia adotada pelo *asset pipeline* do Rails.
 
-A antiga estratégia do Rails era anexar uma string de consulta baseada em data
+A antiga estratégia do Rails era anexar uma *Query String*(string de consulta) baseada em data
 para cada *asset* vinculado com um *helper* interno. Em resumo o código gerado
 parecia com isso:
 
@@ -121,41 +121,41 @@ parecia com isso:
 /stylesheets/global.css?1309495796
 ```
 
-A estratégia de string de consulta tinha várias desvantagens:
+A estratégia de *Query String*(string de consulta) tinha várias desvantagens:
 
-1. **Nem todos os caches irão armazenar o conteúdo onde o nome do arquivo se
-diferencia apenas por parametrôs de busca**
+1. **Nem todos os *caches* irão armazenar o conteúdo onde o nome do arquivo se
+diferencia apenas por parâmetros de busca**
 
     [recommendação do Steve Souders](https://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/),
- "...Evitando uma string de consulta para recursos de armazenamento de cache".
+ "...Evitando uma *Query String*(string de consulta) para recursos de armazenamento de *cache*".
 Ele descobriu que nesse caso 5-20% das requisições não irão ser armazenadas em cache.
-Strings de consulta em particular nem sempre funcionam com alguns CDNs por invalidação de cache.
+*Query String*(string de consulta) em particular nem sempre funcionam com alguns CDNs por invalidação de cache.
 
 2. **O nome do arquivo pode mudar entre nós em ambientes de multi-servidores.**
 
-    A string de consulta padrão no Rails 2.x é baseada na data de modificação dos
-arquivo. Quando os *assets* são implantados em um *cluster*, não há garantia que o
+    A *Query String*(string de consulta) padrão no Rails 2.x é baseada na data de modificação dos
+arquivos. Quando os *assets* são implantados em um *cluster*, não há garantia que o
 *timestamps* será o mesmo, resultando em diferentes valores sendo usados dependendo
 de qual servidor lida com a requisição.
 
 3. **Muita invalidação de cache**
 
     Quando *assets* estáticos são implementados com novas versões de código, o *mtime*
-(horário da ultima modificação) de _todos_ esses arquivos muda, forçando todos
+(horário da última modificação) de _todos_ esses arquivos muda, forçando todos
 os clientes remotos a encontrarem eles de novo, mesmo quando o conteúdo desses
 *assets* não mudaram.
 
-A Impressão digital resolve esses problemas evitando strings de consulta, e garantindo
+A Impressão digital resolve esses problemas evitando *Query String*(string de consulta), e garantindo
 que o nome dos arquivos sejam coerentes com base no seu conteúdo.
 
-A impressão digiral é habilitada por padrão para ambos os ambientes desenvolvimento e
+A impressão digital é habilitada por padrão para ambos os ambientes desenvolvimento e
 produção. Você pode habilitar ou desabilitar isso na sua configuração através da opção
 `config.assets.digest`.
 
 Mais leitura:
 
 * [Otimizar o armazenamento cache](https://developers.google.com/speed/docs/insights/LeverageBrowserCaching)
-* [Acelerando nome dos arquivos: não use strings de consulta](http://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/)
+* [Acelerando nome dos arquivos: não use *Query String*(string de consulta)](http://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/)
 
 
 How to Use the Asset Pipeline
