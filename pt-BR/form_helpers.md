@@ -317,13 +317,13 @@ irá criar um formulário que submete ao `ArticlesController` dentro do *namespa
 form_with model: [:admin, :management, @article]
 ```
 
-Para mais informações sobre o sistema de roteamento Rails e as convenções associadas, consulte o [guia Rails Routing from the Outside In](routing.html) guide.
+Para mais informações sobre o sistema de roteamento Rails e as convenções associadas, consulte o [guia Rails Routing from the Outside In](routing.html).
 
-### How do forms with PATCH, PUT, or DELETE methods work?
+### Como os formulários funcionam com os métodos *PATCH*, *PUT*, ou *DELETE*?
 
-The Rails framework encourages RESTful design of your applications, which means you'll be making a lot of "PATCH", "PUT", and "DELETE" requests (besides "GET" and "POST"). However, most browsers _don't support_ methods other than "GET" and "POST" when it comes to submitting forms.
+O *framework* Rails  incentiva o design *RESTful* de seus aplicativos, o que significa que você fará muitas requisições *"PATCH"*, *"PUT"*, e *"DELETE"* (além de *"GET"* e *"POST"*). Entretanto, a maioria dos navegadores _não suportam_ métodos diferentes de *"GET"* e *"POST"* quando se trata de envio de formulários.
 
-Rails works around this issue by emulating other methods over POST with a hidden input named `"_method"`, which is set to reflect the desired method:
+O Rails contorna esse problema emulando outros métodos no *POST* com uma entrada oculta `"_method"`, que é definida para refletir o método desejado:
 
 ```ruby
 form_with(url: search_path, method: "patch")
@@ -339,9 +339,9 @@ Resultado:
 </form>
 ```
 
-When parsing POSTed data, Rails will take into account the special `_method` parameter and act as if the HTTP method was the one specified inside it ("PATCH" in this example).
+Ao analisar os dados submetidos pelo *POST*, o Rails levará em consideração o parâmetro especial `_method` e agirá como se o método HTTP fosse aquele especificado dentro dele (*"PATCH"* nesse exemplo).
 
-IMPORTANT: All forms using `form_with` implement `remote: true` by default. These forms will submit data using an XHR (Ajax) request. To disable this include `local: true`. To dive deeper see [Working with JavaScript in Rails](working_with_javascript_in_rails.html#remote-elements) guide.
+IMPORTANT: Todos os formulários usando `form_with` implementam `remote: true` por padrão. Esses formulários enviarão dados usando requisições XHR (*Ajax*). Para desabilitar isso, inclua `local: true`. Para se aprofundar, veja o guia [Trabalhando com JavaScript no Rails](working_with_javascript_in_rails.html#remote-elements).
 
 Criando Caixas de Seleção (*Select Boxes*) com Facilidade
 -----------------------------
