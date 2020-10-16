@@ -281,7 +281,7 @@ O *model* Article está disponível para os usuários da aplicação, portanto -
 resources :articles
 ```
 
-TIP: Declarar um recurso tem vários efeitos colaterais. Consulte [o guia Rails *Routing from the Outside In*](routing.html#resource-routing-the-rails-default) para obter mais informações como configurar e usar recursos.
+TIP: Declarar um recurso tem vários efeitos colaterais. Consulte [o guia Rotas do Rails de Fora pra Dentro](routing.html#roteando-resources-recursos-o-padrao-do-rails) para obter mais informações como configurar e usar recursos.
 
 Ao lidar com recursos RESTful, as chamadas de `form_with` ficam significativamente mais fáceis se você contar com a **identificação de registros**. Resumindo, você pode apenas passar a instância do modelo e fazer com que o Rails descubra o nome do modelo e o resto:
 
