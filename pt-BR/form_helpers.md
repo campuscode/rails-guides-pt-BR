@@ -299,7 +299,7 @@ form_with(model: @article, url: article_path(@article), method: "patch")
 form_with(model: @article)
 ```
 
-Observe como a `form_with` chamada de estilo abreviado é convenientemente a mesma, independentemente de o registro ser novo ou existente. A identificação de registros é inteligente o suficiente para descobrir se o registro é novo, chamando `record.persisted?`. Ele também seleciona o caminho correto para enviar e o nome com base na classe do objeto.
+Observe como a chamada de estilo abreviado `form_with` é convenientemente a mesma, independentemente de o registro ser novo ou existente. A identificação de registros é inteligente o suficiente para descobrir se o registro é novo, chamando `record.persisted?`. Ele também seleciona o caminho correto para enviar e o nome com base na classe do objeto.
 
 WARNING: Quando você está usando herança de tabela única  (STI ou *single-table inheritance*) em seus objetos *model*, você não pode confiar na identificação de registro em uma subclasse se apenas sua classe pai for declarada um recurso. Você terá que especificar `:url`, e `:scope` (o nome do *model*) explicitamente.
 
