@@ -341,7 +341,7 @@ Resultado:
 
 Ao analisar os dados submetidos pelo *POST*, o Rails levará em consideração o parâmetro especial `_method` e agirá como se o método HTTP fosse aquele especificado dentro dele (*"PATCH"* nesse exemplo).
 
-IMPORTANT: Todos os formulários usando `form_with` implementam `remote: true` por padrão. Esses formulários enviarão dados usando requisições XHR (*Ajax*). Para desabilitar isso, inclua `local: true`. Para se aprofundar, veja o guia [Trabalhando com JavaScript no Rails](working_with_javascript_in_rails.html#remote-elements).
+IMPORTANT: Todos os formulários usando `form_with` implementam `remote: true` por padrão. Esses formulários enviarão dados usando requisições XHR (*Ajax*). Para desabilitar isso, inclua `local: true`. Para se aprofundar, veja o guia [Trabalhando com JavaScript no Rails](working_with_javascript_in_rails.html#elementos-remotos).
 
 Criando Caixas de Seleção (*Select Boxes*) com Facilidade
 -----------------------------
