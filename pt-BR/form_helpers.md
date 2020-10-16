@@ -183,7 +183,7 @@ Trabalhando com Objetos *Model*
 
 ### *Helpers* de Objetos *Model*
 
-Uma tarefa particularmente comum para um formulário é editar ou criar um objeto *model*. Enquanto os *helpers* `*_tag` possam ser usados para essa tarefa, eles são um pouco verbosos, pois para cada tag você teria que garantir que o nome do parâmetro correto seja usado e atribuir o valor padrão de entrada de maneira apropriada. O Rails fornece *helpers* personalizados para essa função. Esses *helpers* não possuem o sufixo `_tag`, por exemplo `text_field`, `text_area`.
+Uma tarefa particularmente comum para um formulário é editar ou criar um objeto *model*. Embora os *helpers* `*_tag` possam ser usados para essa tarefa, eles são um pouco verbosos, pois para cada *tag* você teria que garantir que o nome do parâmetro correto seja usado e atribuir o valor padrão de entrada de maneira apropriada. O Rails fornece *helpers* personalizados para essa função. Esses *helpers* não possuem o sufixo `_tag`, por exemplo `text_field`, `text_area`.
 
 Para esses *helpers* o primeiro argumento é o nome de uma variável de instância e o segundo é o nome de um método (geralmente um atributo) para chamar esse objeto. O Rails vai definir o valor do controle de entrada para o valor de retorno daquele método para o objeto e definirá um nome de entrada apropriado. Se o seu controlador definiu `@person` e o nome dessa pessoa é Henry, um formulário contendo:
 
