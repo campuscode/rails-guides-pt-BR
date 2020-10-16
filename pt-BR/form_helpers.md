@@ -301,23 +301,23 @@ form_with(model: @article)
 
 Observe como a `form_with` chamada de estilo abreviado é convenientemente a mesma, independentemente de o registro ser novo ou existente. A identificação de registros é inteligente o suficiente para descobrir se o registro é novo, chamando `record.persisted?`. Ele também seleciona o caminho correto para enviar e o nome com base na classe do objeto.
 
-WARNING: When you're using STI (single-table inheritance) with your models, you can't rely on record identification on a subclass if only their parent class is declared a resource. You will have to specify `:url`, and `:scope` (the model name) explicitly.
+WARNING: Quando você está usando herança de tabela única  (STI ou *single-table inheritance*) em seus objetos *model*, você não pode confiar na identificação de registro em uma subclasse se apenas sua classe pai for declarada um recurso. Você terá que especificar `:url`, e `:scope` (o nome do *model*) explicitamente.
 
-#### Dealing with Namespaces
+#### Trabalhando com *Namespaces*
 
-If you have created namespaced routes, `form_with` has a nifty shorthand for that too. If your application has an admin namespace then
+Se você criou rotas com *namespaces*, `form_with` tem uma abreviatura bacana para isso também. Se o seu aplicativo tiver um *namespace* de administrador,
 
 ```ruby
 form_with model: [:admin, @article]
 ```
 
-will create a form that submits to the `ArticlesController` inside the admin namespace (submitting to `admin_article_path(@article)` in the case of an update). If you have several levels of namespacing then the syntax is similar:
+irá criar um formulário que submete ao `ArticlesController` dentro do *namespace* do administrador (submetendo a `admin_article_path(@article)` no caso de uma atualização). Se você tiver vários níveis de *namespacing*, a sintaxe será semelhante:
 
 ```ruby
 form_with model: [:admin, :management, @article]
 ```
 
-For more information on Rails' routing system and the associated conventions, please see [Rails Routing from the Outside In](routing.html) guide.
+Para mais informações sobre o sistema de roteamento Rails e as convenções associadas, consulte o [guia Rails Routing from the Outside In](routing.html) guide.
 
 ### How do forms with PATCH, PUT, or DELETE methods work?
 
