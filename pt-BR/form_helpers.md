@@ -203,11 +203,11 @@ WARNING: Você deve passar o nome da instância da variável, i.e. `:person` ou 
 
 O Rails fornece *helpers* para exibição de validação de erros associados ao objeto *model*. Esses são abordados em detalhes no guia de [Validação do *Active Record*](active_record_validations.html#displaying-validation-errors-in-views).
 
-### Binding a Form to an Object
+### Vinculando um formulário a um objeto
 
-While this is an increase in comfort it is far from perfect. If `Person` has many attributes to edit then we would be repeating the name of the edited object many times. What we want to do is somehow bind a form to a model object, which is exactly what `form_with` with `:model` does.
+Embora isso seja muito confortável, está longe de ser perfeito. Se `Person` tiver muitos atributos para editar, estaríamos repetindo o nome do objeto editado várias vezes. O que queremos fazer é de alguma forma vincular um formulário a um objeto *model*, que é exatamente o que `form_with` com `:model` faz.
 
-Assume we have a controller for dealing with articles `app/controllers/articles_controller.rb`:
+Suponha que temos um *controller* para lidar com *articles* `app/controllers/articles_controller.rb`:
 
 ```ruby
 def new
@@ -215,7 +215,7 @@ def new
 end
 ```
 
-The corresponding view `app/views/articles/new.html.erb` using `form_with` looks like this:
+A *view* correspondente `app/views/articles/new.html.erb` usando `form_with` fica algo parecido com:
 
 ```erb
 <%= form_with model: @article, class: "nifty_form" do |f| %>
@@ -225,15 +225,15 @@ The corresponding view `app/views/articles/new.html.erb` using `form_with` looks
 <% end %>
 ```
 
-There are a few things to note here:
+Existem algumas coisas a serem observadas aqui:
 
-* `@article` is the actual object being edited.
-* There is a single hash of options. HTML options (except `id` and `class`) are passed in the `:html` hash. Also you can provide a `:namespace` option for your form to ensure uniqueness of id attributes on form elements. The scope attribute will be prefixed with underscore on the generated HTML id.
-* The `form_with` method yields a **form builder** object (the `f` variable).
-* If you wish to direct your form request to a particular URL, you would use `form_with url: my_nifty_url_path` instead. To see more in depth options on what `form_with` accepts be sure to [check out the API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
-* Methods to create form controls are called **on** the form builder object `f`.
+* `@article` é o objeto real que está sendo editado.
+* Existe um único *hash* de opções. Opções HTML (exceto `id` e `class`) são passadas no *hash* `:html`. Além disso, você pode fornecer uma opção `:namespace` no seu formulário para garantir a exclusividade dos atributos de *id* nos elementos do formulário. O atributo de escopo será prefixado com sublinhado no id HTML gerado.
+* O método `form_with` produz um objeto **construtor de formulário** (a variável `f`).
+* Se você deseja direcionar sua requisição de formulário para um URL específico, use `form_with url: my_nifty_url_path`. Para ver as opções mais detalhadas sobre o que `form_with` aceita, [verifique a documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
+* Métodos para criar controles de formulário são chamados **no** objeto construtor de formulário `f`.
 
-The resulting HTML is:
+O HTML produzido é:
 
 ```html
 <form class="nifty_form" action="/articles" accept-charset="UTF-8" data-remote="true" method="post">
@@ -244,13 +244,13 @@ The resulting HTML is:
 </form>
 ```
 
-The object passed as `:model` in `form_with` controls the key used in `params` to access the form's values. Here the name is `article` and so all the inputs have names of the form `article[attribute_name]`. Accordingly, in the `create` action `params[:article]` will be a hash with keys `:title` and `:body`. You can read more about the significance of input names in chapter [Understanding Parameter Naming Conventions](#understanding-parameter-naming-conventions) of this guide.
+O objeto passado como `:model` em `form_with` controla a chave usada em `params` para acessar os valores do fomulário. Aqui está o nome `article` e, portanto, todas as entradas tem nomes do formulário `article[attribute_name]`. Assim, na ação `create` haverá um *hash* `params[:article]` com as chaves `:title` e `:body`. Você pode ler mais sobre a importância dos nomes de entrada n capítulo [Compreendendo as convenções de nomemclatura de parametros](#understanding-parameter-naming-conventions) deste guia.
 
-TIP: Conventionally your inputs will mirror model attributes. However, they don't have to! If there is other information you need you can include it in your form just as with attributes and access it via `params[:article][:my_nifty_non_attribute_input]`.
+TIP: Convencionalmente, suas entradas espelharão os atributos do *model*. No entanto, eles não precisam! Se houver outras informações de que você precisa, você pode incluí-las em seu formulário da mesma forma que os atributos e acessá-las via `params[:article][:my_nifty_non_attribute_input]`.
 
-The helper methods called on the form builder are identical to the model object helpers except that it is not necessary to specify which object is being edited since this is already managed by the form builder.
+Os métodos *helper* chamados no construtor de formulário (*form builder*) são identicos ao objeto *model helper*, exceto que não é necessário especificar qual objeto está sendo editado, pois isso já é gerenciado pelo construtor de formulário.
 
-You can create a similar binding without actually creating `<form>` tags with the `fields_for` helper. This is useful for editing additional model objects with the same form. For example, if you had a `Person` model with an associated `ContactDetail` model, you could create a form for creating both like so:
+Você pode criar uma vinculação semelhante sem realmente criar uma tag `<form>` com o *helper* `fields_for`. Isso é útil para editar objetos *model* adicionais com o mesmo formulário. Por exemplo, se você tem um *model* `Person` vínculado à um *model* `ContactDetail`, você pode criar um formulário para criar os dois, assim:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -261,7 +261,7 @@ You can create a similar binding without actually creating `<form>` tags with th
 <% end %>
 ```
 
-which produces the following output:
+que produz a seguinte saída:
 
 ```html
 <form action="/people" accept-charset="UTF-8" data-remote="true" method="post">
@@ -271,19 +271,19 @@ which produces the following output:
 </form>
 ```
 
-The object yielded by `fields_for` is a form builder like the one yielded by `form_with`.
+O objeto produzido por `fields_for` é um construtor de formulário igual ao produzido por `form_with`.
 
-### Relying on Record Identification
+### Confiando na Identificação de Registro
 
-The Article model is directly available to users of the application, so - following the best practices for developing with Rails - you should declare it **a resource**:
+O *model* Article está disponível para os usuários da aplicação, portanto - seguindo as melhores praticas para desenvolvimento com Rails - você deve declará-lo **um recurso**:
 
 ```ruby
 resources :articles
 ```
 
-TIP: Declaring a resource has a number of side effects. See [Rails Routing from the Outside In](routing.html#resource-routing-the-rails-default) guide for more information on setting up and using resources.
+TIP: Declarar um recurso tem vários efeitos colaterais. Consulte [o guia Rails *Routing from the Outside In*](routing.html#resource-routing-the-rails-default) para obter mais informações como configurar e usar recursos.
 
-When dealing with RESTful resources, calls to `form_with` can get significantly easier if you rely on **record identification**. In short, you can just pass the model instance and have Rails figure out model name and the rest:
+Ao lidar com recursos RESTful, as chamadas de `form_with` ficam significativamente mais fáceis se você contar com a **identificação de registros**. Resumindo, você pode apenas passar a instância do modelo e fazer com que o Rails descubra o nome do modelo e o resto:
 
 ```ruby
 ## Creating a new article
@@ -299,7 +299,7 @@ form_with(model: @article, url: article_path(@article), method: "patch")
 form_with(model: @article)
 ```
 
-Notice how the short-style `form_with` invocation is conveniently the same, regardless of the record being new or existing. Record identification is smart enough to figure out if the record is new by asking `record.persisted?`. It also selects the correct path to submit to, and the name based on the class of the object.
+Observe como a `form_with` chamada de estilo abreviado é convenientemente a mesma, independentemente de o registro ser novo ou existente. A identificação de registros é inteligente o suficiente para descobrir se o registro é novo, chamando `record.persisted?`. Ele também seleciona o caminho correto para enviar e o nome com base na classe do objeto.
 
 WARNING: When you're using STI (single-table inheritance) with your models, you can't rely on record identification on a subclass if only their parent class is declared a resource. You will have to specify `:url`, and `:scope` (the model name) explicitly.
 
