@@ -230,7 +230,7 @@ Existem algumas coisas a serem observadas aqui:
 * `@article` é o objeto real que está sendo editado.
 * Existe um único *hash* de opções. Opções HTML (exceto `id` e `class`) são passadas no *hash* `:html`. Além disso, você pode fornecer uma opção `:namespace` no seu formulário para garantir a exclusividade dos atributos de *id* nos elementos do formulário. O atributo de escopo será prefixado com sublinhado no id HTML gerado.
 * O método `form_with` produz um objeto **construtor de formulário** (a variável `f`).
-* Se você deseja direcionar sua requisição de formulário para um URL específico, use `form_with url: my_nifty_url_path`. Para ver as opções mais detalhadas sobre o que `form_with` aceita, [verifique a documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
+* Se você deseja direcionar sua requisição de formulário para uma URL específica, use `form_with url: my_nifty_url_path`. Para ver as opções mais detalhadas sobre o que `form_with` aceita, [verifique a documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
 * Métodos para criar controles de formulário são chamados **no** objeto construtor de formulário `f`.
 
 O HTML produzido é:
