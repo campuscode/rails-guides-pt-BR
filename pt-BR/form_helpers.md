@@ -244,7 +244,7 @@ O HTML produzido é:
 </form>
 ```
 
-O objeto passado como `:model` em `form_with` controla a chave usada em `params` para acessar os valores do fomulário. Aqui está o nome `article` e, portanto, todas as entradas tem nomes do formulário `article[attribute_name]`. Assim, na ação `create` haverá um *hash* `params[:article]` com as chaves `:title` e `:body`. Você pode ler mais sobre a importância dos nomes de entrada n capítulo [Compreendendo as convenções de nomemclatura de parametros](#understanding-parameter-naming-conventions) deste guia.
+O objeto passado como `:model` em `form_with` controla a chave usada em `params` para acessar os valores do fomulário. Aqui está o nome `article` e, portanto, todas as entradas tem nomes do formulário `article[attribute_name]`. Assim, na ação `create` haverá um *hash* `params[:article]` com as chaves `:title` e `:body`. Você pode ler mais sobre a importância dos nomes de entrada no capítulo [Entendendo Convenções de Nomeação de Parâmetros](#entendendo-convencoes-de-nomeacao-de-parametros) deste guia.
 
 TIP: Convencionalmente, suas entradas espelharão os atributos do *model*. No entanto, eles não precisam! Se houver outras informações de que você precisa, você pode incluí-las em seu formulário da mesma forma que os atributos e acessá-las via `params[:article][:my_nifty_non_attribute_input]`.
 
