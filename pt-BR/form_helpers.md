@@ -317,7 +317,7 @@ irá criar um formulário que submete ao `ArticlesController` dentro do *namespa
 form_with model: [:admin, :management, @article]
 ```
 
-Para mais informações sobre o sistema de roteamento Rails e as convenções associadas, consulte o [guia Rails Routing from the Outside In](routing.html).
+Para mais informações sobre o sistema de roteamento Rails e as convenções associadas, consulte o [guia Rotas do Rails de Fora pra Dentro](routing.html).
 
 ### Como os formulários funcionam com os métodos *PATCH*, *PUT*, ou *DELETE*?
 
