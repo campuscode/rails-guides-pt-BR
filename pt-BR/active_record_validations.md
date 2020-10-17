@@ -1297,14 +1297,14 @@ Uma vez criado o *model* e adicionada as validações, se o *model* é criado vi
 formulário web, você provavelmente quer mostrar uma mensagem de erro quando uma
 das validações falhar.
 
-Devido a cada aplicação lidar com esse tipo de coisa de forma diferente, o Rails
-não inclue nenhum *helper* na *view* para ajudar a gerar essas mensagen
+Devido a cada aplicação lidar com esse tipo de cenário de forma diferente, o Rails
+não inclui nenhum *helper* na *view* para ajudar a gerar essas mensagens
 diretamente.
-Contudo, devido ao rico numero de métodos que o Rails nos da para interagirmos
+Contudo, devido ao rico número de métodos que o Rails nos da para interagirmos
 com validações em geral, é muito fácil criar as nossas próprias validações.
 Além disso, quando geramos o *scaffold*, o Rails colocará algum *ERB* dentro
-de `_form.html.erb` que ele gera que exibe a lista completa de erros naquele
-modelo.
+de `_form.html.erb` que ele gera, exibindo a lista completa de erros naquele
+*model*.
 
 Supondo que temos um modelo que foi salvo em uma variável de instância chamada
 `@article`, terá a seguinte aparência:
@@ -1323,8 +1323,8 @@ Supondo que temos um modelo que foi salvo em uma variável de instância chamada
 <% end %>
 ```
 
-Portanto, se você use os *helpers* de formulário do Rails pra gerar seus
-formulários, quando um erro de validação ocorrer num campo, isso irá gerar
+Portanto, se você usar os *helpers* de formulário do Rails para gerar seus
+formulários, quando um erro de validação ocorrer em um campo, isso vai gerar
 uma `<div>` extra ao redor da entrada.
 
 ```
@@ -1333,8 +1333,8 @@ uma `<div>` extra ao redor da entrada.
 </div>
 ```
 
-Você pode definir o estilo desta div como preferir. O *scaffold*
-padrão que o Rails gera, por exemplo, adicione essa regra *CSS*:
+Você pode definir o estilo desta *div* como preferir. O *scaffold*
+padrão que o Rails gera, por exemplo, adiciona essa regra *CSS*:
 
 ```
 .field_with_errors {
@@ -1344,4 +1344,4 @@ padrão que o Rails gera, por exemplo, adicione essa regra *CSS*:
 }
 ```
 
-Isso significa que qualquer campo com erro irá acabar com 2 pixels de borda vermelha.
+Isso significa que qualquer campo com erro termina com 2 *pixels* de borda vermelha.
