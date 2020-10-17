@@ -1549,7 +1549,7 @@ Client.unscoped {
 Localizadores Dinâmicos
 ---------------
 
-Para cada campo (também conhecido como atributo) que você define na sua tabela, o Active Record fornece um método localizador. Se você tiver um campo chamado `first_name` no seu *model* `Client` por exemplo, você terá de graça o método `find_by_first_name` fornecido pelo Active Record. Se você tiver o campo `locked` no seu *model* `Client`, você também receberá o método `find_by_locked`.
+Para cada campo (também conhecido como atributo) que você define na sua tabela, o *Active Record* fornece um método localizador. Se você tiver um campo chamado `first_name` no seu *model* `Client` por exemplo, você terá de graça o método `find_by_first_name` fornecido pelo *Active Record*. Se você tiver o campo `locked` no seu *model* `Client`, você também receberá o método `find_by_locked`.
 
 Você pode especificar o ponto de exclamação (`!`) no final de um localizador dinâmico para que ele levante um erro `ActiveRecord::RecordNotFound` caso não seja retornado nenhum registro, por exemplo `Client.find_by_name!("Ryan")`
 
