@@ -250,7 +250,7 @@ TIP: Convencionalmente, suas entradas espelharão os atributos do *model*. No en
 
 Os métodos *helper* chamados no construtor de formulário (*form builder*) são identicos ao objeto *model helper*, exceto que não é necessário especificar qual objeto está sendo editado, pois isso já é gerenciado pelo construtor de formulário.
 
-Você pode criar uma vinculação semelhante sem realmente criar uma tag `<form>` com o *helper* `fields_for`. Isso é útil para editar objetos *model* adicionais com o mesmo formulário. Por exemplo, se você tem um *model* `Person` vínculado à um *model* `ContactDetail`, você pode criar um formulário para criar os dois, assim:
+Você pode criar uma vinculação semelhante sem realmente criar uma tag `<form>` com o *helper* `fields_for`. Isso é útil para editar objetos *model* adicionais com o mesmo formulário. Por exemplo, se você tem um *model* `Person` vinculado à um *model* `ContactDetail`, você pode criar um formulário para criar os dois, assim:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
