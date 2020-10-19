@@ -270,7 +270,7 @@ WARNING. Any exception that is not `ActiveRecord::Rollback` or `ActiveRecord::Re
 *Callbacks* Relacionais
 --------------------
 
-*Callbacks* trabalham através de relacionamentos dos *models* e podem até ser definidos por eles. Suponha um exemplo onde um usuário tenha muitos artigos. Um artigo de um usuário deve ser apagado se o usuario for apagado. Vamos adicionar um *callback* `after_destroy` para o *model* `User` por meio de seu relacionamento com o *model* ʻArticle`:
+*Callbacks* trabalham através de relacionamentos dos *models* e podem até ser definidos por eles. Suponha um exemplo onde um usuário tenha muitos artigos. Um artigo de um usuário deve ser apagado se o usuario for apagado. Vamos adicionar um *callback* `after_destroy` para o *model* `User` por meio de seu relacionamento com o *model* `Article`:
 
 ```ruby
 class User < ApplicationRecord
