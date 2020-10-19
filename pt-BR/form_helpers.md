@@ -203,7 +203,7 @@ WARNING: Você deve passar o nome da instância da variável, i.e. `:person` ou 
 
 O Rails fornece *helpers* para exibição de validação de erros associados ao objeto *model*. Esses são abordados em detalhes no guia de [Validação do *Active Record*](active_record_validations.html#displaying-validation-errors-in-views).
 
-### Vinculando um formulário a um objeto
+### Vinculando um Formulário a um Objeto
 
 Embora isso seja muito confortável, está longe de ser perfeito. Se `Person` tiver muitos atributos para editar, estaríamos repetindo o nome do objeto editado várias vezes. O que queremos fazer é de alguma forma vincular um formulário a um objeto *model*, que é exatamente o que `form_with` com `:model` faz.
 
