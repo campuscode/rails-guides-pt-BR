@@ -275,7 +275,7 @@ O objeto produzido por `fields_for` é um construtor de formulário igual ao pro
 
 ### Confiando na Identificação de Registro
 
-O *model* Article está disponível para os usuários da aplicação, portanto - seguindo as melhores praticas para desenvolvimento com Rails - você deve declará-lo **um recurso**:
+O *model* Article está disponível para os usuários da aplicação, portanto - seguindo as melhores praticas para desenvolvimento com Rails - você deve declará-lo **um recurso (*resource*)**:
 
 ```ruby
 resources :articles
