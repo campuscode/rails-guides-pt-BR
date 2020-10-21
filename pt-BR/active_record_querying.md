@@ -1710,7 +1710,7 @@ Client.find_or_create_by!(first_name: 'Andy')
 
 ### `find_or_initialize_by`
 
-O `find_or_initialize_by` método funcionará como o
+O método `find_or_initialize_by` funcionará como o
 `find_or_create_by` mas irá chamar `new` ao invés de `create`. Isso significa que uma nova instância de modelo será criada na memória, mas não será salva no banco de dados. Continuando com o exemplo `find_or_create_by`, agora queremos o cliente chamado 'Nick':
 
 
