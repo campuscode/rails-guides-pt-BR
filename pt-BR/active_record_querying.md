@@ -1546,14 +1546,14 @@ Client.unscoped {
 }
 ```
 
-Dynamic Finders
+Localizadores Dinâmicos
 ---------------
 
-For every field (also known as an attribute) you define in your table, Active Record provides a finder method. If you have a field called `first_name` on your `Client` model for example, you get `find_by_first_name` for free from Active Record. If you have a `locked` field on the `Client` model, you also get `find_by_locked` method.
+Para cada campo (também conhecido como atributo) que você define na sua tabela, o *Active Record* fornece um método localizador. Se você tiver um campo chamado `first_name` no seu *model* `Client` por exemplo, você terá de graça o método `find_by_first_name` fornecido pelo *Active Record*. Se você tiver o campo `locked` no seu *model* `Client`, você também receberá o método `find_by_locked`.
 
-You can specify an exclamation point (`!`) on the end of the dynamic finders to get them to raise an `ActiveRecord::RecordNotFound` error if they do not return any records, like `Client.find_by_name!("Ryan")`
+Você pode especificar o ponto de exclamação (`!`) no final de um localizador dinâmico para que ele levante um erro `ActiveRecord::RecordNotFound` caso não seja retornado nenhum registro, por exemplo `Client.find_by_name!("Ryan")`
 
-If you want to find both by name and locked, you can chain these finders together by simply typing "`and`" between the fields. For example, `Client.find_by_first_name_and_locked("Ryan", true)`.
+Se você deseja localizar por *name* e *locked*, você pode encadear esses localizadores juntos simplesmente digitando "`and`" entre os campos. Por exemplo, `Client.find_by_first_name_and_locked("Ryan", true)`.
 
 Enums
 -----
