@@ -1079,7 +1079,7 @@ Há múltiplas maneiras de usar o método `joins`.
 
 #### Usando um Fragmento de String SQL
 
-Você pode apenas fornecer o SQL bruto especificando a cláusula `JOIN` para `joins`:
+Você pode apenas fornecer o SQL literal especificando a cláusula `JOIN` para `joins`:
 
 ```ruby
 Author.joins("INNER JOIN posts ON posts.author_id = authors.id AND posts.published = 't'")
