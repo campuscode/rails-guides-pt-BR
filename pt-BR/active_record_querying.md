@@ -980,7 +980,7 @@ client.visits += 1
 client.save
 ```
 
-Como `client` é explicitamente configurado para ser um objeto _readonly_, o código acima irá levantar uma exceção `ActiveRecord::ReadOnlyRecord` exception when calling `client.save` com o valor atualizado de _visits_.
+Como `client` é explicitamente configurado para ser um objeto _readonly_, o código acima levantará uma exceção `ActiveRecord::ReadOnlyRecord` ao chamar `client.save` com o valor atualizado de _visits_.
 
 Bloqueando registros para alteração
 -----------------------------------
