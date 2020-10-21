@@ -1066,37 +1066,36 @@ item.with_lock do
 end
 ```
 
-Usando _Join_ em tabelas
+Associando tabelas
 --------------
 
-Active Record provides two finder methods for specifying `JOIN` clauses on the
-resulting SQL: `joins` and `left_outer_joins`.
-While `joins` should be used for `INNER JOIN` or custom queries,
-`left_outer_joins` is used for queries using `LEFT OUTER JOIN`.
+Active Record fornece dois métodos de busca para especificar cláusulas `JOIN` no SQL resultante: `joins` e `left_outer_joins`.
+Enquanto `joins` deve ser utilizado para `INNER JOIN` em consultas personalizadas,
+`left_outer_joins` é usado para consultas usando `LEFT OUTER JOIN`.
 
 ### `joins`
 
-There are multiple ways to use the `joins` method.
+Há múltiplas maneiras de usar o método `joins`.
 
-#### Using a String SQL Fragment
+#### Usando um Fragmento de String SQL
 
-You can just supply the raw SQL specifying the `JOIN` clause to `joins`:
+Você pode apenas fornecer o SQL bruto especificando a cláusula `JOIN` para `joins`:
 
 ```ruby
 Author.joins("INNER JOIN posts ON posts.author_id = authors.id AND posts.published = 't'")
 ```
 
-This will result in the following SQL:
+Isso resultará no seguinte SQL:
 
 ```sql
 SELECT authors.* FROM authors INNER JOIN posts ON posts.author_id = authors.id AND posts.published = 't'
 ```
 
-#### Using Array/Hash of Named Associations
+#### Usando Array/Hash de Associações Nomeadas
 
-Active Record lets you use the names of the [associations](association_basics.html) defined on the model as a shortcut for specifying `JOIN` clauses for those associations when using the `joins` method.
+Active Record permite que você use os nomes de [associações](association_basics.html) definidos no _model_ como um atalho para especificar cláusulas `JOIN` para essas associações quando estiver usando o método  `joins`.
 
-For example, consider the following `Category`, `Article`, `Comment`, `Guest` and `Tag` models:
+Por exemplo, considere os seguintes _models_ `Category`, `Article`, `Comment`, `Guest` e `Tag`:
 
 ```ruby
 class Category < ApplicationRecord
@@ -1123,30 +1122,30 @@ class Tag < ApplicationRecord
 end
 ```
 
-Now all of the following will produce the expected join queries using `INNER JOIN`:
+Agora, todos os itens a seguir irão produzir as consultas de junção esperadas usando `INNER JOIN`:
 
-##### Joining a Single Association
+##### Unindo uma Associação Única
 
 ```ruby
 Category.joins(:articles)
 ```
 
-This produces:
+Isso produz:
 
 ```sql
 SELECT categories.* FROM categories
   INNER JOIN articles ON articles.category_id = categories.id
 ```
 
-Or, in English: "return a Category object for all categories with articles". Note that you will see duplicate categories if more than one article has the same category. If you want unique categories, you can use `Category.joins(:articles).distinct`.
+Ou, em Português: "retorne um objeto Category para todas as categorias com artigos". Observe que você verá categrias duplicadas se mais de um artigo tiver a mesma categoria. Se você quiser categorias exclusivas, pode usar `Category.joins(:articles).distinct`.
 
-#### Joining Multiple Associations
+#### Unindo Associações Múltiplas
 
 ```ruby
 Article.joins(:category, :comments)
 ```
 
-This produces:
+Isso produz:
 
 ```sql
 SELECT articles.* FROM articles
@@ -1154,15 +1153,15 @@ SELECT articles.* FROM articles
   INNER JOIN comments ON comments.article_id = articles.id
 ```
 
-Or, in English: "return all articles that have a category and at least one comment". Note again that articles with multiple comments will show up multiple times.
+Ou, em Português: "retorne todos os artigos que tem uma categoria e ao menos um comentário". Observe novamente que artigos com múltiplos comentários aparecerão múltiplas vezes.
 
-##### Joining Nested Associations (Single Level)
+##### Unindo Associações Aninhadas (Nível Único)
 
 ```ruby
 Article.joins(comments: :guest)
 ```
 
-This produces:
+Isso produz:
 
 ```sql
 SELECT articles.* FROM articles
@@ -1170,15 +1169,15 @@ SELECT articles.* FROM articles
   INNER JOIN guests ON guests.comment_id = comments.id
 ```
 
-Or, in English: "return all articles that have a comment made by a guest."
+Ou, em Português: "retorne todos os artigos que tem um comentário feito por um convidado."
 
-##### Joining Nested Associations (Multiple Level)
+##### Unindo Associações Aninhadas (Níveis Múltiplos)
 
 ```ruby
 Category.joins(articles: [{ comments: :guest }, :tags])
 ```
 
-This produces:
+Isso produz:
 
 ```sql
 SELECT categories.* FROM categories
@@ -1188,44 +1187,42 @@ SELECT categories.* FROM categories
   INNER JOIN tags ON tags.article_id = articles.id
 ```
 
-Or, in English: "return all categories that have articles, where those articles have a comment made by a guest, and where those articles also have a tag."
+Ou, em Português: "retorne todas as categorias que têm artigos, sendo que estes artigos têm um comentário feito por um convidado, e que estes artigos também tenham uma _tag_."
 
-#### Specifying Conditions on the Joined Tables
+#### Especificando Condições em Tabelas Associadas
 
-You can specify conditions on the joined tables using the regular [Array](#array-conditions) and [String](#pure-string-conditions) conditions. [Hash conditions](#hash-conditions) provide a special syntax for specifying conditions for the joined tables:
+Você pode especificar condições nas tabelas associadas com condições [Array](#array-conditions) e [String](#pure-string-conditions). [Hash conditions](#hash-conditions) fornecem uma sintaxe especial para especificar condições para as tabelas associadas:
 
 ```ruby
 time_range = (Time.now.midnight - 1.day)..Time.now.midnight
 Client.joins(:orders).where('orders.created_at' => time_range)
 ```
 
-An alternative and cleaner syntax is to nest the hash conditions:
+Uma sintaxe alternativa e mais limpa é aninhar as condições de _hash_:
 
 ```ruby
 time_range = (Time.now.midnight - 1.day)..Time.now.midnight
 Client.joins(:orders).where(orders: { created_at: time_range })
 ```
 
-This will find all clients who have orders that were created yesterday, again using a `BETWEEN` SQL expression.
+Isso encontrará todos os clientes que têm pedidos criados ontem, novamente usando uma expressão SQL `BETWEEN`.
 
 ### `left_outer_joins`
 
-If you want to select a set of records whether or not they have associated
-records you can use the `left_outer_joins` method.
+Se você deseja selecionar um conjunto de registros tendo ou não registros associados, você pode usar o método `left_outer_joins`.
 
 ```ruby
 Author.left_outer_joins(:posts).distinct.select('authors.*, COUNT(posts.*) AS posts_count').group('authors.id')
 ```
 
-Which produces:
+Que resulta em:
 
 ```sql
 SELECT DISTINCT authors.*, COUNT(posts.*) AS posts_count FROM "authors"
 LEFT OUTER JOIN posts ON posts.author_id = authors.id GROUP BY authors.id
 ```
 
-Which means: "return all authors with their count of posts, whether or not they
-have any posts at all"
+Que significa: "retorne todos os autores com suas contagens de posts, tenham eles postagens ou não"
 
 
 Eager Loading Associations
