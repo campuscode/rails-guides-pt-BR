@@ -1683,7 +1683,7 @@ Podemos conseguir isso de duas maneiras. A primeira é usar `create_with`:
 Client.create_with(locked: false).find_or_create_by(first_name: 'Andy')
 ```
 
-A segunda maneira é usar um _lock_:
+A segunda maneira é usar um bloco:
 
 ```ruby
 Client.find_or_create_by(first_name: 'Andy') do |c|
