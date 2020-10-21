@@ -972,7 +972,7 @@ end
 Objetos _Readonly_ (Somente leitura)
 ----------------
 
-Active Record provê o método `readonly` em uma relação para desabilitar moficicações explicitamente em qualquer um dos objetos retornados. Qualquer tentativa de alterar um registro _readonly_ não ocorrerá, levantando uma exceção `ActiveRecord::ReadOnlyRecord`.
+O _Active Record_ provê o método `readonly` em uma relação para desabilitar modificações explicitamente em qualquer um dos objetos retornados. Qualquer tentativa de alterar um registro _readonly_ não ocorrerá, levantando uma exceção `ActiveRecord::ReadOnlyRecord`.
 
 ```ruby
 client = Client.readonly.first
