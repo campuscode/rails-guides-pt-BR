@@ -55,14 +55,14 @@ end
 ```
 
 O *Active Record* irá executar consultas no banco de dados para você e é compatível com a maioria dos sistemas de banco de dados,
-incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato do método do *Active Record* 
+incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato do método do *Active Record*
 será sempre o mesmo.
 
 Recuperando Objetos do Banco de Dados
 ------------------------------------
 
 Para recuperar objetos do banco de dados, o *Active Record* fornece diversos métodos de localização. Cada método de localização permite que você
-passe argumentos para o mesmo para executar determinada consulta no seu banco de dados sem a necessidade de escrever SQL puro. 
+passe argumentos para o mesmo para executar determinada consulta no seu banco de dados sem a necessidade de escrever SQL puro.
 
 Os métodos são:
 
@@ -127,11 +127,11 @@ SELECT * FROM clients WHERE (clients.id = 10) LIMIT 1
 
 O método `find` irá gerar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro correspondente for encontrado.
 
-Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de *primary keys*. 
+Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de *primary keys*.
 Será retornado um array contendo todos os registros correspondentes para as *primary keys* fornecidas. Por exemplo:
 
 ```ruby
-# Encontra os clientes com as primary keys 1 e 10. 
+# Encontra os clientes com as primary keys 1 e 10.
 clients = Client.find([1, 10]) # Or even Client.find(1, 10)
 # => [#<Client id: 1, first_name: "Lifo">, #<Client id: 10, first_name: "Ryan">]
 ```
@@ -159,7 +159,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients LIMIT 1
 ```
 
-O método `take` retorna `nil` se nenhum registro for encontrado e nenhuma exceção será levantada. 
+O método `take` retorna `nil` se nenhum registro for encontrado e nenhuma exceção será levantada.
 
 Você pode passar um argumento numérico para o método `take` para retornar o mesmo número em resultados. Por exemplo:
 
@@ -249,7 +249,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients ORDER BY clients.id DESC LIMIT 1
 ```
 
-O método `last` retorna `nil` se não encontrar nenhum registro correspondente e nenhuma exceção será levantada. 
+O método `last` retorna `nil` se não encontrar nenhum registro correspondente e nenhuma exceção será levantada.
 
 Se o seu [default scope](active_record_querying.html#applying-a-default-scope) contém um método de ordenação, `last` irá retornar
 o último registro de acordo com essa ordenação.
@@ -333,7 +333,7 @@ um grande número de usuários, ou quando vamos exportar dados.
 Isso pode parecer simples:
 
 ```ruby
-# Isso pode consumir muita memória se a tabela for grande. 
+# Isso pode consumir muita memória se a tabela for grande.
 User.all.each do |user|
   NewsMailer.weekly(user).deliver_now
 end
@@ -347,7 +347,7 @@ pode exceder a quantidade de memória disponível.
 O Rails fornece dois métodos para solucionar esse problema, dividindo os registros em lotes *memory-friendly* para o processamento.
 O primeiro método, `find_each`, retorna um lote de registros e depois submete _cada_ registro individualmente para um bloco como um *model*.
 O segundo método, `find_in_batches`, retorna um lote de registros e depois submete _o lote inteiro_ ao bloco como um array de *models*.
- 
+
 TIP: Os métodos `find_each` e `find_in_batches` são destinados ao uso no processamento em lotes de grandes numéros de registros
 que não irão caber na memória de uma só vez. Se você apenas precisa fazer um  *loop* em milhares de registros, os métodos
 regulares do `find` são a opção preferida.
@@ -373,7 +373,7 @@ User.where(weekly_subscriber: true).find_each do |user|
 end
 ```
 
-contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar. 
+contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar.
 
 Se houver uma ordem presente no receptor, o comportamento depende da *flag* `config.active_record.error_on_ignored_order`.
 Se verdadeiro, `ArgumentError` é levantado, caso contrário a ordem será ignorada e um aviso gerado, que é o padrão. Isto pode
@@ -386,7 +386,7 @@ ser substituído com a opção `:error_on_ignore`, explicado abaixo.
 **`:batch_size`**
 
 A opção `:batch_size` permite que você especifique o número de registros à serem retornados em cada lote, antes de serem passados, individualmente, para o bloco.
-Por exemplo, para retornar registros de um lote de 5000: 
+Por exemplo, para retornar registros de um lote de 5000:
 
 ```ruby
 User.find_each(batch_size: 5000) do |user|
@@ -436,7 +436,7 @@ em vez de individualmente. O exemplo à seguir irá produzir ao bloco fornecido 
 com o bloco final contendo qualquer nota fiscal remanescente:
 
 ```ruby
-# Fornece à add_invoices um array com 1000 notas fiscais de uma vez. 
+# Fornece à add_invoices um array com 1000 notas fiscais de uma vez.
 Invoice.find_in_batches do |invoices|
   export.add_invoices(invoices)
 end
@@ -785,18 +785,18 @@ HAVING sum(price) > 100
 
 This returns the date and total price for each order object, grouped by the day they were ordered and where the price is more than $100.
 
-Overriding Conditions
+Condições de substituição
 ---------------------
 
 ### `unscope`
 
-You can specify certain conditions to be removed using the `unscope` method. For example:
+Você pode especificar certas condições a serem removidas usando o método `unscope`. Por exemplo:
 
 ```ruby
 Article.where('id > 10').limit(20).order('id asc').unscope(:order)
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM articles WHERE id > 10 LIMIT 20
@@ -806,14 +806,14 @@ SELECT * FROM articles WHERE id > 10 ORDER BY id asc LIMIT 20
 
 ```
 
-You can also unscope specific `where` clauses. For example:
+Você também pode remover o escopo de cláusulas `where` específicas. Por exemplo:
 
 ```ruby
 Article.where(id: 10, trashed: false).unscope(where: :id)
 # SELECT "articles".* FROM "articles" WHERE trashed = 0
 ```
 
-A relation which has used `unscope` will affect any relation into which it is merged:
+A relação que usou `unscope` afetará quaisquer relações nas quais foi unida:
 
 ```ruby
 Article.order('id asc').merge(Article.unscope(:order))
@@ -822,43 +822,43 @@ Article.order('id asc').merge(Article.unscope(:order))
 
 ### `only`
 
-You can also override conditions using the `only` method. For example:
+Você também pode substituir condições com o método `only`. Por exemplo:
 
 ```ruby
 Article.where('id > 10').limit(20).order('id desc').only(:order, :where)
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM articles WHERE id > 10 ORDER BY id DESC
 
-# Original query without `only`
+# Query original sem `only`
 SELECT * FROM articles WHERE id > 10 ORDER BY id DESC LIMIT 20
 
 ```
 
 ### `reselect`
 
-The `reselect` method overrides an existing select statement. For example:
+O método `reselect` substitui uma declaração de _select_ existente. Por exemplo:
 
 ```ruby
 Post.select(:title, :body).reselect(:created_at)
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT `posts`.`created_at` FROM `posts`
 ```
 
-In case the `reselect` clause is not used,
+No caso em que a cláusula `reselect` não é utilizada,
 
 ```ruby
 Post.select(:title, :body).select(:created_at)
 ```
 
-the SQL executed would be:
+o SQL executado será:
 
 ```sql
 SELECT `posts`.`title`, `posts`.`body`, `posts`.`created_at` FROM `posts`
@@ -866,7 +866,7 @@ SELECT `posts`.`title`, `posts`.`body`, `posts`.`created_at` FROM `posts`
 
 ### `reorder`
 
-The `reorder` method overrides the default scope order. For example:
+O método `reorder` substitui a ordem de escopo padrão. Por exemplo:
 
 ```ruby
 class Article < ApplicationRecord
@@ -876,14 +876,14 @@ end
 Article.find(10).comments.reorder('name')
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM articles WHERE id = 10 LIMIT 1
 SELECT * FROM comments WHERE article_id = 10 ORDER BY name
 ```
 
-In the case where the `reorder` clause is not used, the SQL executed would be:
+No caso em que `reorder` não é utilizado, o SQL executado será:
 
 ```sql
 SELECT * FROM articles WHERE id = 10 LIMIT 1
@@ -892,53 +892,53 @@ SELECT * FROM comments WHERE article_id = 10 ORDER BY posted_at DESC
 
 ### `reverse_order`
 
-The `reverse_order` method reverses the ordering clause if specified.
+O método `reverse_order` reverte a ordem da cláusula, se especificado.
 
 ```ruby
 Client.where("orders_count > 10").order(:name).reverse_order
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM clients WHERE orders_count > 10 ORDER BY name DESC
 ```
 
-If no ordering clause is specified in the query, the `reverse_order` orders by the primary key in reverse order.
+Se nenhuma cláusula de ordenação é especificada na _query_, o `reverse_order` ordena pela chave primária em ordem reversa.
 
 ```ruby
 Client.where("orders_count > 10").reverse_order
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM clients WHERE orders_count > 10 ORDER BY clients.id DESC
 ```
 
-This method accepts **no** arguments.
+Esse método **não aceita** argumentos.
 
 ### `rewhere`
 
-The `rewhere` method overrides an existing, named where condition. For example:
+O método `rewhere` substitui uma existente, nomeada condição de _where_. Por exemplo:
 
 ```ruby
 Article.where(trashed: true).rewhere(trashed: false)
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM articles WHERE `trashed` = 0
 ```
 
-In case the `rewhere` clause is not used,
+No caso em que a cláusula `rewhere` não é usada,
 
 ```ruby
 Article.where(trashed: true).where(trashed: false)
 ```
 
-the SQL executed would be:
+o SQL será:
 
 ```sql
 SELECT * FROM articles WHERE `trashed` = 1 AND `trashed` = 0
@@ -1897,7 +1897,7 @@ Client.exists?
 
 O código acima retorna `false` se a tabela `clients` estiver vazia e `true` caso não esteja.
 
-Você também pode usar `any?` e `many?` para verificar a existência de um *model* ou relação. 
+Você também pode usar `any?` e `many?` para verificar a existência de um *model* ou relação.
 
 ```ruby
 # via a model
@@ -2015,7 +2015,7 @@ Você pode executar o *EXPLAIN* nas *queries* disparadas por relações. Por exe
 User.where(id: 1).joins(:articles).explain
 ```
 
-pode produzir 
+pode produzir
 
 ```
 EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`user_id` = `users`.`id` WHERE `users`.`id` = 1
