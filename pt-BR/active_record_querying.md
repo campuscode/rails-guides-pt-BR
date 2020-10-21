@@ -1093,7 +1093,7 @@ SELECT authors.* FROM authors INNER JOIN posts ON posts.author_id = authors.id A
 
 #### Usando Array/Hash de Associações Nomeadas
 
-Active Record permite que você use os nomes de [associações](association_basics.html) definidos no _model_ como um atalho para especificar cláusulas `JOIN` para essas associações quando estiver usando o método  `joins`.
+O *Active Record* permite que você use os nomes de [associações](association_basics.html) definidos no _model_ como um atalho para especificar cláusulas `JOIN` para essas associações quando estiver usando o método  `joins`.
 
 Por exemplo, considere os seguintes _models_ `Category`, `Article`, `Comment`, `Guest` e `Tag`:
 
