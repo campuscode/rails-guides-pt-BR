@@ -1139,7 +1139,7 @@ SELECT categories.* FROM categories
 
 Ou, em Português: "retorne um objeto `Category` para todas as categorias com artigos". Observe que você verá categorias duplicadas se mais de um artigo tiver a mesma categoria. Se você quiser categorias exclusivas, pode usar `Category.joins(:articles).distinct`.
 
-#### Unindo Associações Múltiplas
+#### Unindo Múltiplas Associações
 
 ```ruby
 Article.joins(:category, :comments)
