@@ -1137,7 +1137,7 @@ SELECT categories.* FROM categories
   INNER JOIN articles ON articles.category_id = categories.id
 ```
 
-Ou, em Português: "retorne um objeto Category para todas as categorias com artigos". Observe que você verá categrias duplicadas se mais de um artigo tiver a mesma categoria. Se você quiser categorias exclusivas, pode usar `Category.joins(:articles).distinct`.
+Ou, em Português: "retorne um objeto `Category` para todas as categorias com artigos". Observe que você verá categorias duplicadas se mais de um artigo tiver a mesma categoria. Se você quiser categorias exclusivas, pode usar `Category.joins(:articles).distinct`.
 
 #### Unindo Associações Múltiplas
 
