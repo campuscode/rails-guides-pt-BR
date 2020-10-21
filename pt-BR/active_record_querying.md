@@ -1691,7 +1691,7 @@ Client.find_or_create_by(first_name: 'Andy') do |c|
 end
 ```
 
-O _lock_ só será executado se o cliente estiver sendo criado. A segunda vez que rodarmos este código, o todo o bloco será ignorado.
+O bloco só será executado se o cliente estiver sendo criado. A segunda vez que rodarmos este código, o todo o bloco será ignorado.
 
 ### `find_or_create_by!`
 
