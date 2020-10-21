@@ -1672,7 +1672,7 @@ COMMIT
 
 O novo registro pode não ser salvo no banco de dados; isso depende se as validações foram aprovadas ou não (assim como `create`).
 
-Suponha que queremos definir o atributo 'bloqueado' para `false` se estamos
+Suponha que queremos definir o atributo 'bloqueado (*locked*)' para `false` se estamos
 criando um novo registro, mas não queremos incluí-lo na consulta. Então
 queremos encontrar o cliente chamado "Andy", ou se esse cliente não
 existir, crie um cliente chamado "Andy" que não esteja bloqueado.
