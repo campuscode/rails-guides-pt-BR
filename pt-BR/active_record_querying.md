@@ -1066,7 +1066,7 @@ item.with_lock do
 end
 ```
 
-Associando tabelas
+Associando Tabelas
 --------------
 
 Active Record fornece dois métodos de busca para especificar cláusulas `JOIN` no SQL resultante: `joins` e `left_outer_joins`.
