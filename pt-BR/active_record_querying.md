@@ -765,7 +765,7 @@ GROUP BY status
 _Having_
 ------
 
-SQL usa a cláusula `HAVING` para especificar condições nos campos `GROUP BY`. Você pode adicionar a cláusula `HAVING` ao SQL disparado pelo `Model.find` ao adicionar o método `having` à busca.
+O SQL usa a cláusula `HAVING` para especificar condições nos campos `GROUP BY`. Você pode adicionar a cláusula `HAVING` ao SQL disparado pelo `Model.find` ao adicionar o método `having` à busca.
 
 Por exemplo:
 
