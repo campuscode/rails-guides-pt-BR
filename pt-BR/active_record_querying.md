@@ -1069,7 +1069,7 @@ end
 Associando Tabelas
 --------------
 
-Active Record fornece dois métodos de busca para especificar cláusulas `JOIN` no SQL resultante: `joins` e `left_outer_joins`.
+O *Active Record* fornece dois métodos de busca para especificar cláusulas `JOIN` no SQL resultante: `joins` e `left_outer_joins`.
 Enquanto `joins` deve ser utilizado para `INNER JOIN` em consultas personalizadas,
 `left_outer_joins` é usado para consultas usando `LEFT OUTER JOIN`.
 
