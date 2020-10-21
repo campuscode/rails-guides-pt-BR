@@ -1122,7 +1122,7 @@ class Tag < ApplicationRecord
 end
 ```
 
-Agora, todos os itens a seguir irão produzir as consultas de junção esperadas usando `INNER JOIN`:
+Agora, todos os itens a seguir irão produzir as consultas de junção (*join*) esperadas usando `INNER JOIN`:
 
 ##### Unindo uma Associação Única
 
