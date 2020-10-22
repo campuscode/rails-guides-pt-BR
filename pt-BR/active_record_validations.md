@@ -1290,22 +1290,24 @@ person.valid? # => true
 person.errors.size # => 0
 ```
 
-Displaying Validation Errors in Views
+Exibindo Erros de Validação nas *Views*
 -------------------------------------
 
-Once you've created a model and added validations, if that model is created via
-a web form, you probably want to display an error message when one of the
-validations fail.
+Uma vez criado o *model* e adicionada as validações, se o *model* é criado via
+formulário web, você provavelmente quer mostrar uma mensagem de erro quando uma
+das validações falhar.
 
-Because every application handles this kind of thing differently, Rails does
-not include any view helpers to help you generate these messages directly.
-However, due to the rich number of methods Rails gives you to interact with
-validations in general, it's fairly easy to build your own. In addition, when
-generating a scaffold, Rails will put some ERB into the `_form.html.erb` that
-it generates that displays the full list of errors on that model.
+Devido a cada aplicação lidar com esse tipo de cenário de forma diferente, o Rails
+não inclui nenhum *helper* na *view* para ajudar a gerar essas mensagens
+diretamente.
+Contudo, devido ao rico número de métodos que o Rails nos da para interagirmos
+com validações em geral, é muito fácil criar as nossas próprias validações.
+Além disso, quando geramos o *scaffold*, o Rails colocará algum *ERB* dentro
+de `_form.html.erb` que ele gera, exibindo a lista completa de erros naquele
+*model*.
 
-Assuming we have a model that's been saved in an instance variable named
-`@article`, it looks like this:
+Supondo que temos um modelo que foi salvo em uma variável de instância chamada
+`@article`, terá a seguinte aparência:
 
 ```ruby
 <% if @article.errors.any? %>
@@ -1321,9 +1323,9 @@ Assuming we have a model that's been saved in an instance variable named
 <% end %>
 ```
 
-Furthermore, if you use the Rails form helpers to generate your forms, when
-a validation error occurs on a field, it will generate an extra `<div>` around
-the entry.
+Portanto, se você usar os *helpers* de formulário do Rails para gerar seus
+formulários, quando um erro de validação ocorrer em um campo, isso vai gerar
+uma `<div>` extra ao redor da entrada.
 
 ```
 <div class="field_with_errors">
@@ -1331,8 +1333,8 @@ the entry.
 </div>
 ```
 
-You can then style this div however you'd like. The default scaffold that
-Rails generates, for example, adds this CSS rule:
+Você pode definir o estilo desta *div* como preferir. O *scaffold*
+padrão que o Rails gera, por exemplo, adiciona essa regra *CSS*:
 
 ```
 .field_with_errors {
@@ -1342,4 +1344,4 @@ Rails generates, for example, adds this CSS rule:
 }
 ```
 
-This means that any field with an error ends up with a 2 pixel red border.
+Isso significa que qualquer campo com erro termina com 2 *pixels* de borda vermelha.

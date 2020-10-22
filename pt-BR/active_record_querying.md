@@ -1545,14 +1545,14 @@ Client.unscoped {
 }
 ```
 
-Dynamic Finders
+Localizadores Dinâmicos
 ---------------
 
-For every field (also known as an attribute) you define in your table, Active Record provides a finder method. If you have a field called `first_name` on your `Client` model for example, you get `find_by_first_name` for free from Active Record. If you have a `locked` field on the `Client` model, you also get `find_by_locked` method.
+Para cada campo (também conhecido como atributo) que você define na sua tabela, o *Active Record* fornece um método localizador. Se você tiver um campo chamado `first_name` no seu *model* `Client` por exemplo, você terá de graça o método `find_by_first_name` fornecido pelo *Active Record*. Se você tiver o campo `locked` no seu *model* `Client`, você também receberá o método `find_by_locked`.
 
-You can specify an exclamation point (`!`) on the end of the dynamic finders to get them to raise an `ActiveRecord::RecordNotFound` error if they do not return any records, like `Client.find_by_name!("Ryan")`
+Você pode especificar o ponto de exclamação (`!`) no final de um localizador dinâmico para que ele levante um erro `ActiveRecord::RecordNotFound` caso não seja retornado nenhum registro, por exemplo `Client.find_by_name!("Ryan")`
 
-If you want to find both by name and locked, you can chain these finders together by simply typing "`and`" between the fields. For example, `Client.find_by_first_name_and_locked("Ryan", true)`.
+Se você deseja localizar por *name* e *locked*, você pode encadear esses localizadores juntos simplesmente digitando "`and`" entre os campos. Por exemplo, `Client.find_by_first_name_and_locked("Ryan", true)`.
 
 Enums
 -----
@@ -2005,16 +2005,16 @@ Client.sum("orders_count")
 
 Para mais opções, veja a seção pai, [Cálculos](#calculos).
 
-Running EXPLAIN
+Executando o EXPLAIN
 ---------------
 
-You can run EXPLAIN on the queries triggered by relations. For example,
+Você pode executar o *EXPLAIN* nas *queries* disparadas por relações. Por exemplo,
 
 ```ruby
 User.where(id: 1).joins(:articles).explain
 ```
 
-may yield
+pode produzir 
 
 ```
 EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`user_id` = `users`.`id` WHERE `users`.`id` = 1
@@ -2034,11 +2034,9 @@ EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`
 2 rows in set (0.00 sec)
 ```
 
-under MySQL and MariaDB.
+em MySQL e MariaDB.
 
-Active Record performs a pretty printing that emulates that of the
-corresponding database shell. So, the same query running with the
-PostgreSQL adapter would yield instead
+O *Active Record* exibe uma impressão que simula a do *shell* do banco de dados correspondente. Então, a mesma *query* sendo executada quando usado o adaptador de PostgreSQL poderá produzir o seguinte:
 
 ```
 EXPLAIN for: SELECT "users".* FROM "users" INNER JOIN "articles" ON "articles"."user_id" = "users"."id" WHERE "users"."id" = 1
@@ -2053,15 +2051,16 @@ EXPLAIN for: SELECT "users".* FROM "users" INNER JOIN "articles" ON "articles"."
 (6 rows)
 ```
 
-Eager loading may trigger more than one query under the hood, and some queries
-may need the results of previous ones. Because of that, `explain` actually
-executes the query, and then asks for the query plans. For example,
+O *Eager Loading* pode disparar mais que uma *query* por debaixo dos panos,
+e algumas *queries* podem necessitar de resultados prévios. Por causa disso,
+o `explain` na verdade executa a *query* e somente depois solicita o que a *query* planeja.
+Por exemplo,
 
 ```ruby
 User.where(id: 1).includes(:articles).explain
 ```
 
-yields
+produz
 
 ```
 EXPLAIN for: SELECT `users`.* FROM `users`  WHERE `users`.`id` = 1
@@ -2094,12 +2093,12 @@ EXPLAIN for: SELECT `articles`.* FROM `articles`  WHERE `articles`.`user_id` IN 
 1 row in set (0.00 sec)
 ```
 
-under MySQL and MariaDB.
+em MySQL e MariaDB.
 
-### Interpreting EXPLAIN
+### Interpretando o EXPLAIN
 
-Interpretation of the output of EXPLAIN is beyond the scope of this guide. The
-following pointers may be helpful:
+A interpretação da saída do *EXPLAIN* está além do escopo deste guia. Os links
+a seguir podem servir de ajuda:
 
 * SQLite3: [EXPLAIN QUERY PLAN](https://www.sqlite.org/eqp.html)
 
