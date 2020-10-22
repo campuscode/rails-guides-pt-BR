@@ -354,6 +354,7 @@ end
 The callback only runs when all the `:if` conditions and none of the `:unless` conditions are evaluated to `true`.
 
 Callback Classes
+Classes *Callback*
 ----------------
 
 Sometimes the callback methods that you'll write will be useful enough to be reused by other models. Active Record makes it possible to create classes that encapsulate the callback methods, so it becomes very easy to reuse them.
