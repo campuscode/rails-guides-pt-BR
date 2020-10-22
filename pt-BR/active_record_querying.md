@@ -724,20 +724,20 @@ will return instead a maximum of 5 clients beginning with the 31st. The SQL look
 SELECT * FROM clients LIMIT 5 OFFSET 30
 ```
 
-Group
+Agrupando
 -----
 
-To apply a `GROUP BY` clause to the SQL fired by the finder, you can use the `group` method.
+Para aplicar uma cláusula `GROUP BY` para o SQL disparado pelo localizador, você pode utilizar o método `group`.
 
-For example, if you want to find a collection of the dates on which orders were created:
+Por exemplo, se você quer encontrar uma coleção das datas em que os pedidos foram criados:
 
 ```ruby
 Order.select("date(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)")
 ```
 
-And this will give you a single `Order` object for each date where there are orders in the database.
+E isso te dará um único objeto `Order` para cada data em que há pedidos no banco de dados.
 
-The SQL that would be executed would be something like this:
+O SQL que será executado parecerá com algo como isso:
 
 ```sql
 SELECT date(created_at) as ordered_date, sum(price) as total_price
@@ -745,16 +745,16 @@ FROM orders
 GROUP BY date(created_at)
 ```
 
-### Total of grouped items
+### Total de itens agrupados
 
-To get the total of grouped items on a single query, call `count` after the `group`.
+Para pegar o total de itens agrupados em uma única _query_, chame `count` depois do `group`.
 
 ```ruby
 Order.group(:status).count
 # => { 'awaiting_approval' => 7, 'paid' => 12 }
 ```
 
-The SQL that would be executed would be something like this:
+O SQL que será executado parecerá com algo como isso:
 
 ```sql
 SELECT COUNT (*) AS count_all, status AS status
