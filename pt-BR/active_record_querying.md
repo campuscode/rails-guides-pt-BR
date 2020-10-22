@@ -55,14 +55,14 @@ end
 ```
 
 O *Active Record* irá executar consultas no banco de dados para você e é compatível com a maioria dos sistemas de banco de dados,
-incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato do método do *Active Record* 
+incluindo MySQL, MariaDB, PostgreSQL e SQLite. Independente de qual sistema de banco de dados você utilize, o formato do método do *Active Record*
 será sempre o mesmo.
 
 Recuperando Objetos do Banco de Dados
 ------------------------------------
 
 Para recuperar objetos do banco de dados, o *Active Record* fornece diversos métodos de localização. Cada método de localização permite que você
-passe argumentos para o mesmo para executar determinada consulta no seu banco de dados sem a necessidade de escrever SQL puro. 
+passe argumentos para o mesmo para executar determinada consulta no seu banco de dados sem a necessidade de escrever SQL puro.
 
 Os métodos são:
 
@@ -127,11 +127,11 @@ SELECT * FROM clients WHERE (clients.id = 10) LIMIT 1
 
 O método `find` irá gerar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro correspondente for encontrado.
 
-Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de *primary keys*. 
+Você pode, também, utilizar este método para consultar múltiplos objetos. Chame o método `find` e passe um array de *primary keys*.
 Será retornado um array contendo todos os registros correspondentes para as *primary keys* fornecidas. Por exemplo:
 
 ```ruby
-# Encontra os clientes com as primary keys 1 e 10. 
+# Encontra os clientes com as primary keys 1 e 10.
 clients = Client.find([1, 10]) # Or even Client.find(1, 10)
 # => [#<Client id: 1, first_name: "Lifo">, #<Client id: 10, first_name: "Ryan">]
 ```
@@ -159,7 +159,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients LIMIT 1
 ```
 
-O método `take` retorna `nil` se nenhum registro for encontrado e nenhuma exceção será levantada. 
+O método `take` retorna `nil` se nenhum registro for encontrado e nenhuma exceção será levantada.
 
 Você pode passar um argumento numérico para o método `take` para retornar o mesmo número em resultados. Por exemplo:
 
@@ -249,7 +249,7 @@ O equivalente ao de cima, em SQL, seria:
 SELECT * FROM clients ORDER BY clients.id DESC LIMIT 1
 ```
 
-O método `last` retorna `nil` se não encontrar nenhum registro correspondente e nenhuma exceção será levantada. 
+O método `last` retorna `nil` se não encontrar nenhum registro correspondente e nenhuma exceção será levantada.
 
 Se o seu [default scope](active_record_querying.html#applying-a-default-scope) contém um método de ordenação, `last` irá retornar
 o último registro de acordo com essa ordenação.
@@ -333,7 +333,7 @@ um grande número de usuários, ou quando vamos exportar dados.
 Isso pode parecer simples:
 
 ```ruby
-# Isso pode consumir muita memória se a tabela for grande. 
+# Isso pode consumir muita memória se a tabela for grande.
 User.all.each do |user|
   NewsMailer.weekly(user).deliver_now
 end
@@ -347,7 +347,7 @@ pode exceder a quantidade de memória disponível.
 O Rails fornece dois métodos para solucionar esse problema, dividindo os registros em lotes *memory-friendly* para o processamento.
 O primeiro método, `find_each`, retorna um lote de registros e depois submete _cada_ registro individualmente para um bloco como um *model*.
 O segundo método, `find_in_batches`, retorna um lote de registros e depois submete _o lote inteiro_ ao bloco como um array de *models*.
- 
+
 TIP: Os métodos `find_each` e `find_in_batches` são destinados ao uso no processamento em lotes de grandes numéros de registros
 que não irão caber na memória de uma só vez. Se você apenas precisa fazer um  *loop* em milhares de registros, os métodos
 regulares do `find` são a opção preferida.
@@ -373,7 +373,7 @@ User.where(weekly_subscriber: true).find_each do |user|
 end
 ```
 
-contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar. 
+contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar.
 
 Se houver uma ordem presente no receptor, o comportamento depende da *flag* `config.active_record.error_on_ignored_order`.
 Se verdadeiro, `ArgumentError` é levantado, caso contrário a ordem será ignorada e um aviso gerado, que é o padrão. Isto pode
@@ -386,7 +386,7 @@ ser substituído com a opção `:error_on_ignore`, explicado abaixo.
 **`:batch_size`**
 
 A opção `:batch_size` permite que você especifique o número de registros à serem retornados em cada lote, antes de serem passados, individualmente, para o bloco.
-Por exemplo, para retornar registros de um lote de 5000: 
+Por exemplo, para retornar registros de um lote de 5000:
 
 ```ruby
 User.find_each(batch_size: 5000) do |user|
@@ -436,7 +436,7 @@ em vez de individualmente. O exemplo à seguir irá produzir ao bloco fornecido 
 com o bloco final contendo qualquer nota fiscal remanescente:
 
 ```ruby
-# Fornece à add_invoices um array com 1000 notas fiscais de uma vez. 
+# Fornece à add_invoices um array com 1000 notas fiscais de uma vez.
 Invoice.find_in_batches do |invoices|
   export.add_invoices(invoices)
 end
@@ -762,19 +762,19 @@ FROM "orders"
 GROUP BY status
 ```
 
-Having
+_Having_
 ------
 
-SQL uses the `HAVING` clause to specify conditions on the `GROUP BY` fields. You can add the `HAVING` clause to the SQL fired by the `Model.find` by adding the `having` method to the find.
+O SQL usa a cláusula `HAVING` para especificar condições nos campos `GROUP BY`. Você pode adicionar a cláusula `HAVING` ao SQL disparado pelo `Model.find` ao adicionar o método `having` à busca.
 
-For example:
+Por exemplo:
 
 ```ruby
 Order.select("date(created_at) as ordered_date, sum(price) as total_price").
   group("date(created_at)").having("sum(price) > ?", 100)
 ```
 
-The SQL that would be executed would be something like this:
+O SQL que será executado será parecido com isso:
 
 ```sql
 SELECT date(created_at) as ordered_date, sum(price) as total_price
@@ -783,7 +783,7 @@ GROUP BY date(created_at)
 HAVING sum(price) > 100
 ```
 
-This returns the date and total price for each order object, grouped by the day they were ordered and where the price is more than $100.
+Isso retorna a data e o preço total para cada objeto de pedido, agrupado pelo dia em que foram criados e se o preço é maior que $100.
 
 Overriding Conditions
 ---------------------
@@ -1897,7 +1897,7 @@ Client.exists?
 
 O código acima retorna `false` se a tabela `clients` estiver vazia e `true` caso não esteja.
 
-Você também pode usar `any?` e `many?` para verificar a existência de um *model* ou relação. 
+Você também pode usar `any?` e `many?` para verificar a existência de um *model* ou relação.
 
 ```ruby
 # via a model
@@ -2015,7 +2015,7 @@ Você pode executar o *EXPLAIN* nas *queries* disparadas por relações. Por exe
 User.where(id: 1).joins(:articles).explain
 ```
 
-pode produzir 
+pode produzir
 
 ```
 EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`user_id` = `users`.`id` WHERE `users`.`id` = 1
