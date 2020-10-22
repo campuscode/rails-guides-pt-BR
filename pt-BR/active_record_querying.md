@@ -944,17 +944,17 @@ o SQL será:
 SELECT * FROM articles WHERE `trashed` = 1 AND `trashed` = 0
 ```
 
-Null Relation
+Relações Nulas
 -------------
 
-The `none` method returns a chainable relation with no records. Any subsequent conditions chained to the returned relation will continue generating empty relations. This is useful in scenarios where you need a chainable response to a method or a scope that could return zero results.
+O método `none` retorna uma relação encadeada sem registros. Quaisquer condições subsequentes encadeadas à relação retornada continuarão gerando relações vazias. Isso é útil em cenários onde você precisa de uma resposta encadeada para um método ou um escopo que pode retornar zero resultados.
 
 ```ruby
-Article.none # returns an empty Relation and fires no queries.
+Article.none # retorna uma Relation vazia e não dispara nenhuma query.
 ```
 
 ```ruby
-# The visible_articles method below is expected to return a Relation.
+# O método visible_articles abaixo deve retornar uma Relation.
 @articles = current_user.visible_articles.where(name: params[:name])
 
 def visible_articles
@@ -964,7 +964,7 @@ def visible_articles
   when 'Reviewer'
     Article.published
   when 'Bad User'
-    Article.none # => returning [] or nil breaks the caller code in this case
+    Article.none # => neste caso, retornar [] ou nil quebrará o código que invocou
   end
 end
 ```
