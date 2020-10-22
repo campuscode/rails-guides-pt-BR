@@ -944,7 +944,7 @@ the SQL executed would be:
 SELECT * FROM articles WHERE `trashed` = 1 AND `trashed` = 0
 ```
 
-Relações nulas
+Relações Nulas
 -------------
 
 O método `none` retorna uma relação encadeada sem registros. Quaisquer condições subsequentes encadeadas à relação retornada continuarão gerando relações vazias. Isso é útil em cenários onde você precisa de uma resposta encadeada para um método ou um escopo que pode retornar zero resultados.
