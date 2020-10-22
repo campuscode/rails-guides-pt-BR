@@ -785,7 +785,7 @@ HAVING sum(price) > 100
 
 This returns the date and total price for each order object, grouped by the day they were ordered and where the price is more than $100.
 
-Condições de substituição
+Condições de Substituição
 ---------------------
 
 ### `unscope`
