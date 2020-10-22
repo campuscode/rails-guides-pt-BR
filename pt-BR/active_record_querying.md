@@ -785,18 +785,18 @@ HAVING sum(price) > 100
 
 Isso retorna a data e o preço total para cada objeto de pedido, agrupado pelo dia em que foram criados e se o preço é maior que $100.
 
-Overriding Conditions
+Condições de Substituição
 ---------------------
 
 ### `unscope`
 
-You can specify certain conditions to be removed using the `unscope` method. For example:
+Você pode especificar certas condições a serem removidas usando o método `unscope`. Por exemplo:
 
 ```ruby
 Article.where('id > 10').limit(20).order('id asc').unscope(:order)
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM articles WHERE id > 10 LIMIT 20
@@ -806,14 +806,14 @@ SELECT * FROM articles WHERE id > 10 ORDER BY id asc LIMIT 20
 
 ```
 
-You can also unscope specific `where` clauses. For example:
+Você também pode remover o escopo de cláusulas `where` específicas. Por exemplo:
 
 ```ruby
 Article.where(id: 10, trashed: false).unscope(where: :id)
 # SELECT "articles".* FROM "articles" WHERE trashed = 0
 ```
 
-A relation which has used `unscope` will affect any relation into which it is merged:
+A relação que usou `unscope` afetará quaisquer relações nas quais foi unida:
 
 ```ruby
 Article.order('id asc').merge(Article.unscope(:order))
@@ -822,43 +822,43 @@ Article.order('id asc').merge(Article.unscope(:order))
 
 ### `only`
 
-You can also override conditions using the `only` method. For example:
+Você também pode substituir condições com o método `only`. Por exemplo:
 
 ```ruby
 Article.where('id > 10').limit(20).order('id desc').only(:order, :where)
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM articles WHERE id > 10 ORDER BY id DESC
 
-# Original query without `only`
+# Query original sem `only`
 SELECT * FROM articles WHERE id > 10 ORDER BY id DESC LIMIT 20
 
 ```
 
 ### `reselect`
 
-The `reselect` method overrides an existing select statement. For example:
+O método `reselect` substitui uma declaração de _select_ existente. Por exemplo:
 
 ```ruby
 Post.select(:title, :body).reselect(:created_at)
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT `posts`.`created_at` FROM `posts`
 ```
 
-In case the `reselect` clause is not used,
+No caso em que a cláusula `reselect` não é utilizada,
 
 ```ruby
 Post.select(:title, :body).select(:created_at)
 ```
 
-the SQL executed would be:
+o SQL executado será:
 
 ```sql
 SELECT `posts`.`title`, `posts`.`body`, `posts`.`created_at` FROM `posts`
@@ -866,7 +866,7 @@ SELECT `posts`.`title`, `posts`.`body`, `posts`.`created_at` FROM `posts`
 
 ### `reorder`
 
-The `reorder` method overrides the default scope order. For example:
+O método `reorder` substitui a ordem de escopo padrão. Por exemplo:
 
 ```ruby
 class Article < ApplicationRecord
@@ -876,14 +876,14 @@ end
 Article.find(10).comments.reorder('name')
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM articles WHERE id = 10 LIMIT 1
 SELECT * FROM comments WHERE article_id = 10 ORDER BY name
 ```
 
-In the case where the `reorder` clause is not used, the SQL executed would be:
+No caso em que `reorder` não é utilizado, o SQL executado será:
 
 ```sql
 SELECT * FROM articles WHERE id = 10 LIMIT 1
@@ -892,53 +892,53 @@ SELECT * FROM comments WHERE article_id = 10 ORDER BY posted_at DESC
 
 ### `reverse_order`
 
-The `reverse_order` method reverses the ordering clause if specified.
+O método `reverse_order` reverte a ordem da cláusula, se especificado.
 
 ```ruby
 Client.where("orders_count > 10").order(:name).reverse_order
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM clients WHERE orders_count > 10 ORDER BY name DESC
 ```
 
-If no ordering clause is specified in the query, the `reverse_order` orders by the primary key in reverse order.
+Se nenhuma cláusula de ordenação é especificada na _query_, o `reverse_order` ordena pela chave primária em ordem reversa.
 
 ```ruby
 Client.where("orders_count > 10").reverse_order
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM clients WHERE orders_count > 10 ORDER BY clients.id DESC
 ```
 
-This method accepts **no** arguments.
+Esse método **não aceita** argumentos.
 
 ### `rewhere`
 
-The `rewhere` method overrides an existing, named where condition. For example:
+O método `rewhere` substitui uma existente, nomeada condição de _where_. Por exemplo:
 
 ```ruby
 Article.where(trashed: true).rewhere(trashed: false)
 ```
 
-The SQL that would be executed:
+O SQL que será executado:
 
 ```sql
 SELECT * FROM articles WHERE `trashed` = 0
 ```
 
-In case the `rewhere` clause is not used,
+No caso em que a cláusula `rewhere` não é usada,
 
 ```ruby
 Article.where(trashed: true).where(trashed: false)
 ```
 
-the SQL executed would be:
+o SQL será:
 
 ```sql
 SELECT * FROM articles WHERE `trashed` = 1 AND `trashed` = 0
