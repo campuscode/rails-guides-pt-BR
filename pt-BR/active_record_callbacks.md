@@ -356,7 +356,7 @@ The callback only runs when all the `:if` conditions and none of the `:unless` c
 Classes *Callback*
 ----------------
 
-Em algumas situações, os métodos de *Callback* que iremos escrever serão úteis para serem reutilizados por outros modelos. O *Active Record* se faz possível para criar classes que encapsulam os métodos *Callback* e, por isso, se tornam muito fáceis de reusá-los.
+Em algumas situações, os métodos de *Callback* que iremos escrever serão úteis para serem reutilizados por outros *models*. O *Active Record* se faz possível para criar classes que encapsulam os métodos *Callback* e, por isso, se tornam muito fáceis de reusá-los.
 
 Aqui está um exemplo onde criamos uma classe com um *callback* `after_destroy` para o *model* `PictureFile`:
 
@@ -378,7 +378,7 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-Perceba que precisamos instanciar um novo objeto chamado `PictureFileCallbacks`, já que declaramos nosso *callback* como uma instância do método. Particularmente, isso é útil se os *callbacks* fazem uso do estado do objeto instanciado. Porém fará mais sentido declarar os *callbacks* como métodos de classe com mais frequencia:
+Perceba que precisamos instanciar um novo objeto chamado `PictureFileCallbacks`, já que declaramos nosso *callback* como um método de instância. Particularmente, isso é útil se os *callbacks* fazem uso do estado do objeto instanciado. Porém fará mais sentido declarar os *callbacks* como métodos de classe com mais frequência:
 
 ```ruby
 class PictureFileCallbacks
@@ -390,7 +390,7 @@ class PictureFileCallbacks
 end
 ```
 
-Se o método *callback* é declarado dessa forma, não será necessário instanciar
+Se o método *callback* é declarado dessa forma, não será necessário instanciar o objeto `PictureFileCallbacks`
 
 ```ruby
 class PictureFile < ApplicationRecord
