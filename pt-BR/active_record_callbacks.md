@@ -356,7 +356,7 @@ The callback only runs when all the `:if` conditions and none of the `:unless` c
 Classes *Callback*
 ----------------
 
-Em algumas situações, os métodos de *Callback* que iremos escrever serão úteis para serem reutilizados por outros *models*. O *Active Record* se faz possível para criar classes que encapsulam os métodos *Callback* e, por isso, se tornam muito fáceis de reusá-los.
+Em algumas situações, os métodos de *Callback* que iremos escrever serão úteis para serem reutilizados por outros *models*. O *Active Record* possibilita a criação de classes que encapsulam os métodos *Callback* e, por isso, se tornam muito fáceis de reusá-los.
 
 Aqui está um exemplo onde criamos uma classe com um *callback* `after_destroy` para o *model* `PictureFile`:
 
