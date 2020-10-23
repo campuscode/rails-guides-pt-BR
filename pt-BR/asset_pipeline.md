@@ -158,58 +158,58 @@ Mais leitura:
 * [Acelerando nome dos arquivos: não use *Query String*(string de consulta)](http://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/)
 
 
-How to Use the Asset Pipeline
------------------------------
+Como usar o *Asset Pipeline*
+----------------------------
 
-In previous versions of Rails, all assets were located in subdirectories of
-`public` such as `images`, `javascripts` and `stylesheets`. With the asset
-pipeline, the preferred location for these assets is now the `app/assets`
-directory. Files in this directory are served by the Sprockets middleware.
+Nas versões anteriores do Rails, todos os *assets* estavam localizados nos subdiretórios
+abaixo de `public`, como `imagens`, `javascripts` and `stylesheets`. Com o *asset pipeline*,
+a localização recomendada para esses *assets* é agora o diretório `app/assets`.
+Arquivos nesse diretório serão servidos pelo *Sprockets middleware*.
 
-Assets can still be placed in the `public` hierarchy. Any assets under `public`
-will be served as static files by the application or web server when
-`config.public_file_server.enabled` is set to true. You should use `app/assets` for
-files that must undergo some pre-processing before they are served.
+Os *assets* podem ainda ser colocados na hierarquia do `public`. Qualquer *asset* sob
+`public` ainda será servido como um arquivo estático pela aplicação ou servidor *web* quando
+`config.public_file_server.enabled` estiver configurado como *true*. Você deve usar o 
+`app/assets` para arquivos que devem ser pré-processados antes de serem servidos.
 
-In production, Rails precompiles these files to `public/assets` by default. The
-precompiled copies are then served as static assets by the web server. The files
-in `app/assets` are never served directly in production.
+Em produção, o Rails pré-compila esses arquivos para `public/assets` por padrão.
+As cópias dos arquivos pré-compilados serão então servidas como *assets* estáticos
+pelo servidor *web*. Os arquivos em `app/assets` nunca serão servidos diretamente em produção.
 
-### Controller Specific Assets
+### *Assets* Específicos de *Controllers*
 
-When you generate a scaffold or a controller, Rails also generates a
-Cascading Style Sheet file (or SCSS file if `sass-rails` is in the `Gemfile`)
-for that controller. Additionally, when generating a scaffold, Rails generates
-the file `scaffolds.css` (or `scaffolds.scss` if `sass-rails` is in the
-`Gemfile`.)
+Quando você gera um *scaffold* ou um *controller*, o Rails também  gera um
+arquivo *Cascading Style Sheet* (ou SCSSS se o `sass-rails` estiver no `Gemfile`)
+para aquele *controller*. Adicionalmente, quando você gera um *scaffold*, o Rails
+também gera o arquivo `scaffolds.css` (ou `scaffolds.scss` se o `sass-rails` 
+estiver no `Gemfile`.)
 
-For example, if you generate a `ProjectsController`, Rails will also add a new
-file at `app/assets/stylesheets/projects.scss`. By default these files will be
-ready to use by your application immediately using the `require_tree` directive. See
-[Manifest Files and Directives](#manifest-files-and-directives) for more details
-on require_tree.
+Por exemplo, se você gerar um `ProjectsController`, o Rails também adicionará um novo
+arquivo em `app/assets/stylesheets/projects.scss`. Por padrão, os arquivos estarão prontos
+para serem usados pela sua aplicação imediatamente usando a diretiva `require_tree`.
+Veja [Arquivos de Manifesto e Diretivas](#manifest-files-and-directives) para mais detalhes
+sobre `require_tree`.
 
-You can also opt to include controller specific stylesheets and JavaScript files
-only in their respective controllers using the following:
+Você também pode optar por incluir folhas de estilo específicas do *controller* e
+arquivos JavaScript apenas nos seus respectivos diretórios, usando o seguinte:
 
-`<%= javascript_include_tag params[:controller] %>` or `<%= stylesheet_link_tag
+`<%= javascript_include_tag params[:controller] %>` ou `<%= stylesheet_link_tag
 params[:controller] %>`
 
-When doing this, ensure you are not using the `require_tree` directive, as that
-will result in your assets being included more than once.
+Ao fazer isso, certifique-se de que você não está usando a diretiva `require_tree`,
+pois isso resultará em seus *assets* serem incluídos mais do que uma vez.
 
-WARNING: When using asset precompilation, you will need to ensure that your
-controller assets will be precompiled when loading them on a per page basis. By
-default `.coffee` and `.scss` files will not be precompiled on their own. See
-[Precompiling Assets](#precompiling-assets) for more information on how
-precompiling works.
+WARNING: Ao usar pré-compilação de *assets*, você precisará certificar-se de que 
+seus *assets* dos *controllers* sejam pré-compilados quando carregá-los por página.
+Por padrão, arquivos `.coffee` e `.scss` não serão pré-compilados por si mesmos.
+Veja [Pré-compilando *Assets*](#precompiling-assets) para mais informações sobre
+como a pré-compilação funciona.
 
-NOTE: You must have an ExecJS supported runtime in order to use CoffeeScript.
-If you are using macOS or Windows, you have a JavaScript runtime installed in
-your operating system. Check [ExecJS](https://github.com/rails/execjs#readme) documentation to know all supported JavaScript runtimes.
+NOTE: Você deve ter uma *runtime* de ExecJS para usar CoffeeScript.
+Se você estiver usando macOS ou Windows, você deve ter uma *runtime* de JavaScript instalada 
+no seu sistema operacional. Veja a documentação do [ExecJS](https://github.com/rails/execjs#readme) para conhecer todas as Javascript *runtimes*.
 
-You can also disable generation of controller specific asset files by adding the
-following to your `config/application.rb` configuration:
+Você também pode desabilitar a geração de arquivos de *assets* específicos dos *controllers* 
+adicionando o seguinte à sua configuração `config/application.rb`:
 
 ```ruby
   config.generators do |g|
@@ -217,32 +217,32 @@ following to your `config/application.rb` configuration:
   end
 ```
 
-### Asset Organization
+### Organização dos *Assets*
 
-Pipeline assets can be placed inside an application in one of three locations:
-`app/assets`, `lib/assets` or `vendor/assets`.
+Os *pipeline assets* podem ser colocados dentro de uma aplicação nos três locais seguintes:
+`app/assets`, `lib/assets` ou `vendor/assets`.
 
-* `app/assets` is for assets that are owned by the application, such as custom
-images, JavaScript files, or stylesheets.
+* `app/assets` é destinado aos *assets* que são proprietários da aplicação, como
+imagens customizadas, arquivos Javascript ou folhas de estilo.
 
-* `lib/assets` is for your own libraries' code that doesn't really fit into the
-scope of the application or those libraries which are shared across applications.
+* `lib/assets` é destinado ao código das suas próprias bibliotecas que não se realmente encaixam
+no escopo da aplicação ou àquelas bibliotecas que são compartilhadas entre aplicações.
 
-* `vendor/assets` is for assets that are owned by outside entities, such as
-code for JavaScript plugins and CSS frameworks. Keep in mind that third party
-code with references to other files also processed by the asset Pipeline (images,
-stylesheets, etc.), will need to be rewritten to use helpers like `asset_path`.
+* `vendor/assets` é destinado aos *assets* que são de propriedade de entidades externas,
+como código para *plugins* de JavaScript e *frameworks* de CSS. Tenha em mente que códigos
+de terceiros com referências à outros arquivos também processados pelo *asset Pipeline*
+(imagens, folhas de estilo, etc.), terão que ser reescritos para usarem auxiliares como `asset_path`.
 
-#### Search Paths
+#### Caminhos de Busca
 
-When a file is referenced from a manifest or a helper, Sprockets searches the
-three default asset locations for it.
+Quando um arquivo é referenciado a partir de um manifesto ou um auxiliar, o Sprockets procura
+por ele nas três localizações padrão de *assets*.
 
-The default locations are: the `images`, `javascripts` and `stylesheets`
-directories under the `app/assets` folder, but these subdirectories
-are not special - any path under `assets/*` will be searched.
+As três localizações padrão são: os diretórios `images`, `javascripts` e `stylesheets`
+abaixo da pasta `app/assets`, mas esses subdiretórios não são especiais - qualquer caminho
+sob `assets/*` será pesquisado.
 
-For example, these files:
+Por exemplo, esses arquivos:
 
 ```
 app/assets/javascripts/home.js
@@ -251,7 +251,7 @@ vendor/assets/javascripts/slider.js
 vendor/assets/somepackage/phonebox.js
 ```
 
-would be referenced in a manifest like this:
+poderiam ser referenciados em um manifesto da seguinte maneira:
 
 ```js
 //= require home
@@ -260,182 +260,182 @@ would be referenced in a manifest like this:
 //= require phonebox
 ```
 
-Assets inside subdirectories can also be accessed.
+Os *assets* dentro dos subdiretórios também podem ser acessados.
 
 ```
 app/assets/javascripts/sub/something.js
 ```
 
-is referenced as:
+é referenciado como:
 
 ```js
 //= require sub/something
 ```
 
-You can view the search path by inspecting
-`Rails.application.config.assets.paths` in the Rails console.
+Você pode visualizar o caminho de busca inspecionando
+`Rails.application.config.assets.paths` no *console* do Rails.
 
-Besides the standard `assets/*` paths, additional (fully qualified) paths can be
-added to the pipeline in `config/initializers/assets.rb`. For example:
+Adicionalmente, além do caminho padrão `assets/*`, caminhos (completos)
+podem ser adicionados ao *pipeline* em `config/initializers/assets.rb`. Por exemplo:
 
 ```ruby
 Rails.application.config.assets.paths << Rails.root.join("lib", "videoplayer", "flash")
 ```
 
-Paths are traversed in the order they occur in the search path. By default,
-this means the files in `app/assets` take precedence, and will mask
-corresponding paths in `lib` and `vendor`.
+Os caminhos são percorridos na ordem em que eles aparecem no caminho de busca. Por padrão,
+isso significa que os arquivos em `app/assets` tem precedência, e mascararão caminhos
+correspondentes em `lib` e `vendor`.
 
-It is important to note that files you want to reference outside a manifest must
-be added to the precompile array or they will not be available in the production
-environment.
+É importante notar que os arquivos que você quiser referenciar fora de um manifesto devem
+ser adicionados ao *array* de pré-compilação, caso contrário eles não estarão disponíveis
+no ambiente de produção.
 
-#### Using Index Files
+#### Usando Índices de Arquivos
 
-Sprockets uses files named `index` (with the relevant extensions) for a special
-purpose.
+O Sprockets usa arquivos nomeados como `index` (com a extensão relevante) para um propósito
+especial.
 
-For example, if you have a jQuery library with many modules, which is stored in
-`lib/assets/javascripts/library_name`, the file `lib/assets/javascripts/library_name/index.js` serves as
-the manifest for all files in this library. This file could include a list of
-all the required files in order, or a simple `require_tree` directive.
+Por exemplo, ser você tiver uma biblioteca JQuery com muitos módulos, que é armazenada em
+`lib/assets/javascripts/library_name`, o arquivo `lib/assets/javascripts/library_name/index.js` serve como
+manifesto para todos os arquivos desta biblioteca. Esse arquivo poderia incluir uma lista de
+ordenada de todos os arquivos necessários ou uma simples diretiva `require_tree`.
 
-The library as a whole can be accessed in the application manifest like so:
+A biblioteca como um todo pode ser acessada no manifesto da aplicação como:
 
 ```js
 //= require library_name
 ```
 
-This simplifies maintenance and keeps things clean by allowing related code to
-be grouped before inclusion elsewhere.
+Isso simplifica a manutenção e mantém as coisas limpas, por permitir código relacionado
+ser agrupado antes da inclusão em outros lugares.
 
-### Coding Links to Assets
+### Codificando *Links* para *Assets*
 
-Sprockets does not add any new methods to access your assets - you still use the
-familiar `javascript_include_tag` and `stylesheet_link_tag`:
+O Sprockets não adiciona nenhum método para acessar seus *assets* - você ainda usa
+as familiares `javascript_include_tag` e `stylesheet_link_tag`:
 
 ```erb
 <%= stylesheet_link_tag "application", media: "all" %>
 <%= javascript_include_tag "application" %>
 ```
 
-If using the turbolinks gem, which is included by default in Rails, then
-include the 'data-turbolinks-track' option which causes turbolinks to check if
-an asset has been updated and if so loads it into the page:
+Se você estiver usando a gem turbolinks, que é incluída por padrão no Rails, então
+inclua a opção 'data-turbolinks-track' que faz com que a turbolinks verifique se um *asset*
+foi atualizado e então o carrega naquela página:
 
 ```erb
 <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => "reload" %>
 <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
 ```
 
-In regular views you can access images in the `app/assets/images` directory
-like this:
+Em *views* comuns você pode acessar imagens no diretório `app/assets/images`
+como essa:
 
 ```erb
 <%= image_tag "rails.png" %>
 ```
 
-Provided that the pipeline is enabled within your application (and not disabled
-in the current environment context), this file is served by Sprockets. If a file
-exists at `public/assets/rails.png` it is served by the web server.
+Se o *pipeline* estiver ativo na sua aplicação (e não desativado no contexto
+do ambiente atual), esse arquivo é servido pelo Sprockets. Se um arquivo
+existir em `public/assets/rails.png` ele é servido pelo servidor *web*.
 
-Alternatively, a request for a file with an SHA256 hash such as
+Alternativamente, uma requisição para um arquivo com um *hash* SHA256 como
 `public/assets/rails-f90d8a84c707a8dc923fca1ca1895ae8ed0a09237f6992015fef1e11be77c023.png`
-is treated the same way. How these hashes are generated is covered in the [In
-Production](#in-production) section later on in this guide.
+é tratado da mesma maneira. A forma como esses *hashes* são gerados está coberta na seção
+[Em Produção](#in-production), posteriormente nesse guia.
 
-Sprockets will also look through the paths specified in `config.assets.paths`,
-which includes the standard application paths and any paths added by Rails
-engines.
+O Sprockets irá procurar através dos caminhos especificados em `config.assets.paths`,
+que inclui os caminhos padrão da aplicação e quaisquer caminhos adicionados pelas engines
+do Rails.
 
-Images can also be organized into subdirectories if required, and then can be
-accessed by specifying the directory's name in the tag:
+As imagens também podem ser organizadas em subdiretórios se necessário, e então
+podem ser acessadas pelo nome do diretório na tag:
 
 ```erb
 <%= image_tag "icons/rails.png" %>
 ```
 
-WARNING: If you're precompiling your assets (see [In Production](#in-production)
-below), linking to an asset that does not exist will raise an exception in the
-calling page. This includes linking to a blank string. As such, be careful using
-`image_tag` and the other helpers with user-supplied data.
+WARNING: Se você estiver pré-compilando seus *assets* (veja [Em Produção](#in-production)
+abaixo), fazer um *link* com um *asset* que não exista irá levantar uma *exception* 
+na página chamadora. O mesmo vale se for especificado um *link* para uma *string* em branco.
+Portanto, seja cauteloso ao usar a `image_tag` e os outros auxiliares com dados informados por usuários.
 
-#### CSS and ERB
+#### CSS e ERB
 
-The asset pipeline automatically evaluates ERB. This means if you add an
-`erb` extension to a CSS asset (for example, `application.css.erb`), then
-helpers like `asset_path` are available in your CSS rules:
+O *asset pipeline* avalia automaticamente o ERB. Isso significa que se você adicionar
+uma extensão `erb` a um *asset* CSS (por exemplo, `application.css.erb`), então
+auxiliares como `asset_path` estarão disponíveis nas suas regras de CSS:
 
 ```css
 .class { background-image: url(<%= asset_path 'image.png' %>) }
 ```
 
-This writes the path to the particular asset being referenced. In this example,
-it would make sense to have an image in one of the asset load paths, such as
-`app/assets/images/image.png`, which would be referenced here. If this image is
-already available in `public/assets` as a fingerprinted file, then that path is
-referenced.
+Isso escreve o caminho ao *asset* em particular que está sendo referenciado. Nesse exemplo,
+faria sentido ter uma imagem em um dos caminhos carregados de *assets*, como 
+`app/assets/images/image.png`, que seria referenciado aqui. Se essa imagem já está
+disponível em `public/assets` como um arquivo com uma impressão digital, então aquele caminho
+é referenciado.
 
-If you want to use a [data URI](https://en.wikipedia.org/wiki/Data_URI_scheme) -
-a method of embedding the image data directly into the CSS file - you can use
-the `asset_data_uri` helper.
+Se você quiser usar [URI de dados](https://en.wikipedia.org/wiki/Data_URI_scheme) -
+um método para embutir a imagem diretamente no arquivo de CSS - você pode usar
+o auxiliar `asset_data_uri`.
 
 ```css
 #logo { background: url(<%= asset_data_uri 'logo.png' %>) }
 ```
 
-This inserts a correctly-formatted data URI into the CSS source.
+Isso insere uma URI de dados corretamente formatada no CSS fonte.
 
-Note that the closing tag cannot be of the style `-%>`.
+Note que a tag de fechamento não pode ser do estilo `-%>`.
 
-#### CSS and Sass
+#### CSS e Sass
 
-When using the asset pipeline, paths to assets must be re-written and
-`sass-rails` provides `-url` and `-path` helpers (hyphenated in Sass,
-underscored in Ruby) for the following asset classes: image, font, video, audio,
-JavaScript and stylesheet.
+Quando usando o *asset pipeline*, os caminhos para os assets devem ser reescritos e
+o `sass-rails` provê os auxiliares `-url` e `-path` (hifenizados em Sass,
+separados por *underscore* em Ruby) para as seguintes classes de *assets*:
+imagem, fonte, vídeo, áudio, JavaScript e folha de estilo.
 
 * `image-url("rails.png")` returns `url(/assets/rails.png)`
 * `image-path("rails.png")` returns `"/assets/rails.png"`
 
-The more generic form can also be used:
+A forma mais genérica também pode ser usada:
 
-* `asset-url("rails.png")` returns `url(/assets/rails.png)`
-* `asset-path("rails.png")` returns `"/assets/rails.png"`
+* `asset-url("rails.png")` retorna `url(/assets/rails.png)`
+* `asset-path("rails.png")` retorna `"/assets/rails.png"`
 
-#### JavaScript/CoffeeScript and ERB
+#### JavaScript/CoffeeScript e ERB
 
-If you add an `erb` extension to a JavaScript asset, making it something such as
-`application.js.erb`, you can then use the `asset_path` helper in your
-JavaScript code:
+Se você adicionar uma extensão `erb` a um *asset* JavaScript, fazendo algo como
+`application.js.erb`, você pode então usar o auxiliar `asset_path` no seu
+código JavaScript:
 
 ```js
 $('#logo').attr({ src: "<%= asset_path('logo.png') %>" });
 ```
 
-This writes the path to the particular asset being referenced.
+Isso escreve o caminho ao *asset* em particular que está sendo referenciado.
 
-Similarly, you can use the `asset_path` helper in CoffeeScript files with `erb`
-extension (e.g., `application.coffee.erb`):
+Similarmente, você pode usar o auxiliar `asset_path` em arquivos CoffeeScript com
+a extensão `erb` (i.e., `application.coffee.erb`).
 
 ```js
 $('#logo').attr src: "<%= asset_path('logo.png') %>"
 ```
 
-### Manifest Files and Directives
+### Arquivos de Manifesto e Diretivas
 
-Sprockets uses manifest files to determine which assets to include and serve.
-These manifest files contain _directives_ - instructions that tell Sprockets
-which files to require in order to build a single CSS or JavaScript file. With
-these directives, Sprockets loads the files specified, processes them if
-necessary, concatenates them into one single file, and then compresses them
-(based on value of `Rails.application.config.assets.js_compressor`). By serving
-one file rather than many, the load time of pages can be greatly reduced because
-the browser makes fewer requests. Compression also reduces file size, enabling
-the browser to download them faster.
+O Sprockets usa arquivos de manifesto para determinar quais *assets* incluir e servir.
+Esses arquivos de manifesto contém _diretivas_ - instruções que dirão ao Sprockets
+quais arquivos solicitar para construir um arquivo CSS ou JavaScript único. Com
+essas diretivas, o Sprockets carrega os arquivos especificados, processa-os se
+necessário, concatena-os com em único arquivo e então comprime-os (baseado no valor
+de `Rails.application.config.assets.js_compressor`). Ao servir um arquivo 
+ao invés de muitos, o tempo de carregamento das páginas pode ser amplamente reduzido
+porque o navegador faz menos requisições. A compressão também reduz o tamanho dos arquivos,
+permitindo ao navegador baixá-los mais rapidamente.
 
-For example, with a `app/assets/javascripts/application.js` file containing the
-following lines:
+Por exemplo, com um arquivo `app/assets/javascripts/application.js` contendo as
+seguintes linhas:
 
 ```js
 // ...
@@ -444,29 +444,29 @@ following lines:
 //= require_tree .
 ```
 
-In JavaScript files, Sprockets directives begin with `//=`. In the above case,
-the file is using the `require` and the `require_tree` directives. The `require`
-directive is used to tell Sprockets the files you wish to require. Here, you are
-requiring the files `rails-ujs.js` and `turbolinks.js` that are available somewhere
-in the search path for Sprockets. You need not supply the extensions explicitly.
-Sprockets assumes you are requiring a `.js` file when done from within a `.js`
-file.
+Nos arquivos JavaScript, as diretivas do Sprocket começam com `//=`. No caso acima,
+o arquivo está usando as diretivas `require` e `require_tree`. A diretiva `require`
+é usada para instruir o Sprockets dos arquivos que você deseja solicitar. Aqui, você
+está solicitando os arquivos `rails-ujs.js` e `turbolinks.js`, que estão disponíveis em
+algum lugar no caminho de busca do Sprockets. Você não precisa informar as extensões
+explicitamente. O Sprockets assume que você está solicitando um arquivo `.js` quando
+feito de dentro de um arquivo `.js`.
 
-The `require_tree` directive tells Sprockets to recursively include _all_
-JavaScript files in the specified directory into the output. These paths must be
-specified relative to the manifest file. You can also use the
-`require_directory` directive which includes all JavaScript files only in the
-directory specified, without recursion.
+A diretiva `require_tree` instrui ao Sprockets para recursivamente incluir _todos_
+os arquivos JavaScript no diretório especificado no *output*. Esses caminhos
+deverão ser especificados de maneira relativa ao arquivo de manifesto. Você também
+pode usar a diretiva `require_directory`, que inclui todos os arquivos JavaScript
+somente do diretório especificado, sem recursão.
 
-Directives are processed top to bottom, but the order in which files are
-included by `require_tree` is unspecified. You should not rely on any particular
-order among those. If you need to ensure some particular JavaScript ends up
-above some other in the concatenated file, require the prerequisite file first
-in the manifest. Note that the family of `require` directives prevents files
-from being included twice in the output.
+As diretivas são processadas de cima para baixo, mas a ordem na qual os arquivos
+são incluídos pelo `require_tree` não é garantida. Você não deve confiar em
+nenhuma ordem particular entre eles. Se você precisar garantir que um JavaScript
+em particular termine acima de outro no arquivo concatenado, solicite o pré-requisito
+antes no manifesto. Note que a família de diretivas `require` previne arquivos de
+serem incluídos duas vezes no *output*.
 
-Rails also creates a default `app/assets/stylesheets/application.css` file
-which contains these lines:
+O Rails também cria um arquivo padrão `app/assets/stylesheets/application.css`
+que contém essas linhas:
 
 ```css
 /* ...
@@ -475,31 +475,31 @@ which contains these lines:
 */
 ```
 
-Rails create `app/assets/stylesheets/application.css` regardless of whether the
---skip-sprockets option is used when creating a new Rails application. This is
-so you can easily add asset pipelining later if you like.
+O Rails cria o `app/assets/stylesheets/application.css` independentemente se
+a opção --skip-sprockets é usada ao criar uma nova aplicação Rails. Isso permite
+que você facilmente adicione o *asset pipelining* mais tarde se assim o quiser.
 
-The directives that work in JavaScript files also work in stylesheets
-(though obviously including stylesheets rather than JavaScript files). The
-`require_tree` directive in a CSS manifest works the same way as the JavaScript
-one, requiring all stylesheets from the current directory.
+As diretivas que funcionam nos arquivos JavaScript também funcionam nas folhas de estilo
+(que obviamente incluem folhas de estilo além de arquivos JavaScript). A diretiva
+`require_tree` em um manifesto CSS funciona da mesma maneira que no JavaScript,
+solicitando todas as folhas de estilo do diretório corrente.
 
-In this example, `require_self` is used. This puts the CSS contained within the
-file (if any) at the precise location of the `require_self` call.
+Nesse exemplo, `require_self` é usado. Isso coloca o CSS contido dentro do 
+arquivo (se houver algum) na localização exata da chamada `require_self`.
 
-NOTE. If you want to use multiple Sass files, you should generally use the [Sass `@import` rule](https://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#import)
-instead of these Sprockets directives. When using Sprockets directives, Sass files exist within
-their own scope, making variables or mixins only available within the document they were defined in.
+NOTE. Se você quiser usar múltiplos arquivos Saas, você deve, via de regra, usar a [regra Sass `@import`](https://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#import)
+ao invés de usar as diretivas Sprockets. Quando usando as diretivas Saas, arquivos Saas existem dentro de seu próprio
+escopo, tornando variáveis ou mixins apenas disponíveis dentro do documento nas quais foram definidas.
 
-You can do file globbing as well using `@import "*"`, and `@import "**/*"` to add the whole tree which is equivalent to how `require_tree` works. Check the [sass-rails documentation](https://github.com/rails/sass-rails#features) for more info and important caveats.
+Você pode fazer *globbing* dos arquivos usando `@import "*"` e `@import "**/*"` para adicionar a árvore completa, que é equivalente a como o `require_tree` funciona. Veja a [documentação do sass-rails](https://github.com/rails/sass-rails#features) para mais informações e ressalvas importantes.
 
-You can have as many manifest files as you need. For example, the `admin.css`
-and `admin.js` manifest could contain the JS and CSS files that are used for the
-admin section of an application.
+Você pode ter quantos arquivos de manifesto quiser. Por exemplo, os manifestos
+`admin.css` e `admin.js` podem conter os arquivos JS e CSS que são usados pela
+seção de *admin* de uma aplicação.
 
-The same remarks about ordering made above apply. In particular, you can specify
-individual files and they are compiled in the order specified. For example, you
-might concatenate three CSS files together this way:
+As mesmas afirmações sobre ordens feitas acima também se aplicam. Em particular, você
+pode especificar arquivos individuais e eles serão compilados na ordem especificada.
+Por exemplo, você pode concatenar três arquivos CSS juntos da seguinte maneira:
 
 ```js
 /* ...
@@ -509,33 +509,33 @@ might concatenate three CSS files together this way:
 */
 ```
 
-### Preprocessing
+### Pré-processamento
 
-The file extensions used on an asset determine what preprocessing is applied.
-When a controller or a scaffold is generated with the default Rails gemset, a
-CoffeeScript file and a SCSS file are generated in place of a regular JavaScript
-and CSS file. The example used before was a controller called "projects", which
-generated an `app/assets/stylesheets/projects.scss` file.
+As extensões de arquivos usadas em um *asset* determinam qual pré-processamento é aplicado.
+Quando um *controller* ou um *scaffold* é gerado com o gemset padrão do Rails, um arquivo
+CoffeeScript e um arquivo SCSS são gerados no lugar de um arquivo comum de JavaScript e CSS.
+O exemplo usado anteriormente era um *controller* chamado "*projects*", que gerou um
+arquivo `app/assets/stylesheets/projects.scss`.
 
-In development mode, or if the asset pipeline is disabled, when these files are
-requested they are processed by the processors provided by the `coffee-script`
-and `sass` gems and then sent back to the browser as JavaScript and CSS
-respectively. When asset pipelining is enabled, these files are preprocessed and
-placed in the `public/assets` directory for serving by either the Rails app or
-web server.
+Em modo de desenvolvimento, se o *asset pipeline* estiver desabilitado, quando esses
+arquivos são solicitados, eles serão processados pelos *processors* especificados
+pelas gems de `coffee-script` e `sass` e então enviados de volta ao navegador como
+JavaScript e CSS respectivamente. Quando o *asset pipelining* está habilitado, esses
+arquivos são pré-processados e colocados no diretório `public/assets`, para serem servidos
+seja pela aplicação Rails ou pelo servidor *web*.
 
-Additional layers of preprocessing can be requested by adding other extensions,
-where each extension is processed in a right-to-left manner. These should be
-used in the order the processing should be applied. For example, a stylesheet
-called `app/assets/stylesheets/projects.scss.erb` is first processed as ERB,
-then SCSS, and finally served as CSS. The same applies to a JavaScript file -
-`app/assets/javascripts/projects.coffee.erb` is processed as ERB, then
-CoffeeScript, and served as JavaScript.
+Camadas adicionais de pré-processamento podem ser solicitadas ao se adicionar outras extensões,
+onde cada extensão é processada da direita para a esquerda. Essas devem ser usadas para que
+o processamento seja aplicado. Por exemplo, uma folha de estilos chamada
+`app/assets/stylesheets/projects.scss.erb` é primeiramente processada como ERB,
+depois como SCSS e finalmente servida como CSS. O mesmo se aplica a um arquivo JavaScript -
+`app/assets/javascripts/projects.coffee.erb`, que é processado como ERB, depois CoffeeScript
+e então servido como JavaScript.
 
-Keep in mind the order of these preprocessors is important. For example, if
-you called your JavaScript file `app/assets/javascripts/projects.erb.coffee`
-then it would be processed with the CoffeeScript interpreter first, which
-wouldn't understand ERB and therefore you would run into problems.
+Tenha em mente que a ordem desses pré-processadores é importante. Por exemplo, se
+você chamou seu arquivo JavaScript de `app/assets/javascripts/projects.erb.coffee`,
+então ele seria processado pelo interpretador do CoffeeScript primeiro, que não
+entende ERB, o que te causaria problemas.
 
 
 In Development
