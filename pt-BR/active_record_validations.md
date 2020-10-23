@@ -1202,7 +1202,7 @@ person.errors.full_messages
 
 ### `errors.details`
 
-Você pode especificar um validator de tipo no *hash* do detalhamento de erro retornado usando o
+Você pode especificar um validador de tipo no *hash* do detalhamento de erro retornado usando o
 método `errors.add`.
 
 ```ruby
@@ -1239,7 +1239,7 @@ validador de tipo correspondente.
 
 ### `errors[:base]`
 
-Voce pode adicionar mensagens de erro relacionadas ao estado do objeto como um todo, ao invés de estarem relacionadas a um atributo em específico. Você pode usar este método quando você quiser dizer que o objeto é invalido, não importando os valores de seus atributos. Sendo o `errors[:base]` um *array*, você pode simplesmente adicionar uma *string* ao método e ela será usada como uma mensagem de erro.
+Voce pode adicionar mensagens de erro relacionadas ao estado do objeto como um todo, ao invés de estarem relacionadas a um atributo em específico. Você pode usar este método quando você quiser dizer que o objeto é inválido, não importando os valores de seus atributos. Sendo o `errors[:base]` um *array*, você pode simplesmente adicionar uma *string* ao método e ela será usada como uma mensagem de erro.
 
 ```ruby
 class Person < ApplicationRecord
