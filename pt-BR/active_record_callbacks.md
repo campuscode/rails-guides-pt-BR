@@ -236,10 +236,10 @@ The `after_initialize` callback is triggered every time a new object of the clas
 
 NOTE: The `find_by_*` and `find_by_*!` methods are dynamic finders generated automatically for every attribute. Learn more about them at the [Dynamic finders section](active_record_querying.html#dynamic-finders)
 
-Pulando *Callbacks*
+Ignorando *Callbacks*
 ------------------
 
-Assim como nas validações, também é possível pular os *callbacks* usando os seguintes métodos:
+Assim como nas validações, também é possível ignorar os *callbacks* usando os seguintes métodos:
 
 * `decrement!`
 * `decrement_counter`
