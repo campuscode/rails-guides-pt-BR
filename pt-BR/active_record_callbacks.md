@@ -254,18 +254,18 @@ Just as with validations, it is also possible to skip callbacks by using the fol
 
 These methods should be used with caution, however, because important business rules and application logic may be kept in callbacks. Bypassing them without understanding the potential implications may lead to invalid data.
 
-Halting Execution
+Terminando uma Execução
 -----------------
 
-As you start registering new callbacks for your models, they will be queued for execution. This queue will include all your model's validations, the registered callbacks, and the database operation to be executed.
+Quando você começar a registrar novos *callbacks* para seus modelos, eles serão enfileirados para a execução. Esta fila incluirá todas as validações do seu modelo, os *callbacks* registrados, e a operação do banco de dados para ser executada.
 
-The whole callback chain is wrapped in a transaction. If any callback raises an exception, the execution chain gets halted and a ROLLBACK is issued. To intentionally stop a chain use:
+Toda a cadeia do *callback* é empacotada numa transação. Se algum *callback* lança uma exceção, a cadeia de execução é terminada e um *ROLLBACK* é emitido. Para parar intencionalmente uma cadeia, use:
 
 ```ruby
 throw :abort
 ```
 
-WARNING. Any exception that is not `ActiveRecord::Rollback` or `ActiveRecord::RecordInvalid` will be re-raised by Rails after the callback chain is halted. Raising an exception other than `ActiveRecord::Rollback` or `ActiveRecord::RecordInvalid` may break code that does not expect methods like `save` and `update` (which normally try to return `true` or `false`) to raise an exception.
+WARNING: Qualquer exceção que não as `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` serão re-lançadas pelo Rails após a cadeia do *callback* ser terminada. Lançar uma outra exceção que não `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` pode quebrar um código que não espera por métodos como `save` ou `update` (os quais normalmente tentam retornar `true` ou `false`) para lançar uma exceção.
 
 *Callbacks* Relacionais
 --------------------
