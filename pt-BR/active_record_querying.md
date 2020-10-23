@@ -459,17 +459,17 @@ O método `find_in_batches` aceita as mesmas opção que o `find_each`
 Condições
 ----------
 
-O método `where`  permite que você especifique condições para limitar os registro retornados, representando o `where`-part da instrução SQL. Condições podem ser especificadas como uma *string*, *array*, ou *hash*.
+O método `where`  permite que você especifique condições para limitar os registro retornados, representando a parte `where` da instrução SQL. Condições podem ser especificadas como uma *string*, *array*, ou *hash*.
 
 ### Condições de Strings Puras
 
-Se você gostaria de adicionar condições para sua busca, poderia apenas especifica-las, por exemplo `Client.where("orders_count = '2'")`. Isso encontrará todos os clientes em que o campo `ordes_count` que tenha o valor igual a 2.
+Se você gostaria de adicionar condições para sua busca, poderia apenas especificá-las, como, por exemplo `Client.where("orders_count = '2'")`. Isso encontrará todos os clientes em que o campo `ordes_count` que tenha o valor igual a 2.
 
 WARNING: Construindo sua própria condição como *strings* pura pode te deixar vulnerável a ataques de injeção SQL. Por exemplo, `Client.where("first_name LIKE '%#{params[:first_name]}%'")` não é seguro. Veja a próxima seção para a maneira de lidar com  condições usando array.
 
 ### Condições de Array
 
-Agora, se esse número pudesse variar, digamos como um argumento de algum lugar? O comado em busca então levaria a forma:
+Agora, se esse número pudesse variar, digamos como um argumento de algum lugar? O comando da busca então levaria a forma:
 
 ```ruby
 Client.where("orders_count = ?", params[:orders])
@@ -477,7 +477,7 @@ Client.where("orders_count = ?", params[:orders])
 
 *Active Record* tomará o primeiro argumento como a string de condições e quaisquer argumentos adicionais vão substituir os pontos de interrogação `(?)` nele.
 
-Se você quer especificar multiplas condições:
+Se você quer especificar múltiplas condições:
 
 ```ruby
 Client.where("orders_count = ? AND locked = ?", params[:orders], false)
@@ -497,7 +497,7 @@ Para este código:
 Client.where("orders_count = #{params[:orders]}")
 ```
 
-Devido à segurança do argumento. Colocando a variável dentro da condição de *string* passará a variável para o banco de dados **como se encontra**. Isto significa que isso será uma variável sem escape diretamente de um usuário que pode ter intenções maliciosas. Se você fizer isso, you coloca todo seu banco de dados em risco, porque uma vez que um usuário descobre que pode explorar seu banco de dados, ele pode fazer qualquer coisa com ele. Nunca, jamais, coloque seus argumentos diretamente dentro da condição de *string*.
+Devido à segurança do argumento. Colocando a variável dentro da condição de *string*, passará a variável para o banco de dados **como se encontra**. Isto significa que será uma variável sem escape diretamente de um usuário que pode ter intenções maliciosas. Se você fizer isso, coloca todo seu banco de dados em risco, porque uma vez que um usuário descobre que pode explorar seu banco de dados, ele pode fazer qualquer coisa com ele. Nunca, jamais, coloque seus argumentos diretamente dentro da condição de *string*.
 
 TIP: Para mais informações sobre os perigos da injeção de SQL, veja em [Ruby on Rails Security Guide](https://guides.rubyonrails.org/security.html#sql-injection) / [Ruby on Rails Security Guide PT-Br](security.html#sql-injection)
 
@@ -555,7 +555,7 @@ Isso irá encontrar todos clientes criados ontem usando uma instrução SQL `BET
 SELECT * FROM clients WHERE (clients.created_at BETWEEN '2008-12-21 00:00:00' AND '2008-12-22 00:00:00')
 ```
 
-Isso demonstra uma sintaxe mais curta para examplos em [Condições de Array](#condiçoes-de-array)
+Isso demonstra uma sintaxe mais curta para exemplos em [Condições de Array](#condiçoes-de-array)
 
 #### Subconjunto de Condições
 
