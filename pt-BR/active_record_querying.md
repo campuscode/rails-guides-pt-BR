@@ -644,14 +644,15 @@ Client.order("orders_count ASC").order("created_at DESC")
 
 WARNING: Na maioria dos sistemas de banco de dados, ao selecionar campos com `distinct` de um conjunto de resultados usando métodos como` select`, `pluck` e `ids`; o método `order` gerará uma exceção `ActiveRecord::StatementInvalid`, a menos que o(s) campo(s) usados ​​na cláusula `order` estejam incluídos na lista de seleção. Consulte a próxima seção para selecionar campos do conjunto de resultados.
 
-Selecting Specific Fields
+Selecionando Campos Específicos
 -------------------------
 
-By default, `Model.find` selects all the fields from the result set using `select *`.
+Por padrão, `Model.find` seleciona todos os campos do conjunto de resultado usando `select *`.
 
-To select only a subset of fields from the result set, you can specify the subset via the `select` method.
+Para selecionar somente um subconjunto de campos do conjunto de resultado, você pode especificar o
+subconjunto via método `select`.
 
-For example, to select only `viewable_by` and `locked` columns:
+Por exemplo, para selecionar somente as colunas `viewable_by` e `locked`:
 
 ```ruby
 Client.select(:viewable_by, :locked)
@@ -659,40 +660,41 @@ Client.select(:viewable_by, :locked)
 Client.select("viewable_by, locked")
 ```
 
-The SQL query used by this find call will be somewhat like:
+A *query* SQL usada por esta chamada de busca vai ser algo como:
 
 ```sql
 SELECT viewable_by, locked FROM clients
 ```
 
-Be careful because this also means you're initializing a model object with only the fields that you've selected. If you attempt to access a field that is not in the initialized record you'll receive:
+Tome cuidado pois isso também significa que você está inicializando um objeto *model* com somente os campos que você selecionou. Se você tentar acessar um campo que não está no registro inicializado,
+você vai receber:
 
 ```bash
 ActiveModel::MissingAttributeError: missing attribute: <attribute>
 ```
 
-Where `<attribute>` is the attribute you asked for. The `id` method will not raise the `ActiveRecord::MissingAttributeError`, so just be careful when working with associations because they need the `id` method to function properly.
+Onde `<attribute>` é o atributo que você pediu. O método `id` não vai lançar o `ActiveRecord::MissingAttributeError`, então fique atento quando estiver trabalhando com associações, pois elas precisam do método `id` para funcionar corretamente.
 
-If you would like to only grab a single record per unique value in a certain field, you can use `distinct`:
+Se você quiser pegar somente um registro por valor único em um certo campo, você pode usar `distinct`:
 
 ```ruby
 Client.select(:name).distinct
 ```
 
-This would generate SQL like:
+Isso vai gerar uma *query* SQL como:
 
 ```sql
 SELECT DISTINCT name FROM clients
 ```
 
-You can also remove the uniqueness constraint:
+Você pode também remover a restrição de unicidade:
 
 ```ruby
 query = Client.select(:name).distinct
-# => Returns unique names
+# => Retorna nomes únicos
 
 query.distinct(false)
-# => Returns all names, even if there are duplicates
+# => Retorna todos os nomes, mesmo se houverem valores duplicados.
 ```
 
 Limit and Offset
