@@ -236,10 +236,10 @@ The `after_initialize` callback is triggered every time a new object of the clas
 
 NOTE: The `find_by_*` and `find_by_*!` methods are dynamic finders generated automatically for every attribute. Learn more about them at the [Dynamic finders section](active_record_querying.html#dynamic-finders)
 
-Skipping Callbacks
+Pulando *Callbacks*
 ------------------
 
-Just as with validations, it is also possible to skip callbacks by using the following methods:
+Assim como nas validações, também é possível pular os *callbacks* usando os seguintes métodos:
 
 * `decrement!`
 * `decrement_counter`
@@ -252,7 +252,7 @@ Just as with validations, it is also possible to skip callbacks by using the fol
 * `update_all`
 * `update_counters`
 
-These methods should be used with caution, however, because important business rules and application logic may be kept in callbacks. Bypassing them without understanding the potential implications may lead to invalid data.
+Contudo, esses métodos devem ser usados com cautela, porque regras de negócio importantes e lógica da aplicação podem ser mantidos nos *callbacks*. Contorná-los sem entender as potenciais implicações pode levar a dados inválidos.
 
 Halting Execution
 -----------------
