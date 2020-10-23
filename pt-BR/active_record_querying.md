@@ -514,7 +514,7 @@ Isso torna a legibilidade mais clara se você tem um grande número de condiçõ
 
 ### Condições de Hash
 
-*Active Record* também permite que você passe em condições de hash o que pode aumentar a legibilidade de suas sintaxes de condições. Com condições de *hash*, você passa em uma *hash* com chaves (*keys*) dos campos que deseja qualificados e os valores (*values*) de como deseja qualificá-los:
+*Active Record* também permite que você passe em condições de *hash* o que pode aumentar a legibilidade de suas sintaxes de condições. Com condições de *hash*, você passa em uma *hash* com chaves (*keys*) dos campos que deseja qualificados e os valores (*values*) de como deseja qualificá-los:
 
 NOTE: Apenas igualdade, intervalo, e subconjunto são possiveis com as condições de *hash*.
 
