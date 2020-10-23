@@ -234,7 +234,7 @@ Adicionalmente, o *callback* `after_find` é acionado pelos seguintes métodos d
 
 O *callback* `after_initialize`  é acionado toda vez que um novo objeto da classe é inicializado. 
 
-NOTE: Os métodos `find_by_*` and `find_by_*!` são localizadores dinâmicos gerados automaticamente para cada atributo. Aprenda mais sobre eles na [seção de Localizadores Dinâmicos](active_record_querying.html#localizadores-dinamicos) 
+NOTE: Os métodos `find_by_*` e `find_by_*!` são localizadores dinâmicos gerados automaticamente para cada atributo. Aprenda mais sobre eles na [seção de Localizadores Dinâmicos](active_record_querying.html#localizadores-dinamicos) 
 
 Skipping Callbacks
 ------------------
