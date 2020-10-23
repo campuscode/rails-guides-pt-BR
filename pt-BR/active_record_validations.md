@@ -1031,7 +1031,7 @@ e nenhuma das condições `:unless` resultarem em `true`.
 Realizando Validações Customizadas
 ----------------------------------
 
-Quando as validações auxiliares embutidas não são o bastante para suas necessidades, você pode
+Quando os *helpers* de validação embutidos não são o bastante para suas necessidades, você pode
 implementar seus próprios validadores ou métodos de validação como preferir.
 
 ### Validadores Customizados
