@@ -969,10 +969,10 @@ def visible_articles
 end
 ```
 
-Readonly Objects
+Objetos _Readonly_ (Somente leitura)
 ----------------
 
-Active Record provides the `readonly` method on a relation to explicitly disallow modification of any of the returned objects. Any attempt to alter a readonly record will not succeed, raising an `ActiveRecord::ReadOnlyRecord` exception.
+O _Active Record_ provê o método `readonly` em uma relação para desabilitar modificações explicitamente em qualquer um dos objetos retornados. Qualquer tentativa de alterar um registro _readonly_ não ocorrerá, levantando uma exceção `ActiveRecord::ReadOnlyRecord`.
 
 ```ruby
 client = Client.readonly.first
@@ -980,7 +980,7 @@ client.visits += 1
 client.save
 ```
 
-As `client` is explicitly set to be a readonly object, the above code will raise an `ActiveRecord::ReadOnlyRecord` exception when calling `client.save` with an updated value of _visits_.
+Como `client` é explicitamente configurado para ser um objeto _readonly_, o código acima levantará uma exceção `ActiveRecord::ReadOnlyRecord` ao chamar `client.save` com o valor atualizado de _visits_.
 
 Bloqueando registros para alteração
 -----------------------------------
