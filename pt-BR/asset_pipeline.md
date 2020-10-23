@@ -196,11 +196,11 @@ arquivos JavaScript apenas nos seus respectivos diretórios, usando o seguinte:
 params[:controller] %>`
 
 Ao fazer isso, certifique-se de que você não está usando a diretiva `require_tree`,
-pois isso resultará em seus *assets* serem incluídos mais do que uma vez.
+pois isso resultará em seus *assets* serem incluídos mais de uma vez.
 
 WARNING: Ao usar pré-compilação de *assets*, você precisará certificar-se de que 
 seus *assets* dos *controllers* sejam pré-compilados quando carregá-los por página.
-Por padrão, arquivos `.coffee` e `.scss` não serão pré-compilados por si mesmos.
+Por padrão, arquivos `.coffee` e `.scss` não serão pré-compilados por conta própria.
 Veja [Pré-compilando *Assets*](#precompiling-assets) para mais informações sobre
 como a pré-compilação funciona.
 
@@ -225,7 +225,7 @@ Os *pipeline assets* podem ser colocados dentro de uma aplicação nos três loc
 * `app/assets` é destinado aos *assets* que são proprietários da aplicação, como
 imagens customizadas, arquivos Javascript ou folhas de estilo.
 
-* `lib/assets` é destinado ao código das suas próprias bibliotecas que não se realmente encaixam
+* `lib/assets` é destinado ao código das suas próprias bibliotecas que não se encaixam
 no escopo da aplicação ou àquelas bibliotecas que são compartilhadas entre aplicações.
 
 * `vendor/assets` é destinado aos *assets* que são de propriedade de entidades externas,
@@ -235,10 +235,10 @@ de terceiros com referências à outros arquivos também processados pelo *asset
 
 #### Caminhos de Busca
 
-Quando um arquivo é referenciado a partir de um manifesto ou um auxiliar, o Sprockets procura
-por ele nas três localizações padrão de *assets*.
+Quando um arquivo é referenciado a partir de um manifesto ou um *helper*, o *Sprockets* procura
+por ele em três locais padrões de *assets*.
 
-As três localizações padrão são: os diretórios `images`, `javascripts` e `stylesheets`
+Os três locais padrões são: os diretórios `images`, `javascripts` e `stylesheets`
 abaixo da pasta `app/assets`, mas esses subdiretórios não são especiais - qualquer caminho
 sob `assets/*` será pesquisado.
 
@@ -292,7 +292,7 @@ no ambiente de produção.
 
 #### Usando Índices de Arquivos
 
-O Sprockets usa arquivos nomeados como `index` (com a extensão relevante) para um propósito
+O *Sprockets* usa arquivos nomeados como `index` (com a extensão relevante) para um propósito
 especial.
 
 Por exemplo, ser você tiver uma biblioteca JQuery com muitos módulos, que é armazenada em
@@ -306,12 +306,12 @@ A biblioteca como um todo pode ser acessada no manifesto da aplicação como:
 //= require library_name
 ```
 
-Isso simplifica a manutenção e mantém as coisas limpas, por permitir código relacionado
-ser agrupado antes da inclusão em outros lugares.
+Isso simplifica a manutenção e mantém as coisas limpas, permitindo que o código relacionado
+seja agrupado antes da inclusão em outro lugar.
 
 ### Codificando *Links* para *Assets*
 
-O Sprockets não adiciona nenhum método para acessar seus *assets* - você ainda usa
+O *Sprockets* não adiciona nenhum método para acessar seus *assets* - você ainda usa
 as familiares `javascript_include_tag` e `stylesheet_link_tag`:
 
 ```erb
@@ -319,7 +319,7 @@ as familiares `javascript_include_tag` e `stylesheet_link_tag`:
 <%= javascript_include_tag "application" %>
 ```
 
-Se você estiver usando a gem turbolinks, que é incluída por padrão no Rails, então
+Se você estiver usando a *gem turbolinks*, que é incluída por padrão no Rails, então
 inclua a opção 'data-turbolinks-track' que faz com que a turbolinks verifique se um *asset*
 foi atualizado e então o carrega naquela página:
 
@@ -336,7 +336,7 @@ como essa:
 ```
 
 Se o *pipeline* estiver ativo na sua aplicação (e não desativado no contexto
-do ambiente atual), esse arquivo é servido pelo Sprockets. Se um arquivo
+do ambiente atual), esse arquivo é servido pelo *Sprockets*. Se um arquivo
 existir em `public/assets/rails.png` ele é servido pelo servidor *web*.
 
 Alternativamente, uma requisição para um arquivo com um *hash* SHA256 como
@@ -344,8 +344,8 @@ Alternativamente, uma requisição para um arquivo com um *hash* SHA256 como
 é tratado da mesma maneira. A forma como esses *hashes* são gerados está coberta na seção
 [Em Produção](#in-production), posteriormente nesse guia.
 
-O Sprockets irá procurar através dos caminhos especificados em `config.assets.paths`,
-que inclui os caminhos padrão da aplicação e quaisquer caminhos adicionados pelas engines
+O *Sprockets* procurará através dos caminhos especificados em `config.assets.paths`,
+que inclui os caminhos padrões da aplicação e quaisquer caminhos adicionados pelas *engines*
 do Rails.
 
 As imagens também podem ser organizadas em subdiretórios se necessário, e então
@@ -358,13 +358,13 @@ podem ser acessadas pelo nome do diretório na tag:
 WARNING: Se você estiver pré-compilando seus *assets* (veja [Em Produção](#in-production)
 abaixo), fazer um *link* com um *asset* que não exista irá levantar uma *exception* 
 na página chamadora. O mesmo vale se for especificado um *link* para uma *string* em branco.
-Portanto, seja cauteloso ao usar a `image_tag` e os outros auxiliares com dados informados por usuários.
+Portanto, tenha cautela ao usar a `image_tag` e os outros *helpers* com dados informados pelos usuários.
 
 #### CSS e ERB
 
 O *asset pipeline* avalia automaticamente o ERB. Isso significa que se você adicionar
 uma extensão `erb` a um *asset* CSS (por exemplo, `application.css.erb`), então
-auxiliares como `asset_path` estarão disponíveis nas suas regras de CSS:
+*helpers* como `asset_path` estarão disponíveis nas suas regras de CSS:
 
 ```css
 .class { background-image: url(<%= asset_path 'image.png' %>) }
@@ -378,7 +378,7 @@ disponível em `public/assets` como um arquivo com uma impressão digital, entã
 
 Se você quiser usar [URI de dados](https://en.wikipedia.org/wiki/Data_URI_scheme) -
 um método para embutir a imagem diretamente no arquivo de CSS - você pode usar
-o auxiliar `asset_data_uri`.
+o *helper* `asset_data_uri`.
 
 ```css
 #logo { background: url(<%= asset_data_uri 'logo.png' %>) }
@@ -390,8 +390,8 @@ Note que a tag de fechamento não pode ser do estilo `-%>`.
 
 #### CSS e Sass
 
-Quando usando o *asset pipeline*, os caminhos para os assets devem ser reescritos e
-o `sass-rails` provê os auxiliares `-url` e `-path` (hifenizados em Sass,
+Ao utilizar o *asset pipeline*, os caminhos para os *assets* devem ser reescritos e
+o `sass-rails` provê os *helpers* `-url` e `-path` (hifenizados em Sass,
 separados por *underscore* em Ruby) para as seguintes classes de *assets*:
 imagem, fonte, vídeo, áudio, JavaScript e folha de estilo.
 
@@ -406,7 +406,7 @@ A forma mais genérica também pode ser usada:
 #### JavaScript/CoffeeScript e ERB
 
 Se você adicionar uma extensão `erb` a um *asset* JavaScript, fazendo algo como
-`application.js.erb`, você pode então usar o auxiliar `asset_path` no seu
+`application.js.erb`, você pode então usar o *helper* `asset_path` no seu
 código JavaScript:
 
 ```js
@@ -415,7 +415,7 @@ $('#logo').attr({ src: "<%= asset_path('logo.png') %>" });
 
 Isso escreve o caminho ao *asset* em particular que está sendo referenciado.
 
-Similarmente, você pode usar o auxiliar `asset_path` em arquivos CoffeeScript com
+Similarmente, você pode usar o *helper* `asset_path` em arquivos CoffeeScript com
 a extensão `erb` (i.e., `application.coffee.erb`).
 
 ```js
@@ -424,10 +424,10 @@ $('#logo').attr src: "<%= asset_path('logo.png') %>"
 
 ### Arquivos de Manifesto e Diretivas
 
-O Sprockets usa arquivos de manifesto para determinar quais *assets* incluir e servir.
-Esses arquivos de manifesto contém _diretivas_ - instruções que dirão ao Sprockets
+O *Sprockets* usa arquivos de manifesto para determinar quais *assets* incluir e servir.
+Esses arquivos de manifesto contém _diretivas_ - instruções que dirão ao *Sprockets*
 quais arquivos solicitar para construir um arquivo CSS ou JavaScript único. Com
-essas diretivas, o Sprockets carrega os arquivos especificados, processa-os se
+essas diretivas, o *Sprockets* carrega os arquivos especificados, processa-os se
 necessário, concatena-os com em único arquivo e então comprime-os (baseado no valor
 de `Rails.application.config.assets.js_compressor`). Ao servir um arquivo 
 ao invés de muitos, o tempo de carregamento das páginas pode ser amplamente reduzido
@@ -446,13 +446,13 @@ seguintes linhas:
 
 Nos arquivos JavaScript, as diretivas do Sprocket começam com `//=`. No caso acima,
 o arquivo está usando as diretivas `require` e `require_tree`. A diretiva `require`
-é usada para instruir o Sprockets dos arquivos que você deseja solicitar. Aqui, você
+é usada para instruir o *Sprockets* dos arquivos que você deseja solicitar. Aqui, você
 está solicitando os arquivos `rails-ujs.js` e `turbolinks.js`, que estão disponíveis em
-algum lugar no caminho de busca do Sprockets. Você não precisa informar as extensões
-explicitamente. O Sprockets assume que você está solicitando um arquivo `.js` quando
+algum lugar no caminho de busca do *Sprockets*. Você não precisa informar as extensões
+explicitamente. O *Sprockets* assume que você está solicitando um arquivo `.js` quando
 feito de dentro de um arquivo `.js`.
 
-A diretiva `require_tree` instrui ao Sprockets para recursivamente incluir _todos_
+A diretiva `require_tree` instrui ao *Sprockets* para recursivamente incluir _todos_
 os arquivos JavaScript no diretório especificado no *output*. Esses caminhos
 deverão ser especificados de maneira relativa ao arquivo de manifesto. Você também
 pode usar a diretiva `require_directory`, que inclui todos os arquivos JavaScript
@@ -488,7 +488,7 @@ Nesse exemplo, `require_self` é usado. Isso coloca o CSS contido dentro do
 arquivo (se houver algum) na localização exata da chamada `require_self`.
 
 NOTE. Se você quiser usar múltiplos arquivos Saas, você deve, via de regra, usar a [regra Sass `@import`](https://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#import)
-ao invés de usar as diretivas Sprockets. Quando usando as diretivas Saas, arquivos Saas existem dentro de seu próprio
+ao invés de usar as diretivas *Sprockets*. Quando usando as diretivas Saas, arquivos Saas existem dentro de seu próprio
 escopo, tornando variáveis ou mixins apenas disponíveis dentro do documento nas quais foram definidas.
 
 Você pode fazer *globbing* dos arquivos usando `@import "*"` e `@import "**/*"` para adicionar a árvore completa, que é equivalente a como o `require_tree` funciona. Veja a [documentação do sass-rails](https://github.com/rails/sass-rails#features) para mais informações e ressalvas importantes.
