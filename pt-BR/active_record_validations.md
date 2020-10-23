@@ -1129,16 +1129,16 @@ class Invoice < ApplicationRecord
 end
 ```
 
-Working with Validation Errors
+Trabalhando com Erros de Validação
 ------------------------------
 
-In addition to the `valid?` and `invalid?` methods covered earlier, Rails provides a number of methods for working with the `errors` collection and inquiring about the validity of objects.
+Em adição aos métodos `valid?` e `invalid?` cobertos anteriormente, o Rails provê outros métodos para trabalhar com a coleção `errors` e investigar a validade dos objetos.
 
-The following is a list of the most commonly used methods. Please refer to the `ActiveModel::Errors` documentation for a list of all the available methods.
+A seguir é exibida uma lista dos métodos mais comumente utilizdos. Por favor, verifique a documentação do `ActiveModel::Errors` para uma lista de todos os métodos disponíveis.
 
 ### `errors`
 
-Returns an instance of the class `ActiveModel::Errors` containing all errors. Each key is the attribute name and the value is an array of strings with all errors.
+Retorna uma instância da classe `ActiveModel::Errors` contendo todos os erros. Cada chave é o nome do atributo e o valor é um *array* de *strings* contendo todos os erros.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1157,7 +1157,7 @@ person.errors.messages # => {}
 
 ### `errors[]`
 
-`errors[]` is used when you want to check the error messages for a specific attribute. It returns an array of strings with all error messages for the given attribute, each string with one error message. If there are no errors related to the attribute, it returns an empty array.
+`errors[]` é utilizado quando você quiser verificar as mensagens de erro de um atributo em específico. O método um *array* de *strings* com todas as mensagens de erro para o atributo informado, cada *string* contendo uma mensagem de erro. Se não há erros relacionados com o atributo, o método retorna um *array* vazio.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1180,7 +1180,7 @@ person.errors[:name]
 
 ### `errors.add`
 
-The `add` method lets you add an error message related to a particular attribute. It takes as arguments the attribute and the error message.
+O método `add` permite a você adicionar uma mensagem de erro relacionada a um atributo em particular. Ele recebe como argumentos o atributo e a mensagem de erro.
 
 The `errors.full_messages` method (or its equivalent, `errors.to_a`) returns the error messages in a user-friendly format, with the capitalized attribute name prepended to each message, as shown in the examples below.
 
