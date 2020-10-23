@@ -1028,18 +1028,18 @@ end
 A validação é executada apenas quando todas as condições `:if`
 e nenhuma das condições `:unless` resultarem em `true`.
 
-Performing Custom Validations
------------------------------
+Realizando Validações Customizadas
+----------------------------------
 
-When the built-in validation helpers are not enough for your needs, you can
-write your own validators or validation methods as you prefer.
+Quando as validações auxiliares embutidas não são o bastante para suas necessidades, você pode
+implementar seus próprios validadores ou métodos de validação como preferir.
 
-### Custom Validators
+### Validadores Customizados
 
-Custom validators are classes that inherit from `ActiveModel::Validator`. These
-classes must implement the `validate` method which takes a record as an argument
-and performs the validation on it. The custom validator is called using the
-`validates_with` method.
+Validadores Customizados são classes que herdam de `ActiveModel::Validator`. Essas
+classes devem implementar o método `validate`, que recebe um *record* como argumento
+e realiza as validações nele. O validador customizado é chamado usando o
+método `validates_with`.
 
 ```ruby
 class MyValidator < ActiveModel::Validator
@@ -1056,12 +1056,11 @@ class Person
 end
 ```
 
-The easiest way to add custom validators for validating individual attributes
-is with the convenient `ActiveModel::EachValidator`. In this case, the custom
-validator class must implement a `validate_each` method which takes three
-arguments: record, attribute, and value. These correspond to the instance, the
-attribute to be validated, and the value of the attribute in the passed
-instance.
+A maneira mais fácil de adicionar validadores customizados para atributos individuais
+é com a conveniente classe `ActiveModel::EachValidator`. Nesse caso, a classe validadora
+customizada deve implementar um método `validate_each`, que recebe três argumentos:
+*record*, *attribute* e *value*. Esses correspondem respectivamente à instância, ao atributo
+a ser validado e ao valor do atributo na instância recebida.
 
 ```ruby
 class EmailValidator < ActiveModel::EachValidator
@@ -1077,23 +1076,23 @@ class Person < ApplicationRecord
 end
 ```
 
-As shown in the example, you can also combine standard validations with your
-own custom validators.
+Como mostrado no exemplo acima, você também pode combinar validações padrão com
+seus próprios validadores customizados.
 
-### Custom Methods
+### Métodos Customizados
 
-You can also create methods that verify the state of your models and add
-messages to the `errors` collection when they are invalid. You must then
-register these methods by using the `validate`
-([API](https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validate))
-class method, passing in the symbols for the validation methods' names.
+Você também pode criar métodos que verificam o estado de seus *models* e
+adicionam mensagens à coleção `errors` quando eles são inválidos. Você
+deve então registrar esses métodos usando o método `validate` da classe
+([API](https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validate)),
+passando os *symbols* dos nomes dos métodos de validação.
 
-You can pass more than one symbol for each class method and the respective
-validations will be run in the same order as they were registered.
+Você pode passar mais do que um *symbol* para cada método da classe e as
+respectivas validações serão executadas na mesma ordem que elas foram registradas.
 
-The `valid?` method will verify that the errors collection is empty,
-so your custom validation methods should add errors to it when you
-wish validation to fail:
+O método `valid?` verificará se a coleção de erros está vazia,
+sendo assim seus métodos de validação customizados devem adicionar erros
+à ela quando você desejar que as validações falhem:
 
 ```ruby
 class Invoice < ApplicationRecord
@@ -1114,10 +1113,10 @@ class Invoice < ApplicationRecord
 end
 ```
 
-By default, such validations will run every time you call `valid?`
-or save the object. But it is also possible to control when to run these
-custom validations by giving an `:on` option to the `validate` method,
-with either: `:create` or `:update`.
+Por padrão, tais validações executarão a cada chamada ao método `valid?`
+ou ao salvar o objeto. Mas também é possível controlar quando executar essas
+validações customizadas informando uma opção `:on` para o método `validate`,
+com `:create` ou `:update`.
 
 ```ruby
 class Invoice < ApplicationRecord
