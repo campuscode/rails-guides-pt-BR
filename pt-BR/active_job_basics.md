@@ -260,12 +260,13 @@ NOTE: Make sure your queuing backend "listens" on your queue name. For some
 backends you need to specify the queues to listen to.
 
 
-Callbacks
+*Callbacks*
 ---------
 
-Active Job provides hooks to trigger logic during the life cycle of a job. Like
-other callbacks in Rails, you can implement the callbacks as ordinary methods
-and use a macro-style class method to register them as callbacks:
+O *Active Job* fornece Hooks para disparar lógica durante o ciclo de vida de um *Job*.
+Assim como em outros *callbacks* no Rails, você pode implementar *callbacks*
+como métodos comuns e usar um método macro de classe para registrá-los
+como *callbacks*:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -286,9 +287,9 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-The macro-style class methods can also receive a block. Consider using this
-style if the code inside your block is so short that it fits in a single line.
-For example, you could send metrics for every job enqueued:
+Os métodos macro de classe podem também receber um bloco. Considere usar esse estilo,
+se o código dentro do bloco for tão pequeno que cabe numa única linha.
+Por exemplo, você pode enviar métricas para cada *job* enfileirado:
 
 ```ruby
 class ApplicationJob < ActiveJob::Base
@@ -296,7 +297,7 @@ class ApplicationJob < ActiveJob::Base
 end
 ```
 
-### Available callbacks
+### *Callbacks* disponíveis
 
 * `before_enqueue`
 * `around_enqueue`
