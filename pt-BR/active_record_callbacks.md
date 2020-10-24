@@ -353,12 +353,12 @@ end
 
 The callback only runs when all the `:if` conditions and none of the `:unless` conditions are evaluated to `true`.
 
-Callback Classes
+Classes *Callback*
 ----------------
 
-Sometimes the callback methods that you'll write will be useful enough to be reused by other models. Active Record makes it possible to create classes that encapsulate the callback methods, so it becomes very easy to reuse them.
+Em algumas situações, os métodos de *Callback* que iremos escrever serão úteis para serem reutilizados por outros *models*. O *Active Record* possibilita a criação de classes que encapsulam os métodos *Callback* e, por isso, se tornam muito fáceis de reusá-los.
 
-Here's an example where we create a class with an `after_destroy` callback for a `PictureFile` model:
+Aqui está um exemplo onde criamos uma classe com um *callback* `after_destroy` para o *model* `PictureFile`:
 
 ```ruby
 class PictureFileCallbacks
@@ -370,7 +370,7 @@ class PictureFileCallbacks
 end
 ```
 
-When declared inside a class, as above, the callback methods will receive the model object as a parameter. We can now use the callback class in the model:
+Quando declaramos dentro da classe, como foi feito acima, os métodos *callback* irão receber o *model* como parâmetro. Agora poderemos usar a classe *callback* no *model*:
 
 ```ruby
 class PictureFile < ApplicationRecord
@@ -378,7 +378,7 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-Note that we needed to instantiate a new `PictureFileCallbacks` object, since we declared our callback as an instance method. This is particularly useful if the callbacks make use of the state of the instantiated object. Often, however, it will make more sense to declare the callbacks as class methods:
+Perceba que precisamos instanciar um novo objeto chamado `PictureFileCallbacks`, já que declaramos nosso *callback* como um método de instância. Particularmente, isso é útil se os *callbacks* fazem uso do estado do objeto instanciado. Porém fará mais sentido declarar os *callbacks* como métodos de classe com mais frequência:
 
 ```ruby
 class PictureFileCallbacks
@@ -390,7 +390,7 @@ class PictureFileCallbacks
 end
 ```
 
-If the callback method is declared this way, it won't be necessary to instantiate a `PictureFileCallbacks` object.
+Se o método *callback* é declarado dessa forma, não será necessário instanciar o objeto `PictureFileCallbacks`
 
 ```ruby
 class PictureFile < ApplicationRecord
@@ -398,7 +398,7 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-You can declare as many callbacks as you want inside your callback classes.
+Você pode declarar dentro de suas classes *callback* quantos *callback* achar necessário.
 
 Transaction Callbacks
 ---------------------
