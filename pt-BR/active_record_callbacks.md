@@ -201,10 +201,10 @@ Employee/Company was touched
 => true
 ```
 
-Running Callbacks
+Executando *Callbacks*
 -----------------
 
-The following methods trigger callbacks:
+Os métodos a seguir acionam *callbacks*:
 
 * `create`
 * `create!`
@@ -221,7 +221,7 @@ The following methods trigger callbacks:
 * `update!`
 * `valid?`
 
-Additionally, the `after_find` callback is triggered by the following finder methods:
+Adicionalmente, o *callback* `after_find` é acionado pelos seguintes métodos de localização:
 
 * `all`
 * `first`
@@ -232,9 +232,9 @@ Additionally, the `after_find` callback is triggered by the following finder met
 * `find_by_sql`
 * `last`
 
-The `after_initialize` callback is triggered every time a new object of the class is initialized.
+O *callback* `after_initialize`  é acionado toda vez que um novo objeto da classe é inicializado. 
 
-NOTE: The `find_by_*` and `find_by_*!` methods are dynamic finders generated automatically for every attribute. Learn more about them at the [Dynamic finders section](active_record_querying.html#dynamic-finders)
+NOTE: Os métodos `find_by_*` e `find_by_*!` são localizadores dinâmicos gerados automaticamente para cada atributo. Aprenda mais sobre eles na [seção de Localizadores Dinâmicos](active_record_querying.html#localizadores-dinamicos) 
 
 Skipping Callbacks
 ------------------
