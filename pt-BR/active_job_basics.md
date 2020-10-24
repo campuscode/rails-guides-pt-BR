@@ -26,18 +26,19 @@ clean-ups, to billing charges, to mailings. Anything that can be chopped up
 into small units of work and run in parallel, really.
 
 
-The Purpose of Active Job
+O propósito do Active Job
 -----------------------------
-The main point is to ensure that all Rails apps will have a job infrastructure
-in place. We can then have framework features and other gems build on top of that,
-without having to worry about API differences between various job runners such as
-Delayed Job and Resque. Picking your queuing backend becomes more of an operational
-concern, then. And you'll be able to switch between them without having to rewrite
-your jobs.
 
-NOTE: Rails by default comes with an asynchronous queuing implementation that
-runs jobs with an in-process thread pool. Jobs will run asynchronously, but any
-jobs in the queue will be dropped upon restart.
+O ponto principal é garantir que todas as aplicações Rails terão uma infraestrutura
+de *jobs* no lugar. Nós podemos então ter *features* de *frameworks* e outras *gems*
+contruídas em cima dela, sem ter que nos preocupar com diferenças de API entre vários
+executadores de *job* como *Delayed Job* e *Resque*. Dessa forma, escolher o seu *backend* 
+de enfileiramento se torna mais uma preocupação operacional. E você poderá alternar entre eles sem
+ter que reescrever os seus *jobs*. 
+
+NOTA: Rails por padrão vem com uma implementação de fila assíncrona que executa *jobs*
+com uma *pool* de *threads* no processo. *Jobs* serão executados da maneira assíncrona, mas
+quaisquer *jobs* na fila serão derrubados ao reinicializar.
 
 
 Creating a Job
