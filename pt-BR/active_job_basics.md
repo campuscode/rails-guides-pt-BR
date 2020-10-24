@@ -2,29 +2,17 @@
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Active Job Basics
-Básico de Active Jobs
 =================
 
 This guide provides you with all you need to get started in creating,
 enqueuing and executing background jobs.
 
-Este guia oferece a você tudo o que você precisa para começar a criar, enfileirar e executar serviços em segundo plano (background jobs)
-
-
 After reading this guide, you will know:
-
 
 * How to create jobs.
 * How to enqueue jobs.
 * How to run jobs in the background.
 * How to send emails from your application asynchronously.
-
-Depois de ler esse guia, você saberá:
-
-* Como criar jobs
-* Como enfileirar jobs
-* como executar jobs em segundo plano 
-* Como enviar emails de sua aplicação de maneira assíncrona 
 
 --------------------------------------------------------------------------------
 
