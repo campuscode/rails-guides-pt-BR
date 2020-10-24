@@ -1202,7 +1202,7 @@ person.errors.full_messages
 
 ### `errors.details`
 
-Você pode especificar um validador de tipo no *hash* do detalhamento de erro retornado usando o
+Você pode especificar um validador (*validator*) de tipo no *hash* do detalhamento de erro retornado usando o
 método `errors.add`.
 
 ```ruby
@@ -1234,8 +1234,8 @@ person.errors.details[:name]
 # => [{error: :invalid_characters, not_allowed: "!@#%*()_-+="}]
 ```
 
-Todos os validadores embutidos no *Rails* populam o *hash* de detalhes com o 
-validador de tipo correspondente.
+Todos os validadores (*validators*)  embutidos no Rails populam o *hash* de detalhes com o 
+validador (*validator*)  de tipo correspondente.
 
 ### `errors[:base]`
 
