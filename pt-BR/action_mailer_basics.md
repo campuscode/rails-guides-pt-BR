@@ -102,10 +102,10 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-Uma breve explicação sobre os items apresentados no método acima. Para uma lista completa de todas as opções disponiveis, por favor, dê uma olhada mais abaixo na seção: Lista completa de atributos de configuração do _Action Mailer_.
+Uma breve explicação sobre os itens apresentados no método acima. Para uma lista completa de todas as opções disponiveis, por favor, dê uma olhada mais abaixo na seção: Lista completa de atributos de configuração do _Action Mailer_.
 
 * `default Hash` - Está é a _Hash_ padrão com valores que serão usados em todos os e-mail enviados por este _mailer_. Neste exemplo nós configuramos o `:from` (Remetente, quem envia) para um valor padrão que será usado em todas as mensagens enviadas por está classe. Está configuração pode ser sobrescrita.
-* `mail` - O e-mail em si, aqui nós estamos passando os parametros `:to` (Destinatário, quem recebe) e `:subject` (Assunto do e-mail) ao cabeçalho.
+* `mail` - O próprio e-mail, aqui nós estamos passando os parametros `:to` (Destinatário, quem recebe) e `:subject` (Assunto do e-mail) ao cabeçalho.
 
 #### Criando uma _View_ para nosso _Mailer_
 
@@ -131,7 +131,7 @@ Crie um arquivo com o nome `welcome_email.html.erb` em `app/views/user_mailer/`.
 </html>
 ```
 
-Vamos criar também um modelo usando somente texto para este e-mail. Nem todos os programas de e-mail leem HTML, então enviar os dois formatos é uma boa pratica. Para isto criaremos um arquivo com o nome `welcome_email.text.erb` em `app/views/user_mailer/`:
+Vamos criar também um modelo usando somente texto para este e-mail. Nem todos os programas de e-mail leem HTML, então enviar os dois formatos é uma boa prática. Para isto criaremos um arquivo com o nome `welcome_email.text.erb` em `app/views/user_mailer/`:
 
 ```erb
 Welcome to example.com, <%= @user.name %>
@@ -144,11 +144,11 @@ To login to the site, just follow this link: <%= @url %>.
 
 Thanks for joining and have a great day!
 ```
-Quando você chamar o método `mail`, `ActionMailer` detectará que existem dois modelos para esse e-mail (Um em HTML e outro somente texto) e automaticamente irá gerar um `multipart/alternative`(Opção que indica ao programa de e-mail que essa mensagem tem uma versão em HTML e outra em somente texto) e-mail.
+Quando você chamar o método `mail`, `ActionMailer` detectará que existem dois modelos para esse e-mail (Um em HTML e outro somente texto) e automaticamente irá gerar um `multipart/alternative` (Opção que indica ao programa de e-mail que essa mensagem tem uma versão em HTML e outra em somente texto) e-mail.
 
 #### Chamando o _Mailer_
 
-_Mailers_ são somente uma outra maneira de renderizar uma _view_. Ao invés de renderizar uma _view_ e envia-la usando o protocolo HTTP, um Mailer envia através dos protocolos de e-mail. Por esse motivo, faz sentido, para o exemplo anterior, que o _controller_ informe ao _mailer_ para enviar uma mensagem assim que um usuário complete seu cadastro com sucesso.
+_Mailers_ são somente outra maneira de renderizar uma _view_. Ao invés de renderizar uma _view_ e envia-la usando o protocolo HTTP, um Mailer envia através dos protocolos de e-mail. Por esse motivo, faz sentido, para o exemplo anterior, que o _controller_ informe ao _mailer_ para enviar uma mensagem assim que um usuário complete seu cadastro com sucesso.
 
 Configurar isto é muito simples.
 
@@ -187,8 +187,8 @@ end
 ```
 
 NOTE: O comportamento padrão do _Active Job_ é executar os serviços de maneira assíncrona, usando o adaptador `:async`. Então você pode usar o método `deliver_later` para enviar os e-mail de maneira assíncrona.
-O adaptador padrão do _Active Job_ executa os serviços em um processo _Thread Pool_. Está abordagem é boa para os ambientes de desenvolvimento e teste, pois não requerem nenhuma infraestrutura externa/complexa, porém é uma abordagem ruim para o ambiente de produção pois caso o sistema seja reiniciado você pode perder os registros desses serviços.
-Se você precisar de uma solução para que esses serviços sejam persistidos, afim de evitar possíveis perdas, você precisará de um serviço a parte que tenha essa funcionalidade, exemplos: Sidekiq, Resque etc.
+O adaptador padrão do _Active Job_ executa os serviços em um processo _Thread Pool_. Está abordagem é boa para os ambientes de desenvolvimento e teste, pois não requerem nenhuma infraestrutura externa/complexa, porém é uma abordagem ruim para o ambiente de produção, pois caso o sistema seja reiniciado você pode perder os registros desses serviços.
+Se você precisar de uma solução para que esses serviços sejam persistidos, de modo a evitar possíveis perdas, você precisará de um serviço a parte que tenha essa funcionalidade, exemplos: Sidekiq, Resque etc.
 
 NOTE: Quando chamar o método `deliver_later` o serviço será posto sob uma fila com o nome de `mailers`. Confirme se o adaptador de filas (_Active Job_, Sidekiq, Resque etc) é compatível com essa fila, caso contrário seu serviço vai acabar sendo ignorado, o que vai impedir os e-mails de serem enviados. Você pode mudar isso especificando uma opção de fila compatível na configuração `config.action_mailer.deliver_later_queue_name`.
 
@@ -206,7 +206,8 @@ end
 
 Qualquer chave-valor passado para o `with` se torna parte da _Hash_ `params` que será usado na _action_ do _Mailer_. Então `with(user: @user, account: @user.account)` cria `params[:user]` e `params[:account]` disponíveis na _action_ do _Mailer_. Como acontece nos _controllers_ que também tem `params`.
 
-O método `welcome_email` tem como retorno um objeto do tipo `ActionMailer::MessageDelivery` que você pode encadear os métodos `deliver_now` ou `deliver_later` para assim ele se enviar como um e-mail. O objeto `ActionMailer::MessageDelivery` é somente _wrapper_ (Embrulho) para  a classe `Mail::Message`. Se você quiser inspecionar, alterar, ou fazer qualquer coisa com o objeto `Mail::Message` você pode acessa-lo através do método `message` do objeto `ActionMailer::MessageDelivery`.
+O método `welcome_email` tem como retorno um objeto do tipo `ActionMailer::MessageDelivery` que você pode encadear os métodos `deliver_now` ou `deliver_later` para assim ele se enviar como um e-mail.
+O objeto `ActionMailer::MessageDelivery` é somente um _wrapper_ (Embrulho) para a classe `Mail::Message`. Se você quiser inspecionar, alterar, ou fazer qualquer coisa com o objeto `Mail::Message` você pode acessa-lo através do método `message` do objeto `ActionMailer::MessageDelivery`.
 
 ### Auto encoding header values
 
