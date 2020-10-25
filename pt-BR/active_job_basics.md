@@ -341,10 +341,10 @@ UserMailer.welcome(@user).deliver_later # Email will be localized to Esperanto.
 ```
 
 
-Supported types for arguments
+Tipos suportados por argumentos
 ----------------------------
 
-ActiveJob supports the following types of arguments by default:
+O *ActiveJob* suporta os seguintes tipos de argumentos por padrão:
 
   - Basic types (`NilClass`, `String`, `Integer`, `Float`, `BigDecimal`, `TrueClass`, `FalseClass`)
   - `Symbol`
@@ -359,9 +359,9 @@ ActiveJob supports the following types of arguments by default:
 
 ### GlobalID
 
-Active Job supports GlobalID for parameters. This makes it possible to pass live
-Active Record objects to your job instead of class/id pairs, which you then have
-to manually deserialize. Before, jobs would look like this:
+O *Active Job* suporta o GlobalID como parâmetros. 
+Isso possibilita passar objetos ativos do *Active Record* para o *job* ao invés do par classe/id, que você deve desserializar manualmente.
+Anteriormente, os *jobs* eram feitos dessa forma:
 
 ```ruby
 class TrashableCleanupJob < ApplicationJob
@@ -372,7 +372,7 @@ class TrashableCleanupJob < ApplicationJob
 end
 ```
 
-Now you can simply do:
+Agora são feitos dessa forma:
 
 ```ruby
 class TrashableCleanupJob < ApplicationJob
@@ -382,23 +382,22 @@ class TrashableCleanupJob < ApplicationJob
 end
 ```
 
-This works with any class that mixes in `GlobalID::Identification`, which
-by default has been mixed into Active Record classes.
+Isso funciona com qualquer classe que está mesclada em `GlobalID::Identification` que, por padrão, já está mesclada dentro das classes *Active Record*.
 
-### Serializers
+### *Serializers*
 
-You can extend the list of supported argument types. You just need to define your own serializer:
+Você pode ampliar a lista de tipos de argumentos suportados. Só é preciso definir seu próprio *serializer*:
 
 ```ruby
 class MoneySerializer < ActiveJob::Serializers::ObjectSerializer
-  # Checks if an argument should be serialized by this serializer.
+  # Checa se um argumento pode ser serializado a partir desse serializer.
   def serialize?(argument)
     argument.is_a? Money
   end
 
-  # Converts an object to a simpler representative using supported object types.
-  # The recommended representative is a Hash with a specific key. Keys can be of basic types only.
-  # You should call `super` to add the custom serializer type to the hash.
+  # Converte um objeto em um representante mais simples usando tipos de objetos suportados.
+  # O representante recomendado é uma Hash com uma key específica. As Keys podem ser somente de tipos básicos.
+  # Você deve invocar o `super` para adicionar o serializer customizado na hash.
   def serialize(money)
     super(
       "amount" => money.amount,
@@ -406,14 +405,14 @@ class MoneySerializer < ActiveJob::Serializers::ObjectSerializer
     )
   end
 
-  # Converts serialized value into a proper object.
+  # Converte o valor serializado em um objeto apropriado.
   def deserialize(hash)
     Money.new(hash["amount"], hash["currency"])
   end
 end
 ```
 
-and add this serializer to the list:
+e adicionar o serializer na lista:
 
 ```ruby
 Rails.application.config.active_job.custom_serializers << MoneySerializer
