@@ -36,7 +36,7 @@ executadores de *job* como *Delayed Job* e *Resque*. Dessa forma, escolher o seu
 de enfileiramento se torna mais uma preocupação operacional. E você poderá alternar entre eles sem
 ter que reescrever os seus *jobs*. 
 
-NOTA: Rails por padrão vem com uma implementação de fila assíncrona que executa *jobs*
+NOTE: Rails por padrão vem com uma implementação de fila assíncrona que executa *jobs*
 com uma *pool* de *threads* no processo. *Jobs* serão executados da maneira assíncrona, mas
 quaisquer *jobs* na fila serão derrubados ao reinicializar.
 
