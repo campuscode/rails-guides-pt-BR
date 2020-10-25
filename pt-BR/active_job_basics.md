@@ -466,7 +466,7 @@ If a passed record is deleted after the job is enqueued but before the `#perform
 method is called Active Job will raise an `ActiveJob::DeserializationError`
 exception.
 
-Job Testing
+Teste de *Jobs*
 --------------
 
 Você pode encontrar instruções mais detalhadas sobre como testar seus *jobs* no
