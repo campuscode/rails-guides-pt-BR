@@ -26,7 +26,7 @@ clean-ups, to billing charges, to mailings. Anything that can be chopped up
 into small units of work and run in parallel, really.
 
 
-O propósito do Active Job
+O Propósito do Active Job
 -----------------------------
 
 O ponto principal é garantir que todas as aplicações Rails terão uma infraestrutura
