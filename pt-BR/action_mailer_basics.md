@@ -33,15 +33,14 @@ Mailers tem:
 * A capacidade de utilizar *layouts* e *partials*.
 * A capacidade de acessar um hash de parâmetros.
 
-Sending Emails
+Enviando E-mails
 --------------
 
-This section will provide a step-by-step guide to creating a mailer and its
-views.
+Esta seção irá te guiar no processo de criação de um _Mailer_ e sua _view_.
 
-### Walkthrough to Generating a Mailer
+### Passo a passo para gerar um Mailer
 
-#### Create the Mailer
+#### Criação de um Mailer
 
 ```bash
 $ rails generate mailer UserMailer
@@ -68,32 +67,28 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-As you can see, you can generate mailers just like you use other generators with
-Rails.
+Como pôde ver no exemplo acima, você pode gerar _mailers_ como faz com outros tipos de arquivos no Rails.
 
-If you didn't want to use a generator, you could create your own file inside of
-`app/mailers`, just make sure that it inherits from `ActionMailer::Base`:
+Se você prefere não usar um _generator_, você pode criar esses arquivos por si só dentro de `app/mailers/`, só não se esqueça de adicionar a herança com `ActionMailer::Base` aos _mailers_:
 
 ```ruby
 class MyMailer < ActionMailer::Base
 end
 ```
 
-#### Edit the Mailer
+#### Editando o Mailer
 
-Mailers have methods called "actions" and they use views to structure their content.
-Where a controller generates content like HTML to send back to the client, a Mailer
-creates a message to be delivered via email.
+_Mailers_ têm métodos chamados _actions_ e usam _views_ para estruturar seu conteúdo.
+Onde um _controller_ gera conteúdo como HTML para enviar de volta à um cliente, o _Mailer_ cria uma mensagem para ser entregue por e-mail.
 
-`app/mailers/user_mailer.rb` contains an empty mailer:
+`app/mailers/user_mailer.rb` contém um _mailer_ vazio:
 
 ```ruby
 class UserMailer < ApplicationMailer
 end
 ```
 
-Let's add a method called `welcome_email`, that will send an email to the user's
-registered email address:
+Vamos adicionar um método chamado `welcome_email`, que enviará um e-mail para o endereço de e-mail registrado pelo usuário.
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -107,20 +102,14 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-Here is a quick explanation of the items presented in the preceding method. For
-a full list of all available options, please have a look further down at the
-Complete List of Action Mailer user-settable attributes section.
+Uma breve explicação sobre os items apresentados no método acima. Para uma lista completa de todas as opções disponiveis, por favor, dê uma olhada mais abaixo na seção: Lista completa de atributos de configuração do _Action Mailer_.
 
-* `default Hash` - This is a hash of default values for any email you send from
-this mailer. In this case we are setting the `:from` header to a value for all
-messages in this class. This can be overridden on a per-email basis.
-* `mail` - The actual email message, we are passing the `:to` and `:subject`
-headers in.
+* `default Hash` - Está é a _Hash_ padrão com valores que serão usados em todos os e-mail enviados por este _mailer_. Neste exemplo nós configuramos o `:from` (Remetente, quem envia) para um valor padrão que será usado em todas as mensagens enviadas por está classe. Está configuração pode ser sobrescrita.
+* `mail` - O e-mail em si, aqui nós estamos passando os parametros `:to` (Destinatário, quem recebe) e `:subject` (Assunto do e-mail) ao cabeçalho.
 
-#### Create a Mailer View
+#### Criando uma _View_ para nosso _Mailer_
 
-Create a file called `welcome_email.html.erb` in `app/views/user_mailer/`. This
-will be the template used for the email, formatted in HTML:
+Crie um arquivo com o nome `welcome_email.html.erb` em `app/views/user_mailer/`. Este será o modelo que usaremos para nosso e-mail, formatado usando HTML:
 
 ```html+erb
 <!DOCTYPE html>
@@ -142,9 +131,7 @@ will be the template used for the email, formatted in HTML:
 </html>
 ```
 
-Let's also make a text part for this email. Not all clients prefer HTML emails,
-and so sending both is best practice. To do this, create a file called
-`welcome_email.text.erb` in `app/views/user_mailer/`:
+Vamos criar também um modelo usando somente texto para este e-mail. Nem todos os programas de e-mail leem HTML, então enviar os dois formatos é uma boa pratica. Para isto criaremos um arquivo com o nome `welcome_email.text.erb` em `app/views/user_mailer/`:
 
 ```erb
 Welcome to example.com, <%= @user.name %>
@@ -157,33 +144,24 @@ To login to the site, just follow this link: <%= @url %>.
 
 Thanks for joining and have a great day!
 ```
+Quando você chamar o método `mail`, `ActionMailer` detectará que existem dois modelos para esse e-mail (Um em HTML e outro somente texto) e automaticamente irá gerar um `multipart/alternative`(Opção que indica ao programa de e-mail que essa mensagem tem uma versão em HTML e outra em somente texto) e-mail.
 
-When you call the `mail` method now, Action Mailer will detect the two templates
-(text and HTML) and automatically generate a `multipart/alternative` email.
+#### Chamando o _Mailer_
 
-#### Calling the Mailer
+_Mailers_ são somente uma outra maneira de renderizar uma _view_. Ao invés de renderizar uma _view_ e envia-la usando o protocolo HTTP, um Mailer envia através dos protocolos de e-mail. Por esse motivo, faz sentido, para o exemplo anterior, que o _controller_ informe ao _mailer_ para enviar uma mensagem assim que um usuário complete seu cadastro com sucesso.
 
-Mailers are really just another way to render a view. Instead of rendering a
-view and sending it over the HTTP protocol, they are just sending it out through
-the email protocols instead. Due to this, it makes sense to just have your
-controller tell the Mailer to send an email when a user is successfully created.
+Configurar isto é muito simples.
 
-Setting this up is simple.
-
-First, let's create a simple `User` scaffold:
+Primeiro, criaremos um simples _scaffold_ (Esqueleto) para nosso _model_ `User`:
 
 ```bash
-$ rails generate scaffold user name email login
+$ rails generate scaffold user name e-mail login
 $ rails db:migrate
 ```
 
-Now that we have a user model to play with, we will just edit the
-`app/controllers/users_controller.rb` make it instruct the `UserMailer` to deliver
-an email to the newly created user by editing the create action and inserting a
-call to `UserMailer.with(user: @user).welcome_email` right after the user is successfully saved.
+Agora que já temos o _model_ para nossos usuários, podemos começar a criar a funcionalidade. Para isso vamos editar o arquivo `app/controllers/users_controller.rb` para chamar o `UserMailer` para enviar um e-mail ao novo usuário registrado. Vamos editar a _action_ `create` inserindo a seguinte chamada: `UserMailer.with(user: @user).welcome_email` logo após o usuário ter sido salvo com sucesso.
 
-Action Mailer is nicely integrated with Active Job so you can send emails outside
-of the request-response cycle, so the user doesn't have to wait on it:
+_Action Mailer_ já é nativamente integrado com o _Active Job_, logo você pode enviar os e-mails fora do ciclo requisição-resposta, então o usuário não precisa aguardar esse processo terminar para continuar usando a aplicação.
 
 ```ruby
 class UsersController < ApplicationController
@@ -194,7 +172,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        # Tell the UserMailer to send a welcome email after save
+        # Tell the UserMailer to send a welcome e-mail after save
         UserMailer.with(user: @user).welcome_email.deliver_later
 
         format.html { redirect_to(@user, notice: 'User was successfully created.') }
@@ -208,19 +186,13 @@ class UsersController < ApplicationController
 end
 ```
 
-NOTE: Active Job's default behavior is to execute jobs via the `:async` adapter. So, you can use
-`deliver_later` now to send emails asynchronously.
-Active Job's default adapter runs jobs with an in-process thread pool.
-It's well-suited for the development/test environments, since it doesn't require
-any external infrastructure, but it's a poor fit for production since it drops
-pending jobs on restart.
-If you need a persistent backend, you will need to use an Active Job adapter
-that has a persistent backend (Sidekiq, Resque, etc).
+NOTE: O comportamento padrão do _Active Job_ é executar os serviços de maneira assíncrona, usando o adaptador `:async`. Então você pode usar o método `deliver_later` para enviar os e-mail de maneira assíncrona.
+O adaptador padrão do _Active Job_ executa os serviços em um processo _Thread Pool_. Está abordagem é boa para os ambientes de desenvolvimento e teste, pois não requerem nenhuma infraestrutura externa/complexa, porém é uma abordagem ruim para o ambiente de produção pois caso o sistema seja reiniciado você pode perder os registros desses serviços.
+Se você precisar de uma solução para que esses serviços sejam persistidos, afim de evitar possíveis perdas, você precisará de um serviço a parte que tenha essa funcionalidade, exemplos: Sidekiq, Resque etc.
 
-NOTE: When calling `deliver_later` the job will be placed under `mailers` queue. Make sure Active Job adapter support it otherwise the job may be silently ignored preventing email delivery. You can change that by specifying `config.action_mailer.deliver_later_queue_name` option.
+NOTE: Quando chamar o método `deliver_later` o serviço será posto sob uma fila com o nome de `mailers`. Confirme se o adaptador de filas (_Active Job_, Sidekiq, Resque etc) é compatível com essa fila, caso contrário seu serviço vai acabar sendo ignorado, o que vai impedir os e-mails de serem enviados. Você pode mudar isso especificando uma opção de fila compatível na configuração `config.action_mailer.deliver_later_queue_name`.
 
-If you want to send emails right away (from a cronjob for example) just call
-`deliver_now`:
+Se você deseja que os e-mail sejam enviados no mesmo tempo que chamar o _Mailer_, simplesmente chame `deliver_now`:
 
 ```ruby
 class SendWeeklySummary
@@ -232,16 +204,9 @@ class SendWeeklySummary
 end
 ```
 
-Any key value pair passed to `with` just becomes the `params` for the mailer
-action. So `with(user: @user, account: @user.account)` makes `params[:user]` and
-`params[:account]` available in the mailer action. Just like controllers have
-params.
+Qualquer chave-valor passado para o `with` se torna parte da _Hash_ `params` que será usado na _action_ do _Mailer_. Então `with(user: @user, account: @user.account)` cria `params[:user]` e `params[:account]` disponíveis na _action_ do _Mailer_. Como acontece nos _controllers_ que também tem `params`.
 
-The method `welcome_email` returns an `ActionMailer::MessageDelivery` object which
-can then just be told `deliver_now` or `deliver_later` to send itself out. The
-`ActionMailer::MessageDelivery` object is just a wrapper around a `Mail::Message`. If
-you want to inspect, alter, or do anything else with the `Mail::Message` object you can
-access it with the `message` method on the `ActionMailer::MessageDelivery` object.
+O método `welcome_email` tem como retorno um objeto do tipo `ActionMailer::MessageDelivery` que você pode encadear os métodos `deliver_now` ou `deliver_later` para assim ele se enviar como um e-mail. O objeto `ActionMailer::MessageDelivery` é somente _wrapper_ (Embrulho) para  a classe `Mail::Message`. Se você quiser inspecionar, alterar, ou fazer qualquer coisa com o objeto `Mail::Message` você pode acessa-lo através do método `message` do objeto `ActionMailer::MessageDelivery`.
 
 ### Auto encoding header values
 
