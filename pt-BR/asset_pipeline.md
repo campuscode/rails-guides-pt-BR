@@ -178,7 +178,7 @@ pelo servidor *web*. Os arquivos em `app/assets` nunca serão servidos diretamen
 ### *Assets* Específicos de *Controllers*
 
 Quando você gera um *scaffold* ou um *controller*, o Rails também  gera um
-arquivo *Cascading Style Sheet* (ou SCSSS se o `sass-rails` estiver no `Gemfile`)
+arquivo *Cascading Style Sheet* (ou SCSS se o `sass-rails` estiver no `Gemfile`)
 para aquele *controller*. Adicionalmente, quando você gera um *scaffold*, o Rails
 também gera o arquivo `scaffolds.css` (ou `scaffolds.scss` se o `sass-rails` 
 estiver no `Gemfile`.)
@@ -189,7 +189,7 @@ para serem usados pela sua aplicação imediatamente usando a diretiva `require_
 Veja [Arquivos de Manifesto e Diretivas](#manifest-files-and-directives) para mais detalhes
 sobre `require_tree`.
 
-Você também pode optar por incluir folhas de estilo específicas do *controller* e
+Você também pode optar por incluir *stylesheets* específicas do *controller* e
 arquivos JavaScript apenas nos seus respectivos diretórios, usando o seguinte:
 
 `<%= javascript_include_tag params[:controller] %>` ou `<%= stylesheet_link_tag
@@ -206,7 +206,7 @@ como a pré-compilação funciona.
 
 NOTE: Você deve ter uma *runtime* de ExecJS para usar CoffeeScript.
 Se você estiver usando macOS ou Windows, você deve ter uma *runtime* de JavaScript instalada 
-no seu sistema operacional. Veja a documentação do [ExecJS](https://github.com/rails/execjs#readme) para conhecer todas as Javascript *runtimes*.
+no seu sistema operacional. Veja a documentação do [ExecJS](https://github.com/rails/execjs#readme) para conhecer todas as JavaScript *runtimes*.
 
 Você também pode desabilitar a geração de arquivos de *assets* específicos dos *controllers* 
 adicionando o seguinte à sua configuração `config/application.rb`:
@@ -223,7 +223,7 @@ Os *pipeline assets* podem ser colocados dentro de uma aplicação nos três loc
 `app/assets`, `lib/assets` ou `vendor/assets`.
 
 * `app/assets` é destinado aos *assets* que são proprietários da aplicação, como
-imagens customizadas, arquivos Javascript ou folhas de estilo.
+imagens customizadas, arquivos JavaScript ou folhas de estilo.
 
 * `lib/assets` é destinado ao código das suas próprias bibliotecas que não se encaixam
 no escopo da aplicação ou àquelas bibliotecas que são compartilhadas entre aplicações.
@@ -295,7 +295,7 @@ no ambiente de produção.
 O *Sprockets* usa arquivos nomeados como `index` (com a extensão relevante) para um propósito
 especial.
 
-Por exemplo, ser você tiver uma biblioteca JQuery com muitos módulos, que é armazenada em
+Por exemplo, ser você tiver uma biblioteca jQuery com muitos módulos, que é armazenada em
 `lib/assets/javascripts/library_name`, o arquivo `lib/assets/javascripts/library_name/index.js` serve como
 manifesto para todos os arquivos desta biblioteca. Esse arquivo poderia incluir uma lista de
 ordenada de todos os arquivos necessários ou uma simples diretiva `require_tree`.
