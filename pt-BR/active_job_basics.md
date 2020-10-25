@@ -31,7 +31,7 @@ O Propósito do Active Job
 
 O ponto principal é garantir que todas as aplicações Rails terão uma infraestrutura
 de *jobs* no lugar. Nós podemos então ter *features* de *frameworks* e outras *gems*
-contruídas em cima dela, sem ter que nos preocupar com diferenças de API entre vários
+construídas em cima dela, sem ter que nos preocupar com diferenças de API entre vários
 executadores de *job* como *Delayed Job* e *Resque*. Dessa forma, escolher o seu *backend* 
 de enfileiramento se torna mais uma preocupação operacional. E você poderá alternar entre eles sem
 ter que reescrever os seus *jobs*. 
