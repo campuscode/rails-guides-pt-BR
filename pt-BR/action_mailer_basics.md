@@ -209,14 +209,11 @@ Qualquer chave-valor passado para o `with` se torna parte da _Hash_ `params` que
 O método `welcome_email` tem como retorno um objeto do tipo `ActionMailer::MessageDelivery` que você pode encadear os métodos `deliver_now` ou `deliver_later` para assim ele se enviar como um e-mail.
 O objeto `ActionMailer::MessageDelivery` é somente um _wrapper_ (Embrulho) para a classe `Mail::Message`. Se você quiser inspecionar, alterar, ou fazer qualquer coisa com o objeto `Mail::Message` você pode acessa-lo através do método `message` do objeto `ActionMailer::MessageDelivery`.
 
-### Auto encoding header values
+### Codificação automática
 
-Action Mailer handles the auto encoding of multibyte characters inside of
-headers and bodies.
+_Action Mailer_ gerencia automaticamente a codificação de caracteres _multibytes_ (Caracteres asiaticos, emojis etc) dentro do cabeçalho e corpo.
 
-For more complex examples such as defining alternate character sets or
-self-encoding text first, please refer to the
-[Mail](https://github.com/mikel/mail) library.
+Para exemplos mais complexos como definir uma lista alternativa de caracteres ou codificar o texto de maneira diferente, use essa biblioteca com referencia: [Mail](https://github.com/mikel/mail).
 
 ### Complete List of Action Mailer Methods
 
