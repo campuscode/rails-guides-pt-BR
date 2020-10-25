@@ -1128,16 +1128,16 @@ class Invoice < ApplicationRecord
 end
 ```
 
-Working with Validation Errors
-------------------------------
+Trabalhando com Erros de Validação
+----------------------------------
 
-In addition to the `valid?` and `invalid?` methods covered earlier, Rails provides a number of methods for working with the `errors` collection and inquiring about the validity of objects.
+Em adição aos métodos `valid?` e `invalid?` cobertos anteriormente, o Rails provê outros métodos para trabalhar com a coleção `errors` e verificar a validade dos objetos.
 
-The following is a list of the most commonly used methods. Please refer to the `ActiveModel::Errors` documentation for a list of all the available methods.
+A seguir é exibida uma lista dos métodos mais comumente utilizados. Por favor, verifique a documentação do `ActiveModel::Errors` para uma lista de todos os métodos disponíveis.
 
 ### `errors`
 
-Returns an instance of the class `ActiveModel::Errors` containing all errors. Each key is the attribute name and the value is an array of strings with all errors.
+Retorna uma instância da classe `ActiveModel::Errors` contendo todos os erros. Cada chave é o nome do atributo e o valor é um *array* de *strings* contendo todos os erros.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1156,7 +1156,7 @@ person.errors.messages # => {}
 
 ### `errors[]`
 
-`errors[]` is used when you want to check the error messages for a specific attribute. It returns an array of strings with all error messages for the given attribute, each string with one error message. If there are no errors related to the attribute, it returns an empty array.
+`errors[]` é utilizado quando você quiser verificar as mensagens de erro de um atributo em específico. O método um *array* de *strings* com todas as mensagens de erro para o atributo informado, cada *string* contendo uma mensagem de erro. Se não há erros relacionados com o atributo, o método retorna um *array* vazio.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1179,9 +1179,9 @@ person.errors[:name]
 
 ### `errors.add`
 
-The `add` method lets you add an error message related to a particular attribute. It takes as arguments the attribute and the error message.
+O método `add` permite a você adicionar uma mensagem de erro relacionada a um atributo em particular. Ele recebe como argumentos o atributo e a mensagem de erro.
 
-The `errors.full_messages` method (or its equivalent, `errors.to_a`) returns the error messages in a user-friendly format, with the capitalized attribute name prepended to each message, as shown in the examples below.
+O método `errors.full_messages` (ou seu equivalente, `errors.to_a`) retorna as mensagens de erro em um formato amigável para o usuário, com o nome do atributo em inicial maiúscula prefixado a cada mensagem, como no exemplo abaixo.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1201,8 +1201,8 @@ person.errors.full_messages
 
 ### `errors.details`
 
-You can specify a validator type to the returned error details hash using the
-`errors.add` method.
+Você pode especificar um validador (*validator*) de tipo no *hash* do detalhamento de erro retornado usando o
+método `errors.add`.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1217,8 +1217,8 @@ person.errors.details[:name]
 # => [{error: :invalid_characters}]
 ```
 
-To improve the error details to contain the unallowed characters set for instance,
-you can pass additional keys to `errors.add`.
+Para aprimorar o detalhamento de erros para que ele contenha o conjunto dos caracteres não permitidos por exemplo,
+você pode passar chaves adicionais ao `errors.add`.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1233,12 +1233,12 @@ person.errors.details[:name]
 # => [{error: :invalid_characters, not_allowed: "!@#%*()_-+="}]
 ```
 
-All built in Rails validators populate the details hash with the corresponding
-validator type.
+Todos os validadores (*validators*)  embutidos no Rails populam o *hash* de detalhes com o 
+validador (*validator*)  de tipo correspondente.
 
 ### `errors[:base]`
 
-You can add error messages that are related to the object's state as a whole, instead of being related to a specific attribute. You can use this method when you want to say that the object is invalid, no matter the values of its attributes. Since `errors[:base]` is an array, you can simply add a string to it and it will be used as an error message.
+Voce pode adicionar mensagens de erro relacionadas ao estado do objeto como um todo, ao invés de estarem relacionadas a um atributo em específico. Você pode usar este método quando você quiser dizer que o objeto é inválido, não importando os valores de seus atributos. Sendo o `errors[:base]` um *array*, você pode simplesmente adicionar uma *string* ao método e ela será usada como uma mensagem de erro.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1250,7 +1250,7 @@ end
 
 ### `errors.clear`
 
-The `clear` method is used when you intentionally want to clear all the messages in the `errors` collection. Of course, calling `errors.clear` upon an invalid object won't actually make it valid: the `errors` collection will now be empty, but the next time you call `valid?` or any method that tries to save this object to the database, the validations will run again. If any of the validations fail, the `errors` collection will be filled again.
+O método `clear` é usado quando você intencionalmente quiser limpar todas as mensagens na coleção `errors`. É claro que, ao chamar o método `errors.clear` sobre um objeto inválido, isso não irá torná-lo válido: a coleção `errors` estará agora vazia, mas a próxima vez que você chamar `valid?` ou qualquer método que tente salvar esse objeto na base de dados, as validações serão executadas novamente. Se qualquer uma das validações falhar, a coleção `errors` será preenchida de novo.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1273,7 +1273,7 @@ person.errors[:name]
 
 ### `errors.size`
 
-The `size` method returns the total number of error messages for the object.
+O método `size` retorna o número total de mensagens de erro para o objeto.
 
 ```ruby
 class Person < ApplicationRecord
