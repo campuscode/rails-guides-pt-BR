@@ -118,13 +118,13 @@ Se o processo quebra ou a máquina é reiniciada, todos os *jobs* pendentes ser�
 *backend* assíncrono padrão. Isso pode ser bom para aplicações menores ou *jobs* não críticos, mas a maioria
 das aplicações em produção precisará escolher um *backend* de persistência.
 
-### Backends
+### *Backends*
 
-O *Active Job* tem adaptadores *built-in* para múltuplos *backends* de fila (Sidekiq
-Resque, Delayed Job e outros). Para obter uma lista atulizada dos adaptadores,
+O *Active Job* tem adaptadores *built-in* para múltiplos *backends* de fila (Sidekiq
+Resque, Delayed Job e outros). Para obter uma lista atualizada dos adaptadores,
 consulte a documentação da API para [ActiveJob::QueueAdapters](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
 
-### Setting the Backend
+### Configurando o *Backend*
 
 Você pode definir facilmente o *backend* de fila:
 
@@ -152,14 +152,13 @@ end
 # was configured in `config.active_job.queue_adapter`.
 ```
 
-### Iniciando o Backend
+### Iniciando o *Backend*
 
 Uma vez que os *jobs* são executados em paralelo à sua aplicação Rails, a maioria
 das bibliotecas de filas exigem que você inicie um serviço de enfileiramento específico
 (além de iniciar sua aplicação Rails) para que o processamento do *job* funcione. Consulte a
 documentação da biblioteca para obter instruções sobre como iniciar o *backend* da fila.
 
-Here is a noncomprehensive list of documentation:
 Aqui está uma lista não abrangente de documentação:
 
 - [Sidekiq](https://github.com/mperham/sidekiq/wiki/Active-Job)
