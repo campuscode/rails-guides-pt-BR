@@ -254,7 +254,7 @@ Just as with validations, it is also possible to skip callbacks by using the fol
 
 These methods should be used with caution, however, because important business rules and application logic may be kept in callbacks. Bypassing them without understanding the potential implications may lead to invalid data.
 
-Terminando uma Execução
+Interrompendo uma Execução
 -----------------
 
 Quando você começar a registrar novos *callbacks* para seus modelos, eles serão enfileirados para a execução. Esta fila incluirá todas as validações do seu modelo, os *callbacks* registrados, e a operação do banco de dados para ser executada.
