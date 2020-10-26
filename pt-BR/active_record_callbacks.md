@@ -259,7 +259,7 @@ Interrompendo uma Execução
 
 Quando você começar a registrar novos *callbacks* para seus *models*, eles serão enfileirados para a execução. Esta fila incluirá todas as validações do seu *model*, os *callbacks* registrados e a operação do banco de dados a ser executada.
 
-Toda a cadeia do *callback* é empacotada numa transação. Se algum *callback* lança uma exceção, a cadeia de execução é terminada e um *ROLLBACK* é emitido. Para parar intencionalmente uma cadeia, use:
+Toda a cadeia do *callback* é empacotada em uma transação. Se algum *callback* lança uma exceção, a cadeia de execução é interrompida e um *ROLLBACK* é emitido. Para interromper intencionalmente uma cadeia, use:
 
 ```ruby
 throw :abort
