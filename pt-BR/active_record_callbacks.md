@@ -257,7 +257,7 @@ These methods should be used with caution, however, because important business r
 Interrompendo uma Execução
 -----------------
 
-Quando você começar a registrar novos *callbacks* para seus modelos, eles serão enfileirados para a execução. Esta fila incluirá todas as validações do seu modelo, os *callbacks* registrados, e a operação do banco de dados para ser executada.
+Quando você começar a registrar novos *callbacks* para seus *models*, eles serão enfileirados para a execução. Esta fila incluirá todas as validações do seu *model*, os *callbacks* registrados e a operação do banco de dados a ser executada.
 
 Toda a cadeia do *callback* é empacotada numa transação. Se algum *callback* lança uma exceção, a cadeia de execução é terminada e um *ROLLBACK* é emitido. Para parar intencionalmente uma cadeia, use:
 
