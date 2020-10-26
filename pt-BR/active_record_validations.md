@@ -941,7 +941,7 @@ end
 Person.new.valid?  # => ActiveModel::StrictValidationFailed: O Nome não pode ser vazio
 ```
 
-Também é possível passar uma exceção personalizada à opção `:strict`.
+Também é possível passar uma exceção personalizada para a opção `:strict`.
 
 ```ruby
 class Person < ApplicationRecord
