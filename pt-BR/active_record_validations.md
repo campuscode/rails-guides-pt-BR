@@ -938,7 +938,7 @@ class Person < ApplicationRecord
   validates :name, presence: { strict: true }
 end
 
-Person.new.valid?  # => ActiveModel::StrictValidationFailed: O Nome não pode ser vazio
+Person.new.valid?  # => ActiveModel::StrictValidationFailed: Name can't be blank
 ```
 
 Também é possível passar uma exceção personalizada para a opção `:strict`.
@@ -948,7 +948,7 @@ class Person < ApplicationRecord
   validates :token, presence: true, uniqueness: true, strict: TokenGenerationException
 end
 
-Person.new.valid?  # => TokenGenerationException: O Token não pode ser vazio
+Person.new.valid?  # => TokenGenerationException: Token can't be blank
 ```
 
 Validação com Condicional
