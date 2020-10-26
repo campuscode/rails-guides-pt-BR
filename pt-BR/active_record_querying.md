@@ -656,7 +656,7 @@ Por exemplo, para selecionar somente as colunas `viewable_by` e `locked`:
 
 ```ruby
 Client.select(:viewable_by, :locked)
-# OR
+# OU
 Client.select("viewable_by, locked")
 ```
 
