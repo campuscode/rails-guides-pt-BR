@@ -459,13 +459,13 @@ O método `find_in_batches` aceita as mesmas opção que o `find_each`
 Condições
 ----------
 
-O método `where`  permite que você especifique condições para limitar os registro retornados, representando a parte `where` da instrução SQL. Condições podem ser especificadas como uma *string*, *array*, ou *hash*.
+O método `where`  permite que você especifique condições para limitar os registros retornados, representando a parte `where` da instrução SQL. Condições podem ser especificadas como uma *string*, *array*, ou *hash*.
 
 ### Condições de Strings Puras
 
-Se você gostaria de adicionar condições para sua busca, poderia apenas especificá-las, como, por exemplo `Client.where("orders_count = '2'")`. Isso encontrará todos os clientes em que o campo `ordes_count` que tenha o valor igual a 2.
+Se você gostaria de adicionar condições para sua busca, poderia apenas especificá-las, como, por exemplo `Client.where("orders_count = '2'")`. Isso encontrará todos os clientes em que o campo `ordes_count` tenha o valor igual a 2.
 
-WARNING: Construindo sua própria condição como *strings* pura pode te deixar vulnerável a ataques de injeção SQL. Por exemplo, `Client.where("first_name LIKE '%#{params[:first_name]}%'")` não é seguro. Veja a próxima seção para a maneira de lidar com  condições usando array.
+WARNING: Construindo sua própria condições como *strings* pura pode te deixar vulnerável a ataques de injeção SQL. Por exemplo, `Client.where("first_name LIKE '%#{params[:first_name]}%'")` não é seguro. Veja a próxima seção para saber a maneira preferida de lidar com  condições usando array.
 
 ### Condições de Array
 
@@ -501,7 +501,7 @@ Devido à segurança do argumento. Colocando a variável dentro da condição de
 
 TIP: Para mais informações sobre os perigos da injeção de SQL, veja em [Ruby on Rails Security Guide](https://guides.rubyonrails.org/security.html#sql-injection) / [Ruby on Rails Security Guide PT-Br](security.html#sql-injection)
 
-#### Placeholder na condição
+#### Condições com *Placeholder*
 
 Similar ao estilo de substituição `(?)` dos parâmetros, você também pode especificar chaves em sua condição de *string* junto com uma *hash* de chaves/valores (*keys/values*) correspondentes:
 
@@ -510,13 +510,13 @@ Client.where("created_at >= :start_date AND created_at <= :end_date",
   {start_date: params[:start_date], end_date: params[:end_date]})
 ```
 
-Isso torna a legibilidade mais clara se você tem um grande número de condições variaveis.
+Isso torna a legibilidade mais clara se você tem um grande número de condições variáveis.
 
 ### Condições de Hash
 
 *Active Record* também permite que você passe em condições de *hash* o que pode aumentar a legibilidade de suas sintaxes de condições. Com condições de *hash*, você passa em uma *hash* com chaves (*keys*) dos campos que deseja qualificados e os valores (*values*) de como deseja qualificá-los:
 
-NOTE: Apenas igualdade, intervalo, e subconjunto são possiveis com as condições de *hash*.
+NOTE: Apenas igualdade, intervalo, e subconjunto são possíveis com as condições de *hash*.
 
 #### Condições de igualdade
 
@@ -536,7 +536,7 @@ O nome do campo também pode ser uma *string*:
 Client.where('locked' => true)
 ```
 
-No caso de um relacionamento `belongs_to`, uma chave de associação pode ser usada para especificar o model se um objeto Active Record for usado como o valor. Este metodo também funciona com relacionamentos polimórficos.
+No caso de um relacionamento `belongs_to`, uma chave de associação pode ser usada para especificar o model se um objeto *Active Record* for usado como o valor. Este método também funciona com relacionamentos polimórficos.
 
 ```ruby
 Article.where(author: author)
@@ -555,11 +555,11 @@ Isso irá encontrar todos clientes criados ontem usando uma instrução SQL `BET
 SELECT * FROM clients WHERE (clients.created_at BETWEEN '2008-12-21 00:00:00' AND '2008-12-22 00:00:00')
 ```
 
-Isso demonstra uma sintaxe mais curta para exemplos em [Condições de Array](#condiçoes-de-array)
+Isso demonstra uma sintaxe mais curta para exemplos em [Condições de Array](#condicoes-de-array)
 
 #### Subconjunto de Condições
 
-Se você deseja procurar registros usando a expressão `IN` pode passar um *array* para o *hash* de condições:
+Se você deseja procurar registros usando a expressão `IN` pode passar um *array* para a *hash* de condições:
 
 ```ruby
 Client.where(orders_count: [1,3,5])
@@ -573,7 +573,7 @@ SELECT * FROM clients WHERE (clients.orders_count IN (1,3,5))
 
 ### Condições NOT
 
-Consultas SQL `NOT` podem ser construidas por `where.not`:
+Consultas SQL `NOT` podem ser construídas por `where.not`:
 
 ```ruby
 Client.where.not(locked: true)
@@ -587,7 +587,7 @@ SELECT * FROM clients WHERE (clients.locked != 1)
 
 ### Condições OR
 
-Condições `OR` entre duas relações podem ser construidas chamando `or` na primeira relação, e passando o segundo como um argumento.
+Condições `OR` entre duas relações podem ser construídas chamando `or` na primeira relação, e passando o segundo como um argumento.
 
 ```ruby
 Client.where(locked: true).or(Client.where(orders_count: [1,3,5]))
