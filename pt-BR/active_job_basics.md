@@ -328,11 +328,11 @@ of the `.deliver_later` emails are processed. To avoid this problem, use
 `.deliver_now` or run a persistent queue in development.
 
 
-Internationalization
---------------------
+Internacionalização
+-------------------
 
-Each job uses the `I18n.locale` set when the job was created. Useful if you send
-emails asynchronously:
+Cada *job* usa o `I18n.locale` configurado quando o *job* é criado. Isso é útil se você
+enviar *e-mails* assincronamente:
 
 ```ruby
 I18n.locale = :eo
