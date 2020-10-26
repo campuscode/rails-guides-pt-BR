@@ -43,12 +43,12 @@ jobs in the queue will be dropped upon restart.
 Creating a Job
 --------------
 
-This section will provide a step-by-step guide to creating a job and enqueuing it.
+Esta seção fornecerá um guia passo a passo para criar um trabalho e enfileirá-lo.
 
-### Create the Job
+### Crie o trabalho
 
-Active Job provides a Rails generator to create jobs. The following will create a
-job in `app/jobs` (with an attached test case under `test/jobs`):
+Active Job fornece um gerador Rails para criar jobs. O seguinte criará um
+trabalho em ʻapp/jobs` (with an attached test case under `test/jobs`):
 
 ```bash
 $ rails generate job guests_cleanup
@@ -57,16 +57,16 @@ create    test/jobs/guests_cleanup_job_test.rb
 create  app/jobs/guests_cleanup_job.rb
 ```
 
-You can also create a job that will run on a specific queue:
+Você também pode criar um trabalho que será executado em uma fila específica:
 
 ```bash
 $ rails generate job guests_cleanup --queue urgent
 ```
 
-If you don't want to use a generator, you could create your own file inside of
-`app/jobs`, just make sure that it inherits from `ApplicationJob`.
+Se você não quiser usar um gerador, você pode criar seu próprio arquivo dentro de
+ʻapp/jobs`, apenas certifique-se de que herda de ʻApplicationJob`.
 
-Here's what a job looks like:
+Aqui está a aparência de um trabalho:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -78,37 +78,37 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-Note that you can define `perform` with as many arguments as you want.
+Observe que você pode definir `perform` com quantos argumentos quiser.
 
-### Enqueue the Job
+### Enfileirar o trabalho
 
-Enqueue a job like so:
+Enfileirar um trabalho assim:
 
 ```ruby
-# Enqueue a job to be performed as soon as the queuing system is
-# free.
+# Enfileirar um trabalho para ser executado assim que o sistema de enfileiramento for
+# livre.
 GuestsCleanupJob.perform_later guest
 ```
 
 ```ruby
-# Enqueue a job to be performed tomorrow at noon.
+# Enfileirar um trabalho para ser executado amanhã ao meio-dia.
 GuestsCleanupJob.set(wait_until: Date.tomorrow.noon).perform_later(guest)
 ```
 
 ```ruby
-# Enqueue a job to be performed 1 week from now.
+# Enfileirar um trabalho para ser executado em 1 semana a partir de agora.
 GuestsCleanupJob.set(wait: 1.week).perform_later(guest)
 ```
 
 ```ruby
-# `perform_now` and `perform_later` will call `perform` under the hood so
-# you can pass as many arguments as defined in the latter.
+# `perform_now` e` perform_later` irão chamar `perform` sob o capô, então
+# você pode passar quantos argumentos forem definidos no último.
 GuestsCleanupJob.perform_later(guest1, guest2, filter: 'some_filter')
 ```
 
-That's it!
+É isso aí!
 
-Job Execution
+Execução de Trabalho
 -------------
 
 For enqueuing and executing jobs in production you need to set up a queuing backend,
