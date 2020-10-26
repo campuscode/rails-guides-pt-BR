@@ -432,7 +432,7 @@ NOTE: A opção `:on` especifica quando um *callback* vai ser disparado. Se voc�
 não fornecer a opção `:on` o *callback* será disparado para cada ação.
 
 Já que usar o *callback* `after_commit` para criar, atualizar ou deletar é
-comum, exitem *alias* para as operações:
+comum, existem *aliases* para as operações:
 
 * `after_create_commit`
 * `after_update_commit`
