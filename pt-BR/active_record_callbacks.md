@@ -400,7 +400,7 @@ end
 
 You can declare as many callbacks as you want inside your callback classes.
 
-Callbacks de Transação
+*Callbacks* de Transação
 ---------------------
 
 Existem dois *callbacks* adicionais que são gatilhados quando se completa uma transação de banco de dados: `after_commit` e `after_rollback`. Estes *callbacks* são muito parecidos com o *callback* `after_save`, exceto que eles não são executados até que as mudanças no banco de dados sejam confirmadas ou desfeitas. Eles são mais úteis quando seus modelos de registros ativos precisam de interagir com sistemas externos que não fazem parte da transação do banco de dados.
