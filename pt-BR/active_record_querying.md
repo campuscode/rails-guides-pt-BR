@@ -1323,9 +1323,9 @@ This is because it is ambiguous whether they should appear on the parent record,
 Scopes
 ------
 
-Scoping allows you to specify commonly-used queries which can be referenced as method calls on the association objects or models. With these scopes, you can use every method previously covered such as `where`, `joins` and `includes`. All scope bodies should return an `ActiveRecord::Relation` or `nil` to allow for further methods (such as other scopes) to be called on it.
+A definição do escopo permite que você especifique consultas comumente usadas, que podem ser referenciadas como chamadas de método nos objetos ou modelos de associação. Com esses escopos, você pode usar todos os métodos cobertos anteriormente, como `where`,` joins` e ʻincludes`. Todos os corpos de escopo devem retornar um ʻActiveRecord :: Relation` ou `nil` para permitir que métodos adicionais (como outros escopos) sejam chamados nele.
 
-To define a simple scope, we use the `scope` method inside the class, passing the query that we'd like to run when this scope is called:
+Para definir um escopo simples, usamos o método `scope` dentro da classe, passando a consulta que gostaríamos de executar quando este escopo for chamado:
 
 ```ruby
 class Article < ApplicationRecord
@@ -1333,7 +1333,7 @@ class Article < ApplicationRecord
 end
 ```
 
-Scopes are also chainable within scopes:
+Os escopos também podem ser encadeados dentro dos escopos:
 
 ```ruby
 class Article < ApplicationRecord
@@ -1342,22 +1342,22 @@ class Article < ApplicationRecord
 end
 ```
 
-To call this `published` scope we can call it on either the class:
+Para chamar este escopo `publicado`, podemos chamá-lo tanto na classe:
 
 ```ruby
 Article.published # => [published articles]
 ```
 
-Or on an association consisting of `Article` objects:
+Ou em uma associação que consiste em objetos ʻArticle`:
 
 ```ruby
 category = Category.first
 category.articles.published # => [published articles belonging to this category]
 ```
 
-### Passing in arguments
+### Transmitindo argumentos
 
-Your scope can take arguments:
+Seu escopo pode receber argumentos:
 
 ```ruby
 class Article < ApplicationRecord
@@ -1365,13 +1365,13 @@ class Article < ApplicationRecord
 end
 ```
 
-Call the scope as if it were a class method:
+Chame o escopo como se fosse um método de classe:
 
 ```ruby
 Article.created_before(Time.zone.now)
 ```
 
-However, this is just duplicating the functionality that would be provided to you by a class method.
+No entanto, isso é apenas a duplicação da funcionalidade que seria fornecida a você por um método de classe.
 
 ```ruby
 class Article < ApplicationRecord
@@ -1381,15 +1381,15 @@ class Article < ApplicationRecord
 end
 ```
 
-Using a class method is the preferred way to accept arguments for scopes. These methods will still be accessible on the association objects:
+Usar um método de classe é a maneira preferida de aceitar argumentos para escopos. Esses métodos ainda estarão acessíveis nos objetos de associação:
 
 ```ruby
 category.articles.created_before(time)
 ```
 
-### Using conditionals
+### Usando condicionais
 
-Your scope can utilize conditionals:
+Seu escopo pode utilizar condicionais:
 
 ```ruby
 class Article < ApplicationRecord
@@ -1397,7 +1397,7 @@ class Article < ApplicationRecord
 end
 ```
 
-Like the other examples, this will behave similarly to a class method.
+Como os outros exemplos, isso se comportará de maneira semelhante a um método de classe.
 
 ```ruby
 class Article < ApplicationRecord
@@ -1407,12 +1407,12 @@ class Article < ApplicationRecord
 end
 ```
 
-However, there is one important caveat: A scope will always return an `ActiveRecord::Relation` object, even if the conditional evaluates to `false`, whereas a class method, will return `nil`. This can cause `NoMethodError` when chaining class methods with conditionals, if any of the conditionals return `false`.
+No entanto, há uma advertência importante: um escopo sempre retornará um objeto ʻActiveRecord :: Relation`, mesmo se a condicional for avaliada como `false`, enquanto um método de classe retornará` nil`. Isso pode causar `NoMethodError` ao encadear métodos de classe com condicionais, se qualquer uma das condicionais retornar` false`.
 
-### Applying a default scope
+### Aplicando um escopo padrão
 
-If we wish for a scope to be applied across all queries to the model we can use the
-`default_scope` method within the model itself.
+Se desejarmos que um escopo seja aplicado em todas as consultas do modelo, podemos usar o
+método `default_scope` dentro do próprio modelo.
 
 ```ruby
 class Client < ApplicationRecord
@@ -1420,15 +1420,15 @@ class Client < ApplicationRecord
 end
 ```
 
-When queries are executed on this model, the SQL query will now look something like
-this:
+Quando as consultas são executadas neste modelo, a consulta SQL agora será semelhante a
+isto:
 
 ```sql
 SELECT * FROM clients WHERE removed_at IS NULL
 ```
 
-If you need to do more complex things with a default scope, you can alternatively
-define it as a class method:
+Se você precisa fazer coisas mais complexas com um escopo padrão, você pode alternativamente
+defina-o como um método de classe:
 
 ```ruby
 class Client < ApplicationRecord
@@ -1438,9 +1438,9 @@ class Client < ApplicationRecord
 end
 ```
 
-NOTE: The `default_scope` is also applied while creating/building a record
-when the scope arguments are given as a `Hash`. It is not applied while
-updating a record. E.g.:
+NOTA: O `default_scope` também é aplicado ao criar / construir um registro
+quando os argumentos do escopo são fornecidos como `Hash`. Não é aplicado enquanto
+atualizando um registro. E.g.:
 
 ```ruby
 class Client < ApplicationRecord
@@ -1451,8 +1451,8 @@ Client.new          # => #<Client id: nil, active: true>
 Client.unscoped.new # => #<Client id: nil, active: nil>
 ```
 
-Be aware that, when given in the `Array` format, `default_scope` query arguments
-cannot be converted to a `Hash` for default attribute assignment. E.g.:
+Esteja ciente de que, quando fornecido no formato ʻArray`, os argumentos de consulta `default_scope`
+não pode ser convertido em `Hash` para atribuição de atributo padrão. E.g.:
 
 ```ruby
 class Client < ApplicationRecord
@@ -1462,9 +1462,9 @@ end
 Client.new # => #<Client id: nil, active: nil>
 ```
 
-### Merging of scopes
+### Mesclagem de escopos
 
-Just like `where` clauses scopes are merged using `AND` conditions.
+Assim como os escopos das cláusulas `where` são mesclados usando as condições ʻAND`.
 
 ```ruby
 class User < ApplicationRecord
@@ -1476,7 +1476,7 @@ User.active.inactive
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'active' AND "users"."state" = 'inactive'
 ```
 
-We can mix and match `scope` and `where` conditions and the final sql
+Podemos misturar e combinar as condições `scope` e` where` e o sql final
 will have all conditions joined with `AND`.
 
 ```ruby
@@ -1484,16 +1484,16 @@ User.active.where(state: 'finished')
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'active' AND "users"."state" = 'finished'
 ```
 
-If we do want the last `where` clause to win then `Relation#merge` can
-be used.
+Se quisermos que a última cláusula `where` vença, então` Relation # merge` pode
+ser usado.
 
 ```ruby
 User.active.merge(User.inactive)
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'
 ```
 
-One important caveat is that `default_scope` will be prepended in
-`scope` and `where` conditions.
+Uma advertência importante é que `default_scope` será anexado em
+condições `scope` e` where`.
 
 ```ruby
 class User < ApplicationRecord
@@ -1512,20 +1512,20 @@ User.where(state: 'inactive')
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'pending' AND "users"."state" = 'inactive'
 ```
 
-As you can see above the `default_scope` is being merged in both
-`scope` and `where` conditions.
+Como você pode ver acima, o `default_scope` está sendo mesclado em ambos
+condições `scope` e` where`.
 
-### Removing All Scoping
+### Removendo todo o escopo
 
-If we wish to remove scoping for any reason we can use the `unscoped` method. This is
-especially useful if a `default_scope` is specified in the model and should not be
-applied for this particular query.
+Se desejarmos remover o escopo por qualquer motivo, podemos usar o método ʻunscoped`. Isto é
+especialmente útil se um `default_scope` é especificado no modelo e não deve ser
+aplicado para esta consulta particular.
 
 ```ruby
 Client.unscoped.load
 ```
 
-This method removes all scoping and will do a normal query on the table.
+Este método remove todo o escopo e fará uma consulta normal na tabela.
 
 ```ruby
 Client.unscoped.all
@@ -1535,7 +1535,7 @@ Client.where(published: false).unscoped.all
 # SELECT "clients".* FROM "clients"
 ```
 
-`unscoped` can also accept a block.
+`unscoped` também pode aceitar um bloqueio.
 
 ```ruby
 Client.unscoped {
