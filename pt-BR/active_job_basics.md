@@ -168,11 +168,11 @@ Here is a noncomprehensive list of documentation:
 - [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
 - [Delayed Job](https://github.com/collectiveidea/delayed_job#active-job)
 
-Queues
-------
+Filas
+-----
 
-Most of the adapters support multiple queues. With Active Job you can schedule
-the job to run on a specific queue:
+A maioria dos *adapters* suportam múltiplas filas. Com o *Active Job* você pode agendar
+o *job* para executar em uma fila específica:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -181,7 +181,7 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-You can prefix the queue name for all your jobs using
+Você pode prefixar o nome da fila para todos os *jobs* usando
 `config.active_job.queue_name_prefix` in `application.rb`:
 
 ```ruby
@@ -203,8 +203,8 @@ end
 # on your staging environment
 ```
 
-The default queue name prefix delimiter is '\_'.  This can be changed by setting
-`config.active_job.queue_name_delimiter` in `application.rb`:
+O prefixo delimitador padrão de nome de fila é '\_'. Isso pode ser alterado configurando o
+`config.active_job.queue_name_delimiter` no `application.rb`:
 
 ```ruby
 # config/application.rb
@@ -226,16 +226,16 @@ end
 # on your staging environment
 ```
 
-If you want more control on what queue a job will be run you can pass a `:queue`
-option to `#set`:
+Se você quiser mais controle em qual fila um *job* será executado, você pode passar
+uma opção `:queue` ao `#set`:
 
 ```ruby
 MyJob.set(queue: :another_queue).perform_later(record)
 ```
 
-To control the queue from the job level you can pass a block to `#queue_as`. The
-block will be executed in the job context (so you can access `self.arguments`)
-and you must return the queue name:
+Para controlar a fila a partir do nível do *job*, você pode passar um bloco para `#queue_as`.
+O bloco será executado no contexto do *job* (o que te permite acessar `self.arguments`) e você
+deve retornar o nome da fila:
 
 ```ruby
 class ProcessVideoJob < ApplicationJob
@@ -256,8 +256,8 @@ end
 ProcessVideoJob.perform_later(Video.last)
 ```
 
-NOTE: Make sure your queuing backend "listens" on your queue name. For some
-backends you need to specify the queues to listen to.
+NOTE: Tenha certeza de que o seu *backend* da fila "escuta" o nome da fila.
+Para alguns *backends* você precisará especificar as filas a serem "ouvidas".
 
 
 Callbacks
