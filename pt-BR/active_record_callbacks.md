@@ -265,7 +265,7 @@ Toda a cadeia do *callback* é empacotada em uma transação. Se algum *callback
 throw :abort
 ```
 
-WARNING: Qualquer exceção que não as `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` serão re-lançadas pelo Rails após a cadeia do *callback* ser terminada. Lançar uma outra exceção que não `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` pode quebrar um código que não espera por métodos como `save` ou `update` (os quais normalmente tentam retornar `true` ou `false`) para lançar uma exceção.
+WARNING: Qualquer exceção que não seja `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` serão lançadas novamente pelo Rails após a cadeia do *callback* ser interrompida. Lançar uma outra exceção que não `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` pode quebrar um código que não espera por métodos como `save` ou `update` (os quais normalmente tentam retornar `true` ou `false`) para lançar uma exceção.
 
 *Callbacks* Relacionais
 --------------------
