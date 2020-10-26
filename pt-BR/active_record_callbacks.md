@@ -403,7 +403,7 @@ You can declare as many callbacks as you want inside your callback classes.
 *Callbacks* de Transação
 ---------------------
 
-Existem dois *callbacks* adicionais que são gatilhados quando se completa uma transação de banco de dados: `after_commit` e `after_rollback`. Estes *callbacks* são muito parecidos com o *callback* `after_save`, exceto que eles não são executados até que as mudanças no banco de dados sejam confirmadas ou desfeitas. Eles são mais úteis quando seus modelos de registros ativos precisam de interagir com sistemas externos que não fazem parte da transação do banco de dados.
+Existem dois *callbacks* adicionais que são disparados quando se completa uma transação de banco de dados: `after_commit` e `after_rollback`. Estes *callbacks* são muito parecidos com o *callback* `after_save`, exceto que eles não são executados até que as mudanças no banco de dados sejam confirmadas ou desfeitas. Eles são mais úteis quando seus *active record models* precisam de interagir com sistemas externos que não fazem parte da transação do banco de dados.
 
 Considere, por exemplo, o exemplo anterior onde o *model* `PictureFile` precisa de apagar um arquivo depois que um registro correspondente é destruído. Se algo lançar uma exceção depois que o *callback* `after_destroy` for chamado e a transação for desfeita, o arquivo terá sido deletado e o *model* será deixado em um estado inconsistente. Por exemplo, suponha que `picture_file_2` no código abaixo não é valido e o método `save!` lança um erro.
 
