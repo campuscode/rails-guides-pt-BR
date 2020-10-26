@@ -454,7 +454,7 @@ WARNING. Quando uma transação é completada, os *callbacks* `after_commit` ou 
 
 WARNING. O código executado dentro dos *callbacks* de `after_commit` ou `after_rollback` não está incluido em uma transação.
 
-WARNING. Usando ambos `after_create_commit` e `after_update_commit` no mesmo modelo irá somente permitir que o último *callback* definido seja efetuado, e irá sobrepor todos os outros.
+WARNING. Usando ambos `after_create_commit` e `after_update_commit` no mesmo *model* permitirá somente que o último *callback* definido seja efetuado, sobrepondo todos os outros.
 
 ```ruby
 class User < ApplicationRecord
