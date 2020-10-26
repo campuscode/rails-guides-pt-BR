@@ -422,7 +422,7 @@ Rails.application.config.active_job.custom_serializers << MoneySerializer
 Exceções
 ----------
 
-*Jobs* ativos fornecem uma maneira de capturar exceções criadas durante a execução do *job*.
+Os *Active Jobs* fornecem uma maneira de capturar exceções criadas durante a execução do *job*.
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -454,7 +454,7 @@ class RemoteServiceJob < ApplicationJob
 end
 ```
 
-Para mais detalhes Veja a Documentação da api para [ActiveJob::Exceções](https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html).
+Para mais detalhes Veja a Documentação da API para [ActiveJob::Exceções](https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html).
 
 ### Desserialização
 
