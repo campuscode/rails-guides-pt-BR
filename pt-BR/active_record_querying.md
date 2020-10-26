@@ -1228,11 +1228,11 @@ Que significa: "retorne todos os autores com suas contagens de posts, tenham ele
 Eager Loading Associations
 --------------------------
 
-Eager loading is the mechanism for loading the associated records of the objects returned by `Model.find` using as few queries as possible.
+O carregamento rápido é o mecanismo para carregar os registros associados dos objetos retornados por `Model.find` usando o mínimo de consultas possível.
 
-**N + 1 queries problem**
+**Problema de consultas N + 1**
 
-Consider the following code, which finds 10 clients and prints their postcodes:
+Considere o seguinte código, que encontra 10 clientes e imprime seus códigos postais:
 
 ```ruby
 clients = Client.limit(10)
@@ -1242,13 +1242,13 @@ clients.each do |client|
 end
 ```
 
-This code looks fine at the first sight. But the problem lies within the total number of queries executed. The above code executes 1 (to find 10 clients) + 10 (one per each client to load the address) = **11** queries in total.
+Este código parece bom à primeira vista. Mas o problema está no número total de consultas executadas. O código acima executa 1 (para encontrar 10 clientes) + 10 (um para cada cliente para carregar o endereço) = **11** consultas no total.
 
-**Solution to N + 1 queries problem**
+**Solução para problemas de consultas N + 1**
 
-Active Record lets you specify in advance all the associations that are going to be loaded. This is possible by specifying the `includes` method of the `Model.find` call. With `includes`, Active Record ensures that all of the specified associations are loaded using the minimum possible number of queries.
+Active Record permite que você especifique com antecedência todas as associações que serão carregadas. Isso é possível especificando o método ʻincludes` da chamada `Model.find`. Com o ʻincludes`, o Active Record garante que todas as associações especificadas sejam carregadas usando o número mínimo possível de consultas.
 
-Revisiting the above case, we could rewrite `Client.limit(10)` to eager load addresses:
+Revisitando o caso acima, poderíamos reescrever `Client.limit (10)` para endereços de carregamento antecipado:
 
 ```ruby
 clients = Client.includes(:address).limit(10)
@@ -1258,7 +1258,7 @@ clients.each do |client|
 end
 ```
 
-The above code will execute just **2** queries, as opposed to **11** queries in the previous case:
+O código acima executará apenas **2** consultas, em oposição às **11** consultas do caso anterior:
 
 ```sql
 SELECT * FROM clients LIMIT 10
@@ -1268,57 +1268,57 @@ SELECT addresses.* FROM addresses
 
 ### Eager Loading Multiple Associations
 
-Active Record lets you eager load any number of associations with a single `Model.find` call by using an array, hash, or a nested hash of array/hash with the `includes` method.
+O Active Record permite que você carregue rapidamente qualquer número de associações com uma única chamada `Model.find` usando um array, hash, ou um hash aninhado de array / hash com o método ʻincludes`.
 
-#### Array of Multiple Associations
+#### Matriz de associações múltiplas
 
 ```ruby
 Article.includes(:category, :comments)
 ```
 
-This loads all the articles and the associated category and comments for each article.
+Isso carrega todos os artigos e a categoria associada e comentários para cada artigo.
 
-#### Nested Associations Hash
+#### Hash de associações aninhadas
 
 ```ruby
 Category.includes(articles: [{ comments: :guest }, :tags]).find(1)
 ```
 
-This will find the category with id 1 and eager load all of the associated articles, the associated articles' tags and comments, and every comment's guest association.
+Isso encontrará a categoria com id 1 e carregará antecipadamente todos os artigos associados, as tags e comentários dos artigos associados e todas as associações de comentários de convidados.
 
-### Specifying Conditions on Eager Loaded Associations
+### Especificando condições em associações carregadas ansiosas
 
-Even though Active Record lets you specify conditions on the eager loaded associations just like `joins`, the recommended way is to use [joins](#joining-tables) instead.
+Mesmo que o Active Record permita que você especifique as condições nas associações carregadas antecipadamente como `joins`, a maneira recomendada é usar [joins](#joining-tables) ao invés.
 
-However if you must do this, you may use `where` as you would normally.
+No entanto, se você deve fazer isso, você pode usar `where` como faria normalmente.
 
 ```ruby
 Article.includes(:comments).where(comments: { visible: true })
 ```
 
-This would generate a query which contains a `LEFT OUTER JOIN` whereas the
-`joins` method would generate one using the `INNER JOIN` function instead.
+Isso geraria uma consulta que contém um `LEFT OUTER JOIN` enquanto o
+O método `joins` geraria um usando a função ʻINNER JOIN`.
 
 ```ruby
   SELECT "articles"."id" AS t0_r0, ... "comments"."updated_at" AS t1_r5 FROM "articles" LEFT OUTER JOIN "comments" ON "comments"."article_id" = "articles"."id" WHERE (comments.visible = 1)
 ```
 
-If there was no `where` condition, this would generate the normal set of two queries.
+Se não houvesse uma condição `where`, isso geraria o conjunto normal de duas consultas.
 
-NOTE: Using `where` like this will only work when you pass it a Hash. For
-SQL-fragments you need to use `references` to force joined tables:
+NOTA: Usar `where` assim só funcionará quando você passar um Hash. Para
+Fragmentos de SQL você precisa usar `referências` para forçar tabelas unidas:
 
 ```ruby
 Article.includes(:comments).where("comments.visible = true").references(:comments)
 ```
 
-If, in the case of this `includes` query, there were no comments for any
-articles, all the articles would still be loaded. By using `joins` (an INNER
-JOIN), the join conditions **must** match, otherwise no records will be
-returned.
+Se, no caso desta consulta ʻinclui`, não houve comentários para qualquer
+artigos, todos os artigos ainda seriam carregados. Usando `joins` (um INNER
+JOIN), as condições de junção ** devem ** corresponder, caso contrário, nenhum registro será
+devolvida.
 
-NOTE: If an association is eager loaded as part of a join, any fields from a custom select clause will not be present on the loaded models.
-This is because it is ambiguous whether they should appear on the parent record, or the child.
+NOTA: Se uma associação for carregada antecipadamente como parte de uma junção, quaisquer campos de uma cláusula de seleção personalizada não estarão presentes nos modelos carregados.
+Isso ocorre porque é ambíguo se eles devem aparecer no registro do pai ou do filho.
 
 Scopes
 ------
