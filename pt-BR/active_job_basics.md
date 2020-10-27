@@ -40,7 +40,7 @@ runs jobs with an in-process thread pool. Jobs will run asynchronously, but any
 jobs in the queue will be dropped upon restart.
 
 
-Criando um Trabalho
+Criando um *Job*
 --------------
 
 Esta seção fornecerá um guia passo a passo para criar um *job* e enfileirá-lo.
@@ -101,7 +101,7 @@ GuestsCleanupJob.set(wait: 1.week).perform_later(guest)
 ```
 
 ```ruby
-# `perform_now` e` perform_later` irão chamar `perform` por baixo dos panos, então
+# `perform_now` e `perform_later` irão chamar `perform` por baixo dos panos, então
 # você pode passar quantos argumentos forem definidos no último.
 GuestsCleanupJob.perform_later(guest1, guest2, filter: 'some_filter')
 ```
