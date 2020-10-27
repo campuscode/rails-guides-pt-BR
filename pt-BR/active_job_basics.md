@@ -198,9 +198,9 @@ class GuestsCleanupJob < ApplicationJob
   #....
 end
 
-# Now your job will run on queue production_low_priority on your
-# production environment and on staging_low_priority
-# on your staging environment
+# Agora seu job irá executar na fila production_low_priority no seu
+# ambiente de produção e na staging_low_priority
+# no seu ambiente de desenvolvimento
 ```
 
 O prefixo delimitador padrão de nome de fila é '\_'. Isso pode ser alterado configurando o
@@ -221,9 +221,9 @@ class GuestsCleanupJob < ApplicationJob
   #....
 end
 
-# Now your job will run on queue production.low_priority on your
-# production environment and on staging.low_priority
-# on your staging environment
+# Agora seu job irá executar na fila production.low.priority no seu
+# ambiente de produção e na staging.low.priority
+# no seu ambiente de desenvolvimento
 ```
 
 Se você quiser mais controle em qual fila um *job* será executado, você pode passar
@@ -249,14 +249,14 @@ class ProcessVideoJob < ApplicationJob
   end
 
   def perform(video)
-    # Do process video
+    # Processa o vídeo
   end
 end
 
 ProcessVideoJob.perform_later(Video.last)
 ```
 
-NOTE: Tenha certeza de que o seu *backend* da fila "escuta" o nome da fila.
+NOTE: Tenha certeza de que o seu *backend* de fila "escuta" o nome da fila.
 Para alguns *backends* você precisará especificar as filas a serem "ouvidas".
 
 
