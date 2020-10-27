@@ -6,7 +6,7 @@ Básico de Active Jobs
 
 Este guia oferece a você tudo o que você precisa para começar a criar, enfileirar e executar *jobs* em *background*
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
 * Como criar *jobs*
 * Como enfileirar *jobs*
