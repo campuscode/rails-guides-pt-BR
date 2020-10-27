@@ -16,17 +16,10 @@ Ao ler este guia você aprenderá:
 
 --------------------------------------------------------------------------------
 
-Introduction
+Introdução
 ------------
 
-Action Cable seamlessly integrates
-[WebSockets](https://en.wikipedia.org/wiki/WebSocket) with the rest of your
-Rails application. It allows for real-time features to be written in Ruby in the
-same style and form as the rest of your Rails application, while still being
-performant and scalable. It's a full-stack offering that provides both a
-client-side JavaScript framework and a server-side Ruby framework. You have
-access to your full domain model written with Active Record or your ORM of
-choice.
+*Action Cable* se integra perfeitamente [WebSockets](https://pt.wikipedia.org/wiki/WebSocket) com o resto da sua aplicação Rails. Permite recursos em tempo real para serem escritos em Ruby no mesmo estilo e forma como o resto de sua aplicação Rails, enquanto ainda é desempenho e escabilidade. Isso é uma oferta full-stack que fornece um framework Javascript do lado do cliente e um framework Ruby do lado do servidor. Você tem acesso ao seu modelo de domínio completo escrito com *Active Record* ou seu ORM de escolha.
 
 Terminology
 -----------
