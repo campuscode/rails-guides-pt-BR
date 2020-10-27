@@ -309,7 +309,7 @@ end
 *Action Mailer*
 ------------
 
-Um dos *jobs* mais comuns em uma aplicação *web* moderna é enviar *e-mails* fora do ciclo de 
+Um dos *jobs* mais comuns em uma aplicação *web* moderna é enviar e-mails fora do ciclo de 
 *request-response*, para que o usuário não tenha que esperar por ele. O *Active Job* está
 integrado com o *Action Mailer*, o que te permite enviar e-mails assincronamente:
 
@@ -321,10 +321,10 @@ UserMailer.welcome(@user).deliver_now
 UserMailer.welcome(@user).deliver_later
 ```
 
-NOTE: Se você usar uma fila assíncrona de uma *Rake task* (por exemplo, para enviar um *e-mail*
+NOTE: Se você usar uma fila assíncrona de uma *Rake task* (por exemplo, para enviar um e-mail
 usando `.deliver_later`), geralmente não irá funcionar porque a *Rake* irá provavelmente
 terminar, fazendo com que o processo interno do *thread pool* seja removido, antes de
-qualquer ou todos os *e-mails* serem processados. Para evitar esse problema, use o 
+qualquer ou todos os e-mails serem processados. Para evitar esse problema, use o 
 `.deliver_now` ou execute uma fila persistente no ambiente de desenvolvimento.
 
 
