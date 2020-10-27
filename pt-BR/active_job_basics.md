@@ -4,8 +4,7 @@
 Básico de Active Jobs
 =================
 
-This guide provides you with all you need to get started in creating,
-enqueuing and executing background jobs.
+Este guia oferece a você tudo o que você precisa para começar a criar, enfileirar e executar *jobs* em *background*
 
 After reading this guide, you will know:
 
