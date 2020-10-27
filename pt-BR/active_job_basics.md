@@ -337,7 +337,7 @@ enviar e-mails assincronamente:
 ```ruby
 I18n.locale = :eo
 
-UserMailer.welcome(@user).deliver_later # Email will be localized to Esperanto.
+UserMailer.welcome(@user).deliver_later # O e-mail será localizado para Esperanto.
 ```
 
 
