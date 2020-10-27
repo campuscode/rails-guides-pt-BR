@@ -4,20 +4,20 @@
 Active Support Core Extensions
 ==============================
 
-Active Support is the Ruby on Rails component responsible for providing Ruby language extensions, utilities, and other transversal stuff.
+Active Support é o componente em Ruby on Rails responsável por fornecer a linguagem Ruby extensões, utilidades, e outras funcionalidades paralelas.
 
-It offers a richer bottom-line at the language level, targeted both at the development of Rails applications, and at the development of Ruby on Rails itself.
+Ele oferece um riquíssimo ponto de partida no nível da linguagem, onde pode-se aproveitar tanto para o desenvolvimento de aplicações Rails, quanto no próprio desenvolvimento da tecnologia Ruby on Rails.
 
-After reading this guide, you will know:
+Depois de ler esse guia, você poderá saber:
 
-* What Core Extensions are.
-* How to load all extensions.
-* How to cherry-pick just the extensions you want.
-* What extensions Active Support provides.
+* O que são _Core Extensions_.
+* Como carregar todas as extensões.
+* Como escolher apenas as extensões que você precisa.
+* Quais extensões o _Active Support_ fornece.
 
 --------------------------------------------------------------------------------
 
-How to Load Core Extensions
+Como Carregar _Core Extensions_
 ---------------------------
 
 ### Stand-Alone Active Support
