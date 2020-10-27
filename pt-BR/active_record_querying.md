@@ -1320,10 +1320,10 @@ returned.
 NOTE: If an association is eager loaded as part of a join, any fields from a custom select clause will not be present on the loaded models.
 This is because it is ambiguous whether they should appear on the parent record, or the child.
 
-Scopes
+_Scopes_
 ------
 
-A definição do escopo permite que você especifique consultas comumente usadas, que podem ser referenciadas como chamadas de método nos objetos ou modelos de associação. Com esses escopos, você pode usar todos os métodos cobertos anteriormente, como `where`,` joins` e ʻincludes`. Todos os corpos de escopo devem retornar um ʻActiveRecord :: Relation` ou `nil` para permitir que métodos adicionais (como outros escopos) sejam chamados nele.
+A definição do escopo permite que você especifique consultas comumente usadas, que podem ser referenciadas como chamadas de método nos objetos ou *modelos* associados. Com esses escopos, você pode usar todos os métodos cobertos anteriormente, como `where`, ` joins` e `includes`. Todos os corpos de escopo devem retornar um `ActiveRecord::Relation` ou `nil` para permitir que métodos adicionais (como outros escopos) sejam chamados nele.
 
 Para definir um escopo simples, usamos o método `scope` dentro da classe, passando a consulta que gostaríamos de executar quando este escopo for chamado:
 
@@ -1342,13 +1342,13 @@ class Article < ApplicationRecord
 end
 ```
 
-Para chamar este escopo `publicado`, podemos chamá-lo tanto na classe:
+Para chamar este escopo `published`, podemos chamá-lo tanto na classe:
 
 ```ruby
 Article.published # => [published articles]
 ```
 
-Ou em uma associação que consiste em objetos ʻArticle`:
+Ou em uma associação que consiste em objetos `Article`:
 
 ```ruby
 category = Category.first
@@ -1407,12 +1407,12 @@ class Article < ApplicationRecord
 end
 ```
 
-No entanto, há uma advertência importante: um escopo sempre retornará um objeto ʻActiveRecord :: Relation`, mesmo se a condicional for avaliada como `false`, enquanto um método de classe retornará` nil`. Isso pode causar `NoMethodError` ao encadear métodos de classe com condicionais, se qualquer uma das condicionais retornar` false`.
+No entanto, há uma advertência importante: um escopo sempre retornará um objeto `ActiveRecord::Relation`, mesmo se a condicional for avaliada como `false`, enquanto um método de classe retornará `nil`. Isso pode causar `NoMethodError` ao encadear métodos de classe com condicionais, se qualquer uma das condicionais retornar `false`.
 
 ### Aplicando um escopo padrão
 
-Se desejarmos que um escopo seja aplicado em todas as consultas do modelo, podemos usar o
-método `default_scope` dentro do próprio modelo.
+Se desejarmos que um escopo seja aplicado em todas as consultas do *model*, podemos usar o
+método `default_scope` dentro do próprio *model*.
 
 ```ruby
 class Client < ApplicationRecord
@@ -1420,7 +1420,7 @@ class Client < ApplicationRecord
 end
 ```
 
-Quando as consultas são executadas neste modelo, a consulta SQL agora será semelhante a
+Quando as consultas são executadas neste *model*, a consulta SQL agora será semelhante a
 isto:
 
 ```sql
@@ -1428,7 +1428,7 @@ SELECT * FROM clients WHERE removed_at IS NULL
 ```
 
 Se você precisa fazer coisas mais complexas com um escopo padrão, você pode alternativamente
-defina-o como um método de classe:
+defini-lo como um método de classe:
 
 ```ruby
 class Client < ApplicationRecord
@@ -1438,7 +1438,7 @@ class Client < ApplicationRecord
 end
 ```
 
-NOTA: O `default_scope` também é aplicado ao criar / construir um registro
+NOTE: O `default_scope` também é aplicado ao criar/construir um registro
 quando os argumentos do escopo são fornecidos como `Hash`. Não é aplicado enquanto
 atualizando um registro. E.g.:
 
@@ -1451,7 +1451,7 @@ Client.new          # => #<Client id: nil, active: true>
 Client.unscoped.new # => #<Client id: nil, active: nil>
 ```
 
-Esteja ciente de que, quando fornecido no formato ʻArray`, os argumentos de consulta `default_scope`
+Esteja ciente de que, quando fornecido no formato `Array`, os argumentos de consulta `default_scope`
 não pode ser convertido em `Hash` para atribuição de atributo padrão. E.g.:
 
 ```ruby
@@ -1464,7 +1464,7 @@ Client.new # => #<Client id: nil, active: nil>
 
 ### Mesclagem de escopos
 
-Assim como os escopos das cláusulas `where` são mesclados usando as condições ʻAND`.
+Assim como os escopos das cláusulas `where` são mesclados usando as condições `AND`.
 
 ```ruby
 class User < ApplicationRecord
@@ -1476,15 +1476,15 @@ User.active.inactive
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'active' AND "users"."state" = 'inactive'
 ```
 
-Podemos misturar e combinar as condições `scope` e` where` e o sql final
-will have all conditions joined with `AND`.
+Podemos misturar e combinar as condições `scope` e `where` e o sql final
+terá todas as condições unidas com `E`.
 
 ```ruby
 User.active.where(state: 'finished')
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'active' AND "users"."state" = 'finished'
 ```
 
-Se quisermos que a última cláusula `where` vença, então` Relation # merge` pode
+Se quisermos que a última cláusula `where` vença, então `Relation#merge` pode
 ser usado.
 
 ```ruby
@@ -1493,7 +1493,7 @@ User.active.merge(User.inactive)
 ```
 
 Uma advertência importante é que `default_scope` será anexado em
-condições `scope` e` where`.
+condições `scope` e `where`.
 
 ```ruby
 class User < ApplicationRecord
@@ -1513,12 +1513,12 @@ User.where(state: 'inactive')
 ```
 
 Como você pode ver acima, o `default_scope` está sendo mesclado em ambos
-condições `scope` e` where`.
+condições `scope` e `where`.
 
 ### Removendo todo o escopo
 
-Se desejarmos remover o escopo por qualquer motivo, podemos usar o método ʻunscoped`. Isto é
-especialmente útil se um `default_scope` é especificado no modelo e não deve ser
+Se desejarmos remover o escopo por qualquer motivo, podemos usar o método `unscoped`. Isto é
+especialmente útil se um `default_scope` é especificado no *model* e não deve ser
 aplicado para esta consulta particular.
 
 ```ruby
