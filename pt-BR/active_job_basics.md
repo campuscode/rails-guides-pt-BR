@@ -8,10 +8,10 @@ Este guia oferece a você tudo o que você precisa para começar a criar, enfile
 
 After reading this guide, you will know:
 
-* How to create jobs.
-* How to enqueue jobs.
-* How to run jobs in the background.
-* How to send emails from your application asynchronously.
+* Como criar *jobs*
+* Como enfileirar *jobs*
+* como executar *jobs* em segundo plano 
+* Como enviar emails de sua aplicação de maneira assíncrona 
 
 --------------------------------------------------------------------------------
 
