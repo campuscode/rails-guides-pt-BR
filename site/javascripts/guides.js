@@ -72,7 +72,7 @@
     clipboard.on('success', function(e) {
       var trigger = e.trigger;
       var triggerLabel = trigger.innerHTML;
-      trigger.innerHTML = 'Copied!';
+      trigger.innerHTML = 'Copiado!';
       setTimeout(function(){
         trigger.innerHTML = triggerLabel;
       }, 3000);

@@ -46,6 +46,7 @@ namespace :guides do
       ENV["KINDLE"] = "1"
       ENV["RAILS_VERSION"] = "v6.0.3.4"
       ENV["GUIDES_LANGUAGE"] = "pt-BR"
+      system('git apply rails.patch')
       # Rake::Task["guides:generate:html"].invoke
       system 'cp -r ./pt-BR rails/guides/source'
       ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
