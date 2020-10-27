@@ -254,18 +254,18 @@ Assim como nas validações, também é possível ignorar os *callbacks* usando 
 
 Contudo, esses métodos devem ser usados com cautela, porque regras de negócio importantes e lógica da aplicação podem ser mantidos nos *callbacks*. Contorná-los sem entender as potenciais implicações pode levar a dados inválidos.
 
-Halting Execution
+Interrompendo uma Execução
 -----------------
 
-As you start registering new callbacks for your models, they will be queued for execution. This queue will include all your model's validations, the registered callbacks, and the database operation to be executed.
+Quando você começar a registrar novos *callbacks* para seus *models*, eles serão enfileirados para a execução. Esta fila incluirá todas as validações do seu *model*, os *callbacks* registrados e a operação do banco de dados a ser executada.
 
-The whole callback chain is wrapped in a transaction. If any callback raises an exception, the execution chain gets halted and a ROLLBACK is issued. To intentionally stop a chain use:
+Toda a cadeia do *callback* é empacotada em uma transação. Se algum *callback* lança uma exceção, a cadeia de execução é interrompida e um *ROLLBACK* é emitido. Para interromper intencionalmente uma cadeia, use:
 
 ```ruby
 throw :abort
 ```
 
-WARNING. Any exception that is not `ActiveRecord::Rollback` or `ActiveRecord::RecordInvalid` will be re-raised by Rails after the callback chain is halted. Raising an exception other than `ActiveRecord::Rollback` or `ActiveRecord::RecordInvalid` may break code that does not expect methods like `save` and `update` (which normally try to return `true` or `false`) to raise an exception.
+WARNING: Qualquer exceção que não seja `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` serão lançadas novamente pelo Rails após a cadeia do *callback* ser interrompida. Lançar uma outra exceção que não `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` pode quebrar um código que não espera por métodos como `save` ou `update` (os quais normalmente tentam retornar `true` ou `false`) para lançar uma exceção.
 
 *Callbacks* Relacionais
 --------------------
