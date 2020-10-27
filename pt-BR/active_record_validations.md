@@ -927,11 +927,11 @@ person.errors.messages
  # => {:email=>["has already been taken"], :age=>["is not a number"], :name=>["can't be blank"]}
 ```
 
-Strict Validations
+Validações Estritas
 ------------------
 
-You can also specify validations to be strict and raise
-`ActiveModel::StrictValidationFailed` when the object is invalid.
+Você também pode especificar validações como estritas e lançar um
+`ActiveModel::StrictValidationFailed` quando o objeto é inválido.
 
 ```ruby
 class Person < ApplicationRecord
@@ -941,7 +941,7 @@ end
 Person.new.valid?  # => ActiveModel::StrictValidationFailed: Name can't be blank
 ```
 
-There is also the ability to pass a custom exception to the `:strict` option.
+Também é possível passar uma exceção personalizada para a opção `:strict`.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1028,18 +1028,18 @@ end
 A validação é executada apenas quando todas as condições `:if`
 e nenhuma das condições `:unless` resultarem em `true`.
 
-Performing Custom Validations
------------------------------
+Realizando Validações Customizadas
+----------------------------------
 
-When the built-in validation helpers are not enough for your needs, you can
-write your own validators or validation methods as you prefer.
+Quando os *helpers* de validação embutidos não são o bastante para suas necessidades, você pode
+implementar seus próprios validadores ou métodos de validação como preferir.
 
-### Custom Validators
+### Validadores Customizados
 
-Custom validators are classes that inherit from `ActiveModel::Validator`. These
-classes must implement the `validate` method which takes a record as an argument
-and performs the validation on it. The custom validator is called using the
-`validates_with` method.
+Validadores Customizados são classes que herdam de `ActiveModel::Validator`. Essas
+classes devem implementar o método `validate`, que recebe um *record* como argumento
+e realiza as validações nele. O validador customizado é chamado usando o
+método `validates_with`.
 
 ```ruby
 class MyValidator < ActiveModel::Validator
@@ -1056,12 +1056,11 @@ class Person
 end
 ```
 
-The easiest way to add custom validators for validating individual attributes
-is with the convenient `ActiveModel::EachValidator`. In this case, the custom
-validator class must implement a `validate_each` method which takes three
-arguments: record, attribute, and value. These correspond to the instance, the
-attribute to be validated, and the value of the attribute in the passed
-instance.
+A maneira mais fácil de adicionar validadores customizados para atributos individuais
+é com a conveniente classe `ActiveModel::EachValidator`. Nesse caso, a classe validadora
+customizada deve implementar um método `validate_each`, que recebe três argumentos:
+*record*, *attribute* e *value*. Esses correspondem respectivamente à instância, ao atributo
+a ser validado e ao valor do atributo na instância recebida.
 
 ```ruby
 class EmailValidator < ActiveModel::EachValidator
@@ -1077,23 +1076,23 @@ class Person < ApplicationRecord
 end
 ```
 
-As shown in the example, you can also combine standard validations with your
-own custom validators.
+Como mostrado no exemplo acima, você também pode combinar validações padrão com
+seus próprios validadores customizados.
 
-### Custom Methods
+### Métodos Customizados
 
-You can also create methods that verify the state of your models and add
-messages to the `errors` collection when they are invalid. You must then
-register these methods by using the `validate`
-([API](https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validate))
-class method, passing in the symbols for the validation methods' names.
+Você também pode criar métodos que verificam o estado de seus *models* e
+adicionam mensagens à coleção `errors` quando eles são inválidos. Você
+deve então registrar esses métodos usando o método `validate` da classe
+([API](https://api.rubyonrails.org/classes/ActiveModel/Validations/ClassMethods.html#method-i-validate)),
+passando os *symbols* dos nomes dos métodos de validação.
 
-You can pass more than one symbol for each class method and the respective
-validations will be run in the same order as they were registered.
+Você pode passar mais do que um *symbol* para cada método da classe e as
+respectivas validações serão executadas na mesma ordem que elas foram registradas.
 
-The `valid?` method will verify that the errors collection is empty,
-so your custom validation methods should add errors to it when you
-wish validation to fail:
+O método `valid?` verificará se a coleção de erros está vazia,
+sendo assim seus métodos de validação customizados devem adicionar erros
+à ela quando você desejar que as validações falhem:
 
 ```ruby
 class Invoice < ApplicationRecord
@@ -1114,10 +1113,10 @@ class Invoice < ApplicationRecord
 end
 ```
 
-By default, such validations will run every time you call `valid?`
-or save the object. But it is also possible to control when to run these
-custom validations by giving an `:on` option to the `validate` method,
-with either: `:create` or `:update`.
+Por padrão, tais validações executarão a cada chamada ao método `valid?`
+ou ao salvar o objeto. Mas também é possível controlar quando executar essas
+validações customizadas informando uma opção `:on` para o método `validate`,
+com `:create` ou `:update`.
 
 ```ruby
 class Invoice < ApplicationRecord
@@ -1129,16 +1128,16 @@ class Invoice < ApplicationRecord
 end
 ```
 
-Working with Validation Errors
-------------------------------
+Trabalhando com Erros de Validação
+----------------------------------
 
-In addition to the `valid?` and `invalid?` methods covered earlier, Rails provides a number of methods for working with the `errors` collection and inquiring about the validity of objects.
+Em adição aos métodos `valid?` e `invalid?` cobertos anteriormente, o Rails provê outros métodos para trabalhar com a coleção `errors` e verificar a validade dos objetos.
 
-The following is a list of the most commonly used methods. Please refer to the `ActiveModel::Errors` documentation for a list of all the available methods.
+A seguir é exibida uma lista dos métodos mais comumente utilizados. Por favor, verifique a documentação do `ActiveModel::Errors` para uma lista de todos os métodos disponíveis.
 
 ### `errors`
 
-Returns an instance of the class `ActiveModel::Errors` containing all errors. Each key is the attribute name and the value is an array of strings with all errors.
+Retorna uma instância da classe `ActiveModel::Errors` contendo todos os erros. Cada chave é o nome do atributo e o valor é um *array* de *strings* contendo todos os erros.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1157,7 +1156,7 @@ person.errors.messages # => {}
 
 ### `errors[]`
 
-`errors[]` is used when you want to check the error messages for a specific attribute. It returns an array of strings with all error messages for the given attribute, each string with one error message. If there are no errors related to the attribute, it returns an empty array.
+`errors[]` é utilizado quando você quiser verificar as mensagens de erro de um atributo em específico. O método um *array* de *strings* com todas as mensagens de erro para o atributo informado, cada *string* contendo uma mensagem de erro. Se não há erros relacionados com o atributo, o método retorna um *array* vazio.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1180,9 +1179,9 @@ person.errors[:name]
 
 ### `errors.add`
 
-The `add` method lets you add an error message related to a particular attribute. It takes as arguments the attribute and the error message.
+O método `add` permite a você adicionar uma mensagem de erro relacionada a um atributo em particular. Ele recebe como argumentos o atributo e a mensagem de erro.
 
-The `errors.full_messages` method (or its equivalent, `errors.to_a`) returns the error messages in a user-friendly format, with the capitalized attribute name prepended to each message, as shown in the examples below.
+O método `errors.full_messages` (ou seu equivalente, `errors.to_a`) retorna as mensagens de erro em um formato amigável para o usuário, com o nome do atributo em inicial maiúscula prefixado a cada mensagem, como no exemplo abaixo.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1202,8 +1201,8 @@ person.errors.full_messages
 
 ### `errors.details`
 
-You can specify a validator type to the returned error details hash using the
-`errors.add` method.
+Você pode especificar um validador (*validator*) de tipo no *hash* do detalhamento de erro retornado usando o
+método `errors.add`.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1218,8 +1217,8 @@ person.errors.details[:name]
 # => [{error: :invalid_characters}]
 ```
 
-To improve the error details to contain the unallowed characters set for instance,
-you can pass additional keys to `errors.add`.
+Para aprimorar o detalhamento de erros para que ele contenha o conjunto dos caracteres não permitidos por exemplo,
+você pode passar chaves adicionais ao `errors.add`.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1234,12 +1233,12 @@ person.errors.details[:name]
 # => [{error: :invalid_characters, not_allowed: "!@#%*()_-+="}]
 ```
 
-All built in Rails validators populate the details hash with the corresponding
-validator type.
+Todos os validadores (*validators*)  embutidos no Rails populam o *hash* de detalhes com o 
+validador (*validator*)  de tipo correspondente.
 
 ### `errors[:base]`
 
-You can add error messages that are related to the object's state as a whole, instead of being related to a specific attribute. You can use this method when you want to say that the object is invalid, no matter the values of its attributes. Since `errors[:base]` is an array, you can simply add a string to it and it will be used as an error message.
+Voce pode adicionar mensagens de erro relacionadas ao estado do objeto como um todo, ao invés de estarem relacionadas a um atributo em específico. Você pode usar este método quando você quiser dizer que o objeto é inválido, não importando os valores de seus atributos. Sendo o `errors[:base]` um *array*, você pode simplesmente adicionar uma *string* ao método e ela será usada como uma mensagem de erro.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1251,7 +1250,7 @@ end
 
 ### `errors.clear`
 
-The `clear` method is used when you intentionally want to clear all the messages in the `errors` collection. Of course, calling `errors.clear` upon an invalid object won't actually make it valid: the `errors` collection will now be empty, but the next time you call `valid?` or any method that tries to save this object to the database, the validations will run again. If any of the validations fail, the `errors` collection will be filled again.
+O método `clear` é usado quando você intencionalmente quiser limpar todas as mensagens na coleção `errors`. É claro que, ao chamar o método `errors.clear` sobre um objeto inválido, isso não irá torná-lo válido: a coleção `errors` estará agora vazia, mas a próxima vez que você chamar `valid?` ou qualquer método que tente salvar esse objeto na base de dados, as validações serão executadas novamente. Se qualquer uma das validações falhar, a coleção `errors` será preenchida de novo.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1274,7 +1273,7 @@ person.errors[:name]
 
 ### `errors.size`
 
-The `size` method returns the total number of error messages for the object.
+O método `size` retorna o número total de mensagens de erro para o objeto.
 
 ```ruby
 class Person < ApplicationRecord

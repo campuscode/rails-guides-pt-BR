@@ -1,7 +1,7 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Job Basics
+Básico de Active Jobs
 =================
 
 This guide provides you with all you need to get started in creating,
@@ -20,10 +20,7 @@ After reading this guide, you will know:
 Introduction
 ------------
 
-Active Job is a framework for declaring jobs and making them run on a variety
-of queuing backends. These jobs can be everything from regularly scheduled
-clean-ups, to billing charges, to mailings. Anything that can be chopped up
-into small units of work and run in parallel, really.
+O *Active Job* é um *framework* para declarar *jobs* e fazê-los executar em uma variedade de *backends* de fila. Estes *jobs* podem ser qualquer coisa, de limpezas programadas regularmente, a cobranças de despesas, a envio de emails. Qualquer coisa que possa ser cortada em pequenas unidades de trabalho e executadas paralelamente, sério. 
 
 
 O Propósito do Active Job
@@ -109,25 +106,25 @@ GuestsCleanupJob.perform_later(guest1, guest2, filter: 'some_filter')
 
 That's it!
 
-Job Execution
+Execução de *Job*
 -------------
 
-For enqueuing and executing jobs in production you need to set up a queuing backend,
-that is to say you need to decide for a 3rd-party queuing library that Rails should use.
-Rails itself only provides an in-process queuing system, which only keeps the jobs in RAM.
-If the process crashes or the machine is reset, then all outstanding jobs are lost with the
-default async backend. This may be fine for smaller apps or non-critical jobs, but most
-production apps will need to pick a persistent backend.
+Para enfileirar e executar *jobs* em produção você precisa configurar um *backend* de filas,
+ou seja, você precisa decidir por uma *lib* de enfileiramento de terceiros que o Rails deve usar,
+o Rails em si fornece apenas um sistema de filas em processo, que só mantém os *jobs* em memória(RAM).
+Se o processo quebra ou a máquina é reiniciada, todos os *jobs* pendentes serão perdidos com o
+*backend* assíncrono padrão. Isso pode ser bom para aplicações menores ou *jobs* não críticos, mas a maioria
+das aplicações em produção precisará escolher um *backend* de persistência.
 
-### Backends
+### *Backends*
 
-Active Job has built-in adapters for multiple queuing backends (Sidekiq,
-Resque, Delayed Job, and others). To get an up-to-date list of the adapters
-see the API Documentation for [ActiveJob::QueueAdapters](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+O *Active Job* tem adaptadores *built-in* para múltiplos *backends* de fila (Sidekiq
+Resque, Delayed Job e outros). Para obter uma lista atualizada dos adaptadores,
+consulte a documentação da API para [ActiveJob::QueueAdapters](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
 
-### Setting the Backend
+### Configurando o *Backend*
 
-You can easily set your queuing backend:
+Você pode definir facilmente o *backend* de fila:
 
 ```ruby
 # config/application.rb
@@ -141,7 +138,7 @@ module YourApp
 end
 ```
 
-You can also configure your backend on a per job basis.
+Você também pode configurar seu *backend* por um *job* base.
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -153,14 +150,14 @@ end
 # was configured in `config.active_job.queue_adapter`.
 ```
 
-### Starting the Backend
+### Iniciando o *Backend*
 
-Since jobs run in parallel to your Rails application, most queuing libraries
-require that you start a library-specific queuing service (in addition to
-starting your Rails app) for the job processing to work. Refer to library
-documentation for instructions on starting your queue backend.
+Uma vez que os *jobs* são executados em paralelo à sua aplicação Rails, a maioria
+das bibliotecas de filas exigem que você inicie um serviço de enfileiramento específico
+(além de iniciar sua aplicação Rails) para que o processamento do *job* funcione. Consulte a
+documentação da biblioteca para obter instruções sobre como iniciar o *backend* da fila.
 
-Here is a noncomprehensive list of documentation:
+Aqui está uma lista não abrangente de documentação:
 
 - [Sidekiq](https://github.com/mperham/sidekiq/wiki/Active-Job)
 - [Resque](https://github.com/resque/resque/wiki/ActiveJob)
@@ -261,12 +258,13 @@ NOTE: Make sure your queuing backend "listens" on your queue name. For some
 backends you need to specify the queues to listen to.
 
 
-Callbacks
+*Callbacks*
 ---------
 
-Active Job provides hooks to trigger logic during the life cycle of a job. Like
-other callbacks in Rails, you can implement the callbacks as ordinary methods
-and use a macro-style class method to register them as callbacks:
+O *Active Job* fornece Hooks para disparar lógica durante o ciclo de vida de um *Job*.
+Assim como em outros *callbacks* no Rails, você pode implementar *callbacks*
+como métodos comuns e usar um método macro de classe para registrá-los
+como *callbacks*:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -287,9 +285,9 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-The macro-style class methods can also receive a block. Consider using this
-style if the code inside your block is so short that it fits in a single line.
-For example, you could send metrics for every job enqueued:
+Os métodos macro de classe podem também receber um bloco. Considere usar esse estilo,
+se o código dentro do bloco for tão pequeno que cabe numa única linha.
+Por exemplo, você pode enviar métricas para cada *job* enfileirado:
 
 ```ruby
 class ApplicationJob < ActiveJob::Base
@@ -297,7 +295,7 @@ class ApplicationJob < ActiveJob::Base
 end
 ```
 
-### Available callbacks
+### *Callbacks* disponíveis
 
 * `before_enqueue`
 * `around_enqueue`

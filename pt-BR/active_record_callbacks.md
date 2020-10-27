@@ -201,10 +201,10 @@ Employee/Company was touched
 => true
 ```
 
-Running Callbacks
+Executando *Callbacks*
 -----------------
 
-The following methods trigger callbacks:
+Os métodos a seguir acionam *callbacks*:
 
 * `create`
 * `create!`
@@ -221,7 +221,7 @@ The following methods trigger callbacks:
 * `update!`
 * `valid?`
 
-Additionally, the `after_find` callback is triggered by the following finder methods:
+Adicionalmente, o *callback* `after_find` é acionado pelos seguintes métodos de localização:
 
 * `all`
 * `first`
@@ -232,14 +232,14 @@ Additionally, the `after_find` callback is triggered by the following finder met
 * `find_by_sql`
 * `last`
 
-The `after_initialize` callback is triggered every time a new object of the class is initialized.
+O *callback* `after_initialize`  é acionado toda vez que um novo objeto da classe é inicializado. 
 
-NOTE: The `find_by_*` and `find_by_*!` methods are dynamic finders generated automatically for every attribute. Learn more about them at the [Dynamic finders section](active_record_querying.html#dynamic-finders)
+NOTE: Os métodos `find_by_*` e `find_by_*!` são localizadores dinâmicos gerados automaticamente para cada atributo. Aprenda mais sobre eles na [seção de Localizadores Dinâmicos](active_record_querying.html#localizadores-dinamicos) 
 
-Skipping Callbacks
+Ignorando *Callbacks*
 ------------------
 
-Just as with validations, it is also possible to skip callbacks by using the following methods:
+Assim como nas validações, também é possível ignorar os *callbacks* usando os seguintes métodos:
 
 * `decrement!`
 * `decrement_counter`
@@ -252,20 +252,20 @@ Just as with validations, it is also possible to skip callbacks by using the fol
 * `update_all`
 * `update_counters`
 
-These methods should be used with caution, however, because important business rules and application logic may be kept in callbacks. Bypassing them without understanding the potential implications may lead to invalid data.
+Contudo, esses métodos devem ser usados com cautela, porque regras de negócio importantes e lógica da aplicação podem ser mantidos nos *callbacks*. Contorná-los sem entender as potenciais implicações pode levar a dados inválidos.
 
-Halting Execution
+Interrompendo uma Execução
 -----------------
 
-As you start registering new callbacks for your models, they will be queued for execution. This queue will include all your model's validations, the registered callbacks, and the database operation to be executed.
+Quando você começar a registrar novos *callbacks* para seus *models*, eles serão enfileirados para a execução. Esta fila incluirá todas as validações do seu *model*, os *callbacks* registrados e a operação do banco de dados a ser executada.
 
-The whole callback chain is wrapped in a transaction. If any callback raises an exception, the execution chain gets halted and a ROLLBACK is issued. To intentionally stop a chain use:
+Toda a cadeia do *callback* é empacotada em uma transação. Se algum *callback* lança uma exceção, a cadeia de execução é interrompida e um *ROLLBACK* é emitido. Para interromper intencionalmente uma cadeia, use:
 
 ```ruby
 throw :abort
 ```
 
-WARNING. Any exception that is not `ActiveRecord::Rollback` or `ActiveRecord::RecordInvalid` will be re-raised by Rails after the callback chain is halted. Raising an exception other than `ActiveRecord::Rollback` or `ActiveRecord::RecordInvalid` may break code that does not expect methods like `save` and `update` (which normally try to return `true` or `false`) to raise an exception.
+WARNING: Qualquer exceção que não seja `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` serão lançadas novamente pelo Rails após a cadeia do *callback* ser interrompida. Lançar uma outra exceção que não `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` pode quebrar um código que não espera por métodos como `save` ou `update` (os quais normalmente tentam retornar `true` ou `false`) para lançar uma exceção.
 
 *Callbacks* Relacionais
 --------------------
@@ -353,12 +353,12 @@ end
 
 The callback only runs when all the `:if` conditions and none of the `:unless` conditions are evaluated to `true`.
 
-Callback Classes
+Classes *Callback*
 ----------------
 
-Sometimes the callback methods that you'll write will be useful enough to be reused by other models. Active Record makes it possible to create classes that encapsulate the callback methods, so it becomes very easy to reuse them.
+Em algumas situações, os métodos de *Callback* que iremos escrever serão úteis para serem reutilizados por outros *models*. O *Active Record* possibilita a criação de classes que encapsulam os métodos *Callback* e, por isso, se tornam muito fáceis de reusá-los.
 
-Here's an example where we create a class with an `after_destroy` callback for a `PictureFile` model:
+Aqui está um exemplo onde criamos uma classe com um *callback* `after_destroy` para o *model* `PictureFile`:
 
 ```ruby
 class PictureFileCallbacks
@@ -370,7 +370,7 @@ class PictureFileCallbacks
 end
 ```
 
-When declared inside a class, as above, the callback methods will receive the model object as a parameter. We can now use the callback class in the model:
+Quando declaramos dentro da classe, como foi feito acima, os métodos *callback* irão receber o *model* como parâmetro. Agora poderemos usar a classe *callback* no *model*:
 
 ```ruby
 class PictureFile < ApplicationRecord
@@ -378,7 +378,7 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-Note that we needed to instantiate a new `PictureFileCallbacks` object, since we declared our callback as an instance method. This is particularly useful if the callbacks make use of the state of the instantiated object. Often, however, it will make more sense to declare the callbacks as class methods:
+Perceba que precisamos instanciar um novo objeto chamado `PictureFileCallbacks`, já que declaramos nosso *callback* como um método de instância. Particularmente, isso é útil se os *callbacks* fazem uso do estado do objeto instanciado. Porém fará mais sentido declarar os *callbacks* como métodos de classe com mais frequência:
 
 ```ruby
 class PictureFileCallbacks
@@ -390,7 +390,7 @@ class PictureFileCallbacks
 end
 ```
 
-If the callback method is declared this way, it won't be necessary to instantiate a `PictureFileCallbacks` object.
+Se o método *callback* é declarado dessa forma, não será necessário instanciar o objeto `PictureFileCallbacks`
 
 ```ruby
 class PictureFile < ApplicationRecord
@@ -398,7 +398,7 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-You can declare as many callbacks as you want inside your callback classes.
+Você pode declarar dentro de suas classes *callback* quantos *callback* achar necessário.
 
 Transaction Callbacks
 ---------------------
