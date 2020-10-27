@@ -332,7 +332,7 @@ Internacionalização
 -------------------
 
 Cada *job* usa o `I18n.locale` configurado quando o *job* é criado. Isso é útil se você
-enviar *e-mails* assincronamente:
+enviar e-mails assincronamente:
 
 ```ruby
 I18n.locale = :eo
