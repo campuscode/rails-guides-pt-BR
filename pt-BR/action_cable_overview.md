@@ -28,7 +28,7 @@ client-side JavaScript framework and a server-side Ruby framework. You have
 access to your full domain model written with Active Record or your ORM of
 choice.
 
-Terminology
+Terminologia
 -----------
 
 A single Action Cable server can handle multiple connection instances. It has one
