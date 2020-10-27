@@ -1,29 +1,24 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Job Basics
+Básico de Active Jobs
 =================
 
-This guide provides you with all you need to get started in creating,
-enqueuing and executing background jobs.
+Este guia oferece a você tudo o que você precisa para começar a criar, enfileirar e executar *jobs* em *background*
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
-* How to create jobs.
-* How to enqueue jobs.
-* How to run jobs in the background.
-* How to send emails from your application asynchronously.
+* Como criar *jobs*
+* Como enfileirar *jobs*
+* como executar *jobs* em segundo plano 
+* Como enviar emails de sua aplicação de maneira assíncrona 
 
 --------------------------------------------------------------------------------
 
-
-Introduction
+Introdução 
 ------------
 
-Active Job is a framework for declaring jobs and making them run on a variety
-of queuing backends. These jobs can be everything from regularly scheduled
-clean-ups, to billing charges, to mailings. Anything that can be chopped up
-into small units of work and run in parallel, really.
+O *Active Job* é um *framework* para declarar *jobs* e fazê-los executar em uma variedade de *backends* de fila. Estes *jobs* podem ser qualquer coisa, de limpezas programadas regularmente, a cobranças de despesas, a envio de emails. Qualquer coisa que possa ser cortada em pequenas unidades de trabalho e executadas paralelamente, sério. 
 
 
 The Purpose of Active Job
