@@ -5,7 +5,8 @@ Começando a usar _Action Mailer_
 ====================
 
 Este guia provê todos os conhecimentos que você precisa para iniciar
-a enviar e-mails da sua aplicação e outros conhecimentos das entranhas
+a enviar e-mails da sua aplicação e outros conhecimentos de como as coisas
+funcionam internamente.
 do _Action Mailer_. Ele também ensina como testar seus _mailers_.
 
 Após a leitura deste guia, você saberá:
@@ -58,7 +59,7 @@ create    test/mailers/previews/user_mailer_preview.rb
 ```ruby
 # app/mailers/application_mailer.rb
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "para@exemplo.com"
   layout 'mailer'
 end
 
@@ -92,17 +93,17 @@ Vamos adicionar um método chamado `welcome_email`, que enviará um e-mail para 
 
 ```ruby
 class UserMailer < ApplicationMailer
-  default from: 'notifications@example.com'
+  default from: 'notificacoes@exemplo.com'
 
   def welcome_email
     @user = params[:user]
-    @url  = 'http://example.com/login'
-    mail(to: @user.email, subject: 'Welcome to My Awesome Site')
+    @url  = 'http://exemplo.com/login'
+    mail(to: @user.email, subject: 'Boas vindas ao nosso incrível site!')
   end
 end
 ```
 
-Uma breve explicação sobre os itens apresentados no método acima. Para uma lista completa de todas as opções disponiveis, por favor, dê uma olhada mais abaixo na seção: Lista completa de atributos de configuração do _Action Mailer_.
+Uma breve explicação sobre os itens apresentados no método acima. Para uma lista completa de todas as opções disponíveis, por favor, dê uma olhada mais abaixo na seção: Lista completa de atributos de configuração do _Action Mailer_.
 
 * `default Hash` — Está é a _Hash_ padrão com valores que serão usados em todos os e-mail enviados por este _mailer_. Neste exemplo nós configuramos o `:from` (Remetente, quem envia) para um valor padrão que será usado em todas as mensagens enviadas por está classe. Está configuração pode ser sobrescrita.
 * `mail` — O próprio e-mail, aqui nós estamos passando os parâmetros `:to` (Destinatário, quem recebe) e `:subject` (Assunto do e-mail) ao cabeçalho.
@@ -118,15 +119,15 @@ Crie um arquivo com o nome `welcome_email.html.erb` em `app/views/user_mailer/`.
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to example.com, <%= @user.name %></h1>
+    <h1>Boas vindas ao site exemplo.com, <%= @user.name %></h1>
     <p>
-      You have successfully signed up to example.com,
-      your username is: <%= @user.login %>.<br>
+      Você concluiu seu cadastro com sucesso,
+      seu nome de usuário é: <%= @user.login %>.<br>
     </p>
     <p>
-      To login to the site, just follow this link: <%= @url %>.
+      Para iniciar sua seção no site clique no link a seguir: <%= @url %>.
     </p>
-    <p>Thanks for joining and have a great day!</p>
+    <p>Agradecemos por se juntar à nós! Tenha um ótimo dia!</p>
   </body>
 </html>
 ```
@@ -134,16 +135,17 @@ Crie um arquivo com o nome `welcome_email.html.erb` em `app/views/user_mailer/`.
 Vamos criar também um modelo usando somente texto para este e-mail. Nem todos os programas de e-mail leem HTML, então enviar os dois formatos é uma boa prática. Para isto criaremos um arquivo com o nome `welcome_email.text.erb` em `app/views/user_mailer/`:
 
 ```erb
-Welcome to example.com, <%= @user.name %>
+Boas vindas ao site exemplo.com, <%= @user.name %>
 ===============================================
 
-You have successfully signed up to example.com,
-your username is: <%= @user.login %>.
+Você concluiu seu cadastro com sucesso,
+seu nome de usuário é: <%= @user.login %>.
 
-To login to the site, just follow this link: <%= @url %>.
+Para iniciar sua seção no site clique no link a seguir: <%= @url %>.
 
-Thanks for joining and have a great day!
+Agradecemos por se juntar à nós! Tenha um ótimo dia!
 ```
+
 Quando você chamar o método `mail`, `ActionMailer` detectará que existem dois modelos para esse e-mail (Um em HTML e outro somente texto) e automaticamente irá gerar um `multipart/alternative` (Opção que indica ao programa de e-mail que essa mensagem tem uma versão em HTML e outra em somente texto) e-mail.
 
 #### Chamando o _Mailer_
@@ -172,10 +174,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        # Tell the UserMailer to send a welcome e-mail after save
+        # Diz ao UserMailer para enviar o _welcome e-mail_ caso o usuário seja salvo
         UserMailer.with(user: @user).welcome_email.deliver_later
 
-        format.html { redirect_to(@user, notice: 'User was successfully created.') }
+        format.html { redirect_to(@user, notice: 'Usuário foi criado com sucesso.') }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: 'new' }
@@ -211,27 +213,27 @@ O objeto `ActionMailer::MessageDelivery` é somente um _wrapper_ (Embrulho) para
 
 ### Codificação automática
 
-_Action Mailer_ gerencia automaticamente a codificação de caracteres _multibytes_ (Caracteres asiaticos, emojis etc) dentro do cabeçalho e corpo.
+_Action Mailer_ gerencia automaticamente a codificação de caracteres _multibytes_ (Caracteres asiáticos, emojis etc) dentro do cabeçalho e corpo.
 
 Para exemplos mais complexos como definir uma lista alternativa de caracteres ou codificar o texto de maneira diferente, use essa biblioteca como referência: [Mail](https://github.com/mikel/mail).
 
 ### Lista Completa de Métodos do _Action Mailer_
 
-Somente há três métodos que você precisa para enviar qualquer mensagem de e-mail:
+Existem apenas três métodos que você precisa para enviar qualquer mensagem de e-mail:
 
 * `headers` — Especifica qualquer cabeçalho no e-mail como você desejar. Você pode passar uma _hash_ contendo os campos do cabeçalho seguindo o padrão `chave: valor`, ou você pode chamar a variável `headers[:field_name] = value`.
 * `attachments` — Permite adicionar anexos ao e-mail. Exemplo: `attachments['file-name.jpg'] = File.read('file-name.jpg')` que irá adicionar o arquivo `file-name.jpg` como anexo no e-mail.
 * `mail` — Método usado para enviar o e-mail. Você pode usar a _hash_ `headers` como um dos parâmetros.
-`mail` vai criar o e-mail, tanto em texto puro ou _multipart_, dependendo dos modelos disponiveis que você definiu.
+`mail` vai criar o e-mail, tanto em texto puro ou _multipart_, dependendo dos modelos disponíveis que você definiu.
 
 #### Adicionando Anexos
 
 Com o _Action Mailer_ é muito fácil trabalhar com anexos.
 
-* Passe o nome do arquivo e o contéudo para o _Action Mailer_ e a [Mail gem](https://github.com/mikel/mail) irá descobrir o _mime type_ do arquivo, configurar a codificação e criar o anexo.
+* Passe o nome do arquivo e o conteúdo para o _Action Mailer_ e a [Mail gem](https://github.com/mikel/mail) irá descobrir o _mime type_ do arquivo, configurar a codificação e criar o anexo.
 
     ```ruby
-    attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
+    attachments['filename.jpg'] = File.read('/caminho/para/o/arquivo.jpg')
     ```
 
   Quando o método `mail` for invocado, enviará um e-mail no modo _multipart_
@@ -239,20 +241,20 @@ Com o _Action Mailer_ é muito fácil trabalhar com anexos.
   como `multipart/mixed` e a mensagem sendo a segunda com `multipart/alternative`
   com o texto e o HTML do e-mail.
 
-NOTE: O anexo será codificado usando _Base64_ pelo `Mail`. Se você precisar de algo diferente, codifique previamente o contéudo e adicione o anexo e qual a codificação na _hash_ `attachments`.
+NOTE: O anexo será codificado usando _Base64_ pelo `Mail`. Se você precisar de algo diferente, codifique previamente o conteúdo e adicione o anexo e qual a codificação na _hash_ `attachments`.
 
-* Passe o nome do arquivo, cabeçalhos especificos e o contéudo e o _Action Mailer_ e `Mail` irão usar as configurações:
+* Passe o nome do arquivo, cabeçalhos específicos e o conteúdo e o _Action Mailer_ e `Mail` irão usar as configurações:
 
     ```ruby
-    encoded_content = SpecialEncode(File.read('/path/to/filename.jpg'))
-    attachments['filename.jpg'] = {
+    encoded_content = SpecialEncode(File.read('/caminho/para/o/arquivo.jpg'))
+    attachments['arquivo.jpg'] = {
       mime_type: 'application/gzip',
       encoding: 'SpecialEncoding',
       content: encoded_content
     }
     ```
 
-NOTE: Se você especificar a codificação, `Mail` assumirá que o contéudo já está codificado e não irá codificar usando o padrão _Base64_.
+NOTE: Se você especificar a codificação, `Mail` assumirá que o conteúdo já está codificado e não irá codificar usando o padrão _Base64_.
 
 #### Criando Anexos dentro da Mensagem de E-mail (_Inline_)
 
@@ -262,24 +264,24 @@ _Action Mailer_ 3.0 cria anexos dentro da mensagem de e-mail, algo que antes da 
 
     ```ruby
     def welcome
-      attachments.inline['image.jpg'] = File.read('/path/to/image.jpg')
+      attachments.inline['image.jpg'] = File.read('/caminho/para/a/imagem.jpg')
     end
     ```
 
 * Na _view_, você só precisa especificar qual o anexo dentro de `attachments`, que é uma _hash_, você quer mostrar, encadeando o método `url` no anexo irá retornar o endereço do anexo e você pode passar o resultado para o método `image_tag` que renderiza uma imagem, veja o exemplo abaixo:
 
     ```html+erb
-    <p>Hello there, this is our image</p>
+    <p>Olá! Aqui está nossa imagem</p>
 
-    <%= image_tag attachments['image.jpg'].url %>
+    <%= image_tag attachments['imagem.jpg'].url %>
     ```
 
 * Como isso é uma chamada normal ao método `image_tag` você pode passar uma _hash_ de opções após a _URL_ do anexo como você faria para qualquer outra imagem:
 
     ```html+erb
-    <p>Hello there, this is our image</p>
+    <p>Olá! Aqui está nossa imagem</p>
 
-    <%= image_tag attachments['image.jpg'].url, alt: 'My Photo', class: 'photos' %>
+    <%= image_tag attachments['imagem.jpg'].url, alt: 'Minha Foto', class: 'fotos' %>
     ```
 
 #### Enviando E-mail para Vários Destinatários
@@ -289,23 +291,23 @@ _Action Mailer_ 3.0 cria anexos dentro da mensagem de e-mail, algo que antes da 
 ```ruby
 class AdminMailer < ApplicationMailer
   default to: -> { Admin.pluck(:email) },
-          from: 'notification@example.com'
+          from: 'notificacao@exemplo.com'
 
   def new_registration(user)
     @user = user
-    mail(subject: "New User Signup: #{@user.email}")
+    mail(subject: "Novo usuário cadastrado: #{@user.email}")
   end
 end
 ```
 
 ```ruby
 class AdminMailer < ApplicationMailer
-  default to: 'email_one@test.com,email_two@test.com,email_three@test.com',
-          from: 'notification@example.com'
+  default to: 'email_um@exemplo.com,email_dois@exemplo.com,email_tres@exemplo.com',
+          from: 'notificacao@exemplo.com'
 
   def new_registration(user)
     @user = user
-    mail(subject: "New User Signup: #{@user.email}")
+    mail(subject: "Novo usuário cadastrado: #{@user.email}")
   end
 end
 ```
@@ -315,7 +317,7 @@ O mesmo formato pode ser usado para enviar e-mails com cópia (Cc:) ou com cópi
 
 #### Enviando E-mail com Nome
 
-Em alguns momentos você deseja exibir o nome da pessoa que enviou ou recebe a mensagem ao inves de mostrar somente o e-mail. O truque para conseguir isso é usar a seguinte formatação no endereço de e-mail `"Nome Complete" <endereço_de_email>`.
+Em alguns momentos você deseja exibir o nome da pessoa que enviou ou recebe a mensagem ao invés de mostrar somente o e-mail. O truque para conseguir isso é usar a seguinte formatação no endereço de e-mail `"Nome Completo" <endereço_de_email>`.
 
 ```ruby
 def welcome_email
