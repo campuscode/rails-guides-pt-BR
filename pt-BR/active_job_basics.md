@@ -416,11 +416,10 @@ and add this serializer to the list:
 Rails.application.config.active_job.custom_serializers << MoneySerializer
 ```
 
-Exceptions
+Exceções
 ----------
 
-Active Job provides a way to catch exceptions raised during the execution of the
-job:
+Os *Active Jobs* fornecem uma maneira de capturar exceções criadas durante a execução do *job*.
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -436,10 +435,9 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-### Retrying or Discarding failed jobs
+### Reexecução ou Descarte de *jobs* falhos
 
-It's also possible to retry or discard a job if an exception is raised during execution.
-For example:
+É possível também reexecutar ou descartar um *job* se uma exceção for gerada durante a execução. Por exemplo:
 
 ```ruby
 class RemoteServiceJob < ApplicationJob
@@ -453,15 +451,13 @@ class RemoteServiceJob < ApplicationJob
 end
 ```
 
-To get more details see the API Documentation for [ActiveJob::Exceptions](https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html).
+Para mais detalhes Veja a Documentação da API para [ActiveJob::Exceções](https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html).
 
-### Deserialization
+### Desserialização
 
-GlobalID allows serializing full Active Record objects passed to `#perform`.
+*GlobalID* permite serializar todos os objetos do *Active Record* passado para o `#perform`.
 
-If a passed record is deleted after the job is enqueued but before the `#perform`
-method is called Active Job will raise an `ActiveJob::DeserializationError`
-exception.
+Se um registro for deletado após o *job* ser enfileirado mas antes do método `#perform` ser chamado, o *Active Job* vai lançar a exceção `ActiveJob::DeserializationError`.
 
 Testando os *Jobs*
 --------------
