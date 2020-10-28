@@ -450,7 +450,7 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-WARNING. Quando uma transação é completada, os *callbacks* `after_commit` ou `after_rollback` são chamados para todos os *models* criados, atualizados ou destruidos em uma transação. No entanto, se uma exceção é lançada em um desses *callbacks*, a exceção vai borbulhar e quaisquer métodos restantes de `after_commit` ou `after_rollback` _não_ serão executados. Assim sendo, se o código do seu *callback* pode lançar uma exceção, você precisará recuperá-la e tratá-la dentro do *callback* para que outros callbacks possam ser executados.
+WARNING. Quando uma transação é completada, os *callbacks* `after_commit` ou `after_rollback` são chamados para todos os *models* criados, atualizados ou destruidos em uma transação. No entanto, se uma exceção é lançada em um desses *callbacks*, a exceção vai interromper a execução e quaisquer métodos restantes de `after_commit` ou `after_rollback` _não_ serão executados. Assim sendo, se o código do seu *callback* pode lançar uma exceção, você precisará recuperá-la e tratá-la dentro do *callback* para que outros callbacks possam ser executados.
 
 WARNING. O código executado dentro dos *callbacks* de `after_commit` ou `after_rollback` não está incluido em uma transação.
 
