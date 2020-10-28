@@ -62,7 +62,11 @@ O que é _Pub/Sub_
 ---------------
 
 _[Pub/Sub](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)_, ou
-_Publish-Subscribe_, refere-se a um paradigma de fila de mensageria em qual os remetentes de uma informação (_publishers_), enviam dados à uma classe abstrata de destinatários (_subscribers_), sem especificar um destinatário específico. _Action Cable_ utiliza essa abordagem para manter a comunicação entre o servidor e diversos clientes.
+_Publish-Subscribe_, refere-se a um paradigma de fila de mensageria o qual os
+remetentes de uma informação (_publishers_) enviam dados à uma classe abstrata de
+destinatários (_subscribers_) sem especificar um destinatário individual.
+*Action Cable* utiliza essa abordagem para manter a comunicação entre o servidor
+e diversos clientes.
 
 ## Server-Side Components
 
