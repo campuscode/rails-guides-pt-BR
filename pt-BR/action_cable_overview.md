@@ -67,21 +67,21 @@ information (publishers), send data to an abstract class of recipients
 (subscribers), without specifying individual recipients. Action Cable uses this
 approach to communicate between the server and many clients.
 
-## Server-Side Components
+## Componentes Server-Side
 
-### Connections
+### *Connections*
 
-*Connections* form the foundation of the client-server relationship. For every
-WebSocket accepted by the server, a connection object is instantiated. This
-object becomes the parent of all the *channel subscriptions* that are created
-from there on. The connection itself does not deal with any specific application
-logic beyond authentication and authorization. The client of a WebSocket
-connection is called the connection *consumer*. An individual user will create
-one consumer-connection pair per browser tab, window, or device they have open.
+*Connections* formam a fundação do relacionamento de cliente-servidor. Para cada
+_WebSocket_ aceito pelo servidor, um objeto *connection* é instanciado. Esse objeto
+se torna o pai de todos os *channel subscriptions* que são criados dali pra frente.
+A *connection* em si não lida com nenhuma lógica específica da aplicação além da
+autenticação e autorização. O cliente de um _WebSocket *connection*_ é chamado de
+*consumer*. Um usuário individual criará um par de *consumer-connection* para cada
+aba do navegador, janela ou dispositivo que ele tiver aberto.
 
-Connections are instances of `ApplicationCable::Connection`. In this class, you
-authorize the incoming connection, and proceed to establish it if the user can
-be identified.
+*Connections* são instâncias de `ApplicationCable::Connection`. Nessa classe,
+você autoriza a *connection* recebida e procede para estabelece-lá, caso o
+usuário possa ser identificado.
 
 #### Connection Setup
 
