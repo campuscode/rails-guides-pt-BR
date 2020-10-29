@@ -768,10 +768,10 @@ config.action_mailer.raise_delivery_errors = true
 config.action_mailer.default_options = {from: 'no-reply@example.com'}
 ```
 
-### Configuração do Action Mailer para Gmail
+### Configuração do _Action Mailer_ para Gmail
 
-Como o Action Mailer agora usa o [Mail gem](https://github.com/mikel/mail), este
-torna-se tão simples quanto adicionar ao arquivo `config / environment / $ RAILS_ENV.rb`:
+Como o Action Mailer agora usa a [gem Mail](https://github.com/mikel/mail),
+torna-se tão simples quanto adicionar ao arquivo `config/environment/$ RAILS_ENV.rb`:
 
 ```ruby
 config.action_mailer.delivery_method = :smtp
@@ -784,7 +784,7 @@ config.action_mailer.smtp_settings = {
   authentication:       'plain',
   enable_starttls_auto: true }
 ```
-NOTA: Em 15 de julho de 2014, o Google aumentou [suas medidas de segurança](https://support.google.com/accounts/answer/6010255) e agora bloqueia as tentativas de aplicativos que considera menos seguros.
+NOTE: Em 15 de julho de 2014, o Google aumentou [suas medidas de segurança](https://support.google.com/accounts/answer/6010255) e agora bloqueia as tentativas de aplicativos que considera menos seguros.
 Você pode alterar suas configurações do Gmail [aqui](https://www.google.com/settings/security/lesssecureapps) para permitir as tentativas. Se sua conta do Gmail tiver a autenticação de dois fatores ativada
 em seguida, você precisará definir uma [senha de aplicativo](https://myaccount.google.com/apppasswords) e usá-la em vez de sua senha normal. Alternativamente, você pode
 use outro ESP para enviar e-mail substituindo 'smtp.gmail.com' acima pelo endereço do seu provedor.
@@ -795,10 +795,10 @@ Testes de *Mailer*
 Você encontrará instruções detalhadas de como testar seus *mailers* no 
 [guia de teste](testing.html#testing-your-mailers).
 
-Interceptando e observando emails
+Interceptando e Observando Emails
 -------------------
 
-Action Mailer fornece ganchos para os métodos observador e interceptor do Mail. Eles permitem que você registre classes que são chamadas durante o ciclo de vida de entrega de cada e-mail enviado.
+_Action Mailer_ fornece ganchos para os métodos observador e interceptor do Mail. Eles permitem que você registre classes que são chamadas durante o ciclo de vida de entrega de cada e-mail enviado.
 
 ### Interceptando Emails
 
@@ -812,8 +812,8 @@ class SandboxEmailInterceptor
 end
 ```
 
-Antes que o interceptor possa fazer seu trabalho, você precisa registrá-lo com o Action
-Estrutura do Mailer. Você pode fazer isso em um arquivo inicializador
+Antes que o interceptor possa fazer seu trabalho, você precisa registrá-lo com o _Action Mailer_. 
+Você pode fazer isso em um arquivo inicializador
 `config/initializers/sandbox_email_interceptor.rb`
 
 ```ruby
@@ -822,7 +822,7 @@ if Rails.env.staging?
 end
 ```
 
-NOTA: O exemplo acima usa um ambiente personalizado chamado "staging" para um
+NOTE: O exemplo acima usa um ambiente personalizado chamado "staging" para um
 servidor como em produção, mas para fins de teste. Você pode ler
 [Criação de ambientes Rails](configuring.html#creating-rails-environments)
 para mais informações sobre ambientes Rails personalizados.
