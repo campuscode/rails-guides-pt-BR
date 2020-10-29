@@ -1323,7 +1323,7 @@ This is because it is ambiguous whether they should appear on the parent record,
 _Scopes_
 ------
 
-A definição do escopo permite que você especifique consultas comumente usadas, que podem ser referenciadas como chamadas de método nos objetos ou *modelos* associados. Com esses escopos, você pode usar todos os métodos cobertos anteriormente, como `where`, ` joins` e `includes`. Todos os corpos de escopo devem retornar um `ActiveRecord::Relation` ou `nil` para permitir que métodos adicionais (como outros escopos) sejam chamados nele.
+A definição do escopo permite que você especifique consultas comumente usadas, que podem ser referenciadas como chamadas de método nos objetos ou *modelos* associados. Com esses escopos, você pode usar todos os métodos cobertos anteriormente, como `where`, `joins` e `includes`. Todos os corpos de escopo devem retornar um `ActiveRecord::Relation` ou `nil` para permitir que métodos adicionais (como outros escopos) sejam chamados nele.
 
 Para definir um escopo simples, usamos o método `scope` dentro da classe, passando a consulta que gostaríamos de executar quando este escopo for chamado:
 
@@ -1477,7 +1477,7 @@ User.active.inactive
 ```
 
 Podemos misturar e combinar as condições `scope` e `where` e o sql final
-terá todas as condições unidas com `E`.
+terá todas as condições unidas com `AND`.
 
 ```ruby
 User.active.where(state: 'finished')
