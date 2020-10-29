@@ -752,7 +752,6 @@ nosso guia de configuração de aplicativos Rails.
 
 ### Exemplo de configuração do _Action Mailer_
 
-
 Um exemplo seria adicionar o seguinte ao seu
 arquivo `config/environments/$RAILS_ENV.rb`:
 
