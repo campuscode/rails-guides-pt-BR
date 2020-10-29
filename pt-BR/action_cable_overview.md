@@ -51,14 +51,15 @@ As you can see, this is a fairly deep architectural stack. There's a lot of new
 terminology to identify the new pieces, and on top of that, you're dealing
 with both client and server side reflections of each unit.
 
-What is Pub/Sub
+O que é _Pub/Sub_
 ---------------
 
-[Pub/Sub](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern), or
-Publish-Subscribe, refers to a message queue paradigm whereby senders of
-information (publishers), send data to an abstract class of recipients
-(subscribers), without specifying individual recipients. Action Cable uses this
-approach to communicate between the server and many clients.
+_[Pub/Sub](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)_, ou
+_Publish-Subscribe_, refere-se a um paradigma de fila de mensageria o qual os
+remetentes de uma informação (_publishers_) enviam dados à uma classe abstrata de
+destinatários (_subscribers_) sem especificar um destinatário individual.
+*Action Cable* utiliza essa abordagem para manter a comunicação entre o servidor
+e diversos clientes.
 
 ## Server-Side Components
 
