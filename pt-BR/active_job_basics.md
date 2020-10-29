@@ -303,12 +303,12 @@ end
 * `after_perform`
 
 
-Action Mailer
+*Action Mailer*
 ------------
 
-One of the most common jobs in a modern web application is sending emails outside
-of the request-response cycle, so the user doesn't have to wait on it. Active Job
-is integrated with Action Mailer so you can easily send emails asynchronously:
+Um dos *jobs* mais comuns em uma aplicação *web* moderna é enviar e-mails fora do ciclo de 
+*request-response*, para que o usuário não tenha que esperar por ele. O *Active Job* está
+integrado com o *Action Mailer*, o que te permite enviar e-mails assincronamente:
 
 ```ruby
 # If you want to send the email now use #deliver_now
@@ -318,11 +318,11 @@ UserMailer.welcome(@user).deliver_now
 UserMailer.welcome(@user).deliver_later
 ```
 
-NOTE: Using the asynchronous queue from a Rake task (for example, to
-send an email using `.deliver_later`) will generally not work because Rake will
-likely end, causing the in-process thread pool to be deleted, before any/all
-of the `.deliver_later` emails are processed. To avoid this problem, use
-`.deliver_now` or run a persistent queue in development.
+NOTE: Se você usar uma fila assíncrona de uma *Rake task* (por exemplo, para enviar um e-mail
+usando `.deliver_later`), geralmente não irá funcionar porque a *Rake* irá provavelmente
+terminar, fazendo com que o processo interno do *thread pool* seja removido, antes de
+qualquer ou todos os e-mails serem processados. Para evitar esse problema, use o 
+`.deliver_now` ou execute uma fila persistente no ambiente de desenvolvimento.
 
 
 Internacionalização
