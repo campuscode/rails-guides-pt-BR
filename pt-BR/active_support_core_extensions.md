@@ -51,37 +51,37 @@ O _Active Support_ foi cuidadosamente projetado para que as seleções de arquiv
 
 #### Carregando _Core Extensions_ Agrupadas
 
-The next level is to simply load all extensions to `Object`. As a rule of thumb, extensions to `SomeClass` are available in one shot by loading `active_support/core_ext/some_class`.
+O próximo passo é simplesmente carregar todas as extensões de `Object`. Como regra geral, extensões para `SomeClass` estão disponíveis em um rápido carregamento de `active_support/core_ext/some_class`.
 
-Thus, to load all extensions to `Object` (including `blank?`):
+Portanto, para carregar todas as extensões de `Object` (incluindo `blank?`):
 
 ```ruby
 require 'active_support'
 require 'active_support/core_ext/object'
 ```
 
-#### Loading All Core Extensions
+#### Carregando Todas _Core Extensions_
 
-You may prefer just to load all core extensions, there is a file for that:
+Você pode escolher por carregar todas as extensões principais, há um arquivo para isso:
 
 ```ruby
 require 'active_support'
 require 'active_support/core_ext'
 ```
 
-#### Loading All Active Support
+#### Carregando _Active Support_ Completamente
 
-And finally, if you want to have all Active Support available just issue:
+E finalmente, se você quer ter tudo que o _Active Support_ fornece, basta apenas:
 
 ```ruby
 require 'active_support/all'
 ```
 
-That does not even put the entire Active Support in memory upfront indeed, some stuff is configured via `autoload`, so it is only loaded if used.
+Isso não irá inserir todo o _Active Support_ na memória antes do necessário, algumas funcionalidades são configuradas via _ʻautoload`_, então só são carregadas se usadas.
 
-### Active Support Within a Ruby on Rails Application
+### Active Support Em Uma Aplicação Ruby on Rails
 
-A Ruby on Rails application loads all Active Support unless `config.active_support.bare` is true. In that case, the application will only load what the framework itself cherry-picks for its own needs, and can still cherry-pick itself at any granularity level, as explained in the previous section.
+Uma aplicação Ruby on Rails carrega todo o _Active Support_ a não ser que `config.active_support.bare` esteja _settada_ como `true`. Neste caso, a aplicação vai carregar apenas o que o próprio _framework_ escolhe como suas próprias necessidades, e ainda pode selecionar a si mesmo em qualquer nível de granularidade, conforme explicado na seção anterior.
 
 Extensions to All Objects
 -------------------------
