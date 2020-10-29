@@ -20,36 +20,36 @@ Depois de ler esse guia, você poderá saber:
 Como Carregar _Core Extensions_
 ---------------------------
 
-### Stand-Alone Active Support
+### Active Support _Stand-Alone_
 
-In order to have a near-zero default footprint, Active Support does not load anything by default. It is broken in small pieces so that you can load just what you need, and also has some convenience entry points to load related extensions in one shot, even everything.
+A fim de ter uma configuração padrão mais básica, o _Active Support_ não carrega nada por padrão. Com isso, ele é granularizado em pequenas unidades para que seja possível carregar apenas o que se é necessário no contexto, além de oferecer pontos de entrada que são interessantes para o carregamento de extensões convenientes de uma só vez, ou até mesmo não carregar nenhuma.
 
-Thus, after a simple require like:
+Portanto, é possível inicializar após o uso de um simples _require_ como:
 
 ```ruby
 require 'active_support'
 ```
 
-objects do not even respond to `blank?`. Let's see how to load its definition.
+Objetos não respondem nem mesmo a um `blank?`. Vejamos como carregar essa definição.
 
-#### Cherry-picking a Definition
+#### Escolhendo a Definição
 
-The most lightweight way to get `blank?` is to cherry-pick the file that defines it.
+A forma mais limitada de conseguir coseguir respostas a um `blank?` é selecionando o arquivo que faz essa definição.
 
-For every single method defined as a core extension this guide has a note that says where such a method is defined. In the case of `blank?` the note reads:
+Para cada método definido como _core extension_ esse guia possui uma nota que diz onde tal método é definido. No caso de `blank?` a nota diz:
 
 NOTE: Defined in `active_support/core_ext/object/blank.rb`.
 
-That means that you can require it like this:
+Isso significa que você pode fazer _requires_ assim:
 
 ```ruby
 require 'active_support'
 require 'active_support/core_ext/object/blank'
 ```
 
-Active Support has been carefully revised so that cherry-picking a file loads only strictly needed dependencies, if any.
+O _Active Support_ foi cuidadosamente projetado para que as seleções de arquivos carreguem somente as dependências extremamente necessárias, caso existam.
 
-#### Loading Grouped Core Extensions
+#### Carregando _Core Extensions_ Agrupadas
 
 The next level is to simply load all extensions to `Object`. As a rule of thumb, extensions to `SomeClass` are available in one shot by loading `active_support/core_ext/some_class`.
 
