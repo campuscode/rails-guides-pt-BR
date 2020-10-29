@@ -20,7 +20,7 @@ Depois de ler esse guia, você saberá:
 Como Carregar _Core Extensions_
 ---------------------------
 
-### Active Support _Stand-Alone_
+### _Active Support Stand-Alone_
 
 A fim de ter uma configuração padrão mais básica, o _Active Support_ não carrega nada por padrão. Com isso, ele é granularizado em pequenas unidades para que seja possível carregar apenas o que se é necessário no contexto, além de oferecer pontos de entrada que são interessantes para o carregamento de extensões convenientes de uma só vez, ou até mesmo não carregar nenhuma.
 
@@ -38,7 +38,7 @@ A forma mais limitada de conseguir respostas a um `blank?` é selecionando o arq
 
 Para cada método definido como _core extension_ esse guia possui uma nota que diz onde tal método é definido. No caso de `blank?` a nota diz:
 
-NOTE: Defined in `active_support/core_ext/object/blank.rb`.
+NOTE: Definido em `active_support/core_ext/object/blank.rb`.
 
 Isso significa que você pode fazer _requires_ assim:
 
@@ -79,9 +79,9 @@ require 'active_support/all'
 
 Isso não vai inserir todo o _Active Support_ na memória antes do necessário, algumas funcionalidades são configuradas via _ʻautoload`_, então só são carregadas se usadas.
 
-### Active Support Em Uma Aplicação Ruby on Rails
+### _Active Support_ Em Uma Aplicação Ruby on Rails
 
-Uma aplicação Ruby on Rails carrega todo o _Active Support_ a não ser que `config.active_support.bare` esteja _settada_ como `true`. Neste caso, a aplicação vai carregar apenas o que o próprio _framework_ escolhe como suas próprias necessidades, e ainda pode selecionar a si mesmo em qualquer nível de granularidade, conforme explicado na seção anterior.
+Uma aplicação Ruby on Rails carrega todo o _Active Support_ a não ser que `config.active_support.bare` esteja definida como `true`. Neste caso, a aplicação vai carregar apenas o que o próprio _framework_ escolhe como suas próprias necessidades, e ainda pode selecionar a si mesmo em qualquer nível de granularidade, conforme explicado na seção anterior.
 
 Extensions to All Objects
 -------------------------
