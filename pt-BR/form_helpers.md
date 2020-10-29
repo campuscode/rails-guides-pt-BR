@@ -349,6 +349,7 @@ Criando Caixas de Seleção (*Select Boxes*) com Facilidade
 As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente.
 
 Esta é a aparência da marcação:
+
 ```html
 <select name="city_id" id="city_id">
   <option value="1">Lisbon</option>
