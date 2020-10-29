@@ -927,11 +927,11 @@ person.errors.messages
  # => {:email=>["has already been taken"], :age=>["is not a number"], :name=>["can't be blank"]}
 ```
 
-Strict Validations
+Validações Estritas
 ------------------
 
-You can also specify validations to be strict and raise
-`ActiveModel::StrictValidationFailed` when the object is invalid.
+Você também pode especificar validações como estritas e lançar um
+`ActiveModel::StrictValidationFailed` quando o objeto é inválido.
 
 ```ruby
 class Person < ApplicationRecord
@@ -941,7 +941,7 @@ end
 Person.new.valid?  # => ActiveModel::StrictValidationFailed: Name can't be blank
 ```
 
-There is also the ability to pass a custom exception to the `:strict` option.
+Também é possível passar uma exceção personalizada para a opção `:strict`.
 
 ```ruby
 class Person < ApplicationRecord

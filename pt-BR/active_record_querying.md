@@ -456,139 +456,138 @@ contanto que não há ordenação, pois o método irá forçar uma ordem interna
 
 O método `find_in_batches` aceita as mesmas opção que o `find_each`
 
-Conditions
+Condições
 ----------
 
-The `where` method allows you to specify conditions to limit the records returned, representing the `WHERE`-part of the SQL statement. Conditions can either be specified as a string, array, or hash.
+O método `where`  permite que você especifique condições para limitar os registros retornados, representando a parte `where` da instrução SQL. Condições podem ser especificadas como uma *string*, *array*, ou *hash*.
 
-### Pure String Conditions
+### Condições de Strings Puras
 
-If you'd like to add conditions to your find, you could just specify them in there, just like `Client.where("orders_count = '2'")`. This will find all clients where the `orders_count` field's value is 2.
+Se você gostaria de adicionar condições para sua busca, poderia apenas especificá-las, como, por exemplo `Client.where("orders_count = '2'")`. Isso encontrará todos os clientes em que o campo `ordes_count` tenha o valor igual a 2.
 
-WARNING: Building your own conditions as pure strings can leave you vulnerable to SQL injection exploits. For example, `Client.where("first_name LIKE '%#{params[:first_name]}%'")` is not safe. See the next section for the preferred way to handle conditions using an array.
+WARNING: Construindo sua própria condições como *strings* pura pode te deixar vulnerável a ataques de injeção SQL. Por exemplo, `Client.where("first_name LIKE '%#{params[:first_name]}%'")` não é seguro. Veja a próxima seção para saber a maneira preferida de lidar com  condições usando array.
 
-### Array Conditions
+### Condições de Array
 
-Now what if that number could vary, say as an argument from somewhere? The find would then take the form:
+Agora, se esse número pudesse variar, digamos como um argumento de algum lugar? O comando da busca então levaria a forma:
 
 ```ruby
 Client.where("orders_count = ?", params[:orders])
 ```
 
-Active Record will take the first argument as the conditions string and any additional arguments will replace the question marks `(?)` in it.
+*Active Record* tomará o primeiro argumento como a string de condições e quaisquer argumentos adicionais vão substituir os pontos de interrogação `(?)` nele.
 
-If you want to specify multiple conditions:
+Se você quer especificar múltiplas condições:
 
 ```ruby
 Client.where("orders_count = ? AND locked = ?", params[:orders], false)
 ```
 
-In this example, the first question mark will be replaced with the value in `params[:orders]` and the second will be replaced with the SQL representation of `false`, which depends on the adapter.
+Neste exemplo, o primeiro ponto de interrogação será substituído com o valor em `params[:orders]` e o segundo será substituído com a representação SQL para `false`, que depende do adaptador.
 
-This code is highly preferable:
+Este código é altamente preferível:
 
 ```ruby
 Client.where("orders_count = ?", params[:orders])
 ```
 
-to this code:
+Para este código:
 
 ```ruby
 Client.where("orders_count = #{params[:orders]}")
 ```
 
-because of argument safety. Putting the variable directly into the conditions string will pass the variable to the database **as-is**. This means that it will be an unescaped variable directly from a user who may have malicious intent. If you do this, you put your entire database at risk because once a user finds out they can exploit your database they can do just about anything to it. Never ever put your arguments directly inside the conditions string.
+Devido à segurança do argumento. Colocando a variável dentro da condição de *string*, passará a variável para o banco de dados **como se encontra**. Isto significa que será uma variável sem escape diretamente de um usuário que pode ter intenções maliciosas. Se você fizer isso, coloca todo seu banco de dados em risco, porque uma vez que um usuário descobre que pode explorar seu banco de dados, ele pode fazer qualquer coisa com ele. Nunca, jamais, coloque seus argumentos diretamente dentro da condição de *string*.
 
-TIP: For more information on the dangers of SQL injection, see the [Ruby on Rails Security Guide](security.html#sql-injection).
+TIP: Para mais informações sobre os perigos da injeção de SQL, veja em [Ruby on Rails Security Guide](https://guides.rubyonrails.org/security.html#sql-injection) / [Ruby on Rails Security Guide PT-Br](security.html#sql-injection)
 
-#### Placeholder Conditions
+#### Condições com *Placeholder*
 
-Similar to the `(?)` replacement style of params, you can also specify keys in your conditions string along with a corresponding keys/values hash:
+Similar ao estilo de substituição `(?)` dos parâmetros, você também pode especificar chaves em sua condição de *string* junto com uma *hash* de chaves/valores (*keys/values*) correspondentes:
 
 ```ruby
 Client.where("created_at >= :start_date AND created_at <= :end_date",
   {start_date: params[:start_date], end_date: params[:end_date]})
 ```
 
-This makes for clearer readability if you have a large number of variable conditions.
+Isso torna a legibilidade mais clara se você tem um grande número de condições variáveis.
 
-### Hash Conditions
+### Condições de Hash
 
-Active Record also allows you to pass in hash conditions which can increase the readability of your conditions syntax. With hash conditions, you pass in a hash with keys of the fields you want qualified and the values of how you want to qualify them:
+*Active Record* também permite que você passe em condições de *hash* o que pode aumentar a legibilidade de suas sintaxes de condições. Com condições de *hash*, você passa em uma *hash* com chaves (*keys*) dos campos que deseja qualificados e os valores (*values*) de como deseja qualificá-los:
 
-NOTE: Only equality, range, and subset checking are possible with Hash conditions.
+NOTE: Apenas igualdade, intervalo, e subconjunto são possíveis com as condições de *hash*.
 
-#### Equality Conditions
+#### Condições de igualdade
 
 ```ruby
 Client.where(locked: true)
 ```
 
-This will generate SQL like this:
+Isso irá gerar um SQL como este:
 
 ```sql
 SELECT * FROM clients WHERE (clients.locked = 1)
 ```
 
-The field name can also be a string:
+O nome do campo também pode ser uma *string*:
 
 ```ruby
 Client.where('locked' => true)
 ```
 
-In the case of a belongs_to relationship, an association key can be used to specify the model if an Active Record object is used as the value. This method works with polymorphic relationships as well.
+No caso de um relacionamento `belongs_to`, uma chave de associação pode ser usada para especificar o model se um objeto *Active Record* for usado como o valor. Este método também funciona com relacionamentos polimórficos.
 
 ```ruby
 Article.where(author: author)
 Author.joins(:articles).where(articles: { author: author })
 ```
 
-#### Range Conditions
+#### Condições de intervalos
 
 ```ruby
 Client.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
 ```
 
-This will find all clients created yesterday by using a `BETWEEN` SQL statement:
+Isso irá encontrar todos clientes criados ontem usando uma instrução SQL `BETWEEN`:
 
 ```sql
 SELECT * FROM clients WHERE (clients.created_at BETWEEN '2008-12-21 00:00:00' AND '2008-12-22 00:00:00')
 ```
 
-This demonstrates a shorter syntax for the examples in [Array Conditions](#array-conditions)
+Isso demonstra uma sintaxe mais curta para exemplos em [Condições de Array](#condicoes-de-array)
 
-#### Subset Conditions
+#### Subconjunto de Condições
 
-If you want to find records using the `IN` expression you can pass an array to the conditions hash:
+Se você deseja procurar registros usando a expressão `IN` pode passar um *array* para a *hash* de condições:
 
 ```ruby
 Client.where(orders_count: [1,3,5])
 ```
 
-This code will generate SQL like this:
+Esse código irá gerar um SQL como este:
 
 ```sql
 SELECT * FROM clients WHERE (clients.orders_count IN (1,3,5))
 ```
 
-### NOT Conditions
+### Condições NOT
 
-`NOT` SQL queries can be built by `where.not`:
+Consultas SQL `NOT` podem ser construídas por `where.not`:
 
 ```ruby
 Client.where.not(locked: true)
 ```
 
-In other words, this query can be generated by calling `where` with no argument, then immediately chain with `not` passing `where` conditions.  This will generate SQL like this:
+Em outras palavras, essa consulta pode ser gerada chamando `where` sem nenhum argumento, então imediatamente encadeie com condições `not` passando `where`. Isso irá gerar SQL como este:
 
 ```sql
 SELECT * FROM clients WHERE (clients.locked != 1)
 ```
 
-### OR Conditions
+### Condições OR
 
-`OR` conditions between two relations can be built by calling `or` on the first
-relation, and passing the second one as an argument.
+Condições `OR` entre duas relações podem ser construídas chamando `or` na primeira relação, e passando o segundo como um argumento.
 
 ```ruby
 Client.where(locked: true).or(Client.where(orders_count: [1,3,5]))
@@ -644,55 +643,57 @@ Client.order("orders_count ASC").order("created_at DESC")
 
 WARNING: Na maioria dos sistemas de banco de dados, ao selecionar campos com `distinct` de um conjunto de resultados usando métodos como` select`, `pluck` e `ids`; o método `order` gerará uma exceção `ActiveRecord::StatementInvalid`, a menos que o(s) campo(s) usados ​​na cláusula `order` estejam incluídos na lista de seleção. Consulte a próxima seção para selecionar campos do conjunto de resultados.
 
-Selecting Specific Fields
+Selecionando Campos Específicos
 -------------------------
 
-By default, `Model.find` selects all the fields from the result set using `select *`.
+Por padrão, `Model.find` seleciona todos os campos do conjunto de resultado usando `select *`.
 
-To select only a subset of fields from the result set, you can specify the subset via the `select` method.
+Para selecionar somente um subconjunto de campos do conjunto de resultado, você pode especificar o
+subconjunto via método `select`.
 
-For example, to select only `viewable_by` and `locked` columns:
+Por exemplo, para selecionar somente as colunas `viewable_by` e `locked`:
 
 ```ruby
 Client.select(:viewable_by, :locked)
-# OR
+# OU
 Client.select("viewable_by, locked")
 ```
 
-The SQL query used by this find call will be somewhat like:
+A *query* SQL usada por esta chamada de busca vai ser algo como:
 
 ```sql
 SELECT viewable_by, locked FROM clients
 ```
 
-Be careful because this also means you're initializing a model object with only the fields that you've selected. If you attempt to access a field that is not in the initialized record you'll receive:
+Tome cuidado pois isso também significa que você está inicializando um objeto *model* com somente os campos que você selecionou. Se você tentar acessar um campo que não está no registro inicializado,
+você vai receber:
 
 ```bash
 ActiveModel::MissingAttributeError: missing attribute: <attribute>
 ```
 
-Where `<attribute>` is the attribute you asked for. The `id` method will not raise the `ActiveRecord::MissingAttributeError`, so just be careful when working with associations because they need the `id` method to function properly.
+Onde `<attribute>` é o atributo que você pediu. O método `id` não vai lançar o `ActiveRecord::MissingAttributeError`, então fique atento quando estiver trabalhando com associações, pois elas precisam do método `id` para funcionar corretamente.
 
-If you would like to only grab a single record per unique value in a certain field, you can use `distinct`:
+Se você quiser pegar somente um registro por valor único em um certo campo, você pode usar `distinct`:
 
 ```ruby
 Client.select(:name).distinct
 ```
 
-This would generate SQL like:
+Isso vai gerar uma *query* SQL como:
 
 ```sql
 SELECT DISTINCT name FROM clients
 ```
 
-You can also remove the uniqueness constraint:
+Você pode também remover a restrição de unicidade:
 
 ```ruby
 query = Client.select(:name).distinct
-# => Returns unique names
+# => Retorna nomes únicos
 
 query.distinct(false)
-# => Returns all names, even if there are duplicates
+# => Retorna todos os nomes, mesmo se houverem valores duplicados.
 ```
 
 Limit and Offset

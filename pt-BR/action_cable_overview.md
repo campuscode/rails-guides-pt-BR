@@ -16,17 +16,10 @@ Ao ler este guia você aprenderá:
 
 --------------------------------------------------------------------------------
 
-Introduction
+Introdução
 ------------
 
-Action Cable seamlessly integrates
-[WebSockets](https://en.wikipedia.org/wiki/WebSocket) with the rest of your
-Rails application. It allows for real-time features to be written in Ruby in the
-same style and form as the rest of your Rails application, while still being
-performant and scalable. It's a full-stack offering that provides both a
-client-side JavaScript framework and a server-side Ruby framework. You have
-access to your full domain model written with Active Record or your ORM of
-choice.
+O *Action Cable* integra-se perfeitamente [WebSockets](https://pt.wikipedia.org/wiki/WebSocket) com o resto da sua aplicação Rails. Permite que recursos em tempo real sejam escritos em Ruby no mesmo estilo e forma que o resto de sua aplicação Rails, ao mesmo tempo em que possui desempenho e escabilidade. Isso é uma oferta _full-stack_ que fornece um _framework_ Javascript do lado do cliente (_client-side_) e um _framework_ Ruby do lado do servidor (_server-side_). Você tem acesso ao seu _model_ de domínio completo escrito com o *Active Record* ou o ORM de sua escolha.
 
 Terminology
 -----------
@@ -58,14 +51,15 @@ As you can see, this is a fairly deep architectural stack. There's a lot of new
 terminology to identify the new pieces, and on top of that, you're dealing
 with both client and server side reflections of each unit.
 
-What is Pub/Sub
+O que é _Pub/Sub_
 ---------------
 
-[Pub/Sub](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern), or
-Publish-Subscribe, refers to a message queue paradigm whereby senders of
-information (publishers), send data to an abstract class of recipients
-(subscribers), without specifying individual recipients. Action Cable uses this
-approach to communicate between the server and many clients.
+_[Pub/Sub](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)_, ou
+_Publish-Subscribe_, refere-se a um paradigma de fila de mensageria o qual os
+remetentes de uma informação (_publishers_) enviam dados à uma classe abstrata de
+destinatários (_subscribers_) sem especificar um destinatário individual.
+*Action Cable* utiliza essa abordagem para manter a comunicação entre o servidor
+e diversos clientes.
 
 ## Server-Side Components
 
@@ -797,7 +791,7 @@ internally, irrespective of whether the application server is multi-threaded or 
 Accordingly, Action Cable works with popular servers like Unicorn, Puma, and
 Passenger.
 
-## Testing
+## Teste
 
-You can find detailed instructions on how to test your Action Cable functionality in the
-[testing guide](testing.html#testing-action-cable).
+Você pode encontrar instruções detalhadas de como testar a sua funcionalidade *Action Cable* no
+[guia de teste](testing.html#testing-action-cable).

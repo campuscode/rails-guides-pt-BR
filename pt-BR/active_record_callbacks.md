@@ -254,18 +254,18 @@ Assim como nas validações, também é possível ignorar os *callbacks* usando 
 
 Contudo, esses métodos devem ser usados com cautela, porque regras de negócio importantes e lógica da aplicação podem ser mantidos nos *callbacks*. Contorná-los sem entender as potenciais implicações pode levar a dados inválidos.
 
-Halting Execution
+Interrompendo uma Execução
 -----------------
 
-As you start registering new callbacks for your models, they will be queued for execution. This queue will include all your model's validations, the registered callbacks, and the database operation to be executed.
+Quando você começar a registrar novos *callbacks* para seus *models*, eles serão enfileirados para a execução. Esta fila incluirá todas as validações do seu *model*, os *callbacks* registrados e a operação do banco de dados a ser executada.
 
-The whole callback chain is wrapped in a transaction. If any callback raises an exception, the execution chain gets halted and a ROLLBACK is issued. To intentionally stop a chain use:
+Toda a cadeia do *callback* é empacotada em uma transação. Se algum *callback* lança uma exceção, a cadeia de execução é interrompida e um *ROLLBACK* é emitido. Para interromper intencionalmente uma cadeia, use:
 
 ```ruby
 throw :abort
 ```
 
-WARNING. Any exception that is not `ActiveRecord::Rollback` or `ActiveRecord::RecordInvalid` will be re-raised by Rails after the callback chain is halted. Raising an exception other than `ActiveRecord::Rollback` or `ActiveRecord::RecordInvalid` may break code that does not expect methods like `save` and `update` (which normally try to return `true` or `false`) to raise an exception.
+WARNING: Qualquer exceção que não seja `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` serão lançadas novamente pelo Rails após a cadeia do *callback* ser interrompida. Lançar uma outra exceção que não `ActiveRecord::Rollback` ou `ActiveRecord::RecordInvalid` pode quebrar um código que não espera por métodos como `save` ou `update` (os quais normalmente tentam retornar `true` ou `false`) para lançar uma exceção.
 
 *Callbacks* Relacionais
 --------------------
@@ -400,12 +400,12 @@ end
 
 Você pode declarar dentro de suas classes *callback* quantos *callback* achar necessário.
 
-Transaction Callbacks
+*Callbacks* de Transação
 ---------------------
 
-There are two additional callbacks that are triggered by the completion of a database transaction: `after_commit` and `after_rollback`. These callbacks are very similar to the `after_save` callback except that they don't execute until after database changes have either been committed or rolled back. They are most useful when your active record models need to interact with external systems which are not part of the database transaction.
+Existem dois *callbacks* adicionais que são disparados quando se completa uma transação de banco de dados: `after_commit` e `after_rollback`. Estes *callbacks* são muito parecidos com o *callback* `after_save`, exceto que eles não são executados até que as mudanças no banco de dados sejam confirmadas ou desfeitas. Eles são mais úteis quando seus *active record models* precisam de interagir com sistemas externos que não fazem parte da transação do banco de dados.
 
-Consider, for example, the previous example where the `PictureFile` model needs to delete a file after the corresponding record is destroyed. If anything raises an exception after the `after_destroy` callback is called and the transaction rolls back, the file will have been deleted and the model will be left in an inconsistent state. For example, suppose that `picture_file_2` in the code below is not valid and the `save!` method raises an error.
+Considere, por exemplo, o exemplo anterior onde o *model* `PictureFile` precisa de apagar um arquivo depois que um registro correspondente é destruído. Se algo lançar uma exceção depois que o *callback* `after_destroy` for chamado e a transação for desfeita, o arquivo terá sido deletado e o *model* será deixado em um estado inconsistente. Por exemplo, suponha que `picture_file_2` no código abaixo não é valido e o método `save!` lança um erro.
 
 ```ruby
 PictureFile.transaction do
@@ -414,7 +414,7 @@ PictureFile.transaction do
 end
 ```
 
-By using the `after_commit` callback we can account for this case.
+Usando o *callback* `after_commit` nós podemos responder por esse caso.
 
 ```ruby
 class PictureFile < ApplicationRecord
@@ -428,11 +428,11 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-NOTE: The `:on` option specifies when a callback will be fired. If you
-don't supply the `:on` option the callback will fire for every action.
+NOTE: A opção `:on` especifica quando um *callback* vai ser disparado. Se você
+não fornecer a opção `:on` o *callback* será disparado para cada ação.
 
-Since using `after_commit` callback only on create, update, or delete is
-common, there are aliases for those operations:
+Já que usar o *callback* `after_commit` para criar, atualizar ou deletar é
+comum, existem *aliases* para as operações:
 
 * `after_create_commit`
 * `after_update_commit`
@@ -450,11 +450,11 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-WARNING. When a transaction completes, the `after_commit` or `after_rollback` callbacks are called for all models created, updated, or destroyed within that transaction. However, if an exception is raised within one of these callbacks, the exception will bubble up and any remaining `after_commit` or `after_rollback` methods will _not_ be executed. As such, if your callback code could raise an exception, you'll need to rescue it and handle it within the callback in order to allow other callbacks to run.
+WARNING. Quando uma transação é completada, os *callbacks* `after_commit` ou `after_rollback` são chamados para todos os *models* criados, atualizados ou destruidos em uma transação. No entanto, se uma exceção é lançada em um desses *callbacks*, a exceção vai interromper a execução e quaisquer métodos restantes de `after_commit` ou `after_rollback` _não_ serão executados. Assim sendo, se o código do seu *callback* pode lançar uma exceção, você precisará recuperá-la e tratá-la dentro do *callback* para que outros callbacks possam ser executados.
 
-WARNING. The code executed within `after_commit` or `after_rollback` callbacks is itself not enclosed within a transaction.
+WARNING. O código executado dentro dos *callbacks* de `after_commit` ou `after_rollback` não está incluido em uma transação.
 
-WARNING. Using both `after_create_commit` and `after_update_commit` in the same model will only allow the last callback defined to take effect, and will override all others.
+WARNING. Usando ambos `after_create_commit` e `after_update_commit` no mesmo *model* permitirá somente que o último *callback* definido seja efetuado, sobrepondo todos os outros.
 
 ```ruby
 class User < ApplicationRecord
@@ -475,7 +475,7 @@ end
 => User was saved to database
 ```
 
-There is also an alias for using the `after_commit` callback for both create and update together:
+Existe também um *alias* para o usar o *callback* `after_commit`, juntamente, tanto para criar quanto para atualizar:
 
 * `after_save_commit`
 
@@ -489,11 +489,11 @@ class User < ApplicationRecord
   end
 end
 
-# creating a User
+# criando um Usuário
 >> @user = User.create
 => User was saved to database
 
-# updating @user
+# atualizando o Usuário @user
 >> @user.save
 => User was saved to database
 ```

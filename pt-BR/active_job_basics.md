@@ -1,54 +1,50 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Job Basics
+Básico de Active Jobs
 =================
 
-This guide provides you with all you need to get started in creating,
-enqueuing and executing background jobs.
+Este guia oferece a você tudo o que você precisa para começar a criar, enfileirar e executar *jobs* em *background*
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
-* How to create jobs.
-* How to enqueue jobs.
-* How to run jobs in the background.
-* How to send emails from your application asynchronously.
+* Como criar *jobs*
+* Como enfileirar *jobs*
+* como executar *jobs* em segundo plano 
+* Como enviar emails de sua aplicação de maneira assíncrona 
 
 --------------------------------------------------------------------------------
 
-
-Introduction
+Introdução 
 ------------
 
-Active Job is a framework for declaring jobs and making them run on a variety
-of queuing backends. These jobs can be everything from regularly scheduled
-clean-ups, to billing charges, to mailings. Anything that can be chopped up
-into small units of work and run in parallel, really.
+O *Active Job* é um *framework* para declarar *jobs* e fazê-los executar em uma variedade de *backends* de fila. Estes *jobs* podem ser qualquer coisa, de limpezas programadas regularmente, a cobranças de despesas, a envio de emails. Qualquer coisa que possa ser cortada em pequenas unidades de trabalho e executadas paralelamente, sério. 
 
 
-The Purpose of Active Job
+O Propósito do Active Job
 -----------------------------
-The main point is to ensure that all Rails apps will have a job infrastructure
-in place. We can then have framework features and other gems build on top of that,
-without having to worry about API differences between various job runners such as
-Delayed Job and Resque. Picking your queuing backend becomes more of an operational
-concern, then. And you'll be able to switch between them without having to rewrite
-your jobs.
 
-NOTE: Rails by default comes with an asynchronous queuing implementation that
-runs jobs with an in-process thread pool. Jobs will run asynchronously, but any
-jobs in the queue will be dropped upon restart.
+O ponto principal é garantir que todas as aplicações Rails terão uma infraestrutura
+de *jobs* no lugar. Nós podemos então ter *features* de *frameworks* e outras *gems*
+construídas em cima dela, sem ter que nos preocupar com diferenças de API entre vários
+executadores de *job* como *Delayed Job* e *Resque*. Dessa forma, escolher o seu *backend* 
+de enfileiramento se torna mais uma preocupação operacional. E você poderá alternar entre eles sem
+ter que reescrever os seus *jobs*. 
+
+NOTE: Rails por padrão vem com uma implementação de fila assíncrona que executa *jobs*
+com uma *pool* de *threads* no processo. *Jobs* serão executados da maneira assíncrona, mas
+quaisquer *jobs* na fila serão derrubados ao reinicializar.
 
 
-Creating a Job
+Criando um *Job*
 --------------
 
-This section will provide a step-by-step guide to creating a job and enqueuing it.
+Esta seção fornecerá um guia passo a passo para criar um *job* e enfileirá-lo.
 
-### Create the Job
+### Crie o *Job*
 
-Active Job provides a Rails generator to create jobs. The following will create a
-job in `app/jobs` (with an attached test case under `test/jobs`):
+O *Active Job* fornece um gerador Rails para criar *jobs*. O seguinte criará um
+*job* em `app/jobs` (com um teste anexado em `test/jobs`):
 
 ```bash
 $ rails generate job guests_cleanup
@@ -57,16 +53,16 @@ create    test/jobs/guests_cleanup_job_test.rb
 create  app/jobs/guests_cleanup_job.rb
 ```
 
-You can also create a job that will run on a specific queue:
+Você também pode criar um *job* que será executado em uma fila específica:
 
 ```bash
 $ rails generate job guests_cleanup --queue urgent
 ```
 
-If you don't want to use a generator, you could create your own file inside of
-`app/jobs`, just make sure that it inherits from `ApplicationJob`.
+Se você não quiser usar um gerador, você pode criar seu próprio arquivo dentro de
+`app/jobs`, apenas certifique-se de que herda de `ApplicationJob`.
 
-Here's what a job looks like:
+Aqui está a aparência de um *job*:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -78,55 +74,55 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-Note that you can define `perform` with as many arguments as you want.
+Observe que você pode definir `perform` com quantos argumentos quiser.
 
-### Enqueue the Job
+### Enfileirar o *Job*
 
-Enqueue a job like so:
+Enfileirar um *job* assim:
 
 ```ruby
-# Enqueue a job to be performed as soon as the queuing system is
-# free.
+# Enfileirar um _job_ para ser executado assim que o sistema de enfileiramento estiver
+# livre.
 GuestsCleanupJob.perform_later guest
 ```
 
 ```ruby
-# Enqueue a job to be performed tomorrow at noon.
+# Enfileirar um _job_ para ser executado amanhã ao meio-dia.
 GuestsCleanupJob.set(wait_until: Date.tomorrow.noon).perform_later(guest)
 ```
 
 ```ruby
-# Enqueue a job to be performed 1 week from now.
+# Enfileirar um _job_ para ser executado em 1 semana a partir de agora.
 GuestsCleanupJob.set(wait: 1.week).perform_later(guest)
 ```
 
 ```ruby
-# `perform_now` and `perform_later` will call `perform` under the hood so
-# you can pass as many arguments as defined in the latter.
+# `perform_now` e `perform_later` irão chamar `perform` por baixo dos panos, então
+# você pode passar quantos argumentos forem definidos no último.
 GuestsCleanupJob.perform_later(guest1, guest2, filter: 'some_filter')
 ```
 
-That's it!
+É isso aí!
 
-Job Execution
+Execução de *Job*
 -------------
 
-For enqueuing and executing jobs in production you need to set up a queuing backend,
-that is to say you need to decide for a 3rd-party queuing library that Rails should use.
-Rails itself only provides an in-process queuing system, which only keeps the jobs in RAM.
-If the process crashes or the machine is reset, then all outstanding jobs are lost with the
-default async backend. This may be fine for smaller apps or non-critical jobs, but most
-production apps will need to pick a persistent backend.
+Para enfileirar e executar *jobs* em produção você precisa configurar um *backend* de filas,
+ou seja, você precisa decidir por uma *lib* de enfileiramento de terceiros que o Rails deve usar,
+o Rails em si fornece apenas um sistema de filas em processo, que só mantém os *jobs* em memória(RAM).
+Se o processo quebra ou a máquina é reiniciada, todos os *jobs* pendentes serão perdidos com o
+*backend* assíncrono padrão. Isso pode ser bom para aplicações menores ou *jobs* não críticos, mas a maioria
+das aplicações em produção precisará escolher um *backend* de persistência.
 
-### Backends
+### *Backends*
 
-Active Job has built-in adapters for multiple queuing backends (Sidekiq,
-Resque, Delayed Job, and others). To get an up-to-date list of the adapters
-see the API Documentation for [ActiveJob::QueueAdapters](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+O *Active Job* tem adaptadores *built-in* para múltiplos *backends* de fila (Sidekiq
+Resque, Delayed Job e outros). Para obter uma lista atualizada dos adaptadores,
+consulte a documentação da API para [ActiveJob::QueueAdapters](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
 
-### Setting the Backend
+### Configurando o *Backend*
 
-You can easily set your queuing backend:
+Você pode definir facilmente o *backend* de fila:
 
 ```ruby
 # config/application.rb
@@ -140,7 +136,7 @@ module YourApp
 end
 ```
 
-You can also configure your backend on a per job basis.
+Você também pode configurar seu *backend* por um *job* base.
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -152,14 +148,14 @@ end
 # was configured in `config.active_job.queue_adapter`.
 ```
 
-### Starting the Backend
+### Iniciando o *Backend*
 
-Since jobs run in parallel to your Rails application, most queuing libraries
-require that you start a library-specific queuing service (in addition to
-starting your Rails app) for the job processing to work. Refer to library
-documentation for instructions on starting your queue backend.
+Uma vez que os *jobs* são executados em paralelo à sua aplicação Rails, a maioria
+das bibliotecas de filas exigem que você inicie um serviço de enfileiramento específico
+(além de iniciar sua aplicação Rails) para que o processamento do *job* funcione. Consulte a
+documentação da biblioteca para obter instruções sobre como iniciar o *backend* da fila.
 
-Here is a noncomprehensive list of documentation:
+Aqui está uma lista não abrangente de documentação:
 
 - [Sidekiq](https://github.com/mperham/sidekiq/wiki/Active-Job)
 - [Resque](https://github.com/resque/resque/wiki/ActiveJob)
@@ -168,11 +164,11 @@ Here is a noncomprehensive list of documentation:
 - [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
 - [Delayed Job](https://github.com/collectiveidea/delayed_job#active-job)
 
-Queues
-------
+Filas
+-----
 
-Most of the adapters support multiple queues. With Active Job you can schedule
-the job to run on a specific queue:
+A maioria dos *adapters* suportam múltiplas filas. Com o *Active Job* você pode agendar
+o *job* para executar em uma fila específica:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -181,7 +177,7 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-You can prefix the queue name for all your jobs using
+Você pode prefixar o nome da fila para todos os *jobs* usando
 `config.active_job.queue_name_prefix` in `application.rb`:
 
 ```ruby
@@ -198,13 +194,13 @@ class GuestsCleanupJob < ApplicationJob
   #....
 end
 
-# Now your job will run on queue production_low_priority on your
-# production environment and on staging_low_priority
-# on your staging environment
+# Agora seu job irá executar na fila production_low_priority no seu
+# ambiente de produção e na staging_low_priority
+# no seu ambiente de desenvolvimento
 ```
 
-The default queue name prefix delimiter is '\_'.  This can be changed by setting
-`config.active_job.queue_name_delimiter` in `application.rb`:
+O prefixo delimitador padrão de nome de fila é '\_'. Isso pode ser alterado configurando o
+`config.active_job.queue_name_delimiter` no `application.rb`:
 
 ```ruby
 # config/application.rb
@@ -221,21 +217,21 @@ class GuestsCleanupJob < ApplicationJob
   #....
 end
 
-# Now your job will run on queue production.low_priority on your
-# production environment and on staging.low_priority
-# on your staging environment
+# Agora seu job irá executar na fila production.low.priority no seu
+# ambiente de produção e na staging.low.priority
+# no seu ambiente de desenvolvimento
 ```
 
-If you want more control on what queue a job will be run you can pass a `:queue`
-option to `#set`:
+Se você quiser mais controle em qual fila um *job* será executado, você pode passar
+uma opção `:queue` ao `#set`:
 
 ```ruby
 MyJob.set(queue: :another_queue).perform_later(record)
 ```
 
-To control the queue from the job level you can pass a block to `#queue_as`. The
-block will be executed in the job context (so you can access `self.arguments`)
-and you must return the queue name:
+Para controlar a fila a partir do nível do *job*, você pode passar um bloco para `#queue_as`.
+O bloco será executado no contexto do *job* (o que te permite acessar `self.arguments`) e você
+deve retornar o nome da fila:
 
 ```ruby
 class ProcessVideoJob < ApplicationJob
@@ -249,23 +245,24 @@ class ProcessVideoJob < ApplicationJob
   end
 
   def perform(video)
-    # Do process video
+    # Processa o vídeo
   end
 end
 
 ProcessVideoJob.perform_later(Video.last)
 ```
 
-NOTE: Make sure your queuing backend "listens" on your queue name. For some
-backends you need to specify the queues to listen to.
+NOTE: Tenha certeza de que o seu *backend* de fila "escuta" o nome da fila.
+Para alguns *backends* você precisará especificar as filas a serem "ouvidas".
 
 
-Callbacks
+*Callbacks*
 ---------
 
-Active Job provides hooks to trigger logic during the life cycle of a job. Like
-other callbacks in Rails, you can implement the callbacks as ordinary methods
-and use a macro-style class method to register them as callbacks:
+O *Active Job* fornece Hooks para disparar lógica durante o ciclo de vida de um *Job*.
+Assim como em outros *callbacks* no Rails, você pode implementar *callbacks*
+como métodos comuns e usar um método macro de classe para registrá-los
+como *callbacks*:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -286,9 +283,9 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-The macro-style class methods can also receive a block. Consider using this
-style if the code inside your block is so short that it fits in a single line.
-For example, you could send metrics for every job enqueued:
+Os métodos macro de classe podem também receber um bloco. Considere usar esse estilo,
+se o código dentro do bloco for tão pequeno que cabe numa única linha.
+Por exemplo, você pode enviar métricas para cada *job* enfileirado:
 
 ```ruby
 class ApplicationJob < ActiveJob::Base
@@ -296,7 +293,7 @@ class ApplicationJob < ActiveJob::Base
 end
 ```
 
-### Available callbacks
+### *Callbacks* disponíveis
 
 * `before_enqueue`
 * `around_enqueue`
@@ -306,12 +303,12 @@ end
 * `after_perform`
 
 
-Action Mailer
+*Action Mailer*
 ------------
 
-One of the most common jobs in a modern web application is sending emails outside
-of the request-response cycle, so the user doesn't have to wait on it. Active Job
-is integrated with Action Mailer so you can easily send emails asynchronously:
+Um dos *jobs* mais comuns em uma aplicação *web* moderna é enviar e-mails fora do ciclo de 
+*request-response*, para que o usuário não tenha que esperar por ele. O *Active Job* está
+integrado com o *Action Mailer*, o que te permite enviar e-mails assincronamente:
 
 ```ruby
 # If you want to send the email now use #deliver_now
@@ -321,23 +318,23 @@ UserMailer.welcome(@user).deliver_now
 UserMailer.welcome(@user).deliver_later
 ```
 
-NOTE: Using the asynchronous queue from a Rake task (for example, to
-send an email using `.deliver_later`) will generally not work because Rake will
-likely end, causing the in-process thread pool to be deleted, before any/all
-of the `.deliver_later` emails are processed. To avoid this problem, use
-`.deliver_now` or run a persistent queue in development.
+NOTE: Se você usar uma fila assíncrona de uma *Rake task* (por exemplo, para enviar um e-mail
+usando `.deliver_later`), geralmente não irá funcionar porque a *Rake* irá provavelmente
+terminar, fazendo com que o processo interno do *thread pool* seja removido, antes de
+qualquer ou todos os e-mails serem processados. Para evitar esse problema, use o 
+`.deliver_now` ou execute uma fila persistente no ambiente de desenvolvimento.
 
 
-Internationalization
---------------------
+Internacionalização
+-------------------
 
-Each job uses the `I18n.locale` set when the job was created. Useful if you send
-emails asynchronously:
+Cada *job* usa o `I18n.locale` configurado quando o *job* é criado. Isso é útil se você
+enviar e-mails assincronamente:
 
 ```ruby
 I18n.locale = :eo
 
-UserMailer.welcome(@user).deliver_later # Email will be localized to Esperanto.
+UserMailer.welcome(@user).deliver_later # O e-mail será localizado para Esperanto.
 ```
 
 
@@ -421,7 +418,8 @@ Rails.application.config.active_job.custom_serializers << MoneySerializer
 Exceções
 ----------
 
-*Jobs* ativos fornecem uma maneira de capturar exceções criadas durante a execução do *job*.
+Os *Active Jobs* fornecem uma maneira de capturar exceções criadas durante a execução do *job*.
+
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -453,7 +451,8 @@ class RemoteServiceJob < ApplicationJob
 end
 ```
 
-Para mais detalhes Veja a Documentação da api para [ActiveJob::Exceções](https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html).
+Para mais detalhes Veja a Documentação da API para [ActiveJob::Exceções](https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html).
+
 
 ### Desserialização
 
@@ -461,7 +460,8 @@ Para mais detalhes Veja a Documentação da api para [ActiveJob::Exceções](htt
 
 Se um registro for deletado após o *job* ser enfileirado mas antes do método `#perform` ser chamado, o *Active Job* vai lançar a exceção `ActiveJob::DeserializationError`.
 
-Teste de *Jobs*
+Testando os *Jobs*
+
 --------------
 
 Você pode encontrar instruções mais detalhadas sobre como testar seus *jobs* no
