@@ -136,7 +136,7 @@ NOTE: Definido em `active_support/core_ext/object/blank.rb`.
 
 ### `duplicable?`
 
-As of Ruby 2.5, most objects can be duplicated via `dup` or `clone`:
+A partir do Ruby 2.5, a maioria dos objetos podem ser duplicados com `dup` ou `clone`:
 
 ```ruby
 "foo".dup           # => "foo"
@@ -146,7 +146,7 @@ Complex(0).dup      # => (0+0i)
 1.method(:+).dup    # => TypeError (allocator undefined for Method)
 ```
 
-Active Support provides `duplicable?` to query an object about this:
+O _Active Support_ fornece o `duplicable?` para consultar se o objeto pode ser duplicado:
 
 ```ruby
 "foo".duplicable?           # => true
@@ -156,7 +156,7 @@ Complex(1).duplicable?      # => true
 1.method(:+).duplicable?    # => false
 ```
 
-WARNING: Any class can disallow duplication by removing `dup` and `clone` or raising exceptions from them. Thus only `rescue` can tell whether a given arbitrary object is duplicable. `duplicable?` depends on the hard-coded list above, but it is much faster than `rescue`. Use it only if you know the hard-coded list is enough in your use case.
+WARNING: Qualquer classe pode ter a duplicação desabilitada a partir da remoção de `dup` e `clone` ou definindo exceções. Neste caso apenas `rescue` pode informar se determinado objeto arbitrável é duplicável. `duplicable?` depende de uma lista como no exemplo porém é muito mais veloz que `rescue`. Use apenas se você souber que a lista é suficiente em seu caso.
 
 NOTE: Defined in `active_support/core_ext/object/duplicable.rb`.
 
