@@ -4,84 +4,84 @@
 Active Support Core Extensions
 ==============================
 
-Active Support is the Ruby on Rails component responsible for providing Ruby language extensions, utilities, and other transversal stuff.
+O _Active Support_ é o componente em Ruby on Rails responsável por fornecer à linguagem Ruby extensões, utilidades e outras funcionalidades paralelas.
 
-It offers a richer bottom-line at the language level, targeted both at the development of Rails applications, and at the development of Ruby on Rails itself.
+Ele oferece um riquíssimo ponto de partida no nível da linguagem, onde pode-se aproveitar tanto para o desenvolvimento de aplicações Rails, quanto no próprio desenvolvimento da tecnologia Ruby on Rails.
 
-After reading this guide, you will know:
+Depois de ler esse guia, você saberá:
 
-* What Core Extensions are.
-* How to load all extensions.
-* How to cherry-pick just the extensions you want.
-* What extensions Active Support provides.
+* O que são _Core Extensions_.
+* Como carregar todas as extensões.
+* Como escolher apenas as extensões que você precisa.
+* Quais extensões o _Active Support_ fornece.
 
 --------------------------------------------------------------------------------
 
-How to Load Core Extensions
+Como Carregar _Core Extensions_
 ---------------------------
 
-### Stand-Alone Active Support
+### _Active Support Stand-Alone_
 
-In order to have a near-zero default footprint, Active Support does not load anything by default. It is broken in small pieces so that you can load just what you need, and also has some convenience entry points to load related extensions in one shot, even everything.
+A fim de ter uma configuração padrão mais básica, o _Active Support_ não carrega nada por padrão. Com isso, ele é granularizado em pequenas unidades para que seja possível carregar apenas o que se é necessário no contexto, além de oferecer pontos de entrada que são interessantes para o carregamento de extensões convenientes de uma só vez, ou até mesmo não carregar nenhuma.
 
-Thus, after a simple require like:
+Portanto, é possível inicializar após o uso de um simples _require_ como:
 
 ```ruby
 require 'active_support'
 ```
 
-objects do not even respond to `blank?`. Let's see how to load its definition.
+Objetos não respondem nem mesmo a um `blank?`. Vejamos como carregar essa definição.
 
-#### Cherry-picking a Definition
+#### Escolhendo a Definição
 
-The most lightweight way to get `blank?` is to cherry-pick the file that defines it.
+A forma mais limitada de conseguir respostas a um `blank?` é selecionando o arquivo que faz essa definição.
 
-For every single method defined as a core extension this guide has a note that says where such a method is defined. In the case of `blank?` the note reads:
+Para cada método definido como _core extension_ esse guia possui uma nota que diz onde tal método é definido. No caso de `blank?` a nota diz:
 
-NOTE: Defined in `active_support/core_ext/object/blank.rb`.
+NOTE: Definido em `active_support/core_ext/object/blank.rb`.
 
-That means that you can require it like this:
+Isso significa que você pode fazer _requires_ assim:
 
 ```ruby
 require 'active_support'
 require 'active_support/core_ext/object/blank'
 ```
 
-Active Support has been carefully revised so that cherry-picking a file loads only strictly needed dependencies, if any.
+O _Active Support_ foi cuidadosamente projetado para que as seleções de arquivos carreguem somente as dependências extremamente necessárias, caso existam.
 
-#### Loading Grouped Core Extensions
+#### Carregando _Core Extensions_ Agrupadas
 
-The next level is to simply load all extensions to `Object`. As a rule of thumb, extensions to `SomeClass` are available in one shot by loading `active_support/core_ext/some_class`.
+O próximo passo é simplesmente carregar todas as extensões de `Object`. Como regra geral, extensões para `SomeClass` estão disponíveis em um rápido carregamento de `active_support/core_ext/some_class`.
 
-Thus, to load all extensions to `Object` (including `blank?`):
+Portanto, para carregar todas as extensões de `Object` (incluindo `blank?`):
 
 ```ruby
 require 'active_support'
 require 'active_support/core_ext/object'
 ```
 
-#### Loading All Core Extensions
+#### Carregando Todas _Core Extensions_
 
-You may prefer just to load all core extensions, there is a file for that:
+Você pode escolher por carregar todas as extensões principais, há um arquivo para isso:
 
 ```ruby
 require 'active_support'
 require 'active_support/core_ext'
 ```
 
-#### Loading All Active Support
+#### Carregando _Active Support_ Completamente
 
-And finally, if you want to have all Active Support available just issue:
+E finalmente, se você quer ter tudo que o _Active Support_ fornece, basta apenas:
 
 ```ruby
 require 'active_support/all'
 ```
 
-That does not even put the entire Active Support in memory upfront indeed, some stuff is configured via `autoload`, so it is only loaded if used.
+Isso não vai inserir todo o _Active Support_ na memória antes do necessário, algumas funcionalidades são configuradas via _ʻautoload`_, então só são carregadas se usadas.
 
-### Active Support Within a Ruby on Rails Application
+### _Active Support_ Em Uma Aplicação Ruby on Rails
 
-A Ruby on Rails application loads all Active Support unless `config.active_support.bare` is true. In that case, the application will only load what the framework itself cherry-picks for its own needs, and can still cherry-pick itself at any granularity level, as explained in the previous section.
+Uma aplicação Ruby on Rails carrega todo o _Active Support_ a não ser que `config.active_support.bare` esteja definida como `true`. Neste caso, a aplicação vai carregar apenas o que o próprio _framework_ escolhe como suas próprias necessidades, e ainda pode selecionar a si mesmo em qualquer nível de granularidade, conforme explicado na seção anterior.
 
 Extensions to All Objects
 -------------------------
