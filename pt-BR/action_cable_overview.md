@@ -783,19 +783,19 @@ in new Rails applications is the asynchronous (`async`) adapter.
 The Ruby side of things is built on top of [websocket-driver](https://github.com/faye/websocket-driver-ruby),
 [nio4r](https://github.com/celluloid/nio4r), and [concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby).
 
-## Deployment
+## Desdobramento, desenvolvimento
 
-Action Cable is powered by a combination of WebSockets and threads. Both the
-framework plumbing and user-specified channel work are handled internally by
-utilizing Ruby's native thread support. This means you can use all your regular
-Rails models with no problem, as long as you haven't committed any thread-safety sins.
+O Action Cable é alimentado por uma combinação de WebSockets e threads. Tanto o
+o encanamento da estrutura e o trabalho do canal especificado pelo usuário são tratados internamente por
+usando suporte de thread nativo do Ruby. Isso significa que você pode usar todos os seus
+Modelos Rails sem problemas, contanto que você não tenha cometido nenhum pecado de thread-safety.
 
-The Action Cable server implements the Rack socket hijacking API,
-thereby allowing the use of a multithreaded pattern for managing connections
-internally, irrespective of whether the application server is multi-threaded or not.
+O servidor Action Cable implementa o Rack socket hijacking API,
+permitindo assim o uso de um padrão multithread para o gerenciamento de conexões
+internamente, independentemente de o servidor de aplicativos ser multiencadeado ou não.
 
-Accordingly, Action Cable works with popular servers like Unicorn, Puma, and
-Passenger.
+Assim, Action Cable funciona com servidores populares como Unicorn, Puma e
+Passageiro.
 
 ## Testing
 
