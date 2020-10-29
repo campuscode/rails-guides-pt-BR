@@ -1,19 +1,19 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Noções básicas do Action Mailer
+Noções básicas do _Action Mailer_
 ====================
 
 Este guia fornece tudo que você precisa para começar a enviar
-e-mails de e para seu aplicativo e muitos componentes internos do Action
-Mailer. Também aborda como testar seus mailers.
+e-mails de e para seu aplicativo e muitos componentes internos do _Action Mailer_. 
+Também aborda como testar seus mailers.
 
 Depois de ler este guia, você saberá:
 
-* Como enviar e-mail em um aplicativo Rails.
-* Como gerar e editar uma classe do Action Mailer e uma visão do mailerviews.
-* Como configurar o Action Mailer para o seu ambiente.
-* Como testar suas classes do Action Mailer.
+* Como enviar e-mail em uma aplicação Rails.
+* Como gerar e editar uma classe do _Action Mailer_ e uma visão do _mailer view_.
+* Como configurar o _Action Mailer_ para o seu ambiente.
+* Como testar suas classes do _Action Mailer_.
 
 --------------------------------------------------------------------------------
 
@@ -729,7 +729,7 @@ Usando os *helpers* do *Action Mailer*
 
 O *Action Mailer* agora herda apenas do `AbstractController`, para que você tenha acesso aos mesmos *helpers* genéricos que no *Action Controller*.
 
-Configuração do Action Mailer
+Configuração do _Action Mailer_
 ---------------------------
 
 As seguintes opções de configuração são feitas melhor em um dos ambientes
@@ -737,13 +737,14 @@ arquivos (environment.rb, production.rb, etc...)
 
 | Configuração  | Descrição |
 |---------------|-------------|
-|`logger`|Gera informações sobre a execução de correspondência, se disponível. Pode ser definido como `nil` para nenhum registro. Compatível com os loggers `Logger` e` Log4r` do Ruby.|
+|`logger`|Gera informações sobre a execução de correspondência, se disponível. Pode ser definido como `nil` para nenhum registro. Compatível com os _loggers_ `Logger` e `Log4r` do Ruby.|
 |`smtp_settings`|Permite configuração detalhada para `:smtp` Método de Entrega:<ul><li>`:address` - Permite que você use um servidor de e-mail remoto. Basta alterá-lo do padrão `"localhost"` configuração.</li><li>`:port` - Na chance de seu servidor de e-mail não funcionar na porta 25, você pode alterá-lo.</li><li>`:domain` - Se você precisar especificar um domínio HELO, pode fazê-lo aqui.</li><li>`:user_name` - Se o seu servidor de e-mail requer autenticação, defina o nome de usuário neste configuração.</li><li>`:password` - Se o seu servidor de e-mail requer autenticação, defina a senha neste configuração.</li><li>`:authentication` - Se o seu servidor de e-mail requer autenticação, você precisa especificar o tipo de autenticação aqui. Este é um símbolo e um dos `:plain` (irá enviar a senha em claro), `:login` (irá enviar senha codificada em Base64) or `:cram_md5` (combina um mecanismo de desafio / resposta para trocar informações e um algoritmo criptográfico Message Digest 5 para hash informações importantes)</li><li>`:enable_starttls_auto` - Detecta se STARTTLS está habilitado em seu servidor SMTP e começa a usá-lo. Defaults to `true`.</li><li>`:openssl_verify_mode` - Ao usar TLS, você pode definir como o OpenSSL verifica o certificado. Isso é realmente útil se você precisar validar um certificado autoassinado e / ou curinga. Você pode usar o nome de uma constante de verificação OpenSSL ('nenhum' ou 'par') ou diretamente a constante (`OpenSSL::SSL::VERIFY_NONE` ou `OpenSSL::SSL::VERIFY_PEER`).</li><li>`:ssl/:tls` - Permite que a conexão SMTP use SMTP / TLS (SMTPS: SMTP sobre conexão TLS direta)</li></ul>|
-|`sendmail_settings`|Permite que você substitua as opções do método de entrega `: sendmail`.<ul><li>`:localização` - A localização do executável sendmail. Padrões para `/usr/sbin/sendmail`.</li><li>`:arguments` - Os argumentos da linha de comando a serem passados ​​ao sendmail. Padrões para `-i`.</li></ul>||`raise_delivery_errors`|Se erros devem ou não ser levantados se o e-mail não for entregue. This only works if the external email server is configured for immediate delivery.|
-|`delivery_method`|Define um método de entrega. Os valores possíveis são:<ul><li>`:smtp` (default), pode ser configurado usando `config.action_mailer.smtp_settings`.</li><li>`:sendmail`, pode ser configurado usando `config.action_mailer.sendmail_settings`.</li><li>`:file`: salvar e-mails em arquivos; pode ser configurado usando `config.action_mailer.file_settings`.</li><li>`:test`: salvar e-mails para `ActionMailer::Base.deliveries` array.</li></ul>See [API docs](https://api.rubyonrails.org/classes/ActionMailer/Base.html) para mais informações.|
-|`perform_deliveries`|Determina se as entregas são realmente realizadas quando o método `entrega` é invocado na mensagem de correio. Por padrão, eles são, mas isso pode ser desligado para ajudar no teste funcional. Se este valor for `false`, a matriz` deliveryies` não será preenchida, mesmo se `delivery_method` for `:test`.|
-|`entregas`|Mantém um array de todos os emails enviados através do Action Mailer com delivery_method: test. Mais útil para teste de unidade e funcional.|
-|`default_options`|Permite definir valores padrão para as opções do método `mail` (`: from`, `: reply_to`, etc.).|
+|`sendmail_settings`|Permite que você substitua as opções do método de entrega `: sendmail`.<ul><li>`:location` - A localização do executável sendmail. Padrões para `/usr/sbin/sendmail`.</li><li>`:arguments` - Os argumentos da linha de comando a serem passados ​​ao sendmail. Padrões para `-i`.</li></ul>|
+|`raise_delivery_errors`|Se erros devem ou não ser levantados se o e-mail não for entregue. This only works if the external email server is configured for immediate delivery.|
+|`delivery_method`|Define um método de entrega. Os valores possíveis são:<ul><li>`:smtp` (default), pode ser configurado usando `config.action_mailer.smtp_settings`.</li><li>`:sendmail`, pode ser configurado usando `config.action_mailer.sendmail_settings`.</li><li>`:file`: salva e-mails em arquivos; pode ser configurado usando `config.action_mailer.file_settings`.</li><li>`:test`: salvar e-mails para `ActionMailer::Base.deliveries` array.</li></ul>Veja[API docs](https://api.rubyonrails.org/classes/ActionMailer/Base.html) para mais informações.|
+|`perform_deliveries`|Determina se as entregas são realmente realizadas quando o método `entrega` é invocado na mensagem do _Mail_. Por padrão, eles são, mas isso pode ser desligado para ajudar nos testes funcionais. Se este valor for `false`, o _array_ `deliveries` não será preenchido, mesmo se `delivery_method` for `:test`.|
+|`deliveries`|Mantém um _array_ de todos os emails enviados através do _Action Mailer_ com delivery_method: test. Muito útil para testes de unidade e funcional.|
+|`default_options`|Permite definir valores padrão para as opções do método `mail` (`:from`, `:reply_to`, etc.).|
 
 Para uma descrição completa das configurações possíveis, consulte o
 [Configuring Action Mailer](configuring.html#configuring-action-mailer) dentro do
