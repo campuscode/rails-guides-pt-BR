@@ -651,7 +651,7 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-Callbacks do Action Mailer
+Callbacks do _Action Mailer_
 -----------------------
 
 *Action Mailer* permite que você especifique o `before_action`, `after_action` e
