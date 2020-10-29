@@ -83,26 +83,26 @@ Isso não vai inserir todo o _Active Support_ na memória antes do necessário, 
 
 Uma aplicação Ruby on Rails carrega todo o _Active Support_ a não ser que `config.active_support.bare` esteja definida como `true`. Neste caso, a aplicação vai carregar apenas o que o próprio _framework_ escolhe como suas próprias necessidades, e ainda pode selecionar a si mesmo em qualquer nível de granularidade, conforme explicado na seção anterior.
 
-Extensions to All Objects
+Extensões para todos os objetos
 -------------------------
 
-### `blank?` and `present?`
+### `blank?` e `present?`
 
-The following values are considered to be blank in a Rails application:
+Os seguintes valores são considerados _blank_ em uma aplicação Rails:
 
-* `nil` and `false`,
+* `nil` e `false`,
 
-* strings composed only of whitespace (see note below),
+* strings compostas apenas por espaços em branco (veja a nota abaixo),
 
-* empty arrays and hashes, and
+* arrays e hashes vazios, e
 
-* any other object that responds to `empty?` and is empty.
+* qualquer outro objeto que responde a `empty?` como `true`.
 
-INFO: The predicate for strings uses the Unicode-aware character class `[:space:]`, so for example U+2029 (paragraph separator) is considered to be whitespace.
+INFO: A condicional é que as _strings_ usem a classe de caracter `[:space:]` do _Unicode-aware_, como por exemplo U+2029 (separador de parágrafo) é considerado um espaço em branco.
 
-WARNING: Note that numbers are not mentioned. In particular, 0 and 0.0 are **not** blank.
+WARNING: Note que números não são mencionados. Em particular, 0 e 0.0 **não** são _blank_.
 
-For example, this method from `ActionController::HttpAuthentication::Token::ControllerMethods` uses `blank?` for checking whether a token is present:
+Por exemplo, este método de `ActionController::HttpAuthentication::Token::ControllerMethods` usa `blank?` pra checar se o _token_ está presente:
 
 ```ruby
 def authenticate(controller, &login_procedure)
@@ -113,7 +113,7 @@ def authenticate(controller, &login_procedure)
 end
 ```
 
-The method `present?` is equivalent to `!blank?`. This example is taken from `ActionDispatch::Http::Cache::Response`:
+O método `present?` é equivalente ao `!blank?`. Este exemplo disponível em `ActionDispatch::Http::Cache::Response`:
 
 ```ruby
 def set_conditional_cache_control!
@@ -122,17 +122,17 @@ def set_conditional_cache_control!
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/object/blank.rb`.
+NOTE: Definido em `active_support/core_ext/object/blank.rb`.
 
 ### `presence`
 
-The `presence` method returns its receiver if `present?`, and `nil` otherwise. It is useful for idioms like this:
+O método `presence` retorna seu valor se `present?` for `true`, e `nil` caso não seja. Isso é muito útil para expressões como esta:
 
 ```ruby
 host = config[:host].presence || 'localhost'
 ```
 
-NOTE: Defined in `active_support/core_ext/object/blank.rb`.
+NOTE: Definido em `active_support/core_ext/object/blank.rb`.
 
 ### `duplicable?`
 
