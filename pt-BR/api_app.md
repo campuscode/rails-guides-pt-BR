@@ -191,7 +191,6 @@ end
 Escolhendo o Middleware
 --------------------
 
-An API application comes with the following middleware by default:
 Uma aplicação de API vem com os seguintes *middlewares* por padrão:
 
 - `Rack::Sendfile`
@@ -212,10 +211,10 @@ Uma aplicação de API vem com os seguintes *middlewares* por padrão:
 - `Rack::ETag`
 
 Olhe a sessão [middleware interno](rails_on_rack.html#internal-middleware-stack)
-do guia do `Rack` para mais informações dele
+do guia do `Rack` para mais informações.
 
-Outros plugins, incluindo o Active Record, podem adicionar *middlewares*
-adicionais. Em geral, esses *middlewares* são agnosticos para o tipo de
+Outros _plugins_, incluindo o _Active Record_, podem adicionar *middlewares*
+adicionais. Em geral, esses *middlewares* são agnósticos para o tipo de
 aplicação que você está construindo, e isso faz sentido em uma aplicação de API
 Rails.
 
@@ -227,7 +226,7 @@ $ rails middleware
 
 ### Usando o Middleware de Cache
 
-Por padrão, o Rails vai adicionar um middleware que fornece um armazenamento de
+Por padrão, o Rails vai adicionar um _middleware_ que fornece um armazenamento de
 *cache* baseado na configuração de sua aplicação (*memcache* por padrão). Isso
 significa que o *cache* embutido no HTTP pode confiar nisso.
 
@@ -245,11 +244,11 @@ end
 
 A chamada `stale?` vai comparar o cabeçalho `If-Modified-Since` na requisição
 com o `@post.updated_at`. Se o cabeçalho é mais novo que a ultima modificação,
-esta ação vai retornar a rasoista "304 Not Modified". Do contrário, ele vai
+esta ação vai retornar a resposta "304 Not Modified". Do contrário, ele vai
 renderizar a resposta e incluir um cabeçalho `Last-Modified` nele.
 
 Normalmente, este mecanismo é usado com base por cliente. O cache de
-*middleware* permite nós a compartilhar este mecanismo de cache através dos
+*middleware* nos permite compartilhar este mecanismo de cache através dos
 clientes. Nós podemos ativar o cache *cross-client* na chamada para `stale?`:
 
 ```ruby
@@ -262,29 +261,29 @@ def show
 end
 ```
 
-Isto significa que o cache de *middleware* vai guaradar o valor de
+Isto significa que o cache de *middleware* vai guardar o valor de
 `Last-Modified` para a URL no cache do Rails, e adiciona um cabeçalho
 `If-Modified-Since` para qualquer requisição de entrada para a mesma URL.
 
-Pense nisso como um cache de página usando a semantica HTTP.
+Pense nisso como um cache de página usando a semântica HTTP.
 
 ### Usando Rack::Sendfile
 
-Quando você usa o metodo `send_file` dentro de um *controller* do Rails, ele
+Quando você usa o método `send_file` dentro de um *controller* do Rails, ele
 define o cabeçalho `X-Sendfile`. O `Rack::Sendfile` é responsável por
 efetivamente enviar o arquivo.
 
 Se seu servidor front-end suportar envio de arquivos acelerado, `Rack::SendFile`
 vai descarregar o arquivo real enviando o trabalho para o servidor front-end.
 
-Você pode configurar o nome do cabeçalho que seu servidor front-end usa para
+Você pode configurar o nome do cabeçalho que seu servidor _front-end_ usa para
 este propósito usando `config.action_dispatch.x_sendfile_header` em seu arquivo
 de configuração de ambiente apropriado.
 
-Você pode aprender mais sobre como usar o `Rack::Sendfile` com front-ends
-popularesm [na documentação do Rack::Sendfile](https://www.rubydoc.info/github/rack/rack/master/Rack/Sendfile).
+Você pode aprender mais sobre como usar o `Rack::Sendfile` com _front-ends_
+populares [na documentação do Rack::Sendfile](https://www.rubydoc.info/github/rack/rack/master/Rack/Sendfile).
 
-Aqui alguns valores para este cabeçalho para alguns servidores populares, quando
+Aqui estão alguns valores para este cabeçalho para alguns servidores populares, quando
 estes servidores são configurados para suportar envio de arquivo acelerado.
 
 ```ruby
