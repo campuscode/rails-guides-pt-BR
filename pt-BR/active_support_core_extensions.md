@@ -421,20 +421,20 @@ TIP: Desde que `with_options` envie chamadas para seus receptores eles podem ser
 
 NOTE: Definido em `active_support/core_ext/object/with_options.rb`.
 
-### JSON support
+### Suporte ao JSON
 
-Active Support provides a better implementation of `to_json` than the `json` gem ordinarily provides for Ruby objects. This is because some classes, like `Hash`, `OrderedHash` and `Process::Status` need special handling in order to provide a proper JSON representation.
+_Active Support_ fornece uma melhor implementação para `to_json` do que a _gem_ `json` normalmente fornece para obejtos em Ruby. Isso é porque algumas classes, como `Hash`, `OrderedHash` e `Process::Status` precisam de manipulações especiais a fim de fornecer uma representação de JSON adequada.
 
-NOTE: Defined in `active_support/core_ext/object/json.rb`.
+NOTE: Definido em `active_support/core_ext/object/json.rb`.
 
-### Instance Variables
+### Variáveis de Instância
 
-Active Support provides several methods to ease access to instance variables.
+_Active Support_ fornece vários métodos para facilitar o acesso a variáveis de instância.
 
 #### `instance_values`
 
-The method `instance_values` returns a hash that maps instance variable names without "@" to their
-corresponding values. Keys are strings:
+O método `instance_values` retorna uma _hash_ que mapeia variáveis de instância de nomes sem "@" para seus
+valores correspondentes. As chaves são _strings_:
 
 ```ruby
 class C
@@ -446,11 +446,11 @@ end
 C.new(0, 1).instance_values # => {"x" => 0, "y" => 1}
 ```
 
-NOTE: Defined in `active_support/core_ext/object/instance_variables.rb`.
+NOTE: Definido em `active_support/core_ext/object/instance_variables.rb`.
 
 #### `instance_variable_names`
 
-The method `instance_variable_names` returns an array. Each name includes the "@" sign.
+O método `instance_variable_names` retorna um _array_. Cada nome inclui o sinal "@".
 
 ```ruby
 class C
@@ -462,17 +462,17 @@ end
 C.new(0, 1).instance_variable_names # => ["@x", "@y"]
 ```
 
-NOTE: Defined in `active_support/core_ext/object/instance_variables.rb`.
+NOTE: Definido em `active_support/core_ext/object/instance_variables.rb`.
 
-### Silencing Warnings and Exceptions
+### Silenciando _Warnings_ e Exceções
 
-The methods `silence_warnings` and `enable_warnings` change the value of `$VERBOSE` accordingly for the duration of their block, and reset it afterwards:
+Os métodos `silence_warnings` e `enable_warnings` trocam o valor de `$VERBOSE` de acordo com a duração do seu bloco, e o reiniciam depois:
 
 ```ruby
 silence_warnings { Object.const_set "RAILS_DEFAULT_LOGGER", logger }
 ```
 
-Silencing exceptions is also possible with `suppress`. This method receives an arbitrary number of exception classes. If an exception is raised during the execution of the block and is `kind_of?` any of the arguments, `suppress` captures it and returns silently. Otherwise the exception is not captured:
+Silenciar expressões também é possível com `suppress`. Este método recebe um número arbitrário de classes de exceção. Se uma exceção é acionada durante a execução de um bloco e é `kind_of?` qualquer um dos argumentos, `suppress` captura e retorna silenciosamente. Caso contrário, a exceção não é capturada:
 
 ```ruby
 # If the user is locked, the increment is lost, no big deal.
@@ -481,13 +481,13 @@ suppress(ActiveRecord::StaleObjectError) do
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/kernel/reporting.rb`.
+NOTE: Definido in `active_support/core_ext/kernel/reporting.rb`.
 
 ### `in?`
 
-The predicate `in?` tests if an object is included in another object. An `ArgumentError` exception will be raised if the argument passed does not respond to `include?`.
+A expressão `in?` testa se um objeto é incluido em outro objeto. Uma exceção `ArgumentError` será acionada se o argumento passado não responder a `include?`.
 
-Examples of `in?`:
+Exemplos de `in?`:
 
 ```ruby
 1.in?([1,2])        # => true
@@ -496,7 +496,7 @@ Examples of `in?`:
 1.in?(1)            # => ArgumentError
 ```
 
-NOTE: Defined in `active_support/core_ext/object/inclusion.rb`.
+NOTE: Definido em `active_support/core_ext/object/inclusion.rb`.
 
 Extensions to `Module`
 ----------------------
