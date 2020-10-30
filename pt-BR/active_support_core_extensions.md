@@ -289,29 +289,29 @@ NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
 
 ### `to_param`
 
-All objects in Rails respond to the method `to_param`, which is meant to return something that represents them as values in a query string, or as URL fragments.
+Todos objetos em Rails respondem ao método `to_param`, no qual se destina ao retorno de algo que representa como valores em consultas de _strings_, ou fragmentos de URL.
 
-By default `to_param` just calls `to_s`:
+Por padrão, `to_param` apenas chama `to_s`:
 
 ```ruby
 7.to_param # => "7"
 ```
 
-The return value of `to_param` should **not** be escaped:
+O retorno de valores em `to_param` **não** deve ser esquecido:
 
 ```ruby
 "Tom & Jerry".to_param # => "Tom & Jerry"
 ```
 
-Several classes in Rails overwrite this method.
+Várias classes em Rails sobreescrevem este método.
 
-For example `nil`, `true`, and `false` return themselves. `Array#to_param` calls `to_param` on the elements and joins the result with "/":
+Por exemplo `nil`, `true`, e `false` retornam a si mesmo. `Array#to_param` chama `to_param` nos elementos e se juntam ao resultado com "/":
 
 ```ruby
 [0, true, String].to_param # => "0/true/String"
 ```
 
-Notably, the Rails routing system calls `to_param` on models to get a value for the `:id` placeholder. `ActiveRecord::Base#to_param` returns the `id` of a model, but you can redefine that method in your models. For example, given
+Notavelmente, as rotas de sistemas Rails chamam `to_param` em _models_ para obter o valor do campo `:id`. `ActiveRecord::Base#to_param` retorna o `id` do _model_, mas você pode redefinir esse método em seus _models_. Por exemplo, dado
 
 ```ruby
 class User
@@ -321,15 +321,15 @@ class User
 end
 ```
 
-we get:
+nós temos:
 
 ```ruby
 user_path(@user) # => "/users/357-john-smith"
 ```
 
-WARNING. Controllers need to be aware of any redefinition of `to_param` because when a request like that comes in "357-john-smith" is the value of `params[:id]`.
+WARNING. _Controllers_ precisam estar atentos a qualquer redefinição de `to_param` porque quando uma requisição como essa chega em "357-john-smith" este é o valor de `params[:id]`.
 
-NOTE: Defined in `active_support/core_ext/object/to_param.rb`.
+NOTE: Definido em `active_support/core_ext/object/to_param.rb`.
 
 ### `to_query`
 
@@ -356,9 +356,9 @@ account.to_query('company[name]')
 # => "company%5Bname%5D=Johnson+%26+Johnson"
 ```
 
-so its output is ready to be used in a query string.
+então its output is ready to be used in a query string.
 
-Arrays return the result of applying `to_query` to each element with `key[]` as key, and join the result with "&":
+_Arrays_ retornam o resultado da aplicação `to_query` para cada elemento com `key[]` como chave, e junta o resultado com "&":
 
 ```ruby
 [3.4, -45.6].to_query('sample')
@@ -371,14 +371,14 @@ Hashes also respond to `to_query` but with a different signature. If no argument
 {c: 3, b: 2, a: 1}.to_query # => "a=1&b=2&c=3"
 ```
 
-The method `Hash#to_query` accepts an optional namespace for the keys:
+O método `Hash#to_query` aceita um opcional espaço entre nomes para as chaves:
 
 ```ruby
 {id: 89, name: "John Smith"}.to_query('user')
 # => "user%5Bid%5D=89&user%5Bname%5D=John+Smith"
 ```
 
-NOTE: Defined in `active_support/core_ext/object/to_query.rb`.
+NOTE: Definido em `active_support/core_ext/object/to_query.rb`.
 
 ### `with_options`
 
