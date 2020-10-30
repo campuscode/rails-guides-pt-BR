@@ -498,7 +498,7 @@ Examples of `in?`:
 
 NOTE: Defined in `active_support/core_ext/object/inclusion.rb`.
 
-Extensions to `Module`
+Extensões de `Module`
 ----------------------
 
 ### Attributes
