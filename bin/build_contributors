@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'faraday'
+require 'faraday_middleware'
+include FileUtils
+
+APP_ROOT = File.expand_path('..', __dir__)
+
+chdir APP_ROOT do
+  url = 'https://api.github.com/search/issues?q=repo:campuscode/rails-guides-pt-BR+is:pr+is:merged'
+
+  connection = Faraday.new(url: url) do |faraday|
+    faraday.headers['Accept'] = 'application/vnd.github.cloak-preview'
+    faraday.headers['Authorization'] = "token #{ENV['GH_PERSONAL_ACCESS_TOKEN']}"
+    faraday.response :json, parser_options: { symbolize_names: true },
+                            content_type: /\bjson$/
+    faraday.adapter :net_http
+  end
+
+  grouped_response = (1..10).inject([]) do |accu, i|
+    response = connection.get do |req|
+      req.params['page'] = i
+      req.params['per_page'] = 100
+    end
+    break accu if response.body.empty?
+
+    accu.push(*response.body[:items])
+  end
+
+  contributors_data = grouped_response
+                        .group_by { _1.dig(:user, :login) }
+                        .map      { [_1, _2.first.dig(:user, :html_url), _2.size] }
+                        .sort_by  { [_1.last, _1.first] }
+                        .reverse
+
+  md = <<~HEREDOC
+        ##### :warning: Esta página é gerada automaticamente a cada merge na branch principal
+
+        ## Participe conosco
+
+        Estamos sempre precisando de pessoas para revisar traduções, gerenciar issues e páginas,
+        e outras ações do dia a dia. Quer ajudar? [Fale conosco!](https://github.com/campuscode/rails-guides-pt-BR/issues/new)
+
+        ## Contribuições :rocket:
+
+        As pessoas que fazem esse projeto acontecer :clap:
+
+        | | Nome de Usuário | N.º de Contribuições
+        |:------------- |:-------------|:-----|
+      HEREDOC
+
+  md_table = contributors_data.map do |login, profile_link, contributions|
+              index = contributors_data.map(&:last).index(contributions) + 1
+              "|##{index}|[#{login}](#{profile_link})|[#{contributions}]"\
+              "(https://github.com/campuscode/rails-guides-pt-BR/pulls?q=is:pr+is:merged+author:#{login})"
+            end.join("\n")
+
+  Dir.mkdir('wiki') unless Dir.exist?('wiki')
+  File.open("wiki/Colaboradores.md", "w") { |f| f.write md + md_table  }
+end
