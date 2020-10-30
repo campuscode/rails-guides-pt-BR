@@ -98,7 +98,7 @@ Os seguintes valores são considerados _blank_ em uma aplicação Rails:
 
 * qualquer outro objeto que responde a `empty?` como `true`.
 
-INFO: A condicional é que as _strings_ usem a classe de caracter `[:space:]` do _Unicode-aware_, como por exemplo U+2029 (separador de parágrafo) é considerado um espaço em branco.
+INFO: A condicional é que as _strings_ usem a classe de caractere `[:space:]` do _Unicode-aware_, como por exemplo U+2029 (separador de parágrafo) é considerado um espaço em branco.
 
 WARNING: Note que números não são mencionados. Em particular, 0 e 0.0 **não** são _blank_.
 
@@ -181,9 +181,9 @@ array     # => ['foo']
 duplicate # => ['foo', 'another-string']
 ```
 
-Como podemos ver, depois de duplicar a instância de `Array`, possuímos agora outro objeto, portanto podemos modifica-lo sem alterar informaçõe do objeto original. Isso não funciona para elementos de um _array_, entretanto. Desde que `dup` não faça a cópia profunda, a _string_ dentro do _array_ se manterá como o mesmo objeto.
+Como podemos ver, depois de duplicar a instância de `Array`, possuímos agora outro objeto, portanto podemos modificá-lo sem alterar informações do objeto original. Isso não funciona para elementos de um _array_, entretanto. Desde que `dup` não faça a cópia profunda, a _string_ dentro do _array_ se manterá como o mesmo objeto.
 
-Se você precisa de uma cópia profunda de um objeto, poder então usar o `deep_dup`. Confira um exemplo:
+Se você precisa de uma cópia profunda de um objeto, pode então usar o `deep_dup`. Confira um exemplo:
 
 ```ruby
 array     = ['string']
@@ -238,7 +238,7 @@ end
 @person.try { |p| "#{p.first_name} #{p.last_name}" }
 ```
 
-Perceba que `try` não exibirá as mensagens de erro caso elas ocorrão, retornando `nil` em vez disso. Se você quiser se proteger de possíveis erros de digitação, use `try!`:
+Perceba que `try` não exibirá as mensagens de erro caso elas ocorram, retornando `nil` em vez disso. Se você quiser se proteger de possíveis erros de digitação, use `try!`:
 
 ```ruby
 @number.try(:nest)  # => nil
@@ -270,7 +270,7 @@ NOTE: Definido em `active_support/core_ext/kernel/singleton_class.rb`.
 
 ### `acts_like?(duck)`
 
-O método `acts_like?` fornece um meio para conferir se alguma classe age como alguma outra classe basaeda em uma simples convenção: a classe que fornece a mesma _interface_ é definida como `String`
+O método `acts_like?` fornece um meio para conferir se alguma classe age como alguma outra classe baseada em uma simples convenção: a classe que fornece a mesma _interface_ é definida como `String`
 
 ```ruby
 def acts_like_string?
