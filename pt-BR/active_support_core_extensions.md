@@ -289,15 +289,15 @@ NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
 
 ### `to_param`
 
-Todos objetos em Rails respondem ao método `to_param`, no qual se destina ao retorno de algo que representa como valores em consultas de _strings_, ou fragmentos de URL.
+Todos objetos em Rails respondem ao método `to_param`, o qual é usado para o retorno de representações de valores em consultas de _strings_, ou fragmentos de URL.
 
-Por padrão, `to_param` apenas chama `to_s`:
+Por padrão, `to_param` apenas chama o método `to_s`:
 
 ```ruby
 7.to_param # => "7"
 ```
 
-O retorno de valores em `to_param` **não** deve ser esquecido:
+O retorno de valores em `to_param` **não** deve ser ingnorado:
 
 ```ruby
 "Tom & Jerry".to_param # => "Tom & Jerry"
@@ -305,7 +305,7 @@ O retorno de valores em `to_param` **não** deve ser esquecido:
 
 Várias classes em Rails sobreescrevem este método.
 
-Por exemplo `nil`, `true`, e `false` retornam a si mesmo. `Array#to_param` chama `to_param` nos elementos e se juntam ao resultado com "/":
+Por exemplo `nil`, `true`, e `false` retornam a si mesmo. `Array#to_param` chama `to_param` para cada elemento, exibindo o resultado separando os elementos com "/":
 
 ```ruby
 [0, true, String].to_param # => "0/true/String"
@@ -327,13 +327,13 @@ nós temos:
 user_path(@user) # => "/users/357-john-smith"
 ```
 
-WARNING. _Controllers_ precisam estar atentos a qualquer redefinição de `to_param` porque quando uma requisição como essa chega em "357-john-smith" este é o valor de `params[:id]`.
+WARNING. _Controllers_ precisam estar alinhados a qualquer redefinição de `to_param` porque quando uma requisição como essa chega em "357-john-smith" este é o valor de `params[:id]`.
 
 NOTE: Definido em `active_support/core_ext/object/to_param.rb`.
 
 ### `to_query`
 
-Except for hashes, given an unescaped `key` this method constructs the part of a query string that would map such key to what `to_param` returns. For example, given
+Exceto para _hashes_, com `key` este método constrói parte da _string_ usada em consultas onde ira mapear a chave que `to_param` retorna. Por exemplo, dado
 
 ```ruby
 class User
@@ -343,20 +343,20 @@ class User
 end
 ```
 
-we get:
+Temos:
 
 ```ruby
 current_user.to_query('user') # => "user=357-john-smith"
 ```
 
-This method escapes whatever is needed, both for the key and the value:
+Este método traz o que é necessário, tanto para chave, como para o valor:
 
 ```ruby
 account.to_query('company[name]')
 # => "company%5Bname%5D=Johnson+%26+Johnson"
 ```
 
-então its output is ready to be used in a query string.
+então esse resultado esta pronto para ser usado em uma _string_ de busca.
 
 _Arrays_ retornam o resultado da aplicação `to_query` para cada elemento com `key[]` como chave, e junta o resultado com "&":
 
@@ -365,13 +365,13 @@ _Arrays_ retornam o resultado da aplicação `to_query` para cada elemento com `
 # => "sample%5B%5D=3.4&sample%5B%5D=-45.6"
 ```
 
-Hashes also respond to `to_query` but with a different signature. If no argument is passed a call generates a sorted series of key/value assignments calling `to_query(key)` on its values. Then it joins the result with "&":
+_Hashes_ tambem respondem a `to_query` mas com uma diferença. Se não passar um argumento a chamada gera uma série ordenada de chaves/valores atribuídas chamando `to_query(key)` em seus valores. Em seguida, o resultado é mesclado com "&":
 
 ```ruby
 {c: 3, b: 2, a: 1}.to_query # => "a=1&b=2&c=3"
 ```
 
-O método `Hash#to_query` aceita um opcional espaço entre nomes para as chaves:
+O método `Hash#to_query` aceita um espaço para nomear as chaves:
 
 ```ruby
 {id: 89, name: "John Smith"}.to_query('user')
@@ -382,9 +382,9 @@ NOTE: Definido em `active_support/core_ext/object/to_query.rb`.
 
 ### `with_options`
 
-The method `with_options` provides a way to factor out common options in a series of method calls.
+O método `with_options` fornece um meio de agrupar opções comuns em uma série de chamada de métodos.
 
-Given a default options hash, `with_options` yields a proxy object to a block. Within the block, methods called on the proxy are forwarded to the receiver with their options merged. For example, you get rid of the duplication in:
+Dado as opções _default_ de uma _hash_, `with_options` faz um objeto de "ponte" em um bloco. Dentro do bloco, métodos são chamados no objeto e são encaminhados ao receptor com suas opções mescladas. Por exemplo, você se livra da duplicação em:
 
 ```ruby
 class Account < ApplicationRecord
@@ -395,7 +395,7 @@ class Account < ApplicationRecord
 end
 ```
 
-this way:
+desta forma:
 
 ```ruby
 class Account < ApplicationRecord
@@ -408,7 +408,7 @@ class Account < ApplicationRecord
 end
 ```
 
-That idiom may convey _grouping_ to the reader as well. For example, say you want to send a newsletter whose language depends on the user. Somewhere in the mailer you could group locale-dependent bits like this:
+Essa expressão pode transmitir um agrupamento para o leitor também. Por exemplo, digamos que você queira enviar um boletim informativo cujo idioma depende do usuário. Em algum lugar na _mailer_ você poderá agrupar os receptores por localidade como no exemplo:
 
 ```ruby
 I18n.with_options locale: user.locale, scope: "newsletter" do |i18n|
@@ -417,9 +417,9 @@ I18n.with_options locale: user.locale, scope: "newsletter" do |i18n|
 end
 ```
 
-TIP: Since `with_options` forwards calls to its receiver they can be nested. Each nesting level will merge inherited defaults in addition to their own.
+TIP: Desde que `with_options` envie chamadas para seus receptores eles podem ser aninhados. Cada nível de aninhamento mesclará os padrões herdados com os seus próprios.
 
-NOTE: Defined in `active_support/core_ext/object/with_options.rb`.
+NOTE: Definido em `active_support/core_ext/object/with_options.rb`.
 
 ### JSON support
 
