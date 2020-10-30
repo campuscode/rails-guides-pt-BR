@@ -459,7 +459,6 @@ Para mais detalhes Veja a Documentação da API para [ActiveJob::Exceções](htt
 Se um registro for deletado após o *job* ser enfileirado mas antes do método `#perform` ser chamado, o *Active Job* vai lançar a exceção `ActiveJob::DeserializationError`.
 
 Testando os *Jobs*
-
 --------------
 
 Você pode encontrar instruções mais detalhadas sobre como testar seus *jobs* no
