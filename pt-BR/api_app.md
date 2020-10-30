@@ -297,15 +297,15 @@ config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
 Se certifique de configurar seu servidor para suportar estas opções seguindo as
 instruções na documentação do `Rack::Sendfile`.
 
-### Using ActionDispatch::Request
+### Usando ActionDispatch::Request
 
-`ActionDispatch::Request#params` will take parameters from the client in the JSON
-format and make them available in your controller inside `params`.
+`ActionDispatch::Request#params` vai pegar os parâmetros do cliente no formato
+_JSON_ e deixa-los disponiveis em seu _controller_ dentro de `params`.
 
-To use this, your client will need to make a request with JSON-encoded parameters
-and specify the `Content-Type` as `application/json`.
+para usar isto, seu cliente vai precisar fazer a requisição com parâmetros
+_JSON-encoded_ e especificar o `Content-Type` como `application/json`.
 
-Here's an example in jQuery:
+Aqui um exemplo em _JQuery_:
 
 ```javascript
 jQuery.ajax({
@@ -318,43 +318,42 @@ jQuery.ajax({
 });
 ```
 
-`ActionDispatch::Request` will see the `Content-Type` and your parameters
-will be:
+O `ActionDispatch::Request` verá o `Content-Type` e seus parâmetros serão:
 
 ```ruby
 { :person => { :firstName => "Yehuda", :lastName => "Katz" } }
 ```
 
-### Other Middleware
+### Outros Middleware
 
-Rails ships with a number of other middleware that you might want to use in an
-API application, especially if one of your API clients is the browser:
+O Rails vem com vários outros _middlewares_ que você pode querer usar em uma
+aplicação _API_, especialmente se um de seus clientes da API é o navegador:
 
 - `Rack::MethodOverride`
 - `ActionDispatch::Cookies`
 - `ActionDispatch::Flash`
-- For session management
+- Para gerenciamento de sessão
     * `ActionDispatch::Session::CacheStore`
     * `ActionDispatch::Session::CookieStore`
     * `ActionDispatch::Session::MemCacheStore`
 
-Any of these middleware can be added via:
+Qualquer um desses _middlewares_ pode ser adicionado via:
 
 ```ruby
 config.middleware.use Rack::MethodOverride
 ```
 
-### Removing Middleware
+### Removendo Middleware
 
-If you don't want to use a middleware that is included by default in the API-only
-middleware set, you can remove it with:
+Se você não quer usar um middleware que está incluido por padrão no conjunto de
+_middlewares_ _API-only_, você pode remove-lo com:
 
 ```ruby
 config.middleware.delete ::Rack::Sendfile
 ```
 
-Keep in mind that removing these middlewares will remove support for certain
-features in Action Controller.
+Tenha em mente que removendo estes _middlewares_ vai remover suporte para
+alguns recursos no _Action Controller_.
 
 Escolhendo os módulos do *controller*
 ---------------------------
