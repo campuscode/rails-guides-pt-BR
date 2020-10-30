@@ -207,9 +207,9 @@ NOTE: Definido em `active_support/core_ext/object/deep_dup.rb`.
 
 ### `try`
 
-When you want to call a method on an object only if it is not `nil`, the simplest way to achieve it is with conditional statements, adding unnecessary clutter. The alternative is to use `try`. `try` is like `Object#send` except that it returns `nil` if sent to `nil`.
+Quando você quer chamar um método em um objeto somente se ele não for `nil`, a forma mais simples de conseguir isso é através de uma estrutura condicional, adicionando uma desnecessária desordem. A alternativa é usar `try`. `try` é como `Object#send` exceto que o retorno seja `nil` se enviado para `nil`.
 
-Here is an example:
+Eis um exemplo:
 
 ```ruby
 # without try
@@ -221,7 +221,7 @@ end
 @number.try(:next)
 ```
 
-Another example is this code from `ActiveRecord::ConnectionAdapters::AbstractAdapter` where `@logger` could be `nil`. You can see that the code uses `try` and avoids an unnecessary check.
+Outro exemplo é o código em `ActiveRecord::ConnectionAdapters::AbstractAdapter` onde `@logger` não pode ser `nil`. Você pode ver que o código usa `try` e evita uma desnecessária verificação.
 
 ```ruby
 def log_info(sql, name, ms)
@@ -232,24 +232,24 @@ def log_info(sql, name, ms)
 end
 ```
 
-`try` can also be called without arguments but a block, which will only be executed if the object is not nil:
+`try` pode também ser chamada sem argumentos, porém em um bloco, no qual só será executado se o objeto não for `nil`:
 
 ```ruby
 @person.try { |p| "#{p.first_name} #{p.last_name}" }
 ```
 
-Note that `try` will swallow no-method errors, returning nil instead. If you want to protect against typos, use `try!` instead:
+Perceba que `try` não exibirá as mensagens de erro caso elas ocorrão, retornando `nil` em vez disso. Se você quiser se proteger de possíveis erros de digitação, use `try!`:
 
 ```ruby
 @number.try(:nest)  # => nil
 @number.try!(:nest) # NoMethodError: undefined method `nest' for 1:Integer
 ```
 
-NOTE: Defined in `active_support/core_ext/object/try.rb`.
+NOTE: Definido em `active_support/core_ext/object/try.rb`.
 
 ### `class_eval(*args, &block)`
 
-You can evaluate code in the context of any object's singleton class using `class_eval`:
+Você pode evoluir o código no contexto de um _singleton_ de qualquer objeto usando `class_eval`:
 
 ```ruby
 class Proc
@@ -266,26 +266,26 @@ class Proc
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/kernel/singleton_class.rb`.
+NOTE: Definido em `active_support/core_ext/kernel/singleton_class.rb`.
 
 ### `acts_like?(duck)`
 
-The method `acts_like?` provides a way to check whether some class acts like some other class based on a simple convention: a class that provides the same interface as `String` defines
+O método `acts_like?` fornece um meio para conferir se alguma classe age como alguma outra classe basaeda em uma simples convenção: a classe que fornece a mesma _interface_ é definida como `String`
 
 ```ruby
 def acts_like_string?
 end
 ```
 
-which is only a marker, its body or return value are irrelevant. Then, client code can query for duck-type-safeness this way:
+que é apenas um marcador, seu corpo ou valor de retorno são irrelevantes. Então, o código do cliente pode consultar a tipagem desta forma:
 
 ```ruby
 some_klass.acts_like?(:string)
 ```
 
-Rails has classes that act like `Date` or `Time` and follow this contract.
+Rails possui classes atuantes como `Date` ou `Time` e seguem essa linha.
 
-NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
+NOTE: Definido em `active_support/core_ext/object/acts_like.rb`.
 
 ### `to_param`
 
