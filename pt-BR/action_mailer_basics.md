@@ -1,19 +1,20 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Noções básicas do _Action Mailer_
+Começando a usar _Action Mailer_
 ====================
 
-Este guia fornece tudo que você precisa para começar a enviar
-e-mails de e para seu aplicativo e muitos componentes internos do _Action Mailer_. 
-Também aborda como testar seus mailers.
+Este guia provê todos os conhecimentos que você precisa para iniciar
+a enviar e-mails da sua aplicação e outros conhecimentos de como as coisas
+funcionam internamente.
+do _Action Mailer_. Ele também ensina como testar seus _mailers_.
 
-Depois de ler este guia, você saberá:
+Após a leitura deste guia, você saberá:
 
-* Como enviar e-mail em uma aplicação Rails.
-* Como gerar e editar uma classe do _Action Mailer_ e uma visão do _mailer view_.
-* Como configurar o _Action Mailer_ para o seu ambiente.
-* Como testar suas classes do _Action Mailer_.
+* Como enviar um e-mail usando sua aplicação Rails;
+* Como gerar e editar uma classe _Action Mailer_ e uma _mailer view_;
+* Como configurar o _Action Mailer_ para o seu ambiente;
+* Como Testar suas classes do _Action Mailer_.
 
 --------------------------------------------------------------------------------
 
