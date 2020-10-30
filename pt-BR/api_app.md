@@ -324,7 +324,7 @@ O `ActionDispatch::Request` verá o `Content-Type` e seus parâmetros serão:
 { :person => { :firstName => "Yehuda", :lastName => "Katz" } }
 ```
 
-### Outros Middleware
+### Outros _Middleware_
 
 O Rails vem com vários outros _middlewares_ que você pode querer usar em uma
 aplicação _API_, especialmente se um de seus clientes da API é o navegador:
@@ -343,9 +343,9 @@ Qualquer um desses _middlewares_ pode ser adicionado via:
 config.middleware.use Rack::MethodOverride
 ```
 
-### Removendo Middleware
+### Removendo _Middleware_
 
-Se você não quer usar um middleware que está incluido por padrão no conjunto de
+Se você não quer usar um _middleware_ que está incluído por padrão no conjunto de
 _middlewares_ _API-only_, você pode remove-lo com:
 
 ```ruby
