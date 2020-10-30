@@ -232,7 +232,7 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "1st Room" })
 consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
 ```
 
-## Client-Server Interactions
+## Interações Client-Server
 
 ### Streams
 
