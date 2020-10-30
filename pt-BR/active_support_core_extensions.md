@@ -92,9 +92,9 @@ Os seguintes valores são considerados _blank_ em uma aplicação Rails:
 
 * `nil` e `false`,
 
-* strings compostas apenas por espaços em branco (veja a nota abaixo),
+* _strings_ compostas apenas por espaços em branco (veja a nota abaixo),
 
-* arrays e hashes vazios, e
+* _arrays_ e _hashes_ vazios, e
 
 * qualquer outro objeto que responde a `empty?` como `true`.
 
@@ -156,13 +156,13 @@ Complex(1).duplicable?      # => true
 1.method(:+).duplicable?    # => false
 ```
 
-WARNING: Qualquer classe pode ter a duplicação desabilitada a partir da remoção de `dup` e `clone` ou definindo exceções. Neste caso apenas `rescue` pode informar se determinado objeto arbitrável é duplicável. `duplicable?` depende de uma lista como no exemplo porém é muito mais veloz que `rescue`. Use apenas se você souber que a lista é suficiente em seu caso.
+WARNING: Qualquer classe pode ter a duplicação desabilitada a partir da remoção de `dup` e `clone` ou definindo exceções. Neste caso apenas `rescue` pode informar se determinado objeto arbitrável é duplicável. `duplicable?` depende da existência de uma lista de elementos a serem analisados, como no exemplo porém é muito mais veloz que `rescue`. Use apenas se você souber que a lista é suficiente em seu caso.
 
 NOTE: Defined in `active_support/core_ext/object/duplicable.rb`.
 
 ### `deep_dup`
 
-The `deep_dup` method returns a deep copy of a given object. Normally, when you `dup` an object that contains other objects, Ruby does not `dup` them, so it creates a shallow copy of the object. If you have an array with a string, for example, it will look like this:
+O método `deep_dup` retorna uma cópia profunda de um objeto. Normalmente, quando você `dup` um objeto que contêm outros objetos, Ruby não executa o `dup`, então é criada uma cópia superficial do objeto. Caso você possua um _array_ com uma _string_, por exemplo, terá algo parecido com:
 
 ```ruby
 array     = ['string']
@@ -181,9 +181,9 @@ array     # => ['foo']
 duplicate # => ['foo', 'another-string']
 ```
 
-As you can see, after duplicating the `Array` instance, we got another object, therefore we can modify it and the original object will stay unchanged. This is not true for array's elements, however. Since `dup` does not make deep copy, the string inside the array is still the same object.
+Como podemos ver, depois de duplicar a instância de `Array`, possuímos agora outro objeto, portanto podemos modifica-lo sem alterar informaçõe do objeto original. Isso não funciona para elementos de um _array_, entretanto. Desde que `dup` não faça a cópia profunda, a _string_ dentro do _array_ se manterá como o mesmo objeto.
 
-If you need a deep copy of an object, you should use `deep_dup`. Here is an example:
+Se você precisa de uma cópia profunda de um objeto, poder então usar o `deep_dup`. Confira um exemplo:
 
 ```ruby
 array     = ['string']
@@ -195,7 +195,7 @@ array     # => ['string']
 duplicate # => ['foo']
 ```
 
-If the object is not duplicable, `deep_dup` will just return it:
+Se o objeto não é duplicável, `deep_dup` apenas retornará:
 
 ```ruby
 number = 1
@@ -203,7 +203,7 @@ duplicate = number.deep_dup
 number.object_id == duplicate.object_id   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
+NOTE: Definido em `active_support/core_ext/object/deep_dup.rb`.
 
 ### `try`
 
