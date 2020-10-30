@@ -188,10 +188,10 @@ class ApplicationController < ActionController::API
 end
 ```
 
-Choosing Middleware
+Escolhendo o Middleware
 --------------------
 
-An API application comes with the following middleware by default:
+Uma aplicação de API vem com os seguintes *middlewares* por padrão:
 
 - `Rack::Sendfile`
 - `ActionDispatch::Static`
@@ -210,26 +210,27 @@ An API application comes with the following middleware by default:
 - `Rack::ConditionalGet`
 - `Rack::ETag`
 
-See the [internal middleware](rails_on_rack.html#internal-middleware-stack)
-section of the Rack guide for further information on them.
+Olhe a sessão [middleware interno](rails_on_rack.html#internal-middleware-stack)
+do guia do `Rack` para mais informações.
 
-Other plugins, including Active Record, may add additional middleware. In
-general, these middleware are agnostic to the type of application you are
-building, and make sense in an API-only Rails application.
+Outros _plugins_, incluindo o _Active Record_, podem adicionar *middlewares*
+adicionais. Em geral, esses *middlewares* são agnósticos para o tipo de
+aplicação que você está construindo, e isso faz sentido em uma aplicação de API
+Rails.
 
-You can get a list of all middleware in your application via:
+Você pode recuperar uma lista com todos os *middlewares* de sua aplicação via:
 
 ```bash
 $ rails middleware
 ```
 
-### Using the Cache Middleware
+### Usando o Middleware de Cache
 
-By default, Rails will add a middleware that provides a cache store based on
-the configuration of your application (memcache by default). This means that
-the built-in HTTP cache will rely on it.
+Por padrão, o Rails vai adicionar um _middleware_ que fornece um armazenamento de
+*cache* baseado na configuração de sua aplicação (*memcache* por padrão). Isso
+significa que o *cache* embutido no HTTP pode confiar nisso.
 
-For instance, using the `stale?` method:
+Por exemplo, usando o metodo `stale?`:
 
 ```ruby
 def show
@@ -241,14 +242,14 @@ def show
 end
 ```
 
-The call to `stale?` will compare the `If-Modified-Since` header in the request
-with `@post.updated_at`. If the header is newer than the last modified, this
-action will return a "304 Not Modified" response. Otherwise, it will render the
-response and include a `Last-Modified` header in it.
+A chamada `stale?` vai comparar o cabeçalho `If-Modified-Since` na requisição
+com o `@post.updated_at`. Se o cabeçalho é mais novo que a ultima modificação,
+esta ação vai retornar a resposta "304 Not Modified". Do contrário, ele vai
+renderizar a resposta e incluir um cabeçalho `Last-Modified` nele.
 
-Normally, this mechanism is used on a per-client basis. The cache middleware
-allows us to share this caching mechanism across clients. We can enable
-cross-client caching in the call to `stale?`:
+Normalmente, este mecanismo é usado com base por cliente. O cache de
+*middleware* nos permite compartilhar este mecanismo de cache através dos
+clientes. Nós podemos ativar o cache *cross-client* na chamada para `stale?`:
 
 ```ruby
 def show
@@ -260,52 +261,51 @@ def show
 end
 ```
 
-This means that the cache middleware will store off the `Last-Modified` value
-for a URL in the Rails cache, and add an `If-Modified-Since` header to any
-subsequent inbound requests for the same URL.
+Isto significa que o cache de *middleware* vai guardar o valor de
+`Last-Modified` para a URL no cache do Rails, e adiciona um cabeçalho
+`If-Modified-Since` para qualquer requisição de entrada para a mesma URL.
 
-Think of it as page caching using HTTP semantics.
+Pense nisso como um cache de página usando a semântica HTTP.
 
-### Using Rack::Sendfile
+### Usando Rack::Sendfile
 
-When you use the `send_file` method inside a Rails controller, it sets the
-`X-Sendfile` header. `Rack::Sendfile` is responsible for actually sending the
-file.
+Quando você usa o método `send_file` dentro de um *controller* do Rails, ele
+define o cabeçalho `X-Sendfile`. O `Rack::Sendfile` é responsável por
+efetivamente enviar o arquivo.
 
-If your front-end server supports accelerated file sending, `Rack::Sendfile`
-will offload the actual file sending work to the front-end server.
+Se seu servidor front-end suportar envio de arquivos acelerado, `Rack::SendFile`
+vai descarregar o arquivo real enviando o trabalho para o servidor front-end.
 
-You can configure the name of the header that your front-end server uses for
-this purpose using `config.action_dispatch.x_sendfile_header` in the appropriate
-environment's configuration file.
+Você pode configurar o nome do cabeçalho que seu servidor _front-end_ usa para
+este propósito usando `config.action_dispatch.x_sendfile_header` em seu arquivo
+de configuração de ambiente apropriado.
 
-You can learn more about how to use `Rack::Sendfile` with popular
-front-ends in [the Rack::Sendfile
-documentation](https://www.rubydoc.info/github/rack/rack/master/Rack/Sendfile).
+Você pode aprender mais sobre como usar o `Rack::Sendfile` com _front-ends_
+populares [na documentação do Rack::Sendfile](https://www.rubydoc.info/github/rack/rack/master/Rack/Sendfile).
 
-Here are some values for this header for some popular servers, once these servers are configured to support
-accelerated file sending:
+Aqui estão alguns valores para este cabeçalho para alguns servidores populares, quando
+estes servidores são configurados para suportar envio de arquivo acelerado.
 
 ```ruby
-# Apache and lighttpd
+# Apache e lighttpd
 config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
 # Nginx
 config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
 ```
 
-Make sure to configure your server to support these options following the
-instructions in the `Rack::Sendfile` documentation.
+Se certifique de configurar seu servidor para suportar estas opções seguindo as
+instruções na documentação do `Rack::Sendfile`.
 
-### Using ActionDispatch::Request
+### Usando ActionDispatch::Request
 
-`ActionDispatch::Request#params` will take parameters from the client in the JSON
-format and make them available in your controller inside `params`.
+`ActionDispatch::Request#params` vai pegar os parâmetros do cliente no formato
+_JSON_ e deixa-los disponiveis em seu _controller_ dentro de `params`.
 
-To use this, your client will need to make a request with JSON-encoded parameters
-and specify the `Content-Type` as `application/json`.
+para usar isto, seu cliente vai precisar fazer a requisição com parâmetros
+_JSON-encoded_ e especificar o `Content-Type` como `application/json`.
 
-Here's an example in jQuery:
+Aqui um exemplo em _JQuery_:
 
 ```javascript
 jQuery.ajax({
@@ -318,43 +318,42 @@ jQuery.ajax({
 });
 ```
 
-`ActionDispatch::Request` will see the `Content-Type` and your parameters
-will be:
+O `ActionDispatch::Request` verá o `Content-Type` e seus parâmetros serão:
 
 ```ruby
 { :person => { :firstName => "Yehuda", :lastName => "Katz" } }
 ```
 
-### Other Middleware
+### Outros _Middleware_
 
-Rails ships with a number of other middleware that you might want to use in an
-API application, especially if one of your API clients is the browser:
+O Rails vem com vários outros _middlewares_ que você pode querer usar em uma
+aplicação _API_, especialmente se um de seus clientes da API é o navegador:
 
 - `Rack::MethodOverride`
 - `ActionDispatch::Cookies`
 - `ActionDispatch::Flash`
-- For session management
+- Para gerenciamento de sessão
     * `ActionDispatch::Session::CacheStore`
     * `ActionDispatch::Session::CookieStore`
     * `ActionDispatch::Session::MemCacheStore`
 
-Any of these middleware can be added via:
+Qualquer um desses _middlewares_ pode ser adicionado via:
 
 ```ruby
 config.middleware.use Rack::MethodOverride
 ```
 
-### Removing Middleware
+### Removendo _Middleware_
 
-If you don't want to use a middleware that is included by default in the API-only
-middleware set, you can remove it with:
+Se você não quer usar um _middleware_ que está incluído por padrão no conjunto de
+_middlewares_ _API-only_, você pode remove-lo com:
 
 ```ruby
 config.middleware.delete ::Rack::Sendfile
 ```
 
-Keep in mind that removing these middlewares will remove support for certain
-features in Action Controller.
+Tenha em mente que removendo estes _middlewares_ vai remover suporte para
+alguns recursos no _Action Controller_.
 
 Escolhendo os módulos do *controller*
 ---------------------------
