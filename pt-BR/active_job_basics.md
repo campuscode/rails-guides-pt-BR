@@ -452,7 +452,6 @@ end
 
 Para mais detalhes Veja a Documentação da API para [ActiveJob::Exceções](https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html).
 
-
 ### Desserialização
 
 *GlobalID* permite serializar todos os objetos do *Active Record* passado para o `#perform`.
