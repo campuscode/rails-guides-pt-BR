@@ -420,7 +420,6 @@ Exceções
 
 Os *Active Jobs* fornecem uma maneira de capturar exceções criadas durante a execução do *job*.
 
-
 ```ruby
 class GuestsCleanupJob < ApplicationJob
   queue_as :default
