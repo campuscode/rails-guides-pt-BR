@@ -162,7 +162,7 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-## Componentes Client-Side
+## Componentes _Client-Side_
 
 ### Conexões
 
@@ -170,7 +170,7 @@ Consumidores precisam de uma instância da conexão do seu lado. Esta conexão p
 ser estabelecida usando o seguinte JavaScript, que é gerado por padrão pelo
 Rails:
 
-#### Conectar Consumidor
+#### Conectar o Consumidor
 
 ```js
 // app/javascript/channels/consumer.js
@@ -182,9 +182,9 @@ import { createConsumer } from "@rails/actioncable"
 export default createConsumer()
 ```
 
-Isto vai preparar um consumidor que irá conectar em `/cable` em seu servidor por
-padrão. A conexão não vai ser estabelecida até que você tambem tenha
-especificado a menos uma inscrição que você tem interesse em ter.
+Isto vai preparar um consumidor que conectará em `/cable` em seu servidor por
+padrão. A conexão não vai ser estabelecida até que você também tenha
+especificado ao menos uma inscrição que você tem interesse em ter.
 
 O consumidor pode optar receber um argumento que especifica a _URL_ para se
 conectar. Ela pode ser uma _string_, ou uma função que retorna uma _string_ que
@@ -194,7 +194,7 @@ vai ser chamada quando o _WebSocket_ é aberto.
 // Especifica uma _URL_ diferente para se conectar
 createConsumer('https://ws.example.com/cable')
 
-// Utiliza uma função para gerar a _URL_ dinâmicamente
+// Utiliza uma função para gerar a _URL_ dinamicamente
 createConsumer(getWebSocketURL)
 
 function getWebSocketURL {
@@ -220,7 +220,7 @@ consumer.subscriptions.create({ channel: "AppearanceChannel" })
 ```
 
 Enquanto isto cria uma assinatura, a funcionalidade necessária para responder
-para dados recebidos será descrita mais tarde.
+aos dados recebidos será descrita mais tarde.
 
 Um consumidor pode agir como um assinante para um dado canal qualquer número de
 vezes. Por exemplo, um consumidor pode assinar várias salas de _chat_ ao mesmo
