@@ -786,7 +786,7 @@ The Ruby side of things is built on top of [websocket-driver](https://github.com
 ## Implantação
 
 O _Action Cable_ é alimentado por uma combinação de _WebSockets_ e _threads_. Tanto o
-[_plumbing_](https://www.techopedia.com/definition/31509/plumbing) do _framework_ e o trabalho do canal especificado pelo usuário são tratados internamente,
+[_plumbing_](https://www.techopedia.com/definition/31509/plumbing) do _framework_ e o trabalho do _channel_ especificado pelo usuário são tratados internamente,
 usando suporte de _thread_ nativo do Ruby. Isso significa que você pode usar todos os seus
 *models* dos Rails sem problemas, contanto que você não tenha cometido nenhum pecado de _thread-safety_.
 
