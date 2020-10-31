@@ -721,12 +721,12 @@ config.action_cable.log_tags = [
 For a full list of all configuration options, see the
 `ActionCable::Server::Configuration` class.
 
-## Executando servidores de cabo autônomos
+## Executando Servidores _Cable_ Autônomos
 
-### No aplicativo
+### No Aplicação
 
-O _Action Cable_ pode ser executado junto com seu aplicativo Rails. Por exemplo, para
-escute as solicitações WebSocket em `/websocket`, especifique esse caminho para
+O _Action Cable_ pode ser executado junto com sua aplicação Rails. Por exemplo, para
+escutar as requisições _WebSocket_ em `/websocket`, especifique esse caminho para
 `config.action_cable.mount_path`:
 
 ```ruby
@@ -736,7 +736,7 @@ class Application < Rails::Application
 end
 ```
 
-Você pode usar `ActionCable.createConsumer()` para conectar ao cabo
+Você pode usar `ActionCable.createConsumer()` para conectar ao 
 servidor se `action_cable_meta_tag` for invocado no layout. Caso contrário, um caminho é
 especificado como primeiro argumento para `createConsumer` (e.g. `ActionCable.createConsumer("/websocket")`).
 
@@ -744,11 +744,11 @@ Para cada instância de seu servidor que você cria e para cada trabalhador seu 
 spawns, você também terá uma nova instância do Action Cable, mas o uso do Redis
 mantém as mensagens sincronizadas nas conexões.
 
-### Estar sozinho
+### Autônomo
 
 Os servidores a cabo podem ser separados do servidor de aplicativos normal. Está
 ainda é um aplicativo Rack, mas é seu próprio aplicativo Rack. O recomendado
-a configuração básica é a seguinte:
+para a configuração básica é a seguinte:
 
 ```ruby
 # cable/config.ru
@@ -758,20 +758,20 @@ Rails.application.eager_load!
 run ActionCable.server
 ```
 
-Então você inicia o servidor usando um binstub em `bin/cable` ala:
+Então você inicia o servidor usando um _binstub_ em `bin/cable` ala:
 
 ```
 #!/bin/bash
 bundle exec puma -p 28080 cable/config.ru
 ```
 
-O acima irá iniciar um servidor de cabo na porta 28080.
+O acima irá iniciar um _cable server_ na porta 28080.
 
 ### Notas
 
 O servidor WebSocket não tem acesso à sessão, mas tem
 acesso aos cookies. Isso pode ser usado quando você precisa lidar com
-autenticação. Você pode ver uma maneira de fazer isso com o Devise neste [article](https://greg.molnar.io/blog/actioncable-devise-authentication/).
+autenticação. Você pode ver uma maneira de fazer isso com o Devise neste [artigo](https://greg.molnar.io/blog/actioncable-devise-authentication/).
 
 ## Dependencies
 
