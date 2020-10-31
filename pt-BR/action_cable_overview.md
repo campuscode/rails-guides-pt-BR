@@ -624,13 +624,13 @@ repository for a full example of how to setup Action Cable in a Rails app and ad
 
 ## Configuração
 
-O _Action Cable_ tem duas configurações necessárias: um adaptador de assinatura e origens de solicitação permitidas.
+O _Action Cable_ tem duas configurações necessárias: um adaptador de assinatura (_subscription_) e origens de requisição (_request_) permitidas.
 
 ### Adaptador de assinatura
 
-Por padrão, Action Cable procura um arquivo de configuração em `config/cable.yml`.
-O arquivo deve especificar um adaptador para cada ambiente Rails. Veja o
-[Dependências](#dependencies) seção para obter informações adicionais sobre adaptadores.
+Por padrão, _Action Cable_ procura um arquivo de configuração em `config/cable.yml`.
+O arquivo deve especificar um adaptador (_adapter_) para cada ambiente Rails. Veja o
+[Dependências](#dependecias) seção para obter informações adicionais sobre adaptadores.
 
 ```yaml
 development:
@@ -644,7 +644,7 @@ production:
   url: redis://10.10.3.153:6381
   channel_prefix: appname_production
 ```
-#### Configuração do Adaptador
+#### Configuração do Adaptador (_Adapter_)
 
 Abaixo está uma lista dos adaptadores de assinatura disponíveis para usuários finais.
 
@@ -693,22 +693,22 @@ arquivos de configuração de ambiente.
 ### Configuração do pool de trabalhadores
 
 O pool de trabalho é usado para executar retornos de chamada de conexão e ações de canal em
-isolamento do thread principal do servidor. Cabo de ação permite a aplicação
-para configurar o número de threads processados ​​simultaneamente no pool de trabalho.
+isolamento da _thread_ principal do servidor. _Action Cable_ permite que a aplicação
+configure o número de _threads_ processados ​​simultaneamente no _worker pool_.
 
 ```ruby
 config.action_cable.worker_pool_size = 4
 ```
 
-Além disso, observe que seu servidor deve fornecer pelo menos o mesmo número de banco de dados
-conexões conforme você tem trabalhadores. O tamanho do pool de trabalho padrão é definido como 4, então
+Além disso, observe que seu servidor deve fornecer pelo menos o mesmo número conexões de banco de dados
+que você tem de _workers_. O tamanho do _worker pool_ de trabalho padrão é definido como 4, então
 isso significa que você deve disponibilizar pelo menos 4 conexões de banco de dados.
  Você pode mudar isso em `config/database.yml` através do atributo `pool`.
 
 ### Outras Configurações
 
-A outra opção comum de configurar são as tags de log aplicadas ao
-registrador por conexão. Aqui está um exemplo que usa
+A outra opção comum de configurar são as _tags_ de _log_ aplicadas ao
+_logger_ por conexão. Aqui está um exemplo que usa
 o ID da conta do usuário, se disponível, senão "sem conta" durante a marcação:
 
 ```ruby
@@ -720,7 +720,7 @@ config.action_cable.log_tags = [
 ```
 
 Para obter uma lista completa de todas as opções de configuração, consulte o
-`ActionCable::Server::Configuration` classe.
+classe `ActionCable::Server::Configuration`.
 
 ## Running Standalone Cable Servers
 
