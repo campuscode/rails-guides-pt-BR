@@ -20,19 +20,18 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-What is Active Storage?
+O que é *Active Storage*?
 -----------------------
 
-Active Storage facilitates uploading files to a cloud storage service like
-Amazon S3, Google Cloud Storage, or Microsoft Azure Storage and attaching those
-files to Active Record objects. It comes with a local disk-based service for
-development and testing and supports mirroring files to subordinate services for
-backups and migrations.
+O *Active Storage* facilita o *upload* de arquivos para um serviço de armazenamento como
+*Amazon S3*, *Google Cloud Storage*, ou *Microsoft Azure Storage* e anexa esses
+arquivos para objetos *Active Record*. Ele vem com um serviço local baseado em disco para
+desenvolvimento e teste e oferece suporte a espelhamento de arquivos em serviços destinados para
+*backups* e *migrations*.
 
-Using Active Storage, an application can transform image uploads with
-[ImageMagick](https://www.imagemagick.org), generate image representations of
-non-image uploads like PDFs and videos, and extract metadata from arbitrary
-files.
+Usando *Active Storage*, uma aplicação pode transformar *uploads* de imagens com
+[ImageMagick](https://www.imagemagick.org), gerar representações de imagens de
+*uploads* que não são imagens como PDFs e vídeos, e extrai metadados de arquivos arbitrários.
 
 ## Setup
 
