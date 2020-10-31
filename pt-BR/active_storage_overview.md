@@ -396,24 +396,26 @@ jobs, Cronjobs, etc.), you can access the rails_blob_path like this:
 Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
 ```
 
-Downloading Files
+Baixando arquivos
 -----------------
 
-Sometimes you need to process a blob after it’s uploaded—for example, to convert
-it to a different format. Use `ActiveStorage::Blob#download` to read a blob’s
-binary data into memory:
+Algumas vezes você vai precisar processar um _blob_ depois dele ter sido
+_uploaded_ (Transferir um arquivo da maquina do cliente para o servidor da sua
+aplicação) para, por exemplo, converte-lo para um formato diferente. Use o
+`ActiveStorage::Blob#download` para carregar o conteúdo binário do _blob_ na
+memória:
 
 ```ruby
 binary = user.avatar.download
 ```
 
-You might want to download a blob to a file on disk so an external program (e.g.
-a virus scanner or media transcoder) can operate on it. Use
-`ActiveStorage::Blob#open` to download a blob to a tempfile on disk:
+Caso deseje baixar o _blob_ para um arquivo no disco para um programa externo
+(Um antivírus, por exemplo) possa operar nele use o `ActiveStorage::Blob#open`
+para baixar o _blob_ para um arquivo temporario no disco:
 
 ```ruby
 message.video.open do |file|
-  system '/path/to/virus/scanner', file.path
+  system '/caminho/para/o/antivirus', file.path
   # ...
 end
 ```
