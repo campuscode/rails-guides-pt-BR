@@ -1225,10 +1225,10 @@ LEFT OUTER JOIN posts ON posts.author_id = authors.id GROUP BY authors.id
 Que significa: "retorne todos os autores com suas contagens de posts, tenham eles postagens ou não"
 
 
-Eager Loading Associations
+Associations com _Eager Loading_
 --------------------------
 
-O carregamento rápido é o mecanismo para carregar os registros associados dos objetos retornados por `Model.find` usando o mínimo de consultas possível.
+O _eager loading_ rápido é o mecanismo para carregar os registros associados dos objetos retornados por `Model.find` usando o mínimo de consultas possível.
 
 **Problema de consultas N + 1**
 
@@ -1246,9 +1246,9 @@ Este código parece bom à primeira vista. Mas o problema está no número total
 
 **Solução para problemas de consultas N + 1**
 
-Active Record permite que você especifique com antecedência todas as associações que serão carregadas. Isso é possível especificando o método ʻincludes` da chamada `Model.find`. Com o ʻincludes`, o Active Record garante que todas as associações especificadas sejam carregadas usando o número mínimo possível de consultas.
+o _Active Record_ permite que você especifique com antecedência todas as associações que serão carregadas. Isso é possível especificando o método `includes` da chamada `Model.find`. Com o `includes`, o _Active Record_ garante que todas as associações especificadas sejam carregadas usando o número mínimo possível de consultas.
 
-Revisitando o caso acima, poderíamos reescrever `Client.limit (10)` para endereços de carregamento antecipado:
+Revisitando o caso acima, poderíamos reescrever `Client.limit(10)` para endereços de carregamento antecipado:
 
 ```ruby
 clients = Client.includes(:address).limit(10)
@@ -1268,9 +1268,9 @@ SELECT addresses.* FROM addresses
 
 ### Eager Loading Multiple Associations
 
-O Active Record permite que você carregue rapidamente qualquer número de associações com uma única chamada `Model.find` usando um array, hash, ou um hash aninhado de array / hash com o método ʻincludes`.
+O _Active Record_ permite que você carregue rapidamente qualquer número de associações com uma única chamada `Model.find` usando um _array_, _hash_, ou um _hash_ aninhado de _array_ / _hash_ com o método `includes`.
 
-#### Matriz de associações múltiplas
+#### _Array_ de Associações Múltiplas
 
 ```ruby
 Article.includes(:category, :comments)
@@ -1278,7 +1278,7 @@ Article.includes(:category, :comments)
 
 Isso carrega todos os artigos e a categoria associada e comentários para cada artigo.
 
-#### Hash de associações aninhadas
+#### _Hash_ de Associações Aninhadas
 
 ```ruby
 Category.includes(articles: [{ comments: :guest }, :tags]).find(1)
@@ -1286,9 +1286,9 @@ Category.includes(articles: [{ comments: :guest }, :tags]).find(1)
 
 Isso encontrará a categoria com id 1 e carregará antecipadamente todos os artigos associados, as tags e comentários dos artigos associados e todas as associações de comentários de convidados.
 
-### Especificando condições em associações carregadas ansiosas
+### Especificando Condições em Associações _Eager Loaded_
 
-Mesmo que o Active Record permita que você especifique as condições nas associações carregadas antecipadamente como `joins`, a maneira recomendada é usar [joins](#joining-tables) ao invés.
+Mesmo que o _Active Record_ permita que você especifique as condições nas associações carregadas antecipadamente como `joins`, a maneira recomendada é usar [joins](#associando-tabelas) ao invés.
 
 No entanto, se você deve fazer isso, você pode usar `where` como faria normalmente.
 
@@ -1297,7 +1297,7 @@ Article.includes(:comments).where(comments: { visible: true })
 ```
 
 Isso geraria uma consulta que contém um `LEFT OUTER JOIN` enquanto o
-O método `joins` geraria um usando a função ʻINNER JOIN`.
+O método `joins` geraria um usando a função `INNER JOIN`.
 
 ```ruby
   SELECT "articles"."id" AS t0_r0, ... "comments"."updated_at" AS t1_r5 FROM "articles" LEFT OUTER JOIN "comments" ON "comments"."article_id" = "articles"."id" WHERE (comments.visible = 1)
@@ -1306,18 +1306,18 @@ O método `joins` geraria um usando a função ʻINNER JOIN`.
 Se não houvesse uma condição `where`, isso geraria o conjunto normal de duas consultas.
 
 NOTA: Usar `where` assim só funcionará quando você passar um Hash. Para
-Fragmentos de SQL você precisa usar `referências` para forçar tabelas unidas:
+Fragmentos de SQL você precisa usar `references` para forçar tabelas unidas:
 
 ```ruby
 Article.includes(:comments).where("comments.visible = true").references(:comments)
 ```
 
-Se, no caso desta consulta ʻinclui`, não houve comentários para qualquer
+Se, no caso desta consulta `includes`, não houve comentários para qualquer
 artigos, todos os artigos ainda seriam carregados. Usando `joins` (um INNER
-JOIN), as condições de junção ** devem ** corresponder, caso contrário, nenhum registro será
-devolvida.
+JOIN), as condições de junção **devem** corresponder, caso contrário, nenhum registro será
+devolvido.
 
-NOTA: Se uma associação for carregada antecipadamente como parte de uma junção, quaisquer campos de uma cláusula de seleção personalizada não estarão presentes nos modelos carregados.
+NOTE: Se uma associação for carregada antecipadamente como parte de uma junção, quaisquer campos de uma cláusula de seleção personalizada não estarão presentes nos *models* carregados.
 Isso ocorre porque é ambíguo se eles devem aparecer no registro do pai ou do filho.
 
 Scopes
