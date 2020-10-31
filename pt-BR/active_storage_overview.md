@@ -357,7 +357,7 @@ file’s content type automatically, it defaults to application/octet-stream.
 Removendo arquivos
 --------------
 
-Para remover um arquivo anexado de um _model_, use o método `purge` no anexdo. A
+Para remover um arquivo anexado de um _model_, use o método `purge` no anexo. A
 remoção pode ser feita de maneira assíncrona na sua aplicação se ela estiver
 configurada para usar o _Active Job_.
 `Purge` remove o _blob_ (O arquivo em sua versão binaria salvo no banco de
