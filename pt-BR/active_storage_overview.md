@@ -226,16 +226,16 @@ NOTE: Files are served from the primary service.
 
 NOTE: This is not compatible with the [direct uploads](#direct-uploads) feature.
 
-Attaching Files to Records
+Anexar Arquivos a Registros
 --------------------------
 
 ### `has_one_attached`
 
-The `has_one_attached` macro sets up a one-to-one mapping between records and
-files. Each record can have one file attached to it.
+O macro `has_one_attached` configura um mapeamento um-para-um entre registros e
+arquivos. Cada registro pode ter um arquivo anexado a ele.
 
-For example, suppose your application has a `User` model. If you want each user to
-have an avatar, define the `User` model like this:
+Por exemplo, imagine que sua aplicação tenha um *model* `User`. Se você quiser que cada usuário
+tenha uma avatar, defina o *model* `User` assim:
 
 ```ruby
 class User < ApplicationRecord
@@ -243,7 +243,7 @@ class User < ApplicationRecord
 end
 ```
 
-You can create a user with an avatar:
+Você pode criar um usuário com um avatar:
 
 ```erb
 <%= form.file_field :avatar %>
@@ -264,13 +264,13 @@ class SignupController < ApplicationController
 end
 ```
 
-Call `avatar.attach` to attach an avatar to an existing user:
+Chamar `avatar.attach` para anexar um avatar a um usuário existente:
 
 ```ruby
 user.avatar.attach(params[:avatar])
 ```
 
-Call `avatar.attached?` to determine whether a particular user has an avatar:
+Chamar `avatar.attached?` para determinar se um usuário em particular tem um avatar:
 
 ```ruby
 user.avatar.attached?
@@ -278,11 +278,11 @@ user.avatar.attached?
 
 ### `has_many_attached`
 
-The `has_many_attached` macro sets up a one-to-many relationship between records
-and files. Each record can have many files attached to it.
+O macro `has_many_attached` configura um relacionamento um-para-muitos entre os registros
+e arquivos. Cada registro pode ter muitos arquivos anexados a ele.
 
-For example, suppose your application has a `Message` model. If you want each
-message to have many images, define the `Message` model like this:
+Por exemplo, imagine que sua aplicação tem um *model* `Message`. Se você quiser que cada
+mensagem tenha muitas imagens, defina o *model* `Message` assim:
 
 ```ruby
 class Message < ApplicationRecord
@@ -290,7 +290,7 @@ class Message < ApplicationRecord
 end
 ```
 
-You can create a message with images:
+Você pode criar uma mensagem com images:
 
 ```ruby
 class MessagesController < ApplicationController
@@ -306,40 +306,40 @@ class MessagesController < ApplicationController
 end
 ```
 
-Call `images.attach` to add new images to an existing message:
+Chamar `images.attach` para adicionar novas imagens para uma mensagem existente:
 
 ```ruby
 @message.images.attach(params[:images])
 ```
 
-Call `images.attached?` to determine whether a particular message has any images:
+Chamar `images.attached?` para determinar se uma mensagem em particular alguma imagem:
 
 ```ruby
 @message.images.attached?
 ```
 
-### Attaching File/IO Objects
+### Anexando Objetos *File/IO*
 
-Sometimes you need to attach a file that doesn’t arrive via an HTTP request.
-For example, you may want to attach a file you generated on disk or downloaded
-from a user-submitted URL. You may also want to attach a fixture file in a
-model test. To do that, provide a Hash containing at least an open IO object
-and a filename:
+Às vezes você precisa anexar um arquivo que não chega por meio de uma requisição HTTP.
+Por exemplo, você pode querer anexar um arquivo que você gerou no disco ou baixou
+de uma URL enviada pelo usuário. Você também pode querer anexar um arquivo de fixação em um
+*model* de test. Para fazer isso, forneça uma *Hash* contendo pelo menos um objeto *open IO*
+e um *filename*:
 
 ```ruby
 @message.image.attach(io: File.open('/path/to/file'), filename: 'file.pdf')
 ```
 
-When possible, provide a content type as well. Active Storage attempts to
-determine a file’s content type from its data. It falls back to the content
-type you provide if it can’t do that.
+Quando possível, forneça um tipo de conteúdo também. O *Active Storage* tenta
+determinar o tipo de conteúdo de um arquivo a partir de seus dados. Depende do tipo
+de conteúdo que você fornece se não for possível.
 
 ```ruby
 @message.image.attach(io: File.open('/path/to/file'), filename: 'file.pdf', content_type: 'application/pdf')
 ```
 
-You can bypass the content type inference from the data by passing in
-`identify: false` along with the `content_type`.
+Você pode ignorar a inferência do tipo de conteúdo a partir dos dados passando
+`identify: false` junto com o `content_type`.
 
 ```ruby
 @message.image.attach(
@@ -350,8 +350,8 @@ You can bypass the content type inference from the data by passing in
 )
 ```
 
-If you don’t provide a content type and Active Storage can’t determine the
-file’s content type automatically, it defaults to application/octet-stream.
+Se você não fornecer um tipo de conteúdo e o *Active Storage* não puder determinar o
+tipo de conteúdo do arquivo automaticamente, o padrão é *application/octet-stream*.
 
 
 Removing Files
