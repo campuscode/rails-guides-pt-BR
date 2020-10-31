@@ -369,30 +369,32 @@ user.avatar.purge
 user.avatar.purge_later
 ```
 
-Linking to Files
+Conectando (_Linking_) arquivos
 ----------------
 
-Generate a permanent URL for the blob that points to the application. Upon
-access, a redirect to the actual service endpoint is returned. This indirection
-decouples the public URL from the actual one, and allows, for example, mirroring
-attachments in different services for high-availability. The redirection has an
-HTTP expiration of 5 min.
+Cria uma _URL_ permanente da sua aplicação para o _blob_. Quando acessado,
+o cliente é redirecionado para a rota (_endpoint_) correta. Está indireção
+desacopla a URL pública da atual, e permite, por exemplo, espelhar anexos em
+diferentes serviços de grande disponibilidade. O redirecionamento tem um tempo
+de expiração de 5 minutos.
 
 ```ruby
 url_for(user.avatar)
 ```
 
-To create a download link, use the `rails_blob_{path|url}` helper. Using this
-helper allows you to set the disposition.
+Para criar um _link_ para baixar o arquivo use o seguinte _helper_:
+`rails_blob_{path|url}`. Usando esse _helper_ permite que você configure a
+disposição (`disposition`) de como deseja apresentar:
 
 ```ruby
 rails_blob_path(user.avatar, disposition: "attachment")
 ```
 
-If you need to create a link from outside of controller/view context (Background
-jobs, Cronjobs, etc.), you can access the rails_blob_path like this:
+Se você precisar criar um _link_ fora do escopo do _controller_ ou _view_ (Um
+serviço que execute tarefas assíncronas, _Cronjob_ etc), você pode acessar o
+_helper_ `rails_blob_path` desta maneira:
 
-```
+```ruby
 Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
 ```
 
