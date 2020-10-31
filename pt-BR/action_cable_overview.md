@@ -778,7 +778,7 @@ authentication. You can see one way of doing that with Devise in this [article](
 O _Action Cable_ fornece uma interface de adaptador de assinatura para processar seus
 _pubsub_ internos. Por padrão, adaptadores assíncronos, _inline_, PostgreSQL e Redis
 estão incluídos. O adaptador padrão
-em novas aplicações Rails é o adaptador assíncrono (ʻasync`).
+em novas aplicações Rails é o adaptador assíncrono (`async`).
 
 O lado Ruby das coisas é construído em cima de [websocket-driver](https://github.com/faye/websocket-driver-ruby),
 [nio4r](https://github.com/celluloid/nio4r) e [concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby).
