@@ -354,18 +354,20 @@ If you don’t provide a content type and Active Storage can’t determine the
 file’s content type automatically, it defaults to application/octet-stream.
 
 
-Removing Files
+Removendo arquivos
 --------------
 
-To remove an attachment from a model, call `purge` on the attachment. Removal
-can be done in the background if your application is setup to use Active Job.
-Purging deletes the blob and the file from the storage service.
+Para remover um arquivo anexado de um _model_, use o método `purge` no anexdo. A
+remoção pode ser feita de maneira assíncrona na sua aplicação se ela estiver
+configurada para usar o _Active Job_.
+`Purge` remove o _blob_ (O arquivo em sua versão binaria salvo no banco de
+dados) e o arquivo do seu serviço de armazenamento.
 
 ```ruby
-# Synchronously destroy the avatar and actual resource files.
+# Maneira usada para remover um avatar e seus arquivos de maneira síncrona.
 user.avatar.purge
 
-# Destroy the associated models and actual resource files async, via Active Job.
+# Maneira usada para remover um avatar e seus arquivos de maneira assíncrona.
 user.avatar.purge_later
 ```
 
