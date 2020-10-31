@@ -411,7 +411,7 @@ binary = user.avatar.download
 
 Caso deseje baixar o _blob_ para um arquivo no disco para um programa externo
 (Um antivírus, por exemplo) possa operar nele use o `ActiveStorage::Blob#open`
-para baixar o _blob_ para um arquivo temporario no disco:
+para baixar o _blob_ para um arquivo temporário no disco:
 
 ```ruby
 message.video.open do |file|
