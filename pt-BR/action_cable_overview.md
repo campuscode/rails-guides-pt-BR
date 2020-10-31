@@ -107,27 +107,27 @@ module ApplicationCable
 end
 ```
 
-Here `identified_by` is a connection identifier that can be used to find the
-specific connection later. Note that anything marked as an identifier will automatically
-create a delegate by the same name on any channel instances created off the connection.
+Aqui, `identified_by` é um identificador de *connection* que pode ser usado para
+encontrar uma *connection* específica mais tarde. Note que qualquer coisa marcada
+como um identificador criará automaticamente um *delegate* pelo mesmo nome em
+qualquer instância de *channel* criada a partir da *connection*.
 
-This example relies on the fact that you will already have handled authentication of the user
-somewhere else in your application, and that a successful authentication sets a signed
-cookie with the user ID.
+Esse exemplo se baseia no fato de que você já lidou a autenticação do usuário em
+algum outro lugar na sua aplicação e essa autenticação bem sucedida dedfiniu um
+*cookie* assinado com o ID do usuário.
 
-The cookie is then automatically sent to the connection instance when a new connection
-is attempted, and you use that to set the `current_user`. By identifying the connection
-by this same current user, you're also ensuring that you can later retrieve all open
-connections by a given user (and potentially disconnect them all if the user is deleted
-or unauthorized).
+O *cookie* é então enviado automaticamente para a instância da *connection* quando há
+a tentativa de criar uma nova *connection*, e você o usa para definir o `current_user`.
+Ao identificar a *connection* para o mesmo usuário, você também garante que você pode retornar todas as *connections* em aberto para um usuário específico (e potencialmente desconectá-los, caso o usuário seja deletado ou desautorizado).
 
-### Channels
+### *Channels*
 
-A *channel* encapsulates a logical unit of work, similar to what a controller does in a
-regular MVC setup. By default, Rails creates a parent `ApplicationCable::Channel` class
-for encapsulating shared logic between your channels.
+O *channel* encapsula uma unidade lógica de trabalho, parecido com o que um
+*controller* faz em um *MVC* comum. Por padrão, o *Rails* cria uma classe pai
+`ApplicationCable::Channel` para encapsular a lógica compartilhada entre seus
+*channels*.
 
-#### Parent Channel Setup
+#### Configuração do *Channel* pai
 
 ```ruby
 # app/channels/application_cable/channel.rb
@@ -137,8 +137,8 @@ module ApplicationCable
 end
 ```
 
-Then you would create your own channel classes. For example, you could have a
-`ChatChannel` and an `AppearanceChannel`:
+Então, você criaria suas própias classes de *channel*. Por exemplo, você poderia ter um
+`ChatChannel` e um `AppearanceChannel`:
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -150,19 +150,19 @@ class AppearanceChannel < ApplicationCable::Channel
 end
 ```
 
-A consumer could then be subscribed to either or both of these channels.
+Um *consumer* poderia então ser inscrito para qualquer ou ambos os *channels*.
 
-#### Subscriptions
+#### *Subscriptions*
 
-Consumers subscribe to channels, acting as *subscribers*. Their connection is
-called a *subscription*. Produced messages are then routed to these channel
-subscriptions based on an identifier sent by the cable consumer.
+*Consumers* se inscrevem a *channels*, agindo como *subscribers*. A *connection*
+deles é chamada de *subscription*. Mensagens produzidas são então roteadas para esses
+*channel subscriptions* basedos em um identificador enviado pelo *cable consumer*.
 
 ```ruby
 # app/channels/chat_channel.rb
 class ChatChannel < ApplicationCable::Channel
-  # Called when the consumer has successfully
-  # become a subscriber to this channel.
+  # Chamado quando o *consumer* tornou-se um *subscriber* a
+  # esse *channel* com sucesso.
   def subscribed
   end
 end
