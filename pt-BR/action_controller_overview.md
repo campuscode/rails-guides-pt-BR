@@ -1043,7 +1043,7 @@ config.filter_parameters << :password
 
 NOTE: Os Parâmetros fornecidos serão filtrados correspondendo parcialmente a uma expressão regular. Rails por padrão adiciona `:password` no *initializer* apropriado (`initializers/filter_parameter_logging.`) e se preocupa com parâmetros típicos da aplicação `password` e `password_confirmation`.
 
-### Redirects Filtering
+### Filtrando Redirecionamentos
 
 As vezes se é desejado que filtrem dos arquivos de log alguns locais sensíveis que sua aplicação é redirecionada.
 Você pode fazer isso utilizando uma opção de configuração `config.filter_redirect`:
