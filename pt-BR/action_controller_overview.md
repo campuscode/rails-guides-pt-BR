@@ -1058,7 +1058,7 @@ Você pode utilizar uma _String_, uma expressão regular ou um array com ambos.
 config.filter_redirect.concat ['s3.amazonaws.com', /private_path/]
 ```
 
-_URLs_ que correspondem a expressão regular serão marcadas como  '[FILTERED]'.
+_URLs_ correspondentes com a expressão regular serão marcadas como  '[FILTERED]'.
 
 Rescue
 ------
