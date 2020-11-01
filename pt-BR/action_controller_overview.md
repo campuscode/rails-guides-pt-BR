@@ -1035,7 +1035,7 @@ Rails mantém um arquivo de log pra cada ambiente na pasta `log`. Eles são bast
 
 ### Filtrando Parâmetros
 
-Você pode retirar paramêtros sensíveis da requisição de serem salvos no seu arquivo de log os adicionando a `config.filter_parameters` na condifuração da aplicação. Esses parâmetros aparecerão como [FILTERED] no arquivo de log.
+Você pode evitar que parâmetros sensíveis da requisição sejam salvos no seu arquivo de log adicionando-os a `config.filter_parameters` na configuração da aplicação. Esses parâmetros aparecerão como [FILTERED] no arquivo de log.
 
 ```ruby
 config.filter_parameters << :password
