@@ -1031,7 +1031,7 @@ you should also note the following things:
 Filtragem de Log
 -------------
 
-Rails mantem um arquivo de log pra cada ambiente na pasta `log`. Esses são extremamente úteis quando estamos depuração o que está realmente acontecendo na sua aplicação, porém você pode não querer que sejam salvos nesse arquivo de log todo _bit_ de informação.
+Rails mantém um arquivo de log pra cada ambiente na pasta `log`. Eles são bastante úteis quando estamos depurando o que está de fato acontecendo na sua aplicação, porém você pode não querer que sejam salvos todas as informações sejam armazenadas no arquivo de log em uma aplicação ativa.
 
 ### Filtrando Parâmetros
 
