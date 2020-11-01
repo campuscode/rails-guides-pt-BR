@@ -457,12 +457,13 @@ To switch to the Vips processor, you would add the following to
 config.active_storage.variant_processor = :vips
 ```
 
-Previewing Files
+Pré-visualização de arquivos
 ----------------
 
-Some non-image files can be previewed: that is, they can be presented as images.
-For example, a video file can be previewed by extracting its first frame. Out of
-the box, Active Storage supports previewing videos and PDF documents.
+Alguns arquivos que não são imagens podem ser pré-visualizados: isto é, eles podem
+ser apresentados como imagens. Por exemplo, um arquivo de vídeo pode ser pré-visualizado
+através da extração de seu primeiro *frame*. O *Active Storage* por padrão já oferece
+suporte para a pré-visualização de vídeos e documentos PDF.
 
 ```erb
 <ul>
@@ -474,11 +475,12 @@ the box, Active Storage supports previewing videos and PDF documents.
 </ul>
 ```
 
-WARNING: Extracting previews requires third-party applications, FFmpeg for
-video and muPDF for PDFs, and on macOS also XQuartz and Poppler.
-These libraries are not provided by Rails. You must install them yourself to
-use the built-in previewers. Before you install and use third-party software,
-make sure you understand the licensing implications of doing so.
+WARNING: Extrair pré-visualizações necessita de aplicações de terceiros, *FFmpeg* para
+vídeo e *muPDF* para PDFs, e no *macOS* também são necessários *XQuartz* e *Poppler*.
+Estas bibliotecas não são fornecidas pelo Rails. Você deve instalá-las para poder
+utilizar as pré-visualizações embutidas no *Active Storage*. Antes de instalar e utilizar
+o *software* de terceiros, certifique-se de entender as implicações da licença para
+essas ações.
 
 
 Direct Uploads
