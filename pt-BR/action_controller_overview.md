@@ -1045,7 +1045,7 @@ NOTE: Os Parâmetros fornecidos serão filtrados correspondendo parcialmente a u
 
 ### Filtrando Redirecionamentos
 
-As vezes se é desejado que filtrem dos arquivos de log alguns locais sensíveis que sua aplicação é redirecionada.
+Às vezes é desejável que sejam filtrados dos arquivos de log alguns locais sensíveis para os quais sua aplicação está redirecionando.
 Você pode fazer isso utilizando uma opção de configuração `config.filter_redirect`:
 
 ```ruby
