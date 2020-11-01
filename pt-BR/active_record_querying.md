@@ -707,7 +707,7 @@ Você pode utilizar `limit` para especificar o número de registros para buscar,
 Client.limit(5)
 ```
 
-retornará no máximo 5 clientes e devido ao método não espeficar nenhum *offset* ele retornará os primeiros 5 registros na tabela. O SQL que o método executa será parecido com:
+retornará no máximo 5 clientes e devido ao método não especificar nenhum *offset* ele retornará os primeiros 5 registros na tabela. O SQL que o método executa será parecido com:
 
 ```sql
 SELECT * FROM clients LIMIT 5
