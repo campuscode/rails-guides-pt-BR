@@ -195,7 +195,7 @@ array     # => ['string']
 duplicate # => ['foo']
 ```
 
-Se o objeto não é duplicável, `deep_dup` apenas retornará:
+Se o objeto não é duplicável, `deep_dup` apenas o retornará:
 
 ```ruby
 number = 1
@@ -212,16 +212,16 @@ Quando você quer chamar um método em um objeto somente se ele não for `nil`, 
 Eis um exemplo:
 
 ```ruby
-# without try
+# sem try
 unless @number.nil?
   @number.next
 end
 
-# with try
+# com try
 @number.try(:next)
 ```
 
-Outro exemplo é o código em `ActiveRecord::ConnectionAdapters::AbstractAdapter` onde `@logger` não pode ser `nil`. Você pode ver que o código usa `try` e evita uma desnecessária verificação.
+Outro exemplo é o código em `ActiveRecord::ConnectionAdapters::AbstractAdapter` onde `@logger` não pode ser `nil`. Você pode ver que o código usa `try` e evita uma verificação desnecessária.
 
 ```ruby
 def log_info(sql, name, ms)
@@ -283,7 +283,7 @@ que é apenas um marcador, seu corpo ou valor de retorno são irrelevantes. Ent�
 some_klass.acts_like?(:string)
 ```
 
-Rails possui classes atuantes como `Date` ou `Time` e seguem essa linha.
+Rails possui classes que agem como `Date` ou `Time` e seguem essa linha.
 
 NOTE: Definido em `active_support/core_ext/object/acts_like.rb`.
 
