@@ -289,7 +289,7 @@ NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
 
 ### `to_param`
 
-Todos objetos em Rails respondem ao método `to_param`, o qual é usado para o retorno de representações de valores em consultas de _strings_, ou fragmentos de URL.
+Todos objetos em Rails respondem ao método `to_param`, o qual é usado para retornar representações de valores em _strings_, no qual podem ser usadas em consultas, ou fragmentos de URL.
 
 Por padrão, `to_param` apenas chama o método `to_s`:
 
@@ -297,13 +297,13 @@ Por padrão, `to_param` apenas chama o método `to_s`:
 7.to_param # => "7"
 ```
 
-O retorno de valores em `to_param` **não** deve ser ingnorado:
+O retorno de valores em `to_param` **não** deve ser ignorado:
 
 ```ruby
 "Tom & Jerry".to_param # => "Tom & Jerry"
 ```
 
-Várias classes em Rails sobreescrevem este método.
+Várias classes em Rails sobrescrevem este método.
 
 Por exemplo `nil`, `true`, e `false` retornam a si mesmo. `Array#to_param` chama `to_param` para cada elemento, exibindo o resultado separando os elementos com "/":
 
@@ -423,7 +423,7 @@ NOTE: Definido em `active_support/core_ext/object/with_options.rb`.
 
 ### Suporte ao JSON
 
-_Active Support_ fornece uma melhor implementação para `to_json` do que a _gem_ `json` normalmente fornece para obejtos em Ruby. Isso é porque algumas classes, como `Hash`, `OrderedHash` e `Process::Status` precisam de manipulações especiais a fim de fornecer uma representação de JSON adequada.
+_Active Support_ fornece uma melhor implementação para `to_json` do que a _gem_ `json` normalmente fornece para objetos em Ruby. Isso é porque algumas classes, como `Hash`, `OrderedHash` e `Process::Status` precisam de manipulações especiais a fim de fornecer uma representação de JSON adequada.
 
 NOTE: Definido em `active_support/core_ext/object/json.rb`.
 
@@ -472,7 +472,7 @@ Os métodos `silence_warnings` e `enable_warnings` trocam o valor de `$VERBOSE` 
 silence_warnings { Object.const_set "RAILS_DEFAULT_LOGGER", logger }
 ```
 
-Silenciar expressões também é possível com `suppress`. Este método recebe um número arbitrário de classes de exceção. Se uma exceção é acionada durante a execução de um bloco e é `kind_of?` qualquer um dos argumentos, `suppress` captura e retorna silenciosamente. Caso contrário, a exceção não é capturada:
+Silenciar exceções também é possível com `suppress`. Este método recebe um número arbitrário de classes de exceção. Se uma exceção é acionada durante a execução de um bloco e é `kind_of?` qualquer um dos argumentos, `suppress` captura e retorna silenciosamente. Caso contrário, a exceção não é capturada:
 
 ```ruby
 # If the user is locked, the increment is lost, no big deal.
@@ -485,7 +485,7 @@ NOTE: Definido in `active_support/core_ext/kernel/reporting.rb`.
 
 ### `in?`
 
-A expressão `in?` testa se um objeto é incluido em outro objeto. Uma exceção `ArgumentError` será acionada se o argumento passado não responder a `include?`.
+A expressão `in?` testa se um objeto é incluído em outro objeto. Uma exceção `ArgumentError` será acionada se o argumento passado não responder a `include?`.
 
 Exemplos de `in?`:
 
