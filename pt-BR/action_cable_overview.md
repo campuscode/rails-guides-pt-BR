@@ -769,15 +769,15 @@ The WebSocket server doesn't have access to the session, but it has
 access to the cookies. This can be used when you need to handle
 authentication. You can see one way of doing that with Devise in this [article](https://greg.molnar.io/blog/actioncable-devise-authentication/).
 
-## Dependencies
+## Dependências
 
-Action Cable provides a subscription adapter interface to process its
-pubsub internals. By default, asynchronous, inline, PostgreSQL, and Redis
-adapters are included. The default adapter
-in new Rails applications is the asynchronous (`async`) adapter.
+O _Action Cable_ fornece uma interface de adaptador de assinatura para processar seus
+_pubsub_ internos. Por padrão, adaptadores assíncronos, _inline_, PostgreSQL e Redis
+estão incluídos. O adaptador padrão
+em novas aplicações Rails é o adaptador assíncrono (`async`).
 
-The Ruby side of things is built on top of [websocket-driver](https://github.com/faye/websocket-driver-ruby),
-[nio4r](https://github.com/celluloid/nio4r), and [concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby).
+O lado Ruby das coisas é construído em cima de [websocket-driver](https://github.com/faye/websocket-driver-ruby),
+[nio4r](https://github.com/celluloid/nio4r) e [concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby).
 
 ## Deployment
 
