@@ -289,29 +289,29 @@ NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
 
 ### `to_param`
 
-All objects in Rails respond to the method `to_param`, which is meant to return something that represents them as values in a query string, or as URL fragments.
+Todos objetos em Rails respondem ao método `to_param`, o qual é usado para retornar representações de valores em _strings_, no qual podem ser usadas em consultas, ou fragmentos de URL.
 
-By default `to_param` just calls `to_s`:
+Por padrão, `to_param` apenas chama o método `to_s`:
 
 ```ruby
 7.to_param # => "7"
 ```
 
-The return value of `to_param` should **not** be escaped:
+O retorno de valores em `to_param` **não** deve ser ignorado:
 
 ```ruby
 "Tom & Jerry".to_param # => "Tom & Jerry"
 ```
 
-Several classes in Rails overwrite this method.
+Várias classes em Rails sobrescrevem este método.
 
-For example `nil`, `true`, and `false` return themselves. `Array#to_param` calls `to_param` on the elements and joins the result with "/":
+Por exemplo `nil`, `true`, e `false` retornam a si mesmo. `Array#to_param` chama `to_param` para cada elemento, exibindo o resultado separando os elementos com "/":
 
 ```ruby
 [0, true, String].to_param # => "0/true/String"
 ```
 
-Notably, the Rails routing system calls `to_param` on models to get a value for the `:id` placeholder. `ActiveRecord::Base#to_param` returns the `id` of a model, but you can redefine that method in your models. For example, given
+Notavelmente, as rotas de sistemas Rails chamam `to_param` em _models_ para obter o valor do campo `:id`. `ActiveRecord::Base#to_param` retorna o `id` do _model_, mas você pode redefinir esse método em seus _models_. Por exemplo, dado
 
 ```ruby
 class User
@@ -321,19 +321,19 @@ class User
 end
 ```
 
-we get:
+nós temos:
 
 ```ruby
 user_path(@user) # => "/users/357-john-smith"
 ```
 
-WARNING. Controllers need to be aware of any redefinition of `to_param` because when a request like that comes in "357-john-smith" is the value of `params[:id]`.
+WARNING. _Controllers_ precisam estar alinhados a qualquer redefinição de `to_param` porque quando uma requisição como essa chega em "357-john-smith" este é o valor de `params[:id]`.
 
-NOTE: Defined in `active_support/core_ext/object/to_param.rb`.
+NOTE: Definido em `active_support/core_ext/object/to_param.rb`.
 
 ### `to_query`
 
-Except for hashes, given an unescaped `key` this method constructs the part of a query string that would map such key to what `to_param` returns. For example, given
+Exceto para _hashes_, com `key` este método constrói parte da _string_ usada em consultas onde ira mapear a chave que `to_param` retorna. Por exemplo, dado
 
 ```ruby
 class User
@@ -343,48 +343,48 @@ class User
 end
 ```
 
-we get:
+Temos:
 
 ```ruby
 current_user.to_query('user') # => "user=357-john-smith"
 ```
 
-This method escapes whatever is needed, both for the key and the value:
+Este método traz o que é necessário, tanto para chave, como para o valor:
 
 ```ruby
 account.to_query('company[name]')
 # => "company%5Bname%5D=Johnson+%26+Johnson"
 ```
 
-so its output is ready to be used in a query string.
+então esse resultado esta pronto para ser usado em uma _string_ de busca.
 
-Arrays return the result of applying `to_query` to each element with `key[]` as key, and join the result with "&":
+_Arrays_ retornam o resultado da aplicação `to_query` para cada elemento com `key[]` como chave, e junta o resultado com "&":
 
 ```ruby
 [3.4, -45.6].to_query('sample')
 # => "sample%5B%5D=3.4&sample%5B%5D=-45.6"
 ```
 
-Hashes also respond to `to_query` but with a different signature. If no argument is passed a call generates a sorted series of key/value assignments calling `to_query(key)` on its values. Then it joins the result with "&":
+_Hashes_ tambem respondem a `to_query` mas com uma diferença. Se não passar um argumento a chamada gera uma série ordenada de chaves/valores atribuídas chamando `to_query(key)` em seus valores. Em seguida, o resultado é mesclado com "&":
 
 ```ruby
 {c: 3, b: 2, a: 1}.to_query # => "a=1&b=2&c=3"
 ```
 
-The method `Hash#to_query` accepts an optional namespace for the keys:
+O método `Hash#to_query` aceita um espaço para nomear as chaves:
 
 ```ruby
 {id: 89, name: "John Smith"}.to_query('user')
 # => "user%5Bid%5D=89&user%5Bname%5D=John+Smith"
 ```
 
-NOTE: Defined in `active_support/core_ext/object/to_query.rb`.
+NOTE: Definido em `active_support/core_ext/object/to_query.rb`.
 
 ### `with_options`
 
-The method `with_options` provides a way to factor out common options in a series of method calls.
+O método `with_options` fornece um meio de agrupar opções comuns em uma série de chamada de métodos.
 
-Given a default options hash, `with_options` yields a proxy object to a block. Within the block, methods called on the proxy are forwarded to the receiver with their options merged. For example, you get rid of the duplication in:
+Dado as opções _default_ de uma _hash_, `with_options` faz um objeto de "ponte" em um bloco. Dentro do bloco, métodos são chamados no objeto e são encaminhados ao receptor com suas opções mescladas. Por exemplo, você se livra da duplicação em:
 
 ```ruby
 class Account < ApplicationRecord
@@ -395,7 +395,7 @@ class Account < ApplicationRecord
 end
 ```
 
-this way:
+desta forma:
 
 ```ruby
 class Account < ApplicationRecord
@@ -408,7 +408,7 @@ class Account < ApplicationRecord
 end
 ```
 
-That idiom may convey _grouping_ to the reader as well. For example, say you want to send a newsletter whose language depends on the user. Somewhere in the mailer you could group locale-dependent bits like this:
+Essa expressão pode transmitir um agrupamento para o leitor também. Por exemplo, digamos que você queira enviar um boletim informativo cujo idioma depende do usuário. Em algum lugar na _mailer_ você poderá agrupar os receptores por localidade como no exemplo:
 
 ```ruby
 I18n.with_options locale: user.locale, scope: "newsletter" do |i18n|
@@ -417,24 +417,24 @@ I18n.with_options locale: user.locale, scope: "newsletter" do |i18n|
 end
 ```
 
-TIP: Since `with_options` forwards calls to its receiver they can be nested. Each nesting level will merge inherited defaults in addition to their own.
+TIP: Desde que `with_options` envie chamadas para seus receptores eles podem ser aninhados. Cada nível de aninhamento mesclará os padrões herdados com os seus próprios.
 
-NOTE: Defined in `active_support/core_ext/object/with_options.rb`.
+NOTE: Definido em `active_support/core_ext/object/with_options.rb`.
 
-### JSON support
+### Suporte ao JSON
 
-Active Support provides a better implementation of `to_json` than the `json` gem ordinarily provides for Ruby objects. This is because some classes, like `Hash`, `OrderedHash` and `Process::Status` need special handling in order to provide a proper JSON representation.
+_Active Support_ fornece uma melhor implementação para `to_json` do que a _gem_ `json` normalmente fornece para objetos em Ruby. Isso é porque algumas classes, como `Hash`, `OrderedHash` e `Process::Status` precisam de manipulações especiais a fim de fornecer uma representação de JSON adequada.
 
-NOTE: Defined in `active_support/core_ext/object/json.rb`.
+NOTE: Definido em `active_support/core_ext/object/json.rb`.
 
-### Instance Variables
+### Variáveis de Instância
 
-Active Support provides several methods to ease access to instance variables.
+_Active Support_ fornece vários métodos para facilitar o acesso a variáveis de instância.
 
 #### `instance_values`
 
-The method `instance_values` returns a hash that maps instance variable names without "@" to their
-corresponding values. Keys are strings:
+O método `instance_values` retorna uma _hash_ que mapeia variáveis de instância de nomes sem "@" para seus
+valores correspondentes. As chaves são _strings_:
 
 ```ruby
 class C
@@ -446,11 +446,11 @@ end
 C.new(0, 1).instance_values # => {"x" => 0, "y" => 1}
 ```
 
-NOTE: Defined in `active_support/core_ext/object/instance_variables.rb`.
+NOTE: Definido em `active_support/core_ext/object/instance_variables.rb`.
 
 #### `instance_variable_names`
 
-The method `instance_variable_names` returns an array. Each name includes the "@" sign.
+O método `instance_variable_names` retorna um _array_. Cada nome inclui o sinal "@".
 
 ```ruby
 class C
@@ -462,17 +462,17 @@ end
 C.new(0, 1).instance_variable_names # => ["@x", "@y"]
 ```
 
-NOTE: Defined in `active_support/core_ext/object/instance_variables.rb`.
+NOTE: Definido em `active_support/core_ext/object/instance_variables.rb`.
 
-### Silencing Warnings and Exceptions
+### Silenciando _Warnings_ e Exceções
 
-The methods `silence_warnings` and `enable_warnings` change the value of `$VERBOSE` accordingly for the duration of their block, and reset it afterwards:
+Os métodos `silence_warnings` e `enable_warnings` trocam o valor de `$VERBOSE` de acordo com a duração do seu bloco, e o reiniciam depois:
 
 ```ruby
 silence_warnings { Object.const_set "RAILS_DEFAULT_LOGGER", logger }
 ```
 
-Silencing exceptions is also possible with `suppress`. This method receives an arbitrary number of exception classes. If an exception is raised during the execution of the block and is `kind_of?` any of the arguments, `suppress` captures it and returns silently. Otherwise the exception is not captured:
+Silenciar exceções também é possível com `suppress`. Este método recebe um número arbitrário de classes de exceção. Se uma exceção é acionada durante a execução de um bloco e é `kind_of?` qualquer um dos argumentos, `suppress` captura e retorna silenciosamente. Caso contrário, a exceção não é capturada:
 
 ```ruby
 # If the user is locked, the increment is lost, no big deal.
@@ -481,13 +481,13 @@ suppress(ActiveRecord::StaleObjectError) do
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/kernel/reporting.rb`.
+NOTE: Definido in `active_support/core_ext/kernel/reporting.rb`.
 
 ### `in?`
 
-The predicate `in?` tests if an object is included in another object. An `ArgumentError` exception will be raised if the argument passed does not respond to `include?`.
+A expressão `in?` testa se um objeto é incluído em outro objeto. Uma exceção `ArgumentError` será acionada se o argumento passado não responder a `include?`.
 
-Examples of `in?`:
+Exemplos de `in?`:
 
 ```ruby
 1.in?([1,2])        # => true
@@ -496,7 +496,7 @@ Examples of `in?`:
 1.in?(1)            # => ArgumentError
 ```
 
-NOTE: Defined in `active_support/core_ext/object/inclusion.rb`.
+NOTE: Definido em `active_support/core_ext/object/inclusion.rb`.
 
 Extensions to `Module`
 ----------------------
