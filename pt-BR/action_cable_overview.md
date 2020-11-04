@@ -737,17 +737,17 @@ end
 ```
 
 Você pode usar `ActionCable.createConsumer()` para conectar ao 
-servidor se `action_cable_meta_tag` for invocado no layout. Caso contrário, um caminho é
+_cable server_ se `action_cable_meta_tag` for invocado no layout. Caso contrário, um caminho é
 especificado como primeiro argumento para `createConsumer` (e.g. `ActionCable.createConsumer("/websocket")`).
 
-Para cada instância de seu servidor que você cria e para cada trabalhador seu servidor
-spawns, você também terá uma nova instância do Action Cable, mas o uso do Redis
-mantém as mensagens sincronizadas nas conexões.
+Para cada instância de seu servidor que você cria e para cada _worker_ que seu servidor
+instancia, você também terá uma nova instância do _Action Cable_, mas o uso do Redis
+mantém as mensagens sincronizadas entre as conexões.
 
 ### Autônomo
 
-Os servidores a cabo podem ser separados do servidor de aplicativos normal. Está
-ainda é um aplicativo Rack, mas é seu próprio aplicativo Rack. O recomendado
+Os _cable servers_ a cabo podem ser separados do servidor de aplicação normal. Este
+ainda é uma aplicação Rack, mas é sua própria aplicação Rack. O recomendado
 para a configuração básica é a seguinte:
 
 ```ruby
