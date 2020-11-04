@@ -779,19 +779,19 @@ em novas aplicações Rails é o adaptador assíncrono (`async`).
 O lado Ruby das coisas é construído em cima de [websocket-driver](https://github.com/faye/websocket-driver-ruby),
 [nio4r](https://github.com/celluloid/nio4r) e [concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby).
 
-## Deployment
+## Implantação
 
-Action Cable is powered by a combination of WebSockets and threads. Both the
-framework plumbing and user-specified channel work are handled internally by
-utilizing Ruby's native thread support. This means you can use all your regular
-Rails models with no problem, as long as you haven't committed any thread-safety sins.
+O _Action Cable_ é alimentado por uma combinação de _WebSockets_ e _threads_. Tanto o
+[_plumbing_](https://www.techopedia.com/definition/31509/plumbing) do _framework_ e o trabalho do _channel_ especificado pelo usuário são tratados internamente,
+usando suporte de _thread_ nativo do Ruby. Isso significa que você pode usar todos os seus
+*models* dos Rails sem problemas, contanto que você não tenha cometido nenhum pecado de _thread-safety_.
 
-The Action Cable server implements the Rack socket hijacking API,
-thereby allowing the use of a multithreaded pattern for managing connections
-internally, irrespective of whether the application server is multi-threaded or not.
+O servidor _Action Cable_ implementa o _Rack socket hijacking API_,
+permitindo assim o uso de um padrão _multithread_ para o gerenciamento de conexões
+internamente, independentemente de o servidor de aplicativos ser multiencadeado ou não.
 
-Accordingly, Action Cable works with popular servers like Unicorn, Puma, and
-Passenger.
+Assim, _Action Cable_ funciona com servidores populares como _Unicorn_, _Puma_ e
+_Passenger_.
 
 ## Teste
 
