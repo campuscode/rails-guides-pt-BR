@@ -423,14 +423,19 @@ message.video.open do |file|
 end
 ```
 
-Analyzing Files
+Analisando arquivos
 ---------------
 
-Active Storage [analyzes](https://api.rubyonrails.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyze) files once they've been uploaded by queuing a job in Active Job. Analyzed files will store additional information in the metadata hash, including `analyzed: true`. You can check whether a blob has been analyzed by calling `analyzed?` on it.
+O *Active Storage* [analisa](https://api.rubyonrails.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyze)
+arquivos assim que eles são enviados através do enfileiramento de um *job* no *Active Job*. Arquivos analisados armazenarão
+informações adicionais no *hash* de metadados, incluindo `analyzed: true`. Você pode verificar se um *blob* foi analisado
+chamando `analyzed?` nele.
 
-Image analysis provides `width` and `height` attributes. Video analysis provides these, as well as `duration`, `angle`, and `display_aspect_ratio`.
+A análise de imagens fornece os atributos `width` e `height`. A análise de vídeos fornece ambos citados anteriormente, assim
+como `duration`, `angle` e `display_aspect_ratio`.
 
-Analysis requires the `mini_magick` gem. Video analysis also requires the [FFmpeg](https://www.ffmpeg.org/) library, which you must include separately.
+A análise necessita da gem `mini_magick`. A análise de vídeos também necessita da biblioteca [FFmpeg](https://www.ffmpeg.org/),
+que você deve incluir separadamente.
 
 Transforming Images
 -------------------
