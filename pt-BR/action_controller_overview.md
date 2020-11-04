@@ -1016,37 +1016,37 @@ Transmitir dados arbitrários é uma ferramenta extremamente poderosa. Como most
   _controller_ `ActionController::Live` não irá funcionar. Você deve usar um 
   servidor web que não armazene automaticamente as respostas.
 
-Log Filtering
+Filtragem de Log
 -------------
 
-Rails keeps a log file for each environment in the `log` folder. These are extremely useful when debugging what's actually going on in your application, but in a live application you may not want every bit of information to be stored in the log file.
+Rails mantém um arquivo de log pra cada ambiente na pasta `log`. Eles são bastante úteis quando estamos depurando o que está de fato acontecendo na sua aplicação, porém você pode não querer que sejam salvos todas as informações sejam armazenadas no arquivo de log em uma aplicação ativa.
 
-### Parameters Filtering
+### Filtrando Parâmetros
 
-You can filter out sensitive request parameters from your log files by appending them to `config.filter_parameters` in the application configuration. These parameters will be marked [FILTERED] in the log.
+Você pode evitar que parâmetros sensíveis da requisição sejam salvos no seu arquivo de log adicionando-os a `config.filter_parameters` na configuração da aplicação. Esses parâmetros aparecerão como [FILTERED] no arquivo de log.
 
 ```ruby
 config.filter_parameters << :password
 ```
 
-NOTE: Provided parameters will be filtered out by partial matching regular expression. Rails adds default `:password` in the appropriate initializer (`initializers/filter_parameter_logging.rb`) and cares about typical application parameters `password` and `password_confirmation`.
+NOTE: Os Parâmetros fornecidos serão filtrados correspondendo parcialmente a uma expressão regular. Rails por padrão adiciona `:password` no *initializer* apropriado (`initializers/filter_parameter_logging.`) e se preocupa com parâmetros típicos da aplicação `password` e `password_confirmation`.
 
-### Redirects Filtering
+### Filtrando Redirecionamentos
 
-Sometimes it's desirable to filter out from log files some sensitive locations your application is redirecting to.
-You can do that by using the `config.filter_redirect` configuration option:
+Às vezes é desejável que sejam filtrados dos arquivos de log alguns locais sensíveis para os quais sua aplicação está redirecionando.
+Você pode fazer isso utilizando uma opção de configuração `config.filter_redirect`:
 
 ```ruby
 config.filter_redirect << 's3.amazonaws.com'
 ```
 
-You can set it to a String, a Regexp, or an array of both.
+Você pode utilizar uma _String_, uma expressão regular ou um array com ambos.
 
 ```ruby
 config.filter_redirect.concat ['s3.amazonaws.com', /private_path/]
 ```
 
-Matching URLs will be marked as '[FILTERED]'.
+_URLs_ correspondentes com a expressão regular serão marcadas como  '[FILTERED]'.
 
 Rescue
 ------
