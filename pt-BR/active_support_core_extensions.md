@@ -83,26 +83,26 @@ Isso não vai inserir todo o _Active Support_ na memória antes do necessário, 
 
 Uma aplicação Ruby on Rails carrega todo o _Active Support_ a não ser que `config.active_support.bare` esteja definida como `true`. Neste caso, a aplicação vai carregar apenas o que o próprio _framework_ escolhe como suas próprias necessidades, e ainda pode selecionar a si mesmo em qualquer nível de granularidade, conforme explicado na seção anterior.
 
-Extensions to All Objects
+Extensões para todos os objetos
 -------------------------
 
-### `blank?` and `present?`
+### `blank?` e `present?`
 
-The following values are considered to be blank in a Rails application:
+Os seguintes valores são considerados _blank_ em uma aplicação Rails:
 
-* `nil` and `false`,
+* `nil` e `false`,
 
-* strings composed only of whitespace (see note below),
+* _strings_ compostas apenas por espaços em branco (veja a nota abaixo),
 
-* empty arrays and hashes, and
+* _arrays_ e _hashes_ vazios, e
 
-* any other object that responds to `empty?` and is empty.
+* qualquer outro objeto que responde a `empty?` como `true`.
 
-INFO: The predicate for strings uses the Unicode-aware character class `[:space:]`, so for example U+2029 (paragraph separator) is considered to be whitespace.
+INFO: A condicional é que as _strings_ usem a classe de caractere `[:space:]` do _Unicode-aware_, como por exemplo U+2029 (separador de parágrafo) é considerado um espaço em branco.
 
-WARNING: Note that numbers are not mentioned. In particular, 0 and 0.0 are **not** blank.
+WARNING: Note que números não são mencionados. Em particular, 0 e 0.0 **não** são _blank_.
 
-For example, this method from `ActionController::HttpAuthentication::Token::ControllerMethods` uses `blank?` for checking whether a token is present:
+Por exemplo, este método de `ActionController::HttpAuthentication::Token::ControllerMethods` usa `blank?` pra checar se o _token_ está presente:
 
 ```ruby
 def authenticate(controller, &login_procedure)
@@ -113,7 +113,7 @@ def authenticate(controller, &login_procedure)
 end
 ```
 
-The method `present?` is equivalent to `!blank?`. This example is taken from `ActionDispatch::Http::Cache::Response`:
+O método `present?` é equivalente ao `!blank?`. Este exemplo disponível em `ActionDispatch::Http::Cache::Response`:
 
 ```ruby
 def set_conditional_cache_control!
@@ -122,21 +122,21 @@ def set_conditional_cache_control!
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/object/blank.rb`.
+NOTE: Definido em `active_support/core_ext/object/blank.rb`.
 
 ### `presence`
 
-The `presence` method returns its receiver if `present?`, and `nil` otherwise. It is useful for idioms like this:
+O método `presence` retorna seu valor se `present?` for `true`, e `nil` caso não seja. Isso é muito útil para expressões como esta:
 
 ```ruby
 host = config[:host].presence || 'localhost'
 ```
 
-NOTE: Defined in `active_support/core_ext/object/blank.rb`.
+NOTE: Definido em `active_support/core_ext/object/blank.rb`.
 
 ### `duplicable?`
 
-As of Ruby 2.5, most objects can be duplicated via `dup` or `clone`:
+A partir do Ruby 2.5, a maioria dos objetos podem ser duplicados com `dup` ou `clone`:
 
 ```ruby
 "foo".dup           # => "foo"
@@ -146,7 +146,7 @@ Complex(0).dup      # => (0+0i)
 1.method(:+).dup    # => TypeError (allocator undefined for Method)
 ```
 
-Active Support provides `duplicable?` to query an object about this:
+O _Active Support_ fornece o `duplicable?` para consultar se o objeto pode ser duplicado:
 
 ```ruby
 "foo".duplicable?           # => true
@@ -156,13 +156,13 @@ Complex(1).duplicable?      # => true
 1.method(:+).duplicable?    # => false
 ```
 
-WARNING: Any class can disallow duplication by removing `dup` and `clone` or raising exceptions from them. Thus only `rescue` can tell whether a given arbitrary object is duplicable. `duplicable?` depends on the hard-coded list above, but it is much faster than `rescue`. Use it only if you know the hard-coded list is enough in your use case.
+WARNING: Qualquer classe pode ter a duplicação desabilitada a partir da remoção de `dup` e `clone` ou definindo exceções. Neste caso apenas `rescue` pode informar se determinado objeto arbitrável é duplicável. `duplicable?` depende da existência de uma lista de elementos a serem analisados, como no exemplo porém é muito mais veloz que `rescue`. Use apenas se você souber que a lista é suficiente em seu caso.
 
 NOTE: Defined in `active_support/core_ext/object/duplicable.rb`.
 
 ### `deep_dup`
 
-The `deep_dup` method returns a deep copy of a given object. Normally, when you `dup` an object that contains other objects, Ruby does not `dup` them, so it creates a shallow copy of the object. If you have an array with a string, for example, it will look like this:
+O método `deep_dup` retorna uma cópia profunda de um objeto. Normalmente, quando você `dup` um objeto que contêm outros objetos, Ruby não executa o `dup`, então é criada uma cópia superficial do objeto. Caso você possua um _array_ com uma _string_, por exemplo, terá algo parecido com:
 
 ```ruby
 array     = ['string']
@@ -181,9 +181,9 @@ array     # => ['foo']
 duplicate # => ['foo', 'another-string']
 ```
 
-As you can see, after duplicating the `Array` instance, we got another object, therefore we can modify it and the original object will stay unchanged. This is not true for array's elements, however. Since `dup` does not make deep copy, the string inside the array is still the same object.
+Como podemos ver, depois de duplicar a instância de `Array`, possuímos agora outro objeto, portanto podemos modificá-lo sem alterar informações do objeto original. Isso não funciona para elementos de um _array_, entretanto. Desde que `dup` não faça a cópia profunda, a _string_ dentro do _array_ se manterá como o mesmo objeto.
 
-If you need a deep copy of an object, you should use `deep_dup`. Here is an example:
+Se você precisa de uma cópia profunda de um objeto, pode então usar o `deep_dup`. Confira um exemplo:
 
 ```ruby
 array     = ['string']
@@ -195,7 +195,7 @@ array     # => ['string']
 duplicate # => ['foo']
 ```
 
-If the object is not duplicable, `deep_dup` will just return it:
+Se o objeto não é duplicável, `deep_dup` apenas o retornará:
 
 ```ruby
 number = 1
@@ -203,25 +203,25 @@ duplicate = number.deep_dup
 number.object_id == duplicate.object_id   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
+NOTE: Definido em `active_support/core_ext/object/deep_dup.rb`.
 
 ### `try`
 
-When you want to call a method on an object only if it is not `nil`, the simplest way to achieve it is with conditional statements, adding unnecessary clutter. The alternative is to use `try`. `try` is like `Object#send` except that it returns `nil` if sent to `nil`.
+Quando você quer chamar um método em um objeto somente se ele não for `nil`, a forma mais simples de conseguir isso é através de uma estrutura condicional, adicionando uma desnecessária desordem. A alternativa é usar `try`. `try` é como `Object#send` exceto que o retorno seja `nil` se enviado para `nil`.
 
-Here is an example:
+Eis um exemplo:
 
 ```ruby
-# without try
+# sem try
 unless @number.nil?
   @number.next
 end
 
-# with try
+# com try
 @number.try(:next)
 ```
 
-Another example is this code from `ActiveRecord::ConnectionAdapters::AbstractAdapter` where `@logger` could be `nil`. You can see that the code uses `try` and avoids an unnecessary check.
+Outro exemplo é o código em `ActiveRecord::ConnectionAdapters::AbstractAdapter` onde `@logger` não pode ser `nil`. Você pode ver que o código usa `try` e evita uma verificação desnecessária.
 
 ```ruby
 def log_info(sql, name, ms)
@@ -232,24 +232,24 @@ def log_info(sql, name, ms)
 end
 ```
 
-`try` can also be called without arguments but a block, which will only be executed if the object is not nil:
+`try` pode também ser chamada sem argumentos, porém em um bloco, no qual só será executado se o objeto não for `nil`:
 
 ```ruby
 @person.try { |p| "#{p.first_name} #{p.last_name}" }
 ```
 
-Note that `try` will swallow no-method errors, returning nil instead. If you want to protect against typos, use `try!` instead:
+Perceba que `try` não exibirá as mensagens de erro caso elas ocorram, retornando `nil` em vez disso. Se você quiser se proteger de possíveis erros de digitação, use `try!`:
 
 ```ruby
 @number.try(:nest)  # => nil
 @number.try!(:nest) # NoMethodError: undefined method `nest' for 1:Integer
 ```
 
-NOTE: Defined in `active_support/core_ext/object/try.rb`.
+NOTE: Definido em `active_support/core_ext/object/try.rb`.
 
 ### `class_eval(*args, &block)`
 
-You can evaluate code in the context of any object's singleton class using `class_eval`:
+Você pode evoluir o código no contexto de um _singleton_ de qualquer objeto usando `class_eval`:
 
 ```ruby
 class Proc
@@ -266,26 +266,26 @@ class Proc
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/kernel/singleton_class.rb`.
+NOTE: Definido em `active_support/core_ext/kernel/singleton_class.rb`.
 
 ### `acts_like?(duck)`
 
-The method `acts_like?` provides a way to check whether some class acts like some other class based on a simple convention: a class that provides the same interface as `String` defines
+O método `acts_like?` fornece um meio para conferir se alguma classe age como alguma outra classe baseada em uma simples convenção: a classe que fornece a mesma _interface_ é definida como `String`
 
 ```ruby
 def acts_like_string?
 end
 ```
 
-which is only a marker, its body or return value are irrelevant. Then, client code can query for duck-type-safeness this way:
+que é apenas um marcador, seu corpo ou valor de retorno são irrelevantes. Então, o código do cliente pode consultar a tipagem desta forma:
 
 ```ruby
 some_klass.acts_like?(:string)
 ```
 
-Rails has classes that act like `Date` or `Time` and follow this contract.
+Rails possui classes que agem como `Date` ou `Time` e seguem essa linha.
 
-NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
+NOTE: Definido em `active_support/core_ext/object/acts_like.rb`.
 
 ### `to_param`
 
