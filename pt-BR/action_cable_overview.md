@@ -67,7 +67,7 @@ information (publishers), send data to an abstract class of recipients
 (subscribers), without specifying individual recipients. Action Cable uses this
 approach to communicate between the server and many clients.
 
-## Componentes Server-Side
+## Componentes _Server-Side_
 
 ### *Connections*
 
@@ -80,10 +80,10 @@ autenticação e autorização. O cliente de um _WebSocket *connection*_ é cham
 aba do navegador, janela ou dispositivo que ele tiver aberto.
 
 *Connections* são instâncias de `ApplicationCable::Connection`. Nessa classe,
-você autoriza a *connection* recebida e procede para estabelece-lá, caso o
+você autoriza a *connection* recebida e procede para estabelecê-la, caso o
 usuário possa ser identificado.
 
-#### Connection Setup
+#### Configuração de uma *Connection*
 
 ```ruby
 # app/channels/application_cable/connection.rb
@@ -113,7 +113,7 @@ como um identificador criará automaticamente um *delegate* pelo mesmo nome em
 qualquer instância de *channel* criada a partir da *connection*.
 
 Esse exemplo se baseia no fato de que você já lidou a autenticação do usuário em
-algum outro lugar na sua aplicação e essa autenticação bem sucedida dedfiniu um
+algum outro lugar na sua aplicação e essa autenticação bem sucedida definiu um
 *cookie* assinado com o ID do usuário.
 
 O *cookie* é então enviado automaticamente para a instância da *connection* quando há
@@ -137,7 +137,7 @@ module ApplicationCable
 end
 ```
 
-Então, você criaria suas própias classes de *channel*. Por exemplo, você poderia ter um
+Então, você criaria suas próprias classes de *channel*. Por exemplo, você poderia ter um
 `ChatChannel` e um `AppearanceChannel`:
 
 ```ruby
@@ -156,13 +156,13 @@ Um *consumer* poderia então ser inscrito para qualquer ou ambos os *channels*.
 
 *Consumers* se inscrevem a *channels*, agindo como *subscribers*. A *connection*
 deles é chamada de *subscription*. Mensagens produzidas são então roteadas para esses
-*channel subscriptions* basedos em um identificador enviado pelo *cable consumer*.
+*channel subscriptions* baseados em um identificador enviado pelo *cable consumer*.
 
 ```ruby
 # app/channels/chat_channel.rb
 class ChatChannel < ApplicationCable::Channel
-  # Chamado quando o *consumer* tornou-se um *subscriber* a
-  # esse *channel* com sucesso.
+  # Chamado quando o *consumer* tornou-se um *subscriber*
+  # desse *channel* com sucesso.
   def subscribed
   end
 end
