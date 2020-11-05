@@ -696,30 +696,30 @@ query.distinct(false)
 # => Retorna todos os nomes, mesmo se houverem valores duplicados.
 ```
 
-Limit and Offset
+*Limit* e *Offset*
 ----------------
 
-To apply `LIMIT` to the SQL fired by the `Model.find`, you can specify the `LIMIT` using `limit` and `offset` methods on the relation.
+Para aplicar `LIMIT` ao SQL disparado pelo método `Model.find`, você pode especificar o `LIMIT` usando os métodos `limit` e `offset` na relação.
 
-You can use `limit` to specify the number of records to be retrieved, and use `offset` to specify the number of records to skip before starting to return the records. For example
+Você pode utilizar `limit` para especificar o número de registros para buscar, e usar `offset` para especificar o número de registros para pular antes de retornar os registros. Por exemplo
 
 ```ruby
 Client.limit(5)
 ```
 
-will return a maximum of 5 clients and because it specifies no offset it will return the first 5 in the table. The SQL it executes looks like this:
+retornará no máximo 5 clientes e devido ao método não especificar nenhum *offset* ele retornará os primeiros 5 registros na tabela. O SQL que o método executa será parecido com:
 
 ```sql
 SELECT * FROM clients LIMIT 5
 ```
 
-Adding `offset` to that
+Ao adicionar `offset`
 
 ```ruby
 Client.limit(5).offset(30)
 ```
 
-will return instead a maximum of 5 clients beginning with the 31st. The SQL looks like:
+a chamada retornará no lugar um máximo de 5 clientes iniciando com o trigésimo-primeiro. O SQL será parecido com:
 
 ```sql
 SELECT * FROM clients LIMIT 5 OFFSET 30
