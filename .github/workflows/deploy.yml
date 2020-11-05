@@ -1,0 +1,62 @@
+name: Deploy
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  deploy:
+    #if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    env:
+      GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN   }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - name: Install dependencies
+        run: |
+          echo "==== Submodule initiation ===="
+          git submodule update --init 
+          echo "==== Installing gems ===="
+          bundle install
+      - name: Generate guides files
+        run: rake assets:precompile
+      - name: Setup
+        run: |
+          echo "==== Configuring Git ===="
+          rm -rf .git
+          git init
+          echo "==== Configuring Git user ===="
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+      - name: Commit site changes
+        run: |
+          echo "==== Creating branch and commit ===="
+          git remote add origin https://x-access-token:$GH_PERSONAL_ACCESS_TOKEN@github.com/${{ github.repository }}.git
+          git add site/
+          git commit -m "Build from commit ${GITHUB_SHA}"
+          echo "==== Push to site branch ===="
+          git push origin HEAD:site --force
+      - name: Comment on merged pull request
+        run: |
+          curl --silent --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments \
+          --header 'Accept: application/vnd.github.squirrel-girl-preview' \
+          --header 'Authorization: token ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --data '{
+            "body": "Já está disponível no Guia Rails :tada: :rocket:"
+          }' > /dev/null
+      - name: Add label on merged pull request
+        run: |
+          curl --silent --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels \
+          --header 'Accept: application/vnd.github.squirrel-girl-preview' \
+          --header 'Authorization: token ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --data '{
+            "labels": [":rocket:"]
+          }' > /dev/null

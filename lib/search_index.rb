@@ -1,5 +1,6 @@
 require 'json'
 require 'open-uri'
+require 'bundler/setup'
 require 'execjs'
 require 'nokogiri'
 
