@@ -6,39 +6,40 @@ on:
 
 jobs:
   deploy:
-    #if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
-      GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN   }}
+      GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
       - name: Install dependencies
         run: |
-          echo "==== Submodule initiation ===="
           git submodule update --init 
-          echo "==== Installing gems ===="
-          bundle install
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
       - name: Generate guides files
         run: rake assets:precompile
-      - name: Setup
+      - name: Git setup
         run: |
-          echo "==== Configuring Git ===="
           rm -rf .git
           git init
-          echo "==== Configuring Git user ===="
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
       - name: Commit site changes
         run: |
-          echo "==== Creating branch and commit ===="
           git remote add origin https://x-access-token:$GH_PERSONAL_ACCESS_TOKEN@github.com/${{ github.repository }}.git
           git add site/
           git commit -m "Build from commit ${GITHUB_SHA}"
-          echo "==== Push to site branch ===="
           git push origin HEAD:site --force
       - name: Comment on merged pull request
         run: |
