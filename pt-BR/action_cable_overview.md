@@ -61,23 +61,23 @@ destinatários (_subscribers_) sem especificar um destinatário individual.
 *Action Cable* utiliza essa abordagem para manter a comunicação entre o servidor
 e diversos clientes.
 
-## Server-Side Components
+## Componentes _Server-Side_
 
-### Connections
+### *Connections*
 
-*Connections* form the foundation of the client-server relationship. For every
-WebSocket accepted by the server, a connection object is instantiated. This
-object becomes the parent of all the *channel subscriptions* that are created
-from there on. The connection itself does not deal with any specific application
-logic beyond authentication and authorization. The client of a WebSocket
-connection is called the connection *consumer*. An individual user will create
-one consumer-connection pair per browser tab, window, or device they have open.
+*Connections* formam a fundação do relacionamento de cliente-servidor. Para cada
+_WebSocket_ aceito pelo servidor, um objeto *connection* é instanciado. Esse objeto
+se torna o pai de todos os *channel subscriptions* que são criados dali pra frente.
+A *connection* em si não lida com nenhuma lógica específica da aplicação além da
+autenticação e autorização. O cliente de um _WebSocket *connection*_ é chamado de
+*consumer*. Um usuário individual criará um par de *consumer-connection* para cada
+aba do navegador, janela ou dispositivo que ele tiver aberto.
 
-Connections are instances of `ApplicationCable::Connection`. In this class, you
-authorize the incoming connection, and proceed to establish it if the user can
-be identified.
+*Connections* são instâncias de `ApplicationCable::Connection`. Nessa classe,
+você autoriza a *connection* recebida e procede para estabelecê-la, caso o
+usuário possa ser identificado.
 
-#### Connection Setup
+#### Configuração de uma *Connection*
 
 ```ruby
 # app/channels/application_cable/connection.rb
@@ -101,27 +101,27 @@ module ApplicationCable
 end
 ```
 
-Here `identified_by` is a connection identifier that can be used to find the
-specific connection later. Note that anything marked as an identifier will automatically
-create a delegate by the same name on any channel instances created off the connection.
+Aqui, `identified_by` é um identificador de *connection* que pode ser usado para
+encontrar uma *connection* específica mais tarde. Note que qualquer coisa marcada
+como um identificador criará automaticamente um *delegate* pelo mesmo nome em
+qualquer instância de *channel* criada a partir da *connection*.
 
-This example relies on the fact that you will already have handled authentication of the user
-somewhere else in your application, and that a successful authentication sets a signed
-cookie with the user ID.
+Esse exemplo se baseia no fato de que você já lidou a autenticação do usuário em
+algum outro lugar na sua aplicação e essa autenticação bem sucedida definiu um
+*cookie* assinado com o ID do usuário.
 
-The cookie is then automatically sent to the connection instance when a new connection
-is attempted, and you use that to set the `current_user`. By identifying the connection
-by this same current user, you're also ensuring that you can later retrieve all open
-connections by a given user (and potentially disconnect them all if the user is deleted
-or unauthorized).
+O *cookie* é então enviado automaticamente para a instância da *connection* quando há
+a tentativa de criar uma nova *connection*, e você o usa para definir o `current_user`.
+Ao identificar a *connection* para o mesmo usuário, você também garante que você pode retornar todas as *connections* em aberto para um usuário específico (e potencialmente desconectá-los, caso o usuário seja deletado ou desautorizado).
 
-### Channels
+### *Channels*
 
-A *channel* encapsulates a logical unit of work, similar to what a controller does in a
-regular MVC setup. By default, Rails creates a parent `ApplicationCable::Channel` class
-for encapsulating shared logic between your channels.
+O *channel* encapsula uma unidade lógica de trabalho, parecido com o que um
+*controller* faz em um *MVC* comum. Por padrão, o *Rails* cria uma classe pai
+`ApplicationCable::Channel` para encapsular a lógica compartilhada entre seus
+*channels*.
 
-#### Parent Channel Setup
+#### Configuração do *Channel* pai
 
 ```ruby
 # app/channels/application_cable/channel.rb
@@ -131,8 +131,8 @@ module ApplicationCable
 end
 ```
 
-Then you would create your own channel classes. For example, you could have a
-`ChatChannel` and an `AppearanceChannel`:
+Então, você criaria suas próprias classes de *channel*. Por exemplo, você poderia ter um
+`ChatChannel` e um `AppearanceChannel`:
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -144,32 +144,33 @@ class AppearanceChannel < ApplicationCable::Channel
 end
 ```
 
-A consumer could then be subscribed to either or both of these channels.
+Um *consumer* poderia então ser inscrito para qualquer ou ambos os *channels*.
 
-#### Subscriptions
+#### *Subscriptions*
 
-Consumers subscribe to channels, acting as *subscribers*. Their connection is
-called a *subscription*. Produced messages are then routed to these channel
-subscriptions based on an identifier sent by the cable consumer.
+*Consumers* se inscrevem a *channels*, agindo como *subscribers*. A *connection*
+deles é chamada de *subscription*. Mensagens produzidas são então roteadas para esses
+*channel subscriptions* baseados em um identificador enviado pelo *cable consumer*.
 
 ```ruby
 # app/channels/chat_channel.rb
 class ChatChannel < ApplicationCable::Channel
-  # Called when the consumer has successfully
-  # become a subscriber to this channel.
+  # Chamado quando o *consumer* tornou-se um *subscriber*
+  # desse *channel* com sucesso.
   def subscribed
   end
 end
 ```
 
-## Client-Side Components
+## Componentes _Client-Side_
 
-### Connections
+### Conexões
 
-Consumers require an instance of the connection on their side. This can be
-established using the following JavaScript, which is generated by default by Rails:
+Consumidores precisam de uma instância da conexão do seu lado. Esta conexão pode
+ser estabelecida usando o seguinte JavaScript, que é gerado por padrão pelo
+Rails:
 
-#### Connect Consumer
+#### Conectar o Consumidor
 
 ```js
 // app/javascript/channels/consumer.js
@@ -181,19 +182,19 @@ import { createConsumer } from "@rails/actioncable"
 export default createConsumer()
 ```
 
-This will ready a consumer that'll connect against `/cable` on your server by default.
-The connection won't be established until you've also specified at least one subscription
-you're interested in having.
+Isto vai preparar um consumidor que conectará em `/cable` em seu servidor por
+padrão. A conexão não vai ser estabelecida até que você também tenha
+especificado ao menos uma inscrição que você tem interesse em ter.
 
-The consumer can optionally take an argument that specifies the URL to connect to. This
-can be a string, or a function that returns a string that will be called when the
-WebSocket is opened.
+O consumidor pode optar receber um argumento que especifica a _URL_ para se
+conectar. Ela pode ser uma _string_, ou uma função que retorna uma _string_ que
+vai ser chamada quando o _WebSocket_ é aberto.
 
 ```js
-// Specify a different URL to connect to
+// Especifica uma _URL_ diferente para se conectar
 createConsumer('https://ws.example.com/cable')
 
-// Use a function to dynamically generate the URL
+// Utiliza uma função para gerar a _URL_ dinamicamente
 createConsumer(getWebSocketURL)
 
 function getWebSocketURL {
@@ -202,9 +203,9 @@ function getWebSocketURL {
 }
 ```
 
-#### Subscriber
+#### Assinante
 
-A consumer becomes a subscriber by creating a subscription to a given channel:
+Um consumidor se torna um assinante criando uma assinatura para um canal:
 
 ```js
 // app/javascript/channels/chat_channel.js
@@ -218,11 +219,12 @@ import consumer from "./consumer"
 consumer.subscriptions.create({ channel: "AppearanceChannel" })
 ```
 
-While this creates the subscription, the functionality needed to respond to
-received data will be described later on.
+Enquanto isto cria uma assinatura, a funcionalidade necessária para responder
+aos dados recebidos será descrita mais tarde.
 
-A consumer can act as a subscriber to a given channel any number of times. For
-example, a consumer could subscribe to multiple chat rooms at the same time:
+Um consumidor pode agir como um assinante para um dado canal qualquer número de
+vezes. Por exemplo, um consumidor pode assinar várias salas de _chat_ ao mesmo
+tempo.
 
 ```js
 // app/javascript/channels/chat_channel.js
@@ -767,29 +769,29 @@ The WebSocket server doesn't have access to the session, but it has
 access to the cookies. This can be used when you need to handle
 authentication. You can see one way of doing that with Devise in this [article](https://greg.molnar.io/blog/actioncable-devise-authentication/).
 
-## Dependencies
+## Dependências
 
-Action Cable provides a subscription adapter interface to process its
-pubsub internals. By default, asynchronous, inline, PostgreSQL, and Redis
-adapters are included. The default adapter
-in new Rails applications is the asynchronous (`async`) adapter.
+O _Action Cable_ fornece uma interface de adaptador de assinatura para processar seus
+_pubsub_ internos. Por padrão, adaptadores assíncronos, _inline_, PostgreSQL e Redis
+estão incluídos. O adaptador padrão
+em novas aplicações Rails é o adaptador assíncrono (`async`).
 
-The Ruby side of things is built on top of [websocket-driver](https://github.com/faye/websocket-driver-ruby),
-[nio4r](https://github.com/celluloid/nio4r), and [concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby).
+O lado Ruby das coisas é construído em cima de [websocket-driver](https://github.com/faye/websocket-driver-ruby),
+[nio4r](https://github.com/celluloid/nio4r) e [concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby).
 
-## Deployment
+## Implantação
 
-Action Cable is powered by a combination of WebSockets and threads. Both the
-framework plumbing and user-specified channel work are handled internally by
-utilizing Ruby's native thread support. This means you can use all your regular
-Rails models with no problem, as long as you haven't committed any thread-safety sins.
+O _Action Cable_ é alimentado por uma combinação de _WebSockets_ e _threads_. Tanto o
+[_plumbing_](https://www.techopedia.com/definition/31509/plumbing) do _framework_ e o trabalho do _channel_ especificado pelo usuário são tratados internamente,
+usando suporte de _thread_ nativo do Ruby. Isso significa que você pode usar todos os seus
+*models* dos Rails sem problemas, contanto que você não tenha cometido nenhum pecado de _thread-safety_.
 
-The Action Cable server implements the Rack socket hijacking API,
-thereby allowing the use of a multithreaded pattern for managing connections
-internally, irrespective of whether the application server is multi-threaded or not.
+O servidor _Action Cable_ implementa o _Rack socket hijacking API_,
+permitindo assim o uso de um padrão _multithread_ para o gerenciamento de conexões
+internamente, independentemente de o servidor de aplicativos ser multiencadeado ou não.
 
-Accordingly, Action Cable works with popular servers like Unicorn, Puma, and
-Passenger.
+Assim, _Action Cable_ funciona com servidores populares como _Unicorn_, _Puma_ e
+_Passenger_.
 
 ## Teste
 

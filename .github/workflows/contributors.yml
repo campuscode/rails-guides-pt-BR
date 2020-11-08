@@ -1,0 +1,28 @@
+name: Contributors Page
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  contributors:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+    - name: Install dependencies
+      run: bundle install
+    - name: Generate contributors page
+      run: bin/build_contributors
+      env:
+        GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN  }}
+    - name: Upload Contributors Page to Wiki
+      uses: SwiftDocOrg/github-wiki-publish-action@v1
+      with:
+        path: 'wiki'
+      env:
+        GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN  }}
+

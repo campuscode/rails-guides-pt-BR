@@ -20,19 +20,18 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-What is Active Storage?
+O que é *Active Storage*?
 -----------------------
 
-Active Storage facilitates uploading files to a cloud storage service like
-Amazon S3, Google Cloud Storage, or Microsoft Azure Storage and attaching those
-files to Active Record objects. It comes with a local disk-based service for
-development and testing and supports mirroring files to subordinate services for
-backups and migrations.
+O *Active Storage* facilita o *upload* de arquivos para um serviço de armazenamento como
+*Amazon S3*, *Google Cloud Storage*, ou *Microsoft Azure Storage* e anexa esses
+arquivos para objetos *Active Record*. Ele vem com um serviço local baseado em disco para
+desenvolvimento e teste e oferece suporte a espelhamento de arquivos em serviços destinados para
+*backups* e *migrations*.
 
-Using Active Storage, an application can transform image uploads with
-[ImageMagick](https://www.imagemagick.org), generate image representations of
-non-image uploads like PDFs and videos, and extract metadata from arbitrary
-files.
+Usando *Active Storage*, uma aplicação pode transformar *uploads* de imagens com
+[ImageMagick](https://www.imagemagick.org), gerar representações de imagens de
+*uploads* que não são imagens como PDFs e vídeos, e extrai metadados de arquivos arbitrários.
 
 ## Setup
 
@@ -354,78 +353,89 @@ If you don’t provide a content type and Active Storage can’t determine the
 file’s content type automatically, it defaults to application/octet-stream.
 
 
-Removing Files
+Removendo arquivos
 --------------
 
-To remove an attachment from a model, call `purge` on the attachment. Removal
-can be done in the background if your application is setup to use Active Job.
-Purging deletes the blob and the file from the storage service.
+Para remover um arquivo anexado de um _model_, use o método `purge` no anexo. A
+remoção pode ser feita de maneira assíncrona na sua aplicação se ela estiver
+configurada para usar o _Active Job_.
+`Purge` remove o _blob_ (O arquivo em sua versão binaria salvo no banco de
+dados) e o arquivo do seu serviço de armazenamento.
 
 ```ruby
-# Synchronously destroy the avatar and actual resource files.
+# Maneira usada para remover um avatar e seus arquivos de maneira síncrona.
 user.avatar.purge
 
-# Destroy the associated models and actual resource files async, via Active Job.
+# Maneira usada para remover um avatar e seus arquivos de maneira assíncrona.
 user.avatar.purge_later
 ```
 
-Linking to Files
+Conectando (_Linking_) arquivos
 ----------------
 
-Generate a permanent URL for the blob that points to the application. Upon
-access, a redirect to the actual service endpoint is returned. This indirection
-decouples the public URL from the actual one, and allows, for example, mirroring
-attachments in different services for high-availability. The redirection has an
-HTTP expiration of 5 min.
+Cria uma _URL_ permanente da sua aplicação para o _blob_. Quando acessado,
+o cliente é redirecionado para a rota (_endpoint_) correta. Está indireção
+desacopla a URL pública da atual, e permite, por exemplo, espelhar anexos em
+diferentes serviços de grande disponibilidade. O redirecionamento tem um tempo
+de expiração de 5 minutos.
 
 ```ruby
 url_for(user.avatar)
 ```
 
-To create a download link, use the `rails_blob_{path|url}` helper. Using this
-helper allows you to set the disposition.
+Para criar um _link_ para baixar o arquivo use o seguinte _helper_:
+`rails_blob_{path|url}`. Usando esse _helper_ permite que você configure a
+disposição (`disposition`) de como deseja apresentar:
 
 ```ruby
 rails_blob_path(user.avatar, disposition: "attachment")
 ```
 
-If you need to create a link from outside of controller/view context (Background
-jobs, Cronjobs, etc.), you can access the rails_blob_path like this:
+Se você precisar criar um _link_ fora do escopo do _controller_ ou _view_ (Um
+serviço que execute tarefas assíncronas, _Cronjob_ etc), você pode acessar o
+_helper_ `rails_blob_path` desta maneira:
 
-```
+```ruby
 Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
 ```
 
-Downloading Files
+Baixando arquivos
 -----------------
 
-Sometimes you need to process a blob after it’s uploaded—for example, to convert
-it to a different format. Use `ActiveStorage::Blob#download` to read a blob’s
-binary data into memory:
+Algumas vezes você vai precisar processar um _blob_ depois dele ter sido
+_uploaded_ (Transferir um arquivo da maquina do cliente para o servidor da sua
+aplicação) para, por exemplo, converte-lo para um formato diferente. Use o
+`ActiveStorage::Blob#download` para carregar o conteúdo binário do _blob_ na
+memória:
 
 ```ruby
 binary = user.avatar.download
 ```
 
-You might want to download a blob to a file on disk so an external program (e.g.
-a virus scanner or media transcoder) can operate on it. Use
-`ActiveStorage::Blob#open` to download a blob to a tempfile on disk:
+Caso deseje baixar o _blob_ para um arquivo no disco para um programa externo
+(Um antivírus, por exemplo) possa operar nele use o `ActiveStorage::Blob#open`
+para baixar o _blob_ para um arquivo temporário no disco:
 
 ```ruby
 message.video.open do |file|
-  system '/path/to/virus/scanner', file.path
+  system '/caminho/para/o/antivirus', file.path
   # ...
 end
 ```
 
-Analyzing Files
+Analisando arquivos
 ---------------
 
-Active Storage [analyzes](https://api.rubyonrails.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyze) files once they've been uploaded by queuing a job in Active Job. Analyzed files will store additional information in the metadata hash, including `analyzed: true`. You can check whether a blob has been analyzed by calling `analyzed?` on it.
+O *Active Storage* [analisa](https://api.rubyonrails.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyze)
+arquivos assim que eles são enviados através do enfileiramento de um *job* no *Active Job*. Arquivos analisados armazenarão
+informações adicionais no *hash* de metadados, incluindo `analyzed: true`. Você pode verificar se um *blob* foi analisado
+chamando `analyzed?` nele.
 
-Image analysis provides `width` and `height` attributes. Video analysis provides these, as well as `duration`, `angle`, and `display_aspect_ratio`.
+A análise de imagens fornece os atributos `width` e `height`. A análise de vídeos fornece ambos citados anteriormente, assim
+como `duration`, `angle` e `display_aspect_ratio`.
 
-Analysis requires the `mini_magick` gem. Video analysis also requires the [FFmpeg](https://www.ffmpeg.org/) library, which you must include separately.
+A análise necessita da gem `mini_magick`. A análise de vídeos também necessita da biblioteca [FFmpeg](https://www.ffmpeg.org/),
+que você deve incluir separadamente.
 
 Transforming Images
 -------------------
@@ -454,12 +464,13 @@ To switch to the Vips processor, you would add the following to
 config.active_storage.variant_processor = :vips
 ```
 
-Previewing Files
+Pré-visualização de arquivos
 ----------------
 
-Some non-image files can be previewed: that is, they can be presented as images.
-For example, a video file can be previewed by extracting its first frame. Out of
-the box, Active Storage supports previewing videos and PDF documents.
+Alguns arquivos que não são imagens podem ser pré-visualizados: isto é, eles podem
+ser apresentados como imagens. Por exemplo, um arquivo de vídeo pode ser pré-visualizado
+através da extração de seu primeiro *frame*. O *Active Storage* por padrão já oferece
+suporte para a pré-visualização de vídeos e documentos PDF.
 
 ```erb
 <ul>
@@ -471,11 +482,12 @@ the box, Active Storage supports previewing videos and PDF documents.
 </ul>
 ```
 
-WARNING: Extracting previews requires third-party applications, FFmpeg for
-video and muPDF for PDFs, and on macOS also XQuartz and Poppler.
-These libraries are not provided by Rails. You must install them yourself to
-use the built-in previewers. Before you install and use third-party software,
-make sure you understand the licensing implications of doing so.
+WARNING: Extrair pré-visualizações necessita de aplicações de terceiros, *FFmpeg* para
+vídeo e *muPDF* para PDFs, e no *macOS* também são necessários *XQuartz* e *Poppler*.
+Estas bibliotecas não são fornecidas pelo Rails. Você deve instalá-las para poder
+utilizar as pré-visualizações embutidas no *Active Storage*. Antes de instalar e utilizar
+o *software* de terceiros, certifique-se de entender as implicações da licença para
+essas ações.
 
 
 Direct Uploads
