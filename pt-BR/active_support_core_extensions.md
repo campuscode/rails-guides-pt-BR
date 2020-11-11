@@ -501,7 +501,7 @@ NOTE: Definido em `active_support/core_ext/object/inclusion.rb`.
 Extensões de `Module`
 ----------------------
 
-### Attributos
+### Atributos
 
 #### `alias_attribute`
 
@@ -555,7 +555,7 @@ end
 
 NOTE: Definido em `active_support/core_ext/module/attr_internal.rb`.
 
-#### Module Attributes
+#### Atributos de Módulo
 
 As macros `mattr_reader`, `mattr_writer`, e `mattr_accessor` São iguais a `cattr_*` macros definidas na classe. De fato, `cattr_*` macros são apenas _aliases_ para as `mattr_*` macros. Confira a seção [Atributos de Classe](#class-attributes).
 
@@ -580,11 +580,11 @@ end
 
 NOTE: Definido em `active_support/core_ext/module/attribute_accessors.rb`.
 
-### Parents
+### _Parents_
 
 #### `module_parent`
 
-The `module_parent` method on a nested named module returns the module that contains its corresponding constant:
+O método `module_parent` em um módulo nomeado aninhado que retorna o módulo que contém uma constante correspondente:
 
 ```ruby
 module X
@@ -599,15 +599,15 @@ X::Y::Z.module_parent # => X::Y
 M.module_parent       # => X::Y
 ```
 
-If the module is anonymous or belongs to the top-level, `module_parent` returns `Object`.
+Se o módulo é anônimo ou pertence a um nível superior, `module_parent` retorna `Object`.
 
-WARNING: Note that in that case `module_parent_name` returns `nil`.
+WARNING: Note que neste caso `module_parent_name` retorna `nil`.
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: Definido em `active_support/core_ext/module/introspection.rb`.
 
 #### `module_parent_name`
 
-The `module_parent_name` method on a nested named module returns the fully qualified name of the module that contains its corresponding constant:
+O método `module_parent_name` em um modulo nomeado aninhado  retorna o nome completamente qualificado do módulo que contém sua constante correspondente:
 
 ```ruby
 module X
@@ -622,15 +622,15 @@ X::Y::Z.module_parent_name # => "X::Y"
 M.module_parent_name       # => "X::Y"
 ```
 
-For top-level or anonymous modules `module_parent_name` returns `nil`.
+Para módulos de nível superior ou anônimos `module_parent_name` retorna `nil`.
 
-WARNING: Note that in that case `module_parent` returns `Object`.
+WARNING: Note que nesse caso `module_parent` retorna `Object`.
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: Definido em `active_support/core_ext/module/introspection.rb`.
 
 #### `module_parents`
 
-The method `module_parents` calls `module_parent` on the receiver and upwards until `Object` is reached. The chain is returned in an array, from bottom to top:
+O método `module_parents` chama `module_parent` no receptor e para cima até `Object` é alcançado. A cadeia é retornada em uma matriz, de baixo para cima:
 
 ```ruby
 module X
@@ -645,7 +645,7 @@ X::Y::Z.module_parents # => [X::Y, X, Object]
 M.module_parents       # => [X::Y, X, Object]
 ```
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: Definido em `active_support/core_ext/module/introspection.rb`.
 
 ### Anônimo
 
