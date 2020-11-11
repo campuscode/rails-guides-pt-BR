@@ -505,7 +505,7 @@ Extensões de `Module`
 
 #### `alias_attribute`
 
-Atributos de _models_ podem ser lidos, escritos e condicionados. Você pode criar um _alias_ para um atributo de _model_ correspondendo a por exemplo, três métodos definidos por você em um passo. Em outro métodos de _alias_, o novo nome é o primeiro argumento, e o antigo nome é o segundo (uma forma de memorizar é pensar que eles se apresentam na mesma ordem como se você fizesse isso uma atribuição):
+Atributos de _models_ podem ser lidos, escritos e condicionados. Você pode criar um _alias_ para um atributo de _model_ correspondendo a por exemplo, três métodos definidos por você em um passo. Em outro métodos de _alias_, o novo nome é o primeiro argumento, e o antigo nome é o segundo (uma forma de memorizar é pensar que eles se apresentam na mesma ordem como se você fizesse uma atribuição):
 
 ```ruby
 class User < ApplicationRecord
@@ -521,7 +521,7 @@ NOTE: Definido em `active_support/core_ext/module/aliasing.rb`.
 
 Quando você esta definindo um atributo em uma classe que pode ser uma subclasse, os conflitos de nomes são um risco. Isso é extremamente importante para as bibliotecas.
 
-_Active Support_ define as macros `attr_internal_reader`, `attr_internal_writer`, e `attr_internal_accessor`. Elas comportam-se como seu próprio Ruby `attr_*` embutido, exceto pelos nomes de variáveis de instância onde faz com que os conflitos sejam menos comuns.
+_Active Support_ define as macros `attr_internal_reader`, `attr_internal_writer`, e `attr_internal_accessor`. Elas comportam-se como seu próprio Ruby `attr_*` embutido, exceto pelos nomes de variáveis de instância que faz com que os conflitos sejam menos comuns.
 
 A macro `attr_internal` é um sinônimo para `attr_internal_accessor`:
 
@@ -537,7 +537,7 @@ class MyCrawler < ThirdPartyLibrary::Crawler
 end
 ```
 
-No exemplo anterior, isso poderia ser o caso que `:log_level` não pertence a interface pública da biblioteca e só seria usada em desenvolvimento. O código do cliente, não tem consciência do potencial conflito, subclasses e definições de seus pŕoprios `:log_level`. Graças ao `attr_internal` não há conflito.
+No exemplo anterior, poderia ser que no caso `:log_level` não pertença a interface pública da biblioteca e só seria usada em desenvolvimento. O código do cliente, não sabe do potencial conflito, subclasses e definições de seus pŕoprios `:log_level`. Graças ao `attr_internal` não há conflito.
 
 Por padrão, a variável de instancia interna é nomeada com uma _underscore_ na frente, `@_log_level` no exemplo acima. Isso é configuravel via `Module.attr_internal_naming_format` apesar disso, você pode passar qualquer tipo de `sprintf` no formato _string_ com a inicial `@` e um `%s` em algum lugar, no qual é onde o nome será colocado. O padrão é `"@_%s"`.
 
@@ -630,7 +630,7 @@ NOTE: Definido em `active_support/core_ext/module/introspection.rb`.
 
 #### `module_parents`
 
-O método `module_parents` chama `module_parent` no receptor e para cima até `Object` é alcançado. A cadeia é retornada em uma matriz, de baixo para cima:
+O método `module_parents` chama `module_parent` no receptor e sobe até `Object` ser alcançado. A cadeia é retornada em uma matriz, de baixo para cima:
 
 ```ruby
 module X
@@ -683,17 +683,17 @@ m = Object.send(:remove_const, :M)
 m.anonymous? # => false
 ```
 
-embora um módulo anônimo seja inacessível por definição.
+Embora um módulo anônimo seja inacessível por definição.
 
 NOTE: Definido em `active_support/core_ext/module/anonymous.rb`.
 
-### Method Delegation
+### Delegação de Método
 
 #### `delegate`
 
-The macro `delegate` offers an easy way to forward methods.
+A macro `delegate` oferece uma maneira fácil de encaminhar métodos.
 
-Let's imagine that users in some application have login information in the `User` model but name and other data in a separate `Profile` model:
+Vamos imaginar que os usuários de alguma aplicação possuem informações de _login_ no _model_ `User` além de nome e outro dado em um _model_ `Profile` separado:
 
 ```ruby
 class User < ApplicationRecord
@@ -701,7 +701,7 @@ class User < ApplicationRecord
 end
 ```
 
-With that configuration you get a user's name via their profile, `user.profile.name`, but it could be handy to still be able to access such attribute directly:
+Com essa configuração você consegue o nome dos usuários partir da classe perfil, `user.profile.name`, mas isso poderia ser conveniente para habilitar o acesso ao atributo diretamente:
 
 ```ruby
 class User < ApplicationRecord
@@ -713,7 +713,7 @@ class User < ApplicationRecord
 end
 ```
 
-That is what `delegate` does for you:
+Isso é o que o `delegate` faz por você:
 
 ```ruby
 class User < ApplicationRecord
@@ -723,69 +723,69 @@ class User < ApplicationRecord
 end
 ```
 
-It is shorter, and the intention more obvious.
+É mais curto e a intenção mais óbvia.
 
-The method must be public in the target.
+O método deve ser público.
 
-The `delegate` macro accepts several methods:
+A macro `delegate` aceita vários métodos:
 
 ```ruby
 delegate :name, :age, :address, :twitter, to: :profile
 ```
 
-When interpolated into a string, the `:to` option should become an expression that evaluates to the object the method is delegated to. Typically a string or symbol. Such an expression is evaluated in the context of the receiver:
+Quando interpolado em uma string, a opção `:to` deve se tornar uma expressão que avalia o objeto ao qual o método é delegado. Normalmente uma _string_ ou um símbolo. Tal expressão é avaliada no contexto do receptor:
 
 ```ruby
-# delegates to the Rails constant
+# delega para as constantes Rails
 delegate :logger, to: :Rails
 
-# delegates to the receiver's class
+# delega para as classes receptoras
 delegate :table_name, to: :class
 ```
 
-WARNING: If the `:prefix` option is `true` this is less generic, see below.
+WARNING: Se a opção `:prefix` for `true` é menos genérica, veja abaixo.
 
-By default, if the delegation raises `NoMethodError` and the target is `nil` the exception is propagated. You can ask that `nil` is returned instead with the `:allow_nil` option:
+Por padrão, se a delegação resulta em `NoMethodError` e o objeto é `nil` a exceção se propaga. Você pode perguntar se `nil` é retornado ao invés com a opção `:allow_nil`:
 
 ```ruby
 delegate :name, to: :profile, allow_nil: true
 ```
 
-With `:allow_nil` the call `user.name` returns `nil` if the user has no profile.
+Com `:allow_nil` a chamada `user.name` retorna `nil` se o usuário não tiver um perfil.
 
-The option `:prefix` adds a prefix to the name of the generated method. This may be handy for example to get a better name:
+A opção `:prefix` adiciona um prefixo ao nome do método gerado. Isso pode ser útil, por exemplo, para obter um nome melhor:
 
 ```ruby
 delegate :street, to: :address, prefix: true
 ```
 
-The previous example generates `address_street` rather than `street`.
+Os exemplos prévios geram `address_street` ao invés de `street`.
 
-WARNING: Since in this case the name of the generated method is composed of the target object and target method names, the `:to` option must be a method name.
+WARNING: Já que neste caso o nome do método gerado é composto pelos nomes do objeto alvo e do método alvo, a opção `:to` deve ser um nome de método.
 
-A custom prefix may also be configured:
+Um prefixo customizado pode também ser configurado:
 
 ```ruby
 delegate :size, to: :attachment, prefix: :avatar
 ```
 
-In the previous example the macro generates `avatar_size` rather than `size`.
+Os macro exemplos prévios geram `avatar_size` ao invés de `size`.
 
-The option `:private` changes methods scope:
+A opção `:private` mudam o escopo do método:
 
 ```ruby
 delegate :date_of_birth, to: :profile, private: true
 ```
 
-The delegated methods are public by default. Pass `private: true` to change that.
+Os métodos delegados são públicos por padrão. Passe `private: true` para mudar isso.
 
-NOTE: Defined in `active_support/core_ext/module/delegation.rb`
+NOTE: Definido em `active_support/core_ext/module/delegation.rb`
 
 #### `delegate_missing_to`
 
-Imagine you would like to delegate everything missing from the `User` object,
-to the `Profile` one. The `delegate_missing_to` macro lets you implement this
-in a breeze:
+Imagine que você gostaria de delegar tudo o que está faltando no objeto `User`,
+para um `Profile`. A macro `delegate_missing_to` permite que você implemente isso
+facilmente:
 
 ```ruby
 class User < ApplicationRecord
@@ -795,10 +795,10 @@ class User < ApplicationRecord
 end
 ```
 
-The target can be anything callable within the object, e.g. instance variables,
-methods, constants, etc. Only the public methods of the target are delegated.
+O destino pode ser qualquer coisa que possa ser chamada dentro do objeto, por exemplo: instância de variáveis,
+métodos, constantes etc. Somente métodos públicos do alvo são delegados.
 
-NOTE: Defined in `active_support/core_ext/module/delegation.rb`.
+NOTE: Definido em `active_support/core_ext/module/delegation.rb`.
 
 ### Redefinindo Métodos
 
