@@ -800,17 +800,17 @@ methods, constants, etc. Only the public methods of the target are delegated.
 
 NOTE: Defined in `active_support/core_ext/module/delegation.rb`.
 
-### Redefining Methods
+### Redefinindo Métodos
 
-There are cases where you need to define a method with `define_method`, but don't know whether a method with that name already exists. If it does, a warning is issued if they are enabled. No big deal, but not clean either.
+Existem casos onde você precisa definir um método com `define_method`, mas não sei se já existe um método com esse nome. Caso sim, um _warning_ é exibido se estiverem habilitados. Não é muito perigoso, mas não é uma boa prática.
 
-The method `redefine_method` prevents such a potential warning, removing the existing method before if needed.
+O método `redefine_method` previne um potencial _warning_, removendo um método existente, se necessário.
 
-You can also use `silence_redefinition_of_method` if you need to define
-the replacement method yourself (because you're using `delegate`, for
-example).
+Você pode também usar `silence_redefinition_of_method` se você precisa definir
+o método de substituição (porque você está usando `delegate`, por
+exemplo).
 
-NOTE: Defined in `active_support/core_ext/module/redefine_method.rb`.
+NOTE: Definido em `active_support/core_ext/module/redefine_method.rb`.
 
 Extensions to `Class`
 ---------------------
