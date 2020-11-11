@@ -33,19 +33,19 @@ Usando *Active Storage*, uma aplicação pode transformar *uploads* de imagens c
 [ImageMagick](https://www.imagemagick.org), gerar representações de imagens de
 *uploads* que não são imagens como PDFs e vídeos, e extrai metadados de arquivos arbitrários.
 
-## Setup
+## Configuração
 
-Active Storage uses two tables in your application’s database named
-`active_storage_blobs` and `active_storage_attachments`. After creating a new
-application (or upgrading your application to Rails 5.2), run
-`rails active_storage:install` to generate a migration that creates these
-tables. Use `rails db:migrate` to run the migration.
+O *Active Storage* usa duas tabelas no banco de dados da sua aplicação chamadas
+`active_storage_blobs` e `active_storage_attachments`. Depois de criar uma nova
+aplicação (ou atualizar sua aplicação para Rails 5.2), execute
+`rails active_storage:install` para gerar uma *migration* que cria essas
+tabelas. Use `rails db:migrate` para executar a *migration*.
 
-WARNING: `active_storage_attachments` is a polymorphic join table that stores your model's class name. If your model's class name changes, you will need to run a migration on this table to update the underlying `record_type` to your model's new class name.
+WARNING: `active_storage_attachments` é uma tabela de junção (*join table*) polimórfica que armazena o nome da classe do seu *model*. Se o nome da classe do seu *model* mudar, você precisará executar uma *migration* nesta tabela para atualizar o `record_type` implícito para o novo nome da classe do seu *model*.
 
-Declare Active Storage services in `config/storage.yml`. For each service your
-application uses, provide a name and the requisite configuration. The example
-below declares three services named `local`, `test`, and `amazon`:
+Declare os serviços do *Active Storage* em `config/storage.yml`. Para cada serviço que sua
+aplicação usa, forneça um nome e a configuração necessária. O exemplo
+abaixo declara três serviços chamados `local`, `test` e `amazon`:
 
 ```yaml
 local:
@@ -76,7 +76,7 @@ development environment, you would add the following to
 config.active_storage.service = :local
 ```
 
-To use the Amazon S3 service in production, you add the following to
+Para usar o serviço Amazon S3 em produção, você adiciona o seguinte ao
 `config/environments/production.rb`:
 
 ```ruby
@@ -84,7 +84,7 @@ To use the Amazon S3 service in production, you add the following to
 config.active_storage.service = :amazon
 ```
 
-To use the test service when testing, you add the following to
+Para usar o serviço *test* durante o teste, você adiciona o seguinte ao
 `config/environments/test.rb`:
 
 ```ruby
@@ -92,12 +92,12 @@ To use the test service when testing, you add the following to
 config.active_storage.service = :test
 ```
 
-Continue reading for more information on the built-in service adapters (e.g.
-`Disk` and `S3`) and the configuration they require.
+Continue lendo para obter mais informações sobre os adaptadores de serviço integrados (por exemplo,
+`Disk` e `S3`) e configurações que ele exigem.
 
-### Disk Service
+### Serviço Disk
 
-Declare a Disk service in `config/storage.yml`:
+Declare um serviço Disk em `config/storage.yml`:
 
 ```yaml
 local:
@@ -105,9 +105,9 @@ local:
   root: <%= Rails.root.join("storage") %>
 ```
 
-### Amazon S3 Service
+### Serviço Amazon S3
 
-Declare an S3 service in `config/storage.yml`:
+Declare um serviço S3 em `config/storage.yml`:
 
 ```yaml
 amazon:
@@ -118,24 +118,23 @@ amazon:
   bucket: ""
 ```
 
-Add the [`aws-sdk-s3`](https://github.com/aws/aws-sdk-ruby) gem to your `Gemfile`:
+Adicione a gem [`aws-sdk-s3`](https://github.com/aws/aws-sdk-ruby) no seu `Gemfile`:
 
 ```ruby
 gem "aws-sdk-s3", require: false
 ```
 
-NOTE: The core features of Active Storage require the following permissions: `s3:ListBucket`, `s3:PutObject`, `s3:GetObject`, and `s3:DeleteObject`. If you have additional upload options configured such as setting ACLs then additional permissions may be required.
+NOTE: Os principais recursos do *Active Storage* requerem as seguintes permissões: `s3:ListBucket`, `s3:PutObject`, `s3:GetObject`, e `s3:DeleteObject`. Se você tiver opções de *upload* adicionais configuradas como configurações de ACLs, então permissões adicionais podem ser necessárias.
 
-NOTE: If you want to use environment variables, standard SDK configuration files, profiles,
-IAM instance profiles or task roles, you can omit the `access_key_id`, `secret_access_key`,
-and `region` keys in the example above. The Amazon S3 Service supports all of the
-authentication options described in the [AWS SDK documentation]
-(https://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html).
+NOTE: Se você quiser usar variáveis de ambiente, arquivos de configuração padrão do SDK, perfis,
+perfis de instância do IAM ou funções de tarefa, você pode omitir as chaves `access_key_id`, `secret_access_key`,
+e `region` no exemplo acima. O serviço Amazon S3 suporta todas as opções de
+autenticação descritas na [documentação AWS SDK](https://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html).
 
 
-### Microsoft Azure Storage Service
+### Serviço Armazenamento da Microsoft Azure
 
-Declare an Azure Storage service in `config/storage.yml`:
+Declare um serviço Azure Storage em `config/storage.yml`:
 
 ```yaml
 azure:
@@ -145,15 +144,15 @@ azure:
   container: ""
 ```
 
-Add the [`azure-storage`](https://github.com/Azure/azure-storage-ruby) gem to your `Gemfile`:
+Adicione a gem [`azure-storage`](https://github.com/Azure/azure-storage-ruby) no seu `Gemfile`:
 
 ```ruby
 gem "azure-storage", require: false
 ```
 
-### Google Cloud Storage Service
+### Serviço Google Cloud Storage
 
-Declare a Google Cloud Storage service in `config/storage.yml`:
+Declare um serviço Google Cloud Storage service in `config/storage.yml`:
 
 ```yaml
 google:
@@ -163,7 +162,7 @@ google:
   bucket: ""
 ```
 
-Optionally provide a Hash of credentials instead of a keyfile path:
+Opcionalmente forneça uma _Hash_ de credenciais em vez de um caminho para o arquivo de chave:
 
 ```yaml
 google:
@@ -183,21 +182,21 @@ google:
   bucket: ""
 ```
 
-Add the [`google-cloud-storage`](https://github.com/GoogleCloudPlatform/google-cloud-ruby/tree/master/google-cloud-storage) gem to your `Gemfile`:
+Adicione a gem [`google-cloud-storage`](https://github.com/GoogleCloudPlatform/google-cloud-ruby/tree/master/google-cloud-storage) no seu `Gemfile`:
 
 ```ruby
 gem "google-cloud-storage", "~> 1.11", require: false
 ```
 
-### Mirror Service
+### Serviço Espelho
 
-You can keep multiple services in sync by defining a mirror service. When a file
-is uploaded or deleted, it's done across all the mirrored services. Mirrored
-services can be used to facilitate a migration between services in production.
-You can start mirroring to the new service, copy existing files from the old
-service to the new, then go all-in on the new service. Define each of the
-services you'd like to use as described above and reference them from a mirrored
-service.
+Você pode manter múltiplos serviços sincronizados definindo um serviço espelho. Quando um arquivo
+é carregado ou deletado, isso é feito em todos serviços espelhados. Serviços
+espelhados podem ser usados para facilitar a migração entre serviços em produção.
+Você pode começar a espelhar para o novo serviço, copiar os arquivos existentes do antigo
+serviço para o novo, e então muda para o novo serviço. Defina cada um dos
+serviços que você gostaria de usar conforme descrito acima e faça referência para um serviço
+espelhado.
 
 ```yaml
 s3_west_coast:
@@ -221,20 +220,20 @@ production:
     - s3_west_coast
 ```
 
-NOTE: Files are served from the primary service.
+NOTE: Os arquivos são servidos pelo serviço principal.
 
-NOTE: This is not compatible with the [direct uploads](#direct-uploads) feature.
+NOTE: Isso não é compatível com a *feature* [direct uploads](#direct-uploads).
 
-Attaching Files to Records
+Anexar Arquivos a Registros
 --------------------------
 
 ### `has_one_attached`
 
-The `has_one_attached` macro sets up a one-to-one mapping between records and
-files. Each record can have one file attached to it.
+O macro `has_one_attached` configura um mapeamento um-para-um entre registros e
+arquivos. Cada registro pode ter um arquivo anexado a ele.
 
-For example, suppose your application has a `User` model. If you want each user to
-have an avatar, define the `User` model like this:
+Por exemplo, imagine que sua aplicação tenha um *model* `User`. Se você quiser que cada usuário
+tenha uma avatar, defina o *model* `User` assim:
 
 ```ruby
 class User < ApplicationRecord
@@ -242,7 +241,7 @@ class User < ApplicationRecord
 end
 ```
 
-You can create a user with an avatar:
+Você pode criar um usuário com um avatar:
 
 ```erb
 <%= form.file_field :avatar %>
@@ -263,13 +262,13 @@ class SignupController < ApplicationController
 end
 ```
 
-Call `avatar.attach` to attach an avatar to an existing user:
+Chamar `avatar.attach` para anexar um avatar a um usuário existente:
 
 ```ruby
 user.avatar.attach(params[:avatar])
 ```
 
-Call `avatar.attached?` to determine whether a particular user has an avatar:
+Chamar `avatar.attached?` para determinar se um usuário em particular tem um avatar:
 
 ```ruby
 user.avatar.attached?
@@ -277,11 +276,11 @@ user.avatar.attached?
 
 ### `has_many_attached`
 
-The `has_many_attached` macro sets up a one-to-many relationship between records
-and files. Each record can have many files attached to it.
+O macro `has_many_attached` configura um relacionamento um-para-muitos entre os registros
+e arquivos. Cada registro pode ter muitos arquivos anexados a ele.
 
-For example, suppose your application has a `Message` model. If you want each
-message to have many images, define the `Message` model like this:
+Por exemplo, imagine que sua aplicação tem um *model* `Message`. Se você quiser que cada
+mensagem tenha muitas imagens, defina o *model* `Message` assim:
 
 ```ruby
 class Message < ApplicationRecord
@@ -289,7 +288,7 @@ class Message < ApplicationRecord
 end
 ```
 
-You can create a message with images:
+Você pode criar uma mensagem com images:
 
 ```ruby
 class MessagesController < ApplicationController
@@ -305,40 +304,40 @@ class MessagesController < ApplicationController
 end
 ```
 
-Call `images.attach` to add new images to an existing message:
+Chamar `images.attach` para adicionar novas imagens para uma mensagem existente:
 
 ```ruby
 @message.images.attach(params[:images])
 ```
 
-Call `images.attached?` to determine whether a particular message has any images:
+Chamar `images.attached?` para determinar se uma mensagem em particular alguma imagem:
 
 ```ruby
 @message.images.attached?
 ```
 
-### Attaching File/IO Objects
+### Anexando Objetos *File/IO*
 
-Sometimes you need to attach a file that doesn’t arrive via an HTTP request.
-For example, you may want to attach a file you generated on disk or downloaded
-from a user-submitted URL. You may also want to attach a fixture file in a
-model test. To do that, provide a Hash containing at least an open IO object
-and a filename:
+Às vezes você precisa anexar um arquivo que não chega por meio de uma requisição HTTP.
+Por exemplo, você pode querer anexar um arquivo que você gerou no disco ou baixou
+de uma URL enviada pelo usuário. Você também pode querer anexar um arquivo de fixação em um
+*model* de test. Para fazer isso, forneça uma *Hash* contendo pelo menos um objeto *open IO*
+e um *filename*:
 
 ```ruby
 @message.image.attach(io: File.open('/path/to/file'), filename: 'file.pdf')
 ```
 
-When possible, provide a content type as well. Active Storage attempts to
-determine a file’s content type from its data. It falls back to the content
-type you provide if it can’t do that.
+Quando possível, forneça um tipo de conteúdo também. O *Active Storage* tenta
+determinar o tipo de conteúdo de um arquivo a partir de seus dados. Depende do tipo
+de conteúdo que você fornece se não for possível.
 
 ```ruby
 @message.image.attach(io: File.open('/path/to/file'), filename: 'file.pdf', content_type: 'application/pdf')
 ```
 
-You can bypass the content type inference from the data by passing in
-`identify: false` along with the `content_type`.
+Você pode ignorar a inferência do tipo de conteúdo a partir dos dados passando
+`identify: false` junto com o `content_type`.
 
 ```ruby
 @message.image.attach(
@@ -349,8 +348,8 @@ You can bypass the content type inference from the data by passing in
 )
 ```
 
-If you don’t provide a content type and Active Storage can’t determine the
-file’s content type automatically, it defaults to application/octet-stream.
+Se você não fornecer um tipo de conteúdo e o *Active Storage* não puder determinar o
+tipo de conteúdo do arquivo automaticamente, o padrão é *application/octet-stream*.
 
 
 Removendo arquivos
