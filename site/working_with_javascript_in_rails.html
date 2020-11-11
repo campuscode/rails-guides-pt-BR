@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trabalhando com JavaScript no Rails — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Trabalhando com JavaScript no Rails — Ruby on Rails Guides" />
+  <meta name="description" content="Trabalhando com JavaScript no RailsEste guia aborda as funcionalidades internas Ajax/JavaScript do Rails (e mais); Isso permitirá que você crie aplicações Ajax ricas e dinâmicas com facilidade!Após ler este guia, você saberá: O básico de Ajax. JavaScript discreto (unobtrusive). Como os helpers internos do Rails ajudam você. Como lidar com Ajax no lado do servidor. A gem Turbolinks. Como incluir seu token de Falsa Requisição Entre Sites (CSRF) nos cabeçalhos da requisição" />
+  <meta property="og:description" content="Trabalhando com JavaScript no RailsEste guia aborda as funcionalidades internas Ajax/JavaScript do Rails (e mais); Isso permitirá que você crie aplicações Ajax ricas e dinâmicas com facilidade!Após ler este guia, você saberá: O básico de Ajax. JavaScript discreto (unobtrusive). Como os helpers internos do Rails ajudam você. Como lidar com Ajax no lado do servidor. A gem Turbolinks. Como incluir seu token de Falsa Requisição Entre Sites (CSRF) nos cabeçalhos da requisição" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Trabalhando com JavaScript no Rails</h2><p>Este guia aborda as funcionalidades internas Ajax/JavaScript do Rails (e
+mais); Isso permitirá que você crie aplicações Ajax ricas e dinâmicas com
+facilidade!</p><p>Após ler este guia, você saberá:</p>
+<ul>
+<li>O básico de <em>Ajax</em>. </li>
+<li>JavaScript discreto (<em>unobtrusive</em>).</li>
+<li>Como os <em>helpers</em> internos do Rails ajudam você.</li>
+<li>Como lidar com Ajax no lado do servidor.</li>
+<li>A <em>gem</em> Turbolinks.</li>
+<li>Como incluir seu token de <a href="https://pt.wikipedia.org/wiki/Cross-site_request_forgery">Falsa Requisição Entre Sites (CSRF)</a> nos cabeçalhos da requisição</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#uma-introducao-ao-ajax">Uma introdução ao Ajax</a></li>
+<li><a href="#javascript-discreto-unobtrusive">JavaScript discreto (<em>unobtrusive</em>)</a></li>
+<li>
+<a href="#helpers-internos"><em>Helpers</em> Internos</a>
+
+<ul>
+<li><a href="#elementos-remotos">Elementos Remotos</a></li>
+<li><a href="#personalize-elementos-remotos">Personalize elementos remotos</a></li>
+<li><a href="#confirmations">Confirmations</a></li>
+<li><a href="#desativando-automaticamente">Desativando Automaticamente</a></li>
+<li><a href="#manipuladores-de-eventos-rails-ujs">Manipuladores de eventos <code>Rails-ujs</code></a></li>
+<li><a href="#eventos-paraveis">Eventos Paravéis</a></li>
+</ul>
+</li>
+<li>
+<a href="#preocupacoes-do-lado-do-servidor">Preocupações Do Lado Do Servidor</a>
+
+<ul>
+<li><a href="#um-exemplo-simples">Um Exemplo Simples</a></li>
+</ul>
+</li>
+<li>
+<a href="#turbolinks">Turbolinks</a>
+
+<ul>
+<li><a href="#como-o-turbolinks-funciona">Como o Turbolinks Funciona</a></li>
+<li><a href="#eventos-de-mudanca-de-pagina">Eventos de Mudança de Página</a></li>
+</ul>
+</li>
+<li><a href="#token-de-falsa-requisicao-entre-sites-csrf-em-ajax">Token de Falsa Requisição Entre Sites (CSRF) em <em>Ajax</em></a></li>
+<li><a href="#outros-recursos">Outros recursos</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="uma-introducao-ao-ajax"><a class="anchorlink" href="#uma-introducao-ao-ajax">1 Uma introdução ao Ajax</a></h3><p>Para entender o Ajax, você precisa entender primeiro o que o navegador faz normalmente.</p><p>Quando você digita <code>http://localhost:3000</code> na barra de endereço do navegador
+e clica no Enter, o navegador (seu 'cliente') faz uma requisição para o servidor.
+Ele analisa a resposta, traz todos os <em>assets</em> associados, como arquivos JavaScript,
+<em>stylesheets</em> e imagens. E então monta a página. Se você clica em um link, ele
+repete o mesmo processo: encontra a página, encontra os <em>assets</em>, coloca eles juntos
+e mostra o resultado. Isso é chamado de 'ciclo de requisição e resposta'.</p><p>JavaScript também pode fazer requisições para o servidor, e analisar a resposta.
+Ele também tem a habilidade de atualizar informações na página. Combinando
+esses dois poderes, o JavaScript permite que uma página web atualize partes
+do seu próprio conteúdo, sem precisar pegar a página inteira do servidor.
+Essa é uma técnica poderosa que nós chamamos de Ajax.</p><p>O Rails é distribuído por padrão com CoffeeScript, então o resto dos exemplos neste
+guia serão em CoffeeScript. Todos essas lições, naturalmente, também funcionam para
+o JavaScript puro (<em>vanilla</em>).</p><p>Como exemplo, aqui está um código CoffeeScript que faz uma requisição Ajax
+usando a biblioteca jQuery:</p><div class="code_container">
+<pre><code class="highlight coffeescript"><span class="nx">$</span><span class="p">.</span><span class="na">ajax</span><span class="p">(</span><span class="na">url</span><span class="o">:</span> <span class="s">"/test"</span><span class="p">).</span><span class="na">done</span> <span class="p">(</span><span class="nx">html</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s">"#results"</span><span class="p">).</span><span class="na">append</span> <span class="nx">html</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6367a6983860d8140d282c11df7a8c1d">$.ajax(url: "/test").done (html) -&gt;
+  $("#results").append html
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6367a6983860d8140d282c11df7a8c1d">Copiar</button>
+</div>
+<p>Este código pega os dados do "/test", e então anexa o resultado na <code>div</code> com
+o id <code>results</code>.</p><p>O Rails fornece muito suporte interno para a criação de páginas web
+com essa técnica. Você raramente terá de escrever esse código. O resto deste
+guia irá lhe mostrar como o Rails pode te ajudar a escrever páginas web
+desse modo, mas tudo isso é feito a partir dessa técnica muito simples.</p><h3 id="javascript-discreto-unobtrusive"><a class="anchorlink" href="#javascript-discreto-unobtrusive">2 JavaScript discreto (<em>unobtrusive</em>)</a></h3><p>O Rails usa uma técnica chamada "JavaScript discreto (<em>unobtrusive</em>)"
+para lidar com a junção do JavaScript ao DOM. Essa costuma ser considerada
+a melhor prática entre a comunidade <em>frontend</em>, mas você pode ocasionalmente
+ler tutoriais que demonstram de outras formas.</p><p>Aqui está o modo mais simples de escrever JavaScript. Você pode ver ele sendo
+referido como <em>'Inline JavaScript'</em>:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"this.style.backgroundColor='#990000'"</span><span class="nt">&gt;</span>Paint it red<span class="nt">&lt;/a&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-22f9d84571eccaabdbcc232399b367f0">&lt;a href="#" onclick="this.style.backgroundColor='#990000'"&gt;Paint it red&lt;/a&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-22f9d84571eccaabdbcc232399b367f0">Copiar</button>
+</div>
+<p>Ao clicar no link, ele ficará vermelho. Aqui está o problema: o que
+acontece quando queremos que mais JavaScript seja executado no clique?</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"this.style.backgroundColor='#009900';this.style.color='#FFFFFF';"</span><span class="nt">&gt;</span>Paint it green<span class="nt">&lt;/a&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6276d9406791bb793be81dce9b507df7">&lt;a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';"&gt;Paint it green&lt;/a&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6276d9406791bb793be81dce9b507df7">Copiar</button>
+</div>
+<p>Estranho, certo? Poderíamos retirar a definição da função do manipulador de cliques,
+e transformar em CoffeeScript:</p><div class="code_container">
+<pre><code class="highlight coffeescript"><span class="vi">@</span><span class="na">paintIt</span> <span class="o">=</span> <span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">backgroundColor</span><span class="p">,</span> <span class="nx">textColor</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">element</span><span class="p">.</span><span class="na">style</span><span class="p">.</span><span class="na">backgroundColor</span> <span class="o">=</span> <span class="nx">backgroundColor</span>
+  <span class="k">if</span> <span class="nx">textColor</span><span class="o">?</span>
+    <span class="nx">element</span><span class="p">.</span><span class="na">style</span><span class="p">.</span><span class="na">color</span> <span class="o">=</span> <span class="nx">textColor</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ab7bbec49f655c2ef6d5d7f5509cf6ff">@paintIt = (element, backgroundColor, textColor) -&gt;
+  element.style.backgroundColor = backgroundColor
+  if textColor?
+    element.style.color = textColor
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ab7bbec49f655c2ef6d5d7f5509cf6ff">Copiar</button>
+</div>
+<p>E então na nossa página:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"paintIt(this, '#990000')"</span><span class="nt">&gt;</span>Paint it red<span class="nt">&lt;/a&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-10e68b2c4af79a56426685a204e81112">&lt;a href="#" onclick="paintIt(this, '#990000')"&gt;Paint it red&lt;/a&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-10e68b2c4af79a56426685a204e81112">Copiar</button>
+</div>
+<p>Esse é um pouco melhor, mas que tal múltiplos links com o mesmo efeito?</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"paintIt(this, '#990000')"</span><span class="nt">&gt;</span>Paint it red<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"paintIt(this, '#009900', '#FFFFFF')"</span><span class="nt">&gt;</span>Paint it green<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"paintIt(this, '#000099', '#FFFFFF')"</span><span class="nt">&gt;</span>Paint it blue<span class="nt">&lt;/a&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1b335989b8f7037b84f2cf93f8956d68">&lt;a href="#" onclick="paintIt(this, '#990000')"&gt;Paint it red&lt;/a&gt;
+&lt;a href="#" onclick="paintIt(this, '#009900', '#FFFFFF')"&gt;Paint it green&lt;/a&gt;
+&lt;a href="#" onclick="paintIt(this, '#000099', '#FFFFFF')"&gt;Paint it blue&lt;/a&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1b335989b8f7037b84f2cf93f8956d68">Copiar</button>
+</div>
+<p>Não muito <a href="https://pt.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>, ahn?
+Podemos corrigir usando eventos. Vamos adicionar o atributo <code>data-*</code> nos
+nossos links, e então vincular o manipulador ao evento clique de cada link
+que tenha esse atributo:</p><div class="code_container">
+<pre><code class="highlight coffeescript"><span class="vi">@</span><span class="na">paintIt</span> <span class="o">=</span> <span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">backgroundColor</span><span class="p">,</span> <span class="nx">textColor</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">element</span><span class="p">.</span><span class="na">style</span><span class="p">.</span><span class="na">backgroundColor</span> <span class="o">=</span> <span class="nx">backgroundColor</span>
+  <span class="k">if</span> <span class="nx">textColor</span><span class="o">?</span>
+    <span class="nx">element</span><span class="p">.</span><span class="na">style</span><span class="p">.</span><span class="na">color</span> <span class="o">=</span> <span class="nx">textColor</span>
+
+<span class="nx">$</span> <span class="o">-&gt;</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s">"a[data-background-color]"</span><span class="p">).</span><span class="na">click</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="nx">e</span><span class="p">.</span><span class="na">preventDefault</span><span class="p">()</span>
+
+    <span class="nx">backgroundColor</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="na">data</span><span class="p">(</span><span class="s">"background-color"</span><span class="p">)</span>
+    <span class="nx">textColor</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="na">data</span><span class="p">(</span><span class="s">"text-color"</span><span class="p">)</span>
+    <span class="nx">paintIt</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">backgroundColor</span><span class="p">,</span> <span class="nx">textColor</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b060b94522ab3acf60262e253cbc90a1">@paintIt = (element, backgroundColor, textColor) -&gt;
+  element.style.backgroundColor = backgroundColor
+  if textColor?
+    element.style.color = textColor
+
+$ -&gt;
+  $("a[data-background-color]").click (e) -&gt;
+    e.preventDefault()
+
+    backgroundColor = $(this).data("background-color")
+    textColor = $(this).data("text-color")
+    paintIt(this, backgroundColor, textColor)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b060b94522ab3acf60262e253cbc90a1">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-background-color=</span><span class="s">"#990000"</span><span class="nt">&gt;</span>Paint it red<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-background-color=</span><span class="s">"#009900"</span> <span class="na">data-text-color=</span><span class="s">"#FFFFFF"</span><span class="nt">&gt;</span>Paint it green<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-background-color=</span><span class="s">"#000099"</span> <span class="na">data-text-color=</span><span class="s">"#FFFFFF"</span><span class="nt">&gt;</span>Paint it blue<span class="nt">&lt;/a&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f9f7528d6e98a75aa6717c6cb181457d">&lt;a href="#" data-background-color="#990000"&gt;Paint it red&lt;/a&gt;
+&lt;a href="#" data-background-color="#009900" data-text-color="#FFFFFF"&gt;Paint it green&lt;/a&gt;
+&lt;a href="#" data-background-color="#000099" data-text-color="#FFFFFF"&gt;Paint it blue&lt;/a&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f9f7528d6e98a75aa6717c6cb181457d">Copiar</button>
+</div>
+<p>Nós chamamos isso de JavaScript 'discreto (<em>unobtrusive</em>)' porque nós não estamos mais
+misturando nosso JavaScript dentro do HTML. Estamos separando propriamente nossos interesses,
+facilitando mudanças futuras. Podemos facilmente adicionar comportamentos em qualquer link
+adicionando o atributo <em>data</em>. Podemos rodar todo nosso JavaScript através de um minimizador
+e concatenador. Podemos entregar todo nosso pacote JavaScript em cada página, o que significa
+que ele terá de ser baixado quando a primeira página carregar e então será salvo na memória
+cache (<em>cached</em>) em todas as páginas depois disso. Muitos pequenos benefícios realmente se somam.</p><p>O time Rails fortemente lhe encoraja a escrever seu CoffeeScript (e JavaScript) nesse estilo,
+e você pode esperar que muitas bibliotecas também seguirão esse padrão.</p><h3 id="helpers-internos"><a class="anchorlink" href="#helpers-internos">3 <em>Helpers</em> Internos</a></h3><h4 id="elementos-remotos"><a class="anchorlink" href="#elementos-remotos">3.1 Elementos Remotos</a></h4><p>O Rails fornece um grupo de métodos <em>view helper</em> escritos em ruby para ajudar você
+na criação do HTML. As vezes, você quer adicionar um pouco de <em>Ajax</em> para esses elementos,
+e o Rails te da cobertura nesses casos.</p><p>Por causa do JavaScript não obtrusivo (<em>unobtrusive</em>), os <em>"Ajax Helpers"</em> do rails
+estão atualmente em duas partes: metade JavaScript e metade Rails.</p><p>A não ser que você desabilite a <em>Asset Pipeline</em>,
+<a href="https://github.com/rails/rails/tree/master/actionview/app/assets/javascripts">o <em>rails-ujs</em></a>
+fornece a metade JavaScript, e os <em>view helpers</em> regulares em Ruby adicionam as <em>tags</em> apropriadas
+ao seu DOM.</p><p>Você pode ler abaixo sobre a diferença dos eventos que são disparados lidando com
+elementos remotos dentro da sua aplicação.</p><h5 id="form-with"><a class="anchorlink" href="#form-with">3.1.1 form_with</a></h5><p><a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with">o <code>form_with</code></a>
+é um <em>helper</em> que auxilia na escrita de formulários. Por padrão, o <code>form_with</code> assume
+que seu formulário estará usando Ajax. Você pode desativar esse comportamento passando
+a opção <em><code>:local</code></em> no <em><code>form_with</code></em></p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span><span class="p">(</span><span class="ss">model: </span><span class="vi">@article</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  ...
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-37bc8899b2c7e3c70856b0ef51fdd07d">&lt;%= form_with(model: @article) do |f| %&gt;
+  ...
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-37bc8899b2c7e3c70856b0ef51fdd07d">Copiar</button>
+</div>
+<p>Isso irá gerar o seguinte HTML:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/articles"</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">data-remote=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+  ...
+<span class="nt">&lt;/form&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-15be46df9abdcabc150e4193cf7b1d67">&lt;form action="/articles" accept-charset="UTF-8" method="post" data-remote="true"&gt;
+  ...
+&lt;/form&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-15be46df9abdcabc150e4193cf7b1d67">Copiar</button>
+</div>
+<p>Veja o <code>data-remote="true"</code>. Agora, o formulário será enviado por <em>Ajax</em> ao invés
+do mecanismo normal de envio do browser.</p><p>Você provavelmente não quer só ficar sentado com um <code>&lt;form&gt;</code> preenchido, entretanto.
+Você provavelmente quer que algo aconteça após um envio bem-sucedido. Para fazer isso,
+vincule o evento <code>ajax:success</code>. Em caso de falha, use <code>ajax:error</code>. confira:</p><div class="code_container">
+<pre><code class="highlight coffeescript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="na">ready</span> <span class="o">-&gt;</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s">"#new_article"</span><span class="p">).</span><span class="na">on</span><span class="p">(</span><span class="s">"ajax:success"</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="p">[</span><span class="nx">data</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">xhr</span><span class="p">]</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="na">detail</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s">"#new_article"</span><span class="p">).</span><span class="na">append</span> <span class="nx">xhr</span><span class="p">.</span><span class="na">responseText</span>
+  <span class="p">).</span><span class="na">on</span> <span class="s">"ajax:error"</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s">"#new_article"</span><span class="p">).</span><span class="na">append</span> <span class="s">"&lt;p&gt;ERROR&lt;/p&gt;"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a9d0f9f1489c1dd46adbf7ec4a6ed3fe">$(document).ready -&gt;
+  $("#new_article").on("ajax:success", (event) -&gt;
+    [data, status, xhr] = event.detail
+    $("#new_article").append xhr.responseText
+  ).on "ajax:error", (event) -&gt;
+    $("#new_article").append "&lt;p&gt;ERROR&lt;/p&gt;"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a9d0f9f1489c1dd46adbf7ec4a6ed3fe">Copiar</button>
+</div>
+<p>Obviamente, você irá querer ser um pouco mais sofisticado que isso, mas
+é um começo.</p><div class="note"><p>A partir do Rails 5.1 e do novo <code>rails-ujs</code>, os parâmetros
+<code>data, status, xhr</code> foram empacotados no <code>event.detail</code>. Para informações
+sobre o <code>jquery-ujs</code> usado anteriormente no Rails 5 e anteriores, leia a <a href="https://github.com/rails/jquery-ujs/wiki/ajax">wiki do <code>jquery-ujs</code></a></p></div><h5 id="link-to"><a class="anchorlink" href="#link-to">3.1.2 link_to</a></h5><p><a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to"><code>link_to</code></a>
+é um <em>helper</em> que ajuda na geração de links. Ele tem a opção <code>:remote</code>
+que você pode usar assim:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"an article"</span><span class="p">,</span> <span class="vi">@article</span><span class="p">,</span> <span class="ss">remote: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d2504350c903277c637410c203ae352d">&lt;%= link_to "an article", @article, remote: true %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d2504350c903277c637410c203ae352d">Copiar</button>
+</div>
+<p>que gera</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/articles/1"</span> <span class="na">data-remote=</span><span class="s">"true"</span><span class="nt">&gt;</span>an article<span class="nt">&lt;/a&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0d56afd0344fb48fb7ab50d361ca5031">&lt;a href="/articles/1" data-remote="true"&gt;an article&lt;/a&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0d56afd0344fb48fb7ab50d361ca5031">Copiar</button>
+</div>
+<p>Você pode vincular os mesmos eventos <em>Ajax</em> do <code>form_with</code>. Aqui está um exemplo.
+Vamos assumir que nós temos uma lista de artigos que podem ser deletadas com apenas
+um clique. Iríamos gerar um HTML como este:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Delete article"</span><span class="p">,</span> <span class="vi">@article</span><span class="p">,</span> <span class="ss">remote: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">method: :delete</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-325859351b24edf8db895c3e9aac88bc">&lt;%= link_to "Delete article", @article, remote: true, method: :delete %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-325859351b24edf8db895c3e9aac88bc">Copiar</button>
+</div>
+<p>e escrever um pouco de CoffeeScript como este:</p><div class="code_container">
+<pre><code class="highlight coffeescript"><span class="nx">$</span> <span class="o">-&gt;</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s">"a[data-remote]"</span><span class="p">).</span><span class="na">on</span> <span class="s">"ajax:success"</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="nx">alert</span> <span class="s">"The article was deleted."</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f5f4bfce076771cbfe0f0cb21821def1">$ -&gt;
+  $("a[data-remote]").on "ajax:success", (event) -&gt;
+    alert "The article was deleted."
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5f4bfce076771cbfe0f0cb21821def1">Copiar</button>
+</div>
+<h5 id="button-to"><a class="anchorlink" href="#button-to">3.1.3 button_to</a></h5><p><a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to"><code>button_to</code></a> é um <em>helper</em> que ajuda você a criar botões. Ele tem a opção <code>:remote</code> que você pode chamar assim:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">button_to</span> <span class="s2">"An article"</span><span class="p">,</span> <span class="vi">@article</span><span class="p">,</span> <span class="ss">remote: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-06a3b309127707a1d7da624b79c8915b">&lt;%= button_to "An article", @article, remote: true %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-06a3b309127707a1d7da624b79c8915b">Copiar</button>
+</div>
+<p>Isso gera</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/articles/1"</span> <span class="na">class=</span><span class="s">"button_to"</span> <span class="na">data-remote=</span><span class="s">"true"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"An article"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d64603dc0e7afb000beb2b486a44ca97">&lt;form action="/articles/1" class="button_to" data-remote="true" method="post"&gt;
+  &lt;input type="submit" value="An article" /&gt;
+&lt;/form&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d64603dc0e7afb000beb2b486a44ca97">Copiar</button>
+</div>
+<p>Uma vez que é apenas um <code>&lt;form&gt;</code>, todas as informações do <code>form_with</code> também se aplicam.</p><h4 id="personalize-elementos-remotos"><a class="anchorlink" href="#personalize-elementos-remotos">3.2 Personalize elementos remotos</a></h4><p>É possível personalizar o comportamento dos elementos com o atributo <code>data-remote</code>
+sem escrever uma linha de JavaScript. Você pode especificar extras atributos <code>data-</code>
+para fazer isso.</p><h5 id="data-method"><a class="anchorlink" href="#data-method">3.2.1 <code>data-method</code></a></h5><p>Ativando <em>hyperlinks</em> sempre resultam em uma requisição HTTP GET. Seja como for, se
+sua aplicação é <a href="https://pt.wikipedia.org/wiki/REST">RESTful</a>,
+alguns links são na verdade ações que mudam dados no servidor, e devem ser executados com
+requisições diferentes de GET. Esse atributo permite mudar tais links para um método explícito
+tais como "post", "put" ou "delete".</p><p>O modo como isso funciona é que, quando um link é ativado, ele constrói um formulário
+escondido no documento com o atributo <em>"action"</em> correspondendo ao valor <em>"href"</em> do
+link, e o método corresponde ao valor do <code>data-method</code>, e envia esse formulário.</p><div class="note"><p>por causa dos envios de formulários com outros métodos HTTP além de
+GET e POST não são amplamente suportados entre navegadores, todos os outros métodos
+HTTP são na verdade enviados através de POST com o método pretendido indicado no
+parâmetro <code>_method</code>. o Rails automaticamente detecta e compensa isso.</p></div><h5 id="data-url-e-data-params"><a class="anchorlink" href="#data-url-e-data-params">3.2.2 <code>data-url</code> e <code>data-params</code></a></h5><p>Certos elementos da sua página não estão atualmente referenciando a alguma URL, mas você pode querer
+que eles acionem chamadas Ajax. Especificando o atributo <code>data-url</code> juntamente com o <code>data-remote</code>
+um irá disparar uma chamada Ajax para a URL dada. Você pode também
+especificar parâmetros extras através do atributo <code>data-params</code>.</p><p>Isso pode ser útil para disparar uma ação nos <em>check-boxes</em> por exemplo:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">data-remote=</span><span class="s">"true"</span>
+    <span class="na">data-url=</span><span class="s">"/update"</span> <span class="na">data-params=</span><span class="s">"id=10"</span> <span class="na">data-method=</span><span class="s">"put"</span><span class="nt">&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cb89330543d2a2ba017b42f39ef16784">&lt;input type="checkbox" data-remote="true"
+    data-url="/update" data-params="id=10" data-method="put"&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cb89330543d2a2ba017b42f39ef16784">Copiar</button>
+</div>
+<h5 id="data-type"><a class="anchorlink" href="#data-type">3.2.3 <code>data-type</code></a></h5><p>Também é possível definir o Ajax <code>dataType</code> explicitamente enquanto desempenha
+requisições para os elementos <code>data-remote</code>, por meio do atributo <code>data-type</code></p><h4 id="confirmations"><a class="anchorlink" href="#confirmations">3.3 Confirmations</a></h4><p>Você pode pedir uma confirmação extra do usuário adicionando o atributo
+<code>data-confirm</code> nos links e formulários. O usuário verá uma caixa de diálogo
+<code>confirm()</code> em JavaScript contendo o texto do atributo. Se o usuário escolher
+cancelar, a ação não acontece.</p><p>Adicionando esse atributo nos links, será disparado a mensagem no clique, e adicionando
+aos formulários, será disparado no <em>submit</em>. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Dangerous zone"</span><span class="p">,</span> <span class="n">dangerous_zone_path</span><span class="p">,</span>
+  <span class="ss">data: </span><span class="p">{</span> <span class="ss">confirm: </span><span class="s1">'Are you sure?'</span> <span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f0327ff9eeccf7268cfa6ba29bc0bcaf">&lt;%= link_to "Dangerous zone", dangerous_zone_path,
+  data: { confirm: 'Are you sure?' } %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f0327ff9eeccf7268cfa6ba29bc0bcaf">Copiar</button>
+</div>
+<p>Isso gera:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"..."</span> <span class="na">data-confirm=</span><span class="s">"Are you sure?"</span><span class="nt">&gt;</span>Dangerous zone<span class="nt">&lt;/a&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f5c32076fe263e31ddf0e1468a963c1b">&lt;a href="..." data-confirm="Are you sure?"&gt;Dangerous zone&lt;/a&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5c32076fe263e31ddf0e1468a963c1b">Copiar</button>
+</div>
+<p>O atributo também está disponível no botão <em>submit</em> do formulário. Isso permite
+você customizar a mensagem de aviso dependendo do botão que foi ativado. Nesse caso,
+você <strong>não</strong> deve ter um <code>data-confirm</code> no formulário em si.</p><p>A confirmação padrão usa a mensagem de confirmação JavaScript, mas você pode mudar
+isso pegando o evento <code>confirm</code>, o qual é disparado antes da janela de confirmação
+aparecer para o usuário. Para cancelar essa confirmação padrão, você tem que fazer o
+gerenciador de confirmação retornar <em>false</em>.</p><h4 id="desativando-automaticamente"><a class="anchorlink" href="#desativando-automaticamente">3.4 Desativando Automaticamente</a></h4><p>Também é possível desabilitar automaticamente um input enquanto o formulário está sendo
+enviado usando o atributo <code>data-disable-with</code>. Isso evita acidentes de duplo cliques do
+usuário, o qual resultaria em uma dupla requisição HTTP que o <code>backend</code> pode não detectar
+como tal. O valor do atributo é o texto que se tornará o novo valor do botão quando está
+no estado desabilitado.</p><p>Isso também funciona para links com o atributo <code>data-method</code>.</p><p>Por exemplo:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span><span class="p">(</span><span class="ss">model: </span><span class="vi">@article</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">submit</span> <span class="ss">data: </span><span class="p">{</span> <span class="s2">"disable-with"</span><span class="p">:</span> <span class="s2">"Saving..."</span> <span class="p">}</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%=</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c14db8a31d5d30a8282050135dede333">&lt;%= form_with(model: @article.new) do |f| %&gt;
+  &lt;%= f.submit data: { "disable-with": "Saving..." } %&gt;
+&lt;%= end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c14db8a31d5d30a8282050135dede333">Copiar</button>
+</div>
+<p>Isso gera um formulário com:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">data-disable-with=</span><span class="s">"Saving..."</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-74515f26190d167570d0178511362b36">&lt;input data-disable-with="Saving..." type="submit"&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-74515f26190d167570d0178511362b36">Copiar</button>
+</div>
+<h4 id="manipuladores-de-eventos-rails-ujs"><a class="anchorlink" href="#manipuladores-de-eventos-rails-ujs">3.5 Manipuladores de eventos <code>Rails-ujs</code></a></h4><p>Rails 5.1 introduziu o <code>rails-ujs</code> e removeram o jQuery como dependência.
+Como resultado o JavaScript discreto (<em>unobtrusive (UJS)</em>) foi reescrito para operar sem <em>jQuery</em>.
+Estas introduções causam pequenas mudanças para os eventos personalizados executados durante a requisição:</p><div class="note"><p>A assinatura de chamadas para os manipuladores de eventos do <code>UJS</code> mudaram.
+Diferente da versão com jQuery, todos os eventos personalizados retornam apenas um parâmetro: <code>event</code>.
+Nesse parâmetro, existe um atributo adicional, o <code>detail</code>, ao qual contém um <em>array</em> de parâmetros extra.</p></div>
+<table>
+<thead>
+<tr>
+<th>Nome do evento</th>
+<th>Parâmetros extra (event.detail)</th>
+<th>Quando é executado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ajax:before</code></td>
+<td></td>
+<td>Antes de toda regra de negócio no <em>ajax</em>.</td>
+</tr>
+<tr>
+<td><code>ajax:beforeSend</code></td>
+<td>[xhr, options]</td>
+<td>Antes da requisição ser enviada.</td>
+</tr>
+<tr>
+<td><code>ajax:send</code></td>
+<td>[xhr]</td>
+<td>Quando a requisição é enviada.</td>
+</tr>
+<tr>
+<td><code>ajax:stopped</code></td>
+<td></td>
+<td>Quando a requisição é parada.</td>
+</tr>
+<tr>
+<td><code>ajax:success</code></td>
+<td>[response, status, xhr]</td>
+<td>Após a conclusão, se a resposta foi bem sucedida.</td>
+</tr>
+<tr>
+<td><code>ajax:error</code></td>
+<td>[response, status, xhr]</td>
+<td>Após a conclusão, se a resposta foi um erro.</td>
+</tr>
+<tr>
+<td><code>ajax:complete</code></td>
+<td>[xhr, status]</td>
+<td>Após a requisição ser concluída, não importa o resultado.</td>
+</tr>
+</tbody>
+</table>
+<p>Exemplo de uso:</p><div class="code_container">
+<pre><code class="highlight html">document.body.addEventListener('ajax:success', function(event) {
+  var detail = event.detail;
+  var data = detail[0], status = detail[1], xhr = detail[2];
+})
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-471e5e8c2e0d90d4e1e9a2973ce2e668">document.body.addEventListener('ajax:success', function(event) {
+  var detail = event.detail;
+  var data = detail[0], status = detail[1], xhr = detail[2];
+})
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-471e5e8c2e0d90d4e1e9a2973ce2e668">Copiar</button>
+</div>
+<div class="note"><p>A partir do Rails 5.1 e o novo <code>rails-ujs</code>, os parâmetros <code>data, status, xhr</code>
+foram empacotados dentro do <code>event.detail</code>. Para informações sobre o <code>jquery-ujs</code> anteriormente
+usado no Rails 5 e anteriores, leia a <a href="https://github.com/rails/jquery-ujs/wiki/ajax">wiki do <code>jquery-ujs</code></a>.</p></div><h4 id="eventos-paraveis"><a class="anchorlink" href="#eventos-paraveis">3.6 Eventos Paravéis</a></h4><p>Você pode parar a execução da requisição <em>Ajax</em> executando o <code>event.preventDefault()</code>
+a partir dos métodos <code>ajax:before</code> ou <code>ajax:beforeSend</code>.
+O evento <code>ajax:before</code> pode manipular os dados do formulário antes da serialização e o
+evento <code>ajax:beforeSend</code> é útil para adicionar <em>headers</em> personalizados.</p><p>Se você parar o evento <code>ajax:aborted:file</code>, o comportamento padrão de permitir
+que o navegador envie o formulário por meios normais (i.e. requisição sem <em>Ajax</em>)
+será cancelada e o formulário não será enviado de nenhuma forma. Isso é útil para
+implementar seu próprio ambiente de <em>upload</em> de arquivos via <em>Ajax</em>.</p><p>Observação, você deveria usar o <code>return false</code> para prevenir eventos para o <code>jquery-ujs</code>
+e <code>e.preventDefault()</code> para o <code>rails-ujs</code></p><h3 id="preocupacoes-do-lado-do-servidor"><a class="anchorlink" href="#preocupacoes-do-lado-do-servidor">4 Preocupações Do Lado Do Servidor</a></h3><p>Ajax não é só do lado do cliente, você também precisa trabalhar
+no lado do servidor para oferecer suporte, geralmente, as pessoas gostam
+que suas requisições retornem JSON mais do que HTML. Vamos discutir o que
+é preciso fazer para isso acontecer.</p><h4 id="um-exemplo-simples"><a class="anchorlink" href="#um-exemplo-simples">4.1 Um Exemplo Simples</a></h4><p>Imagine que você tenha uma série de usuários que você gostaria de mostrar e
+fornecer um formulário nessa mesma página para criar um novo usuário. A ação <em>index</em>
+do seu <em>controller</em> se parece com isso:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="vi">@users</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">all</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span>
+  <span class="k">end</span>
+  <span class="c1"># ...</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-88b3975202d7e979cf7b7976a262136c">class UsersController &lt; ApplicationController
+  def index
+    @users = User.all
+    @user = User.new
+  end
+  # ...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-88b3975202d7e979cf7b7976a262136c">Copiar</button>
+</div>
+<p>A <em>view index</em> (<code>app/views/users/index.html.erb</code>) contém:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;b&gt;</span>Users<span class="nt">&lt;/b&gt;</span>
+
+<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"users"</span><span class="nt">&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="vi">@users</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+
+<span class="nt">&lt;br&gt;</span>
+
+<span class="cp">&lt;%=</span> <span class="n">form_with</span><span class="p">(</span><span class="ss">model: </span><span class="vi">@user</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">label</span> <span class="ss">:name</span> <span class="cp">%&gt;</span><span class="nt">&lt;br&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:name</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">submit</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5876628cf7dbb2160b81ea4417fe33d8">&lt;b&gt;Users&lt;/b&gt;
+
+&lt;ul id="users"&gt;
+&lt;%= render @users %&gt;
+&lt;/ul&gt;
+
+&lt;br&gt;
+
+&lt;%= form_with(model: @user) do |f| %&gt;
+  &lt;%= f.label :name %&gt;&lt;br&gt;
+  &lt;%= f.text_field :name %&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5876628cf7dbb2160b81ea4417fe33d8">Copiar</button>
+</div>
+<p>A <em>partial</em> <code>app/views/users/_user.html.erb</code> contém o seguinte:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">user</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-67f1c6d1089e512130717e81799071bb">&lt;li&gt;&lt;%= user.name %&gt;&lt;/li&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-67f1c6d1089e512130717e81799071bb">Copiar</button>
+</div>
+<p>A parte de cima da página <em>index</em> mostra os usuários. A parte de baixo
+fornece o formulário para criar um novo usuário.</p><p>O formulário de baixo chamará a ação <em><code>create</code></em> no <code>UsersController</code>. Por causa
+da opção <em>remote</em> definida como <code>true</code>, a requisição será enviada para o <code>UsersController</code>
+como uma requisição <em>Ajax</em>, procurando por JavaScript. Afim de atender a requisição,
+a ação <em><code>create</code></em> do seu <em>controller</em> ficaria assim:</p><div class="code_container">
+<pre><code class="highlight ruby">  <span class="c1"># app/controllers/users_controller.rb</span>
+  <span class="c1"># ......</span>
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:user</span><span class="p">])</span>
+
+    <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+      <span class="k">if</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">save</span>
+        <span class="nb">format</span><span class="p">.</span><span class="nf">html</span> <span class="p">{</span> <span class="n">redirect_to</span> <span class="vi">@user</span><span class="p">,</span> <span class="ss">notice: </span><span class="s1">'User was successfully created.'</span> <span class="p">}</span>
+        <span class="nb">format</span><span class="p">.</span><span class="nf">js</span>
+        <span class="nb">format</span><span class="p">.</span><span class="nf">json</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">json: </span><span class="vi">@user</span><span class="p">,</span> <span class="ss">status: :created</span><span class="p">,</span> <span class="ss">location: </span><span class="vi">@user</span> <span class="p">}</span>
+      <span class="k">else</span>
+        <span class="nb">format</span><span class="p">.</span><span class="nf">html</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">action: </span><span class="s2">"new"</span> <span class="p">}</span>
+        <span class="nb">format</span><span class="p">.</span><span class="nf">json</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">json: </span><span class="vi">@user</span><span class="p">.</span><span class="nf">errors</span><span class="p">,</span> <span class="ss">status: :unprocessable_entity</span> <span class="p">}</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-aa45b1f1a2c296b5f7195b10f26143ff">  # app/controllers/users_controller.rb
+  # ......
+  def create
+    @user = User.new(params[:user])
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.js
+        format.json { render json: @user, status: :created, location: @user }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aa45b1f1a2c296b5f7195b10f26143ff">Copiar</button>
+</div>
+<p>Observe o <code>format.js</code> no bloco <code>respond_to</code>: que permite o seu controller responder
+a sua requisição <em>Ajax</em>. Então você tem um correspondente arquivo <em>view</em>
+<code>app/views/users/create.js.erb</code> que gera o atual código JavaScript que será enviado
+e executado no lado do cliente.</p><div class="code_container">
+<pre><code class="highlight erb">$("<span class="cp">&lt;%=</span> <span class="n">escape_javascript</span><span class="p">(</span><span class="n">render</span> <span class="vi">@user</span><span class="p">)</span> <span class="cp">%&gt;</span>").appendTo("#users");
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cf977cdbe7ac5ad401eac56df1822d54">$("&lt;%= escape_javascript(render @user) %&gt;").appendTo("#users");
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cf977cdbe7ac5ad401eac56df1822d54">Copiar</button>
+</div>
+<h3 id="turbolinks"><a class="anchorlink" href="#turbolinks">5 Turbolinks</a></h3><p>O Rails vem com a <a href="https://github.com/turbolinks/turbolinks">biblioteca Turbolinks</a>,
+que utiliza Ajax para acelerar a renderização na maioria das aplicações.</p><h4 id="como-o-turbolinks-funciona"><a class="anchorlink" href="#como-o-turbolinks-funciona">5.1 Como o Turbolinks Funciona</a></h4><p>O Turbolinks anexa um manipulador de cliques em todas as <em>tags</em> <code>&lt;a&gt;</code> da página. Se seu
+navegador tiver suporte ao <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/History_API#The_pushState">PushState</a>,
+o Turbolinks fará uma requisição para a página, analisará a resposta, e trocará o <code>&lt;body&gt;</code>
+inteiro da página com o <code>&lt;body&gt;</code> da resposta. E então ele usará o <em>PushState</em> para mudar
+a URL para a correta, preservando a semântica da atualização e retornando a URLs bonitas.</p><p>Se você quiser desabilitar o Turbolinks para certos links, adicione o atributo
+<code>data-turbolinks="false"</code> para a <em>tag</em>:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"..."</span> <span class="na">data-turbolinks=</span><span class="s">"false"</span><span class="nt">&gt;</span>No turbolinks here<span class="nt">&lt;/a&gt;</span>.
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-155e1e7ae89da06b43c31dc70de5566c">&lt;a href="..." data-turbolinks="false"&gt;No turbolinks here&lt;/a&gt;.
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-155e1e7ae89da06b43c31dc70de5566c">Copiar</button>
+</div>
+<h4 id="eventos-de-mudanca-de-pagina"><a class="anchorlink" href="#eventos-de-mudanca-de-pagina">5.2 Eventos de Mudança de Página</a></h4><p>Quando for escrever CoffeeScript, muitas vezes você vai querer fazer algum tipo de
+mudança no carregamento da página. Com jQuery, você escreveria assim:</p><div class="code_container">
+<pre><code class="highlight coffeescript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="na">ready</span> <span class="o">-&gt;</span>
+  <span class="nx">alert</span> <span class="s">"page has loaded!"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ea37ef937eaac8a656c5482c235e655f">$(document).ready -&gt;
+  alert "page has loaded!"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ea37ef937eaac8a656c5482c235e655f">Copiar</button>
+</div>
+<p>Contudo, como o Turbolinks sobreescreve o processo padrão de carregamento da página,
+o evento no qual ele depende não será disparado. Se você tem um código que se parece com isso,
+você deve mudar seu código para fazer isso no lugar:</p><div class="code_container">
+<pre><code class="highlight coffeescript"><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="na">on</span> <span class="s">"turbolinks:load"</span><span class="p">,</span> <span class="o">-&gt;</span>
+  <span class="nx">alert</span> <span class="s">"page has loaded!"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1802a74cc0223afe936a6a9b1bb3a9e9">$(document).on "turbolinks:load", -&gt;
+  alert "page has loaded!"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1802a74cc0223afe936a6a9b1bb3a9e9">Copiar</button>
+</div>
+<p>Para mais detalhes, incluindo outros eventos que você pode disparar, veja o <a href="https://github.com/turbolinks/turbolinks/blob/master/README.md">README
+do Turbolinks</a></p><h3 id="token-de-falsa-requisicao-entre-sites-csrf-em-ajax"><a class="anchorlink" href="#token-de-falsa-requisicao-entre-sites-csrf-em-ajax">6 Token de Falsa Requisição Entre Sites (CSRF) em <em>Ajax</em></a></h3><p>Ao usar outra biblioteca para fazer chamadas <em>Ajax</em>, é necessário adicionar
+o token de segurança como um <em>header</em> padrão para chamadas <em>Ajax</em> na sua biblioteca.
+Para pegar o token:</p><div class="code_container">
+<pre><code class="highlight javascript"><span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByName</span><span class="p">(</span><span class="dl">'</span><span class="s1">csrf-token</span><span class="dl">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">content</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1bbaeffe7c73c1495e9b2050d9ba02fd">var token = document.getElementsByName('csrf-token')[0].content
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1bbaeffe7c73c1495e9b2050d9ba02fd">Copiar</button>
+</div>
+<p>Você pode então enviar esse token como um <em>X-CSRF-Token</em> no seu <em>header</em>
+para requisições <em>Ajax</em>. Você não precisa adicionar o CSRF para requisições GET,
+apenas para requisições <em>non-GET</em>.</p><p>Você pode ler mais sobre Falsa Requisição Entre Sites (CSRF) na <a href="#cross-site-request-forgery-csrf-token-in-ajax">segurança</a></p><h3 id="outros-recursos"><a class="anchorlink" href="#outros-recursos">7 Outros recursos</a></h3><p>Aqui estão alguns links úteis para te ajudar a aprender mais:</p>
+<ul>
+<li><a href="https://github.com/rails/jquery-ujs/wiki">jquery-ujs wiki</a></li>
+<li><a href="https://github.com/rails/jquery-ujs/wiki/External-articles">jquery-ujs list of external articles</a></li>
+<li><a href="http://www.alfajango.com/blog/rails-3-remote-links-and-forms/">Rails 3 Remote Links and Forms: A Definitive Guide</a></li>
+<li><a href="http://railscasts.com/episodes/205-unobtrusive-javascript">Railscasts: Unobtrusive JavaScript</a></li>
+<li><a href="http://railscasts.com/episodes/390-turbolinks">Railscasts: Turbolinks</a></li>
+</ul>
+
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

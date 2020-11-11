@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rotas do Rails de Fora pra Dentro — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Rotas do Rails de Fora pra Dentro — Ruby on Rails Guides" />
+  <meta name="description" content="Rotas do Rails de Fora pra DentroEsse guia cobre os recursos de roteamento que os usuários podem utilizar no Rails.Após ler esse guia, você saberá: Como interpretar o código em config/routes.rb. Como construir suas próprias rotas, seja usando o formato preferido de resources ou o método match. Como declarar parâmetros de rota, que são passados para ações do controller. Como criar automaticamente caminhos e URLs usando helpers de rota. Técnicas avançadas como criar restrições e montar endpoints Rack." />
+  <meta property="og:description" content="Rotas do Rails de Fora pra DentroEsse guia cobre os recursos de roteamento que os usuários podem utilizar no Rails.Após ler esse guia, você saberá: Como interpretar o código em config/routes.rb. Como construir suas próprias rotas, seja usando o formato preferido de resources ou o método match. Como declarar parâmetros de rota, que são passados para ações do controller. Como criar automaticamente caminhos e URLs usando helpers de rota. Técnicas avançadas como criar restrições e montar endpoints Rack." />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Rotas do Rails de Fora pra Dentro</h2><p>Esse guia cobre os recursos de roteamento que os usuários podem utilizar no Rails.</p><p>Após ler esse guia, você saberá:</p>
+<ul>
+<li>Como interpretar o código em <code>config/routes.rb</code>.</li>
+<li>Como construir suas próprias rotas, seja usando o formato preferido de
+<code>resources</code> ou o método <code>match</code>.</li>
+<li>Como declarar parâmetros de rota, que são passados para ações do <em>controller</em>.</li>
+<li>Como criar automaticamente caminhos e URLs usando <em>helpers</em> de rota.</li>
+<li>Técnicas avançadas como criar restrições e montar <em>endpoints Rack</em>.</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#o-proposito-do-roteador-do-rails">O Propósito do Roteador do Rails</a>
+
+<ul>
+<li><a href="#conectando-urls-ao-codigo">Conectando URLs ao código</a></li>
+<li><a href="#gerando-caminhos-e-urls-a-partir-do-codigo">Gerando Caminhos e URLs a partir do código</a></li>
+<li><a href="#configurando-o-roteador-do-rails">Configurando o Roteador do Rails</a></li>
+</ul>
+</li>
+<li>
+<a href="#roteando-resources-recursos-o-padrao-do-rails">Roteando <em>Resources</em> (Recursos): O padrão do Rails</a>
+
+<ul>
+<li><a href="#resources-na-web"><em>Resources</em> na Web</a></li>
+<li><a href="#crud-verbos-e-actions">CRUD, Verbos, e <em>Actions</em></a></li>
+<li><a href="#helpers-path-e-url">Helpers <em>Path</em> e <em>URL</em></a></li>
+<li><a href="#definindo-multiplos-resources-ao-mesmo-tempo">Definindo Múltiplos <em>Resources</em> ao Mesmo tempo</a></li>
+<li><a href="#resources-no-singular"><em>Resources</em> no Singular</a></li>
+<li><a href="#controller-namespaces-e-routing">Controller Namespaces e Routing</a></li>
+<li><a href="#nested-resources-recursos-aninhados">Nested Resources (Recursos Aninhados)</a></li>
+<li><a href="#roteamento-com-metodo-concerns">Roteamento com método concerns</a></li>
+<li><a href="#criando-paths-e-urls-de-objetos">Criando Paths e URLs de Objetos</a></li>
+<li><a href="#adicionando-mais-restful-actions">Adicionando mais RESTful Actions</a></li>
+</ul>
+</li>
+<li>
+<a href="#rotas-sem-uso-de-resources">Rotas sem uso de <em>Resources</em></a>
+
+<ul>
+<li><a href="#parametros-vinculados">Parâmetros Vinculados</a></li>
+<li><a href="#segmentos-dinamicos">Segmentos Dinâmicos</a></li>
+<li><a href="#segmentos-estaticos">Segmentos Estáticos</a></li>
+<li><a href="#usando-query-string">Usando <em>Query String</em></a></li>
+<li><a href="#definindo-padroes">Definindo Padrões</a></li>
+<li><a href="#nomeando-rotas">Nomeando Rotas</a></li>
+<li><a href="#restringindo-verbos-http">Restringindo Verbos HTTP</a></li>
+<li><a href="#restricoes-de-segmento">Restrições de Segmento</a></li>
+<li><a href="#restricoes-baseadas-em-requisicoes">Restrições Baseadas em Requisições</a></li>
+<li><a href="#restricoes-avancadas">Restrições Avançadas</a></li>
+<li><a href="#rotas-englobadas-glob-e-segmentos-curinga">Rotas Englobadas (<em>Glob</em>) e Segmentos Curinga</a></li>
+<li><a href="#redirecionamento">Redirecionamento</a></li>
+<li><a href="#roteamento-para-aplicacoes-rack">Roteamento para Aplicações Rack</a></li>
+<li><a href="#usando-root">Usando <code>root</code></a></li>
+<li><a href="#rotas-com-caracteres-unicode">Rotas com Caracteres Unicode</a></li>
+<li><a href="#rotas-diretas">Rotas diretas</a></li>
+<li><a href="#usando-resolve">Usando <code>resolve</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#customizando-rotas-com-recursos">Customizando Rotas com Recursos</a>
+
+<ul>
+<li><a href="#especificando-um-controller-para-usar">Especificando um <em>Controller</em> para Usar</a></li>
+<li><a href="#especificando-restricoes">Especificando Restrições</a></li>
+<li><a href="#sobrescrevendo-helpers-de-nome-de-rota">Sobrescrevendo <em>Helpers</em> de Nome de Rota</a></li>
+<li><a href="#sobrescrevendo-os-segmentos-new-e-edit">Sobrescrevendo os Segmentos <code>new</code> e <code>edit</code></a></li>
+<li><a href="#prefixando-os-helpers-de-nome-de-rota">Prefixando os <em>Helpers</em> de Nome de Rota</a></li>
+<li><a href="#restringindo-as-rotas-criadas">Restringindo as Rotas Criadas</a></li>
+<li><a href="#traduzindo-caminhos">Traduzindo Caminhos</a></li>
+<li><a href="#sobrescrevendo-a-forma-singular">Sobrescrevendo a Forma Singular</a></li>
+<li><a href="#usando-as-em-recursos-aninhados">Usando <code>:as</code> em Recursos Aninhados</a></li>
+<li><a href="#sobrescrevendo-parametros-de-nome-de-rota">Sobrescrevendo Parâmetros de Nome de Rota</a></li>
+</ul>
+</li>
+<li>
+<a href="#inspecionando-e-testando-rotas">Inspecionando e Testando Rotas</a>
+
+<ul>
+<li><a href="#listando-rotas-existentes">Listando Rotas Existentes</a></li>
+<li><a href="#testando-rotas">Testando Rotas</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="o-proposito-do-roteador-do-rails"><a class="anchorlink" href="#o-proposito-do-roteador-do-rails">1 O Propósito do Roteador do Rails</a></h3><p>O roteador do Rails organiza URLs e as direcionam para uma ação de um
+<em>controller</em> ou de um aplicativo <em>Rack</em>. Também pode gerar caminhos e URLs,
+evitando a necessidade de codificar sequências de caracteres em suas
+visualizações.</p><h4 id="conectando-urls-ao-codigo"><a class="anchorlink" href="#conectando-urls-ao-codigo">1.1 Conectando URLs ao código</a></h4><p>Quando sua aplicação Rails recebe uma requisição para:</p><div class="code_container">
+<pre><code class="highlight plaintext">GET /patients/17
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-777d3a31f8bfb84e0f77e1bd8154d2bf">GET /patients/17
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-777d3a31f8bfb84e0f77e1bd8154d2bf">Copiar</button>
+</div>
+<p>ela solicita ao roteador que corresponda com uma ação do <em>controller</em>.
+Se a primeira rota correspondente for:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'/patients/:id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'patients#show'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-eed2d68166fb25ea7a61d9e371770519">get '/patients/:id', to: 'patients#show'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eed2d68166fb25ea7a61d9e371770519">Copiar</button>
+</div>
+<p>a requisição é direcionada para o <em>controller</em> <code>patients</code> na ação <code>show</code>
+com <code>{ id: '17' }</code> em <code>params</code>.</p><div class="note"><p>O Rails usa <em>snake_case</em> para nomes de <em>controller</em> no roteamento, se você
+tem um <em>controller</em> com várias palavras como <code>MonsterTrucksController</code>, você
+deve usar <code>monster_trucks#show</code>, por exemplo.</p></div><h4 id="gerando-caminhos-e-urls-a-partir-do-codigo"><a class="anchorlink" href="#gerando-caminhos-e-urls-a-partir-do-codigo">1.2 Gerando Caminhos e URLs a partir do código</a></h4><p>Você também pode gerar caminhos e URLs. Se a rota acima for modificada para ser:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'/patients/:id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'patients#show'</span><span class="p">,</span> <span class="ss">as: </span><span class="s1">'patient'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a1f3bde5bfef242cff2abde47047317e">get '/patients/:id', to: 'patients#show', as: 'patient'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a1f3bde5bfef242cff2abde47047317e">Copiar</button>
+</div>
+<p>e sua aplicação contém esse código no <em>controller</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="vi">@patient</span> <span class="o">=</span> <span class="no">Patient</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2d437a746db58400cb8cbe516974dc84">@patient = Patient.find(params[:id])
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2d437a746db58400cb8cbe516974dc84">Copiar</button>
+</div>
+<p>e isso na <em>view</em> correspondente:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Patient Record'</span><span class="p">,</span> <span class="n">patient_path</span><span class="p">(</span><span class="vi">@patient</span><span class="p">)</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-924f3f43e6249227bf4ca84bdc773792">&lt;%= link_to 'Patient Record', patient_path(@patient) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-924f3f43e6249227bf4ca84bdc773792">Copiar</button>
+</div>
+<p>então seu roteador irá gerar o caminho <code>/patients/17</code>. Isso reduz a fragilidade
+da sua <em>view</em> e faz seu código mais simples de entender. Observe que o <em>id</em> não
+não precisa ser especificado no <em>helper</em> da rota.</p><h4 id="configurando-o-roteador-do-rails"><a class="anchorlink" href="#configurando-o-roteador-do-rails">1.3 Configurando o Roteador do Rails</a></h4><p>As rotas para sua aplicação ou <em>engine</em> estão dentro do arquivo <code>config/routes.rb</code>
+e tipicamente se parecem com isso:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:brands</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:index</span><span class="p">,</span> <span class="ss">:show</span><span class="p">]</span> <span class="k">do</span>
+    <span class="n">resources</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:index</span><span class="p">,</span> <span class="ss">:show</span><span class="p">]</span>
+  <span class="k">end</span>
+
+  <span class="n">resource</span> <span class="ss">:basket</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:show</span><span class="p">,</span> <span class="ss">:update</span><span class="p">,</span> <span class="ss">:destroy</span><span class="p">]</span>
+
+  <span class="n">resolve</span><span class="p">(</span><span class="s2">"Basket"</span><span class="p">)</span> <span class="p">{</span> <span class="n">route_for</span><span class="p">(</span><span class="ss">:basket</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-101e62a567a84a63e049b1ed5ca39d79">Rails.application.routes.draw do
+  resources :brands, only: [:index, :show] do
+    resources :products, only: [:index, :show]
+  end
+
+  resource :basket, only: [:show, :update, :destroy]
+
+  resolve("Basket") { route_for(:basket) }
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-101e62a567a84a63e049b1ed5ca39d79">Copiar</button>
+</div>
+<p>Como isso é um arquivo padrão do Ruby você pode utilizar de todos os seus recursos
+para te ajudar a definir suas rotas, porém tenha cautela com nomes de variáveis
+já que ela pode conflitar com os métodos da <a href="https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico">DSL</a> do roteador.</p><div class="note"><p>O bloco <code>Rails.application.routes.draw do ... end</code> que encapsula suas
+definições de rotas é necessário para estabelecer o escopo do roteador da DSL e não
+deve ser deletado.</p></div><h3 id="roteando-resources-recursos-o-padrao-do-rails"><a class="anchorlink" href="#roteando-resources-recursos-o-padrao-do-rails">2 Roteando <em>Resources</em> (Recursos): O padrão do Rails</a></h3><p>O roteamento de <em>resources</em> permite que você rapidamente declare todas as rotas
+comuns para um <em>controller</em>. Em contrapartida a declarar cada uma das rotas
+das <em>actions</em> <code>index</code>, <code>show</code>, <code>new</code>, <code>edit</code>, <code>create</code>, <code>update</code> e <code>destroy</code>,
+uma rota de <em>resources</em> declara todas elas em uma única linha de código.</p><h4 id="resources-na-web"><a class="anchorlink" href="#resources-na-web">2.1 <em>Resources</em> na Web</a></h4><p>Navegadores solicitam páginas do Rails através de uma URL usando um método HTTP
+específico, como <code>GET</code>,<code>POST</code>, <code>PATCH</code>,<code>PUT</code> e <code>DELETE</code>. Cada método é uma
+solicitação para executar uma operação no <em>resource</em>. Uma rota de <em>resource</em> mapeia
+uma série de solicitações relacionadas a <em>actions</em> em um único <em>controller</em>.</p><p>Quando sua aplicação Rails recebe uma requisição para:</p><div class="code_container">
+<pre><code class="highlight plaintext">DELETE /photos/17
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-14302b50504045a73e15551fc8027d13">DELETE /photos/17
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-14302b50504045a73e15551fc8027d13">Copiar</button>
+</div>
+<p>ela pede ao roteador para enviar esta requisição para a <em>action</em> no seu
+respectivo <em>controller</em>. Se a primeira rota encontrada for:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5651e3069fff9bb6277fbc2b2bd26379">resources :photos
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5651e3069fff9bb6277fbc2b2bd26379">Copiar</button>
+</div>
+<p>O Rails enviará esta requisição para a <em>action</em> <code>destroy</code> no <em>controller</em>
+<code>photos</code> com <code>{ id: 17 }</code> no <code>params</code></p><h4 id="crud-verbos-e-actions"><a class="anchorlink" href="#crud-verbos-e-actions">2.2 CRUD, Verbos, e <em>Actions</em></a></h4><p>No Rails, uma rota de <em>resources</em> fornece um mapeamento entre verbos HTTP e URLs para
+<em>actions</em> do <em>controller</em>. Por convenção, cada ação também é mapeada para uma
+operação específica do CRUD em um banco de dados. Uma única entrada no arquivo
+de roteamento, como:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-39e61f97c7db2cc1a3523c033032fead">resources :photos
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-39e61f97c7db2cc1a3523c033032fead">Copiar</button>
+</div>
+<p>cria sete rotas diferentes rotas em sua aplicação, todas mapeando para o
+<em>controller</em> <code>Photos</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Verbo HTTP</th>
+<th>Path</th>
+<th>Controller#Action</th>
+<th>Usado para</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/photos</td>
+<td>photos#index</td>
+<td>mostra uma lista de todas as fotos</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/photos/new</td>
+<td>photos#new</td>
+<td>retorna um formulário HTML para criar uma nova foto</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/photos</td>
+<td>photos#create</td>
+<td>cria uma nova foto</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/photos/:id</td>
+<td>photos#show</td>
+<td>mostra uma foto específica</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/photos/:id/edit</td>
+<td>photos#edit</td>
+<td>retorna um formulário HTML para editar uma foto</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/photos/:id</td>
+<td>photos#update</td>
+<td>atualiza uma foto específica</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/photos/:id</td>
+<td>photos#destroy</td>
+<td>deleta uma foto específica</td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>Por conta do roteador utilizar os verbos HTTP e a URL para corresponder as requisições de entrada, quatro URLs equivalem a sete <em>actions</em> diferentes.</p></div><div class="note"><p>Rotas de aplicações Rails são combinadas na ordem que são especificadas, portanto, se você tem <code>resources :photos</code> acima de <code>get 'photos/poll'</code>, a rota da <em>action</em> <code>show</code> para a linha do <code>resources</code> será correspondida antes da linha <code>get</code>. Para resolver este problema, mova a linha <code>get</code> <strong>acima</strong> da linha <code>resources</code>, assim a rota será equiparada primeiro.</p></div><h4 id="helpers-path-e-url"><a class="anchorlink" href="#helpers-path-e-url">2.3 Helpers <em>Path</em> e <em>URL</em></a></h4><p>Criando uma rota de <em>resource</em> vai expor um número de <em>helpers</em> para os <em>controllers</em> em sua aplicação. No caso de <code>resources :photos</code>:</p>
+<ul>
+<li>
+<code>photos_path</code> retorna <code>/photos</code>
+</li>
+<li>
+<code>new_photo_path</code> retorna <code>/photos/new</code>
+</li>
+<li>
+<code>edit_photo_path(:id)</code> retorna <code>/photos/:id/edit</code> (por exemplo, <code>edit_photo_path(10)</code> retorna <code>/photos/10/edit</code>)</li>
+<li>
+<code>photo_path(:id)</code> retorna <code>/photos/:id</code> (por exemplo, <code>photo_path(10)</code> retorna <code>/photos/10</code>)</li>
+</ul>
+<p>Cada um desses <em>helpers</em> tem um <em>helper</em> <code>_url</code>  (assim como <code>photos_url</code>) que retorna o mesmo <em>path</em> prefixado com o <em>host</em> atual, porta e o prefixo do <em>path</em>.</p><h4 id="definindo-multiplos-resources-ao-mesmo-tempo"><a class="anchorlink" href="#definindo-multiplos-resources-ao-mesmo-tempo">2.4 Definindo Múltiplos <em>Resources</em> ao Mesmo tempo</a></h4><p>Se você precisa criar rotas para mais de um <em>resource</em>, você pode salvar um pouco de digitação definindo todos eles em uma única chamada para <code>resources</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">:videos</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-03d44678353c978038a36bff2a0e50bc">resources :photos, :books, :videos
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-03d44678353c978038a36bff2a0e50bc">Copiar</button>
+</div>
+<p>Isto funciona exatamente igual a:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span>
+<span class="n">resources</span> <span class="ss">:books</span>
+<span class="n">resources</span> <span class="ss">:videos</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0e4aaf043c920a758eb2f61eb7fbb813">resources :photos
+resources :books
+resources :videos
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0e4aaf043c920a758eb2f61eb7fbb813">Copiar</button>
+</div>
+<h4 id="resources-no-singular"><a class="anchorlink" href="#resources-no-singular">2.5 <em>Resources</em> no Singular</a></h4><p>Algumas vezes você tem um <em>resource</em> que clientes sempre veem sem referenciar um ID. Por exemplo, você gostaria que <code>/profile</code> sempre mostre o perfil do usuário que esta autenticado. Neste caso, você pode usar um <em>resource</em> no singular para  mapear <code>/profile</code> (em vez de <code>/profile/:id</code>) para a <em>action</em> <code>show</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'profile'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'users#show'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e6012a7f7516aeef190d04f01bcc812f">get 'profile', to: 'users#show'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e6012a7f7516aeef190d04f01bcc812f">Copiar</button>
+</div>
+<p>Passando uma <code>String</code> para <code>to:</code> ira esperar um formato <code>controller#action</code>. Quando usamos um <code>Symbol</code>, a opção <code>to:</code> deveria ser trocada por <code>action:</code>. Quando usamos uma <code>String</code> sem um <code>#</code>, a opção <code>to:</code> deveria ser trocada por <code>controller:</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'profile'</span><span class="p">,</span> <span class="ss">action: :show</span><span class="p">,</span> <span class="ss">controller: </span><span class="s1">'users'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f9907c0f300b1e6d1bd55cffe3725952">get 'profile', action: :show, controller: 'users'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f9907c0f300b1e6d1bd55cffe3725952">Copiar</button>
+</div>
+<p>Esta rota <em>resourceful</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resource</span> <span class="ss">:geocoder</span>
+<span class="n">resolve</span><span class="p">(</span><span class="s1">'Geocoder'</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="ss">:geocoder</span><span class="p">]</span> <span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-98fda585a7797cde65ce6d225cdd1e53">resource :geocoder
+resolve('Geocoder') { [:geocoder] }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-98fda585a7797cde65ce6d225cdd1e53">Copiar</button>
+</div>
+<p>cria seis rotas diferentes em sua aplicação, todas mapeando para o <em>controller</em> <code>Geocoders</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Verbo HTTP</th>
+<th>Path</th>
+<th>Controller#Action</th>
+<th>Usado para</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/geocoder/new</td>
+<td>geocoders#new</td>
+<td>retorna um formulário HTML para criar o geocoder</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/geocoder</td>
+<td>geocoders#create</td>
+<td>cria o novo geocoder</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/geocoder</td>
+<td>geocoders#show</td>
+<td>mostra o único geocoder <em>resource</em>
+</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/geocoder/edit</td>
+<td>geocoders#edit</td>
+<td>retorna um formulário HTML para editar o geocoder</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/geocoder</td>
+<td>geocoders#update</td>
+<td>atualiza o único geocoder <em>resource</em>
+</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/geocoder</td>
+<td>geocoders#destroy</td>
+<td>deleta o geocoder <em>resource</em>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>Como você pode querer usar o mesmo <em>controller</em> para uma <em>singular route</em> (<code>/account</code>) e uma <em>plural route</em> (<code>/accounts /45</code>), os <em>singular resources</em> são mapeados para os <em>plural controllers</em>. Assim, por exemplo, <code>resource: photo</code> e<code>resources: photos</code> criam rotas singular e plural que são mapeadas para o mesmo controlador (<code>PhotosController</code>).</p></div><p>Uma rota <em>resourceful</em> singular gera estes <em>helpers</em>:</p>
+<ul>
+<li>
+<code>new_geocoder_path</code> returns <code>/geocoder/new</code>
+</li>
+<li>
+<code>edit_geocoder_path</code> returns <code>/geocoder/edit</code>
+</li>
+<li>
+<code>geocoder_path</code> returns <code>/geocoder</code>
+</li>
+</ul>
+<p>Assim como com <em>resources</em> no plural, os mesmos <em>helpers</em> que terminam com <code>_url</code> tambem vão incluir o <em>host</em>, porta, e o prefixo do <em>path</em>.</p><h4 id="controller-namespaces-e-routing"><a class="anchorlink" href="#controller-namespaces-e-routing">2.6 Controller Namespaces e Routing</a></h4><p>Você pode querer organizar grupos de <em>controllers</em> em um <em>namespace</em>. Mais comumente, você pode querer agrupar <em>controllers</em> administrativos sob um <em>namespace</em> <code>Admin::</code>. Você deverá por esses <em>controllers</em> sob o diretório <code>app/controllers/admin</code>, e você pode agrupá-los em um <em>router</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">namespace</span> <span class="ss">:admin</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:articles</span><span class="p">,</span> <span class="ss">:comments</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6b3cd9640aed2cf6d120cb5cdf7017cb">namespace :admin do
+  resources :articles, :comments
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6b3cd9640aed2cf6d120cb5cdf7017cb">Copiar</button>
+</div>
+<p>Isto criará um número de rotas para cada <em>controller</em> de <code>articles</code> e <code>comments</code>. Para <code>Admin::ArticlesController</code>, o Rails vai criar:</p>
+<table>
+<thead>
+<tr>
+<th>Verbo HTTP</th>
+<th>Path</th>
+<th>Controller#Action</th>
+<th>Helper de rota nomeado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/admin/articles</td>
+<td>admin/articles#index</td>
+<td>admin_articles_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/admin/articles/new</td>
+<td>admin/articles#new</td>
+<td>new_admin_article_path</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/admin/articles</td>
+<td>admin/articles#create</td>
+<td>admin_articles_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/admin/articles/:id</td>
+<td>admin/articles#show</td>
+<td>admin_article_path(:id)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/admin/articles/:id/edit</td>
+<td>admin/articles#edit</td>
+<td>edit_admin_article_path(:id)</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/admin/articles/:id</td>
+<td>admin/articles#update</td>
+<td>admin_article_path(:id)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/admin/articles/:id</td>
+<td>admin/articles#destroy</td>
+<td>admin_article_path(:id)</td>
+</tr>
+</tbody>
+</table>
+<p>Se você quiser rotear <code>/articles</code> (sem o prefixo <code>/admin</code>) para <code>Admin::ArticlesController</code>, você poderia usar:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">scope</span> <span class="ss">module: </span><span class="s1">'admin'</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:articles</span><span class="p">,</span> <span class="ss">:comments</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6a717cd6c82452b67680c94d7c78e2b8">scope module: 'admin' do
+  resources :articles, :comments
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6a717cd6c82452b67680c94d7c78e2b8">Copiar</button>
+</div>
+<p>ou, para um único caso:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:articles</span><span class="p">,</span> <span class="ss">module: </span><span class="s1">'admin'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8e7084aef5dbbbceff4abeb50f09ba9c">resources :articles, module: 'admin'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8e7084aef5dbbbceff4abeb50f09ba9c">Copiar</button>
+</div>
+<p>Se você quiser rotear <code>/admin/articles</code> para <code>ArticlesController</code> (Sem o prefixo do modulo <code>Admin::</code>), você poderia usar:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">scope</span> <span class="s1">'/admin'</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:articles</span><span class="p">,</span> <span class="ss">:comments</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-157c827fa8af68dea8db42d6c928e67a">scope '/admin' do
+  resources :articles, :comments
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-157c827fa8af68dea8db42d6c928e67a">Copiar</button>
+</div>
+<p>ou, para um único caso:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:articles</span><span class="p">,</span> <span class="ss">path: </span><span class="s1">'/admin/articles'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ac333cf1b3120b698293b43afd158843">resources :articles, path: '/admin/articles'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ac333cf1b3120b698293b43afd158843">Copiar</button>
+</div>
+<p>Em cada um desses casos, a rota nomeada continua a mesma, como se você não tivesse usado <code>scope</code>. No último exemplo, os <em>paths</em> seguintes mapeiam para <code>ArticlesController</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Verbo HTTP</th>
+<th>Path</th>
+<th>Controller#Action</th>
+<th>Helper de rota nomeado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/admin/articles</td>
+<td>articles#index</td>
+<td>articles_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/admin/articles/new</td>
+<td>articles#new</td>
+<td>new_article_path</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/admin/articles</td>
+<td>articles#create</td>
+<td>articles_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/admin/articles/:id</td>
+<td>articles#show</td>
+<td>article_path(:id)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/admin/articles/:id/edit</td>
+<td>articles#edit</td>
+<td>edit_article_path(:id)</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/admin/articles/:id</td>
+<td>articles#update</td>
+<td>article_path(:id)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/admin/articles/:id</td>
+<td>articles#destroy</td>
+<td>article_path(:id)</td>
+</tr>
+</tbody>
+</table>
+<div class="info"><p>Se você precisar usar um <em>namespace</em> de <em>controller</em> diferente dentro de um bloco <code>namespace</code> você pode especificar um <em>path</em> absoluto de <em>controller</em>, e.g: <code>get '/foo', to: '/foo#index'</code>.</p></div><h4 id="nested-resources-recursos-aninhados"><a class="anchorlink" href="#nested-resources-recursos-aninhados">2.7 Nested Resources (Recursos Aninhados)</a></h4><p>É comum encontrarmos <em>resources</em> que são "filhos" de outros. Por exemplo, supondo que sua aplicação tem esses <em>models</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Magazine</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_many</span> <span class="ss">:ads</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Ad</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">belongs_to</span> <span class="ss">:magazine</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-31afc93b21b62dc75207a81ed29916b2">class Magazine &lt; ApplicationRecord
+  has_many :ads
+end
+
+class Ad &lt; ApplicationRecord
+  belongs_to :magazine
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-31afc93b21b62dc75207a81ed29916b2">Copiar</button>
+</div>
+<p><em>Nested routes</em> (rotas aninhadas) permitem que você capture este relacionamento no seu roteamento. Neste caso, você poderia incluir esta declaração de rota:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:magazines</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:ads</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-97e6b989b7ed0e58027fa5e224320b24">resources :magazines do
+  resources :ads
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-97e6b989b7ed0e58027fa5e224320b24">Copiar</button>
+</div>
+<p>Em adição das rotas para <em>magazines</em>, esta declaração também adicionará rotas de <em>ads</em> para um <code>AdsContriller</code>. As URLs de <em>ad</em> vão precisar de um <em>magazine</em>:</p>
+<table>
+<thead>
+<tr>
+<th>Verbo HTTP</th>
+<th>Path</th>
+<th>Controller#Action</th>
+<th>Usado para</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/magazines/:magazine_id/ads</td>
+<td>ads#index</td>
+<td>mostra a lista de todos os <code>ads</code> para um <code>magazine</code> específico</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/magazines/:magazine_id/ads/new</td>
+<td>ads#new</td>
+<td>retorna um formulário HTML para a criação de um novo <code>ad</code> pertencente de um <code>magazine</code> específico</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/magazines/:magazine_id/ads</td>
+<td>ads#create</td>
+<td>cria um novo <code>ad</code> pertencente a um <code>magazine</code> específico</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/magazines/:magazine_id/ads/:id</td>
+<td>ads#show</td>
+<td>exibe um <code>ad</code> pertencente a um <code>magazine</code> específico</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/magazines/:magazine_id/ads/:id/edit</td>
+<td>ads#edit</td>
+<td>retorna um formulário HTML para editar um <code>ad</code> pertencente a um <code>magazine</code> específico</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/magazines/:magazine_id/ads/:id</td>
+<td>ads#update</td>
+<td>atualiza um <code>ad</code> específico pertencente a um <code>magazine</code> específico</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/magazines/:magazine_id/ads/:id</td>
+<td>ads#destroy</td>
+<td>deleta um <code>ad</code> específico pertencente a um <code>magazine</code> específico</td>
+</tr>
+</tbody>
+</table>
+<p>Isto vai também criar <em>routing helpers</em> como <code>magazine_ads_url</code> e <code>edit_magazine_ad_path</code>. Esses <em>helpers</em> pegam uma instância de <em>Magazine</em> como o primeiro parâmetro (<code>magazine_ads_url(@magazine)</code>).</p><h5 id="limites-para-o-aninhamento"><a class="anchorlink" href="#limites-para-o-aninhamento">2.7.1 Limites para o Aninhamento</a></h5><p>Você pode aninhar <em>resources</em> entre outros <em>resources</em> aninhados se você desejar. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:publishers</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:magazines</span> <span class="k">do</span>
+    <span class="n">resources</span> <span class="ss">:photos</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a1265a737e1fdae8ee9c22f2ff0f5d9c">resources :publishers do
+  resources :magazines do
+    resources :photos
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a1265a737e1fdae8ee9c22f2ff0f5d9c">Copiar</button>
+</div>
+<p><em>Resources</em> profundamente aninhados ficam confusos. Neste caso, por exemplo, a aplicação iria reconhecer <em>paths</em> como:</p><div class="code_container">
+<pre><code class="highlight plaintext">/publishers/1/magazines/2/photos/3
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e28f696f7befc5e9de8e874b67c70d95">/publishers/1/magazines/2/photos/3
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e28f696f7befc5e9de8e874b67c70d95">Copiar</button>
+</div>
+<p>O <em>helper</em> correspondente a essa rota seria <code>publisher_magazine_photo_url</code>, sendo necessário especificar os objetos de todos os três níveis. De fato, esta situação é confusa o bastante que um <a href="http://weblog.jamisbuck.org/2007/2/5/nesting-resources">artigo</a> escrito por Jamis Buck propõe uma regra de ouro para um bom design no Rails:</p><div class="info"><p><em>Resources</em> não devem nunca ser aninhados mais de um nível de profundidade.</p></div><h5 id="shallow-nesting-aninhamento-raso"><a class="anchorlink" href="#shallow-nesting-aninhamento-raso">2.7.2 Shallow Nesting (Aninhamento raso)</a></h5><p>Uma maneira de evitar um aninhamento profundo (como recomendado acima) é gerar uma coleção de <em>actions</em> <em>scoped</em> abaixo de um pai, assim para ter uma sensação de hierarquia, mas não aninhar as <em>actions</em> do membro. Em outras palavras. para apenas construir <em>routes</em> com o mínimo de informação para identificar unicamente o <em>recurso</em>, como isto:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:articles</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:comments</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:index</span><span class="p">,</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">:create</span><span class="p">]</span>
+<span class="k">end</span>
+<span class="n">resources</span> <span class="ss">:comments</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:show</span><span class="p">,</span> <span class="ss">:edit</span><span class="p">,</span> <span class="ss">:update</span><span class="p">,</span> <span class="ss">:destroy</span><span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-92dab6186f0f4f50c5806d344a39b0bc">resources :articles do
+  resources :comments, only: [:index, :new, :create]
+end
+resources :comments, only: [:show, :edit, :update, :destroy]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-92dab6186f0f4f50c5806d344a39b0bc">Copiar</button>
+</div>
+<p>Essa ideia encontra um equilíbrio entre rotas descritivas e aninhamento profundo. Existe uma sintaxe abreviada para conseguir exatamente isso, via a opção <code>:shallow</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:articles</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:comments</span><span class="p">,</span> <span class="ss">shallow: </span><span class="kp">true</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2bc7aee583aa188fcba44d9692328176">resources :articles do
+  resources :comments, shallow: true
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2bc7aee583aa188fcba44d9692328176">Copiar</button>
+</div>
+<p>Isso vai gerar as mesmas rotas do primeiro exemplo, Você pode também especificar a opção <code>:shallow</code> no seu <em>resource</em> pai, em cada caso todos os <em>resources</em> aninhados serão rasos:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:articles</span><span class="p">,</span> <span class="ss">shallow: </span><span class="kp">true</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:comments</span>
+  <span class="n">resources</span> <span class="ss">:quotes</span>
+  <span class="n">resources</span> <span class="ss">:drafts</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2e07c531be4ae59e51361ee094d246c4">resources :articles, shallow: true do
+  resources :comments
+  resources :quotes
+  resources :drafts
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2e07c531be4ae59e51361ee094d246c4">Copiar</button>
+</div>
+<p>O método <code>shallow</code> do DSL cria um <em>scope</em> em que todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">shallow</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:articles</span> <span class="k">do</span>
+    <span class="n">resources</span> <span class="ss">:comments</span>
+    <span class="n">resources</span> <span class="ss">:quotes</span>
+    <span class="n">resources</span> <span class="ss">:drafts</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bcb3f7d234c757f6964bca10decdb91a">shallow do
+  resources :articles do
+    resources :comments
+    resources :quotes
+    resources :drafts
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bcb3f7d234c757f6964bca10decdb91a">Copiar</button>
+</div>
+<p>Existem duas opções no <code>scope</code> para customizar <em>shallow routes</em>. <code>:shallow_path</code> prefixa seus <em>paths</em> membros com o parâmetro especificado:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">scope</span> <span class="ss">shallow_path: </span><span class="s2">"sekret"</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:articles</span> <span class="k">do</span>
+    <span class="n">resources</span> <span class="ss">:comments</span><span class="p">,</span> <span class="ss">shallow: </span><span class="kp">true</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-63977fd74b09dddaa54d581f772389b5">scope shallow_path: "sekret" do
+  resources :articles do
+    resources :comments, shallow: true
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-63977fd74b09dddaa54d581f772389b5">Copiar</button>
+</div>
+<p>O <em>resource</em> <em>comments</em> aqui terá gerado as seguintes rotas para si:</p>
+<table>
+<thead>
+<tr>
+<th>HTTP Verb</th>
+<th>Path</th>
+<th>Controller#Action</th>
+<th>Helper de rota nomeado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/articles/:article_id/comments(.:format)</td>
+<td>comments#index</td>
+<td>article_comments_path</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/articles/:article_id/comments(.:format)</td>
+<td>comments#create</td>
+<td>article_comments_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/articles/:article_id/comments/new(.:format)</td>
+<td>comments#new</td>
+<td>new_article_comment_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/sekret/comments/:id/edit(.:format)</td>
+<td>comments#edit</td>
+<td>edit_comment_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/sekret/comments/:id(.:format)</td>
+<td>comments#show</td>
+<td>comment_path</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/sekret/comments/:id(.:format)</td>
+<td>comments#update</td>
+<td>comment_path</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/sekret/comments/:id(.:format)</td>
+<td>comments#destroy</td>
+<td>comment_path</td>
+</tr>
+</tbody>
+</table>
+<p>A opção <code>:shallow_prefix</code> adiciona o parÂmetro especificado para os <em>helpers</em> da rota nomeada:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">scope</span> <span class="ss">shallow_prefix: </span><span class="s2">"sekret"</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:articles</span> <span class="k">do</span>
+    <span class="n">resources</span> <span class="ss">:comments</span><span class="p">,</span> <span class="ss">shallow: </span><span class="kp">true</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3256be009526c2bfa461a43e0a09be8f">scope shallow_prefix: "sekret" do
+  resources :articles do
+    resources :comments, shallow: true
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3256be009526c2bfa461a43e0a09be8f">Copiar</button>
+</div>
+<p>O <em>resource</em> <em>comments</em> aqui terá gerado as seguintes rotas para si:</p>
+<table>
+<thead>
+<tr>
+<th>HTTP Verb</th>
+<th>Path</th>
+<th>Controller#Action</th>
+<th>Helper de rota nomeado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/articles/:article_id/comments(.:format)</td>
+<td>comments#index</td>
+<td>article_comments_path</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/articles/:article_id/comments(.:format)</td>
+<td>comments#create</td>
+<td>article_comments_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/articles/:article_id/comments/new(.:format)</td>
+<td>comments#new</td>
+<td>new_article_comment_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/comments/:id/edit(.:format)</td>
+<td>comments#edit</td>
+<td>edit_sekret_comment_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/comments/:id(.:format)</td>
+<td>comments#show</td>
+<td>sekret_comment_path</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/comments/:id(.:format)</td>
+<td>comments#update</td>
+<td>sekret_comment_path</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/comments/:id(.:format)</td>
+<td>comments#destroy</td>
+<td>sekret_comment_path</td>
+</tr>
+</tbody>
+</table>
+<h4 id="roteamento-com-metodo-concerns"><a class="anchorlink" href="#roteamento-com-metodo-concerns">2.8 Roteamento com método concerns</a></h4><p>Roteamento com método concerns permitem você declarar rotas comuns que podem ser reutilizadas dentro de outros <em>resources</em> e rotas. Para definir um <em>concern</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">concern</span> <span class="ss">:commentable</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:comments</span>
+<span class="k">end</span>
+
+<span class="n">concern</span> <span class="ss">:image_attachable</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:images</span><span class="p">,</span> <span class="ss">only: :index</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-257cf7cc3bd1253ab6c2aaef8c61cd74">concern :commentable do
+  resources :comments
+end
+
+concern :image_attachable do
+  resources :images, only: :index
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-257cf7cc3bd1253ab6c2aaef8c61cd74">Copiar</button>
+</div>
+<p>Estes <em>concerns</em> podem ser usados em <em>resources</em> para evitar duplicação de códigos e compartilhar o mesmo comportamento por entre as rotas:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:messages</span><span class="p">,</span> <span class="ss">concerns: :commentable</span>
+
+<span class="n">resources</span> <span class="ss">:articles</span><span class="p">,</span> <span class="ss">concerns: </span><span class="p">[</span><span class="ss">:commentable</span><span class="p">,</span> <span class="ss">:image_attachable</span><span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0cad848e3b72f6ccf18ebe5c68ce6775">resources :messages, concerns: :commentable
+
+resources :articles, concerns: [:commentable, :image_attachable]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0cad848e3b72f6ccf18ebe5c68ce6775">Copiar</button>
+</div>
+<p>O exemplo acima é equivalente a:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:messages</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:comments</span>
+<span class="k">end</span>
+
+<span class="n">resources</span> <span class="ss">:articles</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:comments</span>
+  <span class="n">resources</span> <span class="ss">:images</span><span class="p">,</span> <span class="ss">only: :index</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-796330deafd27d80417ac7880d48bac4">resources :messages do
+  resources :comments
+end
+
+resources :articles do
+  resources :comments
+  resources :images, only: :index
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-796330deafd27d80417ac7880d48bac4">Copiar</button>
+</div>
+<p>Além disso você pode usá-los em qualquer lugar que você quiser dentro das rotas, por exemplo, em uma chamada <code>scope</code> ou <code>namespace</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">namespace</span> <span class="ss">:articles</span> <span class="k">do</span>
+  <span class="n">concerns</span> <span class="ss">:commentable</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-dd7809f824a34b44bcb254f49353fff1">namespace :articles do
+  concerns :commentable
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dd7809f824a34b44bcb254f49353fff1">Copiar</button>
+</div>
+<h4 id="criando-paths-e-urls-de-objetos"><a class="anchorlink" href="#criando-paths-e-urls-de-objetos">2.9 Criando Paths e URLs de Objetos</a></h4><p>Além de usarmos os <em>helpers</em> de roteamento, o Rails pode também criar <em>paths</em> e <em>URLs</em> de um <em>array</em> de parâmetros. Por exemplo, imagine que você tem este grupo de rotas:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:magazines</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:ads</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f6db7c3ff2222d5bdc8209d20ab3610e">resources :magazines do
+  resources :ads
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f6db7c3ff2222d5bdc8209d20ab3610e">Copiar</button>
+</div>
+<p>Enquanto estiver usando <code>magazine_ad_path</code>, você pode passar as instâncias de <code>Magazine</code> e <code>Ad</code> em contrapartida a IDs numéricos:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Ad details'</span><span class="p">,</span> <span class="n">magazine_ad_path</span><span class="p">(</span><span class="vi">@magazine</span><span class="p">,</span> <span class="vi">@ad</span><span class="p">)</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4335766a868b8c07c3fe40d16bc2f8f6">&lt;%= link_to 'Ad details', magazine_ad_path(@magazine, @ad) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4335766a868b8c07c3fe40d16bc2f8f6">Copiar</button>
+</div>
+<p>Você pode também usar <code>url_for</code> com um grupo de objetos, e o Rails vai automaticamente determinar qual rota você quer:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Ad details'</span><span class="p">,</span> <span class="n">url_for</span><span class="p">([</span><span class="vi">@magazine</span><span class="p">,</span> <span class="vi">@ad</span><span class="p">])</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b2f52e8d084fb8d5f0a0a317f2519208">&lt;%= link_to 'Ad details', url_for([@magazine, @ad]) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b2f52e8d084fb8d5f0a0a317f2519208">Copiar</button>
+</div>
+<p>Neste caso, o Rails verá que <code>@magazine</code> é um <code>Magazine</code> e <code>@ad</code> é um <code>Ad</code> e vai portanto usar o <em>helper</em> <code>magazine_ad_path</code>. em <em>helpers</em> como <code>link_to</code>, você pode especificar apenas o objeto no lugar da chamada <code>url_for</code> inteira:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Ad details'</span><span class="p">,</span> <span class="p">[</span><span class="vi">@magazine</span><span class="p">,</span> <span class="vi">@ad</span><span class="p">]</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d7b1f66f2fc91e7d11dd8dfef029513c">&lt;%= link_to 'Ad details', [@magazine, @ad] %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d7b1f66f2fc91e7d11dd8dfef029513c">Copiar</button>
+</div>
+<p>Se você queria apenas o link da magazine:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Magazine details'</span><span class="p">,</span> <span class="vi">@magazine</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-38719be4ab1140ef687ca4b1bb7a4942">&lt;%= link_to 'Magazine details', @magazine %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-38719be4ab1140ef687ca4b1bb7a4942">Copiar</button>
+</div>
+<p>Para outras <em>actions</em>, você apenas precisa inserir o nome desta <em>action</em> como o primeiro elemento deste <em>array</em>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Edit Ad'</span><span class="p">,</span> <span class="p">[</span><span class="ss">:edit</span><span class="p">,</span> <span class="vi">@magazine</span><span class="p">,</span> <span class="vi">@ad</span><span class="p">]</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-302d5947839ffcfe9f9dbb21e4b8dcd9">&lt;%= link_to 'Edit Ad', [:edit, @magazine, @ad] %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-302d5947839ffcfe9f9dbb21e4b8dcd9">Copiar</button>
+</div>
+<p>Isto permite você tratar instâncias de seus <em>models</em> como URLs, e é uma vantagem chave de usar o estilo <em>resourceful</em>.</p><h4 id="adicionando-mais-restful-actions"><a class="anchorlink" href="#adicionando-mais-restful-actions">2.10 Adicionando mais RESTful Actions</a></h4><p>Você não esta limitado as sete rotas que o <em>RESTful routing</em> cria por padrão. Se você quiser, pode criar rotas adicionais  que aplicam a uma coleção ou membros individuais da coleção.</p><h5 id="adicionando-rotas-de-membros"><a class="anchorlink" href="#adicionando-rotas-de-membros">2.10.1 Adicionando Rotas de Membros</a></h5><p>Para adicionar uma rota para um membro, apenas adicione um bloco <code>member</code> em um bloco de <em>resource</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span> <span class="k">do</span>
+  <span class="n">member</span> <span class="k">do</span>
+    <span class="n">get</span> <span class="s1">'preview'</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-25541deac27450bc5ecdbb2a3eaa17f6">resources :photos do
+  member do
+    get 'preview'
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-25541deac27450bc5ecdbb2a3eaa17f6">Copiar</button>
+</div>
+<p>Isso vai reconhecer <code>/photos/1/preview</code> com GET, e rotear para a <em>action</em> <code>preview</code> de <code>PhotosController</code>, com o valor do <em>resource id</em>  passado em <code>params[:id]</code>. Isso vai tambem criar os <em>helpers</em> <code>preview_photo_url</code> e <code>preview_photo_path</code>.</p><p>Dentro do bloco de rotas para membros, cada nome de rota especifica o verbo HTTP
+que vai ser reconhecido. Você pode usar <code>get</code>, <code>patch</code>, <code>put</code>, <code>post</code> ou
+<code>delete</code> aqui. Se você não tiver múltiplas rotas para membros, você pode também
+passar <code>:on</code> para a rota, eliminando o bloco:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span> <span class="k">do</span>
+  <span class="n">get</span> <span class="s1">'preview'</span><span class="p">,</span> <span class="ss">on: :member</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7a8346db6c2c0a1dc4daa7b27540703f">resources :photos do
+  get 'preview', on: :member
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7a8346db6c2c0a1dc4daa7b27540703f">Copiar</button>
+</div>
+<p>Você pode deixar fora a opção <code>:on</code>, isso vai criar o mesmo <em>member route</em> exceto que o valor do <em>resource id</em> estará disponível em <code>params[:photo_id]</code> ao invés de <code>params[:id]</code>. <em>Helpers</em> de rota tambem serão renomeados de <code>preview_photo_url</code> para <code>photo_preview_url</code> e <code>photo_preview_path</code>.</p><h5 id="adicionando-collection-routes"><a class="anchorlink" href="#adicionando-collection-routes">2.10.2 Adicionando Collection Routes</a></h5><p>Para adicionar uma rota para uma coleção:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span> <span class="k">do</span>
+  <span class="n">collection</span> <span class="k">do</span>
+    <span class="n">get</span> <span class="s1">'search'</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6728696bb33b28e17525f1175b394aaa">resources :photos do
+  collection do
+    get 'search'
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6728696bb33b28e17525f1175b394aaa">Copiar</button>
+</div>
+<p>Isto vai permitir que o Rails reconheça <em>paths</em> como <code>/photos/search</code> com GET, e a rota para a <em>action</em> <code>search</code> do <code>PhotosController</code>. Isto também criará os <em>helpers</em> <code>search_photos_url</code> e <code>search_photos_path</code>.</p><p>Assim como em <em>member routes</em>, você pode passar <code>:on</code> para uma rota:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span> <span class="k">do</span>
+  <span class="n">get</span> <span class="s1">'search'</span><span class="p">,</span> <span class="ss">on: :collection</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-24d234e2e70608f683252c61588c59cf">resources :photos do
+  get 'search', on: :collection
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-24d234e2e70608f683252c61588c59cf">Copiar</button>
+</div>
+<div class="note"><p>Se vocês estão definindo rotas de <em>resource</em> adicionais com um <em>symbol</em> como o primeiro argumento posicional, tenha em mente que não é igual a usar uma <em>string</em>. <em>Symbols</em> inferem <em>actions</em> do <em>controller</em> enquanto <em>strings</em> inferem <em>paths</em>.</p></div><h5 id="adicionando-rotas-para-novas-actions-adicionais"><a class="anchorlink" href="#adicionando-rotas-para-novas-actions-adicionais">2.10.3 Adicionando Rotas para Novas Actions Adicionais</a></h5><p>Para adicionar uma <em>action</em> alternativa nova usando o atalho <code>:on</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:comments</span> <span class="k">do</span>
+  <span class="n">get</span> <span class="s1">'preview'</span><span class="p">,</span> <span class="ss">on: :new</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c87636df6ed2952ff674a384ba7fbdeb">resources :comments do
+  get 'preview', on: :new
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c87636df6ed2952ff674a384ba7fbdeb">Copiar</button>
+</div>
+<p>Isto vai permitir que o Rails reconheça <em>paths</em> como <code>/comments/new/preview</code> com GET, e rotear para a <em>action</em> <code>preview</code> do <code>CommentesController</code>. Isto também vai criar os <em>helpers</em> <code>preview_new_comment_url</code> e <code>preview_new_comment_path</code>.</p><div class="info"><p>Se você se encontrar adicionando muitas <em>actions</em> extras para uma rota <em>resourceful</em>, é um bom momento para perguntar a si mesmo se você está mascarando a presença de outro <em>resource</em>.</p></div><h3 id="rotas-sem-uso-de-resources"><a class="anchorlink" href="#rotas-sem-uso-de-resources">3 Rotas sem uso de <em>Resources</em></a></h3><p>Além do roteamento de <em>resources</em>, o Rails possui um suporte poderoso para rotear URLs arbitrárias para <em>actions</em>. Aqui, você não obtém grupos de rotas gerados automaticamente pelo roteamento de <em>resources</em>. Em vez disso, você configura cada rota separadamente na sua aplicação.</p><p>Embora você geralmente deva usar roteamento com <em>resources</em>, ainda existem muitos lugares em que o roteamento mais simples é mais apropriado. Não é necessário tentar encaixar todas as partes do seu aplicativo em uma estrutura de <em>resources</em> se isso não for um bom ajuste.</p><p>Em particular, o roteamento simples facilita o mapeamento de URLs herdados para novas <em>actions</em> do Rails.</p><h4 id="parametros-vinculados"><a class="anchorlink" href="#parametros-vinculados">3.1 Parâmetros Vinculados</a></h4><p>Ao configurar uma rota regular, você fornece uma série de <em>symbols</em> que o Rails mapeia para partes de uma requisição HTTP chegando na aplicação. Por exemplo, considere esta rota:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'photos(/:id)'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#display'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-aaba1ed42f312d80f79712c65ffe949b">get 'photos(/:id)', to: 'photos#display'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aaba1ed42f312d80f79712c65ffe949b">Copiar</button>
+</div>
+<p>Se uma requisição para <code>/photos/1</code> for processada por esta rota (porque não corresponde a nenhuma rota anterior no arquivo), o resultado será invocar a <em>action</em> <code>display</code> do <code>PhotosController</code>, e tornar o parâmetro final <code>"1"</code> disponível como <code>params[:id]</code>. Esta rota também encaminhará uma requisição recebida de <code>/photos</code> para <code>PhotosController#display</code>, pois <code>:id</code> é um parâmetro opcional, indicado por parênteses.</p><h4 id="segmentos-dinamicos"><a class="anchorlink" href="#segmentos-dinamicos">3.2 Segmentos Dinâmicos</a></h4><p>Você pode configurar quantos segmentos dinâmicos em uma rota regular desejar. Qualquer segmento estará disponível para a <em>action</em> como parte de <code>params</code>. Se você configurar esta rota:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'photos/:id/:user_id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#show'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bf359248f35e36d142d296b689286197">get 'photos/:id/:user_id', to: 'photos#show'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bf359248f35e36d142d296b689286197">Copiar</button>
+</div>
+<p>Uma requisição para o endereço <code>/photos/1/2</code> será enviada para a <em>action</em> <code>show</code> do <code>PhotosController</code>. <code>params[:id]</code> será <code>"1"</code> e <code>params[:user_id]</code> será <code>"2"</code>.</p><div class="info"><p>Por padrão, os segmentos dinâmicos não aceitam pontos - isso ocorre porque o ponto é usado como um separador para rotas formatadas. Se você precisar usar um ponto em um segmento dinâmico, adicione uma restrição que o substitua - por exemplo, <code>id: /[^\/]+/</code> permite qualquer coisa, exceto uma barra.</p></div><h4 id="segmentos-estaticos"><a class="anchorlink" href="#segmentos-estaticos">3.3 Segmentos Estáticos</a></h4><p>Você pode especificar segmentos estáticos ao criar uma rota somente não acrescentando dois pontos a um fragmento:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'photos/:id/with_user/:user_id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#show'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a22c6870c597ec8beaef10f15d09e909">get 'photos/:id/with_user/:user_id', to: 'photos#show'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a22c6870c597ec8beaef10f15d09e909">Copiar</button>
+</div>
+<p>Esta rota responderia a caminhos como <code>/photos/1/with_user/2</code>. Nesse caso, <code>params</code> seria <code>{ controller: 'photos', action: 'show', id: '1', user_id: '2' }</code>.</p><h4 id="usando-query-string"><a class="anchorlink" href="#usando-query-string">3.4 Usando <em>Query String</em></a></h4><p>Os <code>params</code> também incluirão quaisquer parâmetros da <em>query string</em>. Por exemplo, com esta rota:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'photos/:id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#show'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ba18050d789970d78519db86a4e95eb7">get 'photos/:id', to: 'photos#show'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ba18050d789970d78519db86a4e95eb7">Copiar</button>
+</div>
+<p>Uma requisição para o caminho <code>/photos/1?user_id=2</code> será enviada para a <em>action</em> <code>show</code> do <em>controller</em> <code>Photos</code>. <code>params</code> será <code>{ controller: 'photos', action: 'show', id: '1', user_id: '2' }</code>.</p><h4 id="definindo-padroes"><a class="anchorlink" href="#definindo-padroes">3.5 Definindo Padrões</a></h4><p>Você pode definir padrões em uma rota fornecendo um hash para a opção <code>:defaults</code>. Isso também se aplica a parâmetros que você não especifica como segmentos dinâmicos. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'photos/:id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#show'</span><span class="p">,</span> <span class="ss">defaults: </span><span class="p">{</span> <span class="ss">format: </span><span class="s1">'jpg'</span> <span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ed370b50e792c5bf8b09e4137f7afc8f">get 'photos/:id', to: 'photos#show', defaults: { format: 'jpg' }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ed370b50e792c5bf8b09e4137f7afc8f">Copiar</button>
+</div>
+<p>O Rails corresponderia <code>photos/12</code> com a <em>action</em> <code>show</code> do <code>PhotosController</code> e definiria <code>params[:format]</code> como <code>"jpg"</code>.</p><p>Você também pode usar <code>defaults</code> em um formato de bloco para definir os padrões para múltiplos itens:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">defaults</span> <span class="ss">format: :json</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:photos</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5c514028f55d633d01f855fbcf654fe1">defaults format: :json do
+  resources :photos
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5c514028f55d633d01f855fbcf654fe1">Copiar</button>
+</div>
+<div class="note"><p>Você não pode substituir os padrões via <em>query parameters</em> por motivos de segurança. Os únicos padrões que podem ser substituídos são segmentos dinâmicos via substituição no caminho da URL.</p></div><h4 id="nomeando-rotas"><a class="anchorlink" href="#nomeando-rotas">3.6 Nomeando Rotas</a></h4><p>Você pode especificar um nome para qualquer rota usando a opção <code>:as</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'exit'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'sessions#destroy'</span><span class="p">,</span> <span class="ss">as: :logout</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-de50cdcef01912d64cb3070a37de3df9">get 'exit', to: 'sessions#destroy', as: :logout
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-de50cdcef01912d64cb3070a37de3df9">Copiar</button>
+</div>
+<p>Isso criará <code>logout_path</code> e <code>logout_url</code> como <em>helpers</em> de rota em sua aplicação. Chamar <code>logout_path</code> retornará <code>/exit</code>.</p><p>Você também pode usar isso para substituir os métodos de roteamento definidos pelos <em>resources</em>, como este:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">':username'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'users#show'</span><span class="p">,</span> <span class="ss">as: :user</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-07e1bd6a2fcbd9334f99cfad90a766e0">get ':username', to: 'users#show', as: :user
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-07e1bd6a2fcbd9334f99cfad90a766e0">Copiar</button>
+</div>
+<p>Isso definirá um método <code>user_path</code> que estará disponível em <em>controllers</em>, <em>helpers</em> e <em>views</em> que irão para uma rota como <code>/bob</code>. Dentro da <em>action</em> <code>show</code> do <code>UsersController</code>, <code>params[:username]</code> conterá o nome do usuário. Altere <code>:username</code> na definição da rota se você não quiser que o nome do seu parâmetro seja <code>:username</code>.</p><h4 id="restringindo-verbos-http"><a class="anchorlink" href="#restringindo-verbos-http">3.7 Restringindo Verbos HTTP</a></h4><p>Em geral, você deve usar os métodos <code>get</code>, <code>post</code>, <code>put</code>, <code>patch</code> e <code>delete</code> para restringir uma rota a um verbo específico. Você pode usar o método <code>match</code> com a opção <code>:via</code> para combinar vários verbos ao mesmo tempo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">match</span> <span class="s1">'photos'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#show'</span><span class="p">,</span> <span class="ss">via: </span><span class="p">[</span><span class="ss">:get</span><span class="p">,</span> <span class="ss">:post</span><span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b0269e95d6c9ad165a196973ab92e512">match 'photos', to: 'photos#show', via: [:get, :post]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b0269e95d6c9ad165a196973ab92e512">Copiar</button>
+</div>
+<p>Você pode combinar todos os verbos em uma rota específica usando <code>via: :all</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">match</span> <span class="s1">'photos'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#show'</span><span class="p">,</span> <span class="ss">via: :all</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b7bcbc953da331265578289c9d2ecacd">match 'photos', to: 'photos#show', via: :all
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b7bcbc953da331265578289c9d2ecacd">Copiar</button>
+</div>
+<div class="note"><p>Rotear solicitações <code>GET</code> e <code>POST</code> para uma única <em>action</em> tem implicações de segurança. Em geral, você deve evitar rotear todos os verbos para uma <em>action</em>, a menos que tenha um bom motivo.</p></div><div class="note"><p><code>GET</code> no Rails não verificará o token CSRF. Você nunca deve escrever no banco de dados a partir de solicitações <code>GET</code>, para obter mais informações, consulte o <a href="security.html#csrf-countermeasures">guia de segurança</a> para contramedidas CSRF.</p></div><h4 id="restricoes-de-segmento"><a class="anchorlink" href="#restricoes-de-segmento">3.8 Restrições de Segmento</a></h4><p>Você pode usar a opção <code>:constraints</code> para impor um formato para um segmento dinâmico:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'photos/:id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#show'</span><span class="p">,</span> <span class="ss">constraints: </span><span class="p">{</span> <span class="ss">id: </span><span class="sr">/[A-Z]\d{5}/</span><span class="err"> }
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-fdf2f2f86c81355355f2905e2099abfa">get 'photos/:id', to: 'photos#show', constraints: { id: /[A-Z]\d{5}/ }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fdf2f2f86c81355355f2905e2099abfa">Copiar</button>
+</div>
+<p>Essa rota corresponderia a caminhos como <code>/photos/A12345</code>, mas não <code>/photos/893</code>. Você pode expressar de forma mais sucinta a mesma rota desta maneira:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'photos/:id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#show'</span><span class="p">,</span> <span class="ss">id: </span><span class="sr">/[A-Z]\d{5}/</span><span class="err">
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-bbc8adffbdd1d75ed845c16a1bc94967">get 'photos/:id', to: 'photos#show', id: /[A-Z]\d{5}/
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bbc8adffbdd1d75ed845c16a1bc94967">Copiar</button>
+</div>
+<p><code>: constraints</code> usam expressões regulares com a restrição de que as âncoras regexp não podem ser usadas. Por exemplo, a seguinte rota não funcionará:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'/:id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'articles#show'</span><span class="p">,</span> <span class="ss">constraints: </span><span class="p">{</span> <span class="ss">id: </span><span class="sr">/^\d/</span><span class="err"> }
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-7f796be51bff2fd59acd2d9f431e8bce">get '/:id', to: 'articles#show', constraints: { id: /^\d/ }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7f796be51bff2fd59acd2d9f431e8bce">Copiar</button>
+</div>
+<p>No entanto, note que você não precisa usar âncoras porque todas as rotas estão ancoradas no início.</p><p>Por exemplo, as rotas a seguir permitiriam <code>articles</code> com valores <code>to_param</code> como <code>1-hello-world</code> que sempre começam com um número e <code>users</code> com valores <code>to_param</code> como <code>david</code> que nunca começam com um número compartilhem o mesmo <em>namespace</em> raiz:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'/:id'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'articles#show'</span><span class="p">,</span> <span class="ss">constraints: </span><span class="p">{</span> <span class="ss">id: </span><span class="sr">/\d.+/</span><span class="err"> }
+g</span><span class="sr">e</span><span class="n">t</span> <span class="s1">'/:username'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'users#show'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-97d232bfbc0559acdcc7da5aa8eb31aa">get '/:id', to: 'articles#show', constraints: { id: /\d.+/ }
+get '/:username', to: 'users#show'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-97d232bfbc0559acdcc7da5aa8eb31aa">Copiar</button>
+</div>
+<h4 id="restricoes-baseadas-em-requisicoes"><a class="anchorlink" href="#restricoes-baseadas-em-requisicoes">3.9 Restrições Baseadas em Requisições</a></h4><p>Você também pode restringir uma rota com base em qualquer método no <a href="action_controller_overview.html#o-objeto-request">objeto <code>request</code></a> que retorna uma <code>String</code>.</p><p>Você especifica uma restrição baseada em requisições da mesma maneira que especifica uma restrição de segmento:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'photos'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#index'</span><span class="p">,</span> <span class="ss">constraints: </span><span class="p">{</span> <span class="ss">subdomain: </span><span class="s1">'admin'</span> <span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2003a63a1be46c9ab16f30743314783d">get 'photos', to: 'photos#index', constraints: { subdomain: 'admin' }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2003a63a1be46c9ab16f30743314783d">Copiar</button>
+</div>
+<p>Você também pode especificar restrições usando blocos:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">namespace</span> <span class="ss">:admin</span> <span class="k">do</span>
+  <span class="n">constraints</span> <span class="ss">subdomain: </span><span class="s1">'admin'</span> <span class="k">do</span>
+    <span class="n">resources</span> <span class="ss">:photos</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-869f131e4b64b595f35c5054b9ed5355">namespace :admin do
+  constraints subdomain: 'admin' do
+    resources :photos
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-869f131e4b64b595f35c5054b9ed5355">Copiar</button>
+</div>
+<div class="note"><p>As restrições de requisição funcionam chamando um método no <a href="action_controller_overview.html#o-objeto-request">Objeto <code>request</code></a> com o mesmo nome que a chave de hash e, em seguida, compara o valor retornado com o valor de hash. Portanto, os valores de restrição devem corresponder ao tipo de retorno do método no objeto <code>request</code> correspondente. Por exemplo: <code>constraints: { subdomain: 'api' }</code> corresponderá a um subdomínio <code>api</code> conforme o esperado, no entanto, o uso de um símbolo <code>constraints: { subdomain: :api }</code> não será, porque <code>request.subdomain</code> retorna <code>'api'</code> como uma <em>String</em>.</p></div><div class="note"><p>Há uma exceção para a restrição <code>format</code>: embora seja um método no objeto <code>request</code>, também é um parâmetro opcional implícito em todos os endereços. Restrições de segmento têm precedência e a restrição de <code>format</code> só é aplicada quando através de um hash. Por exemplo, <code>get 'foo', constraints: { format: 'json' }</code> corresponderão a <code>GET /foo</code> porque o formato é opcional por padrão. No entanto, você pode <a href="#restricoes-avancadas">usar uma expressão lambda</a> como em <code>get 'foo', constraints: lambda { |req| req.format == :json }</code> assim a rota corresponderá apenas a requisições JSON explícitas.</p></div><h4 id="restricoes-avancadas"><a class="anchorlink" href="#restricoes-avancadas">3.10 Restrições Avançadas</a></h4><p>Se você tiver uma restrição mais avançada, poderá fornecer um objeto que responda a <code>matches?</code> que o Rails deve usar. Digamos que você queira rotear todos os usuários em uma lista restrita para o <code>RestrictedListController</code>. Você poderia fazer:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">RestrictedListConstraint</span>
+  <span class="k">def</span> <span class="nf">initialize</span>
+    <span class="vi">@ips</span> <span class="o">=</span> <span class="no">RestrictedList</span><span class="p">.</span><span class="nf">retrieve_ips</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">matches?</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="vi">@ips</span><span class="p">.</span><span class="nf">include?</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="nf">remote_ip</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+  <span class="n">get</span> <span class="s1">'*path'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'restricted_list#index'</span><span class="p">,</span>
+    <span class="ss">constraints: </span><span class="no">RestrictedListConstraint</span><span class="p">.</span><span class="nf">new</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-80c2604e73b28d650d855828d2ba8eff">class RestrictedListConstraint
+  def initialize
+    @ips = RestrictedList.retrieve_ips
+  end
+
+  def matches?(request)
+    @ips.include?(request.remote_ip)
+  end
+end
+
+Rails.application.routes.draw do
+  get '*path', to: 'restricted_list#index',
+    constraints: RestrictedListConstraint.new
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80c2604e73b28d650d855828d2ba8eff">Copiar</button>
+</div>
+<p>Você também pode especificar restrições como uma lambda:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+  <span class="n">get</span> <span class="s1">'*path'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'restricted_list#index'</span><span class="p">,</span>
+    <span class="ss">constraints: </span><span class="nb">lambda</span> <span class="p">{</span> <span class="o">|</span><span class="n">request</span><span class="o">|</span> <span class="no">RestrictedList</span><span class="p">.</span><span class="nf">retrieve_ips</span><span class="p">.</span><span class="nf">include?</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="nf">remote_ip</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7199b47f6293cf2c6446de3301954527">Rails.application.routes.draw do
+  get '*path', to: 'restricted_list#index',
+    constraints: lambda { |request| RestrictedList.retrieve_ips.include?(request.remote_ip) }
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7199b47f6293cf2c6446de3301954527">Copiar</button>
+</div>
+<p>Tanto o método <code>matches?</code> quanto a lambda usam o objeto <code>request</code> como argumento.</p><h4 id="rotas-englobadas-glob-e-segmentos-curinga"><a class="anchorlink" href="#rotas-englobadas-glob-e-segmentos-curinga">3.11 Rotas Englobadas (<em>Glob</em>) e Segmentos Curinga</a></h4><p>O englobamento de rota é uma maneira de especificar que um parâmetro em particular deve corresponder a todas as partes restantes de uma rota. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'photos/*other'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'photos#unknown'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8518ac84c0521430cf5cf60b9356a663">get 'photos/*other', to: 'photos#unknown'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8518ac84c0521430cf5cf60b9356a663">Copiar</button>
+</div>
+<p>Esta rota irá corresponder a <code>photos/12</code> ou <code>/photos/long/path/to/12</code>, definindo <code>params[:other]</code> como <code>"12"</code> ou <code>"long/path/to/12"</code>. Os fragmentos prefixados com um asterisco são chamados de "segmentos curinga".</p><p>Segmentos curinga podem ocorrer em qualquer lugar da rota. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'books/*section/:title'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'books#show'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ce965c0ecae0894f108195e832a9f074">get 'books/*section/:title', to: 'books#show'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ce965c0ecae0894f108195e832a9f074">Copiar</button>
+</div>
+<p>corresponderia <code>books/some/section/last-words-a-memoir</code> para <code>params[:section]</code> igual a <code>'some/section'</code> e <code>params[:title]</code> igual a <code>'last-words-a-memoir'</code>.</p><p>Tecnicamente, uma rota pode ter ainda mais de um segmento curinga. O <em>matcher</em> de rotas atribui segmentos aos parâmetros de maneira intuitiva. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'*a/foo/*b'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'test#index'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-523de5f727bbf5e929f5f05224f0f660">get '*a/foo/*b', to: 'test#index'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-523de5f727bbf5e929f5f05224f0f660">Copiar</button>
+</div>
+<p>corresponderia <code>zoo/woo/foo/bar/baz</code> para <code>params[:a]</code> igual a <code>'zoo/woo'</code>, e <code>params[:b]</code> igual a <code>'bar/baz'</code>.</p><div class="note"><p>Ao solicitar <code>'/foo/bar.json'</code>, seu <code>params[:pages]</code> serão iguais a <code>'foo/bar'</code> com o formato de solicitação JSON. Se você quiser o antigo comportamento 3.0.x de volta, poderá fornecer <code>format: false</code> assim:</p></div><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'*pages'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'pages#show'</span><span class="p">,</span> <span class="ss">format: </span><span class="kp">false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ffdfa68f73fb5e2fd6fb320f55146e7f">get '*pages', to: 'pages#show', format: false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ffdfa68f73fb5e2fd6fb320f55146e7f">Copiar</button>
+</div>
+<div class="note"><p>Se você quiser tornar o segmento de formato obrigatório, para que ele não possa ser omitido, você pode fornecer <code>format: true</code> assim:</p></div><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'*pages'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'pages#show'</span><span class="p">,</span> <span class="ss">format: </span><span class="kp">true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2f0c7fc5a3425f61427e8cc2e5ae2be6">get '*pages', to: 'pages#show', format: true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2f0c7fc5a3425f61427e8cc2e5ae2be6">Copiar</button>
+</div>
+<h4 id="redirecionamento"><a class="anchorlink" href="#redirecionamento">3.12 Redirecionamento</a></h4><p>Você pode redirecionar qualquer rota para outra usando o auxiliar <code>redirect</code> no seu roteador:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'/stories'</span><span class="p">,</span> <span class="ss">to: </span><span class="n">redirect</span><span class="p">(</span><span class="s1">'/articles'</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6f8d8a31f9718a1efcb9bc5fc7f45a3f">get '/stories', to: redirect('/articles')
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6f8d8a31f9718a1efcb9bc5fc7f45a3f">Copiar</button>
+</div>
+<p>Você também pode reutilizar segmentos dinâmicos para corresponder a rotas e redirecionar para:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'/stories/:name'</span><span class="p">,</span> <span class="ss">to: </span><span class="n">redirect</span><span class="p">(</span><span class="s1">'/articles/%{name}'</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8da8f75dc6f3ab4422e45eaae60ba993">get '/stories/:name', to: redirect('/articles/%{name}')
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8da8f75dc6f3ab4422e45eaae60ba993">Copiar</button>
+</div>
+<p>Você também pode fornecer um bloco para redirecionar, que recebe os parâmetros do caminho simbolizado e o objeto <code>request</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'/stories/:name'</span><span class="p">,</span> <span class="ss">to: </span><span class="n">redirect</span> <span class="p">{</span> <span class="o">|</span><span class="n">path_params</span><span class="p">,</span> <span class="n">req</span><span class="o">|</span> <span class="s2">"/articles/</span><span class="si">#{</span><span class="n">path_params</span><span class="p">[</span><span class="ss">:name</span><span class="p">].</span><span class="nf">pluralize</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
+<span class="n">get</span> <span class="s1">'/stories'</span><span class="p">,</span> <span class="ss">to: </span><span class="n">redirect</span> <span class="p">{</span> <span class="o">|</span><span class="n">path_params</span><span class="p">,</span> <span class="n">req</span><span class="o">|</span> <span class="s2">"/articles/</span><span class="si">#{</span><span class="n">req</span><span class="p">.</span><span class="nf">subdomain</span><span class="si">}</span><span class="s2">"</span> <span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0c30dc607047b52c58a04455186fe3ef">get '/stories/:name', to: redirect { |path_params, req| "/articles/#{path_params[:name].pluralize}" }
+get '/stories', to: redirect { |path_params, req| "/articles/#{req.subdomain}" }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0c30dc607047b52c58a04455186fe3ef">Copiar</button>
+</div>
+<p>Observe que o redirecionamento padrão é um redirecionamento 301 "Moved Permanently". Lembre-se de que alguns navegadores da Web ou servidores proxy armazenam em cache esse tipo de redirecionamento, tornando a página antiga inacessível. Você pode usar a opção <code>:status</code> para alterar o status da resposta:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'/stories/:name'</span><span class="p">,</span> <span class="ss">to: </span><span class="n">redirect</span><span class="p">(</span><span class="s1">'/articles/%{name}'</span><span class="p">,</span> <span class="ss">status: </span><span class="mi">302</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d924cb4c2bc08d757d2b9c69dec6d1c7">get '/stories/:name', to: redirect('/articles/%{name}', status: 302)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d924cb4c2bc08d757d2b9c69dec6d1c7">Copiar</button>
+</div>
+<p>Em todos esses casos, se você não fornecer o host principal (<code>http://www.example.com</code>), o Rails obterá esses detalhes da requisição atual.</p><h4 id="roteamento-para-aplicacoes-rack"><a class="anchorlink" href="#roteamento-para-aplicacoes-rack">3.13 Roteamento para Aplicações Rack</a></h4><p>Em vez de uma String como <code>'articles#index'</code>, que corresponde à <em>action</em> <code>index</code> no <code>ArticlesController</code>, você pode especificar qualquer <a href="rails_on_rack.html">aplicação Rack</a> como o <em>endpoint</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">match</span> <span class="s1">'/application.js'</span><span class="p">,</span> <span class="ss">to: </span><span class="no">MyRackApp</span><span class="p">,</span> <span class="ss">via: :all</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fac155537444374c0b75c66ca4310154">match '/application.js', to: MyRackApp, via: :all
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fac155537444374c0b75c66ca4310154">Copiar</button>
+</div>
+<p>Desde que o <code>MyRackApp</code> responda ao método <code>call</code> e retorne um <code>[status, headers, body]</code>, o roteador não saberá a diferença entre a aplicação Rack e uma <em>action</em>. Este é um uso apropriado de <code>via: :all</code>, pois você deseja permitir que sua aplicação Rack manipule todos os verbos conforme considerar apropriado.</p><div class="note"><p>Para os curiosos, <code>'articles#index'</code> na verdade se expande para <code>ArticlesController.action(:index)</code>, que retorna uma aplicação Rack válida.</p></div><p>Se você especificar uma aplicação Rack como <em>endpoint</em>, lembre-se de que
+a rota não será alterada na aplicação de recebimento. Com a seguinte
+rota sua aplicação Rack deve esperar que a rota seja <code>/admin</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">match</span> <span class="s1">'/admin'</span><span class="p">,</span> <span class="ss">to: </span><span class="no">AdminApp</span><span class="p">,</span> <span class="ss">via: :all</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-efd4f9055d6a991c5701114ad1b6f811">match '/admin', to: AdminApp, via: :all
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-efd4f9055d6a991c5701114ad1b6f811">Copiar</button>
+</div>
+<p>Se você preferir que sua aplicação Rack receba requisições no <em>root
+path</em> em vez disso, use <code>mount</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">mount</span> <span class="no">AdminApp</span><span class="p">,</span> <span class="ss">at: </span><span class="s1">'/admin'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bdbf710c600bb9373edee9259e167b3e">mount AdminApp, at: '/admin'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bdbf710c600bb9373edee9259e167b3e">Copiar</button>
+</div>
+<h4 id="usando-root"><a class="anchorlink" href="#usando-root">3.14 Usando <code>root</code></a></h4><p>Você pode especificar para onde o Rails deve rotear <code>'/'</code> com o método <code>root</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">root</span> <span class="ss">to: </span><span class="s1">'pages#main'</span>
+<span class="n">root</span> <span class="s1">'pages#main'</span> <span class="c1"># shortcut for the above</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f9f19496e661bcb75488b68ce0c43d62">root to: 'pages#main'
+root 'pages#main' # shortcut for the above
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f9f19496e661bcb75488b68ce0c43d62">Copiar</button>
+</div>
+<p>Você deve colocar a rota <code>root</code> no topo do arquivo, porque é a rota mais popular e deve ser correspondida primeiro.</p><div class="note"><p>A rota <code>root</code> direciona apenas requisições <code>GET</code> para a <em>action</em>.</p></div><p>Você também pode usar o <em>root</em> dentro de <em>namespaces</em> e <em>scopes</em>. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">namespace</span> <span class="ss">:admin</span> <span class="k">do</span>
+  <span class="n">root</span> <span class="ss">to: </span><span class="s2">"admin#index"</span>
+<span class="k">end</span>
+
+<span class="n">root</span> <span class="ss">to: </span><span class="s2">"home#index"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-56907b4dd2c2d3efe20ac2227abdb6f9">namespace :admin do
+  root to: "admin#index"
+end
+
+root to: "home#index"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-56907b4dd2c2d3efe20ac2227abdb6f9">Copiar</button>
+</div>
+<h4 id="rotas-com-caracteres-unicode"><a class="anchorlink" href="#rotas-com-caracteres-unicode">3.15 Rotas com Caracteres Unicode</a></h4><p>Você pode especificar rotas de caracteres unicode diretamente. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'こんにちは'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'welcome#index'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8afbdf4b955e7fd7deac89d80066d148">get 'こんにちは', to: 'welcome#index'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8afbdf4b955e7fd7deac89d80066d148">Copiar</button>
+</div>
+<h4 id="rotas-diretas"><a class="anchorlink" href="#rotas-diretas">3.16 Rotas diretas</a></h4><p>Você pode criar <em>URL helpers</em> personalizados diretamente. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">direct</span> <span class="ss">:homepage</span> <span class="k">do</span>
+  <span class="s2">"http://www.rubyonrails.org"</span>
+<span class="k">end</span>
+
+<span class="c1"># &gt;&gt; homepage_url</span>
+<span class="c1"># =&gt; "http://www.rubyonrails.org"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-808fcdacd5f88c5583c1a8ae3429dab7">direct :homepage do
+  "http://www.rubyonrails.org"
+end
+
+# &gt;&gt; homepage_url
+# =&gt; "http://www.rubyonrails.org"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-808fcdacd5f88c5583c1a8ae3429dab7">Copiar</button>
+</div>
+<p>O valor de retorno do bloco deve ser um argumento válido para o método <code>url_for</code>. Portanto, você pode transmitir uma URL como <em>string</em> válida, Hash, Array, ou uma instância de <em>Active Model</em> ou uma classe <em>Active Model</em>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">direct</span> <span class="ss">:commentable</span> <span class="k">do</span> <span class="o">|</span><span class="n">model</span><span class="o">|</span>
+  <span class="p">[</span> <span class="n">model</span><span class="p">,</span> <span class="ss">anchor: </span><span class="n">model</span><span class="p">.</span><span class="nf">dom_id</span> <span class="p">]</span>
+<span class="k">end</span>
+
+<span class="n">direct</span> <span class="ss">:main</span> <span class="k">do</span>
+  <span class="p">{</span> <span class="ss">controller: </span><span class="s1">'pages'</span><span class="p">,</span> <span class="ss">action: </span><span class="s1">'index'</span><span class="p">,</span> <span class="ss">subdomain: </span><span class="s1">'www'</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f7e93378fde0b039a5b44a971d51cd04">direct :commentable do |model|
+  [ model, anchor: model.dom_id ]
+end
+
+direct :main do
+  { controller: 'pages', action: 'index', subdomain: 'www' }
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f7e93378fde0b039a5b44a971d51cd04">Copiar</button>
+</div>
+<h4 id="usando-resolve"><a class="anchorlink" href="#usando-resolve">3.17 Usando <code>resolve</code></a></h4><p>O método <code>resolve</code> permite personalizar o mapeamento polimórfico de <em>models</em>. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resource</span> <span class="ss">:basket</span>
+
+<span class="n">resolve</span><span class="p">(</span><span class="s2">"Basket"</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="ss">:basket</span><span class="p">]</span> <span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-88fd3f70a1b047285fbe650180053223">resource :basket
+
+resolve("Basket") { [:basket] }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-88fd3f70a1b047285fbe650180053223">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_for</span> <span class="vi">@basket</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="c">&lt;!-- basket form --&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-18e333e7a7b05d348f73380624cf2b69">&lt;%= form_for @basket do |form| %&gt;
+  &lt;!-- basket form --&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-18e333e7a7b05d348f73380624cf2b69">Copiar</button>
+</div>
+<p>Isso irá gerar uma URL singular <code>/basket</code> ​​em vez da habitual <code>/baskets/:id</code>.</p><h3 id="customizando-rotas-com-recursos"><a class="anchorlink" href="#customizando-rotas-com-recursos">4 Customizando Rotas com Recursos</a></h3><p>Enquanto as rotas padrão e <em>helpers</em> gerados por <code>resources :articles</code> normalmente atendem a maior parte dos casos de uso, você pode querer customizá-los de alguma forma. O Rails lhe permite customizar virtualmente qualquer parte genérica dos <em>helpers</em> de recursos.</p><h4 id="especificando-um-controller-para-usar"><a class="anchorlink" href="#especificando-um-controller-para-usar">4.1 Especificando um <em>Controller</em> para Usar</a></h4><p>A opção <code>:controller</code> permite que você especifique um <em>controller</em> de forma explícita para usar para o recurso. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">controller: </span><span class="s1">'images'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-20a39ab4c66f29904b9bc79d5109c0f5">resources :photos, controller: 'images'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-20a39ab4c66f29904b9bc79d5109c0f5">Copiar</button>
+</div>
+<p>vai reconhecer caminhos requisitados iniciando com <code>/photos</code> mas vai rotear para o <em>controller</em> <code>Images</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Verbo HTTP</th>
+<th>Caminho</th>
+<th>Controller#Action</th>
+<th>Nome do <em>Helper</em> de Rota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/photos</td>
+<td>images#index</td>
+<td>photos_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/photos/new</td>
+<td>images#new</td>
+<td>new_photo_path</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/photos</td>
+<td>images#create</td>
+<td>photos_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/photos/:id</td>
+<td>images#show</td>
+<td>photo_path(:id)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/photos/:id/edit</td>
+<td>images#edit</td>
+<td>edit_photo_path(:id)</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/photos/:id</td>
+<td>images#update</td>
+<td>photo_path(:id)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/photos/:id</td>
+<td>images#destroy</td>
+<td>photo_path(:id)</td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>Utilize <code>photos_path</code>, <code>new_photo_path</code>, etc. para gerar caminhos para este recurso.</p></div><p>Você pode usar a notação de diretório para <em>controllers</em> com <em>namespaces</em> associados. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:user_permissions</span><span class="p">,</span> <span class="ss">controller: </span><span class="s1">'admin/user_permissions'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1067b29590ee19718a386aa5751b2407">resources :user_permissions, controller: 'admin/user_permissions'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1067b29590ee19718a386aa5751b2407">Copiar</button>
+</div>
+<p>Isso vai direcionar a chamada da rota para o <em>controller</em> <code>Admin::UserPermissions</code>.</p><div class="note"><p>Apenas a notação de diretório é suportada. Especificar o <em>controller</em> com
+a notação de constante do Ruby (e.g. <code>controller: 'Admin::UserPermissions'</code>) pode
+causar problemas e resulta em um aviso.</p></div><h4 id="especificando-restricoes"><a class="anchorlink" href="#especificando-restricoes">4.2 Especificando Restrições</a></h4><p>Você pode usar a opção <code>:constraints</code> pra especificar um formato exigido no <code>id</code> implícito. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">constraints: </span><span class="p">{</span> <span class="ss">id: </span><span class="sr">/[A-Z][A-Z][0-9]+/</span><span class="err"> }
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-a2e02c964f96e8ad5e8b93af09a5f88b">resources :photos, constraints: { id: /[A-Z][A-Z][0-9]+/ }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a2e02c964f96e8ad5e8b93af09a5f88b">Copiar</button>
+</div>
+<p>Essa declaração restringe o parâmetro <code>:id</code> de forma que ele seja igual à especificação da expressão regular. Então, nesse caso, o roteador não iria mais aceitar <code>/photos/1</code> para essa rota. Por outro lado, a requisição <code>/photos/RR27</code> seria aceita.</p><p>Você pode especificar uma única restrição para aplicar a mais de uma rota usando a forma de bloco:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">constraints</span><span class="p">(</span><span class="ss">id: </span><span class="sr">/[A-Z][A-Z][0-9]+/</span><span class="err">) d</span><span class="sr">o</span>
+  <span class="n">resources</span> <span class="ss">:photos</span>
+  <span class="n">resources</span> <span class="ss">:accounts</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2bac828d70e5a5e09f1ee2ac3863d3ab">constraints(id: /[A-Z][A-Z][0-9]+/) do
+  resources :photos
+  resources :accounts
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2bac828d70e5a5e09f1ee2ac3863d3ab">Copiar</button>
+</div>
+<div class="note"><p>De fato, você pode usar restrições mais avançadas disponíveis em rotas sem recursos nesse contexto.</p></div><div class="info"><p>Por padrão o parâmetro <code>:id</code> não aceita pontos - isto acontece pois os pontos são usados como separadores para rotas com formato de arquivo especificado. Se você precisa usar um ponto dentro do <code>:id</code> adicione uma restrição que sobrescreva isto - a expressão regular <code>id: /[^\/]+/</code> permite tudo exceto uma barra (<code>\</code>).</p></div><h4 id="sobrescrevendo-helpers-de-nome-de-rota"><a class="anchorlink" href="#sobrescrevendo-helpers-de-nome-de-rota">4.3 Sobrescrevendo <em>Helpers</em> de Nome de Rota</a></h4><p>A opção <code>:as</code> permite que você sobrescreva a convenção de nomes para os <em>helpers</em> de nome de rota. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">as: </span><span class="s1">'images'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fb0bf4230cf531cc566f98f45a033afc">resources :photos, as: 'images'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fb0bf4230cf531cc566f98f45a033afc">Copiar</button>
+</div>
+<p>vai reconhecer chamadas que chegarem iniciando com <code>/photos</code> e direcionar as requisições para o <code>PhotosController</code>, mas vai usar o valor especificado na opção <code>:as</code> para nomear os <em>helpers</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Verbo HTTP</th>
+<th>Caminho</th>
+<th>Controller#Action</th>
+<th>Nome do <em>Helper</em> de Rota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/photos</td>
+<td>photos#index</td>
+<td>images_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/photos/new</td>
+<td>photos#new</td>
+<td>new_image_path</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/photos</td>
+<td>photos#create</td>
+<td>images_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/photos/:id</td>
+<td>photos#show</td>
+<td>image_path(:id)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/photos/:id/edit</td>
+<td>photos#edit</td>
+<td>edit_image_path(:id)</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/photos/:id</td>
+<td>photos#update</td>
+<td>image_path(:id)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/photos/:id</td>
+<td>photos#destroy</td>
+<td>image_path(:id)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="sobrescrevendo-os-segmentos-new-e-edit"><a class="anchorlink" href="#sobrescrevendo-os-segmentos-new-e-edit">4.4 Sobrescrevendo os Segmentos <code>new</code> e <code>edit</code></a></h4><p>A opção <code>:path_names</code> permite que você sobrescreva os segmentos <code>new</code> e <code>edit</code> gerados automaticamente nos caminhos:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">path_names: </span><span class="p">{</span> <span class="ss">new: </span><span class="s1">'make'</span><span class="p">,</span> <span class="ss">edit: </span><span class="s1">'change'</span> <span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ad630564fcf25029443ea2b3ddf157e3">resources :photos, path_names: { new: 'make', edit: 'change' }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ad630564fcf25029443ea2b3ddf157e3">Copiar</button>
+</div>
+<p>Isso faz o roteamento reconhecer caminhos como:</p><div class="code_container">
+<pre><code class="highlight plaintext">/photos/make
+/photos/1/change
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-81b3e1eb389a0c3c9b1c76f6c844ddc5">/photos/make
+/photos/1/change
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-81b3e1eb389a0c3c9b1c76f6c844ddc5">Copiar</button>
+</div>
+<div class="note"><p>Os nomes das ações não sofrem alterações devido a esta opção. Os dois caminhos exibidos ainda apontarão para as ações <code>new</code> e <code>edit</code>.</p></div><div class="info"><p>Se você quiser mudar esta opção para todas as rotas, você pode usar um <em>scope</em>.</p></div><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">scope</span> <span class="ss">path_names: </span><span class="p">{</span> <span class="ss">new: </span><span class="s1">'make'</span> <span class="p">}</span> <span class="k">do</span>
+  <span class="c1"># rest of your routes</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-51fbce09271f2ce2bd74aa062a7218f1">scope path_names: { new: 'make' } do
+  # rest of your routes
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-51fbce09271f2ce2bd74aa062a7218f1">Copiar</button>
+</div>
+<h4 id="prefixando-os-helpers-de-nome-de-rota"><a class="anchorlink" href="#prefixando-os-helpers-de-nome-de-rota">4.5 Prefixando os <em>Helpers</em> de Nome de Rota</a></h4><p>Você pode usar a opção <code>:as</code> pra prefixar os <em>helpers</em> de nome de rota que o Rails gera. Use esta opção para evitar colisões de nomes entre rotas usando um escopo de caminho. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">scope</span> <span class="s1">'admin'</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">as: </span><span class="s1">'admin_photos'</span>
+<span class="k">end</span>
+
+<span class="n">resources</span> <span class="ss">:photos</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-124f58448300d313ed9c66788316d31c">scope 'admin' do
+  resources :photos, as: 'admin_photos'
+end
+
+resources :photos
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-124f58448300d313ed9c66788316d31c">Copiar</button>
+</div>
+<p>Isto fornecerá <em>helpers</em> de rota como <code>admin_photos_path</code>, <code>new_admin_photo_path</code>, etc.</p><p>Para prefixar um grupo de <em>helpers</em> de rota, utilize <code>:as</code> com <code>scope</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">scope</span> <span class="s1">'admin'</span><span class="p">,</span> <span class="ss">as: </span><span class="s1">'admin'</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:accounts</span>
+<span class="k">end</span>
+
+<span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">:accounts</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8c90a9610f8a58dffe093073e50c618e">scope 'admin', as: 'admin' do
+  resources :photos, :accounts
+end
+
+resources :photos, :accounts
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8c90a9610f8a58dffe093073e50c618e">Copiar</button>
+</div>
+<p>Isto irá gerar rotas como <code>admin_photos_path</code> e <code>admin_accounts_path</code> que são mapeadas para <code>/admin/photos</code> e <code>/admin/accounts</code> respectivamente.</p><div class="note"><p>O <em>scope</em> <code>namespace</code> adicionará automaticamente os prefixos <code>:as</code>, assim como <code>:module</code> e <code>:path</code>.</p></div><p>Você pode prefixar as rotas com um <em>named parameter</em> também:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">scope</span> <span class="s1">':username'</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:articles</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1256a83125e16e7d0ff1a5462c068835">scope ':username' do
+  resources :articles
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1256a83125e16e7d0ff1a5462c068835">Copiar</button>
+</div>
+<p>Isto vai lhe deixar com URLs como <code>/bob/articles/-1</code> e também permitirá referir à parte <code>username</code> do caminho como <code>params[:username]</code> nos <em>controllers</em>, <em>helpers</em>, e <em>views</em>.</p><h4 id="restringindo-as-rotas-criadas"><a class="anchorlink" href="#restringindo-as-rotas-criadas">4.6 Restringindo as Rotas Criadas</a></h4><p>O Rails cria rotas para sete ações diferentes (<code>index</code>, <code>show</code>, <code>new</code>, <code>create</code>, <code>edit</code>, <code>update</code>, and <code>destroy</code>) por padrão pra cada rota <em>RESTful</em> na sua aplicação.
+A opção <code>:only</code> diz ao Rails para criar apenas as rotas especificadas:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:index</span><span class="p">,</span> <span class="ss">:show</span><span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-114d013be60594daadecc6955fb84fae">resources :photos, only: [:index, :show]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-114d013be60594daadecc6955fb84fae">Copiar</button>
+</div>
+<p>Agora, a requisição <code>GET</code> para <code>/photos</code> daria certo, mas uma requisição <code>POST</code> para <code>/photos</code> (que por padrão iria para ação <code>create</code>) falhará.</p><p>A opção <code>:except</code> específica uma rota ou lista de rotas que o Rails <em>não</em> deve criar:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">except: :destroy</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7e7b0da2c018b1b0a87af87da869abb3">resources :photos, except: :destroy
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7e7b0da2c018b1b0a87af87da869abb3">Copiar</button>
+</div>
+<p>Nesse caso, o Rails vai criar todas as rotas normais exceto a rota para <code>destroy</code> (uma requisição <code>DELETE</code> para <code>/photos/:id</code>).</p><div class="info"><p>Se sua aplicação tem muitas rotas <em>RESTful</em>, usar <code>:only</code> e <code>:except</code> para gerar somente as rotas que você realmente precisa pode reduzir o consumo de memória e agilizar o processo de roteamento.</p></div><h4 id="traduzindo-caminhos"><a class="anchorlink" href="#traduzindo-caminhos">4.7 Traduzindo Caminhos</a></h4><p>Podemos alterar nomes de caminho gerados por <code>resources</code> usando <code>scope</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">scope</span><span class="p">(</span><span class="ss">path_names: </span><span class="p">{</span> <span class="ss">new: </span><span class="s1">'neu'</span><span class="p">,</span> <span class="ss">edit: </span><span class="s1">'bearbeiten'</span> <span class="p">})</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:categories</span><span class="p">,</span> <span class="ss">path: </span><span class="s1">'kategorien'</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-96a36baa264508e5a288f473fe09edb5">scope(path_names: { new: 'neu', edit: 'bearbeiten' }) do
+  resources :categories, path: 'kategorien'
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-96a36baa264508e5a288f473fe09edb5">Copiar</button>
+</div>
+<p>O Rails agora cria rotas para o <code>CategoriesController</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Verbo HTTP</th>
+<th>Caminho</th>
+<th>Controller#Action</th>
+<th>Nome do <em>Helper</em> de Rota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/kategorien</td>
+<td>categories#index</td>
+<td>categories_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/kategorien/neu</td>
+<td>categories#new</td>
+<td>new_category_path</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/kategorien</td>
+<td>categories#create</td>
+<td>categories_path</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/kategorien/:id</td>
+<td>categories#show</td>
+<td>category_path(:id)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/kategorien/:id/bearbeiten</td>
+<td>categories#edit</td>
+<td>edit_category_path(:id)</td>
+</tr>
+<tr>
+<td>PATCH/PUT</td>
+<td>/kategorien/:id</td>
+<td>categories#update</td>
+<td>category_path(:id)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/kategorien/:id</td>
+<td>categories#destroy</td>
+<td>category_path(:id)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="sobrescrevendo-a-forma-singular"><a class="anchorlink" href="#sobrescrevendo-a-forma-singular">4.8 Sobrescrevendo a Forma Singular</a></h4><p>Se você quer definir a forma singular de um recurso, você deve colocar regras adicionais para o <code>Inflector</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Inflector</span><span class="p">.</span><span class="nf">inflections</span> <span class="k">do</span> <span class="o">|</span><span class="n">inflect</span><span class="o">|</span>
+  <span class="n">inflect</span><span class="p">.</span><span class="nf">irregular</span> <span class="s1">'tooth'</span><span class="p">,</span> <span class="s1">'teeth'</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fae0cd2034623ce4e8790879bef5b4d8">ActiveSupport::Inflector.inflections do |inflect|
+  inflect.irregular 'tooth', 'teeth'
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fae0cd2034623ce4e8790879bef5b4d8">Copiar</button>
+</div>
+<h4 id="usando-as-em-recursos-aninhados"><a class="anchorlink" href="#usando-as-em-recursos-aninhados">4.9 Usando <code>:as</code> em Recursos Aninhados</a></h4><p>A opção <code>:as</code> sobrescreve o nome gerado automaticamente para o recurso em <em>helpers</em> de rota aninhados. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:magazines</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:ads</span><span class="p">,</span> <span class="ss">as: </span><span class="s1">'periodical_ads'</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8081a9ce253d73af2a7a70dc9ded4007">resources :magazines do
+  resources :ads, as: 'periodical_ads'
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8081a9ce253d73af2a7a70dc9ded4007">Copiar</button>
+</div>
+<p>Isto criará helpers de rota como <code>magazine_periodical_ads_url</code> e <code>edit_magazine_periodical_ad_path</code>.</p><h4 id="sobrescrevendo-parametros-de-nome-de-rota"><a class="anchorlink" href="#sobrescrevendo-parametros-de-nome-de-rota">4.10 Sobrescrevendo Parâmetros de Nome de Rota</a></h4><p>A opção <code>:param</code> sobrescreve o identificador padrão de recurso <code>:id</code> (nome do <a href="routing.html#dynamic-segments">segmento dinâmico</a> usado para gerar as rotas). Você pode acessar o segmento do seu <em>controller</em> usando <code>params[&lt;:param&gt;]</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:videos</span><span class="p">,</span> <span class="ss">param: :identifier</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-735f79a37a2c8e17d520703ad263da18">resources :videos, param: :identifier
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-735f79a37a2c8e17d520703ad263da18">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight plaintext">    videos GET  /videos(.:format)                  videos#index
+           POST /videos(.:format)                  videos#create
+ new_video GET  /videos/new(.:format)              videos#new
+edit_video GET  /videos/:identifier/edit(.:format) videos#edit
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b6b05b8e708f93897a1755d4f9e7db20">    videos GET  /videos(.:format)                  videos#index
+           POST /videos(.:format)                  videos#create
+ new_video GET  /videos/new(.:format)              videos#new
+edit_video GET  /videos/:identifier/edit(.:format) videos#edit
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b6b05b8e708f93897a1755d4f9e7db20">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Video</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">identifier: </span><span class="n">params</span><span class="p">[</span><span class="ss">:identifier</span><span class="p">])</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-786a35040c0afe1d65181d639dfac666">Video.find_by(identifier: params[:identifier])
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-786a35040c0afe1d65181d639dfac666">Copiar</button>
+</div>
+<p>Você pode sobrescrever <code>ActiveRecord::Base#to_param</code> de um <em>model</em> relacionado para construir a URL:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Video</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="k">def</span> <span class="nf">to_param</span>
+    <span class="n">identifier</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">video</span> <span class="o">=</span> <span class="no">Video</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">identifier: </span><span class="s2">"Roman-Holiday"</span><span class="p">)</span>
+<span class="n">edit_video_path</span><span class="p">(</span><span class="n">video</span><span class="p">)</span> <span class="c1"># =&gt; "/videos/Roman-Holiday/edit"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-80dadcb88cd7940dee762842f50299fa">class Video &lt; ApplicationRecord
+  def to_param
+    identifier
+  end
+end
+
+video = Video.find_by(identifier: "Roman-Holiday")
+edit_video_path(video) # =&gt; "/videos/Roman-Holiday/edit"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80dadcb88cd7940dee762842f50299fa">Copiar</button>
+</div>
+<h3 id="inspecionando-e-testando-rotas"><a class="anchorlink" href="#inspecionando-e-testando-rotas">5 Inspecionando e Testando Rotas</a></h3><p>Rails oferece recursos para inspecionar e testar suas rotas.</p><h4 id="listando-rotas-existentes"><a class="anchorlink" href="#listando-rotas-existentes">5.1 Listando Rotas Existentes</a></h4><p>Para obter uma lista completa de rotas disponíveis na sua aplicação, visite <code>http://localhost:3000/rails/info/routes</code> no browser quando o servidor estiver rodando em ambiente de desenvolvimento. Você pode também executar o comando <code>rails routes</code> no terminal para reproduzir o mesmo resultado.</p><p>Ambos os métodos irão listas todas suas rotas, na mesma ordem que aparece em <code>config/routes.rb</code>. Para cada rota, você irá ver:</p>
+<ul>
+<li>O Nome da rota (se houver)</li>
+<li>O verbo HTTP usado (se a rota não responder a todos os verbos)</li>
+<li>O padrão ao qual a URL deve corresponder</li>
+<li>Os parâmetros para a cada rota</li>
+</ul>
+<p>Por exemplo, segue uma pequena parte da resposta <code>rails routes</code> para uma rota RESTful:</p><div class="code_container">
+<pre><code class="highlight plaintext">    users GET    /users(.:format)          users#index
+          POST   /users(.:format)          users#create
+ new_user GET    /users/new(.:format)      users#new
+edit_user GET    /users/:id/edit(.:format) users#edit
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-dcff6f043da2d3fa0370d91976d4fa09">    users GET    /users(.:format)          users#index
+          POST   /users(.:format)          users#create
+ new_user GET    /users/new(.:format)      users#new
+edit_user GET    /users/:id/edit(.:format) users#edit
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dcff6f043da2d3fa0370d91976d4fa09">Copiar</button>
+</div>
+<p>Você pode também utilizar a opção <code>--expanded</code> para ativar o modo de formatação por tabela expandida.</p><div class="code_container">
+<pre><code class="highlight plaintext">$ rails routes --expanded
+
+--[ Route 1 ]----------------------------------------------------
+Prefix            | users
+Verb              | GET
+URI               | /users(.:format)
+Controller#Action | users#index
+--[ Route 2 ]----------------------------------------------------
+Prefix            |
+Verb              | POST
+URI               | /users(.:format)
+Controller#Action | users#create
+--[ Route 3 ]----------------------------------------------------
+Prefix            | new_user
+Verb              | GET
+URI               | /users/new(.:format)
+Controller#Action | users#new
+--[ Route 4 ]----------------------------------------------------
+Prefix            | edit_user
+Verb              | GET
+URI               | /users/:id/edit(.:format)
+Controller#Action | users#edit
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f634796087119e61d7ad30f5d5523af4">$ rails routes --expanded
+
+--[ Route 1 ]----------------------------------------------------
+Prefix            | users
+Verb              | GET
+URI               | /users(.:format)
+Controller#Action | users#index
+--[ Route 2 ]----------------------------------------------------
+Prefix            |
+Verb              | POST
+URI               | /users(.:format)
+Controller#Action | users#create
+--[ Route 3 ]----------------------------------------------------
+Prefix            | new_user
+Verb              | GET
+URI               | /users/new(.:format)
+Controller#Action | users#new
+--[ Route 4 ]----------------------------------------------------
+Prefix            | edit_user
+Verb              | GET
+URI               | /users/:id/edit(.:format)
+Controller#Action | users#edit
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f634796087119e61d7ad30f5d5523af4">Copiar</button>
+</div>
+<p>Você pode procurar por rotas utilizando a opção grep: -g. Isso resulta qualquer rota que corresponda parcialmente ao nome do método da URL, o verbo HTTP, ou a URL.</p><div class="code_container">
+<pre><code class="highlight plaintext">$ rails routes -g new_comment
+$ rails routes -g POST
+$ rails routes -g admin
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-378b1473af05563ddbf84388e5095549">$ rails routes -g new_comment
+$ rails routes -g POST
+$ rails routes -g admin
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-378b1473af05563ddbf84388e5095549">Copiar</button>
+</div>
+<p>Se você quiser ver somente as rotas que mapeiam um controller especifico, existe a opção <code>-c</code>.</p><div class="code_container">
+<pre><code class="highlight plaintext">$ rails routes -c users
+$ rails routes -c admin/users
+$ rails routes -c Comments
+$ rails routes -c Articles::CommentsController
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e479d86b0309edc8f8d5386795c2c42d">$ rails routes -c users
+$ rails routes -c admin/users
+$ rails routes -c Comments
+$ rails routes -c Articles::CommentsController
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e479d86b0309edc8f8d5386795c2c42d">Copiar</button>
+</div>
+<div class="info"><p>O resultado do comando <code>rails routes</code> fica muito mais legível se você ampliar a janela do seu terminal até que não haja quebra de linha.</p></div><h4 id="testando-rotas"><a class="anchorlink" href="#testando-rotas">5.2 Testando Rotas</a></h4><p>Rotas deveriam ser incluidas na sua estratégia de testes (assim como resto da sua aplicação). Rails oferece três <a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActionDispatch/Assertions/RoutingAssertions.html">validações nativas</a> desenvolvidas para fazer os testes de rotas mais simples:</p>
+<ul>
+<li><code>assert_generates</code></li>
+<li><code>assert_recognizes</code></li>
+<li><code>assert_routing</code></li>
+</ul>
+<h5 id="a-validacao-assert-generates"><a class="anchorlink" href="#a-validacao-assert-generates">5.2.1 A validação <code>assert_generates</code></a></h5><p><code>assert_generates</code> valida que um conjunto de opções em particular gera um caminho equivalente que pode ser usar com rota padrão ou rota customizada. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">assert_generates</span> <span class="s1">'/photos/1'</span><span class="p">,</span> <span class="p">{</span> <span class="ss">controller: </span><span class="s1">'photos'</span><span class="p">,</span> <span class="ss">action: </span><span class="s1">'show'</span><span class="p">,</span> <span class="ss">id: </span><span class="s1">'1'</span> <span class="p">}</span>
+<span class="n">assert_generates</span> <span class="s1">'/about'</span><span class="p">,</span> <span class="ss">controller: </span><span class="s1">'pages'</span><span class="p">,</span> <span class="ss">action: </span><span class="s1">'about'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-52d245e64bdb6f21178b2c6f817e69d6">assert_generates '/photos/1', { controller: 'photos', action: 'show', id: '1' }
+assert_generates '/about', controller: 'pages', action: 'about'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-52d245e64bdb6f21178b2c6f817e69d6">Copiar</button>
+</div>
+<h5 id="a-validacao-assert-recognizes"><a class="anchorlink" href="#a-validacao-assert-recognizes">5.2.2 A validação <code>assert_recognizes</code></a></h5><p><code>assert_recognizes</code> é o inverso de <code>assert_generates</code>. Valida que um dado caminho é reconhecido e roteia-o a um lugar determinado na sua aplicação. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">assert_recognizes</span><span class="p">({</span> <span class="ss">controller: </span><span class="s1">'photos'</span><span class="p">,</span> <span class="ss">action: </span><span class="s1">'show'</span><span class="p">,</span> <span class="ss">id: </span><span class="s1">'1'</span> <span class="p">},</span> <span class="s1">'/photos/1'</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8d1f6f57ef490f09ad86cecc38fe89bf">assert_recognizes({ controller: 'photos', action: 'show', id: '1' }, '/photos/1')
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8d1f6f57ef490f09ad86cecc38fe89bf">Copiar</button>
+</div>
+<p>Você pode passar um argumento <code>:method</code> para especificar um verbo HTTP:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">assert_recognizes</span><span class="p">({</span> <span class="ss">controller: </span><span class="s1">'photos'</span><span class="p">,</span> <span class="ss">action: </span><span class="s1">'create'</span> <span class="p">},</span> <span class="p">{</span> <span class="ss">path: </span><span class="s1">'photos'</span><span class="p">,</span> <span class="ss">method: :post</span> <span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-da3f97f5ed6d6d677e2acf819bb625c3">assert_recognizes({ controller: 'photos', action: 'create' }, { path: 'photos', method: :post })
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-da3f97f5ed6d6d677e2acf819bb625c3">Copiar</button>
+</div>
+<h5 id="a-validacao-assert-routing"><a class="anchorlink" href="#a-validacao-assert-routing">5.2.3 A validação <code>assert_routing</code></a></h5><p>A validação <code>assert_routing</code> testa a rota dos dois jeitos: Testa que um caminho gera opções, e que opções gera um caminho. Logo, Ela combina as validações <code>assert_generates</code> e <code>assert_recognizes</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">assert_routing</span><span class="p">({</span> <span class="ss">path: </span><span class="s1">'photos'</span><span class="p">,</span> <span class="ss">method: :post</span> <span class="p">},</span> <span class="p">{</span> <span class="ss">controller: </span><span class="s1">'photos'</span><span class="p">,</span> <span class="ss">action: </span><span class="s1">'create'</span> <span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c6098d5aa849f0d4bd55798ac1ced9fa">assert_routing({ path: 'photos', method: :post }, { controller: 'photos', action: 'create' })
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c6098d5aa849f0d4bd55798ac1ced9fa">Copiar</button>
+</div>
+
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

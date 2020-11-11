@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caching with Rails: An Overview — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Caching with Rails: An Overview — Ruby on Rails Guides" />
+  <meta name="description" content="Caching with Rails: An OverviewThis guide is an introduction to speeding up your Rails application with caching.Caching means to store content generated during the request-response cycle and to reuse it when responding to similar requests.Caching is often the most effective way to boost an application&#39;s performance. Through caching, web sites running on a single server with a single database can sustain a load of thousands of concurrent users.Rails provides a set of caching features out of the box. This guide will teach you the scope and purpose of each one of them. Master these techniques and your Rails applications can serve millions of views without exorbitant response times or server bills.After reading this guide, you will know: Fragment and Russian doll caching. How to manage the caching dependencies. Alternative cache stores. Conditional GET support." />
+  <meta property="og:description" content="Caching with Rails: An OverviewThis guide is an introduction to speeding up your Rails application with caching.Caching means to store content generated during the request-response cycle and to reuse it when responding to similar requests.Caching is often the most effective way to boost an application&#39;s performance. Through caching, web sites running on a single server with a single database can sustain a load of thousands of concurrent users.Rails provides a set of caching features out of the box. This guide will teach you the scope and purpose of each one of them. Master these techniques and your Rails applications can serve millions of views without exorbitant response times or server bills.After reading this guide, you will know: Fragment and Russian doll caching. How to manage the caching dependencies. Alternative cache stores. Conditional GET support." />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Caching with Rails: An Overview</h2><p>This guide is an introduction to speeding up your Rails application with caching.</p><p>Caching means to store content generated during the request-response cycle and
+to reuse it when responding to similar requests.</p><p>Caching is often the most effective way to boost an application&#39;s performance.
+Through caching, web sites running on a single server with a single database
+can sustain a load of thousands of concurrent users.</p><p>Rails provides a set of caching features out of the box. This guide will teach
+you the scope and purpose of each one of them. Master these techniques and your
+Rails applications can serve millions of views without exorbitant response times
+or server bills.</p><p>After reading this guide, you will know:</p>
+<ul>
+<li>Fragment and Russian doll caching.</li>
+<li>How to manage the caching dependencies.</li>
+<li>Alternative cache stores.</li>
+<li>Conditional GET support.</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#basic-caching">Basic Caching</a>
+
+<ul>
+<li><a href="#page-caching">Page Caching</a></li>
+<li><a href="#action-caching">Action Caching</a></li>
+<li><a href="#fragment-caching">Fragment Caching</a></li>
+<li><a href="#russian-doll-caching">Russian Doll Caching</a></li>
+<li><a href="#shared-partial-caching">Shared Partial Caching</a></li>
+<li><a href="#managing-dependencies">Managing dependencies</a></li>
+<li><a href="#low-level-caching">Low-Level Caching</a></li>
+<li><a href="#sql-caching">SQL Caching</a></li>
+</ul>
+</li>
+<li>
+<a href="#cache-stores">Cache Stores</a>
+
+<ul>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#activesupport-cache-store">ActiveSupport::Cache::Store</a></li>
+<li><a href="#activesupport-cache-memorystore">ActiveSupport::Cache::MemoryStore</a></li>
+<li><a href="#activesupport-cache-filestore">ActiveSupport::Cache::FileStore</a></li>
+<li><a href="#activesupport-cache-memcachestore">ActiveSupport::Cache::MemCacheStore</a></li>
+<li><a href="#activesupport-cache-rediscachestore">ActiveSupport::Cache::RedisCacheStore</a></li>
+<li><a href="#activesupport-cache-nullstore">ActiveSupport::Cache::NullStore</a></li>
+</ul>
+</li>
+<li><a href="#cache-keys">Cache Keys</a></li>
+<li>
+<a href="#conditional-get-support">Conditional GET support</a>
+
+<ul>
+<li><a href="#strong-v-s-weak-etags">Strong v/s Weak ETags</a></li>
+</ul>
+</li>
+<li><a href="#caching-in-development">Caching in Development</a></li>
+<li><a href="#references">References</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="basic-caching"><a class="anchorlink" href="#basic-caching">1 Basic Caching</a></h3><p>This is an introduction to three types of caching techniques: page, action and
+fragment caching. By default Rails provides fragment caching. In order to use
+page and action caching you will need to add <code>actionpack-page_caching</code> and
+<code>actionpack-action_caching</code> to your <code>Gemfile</code>.</p><p>By default, caching is only enabled in your production environment. To play
+around with caching locally you'll want to enable caching in your local
+environment by setting <code>config.action_controller.perform_caching</code> to <code>true</code> in
+the relevant <code>config/environments/*.rb</code> file:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_controller</span><span class="p">.</span><span class="nf">perform_caching</span> <span class="o">=</span> <span class="kp">true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d0a8205f50074862bf38b6c7dee4886c">config.action_controller.perform_caching = true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d0a8205f50074862bf38b6c7dee4886c">Copiar</button>
+</div>
+<div class="note"><p>Changing the value of <code>config.action_controller.perform_caching</code> will
+only have an effect on the caching provided by the Action Controller component.
+For instance, it will not impact low-level caching, that we address
+<a href="#low-level-caching">below</a>.</p></div><h4 id="page-caching"><a class="anchorlink" href="#page-caching">1.1 Page Caching</a></h4><p>Page caching is a Rails mechanism which allows the request for a generated page
+to be fulfilled by the web server (i.e. Apache or NGINX) without having to go
+through the entire Rails stack. While this is super fast it can't be applied to
+every situation (such as pages that need authentication). Also, because the
+web server is serving a file directly from the filesystem you will need to
+implement cache expiration.</p><div class="info"><p>Page Caching has been removed from Rails 4. See the <a href="https://github.com/rails/actionpack-page_caching">actionpack-page_caching gem</a>.</p></div><h4 id="action-caching"><a class="anchorlink" href="#action-caching">1.2 Action Caching</a></h4><p>Page Caching cannot be used for actions that have before filters - for example, pages that require authentication. This is where Action Caching comes in. Action Caching works like Page Caching except the incoming web request hits the Rails stack so that before filters can be run on it before the cache is served. This allows authentication and other restrictions to be run while still serving the result of the output from a cached copy.</p><div class="info"><p>Action Caching has been removed from Rails 4. See the <a href="https://github.com/rails/actionpack-action_caching">actionpack-action_caching gem</a>. See <a href="https://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works">DHH's key-based cache expiration overview</a> for the newly-preferred method.</p></div><h4 id="fragment-caching"><a class="anchorlink" href="#fragment-caching">1.3 Fragment Caching</a></h4><p>Dynamic web applications usually build pages with a variety of components not
+all of which have the same caching characteristics. When different parts of the
+page need to be cached and expired separately you can use Fragment Caching.</p><p>Fragment Caching allows a fragment of view logic to be wrapped in a cache block and served out of the cache store when the next request comes in.</p><p>For example, if you wanted to cache each product on a page, you could use this
+code:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="vi">@products</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">product</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%</span> <span class="n">cache</span> <span class="n">product</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="n">product</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c37c34e9574bb80d698b27c5446a5e27">&lt;% @products.each do |product| %&gt;
+  &lt;% cache product do %&gt;
+    &lt;%= render product %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c37c34e9574bb80d698b27c5446a5e27">Copiar</button>
+</div>
+<p>When your application receives its first request to this page, Rails will write
+a new cache entry with a unique key. A key looks something like this:</p><div class="code_container">
+<pre><code class="highlight plaintext">views/products/1-201505056193031061005000/bea67108094918eeba42cd4a6e786901
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-599f8a5e21fe904d6be571d6dac2d0cf">views/products/1-201505056193031061005000/bea67108094918eeba42cd4a6e786901
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-599f8a5e21fe904d6be571d6dac2d0cf">Copiar</button>
+</div>
+<p>The number in the middle is the <code>product_id</code> followed by the timestamp value in
+the <code>updated_at</code> attribute of the product record. Rails uses the timestamp value
+to make sure it is not serving stale data. If the value of <code>updated_at</code> has
+changed, a new key will be generated. Then Rails will write a new cache to that
+key, and the old cache written to the old key will never be used again. This is
+called key-based expiration.</p><p>Cache fragments will also be expired when the view fragment changes (e.g., the
+HTML in the view changes). The string of characters at the end of the key is a
+template tree digest. It is a hash digest computed based on the contents of the
+view fragment you are caching. If you change the view fragment, the digest will
+change, expiring the existing file.</p><div class="info"><p>Cache stores like Memcached will automatically delete old cache files.</p></div><p>If you want to cache a fragment under certain conditions, you can use
+<code>cache_if</code> or <code>cache_unless</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">cache_if</span> <span class="n">admin?</span><span class="p">,</span> <span class="n">product</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="n">product</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5e818f49d188f48e4270bbb7055c5198">&lt;% cache_if admin?, product do %&gt;
+  &lt;%= render product %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5e818f49d188f48e4270bbb7055c5198">Copiar</button>
+</div>
+<h5 id="collection-caching"><a class="anchorlink" href="#collection-caching">1.3.1 Collection caching</a></h5><p>The <code>render</code> helper can also cache individual templates rendered for a collection.
+It can even one up the previous example with <code>each</code> by reading all cache
+templates at once instead of one by one. This is done by passing <code>cached: true</code> when rendering the collection:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s1">'products/product'</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@products</span><span class="p">,</span> <span class="ss">cached: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4dd7b002a4a171beee0aae2dd5b28298">&lt;%= render partial: 'products/product', collection: @products, cached: true %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4dd7b002a4a171beee0aae2dd5b28298">Copiar</button>
+</div>
+<p>All cached templates from previous renders will be fetched at once with much
+greater speed. Additionally, the templates that haven't yet been cached will be
+written to cache and multi fetched on the next render.</p><h4 id="russian-doll-caching"><a class="anchorlink" href="#russian-doll-caching">1.4 Russian Doll Caching</a></h4><p>You may want to nest cached fragments inside other cached fragments. This is
+called Russian doll caching.</p><p>The advantage of Russian doll caching is that if a single product is updated,
+all the other inner fragments can be reused when regenerating the outer
+fragment.</p><p>As explained in the previous section, a cached file will expire if the value of
+<code>updated_at</code> changes for a record on which the cached file directly depends.
+However, this will not expire any cache the fragment is nested within.</p><p>For example, take the following view:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">cache</span> <span class="n">product</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="n">product</span><span class="p">.</span><span class="nf">games</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-25c75185419ec75e1a124d3f4fb27495">&lt;% cache product do %&gt;
+  &lt;%= render product.games %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-25c75185419ec75e1a124d3f4fb27495">Copiar</button>
+</div>
+<p>Which in turn renders this view:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">cache</span> <span class="n">game</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="n">game</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-05cc50b525b675944ad097217056c3af">&lt;% cache game do %&gt;
+  &lt;%= render game %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-05cc50b525b675944ad097217056c3af">Copiar</button>
+</div>
+<p>If any attribute of game is changed, the <code>updated_at</code> value will be set to the
+current time, thereby expiring the cache. However, because <code>updated_at</code>
+will not be changed for the product object, that cache will not be expired and
+your app will serve stale data. To fix this, we tie the models together with
+the <code>touch</code> method:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Product</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_many</span> <span class="ss">:games</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Game</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">belongs_to</span> <span class="ss">:product</span><span class="p">,</span> <span class="ss">touch: </span><span class="kp">true</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b5df87ccaa60f7744e7a09810365e802">class Product &lt; ApplicationRecord
+  has_many :games
+end
+
+class Game &lt; ApplicationRecord
+  belongs_to :product, touch: true
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b5df87ccaa60f7744e7a09810365e802">Copiar</button>
+</div>
+<p>With <code>touch</code> set to <code>true</code>, any action which changes <code>updated_at</code> for a game
+record will also change it for the associated product, thereby expiring the
+cache.</p><h4 id="shared-partial-caching"><a class="anchorlink" href="#shared-partial-caching">1.5 Shared Partial Caching</a></h4><p>It is possible to share partials and associated caching between files with different mime types. For example shared partial caching allows template writers to share a partial between HTML and JavaScript files. When templates are collected in the template resolver file paths they only include the template language extension and not the mime type. Because of this templates can be used for multiple mime types. Both HTML and JavaScript requests will respond to the following code:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span><span class="p">(</span><span class="ss">partial: </span><span class="s1">'hotels/hotel'</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@hotels</span><span class="p">,</span> <span class="ss">cached: </span><span class="kp">true</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3714b360b948b69ff90dfee24a9424eb">render(partial: 'hotels/hotel', collection: @hotels, cached: true)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3714b360b948b69ff90dfee24a9424eb">Copiar</button>
+</div>
+<p>Will load a file named <code>hotels/hotel.erb</code>.</p><p>Another option is to include the full filename of the partial to render.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span><span class="p">(</span><span class="ss">partial: </span><span class="s1">'hotels/hotel.html.erb'</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@hotels</span><span class="p">,</span> <span class="ss">cached: </span><span class="kp">true</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8eee3d264aee740551378edca9f555ae">render(partial: 'hotels/hotel.html.erb', collection: @hotels, cached: true)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8eee3d264aee740551378edca9f555ae">Copiar</button>
+</div>
+<p>Will load a file named <code>hotels/hotel.html.erb</code> in any file mime type, for example you could include this partial in a JavaScript file.</p><h4 id="managing-dependencies"><a class="anchorlink" href="#managing-dependencies">1.6 Managing dependencies</a></h4><p>In order to correctly invalidate the cache, you need to properly define the
+caching dependencies. Rails is clever enough to handle common cases so you don't
+have to specify anything. However, sometimes, when you're dealing with custom
+helpers for instance, you need to explicitly define them.</p><h5 id="implicit-dependencies"><a class="anchorlink" href="#implicit-dependencies">1.6.1 Implicit dependencies</a></h5><p>Most template dependencies can be derived from calls to <code>render</code> in the template
+itself. Here are some examples of render calls that <code>ActionView::Digestor</code> knows
+how to decode:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">partial: </span><span class="s2">"comments/comment"</span><span class="p">,</span> <span class="ss">collection: </span><span class="n">commentable</span><span class="p">.</span><span class="nf">comments</span>
+<span class="n">render</span> <span class="s2">"comments/comments"</span>
+<span class="n">render</span> <span class="s1">'comments/comments'</span>
+<span class="n">render</span><span class="p">(</span><span class="s1">'comments/comments'</span><span class="p">)</span>
+
+<span class="n">render</span> <span class="s2">"header"</span> <span class="n">translates</span> <span class="n">to</span> <span class="n">render</span><span class="p">(</span><span class="s2">"comments/header"</span><span class="p">)</span>
+
+<span class="n">render</span><span class="p">(</span><span class="vi">@topic</span><span class="p">)</span>         <span class="n">translates</span> <span class="n">to</span> <span class="n">render</span><span class="p">(</span><span class="s2">"topics/topic"</span><span class="p">)</span>
+<span class="n">render</span><span class="p">(</span><span class="n">topics</span><span class="p">)</span>         <span class="n">translates</span> <span class="n">to</span> <span class="n">render</span><span class="p">(</span><span class="s2">"topics/topic"</span><span class="p">)</span>
+<span class="n">render</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="nf">topics</span><span class="p">)</span> <span class="n">translates</span> <span class="n">to</span> <span class="n">render</span><span class="p">(</span><span class="s2">"topics/topic"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-72fbfb29e04be575e31f69ab7cd697d9">render partial: "comments/comment", collection: commentable.comments
+render "comments/comments"
+render 'comments/comments'
+render('comments/comments')
+
+render "header" translates to render("comments/header")
+
+render(@topic)         translates to render("topics/topic")
+render(topics)         translates to render("topics/topic")
+render(message.topics) translates to render("topics/topic")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-72fbfb29e04be575e31f69ab7cd697d9">Copiar</button>
+</div>
+<p>On the other hand, some calls need to be changed to make caching work properly.
+For instance, if you're passing a custom collection, you'll need to change:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="vi">@project</span><span class="p">.</span><span class="nf">documents</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">published: </span><span class="kp">true</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a40630855eff8f8ad51696ab8782224a">render @project.documents.where(published: true)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a40630855eff8f8ad51696ab8782224a">Copiar</button>
+</div>
+<p>to:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">partial: </span><span class="s2">"documents/document"</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@project</span><span class="p">.</span><span class="nf">documents</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">published: </span><span class="kp">true</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-038f1258ecabfd3f919e77c1ef442e7d">render partial: "documents/document", collection: @project.documents.where(published: true)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-038f1258ecabfd3f919e77c1ef442e7d">Copiar</button>
+</div>
+<h5 id="explicit-dependencies"><a class="anchorlink" href="#explicit-dependencies">1.6.2 Explicit dependencies</a></h5><p>Sometimes you'll have template dependencies that can't be derived at all. This
+is typically the case when rendering happens in helpers. Here's an example:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render_sortable_todolists</span> <span class="vi">@project</span><span class="p">.</span><span class="nf">todolists</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c3b0c3e51b8c5ed84e33d5eeb2f6d9b7">&lt;%= render_sortable_todolists @project.todolists %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c3b0c3e51b8c5ed84e33d5eeb2f6d9b7">Copiar</button>
+</div>
+<p>You'll need to use a special comment format to call those out:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="c">&lt;%# Template Dependency: todolists/todolist %&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render_sortable_todolists</span> <span class="vi">@project</span><span class="p">.</span><span class="nf">todolists</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-63afc71a52d12d0fb70be2245bf98225">&lt;%# Template Dependency: todolists/todolist %&gt;
+&lt;%= render_sortable_todolists @project.todolists %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-63afc71a52d12d0fb70be2245bf98225">Copiar</button>
+</div>
+<p>In some cases, like a single table inheritance setup, you might have a bunch of
+explicit dependencies. Instead of writing every template out, you can use a
+wildcard to match any template in a directory:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="c">&lt;%# Template Dependency: events/* %&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render_categorizable_events</span> <span class="vi">@person</span><span class="p">.</span><span class="nf">events</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a4b235fa6d8087719ffcec75b6ea100e">&lt;%# Template Dependency: events/* %&gt;
+&lt;%= render_categorizable_events @person.events %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a4b235fa6d8087719ffcec75b6ea100e">Copiar</button>
+</div>
+<p>As for collection caching, if the partial template doesn't start with a clean
+cache call, you can still benefit from collection caching by adding a special
+comment format anywhere in the template, like:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="c">&lt;%# Template Collection: notification %&gt;</span>
+<span class="cp">&lt;%</span> <span class="n">my_helper_that_calls_cache</span><span class="p">(</span><span class="n">some_arg</span><span class="p">,</span> <span class="n">notification</span><span class="p">)</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">notification</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d2a55df6c63df6f76fd04ebc087265a5">&lt;%# Template Collection: notification %&gt;
+&lt;% my_helper_that_calls_cache(some_arg, notification) do %&gt;
+  &lt;%= notification.name %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d2a55df6c63df6f76fd04ebc087265a5">Copiar</button>
+</div>
+<h5 id="external-dependencies"><a class="anchorlink" href="#external-dependencies">1.6.3 External dependencies</a></h5><p>If you use a helper method, for example, inside a cached block and you then update
+that helper, you'll have to bump the cache as well. It doesn't really matter how
+you do it, but the MD5 of the template file must change. One recommendation is to
+simply be explicit in a comment, like:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="c">&lt;%# Helper Dependency Updated: Jul 28, 2015 at 7pm %&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">some_helper_method</span><span class="p">(</span><span class="n">person</span><span class="p">)</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c2b2c2e93d58b43160d5f0fa9e96ef9b">&lt;%# Helper Dependency Updated: Jul 28, 2015 at 7pm %&gt;
+&lt;%= some_helper_method(person) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c2b2c2e93d58b43160d5f0fa9e96ef9b">Copiar</button>
+</div>
+<h4 id="low-level-caching"><a class="anchorlink" href="#low-level-caching">1.7 Low-Level Caching</a></h4><p>Sometimes you need to cache a particular value or query result instead of caching view fragments. Rails' caching mechanism works great for storing <strong>any</strong> kind of information.</p><p>The most efficient way to implement low-level caching is using the <code>Rails.cache.fetch</code> method. This method does both reading and writing to the cache. When passed only a single argument, the key is fetched and value from the cache is returned. If a block is passed, that block will be executed in the event of a cache miss. The return value of the block will be written to the cache under the given cache key, and that return value will be returned. In case of cache hit, the cached value will be returned without executing the block.</p><p>Consider the following example. An application has a <code>Product</code> model with an instance method that looks up the product's price on a competing website. The data returned by this method would be perfect for low-level caching:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Product</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="k">def</span> <span class="nf">competing_price</span>
+    <span class="no">Rails</span><span class="p">.</span><span class="nf">cache</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">cache_key_with_version</span><span class="si">}</span><span class="s2">/competing_price"</span><span class="p">,</span> <span class="ss">expires_in: </span><span class="mi">12</span><span class="p">.</span><span class="nf">hours</span><span class="p">)</span> <span class="k">do</span>
+      <span class="no">Competitor</span><span class="o">::</span><span class="no">API</span><span class="p">.</span><span class="nf">find_price</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ec3c9ff259957ecc021539ec422c5fda">class Product &lt; ApplicationRecord
+  def competing_price
+    Rails.cache.fetch("#{cache_key_with_version}/competing_price", expires_in: 12.hours) do
+      Competitor::API.find_price(id)
+    end
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ec3c9ff259957ecc021539ec422c5fda">Copiar</button>
+</div>
+<div class="note"><p>Notice that in this example we used the <code>cache_key_with_version</code> method, so the resulting cache key will be something like <code>products/233-20140225082222765838000/competing_price</code>. <code>cache_key_with_version</code> generates a string based on the model's class name, <code>id</code>, and <code>updated_at</code> attributes. This is a common convention and has the benefit of invalidating the cache whenever the product is updated. In general, when you use low-level caching for instance level information, you need to generate a cache key.</p></div><h4 id="sql-caching"><a class="anchorlink" href="#sql-caching">1.8 SQL Caching</a></h4><p>Query caching is a Rails feature that caches the result set returned by each
+query. If Rails encounters the same query again for that request, it will use
+the cached result set as opposed to running the query against the database
+again.</p><p>For example:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="c1"># Run a find query</span>
+    <span class="vi">@products</span> <span class="o">=</span> <span class="no">Product</span><span class="p">.</span><span class="nf">all</span>
+
+    <span class="o">...</span>
+
+    <span class="c1"># Run the same query again</span>
+    <span class="vi">@products</span> <span class="o">=</span> <span class="no">Product</span><span class="p">.</span><span class="nf">all</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-30e721c2b952b08d2f18f698aad27f56">class ProductsController &lt; ApplicationController
+
+  def index
+    # Run a find query
+    @products = Product.all
+
+    ...
+
+    # Run the same query again
+    @products = Product.all
+  end
+
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-30e721c2b952b08d2f18f698aad27f56">Copiar</button>
+</div>
+<p>The second time the same query is run against the database, it's not actually going to hit the database. The first time the result is returned from the query it is stored in the query cache (in memory) and the second time it's pulled from memory.</p><p>However, it's important to note that query caches are created at the start of
+an action and destroyed at the end of that action and thus persist only for the
+duration of the action. If you'd like to store query results in a more
+persistent fashion, you can with low level caching.</p><h3 id="cache-stores"><a class="anchorlink" href="#cache-stores">2 Cache Stores</a></h3><p>Rails provides different stores for the cached data (apart from SQL and page
+caching).</p><h4 id="configuration"><a class="anchorlink" href="#configuration">2.1 Configuration</a></h4><p>You can set up your application's default cache store by setting the
+<code>config.cache_store</code> configuration option. Other parameters can be passed as
+arguments to the cache store's constructor:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:memory_store</span><span class="p">,</span> <span class="p">{</span> <span class="ss">size: </span><span class="mi">64</span><span class="p">.</span><span class="nf">megabytes</span> <span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b76c86c188c7f248839ad13e1b7c2bdb">config.cache_store = :memory_store, { size: 64.megabytes }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b76c86c188c7f248839ad13e1b7c2bdb">Copiar</button>
+</div>
+<div class="note"><p>Alternatively, you can call <code>ActionController::Base.cache_store</code> outside of a configuration block.</p></div><p>You can access the cache by calling <code>Rails.cache</code>.</p><h4 id="activesupport-cache-store"><a class="anchorlink" href="#activesupport-cache-store">2.2 ActiveSupport::Cache::Store</a></h4><p>This class provides the foundation for interacting with the cache in Rails. This is an abstract class and you cannot use it on its own. Rather you must use a concrete implementation of the class tied to a storage engine. Rails ships with several implementations documented below.</p><p>The main methods to call are <code>read</code>, <code>write</code>, <code>delete</code>, <code>exist?</code>, and <code>fetch</code>. The fetch method takes a block and will either return an existing value from the cache, or evaluate the block and write the result to the cache if no value exists.</p><p>There are some common options that can be used by all cache implementations. These can be passed to the constructor or the various methods to interact with entries.</p>
+<ul>
+<li><p><code>:namespace</code> - This option can be used to create a namespace within the cache store. It is especially useful if your application shares a cache with other applications.</p></li>
+<li><p><code>:compress</code> - Enabled by default. Compresses cache entries so more data can be stored in the same memory footprint, leading to fewer cache evictions and higher hit rates.</p></li>
+<li><p><code>:compress_threshold</code> - Defaults to 1kB. Cache entries larger than this threshold, specified in bytes, are compressed.</p></li>
+<li><p><code>:expires_in</code> - This option sets an expiration time in seconds for the cache entry, if the cache store supports it, when it will be automatically removed from the cache.</p></li>
+<li><p><code>:race_condition_ttl</code> - This option is used in conjunction with the <code>:expires_in</code> option. It will prevent race conditions when cache entries expire by preventing multiple processes from simultaneously regenerating the same entry (also known as the dog pile effect). This option sets the number of seconds that an expired entry can be reused while a new value is being regenerated. It's a good practice to set this value if you use the <code>:expires_in</code> option.</p></li>
+</ul>
+<h5 id="custom-cache-stores"><a class="anchorlink" href="#custom-cache-stores">2.2.1 Custom Cache Stores</a></h5><p>You can create your own custom cache store by simply extending
+<code>ActiveSupport::Cache::Store</code> and implementing the appropriate methods. This way,
+you can swap in any number of caching technologies into your Rails application.</p><p>To use a custom cache store, simply set the cache store to a new instance of your
+custom class.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="no">MyCacheStore</span><span class="p">.</span><span class="nf">new</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d6aa0449dedc23f823249c5a15b6cbd8">config.cache_store = MyCacheStore.new
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d6aa0449dedc23f823249c5a15b6cbd8">Copiar</button>
+</div>
+<h4 id="activesupport-cache-memorystore"><a class="anchorlink" href="#activesupport-cache-memorystore">2.3 ActiveSupport::Cache::MemoryStore</a></h4><p>This cache store keeps entries in memory in the same Ruby process. The cache
+store has a bounded size specified by sending the <code>:size</code> option to the
+initializer (default is 32Mb). When the cache exceeds the allotted size, a
+cleanup will occur and the least recently used entries will be removed.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:memory_store</span><span class="p">,</span> <span class="p">{</span> <span class="ss">size: </span><span class="mi">64</span><span class="p">.</span><span class="nf">megabytes</span> <span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4f5e9578608644e63da7607dfb49fb81">config.cache_store = :memory_store, { size: 64.megabytes }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4f5e9578608644e63da7607dfb49fb81">Copiar</button>
+</div>
+<p>If you're running multiple Ruby on Rails server processes (which is the case
+if you're using Phusion Passenger or puma clustered mode), then your Rails server
+process instances won't be able to share cache data with each other. This cache
+store is not appropriate for large application deployments. However, it can
+work well for small, low traffic sites with only a couple of server processes,
+as well as development and test environments.</p><p>New Rails projects are configured to use this implementation in development environment by default.</p><div class="note"><p>Since processes will not share cache data when using <code>:memory_store</code>,
+it will not be possible to manually read, write, or expire the cache via the Rails console.</p></div><h4 id="activesupport-cache-filestore"><a class="anchorlink" href="#activesupport-cache-filestore">2.4 ActiveSupport::Cache::FileStore</a></h4><p>This cache store uses the file system to store entries. The path to the directory where the store files will be stored must be specified when initializing the cache.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:file_store</span><span class="p">,</span> <span class="s2">"/path/to/cache/directory"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-09529374d50003aed522c89be864fbce">config.cache_store = :file_store, "/path/to/cache/directory"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-09529374d50003aed522c89be864fbce">Copiar</button>
+</div>
+<p>With this cache store, multiple server processes on the same host can share a
+cache. This cache store is appropriate for low to medium traffic sites that are
+served off one or two hosts. Server processes running on different hosts could
+share a cache by using a shared file system, but that setup is not recommended.</p><p>As the cache will grow until the disk is full, it is recommended to
+periodically clear out old entries.</p><p>This is the default cache store implementation (at <code>"#{root}/tmp/cache/"</code>) if
+no explicit <code>config.cache_store</code> is supplied.</p><h4 id="activesupport-cache-memcachestore"><a class="anchorlink" href="#activesupport-cache-memcachestore">2.5 ActiveSupport::Cache::MemCacheStore</a></h4><p>This cache store uses Danga's <code>memcached</code> server to provide a centralized cache for your application. Rails uses the bundled <code>dalli</code> gem by default. This is currently the most popular cache store for production websites. It can be used to provide a single, shared cache cluster with very high performance and redundancy.</p><p>When initializing the cache, you need to specify the addresses for all
+memcached servers in your cluster. If none are specified, it will assume
+memcached is running on localhost on the default port, but this is not an ideal
+setup for larger sites.</p><p>The <code>write</code> and <code>fetch</code> methods on this cache accept two additional options that take advantage of features specific to memcached. You can specify <code>:raw</code> to send a value directly to the server with no serialization. The value must be a string or number. You can use memcached direct operations like <code>increment</code> and <code>decrement</code> only on raw values. You can also specify <code>:unless_exist</code> if you don't want memcached to overwrite an existing entry.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:mem_cache_store</span><span class="p">,</span> <span class="s2">"cache-1.example.com"</span><span class="p">,</span> <span class="s2">"cache-2.example.com"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6830abe30a6563d2c004212b5ed6cfe3">config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.com"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6830abe30a6563d2c004212b5ed6cfe3">Copiar</button>
+</div>
+<h4 id="activesupport-cache-rediscachestore"><a class="anchorlink" href="#activesupport-cache-rediscachestore">2.6 ActiveSupport::Cache::RedisCacheStore</a></h4><p>The Redis cache store takes advantage of Redis support for automatic eviction
+when it reaches max memory, allowing it to behave much like a Memcached cache server.</p><p>Deployment note: Redis doesn't expire keys by default, so take care to use a
+dedicated Redis cache server. Don't fill up your persistent-Redis server with
+volatile cache data! Read the
+<a href="https://redis.io/topics/lru-cache">Redis cache server setup guide</a> in detail.</p><p>For a cache-only Redis server, set <code>maxmemory-policy</code> to one of the variants of allkeys.
+Redis 4+ supports least-frequently-used eviction (<code>allkeys-lfu</code>), an excellent
+default choice. Redis 3 and earlier should use least-recently-used eviction (<code>allkeys-lru</code>).</p><p>Set cache read and write timeouts relatively low. Regenerating a cached value
+is often faster than waiting more than a second to retrieve it. Both read and
+write timeouts default to 1 second, but may be set lower if your network is
+consistently low-latency.</p><p>By default, the cache store will not attempt to reconnect to Redis if the
+connection fails during a request. If you experience frequent disconnects you
+may wish to enable reconnect attempts.</p><p>Cache reads and writes never raise exceptions; they just return <code>nil</code> instead,
+behaving as if there was nothing in the cache. To gauge whether your cache is
+hitting exceptions, you may provide an <code>error_handler</code> to report to an
+exception gathering service. It must accept three keyword arguments: <code>method</code>,
+the cache store method that was originally called; <code>returning</code>, the value that
+was returned to the user, typically <code>nil</code>; and <code>exception</code>, the exception that
+was rescued.</p><p>To get started, add the redis gem to your Gemfile:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'redis'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e91b9468e1074c685243a1af1d2a1fc7">gem 'redis'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e91b9468e1074c685243a1af1d2a1fc7">Copiar</button>
+</div>
+<p>You can enable support for the faster <a href="https://github.com/redis/hiredis">hiredis</a>
+connection library by additionally adding its ruby wrapper to your Gemfile:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'hiredis'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4221791e1bf9f725271124204d3978a3">gem 'hiredis'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4221791e1bf9f725271124204d3978a3">Copiar</button>
+</div>
+<p>Redis cache store will automatically require &amp; use hiredis if available. No further
+configuration is needed.</p><p>Finally, add the configuration in the relevant <code>config/environments/*.rb</code> file:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:redis_cache_store</span><span class="p">,</span> <span class="p">{</span> <span class="ss">url: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'REDIS_URL'</span><span class="p">]</span> <span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0480624fc5f1e9b2aa0c8686c2c79c45">config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0480624fc5f1e9b2aa0c8686c2c79c45">Copiar</button>
+</div>
+<p>A more complex, production Redis cache store may look something like this:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">cache_servers</span> <span class="o">=</span> <span class="sx">%w(redis://cache-01:6379/0 redis://cache-02:6379/0)</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:redis_cache_store</span><span class="p">,</span> <span class="p">{</span> <span class="ss">url: </span><span class="n">cache_servers</span><span class="p">,</span>
+
+  <span class="ss">connect_timeout:    </span><span class="mi">30</span><span class="p">,</span>  <span class="c1"># Defaults to 20 seconds</span>
+  <span class="ss">read_timeout:       </span><span class="mf">0.2</span><span class="p">,</span> <span class="c1"># Defaults to 1 second</span>
+  <span class="ss">write_timeout:      </span><span class="mf">0.2</span><span class="p">,</span> <span class="c1"># Defaults to 1 second</span>
+  <span class="ss">reconnect_attempts: </span><span class="mi">1</span><span class="p">,</span>   <span class="c1"># Defaults to 0</span>
+
+  <span class="ss">error_handler: </span><span class="o">-&gt;</span> <span class="p">(</span><span class="nb">method</span><span class="p">:,</span> <span class="n">returning</span><span class="p">:,</span> <span class="n">exception</span><span class="p">:)</span> <span class="p">{</span>
+    <span class="c1"># Report errors to Sentry as warnings</span>
+    <span class="no">Raven</span><span class="p">.</span><span class="nf">capture_exception</span> <span class="n">exception</span><span class="p">,</span> <span class="ss">level: </span><span class="s1">'warning'</span><span class="p">,</span>
+      <span class="ss">tags: </span><span class="p">{</span> <span class="ss">method: </span><span class="nb">method</span><span class="p">,</span> <span class="ss">returning: </span><span class="n">returning</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-344b2ff44d8decba938b08ddb8d52468">cache_servers = %w(redis://cache-01:6379/0 redis://cache-02:6379/0)
+config.cache_store = :redis_cache_store, { url: cache_servers,
+
+  connect_timeout:    30,  # Defaults to 20 seconds
+  read_timeout:       0.2, # Defaults to 1 second
+  write_timeout:      0.2, # Defaults to 1 second
+  reconnect_attempts: 1,   # Defaults to 0
+
+  error_handler: -&gt; (method:, returning:, exception:) {
+    # Report errors to Sentry as warnings
+    Raven.capture_exception exception, level: 'warning',
+      tags: { method: method, returning: returning }
+  }
+}
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-344b2ff44d8decba938b08ddb8d52468">Copiar</button>
+</div>
+<h4 id="activesupport-cache-nullstore"><a class="anchorlink" href="#activesupport-cache-nullstore">2.7 ActiveSupport::Cache::NullStore</a></h4><p>This cache store implementation is meant to be used only in development or test environments and it never stores anything. This can be very useful in development when you have code that interacts directly with <code>Rails.cache</code> but caching may interfere with being able to see the results of code changes. With this cache store, all <code>fetch</code> and <code>read</code> operations will result in a miss.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:null_store</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-64ec7867d910fc4b9bb29b9f92b243ff">config.cache_store = :null_store
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-64ec7867d910fc4b9bb29b9f92b243ff">Copiar</button>
+</div>
+<h3 id="cache-keys"><a class="anchorlink" href="#cache-keys">3 Cache Keys</a></h3><p>The keys used in a cache can be any object that responds to either <code>cache_key</code> or
+<code>to_param</code>. You can implement the <code>cache_key</code> method on your classes if you need
+to generate custom keys. Active Record will generate keys based on the class name
+and record id.</p><p>You can use Hashes and Arrays of values as cache keys.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># This is a legal cache key</span>
+<span class="no">Rails</span><span class="p">.</span><span class="nf">cache</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="ss">site: </span><span class="s2">"mysite"</span><span class="p">,</span> <span class="ss">owners: </span><span class="p">[</span><span class="n">owner_1</span><span class="p">,</span> <span class="n">owner_2</span><span class="p">])</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0321188f46435ca1a817223d69bc3a6a"># This is a legal cache key
+Rails.cache.read(site: "mysite", owners: [owner_1, owner_2])
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0321188f46435ca1a817223d69bc3a6a">Copiar</button>
+</div>
+<p>The keys you use on <code>Rails.cache</code> will not be the same as those actually used with
+the storage engine. They may be modified with a namespace or altered to fit
+technology backend constraints. This means, for instance, that you can't save
+values with <code>Rails.cache</code> and then try to pull them out with the <code>dalli</code> gem.
+However, you also don't need to worry about exceeding the memcached size limit or
+violating syntax rules.</p><h3 id="conditional-get-support"><a class="anchorlink" href="#conditional-get-support">4 Conditional GET support</a></h3><p>Conditional GETs are a feature of the HTTP specification that provide a way for web servers to tell browsers that the response to a GET request hasn't changed since the last request and can be safely pulled from the browser cache.</p><p>They work by using the <code>HTTP_IF_NONE_MATCH</code> and <code>HTTP_IF_MODIFIED_SINCE</code> headers to pass back and forth both a unique content identifier and the timestamp of when the content was last changed. If the browser makes a request where the content identifier (etag) or last modified since timestamp matches the server's version then the server only needs to send back an empty response with a not modified status.</p><p>It is the server's (i.e. our) responsibility to look for a last modified timestamp and the if-none-match header and determine whether or not to send back the full response. With conditional-get support in Rails this is a pretty easy task:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="vi">@product</span> <span class="o">=</span> <span class="no">Product</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+
+    <span class="c1"># If the request is stale according to the given timestamp and etag value</span>
+    <span class="c1"># (i.e. it needs to be processed again) then execute this block</span>
+    <span class="k">if</span> <span class="n">stale?</span><span class="p">(</span><span class="ss">last_modified: </span><span class="vi">@product</span><span class="p">.</span><span class="nf">updated_at</span><span class="p">.</span><span class="nf">utc</span><span class="p">,</span> <span class="ss">etag: </span><span class="vi">@product</span><span class="p">.</span><span class="nf">cache_key_with_version</span><span class="p">)</span>
+      <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="n">wants</span><span class="o">|</span>
+        <span class="c1"># ... normal response processing</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="c1"># If the request is fresh (i.e. it's not modified) then you don't need to do</span>
+    <span class="c1"># anything. The default render checks for this using the parameters</span>
+    <span class="c1"># used in the previous call to stale? and will automatically send a</span>
+    <span class="c1"># :not_modified. So that's it, you're done.</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-829aa00e0ca24c5851e5add6e57d0775">class ProductsController &lt; ApplicationController
+
+  def show
+    @product = Product.find(params[:id])
+
+    # If the request is stale according to the given timestamp and etag value
+    # (i.e. it needs to be processed again) then execute this block
+    if stale?(last_modified: @product.updated_at.utc, etag: @product.cache_key_with_version)
+      respond_to do |wants|
+        # ... normal response processing
+      end
+    end
+
+    # If the request is fresh (i.e. it's not modified) then you don't need to do
+    # anything. The default render checks for this using the parameters
+    # used in the previous call to stale? and will automatically send a
+    # :not_modified. So that's it, you're done.
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-829aa00e0ca24c5851e5add6e57d0775">Copiar</button>
+</div>
+<p>Instead of an options hash, you can also simply pass in a model. Rails will use the <code>updated_at</code> and <code>cache_key_with_version</code> methods for setting <code>last_modified</code> and <code>etag</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="vi">@product</span> <span class="o">=</span> <span class="no">Product</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">stale?</span><span class="p">(</span><span class="vi">@product</span><span class="p">)</span>
+      <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="n">wants</span><span class="o">|</span>
+        <span class="c1"># ... normal response processing</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ef033f61cbe7865009d1f1baccf1b704">class ProductsController &lt; ApplicationController
+  def show
+    @product = Product.find(params[:id])
+
+    if stale?(@product)
+      respond_to do |wants|
+        # ... normal response processing
+      end
+    end
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ef033f61cbe7865009d1f1baccf1b704">Copiar</button>
+</div>
+<p>If you don't have any special response processing and are using the default rendering mechanism (i.e. you're not using <code>respond_to</code> or calling render yourself) then you've got an easy helper in <code>fresh_when</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="c1"># This will automatically send back a :not_modified if the request is fresh,</span>
+  <span class="c1"># and will render the default template (product.*) if it's stale.</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="vi">@product</span> <span class="o">=</span> <span class="no">Product</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+    <span class="n">fresh_when</span> <span class="ss">last_modified: </span><span class="vi">@product</span><span class="p">.</span><span class="nf">published_at</span><span class="p">.</span><span class="nf">utc</span><span class="p">,</span> <span class="ss">etag: </span><span class="vi">@product</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6b0c9e6d7bb5aa9aacb8821dde990f94">class ProductsController &lt; ApplicationController
+
+  # This will automatically send back a :not_modified if the request is fresh,
+  # and will render the default template (product.*) if it's stale.
+
+  def show
+    @product = Product.find(params[:id])
+    fresh_when last_modified: @product.published_at.utc, etag: @product
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6b0c9e6d7bb5aa9aacb8821dde990f94">Copiar</button>
+</div>
+<p>Sometimes we want to cache response, for example a static page, that never gets
+expired. To achieve this, we can use <code>http_cache_forever</code> helper and by doing
+so browser and proxies will cache it indefinitely.</p><p>By default cached responses will be private, cached only on the user's web
+browser. To allow proxies to cache the response, set <code>public: true</code> to indicate
+that they can serve the cached response to all users.</p><p>Using this helper, <code>last_modified</code> header is set to <code>Time.new(2011, 1, 1).utc</code>
+and <code>expires</code> header is set to a 100 years.</p><div class="warning"><p>Use this method carefully as browser/proxy won't be able to invalidate
+the cached response unless browser cache is forcefully cleared.</p></div><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">HomeController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="n">http_cache_forever</span><span class="p">(</span><span class="ss">public: </span><span class="kp">true</span><span class="p">)</span> <span class="k">do</span>
+      <span class="n">render</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-62a3b49c5dbefe43ac663007e5a5ae64">class HomeController &lt; ApplicationController
+  def index
+    http_cache_forever(public: true) do
+      render
+    end
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-62a3b49c5dbefe43ac663007e5a5ae64">Copiar</button>
+</div>
+<h4 id="strong-v-s-weak-etags"><a class="anchorlink" href="#strong-v-s-weak-etags">4.1 Strong v/s Weak ETags</a></h4><p>Rails generates weak ETags by default. Weak ETags allow semantically equivalent
+responses to have the same ETags, even if their bodies do not match exactly.
+This is useful when we don't want the page to be regenerated for minor changes in
+response body.</p><p>Weak ETags have a leading <code>W/</code> to differentiate them from strong ETags.</p><div class="code_container">
+<pre><code class="highlight plaintext">  W/"618bbc92e2d35ea1945008b42799b0e7" → Weak ETag
+  "618bbc92e2d35ea1945008b42799b0e7" → Strong ETag
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4b11f738c59440e0e7023db8921feeba">  W/"618bbc92e2d35ea1945008b42799b0e7" → Weak ETag
+  "618bbc92e2d35ea1945008b42799b0e7" → Strong ETag
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4b11f738c59440e0e7023db8921feeba">Copiar</button>
+</div>
+<p>Unlike weak ETag, strong ETag implies that response should be exactly the same
+and byte by byte identical. Useful when doing Range requests within a
+large video or PDF file. Some CDNs support only strong ETags, like Akamai.
+If you absolutely need to generate a strong ETag, it can be done as follows.</p><div class="code_container">
+<pre><code class="highlight ruby">  <span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+    <span class="k">def</span> <span class="nf">show</span>
+      <span class="vi">@product</span> <span class="o">=</span> <span class="no">Product</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+      <span class="n">fresh_when</span> <span class="ss">last_modified: </span><span class="vi">@product</span><span class="p">.</span><span class="nf">published_at</span><span class="p">.</span><span class="nf">utc</span><span class="p">,</span> <span class="ss">strong_etag: </span><span class="vi">@product</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-274eaeed6aa0a35e06e259b682afc9d2">  class ProductsController &lt; ApplicationController
+    def show
+      @product = Product.find(params[:id])
+      fresh_when last_modified: @product.published_at.utc, strong_etag: @product
+    end
+  end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-274eaeed6aa0a35e06e259b682afc9d2">Copiar</button>
+</div>
+<p>You can also set the strong ETag directly on the response.</p><div class="code_container">
+<pre><code class="highlight ruby">  <span class="n">response</span><span class="p">.</span><span class="nf">strong_etag</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="nf">body</span> <span class="c1"># =&gt; "618bbc92e2d35ea1945008b42799b0e7"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-76de397974653095971b541413e9a0af">  response.strong_etag = response.body # =&gt; "618bbc92e2d35ea1945008b42799b0e7"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-76de397974653095971b541413e9a0af">Copiar</button>
+</div>
+<h3 id="caching-in-development"><a class="anchorlink" href="#caching-in-development">5 Caching in Development</a></h3><p>It's common to want to test the caching strategy of your application
+in development mode. Rails provides the rails command <code>dev:cache</code> to
+easily toggle caching on/off.</p><div class="code_container">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>dev:cache
+<span class="go">Development mode is now being cached.
+</span><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>dev:cache
+<span class="go">Development mode is no longer being cached.
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-0a82e5481020ca6bbf020bd287b6a330">rails dev:cache
+rails dev:cache
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0a82e5481020ca6bbf020bd287b6a330">Copiar</button>
+</div>
+<h3 id="references"><a class="anchorlink" href="#references">6 References</a></h3>
+<ul>
+<li><a href="https://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works">DHH's article on key-based expiration</a></li>
+<li><a href="http://railscasts.com/episodes/387-cache-digests">Ryan Bates' Railscast on cache digests</a></li>
+</ul>
+
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

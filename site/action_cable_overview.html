@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Action Cable Overview — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Action Cable Overview — Ruby on Rails Guides" />
+  <meta name="description" content="Action Cable OverviewNeste guia, você irá aprender como Action Cable funciona e como usar WebSockets para incorporar funcionalidades de tempo real em sua aplicação Rails.Ao ler este guia você aprenderá: O que é um Action Cable e sua integração backend e frontend Como configurar um Action Cable Como configurar canais Configuração de Deployment e Arquitetura para rodar a Action Cable" />
+  <meta property="og:description" content="Action Cable OverviewNeste guia, você irá aprender como Action Cable funciona e como usar WebSockets para incorporar funcionalidades de tempo real em sua aplicação Rails.Ao ler este guia você aprenderá: O que é um Action Cable e sua integração backend e frontend Como configurar um Action Cable Como configurar canais Configuração de Deployment e Arquitetura para rodar a Action Cable" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Action Cable Overview</h2><p>Neste guia, você irá aprender como <em>Action Cable</em> funciona e como usar <em>WebSockets</em>
+para incorporar funcionalidades de tempo real em sua aplicação Rails.</p><p>Ao ler este guia você aprenderá:</p>
+<ul>
+<li>O que é um <em>Action Cable</em> e sua integração <em>backend</em> e <em>frontend</em></li>
+<li>Como configurar um <em>Action Cable</em></li>
+<li>Como configurar canais</li>
+<li>Configuração de <em>Deployment</em> e Arquitetura para rodar a <em>Action Cable</em></li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#introducao">Introdução</a></li>
+<li><a href="#terminology">Terminology</a></li>
+<li><a href="#o-que-e-pub-sub">O que é <em>Pub/Sub</em></a></li>
+<li>
+<a href="#componentes-server-side">Componentes <em>Server-Side</em></a>
+
+<ul>
+<li><a href="#connections"><em>Connections</em></a></li>
+<li><a href="#channels"><em>Channels</em></a></li>
+</ul>
+</li>
+<li>
+<a href="#componentes-client-side">Componentes <em>Client-Side</em></a>
+
+<ul>
+<li><a href="#conexoes">Conexões</a></li>
+</ul>
+</li>
+<li>
+<a href="#client-server-interactions">Client-Server Interactions</a>
+
+<ul>
+<li><a href="#streams">Streams</a></li>
+<li><a href="#broadcasting">Broadcasting</a></li>
+<li><a href="#client-server-interactions-subscriptions">Subscriptions</a></li>
+<li><a href="#passing-parameters-to-channels">Passing Parameters to Channels</a></li>
+<li><a href="#rebroadcasting-a-message">Rebroadcasting a Message</a></li>
+</ul>
+</li>
+<li>
+<a href="#full-stack-examples">Full-Stack Examples</a>
+
+<ul>
+<li><a href="#example-1-user-appearances">Example 1: User Appearances</a></li>
+<li><a href="#example-2-receiving-new-web-notifications">Example 2: Receiving New Web Notifications</a></li>
+<li><a href="#more-complete-examples">More Complete Examples</a></li>
+</ul>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+
+<ul>
+<li><a href="#subscription-adapter">Subscription Adapter</a></li>
+<li><a href="#allowed-request-origins">Allowed Request Origins</a></li>
+<li><a href="#consumer-configuration">Consumer Configuration</a></li>
+<li><a href="#worker-pool-configuration">Worker Pool Configuration</a></li>
+<li><a href="#other-configurations">Other Configurations</a></li>
+</ul>
+</li>
+<li>
+<a href="#running-standalone-cable-servers">Running Standalone Cable Servers</a>
+
+<ul>
+<li><a href="#in-app">In App</a></li>
+<li><a href="#standalone">Standalone</a></li>
+<li><a href="#notes">Notes</a></li>
+</ul>
+</li>
+<li><a href="#dependencias">Dependências</a></li>
+<li><a href="#implantacao">Implantação</a></li>
+<li><a href="#teste">Teste</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="introducao"><a class="anchorlink" href="#introducao">1 Introdução</a></h3><p>O <em>Action Cable</em> integra-se perfeitamente <a href="https://pt.wikipedia.org/wiki/WebSocket">WebSockets</a> com o resto da sua aplicação Rails. Permite que recursos em tempo real sejam escritos em Ruby no mesmo estilo e forma que o resto de sua aplicação Rails, ao mesmo tempo em que possui desempenho e escabilidade. Isso é uma oferta <em>full-stack</em> que fornece um <em>framework</em> Javascript do lado do cliente (<em>client-side</em>) e um <em>framework</em> Ruby do lado do servidor (<em>server-side</em>). Você tem acesso ao seu <em>model</em> de domínio completo escrito com o <em>Active Record</em> ou o ORM de sua escolha.</p><h3 id="terminology"><a class="anchorlink" href="#terminology">2 Terminology</a></h3><p>A single Action Cable server can handle multiple connection instances. It has one
+connection instance per WebSocket connection. A single user may have multiple
+WebSockets open to your application if they use multiple browser tabs or devices.
+The client of a WebSocket connection is called the consumer.</p><p>Each consumer can in turn subscribe to multiple cable channels. Each channel
+encapsulates a logical unit of work, similar to what a controller does in
+a regular MVC setup. For example, you could have a <code>ChatChannel</code> and
+an <code>AppearancesChannel</code>, and a consumer could be subscribed to either
+or to both of these channels. At the very least, a consumer should be subscribed
+to one channel.</p><p>When the consumer is subscribed to a channel, they act as a subscriber.
+The connection between the subscriber and the channel is, surprise-surprise,
+called a subscription. A consumer can act as a subscriber to a given channel
+any number of times. For example, a consumer could subscribe to multiple chat rooms
+at the same time. (And remember that a physical user may have multiple consumers,
+one per tab/device open to your connection).</p><p>Each channel can then again be streaming zero or more broadcastings.
+A broadcasting is a pubsub link where anything transmitted by the broadcaster is
+sent directly to the channel subscribers who are streaming that named broadcasting.</p><p>As you can see, this is a fairly deep architectural stack. There's a lot of new
+terminology to identify the new pieces, and on top of that, you're dealing
+with both client and server side reflections of each unit.</p><h3 id="o-que-e-pub-sub"><a class="anchorlink" href="#o-que-e-pub-sub">3 O que é <em>Pub/Sub</em></a></h3><p><em><a href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">Pub/Sub</a></em>, ou
+<em>Publish-Subscribe</em>, refere-se a um paradigma de fila de mensageria o qual os
+remetentes de uma informação (<em>publishers</em>) enviam dados à uma classe abstrata de
+destinatários (<em>subscribers</em>) sem especificar um destinatário individual.
+<em>Action Cable</em> utiliza essa abordagem para manter a comunicação entre o servidor
+e diversos clientes.</p><h3 id="componentes-server-side"><a class="anchorlink" href="#componentes-server-side">4 Componentes <em>Server-Side</em></a></h3><h4 id="connections"><a class="anchorlink" href="#connections">4.1 <em>Connections</em></a></h4><p><em>Connections</em> formam a fundação do relacionamento de cliente-servidor. Para cada
+<em>WebSocket</em> aceito pelo servidor, um objeto <em>connection</em> é instanciado. Esse objeto
+se torna o pai de todos os <em>channel subscriptions</em> que são criados dali pra frente.
+A <em>connection</em> em si não lida com nenhuma lógica específica da aplicação além da
+autenticação e autorização. O cliente de um <em>WebSocket <em>connection</em></em> é chamado de
+<em>consumer</em>. Um usuário individual criará um par de <em>consumer-connection</em> para cada
+aba do navegador, janela ou dispositivo que ele tiver aberto.</p><p><em>Connections</em> são instâncias de <code>ApplicationCable::Connection</code>. Nessa classe,
+você autoriza a <em>connection</em> recebida e procede para estabelecê-la, caso o
+usuário possa ser identificado.</p><h5 id="configuracao-de-uma-connection"><a class="anchorlink" href="#configuracao-de-uma-connection">4.1.1 Configuração de uma <em>Connection</em></a></h5><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/channels/application_cable/connection.rb</span>
+<span class="k">module</span> <span class="nn">ApplicationCable</span>
+  <span class="k">class</span> <span class="nc">Connection</span> <span class="o">&lt;</span> <span class="no">ActionCable</span><span class="o">::</span><span class="no">Connection</span><span class="o">::</span><span class="no">Base</span>
+    <span class="n">identified_by</span> <span class="ss">:current_user</span>
+
+    <span class="k">def</span> <span class="nf">connect</span>
+      <span class="nb">self</span><span class="p">.</span><span class="nf">current_user</span> <span class="o">=</span> <span class="n">find_verified_user</span>
+    <span class="k">end</span>
+
+    <span class="kp">private</span>
+      <span class="k">def</span> <span class="nf">find_verified_user</span>
+        <span class="k">if</span> <span class="n">verified_user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">id: </span><span class="n">cookies</span><span class="p">.</span><span class="nf">encrypted</span><span class="p">[</span><span class="ss">:user_id</span><span class="p">])</span>
+          <span class="n">verified_user</span>
+        <span class="k">else</span>
+          <span class="n">reject_unauthorized_connection</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b6393c9f29141e0f1461f1da933cce30"># app/channels/application_cable/connection.rb
+module ApplicationCable
+  class Connection &lt; ActionCable::Connection::Base
+    identified_by :current_user
+
+    def connect
+      self.current_user = find_verified_user
+    end
+
+    private
+      def find_verified_user
+        if verified_user = User.find_by(id: cookies.encrypted[:user_id])
+          verified_user
+        else
+          reject_unauthorized_connection
+        end
+      end
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b6393c9f29141e0f1461f1da933cce30">Copiar</button>
+</div>
+<p>Aqui, <code>identified_by</code> é um identificador de <em>connection</em> que pode ser usado para
+encontrar uma <em>connection</em> específica mais tarde. Note que qualquer coisa marcada
+como um identificador criará automaticamente um <em>delegate</em> pelo mesmo nome em
+qualquer instância de <em>channel</em> criada a partir da <em>connection</em>.</p><p>Esse exemplo se baseia no fato de que você já lidou a autenticação do usuário em
+algum outro lugar na sua aplicação e essa autenticação bem sucedida definiu um
+<em>cookie</em> assinado com o ID do usuário.</p><p>O <em>cookie</em> é então enviado automaticamente para a instância da <em>connection</em> quando há
+a tentativa de criar uma nova <em>connection</em>, e você o usa para definir o <code>current_user</code>.
+Ao identificar a <em>connection</em> para o mesmo usuário, você também garante que você pode retornar todas as <em>connections</em> em aberto para um usuário específico (e potencialmente desconectá-los, caso o usuário seja deletado ou desautorizado).</p><h4 id="channels"><a class="anchorlink" href="#channels">4.2 <em>Channels</em></a></h4><p>O <em>channel</em> encapsula uma unidade lógica de trabalho, parecido com o que um
+<em>controller</em> faz em um <em>MVC</em> comum. Por padrão, o <em>Rails</em> cria uma classe pai
+<code>ApplicationCable::Channel</code> para encapsular a lógica compartilhada entre seus
+<em>channels</em>.</p><h5 id="configuracao-do-channel-pai"><a class="anchorlink" href="#configuracao-do-channel-pai">4.2.1 Configuração do <em>Channel</em> pai</a></h5><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/channels/application_cable/channel.rb</span>
+<span class="k">module</span> <span class="nn">ApplicationCable</span>
+  <span class="k">class</span> <span class="nc">Channel</span> <span class="o">&lt;</span> <span class="no">ActionCable</span><span class="o">::</span><span class="no">Channel</span><span class="o">::</span><span class="no">Base</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-dc9d7a691efef44ab4f3662b49dfdf08"># app/channels/application_cable/channel.rb
+module ApplicationCable
+  class Channel &lt; ActionCable::Channel::Base
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dc9d7a691efef44ab4f3662b49dfdf08">Copiar</button>
+</div>
+<p>Então, você criaria suas próprias classes de <em>channel</em>. Por exemplo, você poderia ter um
+<code>ChatChannel</code> e um <code>AppearanceChannel</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
+<span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
+<span class="k">end</span>
+
+<span class="c1"># app/channels/appearance_channel.rb</span>
+<span class="k">class</span> <span class="nc">AppearanceChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-be098c90e0c40d019eae0c80a32635c0"># app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+end
+
+# app/channels/appearance_channel.rb
+class AppearanceChannel &lt; ApplicationCable::Channel
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-be098c90e0c40d019eae0c80a32635c0">Copiar</button>
+</div>
+<p>Um <em>consumer</em> poderia então ser inscrito para qualquer ou ambos os <em>channels</em>.</p><h5 id="channels-subscriptions"><a class="anchorlink" href="#channels-subscriptions">4.2.2 <em>Subscriptions</em></a></h5><p><em>Consumers</em> se inscrevem a <em>channels</em>, agindo como <em>subscribers</em>. A <em>connection</em>
+deles é chamada de <em>subscription</em>. Mensagens produzidas são então roteadas para esses
+<em>channel subscriptions</em> baseados em um identificador enviado pelo <em>cable consumer</em>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
+<span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
+  <span class="c1"># Chamado quando o *consumer* tornou-se um *subscriber*</span>
+  <span class="c1"># desse *channel* com sucesso.</span>
+  <span class="k">def</span> <span class="nf">subscribed</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1d03591ef432485c6f7b9929a29249ba"># app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+  # Chamado quando o *consumer* tornou-se um *subscriber*
+  # desse *channel* com sucesso.
+  def subscribed
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1d03591ef432485c6f7b9929a29249ba">Copiar</button>
+</div>
+<h3 id="componentes-client-side"><a class="anchorlink" href="#componentes-client-side">5 Componentes <em>Client-Side</em></a></h3><h4 id="conexoes"><a class="anchorlink" href="#conexoes">5.1 Conexões</a></h4><p>Consumidores precisam de uma instância da conexão do seu lado. Esta conexão pode
+ser estabelecida usando o seguinte JavaScript, que é gerado por padrão pelo
+Rails:</p><h5 id="conectar-o-consumidor"><a class="anchorlink" href="#conectar-o-consumidor">5.1.1 Conectar o Consumidor</a></h5><div class="code_container">
+<pre><code class="highlight js"><span class="c1">// app/javascript/channels/consumer.js</span>
+<span class="c1">// Action Cable provides the framework to deal with WebSockets in Rails.</span>
+<span class="c1">// You can generate new channels where WebSocket features live using the `rails generate channel` command.</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createConsumer</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@rails/actioncable</span><span class="dl">"</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">createConsumer</span><span class="p">()</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6f516b0ce1362d414caa12664bd38a26">// app/javascript/channels/consumer.js
+// Action Cable provides the framework to deal with WebSockets in Rails.
+// You can generate new channels where WebSocket features live using the `rails generate channel` command.
+
+import { createConsumer } from "@rails/actioncable"
+
+export default createConsumer()
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6f516b0ce1362d414caa12664bd38a26">Copiar</button>
+</div>
+<p>Isto vai preparar um consumidor que conectará em <code>/cable</code> em seu servidor por
+padrão. A conexão não vai ser estabelecida até que você também tenha
+especificado ao menos uma inscrição que você tem interesse em ter.</p><p>O consumidor pode optar receber um argumento que especifica a <em>URL</em> para se
+conectar. Ela pode ser uma <em>string</em>, ou uma função que retorna uma <em>string</em> que
+vai ser chamada quando o <em>WebSocket</em> é aberto.</p><div class="code_container">
+<pre><code class="highlight js"><span class="c1">// Especifica uma _URL_ diferente para se conectar</span>
+<span class="nx">createConsumer</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://ws.example.com/cable</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="c1">// Utiliza uma função para gerar a _URL_ dinamicamente</span>
+<span class="nx">createConsumer</span><span class="p">(</span><span class="nx">getWebSocketURL</span><span class="p">)</span>
+
+<span class="kd">function</span> <span class="nx">getWebSocketURL</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">localStorage</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">auth-token</span><span class="dl">'</span><span class="p">)</span>
+  <span class="k">return</span> <span class="s2">`</span><span class="err">https://ws.example.com/cable?token=</span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span>
+<span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-22dab686d185454a54aeb49a7888fa8b">// Especifica uma _URL_ diferente para se conectar
+createConsumer('https://ws.example.com/cable')
+
+// Utiliza uma função para gerar a _URL_ dinamicamente
+createConsumer(getWebSocketURL)
+
+function getWebSocketURL {
+  const token = localStorage.get('auth-token')
+  return `https://ws.example.com/cable?token=${token}`
+}
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-22dab686d185454a54aeb49a7888fa8b">Copiar</button>
+</div>
+<h5 id="assinante"><a class="anchorlink" href="#assinante">5.1.2 Assinante</a></h5><p>Um consumidor se torna um assinante criando uma assinatura para um canal:</p><div class="code_container">
+<pre><code class="highlight js"><span class="c1">// app/javascript/channels/chat_channel.js</span>
+<span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
+
+<span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ChatChannel</span><span class="dl">"</span><span class="p">,</span> <span class="na">room</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Best Room</span><span class="dl">"</span> <span class="p">})</span>
+
+<span class="c1">// app/javascript/channels/appearance_channel.js</span>
+<span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
+
+<span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">AppearanceChannel</span><span class="dl">"</span> <span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8b72294a794bd5ed2f117bbaabaf3c37">// app/javascript/channels/chat_channel.js
+import consumer from "./consumer"
+
+consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" })
+
+// app/javascript/channels/appearance_channel.js
+import consumer from "./consumer"
+
+consumer.subscriptions.create({ channel: "AppearanceChannel" })
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8b72294a794bd5ed2f117bbaabaf3c37">Copiar</button>
+</div>
+<p>Enquanto isto cria uma assinatura, a funcionalidade necessária para responder
+aos dados recebidos será descrita mais tarde.</p><p>Um consumidor pode agir como um assinante para um dado canal qualquer número de
+vezes. Por exemplo, um consumidor pode assinar várias salas de <em>chat</em> ao mesmo
+tempo.</p><div class="code_container">
+<pre><code class="highlight js"><span class="c1">// app/javascript/channels/chat_channel.js</span>
+<span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
+
+<span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ChatChannel</span><span class="dl">"</span><span class="p">,</span> <span class="na">room</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1st Room</span><span class="dl">"</span> <span class="p">})</span>
+<span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ChatChannel</span><span class="dl">"</span><span class="p">,</span> <span class="na">room</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2nd Room</span><span class="dl">"</span> <span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e9308b2d2b077d05e19d9655ad34245c">// app/javascript/channels/chat_channel.js
+import consumer from "./consumer"
+
+consumer.subscriptions.create({ channel: "ChatChannel", room: "1st Room" })
+consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e9308b2d2b077d05e19d9655ad34245c">Copiar</button>
+</div>
+<h3 id="client-server-interactions"><a class="anchorlink" href="#client-server-interactions">6 Client-Server Interactions</a></h3><h4 id="streams"><a class="anchorlink" href="#streams">6.1 Streams</a></h4><p><em>Streams</em> provide the mechanism by which channels route published content
+(broadcasts) to their subscribers.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
+<span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
+  <span class="k">def</span> <span class="nf">subscribed</span>
+    <span class="n">stream_from</span> <span class="s2">"chat_</span><span class="si">#{</span><span class="n">params</span><span class="p">[</span><span class="ss">:room</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-03636283aead975678c5d382f69c5bfa"># app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+  def subscribed
+    stream_from "chat_#{params[:room]}"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-03636283aead975678c5d382f69c5bfa">Copiar</button>
+</div>
+<p>If you have a stream that is related to a model, then the broadcasting used
+can be generated from the model and channel. The following example would
+subscribe to a broadcasting like <code>comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE</code></p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CommentsChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
+  <span class="k">def</span> <span class="nf">subscribed</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+    <span class="n">stream_for</span> <span class="n">post</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b2416a00800fc67a6dead0a075e2faa8">class CommentsChannel &lt; ApplicationCable::Channel
+  def subscribed
+    post = Post.find(params[:id])
+    stream_for post
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b2416a00800fc67a6dead0a075e2faa8">Copiar</button>
+</div>
+<p>You can then broadcast to this channel like this:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">CommentsChannel</span><span class="p">.</span><span class="nf">broadcast_to</span><span class="p">(</span><span class="vi">@post</span><span class="p">,</span> <span class="vi">@comment</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-86fa31724248ba9d326458051252ff62">CommentsChannel.broadcast_to(@post, @comment)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-86fa31724248ba9d326458051252ff62">Copiar</button>
+</div>
+<h4 id="broadcasting"><a class="anchorlink" href="#broadcasting">6.2 Broadcasting</a></h4><p>A <em>broadcasting</em> is a pub/sub link where anything transmitted by a publisher
+is routed directly to the channel subscribers who are streaming that named
+broadcasting. Each channel can be streaming zero or more broadcastings.</p><p>Broadcastings are purely an online queue and time-dependent. If a consumer is
+not streaming (subscribed to a given channel), they'll not get the broadcast
+should they connect later.</p><p>Broadcasts are called elsewhere in your Rails application:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">WebNotificationsChannel</span><span class="p">.</span><span class="nf">broadcast_to</span><span class="p">(</span>
+  <span class="n">current_user</span><span class="p">,</span>
+  <span class="ss">title: </span><span class="s1">'New things!'</span><span class="p">,</span>
+  <span class="ss">body: </span><span class="s1">'All the news fit to print'</span>
+<span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3492ddac6e87df4a2a59d46abc600fb5">WebNotificationsChannel.broadcast_to(
+  current_user,
+  title: 'New things!',
+  body: 'All the news fit to print'
+)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3492ddac6e87df4a2a59d46abc600fb5">Copiar</button>
+</div>
+<p>The <code>WebNotificationsChannel.broadcast_to</code> call places a message in the current
+subscription adapter's pubsub queue under a separate broadcasting name for each user.
+The default pubsub queue for Action Cable is <code>redis</code> in production and <code>async</code> in development and
+test environments. For a user with an ID of 1, the broadcasting name would be <code>web_notifications:1</code>.</p><p>The channel has been instructed to stream everything that arrives at
+<code>web_notifications:1</code> directly to the client by invoking the <code>received</code>
+callback.</p><h4 id="client-server-interactions-subscriptions"><a class="anchorlink" href="#client-server-interactions-subscriptions">6.3 Subscriptions</a></h4><p>When a consumer is subscribed to a channel, they act as a subscriber. This
+connection is called a subscription. Incoming messages are then routed to
+these channel subscriptions based on an identifier sent by the cable consumer.</p><div class="code_container">
+<pre><code class="highlight js"><span class="c1">// app/javascript/channels/chat_channel.js</span>
+<span class="c1">// Assumes you've already requested the right to send web notifications</span>
+<span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
+
+<span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ChatChannel</span><span class="dl">"</span><span class="p">,</span> <span class="na">room</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Best Room</span><span class="dl">"</span> <span class="p">},</span> <span class="p">{</span>
+  <span class="nx">received</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">appendLine</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+  <span class="p">},</span>
+
+  <span class="nx">appendLine</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">html</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">createLine</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">[data-chat-room='Best Room']</span><span class="dl">"</span><span class="p">)</span>
+    <span class="nx">element</span><span class="p">.</span><span class="nx">insertAdjacentHTML</span><span class="p">(</span><span class="dl">"</span><span class="s2">beforeend</span><span class="dl">"</span><span class="p">,</span> <span class="nx">html</span><span class="p">)</span>
+  <span class="p">},</span>
+
+  <span class="nx">createLine</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">`</span><span class="err">
+      &lt;article class="chat-line"&gt;
+        &lt;span class="speaker"&gt;</span><span class="p">${</span><span class="nx">data</span><span class="p">[</span><span class="dl">"</span><span class="s2">sent_by</span><span class="dl">"</span><span class="p">]}</span><span class="err">&lt;/span&gt;
+        &lt;span class="body"&gt;</span><span class="p">${</span><span class="nx">data</span><span class="p">[</span><span class="dl">"</span><span class="s2">body</span><span class="dl">"</span><span class="p">]}</span><span class="err">&lt;/span&gt;
+      &lt;/article&gt;
+    </span><span class="s2">`</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-559f42127bad749b28855018fb4ca058">// app/javascript/channels/chat_channel.js
+// Assumes you've already requested the right to send web notifications
+import consumer from "./consumer"
+
+consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
+  received(data) {
+    this.appendLine(data)
+  },
+
+  appendLine(data) {
+    const html = this.createLine(data)
+    const element = document.querySelector("[data-chat-room='Best Room']")
+    element.insertAdjacentHTML("beforeend", html)
+  },
+
+  createLine(data) {
+    return `
+      &lt;article class="chat-line"&gt;
+        &lt;span class="speaker"&gt;${data["sent_by"]}&lt;/span&gt;
+        &lt;span class="body"&gt;${data["body"]}&lt;/span&gt;
+      &lt;/article&gt;
+    `
+  }
+})
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-559f42127bad749b28855018fb4ca058">Copiar</button>
+</div>
+<h4 id="passing-parameters-to-channels"><a class="anchorlink" href="#passing-parameters-to-channels">6.4 Passing Parameters to Channels</a></h4><p>You can pass parameters from the client side to the server side when creating a
+subscription. For example:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
+<span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
+  <span class="k">def</span> <span class="nf">subscribed</span>
+    <span class="n">stream_from</span> <span class="s2">"chat_</span><span class="si">#{</span><span class="n">params</span><span class="p">[</span><span class="ss">:room</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-61a3fdf2cd5ca9427eb17e84f0e5be54"># app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+  def subscribed
+    stream_from "chat_#{params[:room]}"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-61a3fdf2cd5ca9427eb17e84f0e5be54">Copiar</button>
+</div>
+<p>An object passed as the first argument to <code>subscriptions.create</code> becomes the
+params hash in the cable channel. The keyword <code>channel</code> is required:</p><div class="code_container">
+<pre><code class="highlight js"><span class="c1">// app/javascript/channels/chat_channel.js</span>
+<span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
+
+<span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ChatChannel</span><span class="dl">"</span><span class="p">,</span> <span class="na">room</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Best Room</span><span class="dl">"</span> <span class="p">},</span> <span class="p">{</span>
+  <span class="nx">received</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">appendLine</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+  <span class="p">},</span>
+
+  <span class="nx">appendLine</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">html</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">createLine</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">[data-chat-room='Best Room']</span><span class="dl">"</span><span class="p">)</span>
+    <span class="nx">element</span><span class="p">.</span><span class="nx">insertAdjacentHTML</span><span class="p">(</span><span class="dl">"</span><span class="s2">beforeend</span><span class="dl">"</span><span class="p">,</span> <span class="nx">html</span><span class="p">)</span>
+  <span class="p">},</span>
+
+  <span class="nx">createLine</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">`</span><span class="err">
+      &lt;article class="chat-line"&gt;
+        &lt;span class="speaker"&gt;</span><span class="p">${</span><span class="nx">data</span><span class="p">[</span><span class="dl">"</span><span class="s2">sent_by</span><span class="dl">"</span><span class="p">]}</span><span class="err">&lt;/span&gt;
+        &lt;span class="body"&gt;</span><span class="p">${</span><span class="nx">data</span><span class="p">[</span><span class="dl">"</span><span class="s2">body</span><span class="dl">"</span><span class="p">]}</span><span class="err">&lt;/span&gt;
+      &lt;/article&gt;
+    </span><span class="s2">`</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c0d2841c483d61ad49ea3c73a692a0ca">// app/javascript/channels/chat_channel.js
+import consumer from "./consumer"
+
+consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
+  received(data) {
+    this.appendLine(data)
+  },
+
+  appendLine(data) {
+    const html = this.createLine(data)
+    const element = document.querySelector("[data-chat-room='Best Room']")
+    element.insertAdjacentHTML("beforeend", html)
+  },
+
+  createLine(data) {
+    return `
+      &lt;article class="chat-line"&gt;
+        &lt;span class="speaker"&gt;${data["sent_by"]}&lt;/span&gt;
+        &lt;span class="body"&gt;${data["body"]}&lt;/span&gt;
+      &lt;/article&gt;
+    `
+  }
+})
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c0d2841c483d61ad49ea3c73a692a0ca">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Somewhere in your app this is called, perhaps</span>
+<span class="c1"># from a NewCommentJob.</span>
+<span class="no">ActionCable</span><span class="p">.</span><span class="nf">server</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span>
+  <span class="s2">"chat_</span><span class="si">#{</span><span class="n">room</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+  <span class="ss">sent_by: </span><span class="s1">'Paul'</span><span class="p">,</span>
+  <span class="ss">body: </span><span class="s1">'This is a cool chat app.'</span>
+<span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-602820b9836701fe0bbd0fb35edd4b8c"># Somewhere in your app this is called, perhaps
+# from a NewCommentJob.
+ActionCable.server.broadcast(
+  "chat_#{room}",
+  sent_by: 'Paul',
+  body: 'This is a cool chat app.'
+)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-602820b9836701fe0bbd0fb35edd4b8c">Copiar</button>
+</div>
+<h4 id="rebroadcasting-a-message"><a class="anchorlink" href="#rebroadcasting-a-message">6.5 Rebroadcasting a Message</a></h4><p>A common use case is to <em>rebroadcast</em> a message sent by one client to any
+other connected clients.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
+<span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
+  <span class="k">def</span> <span class="nf">subscribed</span>
+    <span class="n">stream_from</span> <span class="s2">"chat_</span><span class="si">#{</span><span class="n">params</span><span class="p">[</span><span class="ss">:room</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">receive</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="no">ActionCable</span><span class="p">.</span><span class="nf">server</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="s2">"chat_</span><span class="si">#{</span><span class="n">params</span><span class="p">[</span><span class="ss">:room</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8bb996f78cf5c44a9dbbfefafc383353"># app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+  def subscribed
+    stream_from "chat_#{params[:room]}"
+  end
+
+  def receive(data)
+    ActionCable.server.broadcast("chat_#{params[:room]}", data)
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8bb996f78cf5c44a9dbbfefafc383353">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight js"><span class="c1">// app/javascript/channels/chat_channel.js</span>
+<span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
+
+<span class="kd">const</span> <span class="nx">chatChannel</span> <span class="o">=</span> <span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ChatChannel</span><span class="dl">"</span><span class="p">,</span> <span class="na">room</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Best Room</span><span class="dl">"</span> <span class="p">},</span> <span class="p">{</span>
+  <span class="nx">received</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// data =&gt; { sent_by: "Paul", body: "This is a cool chat app." }</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">chatChannel</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span> <span class="na">sent_by</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Paul</span><span class="dl">"</span><span class="p">,</span> <span class="na">body</span><span class="p">:</span> <span class="dl">"</span><span class="s2">This is a cool chat app.</span><span class="dl">"</span> <span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-13ca385f17942191fa97caa8cfa412f1">// app/javascript/channels/chat_channel.js
+import consumer from "./consumer"
+
+const chatChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
+  received(data) {
+    // data =&gt; { sent_by: "Paul", body: "This is a cool chat app." }
+  }
+}
+
+chatChannel.send({ sent_by: "Paul", body: "This is a cool chat app." })
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-13ca385f17942191fa97caa8cfa412f1">Copiar</button>
+</div>
+<p>The rebroadcast will be received by all connected clients, <em>including</em> the
+client that sent the message. Note that params are the same as they were when
+you subscribed to the channel.</p><h3 id="full-stack-examples"><a class="anchorlink" href="#full-stack-examples">7 Full-Stack Examples</a></h3><p>The following setup steps are common to both examples:</p>
+<ol>
+<li>
+<a href="#connection-setup">Setup your connection</a>.</li>
+<li>
+<a href="#parent-channel-setup">Setup your parent channel</a>.</li>
+<li>
+<a href="#connect-consumer">Connect your consumer</a>.</li>
+</ol>
+<h4 id="example-1-user-appearances"><a class="anchorlink" href="#example-1-user-appearances">7.1 Example 1: User Appearances</a></h4><p>Here's a simple example of a channel that tracks whether a user is online or not
+and what page they're on. (This is useful for creating presence features like showing
+a green dot next to a user name if they're online).</p><p>Create the server-side appearance channel:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/channels/appearance_channel.rb</span>
+<span class="k">class</span> <span class="nc">AppearanceChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
+  <span class="k">def</span> <span class="nf">subscribed</span>
+    <span class="n">current_user</span><span class="p">.</span><span class="nf">appear</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">unsubscribed</span>
+    <span class="n">current_user</span><span class="p">.</span><span class="nf">disappear</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">appear</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">current_user</span><span class="p">.</span><span class="nf">appear</span><span class="p">(</span><span class="ss">on: </span><span class="n">data</span><span class="p">[</span><span class="s1">'appearing_on'</span><span class="p">])</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">away</span>
+    <span class="n">current_user</span><span class="p">.</span><span class="nf">away</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6f3651633e282f1e5c51299fd3d86a92"># app/channels/appearance_channel.rb
+class AppearanceChannel &lt; ApplicationCable::Channel
+  def subscribed
+    current_user.appear
+  end
+
+  def unsubscribed
+    current_user.disappear
+  end
+
+  def appear(data)
+    current_user.appear(on: data['appearing_on'])
+  end
+
+  def away
+    current_user.away
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6f3651633e282f1e5c51299fd3d86a92">Copiar</button>
+</div>
+<p>When a subscription is initiated the <code>subscribed</code> callback gets fired and we
+take that opportunity to say "the current user has indeed appeared". That
+appear/disappear API could be backed by Redis, a database, or whatever else.</p><p>Create the client-side appearance channel subscription:</p><div class="code_container">
+<pre><code class="highlight js"><span class="c1">// app/javascript/channels/appearance_channel.js</span>
+<span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
+
+<span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">"</span><span class="s2">AppearanceChannel</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+  <span class="c1">// Called once when the subscription is created.</span>
+  <span class="nx">initialized</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+  <span class="p">},</span>
+
+  <span class="c1">// Called when the subscription is ready for use on the server.</span>
+  <span class="nx">connected</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">install</span><span class="p">()</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">()</span>
+  <span class="p">},</span>
+
+  <span class="c1">// Called when the WebSocket connection is closed.</span>
+  <span class="nx">disconnected</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">uninstall</span><span class="p">()</span>
+  <span class="p">},</span>
+
+  <span class="c1">// Called when the subscription is rejected by the server.</span>
+  <span class="nx">rejected</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">uninstall</span><span class="p">()</span>
+  <span class="p">},</span>
+
+  <span class="nx">update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">documentIsActive</span> <span class="p">?</span> <span class="k">this</span><span class="p">.</span><span class="nx">appear</span><span class="p">()</span> <span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">away</span><span class="p">()</span>
+  <span class="p">},</span>
+
+  <span class="nx">appear</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Calls `AppearanceChannel#appear(data)` on the server.</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">perform</span><span class="p">(</span><span class="dl">"</span><span class="s2">appear</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span> <span class="na">appearing_on</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">appearingOn</span> <span class="p">})</span>
+  <span class="p">},</span>
+
+  <span class="nx">away</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Calls `AppearanceChannel#away` on the server.</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">perform</span><span class="p">(</span><span class="dl">"</span><span class="s2">away</span><span class="dl">"</span><span class="p">)</span>
+  <span class="p">},</span>
+
+  <span class="nx">install</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">focus</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">)</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">blur</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">)</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">turbolinks:load</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">)</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">visibilitychange</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">)</span>
+  <span class="p">},</span>
+
+  <span class="nx">uninstall</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">focus</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">)</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">blur</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">)</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">turbolinks:load</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">)</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">visibilitychange</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">)</span>
+  <span class="p">},</span>
+
+  <span class="kd">get</span> <span class="nx">documentIsActive</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">document</span><span class="p">.</span><span class="nx">visibilityState</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">visible</span><span class="dl">"</span> <span class="o">&amp;&amp;</span> <span class="nb">document</span><span class="p">.</span><span class="nx">hasFocus</span><span class="p">()</span>
+  <span class="p">},</span>
+
+  <span class="kd">get</span> <span class="nx">appearingOn</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">[data-appearing-on]</span><span class="dl">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">element</span> <span class="p">?</span> <span class="nx">element</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">data-appearing-on</span><span class="dl">"</span><span class="p">)</span> <span class="p">:</span> <span class="kc">null</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ca54c793520a2f085aefd66a7db6ebc3">// app/javascript/channels/appearance_channel.js
+import consumer from "./consumer"
+
+consumer.subscriptions.create("AppearanceChannel", {
+  // Called once when the subscription is created.
+  initialized() {
+    this.update = this.update.bind(this)
+  },
+
+  // Called when the subscription is ready for use on the server.
+  connected() {
+    this.install()
+    this.update()
+  },
+
+  // Called when the WebSocket connection is closed.
+  disconnected() {
+    this.uninstall()
+  },
+
+  // Called when the subscription is rejected by the server.
+  rejected() {
+    this.uninstall()
+  },
+
+  update() {
+    this.documentIsActive ? this.appear() : this.away()
+  },
+
+  appear() {
+    // Calls `AppearanceChannel#appear(data)` on the server.
+    this.perform("appear", { appearing_on: this.appearingOn })
+  },
+
+  away() {
+    // Calls `AppearanceChannel#away` on the server.
+    this.perform("away")
+  },
+
+  install() {
+    window.addEventListener("focus", this.update)
+    window.addEventListener("blur", this.update)
+    document.addEventListener("turbolinks:load", this.update)
+    document.addEventListener("visibilitychange", this.update)
+  },
+
+  uninstall() {
+    window.removeEventListener("focus", this.update)
+    window.removeEventListener("blur", this.update)
+    document.removeEventListener("turbolinks:load", this.update)
+    document.removeEventListener("visibilitychange", this.update)
+  },
+
+  get documentIsActive() {
+    return document.visibilityState == "visible" &amp;&amp; document.hasFocus()
+  },
+
+  get appearingOn() {
+    const element = document.querySelector("[data-appearing-on]")
+    return element ? element.getAttribute("data-appearing-on") : null
+  }
+})
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ca54c793520a2f085aefd66a7db6ebc3">Copiar</button>
+</div>
+<h6 id="client-server-interaction"><a class="anchorlink" href="#client-server-interaction">7.1.1 Client-Server Interaction</a></h6>
+<ol>
+<li><p><strong>Client</strong> connects to the <strong>Server</strong> via <code>App.cable =
+ActionCable.createConsumer("ws://cable.example.com")</code>. (<code>cable.js</code>). The
+<strong>Server</strong> identifies this connection by <code>current_user</code>.</p></li>
+<li><p><strong>Client</strong> subscribes to the appearance channel via
+<code>consumer.subscriptions.create({ channel: "AppearanceChannel" })</code>. (<code>appearance_channel.js</code>)</p></li>
+<li><p><strong>Server</strong> recognizes a new subscription has been initiated for the
+appearance channel and runs its <code>subscribed</code> callback, calling the <code>appear</code>
+method on <code>current_user</code>. (<code>appearance_channel.rb</code>)</p></li>
+<li><p><strong>Client</strong> recognizes that a subscription has been established and calls
+<code>connected</code> (<code>appearance_channel.js</code>) which in turn calls <code>install</code> and <code>appear</code>.
+<code>appear</code> calls <code>AppearanceChannel#appear(data)</code> on the server, and supplies a
+data hash of <code>{ appearing_on: this.appearingOn }</code>. This is
+possible because the server-side channel instance automatically exposes all
+public methods declared on the class (minus the callbacks), so that these can be
+reached as remote procedure calls via a subscription's <code>perform</code> method.</p></li>
+<li><p><strong>Server</strong> receives the request for the <code>appear</code> action on the appearance
+channel for the connection identified by <code>current_user</code>
+(<code>appearance_channel.rb</code>). <strong>Server</strong> retrieves the data with the
+<code>:appearing_on</code> key from the data hash and sets it as the value for the <code>:on</code>
+key being passed to <code>current_user.appear</code>.</p></li>
+</ol>
+<h4 id="example-2-receiving-new-web-notifications"><a class="anchorlink" href="#example-2-receiving-new-web-notifications">7.2 Example 2: Receiving New Web Notifications</a></h4><p>The appearance example was all about exposing server functionality to
+client-side invocation over the WebSocket connection. But the great thing
+about WebSockets is that it's a two-way street. So now let's show an example
+where the server invokes an action on the client.</p><p>This is a web notification channel that allows you to trigger client-side
+web notifications when you broadcast to the right streams:</p><p>Create the server-side web notifications channel:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/channels/web_notifications_channel.rb</span>
+<span class="k">class</span> <span class="nc">WebNotificationsChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
+  <span class="k">def</span> <span class="nf">subscribed</span>
+    <span class="n">stream_for</span> <span class="n">current_user</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-41491fbbe8635da7f27a6e3bb69f71a6"># app/channels/web_notifications_channel.rb
+class WebNotificationsChannel &lt; ApplicationCable::Channel
+  def subscribed
+    stream_for current_user
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-41491fbbe8635da7f27a6e3bb69f71a6">Copiar</button>
+</div>
+<p>Create the client-side web notifications channel subscription:</p><div class="code_container">
+<pre><code class="highlight js"><span class="c1">// app/javascript/channels/web_notifications_channel.js</span>
+<span class="c1">// Client-side which assumes you've already requested</span>
+<span class="c1">// the right to send web notifications.</span>
+<span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
+
+<span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">"</span><span class="s2">WebNotificationsChannel</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">received</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">new</span> <span class="nx">Notification</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="dl">"</span><span class="s2">title</span><span class="dl">"</span><span class="p">],</span> <span class="na">body</span><span class="p">:</span> <span class="nx">data</span><span class="p">[</span><span class="dl">"</span><span class="s2">body</span><span class="dl">"</span><span class="p">])</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b8b87a33cd4a9507deff8ce027c28bdf">// app/javascript/channels/web_notifications_channel.js
+// Client-side which assumes you've already requested
+// the right to send web notifications.
+import consumer from "./consumer"
+
+consumer.subscriptions.create("WebNotificationsChannel", {
+  received(data) {
+    new Notification(data["title"], body: data["body"])
+  }
+})
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b8b87a33cd4a9507deff8ce027c28bdf">Copiar</button>
+</div>
+<p>Broadcast content to a web notification channel instance from elsewhere in your
+application:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Somewhere in your app this is called, perhaps from a NewCommentJob</span>
+<span class="no">WebNotificationsChannel</span><span class="p">.</span><span class="nf">broadcast_to</span><span class="p">(</span>
+  <span class="n">current_user</span><span class="p">,</span>
+  <span class="ss">title: </span><span class="s1">'New things!'</span><span class="p">,</span>
+  <span class="ss">body: </span><span class="s1">'All the news fit to print'</span>
+<span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8fa23e4b83fb7646c00da5880fafea23"># Somewhere in your app this is called, perhaps from a NewCommentJob
+WebNotificationsChannel.broadcast_to(
+  current_user,
+  title: 'New things!',
+  body: 'All the news fit to print'
+)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8fa23e4b83fb7646c00da5880fafea23">Copiar</button>
+</div>
+<p>The <code>WebNotificationsChannel.broadcast_to</code> call places a message in the current
+subscription adapter's pubsub queue under a separate broadcasting name for each
+user. For a user with an ID of 1, the broadcasting name would be
+<code>web_notifications:1</code>.</p><p>The channel has been instructed to stream everything that arrives at
+<code>web_notifications:1</code> directly to the client by invoking the <code>received</code>
+callback. The data passed as argument is the hash sent as the second parameter
+to the server-side broadcast call, JSON encoded for the trip across the wire
+and unpacked for the data argument arriving as <code>received</code>.</p><h4 id="more-complete-examples"><a class="anchorlink" href="#more-complete-examples">7.3 More Complete Examples</a></h4><p>See the <a href="https://github.com/rails/actioncable-examples">rails/actioncable-examples</a>
+repository for a full example of how to setup Action Cable in a Rails app and adding channels.</p><h3 id="configuration"><a class="anchorlink" href="#configuration">8 Configuration</a></h3><p>Action Cable has two required configurations: a subscription adapter and allowed request origins.</p><h4 id="subscription-adapter"><a class="anchorlink" href="#subscription-adapter">8.1 Subscription Adapter</a></h4><p>By default, Action Cable looks for a configuration file in <code>config/cable.yml</code>.
+The file must specify an adapter for each Rails environment. See the
+<a href="#dependencies">Dependencies</a> section for additional information on adapters.</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">development</span><span class="pi">:</span>
+  <span class="na">adapter</span><span class="pi">:</span> <span class="s">async</span>
+
+<span class="na">test</span><span class="pi">:</span>
+  <span class="na">adapter</span><span class="pi">:</span> <span class="s">async</span>
+
+<span class="na">production</span><span class="pi">:</span>
+  <span class="na">adapter</span><span class="pi">:</span> <span class="s">redis</span>
+  <span class="na">url</span><span class="pi">:</span> <span class="s">redis://10.10.3.153:6381</span>
+  <span class="na">channel_prefix</span><span class="pi">:</span> <span class="s">appname_production</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-10788ced3dbbc3445a1089fc386fdca9">development:
+  adapter: async
+
+test:
+  adapter: async
+
+production:
+  adapter: redis
+  url: redis://10.10.3.153:6381
+  channel_prefix: appname_production
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-10788ced3dbbc3445a1089fc386fdca9">Copiar</button>
+</div>
+<h5 id="adapter-configuration"><a class="anchorlink" href="#adapter-configuration">8.1.1 Adapter Configuration</a></h5><p>Below is a list of the subscription adapters available for end users.</p><h6 id="async-adapter"><a class="anchorlink" href="#async-adapter">8.1.1.1 Async Adapter</a></h6><p>The async adapter is intended for development/testing and should not be used in production.</p><h6 id="redis-adapter"><a class="anchorlink" href="#redis-adapter">8.1.1.2 Redis Adapter</a></h6><p>The Redis adapter requires users to provide a URL pointing to the Redis server.
+Additionally, a <code>channel_prefix</code> may be provided to avoid channel name collisions
+when using the same Redis server for multiple applications. See the <a href="https://redis.io/topics/pubsub#database-amp-scoping">Redis PubSub documentation</a> for more details.</p><h6 id="postgresql-adapter"><a class="anchorlink" href="#postgresql-adapter">8.1.1.3 PostgreSQL Adapter</a></h6><p>The PostgreSQL adapter uses Active Record's connection pool, and thus the
+application's <code>config/database.yml</code> database configuration, for its connection.
+This may change in the future. <a href="https://github.com/rails/rails/issues/27214">#27214</a></p><h4 id="allowed-request-origins"><a class="anchorlink" href="#allowed-request-origins">8.2 Allowed Request Origins</a></h4><p>Action Cable will only accept requests from specified origins, which are
+passed to the server config as an array. The origins can be instances of
+strings or regular expressions, against which a check for the match will be performed.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">allowed_request_origins</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'https://rubyonrails.com'</span><span class="p">,</span> <span class="sr">%r{http://ruby.*}</span><span class="err">]
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-414ad2eb15c90de3d41b8d09d29f2c02">config.action_cable.allowed_request_origins = ['https://rubyonrails.com', %r{http://ruby.*}]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-414ad2eb15c90de3d41b8d09d29f2c02">Copiar</button>
+</div>
+<p>To disable and allow requests from any origin:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">disable_request_forgery_protection</span> <span class="o">=</span> <span class="kp">true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-adfb61aa564e8b8f9611866573656bed">config.action_cable.disable_request_forgery_protection = true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-adfb61aa564e8b8f9611866573656bed">Copiar</button>
+</div>
+<p>By default, Action Cable allows all requests from localhost:3000 when running
+in the development environment.</p><h4 id="consumer-configuration"><a class="anchorlink" href="#consumer-configuration">8.3 Consumer Configuration</a></h4><p>To configure the URL, add a call to <code>action_cable_meta_tag</code> in your HTML layout
+HEAD. This uses a URL or path typically set via <code>config.action_cable.url</code> in the
+environment configuration files.</p><h4 id="worker-pool-configuration"><a class="anchorlink" href="#worker-pool-configuration">8.4 Worker Pool Configuration</a></h4><p>The worker pool is used to run connection callbacks and channel actions in
+isolation from the server's main thread. Action Cable allows the application
+to configure the number of simultaneously processed threads in the worker pool.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">worker_pool_size</span> <span class="o">=</span> <span class="mi">4</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5b350ddebd0ab93fedd0f5324f5fb17a">config.action_cable.worker_pool_size = 4
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5b350ddebd0ab93fedd0f5324f5fb17a">Copiar</button>
+</div>
+<p>Also, note that your server must provide at least the same number of database
+connections as you have workers. The default worker pool size is set to 4, so
+that means you have to make at least 4 database connections available.
+ You can change that in <code>config/database.yml</code> through the <code>pool</code> attribute.</p><h4 id="other-configurations"><a class="anchorlink" href="#other-configurations">8.5 Other Configurations</a></h4><p>The other common option to configure is the log tags applied to the
+per-connection logger. Here's an example that uses
+the user account id if available, else "no-account" while tagging:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">log_tags</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="o">-&gt;</span> <span class="n">request</span> <span class="p">{</span> <span class="n">request</span><span class="p">.</span><span class="nf">env</span><span class="p">[</span><span class="s1">'user_account_id'</span><span class="p">]</span> <span class="o">||</span> <span class="s2">"no-account"</span> <span class="p">},</span>
+  <span class="ss">:action_cable</span><span class="p">,</span>
+  <span class="o">-&gt;</span> <span class="n">request</span> <span class="p">{</span> <span class="n">request</span><span class="p">.</span><span class="nf">uuid</span> <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e201763606dee3d9b7aa74ab44d60e4b">config.action_cable.log_tags = [
+  -&gt; request { request.env['user_account_id'] || "no-account" },
+  :action_cable,
+  -&gt; request { request.uuid }
+]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e201763606dee3d9b7aa74ab44d60e4b">Copiar</button>
+</div>
+<p>For a full list of all configuration options, see the
+<code>ActionCable::Server::Configuration</code> class.</p><h3 id="running-standalone-cable-servers"><a class="anchorlink" href="#running-standalone-cable-servers">9 Running Standalone Cable Servers</a></h3><h4 id="in-app"><a class="anchorlink" href="#in-app">9.1 In App</a></h4><p>Action Cable can run alongside your Rails application. For example, to
+listen for WebSocket requests on <code>/websocket</code>, specify that path to
+<code>config.action_cable.mount_path</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
+<span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="no">Rails</span><span class="o">::</span><span class="no">Application</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">mount_path</span> <span class="o">=</span> <span class="s1">'/websocket'</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e4c6b7695a5face47c68874ef6d9fae2"># config/application.rb
+class Application &lt; Rails::Application
+  config.action_cable.mount_path = '/websocket'
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e4c6b7695a5face47c68874ef6d9fae2">Copiar</button>
+</div>
+<p>You can use <code>ActionCable.createConsumer()</code> to connect to the cable
+server if <code>action_cable_meta_tag</code> is invoked in the layout. Otherwise, A path is
+specified as first argument to <code>createConsumer</code> (e.g. <code>ActionCable.createConsumer("/websocket")</code>).</p><p>For every instance of your server you create and for every worker your server
+spawns, you will also have a new instance of Action Cable, but the use of Redis
+keeps messages synced across connections.</p><h4 id="standalone"><a class="anchorlink" href="#standalone">9.2 Standalone</a></h4><p>The cable servers can be separated from your normal application server. It's
+still a Rack application, but it is its own Rack application. The recommended
+basic setup is as follows:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># cable/config.ru</span>
+<span class="nb">require_relative</span> <span class="s1">'../config/environment'</span>
+<span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">eager_load!</span>
+
+<span class="n">run</span> <span class="no">ActionCable</span><span class="p">.</span><span class="nf">server</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d2d30c8ce565c875c03470f56b183b58"># cable/config.ru
+require_relative '../config/environment'
+Rails.application.eager_load!
+
+run ActionCable.server
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d2d30c8ce565c875c03470f56b183b58">Copiar</button>
+</div>
+<p>Then you start the server using a binstub in <code>bin/cable</code> ala:</p><div class="code_container">
+<pre><code class="highlight plaintext">#!/bin/bash
+bundle exec puma -p 28080 cable/config.ru
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6d6a385a0ebf2c9a5133192a5cc36d9a">#!/bin/bash
+bundle exec puma -p 28080 cable/config.ru
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6d6a385a0ebf2c9a5133192a5cc36d9a">Copiar</button>
+</div>
+<p>The above will start a cable server on port 28080.</p><h4 id="notes"><a class="anchorlink" href="#notes">9.3 Notes</a></h4><p>The WebSocket server doesn't have access to the session, but it has
+access to the cookies. This can be used when you need to handle
+authentication. You can see one way of doing that with Devise in this <a href="https://greg.molnar.io/blog/actioncable-devise-authentication/">article</a>.</p><h3 id="dependencias"><a class="anchorlink" href="#dependencias">10 Dependências</a></h3><p>O <em>Action Cable</em> fornece uma interface de adaptador de assinatura para processar seus
+<em>pubsub</em> internos. Por padrão, adaptadores assíncronos, <em>inline</em>, PostgreSQL e Redis
+estão incluídos. O adaptador padrão
+em novas aplicações Rails é o adaptador assíncrono (<code>async</code>).</p><p>O lado Ruby das coisas é construído em cima de <a href="https://github.com/faye/websocket-driver-ruby">websocket-driver</a>,
+<a href="https://github.com/celluloid/nio4r">nio4r</a> e <a href="https://github.com/ruby-concurrency/concurrent-ruby">concurrent-ruby</a>.</p><h3 id="implantacao"><a class="anchorlink" href="#implantacao">11 Implantação</a></h3><p>O <em>Action Cable</em> é alimentado por uma combinação de <em>WebSockets</em> e <em>threads</em>. Tanto o
+<a href="https://www.techopedia.com/definition/31509/plumbing"><em>plumbing</em></a> do <em>framework</em> e o trabalho do <em>channel</em> especificado pelo usuário são tratados internamente,
+usando suporte de <em>thread</em> nativo do Ruby. Isso significa que você pode usar todos os seus
+<em>models</em> dos Rails sem problemas, contanto que você não tenha cometido nenhum pecado de <em>thread-safety</em>.</p><p>O servidor <em>Action Cable</em> implementa o <em>Rack socket hijacking API</em>,
+permitindo assim o uso de um padrão <em>multithread</em> para o gerenciamento de conexões
+internamente, independentemente de o servidor de aplicativos ser multiencadeado ou não.</p><p>Assim, <em>Action Cable</em> funciona com servidores populares como <em>Unicorn</em>, <em>Puma</em> e
+<em>Passenger</em>.</p><h3 id="teste"><a class="anchorlink" href="#teste">12 Teste</a></h3><p>Você pode encontrar instruções detalhadas de como testar a sua funcionalidade <em>Action Cable</em> no
+<a href="testing.html#testing-action-cable">guia de teste</a>.</p>
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Action Mailbox Basics — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Action Mailbox Basics — Ruby on Rails Guides" />
+  <meta name="description" content="Action Mailbox BasicsThis guide provides you with all you need to get started in receiving emails to your application.After reading this guide, you will know: How to receive email within a Rails application. How to configure Action Mailbox. How to generate and route emails to a mailbox. How to test incoming emails." />
+  <meta property="og:description" content="Action Mailbox BasicsThis guide provides you with all you need to get started in receiving emails to your application.After reading this guide, you will know: How to receive email within a Rails application. How to configure Action Mailbox. How to generate and route emails to a mailbox. How to test incoming emails." />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Action Mailbox Basics</h2><p>This guide provides you with all you need to get started in receiving
+emails to your application.</p><p>After reading this guide, you will know:</p>
+<ul>
+<li>How to receive email within a Rails application.</li>
+<li>How to configure Action Mailbox.</li>
+<li>How to generate and route emails to a mailbox.</li>
+<li>How to test incoming emails.</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#setup">Setup</a></li>
+<li>
+<a href="#configuration">Configuration</a>
+
+<ul>
+<li><a href="#exim">Exim</a></li>
+<li><a href="#mailgun">Mailgun</a></li>
+<li><a href="#mandrill">Mandrill</a></li>
+<li><a href="#postfix">Postfix</a></li>
+<li><a href="#postmark">Postmark</a></li>
+<li><a href="#qmail">Qmail</a></li>
+<li><a href="#sendgrid">SendGrid</a></li>
+</ul>
+</li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#incineration-of-inboundemails">Incineration of InboundEmails</a></li>
+<li><a href="#working-with-action-mailbox-in-development">Working with Action Mailbox in development</a></li>
+<li><a href="#testing-mailboxes">Testing mailboxes</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="introduction"><a class="anchorlink" href="#introduction">1 Introduction</a></h3><p>Action Mailbox routes incoming emails to controller-like mailboxes for
+processing in Rails. It ships with ingresses for Mailgun, Mandrill, Postmark,
+and SendGrid. You can also handle inbound mails directly via the built-in Exim,
+Postfix, and Qmail ingresses.</p><p>The inbound emails are turned into <code>InboundEmail</code> records using Active Record
+and feature lifecycle tracking, storage of the original email on cloud storage
+via Active Storage, and responsible data handling with
+on-by-default incineration.</p><p>These inbound emails are routed asynchronously using Active Job to one or
+several dedicated mailboxes, which are capable of interacting directly
+with the rest of your domain model.</p><h3 id="setup"><a class="anchorlink" href="#setup">2 Setup</a></h3><p>Install migrations needed for <code>InboundEmail</code> and ensure Active Storage is set up:</p><div class="code_container">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>action_mailbox:install
+<span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>db:migrate
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-db1553a698ecd846cf063910c3849dc3">rails action_mailbox:install
+rails db:migrate
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-db1553a698ecd846cf063910c3849dc3">Copiar</button>
+</div>
+<h3 id="configuration"><a class="anchorlink" href="#configuration">3 Configuration</a></h3><h4 id="exim"><a class="anchorlink" href="#exim">3.1 Exim</a></h4><p>Tell Action Mailbox to accept emails from an SMTP relay:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:relay</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-951d9d039745e188bb02e69bc2888d7b"># config/environments/production.rb
+config.action_mailbox.ingress = :relay
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-951d9d039745e188bb02e69bc2888d7b">Copiar</button>
+</div>
+<p>Generate a strong password that Action Mailbox can use to authenticate requests to the relay ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's encrypted credentials under
+<code>action_mailbox.ingress_password</code>, where Action Mailbox will automatically find it:</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
+  <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ce3dc7bb5d458d1f6c731cf8652b1fbb">action_mailbox:
+  ingress_password: ...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ce3dc7bb5d458d1f6c731cf8652b1fbb">Copiar</button>
+</div>
+<p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code> environment variable.</p><p>Configure Exim to pipe inbound emails to <code>bin/rails action_mailbox:ingress:exim</code>,
+providing the <code>URL</code> of the relay ingress and the <code>INGRESS_PASSWORD</code> you
+previously generated. If your application lived at <code>https://example.com</code>, the
+full command would look like this:</p><div class="code_container">
+<pre><code class="highlight shell"><span class="nb">bin/rails </span>action_mailbox:ingress:exim <span class="nv">URL</span><span class="o">=</span>https://example.com/rails/action_mailbox/relay/inbound_emails <span class="nv">INGRESS_PASSWORD</span><span class="o">=</span>...
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7dc6c079c04c910055ae562959bc5390">bin/rails action_mailbox:ingress:exim URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7dc6c079c04c910055ae562959bc5390">Copiar</button>
+</div>
+<h4 id="mailgun"><a class="anchorlink" href="#mailgun">3.2 Mailgun</a></h4><p>Give Action Mailbox your
+<a href="https://help.mailgun.com/hc/en-us/articles/203380100-Where-can-I-find-my-API-key-and-SMTP-credentials">Mailgun API key</a>
+so it can authenticate requests to the Mailgun ingress.</p><p>Use <code>rails credentials:edit</code> to add your API key to your application's
+encrypted credentials under <code>action_mailbox.mailgun_api_key</code>,
+where Action Mailbox will automatically find it:</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
+  <span class="na">mailgun_api_key</span><span class="pi">:</span> <span class="s">...</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ed2d0a64740dce73b9a4349eac93a6de">action_mailbox:
+  mailgun_api_key: ...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ed2d0a64740dce73b9a4349eac93a6de">Copiar</button>
+</div>
+<p>Alternatively, provide your API key in the <code>MAILGUN_INGRESS_API_KEY</code> environment
+variable.</p><p>Tell Action Mailbox to accept emails from Mailgun:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:mailgun</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8a697a442a8d1d32b0d07d21e0d1cd32"># config/environments/production.rb
+config.action_mailbox.ingress = :mailgun
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8a697a442a8d1d32b0d07d21e0d1cd32">Copiar</button>
+</div>
+<p><a href="https://documentation.mailgun.com/en/latest/user_manual.html#receiving-forwarding-and-storing-messages">Configure Mailgun</a>
+to forward inbound emails to <code>/rails/action_mailbox/mailgun/inbound_emails/mime</code>.
+If your application lived at <code>https://example.com</code>, you would specify the
+fully-qualified URL <code>https://example.com/rails/action_mailbox/mailgun/inbound_emails/mime</code>.</p><h4 id="mandrill"><a class="anchorlink" href="#mandrill">3.3 Mandrill</a></h4><p>Give Action Mailbox your Mandrill API key so it can authenticate requests to
+the Mandrill ingress.</p><p>Use <code>rails credentials:edit</code> to add your API key to your application's
+encrypted credentials under <code>action_mailbox.mandrill_api_key</code>,
+where Action Mailbox will automatically find it:</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
+  <span class="na">mandrill_api_key</span><span class="pi">:</span> <span class="s">...</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1bf63b6139e7d6af8cc5d12c12c0e263">action_mailbox:
+  mandrill_api_key: ...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1bf63b6139e7d6af8cc5d12c12c0e263">Copiar</button>
+</div>
+<p>Alternatively, provide your API key in the <code>MANDRILL_INGRESS_API_KEY</code>
+environment variable.</p><p>Tell Action Mailbox to accept emails from Mandrill:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:mandrill</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a3aadf703f453e110dd4b5f34a809caf"># config/environments/production.rb
+config.action_mailbox.ingress = :mandrill
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a3aadf703f453e110dd4b5f34a809caf">Copiar</button>
+</div>
+<p><a href="https://mandrill.zendesk.com/hc/en-us/articles/205583197-Inbound-Email-Processing-Overview">Configure Mandrill</a>
+to route inbound emails to <code>/rails/action_mailbox/mandrill/inbound_emails</code>.
+If your application lived at <code>https://example.com</code>, you would specify
+the fully-qualified URL <code>https://example.com/rails/action_mailbox/mandrill/inbound_emails</code>.</p><h4 id="postfix"><a class="anchorlink" href="#postfix">3.4 Postfix</a></h4><p>Tell Action Mailbox to accept emails from an SMTP relay:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:relay</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fb2256d8c03643498099b0cf34fcdc38"># config/environments/production.rb
+config.action_mailbox.ingress = :relay
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fb2256d8c03643498099b0cf34fcdc38">Copiar</button>
+</div>
+<p>Generate a strong password that Action Mailbox can use to authenticate requests to the relay ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's encrypted credentials under
+<code>action_mailbox.ingress_password</code>, where Action Mailbox will automatically find it:</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
+  <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ef95da84124b1d9a8f12d6249f2168a9">action_mailbox:
+  ingress_password: ...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ef95da84124b1d9a8f12d6249f2168a9">Copiar</button>
+</div>
+<p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code> environment variable.</p><p><a href="https://serverfault.com/questions/258469/how-to-configure-postfix-to-pipe-all-incoming-email-to-a-script">Configure Postfix</a>
+to pipe inbound emails to <code>bin/rails action_mailbox:ingress:postfix</code>, providing
+the <code>URL</code> of the Postfix ingress and the <code>INGRESS_PASSWORD</code> you previously
+generated. If your application lived at <code>https://example.com</code>, the full command
+would look like this:</p><div class="code_container">
+<pre><code class="highlight shell"><span class="nv">$ </span><span class="nb">bin/rails </span>action_mailbox:ingress:postfix <span class="nv">URL</span><span class="o">=</span>https://example.com/rails/action_mailbox/relay/inbound_emails <span class="nv">INGRESS_PASSWORD</span><span class="o">=</span>...
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0cc211e4ed67bf9bc249010c9f0a7b37">$ bin/rails action_mailbox:ingress:postfix URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0cc211e4ed67bf9bc249010c9f0a7b37">Copiar</button>
+</div>
+<h4 id="postmark"><a class="anchorlink" href="#postmark">3.5 Postmark</a></h4><p>Tell Action Mailbox to accept emails from Postmark:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:postmark</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bcec23abea14c584b650a39d046275a7"># config/environments/production.rb
+config.action_mailbox.ingress = :postmark
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bcec23abea14c584b650a39d046275a7">Copiar</button>
+</div>
+<p>Generate a strong password that Action Mailbox can use to authenticate
+requests to the Postmark ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's
+encrypted credentials under <code>action_mailbox.ingress_password</code>,
+where Action Mailbox will automatically find it:</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
+  <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a838119b42c0a21ea3b84363ba33eda5">action_mailbox:
+  ingress_password: ...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a838119b42c0a21ea3b84363ba33eda5">Copiar</button>
+</div>
+<p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code>
+environment variable.</p><p><a href="https://postmarkapp.com/manual#configure-your-inbound-webhook-url">Configure Postmark inbound webhook</a>
+to forward inbound emails to <code>/rails/action_mailbox/postmark/inbound_emails</code> with the username <code>actionmailbox</code>
+and the password you previously generated. If your application lived at <code>https://example.com</code>, you would
+configure Postmark with the following fully-qualified URL:</p><div class="code_container">
+<pre><code class="highlight plaintext">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/postmark/inbound_emails
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0085d2b80e3a82f4e680cab11e35cd2b">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/postmark/inbound_emails
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0085d2b80e3a82f4e680cab11e35cd2b">Copiar</button>
+</div>
+<div class="note"><p>When configuring your Postmark inbound webhook, be sure to check the box labeled <strong>"Include raw email content in JSON payload"</strong>.
+Action Mailbox needs the raw email content to work.</p></div><h4 id="qmail"><a class="anchorlink" href="#qmail">3.6 Qmail</a></h4><p>Tell Action Mailbox to accept emails from an SMTP relay:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:relay</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d88de012c44948760b1e2256cb88cb7c"># config/environments/production.rb
+config.action_mailbox.ingress = :relay
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d88de012c44948760b1e2256cb88cb7c">Copiar</button>
+</div>
+<p>Generate a strong password that Action Mailbox can use to authenticate requests to the relay ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's encrypted credentials under
+<code>action_mailbox.ingress_password</code>, where Action Mailbox will automatically find it:</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
+  <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-88ca39164b8bd824d250d1ebac65ac28">action_mailbox:
+  ingress_password: ...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-88ca39164b8bd824d250d1ebac65ac28">Copiar</button>
+</div>
+<p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code> environment variable.</p><p>Configure Qmail to pipe inbound emails to <code>bin/rails action_mailbox:ingress:qmail</code>,
+providing the <code>URL</code> of the relay ingress and the <code>INGRESS_PASSWORD</code> you
+previously generated. If your application lived at <code>https://example.com</code>, the
+full command would look like this:</p><div class="code_container">
+<pre><code class="highlight shell"><span class="nb">bin/rails </span>action_mailbox:ingress:qmail <span class="nv">URL</span><span class="o">=</span>https://example.com/rails/action_mailbox/relay/inbound_emails <span class="nv">INGRESS_PASSWORD</span><span class="o">=</span>...
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9f0c8d80f93e3717433bdf09ea0cb29b">bin/rails action_mailbox:ingress:qmail URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f0c8d80f93e3717433bdf09ea0cb29b">Copiar</button>
+</div>
+<h4 id="sendgrid"><a class="anchorlink" href="#sendgrid">3.7 SendGrid</a></h4><p>Tell Action Mailbox to accept emails from SendGrid:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:sendgrid</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1e835ffd0c6a96911773412c7ed24afa"># config/environments/production.rb
+config.action_mailbox.ingress = :sendgrid
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1e835ffd0c6a96911773412c7ed24afa">Copiar</button>
+</div>
+<p>Generate a strong password that Action Mailbox can use to authenticate
+requests to the SendGrid ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's
+encrypted credentials under <code>action_mailbox.ingress_password</code>,
+where Action Mailbox will automatically find it:</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
+  <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9925e63c56ff2ca76bf20d7f22e6a0ac">action_mailbox:
+  ingress_password: ...
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9925e63c56ff2ca76bf20d7f22e6a0ac">Copiar</button>
+</div>
+<p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code>
+environment variable.</p><p><a href="https://sendgrid.com/docs/for-developers/parsing-email/setting-up-the-inbound-parse-webhook/">Configure SendGrid Inbound Parse</a>
+to forward inbound emails to
+<code>/rails/action_mailbox/sendgrid/inbound_emails</code> with the username <code>actionmailbox</code>
+and the password you previously generated. If your application lived at <code>https://example.com</code>,
+you would configure SendGrid with the following URL:</p><div class="code_container">
+<pre><code class="highlight plaintext">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/sendgrid/inbound_emails
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e84706cea889738ab99271006cab7b6c">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/sendgrid/inbound_emails
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e84706cea889738ab99271006cab7b6c">Copiar</button>
+</div>
+<div class="note"><p>When configuring your SendGrid Inbound Parse webhook, be sure to check the box labeled <strong>“Post the raw, full MIME message.”</strong> Action Mailbox needs the raw MIME message to work.</p></div><h3 id="examples"><a class="anchorlink" href="#examples">4 Examples</a></h3><p>Configure basic routing:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/mailboxes/application_mailbox.rb</span>
+<span class="k">class</span> <span class="nc">ApplicationMailbox</span> <span class="o">&lt;</span> <span class="no">ActionMailbox</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">routing</span> <span class="sr">/^save@/i</span>     <span class="o">=&gt;</span> <span class="ss">:forwards</span>
+  <span class="n">routing</span> <span class="sr">/@replies\./i</span> <span class="o">=&gt;</span> <span class="ss">:replies</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-79f7ec1018e710e45a8d36ab42f2637c"># app/mailboxes/application_mailbox.rb
+class ApplicationMailbox &lt; ActionMailbox::Base
+  routing /^save@/i     =&gt; :forwards
+  routing /@replies\./i =&gt; :replies
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-79f7ec1018e710e45a8d36ab42f2637c">Copiar</button>
+</div>
+<p>Then set up a mailbox:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generate new mailbox</span>
+<span class="err">$</span> <span class="n">bin</span><span class="o">/</span><span class="n">rails</span> <span class="n">generate</span> <span class="n">mailbox</span> <span class="n">forwards</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9d1dd98615c5a3f40012adc5d48d641f"># Generate new mailbox
+$ bin/rails generate mailbox forwards
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9d1dd98615c5a3f40012adc5d48d641f">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/mailboxes/forwards_mailbox.rb</span>
+<span class="k">class</span> <span class="nc">ForwardsMailbox</span> <span class="o">&lt;</span> <span class="no">ApplicationMailbox</span>
+  <span class="c1"># Callbacks specify prerequisites to processing</span>
+  <span class="n">before_processing</span> <span class="ss">:require_projects</span>
+
+  <span class="k">def</span> <span class="nf">process</span>
+    <span class="c1"># Record the forward on the one project, or…</span>
+    <span class="k">if</span> <span class="n">forwarder</span><span class="p">.</span><span class="nf">projects</span><span class="p">.</span><span class="nf">one?</span>
+      <span class="n">record_forward</span>
+    <span class="k">else</span>
+      <span class="c1"># …involve a second Action Mailer to ask which project to forward into.</span>
+      <span class="n">request_forwarding_project</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+    <span class="k">def</span> <span class="nf">require_projects</span>
+      <span class="k">if</span> <span class="n">forwarder</span><span class="p">.</span><span class="nf">projects</span><span class="p">.</span><span class="nf">none?</span>
+        <span class="c1"># Use Action Mailers to bounce incoming emails back to sender – this halts processing</span>
+        <span class="n">bounce_with</span> <span class="no">Forwards</span><span class="o">::</span><span class="no">BounceMailer</span><span class="p">.</span><span class="nf">no_projects</span><span class="p">(</span><span class="n">inbound_email</span><span class="p">,</span> <span class="ss">forwarder: </span><span class="n">forwarder</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">record_forward</span>
+      <span class="n">forwarder</span><span class="p">.</span><span class="nf">forwards</span><span class="p">.</span><span class="nf">create</span> <span class="ss">subject: </span><span class="n">mail</span><span class="p">.</span><span class="nf">subject</span><span class="p">,</span> <span class="ss">content: </span><span class="n">mail</span><span class="p">.</span><span class="nf">content</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">request_forwarding_project</span>
+      <span class="no">Forwards</span><span class="o">::</span><span class="no">RoutingMailer</span><span class="p">.</span><span class="nf">choose_project</span><span class="p">(</span><span class="n">inbound_email</span><span class="p">,</span> <span class="ss">forwarder: </span><span class="n">forwarder</span><span class="p">).</span><span class="nf">deliver_now</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">forwarder</span>
+      <span class="vi">@forwarder</span> <span class="o">||=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">email_address: </span><span class="n">mail</span><span class="p">.</span><span class="nf">from</span><span class="p">)</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1c54cab19501a8e15e7ea7528e183fba"># app/mailboxes/forwards_mailbox.rb
+class ForwardsMailbox &lt; ApplicationMailbox
+  # Callbacks specify prerequisites to processing
+  before_processing :require_projects
+
+  def process
+    # Record the forward on the one project, or…
+    if forwarder.projects.one?
+      record_forward
+    else
+      # …involve a second Action Mailer to ask which project to forward into.
+      request_forwarding_project
+    end
+  end
+
+  private
+    def require_projects
+      if forwarder.projects.none?
+        # Use Action Mailers to bounce incoming emails back to sender – this halts processing
+        bounce_with Forwards::BounceMailer.no_projects(inbound_email, forwarder: forwarder)
+      end
+    end
+
+    def record_forward
+      forwarder.forwards.create subject: mail.subject, content: mail.content
+    end
+
+    def request_forwarding_project
+      Forwards::RoutingMailer.choose_project(inbound_email, forwarder: forwarder).deliver_now
+    end
+
+    def forwarder
+      @forwarder ||= User.find_by(email_address: mail.from)
+    end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1c54cab19501a8e15e7ea7528e183fba">Copiar</button>
+</div>
+<h3 id="incineration-of-inboundemails"><a class="anchorlink" href="#incineration-of-inboundemails">5 Incineration of InboundEmails</a></h3><p>By default, an InboundEmail that has been successfully processed will be
+incinerated after 30 days. This ensures you're not holding on to people's data
+willy-nilly after they may have canceled their accounts or deleted their
+content. The intention is that after you've processed an email, you should have
+extracted all the data you needed and turned it into domain models and content
+on your side of the application. The InboundEmail simply stays in the system
+for the extra time to provide debugging and forensics options.</p><p>The actual incineration is done via the <code>IncinerationJob</code> that's scheduled
+to run after <code>config.action_mailbox.incinerate_after</code> time. This value is
+by default set to <code>30.days</code>, but you can change it in your production.rb
+configuration. (Note that this far-future incineration scheduling relies on
+your job queue being able to hold jobs for that long.)</p><h3 id="working-with-action-mailbox-in-development"><a class="anchorlink" href="#working-with-action-mailbox-in-development">6 Working with Action Mailbox in development</a></h3><p>It's helpful to be able to test incoming emails in development without actually
+sending and receiving real emails. To accomplish this, there's a conductor
+controller mounted at <code>/rails/conductor/action_mailbox/inbound_emails</code>,
+which gives you an index of all the InboundEmails in the system, their
+state of processing, and a form to create a new InboundEmail as well.</p><h3 id="testing-mailboxes"><a class="anchorlink" href="#testing-mailboxes">7 Testing mailboxes</a></h3><p>Example:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ForwardsMailboxTest</span> <span class="o">&lt;</span> <span class="no">ActionMailbox</span><span class="o">::</span><span class="no">TestCase</span>
+  <span class="nb">test</span> <span class="s2">"directly recording a client forward for a forwarder and forwardee corresponding to one project"</span> <span class="k">do</span>
+    <span class="n">assert_difference</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">people</span><span class="p">(</span><span class="ss">:david</span><span class="p">).</span><span class="nf">buckets</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">recordings</span><span class="p">.</span><span class="nf">count</span> <span class="p">}</span> <span class="k">do</span>
+      <span class="n">receive_inbound_email_from_mail</span> <span class="p">\</span>
+        <span class="ss">to: </span><span class="s1">'save@example.com'</span><span class="p">,</span>
+        <span class="ss">from: </span><span class="n">people</span><span class="p">(</span><span class="ss">:david</span><span class="p">).</span><span class="nf">email_address</span><span class="p">,</span>
+        <span class="ss">subject: </span><span class="s2">"Fwd: Status update?"</span><span class="p">,</span>
+        <span class="ss">body: </span><span class="o">&lt;&lt;~</span><span class="no">BODY</span><span class="sh">
+          --- Begin forwarded message ---
+          From: Frank Holland &lt;frank@microsoft.com&gt;
+
+          What's the status?
+</span><span class="no">        BODY</span>
+    <span class="k">end</span>
+
+    <span class="n">recording</span> <span class="o">=</span> <span class="n">people</span><span class="p">(</span><span class="ss">:david</span><span class="p">).</span><span class="nf">buckets</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">recordings</span><span class="p">.</span><span class="nf">last</span>
+    <span class="n">assert_equal</span> <span class="n">people</span><span class="p">(</span><span class="ss">:david</span><span class="p">),</span> <span class="n">recording</span><span class="p">.</span><span class="nf">creator</span>
+    <span class="n">assert_equal</span> <span class="s2">"Status update?"</span><span class="p">,</span> <span class="n">recording</span><span class="p">.</span><span class="nf">forward</span><span class="p">.</span><span class="nf">subject</span>
+    <span class="n">assert_match</span> <span class="s2">"What's the status?"</span><span class="p">,</span> <span class="n">recording</span><span class="p">.</span><span class="nf">forward</span><span class="p">.</span><span class="nf">content</span><span class="p">.</span><span class="nf">to_s</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ce82d740027581428a1020468e1ac56c">class ForwardsMailboxTest &lt; ActionMailbox::TestCase
+  test "directly recording a client forward for a forwarder and forwardee corresponding to one project" do
+    assert_difference -&gt; { people(:david).buckets.first.recordings.count } do
+      receive_inbound_email_from_mail \
+        to: 'save@example.com',
+        from: people(:david).email_address,
+        subject: "Fwd: Status update?",
+        body: &lt;&lt;~BODY
+          --- Begin forwarded message ---
+          From: Frank Holland &lt;frank@microsoft.com&gt;
+
+          What's the status?
+        BODY
+    end
+
+    recording = people(:david).buckets.first.recordings.last
+    assert_equal people(:david), recording.creator
+    assert_equal "Status update?", recording.forward.subject
+    assert_match "What's the status?", recording.forward.content.to_s
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ce82d740027581428a1020468e1ac56c">Copiar</button>
+</div>
+
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

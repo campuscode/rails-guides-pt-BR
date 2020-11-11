@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layouts e Renderização no Rails — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Layouts e Renderização no Rails — Ruby on Rails Guides" />
+  <meta name="description" content="Layouts e Renderização no RailsEste guia aborda os recursos básicos de layout do Action Controller e da Action View.Depois de ler este guia, você saberá: Como usar os vários métodos de renderização embutidos no Rails. Como criar layouts com várias seções de conteúdo. Como usar partials para enxugar suas views. Como usar nested layouts (sub-templates)." />
+  <meta property="og:description" content="Layouts e Renderização no RailsEste guia aborda os recursos básicos de layout do Action Controller e da Action View.Depois de ler este guia, você saberá: Como usar os vários métodos de renderização embutidos no Rails. Como criar layouts com várias seções de conteúdo. Como usar partials para enxugar suas views. Como usar nested layouts (sub-templates)." />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2><em>Layouts</em> e Renderização no Rails</h2><p>Este guia aborda os recursos básicos de <em>layout</em> do <em>Action Controller</em> e da <em>Action View</em>.</p><p>Depois de ler este guia, você saberá:</p>
+<ul>
+<li>Como usar os vários métodos de renderização embutidos no Rails.</li>
+<li>Como criar <em>layouts</em> com várias seções de conteúdo.</li>
+<li>Como usar <em>partials</em> para enxugar suas <em>views</em>.</li>
+<li>Como usar <em>nested layouts</em> (sub-templates).</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#visao-geral-como-as-pecas-se-encaixam">Visão Geral: Como as peças se encaixam</a></li>
+<li>
+<a href="#criando-respostas">Criando respostas</a>
+
+<ul>
+<li><a href="#renderizacao-por-padrao-convencao-sobre-configuracao-em-acao">Renderização por padrão: Convenção sobre configuração em ação</a></li>
+<li><a href="#usando-render">Usando <code>render</code></a></li>
+<li><a href="#usando-redirect-to">Usando <code>redirect_to</code></a></li>
+<li><a href="#usando-head-para-criar-respostas-com-apenas-o-cabecalho-header-only">Usando <code>head</code> para criar respostas com apenas o cabeçalho (<em>Header-Only</em>)</a></li>
+</ul>
+</li>
+<li>
+<a href="#estruturando-layouts">Estruturando <em>Layouts</em></a>
+
+<ul>
+<li><a href="#helpers-de-asset-tags"><em>Helpers</em> de <em>Asset Tags</em></a></li>
+<li><a href="#entendendo-yield">Entendendo <code>yield</code></a></li>
+<li><a href="#usando-o-metodo-content-for">Usando o Método <code>content_for</code></a></li>
+<li><a href="#usando-partials">Usando <em>Partials</em></a></li>
+<li><a href="#usando-layouts-aninhados">Usando <em>Layouts</em> Aninhados</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="visao-geral-como-as-pecas-se-encaixam"><a class="anchorlink" href="#visao-geral-como-as-pecas-se-encaixam">1 Visão Geral: Como as peças se encaixam</a></h3><p>Este guia concentra-se na interação entre o <em>Controller</em> e <em>View</em> no triângulo <em>Model-View-Controller</em>. Como você sabe, o <em>Controller</em> é responsável por orquestrar todo o processo de como lidar com uma requisição no Rails, embora normalmente entregue qualquer código pesado ao <em>Model</em>. Porém, na hora de enviar uma resposta de volta ao usuário, o <em>Controller</em> transfere as informações para a <em>View</em>. É essa transferência que é o assunto deste guia.</p><p>Em linhas gerais, isso envolve decidir o que deve ser enviado como resposta e chamar um método apropriado para criar essa resposta. Se a resposta for uma <em>view</em> completa, o Rails também fará um trabalho extra para encapsular a <em>view</em> em um <em>layout</em> e, possivelmente, obter as <em>partials</em>. Você verá todos esses caminhos posteriormente neste guia.</p><h3 id="criando-respostas"><a class="anchorlink" href="#criando-respostas">2 Criando respostas</a></h3><p>Do ponto de vista do <em>controller</em>, há três maneiras de criar uma resposta HTTP:</p>
+<ul>
+<li>Chamar <code>render</code> para criar uma resposta completa e enviar de volta ao navegador</li>
+<li>Chamar <code>redirect_to</code> para enviar um <em>status code</em> HTTP de redirecionamento para o navegador</li>
+<li>Chamar <code>head</code> para criar uma resposta que consiste apenas em cabeçalhos HTTP para enviar de volta ao navegador</li>
+</ul>
+<h4 id="renderizacao-por-padrao-convencao-sobre-configuracao-em-acao"><a class="anchorlink" href="#renderizacao-por-padrao-convencao-sobre-configuracao-em-acao">2.1 Renderização por padrão: Convenção sobre configuração em ação</a></h4><p>Você já ouviu falar que o Rails promove "convenção sobre configuração". A renderização padrão é um excelente exemplo disso. Por padrão, os <em>controllers</em> no Rails renderizam automaticamente <em>views</em> com nomes que correspondem a rotas válidas. Por exemplo, se você tiver esse código na classe <code>BooksController</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">BooksController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-120962e1534fee5ff696fab85cc03523">class BooksController &lt; ApplicationController
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-120962e1534fee5ff696fab85cc03523">Copiar</button>
+</div>
+<p>E o seguinte no seu arquivo de rotas:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:books</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0c50ed5f3226acf52fcd43687e85bc29">resources :books
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0c50ed5f3226acf52fcd43687e85bc29">Copiar</button>
+</div>
+<p>E você tem um arquivo de exibição <code>app/views/books/index.html.erb</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Os livros chegarão em breve!<span class="nt">&lt;/h1&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bbbfec82156a1e85fb445100f7157b3d">&lt;h1&gt;Os livros chegarão em breve!&lt;/h1&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bbbfec82156a1e85fb445100f7157b3d">Copiar</button>
+</div>
+<p>O Rails renderizará automaticamente <code>app/views/books/index.html.erb</code> quando você navegar para <code>/books</code> e verá "Os livros chegarão em breve!" na sua tela.</p><p>No entanto, uma tela em breve é apenas minimamente útil; portanto, em breve você criará o seu modelo <code>Book</code> e adicionará a <em>action</em> <em>index</em> ao <code>BooksController</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">BooksController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="vi">@books</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">all</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4e87d9ad0656a27daee6fd4ce3e36a6c">class BooksController &lt; ApplicationController
+  def index
+    @books = Book.all
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4e87d9ad0656a27daee6fd4ce3e36a6c">Copiar</button>
+</div>
+<p>Observe que não temos <em>render</em> explícito no final da <em>action</em> <em>index</em>, de acordo com o princípio "convenção sobre configuração". A regra é que, se você não renderizar explicitamente algo no final de uma <em>action</em> do <em>controller</em>, o Rails procurará automaticamente o <em>template</em> <code>action_name.html.erb</code> no caminho da <em>view</em> do <em>controller</em> e o renderizará. Portanto, neste caso, o Rails renderizará o arquivo <code>app/views/books/index.html.erb</code>.</p><p>Se queremos exibir as propriedades de todos os livros em nossa <em>view</em>, podemos fazer isso com um template ERB como este:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Listing Books<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;table&gt;</span>
+  <span class="nt">&lt;thead&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+      <span class="nt">&lt;th&gt;</span>Title<span class="nt">&lt;/th&gt;</span>
+      <span class="nt">&lt;th&gt;</span>Content<span class="nt">&lt;/th&gt;</span>
+      <span class="nt">&lt;th</span> <span class="na">colspan=</span><span class="s">"3"</span><span class="nt">&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/thead&gt;</span>
+
+  <span class="nt">&lt;tbody&gt;</span>
+    <span class="cp">&lt;%</span> <span class="vi">@books</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">book</span><span class="o">|</span> <span class="cp">%&gt;</span>
+      <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">book</span><span class="p">.</span><span class="nf">title</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+        <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">book</span><span class="p">.</span><span class="nf">content</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+        <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Show"</span><span class="p">,</span> <span class="n">book</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+        <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Edit"</span><span class="p">,</span> <span class="n">edit_book_path</span><span class="p">(</span><span class="n">book</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+        <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Destroy"</span><span class="p">,</span> <span class="n">book</span><span class="p">,</span> <span class="ss">method: :delete</span><span class="p">,</span> <span class="ss">data: </span><span class="p">{</span> <span class="ss">confirm: </span><span class="s2">"Are you sure?"</span> <span class="p">}</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+      <span class="nt">&lt;/tr&gt;</span>
+    <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/tbody&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+
+<span class="nt">&lt;br&gt;</span>
+
+<span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"New book"</span><span class="p">,</span> <span class="n">new_book_path</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ab25d1a0f23b16f37d3d6efa49d29571">&lt;h1&gt;Listing Books&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Title&lt;/th&gt;
+      &lt;th&gt;Content&lt;/th&gt;
+      &lt;th colspan="3"&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+
+  &lt;tbody&gt;
+    &lt;% @books.each do |book| %&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;%= book.title %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= book.content %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= link_to "Show", book %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= link_to "Edit", edit_book_path(book) %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= link_to "Destroy", book, method: :delete, data: { confirm: "Are you sure?" } %&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;% end %&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+
+&lt;%= link_to "New book", new_book_path %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ab25d1a0f23b16f37d3d6efa49d29571">Copiar</button>
+</div>
+<div class="note"><p>A renderização real é feita por classes aninhadas do módulo <a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActionView/Template/Handlers.html"><code>ActionView::Template::Handlers</code></a>. Este guia não analisa esse processo, mas é importante saber que a extensão do arquivo na sua <em>view</em> controla a escolha do manipulador de templates.</p></div><h4 id="usando-render"><a class="anchorlink" href="#usando-render">2.2 Usando <code>render</code></a></h4><p>Na maioria dos casos, o método <code>ActionController::Base#render</code> faz o trabalho pesado de renderizar o conteúdo do aplicativo para ser utilizado por um navegador. Existem várias maneiras de personalizar o comportamento do <code>render</code>. Você pode renderizar a <em>view</em> padrão de um template do Rails, ou de um template específico, ou de um arquivo, ou código embutido, ou nada. Você pode renderizar text, JSON ou XML. Você também pode especificar o tipo de conteúdo ou o status HTTP da resposta renderizada.</p><div class="info"><p>Se você deseja ver os resultados exatos de uma chamada para <code>render</code> sem precisar inspecioná-la em um navegador, você pode chamar<code>render_to_string</code>. Este método usa exatamente as mesmas opções que o <code>render</code>, mas retorna uma string em vez de enviar uma resposta de volta ao navegador.</p></div><h5 id="renderizando-a-view-de-uma-action"><a class="anchorlink" href="#renderizando-a-view-de-uma-action">2.2.1 Renderizando a <em>View</em> de uma <em>Action</em></a></h5><p>Se você deseja renderizar a <em>view</em> que corresponde a um modelo diferente dentro do mesmo <em>controller</em>, você pode usar <code>render</code> com o nome da <em>view</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">update</span>
+  <span class="vi">@book</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">if</span> <span class="vi">@book</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">book_params</span><span class="p">)</span>
+    <span class="n">redirect_to</span><span class="p">(</span><span class="vi">@book</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">render</span> <span class="s2">"edit"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f40e03f53042b59e65596b482a29f923">def update
+  @book = Book.find(params[:id])
+  if @book.update(book_params)
+    redirect_to(@book)
+  else
+    render "edit"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f40e03f53042b59e65596b482a29f923">Copiar</button>
+</div>
+<p>Se a chamada para <code>update</code> falhar, a <em>action</em> <code>update</code> neste <em>controller</em> renderizará o template <code>edit.html.erb</code> pertencente ao mesmo <em>controller</em>.</p><p>Se preferir, você pode usar um símbolo em vez de uma <em>string</em> para especificar a <em>action</em> a ser renderizada:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">update</span>
+  <span class="vi">@book</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">if</span> <span class="vi">@book</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">book_params</span><span class="p">)</span>
+    <span class="n">redirect_to</span><span class="p">(</span><span class="vi">@book</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">render</span> <span class="ss">:edit</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-087793feaf1ecebca18d9399958d638c">def update
+  @book = Book.find(params[:id])
+  if @book.update(book_params)
+    redirect_to(@book)
+  else
+    render :edit
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-087793feaf1ecebca18d9399958d638c">Copiar</button>
+</div>
+<h5 id="renderizando-o-template-de-uma-action-de-outro-controller"><a class="anchorlink" href="#renderizando-o-template-de-uma-action-de-outro-controller">2.2.2 Renderizando o template de uma <em>Action</em> de outro <em>Controller</em></a></h5><p>E se você quiser renderizar um template de um <em>controller</em> totalmente diferente daquele que contém o código da <em>action</em>? Você também pode fazer isso com <code>render</code>, que aceita o caminho completo (relativo a <code>app/views</code>) do template a ser renderizado. Por exemplo, se você estiver executando o código em <code>AdminProductsController</code> que fica em<code>app/controllers/admin</code>, você pode renderizar os resultados de uma <em>action</em> em um template em <code>app/views/products</code> desta maneira:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="s2">"products/show"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5938186bd5a8de37c61362b4ccc12738">render "products/show"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5938186bd5a8de37c61362b4ccc12738">Copiar</button>
+</div>
+<p>O Rails sabe que essa <em>view</em> pertence a um <em>controller</em> diferente devido ao caractere de barra contido na string. Se você quer ser explícito, você pode usar a opção <code>:template</code> (necessária no Rails 2.2 e versões anteriores):</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">template: </span><span class="s2">"products/show"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3ea24f9ef2a4dd5164d1d334967accdb">render template: "products/show"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3ea24f9ef2a4dd5164d1d334967accdb">Copiar</button>
+</div>
+<h5 id="resumindo"><a class="anchorlink" href="#resumindo">2.2.3 Resumindo</a></h5><p>As três maneiras acima de renderizar (renderizar outro template dentro do <em>controller</em>, renderizar um template dentro de outro <em>controller</em> e renderizar um arquivo arbitrário no sistema de arquivos) são na verdade variantes da mesma ação.</p><p>De fato, na classe <em>BooksController</em>, dentro da <em>action</em> update na qual queremos renderizar o template <em>edit</em>, se o livro não for atualizado com êxito, todas as seguintes chamadas de <code>render</code> renderizarão o <em>template</em> <code>edit.html.erb</code> no diretório <code>views/books</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">:edit</span>
+<span class="n">render</span> <span class="ss">action: :edit</span>
+<span class="n">render</span> <span class="s2">"edit"</span>
+<span class="n">render</span> <span class="ss">action: </span><span class="s2">"edit"</span>
+<span class="n">render</span> <span class="s2">"books/edit"</span>
+<span class="n">render</span> <span class="ss">template: </span><span class="s2">"books/edit"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-81640d0bca3e1efbc0bee633a871db69">render :edit
+render action: :edit
+render "edit"
+render action: "edit"
+render "books/edit"
+render template: "books/edit"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-81640d0bca3e1efbc0bee633a871db69">Copiar</button>
+</div>
+<p>Qual deles você usa é realmente uma questão de estilo e convenção, mas a regra geral é usar o mais simples que faça sentido para o código que você está escrevendo.</p><h5 id="usando-render-com-inline"><a class="anchorlink" href="#usando-render-com-inline">2.2.4 Usando <code>render</code> com <code>:inline</code></a></h5><p>O método <code>render</code> pode ficar completamente sem uma <em>view</em> se você estiver disposto a usar a opção <code>:inline</code> para fornecer um ERB como parte da chamada do método. Isso é perfeitamente válido:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">inline: </span><span class="s2">"&lt;% products.each do |p| %&gt;&lt;p&gt;&lt;%= p.name %&gt;&lt;/p&gt;&lt;% end %&gt;"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-58ef7834cabba187d8b7b451e0cde42a">render inline: "&lt;% products.each do |p| %&gt;&lt;p&gt;&lt;%= p.name %&gt;&lt;/p&gt;&lt;% end %&gt;"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-58ef7834cabba187d8b7b451e0cde42a">Copiar</button>
+</div>
+<div class="warning"><p>Raramente existe uma boa razão para usar esta opção. Misturar ERB em seus <em>controllers</em> anula o MVC do Rails e torna mais difícil para outros desenvolvedores seguir a lógica do seu projeto. De preferência, use uma <em>view</em> erb separada.</p></div><p>Por padrão, a renderização <em>inline</em> usa o ERB. Como alternativa, você pode forçá-lo a usar Builder com a opção <code>:type</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">inline: </span><span class="s2">"xml.p {'Horrid coding practice!'}"</span><span class="p">,</span> <span class="ss">type: :builder</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ff2a9ece7bc6abeb72c50a7f826312e0">render inline: "xml.p {'Horrid coding practice!'}", type: :builder
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ff2a9ece7bc6abeb72c50a7f826312e0">Copiar</button>
+</div>
+<h5 id="renderizacao-de-texto"><a class="anchorlink" href="#renderizacao-de-texto">2.2.5 Renderização de texto</a></h5><p>Você pode enviar texto sem formatação - sem nenhuma marcação - de volta ao navegador usando
+a opção <code>:plain</code> em<code>render</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">plain: </span><span class="s2">"OK"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-50f6d67f6101ae071cb7c23bdcd7bf08">render plain: "OK"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-50f6d67f6101ae071cb7c23bdcd7bf08">Copiar</button>
+</div>
+<div class="info"><p>A renderização de texto puro é mais útil quando você está respondendo solicitações Ajax ou serviços Web
+que esperam algo diferente de HTML adequado.</p></div><div class="note"><p>Por padrão, se você usar a opção <code>:plain</code>, o texto será renderizado sem
+usar o <em>layout</em> atual. Se você deseja que o Rails coloque o texto no <em>layout</em>
+atual, você precisa adicionar a opção <code>layout: true</code> e usar a extensão<code>.text.erb</code>
+para o arquivo de <em>layout</em>.</p></div><h5 id="renderizacao-de-html"><a class="anchorlink" href="#renderizacao-de-html">2.2.6 Renderização de HTML</a></h5><p>Você pode enviar uma <em>string</em> HTML de volta ao navegador usando a opção <code>:html</code>
+ em <code>render</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">html: </span><span class="n">helpers</span><span class="p">.</span><span class="nf">tag</span><span class="p">.</span><span class="nf">strong</span><span class="p">(</span><span class="s1">'Not Found'</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b3bf13425edfba85e64d389d074465cd">render html: helpers.tag.strong('Not Found')
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b3bf13425edfba85e64d389d074465cd">Copiar</button>
+</div>
+<div class="info"><p>Isso é útil quando você renderiza um pequeno trecho de código HTML.
+No entanto, você deve considerar movê-lo para um arquivo de template se a marcação
+for complexa.</p></div><div class="note"><p>Ao usar a opção <code>html:</code>, as entidades HTML serão escapadas se a <em>string</em> não for composta por APIs compatíveis com <code>html_safe</code>.</p></div><h5 id="renderizando-json"><a class="anchorlink" href="#renderizando-json">2.2.7 Renderizando JSON</a></h5><p>JSON é um formato de dados JavaScript usado por muitas bibliotecas Ajax. O Rails possui suporte interno para converter objetos em JSON e renderizar esse JSON de volta ao navegador:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">json: </span><span class="vi">@product</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0b93ab547fc6b3cc2fc997b0b3c8ddfd">render json: @product
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0b93ab547fc6b3cc2fc997b0b3c8ddfd">Copiar</button>
+</div>
+<div class="info"><p>Você não precisa chamar <code>to_json</code> no objeto que deseja renderizar. Se você usar a opção <code>:json</code>, o <code>render</code> chamará automaticamente <code>to_json</code> para você.</p></div><h5 id="renderizando-xml"><a class="anchorlink" href="#renderizando-xml">2.2.8 Renderizando XML</a></h5><p>O Rails também possui suporte interno para converter objetos em XML e renderizar esse XML de volta para quem o chamou:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">xml: </span><span class="vi">@product</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fe9a2267f32359e2c8c65342015295ac">render xml: @product
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fe9a2267f32359e2c8c65342015295ac">Copiar</button>
+</div>
+<div class="info"><p>Você não precisa chamar <code>to_xml</code> no objeto que deseja renderizar. Se você usar a opção <code>:xml</code>, o<code>render</code> automaticamente chamará <code>to_xml</code> para você.</p></div><h5 id="renderizando-vanilla-javascript"><a class="anchorlink" href="#renderizando-vanilla-javascript">2.2.9 Renderizando Vanilla JavaScript</a></h5><p>O Rails pode renderizar JavaScript convencional:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">js: </span><span class="s2">"alert('Hello Rails');"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c26be02ac970a0a5c23a0988c5f30684">render js: "alert('Hello Rails');"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c26be02ac970a0a5c23a0988c5f30684">Copiar</button>
+</div>
+<p>Isso enviará a <em>string</em> fornecida ao navegador com um <em>MIME type</em> de <code>text/javascript</code>.</p><h5 id="renderizando-conteudo-bruto"><a class="anchorlink" href="#renderizando-conteudo-bruto">2.2.10 Renderizando conteúdo bruto</a></h5><p>Você pode enviar um conteúdo bruto de volta ao navegador, sem definir nenhum tipo de
+conteúdo, usando a opção <code>:body</code> em <code>render</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">body: </span><span class="s2">"raw"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f88c77262574082faa441527da7b0003">render body: "raw"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f88c77262574082faa441527da7b0003">Copiar</button>
+</div>
+<div class="info"><p>essa opção deve ser usada apenas se você não se importar com o tipo de conteúdo
+da resposta. Usando <code>:plain</code> ou <code>:html</code> é mais apropriado na maior parte do
+tempo.</p></div><div class="note"><p>A menos que substituído, sua resposta retornada dessa opção de renderização será
+<code>text/plain</code>, pois esse é o tipo de conteúdo padrão da resposta do Action Dispatch.</p></div><h5 id="renderizando-arquivo-bruto"><a class="anchorlink" href="#renderizando-arquivo-bruto">2.2.11 Renderizando arquivo bruto</a></h5><p>O Rails pode renderizar um arquivo bruto a partir de um caminho absoluto. Isso é útil para
+condicionalmente renderizar arquivos estáticos, como páginas de erro.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">file: </span><span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/public/404.html"</span><span class="p">,</span> <span class="ss">layout: </span><span class="kp">false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-46976523d154c79277d2848ba3ba2350">render file: "#{Rails.root}/public/404.html", layout: false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-46976523d154c79277d2848ba3ba2350">Copiar</button>
+</div>
+<p>Isso renderiza o arquivo bruto (não suporta ERB ou outros manipuladores). Por
+o padrão é renderizado no <em>layout</em> atual.</p><div class="warning"><p>Usar a opção <code>:file</code> em combinação com a entrada de dados dos usuários pode levar a problemas de segurança,
+pois um invasor pode usar esta <em>action</em> para acessar arquivos confidenciais de segurança em seu sistema de arquivos.</p></div><div class="info"><p><code>send_file</code> geralmente é uma opção mais rápida e melhor se um <em>layout</em> não for necessário.</p></div><h5 id="opcoes-para-render"><a class="anchorlink" href="#opcoes-para-render">2.2.12 Opções para <code>render</code></a></h5><p>As chamadas para o método <code>render</code> geralmente aceitam seis opções:</p>
+<ul>
+<li><code>:content_type</code></li>
+<li><code>:layout</code></li>
+<li><code>:location</code></li>
+<li><code>:status</code></li>
+<li><code>:formats</code></li>
+<li><code>:variants</code></li>
+</ul>
+<h6 id="a-opcao-content-type"><a class="anchorlink" href="#a-opcao-content-type">2.2.12.1 A opção <code>:content_type</code></a></h6><p>Por padrão, o Rails exibirá os resultados de uma renderização com o tipo de conteúdo MIME como <code>text/html</code> (ou <code>application/json</code> se você usar a opção <code>:json</code> ou<code>application/xml</code> para a opção <code>:xml</code>.). Há momentos em que você pode alterar isso, e pode fazê-lo definindo a opção <code>:content_type</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">template: </span><span class="s2">"feed"</span><span class="p">,</span> <span class="ss">content_type: </span><span class="s2">"application/rss"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c4561e796e3cf1ef923df0241f2b9499">render template: "feed", content_type: "application/rss"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c4561e796e3cf1ef923df0241f2b9499">Copiar</button>
+</div>
+<h6 id="a-opcao-layout"><a class="anchorlink" href="#a-opcao-layout">2.2.12.2 A opção <code>:layout</code></a></h6><p>Com a maioria das opções para <code>render</code>, o conteúdo renderizado é exibido como parte do <em>layout</em> atual. Você aprenderá mais sobre <em>layouts</em> e como usá-los posteriormente neste guia.</p><p>Você pode usar a opção <code>:layout</code> para que o Rails use um arquivo específico como o <em>layout</em> da <em>action</em> atual:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">layout: </span><span class="s2">"special_layout"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d535bf0457f1cddb2e27656413bbce79">render layout: "special_layout"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d535bf0457f1cddb2e27656413bbce79">Copiar</button>
+</div>
+<p>Você também pode dizer ao Rails para renderizar sem nenhum <em>layout</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">layout: </span><span class="kp">false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3a3e1f223497f75c71cafc617874987c">render layout: false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3a3e1f223497f75c71cafc617874987c">Copiar</button>
+</div>
+<h6 id="a-opcao-location"><a class="anchorlink" href="#a-opcao-location">2.2.12.3 A opção <code>:location</code></a></h6><p>Você pode usar a opção <code>:location</code> para definir o cabeçalho HTTP <code>Location</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">xml: </span><span class="n">photo</span><span class="p">,</span> <span class="ss">location: </span><span class="n">photo_url</span><span class="p">(</span><span class="n">photo</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d28e64a5fb8304ed15e4f41a7576cf95">render xml: photo, location: photo_url(photo)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d28e64a5fb8304ed15e4f41a7576cf95">Copiar</button>
+</div>
+<h6 id="a-opcao-status"><a class="anchorlink" href="#a-opcao-status">2.2.12.4 A opção <code>:status</code></a></h6><p>O Rails gerará automaticamente uma resposta com o código de status HTTP correto (na maioria dos casos, isso é <code>200 OK</code>). Você pode usar a opção <code>:status</code> para alterar isso:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">status: </span><span class="mi">500</span>
+<span class="n">render</span> <span class="ss">status: :forbidden</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6cea09bc4a7945d0ea3465ca3585c837">render status: 500
+render status: :forbidden
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6cea09bc4a7945d0ea3465ca3585c837">Copiar</button>
+</div>
+<p>O Rails entende os códigos númericos de status e os símbolos correspondentes mostrados abaixo.</p>
+<table>
+<thead>
+<tr>
+<th>Classe da Resposta</th>
+<th>Código de Status HTTP</th>
+<th>Símbolo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Informational</strong></td>
+<td>100</td>
+<td>:continue</td>
+</tr>
+<tr>
+<td></td>
+<td>101</td>
+<td>:switching_protocols</td>
+</tr>
+<tr>
+<td></td>
+<td>102</td>
+<td>:processing</td>
+</tr>
+<tr>
+<td><strong>Success</strong></td>
+<td>200</td>
+<td>:ok</td>
+</tr>
+<tr>
+<td></td>
+<td>201</td>
+<td>:created</td>
+</tr>
+<tr>
+<td></td>
+<td>202</td>
+<td>:accepted</td>
+</tr>
+<tr>
+<td></td>
+<td>203</td>
+<td>:non_authoritative_information</td>
+</tr>
+<tr>
+<td></td>
+<td>204</td>
+<td>:no_content</td>
+</tr>
+<tr>
+<td></td>
+<td>205</td>
+<td>:reset_content</td>
+</tr>
+<tr>
+<td></td>
+<td>206</td>
+<td>:partial_content</td>
+</tr>
+<tr>
+<td></td>
+<td>207</td>
+<td>:multi_status</td>
+</tr>
+<tr>
+<td></td>
+<td>208</td>
+<td>:already_reported</td>
+</tr>
+<tr>
+<td></td>
+<td>226</td>
+<td>:im_used</td>
+</tr>
+<tr>
+<td><strong>Redirection</strong></td>
+<td>300</td>
+<td>:multiple_choices</td>
+</tr>
+<tr>
+<td></td>
+<td>301</td>
+<td>:moved_permanently</td>
+</tr>
+<tr>
+<td></td>
+<td>302</td>
+<td>:found</td>
+</tr>
+<tr>
+<td></td>
+<td>303</td>
+<td>:see_other</td>
+</tr>
+<tr>
+<td></td>
+<td>304</td>
+<td>:not_modified</td>
+</tr>
+<tr>
+<td></td>
+<td>305</td>
+<td>:use_proxy</td>
+</tr>
+<tr>
+<td></td>
+<td>307</td>
+<td>:temporary_redirect</td>
+</tr>
+<tr>
+<td></td>
+<td>308</td>
+<td>:permanent_redirect</td>
+</tr>
+<tr>
+<td><strong>Client Error</strong></td>
+<td>400</td>
+<td>:bad_request</td>
+</tr>
+<tr>
+<td></td>
+<td>401</td>
+<td>:unauthorized</td>
+</tr>
+<tr>
+<td></td>
+<td>402</td>
+<td>:payment_required</td>
+</tr>
+<tr>
+<td></td>
+<td>403</td>
+<td>:forbidden</td>
+</tr>
+<tr>
+<td></td>
+<td>404</td>
+<td>:not_found</td>
+</tr>
+<tr>
+<td></td>
+<td>405</td>
+<td>:method_not_allowed</td>
+</tr>
+<tr>
+<td></td>
+<td>406</td>
+<td>:not_acceptable</td>
+</tr>
+<tr>
+<td></td>
+<td>407</td>
+<td>:proxy_authentication_required</td>
+</tr>
+<tr>
+<td></td>
+<td>408</td>
+<td>:request_timeout</td>
+</tr>
+<tr>
+<td></td>
+<td>409</td>
+<td>:conflict</td>
+</tr>
+<tr>
+<td></td>
+<td>410</td>
+<td>:gone</td>
+</tr>
+<tr>
+<td></td>
+<td>411</td>
+<td>:length_required</td>
+</tr>
+<tr>
+<td></td>
+<td>412</td>
+<td>:precondition_failed</td>
+</tr>
+<tr>
+<td></td>
+<td>413</td>
+<td>:payload_too_large</td>
+</tr>
+<tr>
+<td></td>
+<td>414</td>
+<td>:uri_too_long</td>
+</tr>
+<tr>
+<td></td>
+<td>415</td>
+<td>:unsupported_media_type</td>
+</tr>
+<tr>
+<td></td>
+<td>416</td>
+<td>:range_not_satisfiable</td>
+</tr>
+<tr>
+<td></td>
+<td>417</td>
+<td>:expectation_failed</td>
+</tr>
+<tr>
+<td></td>
+<td>421</td>
+<td>:misdirected_request</td>
+</tr>
+<tr>
+<td></td>
+<td>422</td>
+<td>:unprocessable_entity</td>
+</tr>
+<tr>
+<td></td>
+<td>423</td>
+<td>:locked</td>
+</tr>
+<tr>
+<td></td>
+<td>424</td>
+<td>:failed_dependency</td>
+</tr>
+<tr>
+<td></td>
+<td>426</td>
+<td>:upgrade_required</td>
+</tr>
+<tr>
+<td></td>
+<td>428</td>
+<td>:precondition_required</td>
+</tr>
+<tr>
+<td></td>
+<td>429</td>
+<td>:too_many_requests</td>
+</tr>
+<tr>
+<td></td>
+<td>431</td>
+<td>:request_header_fields_too_large</td>
+</tr>
+<tr>
+<td></td>
+<td>451</td>
+<td>:unavailable_for_legal_reasons</td>
+</tr>
+<tr>
+<td><strong>Server Error</strong></td>
+<td>500</td>
+<td>:internal_server_error</td>
+</tr>
+<tr>
+<td></td>
+<td>501</td>
+<td>:not_implemented</td>
+</tr>
+<tr>
+<td></td>
+<td>502</td>
+<td>:bad_gateway</td>
+</tr>
+<tr>
+<td></td>
+<td>503</td>
+<td>:service_unavailable</td>
+</tr>
+<tr>
+<td></td>
+<td>504</td>
+<td>:gateway_timeout</td>
+</tr>
+<tr>
+<td></td>
+<td>505</td>
+<td>:http_version_not_supported</td>
+</tr>
+<tr>
+<td></td>
+<td>506</td>
+<td>:variant_also_negotiates</td>
+</tr>
+<tr>
+<td></td>
+<td>507</td>
+<td>:insufficient_storage</td>
+</tr>
+<tr>
+<td></td>
+<td>508</td>
+<td>:loop_detected</td>
+</tr>
+<tr>
+<td></td>
+<td>510</td>
+<td>:not_extended</td>
+</tr>
+<tr>
+<td></td>
+<td>511</td>
+<td>:network_authentication_required</td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>Se você tentar renderizar um conteúdo junto com um código de status que não tem conteúdo
+(100-199, 204, 205 ou 304), o contéudo será descartado da resposta.</p></div><h6 id="a-opcao-formats"><a class="anchorlink" href="#a-opcao-formats">2.2.12.5 A opção <code>:formats</code></a></h6><p>O Rails usa o formato especificado na solicitação (ou <code>:html</code> por padrão). Você pode
+mudar isso passando a opção <code>:formats</code> com um símbolo ou um <em>array</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">formats: :xml</span>
+<span class="n">render</span> <span class="ss">formats: </span><span class="p">[</span><span class="ss">:json</span><span class="p">,</span> <span class="ss">:xml</span><span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-030ec33196dabfc389e84d1ab2e16c27">render formats: :xml
+render formats: [:json, :xml]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-030ec33196dabfc389e84d1ab2e16c27">Copiar</button>
+</div>
+<p>Se um template com o formato especificado não existir, será gerado um erro <code>ActionView::MissingTemplate</code>.</p><h6 id="a-opcao-variants"><a class="anchorlink" href="#a-opcao-variants">2.2.12.6 A opção <code>:variants</code></a></h6><p>Isso diz ao Rails para procurar variações de template do mesmo formato.
+Você pode especificar uma lista de variações passando a opção <code>:variants</code> com um símbolo ou um <em>array</em>.</p><p>Um exemplo de uso seria este.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># called in HomeController#index</span>
+<span class="n">render</span> <span class="ss">variants: </span><span class="p">[</span><span class="ss">:mobile</span><span class="p">,</span> <span class="ss">:desktop</span><span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-44d12fec0496f4720d50a88cce11cea6"># called in HomeController#index
+render variants: [:mobile, :desktop]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-44d12fec0496f4720d50a88cce11cea6">Copiar</button>
+</div>
+<p>Com esse conjunto de variantes, o Rails procurará o conjunto de modelos a seguir e usará o primeiro que encontrar.</p>
+<ul>
+<li><code>app/views/home/index.html+mobile.erb</code></li>
+<li><code>app/views/home/index.html+desktop.erb</code></li>
+<li><code>app/views/home/index.html.erb</code></li>
+</ul>
+<p>Se um template com o formato especificado não existir, será gerado um erro <code>ActionView::MissingTemplate</code>.</p><p>Em vez de definir a variação na chamada da renderização, você também pode configurá-la no objeto de solicitação na <em>action</em> do <em>controller</em>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">index</span>
+  <span class="n">request</span><span class="p">.</span><span class="nf">variant</span> <span class="o">=</span> <span class="n">determine_variant</span>
+<span class="k">end</span>
+
+<span class="kp">private</span>
+
+<span class="k">def</span> <span class="nf">determine_variant</span>
+  <span class="n">variant</span> <span class="o">=</span> <span class="kp">nil</span>
+  <span class="c1"># some code to determine the variant(s) to use</span>
+  <span class="n">variant</span> <span class="o">=</span> <span class="ss">:mobile</span> <span class="k">if</span> <span class="n">session</span><span class="p">[</span><span class="ss">:use_mobile</span><span class="p">]</span>
+
+  <span class="n">variant</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-63c165ac5c3f92e0b582699257e5958a">def index
+  request.variant = determine_variant
+end
+
+private
+
+def determine_variant
+  variant = nil
+  # some code to determine the variant(s) to use
+  variant = :mobile if session[:use_mobile]
+
+  variant
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-63c165ac5c3f92e0b582699257e5958a">Copiar</button>
+</div>
+<h5 id="localizando-layouts"><a class="anchorlink" href="#localizando-layouts">2.2.13 Localizando <em>Layouts</em></a></h5><p>Para encontrar o <em>layout</em> atual, o Rails primeiro procura por um arquivo em <code>app/views/layouts</code> com o mesmo nome base que o <em>controller</em>. Por exemplo, renderizar <em>actions</em> da classe <code>PhotosController</code> usam <code>app/views/layouts/photos.html.erb</code> (ou <code>app/views/layouts/photos.builder</code>). Se não houver esse <em>layout</em> específico do <em>controller</em>, o Rails usará <code>app/views/layouts/application.html.erb</code> ou<code>app/views/layouts/application.builder</code>. Se não houver um <em>layout</em> <code>.erb</code>, o Rails usará um <em>layout</em><code>.builder</code>, se houver. O Rails também fornece várias maneiras de atribuir <em>layouts</em> específicos com mais precisão a <em>controllers</em> e <em>actions</em> individuais.</p><h6 id="especificando-layouts-para-controllers"><a class="anchorlink" href="#especificando-layouts-para-controllers">2.2.13.1 Especificando <em>Layouts</em> para Controllers</a></h6><p>Você pode substituir as convenções de <em>layout</em> padrão em seus <em>controllers</em> usando a declaração <code>layout</code>. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="n">layout</span> <span class="s2">"inventory"</span>
+  <span class="c1">#...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2926bf27e0afa8baa900fe76419ce320">class ProductsController &lt; ApplicationController
+  layout "inventory"
+  #...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2926bf27e0afa8baa900fe76419ce320">Copiar</button>
+</div>
+<p>Com esta declaração, todas as <em>views</em> renderizadas pelo <code>ProductsController</code> usarão<code>app/views/layouts/inventário.html.erb</code> como <em>layout</em>.</p><p>Para atribuir um <em>layout</em> específico para toda a aplicação, declare um <code>layout</code> na sua classe<code>ApplicationController</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">layout</span> <span class="s2">"main"</span>
+  <span class="c1">#...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-51e2ffacc5c647eaad927ccf3ade6957">class ApplicationController &lt; ActionController::Base
+  layout "main"
+  #...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-51e2ffacc5c647eaad927ccf3ade6957">Copiar</button>
+</div>
+<p>Com esta declaração, todas as <em>views</em>, em toda a aplicação, usarão <code>app/views/layouts/main.html.erb</code> para seu <em>layout</em>.</p><h6 id="escolhendo-layouts-em-tempo-de-execucao"><a class="anchorlink" href="#escolhendo-layouts-em-tempo-de-execucao">2.2.13.2 Escolhendo <em>Layouts</em> em Tempo de Execução</a></h6><p>Você pode usar um símbolo para adiar a escolha do <em>layout</em> até que uma requisição seja processada:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="n">layout</span> <span class="ss">:products_layout</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="vi">@product</span> <span class="o">=</span> <span class="no">Product</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+    <span class="k">def</span> <span class="nf">products_layout</span>
+      <span class="vi">@current_user</span><span class="p">.</span><span class="nf">special?</span> <span class="p">?</span> <span class="s2">"special"</span> <span class="p">:</span> <span class="s2">"products"</span>
+    <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a1de79148a7bdcf50c357f859eb08e8a">class ProductsController &lt; ApplicationController
+  layout :products_layout
+
+  def show
+    @product = Product.find(params[:id])
+  end
+
+  private
+    def products_layout
+      @current_user.special? ? "special" : "products"
+    end
+
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a1de79148a7bdcf50c357f859eb08e8a">Copiar</button>
+</div>
+<p>Agora, se o usuário atual for um usuário especial, ele receberá um <em>layout</em> especial ao visualizar um produto.</p><p>Você pode até usar um método <em>inline</em>, como um Proc, para determinar o <em>layout</em>. Por exemplo, se você passar um objeto Proc, o bloco que você fornecer ao Proc receberá a instância <code>controller</code>, para que o <em>layout</em> possa ser determinado com base na solicitação atual:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="n">layout</span> <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">controller</span><span class="o">|</span> <span class="n">controller</span><span class="p">.</span><span class="nf">request</span><span class="p">.</span><span class="nf">xhr?</span> <span class="p">?</span> <span class="s2">"popup"</span> <span class="p">:</span> <span class="s2">"application"</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1bd05497a7a2751c5f3303a8c53db2f2">class ProductsController &lt; ApplicationController
+  layout Proc.new { |controller| controller.request.xhr? ? "popup" : "application" }
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1bd05497a7a2751c5f3303a8c53db2f2">Copiar</button>
+</div>
+<h6 id="layouts-condicionais"><a class="anchorlink" href="#layouts-condicionais">2.2.13.3 <em>Layouts</em> Condicionais</a></h6><p>Os <em>layouts</em> especificados no nível do <em>controller</em> suportam as opções <code>:only</code> e<code>:except</code>. Essas opções recebem um nome de método ou um <em>array</em> de nomes de métodos que correspondem aos nomes de métodos no <em>controller</em>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="n">layout</span> <span class="s2">"product"</span><span class="p">,</span> <span class="ss">except: </span><span class="p">[</span><span class="ss">:index</span><span class="p">,</span> <span class="ss">:rss</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c1fa51d042270f692c0bff4e96ef1806">class ProductsController &lt; ApplicationController
+  layout "product", except: [:index, :rss]
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c1fa51d042270f692c0bff4e96ef1806">Copiar</button>
+</div>
+<p>Com esta declaração, o <em>layout</em> de <code>product</code> seria usado para tudo, menos os métodos<code>rss</code> e <code>index</code>.</p><h6 id="heranca-de-layout"><a class="anchorlink" href="#heranca-de-layout">2.2.13.4 Herança de <em>Layout</em></a></h6><p>As declarações de <em>layout</em> cascateam na hierarquia, e as declarações de <em>layout</em> mais específicas sempre substituem as mais gerais. Por exemplo:</p>
+<ul>
+<li>
+<p><code>application_controller.rb</code></p>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">layout</span> <span class="s2">"main"</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e10370f0b5631035f3d3237b67c6a0dc">class ApplicationController &lt; ActionController::Base
+  layout "main"
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e10370f0b5631035f3d3237b67c6a0dc">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>articles_controller.rb</code></p>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ArticlesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c735ef0171f32c6ae69e27b38bfa3694">class ArticlesController &lt; ApplicationController
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c735ef0171f32c6ae69e27b38bfa3694">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>special_articles_controller.rb</code></p>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">SpecialArticlesController</span> <span class="o">&lt;</span> <span class="no">ArticlesController</span>
+  <span class="n">layout</span> <span class="s2">"special"</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3dc83badc0f5dbc6cf34dc6535294d6c">class SpecialArticlesController &lt; ArticlesController
+  layout "special"
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3dc83badc0f5dbc6cf34dc6535294d6c">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>old_articles_controller.rb</code></p>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">OldArticlesController</span> <span class="o">&lt;</span> <span class="no">SpecialArticlesController</span>
+  <span class="n">layout</span> <span class="kp">false</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="vi">@article</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="vi">@old_articles</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">older</span>
+    <span class="n">render</span> <span class="ss">layout: </span><span class="s2">"old"</span>
+  <span class="k">end</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3c681b608d8510c7607b308bb53bd52f">class OldArticlesController &lt; SpecialArticlesController
+  layout false
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def index
+    @old_articles = Article.older
+    render layout: "old"
+  end
+  # ...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3c681b608d8510c7607b308bb53bd52f">Copiar</button>
+</div>
+</li>
+</ul>
+<p>Nesta aplicação:</p>
+<ul>
+<li>Em geral, as <em>views</em> serão renderizadas no <em>layout</em> <code>main</code>
+</li>
+<li>O <code>ArticlesController#index</code> usará o <em>layout</em> <code>main</code>
+</li>
+<li>
+<code>SpecialArticlesController#index</code> usará o <em>layout</em> <code>special</code>
+</li>
+<li>
+<code>OldArticlesController#show</code> não usará nenhum <em>layout</em>
+</li>
+<li>
+<code>OldArticlesController#index</code> usará o <em>layout</em> <code>old</code>
+</li>
+</ul>
+<h6 id="heranca-de-template"><a class="anchorlink" href="#heranca-de-template">2.2.13.5 Herança de Template</a></h6><p>Similar à lógica de herança de <em>layout</em>, se um <em>template</em> ou <em>partial</em> não for encontrado no caminho convencional, o <em>controller</em> procurará um <em>template</em> ou <em>partial</em> para renderizar em sua cadeia de herança. Por exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># in app/controllers/application_controller</span>
+<span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+<span class="k">end</span>
+
+<span class="c1"># in app/controllers/admin_controller</span>
+<span class="k">class</span> <span class="nc">AdminController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+<span class="k">end</span>
+
+<span class="c1"># in app/controllers/admin/products_controller</span>
+<span class="k">class</span> <span class="nc">Admin::ProductsController</span> <span class="o">&lt;</span> <span class="no">AdminController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b69c37014a00eea03daa86f665059087"># in app/controllers/application_controller
+class ApplicationController &lt; ActionController::Base
+end
+
+# in app/controllers/admin_controller
+class AdminController &lt; ApplicationController
+end
+
+# in app/controllers/admin/products_controller
+class Admin::ProductsController &lt; AdminController
+  def index
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b69c37014a00eea03daa86f665059087">Copiar</button>
+</div>
+<p>A ordem de busca para uma <em>action</em> <code>admin/products#index</code> será:</p>
+<ul>
+<li><code>app/views/admin/products/</code></li>
+<li><code>app/views/admin/</code></li>
+<li><code>app/views/application/</code></li>
+</ul>
+<p>Isso torna o <code>app/views/application/</code> um ótimo lugar para suas <em>partials</em> compartilhadas, que podem ser renderizadas no seu ERB da seguinte forma:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="c">&lt;%# app/views/admin/products/index.html.erb %&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="vi">@products</span> <span class="o">||</span> <span class="s2">"empty_list"</span> <span class="cp">%&gt;</span>
+
+<span class="c">&lt;%# app/views/application/_empty_list.html.erb %&gt;</span>
+There are no items in this list <span class="nt">&lt;em&gt;</span>yet<span class="nt">&lt;/em&gt;</span>.
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-76d874edc6ba88dd221217187399dc9e">&lt;%# app/views/admin/products/index.html.erb %&gt;
+&lt;%= render @products || "empty_list" %&gt;
+
+&lt;%# app/views/application/_empty_list.html.erb %&gt;
+There are no items in this list &lt;em&gt;yet&lt;/em&gt;.
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-76d874edc6ba88dd221217187399dc9e">Copiar</button>
+</div>
+<h5 id="como-evitar-erros-de-renderizacao-dupla"><a class="anchorlink" href="#como-evitar-erros-de-renderizacao-dupla">2.2.14 Como evitar erros de renderização dupla</a></h5><p>Mais cedo ou mais tarde, a maioria das pessoas desenvolvedoras Rails verá a mensagem de erro "Só pode renderizar ou redirecionar uma vez por ação" ("Can only render or redirect once per action"). Embora isso seja irritante, é relativamente fácil de corrigir. Geralmente isso ocorre devido a um mal-entendido sobre o modo como o <code>render</code> funciona.</p><p>Por exemplo, aqui está um código que acionará esse erro:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">show</span>
+  <span class="vi">@book</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">if</span> <span class="vi">@book</span><span class="p">.</span><span class="nf">special?</span>
+    <span class="n">render</span> <span class="ss">action: </span><span class="s2">"special_show"</span>
+  <span class="k">end</span>
+  <span class="n">render</span> <span class="ss">action: </span><span class="s2">"regular_show"</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b66e3fe62b0739220c12001556d1e11e">def show
+  @book = Book.find(params[:id])
+  if @book.special?
+    render action: "special_show"
+  end
+  render action: "regular_show"
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b66e3fe62b0739220c12001556d1e11e">Copiar</button>
+</div>
+<p>Se <code>@book.special?</code> for avaliado como <code>true</code>, o Rails iniciará o processo de renderização para despejar a variável <code>@book</code> na <em>view</em> <code>special_show</code>. Mas isso <em>não</em> interrompe a execução do restante do código na <em>action</em> <code>show</code>, e quando o Rails chegar ao final da ação, ele começará a renderizar a <em>view</em> <code>regular_show</code> - e gerará um erro. A solução é simples: verifique se você tem apenas uma chamada para <code>render</code> ou <code>redirect</code> em um único fluxo de código. Uma coisa que pode ajudar é <code>and return</code>. Aqui está uma versão corrigida do método:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">show</span>
+  <span class="vi">@book</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">if</span> <span class="vi">@book</span><span class="p">.</span><span class="nf">special?</span>
+    <span class="n">render</span> <span class="ss">action: </span><span class="s2">"special_show"</span> <span class="n">and</span> <span class="k">return</span>
+  <span class="k">end</span>
+  <span class="n">render</span> <span class="ss">action: </span><span class="s2">"regular_show"</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-03ed02aadd9ce280cb5c51cfa592f04c">def show
+  @book = Book.find(params[:id])
+  if @book.special?
+    render action: "special_show" and return
+  end
+  render action: "regular_show"
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-03ed02aadd9ce280cb5c51cfa592f04c">Copiar</button>
+</div>
+<p>Certifique-se de usar <code>and return</code> em vez de <code>&amp;&amp; return</code>, porque <code>&amp;&amp; return</code> não funcionará devido à precedência do operador na linguagem Ruby.</p><p>Observe que a renderização implícita feita pelo <code>ActionController</code> detecta se <code>render</code> foi chamado, portanto, o seguinte código funcionará sem erros:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">show</span>
+  <span class="vi">@book</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">if</span> <span class="vi">@book</span><span class="p">.</span><span class="nf">special?</span>
+    <span class="n">render</span> <span class="ss">action: </span><span class="s2">"special_show"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ba997604d1c2ad44a1f666e47bae78e3">def show
+  @book = Book.find(params[:id])
+  if @book.special?
+    render action: "special_show"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ba997604d1c2ad44a1f666e47bae78e3">Copiar</button>
+</div>
+<p>Isso renderizará um livro com <code>special?</code> configurado com o <em>template</em> <code>special_show</code>, enquanto outros livros serão renderizados com o template padrão <code>show</code>.</p><h4 id="usando-redirect-to"><a class="anchorlink" href="#usando-redirect-to">2.3 Usando <code>redirect_to</code></a></h4><p>Outra maneira de lidar com o retorno das respostas de uma requisição HTTP é com <code>redirect_to</code>. Como você viu, <code>render</code> diz ao Rails qual <em>view</em> (ou outro <em>asset</em>) deve ser usado na construção de uma resposta. O método <code>redirect_to</code> faz algo completamente diferente: diz ao navegador para enviar uma nova requisição para uma URL diferente. Por exemplo, você pode redirecionar de onde quer que esteja no seu código para o <em>index</em> de fotos em sua aplicação com esta chamada:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">redirect_to</span> <span class="n">photos_url</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0fb17d3a69c2b51beb1ed607e514090f">redirect_to photos_url
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0fb17d3a69c2b51beb1ed607e514090f">Copiar</button>
+</div>
+<p>Você pode usar o <code>redirect_back</code> para retornar o usuário à página de onde eles vieram.
+Este local é extraído do cabeçalho <code>HTTP_REFERER</code>, que não garante
+que esteja definido pelo navegador, portanto, você deve fornecer o <code>fallback_location</code>
+para usar neste caso.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">redirect_back</span><span class="p">(</span><span class="ss">fallback_location: </span><span class="n">root_path</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f8e7b3c31348ffad4c82e12ca5c1fb1e">redirect_back(fallback_location: root_path)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f8e7b3c31348ffad4c82e12ca5c1fb1e">Copiar</button>
+</div>
+<div class="note"><p><code>redirect_to</code> e <code>redirect_back</code> não param e retornam imediatamente da execução do método, mas simplesmente definem as respostas HTTP. As instruções que ocorrerem depois deles em um método serão executadas. Você pode parar a execução com um <code>return</code> explícito ou algum outro mecanismo de parada, se necessário.</p></div><h5 id="obtendo-um-codigo-de-status-de-redirecionamento-diferente"><a class="anchorlink" href="#obtendo-um-codigo-de-status-de-redirecionamento-diferente">2.3.1 Obtendo um Código de Status de Redirecionamento Diferente</a></h5><p>O Rails usa o código de status HTTP 302, um redirecionamento temporário, quando você chama <code>redirect_to</code>. Se você quiser usar um código de status diferente, talvez 301, um redirecionamento permanente, use a opção <code>:status</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">redirect_to</span> <span class="n">photos_path</span><span class="p">,</span> <span class="ss">status: </span><span class="mi">301</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cde3b6a962ff211b32b46982a3c25312">redirect_to photos_path, status: 301
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cde3b6a962ff211b32b46982a3c25312">Copiar</button>
+</div>
+<p>Assim como a opção <code>:status</code> para<code>render</code>, <code>:status</code> para <code>redirect_to</code> aceita designações numéricas e simbólicas de cabeçalho .</p><h5 id="a-diferenca-entre-render-eredirect-to"><a class="anchorlink" href="#a-diferenca-entre-render-eredirect-to">2.3.2 A Diferença entre <code>render</code> e<code>redirect_to</code></a></h5><p>Às vezes, pessoas desenvolvedoras inexperientes pensam no <code>redirect_to</code> como uma espécie de comando <code>goto</code>, movendo a execução de um lugar para outro no seu código Rails. Isso <em>não</em> está correto. Seu código para de ser executado e aguarda uma nova requisição do navegador. Acontece que você informou ao navegador qual requisição deve acontecer em seguida, enviando de volta um código de status HTTP 302.</p><p>Considere estas ações para ver a diferença:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">index</span>
+  <span class="vi">@books</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">all</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">show</span>
+  <span class="vi">@book</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">id: </span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">if</span> <span class="vi">@book</span><span class="p">.</span><span class="nf">nil?</span>
+    <span class="n">render</span> <span class="ss">action: </span><span class="s2">"index"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-eec68d59185e1874bdb2e17b930d6f2e">def index
+  @books = Book.all
+end
+
+def show
+  @book = Book.find_by(id: params[:id])
+  if @book.nil?
+    render action: "index"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eec68d59185e1874bdb2e17b930d6f2e">Copiar</button>
+</div>
+<p>Com o código neste formulário, provavelmente haverá um problema se a variável <code>@book</code> for <code>nil</code>. Lembre-se de que um <code>render: action</code> não executa nenhum código na <em>action</em> de destino, então nada configurará a variável <code>@books</code> que a <em>view</em> do <code>index</code> provavelmente exigirá. Uma maneira de corrigir isso é redirecionar em vez de renderizar:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">index</span>
+  <span class="vi">@books</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">all</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">show</span>
+  <span class="vi">@book</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">id: </span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">if</span> <span class="vi">@book</span><span class="p">.</span><span class="nf">nil?</span>
+    <span class="n">redirect_to</span> <span class="ss">action: :index</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8ff05c9520e10e814506acdda88e2053">def index
+  @books = Book.all
+end
+
+def show
+  @book = Book.find_by(id: params[:id])
+  if @book.nil?
+    redirect_to action: :index
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ff05c9520e10e814506acdda88e2053">Copiar</button>
+</div>
+<p>Com esse código, o navegador fará uma nova requisição para a página de índice, o código no método <code>index</code> será executado e tudo ficará bem.</p><p>A única desvantagem desse código é que ele requer que o navegador faça uma volta: o navegador solicitou a <em>action</em> <em>show</em> com <code>/books/1</code> e o <em>controller</em> descobre que não há livros, portanto o <em>controller</em> envia uma resposta de redirecionamento 302 para o navegador dizendo para ele ir para <code>/books/</code>, o navegador obedece e envia uma nova requisição de volta ao <em>controller</em> solicitando agora a <em>action</em> <code>index</code>, o <em>controller</em> obtém todos os livros no banco de dados e renderiza o template de <em>index</em>, enviando-o de volta para o navegador, que o exibe na tela.</p><p>Enquanto em uma aplicação pequena essa latência adicional pode não ser um problema, é algo para se pensar se o tempo de resposta é uma preocupação. Podemos demonstrar uma maneira de lidar com isso com um exemplo:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">index</span>
+  <span class="vi">@books</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">all</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">show</span>
+  <span class="vi">@book</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">id: </span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+  <span class="k">if</span> <span class="vi">@book</span><span class="p">.</span><span class="nf">nil?</span>
+    <span class="vi">@books</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">all</span>
+    <span class="n">flash</span><span class="p">.</span><span class="nf">now</span><span class="p">[</span><span class="ss">:alert</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Your book was not found"</span>
+    <span class="n">render</span> <span class="s2">"index"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e95886a01364ab963c90a2705059cdc0">def index
+  @books = Book.all
+end
+
+def show
+  @book = Book.find_by(id: params[:id])
+  if @book.nil?
+    @books = Book.all
+    flash.now[:alert] = "Your book was not found"
+    render "index"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e95886a01364ab963c90a2705059cdc0">Copiar</button>
+</div>
+<p>Isso detectaria que não há livros com o ID especificado, define a variável de instância <code>@books</code> com todos os livros no modelo e depois renderiza diretamente o template <code>index.html.erb</code>, retornando-o ao navegador com um mensagem de alerta <em>flash</em> para informar ao usuário o que aconteceu.</p><h4 id="usando-head-para-criar-respostas-com-apenas-o-cabecalho-header-only"><a class="anchorlink" href="#usando-head-para-criar-respostas-com-apenas-o-cabecalho-header-only">2.4 Usando <code>head</code> para criar respostas com apenas o cabeçalho (<em>Header-Only</em>)</a></h4><p>O método <code>head</code> pode ser usado para enviar respostas apenas com cabeçalhos para o navegador. O método <code>head</code> aceita um número ou símbolo (consulte <a href="#a-opcao-status">tabela de referência</a>) representando um código de status HTTP. O argumento de <em>options</em> é interpretado como um hash de nomes e valores de cabeçalho. Por exemplo, você pode retornar apenas um cabeçalho de erro:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">head</span> <span class="ss">:bad_request</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-df2da7f72476ab7d010210a65c94780b">head :bad_request
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-df2da7f72476ab7d010210a65c94780b">Copiar</button>
+</div>
+<p>Isso produziria o seguinte cabeçalho:</p><div class="code_container">
+<pre><code class="highlight plaintext">HTTP/1.1 400 Bad Request
+Connection: close
+Date: Sun, 24 Jan 2010 12:15:53 GMT
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+X-Runtime: 0.013483
+Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
+Cache-Control: no-cache
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b7b882b261fb6d5d1d18ecd3d83514a1">HTTP/1.1 400 Bad Request
+Connection: close
+Date: Sun, 24 Jan 2010 12:15:53 GMT
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+X-Runtime: 0.013483
+Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
+Cache-Control: no-cache
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b7b882b261fb6d5d1d18ecd3d83514a1">Copiar</button>
+</div>
+<p>Ou você pode usar outros cabeçalhos HTTP para transmitir outras informações:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">head</span> <span class="ss">:created</span><span class="p">,</span> <span class="ss">location: </span><span class="n">photo_path</span><span class="p">(</span><span class="vi">@photo</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-51ba55a55a3a787236ba72c8c62732a9">head :created, location: photo_path(@photo)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-51ba55a55a3a787236ba72c8c62732a9">Copiar</button>
+</div>
+<p>O que produziria:</p><div class="code_container">
+<pre><code class="highlight plaintext">HTTP/1.1 201 Created
+Connection: close
+Date: Sun, 24 Jan 2010 12:16:44 GMT
+Transfer-Encoding: chunked
+Location: /photos/1
+Content-Type: text/html; charset=utf-8
+X-Runtime: 0.083496
+Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
+Cache-Control: no-cache
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ec156c318f0f68238413beaf238abe72">HTTP/1.1 201 Created
+Connection: close
+Date: Sun, 24 Jan 2010 12:16:44 GMT
+Transfer-Encoding: chunked
+Location: /photos/1
+Content-Type: text/html; charset=utf-8
+X-Runtime: 0.083496
+Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
+Cache-Control: no-cache
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ec156c318f0f68238413beaf238abe72">Copiar</button>
+</div>
+<h3 id="estruturando-layouts"><a class="anchorlink" href="#estruturando-layouts">3 Estruturando <em>Layouts</em></a></h3><p>Quando o Rails renderiza a <em>view</em> como uma resposta, ele faz isso combinando a <em>view</em> com o <em>layout</em> atual, usando as regras pra achar o <em>layout</em> atual que foram mencionadas neste guia. Dentro de um <em>layout</em>, você tem acesso a três ferramentas para combinar pedaços diferentes de saídas para formar a resposta geral:</p>
+<ul>
+<li><em>Asset tags</em></li>
+<li>
+<code>yield</code> e <code>content_for</code>
+</li>
+<li><em>Partials</em></li>
+</ul>
+<h4 id="helpers-de-asset-tags"><a class="anchorlink" href="#helpers-de-asset-tags">3.1 <em>Helpers</em> de <em>Asset Tags</em></a></h4><p><em>Helpers</em> de <em>Asset Tags</em> fornecem métodos para gerar HTML que liga <em>views</em> a <em>feeds</em>, JavaScript, <em>stylesheets</em>, imagens, vídeos, e áudios. Há seis <em>helpers</em> de <em>asset tags</em> disponíveis no Rails:</p>
+<ul>
+<li><code>auto_discovery_link_tag</code></li>
+<li><code>javascript_include_tag</code></li>
+<li><code>stylesheet_link_tag</code></li>
+<li><code>image_tag</code></li>
+<li><code>video_tag</code></li>
+<li><code>audio_tag</code></li>
+</ul>
+<p>Você pode usar essas <em>tags</em> em <em>layouts</em> ou outras <em>views</em>, embora os métodos <code>auto_discovery_link_tag</code>, <code>javascript_include_tag</code> e <code>stylesheet_link_tag</code> apareçam mais na seção <code>&lt;head&gt;</code> de um <em>layout</em>.</p><div class="warning"><p>Os <em>helpers</em> de <em>asset tags</em> <em>não</em> verificam a existência dos <em>assets</em> nos endereços específicos; eles simplesmente presumem que você sabe o que está fazendo e geram o link.</p></div><h5 id="ligando-a-feeds-com-o-metodo-auto-discovery-link-tag"><a class="anchorlink" href="#ligando-a-feeds-com-o-metodo-auto-discovery-link-tag">3.1.1 Ligando a <em>Feeds</em> com o método <code>auto_discovery_link_tag</code></a></h5><p>O <em>helper</em> <code>auto_discovery_link_tag</code> monta HTML que a maioria dos navegadores e leitores de <em>feeds</em> conseguem usar para detectar a presenta de <em>feeds</em> RSS, Atom, ou JSON. Ele recebe o tipo de link (<code>:rss</code>, <code>:atom</code>, or <code>:json</code>), um <em>hash</em> de opções que são encaminhados para url_for, e um <em>hash</em> de opções para a <em>tag</em>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">auto_discovery_link_tag</span><span class="p">(</span><span class="ss">:rss</span><span class="p">,</span> <span class="p">{</span><span class="ss">action: </span><span class="s2">"feed"</span><span class="p">},</span>
+  <span class="p">{</span><span class="ss">title: </span><span class="s2">"RSS Feed"</span><span class="p">})</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cfa0ed4f70307b32025dabcc3296ec26">&lt;%= auto_discovery_link_tag(:rss, {action: "feed"},
+  {title: "RSS Feed"}) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cfa0ed4f70307b32025dabcc3296ec26">Copiar</button>
+</div>
+<p>Há três opções de <em>tags</em> disponíveis para o método <code>auto_discovery_link_tag</code>:</p>
+<ul>
+<li>
+<code>:rel</code> especifica o valor <code>rel</code> no link. O valor padrão é "alternate".</li>
+<li>
+<code>:type</code> especifica um <em>MIME type</em> explícito. O Rails criará um <em>MIME type</em> apropriado automaticamente.</li>
+<li>
+<code>:title</code> especifica o título do link. O valor padrão é o valor definido em <code>:type</code> com letras maiúsculas, por exemplo, "ATOM" ou "RSS".</li>
+</ul>
+<h5 id="ligando-a-arquivos-javascript-com-o-metodo-javascript-include-tag"><a class="anchorlink" href="#ligando-a-arquivos-javascript-com-o-metodo-javascript-include-tag">3.1.2 Ligando a Arquivos JavaScript com o Método <code>javascript_include_tag</code></a></h5><p>O <em>helper</em> <code>javascript_include_tag</code> retorna uma tag HTML <code>script</code> para cada fonte fornecida.</p><p>Se você está usando o Rails com a <a href="asset_pipeline.html"><em>Asset Pipeline</em></a> habilitada, este <em>helper</em> criará um link para <code>/assets/javascripts/</code> ao invés de <code>public/javascripts</code> que era usado em versões anteriores do Rails. Este link será disponibilizado pelo <em>asset pipeline</em>.</p><p>Um arquivo JavaScript dentro de uma aplicação ou <em>engine</em> Rails pode ir dentro de uma entre três possíveis pastas: <code>app/assets</code>, <code>lib/assets</code> ou <code>vendor/assets</code>. Estas pastas são explicadas com detalhes na seção <a href="asset_pipeline.html#asset-organization">Organização de <em>Assets</em> no Guia de <em>Asset Pipeline</em></a>.</p><p>Você pode especificar um caminho completo relativo à raiz do documento, ou uma URL, se você preferir. Por exemplo, pra ligar a um arquivo JavaScript que está dentro de um diretório chamado <code>javascripts</code> dentro de<code>app/assets</code>, <code>lib/assets</code> ou <code>vendor/assets</code>, você faria isto:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"main"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-09dd55816ec848a627ef0c3fa7d3d923">&lt;%= javascript_include_tag "main" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-09dd55816ec848a627ef0c3fa7d3d923">Copiar</button>
+</div>
+<p>O Rails criará então uma tag <code>script</code> tag como esta:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">'/assets/main.js'</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bf77f8e449ba582bc051f29010d2eb55">&lt;script src='/assets/main.js'&gt;&lt;/script&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bf77f8e449ba582bc051f29010d2eb55">Copiar</button>
+</div>
+<p>A requisição para este <em>asset</em> será então disponibilizada pela <em>gem</em> Sprockets.</p><p>Para incluir vários arquivos como <code>app/assets/javascripts/main.js</code> e <code>app/assets/javascripts/columns.js</code> ao mesmo tempo:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"main"</span><span class="p">,</span> <span class="s2">"columns"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f9521829c700f2a3a1131c986862156c">&lt;%= javascript_include_tag "main", "columns" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f9521829c700f2a3a1131c986862156c">Copiar</button>
+</div>
+<p>Para incluir <code>app/assets/javascripts/main.js</code> e <code>app/assets/javascripts/photos/columns.js</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"main"</span><span class="p">,</span> <span class="s2">"/photos/columns"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fbebfe63285f12e2a898aba2d660965e">&lt;%= javascript_include_tag "main", "/photos/columns" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fbebfe63285f12e2a898aba2d660965e">Copiar</button>
+</div>
+<p>Para incluir <code>http://example.com/main.js</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"http://example.com/main.js"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ee601781db0a6a76d74cb4aeecb819e0">&lt;%= javascript_include_tag "http://example.com/main.js" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ee601781db0a6a76d74cb4aeecb819e0">Copiar</button>
+</div>
+<h5 id="ligando-a-arquivos-css-com-o-metodo-stylesheet-link-tag"><a class="anchorlink" href="#ligando-a-arquivos-css-com-o-metodo-stylesheet-link-tag">3.1.3 Ligando a Arquivos CSS com o método <code>stylesheet_link_tag</code></a></h5><p>O <em>helper</em> <code>stylesheet_link_tag</code> retorna uma tag HTML <code>&lt;link&gt;</code> para cada fonte fornecida.</p><p>Se você está usando o Rails com a <em>"Asset Pipeline"</em> habilitada, este <em>helper</em> criará um link para <code>/assets/stylesheets/</code>. Este link então será processado pela <em>gem</em> Sprockets. Um arquivo de <em>stylesheet</em> pode ser armazenado em um de três endereços: <code>app/assets</code>, <code>lib/assets</code> ou <code>vendor/assets</code>.</p><p>Você pode especificar um caminho completo relativo à raiz do documento, ou uma URL. Por exemplo, para ligar a um arquivo de <em>stylesheet</em> que está dentro de um diretório chamado <code>stylesheets</code> dentro de <code>app/assets</code>, <code>lib/assets</code> ou <code>vendor/assets</code>, você faria isto:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"main"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-83f1b036785566c67b6880745a019d2c">&lt;%= stylesheet_link_tag "main" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-83f1b036785566c67b6880745a019d2c">Copiar</button>
+</div>
+<p>Para incluir <code>app/assets/stylesheets/main.css</code> e <code>app/assets/stylesheets/columns.css</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"main"</span><span class="p">,</span> <span class="s2">"columns"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e63d82051b486a3aed8aca514fde5d7f">&lt;%= stylesheet_link_tag "main", "columns" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e63d82051b486a3aed8aca514fde5d7f">Copiar</button>
+</div>
+<p>Para incluir <code>app/assets/stylesheets/main.css</code> e <code>app/assets/stylesheets/photos/columns.css</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"main"</span><span class="p">,</span> <span class="s2">"photos/columns"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e4a1802c3cf2639cf316e5d6c3d0ef95">&lt;%= stylesheet_link_tag "main", "photos/columns" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e4a1802c3cf2639cf316e5d6c3d0ef95">Copiar</button>
+</div>
+<p>Para incluir <code>http://example.com/main.css</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"http://example.com/main.css"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4993502c142605dfedb2de253c8a86c9">&lt;%= stylesheet_link_tag "http://example.com/main.css" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4993502c142605dfedb2de253c8a86c9">Copiar</button>
+</div>
+<p>Por padrão, o método <code>stylesheet_link_tag</code> cria links com <code>media="screen" rel="stylesheet"</code>. Você pode sobrescrever qualquer um destes padrões especificando uma opção apropriada (<code>:media</code>, <code>:rel</code>):</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"main_print"</span><span class="p">,</span> <span class="ss">media: </span><span class="s2">"print"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-048fc4b3e7984eaef9622680cf4c6d21">&lt;%= stylesheet_link_tag "main_print", media: "print" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-048fc4b3e7984eaef9622680cf4c6d21">Copiar</button>
+</div>
+<h5 id="ligando-a-imagens-com-o-metodo-image-tag"><a class="anchorlink" href="#ligando-a-imagens-com-o-metodo-image-tag">3.1.4 Ligando a  Imagens com o método <code>image_tag</code></a></h5><p>O <em>helper</em> <code>image_tag</code> monta uma tag <code>&lt;img /&gt;</code> que aponta para o arquivo especificado. Por padrão, os arquivos são carregados a partir de <code>public/images</code>.</p><div class="warning"><p>Note que você deve especificar a extensão da imagem.</p></div><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"header.png"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-24a2166b2a1c90c96169e6b5d04d90f6">&lt;%= image_tag "header.png" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-24a2166b2a1c90c96169e6b5d04d90f6">Copiar</button>
+</div>
+<p>Você pode fornecer um caminho para a imagem se preferir:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"icons/delete.gif"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0a9e296fe219decd04d7cb0170c17ed1">&lt;%= image_tag "icons/delete.gif" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0a9e296fe219decd04d7cb0170c17ed1">Copiar</button>
+</div>
+<p>Você pode fornecer um <em>hash</em> de opções adicionais para o HTML:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"icons/delete.gif"</span><span class="p">,</span> <span class="p">{</span><span class="ss">height: </span><span class="mi">45</span><span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-17dec2f4038d98891bd23ea91c9acd59">&lt;%= image_tag "icons/delete.gif", {height: 45} %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-17dec2f4038d98891bd23ea91c9acd59">Copiar</button>
+</div>
+<p>Você pode fornecer um texto alternativo para a imagem que será utilizado se a pessoa usuária estiver com imagens desabilitadas no navegador. Se você não especificar um texto alternativo de forma explícita, o valor padrão será o nome do arquivo, com a inicial maiúscula e sem extensão. Por exemplo, estas duas imagens devolvem o mesmo código:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"home.gif"</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"home.gif"</span><span class="p">,</span> <span class="ss">alt: </span><span class="s2">"Home"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-efa9e965c0dd64dd7060db87d6c390b2">&lt;%= image_tag "home.gif" %&gt;
+&lt;%= image_tag "home.gif", alt: "Home" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-efa9e965c0dd64dd7060db87d6c390b2">Copiar</button>
+</div>
+<p>Você também pode especificar uma tag <em>size</em> especial, no formato "{largura}x{altura}":</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"home.gif"</span><span class="p">,</span> <span class="ss">size: </span><span class="s2">"50x20"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-605611b02dda50f748b240ec417647e7">&lt;%= image_tag "home.gif", size: "50x20" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-605611b02dda50f748b240ec417647e7">Copiar</button>
+</div>
+<p>Além da tag especial acima, você pode fornecer um <em>hash</em> final de opções HTML padrão, como <code>:class</code>, <code>:id</code> ou <code>:name</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"home.gif"</span><span class="p">,</span> <span class="ss">alt: </span><span class="s2">"Go Home"</span><span class="p">,</span>
+                          <span class="ss">id: </span><span class="s2">"HomeImage"</span><span class="p">,</span>
+                          <span class="ss">class: </span><span class="s2">"nav_bar"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-141222e539ca0192b1e6db0ad1f4ab0d">&lt;%= image_tag "home.gif", alt: "Go Home",
+                          id: "HomeImage",
+                          class: "nav_bar" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-141222e539ca0192b1e6db0ad1f4ab0d">Copiar</button>
+</div>
+<h5 id="ligando-a-videos-com-o-metodo-video-tag"><a class="anchorlink" href="#ligando-a-videos-com-o-metodo-video-tag">3.1.5 Ligando a Vídeos com o método <code>video_tag</code></a></h5><p>O <em>helper</em> <code>video_tag</code> monta uma tag HTML 5 <code>&lt;video&gt;</code> apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de <code>public/videos</code>.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">video_tag</span> <span class="s2">"movie.ogg"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-00448886cc2412634df4eb44d25bf6b7">&lt;%= video_tag "movie.ogg" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-00448886cc2412634df4eb44d25bf6b7">Copiar</button>
+</div>
+<p>Produz</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;video</span> <span class="na">src=</span><span class="s">"/videos/movie.ogg"</span> <span class="nt">/&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ed6eea484dc28e215e05557d2ad19c11">&lt;video src="/videos/movie.ogg" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ed6eea484dc28e215e05557d2ad19c11">Copiar</button>
+</div>
+<p>Como o método <code>image_tag</code>, você pode fornecer um caminho absoluto ou relativo ao diretório <code>public/videos</code>. Além disso você pode especificar a opção <code>size: "#{width}x#{height}"</code> assim como no método <code>image_tag</code>. Tags de vídeo também podem ter qualquer uma das opções HTML especificadas no fim do método (<code>id</code>, <code>class</code> et al).</p><p>O método <code>video_tag</code> também suporta todas as opções da tag HTML <code>&lt;video&gt;</code> através do <em>hash</em> de opções HTML, incluindo:</p>
+<ul>
+<li>
+<code>poster: "image_name.png"</code>, fornece uma imagem para colocar no lugar do vídeo antes de reproduzir.</li>
+<li>
+<code>autoplay: true</code>, inicia a reprodução do vídeo quando a página é carregada.</li>
+<li>
+<code>loop: true</code>, continua a reprodução do vídeo quando este chega no fim.</li>
+<li>
+<code>controls: true</code>, habilita controles fornecidos pelo navegador de forma que a pessoa usuária possa interagir com o vídeo.</li>
+<li>
+<code>autobuffer: true</code>, o vídeo será pré-carregado para a pessoa usuária quando a página carregar.</li>
+</ul>
+<p>Você também pode especificar vários vídeos para reprodução consecutiva passando um <em>array</em> de vídeos para o método <code>video_tag</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">video_tag</span> <span class="p">[</span><span class="s2">"trailer.ogg"</span><span class="p">,</span> <span class="s2">"movie.ogg"</span><span class="p">]</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0e7d8d54f39bfa6a8ba0af281cf116ce">&lt;%= video_tag ["trailer.ogg", "movie.ogg"] %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0e7d8d54f39bfa6a8ba0af281cf116ce">Copiar</button>
+</div>
+<p>Isto irá produzir:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;video&gt;</span>
+  <span class="nt">&lt;source</span> <span class="na">src=</span><span class="s">"/videos/trailer.ogg"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;source</span> <span class="na">src=</span><span class="s">"/videos/movie.ogg"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/video&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-36859b3a2afc7adf0dd8e28f846ca6ba">&lt;video&gt;
+  &lt;source src="/videos/trailer.ogg"&gt;
+  &lt;source src="/videos/movie.ogg"&gt;
+&lt;/video&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-36859b3a2afc7adf0dd8e28f846ca6ba">Copiar</button>
+</div>
+<h5 id="ligando-a-arquivos-de-audio-com-o-metodo-audio-tag"><a class="anchorlink" href="#ligando-a-arquivos-de-audio-com-o-metodo-audio-tag">3.1.6 Ligando a Arquivos de Áudio com o método <code>audio_tag</code></a></h5><p>O <em>helper</em> <code>audio_tag</code> monta uma tag HTML 5 <code>&lt;audio&gt;</code> apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de <code>public/audios</code>.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">audio_tag</span> <span class="s2">"music.mp3"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-67bcb5165fd99b503a7c79e3000d4dd0">&lt;%= audio_tag "music.mp3" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-67bcb5165fd99b503a7c79e3000d4dd0">Copiar</button>
+</div>
+<p>Você pode fornecer um caminho para o arquivo de áudio se preferir:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">audio_tag</span> <span class="s2">"music/first_song.mp3"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-79e24a165c59efac8d280cd14b3919f8">&lt;%= audio_tag "music/first_song.mp3" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-79e24a165c59efac8d280cd14b3919f8">Copiar</button>
+</div>
+<p>Você também pode fornecer um <em>hash</em> de opções adicionais, como <code>:id</code>, <code>:class</code> etc.</p><p>Como o método <code>video_tag</code>, o método <code>audio_tag</code> tem opções especiais:</p>
+<ul>
+<li>
+<code>autoplay: true</code>, inicia a reprodução do áudio quando a página é carregada.</li>
+<li>
+<code>controls: true</code>, habilita controles fornecidos pelo navegador para a pessoa usuária interagir com o áudio.</li>
+<li>
+<code>autobuffer: true</code>, o áudio será pré-carregado para a pessoa usuária quando a página carregar.</li>
+</ul>
+<h4 id="entendendo-yield"><a class="anchorlink" href="#entendendo-yield">3.2 Entendendo <code>yield</code></a></h4><p>Dentro do contexto de um <em>layout</em>, <code>yield</code> identifica uma seção onde o conteúdo da <em>view</em> deve ser inserido. A maneira mais simples de utilizar isto é colocar um único <code>yield</code>, dentro do qual todo o conteúdo da <em>view</em> renderizada no momento é inserido:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-07c0625b25ff1f74dea639edd4de49cb">&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;%= yield %&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-07c0625b25ff1f74dea639edd4de49cb">Copiar</button>
+</div>
+<p>Você também pode criar um <em>layout</em> com várias regiões com <code>yield</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="ss">:head</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-82838616ef818183f28dbdca0f28417b">&lt;html&gt;
+  &lt;head&gt;
+  &lt;%= yield :head %&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;%= yield %&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-82838616ef818183f28dbdca0f28417b">Copiar</button>
+</div>
+<p>O <em>body</em> principal da <em>view</em> sempre manda o conteúdo para dentro do <code>yield</code> sem nome. Para direcionar o conteúdo para as tags <code>yield</code> com nome, usa-se o método <code>content_for</code>.</p><h4 id="usando-o-metodo-content-for"><a class="anchorlink" href="#usando-o-metodo-content-for">3.3 Usando o Método <code>content_for</code></a></h4><p>O método <code>content_for</code> lhe permite inserir conteúdo dentro de um bloco <code>yield</code> com nome no seu <em>layout</em>. Por exmeplo, esta <em>view</em> funcionaria com o <em>layout</em> que você acabou de ver:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">content_for</span> <span class="ss">:head</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;title&gt;</span>A simple page<span class="nt">&lt;/title&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Hello, Rails!<span class="nt">&lt;/p&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c3e595e54add0f989fbb7ed628fe7578">&lt;% content_for :head do %&gt;
+  &lt;title&gt;A simple page&lt;/title&gt;
+&lt;% end %&gt;
+
+&lt;p&gt;Hello, Rails!&lt;/p&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c3e595e54add0f989fbb7ed628fe7578">Copiar</button>
+</div>
+<p>O resultado da renderização desta página dentro do <em>layout</em> fornecido seria este HTML:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>A simple page<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;p&gt;</span>Hello, Rails!<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9fefbbcef5fb2f6e9ae870d26b1cdcd0">&lt;html&gt;
+  &lt;head&gt;
+  &lt;title&gt;A simple page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;p&gt;Hello, Rails!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9fefbbcef5fb2f6e9ae870d26b1cdcd0">Copiar</button>
+</div>
+<p>O método <code>content_for</code> ajuda muito quando o seu <em>layout</em> contém regiões distintas como <em>sidebars</em> e rodapés que precisam receber blocos de conteúdo próprios. Ele também é útil para inserir tags que carregam JavaScript ou arquivos css dentro do cabeçalho de um <em>layout</em> que seria genérico em outro cenário.</p><h4 id="usando-partials"><a class="anchorlink" href="#usando-partials">3.4 Usando <em>Partials</em></a></h4><p>Templates parciais - normalmente chamados de <em>"partials"</em> - são outro dispositivo para quebrar o processo de renderização em pedaços menores. Com uma <em>partial</em>, você pode mover o código para renderizar um pedaço específico de uma resposta para um arquivo próprio.</p><h5 id="nomeando-partials"><a class="anchorlink" href="#nomeando-partials">3.4.1 Nomeando <em>Partials</em></a></h5><p>Para renderizar uma <em>partial</em> como parte da <em>view</em>, usa-se o método <code>render</code> dentro da view:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="o">&lt;</span><span class="sx">%= render "menu" %&gt;
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-8661baa1984c29360dac8e20e408573d">&lt;%= render "menu" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8661baa1984c29360dac8e20e408573d">Copiar</button>
+</div>
+<p>Isto inclui o conteúdo de um arquivo chamado <code>_menu.html.erb</code> neste ponto dentro da view renderizada. Note o <em>underscore</em> inicial no nome do arquivo: <em>partials</em> recebem nomes com um <em>underscore</em> inicial para distingui-los de <em>views</em> regulares, mesmo sem usar esta notação em casos mais comuns. Isso continua sendo verdade mesmo quando você incluir uma <em>partial</em> de outro diretório:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="o">&lt;</span><span class="sx">%= render "shared/menu" %&gt;
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-4984ef56f59745da790c88bafd3826b2">&lt;%= render "shared/menu" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4984ef56f59745da790c88bafd3826b2">Copiar</button>
+</div>
+<p>Este código puxará a <em>partial</em> de <code>app/views/shared/_menu</code>.</p><h5 id="usando-partials-para-simplificar-views"><a class="anchorlink" href="#usando-partials-para-simplificar-views">3.4.2 Usando <em>Partials</em> para Simplificar <em>Views</em></a></h5><p>Um jeito de usar <em>partials</em> é tratá-los como algo equivalente a sub-rotinas: como um jeito de mover detalhes fora da <em>view</em> de forma que você entenda o que está acontecendo de forma mais fácil. Por exemplo, você pode ter uma <em>view</em> que estava assim:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/ad_banner"</span> <span class="cp">%&gt;</span>
+
+<span class="nt">&lt;h1&gt;</span>Products<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Here are a few of our fine products:<span class="nt">&lt;/p&gt;</span>
+...
+
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/footer"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-900c42e5ada01865f8265d76daf6e52d">&lt;%= render "shared/ad_banner" %&gt;
+
+&lt;h1&gt;Products&lt;/h1&gt;
+
+&lt;p&gt;Here are a few of our fine products:&lt;/p&gt;
+...
+
+&lt;%= render "shared/footer" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-900c42e5ada01865f8265d76daf6e52d">Copiar</button>
+</div>
+<p>Aqui, os <em>partials</em> <code>_ad_banner.html.erb</code> e <code>_footer.html.erb</code> podem ter conteúdo que é compartilhado por muitas páginas na sua aplicação. Você não precisa ver os detalhes destas seções quando concentrar a atenção em uma página em particular.</p><p>Como em seções anteriores deste guia, o <code>yield</code> é uma ferramenta muito poderosa para fazer faxina nos seus <em>layouts</em>. Tenha em mente que isto é Ruby puro, então é possível usar isto quase em qualquer lugar. Por exemplo, nós podemos usar o <code>yield</code> para remover a duplicação das definições do <em>layout</em> de formulário para vários recursos similares:</p>
+<ul>
+<li>
+<p><code>users/index.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/search_filters"</span><span class="p">,</span> <span class="ss">search: </span><span class="vi">@q</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;p&gt;</span>
+    Name contains: <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:name_contains</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3039efd3d869ec6a9473457358fe2cff">&lt;%= render "shared/search_filters", search: @q do |f| %&gt;
+  &lt;p&gt;
+    Name contains: &lt;%= f.text_field :name_contains %&gt;
+  &lt;/p&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3039efd3d869ec6a9473457358fe2cff">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>roles/index.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/search_filters"</span><span class="p">,</span> <span class="ss">search: </span><span class="vi">@q</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;p&gt;</span>
+    Title contains: <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:title_contains</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7805727e6ca91266cf65dd9bfea95e69">&lt;%= render "shared/search_filters", search: @q do |f| %&gt;
+  &lt;p&gt;
+    Title contains: &lt;%= f.text_field :title_contains %&gt;
+  &lt;/p&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7805727e6ca91266cf65dd9bfea95e69">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>shared/_search_filters.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_for</span><span class="p">(</span><span class="n">search</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>Search form:<span class="nt">&lt;/h1&gt;</span>
+  <span class="nt">&lt;fieldset&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="n">f</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/fieldset&gt;</span>
+  <span class="nt">&lt;p&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">submit</span> <span class="s2">"Search"</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7451cb1068c207f3c56e2e613375d22f">&lt;%= form_for(search) do |f| %&gt;
+  &lt;h1&gt;Search form:&lt;/h1&gt;
+  &lt;fieldset&gt;
+    &lt;%= yield f %&gt;
+  &lt;/fieldset&gt;
+  &lt;p&gt;
+    &lt;%= f.submit "Search" %&gt;
+  &lt;/p&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7451cb1068c207f3c56e2e613375d22f">Copiar</button>
+</div>
+</li>
+</ul>
+<div class="info"><p>Para conteúdo que é compartilhado por todas as páginas da sua aplicação, você pode usar <em>partials</em> diretamente dos <em>layouts</em>.</p></div><h5 id="layouts-parciais"><a class="anchorlink" href="#layouts-parciais">3.4.3 <em>Layouts</em> Parciais</a></h5><p>Uma <em>partial</em> pode usar seu próprio arquivo, assim como uma <em>view</em> pode usar um <em>layout</em>. Por exemplo, você pode chamar uma <em>partial</em> assim:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"link_area"</span><span class="p">,</span> <span class="ss">layout: </span><span class="s2">"graybar"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a8b54978d3f60e07edb1cbda08654e89">&lt;%= render partial: "link_area", layout: "graybar" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a8b54978d3f60e07edb1cbda08654e89">Copiar</button>
+</div>
+<p>Isto procura por uma <em>partial</em> chamado <code>_link_area.html.erb</code> e o renderiza usando o <em>layout</em> <code>_graybar.html.erb</code>. Note que <em>layouts</em> para <em>partials</em> seguem a mesma nomenclatura de <em>underscore</em> inicial que <em>partials</em> comuns, e ficam no mesmo diretório que a <em>partial</em> ao qual pertencem (não é o diretório principal <code>layouts</code>).</p><p>Note também que é necessário especificar <code>:partial</code> de forma explícita quando passar opções adicionais como <code>:layout</code>.</p><h5 id="passando-variaveis-locais"><a class="anchorlink" href="#passando-variaveis-locais">3.4.4 Passando Variáveis Locais</a></h5><p>Você também pode passar variáveis locais para os <em>partials</em>, tornando-os ainda mais poderosos e flexíveis. Por exemplo, você pode utilizar esta técnica para reduzir duplicação entre páginas <em>new</em> e <em>edit</em>, enquanto mantém um pouco de conteúdo distinto:</p>
+<ul>
+<li>
+<p><code>new.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>New zone<span class="nt">&lt;/h1&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"form"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span><span class="ss">zone: </span><span class="vi">@zone</span><span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2d4964b34edcd97b6fbe38c72b14b238">&lt;h1&gt;New zone&lt;/h1&gt;
+&lt;%= render partial: "form", locals: {zone: @zone} %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2d4964b34edcd97b6fbe38c72b14b238">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>edit.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Editing zone<span class="nt">&lt;/h1&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"form"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span><span class="ss">zone: </span><span class="vi">@zone</span><span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cc4aefe45fba26e4c92803b8a70ac034">&lt;h1&gt;Editing zone&lt;/h1&gt;
+&lt;%= render partial: "form", locals: {zone: @zone} %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cc4aefe45fba26e4c92803b8a70ac034">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>_form.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_for</span><span class="p">(</span><span class="n">zone</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;b&gt;</span>Zone name<span class="nt">&lt;/b&gt;&lt;br&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:name</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">submit</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e4058d82b64cf0fc582b9648a1ee478f">&lt;%= form_for(zone) do |f| %&gt;
+  &lt;p&gt;
+    &lt;b&gt;Zone name&lt;/b&gt;&lt;br&gt;
+    &lt;%= f.text_field :name %&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;%= f.submit %&gt;
+  &lt;/p&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e4058d82b64cf0fc582b9648a1ee478f">Copiar</button>
+</div>
+</li>
+</ul>
+<p>Mesmo com o mesma <em>partial</em> renderizado dentro das duas <em>views</em>, o <em>helper</em> <code>submit</code> retorna <em>"Create Zone"</em> para a ação <em>new</em> e <em>"Update Zone"</em> para a ação <em>edit</em>.</p><p>Para passar uma variável local para uma <em>partial</em> apenas em casos específicos usa-se <code>local_assigns</code>.</p>
+<ul>
+<li><code>index.html.erb</code></li>
+</ul>
+<div class="code_container">
+<pre><code class="highlight erb">  <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="n">user</span><span class="p">.</span><span class="nf">articles</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a380e8e4fd7afd096777791c628c6a14">  &lt;%= render user.articles %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a380e8e4fd7afd096777791c628c6a14">Copiar</button>
+</div>
+
+<ul>
+<li><code>show.html.erb</code></li>
+</ul>
+<div class="code_container">
+<pre><code class="highlight erb">  <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="n">article</span><span class="p">,</span> <span class="ss">full: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-be74842a7fdbcb04a5166b8c97732a00">  &lt;%= render article, full: true %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-be74842a7fdbcb04a5166b8c97732a00">Copiar</button>
+</div>
+
+<ul>
+<li><code>_article.html.erb</code></li>
+</ul>
+<div class="code_container">
+<pre><code class="highlight erb">  <span class="nt">&lt;h2&gt;</span><span class="cp">&lt;%=</span> <span class="n">article</span><span class="p">.</span><span class="nf">title</span> <span class="cp">%&gt;</span><span class="nt">&lt;/h2&gt;</span>
+
+  <span class="cp">&lt;%</span> <span class="k">if</span> <span class="n">local_assigns</span><span class="p">[</span><span class="ss">:full</span><span class="p">]</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">simple_format</span> <span class="n">article</span><span class="p">.</span><span class="nf">body</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%</span> <span class="k">else</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">truncate</span> <span class="n">article</span><span class="p">.</span><span class="nf">body</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-14ecc3883bce162203c38e1689d6d1e9">  &lt;h2&gt;&lt;%= article.title %&gt;&lt;/h2&gt;
+
+  &lt;% if local_assigns[:full] %&gt;
+    &lt;%= simple_format article.body %&gt;
+  &lt;% else %&gt;
+    &lt;%= truncate article.body %&gt;
+  &lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-14ecc3883bce162203c38e1689d6d1e9">Copiar</button>
+</div>
+<p>Desta forma é possível utilizar a <em>partial</em> sem necessidade de declarar todas as variáveis locais.</p><p>Toda <em>partial</em> também tem uma variável local com o mesmo nome da <em>partial</em> (sem o <em>underscore</em> inicial). Você pode passar um objeto para esta variável local por via da opção <code>:object</code>.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"customer"</span><span class="p">,</span> <span class="ss">object: </span><span class="vi">@new_customer</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-08dc98762eb1802e16a178cfcb68db7b">&lt;%= render partial: "customer", object: @new_customer %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-08dc98762eb1802e16a178cfcb68db7b">Copiar</button>
+</div>
+<p>Dentro da <em>partial</em> <code>customer</code>, a variável <code>customer</code> refere a <code>@new_customer</code> a partir da <em>view</em> superior.</p><p>Se você tem uma instância de um <em>model</em> para renderizar dentro de uma <em>partial</em>, você pode usar a sintaxe reduzida:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="vi">@customer</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-de239fca3b3d6a4de01a07b5a2c93d1c">&lt;%= render @customer %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-de239fca3b3d6a4de01a07b5a2c93d1c">Copiar</button>
+</div>
+<p>Presumindo que a variável de instância <code>@customer</code> contém uma instância do model <code>Customer</code>, isto utilizará <code>_customer.html.erb</code> para renderizá-la e passará a variável local <code>customer</code> dentro da <em>partial</em> que se refere à variável de instância <code>@customer</code> na <em>view</em> superior.</p><h5 id="renderizando-colecoes"><a class="anchorlink" href="#renderizando-colecoes">3.4.5 Renderizando Coleções</a></h5><p><em>Partials</em> são muito úteis para renderizar coleções. Quando você passa uma coleção para uma <em>partial</em> através da opção <code>:collection</code>, a <em>partial</em> será inserido uma vez para cada membro da coleção:</p>
+<ul>
+<li>
+<p><code>index.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Products<span class="nt">&lt;/h1&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@products</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f5a6c84e0c15185e55bd90107fb3862c">&lt;h1&gt;Products&lt;/h1&gt;
+&lt;%= render partial: "product", collection: @products %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5a6c84e0c15185e55bd90107fb3862c">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>_product.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;p&gt;</span>Product Name: <span class="cp">&lt;%=</span> <span class="n">product</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bef96d9b8b5aabac2b82929342749065">&lt;p&gt;Product Name: &lt;%= product.name %&gt;&lt;/p&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bef96d9b8b5aabac2b82929342749065">Copiar</button>
+</div>
+</li>
+</ul>
+<p>Quando uma <em>partial</em> é chamado com uma coleção pluralizada, então as instâncias individuais da <em>partial</em> tem acesso ao membro da coleção que é renderizado por via de uma variável nomeada com base na <em>partial</em>. Neste caso, a <em>partial</em> é <code>_product</code>, e dentro da <em>partial</em> <code>_product</code>, você pode referir a <code>product</code> para pegar a instância renderizada.</p><p>Há também uma sintaxe reduzida para isto. Presumindo question <code>@products</code> é uma coleção de instâncias <code>Product</code>, você pode simplesmente escrever isto dentro de <code>index.html.erb</code> para produzir o mesmo resultado:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Products<span class="nt">&lt;/h1&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="vi">@products</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a75bf7a6a69fe8f0c3c00a7310374e95">&lt;h1&gt;Products&lt;/h1&gt;
+&lt;%= render @products %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a75bf7a6a69fe8f0c3c00a7310374e95">Copiar</button>
+</div>
+<p>O Rails determina o nome da <em>partial</em> a utilizar olhando para o nome do <em>model</em> na coleção. Aliás, você pode até criar uma coleção heterogênea e fazer a renderização deste jeito, e o Rails escolherá a <em>partial</em> apropriado para cada membro da coleção:</p>
+<ul>
+<li>
+<p><code>index.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Contacts<span class="nt">&lt;/h1&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="p">[</span><span class="n">customer1</span><span class="p">,</span> <span class="n">employee1</span><span class="p">,</span> <span class="n">customer2</span><span class="p">,</span> <span class="n">employee2</span><span class="p">]</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-12d4212da1dbd43e3c078e74f1361d79">&lt;h1&gt;Contacts&lt;/h1&gt;
+&lt;%= render [customer1, employee1, customer2, employee2] %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-12d4212da1dbd43e3c078e74f1361d79">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>customers/_customer.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;p&gt;</span>Customer: <span class="cp">&lt;%=</span> <span class="n">customer</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b1536ecc9d6e09ec61e11ce9628a16d1">&lt;p&gt;Customer: &lt;%= customer.name %&gt;&lt;/p&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b1536ecc9d6e09ec61e11ce9628a16d1">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>employees/_employee.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;p&gt;</span>Employee: <span class="cp">&lt;%=</span> <span class="n">employee</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7a69b1708d0f6b92f63d61d35ee84a3f">&lt;p&gt;Employee: &lt;%= employee.name %&gt;&lt;/p&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7a69b1708d0f6b92f63d61d35ee84a3f">Copiar</button>
+</div>
+</li>
+</ul>
+<p>Neste caso, o Rails utilizará os <em>partials</em> de cliente ou empregado nas situações apropriadas para cada membro da coleção.</p><p>Caso a coleção esteja vazia, <code>render</code> retornará <em>nil</em>, então não deve haver dificuldades para fornecer conteúdo alternativo.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Products<span class="nt">&lt;/h1&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render</span><span class="p">(</span><span class="vi">@products</span><span class="p">)</span> <span class="o">||</span> <span class="s2">"There are no products available."</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-11aeb8701b3ec2a897c94b862a801b73">&lt;h1&gt;Products&lt;/h1&gt;
+&lt;%= render(@products) || "There are no products available." %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-11aeb8701b3ec2a897c94b862a801b73">Copiar</button>
+</div>
+<h5 id="variaveis-locais"><a class="anchorlink" href="#variaveis-locais">3.4.6 Variáveis Locais</a></h5><p>Para usar uma variável local personalizada dentro da <em>partial</em>, especifique a opção <code>:as</code> na chamada para a <em>partial</em>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@products</span><span class="p">,</span> <span class="ss">as: :item</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1f881c13909e968c215c2cae5320e4ca">&lt;%= render partial: "product", collection: @products, as: :item %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1f881c13909e968c215c2cae5320e4ca">Copiar</button>
+</div>
+<p>Com esta mudança, você pode acessar uma instância da coleção <code>@products</code> como a variável local <code>item</code> dentro da <em>partial</em>.</p><p>Você também pode passar variáveis locais arbitrárias para qualquer <em>partial</em> que você renderizar com a opção <code>locals: {}</code>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@products</span><span class="p">,</span>
+           <span class="ss">as: :item</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span><span class="ss">title: </span><span class="s2">"Products Page"</span><span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e4a9f63c850a4a036fc10f4af0703570">&lt;%= render partial: "product", collection: @products,
+           as: :item, locals: {title: "Products Page"} %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e4a9f63c850a4a036fc10f4af0703570">Copiar</button>
+</div>
+<p>Neste caso, a <em>partial</em> terá acesso à variável local <code>title</code> com o valor <em>"Products Page"</em>.</p><div class="info"><p>O Rails também cria uma variável de contagem disponível dentro de uma <em>partial</em> chamado pela coleção, que recebe um nome com base no título da <em>partial</em> seguido de <code>_counter</code>. Por exemplo, ao renderizar a coleção <code>@products</code> a <em>partial</em> <code>_product.html.erb</code> pode acessar a variável <code>product_counter</code> que registra o número de vezes que a <em>partial</em> foi renderizado dentro da <em>view</em> em questão. Note que isto também se aplica para quando o nome da <em>partial</em> sofre alterações através da opção <code>as:</code>. Por exemplo, a variável de contagem para o código acima seria <code>item_counter</code>.</p></div><p>Você também pode especificar um segunda <em>partial</em> para renderizar entre instâncias de uma <em>partial</em> principal usando a opção <code>:spacer_template</code>:</p><h5 id="spacer-templates"><a class="anchorlink" href="#spacer-templates">3.4.7 <em>Spacer Templates</em></a></h5><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="vi">@products</span><span class="p">,</span> <span class="ss">spacer_template: </span><span class="s2">"product_ruler"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7f344aa64074fa66b5685106aaf3b3f7">&lt;%= render partial: @products, spacer_template: "product_ruler" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7f344aa64074fa66b5685106aaf3b3f7">Copiar</button>
+</div>
+<p>O Rails irá renderizar a <em>partial</em> <code>_product_ruler</code> (sem dados encaminhados pra ele) entre cada par de <em>partials</em> <code>_product</code>.</p><h5 id="layouts-parciais-de-colecao"><a class="anchorlink" href="#layouts-parciais-de-colecao">3.4.8 <em>Layouts</em> Parciais de Coleção</a></h5><p>É possível usar a opção <code>:layout</code> quando renderizar coleções:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@products</span><span class="p">,</span> <span class="ss">layout: </span><span class="s2">"special_layout"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2c723c210776fe0640f9fc469ce9a3c5">&lt;%= render partial: "product", collection: @products, layout: "special_layout" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2c723c210776fe0640f9fc469ce9a3c5">Copiar</button>
+</div>
+<p>O <em>layout</em> será renderizado junto com a <em>partial</em> para cada item da coleção. As variáveis de objeto atual e <em>object_counter</em> ficam disponíveis no <em>layout</em> também, da mesma forma que ficam dentro da <em>partial</em>.</p><h4 id="usando-layouts-aninhados"><a class="anchorlink" href="#usando-layouts-aninhados">3.5 Usando <em>Layouts</em> Aninhados</a></h4><p>Pode ser que sua aplicação necessite de um <em>layout</em> que seja ligeiramente diferente do <em>layout</em> da aplicação para dar suporte a um <em>controller</em> em particular. Ao invés de repetir o <em>layout</em> principal e editá-lo, é possível fazer isso através de <em>layouts</em> aninhados (algumas vezes chamados de <em>sub-templates</em>). Segue um exemplo:</p><p>Suponha que você tem este <em>layout</em> de <code>ApplicationController</code>:</p>
+<ul>
+<li>
+<p><code>app/views/layouts/application.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@page_title</span> <span class="n">or</span> <span class="s2">"Page Title"</span> <span class="cp">%&gt;</span><span class="nt">&lt;/title&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"layout"</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;style&gt;</span><span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="ss">:stylesheets</span> <span class="cp">%&gt;</span><span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"top_menu"</span><span class="nt">&gt;</span>Top menu items here<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"menu"</span><span class="nt">&gt;</span>Menu items here<span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"content"</span><span class="nt">&gt;</span><span class="cp">&lt;%=</span> <span class="n">content_for?</span><span class="p">(</span><span class="ss">:content</span><span class="p">)</span> <span class="p">?</span> <span class="k">yield</span><span class="p">(</span><span class="ss">:content</span><span class="p">)</span> <span class="p">:</span> <span class="k">yield</span> <span class="cp">%&gt;</span><span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0ee9fff61a16f9b44394d277210d2b2a">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;%= @page_title or "Page Title" %&gt;&lt;/title&gt;
+  &lt;%= stylesheet_link_tag "layout" %&gt;
+  &lt;style&gt;&lt;%= yield :stylesheets %&gt;&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="top_menu"&gt;Top menu items here&lt;/div&gt;
+  &lt;div id="menu"&gt;Menu items here&lt;/div&gt;
+  &lt;div id="content"&gt;&lt;%= content_for?(:content) ? yield(:content) : yield %&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0ee9fff61a16f9b44394d277210d2b2a">Copiar</button>
+</div>
+</li>
+</ul>
+<p>Nas páginas geradas pelo <code>NewsController</code>, você quer esconder o menu do topo e colocar um menu à direita:</p>
+<ul>
+<li>
+<p><code>app/views/layouts/news.html.erb</code></p>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">content_for</span> <span class="ss">:stylesheets</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  #top_menu {display: none}
+  #right_menu {float: right; background-color: yellow; color: black}
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="n">content_for</span> <span class="ss">:content</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"right_menu"</span><span class="nt">&gt;</span>Right menu items here<span class="nt">&lt;/div&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">content_for?</span><span class="p">(</span><span class="ss">:news_content</span><span class="p">)</span> <span class="p">?</span> <span class="k">yield</span><span class="p">(</span><span class="ss">:news_content</span><span class="p">)</span> <span class="p">:</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">template: </span><span class="s2">"layouts/application"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b51ae14f1fd3b8ccd6cb0e15cf1fa9ea">&lt;% content_for :stylesheets do %&gt;
+  #top_menu {display: none}
+  #right_menu {float: right; background-color: yellow; color: black}
+&lt;% end %&gt;
+&lt;% content_for :content do %&gt;
+  &lt;div id="right_menu"&gt;Right menu items here&lt;/div&gt;
+  &lt;%= content_for?(:news_content) ? yield(:news_content) : yield %&gt;
+&lt;% end %&gt;
+&lt;%= render template: "layouts/application" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b51ae14f1fd3b8ccd6cb0e15cf1fa9ea">Copiar</button>
+</div>
+</li>
+</ul>
+<p>É isto. A view <em>News</em> irá utilizar o novo <em>layout</em>, com um menu no topo e com um menu novo à direita dentro da <em>div</em> "content".</p><p>Há vários jeitos de conseguir resultados similares com esquemas diferentes de <em>sub-templates</em> através desta técnica. Note que não há limite no nível de aninhamento. É possível utilizar o método <code>ActionView::render</code> via <code>render template: 'layouts/news'</code> para criar um novo <em>layout</em> com base no <em>layout</em> News. Se você tem certeza que não criará outros templates a partir do <em>layout</em> <code>News</code>, você pode substituir o <code>content_for?(:news_content) ? yield(:news_content) : yield</code> com simplesmente <code>yield</code>.</p>
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

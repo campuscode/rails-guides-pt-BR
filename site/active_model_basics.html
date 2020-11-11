@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Básico de Active Model — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Básico de Active Model — Ruby on Rails Guides" />
+  <meta name="description" content="Básico de Active ModelEsse guia deverá prover tudo que você precisa para começar a usar classes de modelo (models). O Active Model permite que o Ation Pack Helpers interaja com os objetos ruby. O Active model também auxilia a criação de ORMs (mapeamento de objetos relacionais) para o uso fora do framework Rails.Após a leitura desse guia você saberá: * Como um Active Record se comporta. * Como Callbacks e Validações funcionam. * Como serializers funcionam. * Como Active Model integra com o framework de internacionalização(i18n) do Rails." />
+  <meta property="og:description" content="Básico de Active ModelEsse guia deverá prover tudo que você precisa para começar a usar classes de modelo (models). O Active Model permite que o Ation Pack Helpers interaja com os objetos ruby. O Active model também auxilia a criação de ORMs (mapeamento de objetos relacionais) para o uso fora do framework Rails.Após a leitura desse guia você saberá: * Como um Active Record se comporta. * Como Callbacks e Validações funcionam. * Como serializers funcionam. * Como Active Model integra com o framework de internacionalização(i18n) do Rails." />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Básico de <em>Active Model</em></h2><p>Esse guia deverá prover tudo que você precisa para começar a usar classes de modelo (<code>models</code>).
+O <em>Active Model</em> permite que o <em>Ation Pack Helpers</em> interaja com os objetos ruby. O <em>Active model</em> também auxilia a criação de <em>ORMs</em> (mapeamento de objetos relacionais) para o uso fora do framework Rails.</p><p>Após a leitura desse guia você saberá:
+* Como um <em>Active Record</em> se comporta.
+* Como Callbacks e Validações funcionam.
+* Como serializers funcionam.
+* Como <em>Active Model</em> integra com o framework de internacionalização(<code>i18n</code>) do Rails.</p>
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#introducao">Introdução</a>
+
+<ul>
+<li><a href="#metodos-de-atributo">Métodos de Atributo</a></li>
+<li><a href="#callbacks">Callbacks</a></li>
+<li><a href="#conversao">Conversão</a></li>
+<li><a href="#sujeira">Sujeira</a></li>
+<li><a href="#validacoes">Validações</a></li>
+<li><a href="#nomeacao">Nomeação</a></li>
+<li><a href="#model"><em>Model</em></a></li>
+<li><a href="#serializacao">Serialização</a></li>
+<li><a href="#traducao">Tradução</a></li>
+<li><a href="#lint-tests">Lint Tests</a></li>
+<li><a href="#securepassword">SecurePassword</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="introducao"><a class="anchorlink" href="#introducao">1 Introdução</a></h3><p>O Active Model é uma biblioteca que contém vários módulos utilizados para desenvolvimento de classes que precisam de algumas funções (<code>features</code>) existentes no Active Record.</p><p>Alguns desses módulos serão explicados abaixo.</p><h4 id="metodos-de-atributo"><a class="anchorlink" href="#metodos-de-atributo">1.1 Métodos de Atributo</a></h4><p>O <code>ActiveModel::AttributeMethods</code>, módulo que pode adicionar prefixos e sufixos customizados nos metodos de uma classe.
+Isso é feito pela definição dos prefixos e sufixos e quais métodos no objeto que vai utilizá-los.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">AttributeMethods</span>
+
+  <span class="n">attribute_method_prefix</span> <span class="s1">'reset_'</span>
+  <span class="n">attribute_method_suffix</span> <span class="s1">'_highest?'</span>
+  <span class="n">define_attribute_methods</span> <span class="s1">'age'</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:age</span>
+
+  <span class="kp">private</span>
+    <span class="k">def</span> <span class="nf">reset_attribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+      <span class="nb">send</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">attribute</span><span class="si">}</span><span class="s2">="</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">attribute_highest?</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+      <span class="nb">send</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">age</span> <span class="o">=</span> <span class="mi">110</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">age_highest?</span>  <span class="c1"># =&gt; true</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">reset_age</span>     <span class="c1"># =&gt; 0</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">age_highest?</span>  <span class="c1"># =&gt; false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2dd4767532cc0955208fcc4221653d46">class Person
+  include ActiveModel::AttributeMethods
+
+  attribute_method_prefix 'reset_'
+  attribute_method_suffix '_highest?'
+  define_attribute_methods 'age'
+
+  attr_accessor :age
+
+  private
+    def reset_attribute(attribute)
+      send("#{attribute}=", 0)
+    end
+
+    def attribute_highest?(attribute)
+      send(attribute) &gt; 100
+    end
+end
+
+person = Person.new
+person.age = 110
+person.age_highest?  # =&gt; true
+person.reset_age     # =&gt; 0
+person.age_highest?  # =&gt; false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2dd4767532cc0955208fcc4221653d46">Copiar</button>
+</div>
+<h4 id="callbacks"><a class="anchorlink" href="#callbacks">1.2 Callbacks</a></h4><p><code>ActiveModel::Callbacks</code> trazem os <code>callbacks</code> no padrão do Active Record. Isso provê a habilidade de definir o callback que rodará no tempo apropriado.
+Após definir os callbacks, você pode envolvê-los com métodos customizados antes, depois e durante.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">extend</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Callbacks</span>
+
+  <span class="n">define_model_callbacks</span> <span class="ss">:update</span>
+
+  <span class="n">before_update</span> <span class="ss">:reset_me</span>
+
+  <span class="k">def</span> <span class="nf">update</span>
+    <span class="n">run_callbacks</span><span class="p">(</span><span class="ss">:update</span><span class="p">)</span> <span class="k">do</span>
+      <span class="c1"># This method is called when update is called on an object.</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">reset_me</span>
+    <span class="c1"># This method is called when update is called on an object as a before_update callback is defined.</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-49e1392aef564e75ad6138c5d7b5ea5f">class Person
+  extend ActiveModel::Callbacks
+
+  define_model_callbacks :update
+
+  before_update :reset_me
+
+  def update
+    run_callbacks(:update) do
+      # This method is called when update is called on an object.
+    end
+  end
+
+  def reset_me
+    # This method is called when update is called on an object as a before_update callback is defined.
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-49e1392aef564e75ad6138c5d7b5ea5f">Copiar</button>
+</div>
+<h4 id="conversao"><a class="anchorlink" href="#conversao">1.3 Conversão</a></h4><p>Se a classe define os métodos <code>persisted?</code> e <code>id</code>, então você pode incluir o módulo <code>ActiveModel::Conversion</code> naquela classe e chamar os métodos de conversão do Rails nos objetos daquela classe.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Conversion</span>
+
+  <span class="k">def</span> <span class="nf">persisted?</span>
+    <span class="kp">false</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">id</span>
+    <span class="kp">nil</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">to_model</span> <span class="o">==</span> <span class="n">person</span>  <span class="c1"># =&gt; true</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">to_key</span>              <span class="c1"># =&gt; nil</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">to_param</span>            <span class="c1"># =&gt; nil</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-60cc1aacfac59f6eb44d9ef9352b3e1a">class Person
+  include ActiveModel::Conversion
+
+  def persisted?
+    false
+  end
+
+  def id
+    nil
+  end
+end
+
+person = Person.new
+person.to_model == person  # =&gt; true
+person.to_key              # =&gt; nil
+person.to_param            # =&gt; nil
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-60cc1aacfac59f6eb44d9ef9352b3e1a">Copiar</button>
+</div>
+<h4 id="sujeira"><a class="anchorlink" href="#sujeira">1.4 Sujeira</a></h4><p>Um objeto se torna sujo quando ele passa por uma ou mais mudanças nos seus atributos e isso não foi salvo. O <code>ActiveModel::Dirty</code> te concede a habilidade de checar quando um objeto foi alterado ou não. Também possui atributos baseados em métodos de acesso.
+Vamos considerar a classe <code>Person</code> com os atributos <code>first_name</code> e <code>last_name</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Dirty</span>
+  <span class="n">define_attribute_methods</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">:last_name</span>
+
+  <span class="k">def</span> <span class="nf">first_name</span>
+    <span class="vi">@first_name</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">first_name</span><span class="o">=</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">first_name_will_change!</span>
+    <span class="vi">@first_name</span> <span class="o">=</span> <span class="n">value</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">last_name</span>
+    <span class="vi">@last_name</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">last_name</span><span class="o">=</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">last_name_will_change!</span>
+    <span class="vi">@last_name</span> <span class="o">=</span> <span class="n">value</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">save</span>
+    <span class="c1"># do save work...</span>
+    <span class="n">changes_applied</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6bba462a5a2113c2dc4e6d694be09343">class Person
+  include ActiveModel::Dirty
+  define_attribute_methods :first_name, :last_name
+
+  def first_name
+    @first_name
+  end
+
+  def first_name=(value)
+    first_name_will_change!
+    @first_name = value
+  end
+
+  def last_name
+    @last_name
+  end
+
+  def last_name=(value)
+    last_name_will_change!
+    @last_name = value
+  end
+
+  def save
+    # do save work...
+    changes_applied
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6bba462a5a2113c2dc4e6d694be09343">Copiar</button>
+</div>
+<h5 id="consultando-o-objeto-diretamente-para-obter-uma-lista-de-todos-os-atributos-alterados"><a class="anchorlink" href="#consultando-o-objeto-diretamente-para-obter-uma-lista-de-todos-os-atributos-alterados">1.4.1 Consultando o objeto diretamente para obter uma lista de todos os atributos alterados.</a></h5><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">changed?</span> <span class="c1"># =&gt; false</span>
+
+<span class="n">person</span><span class="p">.</span><span class="nf">first_name</span> <span class="o">=</span> <span class="s2">"First Name"</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">first_name</span> <span class="c1"># =&gt; "First Name"</span>
+
+<span class="c1"># returns true if any of the attributes have unsaved changes.</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">changed?</span> <span class="c1"># =&gt; true</span>
+
+<span class="c1"># returns a list of attributes that have changed before saving.</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">changed</span> <span class="c1"># =&gt; ["first_name"]</span>
+
+<span class="c1"># returns a Hash of the attributes that have changed with their original values.</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">changed_attributes</span> <span class="c1"># =&gt; {"first_name"=&gt;nil}</span>
+
+<span class="c1"># returns a Hash of changes, with the attribute names as the keys, and the</span>
+<span class="c1"># values as an array of the old and new values for that field.</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">changes</span> <span class="c1"># =&gt; {"first_name"=&gt;[nil, "First Name"]}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3a5da8be50baa4d6eb8c863b5e27c51a">person = Person.new
+person.changed? # =&gt; false
+
+person.first_name = "First Name"
+person.first_name # =&gt; "First Name"
+
+# returns true if any of the attributes have unsaved changes.
+person.changed? # =&gt; true
+
+# returns a list of attributes that have changed before saving.
+person.changed # =&gt; ["first_name"]
+
+# returns a Hash of the attributes that have changed with their original values.
+person.changed_attributes # =&gt; {"first_name"=&gt;nil}
+
+# returns a Hash of changes, with the attribute names as the keys, and the
+# values as an array of the old and new values for that field.
+person.changes # =&gt; {"first_name"=&gt;[nil, "First Name"]}
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3a5da8be50baa4d6eb8c863b5e27c51a">Copiar</button>
+</div>
+<h5 id="atributos-baseados-em-metodos-de-acesso"><a class="anchorlink" href="#atributos-baseados-em-metodos-de-acesso">1.4.2 Atributos baseados em métodos de acesso</a></h5><p>Acompanhe se o atributo específico foi alterado ou não.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># attr_name_changed?</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">first_name</span> <span class="c1"># =&gt; "First Name"</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">first_name_changed?</span> <span class="c1"># =&gt; true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-999a24d0898256bb2e4be5b0019f8c7b"># attr_name_changed?
+person.first_name # =&gt; "First Name"
+person.first_name_changed? # =&gt; true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-999a24d0898256bb2e4be5b0019f8c7b">Copiar</button>
+</div>
+<p>Track the previous value of the attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># attr_name_was accessor</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">first_name_was</span> <span class="c1"># =&gt; nil</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8df20116809243ad6f6dbf212e0d1882"># attr_name_was accessor
+person.first_name_was # =&gt; nil
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8df20116809243ad6f6dbf212e0d1882">Copiar</button>
+</div>
+<p>Track both previous and current value of the changed attribute. Returns an array
+if changed, otherwise returns nil.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># attr_name_change</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">first_name_change</span> <span class="c1"># =&gt; [nil, "First Name"]</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">last_name_change</span> <span class="c1"># =&gt; nil</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2cc77ae94cf181cc67745f8922fb0343"># attr_name_change
+person.first_name_change # =&gt; [nil, "First Name"]
+person.last_name_change # =&gt; nil
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2cc77ae94cf181cc67745f8922fb0343">Copiar</button>
+</div>
+<h4 id="validacoes"><a class="anchorlink" href="#validacoes">1.5 Validações</a></h4><p>O módulo <code>ActiveModel::Validations</code> adiciona a habilidade de validar objetos como no <em>Active Record</em>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Validations</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:token</span>
+
+  <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+  <span class="n">validates_format_of</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">with: </span><span class="sr">/\A([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})\z/i</span>
+  <span class="n">validates!</span> <span class="ss">:token</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+<span class="k">end</span>
+
+<span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">token</span> <span class="o">=</span> <span class="s2">"2b1f325"</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">valid?</span>                        <span class="c1"># =&gt; false</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'vishnu'</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">email</span> <span class="o">=</span> <span class="s1">'me'</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">valid?</span>                        <span class="c1"># =&gt; false</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">email</span> <span class="o">=</span> <span class="s1">'me@vishnuatrai.com'</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">valid?</span>                        <span class="c1"># =&gt; true</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">token</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">valid?</span>                        <span class="c1"># =&gt; raises ActiveModel::StrictValidationFailed</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cf6500c860305263d575cf6d56b5bded">class Person
+  include ActiveModel::Validations
+
+  attr_accessor :name, :email, :token
+
+  validates :name, presence: true
+  validates_format_of :email, with: /\A([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})\z/i
+  validates! :token, presence: true
+end
+
+person = Person.new
+person.token = "2b1f325"
+person.valid?                        # =&gt; false
+person.name = 'vishnu'
+person.email = 'me'
+person.valid?                        # =&gt; false
+person.email = 'me@vishnuatrai.com'
+person.valid?                        # =&gt; true
+person.token = nil
+person.valid?                        # =&gt; raises ActiveModel::StrictValidationFailed
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cf6500c860305263d575cf6d56b5bded">Copiar</button>
+</div>
+<h4 id="nomeacao"><a class="anchorlink" href="#nomeacao">1.6 Nomeação</a></h4><p><code>ActiveModel::Naming</code> adiciona vários métodos de classe que tornam a nomeação e o roteamento mais fácil de administrar. O módulo define o método da classe <code>model_name</code> que definirá vários acessadores usando alguns métodos do <code>ActiveSupport::Inflector</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">extend</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Naming</span>
+<span class="k">end</span>
+
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">name</span>                <span class="c1"># =&gt; "Person"</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">singular</span>            <span class="c1"># =&gt; "person"</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">plural</span>              <span class="c1"># =&gt; "people"</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">element</span>             <span class="c1"># =&gt; "person"</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">human</span>               <span class="c1"># =&gt; "Person"</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">collection</span>          <span class="c1"># =&gt; "people"</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">param_key</span>           <span class="c1"># =&gt; "person"</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">i18n_key</span>            <span class="c1"># =&gt; :person</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">route_key</span>           <span class="c1"># =&gt; "people"</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">singular_route_key</span>  <span class="c1"># =&gt; "person"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-26499d5a3e019435d4b4108fa4975b30">class Person
+  extend ActiveModel::Naming
+end
+
+Person.model_name.name                # =&gt; "Person"
+Person.model_name.singular            # =&gt; "person"
+Person.model_name.plural              # =&gt; "people"
+Person.model_name.element             # =&gt; "person"
+Person.model_name.human               # =&gt; "Person"
+Person.model_name.collection          # =&gt; "people"
+Person.model_name.param_key           # =&gt; "person"
+Person.model_name.i18n_key            # =&gt; :person
+Person.model_name.route_key           # =&gt; "people"
+Person.model_name.singular_route_key  # =&gt; "person"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-26499d5a3e019435d4b4108fa4975b30">Copiar</button>
+</div>
+<h4 id="model"><a class="anchorlink" href="#model">1.7 <em>Model</em></a></h4><p>O <code>ActiveModel::Model</code> adiciona a capacidade de uma classe trabalhar com o <em>Action Pack</em> e <em>Action View</em> imediatamente.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">EmailContact</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Model</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:message</span>
+  <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:message</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+
+  <span class="k">def</span> <span class="nf">deliver</span>
+    <span class="k">if</span> <span class="n">valid?</span>
+      <span class="c1"># deliver email</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-93c0d6421e510022fb13abe84c108f00">class EmailContact
+  include ActiveModel::Model
+
+  attr_accessor :name, :email, :message
+  validates :name, :email, :message, presence: true
+
+  def deliver
+    if valid?
+      # deliver email
+    end
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-93c0d6421e510022fb13abe84c108f00">Copiar</button>
+</div>
+<p>Ao incluir o <code>ActiveModel::Model</code>, você obtém alguns recursos como:</p>
+<ul>
+<li>introspecção do nome de <em>model</em>
+</li>
+<li>conversões</li>
+<li>traduções</li>
+<li>validações</li>
+</ul>
+<p>Também oferece a capacidade de inicializar um objeto com um hash de atributos, muito parecido com qualquer objeto <em>Active Record</em>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">email_contact</span> <span class="o">=</span> <span class="no">EmailContact</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'David'</span><span class="p">,</span>
+                                 <span class="ss">email: </span><span class="s1">'david@example.com'</span><span class="p">,</span>
+                                 <span class="ss">message: </span><span class="s1">'Hello World'</span><span class="p">)</span>
+<span class="n">email_contact</span><span class="p">.</span><span class="nf">name</span>       <span class="c1"># =&gt; 'David'</span>
+<span class="n">email_contact</span><span class="p">.</span><span class="nf">email</span>      <span class="c1"># =&gt; 'david@example.com'</span>
+<span class="n">email_contact</span><span class="p">.</span><span class="nf">valid?</span>     <span class="c1"># =&gt; true</span>
+<span class="n">email_contact</span><span class="p">.</span><span class="nf">persisted?</span> <span class="c1"># =&gt; false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cad7d1c9ce93e9ca7d5bd30ba00bff4a">email_contact = EmailContact.new(name: 'David',
+                                 email: 'david@example.com',
+                                 message: 'Hello World')
+email_contact.name       # =&gt; 'David'
+email_contact.email      # =&gt; 'david@example.com'
+email_contact.valid?     # =&gt; true
+email_contact.persisted? # =&gt; false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cad7d1c9ce93e9ca7d5bd30ba00bff4a">Copiar</button>
+</div>
+<p>Qualquer classe que inclua <code>ActiveModel::Model</code> pode ser usada com <code>form_for</code>, <code>render</code> e quaisquer outros métodos auxiliares do <em>Action View</em>, assim como o <em>Active Record</em> objetos.</p><h4 id="serializacao"><a class="anchorlink" href="#serializacao">1.8 Serialização</a></h4><p>O <code>ActiveModel::Serialization</code> fornece serialização básica para o seu objeto. Você precisa declarar um Hash de atributos que contém os atributos que deseja serializar. Os atributos devem ser cadeias, não símbolos.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Serialization</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:name</span>
+
+  <span class="k">def</span> <span class="nf">attributes</span>
+    <span class="p">{</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9f35751404e296f7cf5b9ec21db36283">class Person
+  include ActiveModel::Serialization
+
+  attr_accessor :name
+
+  def attributes
+    {'name' =&gt; nil}
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f35751404e296f7cf5b9ec21db36283">Copiar</button>
+</div>
+<p>Agora você pode acessar um Hash serializado do seu objeto usando o método <code>serializable_hash</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">serializable_hash</span>   <span class="c1"># =&gt; {"name"=&gt;nil}</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"Bob"</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">serializable_hash</span>   <span class="c1"># =&gt; {"name"=&gt;"Bob"}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9e8ef50e9832c12558c1a351a4e54b9f">person = Person.new
+person.serializable_hash   # =&gt; {"name"=&gt;nil}
+person.name = "Bob"
+person.serializable_hash   # =&gt; {"name"=&gt;"Bob"}
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9e8ef50e9832c12558c1a351a4e54b9f">Copiar</button>
+</div>
+<h5 id="activemodel-serializers"><a class="anchorlink" href="#activemodel-serializers">1.8.1 ActiveModel::Serializers</a></h5><p>O Active Model também fornece o módulo <code>ActiveModel::Serializers::JSON</code> para serialização / desserialização JSON. Este módulo inclui automaticamente o módulo <code>ActiveModel::Serialization</code> discutido anteriormente.</p><h6 id="activemodel-serializers-json"><a class="anchorlink" href="#activemodel-serializers-json">1.8.1.1 ActiveModel::Serializers::JSON</a></h6><p>Para usar o <code>ActiveModel::Serializers::JSON</code>, você só precisa alterar o módulo que você está incluindo de <code>ActiveModel::Serialization</code> para<code>ActiveModel::Serializers::JSON</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Serializers</span><span class="o">::</span><span class="no">JSON</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:name</span>
+
+  <span class="k">def</span> <span class="nf">attributes</span>
+    <span class="p">{</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-08e90e8962886606b254fba0d1709a4e">class Person
+  include ActiveModel::Serializers::JSON
+
+  attr_accessor :name
+
+  def attributes
+    {'name' =&gt; nil}
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-08e90e8962886606b254fba0d1709a4e">Copiar</button>
+</div>
+<p>O método <code>as_json</code>, semelhante ao<code>serializable_hash</code>, fornece um Hash representando o modelo.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">as_json</span> <span class="c1"># =&gt; {"name"=&gt;nil}</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"Bob"</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">as_json</span> <span class="c1"># =&gt; {"name"=&gt;"Bob"}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-81e6ce8f29826e5eafda2213557c0828">person = Person.new
+person.as_json # =&gt; {"name"=&gt;nil}
+person.name = "Bob"
+person.as_json # =&gt; {"name"=&gt;"Bob"}
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-81e6ce8f29826e5eafda2213557c0828">Copiar</button>
+</div>
+<p>Você também pode definir os atributos para um modelo a partir de uma sequência JSON. No entanto, você precisa definir o método <code>attribute =</code> na sua classe:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Serializers</span><span class="o">::</span><span class="no">JSON</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:name</span>
+
+  <span class="k">def</span> <span class="nf">attributes</span><span class="o">=</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+    <span class="nb">hash</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">|</span>
+      <span class="nb">send</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">key</span><span class="si">}</span><span class="s2">="</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">attributes</span>
+    <span class="p">{</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cd3b37763b4578ac84ee1ffb81dd9cf7">class Person
+  include ActiveModel::Serializers::JSON
+
+  attr_accessor :name
+
+  def attributes=(hash)
+    hash.each do |key, value|
+      send("#{key}=", value)
+    end
+  end
+
+  def attributes
+    {'name' =&gt; nil}
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cd3b37763b4578ac84ee1ffb81dd9cf7">Copiar</button>
+</div>
+<p>Agora é possível criar uma instância de <code>Person</code> e definir atributos usando<code>from_json</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">json</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">name: </span><span class="s1">'Bob'</span> <span class="p">}.</span><span class="nf">to_json</span>
+<span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">from_json</span><span class="p">(</span><span class="n">json</span><span class="p">)</span> <span class="c1"># =&gt; #&lt;Person:0x00000100c773f0 @name="Bob"&gt;</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">name</span>            <span class="c1"># =&gt; "Bob"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d4fb628e441003f8c9dd648b6e1b7c35">json = { name: 'Bob' }.to_json
+person = Person.new
+person.from_json(json) # =&gt; #&lt;Person:0x00000100c773f0 @name="Bob"&gt;
+person.name            # =&gt; "Bob"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d4fb628e441003f8c9dd648b6e1b7c35">Copiar</button>
+</div>
+<h4 id="traducao"><a class="anchorlink" href="#traducao">1.9 Tradução</a></h4><p>O <code>ActiveModel::Translation</code> fornece integração entre seu objeto e o Rails internacionalização (i18n).</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">extend</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Translation</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ef5f7af6605124ce27df0c1144cdd35d">class Person
+  extend ActiveModel::Translation
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ef5f7af6605124ce27df0c1144cdd35d">Copiar</button>
+</div>
+<p>Com o método <code>human_attribute_name</code>, você pode transformar nomes de atributos em um formato mais legível por humanos. O formato legível por humanos é definido nos seus arquivos de localidade.</p>
+<ul>
+<li>config/locales/app.pt-BR.yml</li>
+</ul>
+<div class="code_container">
+<pre><code class="highlight yml">  <span class="na">pt-BR</span><span class="pi">:</span>
+    <span class="na">activemodel</span><span class="pi">:</span>
+      <span class="na">attributes</span><span class="pi">:</span>
+        <span class="na">person</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Nome'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5b17dd8a646ba6cda6e7f48ddc51be94">  pt-BR:
+    activemodel:
+      attributes:
+        person:
+          name: 'Nome'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5b17dd8a646ba6cda6e7f48ddc51be94">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Person</span><span class="p">.</span><span class="nf">human_attribute_name</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span> <span class="c1"># =&gt; "Nome"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-84f1318d3b193a8343eb747b446a98f0">Person.human_attribute_name('name') # =&gt; "Nome"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-84f1318d3b193a8343eb747b446a98f0">Copiar</button>
+</div>
+<h4 id="lint-tests"><a class="anchorlink" href="#lint-tests">1.10 Lint Tests</a></h4><p>O <code>ActiveModel::Lint::Tests</code> permite testar se um objeto é compatível com a API do <em>model</em> ativo.</p>
+<ul>
+<li>
+<p><code>app/models/person.rb</code></p>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Model</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ace5576e8930e97a737b6dffb2d7ada2">class Person
+  include ActiveModel::Model
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ace5576e8930e97a737b6dffb2d7ada2">Copiar</button>
+</div>
+</li>
+<li>
+<p><code>test/models/person_test.rb</code></p>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'test_helper'</span>
+
+<span class="k">class</span> <span class="nc">PersonTest</span> <span class="o">&lt;</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">TestCase</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Lint</span><span class="o">::</span><span class="no">Tests</span>
+
+  <span class="n">setup</span> <span class="k">do</span>
+    <span class="vi">@model</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bbeaabf0479393e8827a049e96a0fac6">require 'test_helper'
+
+class PersonTest &lt; ActiveSupport::TestCase
+  include ActiveModel::Lint::Tests
+
+  setup do
+    @model = Person.new
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bbeaabf0479393e8827a049e96a0fac6">Copiar</button>
+</div>
+</li>
+</ul>
+<div class="code_container">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails test</span>
+<span class="go">
+Run options: --seed 14596
+
+</span><span class="gp">#</span><span class="w"> </span>Running:
+<span class="go">
+</span><span class="c">......
+</span><span class="go">
+Finished in 0.024899s, 240.9735 runs/s, 1204.8677 assertions/s.
+
+6 runs, 30 assertions, 0 failures, 0 errors, 0 skips
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-4627e320105cce816e2befef0b2cf9ba">rails test
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4627e320105cce816e2befef0b2cf9ba">Copiar</button>
+</div>
+<p>Não é necessário um objeto para implementar todas as APIs para trabalhar com <em>Action Pack</em>. Este módulo pretende apenas fornecer orientação caso você queira que todos recursos prontos para uso.</p><h4 id="securepassword"><a class="anchorlink" href="#securepassword">1.11 SecurePassword</a></h4><p>O <code>ActiveModel::SecurePassword</code> fornece uma maneira de armazenar com segurança qualquer senha de forma criptografada. Quando você inclui este módulo, é fornecido o método da classe <code>has_secure_password</code> que define um acessador de <code>senha</code> com certas validações por padrão.</p><h5 id="requerimentos"><a class="anchorlink" href="#requerimentos">1.11.1 Requerimentos</a></h5><p>O <code>ActiveModel::SecurePassword</code> depende de <a href="https://github.com/codahale/bcrypt-ruby" title="BCrypt"><code>bcrypt</code></a>,
+portanto, inclua esta <code>gem</code> no seu <code>Gemfile</code> para usar o<code>ActiveModel::SecurePassword</code> corretamente.
+Para fazer isso funcionar, o <em>model</em> deve ter um acessador chamado <code>XXX_digest</code>.
+Onde <code>XXX</code> é o nome do atributo da sua senha desejada.
+As seguintes validações são adicionadas automaticamente:</p>
+<ol>
+<li>A senha deve estar presente.</li>
+<li>A senha deve ser igual à sua confirmação (desde que <code>XXX_confirmation</code> seja passada adiante).</li>
+<li>O tamanho máximo de uma senha é 72 (exigido pelo <code>bcrypt</code> do qual o ActiveModel::SecurePassword depende)</li>
+</ol>
+<h5 id="exemplos"><a class="anchorlink" href="#exemplos">1.11.2 Exemplos</a></h5><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">SecurePassword</span>
+  <span class="n">has_secure_password</span>
+  <span class="n">has_secure_password</span> <span class="ss">:recovery_password</span><span class="p">,</span> <span class="ss">validations: </span><span class="kp">false</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:password_digest</span><span class="p">,</span> <span class="ss">:recovery_password_digest</span>
+<span class="k">end</span>
+
+<span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="c1"># When password is blank.</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">valid?</span> <span class="c1"># =&gt; false</span>
+
+<span class="c1"># When the confirmation doesn't match the password.</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="s1">'aditya'</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">password_confirmation</span> <span class="o">=</span> <span class="s1">'nomatch'</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">valid?</span> <span class="c1"># =&gt; false</span>
+
+<span class="c1"># When the length of password exceeds 72.</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="n">person</span><span class="p">.</span><span class="nf">password_confirmation</span> <span class="o">=</span> <span class="s1">'a'</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">valid?</span> <span class="c1"># =&gt; false</span>
+
+<span class="c1"># When only password is supplied with no password_confirmation.</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="s1">'aditya'</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">valid?</span> <span class="c1"># =&gt; true</span>
+
+<span class="c1"># When all validations are passed.</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="n">person</span><span class="p">.</span><span class="nf">password_confirmation</span> <span class="o">=</span> <span class="s1">'aditya'</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">valid?</span> <span class="c1"># =&gt; true</span>
+
+<span class="n">person</span><span class="p">.</span><span class="nf">recovery_password</span> <span class="o">=</span> <span class="s2">"42password"</span>
+
+<span class="n">person</span><span class="p">.</span><span class="nf">authenticate</span><span class="p">(</span><span class="s1">'aditya'</span><span class="p">)</span> <span class="c1"># =&gt; person</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">authenticate</span><span class="p">(</span><span class="s1">'notright'</span><span class="p">)</span> <span class="c1"># =&gt; false</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">authenticate_password</span><span class="p">(</span><span class="s1">'aditya'</span><span class="p">)</span> <span class="c1"># =&gt; person</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">authenticate_password</span><span class="p">(</span><span class="s1">'notright'</span><span class="p">)</span> <span class="c1"># =&gt; false</span>
+
+<span class="n">person</span><span class="p">.</span><span class="nf">authenticate_recovery_password</span><span class="p">(</span><span class="s1">'42password'</span><span class="p">)</span> <span class="c1"># =&gt; person</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">authenticate_recovery_password</span><span class="p">(</span><span class="s1">'notright'</span><span class="p">)</span> <span class="c1"># =&gt; false</span>
+
+<span class="n">person</span><span class="p">.</span><span class="nf">password_digest</span> <span class="c1"># =&gt; "$2a$04$gF8RfZdoXHvyTjHhiU4ZsO.kQqV9oonYZu31PRE4hLQn3xM2qkpIy"</span>
+<span class="n">person</span><span class="p">.</span><span class="nf">recovery_password_digest</span> <span class="c1"># =&gt; "$2a$04$iOfhwahFymCs5weB3BNH/uXkTG65HR.qpW.bNhEjFP3ftli3o5DQC"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3359ef011689075ef697c13f800b20d5">class Person
+  include ActiveModel::SecurePassword
+  has_secure_password
+  has_secure_password :recovery_password, validations: false
+
+  attr_accessor :password_digest, :recovery_password_digest
+end
+
+person = Person.new
+
+# When password is blank.
+person.valid? # =&gt; false
+
+# When the confirmation doesn't match the password.
+person.password = 'aditya'
+person.password_confirmation = 'nomatch'
+person.valid? # =&gt; false
+
+# When the length of password exceeds 72.
+person.password = person.password_confirmation = 'a' * 100
+person.valid? # =&gt; false
+
+# When only password is supplied with no password_confirmation.
+person.password = 'aditya'
+person.valid? # =&gt; true
+
+# When all validations are passed.
+person.password = person.password_confirmation = 'aditya'
+person.valid? # =&gt; true
+
+person.recovery_password = "42password"
+
+person.authenticate('aditya') # =&gt; person
+person.authenticate('notright') # =&gt; false
+person.authenticate_password('aditya') # =&gt; person
+person.authenticate_password('notright') # =&gt; false
+
+person.authenticate_recovery_password('42password') # =&gt; person
+person.authenticate_recovery_password('notright') # =&gt; false
+
+person.password_digest # =&gt; "$2a$04$gF8RfZdoXHvyTjHhiU4ZsO.kQqV9oonYZu31PRE4hLQn3xM2qkpIy"
+person.recovery_password_digest # =&gt; "$2a$04$iOfhwahFymCs5weB3BNH/uXkTG65HR.qpW.bNhEjFP3ftli3o5DQC"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3359ef011689075ef697c13f800b20d5">Copiar</button>
+</div>
+
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

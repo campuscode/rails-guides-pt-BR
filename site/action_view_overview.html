@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Action View Overview — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Action View Overview — Ruby on Rails Guides" />
+  <meta name="description" content="Action View OverviewAfter reading this guide, you will know: What Action View is and how to use it with Rails. How best to use templates, partials, and layouts. What helpers are provided by Action View. How to use localized views." />
+  <meta property="og:description" content="Action View OverviewAfter reading this guide, you will know: What Action View is and how to use it with Rails. How best to use templates, partials, and layouts. What helpers are provided by Action View. How to use localized views." />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Action View Overview</h2><p>After reading this guide, you will know:</p>
+<ul>
+<li>What Action View is and how to use it with Rails.</li>
+<li>How best to use templates, partials, and layouts.</li>
+<li>What helpers are provided by Action View.</li>
+<li>How to use localized views.</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#what-is-action-view-questionmark">What is Action View?</a></li>
+<li><a href="#using-action-view-with-rails">Using Action View with Rails</a></li>
+<li>
+<a href="#templates-partials-and-layouts">Templates, Partials, and Layouts</a>
+
+<ul>
+<li><a href="#templates">Templates</a></li>
+<li><a href="#partials">Partials</a></li>
+<li><a href="#layouts">Layouts</a></li>
+</ul>
+</li>
+<li><a href="#partial-layouts">Partial Layouts</a></li>
+<li>
+<a href="#view-paths">View Paths</a>
+
+<ul>
+<li><a href="#prepend-view-path">Prepend view path</a></li>
+<li><a href="#append-view-path">Append view path</a></li>
+</ul>
+</li>
+<li>
+<a href="#overview-of-helpers-provided-by-action-view">Overview of helpers provided by Action View</a>
+
+<ul>
+<li><a href="#assettaghelper">AssetTagHelper</a></li>
+<li><a href="#atomfeedhelper">AtomFeedHelper</a></li>
+<li><a href="#benchmarkhelper">BenchmarkHelper</a></li>
+<li><a href="#cachehelper">CacheHelper</a></li>
+<li><a href="#capturehelper">CaptureHelper</a></li>
+<li><a href="#datehelper">DateHelper</a></li>
+<li><a href="#debughelper">DebugHelper</a></li>
+<li><a href="#formhelper">FormHelper</a></li>
+<li><a href="#formoptionshelper">FormOptionsHelper</a></li>
+<li><a href="#formtaghelper">FormTagHelper</a></li>
+<li><a href="#javascripthelper">JavaScriptHelper</a></li>
+<li><a href="#numberhelper">NumberHelper</a></li>
+<li><a href="#sanitizehelper">SanitizeHelper</a></li>
+<li><a href="#csrfhelper">CsrfHelper</a></li>
+</ul>
+</li>
+<li><a href="#localized-views">Localized Views</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="what-is-action-view-questionmark"><a class="anchorlink" href="#what-is-action-view-questionmark">1 What is Action View?</a></h3><p>In Rails, web requests are handled by <a href="action_controller_overview.html">Action Controller</a> and Action View. Typically, Action Controller is concerned with communicating with the database and performing CRUD actions where necessary. Action View is then responsible for compiling the response.</p><p>Action View templates are written using embedded Ruby in tags mingled with HTML. To avoid cluttering the templates with boilerplate code, a number of helper classes provide common behavior for forms, dates, and strings. It's also easy to add new helpers to your application as it evolves.</p><div class="note"><p>Some features of Action View are tied to Active Record, but that doesn't mean Action View depends on Active Record. Action View is an independent package that can be used with any sort of Ruby libraries.</p></div><h3 id="using-action-view-with-rails"><a class="anchorlink" href="#using-action-view-with-rails">2 Using Action View with Rails</a></h3><p>For each controller there is an associated directory in the <code>app/views</code> directory which holds the template files that make up the views associated with that controller. These files are used to display the view that results from each controller action.</p><p>Let's take a look at what Rails does by default when creating a new resource using the scaffold generator:</p><div class="code_container">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>generate scaffold article
+<span class="go">      [...]
+      invoke  scaffold_controller
+      create    app/controllers/articles_controller.rb
+      invoke    erb
+      create      app/views/articles
+      create      app/views/articles/index.html.erb
+      create      app/views/articles/edit.html.erb
+      create      app/views/articles/show.html.erb
+      create      app/views/articles/new.html.erb
+      create      app/views/articles/_form.html.erb
+      [...]
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-55dbc5d3db0996667ec86fedcfc23571">rails generate scaffold article
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-55dbc5d3db0996667ec86fedcfc23571">Copiar</button>
+</div>
+<p>There is a naming convention for views in Rails. Typically, the views share their name with the associated controller action, as you can see above.
+For example, the index controller action of the <code>articles_controller.rb</code> will use the <code>index.html.erb</code> view file in the <code>app/views/articles</code> directory.
+The complete HTML returned to the client is composed of a combination of this ERB file, a layout template that wraps it, and all the partials that the view may reference. Within this guide you will find more detailed documentation about each of these three components.</p><h3 id="templates-partials-and-layouts"><a class="anchorlink" href="#templates-partials-and-layouts">3 Templates, Partials, and Layouts</a></h3><p>As mentioned, the final HTML output is a composition of three Rails elements: <code>Templates</code>, <code>Partials</code> and <code>Layouts</code>.
+Below is a brief overview of each of them.</p><h4 id="templates"><a class="anchorlink" href="#templates">3.1 Templates</a></h4><p>Action View templates can be written in several ways. If the template file has a <code>.erb</code> extension then it uses a mixture of ERB (Embedded Ruby) and HTML. If the template file has a <code>.builder</code> extension then the <code>Builder::XmlMarkup</code> library is used.</p><p>Rails supports multiple template systems and uses a file extension to distinguish amongst them. For example, an HTML file using the ERB template system will have <code>.html.erb</code> as a file extension.</p><h5 id="erb"><a class="anchorlink" href="#erb">3.1.1 ERB</a></h5><p>Within an ERB template, Ruby code can be included using both <code>&lt;% %&gt;</code> and <code>&lt;%= %&gt;</code> tags. The <code>&lt;% %&gt;</code> tags are used to execute Ruby code that does not return anything, such as conditions, loops, or blocks, and the <code>&lt;%= %&gt;</code> tags are used when you want output.</p><p>Consider the following loop for names:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Names of all the people<span class="nt">&lt;/h1&gt;</span>
+<span class="cp">&lt;%</span> <span class="vi">@people</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  Name: <span class="cp">&lt;%=</span> <span class="n">person</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;br&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d3242565880658f2a4c34b99b8cd2275">&lt;h1&gt;Names of all the people&lt;/h1&gt;
+&lt;% @people.each do |person| %&gt;
+  Name: &lt;%= person.name %&gt;&lt;br&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d3242565880658f2a4c34b99b8cd2275">Copiar</button>
+</div>
+<p>The loop is set up using regular embedding tags (<code>&lt;% %&gt;</code>) and the name is inserted using the output embedding tags (<code>&lt;%= %&gt;</code>). Note that this is not just a usage suggestion: regular output functions such as <code>print</code> and <code>puts</code> won't be rendered to the view with ERB templates. So this would be wrong:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="c">&lt;%# WRONG %&gt;</span>
+Hi, Mr. <span class="cp">&lt;%</span> <span class="nb">puts</span> <span class="s2">"Frodo"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f5a670b86d6e940e216a809a9043fdc6">&lt;%# WRONG %&gt;
+Hi, Mr. &lt;% puts "Frodo" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5a670b86d6e940e216a809a9043fdc6">Copiar</button>
+</div>
+<p>To suppress leading and trailing whitespaces, you can use <code>&lt;%-</code> <code>-%&gt;</code> interchangeably with <code>&lt;%</code> and <code>%&gt;</code>.</p><h5 id="builder"><a class="anchorlink" href="#builder">3.1.2 Builder</a></h5><p>Builder templates are a more programmatic alternative to ERB. They are especially useful for generating XML content. An XmlMarkup object named <code>xml</code> is automatically made available to templates with a <code>.builder</code> extension.</p><p>Here are some basic examples:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">xml</span><span class="p">.</span><span class="nf">em</span><span class="p">(</span><span class="s2">"emphasized"</span><span class="p">)</span>
+<span class="n">xml</span><span class="p">.</span><span class="nf">em</span> <span class="p">{</span> <span class="n">xml</span><span class="p">.</span><span class="nf">b</span><span class="p">(</span><span class="s2">"emph &amp; bold"</span><span class="p">)</span> <span class="p">}</span>
+<span class="n">xml</span><span class="p">.</span><span class="nf">a</span><span class="p">(</span><span class="s2">"A Link"</span><span class="p">,</span> <span class="s2">"href"</span> <span class="o">=&gt;</span> <span class="s2">"https://rubyonrails.org"</span><span class="p">)</span>
+<span class="n">xml</span><span class="p">.</span><span class="nf">target</span><span class="p">(</span><span class="s2">"name"</span> <span class="o">=&gt;</span> <span class="s2">"compile"</span><span class="p">,</span> <span class="s2">"option"</span> <span class="o">=&gt;</span> <span class="s2">"fast"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-feaa6919128e22b39fa1750f452bba4e">xml.em("emphasized")
+xml.em { xml.b("emph &amp; bold") }
+xml.a("A Link", "href" =&gt; "https://rubyonrails.org")
+xml.target("name" =&gt; "compile", "option" =&gt; "fast")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-feaa6919128e22b39fa1750f452bba4e">Copiar</button>
+</div>
+<p>which would produce:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;em&gt;</span>emphasized<span class="nt">&lt;/em&gt;</span>
+<span class="nt">&lt;em&gt;&lt;b&gt;</span>emph <span class="ni">&amp;amp;</span> bold<span class="nt">&lt;/b&gt;&lt;/em&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://rubyonrails.org"</span><span class="nt">&gt;</span>A link<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;target</span> <span class="na">option=</span><span class="s">"fast"</span> <span class="na">name=</span><span class="s">"compile"</span> <span class="nt">/&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-60b9b8bba2f0e968f546ad67113f28d3">&lt;em&gt;emphasized&lt;/em&gt;
+&lt;em&gt;&lt;b&gt;emph &amp;amp; bold&lt;/b&gt;&lt;/em&gt;
+&lt;a href="https://rubyonrails.org"&gt;A link&lt;/a&gt;
+&lt;target option="fast" name="compile" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-60b9b8bba2f0e968f546ad67113f28d3">Copiar</button>
+</div>
+<p>Any method with a block will be treated as an XML markup tag with nested markup in the block. For example, the following:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">xml</span><span class="p">.</span><span class="nf">div</span> <span class="p">{</span>
+  <span class="n">xml</span><span class="p">.</span><span class="nf">h1</span><span class="p">(</span><span class="vi">@person</span><span class="p">.</span><span class="nf">name</span><span class="p">)</span>
+  <span class="n">xml</span><span class="p">.</span><span class="nf">p</span><span class="p">(</span><span class="vi">@person</span><span class="p">.</span><span class="nf">bio</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-036f9c4a761433b772e8b0d11fa899b7">xml.div {
+  xml.h1(@person.name)
+  xml.p(@person.bio)
+}
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-036f9c4a761433b772e8b0d11fa899b7">Copiar</button>
+</div>
+<p>would produce something like:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>David Heinemeier Hansson<span class="nt">&lt;/h1&gt;</span>
+  <span class="nt">&lt;p&gt;</span>A product of Danish Design during the Winter of '79...<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5886c81a9873eba8da5f53d80c0630d4">&lt;div&gt;
+  &lt;h1&gt;David Heinemeier Hansson&lt;/h1&gt;
+  &lt;p&gt;A product of Danish Design during the Winter of '79...&lt;/p&gt;
+&lt;/div&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5886c81a9873eba8da5f53d80c0630d4">Copiar</button>
+</div>
+<p>Below is a full-length RSS example actually used on Basecamp:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">xml</span><span class="p">.</span><span class="nf">rss</span><span class="p">(</span><span class="s2">"version"</span> <span class="o">=&gt;</span> <span class="s2">"2.0"</span><span class="p">,</span> <span class="s2">"xmlns:dc"</span> <span class="o">=&gt;</span> <span class="s2">"http://purl.org/dc/elements/1.1/"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">xml</span><span class="p">.</span><span class="nf">channel</span> <span class="k">do</span>
+    <span class="n">xml</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="vi">@feed_title</span><span class="p">)</span>
+    <span class="n">xml</span><span class="p">.</span><span class="nf">link</span><span class="p">(</span><span class="vi">@url</span><span class="p">)</span>
+    <span class="n">xml</span><span class="p">.</span><span class="nf">description</span> <span class="s2">"Basecamp: Recent items"</span>
+    <span class="n">xml</span><span class="p">.</span><span class="nf">language</span> <span class="s2">"en-us"</span>
+    <span class="n">xml</span><span class="p">.</span><span class="nf">ttl</span> <span class="s2">"40"</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="k">in</span> <span class="vi">@recent_items</span>
+      <span class="n">xml</span><span class="p">.</span><span class="nf">item</span> <span class="k">do</span>
+        <span class="n">xml</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="n">item_title</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="n">xml</span><span class="p">.</span><span class="nf">description</span><span class="p">(</span><span class="n">item_description</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="k">if</span> <span class="n">item_description</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">xml</span><span class="p">.</span><span class="nf">pubDate</span><span class="p">(</span><span class="n">item_pubDate</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="n">xml</span><span class="p">.</span><span class="nf">guid</span><span class="p">(</span><span class="vi">@person</span><span class="p">.</span><span class="nf">firm</span><span class="p">.</span><span class="nf">account</span><span class="p">.</span><span class="nf">url</span> <span class="o">+</span> <span class="vi">@recent_items</span><span class="p">.</span><span class="nf">url</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="n">xml</span><span class="p">.</span><span class="nf">link</span><span class="p">(</span><span class="vi">@person</span><span class="p">.</span><span class="nf">firm</span><span class="p">.</span><span class="nf">account</span><span class="p">.</span><span class="nf">url</span> <span class="o">+</span> <span class="vi">@recent_items</span><span class="p">.</span><span class="nf">url</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="n">xml</span><span class="p">.</span><span class="nf">tag!</span><span class="p">(</span><span class="s2">"dc:creator"</span><span class="p">,</span> <span class="n">item</span><span class="p">.</span><span class="nf">author_name</span><span class="p">)</span> <span class="k">if</span> <span class="n">item_has_creator?</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a9ae5f1ea16f4b598fccb8904a6ad65e">xml.rss("version" =&gt; "2.0", "xmlns:dc" =&gt; "http://purl.org/dc/elements/1.1/") do
+  xml.channel do
+    xml.title(@feed_title)
+    xml.link(@url)
+    xml.description "Basecamp: Recent items"
+    xml.language "en-us"
+    xml.ttl "40"
+
+    for item in @recent_items
+      xml.item do
+        xml.title(item_title(item))
+        xml.description(item_description(item)) if item_description(item)
+        xml.pubDate(item_pubDate(item))
+        xml.guid(@person.firm.account.url + @recent_items.url(item))
+        xml.link(@person.firm.account.url + @recent_items.url(item))
+        xml.tag!("dc:creator", item.author_name) if item_has_creator?(item)
+      end
+    end
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a9ae5f1ea16f4b598fccb8904a6ad65e">Copiar</button>
+</div>
+<h5 id="jbuilder"><a class="anchorlink" href="#jbuilder">3.1.3 Jbuilder</a></h5><p><a href="https://github.com/rails/jbuilder">Jbuilder</a> is a gem that's
+maintained by the Rails team and included in the default Rails <code>Gemfile</code>.
+It's similar to Builder, but is used to generate JSON, instead of XML.</p><p>If you don't have it, you can add the following to your <code>Gemfile</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'jbuilder'</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e266927e67044af28ff85cda26582722">gem 'jbuilder'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e266927e67044af28ff85cda26582722">Copiar</button>
+</div>
+<p>A Jbuilder object named <code>json</code> is automatically made available to templates with
+a <code>.jbuilder</code> extension.</p><p>Here is a basic example:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">json</span><span class="p">.</span><span class="nf">name</span><span class="p">(</span><span class="s2">"Alex"</span><span class="p">)</span>
+<span class="n">json</span><span class="p">.</span><span class="nf">email</span><span class="p">(</span><span class="s2">"alex@example.com"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-aa4acf47a99ec142674bc83afe87f5e7">json.name("Alex")
+json.email("alex@example.com")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aa4acf47a99ec142674bc83afe87f5e7">Copiar</button>
+</div>
+<p>would produce:</p><div class="code_container">
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Alex"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alex@example.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-4aee67047d523cbed54d4cdf34c3807d">{
+  "name": "Alex",
+  "email": "alex@example.com"
+}
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4aee67047d523cbed54d4cdf34c3807d">Copiar</button>
+</div>
+<p>See the <a href="https://github.com/rails/jbuilder#jbuilder">Jbuilder documentation</a> for
+more examples and information.</p><h5 id="template-caching"><a class="anchorlink" href="#template-caching">3.1.4 Template Caching</a></h5><p>By default, Rails will compile each template to a method in order to render it. When you alter a template, Rails will check the file's modification time and recompile it in development mode.</p><h4 id="partials"><a class="anchorlink" href="#partials">3.2 Partials</a></h4><p>Partial templates - usually just called "partials" - are another device for breaking the rendering process into more manageable chunks. With partials, you can extract pieces of code from your templates to separate files and also reuse them throughout your templates.</p><h5 id="naming-partials"><a class="anchorlink" href="#naming-partials">3.2.1 Naming Partials</a></h5><p>To render a partial as part of a view, you use the <code>render</code> method within the view:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"menu"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cd5fd1375c2a28562b2c31233453f7e4">&lt;%= render "menu" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cd5fd1375c2a28562b2c31233453f7e4">Copiar</button>
+</div>
+<p>This will render a file named <code>_menu.html.erb</code> at that point within the view that is being rendered. Note the leading underscore character: partials are named with a leading underscore to distinguish them from regular views, even though they are referred to without the underscore. This holds true even when you're pulling in a partial from another folder:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/menu"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8ebf3452d9e642db31e6087b8476ca4d">&lt;%= render "shared/menu" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ebf3452d9e642db31e6087b8476ca4d">Copiar</button>
+</div>
+<p>That code will pull in the partial from <code>app/views/shared/_menu.html.erb</code>.</p><h5 id="using-partials-to-simplify-views"><a class="anchorlink" href="#using-partials-to-simplify-views">3.2.2 Using Partials to simplify Views</a></h5><p>One way to use partials is to treat them as the equivalent of subroutines; a way to move details out of a view so that you can grasp what's going on more easily. For example, you might have a view that looks like this:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/ad_banner"</span> <span class="cp">%&gt;</span>
+
+<span class="nt">&lt;h1&gt;</span>Products<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Here are a few of our fine products:<span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;%</span> <span class="vi">@products</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">product</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">product: </span><span class="n">product</span> <span class="p">}</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+
+<span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/footer"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fd73c2c016d00f10d88f5136877d80ee">&lt;%= render "shared/ad_banner" %&gt;
+
+&lt;h1&gt;Products&lt;/h1&gt;
+
+&lt;p&gt;Here are a few of our fine products:&lt;/p&gt;
+&lt;% @products.each do |product| %&gt;
+  &lt;%= render partial: "product", locals: { product: product } %&gt;
+&lt;% end %&gt;
+
+&lt;%= render "shared/footer" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fd73c2c016d00f10d88f5136877d80ee">Copiar</button>
+</div>
+<p>Here, the <code>_ad_banner.html.erb</code> and <code>_footer.html.erb</code> partials could contain content that is shared among many pages in your application. You don't need to see the details of these sections when you're concentrating on a particular page.</p><h5 id="render-without-partial-and-locals-options"><a class="anchorlink" href="#render-without-partial-and-locals-options">3.2.3 <code>render</code> without <code>partial</code> and <code>locals</code> options</a></h5><p>In the above example, <code>render</code> takes 2 options: <code>partial</code> and <code>locals</code>. But if
+these are the only options you want to pass, you can skip using these options.
+For example, instead of:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">product: </span><span class="vi">@product</span> <span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3322329823e0857b68197951b98cf7c5">&lt;%= render partial: "product", locals: { product: @product } %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3322329823e0857b68197951b98cf7c5">Copiar</button>
+</div>
+<p>You can also do:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"product"</span><span class="p">,</span> <span class="ss">product: </span><span class="vi">@product</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7731b9b95dcbfc0edb1fc35ecbd486f2">&lt;%= render "product", product: @product %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7731b9b95dcbfc0edb1fc35ecbd486f2">Copiar</button>
+</div>
+<h5 id="the-as-and-object-options"><a class="anchorlink" href="#the-as-and-object-options">3.2.4 The <code>as</code> and <code>object</code> options</a></h5><p>By default <code>ActionView::Partials::PartialRenderer</code> has its object in a local variable with the same name as the template. So, given:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-de9d0d58554b2d7d1f4b8f21df793ac4">&lt;%= render partial: "product" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-de9d0d58554b2d7d1f4b8f21df793ac4">Copiar</button>
+</div>
+<p>within <code>_product</code> partial we'll get <code>@product</code> in the local variable <code>product</code>,
+as if we had written:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">product: </span><span class="vi">@product</span> <span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e688c7077bcb5d60a4b788add1fe462e">&lt;%= render partial: "product", locals: { product: @product } %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e688c7077bcb5d60a4b788add1fe462e">Copiar</button>
+</div>
+<p>The <code>object</code> option can be used to directly specify which object is rendered into the partial; useful when the template's object is elsewhere (e.g. in a different instance variable or in a local variable).</p><p>For example, instead of:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">product: </span><span class="vi">@item</span> <span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bb621459217bb2b0e7ed338f0395114d">&lt;%= render partial: "product", locals: { product: @item } %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bb621459217bb2b0e7ed338f0395114d">Copiar</button>
+</div>
+<p>we would do:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">object: </span><span class="vi">@item</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fde7bf2ac484a8bc50ca71ca3a430123">&lt;%= render partial: "product", object: @item %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fde7bf2ac484a8bc50ca71ca3a430123">Copiar</button>
+</div>
+<p>With the <code>as</code> option we can specify a different name for the said local variable. For example, if we wanted it to be <code>item</code> instead of <code>product</code> we would do:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">object: </span><span class="vi">@item</span><span class="p">,</span> <span class="ss">as: </span><span class="s2">"item"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0d3b07c73bcfe1ee6e55d6fd4bad2208">&lt;%= render partial: "product", object: @item, as: "item" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0d3b07c73bcfe1ee6e55d6fd4bad2208">Copiar</button>
+</div>
+<p>This is equivalent to</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">item: </span><span class="vi">@item</span> <span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cc074bf91f4aa0b38504338d2d029b1c">&lt;%= render partial: "product", locals: { item: @item } %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cc074bf91f4aa0b38504338d2d029b1c">Copiar</button>
+</div>
+<h5 id="rendering-collections"><a class="anchorlink" href="#rendering-collections">3.2.5 Rendering Collections</a></h5><p>It is very common that a template will need to iterate over a collection and render a sub-template for each of the elements. This pattern has been implemented as a single method that accepts an array and renders a partial for each one of the elements in the array.</p><p>So this example for rendering all the products:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="vi">@products</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">product</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">product: </span><span class="n">product</span> <span class="p">}</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-57787f1936b1245262668708283985be">&lt;% @products.each do |product| %&gt;
+  &lt;%= render partial: "product", locals: { product: product } %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-57787f1936b1245262668708283985be">Copiar</button>
+</div>
+<p>can be rewritten in a single line:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@products</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d937fe0677c4fead7d8b9c691368cd8d">&lt;%= render partial: "product", collection: @products %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d937fe0677c4fead7d8b9c691368cd8d">Copiar</button>
+</div>
+<p>When a partial is called with a collection, the individual instances of the partial have access to the member of the collection being rendered via a variable named after the partial. In this case, the partial is <code>_product</code>, and within it you can refer to <code>product</code> to get the collection member that is being rendered.</p><p>You can use a shorthand syntax for rendering collections. Assuming <code>@products</code> is a collection of <code>Product</code> instances, you can simply write the following to produce the same result:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="vi">@products</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-31b88f4270a6ea4b523c6ec4f25c72af">&lt;%= render @products %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-31b88f4270a6ea4b523c6ec4f25c72af">Copiar</button>
+</div>
+<p>Rails determines the name of the partial to use by looking at the model name in the collection, <code>Product</code> in this case. In fact, you can even render a collection made up of instances of different models using this shorthand, and Rails will choose the proper partial for each member of the collection.</p><h5 id="spacer-templates"><a class="anchorlink" href="#spacer-templates">3.2.6 Spacer Templates</a></h5><p>You can also specify a second partial to be rendered between instances of the main partial by using the <code>:spacer_template</code> option:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="vi">@products</span><span class="p">,</span> <span class="ss">spacer_template: </span><span class="s2">"product_ruler"</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-eb037db9522e48eb6b7dfb64f4c57de4">&lt;%= render partial: @products, spacer_template: "product_ruler" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eb037db9522e48eb6b7dfb64f4c57de4">Copiar</button>
+</div>
+<p>Rails will render the <code>_product_ruler</code> partial (with no data passed to it) between each pair of <code>_product</code> partials.</p><h4 id="layouts"><a class="anchorlink" href="#layouts">3.3 Layouts</a></h4><p>Layouts can be used to render a common view template around the results of Rails controller actions. Typically, a Rails application will have a couple of layouts that pages will be rendered within. For example, a site might have one layout for a logged in user and another for the marketing or sales side of the site. The logged in user layout might include top-level navigation that should be present across many controller actions. The sales layout for a SaaS app might include top-level navigation for things like "Pricing" and "Contact Us" pages. You would expect each layout to have a different look and feel. You can read about layouts in more detail in the <a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a> guide.</p><h3 id="partial-layouts"><a class="anchorlink" href="#partial-layouts">4 Partial Layouts</a></h3><p>Partials can have their own layouts applied to them. These layouts are different from those applied to a controller action, but they work in a similar fashion.</p><p>Let's say we're displaying an article on a page which should be wrapped in a <code>div</code> for display purposes. Firstly, we'll create a new <code>Article</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Article</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">body: </span><span class="s1">'Partial Layouts are cool!'</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0acab4dafb5bfa19ff2913c4e182b65a">Article.create(body: 'Partial Layouts are cool!')
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0acab4dafb5bfa19ff2913c4e182b65a">Copiar</button>
+</div>
+<p>In the <code>show</code> template, we'll render the <code>_article</code> partial wrapped in the <code>box</code> layout:</p><p><strong>articles/show.html.erb</strong></p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s1">'article'</span><span class="p">,</span> <span class="ss">layout: </span><span class="s1">'box'</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">article: </span><span class="vi">@article</span> <span class="p">}</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f7f0f3e9be0b08aceedcc46f4f758f3c">&lt;%= render partial: 'article', layout: 'box', locals: { article: @article } %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f7f0f3e9be0b08aceedcc46f4f758f3c">Copiar</button>
+</div>
+<p>The <code>box</code> layout simply wraps the <code>_article</code> partial in a <code>div</code>:</p><p><strong>articles/_box.html.erb</strong></p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">'box'</span><span class="nt">&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-bb3f7c4d301fe52bb0001f156f8947d3">&lt;div class='box'&gt;
+  &lt;%= yield %&gt;
+&lt;/div&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bb3f7c4d301fe52bb0001f156f8947d3">Copiar</button>
+</div>
+<p>Note that the partial layout has access to the local <code>article</code> variable that was passed into the <code>render</code> call. However, unlike application-wide layouts, partial layouts still have the underscore prefix.</p><p>You can also render a block of code within a partial layout instead of calling <code>yield</code>. For example, if we didn't have the <code>_article</code> partial, we could do this instead:</p><p><strong>articles/show.html.erb</strong></p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">render</span><span class="p">(</span><span class="ss">layout: </span><span class="s1">'box'</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">article: </span><span class="vi">@article</span> <span class="p">})</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;div&gt;</span>
+    <span class="nt">&lt;p&gt;</span><span class="cp">&lt;%=</span> <span class="n">article</span><span class="p">.</span><span class="nf">body</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-129813a8e01576d5b30afddccbb244a3">&lt;% render(layout: 'box', locals: { article: @article }) do %&gt;
+  &lt;div&gt;
+    &lt;p&gt;&lt;%= article.body %&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-129813a8e01576d5b30afddccbb244a3">Copiar</button>
+</div>
+<p>Supposing we use the same <code>_box</code> partial from above, this would produce the same output as the previous example.</p><h3 id="view-paths"><a class="anchorlink" href="#view-paths">5 View Paths</a></h3><p>When rendering a response, the controller needs to resolve where the different
+views are located. By default it only looks inside the <code>app/views</code> directory.</p><p>We can add other locations and give them a certain precedence when resolving
+paths using the <code>prepend_view_path</code> and <code>append_view_path</code> methods.</p><h4 id="prepend-view-path"><a class="anchorlink" href="#prepend-view-path">5.1 Prepend view path</a></h4><p>This can be helpful for example, when we want to put views inside a different
+directory for subdomains.</p><p>We can do this by using:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">prepend_view_path</span> <span class="s2">"app/views/</span><span class="si">#{</span><span class="n">request</span><span class="p">.</span><span class="nf">subdomain</span><span class="si">}</span><span class="s2">"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e0a8166596cc5ed0dfe0b1cb54865142">prepend_view_path "app/views/#{request.subdomain}"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e0a8166596cc5ed0dfe0b1cb54865142">Copiar</button>
+</div>
+<p>Then Action View will look first in this directory when resolving views.</p><h4 id="append-view-path"><a class="anchorlink" href="#append-view-path">5.2 Append view path</a></h4><p>Similarly, we can append paths:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">append_view_path</span> <span class="s2">"app/views/direct"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-72104113ab3c9052fbcb1299fbe6d9b0">append_view_path "app/views/direct"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-72104113ab3c9052fbcb1299fbe6d9b0">Copiar</button>
+</div>
+<p>This will add <code>app/views/direct</code> to the end of the lookup paths.</p><h3 id="overview-of-helpers-provided-by-action-view"><a class="anchorlink" href="#overview-of-helpers-provided-by-action-view">6 Overview of helpers provided by Action View</a></h3><p>WIP: Not all the helpers are listed here. For a full list see the <a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActionView/Helpers.html">API documentation</a></p><p>The following is only a brief overview summary of the helpers available in Action View. It's recommended that you review the <a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActionView/Helpers.html">API Documentation</a>, which covers all of the helpers in more detail, but this should serve as a good starting point.</p><h4 id="assettaghelper"><a class="anchorlink" href="#assettaghelper">6.1 AssetTagHelper</a></h4><p>This module provides methods for generating HTML that links views to assets such as images, JavaScript files, stylesheets, and feeds.</p><p>By default, Rails links to these assets on the current host in the public folder, but you can direct Rails to link to assets from a dedicated assets server by setting <code>config.action_controller.asset_host</code> in the application configuration, typically in <code>config/environments/production.rb</code>. For example, let's say your asset host is <code>assets.example.com</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_controller</span><span class="p">.</span><span class="nf">asset_host</span> <span class="o">=</span> <span class="s2">"assets.example.com"</span>
+<span class="n">image_tag</span><span class="p">(</span><span class="s2">"rails.png"</span><span class="p">)</span> <span class="c1"># =&gt; &lt;img src="http://assets.example.com/images/rails.png" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ea977c063aeca206e83858cd46e03236">config.action_controller.asset_host = "assets.example.com"
+image_tag("rails.png") # =&gt; &lt;img src="http://assets.example.com/images/rails.png" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ea977c063aeca206e83858cd46e03236">Copiar</button>
+</div>
+<h5 id="auto-discovery-link-tag"><a class="anchorlink" href="#auto-discovery-link-tag">6.1.1 auto_discovery_link_tag</a></h5><p>Returns a link tag that browsers and feed readers can use to auto-detect an RSS, Atom, or JSON feed.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">auto_discovery_link_tag</span><span class="p">(</span><span class="ss">:rss</span><span class="p">,</span> <span class="s2">"http://www.example.com/feed.rss"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">title: </span><span class="s2">"RSS Feed"</span> <span class="p">})</span> <span class="c1"># =&gt;</span>
+  <span class="o">&lt;</span><span class="n">link</span> <span class="n">rel</span><span class="o">=</span><span class="s2">"alternate"</span> <span class="n">type</span><span class="o">=</span><span class="s2">"application/rss+xml"</span> <span class="n">title</span><span class="o">=</span><span class="s2">"RSS Feed"</span> <span class="n">href</span><span class="o">=</span><span class="s2">"http://www.example.com/feed.rss"</span> <span class="o">/&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-543261d68b80cfc615176ed9ec2ef20e">auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", { title: "RSS Feed" }) # =&gt;
+  &lt;link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://www.example.com/feed.rss" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-543261d68b80cfc615176ed9ec2ef20e">Copiar</button>
+</div>
+<h5 id="image-path"><a class="anchorlink" href="#image-path">6.1.2 image_path</a></h5><p>Computes the path to an image asset in the <code>app/assets/images</code> directory. Full paths from the document root will be passed through. Used internally by <code>image_tag</code> to build the image path.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">image_path</span><span class="p">(</span><span class="s2">"edit.png"</span><span class="p">)</span> <span class="c1"># =&gt; /assets/edit.png</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0edc94e0e16902a556943f90f7300e2b">image_path("edit.png") # =&gt; /assets/edit.png
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0edc94e0e16902a556943f90f7300e2b">Copiar</button>
+</div>
+<p>Fingerprint will be added to the filename if config.assets.digest is set to true.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">image_path</span><span class="p">(</span><span class="s2">"edit.png"</span><span class="p">)</span> <span class="c1"># =&gt; /assets/edit-2d1a2db63fc738690021fedb5a65b68e.png</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-17338481b038c31a5b1f1dd872b7757d">image_path("edit.png") # =&gt; /assets/edit-2d1a2db63fc738690021fedb5a65b68e.png
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-17338481b038c31a5b1f1dd872b7757d">Copiar</button>
+</div>
+<h5 id="image-url"><a class="anchorlink" href="#image-url">6.1.3 image_url</a></h5><p>Computes the URL to an image asset in the <code>app/assets/images</code> directory. This will call <code>image_path</code> internally and merge with your current host or your asset host.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">image_url</span><span class="p">(</span><span class="s2">"edit.png"</span><span class="p">)</span> <span class="c1"># =&gt; http://www.example.com/assets/edit.png</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-66ca9d25425c0b53798f1afc4c255d3a">image_url("edit.png") # =&gt; http://www.example.com/assets/edit.png
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-66ca9d25425c0b53798f1afc4c255d3a">Copiar</button>
+</div>
+<h5 id="image-tag"><a class="anchorlink" href="#image-tag">6.1.4 image_tag</a></h5><p>Returns an HTML image tag for the source. The source can be a full path or a file that exists in your <code>app/assets/images</code> directory.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">image_tag</span><span class="p">(</span><span class="s2">"icon.png"</span><span class="p">)</span> <span class="c1"># =&gt; &lt;img src="/assets/icon.png" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8a9258091ef5392736f51f78a6d7c347">image_tag("icon.png") # =&gt; &lt;img src="/assets/icon.png" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8a9258091ef5392736f51f78a6d7c347">Copiar</button>
+</div>
+<h5 id="javascript-include-tag"><a class="anchorlink" href="#javascript-include-tag">6.1.5 javascript_include_tag</a></h5><p>Returns an HTML script tag for each of the sources provided. You can pass in the filename (<code>.js</code> extension is optional) of JavaScript files that exist in your <code>app/assets/javascripts</code> directory for inclusion into the current page or you can pass the full path relative to your document root.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">javascript_include_tag</span> <span class="s2">"common"</span> <span class="c1"># =&gt; &lt;script src="/assets/common.js"&gt;&lt;/script&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4417815e857e46ffaefef19904b5e823">javascript_include_tag "common" # =&gt; &lt;script src="/assets/common.js"&gt;&lt;/script&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4417815e857e46ffaefef19904b5e823">Copiar</button>
+</div>
+<h5 id="javascript-path"><a class="anchorlink" href="#javascript-path">6.1.6 javascript_path</a></h5><p>Computes the path to a JavaScript asset in the <code>app/assets/javascripts</code> directory. If the source filename has no extension, <code>.js</code> will be appended. Full paths from the document root will be passed through. Used internally by <code>javascript_include_tag</code> to build the script path.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">javascript_path</span> <span class="s2">"common"</span> <span class="c1"># =&gt; /assets/common.js</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ed68a6b467db43282e97da17e2a4d1a5">javascript_path "common" # =&gt; /assets/common.js
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ed68a6b467db43282e97da17e2a4d1a5">Copiar</button>
+</div>
+<h5 id="javascript-url"><a class="anchorlink" href="#javascript-url">6.1.7 javascript_url</a></h5><p>Computes the URL to a JavaScript asset in the <code>app/assets/javascripts</code> directory. This will call <code>javascript_path</code> internally and merge with your current host or your asset host.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">javascript_url</span> <span class="s2">"common"</span> <span class="c1"># =&gt; http://www.example.com/assets/common.js</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3af83fb19440bc706fed700d51185c6e">javascript_url "common" # =&gt; http://www.example.com/assets/common.js
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3af83fb19440bc706fed700d51185c6e">Copiar</button>
+</div>
+<h5 id="stylesheet-link-tag"><a class="anchorlink" href="#stylesheet-link-tag">6.1.8 stylesheet_link_tag</a></h5><p>Returns a stylesheet link tag for the sources specified as arguments. If you don't specify an extension, <code>.css</code> will be appended automatically.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">stylesheet_link_tag</span> <span class="s2">"application"</span> <span class="c1"># =&gt; &lt;link href="/assets/application.css" media="screen" rel="stylesheet" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e62e78fd9bf0f872e067b24604463251">stylesheet_link_tag "application" # =&gt; &lt;link href="/assets/application.css" media="screen" rel="stylesheet" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e62e78fd9bf0f872e067b24604463251">Copiar</button>
+</div>
+<h5 id="stylesheet-path"><a class="anchorlink" href="#stylesheet-path">6.1.9 stylesheet_path</a></h5><p>Computes the path to a stylesheet asset in the <code>app/assets/stylesheets</code> directory. If the source filename has no extension, <code>.css</code> will be appended. Full paths from the document root will be passed through. Used internally by <code>stylesheet_link_tag</code> to build the stylesheet path.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">stylesheet_path</span> <span class="s2">"application"</span> <span class="c1"># =&gt; /assets/application.css</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e022d8e787c002fe9c13d9aa1507de09">stylesheet_path "application" # =&gt; /assets/application.css
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e022d8e787c002fe9c13d9aa1507de09">Copiar</button>
+</div>
+<h5 id="stylesheet-url"><a class="anchorlink" href="#stylesheet-url">6.1.10 stylesheet_url</a></h5><p>Computes the URL to a stylesheet asset in the <code>app/assets/stylesheets</code> directory. This will call <code>stylesheet_path</code> internally and merge with your current host or your asset host.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">stylesheet_url</span> <span class="s2">"application"</span> <span class="c1"># =&gt; http://www.example.com/assets/application.css</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1c6bb3949f159a6d38a0be4ed3328d0b">stylesheet_url "application" # =&gt; http://www.example.com/assets/application.css
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1c6bb3949f159a6d38a0be4ed3328d0b">Copiar</button>
+</div>
+<h4 id="atomfeedhelper"><a class="anchorlink" href="#atomfeedhelper">6.2 AtomFeedHelper</a></h4><h5 id="atom-feed"><a class="anchorlink" href="#atom-feed">6.2.1 atom_feed</a></h5><p>This helper makes building an Atom feed easy. Here's a full usage example:</p><p><strong>config/routes.rb</strong></p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:articles</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c1ad2ad5ca138b2eb8060132b1debb59">resources :articles
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c1ad2ad5ca138b2eb8060132b1debb59">Copiar</button>
+</div>
+<p><strong>app/controllers/articles_controller.rb</strong></p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">index</span>
+  <span class="vi">@articles</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">all</span>
+
+  <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+    <span class="nb">format</span><span class="p">.</span><span class="nf">html</span>
+    <span class="nb">format</span><span class="p">.</span><span class="nf">atom</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-49e82e219bc606ba2d3c2de7e72a3100">def index
+  @articles = Article.all
+
+  respond_to do |format|
+    format.html
+    format.atom
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-49e82e219bc606ba2d3c2de7e72a3100">Copiar</button>
+</div>
+<p><strong>app/views/articles/index.atom.builder</strong></p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">atom_feed</span> <span class="k">do</span> <span class="o">|</span><span class="n">feed</span><span class="o">|</span>
+  <span class="n">feed</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="s2">"Articles Index"</span><span class="p">)</span>
+  <span class="n">feed</span><span class="p">.</span><span class="nf">updated</span><span class="p">(</span><span class="vi">@articles</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">created_at</span><span class="p">)</span>
+
+  <span class="vi">@articles</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">article</span><span class="o">|</span>
+    <span class="n">feed</span><span class="p">.</span><span class="nf">entry</span><span class="p">(</span><span class="n">article</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">entry</span><span class="o">|</span>
+      <span class="n">entry</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="n">article</span><span class="p">.</span><span class="nf">title</span><span class="p">)</span>
+      <span class="n">entry</span><span class="p">.</span><span class="nf">content</span><span class="p">(</span><span class="n">article</span><span class="p">.</span><span class="nf">body</span><span class="p">,</span> <span class="ss">type: </span><span class="s1">'html'</span><span class="p">)</span>
+
+      <span class="n">entry</span><span class="p">.</span><span class="nf">author</span> <span class="k">do</span> <span class="o">|</span><span class="n">author</span><span class="o">|</span>
+        <span class="n">author</span><span class="p">.</span><span class="nf">name</span><span class="p">(</span><span class="n">article</span><span class="p">.</span><span class="nf">author_name</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c1cad3cd2f9e257665d838dad3bf66f7">atom_feed do |feed|
+  feed.title("Articles Index")
+  feed.updated(@articles.first.created_at)
+
+  @articles.each do |article|
+    feed.entry(article) do |entry|
+      entry.title(article.title)
+      entry.content(article.body, type: 'html')
+
+      entry.author do |author|
+        author.name(article.author_name)
+      end
+    end
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c1cad3cd2f9e257665d838dad3bf66f7">Copiar</button>
+</div>
+<h4 id="benchmarkhelper"><a class="anchorlink" href="#benchmarkhelper">6.3 BenchmarkHelper</a></h4><h5 id="benchmark"><a class="anchorlink" href="#benchmark">6.3.1 benchmark</a></h5><p>Allows you to measure the execution time of a block in a template and records the result to the log. Wrap this block around expensive operations or possible bottlenecks to get a time reading for the operation.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">benchmark</span> <span class="s2">"Process data files"</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">expensive_files_operation</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-21cec3c80c5ff229f3fc7a3ca889b590">&lt;% benchmark "Process data files" do %&gt;
+  &lt;%= expensive_files_operation %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-21cec3c80c5ff229f3fc7a3ca889b590">Copiar</button>
+</div>
+<p>This would add something like "Process data files (0.34523)" to the log, which you can then use to compare timings when optimizing your code.</p><h4 id="cachehelper"><a class="anchorlink" href="#cachehelper">6.4 CacheHelper</a></h4><h5 id="cache"><a class="anchorlink" href="#cache">6.4.1 cache</a></h5><p>A method for caching fragments of a view rather than an entire action or page. This technique is useful for caching pieces like menus, lists of news topics, static HTML fragments, and so on. This method takes a block that contains the content you wish to cache. See <code>AbstractController::Caching::Fragments</code> for more information.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">cache</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/footer"</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-319fd5ea03e5f9081c29147bea284618">&lt;% cache do %&gt;
+  &lt;%= render "shared/footer" %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-319fd5ea03e5f9081c29147bea284618">Copiar</button>
+</div>
+<h4 id="capturehelper"><a class="anchorlink" href="#capturehelper">6.5 CaptureHelper</a></h4><h5 id="capture"><a class="anchorlink" href="#capture">6.5.1 capture</a></h5><p>The <code>capture</code> method allows you to extract part of a template into a variable. You can then use this variable anywhere in your templates or layout.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="vi">@greeting</span> <span class="o">=</span> <span class="n">capture</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;p&gt;</span>Welcome! The date and time is <span class="cp">&lt;%=</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-72c7c73ccd161e395977d63dc4824052">&lt;% @greeting = capture do %&gt;
+  &lt;p&gt;Welcome! The date and time is &lt;%= Time.now %&gt;&lt;/p&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-72c7c73ccd161e395977d63dc4824052">Copiar</button>
+</div>
+<p>The captured variable can then be used anywhere else.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Welcome!<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="vi">@greeting</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d415220151067beff6d53a781aecb4cd">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Welcome!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;%= @greeting %&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d415220151067beff6d53a781aecb4cd">Copiar</button>
+</div>
+<h5 id="content-for"><a class="anchorlink" href="#content-for">6.5.2 content_for</a></h5><p>Calling <code>content_for</code> stores a block of markup in an identifier for later use. You can make subsequent calls to the stored content in other templates or the layout by passing the identifier as an argument to <code>yield</code>.</p><p>For example, let's say we have a standard application layout, but also a special page that requires certain JavaScript that the rest of the site doesn't need. We can use <code>content_for</code> to include this JavaScript on our special page without fattening up the rest of the site.</p><p><strong>app/views/layouts/application.html.erb</strong></p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Welcome!<span class="nt">&lt;/title&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="ss">:special_script</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Welcome! The date and time is <span class="cp">&lt;%=</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f5c9bc5908faa9bbe8794d452ebb862d">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Welcome!&lt;/title&gt;
+    &lt;%= yield :special_script %&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;Welcome! The date and time is &lt;%= Time.now %&gt;&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5c9bc5908faa9bbe8794d452ebb862d">Copiar</button>
+</div>
+<p><strong>app/views/articles/special.html.erb</strong></p><div class="code_container">
+<pre><code class="highlight erb"><span class="nt">&lt;p&gt;</span>This is a special page.<span class="nt">&lt;/p&gt;</span>
+
+<span class="cp">&lt;%</span> <span class="n">content_for</span> <span class="ss">:special_script</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;script&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello!</span><span class="dl">'</span><span class="p">)</span><span class="nt">&lt;/script&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-71153a9b553c1ffc095dd2ad40e41f1e">&lt;p&gt;This is a special page.&lt;/p&gt;
+
+&lt;% content_for :special_script do %&gt;
+  &lt;script&gt;alert('Hello!')&lt;/script&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-71153a9b553c1ffc095dd2ad40e41f1e">Copiar</button>
+</div>
+<h4 id="datehelper"><a class="anchorlink" href="#datehelper">6.6 DateHelper</a></h4><h5 id="date-select"><a class="anchorlink" href="#date-select">6.6.1 date_select</a></h5><p>Returns a set of select tags (one for year, month, and day) pre-selected for accessing a specified date-based attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">date_select</span><span class="p">(</span><span class="s2">"article"</span><span class="p">,</span> <span class="s2">"published_on"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e62b3907c2f2b78119e630b9d998d8c3">date_select("article", "published_on")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e62b3907c2f2b78119e630b9d998d8c3">Copiar</button>
+</div>
+<h5 id="datetime-select"><a class="anchorlink" href="#datetime-select">6.6.2 datetime_select</a></h5><p>Returns a set of select tags (one for year, month, day, hour, and minute) pre-selected for accessing a specified datetime-based attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">datetime_select</span><span class="p">(</span><span class="s2">"article"</span><span class="p">,</span> <span class="s2">"published_on"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a74a580596d3b044ac38296ae92c6c45">datetime_select("article", "published_on")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a74a580596d3b044ac38296ae92c6c45">Copiar</button>
+</div>
+<h5 id="distance-of-time-in-words"><a class="anchorlink" href="#distance-of-time-in-words">6.6.3 distance_of_time_in_words</a></h5><p>Reports the approximate distance in time between two Time or Date objects or integers as seconds. Set <code>include_seconds</code> to true if you want more detailed approximations.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">distance_of_time_in_words</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">,</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="o">+</span> <span class="mi">15</span><span class="p">.</span><span class="nf">seconds</span><span class="p">)</span>        <span class="c1"># =&gt; less than a minute</span>
+<span class="n">distance_of_time_in_words</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">,</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="o">+</span> <span class="mi">15</span><span class="p">.</span><span class="nf">seconds</span><span class="p">,</span> <span class="ss">include_seconds: </span><span class="kp">true</span><span class="p">)</span>  <span class="c1"># =&gt; less than 20 seconds</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6cfb6178404b618f1ab22c4dbb7fda01">distance_of_time_in_words(Time.now, Time.now + 15.seconds)        # =&gt; less than a minute
+distance_of_time_in_words(Time.now, Time.now + 15.seconds, include_seconds: true)  # =&gt; less than 20 seconds
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6cfb6178404b618f1ab22c4dbb7fda01">Copiar</button>
+</div>
+<h5 id="select-date"><a class="anchorlink" href="#select-date">6.6.4 select_date</a></h5><p>Returns a set of HTML select-tags (one for year, month, and day) pre-selected with the <code>date</code> provided.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generates a date select that defaults to the date provided (six days after today)</span>
+<span class="n">select_date</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">today</span> <span class="o">+</span> <span class="mi">6</span><span class="p">.</span><span class="nf">days</span><span class="p">)</span>
+
+<span class="c1"># Generates a date select that defaults to today (no specified date)</span>
+<span class="n">select_date</span><span class="p">()</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0e698dfde722db1a46c984a2ac09314b"># Generates a date select that defaults to the date provided (six days after today)
+select_date(Time.today + 6.days)
+
+# Generates a date select that defaults to today (no specified date)
+select_date()
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0e698dfde722db1a46c984a2ac09314b">Copiar</button>
+</div>
+<h5 id="select-datetime"><a class="anchorlink" href="#select-datetime">6.6.5 select_datetime</a></h5><p>Returns a set of HTML select-tags (one for year, month, day, hour, and minute) pre-selected with the <code>datetime</code> provided.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generates a datetime select that defaults to the datetime provided (four days after today)</span>
+<span class="n">select_datetime</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="o">+</span> <span class="mi">4</span><span class="p">.</span><span class="nf">days</span><span class="p">)</span>
+
+<span class="c1"># Generates a datetime select that defaults to today (no specified datetime)</span>
+<span class="n">select_datetime</span><span class="p">()</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c3d878b98f7999a271fb1f3cc8cd5fb1"># Generates a datetime select that defaults to the datetime provided (four days after today)
+select_datetime(Time.now + 4.days)
+
+# Generates a datetime select that defaults to today (no specified datetime)
+select_datetime()
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c3d878b98f7999a271fb1f3cc8cd5fb1">Copiar</button>
+</div>
+<h5 id="select-day"><a class="anchorlink" href="#select-day">6.6.6 select_day</a></h5><p>Returns a select tag with options for each of the days 1 through 31 with the current day selected.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generates a select field for days that defaults to the day for the date provided</span>
+<span class="n">select_day</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">today</span> <span class="o">+</span> <span class="mi">2</span><span class="p">.</span><span class="nf">days</span><span class="p">)</span>
+
+<span class="c1"># Generates a select field for days that defaults to the number given</span>
+<span class="n">select_day</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4bd93df359130945fcbb2cfe14c16660"># Generates a select field for days that defaults to the day for the date provided
+select_day(Time.today + 2.days)
+
+# Generates a select field for days that defaults to the number given
+select_day(5)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4bd93df359130945fcbb2cfe14c16660">Copiar</button>
+</div>
+<h5 id="select-hour"><a class="anchorlink" href="#select-hour">6.6.7 select_hour</a></h5><p>Returns a select tag with options for each of the hours 0 through 23 with the current hour selected.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generates a select field for hours that defaults to the hours for the time provided</span>
+<span class="n">select_hour</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="o">+</span> <span class="mi">6</span><span class="p">.</span><span class="nf">hours</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1c1238ca4cb0bfe6ea3d3a06b8db75cd"># Generates a select field for hours that defaults to the hours for the time provided
+select_hour(Time.now + 6.hours)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1c1238ca4cb0bfe6ea3d3a06b8db75cd">Copiar</button>
+</div>
+<h5 id="select-minute"><a class="anchorlink" href="#select-minute">6.6.8 select_minute</a></h5><p>Returns a select tag with options for each of the minutes 0 through 59 with the current minute selected.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generates a select field for minutes that defaults to the minutes for the time provided.</span>
+<span class="n">select_minute</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="o">+</span> <span class="mi">10</span><span class="p">.</span><span class="nf">minutes</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e0dab31379477b82301ab728b2dcb62f"># Generates a select field for minutes that defaults to the minutes for the time provided.
+select_minute(Time.now + 10.minutes)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e0dab31379477b82301ab728b2dcb62f">Copiar</button>
+</div>
+<h5 id="select-month"><a class="anchorlink" href="#select-month">6.6.9 select_month</a></h5><p>Returns a select tag with options for each of the months January through December with the current month selected.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generates a select field for months that defaults to the current month</span>
+<span class="n">select_month</span><span class="p">(</span><span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4ff7b795466d6c61e200c3f62af846fb"># Generates a select field for months that defaults to the current month
+select_month(Date.today)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4ff7b795466d6c61e200c3f62af846fb">Copiar</button>
+</div>
+<h5 id="select-second"><a class="anchorlink" href="#select-second">6.6.10 select_second</a></h5><p>Returns a select tag with options for each of the seconds 0 through 59 with the current second selected.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generates a select field for seconds that defaults to the seconds for the time provided</span>
+<span class="n">select_second</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="o">+</span> <span class="mi">16</span><span class="p">.</span><span class="nf">seconds</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ad0d10fbc5f6aacaf9614eaa9dd54dd3"># Generates a select field for seconds that defaults to the seconds for the time provided
+select_second(Time.now + 16.seconds)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ad0d10fbc5f6aacaf9614eaa9dd54dd3">Copiar</button>
+</div>
+<h5 id="select-time"><a class="anchorlink" href="#select-time">6.6.11 select_time</a></h5><p>Returns a set of HTML select-tags (one for hour and minute).</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generates a time select that defaults to the time provided</span>
+<span class="n">select_time</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5bc7f4c402171a48897efb40c99b2452"># Generates a time select that defaults to the time provided
+select_time(Time.now)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5bc7f4c402171a48897efb40c99b2452">Copiar</button>
+</div>
+<h5 id="select-year"><a class="anchorlink" href="#select-year">6.6.12 select_year</a></h5><p>Returns a select tag with options for each of the five years on each side of the current, which is selected. The five year radius can be changed using the <code>:start_year</code> and <code>:end_year</code> keys in the <code>options</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Generates a select field for five years on either side of Date.today that defaults to the current year</span>
+<span class="n">select_year</span><span class="p">(</span><span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">)</span>
+
+<span class="c1"># Generates a select field from 1900 to 2009 that defaults to the current year</span>
+<span class="n">select_year</span><span class="p">(</span><span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">,</span> <span class="ss">start_year: </span><span class="mi">1900</span><span class="p">,</span> <span class="ss">end_year: </span><span class="mi">2009</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8da2673c8c91553f8837c786b6f51965"># Generates a select field for five years on either side of Date.today that defaults to the current year
+select_year(Date.today)
+
+# Generates a select field from 1900 to 2009 that defaults to the current year
+select_year(Date.today, start_year: 1900, end_year: 2009)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8da2673c8c91553f8837c786b6f51965">Copiar</button>
+</div>
+<h5 id="time-ago-in-words"><a class="anchorlink" href="#time-ago-in-words">6.6.13 time_ago_in_words</a></h5><p>Like <code>distance_of_time_in_words</code>, but where <code>to_time</code> is fixed to <code>Time.now</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">time_ago_in_words</span><span class="p">(</span><span class="mi">3</span><span class="p">.</span><span class="nf">minutes</span><span class="p">.</span><span class="nf">from_now</span><span class="p">)</span>  <span class="c1"># =&gt; 3 minutes</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c3fb7a82205f209bef74d06fb51ac8c0">time_ago_in_words(3.minutes.from_now)  # =&gt; 3 minutes
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c3fb7a82205f209bef74d06fb51ac8c0">Copiar</button>
+</div>
+<h5 id="time-select"><a class="anchorlink" href="#time-select">6.6.14 time_select</a></h5><p>Returns a set of select tags (one for hour, minute, and optionally second) pre-selected for accessing a specified time-based attribute. The selects are prepared for multi-parameter assignment to an Active Record object.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Creates a time select tag that, when POSTed, will be stored in the order variable in the submitted attribute</span>
+<span class="n">time_select</span><span class="p">(</span><span class="s2">"order"</span><span class="p">,</span> <span class="s2">"submitted"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d1fc8fab638fdfba86b16302e10e1c27"># Creates a time select tag that, when POSTed, will be stored in the order variable in the submitted attribute
+time_select("order", "submitted")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d1fc8fab638fdfba86b16302e10e1c27">Copiar</button>
+</div>
+<h4 id="debughelper"><a class="anchorlink" href="#debughelper">6.7 DebugHelper</a></h4><p>Returns a <code>pre</code> tag that has object dumped by YAML. This creates a very readable way to inspect an object.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">my_hash</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">'first'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'second'</span> <span class="o">=&gt;</span> <span class="s1">'two'</span><span class="p">,</span> <span class="s1">'third'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="p">}</span>
+<span class="n">debug</span><span class="p">(</span><span class="n">my_hash</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-182986ed1d473feea1244faf9e719319">my_hash = { 'first' =&gt; 1, 'second' =&gt; 'two', 'third' =&gt; [1,2,3] }
+debug(my_hash)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-182986ed1d473feea1244faf9e719319">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;pre</span> <span class="na">class=</span><span class="s">'debug_dump'</span><span class="nt">&gt;</span>---
+first: 1
+second: two
+third:
+- 1
+- 2
+- 3
+<span class="nt">&lt;/pre&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5fed3f3b989dbb2e755b3c6374216995">&lt;pre class='debug_dump'&gt;---
+first: 1
+second: two
+third:
+- 1
+- 2
+- 3
+&lt;/pre&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5fed3f3b989dbb2e755b3c6374216995">Copiar</button>
+</div>
+<h4 id="formhelper"><a class="anchorlink" href="#formhelper">6.8 FormHelper</a></h4><p>Form helpers are designed to make working with models much easier compared to using just standard HTML elements by providing a set of methods for creating forms based on your models. This helper generates the HTML for forms, providing a method for each sort of input (e.g., text, password, select, and so on). When the form is submitted (i.e., when the user hits the submit button or form.submit is called via JavaScript), the form inputs will be bundled into the params object and passed back to the controller.</p><p>There are two types of form helpers: those that specifically work with model attributes and those that don't. This helper deals with those that work with model attributes; to see an example of form helpers that don't work with model attributes, check the <code>ActionView::Helpers::FormTagHelper</code> documentation.</p><p>The core method of this helper, <code>form_for</code>, gives you the ability to create a form for a model instance; for example, let's say that you have a model Person and want to create a new instance of it:</p><div class="code_container">
+<pre><code class="highlight erb"># Note: a @person variable will have been created in the controller (e.g. @person = Person.new)
+<span class="cp">&lt;%=</span> <span class="n">form_for</span> <span class="vi">@person</span><span class="p">,</span> <span class="ss">url: </span><span class="p">{</span> <span class="ss">action: </span><span class="s2">"create"</span> <span class="p">}</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:first_name</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:last_name</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">submit_tag</span> <span class="s1">'Create'</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cb7df3d397e6d879c9ed58f7081012ca"># Note: a @person variable will have been created in the controller (e.g. @person = Person.new)
+&lt;%= form_for @person, url: { action: "create" } do |f| %&gt;
+  &lt;%= f.text_field :first_name %&gt;
+  &lt;%= f.text_field :last_name %&gt;
+  &lt;%= submit_tag 'Create' %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cb7df3d397e6d879c9ed58f7081012ca">Copiar</button>
+</div>
+<p>The HTML generated for this would be:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"new_person"</span> <span class="na">id=</span><span class="s">"new_person"</span> <span class="na">action=</span><span class="s">"/people"</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"utf8"</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">value=</span><span class="s">"&amp;#x2713;"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"authenticity_token"</span> <span class="na">value=</span><span class="s">"lTuvBzs7ANygT0NFinXj98tfw3Emfm65wwYLbUvoWsK2pngccIQSUorM2C035M9dZswXgWTvKwFS8W5TVblpYw=="</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"person[first_name]"</span> <span class="na">id=</span><span class="s">"person_first_name"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"person[last_name]"</span> <span class="na">id=</span><span class="s">"person_last_name"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">name=</span><span class="s">"commit"</span> <span class="na">value=</span><span class="s">"Create"</span> <span class="na">data-disable-with=</span><span class="s">"Create"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2c5836025a87b90d982ac66f006622fb">&lt;form class="new_person" id="new_person" action="/people" accept-charset="UTF-8" method="post"&gt;
+  &lt;input name="utf8" type="hidden" value="&amp;#x2713;" /&gt;
+  &lt;input type="hidden" name="authenticity_token" value="lTuvBzs7ANygT0NFinXj98tfw3Emfm65wwYLbUvoWsK2pngccIQSUorM2C035M9dZswXgWTvKwFS8W5TVblpYw==" /&gt;
+  &lt;input type="text" name="person[first_name]" id="person_first_name" /&gt;
+  &lt;input type="text" name="person[last_name]" id="person_last_name" /&gt;
+  &lt;input type="submit" name="commit" value="Create" data-disable-with="Create" /&gt;
+&lt;/form&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2c5836025a87b90d982ac66f006622fb">Copiar</button>
+</div>
+<p>The params object created when this form is submitted would look like:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span><span class="s2">"utf8"</span> <span class="o">=&gt;</span> <span class="s2">"✓"</span><span class="p">,</span> <span class="s2">"authenticity_token"</span> <span class="o">=&gt;</span> <span class="s2">"lTuvBzs7ANygT0NFinXj98tfw3Emfm65wwYLbUvoWsK2pngccIQSUorM2C035M9dZswXgWTvKwFS8W5TVblpYw=="</span><span class="p">,</span> <span class="s2">"person"</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="s2">"first_name"</span> <span class="o">=&gt;</span> <span class="s2">"William"</span><span class="p">,</span> <span class="s2">"last_name"</span> <span class="o">=&gt;</span> <span class="s2">"Smith"</span><span class="p">},</span> <span class="s2">"commit"</span> <span class="o">=&gt;</span> <span class="s2">"Create"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"people"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"create"</span><span class="p">}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b309a52616104aeac5b6c21336827e83">{"utf8" =&gt; "✓", "authenticity_token" =&gt; "lTuvBzs7ANygT0NFinXj98tfw3Emfm65wwYLbUvoWsK2pngccIQSUorM2C035M9dZswXgWTvKwFS8W5TVblpYw==", "person" =&gt; {"first_name" =&gt; "William", "last_name" =&gt; "Smith"}, "commit" =&gt; "Create", "controller" =&gt; "people", "action" =&gt; "create"}
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b309a52616104aeac5b6c21336827e83">Copiar</button>
+</div>
+<p>The params hash has a nested person value, which can therefore be accessed with <code>params[:person]</code> in the controller.</p><h5 id="check-box"><a class="anchorlink" href="#check-box">6.8.1 check_box</a></h5><p>Returns a checkbox tag tailored for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Let's say that @article.validated? is 1:</span>
+<span class="n">check_box</span><span class="p">(</span><span class="s2">"article"</span><span class="p">,</span> <span class="s2">"validated"</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;input type="checkbox" id="article_validated" name="article[validated]" value="1" /&gt;</span>
+<span class="c1">#    &lt;input name="article[validated]" type="hidden" value="0" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7141190d40682393b10075ccd19d38ae"># Let's say that @article.validated? is 1:
+check_box("article", "validated")
+# =&gt; &lt;input type="checkbox" id="article_validated" name="article[validated]" value="1" /&gt;
+#    &lt;input name="article[validated]" type="hidden" value="0" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7141190d40682393b10075ccd19d38ae">Copiar</button>
+</div>
+<h5 id="fields-for"><a class="anchorlink" href="#fields-for">6.8.2 fields_for</a></h5><p>Creates a scope around a specific model object like <code>form_for</code>, but doesn't create the form tags themselves. This makes <code>fields_for</code> suitable for specifying additional model objects in the same form:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_for</span> <span class="vi">@person</span><span class="p">,</span> <span class="ss">url: </span><span class="p">{</span> <span class="ss">action: </span><span class="s2">"update"</span> <span class="p">}</span> <span class="k">do</span> <span class="o">|</span><span class="n">person_form</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  First name: <span class="cp">&lt;%=</span> <span class="n">person_form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:first_name</span> <span class="cp">%&gt;</span>
+  Last name : <span class="cp">&lt;%=</span> <span class="n">person_form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:last_name</span> <span class="cp">%&gt;</span>
+
+  <span class="cp">&lt;%=</span> <span class="n">fields_for</span> <span class="vi">@person</span><span class="p">.</span><span class="nf">permission</span> <span class="k">do</span> <span class="o">|</span><span class="n">permission_fields</span><span class="o">|</span> <span class="cp">%&gt;</span>
+    Admin?  : <span class="cp">&lt;%=</span> <span class="n">permission_fields</span><span class="p">.</span><span class="nf">check_box</span> <span class="ss">:admin</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-09f066f7b70f64c4b421552ddc355cae">&lt;%= form_for @person, url: { action: "update" } do |person_form| %&gt;
+  First name: &lt;%= person_form.text_field :first_name %&gt;
+  Last name : &lt;%= person_form.text_field :last_name %&gt;
+
+  &lt;%= fields_for @person.permission do |permission_fields| %&gt;
+    Admin?  : &lt;%= permission_fields.check_box :admin %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-09f066f7b70f64c4b421552ddc355cae">Copiar</button>
+</div>
+<h5 id="file-field"><a class="anchorlink" href="#file-field">6.8.3 file_field</a></h5><p>Returns a file upload input tag tailored for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">file_field</span><span class="p">(</span><span class="ss">:user</span><span class="p">,</span> <span class="ss">:avatar</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;input type="file" id="user_avatar" name="user[avatar]" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-eb0b835a9dfc73c2adb66c70c67204ee">file_field(:user, :avatar)
+# =&gt; &lt;input type="file" id="user_avatar" name="user[avatar]" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eb0b835a9dfc73c2adb66c70c67204ee">Copiar</button>
+</div>
+<h5 id="form-for"><a class="anchorlink" href="#form-for">6.8.4 form_for</a></h5><p>Creates a form and a scope around a specific model object that is used as a base for questioning about values for the fields.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_for</span> <span class="vi">@article</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">label</span> <span class="ss">:title</span><span class="p">,</span> <span class="s1">'Title'</span> <span class="cp">%&gt;</span>:
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:title</span> <span class="cp">%&gt;</span><span class="nt">&lt;br&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">label</span> <span class="ss">:body</span><span class="p">,</span> <span class="s1">'Body'</span> <span class="cp">%&gt;</span>:
+  <span class="cp">&lt;%=</span> <span class="n">f</span><span class="p">.</span><span class="nf">text_area</span> <span class="ss">:body</span> <span class="cp">%&gt;</span><span class="nt">&lt;br&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-91dd69d9f27595c3d11562c9634582ec">&lt;%= form_for @article do |f| %&gt;
+  &lt;%= f.label :title, 'Title' %&gt;:
+  &lt;%= f.text_field :title %&gt;&lt;br&gt;
+  &lt;%= f.label :body, 'Body' %&gt;:
+  &lt;%= f.text_area :body %&gt;&lt;br&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-91dd69d9f27595c3d11562c9634582ec">Copiar</button>
+</div>
+<h5 id="hidden-field"><a class="anchorlink" href="#hidden-field">6.8.5 hidden_field</a></h5><p>Returns a hidden input tag tailored for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">hidden_field</span><span class="p">(</span><span class="ss">:user</span><span class="p">,</span> <span class="ss">:token</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;input type="hidden" id="user_token" name="user[token]" value="#{@user.token}" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5a06aa60125f6013386dcdce73101523">hidden_field(:user, :token)
+# =&gt; &lt;input type="hidden" id="user_token" name="user[token]" value="#{@user.token}" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5a06aa60125f6013386dcdce73101523">Copiar</button>
+</div>
+<h5 id="label"><a class="anchorlink" href="#label">6.8.6 label</a></h5><p>Returns a label tag tailored for labelling an input field for a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">label</span><span class="p">(</span><span class="ss">:article</span><span class="p">,</span> <span class="ss">:title</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;label for="article_title"&gt;Title&lt;/label&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2d0013e894223efe207032b91e2ca4d4">label(:article, :title)
+# =&gt; &lt;label for="article_title"&gt;Title&lt;/label&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2d0013e894223efe207032b91e2ca4d4">Copiar</button>
+</div>
+<h5 id="password-field"><a class="anchorlink" href="#password-field">6.8.7 password_field</a></h5><p>Returns an input tag of the "password" type tailored for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">password_field</span><span class="p">(</span><span class="ss">:login</span><span class="p">,</span> <span class="ss">:pass</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;input type="text" id="login_pass" name="login[pass]" value="#{@login.pass}" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-45f8c287bbc5c5839baf78fdc88fbbeb">password_field(:login, :pass)
+# =&gt; &lt;input type="text" id="login_pass" name="login[pass]" value="#{@login.pass}" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-45f8c287bbc5c5839baf78fdc88fbbeb">Copiar</button>
+</div>
+<h5 id="radio-button"><a class="anchorlink" href="#radio-button">6.8.8 radio_button</a></h5><p>Returns a radio button tag for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Let's say that @article.category returns "rails":</span>
+<span class="n">radio_button</span><span class="p">(</span><span class="s2">"article"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">,</span> <span class="s2">"rails"</span><span class="p">)</span>
+<span class="n">radio_button</span><span class="p">(</span><span class="s2">"article"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">,</span> <span class="s2">"java"</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;input type="radio" id="article_category_rails" name="article[category]" value="rails" checked="checked" /&gt;</span>
+<span class="c1">#    &lt;input type="radio" id="article_category_java" name="article[category]" value="java" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2a7071372306b516c725046386959d79"># Let's say that @article.category returns "rails":
+radio_button("article", "category", "rails")
+radio_button("article", "category", "java")
+# =&gt; &lt;input type="radio" id="article_category_rails" name="article[category]" value="rails" checked="checked" /&gt;
+#    &lt;input type="radio" id="article_category_java" name="article[category]" value="java" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a7071372306b516c725046386959d79">Copiar</button>
+</div>
+<h5 id="text-area"><a class="anchorlink" href="#text-area">6.8.9 text_area</a></h5><p>Returns a textarea opening and closing tag set tailored for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">text_area</span><span class="p">(</span><span class="ss">:comment</span><span class="p">,</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">size: </span><span class="s2">"20x30"</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;textarea cols="20" rows="30" id="comment_text" name="comment[text]"&gt;</span>
+<span class="c1">#      #{@comment.text}</span>
+<span class="c1">#    &lt;/textarea&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ee849067af2b097399b2ef5c584db63b">text_area(:comment, :text, size: "20x30")
+# =&gt; &lt;textarea cols="20" rows="30" id="comment_text" name="comment[text]"&gt;
+#      #{@comment.text}
+#    &lt;/textarea&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ee849067af2b097399b2ef5c584db63b">Copiar</button>
+</div>
+<h5 id="text-field"><a class="anchorlink" href="#text-field">6.8.10 text_field</a></h5><p>Returns an input tag of the "text" type tailored for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">text_field</span><span class="p">(</span><span class="ss">:article</span><span class="p">,</span> <span class="ss">:title</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;input type="text" id="article_title" name="article[title]" value="#{@article.title}" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e6c15cb41da4396563c7f0f1c1e28076">text_field(:article, :title)
+# =&gt; &lt;input type="text" id="article_title" name="article[title]" value="#{@article.title}" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e6c15cb41da4396563c7f0f1c1e28076">Copiar</button>
+</div>
+<h5 id="email-field"><a class="anchorlink" href="#email-field">6.8.11 email_field</a></h5><p>Returns an input tag of the "email" type tailored for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">email_field</span><span class="p">(</span><span class="ss">:user</span><span class="p">,</span> <span class="ss">:email</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;input type="email" id="user_email" name="user[email]" value="#{@user.email}" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-779c9f746e6e2f52a1343eec04962a99">email_field(:user, :email)
+# =&gt; &lt;input type="email" id="user_email" name="user[email]" value="#{@user.email}" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-779c9f746e6e2f52a1343eec04962a99">Copiar</button>
+</div>
+<h5 id="url-field"><a class="anchorlink" href="#url-field">6.8.12 url_field</a></h5><p>Returns an input tag of the "url" type tailored for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">url_field</span><span class="p">(</span><span class="ss">:user</span><span class="p">,</span> <span class="ss">:url</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;input type="url" id="user_url" name="user[url]" value="#{@user.url}" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b707849b3c7b671137adbde685b7305a">url_field(:user, :url)
+# =&gt; &lt;input type="url" id="user_url" name="user[url]" value="#{@user.url}" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b707849b3c7b671137adbde685b7305a">Copiar</button>
+</div>
+<h4 id="formoptionshelper"><a class="anchorlink" href="#formoptionshelper">6.9 FormOptionsHelper</a></h4><p>Provides a number of methods for turning different kinds of containers into a set of option tags.</p><h5 id="collection-select"><a class="anchorlink" href="#collection-select">6.9.1 collection_select</a></h5><p>Returns <code>select</code> and <code>option</code> tags for the collection of existing return values of <code>method</code> for <code>object</code>'s class.</p><p>Example object structure for use with this method:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">belongs_to</span> <span class="ss">:author</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Author</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_many</span> <span class="ss">:articles</span>
+  <span class="k">def</span> <span class="nf">name_with_initial</span>
+    <span class="s2">"</span><span class="si">#{</span><span class="n">first_name</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2">. </span><span class="si">#{</span><span class="n">last_name</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d49a73a7d13b22cfe1c3210301575b96">class Article &lt; ApplicationRecord
+  belongs_to :author
+end
+
+class Author &lt; ApplicationRecord
+  has_many :articles
+  def name_with_initial
+    "#{first_name.first}. #{last_name}"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d49a73a7d13b22cfe1c3210301575b96">Copiar</button>
+</div>
+<p>Sample usage (selecting the associated Author for an instance of Article, <code>@article</code>):</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">collection_select</span><span class="p">(</span><span class="ss">:article</span><span class="p">,</span> <span class="ss">:author_id</span><span class="p">,</span> <span class="no">Author</span><span class="p">.</span><span class="nf">all</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name_with_initial</span><span class="p">,</span> <span class="p">{</span> <span class="ss">prompt: </span><span class="kp">true</span> <span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8e9adb1f28f90e9f66e92794148fb1b8">collection_select(:article, :author_id, Author.all, :id, :name_with_initial, { prompt: true })
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8e9adb1f28f90e9f66e92794148fb1b8">Copiar</button>
+</div>
+<p>If <code>@article.author_id</code> is 1, this would return:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"article[author_id]"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>Please select<span class="nt">&lt;/option&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"1"</span> <span class="na">selected=</span><span class="s">"selected"</span><span class="nt">&gt;</span>D. Heinemeier Hansson<span class="nt">&lt;/option&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">&gt;</span>D. Thomas<span class="nt">&lt;/option&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"3"</span><span class="nt">&gt;</span>M. Clark<span class="nt">&lt;/option&gt;</span>
+<span class="nt">&lt;/select&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-afffdc15a5564e32ce078631bff6f258">&lt;select name="article[author_id]"&gt;
+  &lt;option value=""&gt;Please select&lt;/option&gt;
+  &lt;option value="1" selected="selected"&gt;D. Heinemeier Hansson&lt;/option&gt;
+  &lt;option value="2"&gt;D. Thomas&lt;/option&gt;
+  &lt;option value="3"&gt;M. Clark&lt;/option&gt;
+&lt;/select&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-afffdc15a5564e32ce078631bff6f258">Copiar</button>
+</div>
+<h5 id="collection-radio-buttons"><a class="anchorlink" href="#collection-radio-buttons">6.9.2 collection_radio_buttons</a></h5><p>Returns <code>radio_button</code> tags for the collection of existing return values of <code>method</code> for <code>object</code>'s class.</p><p>Example object structure for use with this method:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">belongs_to</span> <span class="ss">:author</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Author</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_many</span> <span class="ss">:articles</span>
+  <span class="k">def</span> <span class="nf">name_with_initial</span>
+    <span class="s2">"</span><span class="si">#{</span><span class="n">first_name</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2">. </span><span class="si">#{</span><span class="n">last_name</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0892888b99f9a8cb38e727c4c0d7ccff">class Article &lt; ApplicationRecord
+  belongs_to :author
+end
+
+class Author &lt; ApplicationRecord
+  has_many :articles
+  def name_with_initial
+    "#{first_name.first}. #{last_name}"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0892888b99f9a8cb38e727c4c0d7ccff">Copiar</button>
+</div>
+<p>Sample usage (selecting the associated Author for an instance of Article, <code>@article</code>):</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">collection_radio_buttons</span><span class="p">(</span><span class="ss">:article</span><span class="p">,</span> <span class="ss">:author_id</span><span class="p">,</span> <span class="no">Author</span><span class="p">.</span><span class="nf">all</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name_with_initial</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1aa42b5231f0d56957acc245dc639b15">collection_radio_buttons(:article, :author_id, Author.all, :id, :name_with_initial)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1aa42b5231f0d56957acc245dc639b15">Copiar</button>
+</div>
+<p>If <code>@article.author_id</code> is 1, this would return:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"article_author_id_1"</span> <span class="na">name=</span><span class="s">"article[author_id]"</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">value=</span><span class="s">"1"</span> <span class="na">checked=</span><span class="s">"checked"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"article_author_id_1"</span><span class="nt">&gt;</span>D. Heinemeier Hansson<span class="nt">&lt;/label&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"article_author_id_2"</span> <span class="na">name=</span><span class="s">"article[author_id]"</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">value=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"article_author_id_2"</span><span class="nt">&gt;</span>D. Thomas<span class="nt">&lt;/label&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"article_author_id_3"</span> <span class="na">name=</span><span class="s">"article[author_id]"</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">value=</span><span class="s">"3"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"article_author_id_3"</span><span class="nt">&gt;</span>M. Clark<span class="nt">&lt;/label&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9af584921ceb635b91c47cb2feb5635f">&lt;input id="article_author_id_1" name="article[author_id]" type="radio" value="1" checked="checked" /&gt;
+&lt;label for="article_author_id_1"&gt;D. Heinemeier Hansson&lt;/label&gt;
+&lt;input id="article_author_id_2" name="article[author_id]" type="radio" value="2" /&gt;
+&lt;label for="article_author_id_2"&gt;D. Thomas&lt;/label&gt;
+&lt;input id="article_author_id_3" name="article[author_id]" type="radio" value="3" /&gt;
+&lt;label for="article_author_id_3"&gt;M. Clark&lt;/label&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9af584921ceb635b91c47cb2feb5635f">Copiar</button>
+</div>
+<h5 id="collection-check-boxes"><a class="anchorlink" href="#collection-check-boxes">6.9.3 collection_check_boxes</a></h5><p>Returns <code>check_box</code> tags for the collection of existing return values of <code>method</code> for <code>object</code>'s class.</p><p>Example object structure for use with this method:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_and_belongs_to_many</span> <span class="ss">:authors</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Author</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_and_belongs_to_many</span> <span class="ss">:articles</span>
+  <span class="k">def</span> <span class="nf">name_with_initial</span>
+    <span class="s2">"</span><span class="si">#{</span><span class="n">first_name</span><span class="p">.</span><span class="nf">first</span><span class="si">}</span><span class="s2">. </span><span class="si">#{</span><span class="n">last_name</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-45a1be3b2fba38455ad27d452d1d4a2d">class Article &lt; ApplicationRecord
+  has_and_belongs_to_many :authors
+end
+
+class Author &lt; ApplicationRecord
+  has_and_belongs_to_many :articles
+  def name_with_initial
+    "#{first_name.first}. #{last_name}"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-45a1be3b2fba38455ad27d452d1d4a2d">Copiar</button>
+</div>
+<p>Sample usage (selecting the associated Authors for an instance of Article, <code>@article</code>):</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">collection_check_boxes</span><span class="p">(</span><span class="ss">:article</span><span class="p">,</span> <span class="ss">:author_ids</span><span class="p">,</span> <span class="no">Author</span><span class="p">.</span><span class="nf">all</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name_with_initial</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-932370e5a471e07ffd6b953ba6eccc9b">collection_check_boxes(:article, :author_ids, Author.all, :id, :name_with_initial)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-932370e5a471e07ffd6b953ba6eccc9b">Copiar</button>
+</div>
+<p>If <code>@article.author_ids</code> is [1], this would return:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"article_author_ids_1"</span> <span class="na">name=</span><span class="s">"article[author_ids][]"</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">value=</span><span class="s">"1"</span> <span class="na">checked=</span><span class="s">"checked"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"article_author_ids_1"</span><span class="nt">&gt;</span>D. Heinemeier Hansson<span class="nt">&lt;/label&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"article_author_ids_2"</span> <span class="na">name=</span><span class="s">"article[author_ids][]"</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">value=</span><span class="s">"2"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"article_author_ids_2"</span><span class="nt">&gt;</span>D. Thomas<span class="nt">&lt;/label&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"article_author_ids_3"</span> <span class="na">name=</span><span class="s">"article[author_ids][]"</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">value=</span><span class="s">"3"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"article_author_ids_3"</span><span class="nt">&gt;</span>M. Clark<span class="nt">&lt;/label&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"article[author_ids][]"</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">value=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-680cc1190e3d9848e27b12f35794ec29">&lt;input id="article_author_ids_1" name="article[author_ids][]" type="checkbox" value="1" checked="checked" /&gt;
+&lt;label for="article_author_ids_1"&gt;D. Heinemeier Hansson&lt;/label&gt;
+&lt;input id="article_author_ids_2" name="article[author_ids][]" type="checkbox" value="2" /&gt;
+&lt;label for="article_author_ids_2"&gt;D. Thomas&lt;/label&gt;
+&lt;input id="article_author_ids_3" name="article[author_ids][]" type="checkbox" value="3" /&gt;
+&lt;label for="article_author_ids_3"&gt;M. Clark&lt;/label&gt;
+&lt;input name="article[author_ids][]" type="hidden" value="" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-680cc1190e3d9848e27b12f35794ec29">Copiar</button>
+</div>
+<h5 id="option-groups-from-collection-for-select"><a class="anchorlink" href="#option-groups-from-collection-for-select">6.9.4 option_groups_from_collection_for_select</a></h5><p>Returns a string of <code>option</code> tags, like <code>options_from_collection_for_select</code>, but groups them by <code>optgroup</code> tags based on the object relationships of the arguments.</p><p>Example object structure for use with this method:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Continent</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_many</span> <span class="ss">:countries</span>
+  <span class="c1"># attribs: id, name</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Country</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">belongs_to</span> <span class="ss">:continent</span>
+  <span class="c1"># attribs: id, name, continent_id</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a123bde1d6529bdf2142484f5eca6f5e">class Continent &lt; ApplicationRecord
+  has_many :countries
+  # attribs: id, name
+end
+
+class Country &lt; ApplicationRecord
+  belongs_to :continent
+  # attribs: id, name, continent_id
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a123bde1d6529bdf2142484f5eca6f5e">Copiar</button>
+</div>
+<p>Sample usage:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">option_groups_from_collection_for_select</span><span class="p">(</span><span class="vi">@continents</span><span class="p">,</span> <span class="ss">:countries</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5de67d86ed6001f83bfc0f3868361429">option_groups_from_collection_for_select(@continents, :countries, :name, :id, :name, 3)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5de67d86ed6001f83bfc0f3868361429">Copiar</button>
+</div>
+<p>Possible output:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;optgroup</span> <span class="na">label=</span><span class="s">"Africa"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"1"</span><span class="nt">&gt;</span>Egypt<span class="nt">&lt;/option&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"4"</span><span class="nt">&gt;</span>Rwanda<span class="nt">&lt;/option&gt;</span>
+  ...
+<span class="nt">&lt;/optgroup&gt;</span>
+<span class="nt">&lt;optgroup</span> <span class="na">label=</span><span class="s">"Asia"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"3"</span> <span class="na">selected=</span><span class="s">"selected"</span><span class="nt">&gt;</span>China<span class="nt">&lt;/option&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"12"</span><span class="nt">&gt;</span>India<span class="nt">&lt;/option&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"5"</span><span class="nt">&gt;</span>Japan<span class="nt">&lt;/option&gt;</span>
+  ...
+<span class="nt">&lt;/optgroup&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9ed2001ca1992634af0f6736256370ed">&lt;optgroup label="Africa"&gt;
+  &lt;option value="1"&gt;Egypt&lt;/option&gt;
+  &lt;option value="4"&gt;Rwanda&lt;/option&gt;
+  ...
+&lt;/optgroup&gt;
+&lt;optgroup label="Asia"&gt;
+  &lt;option value="3" selected="selected"&gt;China&lt;/option&gt;
+  &lt;option value="12"&gt;India&lt;/option&gt;
+  &lt;option value="5"&gt;Japan&lt;/option&gt;
+  ...
+&lt;/optgroup&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9ed2001ca1992634af0f6736256370ed">Copiar</button>
+</div>
+<div class="note"><p>Only the <code>optgroup</code> and <code>option</code> tags are returned, so you still have to wrap the output in an appropriate <code>select</code> tag.</p></div><h5 id="options-for-select"><a class="anchorlink" href="#options-for-select">6.9.5 options_for_select</a></h5><p>Accepts a container (hash, array, enumerable, your type) and returns a string of option tags.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">options_for_select</span><span class="p">([</span> <span class="s2">"VISA"</span><span class="p">,</span> <span class="s2">"MasterCard"</span> <span class="p">])</span>
+<span class="c1"># =&gt; &lt;option&gt;VISA&lt;/option&gt; &lt;option&gt;MasterCard&lt;/option&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-46b36eacb4d3cec3d0b4e9bbe7e47e98">options_for_select([ "VISA", "MasterCard" ])
+# =&gt; &lt;option&gt;VISA&lt;/option&gt; &lt;option&gt;MasterCard&lt;/option&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-46b36eacb4d3cec3d0b4e9bbe7e47e98">Copiar</button>
+</div>
+<div class="note"><p>Only the <code>option</code> tags are returned, you have to wrap this call in a regular HTML <code>select</code> tag.</p></div><h5 id="options-from-collection-for-select"><a class="anchorlink" href="#options-from-collection-for-select">6.9.6 options_from_collection_for_select</a></h5><p>Returns a string of option tags that have been compiled by iterating over the <code>collection</code> and assigning the result of a call to the <code>value_method</code> as the option value and the <code>text_method</code> as the option text.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># options_from_collection_for_select(collection, value_method, text_method, selected = nil)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-09e296060ecfe1972ac3c3d23848008b"># options_from_collection_for_select(collection, value_method, text_method, selected = nil)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-09e296060ecfe1972ac3c3d23848008b">Copiar</button>
+</div>
+<p>For example, imagine a loop iterating over each person in <code>@project.people</code> to generate an input tag:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">options_from_collection_for_select</span><span class="p">(</span><span class="vi">@project</span><span class="p">.</span><span class="nf">people</span><span class="p">,</span> <span class="s2">"id"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;option value="#{person.id}"&gt;#{person.name}&lt;/option&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4f46ec273ba1a052f295da3e21cccad2">options_from_collection_for_select(@project.people, "id", "name")
+# =&gt; &lt;option value="#{person.id}"&gt;#{person.name}&lt;/option&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4f46ec273ba1a052f295da3e21cccad2">Copiar</button>
+</div>
+<div class="note"><p>Only the <code>option</code> tags are returned, you have to wrap this call in a regular HTML <code>select</code> tag.</p></div><h5 id="select"><a class="anchorlink" href="#select">6.9.7 select</a></h5><p>Create a select tag and a series of contained option tags for the provided object and method.</p><p>Example:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="nb">select</span><span class="p">(</span><span class="s2">"article"</span><span class="p">,</span> <span class="s2">"person_id"</span><span class="p">,</span> <span class="no">Person</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">collect</span> <span class="p">{</span> <span class="o">|</span><span class="nb">p</span><span class="o">|</span> <span class="p">[</span> <span class="nb">p</span><span class="p">.</span><span class="nf">name</span><span class="p">,</span> <span class="nb">p</span><span class="p">.</span><span class="nf">id</span> <span class="p">]</span> <span class="p">},</span> <span class="p">{</span> <span class="ss">include_blank: </span><span class="kp">true</span> <span class="p">})</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7d2afb674c6b80eb0b8597f964cfc343">select("article", "person_id", Person.all.collect { |p| [ p.name, p.id ] }, { include_blank: true })
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7d2afb674c6b80eb0b8597f964cfc343">Copiar</button>
+</div>
+<p>If <code>@article.person_id</code> is 1, this would become:</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"article[person_id]"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;&lt;/option&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"1"</span> <span class="na">selected=</span><span class="s">"selected"</span><span class="nt">&gt;</span>David<span class="nt">&lt;/option&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">&gt;</span>Eileen<span class="nt">&lt;/option&gt;</span>
+  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"3"</span><span class="nt">&gt;</span>Rafael<span class="nt">&lt;/option&gt;</span>
+<span class="nt">&lt;/select&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0a348b5858bc3ca923209e48179a50a9">&lt;select name="article[person_id]"&gt;
+  &lt;option value=""&gt;&lt;/option&gt;
+  &lt;option value="1" selected="selected"&gt;David&lt;/option&gt;
+  &lt;option value="2"&gt;Eileen&lt;/option&gt;
+  &lt;option value="3"&gt;Rafael&lt;/option&gt;
+&lt;/select&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0a348b5858bc3ca923209e48179a50a9">Copiar</button>
+</div>
+<h5 id="time-zone-options-for-select"><a class="anchorlink" href="#time-zone-options-for-select">6.9.8 time_zone_options_for_select</a></h5><p>Returns a string of option tags for pretty much any time zone in the world.</p><h5 id="time-zone-select"><a class="anchorlink" href="#time-zone-select">6.9.9 time_zone_select</a></h5><p>Returns select and option tags for the given object and method, using <code>time_zone_options_for_select</code> to generate the list of option tags.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">time_zone_select</span><span class="p">(</span><span class="s2">"user"</span><span class="p">,</span> <span class="s2">"time_zone"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8c2910772ec85a75600b2f95c5c8f41b">time_zone_select("user", "time_zone")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8c2910772ec85a75600b2f95c5c8f41b">Copiar</button>
+</div>
+<h5 id="date-field"><a class="anchorlink" href="#date-field">6.9.10 date_field</a></h5><p>Returns an input tag of the "date" type tailored for accessing a specified attribute.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">date_field</span><span class="p">(</span><span class="s2">"user"</span><span class="p">,</span> <span class="s2">"dob"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-40d2e1ed883f468ddf8222d8167aac25">date_field("user", "dob")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-40d2e1ed883f468ddf8222d8167aac25">Copiar</button>
+</div>
+<h4 id="formtaghelper"><a class="anchorlink" href="#formtaghelper">6.10 FormTagHelper</a></h4><p>Provides a number of methods for creating form tags that don't rely on an Active Record object assigned to the template like FormHelper does. Instead, you provide the names and values manually.</p><h5 id="check-box-tag"><a class="anchorlink" href="#check-box-tag">6.10.1 check_box_tag</a></h5><p>Creates a check box form input tag.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">check_box_tag</span> <span class="s1">'accept'</span>
+<span class="c1"># =&gt; &lt;input id="accept" name="accept" type="checkbox" value="1" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c0fc194e7f2db4f49e89f47e661e067c">check_box_tag 'accept'
+# =&gt; &lt;input id="accept" name="accept" type="checkbox" value="1" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c0fc194e7f2db4f49e89f47e661e067c">Copiar</button>
+</div>
+<h5 id="field-set-tag"><a class="anchorlink" href="#field-set-tag">6.10.2 field_set_tag</a></h5><p>Creates a field set for grouping HTML form elements.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">field_set_tag</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;p&gt;</span><span class="cp">&lt;%=</span> <span class="n">text_field_tag</span> <span class="s1">'name'</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+# =&gt; <span class="nt">&lt;fieldset&gt;&lt;p&gt;&lt;input</span> <span class="na">id=</span><span class="s">"name"</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="nt">/&gt;&lt;/p&gt;&lt;/fieldset&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f21da00ffb95703534729a1f4394cd27">&lt;%= field_set_tag do %&gt;
+  &lt;p&gt;&lt;%= text_field_tag 'name' %&gt;&lt;/p&gt;
+&lt;% end %&gt;
+# =&gt; &lt;fieldset&gt;&lt;p&gt;&lt;input id="name" name="name" type="text" /&gt;&lt;/p&gt;&lt;/fieldset&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f21da00ffb95703534729a1f4394cd27">Copiar</button>
+</div>
+<h5 id="file-field-tag"><a class="anchorlink" href="#file-field-tag">6.10.3 file_field_tag</a></h5><p>Creates a file upload field.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_tag</span><span class="p">({</span> <span class="ss">action: </span><span class="s2">"post"</span> <span class="p">},</span> <span class="ss">multipart: </span><span class="kp">true</span><span class="p">)</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"file"</span><span class="nt">&gt;</span>File to Upload<span class="nt">&lt;/label&gt;</span> <span class="cp">&lt;%=</span> <span class="n">file_field_tag</span> <span class="s2">"file"</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">submit_tag</span> <span class="cp">%&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e32d8478bcda07b41dc2cc597474352b">&lt;%= form_tag({ action: "post" }, multipart: true) do %&gt;
+  &lt;label for="file"&gt;File to Upload&lt;/label&gt; &lt;%= file_field_tag "file" %&gt;
+  &lt;%= submit_tag %&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e32d8478bcda07b41dc2cc597474352b">Copiar</button>
+</div>
+<p>Example output:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">file_field_tag</span> <span class="s1">'attachment'</span>
+<span class="c1"># =&gt; &lt;input id="attachment" name="attachment" type="file" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7e0f0e2730c3653e5d6f72bf5563331f">file_field_tag 'attachment'
+# =&gt; &lt;input id="attachment" name="attachment" type="file" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7e0f0e2730c3653e5d6f72bf5563331f">Copiar</button>
+</div>
+<h5 id="form-tag"><a class="anchorlink" href="#form-tag">6.10.4 form_tag</a></h5><p>Starts a form tag that points the action to a URL configured with <code>url_for_options</code> just like <code>ActionController::Base#url_for</code>.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_tag</span> <span class="s1">'/articles'</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;div&gt;</span><span class="cp">&lt;%=</span> <span class="n">submit_tag</span> <span class="s1">'Save'</span> <span class="cp">%&gt;</span><span class="nt">&lt;/div&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+# =&gt; <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/articles"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;&lt;div&gt;&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">name=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Save"</span> <span class="nt">/&gt;&lt;/div&gt;&lt;/form&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-83bd0b537c46664ca4bb98826e104f17">&lt;%= form_tag '/articles' do %&gt;
+  &lt;div&gt;&lt;%= submit_tag 'Save' %&gt;&lt;/div&gt;
+&lt;% end %&gt;
+# =&gt; &lt;form action="/articles" method="post"&gt;&lt;div&gt;&lt;input type="submit" name="submit" value="Save" /&gt;&lt;/div&gt;&lt;/form&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-83bd0b537c46664ca4bb98826e104f17">Copiar</button>
+</div>
+<h5 id="hidden-field-tag"><a class="anchorlink" href="#hidden-field-tag">6.10.5 hidden_field_tag</a></h5><p>Creates a hidden form input field used to transmit data that would be lost due to HTTP's statelessness or data that should be hidden from the user.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">hidden_field_tag</span> <span class="s1">'token'</span><span class="p">,</span> <span class="s1">'VUBJKB23UIVI1UU1VOBVI@'</span>
+<span class="c1"># =&gt; &lt;input id="token" name="token" type="hidden" value="VUBJKB23UIVI1UU1VOBVI@" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f9be3a1dc0e151ec7a2db704166150ff">hidden_field_tag 'token', 'VUBJKB23UIVI1UU1VOBVI@'
+# =&gt; &lt;input id="token" name="token" type="hidden" value="VUBJKB23UIVI1UU1VOBVI@" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f9be3a1dc0e151ec7a2db704166150ff">Copiar</button>
+</div>
+<h5 id="image-submit-tag"><a class="anchorlink" href="#image-submit-tag">6.10.6 image_submit_tag</a></h5><p>Displays an image which when clicked will submit the form.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">image_submit_tag</span><span class="p">(</span><span class="s2">"login.png"</span><span class="p">)</span>
+<span class="c1"># =&gt; &lt;input src="/images/login.png" type="image" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9861d975a7895b708eaf55e7dedd320f">image_submit_tag("login.png")
+# =&gt; &lt;input src="/images/login.png" type="image" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9861d975a7895b708eaf55e7dedd320f">Copiar</button>
+</div>
+<h5 id="label-tag"><a class="anchorlink" href="#label-tag">6.10.7 label_tag</a></h5><p>Creates a label field.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">label_tag</span> <span class="s1">'name'</span>
+<span class="c1"># =&gt; &lt;label for="name"&gt;Name&lt;/label&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-993a80d92c35966acc50740e3af134ea">label_tag 'name'
+# =&gt; &lt;label for="name"&gt;Name&lt;/label&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-993a80d92c35966acc50740e3af134ea">Copiar</button>
+</div>
+<h5 id="password-field-tag"><a class="anchorlink" href="#password-field-tag">6.10.8 password_field_tag</a></h5><p>Creates a password field, a masked text field that will hide the users input behind a mask character.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">password_field_tag</span> <span class="s1">'pass'</span>
+<span class="c1"># =&gt; &lt;input id="pass" name="pass" type="password" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-84d183f06d36864981cc682425649a46">password_field_tag 'pass'
+# =&gt; &lt;input id="pass" name="pass" type="password" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-84d183f06d36864981cc682425649a46">Copiar</button>
+</div>
+<h5 id="radio-button-tag"><a class="anchorlink" href="#radio-button-tag">6.10.9 radio_button_tag</a></h5><p>Creates a radio button; use groups of radio buttons named the same to allow users to select from a group of options.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">radio_button_tag</span> <span class="s1">'favorite_color'</span><span class="p">,</span> <span class="s1">'maroon'</span>
+<span class="c1"># =&gt; &lt;input id="favorite_color_maroon" name="favorite_color" type="radio" value="maroon" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8d7e52ce0284f17cc729fa662fed1601">radio_button_tag 'favorite_color', 'maroon'
+# =&gt; &lt;input id="favorite_color_maroon" name="favorite_color" type="radio" value="maroon" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8d7e52ce0284f17cc729fa662fed1601">Copiar</button>
+</div>
+<h5 id="select-tag"><a class="anchorlink" href="#select-tag">6.10.10 select_tag</a></h5><p>Creates a dropdown selection box.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">select_tag</span> <span class="s2">"people"</span><span class="p">,</span> <span class="s2">"&lt;option&gt;David&lt;/option&gt;"</span>
+<span class="c1"># =&gt; &lt;select id="people" name="people"&gt;&lt;option&gt;David&lt;/option&gt;&lt;/select&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e3399d17abf9a157c08c5e82f3378521">select_tag "people", "&lt;option&gt;David&lt;/option&gt;"
+# =&gt; &lt;select id="people" name="people"&gt;&lt;option&gt;David&lt;/option&gt;&lt;/select&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e3399d17abf9a157c08c5e82f3378521">Copiar</button>
+</div>
+<h5 id="submit-tag"><a class="anchorlink" href="#submit-tag">6.10.11 submit_tag</a></h5><p>Creates a submit button with the text provided as the caption.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">submit_tag</span> <span class="s2">"Publish this article"</span>
+<span class="c1"># =&gt; &lt;input name="commit" type="submit" value="Publish this article" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0e78f6162c30ac98379e3b966dc50c94">submit_tag "Publish this article"
+# =&gt; &lt;input name="commit" type="submit" value="Publish this article" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0e78f6162c30ac98379e3b966dc50c94">Copiar</button>
+</div>
+<h5 id="text-area-tag"><a class="anchorlink" href="#text-area-tag">6.10.12 text_area_tag</a></h5><p>Creates a text input area; use a textarea for longer text inputs such as blog posts or descriptions.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">text_area_tag</span> <span class="s1">'article'</span>
+<span class="c1"># =&gt; &lt;textarea id="article" name="article"&gt;&lt;/textarea&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0c2221eed2cb362df9c09b3662f958d6">text_area_tag 'article'
+# =&gt; &lt;textarea id="article" name="article"&gt;&lt;/textarea&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0c2221eed2cb362df9c09b3662f958d6">Copiar</button>
+</div>
+<h5 id="text-field-tag"><a class="anchorlink" href="#text-field-tag">6.10.13 text_field_tag</a></h5><p>Creates a standard text field; use these text fields to input smaller chunks of text like a username or a search query.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">text_field_tag</span> <span class="s1">'name'</span>
+<span class="c1"># =&gt; &lt;input id="name" name="name" type="text" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1cf53f05e6f50418a23c419932ece543">text_field_tag 'name'
+# =&gt; &lt;input id="name" name="name" type="text" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1cf53f05e6f50418a23c419932ece543">Copiar</button>
+</div>
+<h5 id="email-field-tag"><a class="anchorlink" href="#email-field-tag">6.10.14 email_field_tag</a></h5><p>Creates a standard input field of email type.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">email_field_tag</span> <span class="s1">'email'</span>
+<span class="c1"># =&gt; &lt;input id="email" name="email" type="email" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-99c6f2871f8af5f30a2909b5fa1ca7cf">email_field_tag 'email'
+# =&gt; &lt;input id="email" name="email" type="email" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-99c6f2871f8af5f30a2909b5fa1ca7cf">Copiar</button>
+</div>
+<h5 id="url-field-tag"><a class="anchorlink" href="#url-field-tag">6.10.15 url_field_tag</a></h5><p>Creates a standard input field of url type.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">url_field_tag</span> <span class="s1">'url'</span>
+<span class="c1"># =&gt; &lt;input id="url" name="url" type="url" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7f4b7f0c5ef859b9dd58e09890b3cc05">url_field_tag 'url'
+# =&gt; &lt;input id="url" name="url" type="url" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7f4b7f0c5ef859b9dd58e09890b3cc05">Copiar</button>
+</div>
+<h5 id="date-field-tag"><a class="anchorlink" href="#date-field-tag">6.10.16 date_field_tag</a></h5><p>Creates a standard input field of date type.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">date_field_tag</span> <span class="s2">"dob"</span>
+<span class="c1"># =&gt; &lt;input id="dob" name="dob" type="date" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d7d1a4f0b7cf48b168a8ae355741dd0b">date_field_tag "dob"
+# =&gt; &lt;input id="dob" name="dob" type="date" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d7d1a4f0b7cf48b168a8ae355741dd0b">Copiar</button>
+</div>
+<h4 id="javascripthelper"><a class="anchorlink" href="#javascripthelper">6.11 JavaScriptHelper</a></h4><p>Provides functionality for working with JavaScript in your views.</p><h5 id="escape-javascript"><a class="anchorlink" href="#escape-javascript">6.11.1 escape_javascript</a></h5><p>Escape carrier returns and single and double quotes for JavaScript segments.</p><h5 id="javascript-tag"><a class="anchorlink" href="#javascript-tag">6.11.2 javascript_tag</a></h5><p>Returns a JavaScript tag wrapping the provided code.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">javascript_tag</span> <span class="s2">"alert('All is good')"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-af507aeea11dca48dadb2041f60bdbe4">javascript_tag "alert('All is good')"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-af507aeea11dca48dadb2041f60bdbe4">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;script&gt;</span>
+<span class="c1">//</span><span class="o">&lt;!</span><span class="p">[</span><span class="nx">CDATA</span><span class="p">[</span>
+<span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">All is good</span><span class="dl">'</span><span class="p">)</span>
+<span class="c1">//]]&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1ec23ff9b31c026da3dbc2df9b6a983f">&lt;script&gt;
+//&lt;![CDATA[
+alert('All is good')
+//]]&gt;
+&lt;/script&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1ec23ff9b31c026da3dbc2df9b6a983f">Copiar</button>
+</div>
+<h4 id="numberhelper"><a class="anchorlink" href="#numberhelper">6.12 NumberHelper</a></h4><p>Provides methods for converting numbers into formatted strings. Methods are provided for phone numbers, currency, percentage, precision, positional notation, and file size.</p><h5 id="number-to-currency"><a class="anchorlink" href="#number-to-currency">6.12.1 number_to_currency</a></h5><p>Formats a number into a currency string (e.g., $13.65).</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">number_to_currency</span><span class="p">(</span><span class="mf">1234567890.50</span><span class="p">)</span> <span class="c1"># =&gt; $1,234,567,890.50</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8b6d8e10da9f7b04a0b2ed0bcd3c1da1">number_to_currency(1234567890.50) # =&gt; $1,234,567,890.50
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8b6d8e10da9f7b04a0b2ed0bcd3c1da1">Copiar</button>
+</div>
+<h5 id="number-to-human-size"><a class="anchorlink" href="#number-to-human-size">6.12.2 number_to_human_size</a></h5><p>Formats the bytes in size into a more understandable representation; useful for reporting file sizes to users.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">number_to_human_size</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>          <span class="c1"># =&gt; 1.2 KB</span>
+<span class="n">number_to_human_size</span><span class="p">(</span><span class="mi">1234567</span><span class="p">)</span>       <span class="c1"># =&gt; 1.2 MB</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7a675706c4b96209e8389b6d508bea9d">number_to_human_size(1234)          # =&gt; 1.2 KB
+number_to_human_size(1234567)       # =&gt; 1.2 MB
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7a675706c4b96209e8389b6d508bea9d">Copiar</button>
+</div>
+<h5 id="number-to-percentage"><a class="anchorlink" href="#number-to-percentage">6.12.3 number_to_percentage</a></h5><p>Formats a number as a percentage string.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">number_to_percentage</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="ss">precision: </span><span class="mi">0</span><span class="p">)</span>        <span class="c1"># =&gt; 100%</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9f9a97d46aa92f0e2d5c29e893886f2c">number_to_percentage(100, precision: 0)        # =&gt; 100%
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f9a97d46aa92f0e2d5c29e893886f2c">Copiar</button>
+</div>
+<h5 id="number-to-phone"><a class="anchorlink" href="#number-to-phone">6.12.4 number_to_phone</a></h5><p>Formats a number into a phone number (US by default).</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">number_to_phone</span><span class="p">(</span><span class="mi">1235551234</span><span class="p">)</span> <span class="c1"># =&gt; 123-555-1234</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3bac834f9db53f1b05b6120d1388ed5a">number_to_phone(1235551234) # =&gt; 123-555-1234
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3bac834f9db53f1b05b6120d1388ed5a">Copiar</button>
+</div>
+<h5 id="number-with-delimiter"><a class="anchorlink" href="#number-with-delimiter">6.12.5 number_with_delimiter</a></h5><p>Formats a number with grouped thousands using a delimiter.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">number_with_delimiter</span><span class="p">(</span><span class="mi">12345678</span><span class="p">)</span> <span class="c1"># =&gt; 12,345,678</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-35e6fe9a4a77c0b764e0980b06e50af2">number_with_delimiter(12345678) # =&gt; 12,345,678
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-35e6fe9a4a77c0b764e0980b06e50af2">Copiar</button>
+</div>
+<h5 id="number-with-precision"><a class="anchorlink" href="#number-with-precision">6.12.6 number_with_precision</a></h5><p>Formats a number with the specified level of <code>precision</code>, which defaults to 3.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">number_with_precision</span><span class="p">(</span><span class="mf">111.2345</span><span class="p">)</span>     <span class="c1"># =&gt; 111.235</span>
+<span class="n">number_with_precision</span><span class="p">(</span><span class="mf">111.2345</span><span class="p">,</span> <span class="ss">precision: </span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># =&gt; 111.23</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6eb5499e22f74ea45e1fb8d8a0bf4961">number_with_precision(111.2345)     # =&gt; 111.235
+number_with_precision(111.2345, precision: 2)  # =&gt; 111.23
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6eb5499e22f74ea45e1fb8d8a0bf4961">Copiar</button>
+</div>
+<h4 id="sanitizehelper"><a class="anchorlink" href="#sanitizehelper">6.13 SanitizeHelper</a></h4><p>The SanitizeHelper module provides a set of methods for scrubbing text of undesired HTML elements.</p><h5 id="sanitize"><a class="anchorlink" href="#sanitize">6.13.1 sanitize</a></h5><p>This sanitize helper will HTML encode all tags and strip all attributes that aren't specifically allowed.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">sanitize</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">body</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5740b16bb709b2c0932d88dbb08c1336">sanitize @article.body
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5740b16bb709b2c0932d88dbb08c1336">Copiar</button>
+</div>
+<p>If either the <code>:attributes</code> or <code>:tags</code> options are passed, only the mentioned attributes and tags are allowed and nothing else.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">sanitize</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">body</span><span class="p">,</span> <span class="ss">tags: </span><span class="sx">%w(table tr td)</span><span class="p">,</span> <span class="ss">attributes: </span><span class="sx">%w(id class style)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d8f14dd5791677d9c136cbf017cef264">sanitize @article.body, tags: %w(table tr td), attributes: %w(id class style)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d8f14dd5791677d9c136cbf017cef264">Copiar</button>
+</div>
+<p>To change defaults for multiple uses, for example adding table tags to the default:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="no">Rails</span><span class="o">::</span><span class="no">Application</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">action_view</span><span class="p">.</span><span class="nf">sanitized_allowed_tags</span> <span class="o">=</span> <span class="s1">'table'</span><span class="p">,</span> <span class="s1">'tr'</span><span class="p">,</span> <span class="s1">'td'</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d3e3579ea79f40d026c0a99e0f0bc906">class Application &lt; Rails::Application
+  config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td'
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d3e3579ea79f40d026c0a99e0f0bc906">Copiar</button>
+</div>
+<h5 id="sanitize-css-style"><a class="anchorlink" href="#sanitize-css-style">6.13.2 sanitize_css(style)</a></h5><p>Sanitizes a block of CSS code.</p><h5 id="strip-links-html"><a class="anchorlink" href="#strip-links-html">6.13.3 strip_links(html)</a></h5><p>Strips all link tags from text leaving just the link text.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">strip_links</span><span class="p">(</span><span class="s1">'&lt;a href="https://rubyonrails.org"&gt;Ruby on Rails&lt;/a&gt;'</span><span class="p">)</span>
+<span class="c1"># =&gt; Ruby on Rails</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-91fcb15141d2a221ccf8524da713fd8f">strip_links('&lt;a href="https://rubyonrails.org"&gt;Ruby on Rails&lt;/a&gt;')
+# =&gt; Ruby on Rails
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-91fcb15141d2a221ccf8524da713fd8f">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="n">strip_links</span><span class="p">(</span><span class="s1">'emails to &lt;a href="mailto:me@email.com"&gt;me@email.com&lt;/a&gt;.'</span><span class="p">)</span>
+<span class="c1"># =&gt; emails to me@email.com.</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-16b5887d87d95350e852e2ac2e34a760">strip_links('emails to &lt;a href="mailto:me@email.com"&gt;me@email.com&lt;/a&gt;.')
+# =&gt; emails to me@email.com.
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-16b5887d87d95350e852e2ac2e34a760">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="n">strip_links</span><span class="p">(</span><span class="s1">'Blog: &lt;a href="http://myblog.com/"&gt;Visit&lt;/a&gt;.'</span><span class="p">)</span>
+<span class="c1"># =&gt; Blog: Visit.</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-704ee37db84201f137b3e24f8ff0d013">strip_links('Blog: &lt;a href="http://myblog.com/"&gt;Visit&lt;/a&gt;.')
+# =&gt; Blog: Visit.
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-704ee37db84201f137b3e24f8ff0d013">Copiar</button>
+</div>
+<h5 id="strip-tags-html"><a class="anchorlink" href="#strip-tags-html">6.13.4 strip_tags(html)</a></h5><p>Strips all HTML tags from the html, including comments.
+This functionality is powered by the rails-html-sanitizer gem.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">strip_tags</span><span class="p">(</span><span class="s2">"Strip &lt;i&gt;these&lt;/i&gt; tags!"</span><span class="p">)</span>
+<span class="c1"># =&gt; Strip these tags!</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-76880390115b16504c363ce2b7094375">strip_tags("Strip &lt;i&gt;these&lt;/i&gt; tags!")
+# =&gt; Strip these tags!
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-76880390115b16504c363ce2b7094375">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="n">strip_tags</span><span class="p">(</span><span class="s2">"&lt;b&gt;Bold&lt;/b&gt; no more!  &lt;a href='more.html'&gt;See more&lt;/a&gt;"</span><span class="p">)</span>
+<span class="c1"># =&gt; Bold no more!  See more</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5aace84ba377b2427d648a91b14d1b65">strip_tags("&lt;b&gt;Bold&lt;/b&gt; no more!  &lt;a href='more.html'&gt;See more&lt;/a&gt;")
+# =&gt; Bold no more!  See more
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5aace84ba377b2427d648a91b14d1b65">Copiar</button>
+</div>
+<p>NB: The output may still contain unescaped '&lt;', '&gt;', '&amp;' characters and confuse browsers.</p><h4 id="csrfhelper"><a class="anchorlink" href="#csrfhelper">6.14 CsrfHelper</a></h4><p>Returns meta tags "csrf-param" and "csrf-token" with the name of the cross-site
+request forgery protection parameter and token, respectively.</p><div class="code_container">
+<pre><code class="highlight html"><span class="nt">&lt;</span><span class="err">%=</span> <span class="na">csrf_meta_tags</span> <span class="err">%</span><span class="nt">&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e38771260ee4ec458b346b5d551a77bd">&lt;%= csrf_meta_tags %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e38771260ee4ec458b346b5d551a77bd">Copiar</button>
+</div>
+<div class="note"><p>Regular forms generate hidden fields so they do not use these tags. More
+details can be found in the <a href="security.html#cross-site-request-forgery-csrf">Rails Security Guide</a>.</p></div><h3 id="localized-views"><a class="anchorlink" href="#localized-views">7 Localized Views</a></h3><p>Action View has the ability to render different templates depending on the current locale.</p><p>For example, suppose you have an <code>ArticlesController</code> with a show action. By default, calling this action will render <code>app/views/articles/show.html.erb</code>. But if you set <code>I18n.locale = :de</code>, then <code>app/views/articles/show.de.html.erb</code> will be rendered instead. If the localized template isn't present, the undecorated version will be used. This means you're not required to provide localized views for all cases, but they will be preferred and used if available.</p><p>You can use the same technique to localize the rescue files in your public directory. For example, setting <code>I18n.locale = :de</code> and creating <code>public/500.de.html</code> and <code>public/404.de.html</code> would allow you to have localized rescue pages.</p><p>Since Rails doesn't restrict the symbols that you use to set I18n.locale, you can leverage this system to display different content depending on anything you like. For example, suppose you have some "expert" users that should see different pages from "normal" users. You could add the following to <code>app/controllers/application.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">before_action</span> <span class="ss">:set_expert_locale</span>
+
+<span class="k">def</span> <span class="nf">set_expert_locale</span>
+  <span class="no">I18n</span><span class="p">.</span><span class="nf">locale</span> <span class="o">=</span> <span class="ss">:expert</span> <span class="k">if</span> <span class="n">current_user</span><span class="p">.</span><span class="nf">expert?</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c76d3d13e5f0b3a8bef4215503f47421">before_action :set_expert_locale
+
+def set_expert_locale
+  I18n.locale = :expert if current_user.expert?
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c76d3d13e5f0b3a8bef4215503f47421">Copiar</button>
+</div>
+<p>Then you could create special views like <code>app/views/articles/show.expert.html.erb</code> that would only be displayed to expert users.</p><p>You can read more about the Rails Internationalization (I18n) API <a href="i18n.html">here</a>.</p>
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

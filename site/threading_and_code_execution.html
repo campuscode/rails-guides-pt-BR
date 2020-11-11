@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Threading and Code Execution in Rails — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Threading and Code Execution in Rails — Ruby on Rails Guides" />
+  <meta name="description" content="Threading and Code Execution in RailsAfter reading this guide, you will know: What code Rails will automatically execute concurrently How to integrate manual concurrency with Rails internals How to wrap all application code How to affect application reloading" />
+  <meta property="og:description" content="Threading and Code Execution in RailsAfter reading this guide, you will know: What code Rails will automatically execute concurrently How to integrate manual concurrency with Rails internals How to wrap all application code How to affect application reloading" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Threading and Code Execution in Rails</h2><p>After reading this guide, you will know:</p>
+<ul>
+<li>What code Rails will automatically execute concurrently</li>
+<li>How to integrate manual concurrency with Rails internals</li>
+<li>How to wrap all application code</li>
+<li>How to affect application reloading</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#automatic-concurrency">Automatic Concurrency</a></li>
+<li>
+<a href="#executor">Executor</a>
+
+<ul>
+<li><a href="#default-callbacks">Default callbacks</a></li>
+<li><a href="#wrapping-application-code">Wrapping application code</a></li>
+<li><a href="#executor-concurrency">Concurrency</a></li>
+</ul>
+</li>
+<li>
+<a href="#reloader">Reloader</a>
+
+<ul>
+<li><a href="#callbacks">Callbacks</a></li>
+<li><a href="#class-unload">Class Unload</a></li>
+<li><a href="#reloader-concurrency">Concurrency</a></li>
+</ul>
+</li>
+<li>
+<a href="#framework-behavior">Framework Behavior</a>
+
+<ul>
+<li><a href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li>
+<a href="#load-interlock">Load Interlock</a>
+
+<ul>
+<li><a href="#permit-concurrent-loads"><code>permit_concurrent_loads</code></a></li>
+<li><a href="#actiondispatch-debuglocks">ActionDispatch::DebugLocks</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="automatic-concurrency"><a class="anchorlink" href="#automatic-concurrency">1 Automatic Concurrency</a></h3><p>Rails automatically allows various operations to be performed at the same time.</p><p>When using a threaded web server, such as the default Puma, multiple HTTP
+requests will be served simultaneously, with each request provided its own
+controller instance.</p><p>Threaded Active Job adapters, including the built-in Async, will likewise
+execute several jobs at the same time. Action Cable channels are managed this
+way too.</p><p>These mechanisms all involve multiple threads, each managing work for a unique
+instance of some object (controller, job, channel), while sharing the global
+process space (such as classes and their configurations, and global variables).
+As long as your code doesn't modify any of those shared things, it can mostly
+ignore that other threads exist.</p><p>The rest of this guide describes the mechanisms Rails uses to make it "mostly
+ignorable", and how extensions and applications with special needs can use them.</p><h3 id="executor"><a class="anchorlink" href="#executor">2 Executor</a></h3><p>The Rails Executor separates application code from framework code: any time the
+framework invokes code you've written in your application, it will be wrapped by
+the Executor.</p><p>The Executor consists of two callbacks: <code>to_run</code> and <code>to_complete</code>. The Run
+callback is called before the application code, and the Complete callback is
+called after.</p><h4 id="default-callbacks"><a class="anchorlink" href="#default-callbacks">2.1 Default callbacks</a></h4><p>In a default Rails application, the Executor callbacks are used to:</p>
+<ul>
+<li>track which threads are in safe positions for autoloading and reloading</li>
+<li>enable and disable the Active Record query cache</li>
+<li>return acquired Active Record connections to the pool</li>
+<li>constrain internal cache lifetimes</li>
+</ul>
+<p>Prior to Rails 5.0, some of these were handled by separate Rack middleware
+classes (such as <code>ActiveRecord::ConnectionAdapters::ConnectionManagement</code>), or
+directly wrapping code with methods like
+<code>ActiveRecord::Base.connection_pool.with_connection</code>. The Executor replaces
+these with a single more abstract interface.</p><h4 id="wrapping-application-code"><a class="anchorlink" href="#wrapping-application-code">2.2 Wrapping application code</a></h4><p>If you're writing a library or component that will invoke application code, you
+should wrap it with a call to the executor:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
+  <span class="c1"># call application code here</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a02406c77bdfcc50fe2c869a6b06f291">Rails.application.executor.wrap do
+  # call application code here
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a02406c77bdfcc50fe2c869a6b06f291">Copiar</button>
+</div>
+<div class="info"><p>If you repeatedly invoke application code from a long-running process, you
+may want to wrap using the Reloader instead.</p></div><p>Each thread should be wrapped before it runs application code, so if your
+application manually delegates work to other threads, such as via <code>Thread.new</code>
+or Concurrent Ruby features that use thread pools, you should immediately wrap
+the block:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Thread</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+  <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
+    <span class="c1"># your code here</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4461b4405b3aa8dfbf63aecf11e3530b">Thread.new do
+  Rails.application.executor.wrap do
+    # your code here
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4461b4405b3aa8dfbf63aecf11e3530b">Copiar</button>
+</div>
+<div class="note"><p>Concurrent Ruby uses a <code>ThreadPoolExecutor</code>, which it sometimes configures
+with an <code>executor</code> option. Despite the name, it is unrelated.</p></div><p>The Executor is safely re-entrant; if it is already active on the current
+thread, <code>wrap</code> is a no-op.</p><p>If it's impractical to wrap the application code in a block (for
+example, the Rack API makes this problematic), you can also use the <code>run!</code> /
+<code>complete!</code> pair:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Thread</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+  <span class="n">execution_context</span> <span class="o">=</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">run!</span>
+  <span class="c1"># your code here</span>
+<span class="k">ensure</span>
+  <span class="n">execution_context</span><span class="p">.</span><span class="nf">complete!</span> <span class="k">if</span> <span class="n">execution_context</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f068ae8d7e06c1f70d598e094410d756">Thread.new do
+  execution_context = Rails.application.executor.run!
+  # your code here
+ensure
+  execution_context.complete! if execution_context
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f068ae8d7e06c1f70d598e094410d756">Copiar</button>
+</div>
+<h4 id="executor-concurrency"><a class="anchorlink" href="#executor-concurrency">2.3 Concurrency</a></h4><p>The Executor will put the current thread into <code>running</code> mode in the Load
+Interlock. This operation will block temporarily if another thread is currently
+either autoloading a constant or unloading/reloading the application.</p><h3 id="reloader"><a class="anchorlink" href="#reloader">3 Reloader</a></h3><p>Like the Executor, the Reloader also wraps application code. If the Executor is
+not already active on the current thread, the Reloader will invoke it for you,
+so you only need to call one. This also guarantees that everything the Reloader
+does, including all its callback invocations, occurs wrapped inside the
+Executor.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">reloader</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
+  <span class="c1"># call application code here</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3b1a48cdbe34b662df790136dd819b6e">Rails.application.reloader.wrap do
+  # call application code here
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3b1a48cdbe34b662df790136dd819b6e">Copiar</button>
+</div>
+<p>The Reloader is only suitable where a long-running framework-level process
+repeatedly calls into application code, such as for a web server or job queue.
+Rails automatically wraps web requests and Active Job workers, so you'll rarely
+need to invoke the Reloader for yourself. Always consider whether the Executor
+is a better fit for your use case.</p><h4 id="callbacks"><a class="anchorlink" href="#callbacks">3.1 Callbacks</a></h4><p>Before entering the wrapped block, the Reloader will check whether the running
+application needs to be reloaded -- for example, because a model's source file has
+been modified. If it determines a reload is required, it will wait until it's
+safe, and then do so, before continuing. When the application is configured to
+always reload regardless of whether any changes are detected, the reload is
+instead performed at the end of the block.</p><p>The Reloader also provides <code>to_run</code> and <code>to_complete</code> callbacks; they are
+invoked at the same points as those of the Executor, but only when the current
+execution has initiated an application reload. When no reload is deemed
+necessary, the Reloader will invoke the wrapped block with no other callbacks.</p><h4 id="class-unload"><a class="anchorlink" href="#class-unload">3.2 Class Unload</a></h4><p>The most significant part of the reloading process is the Class Unload, where
+all autoloaded classes are removed, ready to be loaded again. This will occur
+immediately before either the Run or Complete callback, depending on the
+<code>reload_classes_only_on_change</code> setting.</p><p>Often, additional reloading actions need to be performed either just before or
+just after the Class Unload, so the Reloader also provides <code>before_class_unload</code>
+and <code>after_class_unload</code> callbacks.</p><h4 id="reloader-concurrency"><a class="anchorlink" href="#reloader-concurrency">3.3 Concurrency</a></h4><p>Only long-running "top level" processes should invoke the Reloader, because if
+it determines a reload is needed, it will block until all other threads have
+completed any Executor invocations.</p><p>If this were to occur in a "child" thread, with a waiting parent inside the
+Executor, it would cause an unavoidable deadlock: the reload must occur before
+the child thread is executed, but it cannot be safely performed while the parent
+thread is mid-execution. Child threads should use the Executor instead.</p><h3 id="framework-behavior"><a class="anchorlink" href="#framework-behavior">4 Framework Behavior</a></h3><p>The Rails framework components use these tools to manage their own concurrency
+needs too.</p><p><code>ActionDispatch::Executor</code> and <code>ActionDispatch::Reloader</code> are Rack middlewares
+that wraps the request with a supplied Executor or Reloader, respectively. They
+are automatically included in the default application stack. The Reloader will
+ensure any arriving HTTP request is served with a freshly-loaded copy of the
+application if any code changes have occurred.</p><p>Active Job also wraps its job executions with the Reloader, loading the latest
+code to execute each job as it comes off the queue.</p><p>Action Cable uses the Executor instead: because a Cable connection is linked to
+a specific instance of a class, it's not possible to reload for every arriving
+websocket message. Only the message handler is wrapped, though; a long-running
+Cable connection does not prevent a reload that's triggered by a new incoming
+request or job. Instead, Action Cable uses the Reloader's <code>before_class_unload</code>
+callback to disconnect all its connections. When the client automatically
+reconnects, it will be speaking to the new version of the code.</p><p>The above are the entry points to the framework, so they are responsible for
+ensuring their respective threads are protected, and deciding whether a reload
+is necessary. Other components only need to use the Executor when they spawn
+additional threads.</p><h4 id="configuration"><a class="anchorlink" href="#configuration">4.1 Configuration</a></h4><p>The Reloader only checks for file changes when <code>cache_classes</code> is false and
+<code>reload_classes_only_on_change</code> is true (which is the default in the
+<code>development</code> environment).</p><p>When <code>cache_classes</code> is true (in <code>production</code>, by default), the Reloader is only
+a pass-through to the Executor.</p><p>The Executor always has important work to do, like database connection
+management. When <code>cache_classes</code> and <code>eager_load</code> are both true (<code>production</code>),
+no autoloading or class reloading will occur, so it does not need the Load
+Interlock. If either of those are false (<code>development</code>), then the Executor will
+use the Load Interlock to ensure constants are only loaded when it is safe.</p><h3 id="load-interlock"><a class="anchorlink" href="#load-interlock">5 Load Interlock</a></h3><p>The Load Interlock allows autoloading and reloading to be enabled in a
+multi-threaded runtime environment.</p><p>When one thread is performing an autoload by evaluating the class definition
+from the appropriate file, it is important no other thread encounters a
+reference to the partially-defined constant.</p><p>Similarly, it is only safe to perform an unload/reload when no application code
+is in mid-execution: after the reload, the <code>User</code> constant, for example, may
+point to a different class. Without this rule, a poorly-timed reload would mean
+<code>User.new.class == User</code>, or even <code>User == User</code>, could be false.</p><p>Both of these constraints are addressed by the Load Interlock. It keeps track of
+which threads are currently running application code, loading a class, or
+unloading autoloaded constants.</p><p>Only one thread may load or unload at a time, and to do either, it must wait
+until no other threads are running application code. If a thread is waiting to
+perform a load, it doesn't prevent other threads from loading (in fact, they'll
+cooperate, and each perform their queued load in turn, before all resuming
+running together).</p><h4 id="permit-concurrent-loads"><a class="anchorlink" href="#permit-concurrent-loads">5.1 <code>permit_concurrent_loads</code></a></h4><p>The Executor automatically acquires a <code>running</code> lock for the duration of its
+block, and autoload knows when to upgrade to a <code>load</code> lock, and switch back to
+<code>running</code> again afterwards.</p><p>Other blocking operations performed inside the Executor block (which includes
+all application code), however, can needlessly retain the <code>running</code> lock. If
+another thread encounters a constant it must autoload, this can cause a
+deadlock.</p><p>For example, assuming <code>User</code> is not yet loaded, the following will deadlock:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
+  <span class="n">th</span> <span class="o">=</span> <span class="no">Thread</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+    <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
+      <span class="no">User</span> <span class="c1"># inner thread waits here; it cannot load</span>
+           <span class="c1"># User while another thread is running</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">th</span><span class="p">.</span><span class="nf">join</span> <span class="c1"># outer thread waits here, holding 'running' lock</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c163079f8403a9ac8a09c1dea25340bf">Rails.application.executor.wrap do
+  th = Thread.new do
+    Rails.application.executor.wrap do
+      User # inner thread waits here; it cannot load
+           # User while another thread is running
+    end
+  end
+
+  th.join # outer thread waits here, holding 'running' lock
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c163079f8403a9ac8a09c1dea25340bf">Copiar</button>
+</div>
+<p>To prevent this deadlock, the outer thread can <code>permit_concurrent_loads</code>. By
+calling this method, the thread guarantees it will not dereference any
+possibly-autoloaded constant inside the supplied block. The safest way to meet
+that promise is to put it as close as possible to the blocking call:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
+  <span class="n">th</span> <span class="o">=</span> <span class="no">Thread</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+    <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
+      <span class="no">User</span> <span class="c1"># inner thread can acquire the 'load' lock,</span>
+           <span class="c1"># load User, and continue</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Dependencies</span><span class="p">.</span><span class="nf">interlock</span><span class="p">.</span><span class="nf">permit_concurrent_loads</span> <span class="k">do</span>
+    <span class="n">th</span><span class="p">.</span><span class="nf">join</span> <span class="c1"># outer thread waits here, but has no lock</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-50d713be3567cf2f5ada964071ca8d57">Rails.application.executor.wrap do
+  th = Thread.new do
+    Rails.application.executor.wrap do
+      User # inner thread can acquire the 'load' lock,
+           # load User, and continue
+    end
+  end
+
+  ActiveSupport::Dependencies.interlock.permit_concurrent_loads do
+    th.join # outer thread waits here, but has no lock
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-50d713be3567cf2f5ada964071ca8d57">Copiar</button>
+</div>
+<p>Another example, using Concurrent Ruby:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
+  <span class="n">futures</span> <span class="o">=</span> <span class="mi">3</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">collect</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+    <span class="no">Concurrent</span><span class="o">::</span><span class="no">Future</span><span class="p">.</span><span class="nf">execute</span> <span class="k">do</span>
+      <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
+        <span class="c1"># do work here</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">values</span> <span class="o">=</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Dependencies</span><span class="p">.</span><span class="nf">interlock</span><span class="p">.</span><span class="nf">permit_concurrent_loads</span> <span class="k">do</span>
+    <span class="n">futures</span><span class="p">.</span><span class="nf">collect</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:value</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9cf51d9552eef4fa38d7520966093c42">Rails.application.executor.wrap do
+  futures = 3.times.collect do |i|
+    Concurrent::Future.execute do
+      Rails.application.executor.wrap do
+        # do work here
+      end
+    end
+  end
+
+  values = ActiveSupport::Dependencies.interlock.permit_concurrent_loads do
+    futures.collect(&amp;:value)
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9cf51d9552eef4fa38d7520966093c42">Copiar</button>
+</div>
+<h4 id="actiondispatch-debuglocks"><a class="anchorlink" href="#actiondispatch-debuglocks">5.2 ActionDispatch::DebugLocks</a></h4><p>If your application is deadlocking and you think the Load Interlock may be
+involved, you can temporarily add the ActionDispatch::DebugLocks middleware to
+<code>config/application.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">insert_before</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Sendfile</span><span class="p">,</span>
+                                  <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">DebugLocks</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5065ce2832823489a6887ddf3ff5683c">config.middleware.insert_before Rack::Sendfile,
+                                  ActionDispatch::DebugLocks
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5065ce2832823489a6887ddf3ff5683c">Copiar</button>
+</div>
+<p>If you then restart the application and re-trigger the deadlock condition,
+<code>/rails/locks</code> will show a summary of all threads currently known to the
+interlock, which lock level they are holding or awaiting, and their current
+backtrace.</p><p>Generally a deadlock will be caused by the interlock conflicting with some other
+external lock or blocking I/O call. Once you find it, you can wrap it with
+<code>permit_concurrent_loads</code>.</p>
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orientações para Documentação de API — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Orientações para Documentação de API — Ruby on Rails Guides" />
+  <meta name="description" content="Orientações para Documentação de APIEste guia apresenta as orientações para documentação da API Ruby on Rails.Após ler este guia, você saberá: Como escrever um discurso eficaz para propósitos de documentação. Orientações de estilo para documentar diferentes tipos de código em Ruby." />
+  <meta property="og:description" content="Orientações para Documentação de APIEste guia apresenta as orientações para documentação da API Ruby on Rails.Após ler este guia, você saberá: Como escrever um discurso eficaz para propósitos de documentação. Orientações de estilo para documentar diferentes tipos de código em Ruby." />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <div class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Orientações para Documentação de API</h2><p>Este guia apresenta as orientações para documentação da API Ruby on Rails.</p><p>Após ler este guia, você saberá:</p>
+<ul>
+<li>Como escrever um discurso eficaz para propósitos de documentação.</li>
+<li>Orientações de estilo para documentar diferentes tipos de código em Ruby.</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#rdoc">RDoc</a></li>
+<li><a href="#wording">Wording</a></li>
+<li><a href="#english">English</a></li>
+<li><a href="#oxford-comma">Oxford Comma</a></li>
+<li><a href="#example-code">Example Code</a></li>
+<li><a href="#booleans">Booleans</a></li>
+<li><a href="#file-names">File Names</a></li>
+<li>
+<a href="#fonts">Fonts</a>
+
+<ul>
+<li><a href="#fixed-width-font">Fixed-width Font</a></li>
+<li><a href="#regular-font">Regular Font</a></li>
+</ul>
+</li>
+<li><a href="#description-lists">Description Lists</a></li>
+<li><a href="#dynamically-generated-methods">Dynamically Generated Methods</a></li>
+<li><a href="#method-visibility">Method Visibility</a></li>
+<li><a href="#regarding-the-rails-stack">Regarding the Rails Stack</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="rdoc"><a class="anchorlink" href="#rdoc">1 RDoc</a></h3><p>A <a href="https://api.rubyonrails.org/v6.0.3.4">documentação da API Rails</a> é gerada com 
+<a href="https://ruby.github.io/rdoc/">RDoc</a>. Para gerá-la, certifique-se que você está
+no diretório raiz do Rails, execute <code>bundle install</code> e, em seguida:</p><div class="code_container">
+<pre><code class="highlight console"><span class="go">  bundle exec rake rdoc
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-11617014fb6708a9ba3bfa6da0eae496"></textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-11617014fb6708a9ba3bfa6da0eae496">Copiar</button>
+</div>
+<p>Os arquivos HTML gerados podem ser encontrados no diretório ./doc/rdoc.</p><p>Por favor consulte a documentação RDoc para ajuda com a <a href="https://ruby.github.io/rdoc/RDoc/Markup.html">marcação</a>,
+e leve em consideração esses <a href="https://ruby.github.io/rdoc/RDoc/Parser/Ruby.html">direcionamentos adicionais</a>.</p><h3 id="wording"><a class="anchorlink" href="#wording">2 Wording</a></h3><p>Write simple, declarative sentences. Brevity is a plus: get to the point.</p><p>Write in present tense: "Returns a hash that...", rather than "Returned a hash that..." or "Will return a hash that...".</p><p>Start comments in upper case. Follow regular punctuation rules:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Declares an attribute reader backed by an internally-named</span>
+<span class="c1"># instance variable.</span>
+<span class="k">def</span> <span class="nf">attr_internal_reader</span><span class="p">(</span><span class="o">*</span><span class="n">attrs</span><span class="p">)</span>
+  <span class="o">...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9a9fa588e30b95d31e8ff8287b69f7e9"># Declares an attribute reader backed by an internally-named
+# instance variable.
+def attr_internal_reader(*attrs)
+  ...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9a9fa588e30b95d31e8ff8287b69f7e9">Copiar</button>
+</div>
+<p>Communicate to the reader the current way of doing things, both explicitly and implicitly. Use the idioms recommended in edge. Reorder sections to emphasize favored approaches if needed, etc. The documentation should be a model for best practices and canonical, modern Rails usage.</p><p>Documentation has to be concise but comprehensive. Explore and document edge cases. What happens if a module is anonymous? What if a collection is empty? What if an argument is nil?</p><p>The proper names of Rails components have a space in between the words, like "Active Support". <code>ActiveRecord</code> is a Ruby module, whereas Active Record is an ORM. All Rails documentation should consistently refer to Rails components by their proper name, and if in your next blog post or presentation you remember this tidbit and take it into account that'd be phenomenal.</p><p>Spell names correctly: Arel, minitest, RSpec, HTML, MySQL, JavaScript, ERB. When in doubt, please have a look at some authoritative source like their official documentation.</p><p>Use the article "an" for "SQL", as in "an SQL statement". Also "an SQLite database".</p><p>Prefer wordings that avoid "you"s and "your"s. For example, instead of</p><div class="code_container">
+<pre><code class="highlight markdown">If you need to use <span class="sb">`return`</span> statements in your callbacks, it is recommended that you explicitly define them as methods.
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-eaeae055fb9064e8cbaf907d7245d29e">If you need to use `return` statements in your callbacks, it is recommended that you explicitly define them as methods.
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eaeae055fb9064e8cbaf907d7245d29e">Copiar</button>
+</div>
+<p>use this style:</p><div class="code_container">
+<pre><code class="highlight markdown">If <span class="sb">`return`</span> is needed it is recommended to explicitly define a method.
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e06767c7d39cd779d036bc97ce266d6b">If `return` is needed it is recommended to explicitly define a method.
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e06767c7d39cd779d036bc97ce266d6b">Copiar</button>
+</div>
+<p>That said, when using pronouns in reference to a hypothetical person, such as "a
+user with a session cookie", gender neutral pronouns (they/their/them) should be
+used. Instead of:</p>
+<ul>
+<li>he or she... use they.</li>
+<li>him or her... use them.</li>
+<li>his or her... use their.</li>
+<li>his or hers... use theirs.</li>
+<li>himself or herself... use themselves.</li>
+</ul>
+<h3 id="english"><a class="anchorlink" href="#english">3 English</a></h3><p>Please use American English (<em>color</em>, <em>center</em>, <em>modularize</em>, etc). See <a href="https://en.wikipedia.org/wiki/American_and_British_English_spelling_differences">a list of American and British English spelling differences here</a>.</p><h3 id="oxford-comma"><a class="anchorlink" href="#oxford-comma">4 Oxford Comma</a></h3><p>Please use the <a href="https://en.wikipedia.org/wiki/Serial_comma">Oxford comma</a>
+("red, white, and blue", instead of "red, white and blue").</p><h3 id="example-code"><a class="anchorlink" href="#example-code">5 Example Code</a></h3><p>Choose meaningful examples that depict and cover the basics as well as interesting points or gotchas.</p><p>Use two spaces to indent chunks of code--that is, for markup purposes, two spaces with respect to the left margin. The examples themselves should use <a href="contributing_to_ruby_on_rails.html#follow-the-coding-conventions">Rails coding conventions</a>.</p><p>Short docs do not need an explicit "Examples" label to introduce snippets; they just follow paragraphs:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Converts a collection of elements into a formatted string by</span>
+<span class="c1"># calling +to_s+ on all elements and joining them.</span>
+<span class="c1">#</span>
+<span class="c1">#   Blog.all.to_formatted_s # =&gt; "First PostSecond PostThird Post"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fccf196b6e60373190ea35373cb63de8"># Converts a collection of elements into a formatted string by
+# calling +to_s+ on all elements and joining them.
+#
+#   Blog.all.to_formatted_s # =&gt; "First PostSecond PostThird Post"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fccf196b6e60373190ea35373cb63de8">Copiar</button>
+</div>
+<p>On the other hand, big chunks of structured documentation may have a separate "Examples" section:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># ==== Examples</span>
+<span class="c1">#</span>
+<span class="c1">#   Person.exists?(5)</span>
+<span class="c1">#   Person.exists?('5')</span>
+<span class="c1">#   Person.exists?(name: "David")</span>
+<span class="c1">#   Person.exists?(['name LIKE ?', "%#{query}%"])</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-641dfac93d6ae2f745482e5fa5273c9a"># ==== Examples
+#
+#   Person.exists?(5)
+#   Person.exists?('5')
+#   Person.exists?(name: "David")
+#   Person.exists?(['name LIKE ?', "%#{query}%"])
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-641dfac93d6ae2f745482e5fa5273c9a">Copiar</button>
+</div>
+<p>The results of expressions follow them and are introduced by "# =&gt; ", vertically aligned:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># For checking if an integer is even or odd.</span>
+<span class="c1">#</span>
+<span class="c1">#   1.even? # =&gt; false</span>
+<span class="c1">#   1.odd?  # =&gt; true</span>
+<span class="c1">#   2.even? # =&gt; true</span>
+<span class="c1">#   2.odd?  # =&gt; false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6f9b7755e24a9acb571ddd0865e573d6"># For checking if an integer is even or odd.
+#
+#   1.even? # =&gt; false
+#   1.odd?  # =&gt; true
+#   2.even? # =&gt; true
+#   2.odd?  # =&gt; false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6f9b7755e24a9acb571ddd0865e573d6">Copiar</button>
+</div>
+<p>If a line is too long, the comment may be placed on the next line:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1">#   label(:article, :title)</span>
+<span class="c1">#   # =&gt; &lt;label for="article_title"&gt;Title&lt;/label&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#   label(:article, :title, "A short title")</span>
+<span class="c1">#   # =&gt; &lt;label for="article_title"&gt;A short title&lt;/label&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#   label(:article, :title, "A short title", class: "title_label")</span>
+<span class="c1">#   # =&gt; &lt;label for="article_title" class="title_label"&gt;A short title&lt;/label&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-191ee7a9e789b01595c949247655e97a">#   label(:article, :title)
+#   # =&gt; &lt;label for="article_title"&gt;Title&lt;/label&gt;
+#
+#   label(:article, :title, "A short title")
+#   # =&gt; &lt;label for="article_title"&gt;A short title&lt;/label&gt;
+#
+#   label(:article, :title, "A short title", class: "title_label")
+#   # =&gt; &lt;label for="article_title" class="title_label"&gt;A short title&lt;/label&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-191ee7a9e789b01595c949247655e97a">Copiar</button>
+</div>
+<p>Avoid using any printing methods like <code>puts</code> or <code>p</code> for that purpose.</p><p>On the other hand, regular comments do not use an arrow:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1">#   polymorphic_url(record)  # same as comment_url(record)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-54535e6fc88246252464da5c5c282cad">#   polymorphic_url(record)  # same as comment_url(record)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-54535e6fc88246252464da5c5c282cad">Copiar</button>
+</div>
+<h3 id="booleans"><a class="anchorlink" href="#booleans">6 Booleans</a></h3><p>In predicates and flags prefer documenting boolean semantics over exact values.</p><p>When "true" or "false" are used as defined in Ruby use regular font. The
+singletons <code>true</code> and <code>false</code> need fixed-width font. Please avoid terms like
+"truthy", Ruby defines what is true and false in the language, and thus those
+words have a technical meaning and need no substitutes.</p><p>As a rule of thumb, do not document singletons unless absolutely necessary. That
+prevents artificial constructs like <code>!!</code> or ternaries, allows refactors, and the
+code does not need to rely on the exact values returned by methods being called
+in the implementation.</p><p>For example:</p><div class="code_container">
+<pre><code class="highlight markdown"><span class="sb">`config.action_mailer.perform_deliveries`</span> specifies whether mail will actually be delivered and is true by default
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f6e0808aa71af72fe15c0d9062e432f1">`config.action_mailer.perform_deliveries` specifies whether mail will actually be delivered and is true by default
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f6e0808aa71af72fe15c0d9062e432f1">Copiar</button>
+</div>
+<p>the user does not need to know which is the actual default value of the flag,
+and so we only document its boolean semantics.</p><p>An example with a predicate:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Returns true if the collection is empty.</span>
+<span class="c1">#</span>
+<span class="c1"># If the collection has been loaded</span>
+<span class="c1"># it is equivalent to &lt;tt&gt;collection.size.zero?&lt;/tt&gt;. If the</span>
+<span class="c1"># collection has not been loaded, it is equivalent to</span>
+<span class="c1"># &lt;tt&gt;collection.exists?&lt;/tt&gt;. If the collection has not already been</span>
+<span class="c1"># loaded and you are going to fetch the records anyway it is better to</span>
+<span class="c1"># check &lt;tt&gt;collection.length.zero?&lt;/tt&gt;.</span>
+<span class="k">def</span> <span class="nf">empty?</span>
+  <span class="k">if</span> <span class="n">loaded?</span>
+    <span class="n">size</span><span class="p">.</span><span class="nf">zero?</span>
+  <span class="k">else</span>
+    <span class="vi">@target</span><span class="p">.</span><span class="nf">blank?</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">scope</span><span class="p">.</span><span class="nf">exists?</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3594b020edc793447d7950a40d9f30dc"># Returns true if the collection is empty.
+#
+# If the collection has been loaded
+# it is equivalent to &lt;tt&gt;collection.size.zero?&lt;/tt&gt;. If the
+# collection has not been loaded, it is equivalent to
+# &lt;tt&gt;collection.exists?&lt;/tt&gt;. If the collection has not already been
+# loaded and you are going to fetch the records anyway it is better to
+# check &lt;tt&gt;collection.length.zero?&lt;/tt&gt;.
+def empty?
+  if loaded?
+    size.zero?
+  else
+    @target.blank? &amp;&amp; !scope.exists?
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3594b020edc793447d7950a40d9f30dc">Copiar</button>
+</div>
+<p>The API is careful not to commit to any particular value, the method has
+predicate semantics, that's enough.</p><h3 id="file-names"><a class="anchorlink" href="#file-names">7 File Names</a></h3><p>As a rule of thumb, use filenames relative to the application root:</p><div class="code_container">
+<pre><code class="highlight plaintext">config/routes.rb            # YES
+routes.rb                   # NO
+RAILS_ROOT/config/routes.rb # NO
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-87c93e7c607ae3ccab2ff9c9884b0479">config/routes.rb            # YES
+routes.rb                   # NO
+RAILS_ROOT/config/routes.rb # NO
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-87c93e7c607ae3ccab2ff9c9884b0479">Copiar</button>
+</div>
+<h3 id="fonts"><a class="anchorlink" href="#fonts">8 Fonts</a></h3><h4 id="fixed-width-font"><a class="anchorlink" href="#fixed-width-font">8.1 Fixed-width Font</a></h4><p>Use fixed-width fonts for:</p>
+<ul>
+<li>Constants, in particular class and module names.</li>
+<li>Method names.</li>
+<li>Literals like <code>nil</code>, <code>false</code>, <code>true</code>, <code>self</code>.</li>
+<li>Symbols.</li>
+<li>Method parameters.</li>
+<li>File names.</li>
+</ul>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Array</span>
+  <span class="c1"># Calls +to_param+ on all its elements and joins the result with</span>
+  <span class="c1"># slashes. This is used by +url_for+ in Action Pack.</span>
+  <span class="k">def</span> <span class="nf">to_param</span>
+    <span class="n">collect</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_param</span> <span class="p">}.</span><span class="nf">join</span> <span class="s1">'/'</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8f811aa71063319980046e9ba2a1aacb">class Array
+  # Calls +to_param+ on all its elements and joins the result with
+  # slashes. This is used by +url_for+ in Action Pack.
+  def to_param
+    collect { |e| e.to_param }.join '/'
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8f811aa71063319980046e9ba2a1aacb">Copiar</button>
+</div>
+<div class="warning"><p>Using <code>+...+</code> for fixed-width font only works with simple content like
+ordinary method names, symbols, paths (with forward slashes), etc. Please use
+<code>&lt;tt&gt;...&lt;/tt&gt;</code> for everything else, notably class or module names with a
+namespace as in <code>&lt;tt&gt;ActiveRecord::Base&lt;/tt&gt;</code>.</p></div><p>You can quickly test the RDoc output with the following command:</p><div class="code_container">
+<pre><code class="highlight plaintext">$ echo "+:to_param+" | rdoc --pipe
+# =&gt; &lt;p&gt;&lt;code&gt;:to_param&lt;/code&gt;&lt;/p&gt;
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-366ff46614fa54caee99fab6a5e3c805">$ echo "+:to_param+" | rdoc --pipe
+# =&gt; &lt;p&gt;&lt;code&gt;:to_param&lt;/code&gt;&lt;/p&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-366ff46614fa54caee99fab6a5e3c805">Copiar</button>
+</div>
+<h4 id="regular-font"><a class="anchorlink" href="#regular-font">8.2 Regular Font</a></h4><p>When "true" and "false" are English words rather than Ruby keywords use a regular font:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Runs all the validations within the specified context.</span>
+<span class="c1"># Returns true if no errors are found, false otherwise.</span>
+<span class="c1">#</span>
+<span class="c1"># If the argument is false (default is +nil+), the context is</span>
+<span class="c1"># set to &lt;tt&gt;:create&lt;/tt&gt; if &lt;tt&gt;new_record?&lt;/tt&gt; is true,</span>
+<span class="c1"># and to &lt;tt&gt;:update&lt;/tt&gt; if it is not.</span>
+<span class="c1">#</span>
+<span class="c1"># Validations with no &lt;tt&gt;:on&lt;/tt&gt; option will run no</span>
+<span class="c1"># matter the context. Validations with # some &lt;tt&gt;:on&lt;/tt&gt;</span>
+<span class="c1"># option will only run in the specified context.</span>
+<span class="k">def</span> <span class="nf">valid?</span><span class="p">(</span><span class="n">context</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+  <span class="o">...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-25cb55a8de5cdc7c01d838f28501e16f"># Runs all the validations within the specified context.
+# Returns true if no errors are found, false otherwise.
+#
+# If the argument is false (default is +nil+), the context is
+# set to &lt;tt&gt;:create&lt;/tt&gt; if &lt;tt&gt;new_record?&lt;/tt&gt; is true,
+# and to &lt;tt&gt;:update&lt;/tt&gt; if it is not.
+#
+# Validations with no &lt;tt&gt;:on&lt;/tt&gt; option will run no
+# matter the context. Validations with # some &lt;tt&gt;:on&lt;/tt&gt;
+# option will only run in the specified context.
+def valid?(context = nil)
+  ...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-25cb55a8de5cdc7c01d838f28501e16f">Copiar</button>
+</div>
+<h3 id="description-lists"><a class="anchorlink" href="#description-lists">9 Description Lists</a></h3><p>In lists of options, parameters, etc. use a hyphen between the item and its description (reads better than a colon because normally options are symbols):</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># * &lt;tt&gt;:allow_nil&lt;/tt&gt; - Skip validation if attribute is +nil+.</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e27247f5c6d6dc103b18c3737ab99a25"># * &lt;tt&gt;:allow_nil&lt;/tt&gt; - Skip validation if attribute is +nil+.
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e27247f5c6d6dc103b18c3737ab99a25">Copiar</button>
+</div>
+<p>The description starts in upper case and ends with a full stop-it's standard English.</p><h3 id="dynamically-generated-methods"><a class="anchorlink" href="#dynamically-generated-methods">10 Dynamically Generated Methods</a></h3><p>Methods created with <code>(module|class)_eval(STRING)</code> have a comment by their side with an instance of the generated code. That comment is 2 spaces away from the template:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">for</span> <span class="n">severity</span> <span class="k">in</span> <span class="no">Severity</span><span class="p">.</span><span class="nf">constants</span>
+  <span class="nb">class_eval</span> <span class="o">&lt;&lt;-</span><span class="no">EOT</span><span class="p">,</span> <span class="kp">__FILE__</span><span class="p">,</span> <span class="kp">__LINE__</span> <span class="o">+</span> <span class="mi">1</span><span class="sh">
+    def </span><span class="si">#{</span><span class="n">severity</span><span class="p">.</span><span class="nf">downcase</span><span class="si">}</span><span class="sh">(message = nil, progname = nil, &amp;block)  # def debug(message = nil, progname = nil, &amp;block)
+      add(</span><span class="si">#{</span><span class="n">severity</span><span class="si">}</span><span class="sh">, message, progname, &amp;block)                    #   add(DEBUG, message, progname, &amp;block)
+    end                                                              # end
+                                                                     #
+    def </span><span class="si">#{</span><span class="n">severity</span><span class="p">.</span><span class="nf">downcase</span><span class="si">}</span><span class="sh">?                                        # def debug?
+      </span><span class="si">#{</span><span class="n">severity</span><span class="si">}</span><span class="sh"> &gt;= @level                                          #   DEBUG &gt;= @level
+    end                                                              # end
+</span><span class="no">  EOT</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7195978f7d434a031fcb074a91e2573b">for severity in Severity.constants
+  class_eval &lt;&lt;-EOT, __FILE__, __LINE__ + 1
+    def #{severity.downcase}(message = nil, progname = nil, &amp;block)  # def debug(message = nil, progname = nil, &amp;block)
+      add(#{severity}, message, progname, &amp;block)                    #   add(DEBUG, message, progname, &amp;block)
+    end                                                              # end
+                                                                     #
+    def #{severity.downcase}?                                        # def debug?
+      #{severity} &gt;= @level                                          #   DEBUG &gt;= @level
+    end                                                              # end
+  EOT
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7195978f7d434a031fcb074a91e2573b">Copiar</button>
+</div>
+<p>If the resulting lines are too wide, say 200 columns or more, put the comment above the call:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># def self.find_by_login_and_activated(*args)</span>
+<span class="c1">#   options = args.extract_options!</span>
+<span class="c1">#   ...</span>
+<span class="c1"># end</span>
+<span class="nb">self</span><span class="p">.</span><span class="nf">class_eval</span> <span class="sx">%{
+  def self.#{method_id}(*args)
+    options = args.extract_options!
+    ...
+  end
+}</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-012b35738856fc43de0879a4de43ba87"># def self.find_by_login_and_activated(*args)
+#   options = args.extract_options!
+#   ...
+# end
+self.class_eval %{
+  def self.#{method_id}(*args)
+    options = args.extract_options!
+    ...
+  end
+}
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-012b35738856fc43de0879a4de43ba87">Copiar</button>
+</div>
+<h3 id="method-visibility"><a class="anchorlink" href="#method-visibility">11 Method Visibility</a></h3><p>When writing documentation for Rails, it's important to understand the difference between public user-facing API vs internal API.</p><p>Rails, like most libraries, uses the private keyword from Ruby for defining internal API. However, public API follows a slightly different convention. Instead of assuming all public methods are designed for user consumption, Rails uses the <code>:nodoc:</code> directive to annotate these kinds of methods as internal API.</p><p>This means that there are methods in Rails with <code>public</code> visibility that aren't meant for user consumption.</p><p>An example of this is <code>ActiveRecord::Core::ClassMethods#arel_table</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">ActiveRecord::Core::ClassMethods</span>
+  <span class="k">def</span> <span class="nf">arel_table</span> <span class="c1">#:nodoc:</span>
+    <span class="c1"># do some magic..</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-97a5de6eb55b02bdd382d7ce527cc44e">module ActiveRecord::Core::ClassMethods
+  def arel_table #:nodoc:
+    # do some magic..
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-97a5de6eb55b02bdd382d7ce527cc44e">Copiar</button>
+</div>
+<p>If you thought, "this method looks like a public class method for <code>ActiveRecord::Core</code>", you were right. But actually the Rails team doesn't want users to rely on this method. So they mark it as <code>:nodoc:</code> and it's removed from public documentation. The reasoning behind this is to allow the team to change these methods according to their internal needs across releases as they see fit. The name of this method could change, or the return value, or this entire class may disappear; there's no guarantee and so you shouldn't depend on this API in your plugins or applications. Otherwise, you risk your app or gem breaking when you upgrade to a newer release of Rails.</p><p>As a contributor, it's important to think about whether this API is meant for end-user consumption. The Rails team is committed to not making any breaking changes to public API across releases without going through a full deprecation cycle. It's recommended that you <code>:nodoc:</code> any of your internal methods/classes unless they're already private (meaning visibility), in which case it's internal by default. Once the API stabilizes the visibility can change, but changing public API is much harder due to backwards compatibility.</p><p>A class or module is marked with <code>:nodoc:</code> to indicate that all methods are internal API and should never be used directly.</p><p>To summarize, the Rails team uses <code>:nodoc:</code> to mark publicly visible methods and classes for internal use; changes to the visibility of API should be considered carefully and discussed over a pull request first.</p><h3 id="regarding-the-rails-stack"><a class="anchorlink" href="#regarding-the-rails-stack">12 Regarding the Rails Stack</a></h3><p>When documenting parts of Rails API, it's important to remember all of the
+pieces that go into the Rails stack.</p><p>This means that behavior may change depending on the scope or context of the
+method or class you're trying to document.</p><p>In various places there is different behavior when you take the entire stack
+into account, one such example is
+<code>ActionView::Helpers::AssetTagHelper#image_tag</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># image_tag("icon.png")</span>
+<span class="c1">#   # =&gt; &lt;img src="/assets/icon.png" /&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5220a4bf8f23582768d6c197259ba1bd"># image_tag("icon.png")
+#   # =&gt; &lt;img src="/assets/icon.png" /&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5220a4bf8f23582768d6c197259ba1bd">Copiar</button>
+</div>
+<p>Although the default behavior for <code>#image_tag</code> is to always return
+<code>/images/icon.png</code>, we take into account the full Rails stack (including the
+Asset Pipeline) we may see the result seen above.</p><p>We're only concerned with the behavior experienced when using the full default
+Rails stack.</p><p>In this case, we want to document the behavior of the <em>framework</em>, and not just
+this specific method.</p><p>If you have a question on how the Rails team handles certain API, don't hesitate to open a ticket or send a patch to the <a href="https://github.com/rails/rails/issues">issue tracker</a>.</p>
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>
