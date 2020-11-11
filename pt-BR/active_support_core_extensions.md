@@ -501,47 +501,47 @@ NOTE: Definido em `active_support/core_ext/object/inclusion.rb`.
 Extensões de `Module`
 ----------------------
 
-### Attributes
+### Attributos
 
 #### `alias_attribute`
 
-Model attributes have a reader, a writer, and a predicate. You can alias a model attribute having the corresponding three methods defined for you in one shot. As in other aliasing methods, the new name is the first argument, and the old name is the second (one mnemonic is that they go in the same order as if you did an assignment):
+Atributos de _models_ podem ser lidos, escritos e condicionados. Você pode criar um _alias_ para um atributo de _model_ correspondendo a por exemplo, três métodos definidos por você em um passo. Em outro métodos de _alias_, o novo nome é o primeiro argumento, e o antigo nome é o segundo (uma forma de memorizar é pensar que eles se apresentam na mesma ordem como se você fizesse isso uma atribuição):
 
 ```ruby
 class User < ApplicationRecord
-  # You can refer to the email column as "login".
-  # This can be meaningful for authentication code.
+  # Você pode referenciar a coluna email como "login".
+  # Isso pode ser importante para o código de autenticação.
   alias_attribute :login, :email
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/module/aliasing.rb`.
+NOTE: Definido em `active_support/core_ext/module/aliasing.rb`.
 
-#### Internal Attributes
+#### Atributos Internos
 
-When you are defining an attribute in a class that is meant to be subclassed, name collisions are a risk. That's remarkably important for libraries.
+Quando você esta definindo um atributo em uma classe que pode ser uma subclasse, os conflitos de nomes são um risco. Isso é extremamente importante para as bibliotecas.
 
-Active Support defines the macros `attr_internal_reader`, `attr_internal_writer`, and `attr_internal_accessor`. They behave like their Ruby built-in `attr_*` counterparts, except they name the underlying instance variable in a way that makes collisions less likely.
+_Active Support_ define as macros `attr_internal_reader`, `attr_internal_writer`, e `attr_internal_accessor`. Elas comportam-se como seu próprio Ruby `attr_*` embutido, exceto pelos nomes de variáveis de instância onde faz com que os conflitos sejam menos comuns.
 
-The macro `attr_internal` is a synonym for `attr_internal_accessor`:
+A macro `attr_internal` é um sinônimo para `attr_internal_accessor`:
 
 ```ruby
-# library
+# biblioteca
 class ThirdPartyLibrary::Crawler
   attr_internal :log_level
 end
 
-# client code
+# código do cliente
 class MyCrawler < ThirdPartyLibrary::Crawler
   attr_accessor :log_level
 end
 ```
 
-In the previous example it could be the case that `:log_level` does not belong to the public interface of the library and it is only used for development. The client code, unaware of the potential conflict, subclasses and defines its own `:log_level`. Thanks to `attr_internal` there's no collision.
+No exemplo anterior, isso poderia ser o caso que `:log_level` não pertence a interface pública da biblioteca e só seria usada em desenvolvimento. O código do cliente, não tem consciência do potencial conflito, subclasses e definições de seus pŕoprios `:log_level`. Graças ao `attr_internal` não há conflito.
 
-By default the internal instance variable is named with a leading underscore, `@_log_level` in the example above. That's configurable via `Module.attr_internal_naming_format` though, you can pass any `sprintf`-like format string with a leading `@` and a `%s` somewhere, which is where the name will be placed. The default is `"@_%s"`.
+Por padrão, a variável de instancia interna é nomeada com uma _underscore_ na frente, `@_log_level` no exemplo acima. Isso é configuravel via `Module.attr_internal_naming_format` apesar disso, você pode passar qualquer tipo de `sprintf` no formato _string_ com a inicial `@` e um `%s` em algum lugar, no qual é onde o nome será colocado. O padrão é `"@_%s"`.
 
-Rails uses internal attributes in a few spots, for examples for views:
+Rails usa atributos internos em alguns pontos, para _views_ como por exemplo:
 
 ```ruby
 module ActionView
@@ -553,13 +553,13 @@ module ActionView
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/module/attr_internal.rb`.
+NOTE: Definido em `active_support/core_ext/module/attr_internal.rb`.
 
 #### Module Attributes
 
-The macros `mattr_reader`, `mattr_writer`, and `mattr_accessor` are the same as the `cattr_*` macros defined for class. In fact, the `cattr_*` macros are just aliases for the `mattr_*` macros. Check [Class Attributes](#class-attributes).
+As macros `mattr_reader`, `mattr_writer`, e `mattr_accessor` São iguais a `cattr_*` macros definidas na classe. De fato, `cattr_*` macros são apenas _aliases_ para as `mattr_*` macros. Confira a seção [Atributos de Classe](#class-attributes).
 
-For example, the dependencies mechanism uses them:
+Por exemplo, os mecanismos de dependências usam:
 
 ```ruby
 module ActiveSupport
@@ -578,7 +578,7 @@ module ActiveSupport
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/module/attribute_accessors.rb`.
+NOTE: Definido em `active_support/core_ext/module/attribute_accessors.rb`.
 
 ### Parents
 
