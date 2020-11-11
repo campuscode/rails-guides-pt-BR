@@ -647,9 +647,9 @@ M.module_parents       # => [X::Y, X, Object]
 
 NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
 
-### Anonymous
+### Anônimo
 
-A module may or may not have a name:
+Um módulo pode ou não ter um nome:
 
 ```ruby
 module M
@@ -662,7 +662,7 @@ N.name # => "N"
 Module.new.name # => nil
 ```
 
-You can check whether a module has a name with the predicate `anonymous?`:
+Você pode verificar se um módulo possui um nome com a condicional `anonymous?`:
 
 ```ruby
 module M
@@ -672,7 +672,7 @@ M.anonymous? # => false
 Module.new.anonymous? # => true
 ```
 
-Note that being unreachable does not imply being anonymous:
+Observe que estar inacessível não significa ser anônimo:
 
 ```ruby
 module M
@@ -683,9 +683,9 @@ m = Object.send(:remove_const, :M)
 m.anonymous? # => false
 ```
 
-though an anonymous module is unreachable by definition.
+embora um módulo anônimo seja inacessível por definição.
 
-NOTE: Defined in `active_support/core_ext/module/anonymous.rb`.
+NOTE: Definido em `active_support/core_ext/module/anonymous.rb`.
 
 ### Method Delegation
 
