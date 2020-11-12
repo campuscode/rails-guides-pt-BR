@@ -305,7 +305,7 @@ Isso é feito pela definição dos prefixos e sufixos e quais métodos no objeto
 <span class="n">person</span><span class="p">.</span><span class="nf">reset_age</span>     <span class="c1"># =&gt; 0</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">age_highest?</span>  <span class="c1"># =&gt; false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2dd4767532cc0955208fcc4221653d46">class Person
+<textarea class="clipboard-content" id="clipboard-2ffba21e7d785bc754cde065dd08985b">class Person
   include ActiveModel::AttributeMethods
 
   attribute_method_prefix 'reset_'
@@ -330,7 +330,7 @@ person.age_highest?  # =&gt; true
 person.reset_age     # =&gt; 0
 person.age_highest?  # =&gt; false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2dd4767532cc0955208fcc4221653d46">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2ffba21e7d785bc754cde065dd08985b">Copiar</button>
 </div>
 <h4 id="callbacks"><a class="anchorlink" href="#callbacks">1.2 Callbacks</a></h4><p><code>ActiveModel::Callbacks</code> trazem os <code>callbacks</code> no padrão do Active Record. Isso provê a habilidade de definir o callback que rodará no tempo apropriado.
 Após definir os callbacks, você pode envolvê-los com métodos customizados antes, depois e durante.</p><div class="code_container">
@@ -352,7 +352,7 @@ Após definir os callbacks, você pode envolvê-los com métodos customizados an
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-49e1392aef564e75ad6138c5d7b5ea5f">class Person
+<textarea class="clipboard-content" id="clipboard-d2ebf05e54141ad13106266102e9830b">class Person
   extend ActiveModel::Callbacks
 
   define_model_callbacks :update
@@ -370,7 +370,7 @@ Após definir os callbacks, você pode envolvê-los com métodos customizados an
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-49e1392aef564e75ad6138c5d7b5ea5f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d2ebf05e54141ad13106266102e9830b">Copiar</button>
 </div>
 <h4 id="conversao"><a class="anchorlink" href="#conversao">1.3 Conversão</a></h4><p>Se a classe define os métodos <code>persisted?</code> e <code>id</code>, então você pode incluir o módulo <code>ActiveModel::Conversion</code> naquela classe e chamar os métodos de conversão do Rails nos objetos daquela classe.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
@@ -390,7 +390,7 @@ end
 <span class="n">person</span><span class="p">.</span><span class="nf">to_key</span>              <span class="c1"># =&gt; nil</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">to_param</span>            <span class="c1"># =&gt; nil</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-60cc1aacfac59f6eb44d9ef9352b3e1a">class Person
+<textarea class="clipboard-content" id="clipboard-2223b5f75c30a279bbe15b42126a36ab">class Person
   include ActiveModel::Conversion
 
   def persisted?
@@ -407,7 +407,7 @@ person.to_model == person  # =&gt; true
 person.to_key              # =&gt; nil
 person.to_param            # =&gt; nil
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-60cc1aacfac59f6eb44d9ef9352b3e1a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2223b5f75c30a279bbe15b42126a36ab">Copiar</button>
 </div>
 <h4 id="sujeira"><a class="anchorlink" href="#sujeira">1.4 Sujeira</a></h4><p>Um objeto se torna sujo quando ele passa por uma ou mais mudanças nos seus atributos e isso não foi salvo. O <code>ActiveModel::Dirty</code> te concede a habilidade de checar quando um objeto foi alterado ou não. Também possui atributos baseados em métodos de acesso.
 Vamos considerar a classe <code>Person</code> com os atributos <code>first_name</code> e <code>last_name</code>:</p><div class="code_container">
@@ -439,7 +439,7 @@ Vamos considerar a classe <code>Person</code> com os atributos <code>first_name<
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6bba462a5a2113c2dc4e6d694be09343">class Person
+<textarea class="clipboard-content" id="clipboard-d7dd084cc347f5127164285e0b4b155d">class Person
   include ActiveModel::Dirty
   define_attribute_methods :first_name, :last_name
 
@@ -467,7 +467,7 @@ Vamos considerar a classe <code>Person</code> com os atributos <code>first_name<
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6bba462a5a2113c2dc4e6d694be09343">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d7dd084cc347f5127164285e0b4b155d">Copiar</button>
 </div>
 <h5 id="consultando-o-objeto-diretamente-para-obter-uma-lista-de-todos-os-atributos-alterados"><a class="anchorlink" href="#consultando-o-objeto-diretamente-para-obter-uma-lista-de-todos-os-atributos-alterados">1.4.1 Consultando o objeto diretamente para obter uma lista de todos os atributos alterados.</a></h5><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
@@ -489,7 +489,7 @@ end
 <span class="c1"># values as an array of the old and new values for that field.</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">changes</span> <span class="c1"># =&gt; {"first_name"=&gt;[nil, "First Name"]}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3a5da8be50baa4d6eb8c863b5e27c51a">person = Person.new
+<textarea class="clipboard-content" id="clipboard-5b3c2a514a8a1ff8ef264c8e1e42d892">person = Person.new
 person.changed? # =&gt; false
 
 person.first_name = "First Name"
@@ -508,27 +508,27 @@ person.changed_attributes # =&gt; {"first_name"=&gt;nil}
 # values as an array of the old and new values for that field.
 person.changes # =&gt; {"first_name"=&gt;[nil, "First Name"]}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3a5da8be50baa4d6eb8c863b5e27c51a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5b3c2a514a8a1ff8ef264c8e1e42d892">Copiar</button>
 </div>
 <h5 id="atributos-baseados-em-metodos-de-acesso"><a class="anchorlink" href="#atributos-baseados-em-metodos-de-acesso">1.4.2 Atributos baseados em métodos de acesso</a></h5><p>Acompanhe se o atributo específico foi alterado ou não.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># attr_name_changed?</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">first_name</span> <span class="c1"># =&gt; "First Name"</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">first_name_changed?</span> <span class="c1"># =&gt; true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-999a24d0898256bb2e4be5b0019f8c7b"># attr_name_changed?
+<textarea class="clipboard-content" id="clipboard-27e431ffd400c5a2335925e3bedd58d9"># attr_name_changed?
 person.first_name # =&gt; "First Name"
 person.first_name_changed? # =&gt; true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-999a24d0898256bb2e4be5b0019f8c7b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-27e431ffd400c5a2335925e3bedd58d9">Copiar</button>
 </div>
 <p>Track the previous value of the attribute.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># attr_name_was accessor</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">first_name_was</span> <span class="c1"># =&gt; nil</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8df20116809243ad6f6dbf212e0d1882"># attr_name_was accessor
+<textarea class="clipboard-content" id="clipboard-d37f22f3f836fbdf4af41bab484e8285"># attr_name_was accessor
 person.first_name_was # =&gt; nil
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8df20116809243ad6f6dbf212e0d1882">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d37f22f3f836fbdf4af41bab484e8285">Copiar</button>
 </div>
 <p>Track both previous and current value of the changed attribute. Returns an array
 if changed, otherwise returns nil.</p><div class="code_container">
@@ -536,11 +536,11 @@ if changed, otherwise returns nil.</p><div class="code_container">
 <span class="n">person</span><span class="p">.</span><span class="nf">first_name_change</span> <span class="c1"># =&gt; [nil, "First Name"]</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">last_name_change</span> <span class="c1"># =&gt; nil</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2cc77ae94cf181cc67745f8922fb0343"># attr_name_change
+<textarea class="clipboard-content" id="clipboard-39e07346bfe8741498a8e3bbd38e8a97"># attr_name_change
 person.first_name_change # =&gt; [nil, "First Name"]
 person.last_name_change # =&gt; nil
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2cc77ae94cf181cc67745f8922fb0343">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-39e07346bfe8741498a8e3bbd38e8a97">Copiar</button>
 </div>
 <h4 id="validacoes"><a class="anchorlink" href="#validacoes">1.5 Validações</a></h4><p>O módulo <code>ActiveModel::Validations</code> adiciona a habilidade de validar objetos como no <em>Active Record</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
@@ -564,7 +564,7 @@ person.last_name_change # =&gt; nil
 <span class="n">person</span><span class="p">.</span><span class="nf">token</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">valid?</span>                        <span class="c1"># =&gt; raises ActiveModel::StrictValidationFailed</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf6500c860305263d575cf6d56b5bded">class Person
+<textarea class="clipboard-content" id="clipboard-912e26aa29f24035c29dc26fbacb2e0a">class Person
   include ActiveModel::Validations
 
   attr_accessor :name, :email, :token
@@ -585,7 +585,7 @@ person.valid?                        # =&gt; true
 person.token = nil
 person.valid?                        # =&gt; raises ActiveModel::StrictValidationFailed
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf6500c860305263d575cf6d56b5bded">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-912e26aa29f24035c29dc26fbacb2e0a">Copiar</button>
 </div>
 <h4 id="nomeacao"><a class="anchorlink" href="#nomeacao">1.6 Nomeação</a></h4><p><code>ActiveModel::Naming</code> adiciona vários métodos de classe que tornam a nomeação e o roteamento mais fácil de administrar. O módulo define o método da classe <code>model_name</code> que definirá vários acessadores usando alguns métodos do <code>ActiveSupport::Inflector</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
@@ -603,7 +603,7 @@ person.valid?                        # =&gt; raises ActiveModel::StrictValidatio
 <span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">route_key</span>           <span class="c1"># =&gt; "people"</span>
 <span class="no">Person</span><span class="p">.</span><span class="nf">model_name</span><span class="p">.</span><span class="nf">singular_route_key</span>  <span class="c1"># =&gt; "person"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-26499d5a3e019435d4b4108fa4975b30">class Person
+<textarea class="clipboard-content" id="clipboard-e254ed0366ba7fdd3612a276dcfa4725">class Person
   extend ActiveModel::Naming
 end
 
@@ -618,7 +618,7 @@ Person.model_name.i18n_key            # =&gt; :person
 Person.model_name.route_key           # =&gt; "people"
 Person.model_name.singular_route_key  # =&gt; "person"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26499d5a3e019435d4b4108fa4975b30">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e254ed0366ba7fdd3612a276dcfa4725">Copiar</button>
 </div>
 <h4 id="model"><a class="anchorlink" href="#model">1.7 <em>Model</em></a></h4><p>O <code>ActiveModel::Model</code> adiciona a capacidade de uma classe trabalhar com o <em>Action Pack</em> e <em>Action View</em> imediatamente.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">EmailContact</span>
@@ -634,7 +634,7 @@ Person.model_name.singular_route_key  # =&gt; "person"
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-93c0d6421e510022fb13abe84c108f00">class EmailContact
+<textarea class="clipboard-content" id="clipboard-942bf6783899363fa2d64c28a1c52160">class EmailContact
   include ActiveModel::Model
 
   attr_accessor :name, :email, :message
@@ -647,7 +647,7 @@ Person.model_name.singular_route_key  # =&gt; "person"
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-93c0d6421e510022fb13abe84c108f00">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-942bf6783899363fa2d64c28a1c52160">Copiar</button>
 </div>
 <p>Ao incluir o <code>ActiveModel::Model</code>, você obtém alguns recursos como:</p>
 <ul>
@@ -666,7 +666,7 @@ end
 <span class="n">email_contact</span><span class="p">.</span><span class="nf">valid?</span>     <span class="c1"># =&gt; true</span>
 <span class="n">email_contact</span><span class="p">.</span><span class="nf">persisted?</span> <span class="c1"># =&gt; false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cad7d1c9ce93e9ca7d5bd30ba00bff4a">email_contact = EmailContact.new(name: 'David',
+<textarea class="clipboard-content" id="clipboard-5f308d4af3548fa0012ef9209e8216ba">email_contact = EmailContact.new(name: 'David',
                                  email: 'david@example.com',
                                  message: 'Hello World')
 email_contact.name       # =&gt; 'David'
@@ -674,7 +674,7 @@ email_contact.email      # =&gt; 'david@example.com'
 email_contact.valid?     # =&gt; true
 email_contact.persisted? # =&gt; false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cad7d1c9ce93e9ca7d5bd30ba00bff4a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5f308d4af3548fa0012ef9209e8216ba">Copiar</button>
 </div>
 <p>Qualquer classe que inclua <code>ActiveModel::Model</code> pode ser usada com <code>form_for</code>, <code>render</code> e quaisquer outros métodos auxiliares do <em>Action View</em>, assim como o <em>Active Record</em> objetos.</p><h4 id="serializacao"><a class="anchorlink" href="#serializacao">1.8 Serialização</a></h4><p>O <code>ActiveModel::Serialization</code> fornece serialização básica para o seu objeto. Você precisa declarar um Hash de atributos que contém os atributos que deseja serializar. Os atributos devem ser cadeias, não símbolos.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
@@ -687,7 +687,7 @@ email_contact.persisted? # =&gt; false
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9f35751404e296f7cf5b9ec21db36283">class Person
+<textarea class="clipboard-content" id="clipboard-bbf8d40077139c0dd11e9144d19039d8">class Person
   include ActiveModel::Serialization
 
   attr_accessor :name
@@ -697,7 +697,7 @@ email_contact.persisted? # =&gt; false
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9f35751404e296f7cf5b9ec21db36283">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bbf8d40077139c0dd11e9144d19039d8">Copiar</button>
 </div>
 <p>Agora você pode acessar um Hash serializado do seu objeto usando o método <code>serializable_hash</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
@@ -705,12 +705,12 @@ end
 <span class="n">person</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"Bob"</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">serializable_hash</span>   <span class="c1"># =&gt; {"name"=&gt;"Bob"}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9e8ef50e9832c12558c1a351a4e54b9f">person = Person.new
+<textarea class="clipboard-content" id="clipboard-85905a6bea9e6cac770d1f77dc7b86cc">person = Person.new
 person.serializable_hash   # =&gt; {"name"=&gt;nil}
 person.name = "Bob"
 person.serializable_hash   # =&gt; {"name"=&gt;"Bob"}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9e8ef50e9832c12558c1a351a4e54b9f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-85905a6bea9e6cac770d1f77dc7b86cc">Copiar</button>
 </div>
 <h5 id="activemodel-serializers"><a class="anchorlink" href="#activemodel-serializers">1.8.1 ActiveModel::Serializers</a></h5><p>O Active Model também fornece o módulo <code>ActiveModel::Serializers::JSON</code> para serialização / desserialização JSON. Este módulo inclui automaticamente o módulo <code>ActiveModel::Serialization</code> discutido anteriormente.</p><h6 id="activemodel-serializers-json"><a class="anchorlink" href="#activemodel-serializers-json">1.8.1.1 ActiveModel::Serializers::JSON</a></h6><p>Para usar o <code>ActiveModel::Serializers::JSON</code>, você só precisa alterar o módulo que você está incluindo de <code>ActiveModel::Serialization</code> para<code>ActiveModel::Serializers::JSON</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
@@ -723,7 +723,7 @@ person.serializable_hash   # =&gt; {"name"=&gt;"Bob"}
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-08e90e8962886606b254fba0d1709a4e">class Person
+<textarea class="clipboard-content" id="clipboard-07853c24ec9efdf21125f5e3350eb723">class Person
   include ActiveModel::Serializers::JSON
 
   attr_accessor :name
@@ -733,7 +733,7 @@ person.serializable_hash   # =&gt; {"name"=&gt;"Bob"}
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-08e90e8962886606b254fba0d1709a4e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-07853c24ec9efdf21125f5e3350eb723">Copiar</button>
 </div>
 <p>O método <code>as_json</code>, semelhante ao<code>serializable_hash</code>, fornece um Hash representando o modelo.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
@@ -741,12 +741,12 @@ end
 <span class="n">person</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"Bob"</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">as_json</span> <span class="c1"># =&gt; {"name"=&gt;"Bob"}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-81e6ce8f29826e5eafda2213557c0828">person = Person.new
+<textarea class="clipboard-content" id="clipboard-f892ebe16f22081c82de0db8b2c77fa6">person = Person.new
 person.as_json # =&gt; {"name"=&gt;nil}
 person.name = "Bob"
 person.as_json # =&gt; {"name"=&gt;"Bob"}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-81e6ce8f29826e5eafda2213557c0828">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f892ebe16f22081c82de0db8b2c77fa6">Copiar</button>
 </div>
 <p>Você também pode definir os atributos para um modelo a partir de uma sequência JSON. No entanto, você precisa definir o método <code>attribute =</code> na sua classe:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
@@ -765,7 +765,7 @@ person.as_json # =&gt; {"name"=&gt;"Bob"}
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cd3b37763b4578ac84ee1ffb81dd9cf7">class Person
+<textarea class="clipboard-content" id="clipboard-cefcfe5509221f3f3e6c58a3c8aea770">class Person
   include ActiveModel::Serializers::JSON
 
   attr_accessor :name
@@ -781,7 +781,7 @@ person.as_json # =&gt; {"name"=&gt;"Bob"}
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cd3b37763b4578ac84ee1ffb81dd9cf7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cefcfe5509221f3f3e6c58a3c8aea770">Copiar</button>
 </div>
 <p>Agora é possível criar uma instância de <code>Person</code> e definir atributos usando<code>from_json</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">json</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">name: </span><span class="s1">'Bob'</span> <span class="p">}.</span><span class="nf">to_json</span>
@@ -789,23 +789,23 @@ end
 <span class="n">person</span><span class="p">.</span><span class="nf">from_json</span><span class="p">(</span><span class="n">json</span><span class="p">)</span> <span class="c1"># =&gt; #&lt;Person:0x00000100c773f0 @name="Bob"&gt;</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">name</span>            <span class="c1"># =&gt; "Bob"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d4fb628e441003f8c9dd648b6e1b7c35">json = { name: 'Bob' }.to_json
+<textarea class="clipboard-content" id="clipboard-92ec5938a3d0b659eaf31c362b62be63">json = { name: 'Bob' }.to_json
 person = Person.new
 person.from_json(json) # =&gt; #&lt;Person:0x00000100c773f0 @name="Bob"&gt;
 person.name            # =&gt; "Bob"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d4fb628e441003f8c9dd648b6e1b7c35">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-92ec5938a3d0b659eaf31c362b62be63">Copiar</button>
 </div>
 <h4 id="traducao"><a class="anchorlink" href="#traducao">1.9 Tradução</a></h4><p>O <code>ActiveModel::Translation</code> fornece integração entre seu objeto e o Rails internacionalização (i18n).</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
   <span class="kp">extend</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Translation</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ef5f7af6605124ce27df0c1144cdd35d">class Person
+<textarea class="clipboard-content" id="clipboard-404cee35f6746d30046b160b84209d8b">class Person
   extend ActiveModel::Translation
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ef5f7af6605124ce27df0c1144cdd35d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-404cee35f6746d30046b160b84209d8b">Copiar</button>
 </div>
 <p>Com o método <code>human_attribute_name</code>, você pode transformar nomes de atributos em um formato mais legível por humanos. O formato legível por humanos é definido nos seus arquivos de localidade.</p>
 <ul>
@@ -818,20 +818,20 @@ end
         <span class="na">person</span><span class="pi">:</span>
           <span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Nome'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5b17dd8a646ba6cda6e7f48ddc51be94">  pt-BR:
+<textarea class="clipboard-content" id="clipboard-6f119f8949dd7eafbc17626aecdfb2ed">  pt-BR:
     activemodel:
       attributes:
         person:
           name: 'Nome'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5b17dd8a646ba6cda6e7f48ddc51be94">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6f119f8949dd7eafbc17626aecdfb2ed">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Person</span><span class="p">.</span><span class="nf">human_attribute_name</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span> <span class="c1"># =&gt; "Nome"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-84f1318d3b193a8343eb747b446a98f0">Person.human_attribute_name('name') # =&gt; "Nome"
+<textarea class="clipboard-content" id="clipboard-e6134e4de89ca1e3346a5db62d978aa3">Person.human_attribute_name('name') # =&gt; "Nome"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-84f1318d3b193a8343eb747b446a98f0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e6134e4de89ca1e3346a5db62d978aa3">Copiar</button>
 </div>
 <h4 id="lint-tests"><a class="anchorlink" href="#lint-tests">1.10 Lint Tests</a></h4><p>O <code>ActiveModel::Lint::Tests</code> permite testar se um objeto é compatível com a API do <em>model</em> ativo.</p>
 <ul>
@@ -842,11 +842,11 @@ end
   <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Model</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ace5576e8930e97a737b6dffb2d7ada2">class Person
+<textarea class="clipboard-content" id="clipboard-ff3a4c42828e7b27300b0207eb90b34e">class Person
   include ActiveModel::Model
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ace5576e8930e97a737b6dffb2d7ada2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ff3a4c42828e7b27300b0207eb90b34e">Copiar</button>
 </div>
 </li>
 <li>
@@ -862,7 +862,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bbeaabf0479393e8827a049e96a0fac6">require 'test_helper'
+<textarea class="clipboard-content" id="clipboard-1c4fc5df08d9d2d09da6aed9686e7f08">require 'test_helper'
 
 class PersonTest &lt; ActiveSupport::TestCase
   include ActiveModel::Lint::Tests
@@ -872,7 +872,7 @@ class PersonTest &lt; ActiveSupport::TestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bbeaabf0479393e8827a049e96a0fac6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1c4fc5df08d9d2d09da6aed9686e7f08">Copiar</button>
 </div>
 </li>
 </ul>
@@ -889,9 +889,9 @@ Finished in 0.024899s, 240.9735 runs/s, 1204.8677 assertions/s.
 
 6 runs, 30 assertions, 0 failures, 0 errors, 0 skips
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-4627e320105cce816e2befef0b2cf9ba">rails test
+<textarea class="clipboard-content" id="clipboard-5aa7225c1e3846cc42fbfcd1bc478a08">rails test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4627e320105cce816e2befef0b2cf9ba">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5aa7225c1e3846cc42fbfcd1bc478a08">Copiar</button>
 </div>
 <p>Não é necessário um objeto para implementar todas as APIs para trabalhar com <em>Action Pack</em>. Este módulo pretende apenas fornecer orientação caso você queira que todos recursos prontos para uso.</p><h4 id="securepassword"><a class="anchorlink" href="#securepassword">1.11 SecurePassword</a></h4><p>O <code>ActiveModel::SecurePassword</code> fornece uma maneira de armazenar com segurança qualquer senha de forma criptografada. Quando você inclui este módulo, é fornecido o método da classe <code>has_secure_password</code> que define um acessador de <code>senha</code> com certas validações por padrão.</p><h5 id="requerimentos"><a class="anchorlink" href="#requerimentos">1.11.1 Requerimentos</a></h5><p>O <code>ActiveModel::SecurePassword</code> depende de <a href="https://github.com/codahale/bcrypt-ruby" title="BCrypt"><code>bcrypt</code></a>,
 portanto, inclua esta <code>gem</code> no seu <code>Gemfile</code> para usar o<code>ActiveModel::SecurePassword</code> corretamente.
@@ -947,7 +947,7 @@ As seguintes validações são adicionadas automaticamente:</p>
 <span class="n">person</span><span class="p">.</span><span class="nf">password_digest</span> <span class="c1"># =&gt; "$2a$04$gF8RfZdoXHvyTjHhiU4ZsO.kQqV9oonYZu31PRE4hLQn3xM2qkpIy"</span>
 <span class="n">person</span><span class="p">.</span><span class="nf">recovery_password_digest</span> <span class="c1"># =&gt; "$2a$04$iOfhwahFymCs5weB3BNH/uXkTG65HR.qpW.bNhEjFP3ftli3o5DQC"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3359ef011689075ef697c13f800b20d5">class Person
+<textarea class="clipboard-content" id="clipboard-d7f3ea3e085a31b4dd30bdfb86dc98d4">class Person
   include ActiveModel::SecurePassword
   has_secure_password
   has_secure_password :recovery_password, validations: false
@@ -990,7 +990,7 @@ person.authenticate_recovery_password('notright') # =&gt; false
 person.password_digest # =&gt; "$2a$04$gF8RfZdoXHvyTjHhiU4ZsO.kQqV9oonYZu31PRE4hLQn3xM2qkpIy"
 person.recovery_password_digest # =&gt; "$2a$04$iOfhwahFymCs5weB3BNH/uXkTG65HR.qpW.bNhEjFP3ftli3o5DQC"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3359ef011689075ef697c13f800b20d5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d7f3ea3e085a31b4dd30bdfb86dc98d4">Copiar</button>
 </div>
 
 
