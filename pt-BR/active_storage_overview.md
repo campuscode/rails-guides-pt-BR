@@ -450,7 +450,7 @@ Quando o navegador acessa a _URL_ da variação, o _Active Storage_ vai lentamen
 Para trocar para o processador Vips, você teria que adicionar o seguinte trecho no `config/application.rb`:
 
 ```ruby
-# Use Vips for processing variants.
+# Use o Vips para processar variações.
 config.active_storage.variant_processor = :vips
 ```
 
