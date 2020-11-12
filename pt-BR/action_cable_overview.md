@@ -650,49 +650,49 @@ Abaixo está uma lista dos adaptadores de assinatura disponíveis para usuários
 
 ##### Adaptador Async
 
-O adaptador assíncrono destina-se ao desenvolvimento / teste e não deve ser usado na produção.
+O adaptador assíncrono destina-se ao desenvolvimento / teste e não deve ser usado em produção.
 
 ##### Adaptador Redis
 
-O adaptador Redis requer que os usuários forneçam um URL apontando para o servidor Redis.
+O adaptador Redis requer que os usuários forneçam uma URL apontando para o servidor Redis.
 Além disso, um `channel_prefix` pode ser fornecido para evitar colisões de nome de canal
-ao usar o mesmo servidor Redis para vários aplicativos. Veja o 
+ao usar o mesmo servidor Redis para vários aplicativos. Veja a 
 [Documentação Redis PubSub](https://redis.io/topics/pubsub#database-amp-scoping) para mais detalhes.
 
 ##### Adaptador PostgreSQL
 
-O adaptador PostgreSQL usa o pool de conexão do Active Record e, portanto, o
-configuração do banco de dados `config / database.yml` do aplicativo, para sua conexão.
+O adaptador PostgreSQL usa o _pool_ de conexão do _Active Record_ e, portanto, o
+configuração do banco de dados `config/database.yml` do aplicativo, para sua conexão.
 Isso pode mudar no futuro. [#27214](https://github.com/rails/rails/issues/27214)
 
-### Origens de solicitação permitidas
+### Origens de Requisição Permitidas
 
-Action Cable só aceitará solicitações de origens especificadas, que são
+Action Cable só aceitará requisições de origens especificadas, que são
 passado para a configuração do servidor como um array. As origens podem ser instâncias de
-strings ou expressões regulares, contra as quais uma verificação de correspondência será realizada.
+_strings_ ou expressões regulares, contra as quais uma verificação de correspondência será realizada.
 
 ```ruby
 config.action_cable.allowed_request_origins = ['https://rubyonrails.com', %r{http://ruby.*}]
 ```
 
-Para desativar e permitir solicitações de qualquer origem:
+Para desativar e permitir requisições de qualquer origem:
 
 ```ruby
 config.action_cable.disable_request_forgery_protection = true
 ```
 
-Por padrão, o Action Cable permite todas as solicitações de localhost: 3000 durante a execução
+Por padrão, o _Action Cable_ permite todas as requisições de localhost:3000 durante a execução
 no ambiente de desenvolvimento.
 
 ### Configuração do Consumidor
 
-Para configurar o URL, adicione uma chamada para ʻaction_cable_meta_tag` em seu layout HTML
-CABEÇA. Isso usa uma URL ou caminho normalmente definido via `config.action_cable.url` no
+Para configurar o URL, adicione uma chamada para `action_cable_meta_tag` em seu _layout_ HTML
+HEAD. Isso usa uma URL ou caminho (_path_) normalmente definido via `config.action_cable.url` no
 arquivos de configuração de ambiente.
 
-### Configuração do pool de trabalhadores
+### Configuração do _Worker Pool_
 
-O pool de trabalho é usado para executar retornos de chamada de conexão e ações de canal em
+O _pool_ de _workers_ é usado para executar retornos (_callbacks_) de conexão e ações de _channel_ em
 isolamento da _thread_ principal do servidor. _Action Cable_ permite que a aplicação
 configure o número de _threads_ processados ​​simultaneamente no _worker pool_.
 
@@ -700,7 +700,7 @@ configure o número de _threads_ processados ​​simultaneamente no _worker po
 config.action_cable.worker_pool_size = 4
 ```
 
-Além disso, observe que seu servidor deve fornecer pelo menos o mesmo número conexões de banco de dados
+Além disso, observe que seu servidor deve fornecer pelo menos o mesmo número de conexões de banco de dados
 que você tem de _workers_. O tamanho do _worker pool_ de trabalho padrão é definido como 4, então
 isso significa que você deve disponibilizar pelo menos 4 conexões de banco de dados.
  Você pode mudar isso em `config/database.yml` através do atributo `pool`.
