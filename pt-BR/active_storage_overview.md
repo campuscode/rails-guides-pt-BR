@@ -433,7 +433,7 @@ Analysis requires the `mini_magick` gem. Video analysis also requires the [FFmpe
 Transformando Imagens
 -------------------
 
-Para ativar variações, adicione a gema  `image_processing`  no seu `Gemfile`:
+Para ativar variações, adicione a _gem_  `image_processing`  no seu `Gemfile`:
 
 ```ruby
 gem 'image_processing'
