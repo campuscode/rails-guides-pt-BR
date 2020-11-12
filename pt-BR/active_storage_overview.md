@@ -441,7 +441,7 @@ gem 'image_processing'
 
 Para criar uma variação de uma imagem, chame `variant` no `Blob`. Você pode passar qualquer transformação para o método suportado pelo processador. O processador padrão para _Active Storage_ é o MiniMagick, mas você também pode usar o [Vips](https://www.rubydoc.info/gems/ruby-vips/Vips/Image).
 
-Quando o navegador acessa a _URL_ da variação, o _Active Storage_ vai lentamente transformar o blob original para o formato especificado e redirecionar para sua nova localização de serviço.
+Quando o navegador acessa a _URL_ da variação, o _Active Storage_ vai lentamente transformar o _blob+ original para o formato especificado e redirecionar para sua nova localização de serviço.
 
 ```erb
 <%= image_tag user.avatar.variant(resize_to_limit: [100, 100]) %>
