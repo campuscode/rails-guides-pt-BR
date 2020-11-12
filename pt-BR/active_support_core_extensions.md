@@ -537,9 +537,9 @@ class MyCrawler < ThirdPartyLibrary::Crawler
 end
 ```
 
-No exemplo anterior, poderia ser que no caso `:log_level` não pertença a interface pública da biblioteca e só seria usada em desenvolvimento. O código do cliente, não sabe do potencial conflito, subclasses e definições de seus pŕoprios `:log_level`. Graças ao `attr_internal` não há conflito.
+No exemplo anterior, poderia ser que no caso `:log_level` não pertença a interface pública da biblioteca e só seria usada em desenvolvimento. O código do cliente, não sabe do potencial conflito, subclasses e definições de seus próprios `:log_level`. Graças ao `attr_internal` não há conflito.
 
-Por padrão, a variável de instancia interna é nomeada com uma _underscore_ na frente, `@_log_level` no exemplo acima. Isso é configuravel via `Module.attr_internal_naming_format` apesar disso, você pode passar qualquer tipo de `sprintf` no formato _string_ com a inicial `@` e um `%s` em algum lugar, no qual é onde o nome será colocado. O padrão é `"@_%s"`.
+Por padrão, a variável de instancia interna é nomeada com uma _underscore_ na frente, `@_log_level` no exemplo acima. Isso é configurável via `Module.attr_internal_naming_format` apesar disso, você pode passar qualquer tipo de `sprintf` no formato _string_ com a inicial `@` e um `%s` em algum lugar, no qual é onde o nome será colocado. O padrão é `"@_%s"`.
 
 Rails usa atributos internos em alguns pontos, para _views_ como por exemplo:
 
@@ -733,7 +733,7 @@ A macro `delegate` aceita vários métodos:
 delegate :name, :age, :address, :twitter, to: :profile
 ```
 
-Quando interpolado em uma string, a opção `:to` deve se tornar uma expressão que avalia o objeto ao qual o método é delegado. Normalmente uma _string_ ou um símbolo. Tal expressão é avaliada no contexto do receptor:
+Quando interpolado em uma _string_, a opção `:to` deve se tornar uma expressão que avalia o objeto ao qual o método é delegado. Normalmente uma _string_ ou um _symbol_. Tal expressão é avaliada no contexto do receptor:
 
 ```ruby
 # delega para as constantes Rails
