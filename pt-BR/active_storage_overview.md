@@ -436,30 +436,27 @@ como `duration`, `angle` e `display_aspect_ratio`.
 A análise necessita da gem `mini_magick`. A análise de vídeos também necessita da biblioteca [FFmpeg](https://www.ffmpeg.org/),
 que você deve incluir separadamente.
 
-Transforming Images
+Transformando Imagens
 -------------------
 
-To enable variants, add the `image_processing` gem to your `Gemfile`:
+Para ativar variações, adicione a _gem_  `image_processing`  no seu `Gemfile`:
 
 ```ruby
 gem 'image_processing'
 ```
 
-To create a variation of an image, call `variant` on the `Blob`. You can pass any transformation to the method supported by the processor. The default processor for Active Storage is MiniMagick, but you can also use [Vips](https://www.rubydoc.info/gems/ruby-vips/Vips/Image).
+Para criar uma variação de uma imagem, chame `variant` no `Blob`. Você pode passar qualquer transformação para o método suportado pelo processador. O processador padrão para _Active Storage_ é o MiniMagick, mas você também pode usar o [Vips](https://www.rubydoc.info/gems/ruby-vips/Vips/Image).
 
-When the browser hits the variant URL, Active Storage will lazily transform the
-original blob into the specified format and redirect to its new service
-location.
+Quando o navegador acessa a _URL_ da variação, o _Active Storage_ vai lentamente transformar o _blob+ original para o formato especificado e redirecionar para sua nova localização de serviço.
 
 ```erb
 <%= image_tag user.avatar.variant(resize_to_limit: [100, 100]) %>
 ```
 
-To switch to the Vips processor, you would add the following to
-`config/application.rb`:
+Para trocar para o processador Vips, você teria que adicionar o seguinte trecho no `config/application.rb`:
 
 ```ruby
-# Use Vips for processing variants.
+# Use o Vips para processar variações.
 config.active_storage.variant_processor = :vips
 ```
 
