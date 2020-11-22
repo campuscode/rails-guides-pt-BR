@@ -723,7 +723,7 @@ For a full list of all configuration options, see the
 
 ## Executando Servidores _Cable_ Autônomos
 
-### No Aplicação
+### Na Aplicação
 
 O _Action Cable_ pode ser executado junto com sua aplicação Rails. Por exemplo, para
 escutar as requisições _WebSocket_ em `/websocket`, especifique esse caminho para
@@ -765,7 +765,7 @@ Então você inicia o servidor usando um _binstub_ em `bin/cable` ala:
 bundle exec puma -p 28080 cable/config.ru
 ```
 
-O acima irá iniciar um _cable server_ na porta 28080.
+O código irá iniciar um _cable server_ na porta 28080.
 
 ### Notas
 
