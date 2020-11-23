@@ -618,15 +618,15 @@ and unpacked for the data argument arriving as `received`.
 See the [rails/actioncable-examples](https://github.com/rails/actioncable-examples)
 repository for a full example of how to setup Action Cable in a Rails app and adding channels.
 
-## Configuration
+## Configuração
 
-Action Cable has two required configurations: a subscription adapter and allowed request origins.
+O _Action Cable_ tem duas configurações necessárias: um adaptador de assinatura (_subscription_) e origens de requisição (_request_) permitidas.
 
-### Subscription Adapter
+### Adaptador de assinatura
 
-By default, Action Cable looks for a configuration file in `config/cable.yml`.
-The file must specify an adapter for each Rails environment. See the
-[Dependencies](#dependencies) section for additional information on adapters.
+Por padrão, _Action Cable_ procura um arquivo de configuração em `config/cable.yml`.
+O arquivo deve especificar um adaptador (_adapter_) para cada ambiente Rails. Veja o
+[Dependências](#dependecias) seção para obter informações adicionais sobre adaptadores.
 
 ```yaml
 development:
@@ -640,71 +640,72 @@ production:
   url: redis://10.10.3.153:6381
   channel_prefix: appname_production
 ```
-#### Adapter Configuration
+#### Configuração do Adaptador (_Adapter_)
 
-Below is a list of the subscription adapters available for end users.
+Abaixo está uma lista dos adaptadores de assinatura disponíveis para usuários finais.
 
-##### Async Adapter
+##### Adaptador Async
 
-The async adapter is intended for development/testing and should not be used in production.
+O adaptador assíncrono destina-se ao desenvolvimento / teste e não deve ser usado em produção.
 
-##### Redis Adapter
+##### Adaptador Redis
 
-The Redis adapter requires users to provide a URL pointing to the Redis server.
-Additionally, a `channel_prefix` may be provided to avoid channel name collisions
-when using the same Redis server for multiple applications. See the [Redis PubSub documentation](https://redis.io/topics/pubsub#database-amp-scoping) for more details.
+O adaptador Redis requer que os usuários forneçam uma URL apontando para o servidor Redis.
+Além disso, um `channel_prefix` pode ser fornecido para evitar colisões de nome de canal
+ao usar o mesmo servidor Redis para vários aplicativos. Veja a 
+[Documentação Redis PubSub](https://redis.io/topics/pubsub#database-amp-scoping) para mais detalhes.
 
-##### PostgreSQL Adapter
+##### Adaptador PostgreSQL
 
-The PostgreSQL adapter uses Active Record's connection pool, and thus the
-application's `config/database.yml` database configuration, for its connection.
-This may change in the future. [#27214](https://github.com/rails/rails/issues/27214)
+O adaptador PostgreSQL usa o _pool_ de conexão do _Active Record_ e, portanto, o
+configuração do banco de dados `config/database.yml` do aplicativo, para sua conexão.
+Isso pode mudar no futuro. [#27214](https://github.com/rails/rails/issues/27214)
 
-### Allowed Request Origins
+### Origens de Requisição Permitidas
 
-Action Cable will only accept requests from specified origins, which are
-passed to the server config as an array. The origins can be instances of
-strings or regular expressions, against which a check for the match will be performed.
+Action Cable só aceitará requisições de origens especificadas, que são
+passado para a configuração do servidor como um array. As origens podem ser instâncias de
+_strings_ ou expressões regulares, contra as quais uma verificação de correspondência será realizada.
 
 ```ruby
 config.action_cable.allowed_request_origins = ['https://rubyonrails.com', %r{http://ruby.*}]
 ```
 
-To disable and allow requests from any origin:
+Para desativar e permitir requisições de qualquer origem:
 
 ```ruby
 config.action_cable.disable_request_forgery_protection = true
 ```
 
-By default, Action Cable allows all requests from localhost:3000 when running
-in the development environment.
+Por padrão, o _Action Cable_ permite todas as requisições de localhost:3000 durante a execução
+no ambiente de desenvolvimento.
 
-### Consumer Configuration
+### Configuração do Consumidor
 
-To configure the URL, add a call to `action_cable_meta_tag` in your HTML layout
-HEAD. This uses a URL or path typically set via `config.action_cable.url` in the
-environment configuration files.
+Para configurar o URL, adicione uma chamada para `action_cable_meta_tag` em seu _layout_ HTML
+HEAD. Isso usa uma URL ou caminho (_path_) normalmente definido via `config.action_cable.url` no
+arquivos de configuração de ambiente.
 
-### Worker Pool Configuration
+### Configuração do _Worker Pool_
 
-The worker pool is used to run connection callbacks and channel actions in
-isolation from the server's main thread. Action Cable allows the application
-to configure the number of simultaneously processed threads in the worker pool.
+O _pool_ de _workers_ é usado para executar retornos (_callbacks_) de conexão e ações de _channel_ em
+isolamento da _thread_ principal do servidor. _Action Cable_ permite que a aplicação
+configure o número de _threads_ processados ​​simultaneamente no _worker pool_.
 
 ```ruby
 config.action_cable.worker_pool_size = 4
 ```
 
-Also, note that your server must provide at least the same number of database
-connections as you have workers. The default worker pool size is set to 4, so
-that means you have to make at least 4 database connections available.
- You can change that in `config/database.yml` through the `pool` attribute.
+Além disso, observe que seu servidor deve fornecer pelo menos o mesmo número de conexões de banco de dados
+que você tem de _workers_. O tamanho do _worker pool_ de trabalho padrão é definido como 4, então
+isso significa que você deve disponibilizar pelo menos 4 conexões de banco de dados.
+ Você pode mudar isso em `config/database.yml` através do atributo `pool`.
 
-### Other Configurations
+### Outras Configurações
 
-The other common option to configure is the log tags applied to the
-per-connection logger. Here's an example that uses
-the user account id if available, else "no-account" while tagging:
+A outra opção comum de configurar são as _tags_ de _log_ aplicadas ao
+_logger_ por conexão. Aqui está um exemplo que usa
+o ID da conta do usuário, se disponível, senão "sem conta" durante a marcação:
 
 ```ruby
 config.action_cable.log_tags = [
@@ -714,8 +715,8 @@ config.action_cable.log_tags = [
 ]
 ```
 
-For a full list of all configuration options, see the
-`ActionCable::Server::Configuration` class.
+Para obter uma lista completa de todas as opções de configuração, consulte o
+classe `ActionCable::Server::Configuration`.
 
 ## Running Standalone Cable Servers
 
