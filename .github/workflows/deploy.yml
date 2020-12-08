@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   pull_request:
-    types: [closed]
+    types: [ closed ]
 
 jobs:
   deploy:
@@ -37,7 +37,7 @@ jobs:
           git config user.email "<>"
       - name: Commit site changes
         run: |
-          git remote add origin https://HenriqueMorato:$GH_PERSONAL_ACCESS_TOKEN@github.com/${{ github.repository }}.git
+          git remote add origin https://$GITHUB_ACTOR:$GH_PERSONAL_ACCESS_TOKEN@github.com/${{ github.repository }}.git
           git add site/
           git commit -m "Build from commit ${GITHUB_SHA}"
           git push origin HEAD:site --force
