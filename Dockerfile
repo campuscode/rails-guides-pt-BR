@@ -1,6 +1,10 @@
 FROM ruby:latest
 MAINTAINER Campus Code <contato@campuscode.com.br>
 
+
+
+
+
 RUN apt-get update -qq
 RUN apt-get install -y --force-yes vim \
       imagemagick locales
