@@ -306,19 +306,19 @@ path. This executable contains the following lines:</p><div class="code_containe
 <pre><code class="highlight ruby"><span class="n">version</span> <span class="o">=</span> <span class="s2">"&gt;= 0"</span>
 <span class="nb">load</span> <span class="no">Gem</span><span class="p">.</span><span class="nf">bin_path</span><span class="p">(</span><span class="s1">'railties'</span><span class="p">,</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f727fcde2500af76cbe6cd8047ba2165">version = "&gt;= 0"
+<textarea class="clipboard-content" id="clipboard-ffa08352dec3c29db78205b5bdcc5fe2">version = "&gt;= 0"
 load Gem.bin_path('railties', 'rails', version)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f727fcde2500af76cbe6cd8047ba2165">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ffa08352dec3c29db78205b5bdcc5fe2">Copiar</button>
 </div>
 <p>If you try out this command in a Rails console, you would see that this loads
 <code>railties/exe/rails</code>. A part of the file <code>railties/exe/rails</code> has the
 following code:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"rails/cli"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-67dd4463863512435f77e49615df5cc4">require "rails/cli"
+<textarea class="clipboard-content" id="clipboard-a43009b881f0ae8b5dc67dee43388ba7">require "rails/cli"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-67dd4463863512435f77e49615df5cc4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a43009b881f0ae8b5dc67dee43388ba7">Copiar</button>
 </div>
 <p>The file <code>railties/lib/rails/cli</code> in turn calls
 <code>Rails::AppLoader.exec_app</code>.</p><h4 id="railties-lib-rails-app-loader-rb"><a class="anchorlink" href="#railties-lib-rails-app-loader-rb">1.2 <code>railties/lib/rails/app_loader.rb</code></a></h4><p>The primary goal of the function <code>exec_app</code> is to execute your app's
@@ -327,9 +327,9 @@ navigate upwards until it finds a <code>bin/rails</code> executable. Thus one ca
 <code>rails</code> command from anywhere inside a rails application.</p><p>For <code>rails server</code> the equivalent of the following command is executed:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">exec ruby bin/rails </span>server
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6351dd18d6265329e2a3632dd65cf50d">exec ruby bin/rails server
+<textarea class="clipboard-content" id="clipboard-b2a99e635d79f2a3c8ed733d3adbd604">exec ruby bin/rails server
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6351dd18d6265329e2a3632dd65cf50d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b2a99e635d79f2a3c8ed733d3adbd604">Copiar</button>
 </div>
 <h4 id="bin-rails"><a class="anchorlink" href="#bin-rails">1.3 <code>bin/rails</code></a></h4><p>This file is as follows:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1">#!/usr/bin/env ruby</span>
@@ -337,23 +337,23 @@ navigate upwards until it finds a <code>bin/rails</code> executable. Thus one ca
 <span class="nb">require_relative</span> <span class="s1">'../config/boot'</span>
 <span class="nb">require</span> <span class="s1">'rails/commands'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6219e4eb9cb1278f88d4b8355a8471e8">#!/usr/bin/env ruby
+<textarea class="clipboard-content" id="clipboard-51762b9f3c758ca720b2cea4c7b51a9d">#!/usr/bin/env ruby
 APP_PATH = File.expand_path('../config/application', __dir__)
 require_relative '../config/boot'
 require 'rails/commands'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6219e4eb9cb1278f88d4b8355a8471e8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-51762b9f3c758ca720b2cea4c7b51a9d">Copiar</button>
 </div>
 <p>The <code>APP_PATH</code> constant will be used later in <code>rails/commands</code>. The <code>config/boot</code> file referenced here is the <code>config/boot.rb</code> file in our application which is responsible for loading Bundler and setting it up.</p><h4 id="config-boot-rb"><a class="anchorlink" href="#config-boot-rb">1.4 <code>config/boot.rb</code></a></h4><p><code>config/boot.rb</code> contains:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ENV</span><span class="p">[</span><span class="s1">'BUNDLE_GEMFILE'</span><span class="p">]</span> <span class="o">||=</span> <span class="no">File</span><span class="p">.</span><span class="nf">expand_path</span><span class="p">(</span><span class="s1">'../Gemfile'</span><span class="p">,</span> <span class="n">__dir__</span><span class="p">)</span>
 
 <span class="nb">require</span> <span class="s1">'bundler/setup'</span> <span class="c1"># Set up gems listed in the Gemfile.</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-12adc46aa9e78f73e5fc8c66833ce959">ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
+<textarea class="clipboard-content" id="clipboard-5c0abc8ad6048999a56a13f58d97f7f1">ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 
 require 'bundler/setup' # Set up gems listed in the Gemfile.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-12adc46aa9e78f73e5fc8c66833ce959">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5c0abc8ad6048999a56a13f58d97f7f1">Copiar</button>
 </div>
 <p>In a standard Rails application, there's a <code>Gemfile</code> which declares all
 dependencies of the application. <code>config/boot.rb</code> sets
@@ -408,7 +408,7 @@ configure the load path for your Gemfile's dependencies.</p><p>A standard Rails 
 
 <span class="no">Rails</span><span class="o">::</span><span class="no">Command</span><span class="p">.</span><span class="nf">invoke</span> <span class="n">command</span><span class="p">,</span> <span class="no">ARGV</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4081a80dcf6254e35c76cdb8ddf823fa">require_relative "command"
+<textarea class="clipboard-content" id="clipboard-fb851f79742aadc02bc4848b46ccbc48">require_relative "command"
 
 aliases = {
   "g"  =&gt; "generate",
@@ -425,7 +425,7 @@ command = aliases[command] || command
 
 Rails::Command.invoke command, ARGV
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4081a80dcf6254e35c76cdb8ddf823fa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fb851f79742aadc02bc4848b46ccbc48">Copiar</button>
 </div>
 <p>If we had used <code>s</code> rather than <code>server</code>, Rails would have used the <code>aliases</code>
 defined here to find the matching command.</p><h4 id="rails-command-rb"><a class="anchorlink" href="#rails-command-rb">1.6 <code>rails/command.rb</code></a></h4><p>When one types a Rails command, <code>invoke</code> tries to lookup a command for the given
@@ -448,7 +448,7 @@ are empty.</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9d8953af5360bfb94772b02d396f7289">module Rails::Command
+<textarea class="clipboard-content" id="clipboard-ccd1d7f13afab3d189933a93d7d9cfd7">module Rails::Command
   class &lt;&lt; self
     def invoke(namespace, args = [], **config)
       namespace = namespace.to_s
@@ -464,7 +464,7 @@ are empty.</p><div class="code_container">
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9d8953af5360bfb94772b02d396f7289">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ccd1d7f13afab3d189933a93d7d9cfd7">Copiar</button>
 </div>
 <p>With the <code>server</code> command, Rails will further run the following code:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">Rails</span>
@@ -485,7 +485,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b3ea03c904df6136c2c63800e450ad94">module Rails
+<textarea class="clipboard-content" id="clipboard-4e005c854a40b60829176d225e20d8f2">module Rails
   module Command
     class ServerCommand &lt; Base # :nodoc:
       def perform
@@ -503,7 +503,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b3ea03c904df6136c2c63800e450ad94">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4e005c854a40b60829176d225e20d8f2">Copiar</button>
 </div>
 <p>This file will change into the Rails root directory (a path two directories up
 from <code>APP_PATH</code> which points at <code>config/application.rb</code>), but only if the
@@ -516,12 +516,12 @@ method in <code>rails/commands/server/server_command.rb</code>:</p><div class="c
   <span class="n">set_environment</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fbd24155ce56768df3962ec8618af106">def initialize(*)
+<textarea class="clipboard-content" id="clipboard-5ff7d44fde4da5ef82bcf03a05ea41cf">def initialize(*)
   super
   set_environment
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fbd24155ce56768df3962ec8618af106">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5ff7d44fde4da5ef82bcf03a05ea41cf">Copiar</button>
 </div>
 <p>Firstly, <code>super</code> is called which calls the <code>initialize</code> method on <code>Rack::Server</code>.</p><h4 id="launch-bang-rack-lib-rack-server-rb"><a class="anchorlink" href="#launch-bang-rack-lib-rack-server-rb">1.9 Rack: <code>lib/rack/server.rb</code></a></h4><p><code>Rack::Server</code> is responsible for providing a common server interface for all Rack-based applications, which Rails is now a part of.</p><p>The <code>initialize</code> method in <code>Rack::Server</code> simply sets a couple of variables:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
@@ -529,12 +529,12 @@ end
   <span class="vi">@app</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="ss">:app</span><span class="p">]</span> <span class="k">if</span> <span class="n">options</span> <span class="o">&amp;&amp;</span> <span class="n">options</span><span class="p">[</span><span class="ss">:app</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fdb1c7f7990896d365bde07b7d6c8b39">def initialize(options = nil)
+<textarea class="clipboard-content" id="clipboard-b839414fbe0502f2ad9819d51bf9d35c">def initialize(options = nil)
   @options = options
   @app = options[:app] if options &amp;&amp; options[:app]
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fdb1c7f7990896d365bde07b7d6c8b39">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b839414fbe0502f2ad9819d51bf9d35c">Copiar</button>
 </div>
 <p>In this case, <code>options</code> will be <code>nil</code> so nothing happens in this method.</p><p>After <code>super</code> has finished in <code>Rack::Server</code>, we jump back to
 <code>rails/commands/server/server_command.rb</code>. At this point, <code>set_environment</code>
@@ -544,22 +544,22 @@ doesn't appear to do much at first glance:</p><div class="code_container">
   <span class="no">ENV</span><span class="p">[</span><span class="s2">"RAILS_ENV"</span><span class="p">]</span> <span class="o">||=</span> <span class="n">options</span><span class="p">[</span><span class="ss">:environment</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a30d14934f914df6a03d3d92fdd99e6f">def set_environment
+<textarea class="clipboard-content" id="clipboard-689e3758082e7eeb8563b76510df23ad">def set_environment
   ENV["RAILS_ENV"] ||= options[:environment]
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a30d14934f914df6a03d3d92fdd99e6f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-689e3758082e7eeb8563b76510df23ad">Copiar</button>
 </div>
 <p>In fact, the <code>options</code> method here does quite a lot. This method is defined in <code>Rack::Server</code> like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">options</span>
   <span class="vi">@options</span> <span class="o">||=</span> <span class="n">parse_options</span><span class="p">(</span><span class="no">ARGV</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-54cfc40cf4ac19de3d3e2e7b25a33794">def options
+<textarea class="clipboard-content" id="clipboard-58417704f88dfd3ca6f3ee8ceede1215">def options
   @options ||= parse_options(ARGV)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-54cfc40cf4ac19de3d3e2e7b25a33794">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-58417704f88dfd3ca6f3ee8ceede1215">Copiar</button>
 </div>
 <p>Then <code>parse_options</code> is defined like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">parse_options</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
@@ -575,7 +575,7 @@ end
   <span class="n">options</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8cf19f85f95f727c4064293162fb1acc">def parse_options(args)
+<textarea class="clipboard-content" id="clipboard-8ac79d990e141424abe7997210286e81">def parse_options(args)
   options = default_options
 
   # Don't evaluate CGI ISINDEX parameters.
@@ -588,7 +588,7 @@ end
   options
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8cf19f85f95f727c4064293162fb1acc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ac79d990e141424abe7997210286e81">Copiar</button>
 </div>
 <p>With the <code>default_options</code> set to this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">default_options</span>
@@ -603,7 +603,7 @@ end
     <span class="ss">restart_cmd:        </span><span class="n">restart_command</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e4b600e351e5204c040b7aa6ea707c36">def default_options
+<textarea class="clipboard-content" id="clipboard-06d2f90408d0ec5a9cbb48bf0315a4b6">def default_options
   super.merge(
     Port:               ENV.fetch("PORT", 3000).to_i,
     Host:               ENV.fetch("HOST", "localhost").dup,
@@ -615,18 +615,18 @@ end
     restart_cmd:        restart_command)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e4b600e351e5204c040b7aa6ea707c36">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-06d2f90408d0ec5a9cbb48bf0315a4b6">Copiar</button>
 </div>
 <p>There is no <code>REQUEST_METHOD</code> key in <code>ENV</code> so we can skip over that line. The next line merges in the options from <code>opt_parser</code> which is defined plainly in <code>Rack::Server</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">opt_parser</span>
   <span class="no">Options</span><span class="p">.</span><span class="nf">new</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-298d5ab4283b16042739fbe7e9570a9f">def opt_parser
+<textarea class="clipboard-content" id="clipboard-9c354b6a82d08b129830f6c7c4a33eb3">def opt_parser
   Options.new
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-298d5ab4283b16042739fbe7e9570a9f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9c354b6a82d08b129830f6c7c4a33eb3">Copiar</button>
 </div>
 <p>The class <strong>is</strong> defined in <code>Rack::Server</code>, but is overwritten in
 <code>Rails::Server</code> to take different arguments. Its <code>parse!</code> method looks
@@ -641,7 +641,7 @@ like this:</p><div class="code_container">
   <span class="n">options</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e77b255be13f64fcfe331ddff48c2639">def parse!(args)
+<textarea class="clipboard-content" id="clipboard-a673ecfc6aa72f199d6f98c66125b6ad">def parse!(args)
   args, options = args.dup, {}
 
   option_parser(options).parse! args
@@ -651,7 +651,7 @@ like this:</p><div class="code_container">
   options
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e77b255be13f64fcfe331ddff48c2639">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a673ecfc6aa72f199d6f98c66125b6ad">Copiar</button>
 </div>
 <p>This method will set up keys for the <code>options</code> which Rails will then be
 able to use to determine how its server should run. After <code>initialize</code>
@@ -701,7 +701,7 @@ defined like this:</p><div class="code_container">
     <span class="k">end</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0d4b6ba81df8002933dc85d7591eb007">def start
+<textarea class="clipboard-content" id="clipboard-ca1c5b3423659e2b1fc5d3400a42764f">def start
   print_boot_information
   trap(:INT) { exit }
   create_tmp_directories
@@ -742,7 +742,7 @@ private
     end
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0d4b6ba81df8002933dc85d7591eb007">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ca1c5b3423659e2b1fc5d3400a42764f">Copiar</button>
 </div>
 <p>This is where the first output of the Rails initialization happens. This method
 creates a trap for <code>INT</code> signals, so if you <code>CTRL-C</code> the server, it will exit the
@@ -793,7 +793,7 @@ of <code>ActiveSupport::Logger</code>.</p><p>The <code>super</code> method will 
   <span class="n">server</span><span class="p">.</span><span class="nf">run</span> <span class="n">wrapped_app</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">blk</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1045ada7d43a489357441eebca40e53a">def start &amp;blk
+<textarea class="clipboard-content" id="clipboard-eb110fcc75942c8e61cad7d52005f569">def start &amp;blk
   if options[:warn]
     $-w = true
   end
@@ -835,16 +835,16 @@ of <code>ActiveSupport::Logger</code>.</p><p>The <code>super</code> method will 
   server.run wrapped_app, options, &amp;blk
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1045ada7d43a489357441eebca40e53a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eb110fcc75942c8e61cad7d52005f569">Copiar</button>
 </div>
 <p>The interesting part for a Rails app is the last line, <code>server.run</code>. Here we encounter the <code>wrapped_app</code> method again, which this time
 we're going to explore more (even though it was executed before, and
 thus memoized by now).</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="vi">@wrapped_app</span> <span class="o">||=</span> <span class="n">build_app</span> <span class="n">app</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8c0eccb3f944c66502f22bbbb4600af9">@wrapped_app ||= build_app app
+<textarea class="clipboard-content" id="clipboard-f393e9a9286396b65d985b1181bad0b7">@wrapped_app ||= build_app app
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8c0eccb3f944c66502f22bbbb4600af9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f393e9a9286396b65d985b1181bad0b7">Copiar</button>
 </div>
 <p>The <code>app</code> method here is defined like so:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">app</span>
@@ -866,7 +866,7 @@ thus memoized by now).</p><div class="code_container">
     <span class="no">Rack</span><span class="o">::</span><span class="no">Builder</span><span class="p">.</span><span class="nf">new_from_string</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">options</span><span class="p">[</span><span class="ss">:builder</span><span class="p">])</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b70817699a09e281051a53bf6b7e963a">def app
+<textarea class="clipboard-content" id="clipboard-fc0493849fb6fe4569b8d7e4891ae7c2">def app
   @app ||= options[:builder] ? build_app_from_string : build_app_and_options_from_config
 end
 ...
@@ -885,7 +885,7 @@ private
     Rack::Builder.new_from_string(self.options[:builder])
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b70817699a09e281051a53bf6b7e963a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fc0493849fb6fe4569b8d7e4891ae7c2">Copiar</button>
 </div>
 <p>The <code>options[:config]</code> value defaults to <code>config.ru</code> which contains this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># This file is used by Rack-based servers to start the application.</span>
@@ -893,12 +893,12 @@ private
 <span class="nb">require_relative</span> <span class="s1">'config/environment'</span>
 <span class="n">run</span> <span class="o">&lt;</span><span class="sx">%= app_const %&gt;
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-6f87fdde22b959de0d5d6c45ecdd31f7"># This file is used by Rack-based servers to start the application.
+<textarea class="clipboard-content" id="clipboard-3b65f6c22483fd1e5d5ad117d8c3475d"># This file is used by Rack-based servers to start the application.
 
 require_relative 'config/environment'
 run &lt;%= app_const %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6f87fdde22b959de0d5d6c45ecdd31f7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3b65f6c22483fd1e5d5ad117d8c3475d">Copiar</button>
 </div>
 <p>The <code>Rack::Builder.parse_file</code> method here takes the content from this <code>config.ru</code> file and parses it using this code:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">app</span> <span class="o">=</span> <span class="n">new_from_string</span> <span class="n">cfgfile</span><span class="p">,</span> <span class="n">config</span>
@@ -910,7 +910,7 @@ run &lt;%= app_const %&gt;
     <span class="no">TOPLEVEL_BINDING</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="mi">0</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5b54ec23c6e3495feec90d54900590cd">app = new_from_string cfgfile, config
+<textarea class="clipboard-content" id="clipboard-74ba309dcd1b36bb13c893de09c591d5">app = new_from_string cfgfile, config
 
 ...
 
@@ -919,36 +919,36 @@ def self.new_from_string(builder_script, file="(rackup)")
     TOPLEVEL_BINDING, file, 0
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5b54ec23c6e3495feec90d54900590cd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-74ba309dcd1b36bb13c893de09c591d5">Copiar</button>
 </div>
 <p>The <code>initialize</code> method of <code>Rack::Builder</code> will take the block here and execute it within an instance of <code>Rack::Builder</code>. This is where the majority of the initialization process of Rails happens. The <code>require</code> line for <code>config/environment.rb</code> in <code>config.ru</code> is the first to run:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require_relative</span> <span class="s1">'config/environment'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6b05cc58be7a485ae8992950026446eb">require_relative 'config/environment'
+<textarea class="clipboard-content" id="clipboard-e31c622640d42eaf739604702a822cd4">require_relative 'config/environment'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6b05cc58be7a485ae8992950026446eb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e31c622640d42eaf739604702a822cd4">Copiar</button>
 </div>
 <h4 id="config-environment-rb"><a class="anchorlink" href="#config-environment-rb">1.12 <code>config/environment.rb</code></a></h4><p>This file is the common file required by <code>config.ru</code> (<code>rails server</code>) and Passenger. This is where these two ways to run the server meet; everything before this point has been Rack and Rails setup.</p><p>This file begins with requiring <code>config/application.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require_relative</span> <span class="s1">'application'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-da2a07f7aac43fb6fd32b14150ed1a30">require_relative 'application'
+<textarea class="clipboard-content" id="clipboard-9967b4cd8ae551a96141b8ee39690381">require_relative 'application'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-da2a07f7aac43fb6fd32b14150ed1a30">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9967b4cd8ae551a96141b8ee39690381">Copiar</button>
 </div>
 <h4 id="config-application-rb"><a class="anchorlink" href="#config-application-rb">1.13 <code>config/application.rb</code></a></h4><p>This file requires <code>config/boot.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require_relative</span> <span class="s1">'boot'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5124e7f24a9973e7c8be30c0f4b2b69c">require_relative 'boot'
+<textarea class="clipboard-content" id="clipboard-95016683fe8b0f64acbb4f026252d509">require_relative 'boot'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5124e7f24a9973e7c8be30c0f4b2b69c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-95016683fe8b0f64acbb4f026252d509">Copiar</button>
 </div>
 <p>But only if it hasn't been required before, which would be the case in <code>rails server</code>
 but <strong>wouldn't</strong> be the case with Passenger.</p><p>Then the fun begins!</p><h3 id="loading-rails"><a class="anchorlink" href="#loading-rails">2 Loading Rails</a></h3><p>The next line in <code>config/application.rb</code> is:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'rails/all'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a80c0b406e542a240356496a020ff057">require 'rails/all'
+<textarea class="clipboard-content" id="clipboard-45bd2cc15b317e939bb1fb6422548c18">require 'rails/all'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a80c0b406e542a240356496a020ff057">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-45bd2cc15b317e939bb1fb6422548c18">Copiar</button>
 </div>
 <h4 id="railties-lib-rails-all-rb"><a class="anchorlink" href="#railties-lib-rails-all-rb">2.1 <code>railties/lib/rails/all.rb</code></a></h4><p>This file is responsible for requiring all the individual frameworks of Rails:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"rails"</span>
@@ -972,7 +972,7 @@ but <strong>wouldn't</strong> be the case with Passenger.</p><p>Then the fun beg
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a8586d02e6460fdadee4cd6035b81a43">require "rails"
+<textarea class="clipboard-content" id="clipboard-8475b555502a28df83535f379952f19b">require "rails"
 
 %w(
   active_record/railtie
@@ -993,7 +993,7 @@ but <strong>wouldn't</strong> be the case with Passenger.</p><p>Then the fun beg
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a8586d02e6460fdadee4cd6035b81a43">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8475b555502a28df83535f379952f19b">Copiar</button>
 </div>
 <p>This is where all the Rails frameworks are loaded and thus made
 available to the application. We won't go into detail of what happens
@@ -1012,14 +1012,14 @@ defined in <code>rails/application.rb</code>.</p><h4 id="railties-lib-rails-appl
   <span class="nb">self</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fcfe34d5bf59ad1db2a8663bbfdc40c8">def initialize!(group=:default) #:nodoc:
+<textarea class="clipboard-content" id="clipboard-a6f6e26c531ab76536ba69bfdc9c72ac">def initialize!(group=:default) #:nodoc:
   raise "Application has been already initialized." if @initialized
   run_initializers(group, self)
   @initialized = true
   self
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fcfe34d5bf59ad1db2a8663bbfdc40c8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a6f6e26c531ab76536ba69bfdc9c72ac">Copiar</button>
 </div>
 <p>As you can see, you can only initialize an app once. The initializers are run through
 the <code>run_initializers</code> method which is defined in <code>railties/lib/rails/initializable.rb</code>:</p><div class="code_container">
@@ -1031,7 +1031,7 @@ the <code>run_initializers</code> method which is defined in <code>railties/lib/
   <span class="vi">@ran</span> <span class="o">=</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2478faf356ad2b1d0837416d7d543b3d">def run_initializers(group=:default, *args)
+<textarea class="clipboard-content" id="clipboard-66bcd0c5a92fa37344e0a774964e8860">def run_initializers(group=:default, *args)
   return if instance_variable_defined?(:@ran)
   initializers.tsort_each do |initializer|
     initializer.run(*args) if initializer.belongs_to?(group)
@@ -1039,7 +1039,7 @@ the <code>run_initializers</code> method which is defined in <code>railties/lib/
   @ran = true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2478faf356ad2b1d0837416d7d543b3d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-66bcd0c5a92fa37344e0a774964e8860">Copiar</button>
 </div>
 <p>The <code>run_initializers</code> code itself is tricky. What Rails is doing here is
 traversing all the class ancestors looking for those that respond to an
@@ -1070,7 +1070,7 @@ itself and are run between the <code>bootstrap</code> and <code>finishers</code>
     <span class="no">Rack</span><span class="o">::</span><span class="no">Builder</span><span class="p">.</span><span class="nf">new_from_string</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">options</span><span class="p">[</span><span class="ss">:builder</span><span class="p">])</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f3df7dde26302ecd14182e6b703d1e0e">def app
+<textarea class="clipboard-content" id="clipboard-b934a6b949df794141457abfdccf210c">def app
   @app ||= options[:builder] ? build_app_from_string : build_app_and_options_from_config
 end
 ...
@@ -1089,7 +1089,7 @@ private
     Rack::Builder.new_from_string(self.options[:builder])
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f3df7dde26302ecd14182e6b703d1e0e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b934a6b949df794141457abfdccf210c">Copiar</button>
 </div>
 <p>At this point <code>app</code> is the Rails app itself (a middleware), and what
 happens next is Rack will call all the provided middlewares:</p><div class="code_container">
@@ -1103,7 +1103,7 @@ happens next is Rack will call all the provided middlewares:</p><div class="code
   <span class="n">app</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-25c56705b1beed7262bc24fe99fdfa49">def build_app(app)
+<textarea class="clipboard-content" id="clipboard-1320aff0eddfa0776a628cfa1de53119">def build_app(app)
   middleware[options[:environment]].reverse_each do |middleware|
     middleware = middleware.call(self) if middleware.respond_to?(:call)
     next unless middleware
@@ -1113,15 +1113,15 @@ happens next is Rack will call all the provided middlewares:</p><div class="code
   app
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-25c56705b1beed7262bc24fe99fdfa49">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1320aff0eddfa0776a628cfa1de53119">Copiar</button>
 </div>
 <p>Remember, <code>build_app</code> was called (by <code>wrapped_app</code>) in the last line of <code>Server#start</code>.
 Here's how it looked like when we left:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">server</span><span class="p">.</span><span class="nf">run</span> <span class="n">wrapped_app</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">blk</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d49fe287f5bf1f9a66929cb11f3f4427">server.run wrapped_app, options, &amp;blk
+<textarea class="clipboard-content" id="clipboard-3071200ddfc7f9b8aab620ce60e512dc">server.run wrapped_app, options, &amp;blk
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d49fe287f5bf1f9a66929cb11f3f4427">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3071200ddfc7f9b8aab620ce60e512dc">Copiar</button>
 </div>
 <p>At this point, the implementation of <code>server.run</code> will depend on the
 server you're using. For example, if you were using Puma, here's what
@@ -1168,7 +1168,7 @@ the <code>run</code> method would look like:</p><div class="code_container">
 
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-58e6fc20aa9a268333b280cf64593c0c">...
+<textarea class="clipboard-content" id="clipboard-51a2a011f64e24381561606de7ffbb05">...
 DEFAULT_OPTIONS = {
   :Host =&gt; '0.0.0.0',
   :Port =&gt; 8080,
@@ -1210,7 +1210,7 @@ def self.run(app, options = {})
 
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-58e6fc20aa9a268333b280cf64593c0c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-51a2a011f64e24381561606de7ffbb05">Copiar</button>
 </div>
 <p>We won't dig into the server configuration itself, but this is
 the last piece of our journey in the Rails initialization process.</p><p>This high level overview will help you understand when your code is

@@ -323,16 +323,16 @@ quaisquer <em>jobs</em> na fila serão derrubados ao reinicializar.</p></div><h3
 create    test/jobs/guests_cleanup_job_test.rb
 create  app/jobs/guests_cleanup_job.rb
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-01fbf0c1409c45366342948140b736a8">rails generate job guests_cleanup
+<textarea class="clipboard-content" id="clipboard-1c431f0af54080819c79aac419078e74">rails generate job guests_cleanup
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-01fbf0c1409c45366342948140b736a8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1c431f0af54080819c79aac419078e74">Copiar</button>
 </div>
 <p>Você também pode criar um <em>job</em> que será executado em uma fila específica:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>generate job guests_cleanup <span class="nt">--queue</span> urgent
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f03772a91d3c0ac3dd4fa92aca5fe951">rails generate job guests_cleanup --queue urgent
+<textarea class="clipboard-content" id="clipboard-4e16e4ecb9ce8610640308afd4e956e9">rails generate job guests_cleanup --queue urgent
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f03772a91d3c0ac3dd4fa92aca5fe951">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4e16e4ecb9ce8610640308afd4e956e9">Copiar</button>
 </div>
 <p>Se você não quiser usar um gerador, você pode criar seu próprio arquivo dentro de
 <code>app/jobs</code>, apenas certifique-se de que herda de <code>ApplicationJob</code>.</p><p>Aqui está a aparência de um <em>job</em>:</p><div class="code_container">
@@ -344,7 +344,7 @@ create  app/jobs/guests_cleanup_job.rb
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b7d8e88b42b70c68e584648462d30649">class GuestsCleanupJob &lt; ApplicationJob
+<textarea class="clipboard-content" id="clipboard-5a30009dcb803c6425dd82cdf781bd5c">class GuestsCleanupJob &lt; ApplicationJob
   queue_as :default
 
   def perform(*guests)
@@ -352,47 +352,47 @@ create  app/jobs/guests_cleanup_job.rb
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b7d8e88b42b70c68e584648462d30649">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5a30009dcb803c6425dd82cdf781bd5c">Copiar</button>
 </div>
 <p>Observe que você pode definir <code>perform</code> com quantos argumentos quiser.</p><h4 id="enfileirar-o-job"><a class="anchorlink" href="#enfileirar-o-job">3.2 Enfileirar o <em>Job</em></a></h4><p>Enfileirar um <em>job</em> assim:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Enfileirar um _job_ para ser executado assim que o sistema de enfileiramento estiver</span>
 <span class="c1"># livre.</span>
 <span class="no">GuestsCleanupJob</span><span class="p">.</span><span class="nf">perform_later</span> <span class="n">guest</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e4d5e624877f9e03cdc92405ce74ef1c"># Enfileirar um _job_ para ser executado assim que o sistema de enfileiramento estiver
+<textarea class="clipboard-content" id="clipboard-f77ca1b0a0989eab7596fb0c627887fc"># Enfileirar um _job_ para ser executado assim que o sistema de enfileiramento estiver
 # livre.
 GuestsCleanupJob.perform_later guest
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e4d5e624877f9e03cdc92405ce74ef1c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f77ca1b0a0989eab7596fb0c627887fc">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Enfileirar um _job_ para ser executado amanhã ao meio-dia.</span>
 <span class="no">GuestsCleanupJob</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="ss">wait_until: </span><span class="no">Date</span><span class="p">.</span><span class="nf">tomorrow</span><span class="p">.</span><span class="nf">noon</span><span class="p">).</span><span class="nf">perform_later</span><span class="p">(</span><span class="n">guest</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-22bc7206933780b0c4c491acd4f03b1e"># Enfileirar um _job_ para ser executado amanhã ao meio-dia.
+<textarea class="clipboard-content" id="clipboard-cd55a7a2af819d1608398bb6ae23a86d"># Enfileirar um _job_ para ser executado amanhã ao meio-dia.
 GuestsCleanupJob.set(wait_until: Date.tomorrow.noon).perform_later(guest)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-22bc7206933780b0c4c491acd4f03b1e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cd55a7a2af819d1608398bb6ae23a86d">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Enfileirar um _job_ para ser executado em 1 semana a partir de agora.</span>
 <span class="no">GuestsCleanupJob</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="ss">wait: </span><span class="mi">1</span><span class="p">.</span><span class="nf">week</span><span class="p">).</span><span class="nf">perform_later</span><span class="p">(</span><span class="n">guest</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-38c57cf29ac89cd320b45789abd8e927"># Enfileirar um _job_ para ser executado em 1 semana a partir de agora.
+<textarea class="clipboard-content" id="clipboard-9eb7e1415ae0c9de28a48e3780314784"># Enfileirar um _job_ para ser executado em 1 semana a partir de agora.
 GuestsCleanupJob.set(wait: 1.week).perform_later(guest)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-38c57cf29ac89cd320b45789abd8e927">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9eb7e1415ae0c9de28a48e3780314784">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># `perform_now` e `perform_later` irão chamar `perform` por baixo dos panos, então</span>
 <span class="c1"># você pode passar quantos argumentos forem definidos no último.</span>
 <span class="no">GuestsCleanupJob</span><span class="p">.</span><span class="nf">perform_later</span><span class="p">(</span><span class="n">guest1</span><span class="p">,</span> <span class="n">guest2</span><span class="p">,</span> <span class="ss">filter: </span><span class="s1">'some_filter'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7a40d4337758977ccc7c1647709910e4"># `perform_now` e `perform_later` irão chamar `perform` por baixo dos panos, então
+<textarea class="clipboard-content" id="clipboard-b8cd6c462a0ea0916690528b204c29c3"># `perform_now` e `perform_later` irão chamar `perform` por baixo dos panos, então
 # você pode passar quantos argumentos forem definidos no último.
 GuestsCleanupJob.perform_later(guest1, guest2, filter: 'some_filter')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7a40d4337758977ccc7c1647709910e4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b8cd6c462a0ea0916690528b204c29c3">Copiar</button>
 </div>
 <p>É isso aí!</p><h3 id="execucao-de-job"><a class="anchorlink" href="#execucao-de-job">4 Execução de <em>Job</em></a></h3><p>Para enfileirar e executar <em>jobs</em> em produção você precisa configurar um <em>backend</em> de filas,
 ou seja, você precisa decidir por uma <em>lib</em> de enfileiramento de terceiros que o Rails deve usar,
@@ -412,7 +412,7 @@ consulte a documentação da API para <a href="https://api.rubyonrails.org/v6.0.
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-451527d49bc32184f54dc334c4eed750"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-6e62ff382fffee796d5261ae1dcda03b"># config/application.rb
 module YourApp
   class Application &lt; Rails::Application
     # Be sure to have the adapter's gem in your Gemfile
@@ -422,7 +422,7 @@ module YourApp
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-451527d49bc32184f54dc334c4eed750">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6e62ff382fffee796d5261ae1dcda03b">Copiar</button>
 </div>
 <p>Você também pode configurar seu <em>backend</em> por um <em>job</em> base.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">GuestsCleanupJob</span> <span class="o">&lt;</span> <span class="no">ApplicationJob</span>
@@ -433,7 +433,7 @@ end
 <span class="c1"># Now your job will use `resque` as its backend queue adapter overriding what</span>
 <span class="c1"># was configured in `config.active_job.queue_adapter`.</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-05ab2ec8028518a2034af8b8cbcac77f">class GuestsCleanupJob &lt; ApplicationJob
+<textarea class="clipboard-content" id="clipboard-3c00414aa2c224444450cb5caaccc7e6">class GuestsCleanupJob &lt; ApplicationJob
   self.queue_adapter = :resque
   #....
 end
@@ -441,7 +441,7 @@ end
 # Now your job will use `resque` as its backend queue adapter overriding what
 # was configured in `config.active_job.queue_adapter`.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-05ab2ec8028518a2034af8b8cbcac77f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3c00414aa2c224444450cb5caaccc7e6">Copiar</button>
 </div>
 <h4 id="iniciando-o-backend"><a class="anchorlink" href="#iniciando-o-backend">4.3 Iniciando o <em>Backend</em></a></h4><p>Uma vez que os <em>jobs</em> são executados em paralelo à sua aplicação Rails, a maioria
 das bibliotecas de filas exigem que você inicie um serviço de enfileiramento específico
@@ -462,12 +462,12 @@ o <em>job</em> para executar em uma fila específica:</p><div class="code_contai
   <span class="c1">#....</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fb92af67931d80d935df83835d34b5fc">class GuestsCleanupJob &lt; ApplicationJob
+<textarea class="clipboard-content" id="clipboard-3c5d08bdf32ba04e54d4c8a7afee895d">class GuestsCleanupJob &lt; ApplicationJob
   queue_as :low_priority
   #....
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fb92af67931d80d935df83835d34b5fc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3c5d08bdf32ba04e54d4c8a7afee895d">Copiar</button>
 </div>
 <p>Você pode prefixar o nome da fila para todos os <em>jobs</em> usando
 <code>config.active_job.queue_name_prefix</code> in <code>application.rb</code>:</p><div class="code_container">
@@ -488,7 +488,7 @@ end
 <span class="c1"># ambiente de produção e na staging_low_priority</span>
 <span class="c1"># no seu ambiente de desenvolvimento</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c79ad18c6c14afbe5218766047a3e36d"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-af38ae9e76747c8c4408d03cca4e8e3f"># config/application.rb
 module YourApp
   class Application &lt; Rails::Application
     config.active_job.queue_name_prefix = Rails.env
@@ -505,7 +505,7 @@ end
 # ambiente de produção e na staging_low_priority
 # no seu ambiente de desenvolvimento
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c79ad18c6c14afbe5218766047a3e36d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-af38ae9e76747c8c4408d03cca4e8e3f">Copiar</button>
 </div>
 <p>O prefixo delimitador padrão de nome de fila é '_'. Isso pode ser alterado configurando o
 <code>config.active_job.queue_name_delimiter</code> no <code>application.rb</code>:</p><div class="code_container">
@@ -527,7 +527,7 @@ end
 <span class="c1"># ambiente de produção e na staging.low.priority</span>
 <span class="c1"># no seu ambiente de desenvolvimento</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-317db0340d3067d3de999fcf46afb6fa"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-0cc5c59371b32af80a31023624ee75df"># config/application.rb
 module YourApp
   class Application &lt; Rails::Application
     config.active_job.queue_name_prefix = Rails.env
@@ -545,15 +545,15 @@ end
 # ambiente de produção e na staging.low.priority
 # no seu ambiente de desenvolvimento
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-317db0340d3067d3de999fcf46afb6fa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0cc5c59371b32af80a31023624ee75df">Copiar</button>
 </div>
 <p>Se você quiser mais controle em qual fila um <em>job</em> será executado, você pode passar
 uma opção <code>:queue</code> ao <code>#set</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">MyJob</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="ss">queue: :another_queue</span><span class="p">).</span><span class="nf">perform_later</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9305157e70a821b6a589e4df844afd5b">MyJob.set(queue: :another_queue).perform_later(record)
+<textarea class="clipboard-content" id="clipboard-ee882993fe326ba25a220179aee20ab8">MyJob.set(queue: :another_queue).perform_later(record)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9305157e70a821b6a589e4df844afd5b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ee882993fe326ba25a220179aee20ab8">Copiar</button>
 </div>
 <p>Para controlar a fila a partir do nível do <em>job</em>, você pode passar um bloco para <code>#queue_as</code>.
 O bloco será executado no contexto do <em>job</em> (o que te permite acessar <code>self.arguments</code>) e você
@@ -575,7 +575,7 @@ deve retornar o nome da fila:</p><div class="code_container">
 
 <span class="no">ProcessVideoJob</span><span class="p">.</span><span class="nf">perform_later</span><span class="p">(</span><span class="no">Video</span><span class="p">.</span><span class="nf">last</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aa77121c3ed42065b9c3e199226ee1b1">class ProcessVideoJob &lt; ApplicationJob
+<textarea class="clipboard-content" id="clipboard-fc9cc49bd006a2565b6c3f03ef2fd808">class ProcessVideoJob &lt; ApplicationJob
   queue_as do
     video = self.arguments.first
     if video.owner.premium?
@@ -592,7 +592,7 @@ end
 
 ProcessVideoJob.perform_later(Video.last)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aa77121c3ed42065b9c3e199226ee1b1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fc9cc49bd006a2565b6c3f03ef2fd808">Copiar</button>
 </div>
 <div class="note"><p>Tenha certeza de que o seu <em>backend</em> de fila "escuta" o nome da fila.
 Para alguns <em>backends</em> você precisará especificar as filas a serem "ouvidas".</p></div><h3 id="callbacks"><a class="anchorlink" href="#callbacks">6 <em>Callbacks</em></a></h3><p>O <em>Active Job</em> fornece Hooks para disparar lógica durante o ciclo de vida de um <em>Job</em>.
@@ -616,7 +616,7 @@ como <em>callbacks</em>:</p><div class="code_container">
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-72fc96ace77e4038271dacdc0774030f">class GuestsCleanupJob &lt; ApplicationJob
+<textarea class="clipboard-content" id="clipboard-55e05aba4e878cb08e687f47c2239228">class GuestsCleanupJob &lt; ApplicationJob
   queue_as :default
 
   around_perform :around_cleanup
@@ -633,7 +633,7 @@ como <em>callbacks</em>:</p><div class="code_container">
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-72fc96ace77e4038271dacdc0774030f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-55e05aba4e878cb08e687f47c2239228">Copiar</button>
 </div>
 <p>Os métodos macro de classe podem também receber um bloco. Considere usar esse estilo,
 se o código dentro do bloco for tão pequeno que cabe numa única linha.
@@ -642,11 +642,11 @@ Por exemplo, você pode enviar métricas para cada <em>job</em> enfileirado:</p>
   <span class="n">before_enqueue</span> <span class="p">{</span> <span class="o">|</span><span class="n">job</span><span class="o">|</span> <span class="vg">$statsd</span><span class="p">.</span><span class="nf">increment</span> <span class="s2">"</span><span class="si">#{</span><span class="n">job</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">underscore</span><span class="si">}</span><span class="s2">.enqueue"</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f74390a1d76837d5023a88b44cfc69f0">class ApplicationJob &lt; ActiveJob::Base
+<textarea class="clipboard-content" id="clipboard-78997f2f63aa8d6ef2ffa1494db53b43">class ApplicationJob &lt; ActiveJob::Base
   before_enqueue { |job| $statsd.increment "#{job.class.name.underscore}.enqueue" }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f74390a1d76837d5023a88b44cfc69f0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-78997f2f63aa8d6ef2ffa1494db53b43">Copiar</button>
 </div>
 <h4 id="callbacks-disponiveis"><a class="anchorlink" href="#callbacks-disponiveis">6.1 <em>Callbacks</em> disponíveis</a></h4>
 <ul>
@@ -666,13 +666,13 @@ integrado com o <em>Action Mailer</em>, o que te permite enviar e-mails assincro
 <span class="c1"># If you want to send the email through Active Job use #deliver_later</span>
 <span class="no">UserMailer</span><span class="p">.</span><span class="nf">welcome</span><span class="p">(</span><span class="vi">@user</span><span class="p">).</span><span class="nf">deliver_later</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a58ea9052b68f432814c49fd57fd2eb2"># If you want to send the email now use #deliver_now
+<textarea class="clipboard-content" id="clipboard-97eb625dec17cc7a32d44043639cdae7"># If you want to send the email now use #deliver_now
 UserMailer.welcome(@user).deliver_now
 
 # If you want to send the email through Active Job use #deliver_later
 UserMailer.welcome(@user).deliver_later
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a58ea9052b68f432814c49fd57fd2eb2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-97eb625dec17cc7a32d44043639cdae7">Copiar</button>
 </div>
 <div class="note"><p>Se você usar uma fila assíncrona de uma <em>Rake task</em> (por exemplo, para enviar um e-mail
 usando <code>.deliver_later</code>), geralmente não irá funcionar porque a <em>Rake</em> irá provavelmente
@@ -684,11 +684,11 @@ enviar e-mails assincronamente:</p><div class="code_container">
 
 <span class="no">UserMailer</span><span class="p">.</span><span class="nf">welcome</span><span class="p">(</span><span class="vi">@user</span><span class="p">).</span><span class="nf">deliver_later</span> <span class="c1"># O e-mail será localizado para Esperanto.</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d5adb03e233ca829407e4932d44870d2">I18n.locale = :eo
+<textarea class="clipboard-content" id="clipboard-55c018008a3f336170b57dce1a39c8b2">I18n.locale = :eo
 
 UserMailer.welcome(@user).deliver_later # O e-mail será localizado para Esperanto.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d5adb03e233ca829407e4932d44870d2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-55c018008a3f336170b57dce1a39c8b2">Copiar</button>
 </div>
 <h3 id="tipos-suportados-por-argumentos"><a class="anchorlink" href="#tipos-suportados-por-argumentos">9 Tipos suportados por argumentos</a></h3><p>O <em>ActiveJob</em> suporta os seguintes tipos de argumentos por padrão:</p>
 <ul>
@@ -714,14 +714,14 @@ Anteriormente, os <em>jobs</em> eram feitos dessa forma:</p><div class="code_con
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a0b2b2285e76c500faa9487e0e798476">class TrashableCleanupJob &lt; ApplicationJob
+<textarea class="clipboard-content" id="clipboard-f573e15c9d7770a5f2f380462cdf0df2">class TrashableCleanupJob &lt; ApplicationJob
   def perform(trashable_class, trashable_id, depth)
     trashable = trashable_class.constantize.find(trashable_id)
     trashable.cleanup(depth)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a0b2b2285e76c500faa9487e0e798476">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f573e15c9d7770a5f2f380462cdf0df2">Copiar</button>
 </div>
 <p>Agora são feitos dessa forma:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">TrashableCleanupJob</span> <span class="o">&lt;</span> <span class="no">ApplicationJob</span>
@@ -730,13 +730,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-461cb86aab14e2ad49b70dcd890d7f1d">class TrashableCleanupJob &lt; ApplicationJob
+<textarea class="clipboard-content" id="clipboard-365d5f9a44afc80971d26960b4cab832">class TrashableCleanupJob &lt; ApplicationJob
   def perform(trashable, depth)
     trashable.cleanup(depth)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-461cb86aab14e2ad49b70dcd890d7f1d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-365d5f9a44afc80971d26960b4cab832">Copiar</button>
 </div>
 <p>Isso funciona com qualquer classe que está mesclada em <code>GlobalID::Identification</code> que, por padrão, já está mesclada dentro das classes <em>Active Record</em>.</p><h4 id="serializers"><a class="anchorlink" href="#serializers">9.2 <em>Serializers</em></a></h4><p>Você pode ampliar a lista de tipos de argumentos suportados. Só é preciso definir seu próprio <em>serializer</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">MoneySerializer</span> <span class="o">&lt;</span> <span class="no">ActiveJob</span><span class="o">::</span><span class="no">Serializers</span><span class="o">::</span><span class="no">ObjectSerializer</span>
@@ -761,7 +761,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e572571d884fb24423fea95a5b88c72a">class MoneySerializer &lt; ActiveJob::Serializers::ObjectSerializer
+<textarea class="clipboard-content" id="clipboard-05004775caab4a85de52655452bcf084">class MoneySerializer &lt; ActiveJob::Serializers::ObjectSerializer
   # Checa se um argumento pode ser serializado a partir desse serializer.
   def serialize?(argument)
     argument.is_a? Money
@@ -783,14 +783,14 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e572571d884fb24423fea95a5b88c72a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-05004775caab4a85de52655452bcf084">Copiar</button>
 </div>
 <p>e adicionar o serializer na lista:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">active_job</span><span class="p">.</span><span class="nf">custom_serializers</span> <span class="o">&lt;&lt;</span> <span class="no">MoneySerializer</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1844c6326df04d7524efd71990f455a7">Rails.application.config.active_job.custom_serializers &lt;&lt; MoneySerializer
+<textarea class="clipboard-content" id="clipboard-a9d5133da7f465251c4017e8cdbcd09c">Rails.application.config.active_job.custom_serializers &lt;&lt; MoneySerializer
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1844c6326df04d7524efd71990f455a7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a9d5133da7f465251c4017e8cdbcd09c">Copiar</button>
 </div>
 <h3 id="excecoes"><a class="anchorlink" href="#excecoes">10 Exceções</a></h3><p>Os <em>Active Jobs</em> fornecem uma maneira de capturar exceções criadas durante a execução do <em>job</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">GuestsCleanupJob</span> <span class="o">&lt;</span> <span class="no">ApplicationJob</span>
@@ -805,7 +805,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d65138f71a791a7f57d73587d6b28b53">class GuestsCleanupJob &lt; ApplicationJob
+<textarea class="clipboard-content" id="clipboard-5b6872849fa7f171876081e0645aefd6">class GuestsCleanupJob &lt; ApplicationJob
   queue_as :default
 
   rescue_from(ActiveRecord::RecordNotFound) do |exception|
@@ -817,7 +817,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d65138f71a791a7f57d73587d6b28b53">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5b6872849fa7f171876081e0645aefd6">Copiar</button>
 </div>
 <h4 id="reexecucao-ou-descarte-de-jobs-falhos"><a class="anchorlink" href="#reexecucao-ou-descarte-de-jobs-falhos">10.1 Reexecução ou Descarte de <em>jobs</em> falhos</a></h4><p>É possível também reexecutar ou descartar um <em>job</em> se uma exceção for gerada durante a execução. Por exemplo:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">RemoteServiceJob</span> <span class="o">&lt;</span> <span class="no">ApplicationJob</span>
@@ -830,7 +830,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6b07ddedd585d95be5c12710ba3197d6">class RemoteServiceJob &lt; ApplicationJob
+<textarea class="clipboard-content" id="clipboard-59466a52ff9f3bae5b42b5b87fa6ce1f">class RemoteServiceJob &lt; ApplicationJob
   retry_on CustomAppException # defaults to 3s wait, 5 attempts
 
   discard_on ActiveJob::DeserializationError
@@ -840,7 +840,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6b07ddedd585d95be5c12710ba3197d6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-59466a52ff9f3bae5b42b5b87fa6ce1f">Copiar</button>
 </div>
 <p>Para mais detalhes Veja a Documentação da API para <a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActiveJob/Exceptions/ClassMethods.html">ActiveJob::Exceções</a>.</p><h4 id="desserializacao"><a class="anchorlink" href="#desserializacao">10.2 Desserialização</a></h4><p><em>GlobalID</em> permite serializar todos os objetos do <em>Active Record</em> passado para o <code>#perform</code>.</p><p>Se um registro for deletado após o <em>job</em> ser enfileirado mas antes do método <code>#perform</code> ser chamado, o <em>Active Job</em> vai lançar a exceção <code>ActiveJob::DeserializationError</code>.</p><h3 id="testando-os-jobs"><a class="anchorlink" href="#testando-os-jobs">11 Testando os <em>Jobs</em></a></h3><p>Você pode encontrar instruções mais detalhadas sobre como testar seus <em>jobs</em> no
 <a href="testing.html#testing-jobs">guia de teste</a>.</p>

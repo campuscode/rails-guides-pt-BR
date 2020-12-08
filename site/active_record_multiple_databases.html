@@ -304,12 +304,12 @@ new database for some new tables we're adding. The name of the new database will
   <span class="na">user</span><span class="pi">:</span> <span class="s">root</span>
   <span class="na">adapter</span><span class="pi">:</span> <span class="s">mysql</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fa489a4092c87bce64cdf016a1fbb8d6">production:
+<textarea class="clipboard-content" id="clipboard-4fe3226878f9c2e3a0e4c715c1c4f2d0">production:
   database: my_primary_database
   user: root
   adapter: mysql
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fa489a4092c87bce64cdf016a1fbb8d6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4fe3226878f9c2e3a0e4c715c1c4f2d0">Copiar</button>
 </div>
 <p>Let's add a replica for the primary, a new writer called animals and a replica for that
 as well. To do this we need to change our <code>database.yml</code> from a 2-tier to a 3-tier config.</p><div class="code_container">
@@ -334,7 +334,7 @@ as well. To do this we need to change our <code>database.yml</code> from a 2-tie
     <span class="na">adapter</span><span class="pi">:</span> <span class="s">mysql</span>
     <span class="na">replica</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-727aa3767259f611f84898e7f331e68b">production:
+<textarea class="clipboard-content" id="clipboard-89cfef5c5047b1a1a430864c728c1d0b">production:
   primary:
     database: my_primary_database
     user: root
@@ -355,7 +355,7 @@ as well. To do this we need to change our <code>database.yml</code> from a 2-tie
     adapter: mysql
     replica: true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-727aa3767259f611f84898e7f331e68b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-89cfef5c5047b1a1a430864c728c1d0b">Copiar</button>
 </div>
 <p>When using multiple databases there are a few important settings.</p><p>First, the database name for the primary and replica should be the same because they contain
 the same data. Second, the username for the primary and replica should be different, and the
@@ -371,13 +371,13 @@ need to create a new abstract class and connect to the animals databases.</p><di
   <span class="n">connects_to</span> <span class="ss">database: </span><span class="p">{</span> <span class="ss">writing: :animals</span><span class="p">,</span> <span class="ss">reading: :animals_replica</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7932f2c6caf33531f6ae737f04d221ab">class AnimalsBase &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-3010e6c538085b2973ffd542f9513f54">class AnimalsBase &lt; ApplicationRecord
   self.abstract_class = true
 
   connects_to database: { writing: :animals, reading: :animals_replica }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7932f2c6caf33531f6ae737f04d221ab">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3010e6c538085b2973ffd542f9513f54">Copiar</button>
 </div>
 <p> Then we need to
 update <code>ApplicationRecord</code> to be aware of our new replica.</p><div class="code_container">
@@ -387,13 +387,13 @@ update <code>ApplicationRecord</code> to be aware of our new replica.</p><div cl
   <span class="n">connects_to</span> <span class="ss">database: </span><span class="p">{</span> <span class="ss">writing: :primary</span><span class="p">,</span> <span class="ss">reading: :primary_replica</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c33aaf4917265b37c2f105c6798d05ac">class ApplicationRecord &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-26e556ee249164809ee4fe0a4a5e04a3">class ApplicationRecord &lt; ActiveRecord::Base
   self.abstract_class = true
 
   connects_to database: { writing: :primary, reading: :primary_replica }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c33aaf4917265b37c2f105c6798d05ac">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-26e556ee249164809ee4fe0a4a5e04a3">Copiar</button>
 </div>
 <p>By default Rails expects the database roles to be <code>writing</code> and <code>reading</code> for the primary
 and replica respectively. If you have a legacy system you may already have roles set up that
@@ -401,10 +401,10 @@ you don't want to change. In that case you can set a new role name in your appli
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">writing_role</span> <span class="o">=</span> <span class="ss">:default</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">reading_role</span> <span class="o">=</span> <span class="ss">:readonly</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b5ec23fc7c77c543ddfc202684300f83">config.active_record.writing_role = :default
+<textarea class="clipboard-content" id="clipboard-cefd8043ecbfe23461848de58219b705">config.active_record.writing_role = :default
 config.active_record.reading_role = :readonly
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b5ec23fc7c77c543ddfc202684300f83">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cefd8043ecbfe23461848de58219b705">Copiar</button>
 </div>
 <p>It's important to connect to your database in a single model and then inherit from that model
 for the tables rather than connect multiple individual models to the same database. Database
@@ -426,7 +426,7 @@ rails db:migrate:status                  # Display status of migrations
 rails db:migrate:status:animals          # Display status of migrations for animals database
 rails db:migrate:status:primary          # Display status of migrations for primary database
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d4babc5955f1c727400109cc054ba48c">$ rails -T
+<textarea class="clipboard-content" id="clipboard-cb39e9e1476868a60a1a7112372258e7">$ rails -T
 rails db:create                          # Creates the database from DATABASE_URL or config/database.yml for the ...
 rails db:create:animals                  # Create animals database for current environment
 rails db:create:primary                  # Create primary database for current environment
@@ -440,7 +440,7 @@ rails db:migrate:status                  # Display status of migrations
 rails db:migrate:status:animals          # Display status of migrations for animals database
 rails db:migrate:status:primary          # Display status of migrations for primary database
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d4babc5955f1c727400109cc054ba48c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cb39e9e1476868a60a1a7112372258e7">Copiar</button>
 </div>
 <p>Running a command like <code>rails db:create</code> will create both the primary and animals databases.
 Note that there is no command for creating the users and you'll need to do that manually
@@ -452,9 +452,9 @@ where to find the migrations.</p><p>For example the <code>animals</code> databas
 so that the file is generated in the correct directory. The command can be run like so:</p><div class="code_container">
 <pre><code class="highlight plaintext">$ rails g migration CreateDogs name:string --database animals
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0a05b8d95461f092c796a67200c1ab65">$ rails g migration CreateDogs name:string --database animals
+<textarea class="clipboard-content" id="clipboard-7acb45fea0f0fc1a69306d7445aa3f17">$ rails g migration CreateDogs name:string --database animals
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0a05b8d95461f092c796a67200c1ab65">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7acb45fea0f0fc1a69306d7445aa3f17">Copiar</button>
 </div>
 <h3 id="activating-automatic-connection-switching"><a class="anchorlink" href="#activating-automatic-connection-switching">3 Activating automatic connection switching</a></h3><p>Finally, in order to use the read-only replica in your application you'll need to activate
 the middleware for automatic switching.</p><p>Automatic switching allows the application to switch from the primary to replica or replica
@@ -467,11 +467,11 @@ lines in your application config.</p><div class="code_container">
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">DatabaseSelector</span><span class="o">::</span><span class="no">Resolver</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver_context</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">DatabaseSelector</span><span class="o">::</span><span class="no">Resolver</span><span class="o">::</span><span class="no">Session</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6441cd93ecde16d425c2d8db7db499b4">config.active_record.database_selector = { delay: 2.seconds }
+<textarea class="clipboard-content" id="clipboard-5981d90168603aed54d6758d475d37d6">config.active_record.database_selector = { delay: 2.seconds }
 config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
 config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6441cd93ecde16d425c2d8db7db499b4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5981d90168603aed54d6758d475d37d6">Copiar</button>
 </div>
 <p>Rails guarantees "read your own write" and will send your GET or HEAD request to the
 primary if it's within the <code>delay</code> window. By default the delay is set to 2 seconds. You
@@ -486,22 +486,22 @@ decide when to swap connections. You can write your own class:</p><div class="co
   <span class="c1"># code for your cookie class</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-42f1c6104104a469ee865dd4775be2da">class MyCookieResolver
+<textarea class="clipboard-content" id="clipboard-8efaac975a7dae9492e9a19d5907f3ce">class MyCookieResolver
   # code for your cookie class
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-42f1c6104104a469ee865dd4775be2da">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8efaac975a7dae9492e9a19d5907f3ce">Copiar</button>
 </div>
 <p>And then pass it to the middleware:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_selector</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">delay: </span><span class="mi">2</span><span class="p">.</span><span class="nf">seconds</span> <span class="p">}</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">DatabaseSelector</span><span class="o">::</span><span class="no">Resolver</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver_context</span> <span class="o">=</span> <span class="no">MyCookieResolver</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9ba07cb642820587113cf17056ec7298">config.active_record.database_selector = { delay: 2.seconds }
+<textarea class="clipboard-content" id="clipboard-913ee59a788dfcb23758523472d74092">config.active_record.database_selector = { delay: 2.seconds }
 config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
 config.active_record.database_resolver_context = MyCookieResolver
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9ba07cb642820587113cf17056ec7298">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-913ee59a788dfcb23758523472d74092">Copiar</button>
 </div>
 <h3 id="using-manual-connection-switching"><a class="anchorlink" href="#using-manual-connection-switching">4 Using manual connection switching</a></h3><p>There are some cases where you may want your application to connect to a primary or a replica
 and the automatic connection switching isn't adequate. For example, you may know that for a
@@ -512,11 +512,11 @@ need.</p><div class="code_container">
   <span class="c1"># all code in this block will be connected to the reading role</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-383e8a7bac34b790dd6d2ff99a79a058">ActiveRecord::Base.connected_to(role: :reading) do
+<textarea class="clipboard-content" id="clipboard-53825a0d9e1f037952fa58d733a3e160">ActiveRecord::Base.connected_to(role: :reading) do
   # all code in this block will be connected to the reading role
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-383e8a7bac34b790dd6d2ff99a79a058">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-53825a0d9e1f037952fa58d733a3e160">Copiar</button>
 </div>
 <p>The "role" in the <code>connected_to</code> call looks up the connections that are connected on that
 connection handler (or role). The <code>reading</code> connection handler will hold all the connections
