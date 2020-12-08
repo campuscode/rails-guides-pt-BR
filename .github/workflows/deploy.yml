@@ -2,11 +2,10 @@ name: Deploy
 
 on:
   pull_request:
-    types: [closed]
+    types: [open]
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
       GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
@@ -37,7 +36,7 @@ jobs:
           git config user.email "<>"
       - name: Commit site changes
         run: |
-          git remote add origin https://x-access-token:$GH_PERSONAL_ACCESS_TOKEN@github.com/${{ github.repository }}.git
+          git remote add origin https://$GITHUB_ACTOR:$GH_PERSONAL_ACCESS_TOKEN@github.com/${{ github.repository }}.git
           git add site/
           git commit -m "Build from commit ${GITHUB_SHA}"
           git push origin HEAD:site --force
