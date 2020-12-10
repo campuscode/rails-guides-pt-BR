@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Ruby on Rails 4.2 Release Notes
@@ -871,7 +872,7 @@ Please refer to the [Changelog][active-support] for detailed changes.
     `module Foo; extend ActiveSupport::Concern; end` boilerplate.
     ([Commit](https://github.com/rails/rails/commit/b16c36e688970df2f96f793a759365b248b582ad))
 
-*   New [guide](autoloading_and_reloading_constants.html) about constant autoloading and reloading.
+*   New [guide](autoloading_and_reloading_constants_classic_mode.html) about constant autoloading and reloading.
 
 Credits
 -------
