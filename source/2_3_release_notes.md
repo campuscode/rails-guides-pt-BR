@@ -415,7 +415,7 @@ select_datetime(DateTime.now, :prompt =>
 
 ### AssetTag Timestamp Caching
 
-You're likely familiar with Rails' practice of adding timestamps to static asset paths as a "cache buster." This helps ensure that stale copies of things like images and stylesheets don't get served out of the user's browser cache when you change them on the server. You can now modify this behavior with the `cache_asset_timestamps` configuration option for Action View. If you enable the cache, then Rails will calculate the timestamp once when it first serves an asset, and save that value. This means fewer (expensive) file system calls to serve static assets - but it also means that you can't modify any of the assets while the server is running and expect the changes to get picked up by clients.
+You're likely familiar with Rails' practice of adding timestamps to static asset paths as a "cache buster". This helps ensure that stale copies of things like images and stylesheets don't get served out of the user's browser cache when you change them on the server. You can now modify this behavior with the `cache_asset_timestamps` configuration option for Action View. If you enable the cache, then Rails will calculate the timestamp once when it first serves an asset, and save that value. This means fewer (expensive) file system calls to serve static assets - but it also means that you can't modify any of the assets while the server is running and expect the changes to get picked up by clients.
 
 ### Asset Hosts as Objects
 
@@ -520,8 +520,7 @@ XmlMini.backend = 'LibXML'
 The `Time` and `TimeWithZone` classes include an `xmlschema` method to return the time in an XML-friendly string. As of Rails 2.3, `TimeWithZone` supports the same argument for specifying the number of digits in the fractional second part of the returned string that `Time` does:
 
 ```ruby
->> Time.zone.now.xmlschema(6)
-=> "2009-01-16T13:00:06.13653Z"
+Time.zone.now.xmlschema(6) # => "2009-01-16T13:00:06.13653Z"
 ```
 
 * Lead Contributor: [Nicholas Dainty](http://www.workingwithrails.com/person/13536-nicholas-dainty)
@@ -561,8 +560,8 @@ Rails Metal is a new mechanism that provides superfast endpoints inside of your 
 
 Rails 2.3 incorporates Jeremy McAnally's [rg](https://github.com/jm/rg) application generator. What this means is that we now have template-based application generation built right into Rails; if you have a set of plugins you include in every application (among many other use cases), you can just set up a template once and use it over and over again when you run the `rails` command. There's also a rake task to apply a template to an existing application:
 
-```
-rake rails:template LOCATION=~/template.rb
+```bash
+$ rake rails:template LOCATION=~/template.rb
 ```
 
 This will layer the changes from the template on top of whatever code the project already contains.
