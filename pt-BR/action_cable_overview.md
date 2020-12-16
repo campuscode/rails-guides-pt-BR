@@ -718,12 +718,12 @@ config.action_cable.log_tags = [
 Para obter uma lista completa de todas as opções de configuração, consulte o
 classe `ActionCable::Server::Configuration`.
 
-## Running Standalone Cable Servers
+## Executando Servidores _Cable_ Autônomos
 
-### In App
+### Na Aplicação
 
-Action Cable can run alongside your Rails application. For example, to
-listen for WebSocket requests on `/websocket`, specify that path to
+O _Action Cable_ pode ser executado junto com sua aplicação Rails. Por exemplo, para
+escutar as requisições _WebSocket_ em `/websocket`, especifique esse caminho para
 `config.action_cable.mount_path`:
 
 ```ruby
@@ -733,19 +733,19 @@ class Application < Rails::Application
 end
 ```
 
-You can use `ActionCable.createConsumer()` to connect to the cable
-server if `action_cable_meta_tag` is invoked in the layout. Otherwise, A path is
-specified as first argument to `createConsumer` (e.g. `ActionCable.createConsumer("/websocket")`).
+Você pode usar `ActionCable.createConsumer()` para conectar ao 
+_cable server_ se `action_cable_meta_tag` for invocado no layout. Caso contrário, um caminho é
+especificado como primeiro argumento para `createConsumer` (e.g. `ActionCable.createConsumer("/websocket")`).
 
-For every instance of your server you create and for every worker your server
-spawns, you will also have a new instance of Action Cable, but the use of Redis
-keeps messages synced across connections.
+Para cada instância de seu servidor que você cria e para cada _worker_ que seu servidor
+instancia, você também terá uma nova instância do _Action Cable_, mas o uso do Redis
+mantém as mensagens sincronizadas entre as conexões.
 
-### Standalone
+### Autônomo
 
-The cable servers can be separated from your normal application server. It's
-still a Rack application, but it is its own Rack application. The recommended
-basic setup is as follows:
+Os _cable servers_ a cabo podem ser separados do servidor de aplicação normal. Este
+ainda é uma aplicação Rack, mas é sua própria aplicação Rack. O recomendado
+para a configuração básica é a seguinte:
 
 ```ruby
 # cable/config.ru
@@ -755,20 +755,20 @@ Rails.application.eager_load!
 run ActionCable.server
 ```
 
-Then you start the server using a binstub in `bin/cable` ala:
+Então você inicia o servidor usando um _binstub_ em `bin/cable` ala:
 
 ```
 #!/bin/bash
 bundle exec puma -p 28080 cable/config.ru
 ```
 
-The above will start a cable server on port 28080.
+O código irá iniciar um _cable server_ na porta 28080.
 
-### Notes
+### Notas
 
-The WebSocket server doesn't have access to the session, but it has
-access to the cookies. This can be used when you need to handle
-authentication. You can see one way of doing that with Devise in this [article](https://greg.molnar.io/blog/actioncable-devise-authentication/).
+O servidor WebSocket não tem acesso à sessão, mas tem
+acesso aos cookies. Isso pode ser usado quando você precisa lidar com
+autenticação. Você pode ver uma maneira de fazer isso com o Devise neste [artigo](https://greg.molnar.io/blog/actioncable-devise-authentication/).
 
 ## Dependências
 
