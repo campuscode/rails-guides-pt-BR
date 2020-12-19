@@ -15,8 +15,8 @@ Depois de ler este guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-O que é o Active Job ?
-----------------------
+O que é *Active Job*?
+---------------------
 
 O *Active Job* é um *framework* para declarar *jobs* e fazê-los executar em uma variedade de *backends* de fila. Estes *jobs* podem ser qualquer coisa, de limpezas programadas regularmente, a cobranças de despesas, a envio de emails. Qualquer coisa que possa ser cortada em pequenas unidades de trabalho e executadas paralelamente, sério. 
 
