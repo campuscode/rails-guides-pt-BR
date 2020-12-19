@@ -15,8 +15,8 @@ Depois de ler este guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-Introdução 
-------------
+O que é o Active Job ?
+----------------------
 
 O *Active Job* é um *framework* para declarar *jobs* e fazê-los executar em uma variedade de *backends* de fila. Estes *jobs* podem ser qualquer coisa, de limpezas programadas regularmente, a cobranças de despesas, a envio de emails. Qualquer coisa que possa ser cortada em pequenas unidades de trabalho e executadas paralelamente, sério. 
 
@@ -47,7 +47,7 @@ O *Active Job* fornece um gerador Rails para criar *jobs*. O seguinte criará um
 *job* em `app/jobs` (com um teste anexado em `test/jobs`):
 
 ```bash
-$ rails generate job guests_cleanup
+$ bin/rails generate job guests_cleanup
 invoke  test_unit
 create    test/jobs/guests_cleanup_job_test.rb
 create  app/jobs/guests_cleanup_job.rb
@@ -56,7 +56,7 @@ create  app/jobs/guests_cleanup_job.rb
 Você também pode criar um *job* que será executado em uma fila específica:
 
 ```bash
-$ rails generate job guests_cleanup --queue urgent
+$ bin/rails generate job guests_cleanup --queue urgent
 ```
 
 Se você não quiser usar um gerador, você pode criar seu próprio arquivo dentro de
@@ -163,6 +163,7 @@ Aqui está uma lista não abrangente de documentação:
 - [Sucker Punch](https://github.com/brandonhilkert/sucker_punch#active-job)
 - [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
 - [Delayed Job](https://github.com/collectiveidea/delayed_job#active-job)
+- [Que](https://github.com/que-rb/que#additional-rails-specific-setup)
 
 Filas
 -----
@@ -199,6 +200,19 @@ end
 # no seu ambiente de desenvolvimento
 ```
 
+Você também pode configurar o prefixo para cada *job*.
+
+```ruby
+class GuestsCleanupJob < ApplicationJob
+  queue_as :low_priority
+  self.queue_name_prefix = nil
+  #....
+end
+
+# Now your job's queue won't be prefixed, overriding what
+# was configured in `config.active_job.queue_name_prefix`.
+```
+
 O prefixo delimitador padrão de nome de fila é '\_'. Isso pode ser alterado configurando o
 `config.active_job.queue_name_delimiter` no `application.rb`:
 
@@ -217,9 +231,9 @@ class GuestsCleanupJob < ApplicationJob
   #....
 end
 
-# Agora seu job irá executar na fila production.low.priority no seu
-# ambiente de produção e na staging.low.priority
-# no seu ambiente de desenvolvimento
+# Agora seu job irá executar na fila production.low_priority no seu
+# ambiente de produção e na staging.low_priority
+# no seu ambiente de staging
 ```
 
 Se você quiser mais controle em qual fila um *job* será executado, você pode passar
@@ -353,6 +367,8 @@ O *ActiveJob* suporta os seguintes tipos de argumentos por padrão:
   - `Hash` (Keys should be of `String` or `Symbol` type)
   - `ActiveSupport::HashWithIndifferentAccess`
   - `Array`
+  - `Module`
+  - `Class`
 
 ### GlobalID
 
@@ -434,7 +450,11 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
+Se a exceção não for tratada dentro do job, como mostrado acima, então o job é reconhecido como "*failed* (falhado)"
+
 ### Reexecução ou Descarte de *jobs* falhos
+
+Um *job* que falhou não será executado novamente, exceto se configurado para fazer isso.
 
 É possível também reexecutar ou descartar um *job* se uma exceção for gerada durante a execução. Por exemplo:
 
