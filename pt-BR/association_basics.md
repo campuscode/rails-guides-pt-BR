@@ -86,20 +86,25 @@ Os Tipos de Associações
 
 O Rails suporta seis tipos de associações:
 
-* `belongs_to`
-* `has_one`
-* `has_many`
-* `has_many :through`
-* `has_one :through`
-* `has_and_belongs_to_many`
+* [`belongs_to`][]
+* [`has_one`][]
+* [`has_many`][]
+* [`has_many :through`][`has_many`]
+* [`has_one :through`][`has_one`]
+* [`has_and_belongs_to_many`][]
 
 As associações são implementadas usando chamadas _macro-style_, para que você possa adicionar declarativamente recursos aos seus _models_. Por exemplo, ao declarar que um _model_ `belongs_to` (pertence a outro), você instrui o Rails a manter as informações de [Primary Key](https://pt.wikipedia.org/wiki/Chave_prim%C3%A1ria)-[Foreign Key](https://pt.wikipedia.org/wiki/Chave_estrangeira) (Chave primária-Chave Estrangeira) entre instâncias dos dois _models_, e também obtém vários métodos úteis adicionados ao seu _model_.
 
 No restante deste guia, você aprenderá como declarar e usar as várias formas de associação. Mas primeiro, uma rápida introdução para as situações em que cada tipo de associação é apropriada.
 
+[`belongs_to`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to
+[`has_and_belongs_to_many`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_and_belongs_to_many
+[`has_many`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many
+[`has_one`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_one
+
 ### A Associação `belongs_to`
 
-Uma associação `belongs_to` configura uma conexão um-para-um com outro _model_, de modo que cada instância do _model_ declarante "pertença a" uma instância do outro _model_. Por exemplo, se sua aplicação incluir autores e livros, e cada livro pertencer a apenas um autor, você declarará o _model_ do livro da seguinte maneira:
+Uma associação [`belongs_to`][] configura uma conexão com outro _model_, de modo que cada instância do _model_ declarante "pertença a" uma instância do outro _model_. Por exemplo, se sua aplicação incluir autores e livros, e cada livro pertencer a apenas um autor, você declarará o _model_ do livro da seguinte maneira:
 
 ```ruby
 class Book < ApplicationRecord
@@ -114,7 +119,7 @@ NOTE: as associações `belongs_to` _devem_ usar o termo no singular. Se você u
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateBooks < ActiveRecord::Migration[5.0]
+class CreateBooks < ActiveRecord::Migration[6.0]
   def change
     create_table :authors do |t|
       t.string :name
@@ -130,9 +135,23 @@ class CreateBooks < ActiveRecord::Migration[5.0]
 end
 ```
 
+Quando usado sozinho, `belongs_to` produz uma conexão unidirecional um-para-um. Portanto, cada livro no exemplo acima "conhece" seu autor, mas os autores não sabem sobre seus livros.
+Para configurar uma [associação bidirecional](#associacoes-bidirecionais) - use `belongs_to` em combinação com `has_one` ou `has_many` no outro _model_.
+
+`belongs_to` não garante consistência de referência, portanto, dependendo do caso de uso, você também pode precisar adicionar uma restrição de chave estrangeira a nível de banco de dados na coluna de referência, assim:
+
+```ruby
+create_table :books do |t|
+  t.belongs_to :author, foreign_key: true
+  # ...
+end
+```
+
 ### A associação `has_one`
 
-Uma associação `has_one` também estabelece uma conexão um-para-um com outro _model_, mas com semânticas um pouco diferentes (e consequências). Essa associação indica que cada instância de um _model_ contém ou possui uma instância de outro _model_. Por exemplo, se cada fornecedor em sua aplicação possuir apenas uma conta, você vai declarar o _model_ de fornecedor da seguinte maneira:
+Uma associação [`has_one`][] indica que um outro _model_ tem uma referência a este _model_. Esse _model_ pode ser obtido por meio dessa associação.
+
+Por exemplo, se cada fornecedor (_supplier_) da sua aplicação tiver apenas uma conta, você declararia o _model_ de fornecedor desta forma:
 
 ```ruby
 class Supplier < ApplicationRecord
@@ -140,12 +159,14 @@ class Supplier < ApplicationRecord
 end
 ```
 
+A principal diferença do `belongs_to` é que a coluna do link `supplier_id` está localizada na outra tabela:
+
 ![Diagrama de Associação has_one](images/association_basics/has_one.png)
 
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateSuppliers < ActiveRecord::Migration[5.0]
+class CreateSuppliers < ActiveRecord::Migration[6.0]
   def change
     create_table :suppliers do |t|
       t.string :name
@@ -172,9 +193,12 @@ create_table :accounts do |t|
 end
 ```
 
+Esta relação pode ser [bidirecional](#associacoes-bidirecionais) quando usada em combinação com `belongs_to` no outro _model_.
+
 ### A Associação `has_many`
 
-Uma associação `has_many` indica uma conexão um-para-muitos com outro _model_. Você encontrará frequentemente essa associação no "outro lado" de uma associação `belongs_to`. Essa associação indica que cada instância do _model_ possui zero ou mais instâncias de outro _model_. Por exemplo, em uma aplicação que contém autores e livros, o _model_ do autor pode ser declarado assim:
+Uma associação [`has_many`][] é semelhante a `has_one`, mas indica uma conexão um-para-muitos com outro _model_. Você encontrará frequentemente essa associação no "outro lado" de uma associação `belongs_to`. Essa associação 
+indica que cada instância do _model_ possui zero ou mais instâncias de outro _model_. Por exemplo, em uma aplicação que contém autores e livros, o _model_ do autor pode ser declarado assim:
 
 ```ruby
 class Author < ApplicationRecord
@@ -189,7 +213,7 @@ NOTE: O nome do outro _model_ é pluralizado ao declarar uma associação `has_m
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateAuthors < ActiveRecord::Migration[5.0]
+class CreateAuthors < ActiveRecord::Migration[6.0]
   def change
     create_table :authors do |t|
       t.string :name
@@ -205,9 +229,19 @@ class CreateAuthors < ActiveRecord::Migration[5.0]
 end
 ```
 
+Dependendo do caso de uso, geralmente é uma boa ideia criar um índice não único e, opcionalmente,
+uma restrição de chave estrangeira na coluna do autor para a tabela de livros:
+
+```ruby
+create_table :books do |t|
+  t.belongs_to :author, index: true, foreign_key: true
+  # ...
+end
+```
+
 ### A Associação `has_many :through`
 
-Uma associação `has_many :through` é frequentemente usada para estabelecer uma conexão muitos-para-muitos com outro _model_. Essa associação indica que o _model_ declarado pode ser correspondido com zero ou mais instâncias de outro _model_, prosseguindo através (_through_) de um terceiro _model_. Por exemplo, considere uma prática médica em que os pacientes marcam consultas com médicos. As declarações de associação relevantes podem ter a seguinte aparência:
+Uma associação [`has_many :through`][`has_many`] é frequentemente usada para estabelecer uma conexão muitos-para-muitos com outro _model_. Essa associação indica que o _model_ declarado pode ser correspondido com zero ou mais instâncias de outro _model_, prosseguindo através (_through_) de um terceiro _model_. Por exemplo, considere uma prática médica em que os pacientes marcam consultas com médicos. As declarações de associação relevantes podem ter a seguinte aparência:
 
 ```ruby
 class Physician < ApplicationRecord
@@ -231,7 +265,7 @@ end
 A _migration_ correspondente parecerá assim:
 
 ```ruby
-class CreateAppointments < ActiveRecord::Migration[5.0]
+class CreateAppointments < ActiveRecord::Migration[6.0]
   def change
     create_table :physicians do |t|
       t.string :name
@@ -291,7 +325,7 @@ Com `through: :section` especificado, o Rails agora entenderá:
 
 ### A Associação `has_one :through`
 
-Uma Associação `has_one :through` estabelece uma conexão um-para-um com outro _model_. Essa associação indica
+Uma Associação [`has_one :through`][`has_one`] estabelece uma conexão um-para-um com outro _model_. Essa associação indica
 que o _model_ declarante pode ser combinado com uma instância de outro _model_, prosseguindo através(_through_) de um terceiro _model_.
 Por exemplo, se cada fornecedor tiver uma conta, e cada conta estiver associada a um histórico da conta, então o
 _model_ fornecedor poderia ficar assim:
@@ -317,7 +351,7 @@ end
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateAccountHistories < ActiveRecord::Migration[5.0]
+class CreateAccountHistories < ActiveRecord::Migration[6.0]
   def change
     create_table :suppliers do |t|
       t.string :name
@@ -341,7 +375,9 @@ end
 
 ### A Associação `has_and_belongs_to_many`
 
-Uma associação `has_and_belongs_to_many` cria uma conexão direta muitos-para-muitos com outro _model_, sem nenhum _model_ intermediário. Por exemplo, se sua aplicação incluir conjuntos e peças, com cada conjunto tendo muitas peças e cada peça aparecendo em muitos conjuntos, você poderá declarar os _model_ desta maneira:
+Uma associação [`has_and_belongs_to_many`][] cria uma conexão direta muitos-para-muitos com outro _model_, sem nenhum _model_ intermediário.
+Essa associação indica que cada instância do _model_ declarado se refere a zero ou mais instâncias do outro _model_
+Por exemplo, se sua aplicação incluir conjuntos e peças, com cada conjunto tendo muitas peças e cada peça aparecendo em muitos conjuntos, você poderá declarar os _model_ desta maneira:
 
 ```ruby
 class Assembly < ApplicationRecord
@@ -358,7 +394,7 @@ end
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateAssembliesAndParts < ActiveRecord::Migration[5.0]
+class CreateAssembliesAndParts < ActiveRecord::Migration[6.0]
   def change
     create_table :assemblies do |t|
       t.string :name
@@ -397,7 +433,7 @@ end
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateSuppliers < ActiveRecord::Migration[5.2]
+class CreateSuppliers < ActiveRecord::Migration[6.0]
   def change
     create_table :suppliers do |t|
       t.string :name
@@ -419,7 +455,7 @@ NOTE: O uso de `t.bigint :supplier_id` torna a nomeação da _foreign key_ óbvi
 
 ### Escolhendo entre `has_many :through` e `has_and_belongs_to_many`
 
-O Rails oferece duas maneiras diferentes de declarar um relacionamento muitos-para-muitos entre os _models_. A maneira mais simples é usar `has_and_belongs_to_many`, o que permite fazer a associação diretamente:
+O Rails oferece duas maneiras diferentes de declarar um relacionamento muitos-para-muitos entre os _models_. A primeira maneira é usar `has_and_belongs_to_many`, o que permite fazer a associação diretamente:
 
 ```ruby
 class Assembly < ApplicationRecord
@@ -479,7 +515,7 @@ Da mesma forma, você pode recuperar `@product.pictures`.
 Se você tem uma instância do _model_ `Fotos`, você pode chegar ao seu pai via `@picture.imageable`. Para fazer isso funcionar, você precisa declarar uma coluna de _foreign key_ e uma coluna de tipo no _model_ que declara a interface polimórfica:
 
 ```ruby
-class CreatePictures < ActiveRecord::Migration[5.2]
+class CreatePictures < ActiveRecord::Migration[6.0]
   def change
     create_table :pictures do |t|
       t.string  :name
@@ -496,7 +532,7 @@ end
 Esta _migration_ pode ser simplificada usando a forma de `t.references`:
 
 ```ruby
-class CreatePictures < ActiveRecord::Migration[5.0]
+class CreatePictures < ActiveRecord::Migration[6.0]
   def change
     create_table :pictures do |t|
       t.string :name
@@ -527,10 +563,10 @@ Com esta configuração, você pode recuperar `@employee.subordinates` e `@emplo
 Em suas _migrations_/_schema_, você adicionará uma coluna de referências ao próprio _model_.
 
 ```ruby
-class CreateEmployees < ActiveRecord::Migration[5.0]
+class CreateEmployees < ActiveRecord::Migration[6.0]
   def change
     create_table :employees do |t|
-      t.references :manager
+      t.references :manager, foreign_key: { to_table: :employees }
       t.timestamps
     end
   end
@@ -553,7 +589,7 @@ Segue algumas coisas que você deve saber para utilizar as associações do *Act
 Todos os métodos de associação são construídos em torno de *caching*, o que mantém o resultado da *query* mais recente disponível para operações futuras. O *cache* é até compartilhado entre métodos. Por exemplo:
 
 ```ruby
-author.books                 # retorna *books* do banco de dados
+author.books.load            # retorna *books* do banco de dados
 author.books.size            # usa a versão salva em cache da busca por *books*
 author.books.empty?          # usa a versão salva em cache da busca por *books*
 ```
@@ -588,7 +624,7 @@ end
 Esta declaração precisa do apoio de uma coluna de chave estrangeira apropriada na tabela *books*. Pra uma tabela recém criada, a migração pode parecer com isto:
 
 ```ruby
-class CreateBooks < ActiveRecord::Migration[5.0]
+class CreateBooks < ActiveRecord::Migration[6.0]
   def change
     create_table :books do |t|
       t.datetime   :published_at
@@ -602,7 +638,7 @@ end
 Enquanto que para uma tabela existente, pode parecer com isto:
 
 ```ruby
-class AddAuthorToBooks < ActiveRecord::Migration[5.0]
+class AddAuthorToBooks < ActiveRecord::Migration[6.0]
   def change
     add_reference :books, :author
   end
@@ -632,7 +668,7 @@ end
 Elas precisam do apoio de uma migração para criar a tabela `assemblies_parts`. Esta tabela deve ser criada sem a chave primária:
 
 ```ruby
-class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[5.2]
+class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[6.0]
   def change
     create_table :assemblies_parts, id: false do |t|
       t.bigint :assembly_id
@@ -650,7 +686,7 @@ Passamos `id: false` para `create_table` porque esta tabela não representa um *
 Você também pode utilizar o método `create_join_table`
 
 ```ruby
-class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[5.0]
+class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[6.0]
   def change
     create_join_table :assemblies, :parts do |t|
       t.index :assembly_id
@@ -732,12 +768,14 @@ end
 
 O *Active Record* tentará identificar automaticamente que estes dois *models* compartilham uma associação bidirecional baseando-se no nome da associação. Desta forma, o *Active Record* carregará apenas uma cópia do objeto `Author`, tornando sua aplicação mais eficiente e evitando dados inconsistentes:
 
-```ruby
-a = Author.first
-b = a.books.first
-a.first_name == b.author.first_name # => true
-a.first_name = 'David'
-a.first_name == b.author.first_name # => true
+```irb
+irb> a = Author.first
+irb> b = a.books.first
+irb> a.first_name == b.author.first_name
+=> true
+irb> a.first_name = 'David'
+irb> a.first_name == b.author.first_name
+=> true
 ```
 
 O *Active Record* tem suporte a identificação automática para a maioria das associações com nomes padrão. Contudo, o *Active Record* não identificará automaticamente associações bidirecionais que contém um escopo ou qualquer uma das opções abaixo:
@@ -759,12 +797,14 @@ end
 
 O *Active Record* não reconhecerá mais a associação bidirecional:
 
-```ruby
-a = Author.first
-b = a.books.first
-a.first_name == b.writer.first_name # => true
-a.first_name = 'David'
-a.first_name == b.writer.first_name # => false
+```irb
+irb> a = Author.first
+irb> b = a.books.first
+irb> a.first_name == b.writer.first_name
+=> true
+irb> a.first_name = 'David'
+irb> a.first_name == b.writer.first_name
+=> false
 ```
 
 O *Active Record* fornece a opção `:inverse_of` para declarar associações bidirecionais de forma explícita:
@@ -781,12 +821,14 @@ end
 
 Ao incluir a opção `:inverse_of` na declaração da associação `has_many`, o *Active Record* agora reconhecerá a associação bidirecional:
 
-```ruby
-a = Author.first
-b = a.books.first
-a.first_name == b.writer.first_name # => true
-a.first_name = 'David'
-a.first_name == b.writer.first_name # => true
+```irb
+irb> a = Author.first
+irb> b = a.books.first
+irb> a.first_name == b.writer.first_name
+=> true
+irb> a.first_name = 'David'
+irb> a.first_name == b.writer.first_name
+=> true
 ```
 
 Referência Detalhada das Associações
@@ -796,7 +838,9 @@ As seções seguintes dão detalhes sobre cada tipo de associação, incluindo o
 
 ### Referência da Associação `belongs_to`
 
-A associação `belongs_to` cria uma relação um-para-um com outro *model*. Em termos de banco de dados, esta associação diz que esta classe contém a chave estrangeira. Se a outra classe contém a chave estrangeira, então você deve utilizar `has_one` no lugar.
+Em termos de banco de dados, esta associação diz que a tabela deste modelo contém uma coluna que representa uma referência a outra tabela.
+Isso pode ser usado para configurar relações um-para-um ou um-para-muitos, dependendo da configuração.
+Se a tabela da outra classe contém a referência em uma relação um-para-um, então você deve usar `has_one`.
 
 #### Métodos Adicionados por `belongs_to`
 
@@ -885,7 +929,7 @@ class Book < ApplicationRecord
 end
 ```
 
-A associação `belongs_to` tem suporte a estas opções:
+A associação [`belongs_to`][] tem suporte a estas opções:
 
 * `:autosave`
 * `:class_name`
@@ -1233,7 +1277,7 @@ class Supplier < ApplicationRecord
 end
 ```
 
-A associação `has_one` tem suporte para estas opções:
+A associação [`has_one`][] tem suporte para estas opções:
 
 * `:as`
 * `:autosave`
@@ -1321,9 +1365,14 @@ A opção `:source` especifica a associação fonte para uma associação `has_o
 A opção `:source_type` especifica o tipo da associação fonte para uma associação `has_one :through` que procede através de uma associação polimórfica.
 
 ```ruby
+class Author < ApplicationRecord
+  has_one :book
+  has_one :hardback, through: :book, source: :format, source_type: "Hardback"
+  has_one :dust_jacket, through: :hardback
+end
+
 class Book < ApplicationRecord
-  has_one :format, polymorphic: true
-  has_one :dust_jacket, through: :format, source: :dust_jacket, source_type: "Hardback"
+  belongs_to :format, polymorphic: true
 end
 
 class Paperback < ApplicationRecord; end
@@ -1465,22 +1514,23 @@ A associação `has_many` cria uma relação um-para-muitos com outro *model*. E
 Quando você declara uma associação `has_many`, a classe declarada ganha automaticamente 17 métodos relacionados à associação:
 
 * `collection`
-* `collection<<(object, ...)`
-* `collection.delete(object, ...)`
-* `collection.destroy(object, ...)`
+* [`collection<<(object, ...)`][`collection<<`]
+* [`collection.delete(object, ...)`][`collection.delete`]
+* [`collection.destroy(object, ...)`][`collection.destroy`]
 * `collection=(objects)`
 * `collection_singular_ids`
 * `collection_singular_ids=(ids)`
-* `collection.clear`
-* `collection.empty?`
-* `collection.size`
-* `collection.find(...)`
-* `collection.where(...)`
-* `collection.exists?(...)`
-* `collection.build(attributes = {}, ...)`
-* `collection.create(attributes = {})`
-* `collection.create!(attributes = {})`
-* `collection.reload`
+* [`collection.clear`][]
+* [`collection.empty?`][]
+* [`collection.size`][]
+* [`collection.find(...)`][`collection.find`]
+* [`collection.where(...)`][`collection.where`]
+* [`collection.exists?(...)`][`collection.exists?`]
+* [`collection.build(attributes = {}, ...)`][`collection.build`]
+* [`collection.create(attributes = {})`][`collection.create`]
+* [`collection.create!(attributes = {})`][`collection.create!`]
+* [`collection.reload`][]
+
 
 Em todos estes métodos, `collection` será substituído pelo *symbol* passado como primeiro argumento para `has_many`, e `collection_singular` será substituído pela versão em singular daquele *symbol*. Por exemplo, dada a declaração:
 
@@ -1512,6 +1562,20 @@ books.create!(attributes = {})
 books.reload
 ```
 
+[`collection<<`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-3C-3C
+[`collection.build`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-build
+[`collection.clear`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-clear
+[`collection.create`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create
+[`collection.create!`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-create-21
+[`collection.delete`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-delete
+[`collection.destroy`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-destroy
+[`collection.empty?`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-empty-3F
+[`collection.exists?`]: https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F
+[`collection.find`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-find
+[`collection.reload`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-reload
+[`collection.size`]: https://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html#method-i-size
+[`collection.where`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-where
+
 ##### `collection`
 
 O método `collection` retorna uma *Relation* de todos os objetos associados. Se não há objetos associados, ele retorna uma *Relation* vazia.
@@ -1522,7 +1586,7 @@ O método `collection` retorna uma *Relation* de todos os objetos associados. Se
 
 ##### `collection<<(object, ...)`
 
-O método `collection<<` acrescenta um ou mais objetos à coleção configurando a chave estrangeira deles como a chave primária do *model* pai.
+O método [`collection<<`][] acrescenta um ou mais objetos à coleção configurando a chave estrangeira deles como a chave primária do *model* pai.
 
 ```ruby
 @author.books << @book1
@@ -1530,7 +1594,7 @@ O método `collection<<` acrescenta um ou mais objetos à coleção configurando
 
 ##### `collection.delete(object, ...)`
 
-O método `collection.delete` remove um ou mais objetos da coleção ao configurar a chave estrangeira deles como `NULL`.
+O método [`collection.delete`][] remove um ou mais objetos da coleção ao configurar a chave estrangeira deles como `NULL`.
 
 ```ruby
 @author.books.delete(@book1)
@@ -1540,7 +1604,7 @@ WARNING: Além disso, os objetos serão destruídos se estiverem associados com 
 
 ##### `collection.destroy(object, ...)`
 
-O método `collection.destroy` remove um ou mais objetos da coleção executando `destroy` em cada objeto.
+O método [`collection.destroy`][] remove um ou mais objetos da coleção executando `destroy` em cada objeto.
 
 ```ruby
 @author.books.destroy(@book1)
@@ -1566,7 +1630,7 @@ O método `collection=` faz com que a coleção contenha apenas os objetos ident
 
 ##### `collection.clear`
 
-O método `collection.clear` remove todos os objetos da coleção de acordo com a estratégia especificada pela opção `dependent`. Se nenhuma opção for especificada, ele segue a estratégia padrão. A estratégia padrão para associações `has_many :through` é `delete_all`, e para associações `has_many` é configurar as chaves estrangeiras como `NULL`.
+O método [`collection.clear`][] remove todos os objetos da coleção de acordo com a estratégia especificada pela opção `dependent`. Se nenhuma opção for especificada, ele segue a estratégia padrão. A estratégia padrão para associações `has_many :through` é `delete_all`, e para associações `has_many` é configurar as chaves estrangeiras como `NULL`.
 
 ```ruby
 @author.books.clear
@@ -1577,7 +1641,7 @@ assim como `dependent: :delete_all`.
 
 ##### `collection.empty?`
 
-O método `collection.empty?` retorna `true` se a coleção não contiver nenhum objeto associado.
+O método [`collection.empty?`][] retorna `true` se a coleção não contiver nenhum objeto associado.
 
 ```erb
 <% if @author.books.empty? %>
@@ -1587,7 +1651,7 @@ O método `collection.empty?` retorna `true` se a coleção não contiver nenhum
 
 ##### `collection.size`
 
-O método `collection.size` retorna o número de objetos na coleção.
+O método [`collection.size`][] retorna o número de objetos na coleção.
 
 ```ruby
 @book_count = @author.books.size
@@ -1595,8 +1659,7 @@ O método `collection.size` retorna o número de objetos na coleção.
 
 ##### `collection.find(...)`
 
-O método `collection.find` procura objetos dentro da coleção. Ele utiliza a mesma sintaxe e opções que
-[`ActiveRecord::Base.find`](https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find).
+O método [`collection.find`][] procura objetos dentro da tabela da coleção.
 
 ```ruby
 @available_book = @author.books.find(1)
@@ -1604,7 +1667,7 @@ O método `collection.find` procura objetos dentro da coleção. Ele utiliza a m
 
 ##### `collection.where(...)`
 
-O método `collection.where` procura objetos dentro da coleção com base nas condições fornecidas mas os objetos serão carregados apenas quando necessário (*lazy loading*) significando que o banco de dados é consultado apenas quando os objetos são acessados.
+O método [`collection.where`][] procura objetos dentro da coleção com base nas condições fornecidas mas os objetos serão carregados apenas quando necessário (*lazy loading*) significando que o banco de dados é consultado apenas quando os objetos são acessados.
 
 ```ruby
 @available_books = @author.books.where(available: true) # No query yet
@@ -1613,13 +1676,12 @@ O método `collection.where` procura objetos dentro da coleção com base nas co
 
 ##### `collection.exists?(...)`
 
-O método `collection.exists?` confere se um objeto que atende às condições fornecidas
-existe na coleção. Ele usa a mesma sintaxe e opções que
-[`ActiveRecord::Base.exists?`](https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F).
+O método [`collection.exists?`][] confere se um objeto que atende às condições fornecidas
+existe na tabela da coleção.
 
 ##### `collection.build(attributes = {}, ...)`
 
-O método `collection.build` retorna apenas um objeto ou um *array* de objetos. Os objetos serão instanciados com base nos atributos passados para o método e será criada uma ligação através de chaves estrangeiras, mas os objetos associados _não_ serão salvos ainda.
+O método [`collection.build`][] retorna apenas um objeto ou um *array* de objetos. Os objetos serão instanciados com base nos atributos passados para o método e será criada uma ligação através de chaves estrangeiras, mas os objetos associados _não_ serão salvos ainda.
 
 ```ruby
 @book = @author.books.build(published_at: Time.now,
@@ -1633,7 +1695,7 @@ O método `collection.build` retorna apenas um objeto ou um *array* de objetos. 
 
 ##### `collection.create(attributes = {})`
 
-O método `collection.create` retorna um objeto ou um *array* de novos objetos do tipo associado. Os objetos serão instanciados com base nos atributos que foram passados para o método, e uma ligação será criada através de uma chave estrangeira, e, uma vez que estes objetos passem por todas as validações especificadas no *model* associado, o objeto associado _será_ salvo.
+O método [`collection.create`][] retorna um objeto ou um *array* de novos objetos do tipo associado. Os objetos serão instanciados com base nos atributos que foram passados para o método, e uma ligação será criada através de uma chave estrangeira, e, uma vez que estes objetos passem por todas as validações especificadas no *model* associado, o objeto associado _será_ salvo.
 
 ```ruby
 @book = @author.books.create(published_at: Time.now,
@@ -1651,7 +1713,7 @@ Faz o mesmo que `collection.create` acima, mas retorna `ActiveRecord::RecordInva
 
 ##### `collection.reload`
 
-O método `collection.reload` retorna uma *Relation* de todos os objetos associados, forçando uma leitura do banco de dados. Se não houver objetos associados, ele retorna uma *Relation* vazia.
+O método [`collection.reload`][] retorna uma *Relation* de todos os objetos associados, forçando uma leitura do banco de dados. Se não houver objetos associados, ele retorna uma *Relation* vazia.
 
 ```ruby
 @books = @author.books.reload
@@ -1667,7 +1729,7 @@ class Author < ApplicationRecord
 end
 ```
 
-A associação `has_many` tem suporte para estas opções:
+A associação [`has_many`][] tem suporte para estas opções:
 
 * `:as`
 * `:autosave`
@@ -1776,7 +1838,7 @@ class Author < ApplicationRecord
 end
 
 class Book < ApplicationRecord
-  has_one :format, polymorphic: true
+  belongs_to :format, polymorphic: true
 end
 
 class Hardback < ApplicationRecord; end
@@ -1933,13 +1995,17 @@ class Person < ApplicationRecord
   has_many :readings
   has_many :articles, through: :readings
 end
+```
 
-person = Person.create(name: 'John')
-article   = Article.create(name: 'a1')
-person.articles << article
-person.articles << article
-person.articles.inspect # => [#<Article id: 5, name: "a1">, #<Article id: 5, name: "a1">]
-Reading.all.inspect     # => [#<Reading id: 12, person_id: 5, article_id: 5>, #<Reading id: 13, person_id: 5, article_id: 5>]
+```irb
+irb> person = Person.create(name: 'John')
+irb> article = Article.create(name: 'a1')
+irb> person.articles << article
+irb> person.articles << article
+irb> person.articles.to_a
+=> [#<Article id: 5, name: "a1">, #<Article id: 5, name: "a1">]
+irb> Reading.all.to_a
+=> [#<Reading id: 12, person_id: 5, article_id: 5>, #<Reading id: 13, person_id: 5, article_id: 5>]
 ```
 
 No caso acima há dois *readings* e `person.articles` retorna os dois apesar
@@ -1952,13 +2018,17 @@ class Person
   has_many :readings
   has_many :articles, -> { distinct }, through: :readings
 end
+```
 
-person = Person.create(name: 'Honda')
-article   = Article.create(name: 'a1')
-person.articles << article
-person.articles << article
-person.articles.inspect # => [#<Article id: 7, name: "a1">]
-Reading.all.inspect     # => [#<Reading id: 16, person_id: 7, article_id: 7>, #<Reading id: 17, person_id: 7, article_id: 7>]
+```irb
+irb> person = Person.create(name: 'Honda')
+irb> article = Article.create(name: 'a1')
+irb> person.articles << article
+irb> person.articles << article
+irb> person.articles.to_a
+=> [#<Article id: 7, name: "a1">]
+irb> Reading.all.to_a
+=> [#<Reading id: 16, person_id: 7, article_id: 7>, #<Reading id: 17, person_id: 7, article_id: 7>]
 ```
 
 No caso acima ainda há dois *readings*. Contudo, `person.articles` mostra apenas
@@ -1979,11 +2049,12 @@ add_index :readings, [:person_id, :article_id], unique: true
 Uma vez que você tenha este índice único, tentar incluir um *article* a uma
 *person* duas vezes retornará um erro `ActiveRecord::RecordNotUnique`:
 
-```ruby
-person = Person.create(name: 'Honda')
-article = Article.create(name: 'a1')
-person.articles << article
-person.articles << article # => ActiveRecord::RecordNotUnique
+```irb
+irb> person = Person.create(name: 'Honda')
+irb> article = Article.create(name: 'a1')
+irb> person.articles << article
+irb> person.articles << article
+ActiveRecord::RecordNotUnique
 ```
 
 Note que conferir por unicidade utilizando algo como `include?` está sujeito a
@@ -2016,22 +2087,22 @@ A associação `has_and_belongs_to_many` cria uma relação muitos-para-muitos c
 Quando você declara uma associação `has_and_belongs_to_many`, a classe declarada ganha automaticamente 17 métodos relacionados à associação:
 
 * `collection`
-* `collection<<(object, ...)`
-* `collection.delete(object, ...)`
-* `collection.destroy(object, ...)`
+* [`collection<<(object, ...)`][`collection<<`]
+* [`collection.delete(object, ...)`][`collection.delete`]
+* [`collection.destroy(object, ...)`][`collection.destroy`]
 * `collection=(objects)`
 * `collection_singular_ids`
 * `collection_singular_ids=(ids)`
-* `collection.clear`
-* `collection.empty?`
-* `collection.size`
-* `collection.find(...)`
-* `collection.where(...)`
-* `collection.exists?(...)`
-* `collection.build(attributes = {})`
-* `collection.create(attributes = {})`
-* `collection.create!(attributes = {})`
-* `collection.reload`
+* [`collection.clear`][]
+* [`collection.empty?`][]
+* [`collection.size`][]
+* [`collection.find(...)`][`collection.find`]
+* [`collection.where(...)`][`collection.where`]
+* [`collection.exists?(...)`][`collection.exists?`]
+* [`collection.build(attributes = {})`][`collection.build`]
+* [`collection.create(attributes = {})`][`collection.create`]
+* [`collection.create!(attributes = {})`][`collection.create!`]
+* [`collection.reload`][]
 
 Em todos estes métodos, `collection` será substituído pelo *symbol* passado como primeiro argumento para `has_and_belongs_to_many`, e `collection_singular` será substituído com a versão singular daquele *symbol*. Por exemplo, dada a declaração:
 
@@ -2080,7 +2151,7 @@ O método `collection` retorna uma *Relation* de todos os objetos associados. Se
 
 ##### `collection<<(object, ...)`
 
-O método `collection<<` acrescenta um ou mais objetos à coleção criando dados na tabela de junção.
+O método [`collection<<`][] acrescenta um ou mais objetos à coleção criando dados na tabela de junção.
 
 ```ruby
 @part.assemblies << @assembly1
@@ -2090,7 +2161,7 @@ NOTE: Este método pode ser chamado como `collection.concat` e `collection.push`
 
 ##### `collection.delete(object, ...)`
 
-O método `collection.delete` remove um ou mais objetos da coleção deletando dados da tabela de junção. Isto não destrói os objetos.
+O método [`collection.delete`][] remove um ou mais objetos da coleção deletando dados da tabela de junção. Isto não destrói os objetos.
 
 ```ruby
 @part.assemblies.delete(@assembly1)
@@ -2098,7 +2169,7 @@ O método `collection.delete` remove um ou mais objetos da coleção deletando d
 
 ##### `collection.destroy(object, ...)`
 
-O método `collection.destroy` remove um ou mais objetos da coleção deletando dados da tabela de junção. Isto não destrói os objetos.
+O método [`collection.destroy`][] remove um ou mais objetos da coleção deletando dados da tabela de junção. Isto não destrói os objetos.
 
 ```ruby
 @part.assemblies.destroy(@assembly1)
@@ -2122,11 +2193,11 @@ O método `collection=` faz com que a coleção contenha apenas os objetos ident
 
 ##### `collection.clear`
 
-O método `collection.clear` remove todos os objetos da coleção deletando todas as linhas da tabela de junção. Isto não destrói os objetos associados.
+O método [`collection.clear`][] remove todos os objetos da coleção deletando todas as linhas da tabela de junção. Isto não destrói os objetos associados.
 
 ##### `collection.empty?`
 
-O método `collection.empty?` retorna `true` se a coleção não contiver nenhum objeto associado.
+O método [`collection.empty?`][] retorna `true` se a coleção não contiver nenhum objeto associado.
 
 ```ruby
 <% if @part.assemblies.empty? %>
@@ -2136,7 +2207,7 @@ O método `collection.empty?` retorna `true` se a coleção não contiver nenhum
 
 ##### `collection.size`
 
-O método `collection.size` retorna o número de objetos na coleção.
+O método [`collection.size`][] retorna o número de objetos na coleção.
 
 ```ruby
 @assembly_count = @part.assemblies.size
@@ -2144,8 +2215,7 @@ O método `collection.size` retorna o número de objetos na coleção.
 
 ##### `collection.find(...)`
 
-O método `collection.find` procura objetos dentro da coleção. Ele utiliza a mesma sintaxe e opções que
-[`ActiveRecord::Base.find`](https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find).
+O método [`collection.find`][] procura objetos dentro da tabela da coleção.
 
 ```ruby
 @assembly = @part.assemblies.find(1)
@@ -2153,7 +2223,7 @@ O método `collection.find` procura objetos dentro da coleção. Ele utiliza a m
 
 ##### `collection.where(...)`
 
-O método `collection.where` procura objetos dentro da coleção com base nas condições fornecidas mas os objetos serão carregados apenas quando necessário (*lazy loading*) significando que o banco de dados é consultado apenas quando os objetos são acessados.
+O método [`collection.where`][] procura objetos dentro da coleção com base nas condições fornecidas mas os objetos serão carregados apenas quando necessário (*lazy loading*) significando que o banco de dados é consultado apenas quando os objetos são acessados.
 
 ```ruby
 @new_assemblies = @part.assemblies.where("created_at > ?", 2.days.ago)
@@ -2161,13 +2231,12 @@ O método `collection.where` procura objetos dentro da coleção com base nas co
 
 ##### `collection.exists?(...)`
 
-O método `collection.exists?` confere se um objeto que atende às condições fornecidas
-existe na coleção. Ele usa a mesma sintaxe e opções que
-[`ActiveRecord::Base.exists?`](https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F).
+O método [`collection.exists?`][] confere se um objeto que atende às condições fornecidas
+existe na tabela da coleção.
 
 ##### `collection.build(attributes = {})`
 
-O método `collection.build` retorna um objeto novo do tipo associado. O objeto será instanciado com base nos atributos passados para o método e será criada uma ligação através de uma chave estrangeira, mas o objeto associado _não_ será salvo ainda.
+O método [`collection.build`][] retorna um objeto novo do tipo associado. O objeto será instanciado com base nos atributos passados para o método e será criada uma ligação através de uma chave estrangeira, mas o objeto associado _não_ será salvo ainda.
 
 ```ruby
 @assembly = @part.assemblies.build({assembly_name: "Transmission housing"})
@@ -2175,7 +2244,7 @@ O método `collection.build` retorna um objeto novo do tipo associado. O objeto 
 
 ##### `collection.create(attributes = {})`
 
-O método `collection.create` retorna um objeto novo do tipo associado. Este objeto será instanciado com base nos atributos que foram passados para o método, a ligação através da tabela de junção será criado, e, uma vez que o objeto passe por todas as validações especificadas no *model* associado, o objeto associado _será_ salvo.
+O método [`collection.create`][] retorna um objeto novo do tipo associado. Este objeto será instanciado com base nos atributos que foram passados para o método, a ligação através da tabela de junção será criado, e, uma vez que o objeto passe por todas as validações especificadas no *model* associado, o objeto associado _será_ salvo.
 
 ```ruby
 @assembly = @part.assemblies.create({assembly_name: "Transmission housing"})
@@ -2187,7 +2256,7 @@ Faz o mesmo que `collection.create`, mas retorna `ActiveRecord::RecordInvalid` s
 
 ##### `collection.reload`
 
-O método `collection.reload` retorna uma *Relation* de todos os objetos associados, forçando uma leitura do banco de dados. Se não houver objetos associados, ele retorna uma *Relation* vazia.
+O método [`collection.reload`][] retorna uma *Relation* de todos os objetos associados, forçando uma leitura do banco de dados. Se não houver objetos associados, ele retorna uma *Relation* vazia.
 
 ```ruby
 @assemblies = @part.assemblies.reload
@@ -2204,7 +2273,7 @@ class Parts < ApplicationRecord
 end
 ```
 
-A associação `has_and_belongs_to_many` tem suporte para estas opções:
+A associação [`has_and_belongs_to_many`][] tem suporte para estas opções:
 
 * `:association_foreign_key`
 * `:autosave`
@@ -2416,8 +2485,16 @@ class Author < ApplicationRecord
 end
 ```
 
-Se um *callback*  `before_add` retornar uma exceção, o objeto não será adicionado à coleção. De forma similar, se um *callback* `before_remove` retornar uma exceção, o objeto não será removido da coleção.
+Se um *callback* `before_add` retorna a exceção `:abort`, o objeto não será adicionado 
+à coleção. De forma similar, se um *callback* `before_remove` retorna a exceção `:abort`, o
+objeto não será removido da coleção.
 
+```ruby
+# livros não serão adicionado se o limite foi atingido
+def check_credit_limit(book)
+  throw(:abort) if limit_reached?
+end
+```
 NOTE: Estes *callbacks* são chamados apenas quando os objetos associados são adicionados ou removidos através da coleção da associação:
 
 ```ruby
@@ -2467,8 +2544,8 @@ Extensões podem fazer referência a detalehs internos do objeto de referência 
 * `proxy_association.reflection` retorna o objeto de reflexão que descreve a associação.
 * `proxy_association.target` retorna o objeto associado para `belongs_to` ou `has_one`, ou a coleção de objetos associados para `has_many` ou `has_and_belongs_to_many`.
 
-Single Table Inheritance
-------------------------
+Single Table Inheritance (STI)
+------------------------------
 
 Às vezes é desejável compartilhar atributos e comportamento entre _models_.
 Vamos dizer que temos _models_ `Car`, `Motorcycle` e `Bicycle`. Queremos
@@ -2476,10 +2553,10 @@ compartilhar os atributos de `color` e `price` e também alguns métodos para
 estes atributos, mas ainda mantendo comportamentos específicos para cada um
 deles, incluindo _controllers_ separados.
 
-O Rails deixa isso bem fácil. Primeiro, vamos gerar o _model_ de base, `Vehicle`:
+Primeiro, vamos gerar o _model_ de base, `Vehicle`:
 
 ```bash
-$ rails generate model vehicle type:string color:string price:decimal{10.2}
+$ bin/rails generate model vehicle type:string color:string price:decimal{10.2}
 ```
 
 Você notou que estamos adicionando um atributo `type`? Dado que todos os _models_
@@ -2487,14 +2564,14 @@ serão armazenados em uma única tabela, o Rails vai armazenar o nome do _model_
 nesse atributo. No nosso exemplo, as possibilidades são `Car`, `Motorcycle` ou
 `Bicycle`. STI não funciona sem um atributo `type` na tabela.
 
-Em seguida, vamos gerar os três _models_ que herdam de `Vehicle`. Para isso podemos
+Em seguida, vamos gerar os três _models_ `Car` que herdam de `Vehicle`. Para isso podemos
 usar a opção `--parent=PARENT` que vai gerar um _model_ que herda do "_parent_"
 especificado e sem uma _migration_ equivalente (dado que a tabela já existe).
 
 Por exemplo, para gerar o _model_ `Car`:
 
 ```bash
-$ rails generate model car --parent=Vehicle
+$ bin/rails generate model car --parent=Vehicle
 ```
 
 O _model_ gerado vai parecer com:
@@ -2521,7 +2598,7 @@ vai gerar o seguinte SQL:
 INSERT INTO "vehicles" ("type", "color", "price") VALUES ('Car', 'Red', 10000)
 ```
 
-A _query_ (consulta) por registros de carros vai simplesmente buscar veiculos que
+A _query_ (consulta) por registros de carros vai buscar veiculos que
 são do tipo _Car_.
 
 ```ruby
