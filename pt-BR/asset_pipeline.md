@@ -31,19 +31,20 @@ e é habilitado por padrão. Você pode desabilitar enquanto está criando uma n
 passando a opção `--skip-sprockets`.
 
 ```bash
-rails new appname --skip-sprockets
+$ rails new appname --skip-sprockets
 ```
 
-O Rails automaticamente adiciona a *gem* `sass-rails` no seu `Gemfile`, o qual é
-usado pelo Sprockets para comprimir o *asset*:
+O Rails automaticamente adiciona a *gem* [`sass-rails`](https://github.com/rails/sass-rails)
+no seu `Gemfile`, o qual é usado pelo Sprockets para comprimir
+[Sass](https://sass-lang.com):
 
 ```ruby
 gem 'sass-rails'
 ```
 
-Usando a opção `--skip-sprockets` previnirá que o Rails adicione ao seu `Gemfile`,
+Usando a opção `--skip-sprockets` previnirá que o Rails adicione essa gem seu `Gemfile`,
 então se mais tarde você quiser habilitar o *asset pipeline* você terá que adicionar
-essas *gems* ao seu `Gemfile`. Além disso, criando uma aplicação com a opção `--skip-sprockets`
+essas *gems* ao seu `Gemfile` manualmente. Além disso, criando uma aplicação com a opção `--skip-sprockets`
 gerará um arquivo `config/application.rb` levemente diferente, com a declaração de requerimento
 para o *sprockets* que está comentado. Você terá de remover o operador de comentário nessa linha
 para depois habilitar o *asset pipeline*:
@@ -476,7 +477,7 @@ que contém essas linhas:
 ```
 
 O Rails cria o `app/assets/stylesheets/application.css` independentemente se
-a opção --skip-sprockets é usada ao criar uma nova aplicação Rails. Isso permite
+a opção `--skip-sprockets` é usada ao criar uma nova aplicação Rails. Isso permite
 que você facilmente adicione o *asset pipelining* mais tarde se assim o quiser.
 
 As diretivas que funcionam nos arquivos JavaScript também funcionam nas folhas de estilo
@@ -513,14 +514,14 @@ Por exemplo, você pode concatenar três arquivos CSS juntos da seguinte maneira
 
 As extensões de arquivos usadas em um *asset* determinam qual pré-processamento é aplicado.
 Quando um *controller* ou um *scaffold* é gerado com o gemset padrão do Rails, um arquivo
-CoffeeScript e um arquivo SCSS são gerados no lugar de um arquivo comum de JavaScript e CSS.
+SCSS é gerados no lugar de um arquivo comum CSS.
 O exemplo usado anteriormente era um *controller* chamado "*projects*", que gerou um
 arquivo `app/assets/stylesheets/projects.scss`.
 
 Em modo de desenvolvimento, se o *asset pipeline* estiver desabilitado, quando esses
 arquivos são solicitados, eles serão processados pelos *processors* especificados
-pelas gems de `coffee-script` e `sass` e então enviados de volta ao navegador como
-JavaScript e CSS respectivamente. Quando o *asset pipelining* está habilitado, esses
+pela gem `sass-rails` e então enviados de volta ao navegador como
+CSS. Quando o *asset pipelining* está habilitado, esses
 arquivos são pré-processados e colocados no diretório `public/assets`, para serem servidos
 seja pela aplicação Rails ou pelo servidor *web*.
 
@@ -680,13 +681,6 @@ The command is:
 $ RAILS_ENV=production rails assets:precompile
 ```
 
-Capistrano (v2.15.1 and above) includes a recipe to handle this in deployment.
-Add the following line to `Capfile`:
-
-```ruby
-load 'deploy/assets'
-```
-
 This links the folder specified in `config.assets.prefix` to `shared/assets`.
 If you already use this shared folder you'll need to write your own deployment
 command.
@@ -781,39 +775,45 @@ location ~ ^/assets/ {
 
 ### Local Precompilation
 
-There are several reasons why you might want to precompile your assets locally.
-Among them are:
+Sometimes, you may not want or be able to compile assets on the production
+server. For instance, you may have limited write access to your production
+filesystem, or you may plan to deploy frequently without making any changes to
+your assets.
 
-* You may not have write access to your production file system.
-* You may be deploying to more than one server, and want to avoid
-duplication of work.
-* You may be doing frequent deploys that do not include asset changes.
+In such cases, you can precompile assets _locally_ — that is, add a finalized
+set of compiled, production-ready assets to your source code repository before
+pushing to production. This way, they do not need to be precompiled separately
+on the production server upon each deployment.
 
-Local compilation allows you to commit the compiled files into source control,
-and deploy as normal.
+As above, you can perform this step using
 
-There are three caveats:
-
-* You must not run the Capistrano deployment task that precompiles assets.
-* You must ensure any necessary compressors or minifiers are
-available on your development system.
-* You must change the following application configuration setting:
-
-In `config/environments/development.rb`, place the following line:
-
-```ruby
-config.assets.prefix = "/dev-assets"
+```bash
+$ RAILS_ENV=production rails assets:precompile
 ```
 
-The `prefix` change makes Sprockets use a different URL for serving assets in
-development mode, and pass all requests to Sprockets. The prefix is still set to
-`/assets` in the production environment. Without this change, the application
-would serve the precompiled assets from `/assets` in development, and you would
-not see any local changes until you compile assets again.
+Note the following caveats:
 
-In practice, this will allow you to precompile locally, have those files in your
-working tree, and commit those files to source control when needed.  Development
-mode will work as expected.
+* If precompiled assets are available, they will be served — even if they no
+  longer match the original (uncompiled) assets, _even on the development
+  server._
+
+  To ensure that the development server always compiles assets on-the-fly (and
+  thus always reflects the most recent state of the code), the development
+  environment _must be configured to keep precompiled assets in a different
+  location than production does._ Otherwise, any assets precompiled for use in
+  production will clobber requests for them in development (_i.e.,_ subsequent
+  changes you make to assets will not be reflected in the browser).
+
+  You can do this by adding the following line to
+  `config/environments/development.rb`:
+
+  ```ruby
+  config.assets.prefix = "/dev-assets"
+  ```
+* The asset precompile task in your deployment tool (_e.g.,_ Capistrano) should
+  be disabled.
+* Any necessary compressors or minifiers must be available on your development
+  system.
 
 ### Live Compilation
 
@@ -826,9 +826,9 @@ To enable this option set:
 config.assets.compile = true
 ```
 
-On the first request the assets are compiled and cached as outlined in
-development above, and the manifest names used in the helpers are altered to
-include the SHA256 hash.
+On the first request the assets are compiled and cached as outlined in [Assets
+Cache Store](#assets-cache-store), and the manifest names used in the helpers
+are altered to include the SHA256 hash.
 
 Sprockets also sets the `Cache-Control` HTTP header to `max-age=31536000`. This
 signals all caches between your server and the client browser that this content
@@ -886,11 +886,11 @@ valid CDN provider at the time of this writing). Now that you have configured
 your CDN server, you need to tell browsers to use your CDN to grab assets
 instead of your Rails server directly. You can do this by configuring Rails to
 set your CDN as the asset host instead of using a relative path. To set your
-asset host in Rails, you need to set `config.action_controller.asset_host` in
+asset host in Rails, you need to set `config.asset_host` in
 `config/environments/production.rb`:
 
 ```ruby
-config.action_controller.asset_host = 'mycdnsubdomain.fictional-cdn.com'
+config.asset_host = 'mycdnsubdomain.fictional-cdn.com'
 ```
 
 NOTE: You only need to provide the "host", this is the subdomain and root
@@ -902,8 +902,8 @@ You can also set this value through an [environment
 variable](https://en.wikipedia.org/wiki/Environment_variable) to make running a
 staging copy of your site easier:
 
-```
-config.action_controller.asset_host = ENV['CDN_HOST']
+```ruby
+config.asset_host = ENV['CDN_HOST']
 ```
 
 
@@ -962,7 +962,7 @@ https://explainshell.com/explain?cmd=curl+-I+http%3A%2F%2Fwww.example.com). You
 can request the headers from both your server and your CDN to verify they are
 the same:
 
-```
+```bash
 $ curl -I http://www.example/assets/application-
 d0e099e021c95eb0de3615fd1d8c4d83.css
 HTTP/1.1 200 OK
@@ -978,7 +978,7 @@ Via: 1.1 vegur
 
 Versus the CDN copy.
 
-```
+```bash
 $ curl -I http://mycdnsubdomain.fictional-cdn.com/application-
 d0e099e021c95eb0de3615fd1d8c4d83.css
 HTTP/1.1 200 OK Server: Cowboy Last-
@@ -1017,7 +1017,7 @@ the cache will store the object before invalidating the cache. The `max-age`
 value is set to seconds with a maximum possible value of `31536000` which is one
 year. You can do this in your Rails application by setting
 
-```
+```ruby
 config.public_file_server.headers = {
   'Cache-Control' => 'public, max-age=31536000'
 }
