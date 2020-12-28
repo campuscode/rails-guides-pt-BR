@@ -27,9 +27,13 @@ Criando respostas
 
 Do ponto de vista do _controller_, há três maneiras de criar uma resposta HTTP:
 
-* Chamar `render` para criar uma resposta completa e enviar de volta ao navegador
-* Chamar `redirect_to` para enviar um _status code_ HTTP de redirecionamento para o navegador
-* Chamar `head` para criar uma resposta que consiste apenas em cabeçalhos HTTP para enviar de volta ao navegador
+* Chamar [`render`][controller.render] para criar uma resposta completa e enviar de volta ao navegador
+* Chamar [`redirect_to`][] para enviar um _status code_ HTTP de redirecionamento para o navegador
+* Chamar [`head`][] para criar uma resposta que consiste apenas em cabeçalhos HTTP para enviar de volta ao navegador
+
+[controller.render]: https://api.rubyonrails.org/classes/AbstractController/Rendering.html#method-i-render
+[`redirect_to`]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
+[`head`]: https://api.rubyonrails.org/classes/ActionController/Head.html#method-i-head
 
 ### Renderização por padrão: Convenção sobre configuração em ação
 
@@ -102,7 +106,7 @@ NOTE: A renderização real é feita por classes aninhadas do módulo [`ActionVi
 
 ### Usando `render`
 
-Na maioria dos casos, o método `ActionController::Base#render` faz o trabalho pesado de renderizar o conteúdo do aplicativo para ser utilizado por um navegador. Existem várias maneiras de personalizar o comportamento do `render`. Você pode renderizar a _view_ padrão de um template do Rails, ou de um template específico, ou de um arquivo, ou código embutido, ou nada. Você pode renderizar text, JSON ou XML. Você também pode especificar o tipo de conteúdo ou o status HTTP da resposta renderizada.
+Na maioria dos casos, o método [`ActionController::Base#render`][controller.render] faz o trabalho pesado de renderizar o conteúdo do aplicativo para ser utilizado por um navegador. Existem várias maneiras de personalizar o comportamento do `render`. Você pode renderizar a _view_ padrão de um template do Rails, ou de um template específico, ou de um arquivo, ou código embutido, ou nada. Você pode renderizar text, JSON ou XML. Você também pode especificar o tipo de conteúdo ou o status HTTP da resposta renderizada.
 
 TIP: Se você deseja ver os resultados exatos de uma chamada para `render` sem precisar inspecioná-la em um navegador, você pode chamar` render_to_string`. Este método usa exatamente as mesmas opções que o `render`, mas retorna uma string em vez de enviar uma resposta de volta ao navegador.
 
@@ -152,7 +156,7 @@ render template: "products/show"
 
 #### Resumindo
 
-As três maneiras acima de renderizar (renderizar outro template dentro do _controller_, renderizar um template dentro de outro _controller_ e renderizar um arquivo arbitrário no sistema de arquivos) são na verdade variantes da mesma ação.
+As duas maneiras acima de renderizar (renderizar um template de outra _action_ dentro do mesmo _controller_ e renderizar um template de outra _action_ dentro de outro _controller_) são na verdade variantes da mesma operação.
 
 De fato, na classe _BooksController_, dentro da _action_ update na qual queremos renderizar o template _edit_, se o livro não for atualizado com êxito, todas as seguintes chamadas de `render` renderizarão o _template_ `edit.html.erb` no diretório `views/books`:
 
@@ -278,9 +282,19 @@ pois um invasor pode usar esta _action_ para acessar arquivos confidenciais de s
 
 TIP: `send_file` geralmente é uma opção mais rápida e melhor se um *layout* não for necessário.
 
+#### Renderizando objetos
+
+O Rails pode renderizar objetos que respondem ao método `:render_in`.
+
+```ruby
+render MyRenderable.new
+```
+
+Isso chama `render_in` no objeto com o contexto de _view_ (_view context_) atual.
+
 #### Opções para `render`
 
-As chamadas para o método `render` geralmente aceitam seis opções:
+As chamadas para o método [`render`][controller.render] geralmente aceitam seis opções:
 
 * `:content_type`
 * `:layout`
@@ -453,7 +467,7 @@ Para encontrar o *layout* atual, o Rails primeiro procura por um arquivo em `app
 
 ##### Especificando *Layouts* para Controllers
 
-Você pode substituir as convenções de *layout* padrão em seus _controllers_ usando a declaração `layout`. Por exemplo:
+Você pode substituir as convenções de *layout* padrão em seus _controllers_ usando a declaração [`layout`][]. Por exemplo:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -474,6 +488,8 @@ end
 ```
 
 Com esta declaração, todas as _views_, em toda a aplicação, usarão `app/views/layouts/main.html.erb` para seu *layout*.
+
+[`layout`]: https://api.rubyonrails.org/classes/ActionView/Layouts/ClassMethods.html#method-i-layout
 
 ##### Escolhendo *Layouts* em Tempo de Execução
 
@@ -650,13 +666,13 @@ Isso renderizará um livro com `special?` configurado com o *template* `special_
 
 ### Usando `redirect_to`
 
-Outra maneira de lidar com o retorno das respostas de uma requisição HTTP é com `redirect_to`. Como você viu, `render` diz ao Rails qual _view_ (ou outro _asset_) deve ser usado na construção de uma resposta. O método `redirect_to` faz algo completamente diferente: diz ao navegador para enviar uma nova requisição para uma URL diferente. Por exemplo, você pode redirecionar de onde quer que esteja no seu código para o _index_ de fotos em sua aplicação com esta chamada:
+Outra maneira de lidar com o retorno das respostas de uma requisição HTTP é com [`redirect_to`][]. Como você viu, `render` diz ao Rails qual _view_ (ou outro _asset_) deve ser usado na construção de uma resposta. O método `redirect_to` faz algo completamente diferente: diz ao navegador para enviar uma nova requisição para uma URL diferente. Por exemplo, você pode redirecionar de onde quer que esteja no seu código para o _index_ de fotos em sua aplicação com esta chamada:
 
 ```ruby
 redirect_to photos_url
 ```
 
-Você pode usar o `redirect_back` para retornar o usuário à página de onde eles vieram.
+Você pode usar o [`redirect_back`][] para retornar o usuário à página de onde eles vieram.
 Este local é extraído do cabeçalho `HTTP_REFERER`, que não garante
 que esteja definido pelo navegador, portanto, você deve fornecer o `fallback_location`
 para usar neste caso.
@@ -666,6 +682,8 @@ redirect_back(fallback_location: root_path)
 ```
 
 NOTE: `redirect_to` e `redirect_back` não param e retornam imediatamente da execução do método, mas simplesmente definem as respostas HTTP. As instruções que ocorrerem depois deles em um método serão executadas. Você pode parar a execução com um `return` explícito ou algum outro mecanismo de parada, se necessário.
+
+[`redirect_back`]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_back
 
 #### Obtendo um Código de Status de Redirecionamento Diferente
 
@@ -736,7 +754,7 @@ Isso detectaria que não há livros com o ID especificado, define a variável de
 
 ### Usando `head` para criar respostas com apenas o cabeçalho (_Header-Only_)
 
-O método `head` pode ser usado para enviar respostas apenas com cabeçalhos para o navegador. O método `head` aceita um número ou símbolo (consulte [tabela de referência] (#a-opcao-status)) representando um código de status HTTP. O argumento de _options_ é interpretado como um hash de nomes e valores de cabeçalho. Por exemplo, você pode retornar apenas um cabeçalho de erro:
+O método [`head`][] pode ser usado para enviar respostas apenas com cabeçalhos para o navegador. O método `head` aceita um número ou símbolo (consulte [tabela de referência] (#a-opcao-status)) representando um código de status HTTP. O argumento de _options_ é interpretado como um hash de nomes e valores de cabeçalho. Por exemplo, você pode retornar apenas um cabeçalho de erro:
 
 ```ruby
 head :bad_request
@@ -744,7 +762,7 @@ head :bad_request
 
 Isso produziria o seguinte cabeçalho:
 
-```
+```http
 HTTP/1.1 400 Bad Request
 Connection: close
 Date: Sun, 24 Jan 2010 12:15:53 GMT
@@ -763,7 +781,7 @@ head :created, location: photo_path(@photo)
 
 O que produziria:
 
-```
+```http
 HTTP/1.1 201 Created
 Connection: close
 Date: Sun, 24 Jan 2010 12:16:44 GMT
@@ -781,27 +799,37 @@ Estruturando *Layouts*
 Quando o Rails renderiza a *view* como uma resposta, ele faz isso combinando a *view* com o *layout* atual, usando as regras pra achar o *layout* atual que foram mencionadas neste guia. Dentro de um *layout*, você tem acesso a três ferramentas para combinar pedaços diferentes de saídas para formar a resposta geral:
 
 * *Asset tags*
-* `yield` e `content_for`
+* `yield` e [`content_for`][]
 * *Partials*
+
+[`content_for`]: https://api.rubyonrails.org/classes/ActionView/Helpers/CaptureHelper.html#method-i-content_for
 
 ### *Helpers* de *Asset Tags*
 
 *Helpers* de *Asset Tags* fornecem métodos para gerar HTML que liga *views* a *feeds*, JavaScript, *stylesheets*, imagens, vídeos, e áudios. Há seis *helpers* de *asset tags* disponíveis no Rails:
 
-* `auto_discovery_link_tag`
-* `javascript_include_tag`
-* `stylesheet_link_tag`
-* `image_tag`
-* `video_tag`
-* `audio_tag`
+* [`auto_discovery_link_tag`][]
+* [`javascript_include_tag`][]
+* [`stylesheet_link_tag`][]
+* [`image_tag`][]
+* [`video_tag`][]
+* [`audio_tag`][]
 
 Você pode usar essas *tags* em *layouts* ou outras *views*, embora os métodos `auto_discovery_link_tag`, `javascript_include_tag` e `stylesheet_link_tag` apareçam mais na seção `<head>` de um *layout*.
 
 WARNING: Os *helpers* de *asset tags* _não_ verificam a existência dos *assets* nos endereços específicos; eles simplesmente presumem que você sabe o que está fazendo e geram o link.
 
+[`auto_discovery_link_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-auto_discovery_link_tag
+[`javascript_include_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-javascript_include_tag
+[`stylesheet_link_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-stylesheet_link_tag
+[`image_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag
+[`video_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-video_tag
+[`audio_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-audio_tag
+
+
 #### Ligando a *Feeds* com o método `auto_discovery_link_tag`
 
-O *helper* `auto_discovery_link_tag` monta HTML que a maioria dos navegadores e leitores de *feeds* conseguem usar para detectar a presenta de *feeds* RSS, Atom, ou JSON. Ele recebe o tipo de link (`:rss`, `:atom`, or `:json`), um *hash* de opções que são encaminhados para url_for, e um *hash* de opções para a *tag*:
+O *helper* [`auto_discovery_link_tag`][] monta HTML que a maioria dos navegadores e leitores de *feeds* conseguem usar para detectar a presenta de *feeds* RSS, Atom, ou JSON. Ele recebe o tipo de link (`:rss`, `:atom`, or `:json`), um *hash* de opções que são encaminhados para url_for, e um *hash* de opções para a *tag*:
 
 ```erb
 <%= auto_discovery_link_tag(:rss, {action: "feed"},
@@ -816,7 +844,7 @@ Há três opções de *tags* disponíveis para o método `auto_discovery_link_ta
 
 #### Ligando a Arquivos JavaScript com o Método `javascript_include_tag`
 
-O *helper* `javascript_include_tag` retorna uma tag HTML `script` para cada fonte fornecida.
+O *helper* [`javascript_include_tag`][] retorna uma tag HTML `script` para cada fonte fornecida.
 
 Se você está usando o Rails com a [*Asset Pipeline*](asset_pipeline.html) habilitada, este *helper* criará um link para `/assets/javascripts/` ao invés de `public/javascripts` que era usado em versões anteriores do Rails. Este link será disponibilizado pelo *asset pipeline*.
 
@@ -856,7 +884,7 @@ Para incluir `http://example.com/main.js`:
 
 #### Ligando a Arquivos CSS com o método `stylesheet_link_tag`
 
-O *helper* `stylesheet_link_tag` retorna uma tag HTML `<link>` para cada fonte fornecida.
+O *helper* [`stylesheet_link_tag`][] retorna uma tag HTML `<link>` para cada fonte fornecida.
 
 Se você está usando o Rails com a *"Asset Pipeline"* habilitada, este *helper* criará um link para `/assets/stylesheets/`. Este link então será processado pela *gem* Sprockets. Um arquivo de *stylesheet* pode ser armazenado em um de três endereços: `app/assets`, `lib/assets` ou `vendor/assets`.
 
@@ -892,7 +920,7 @@ Por padrão, o método `stylesheet_link_tag` cria links com `media="screen" rel=
 
 #### Ligando a  Imagens com o método `image_tag`
 
-O *helper* `image_tag` monta uma tag `<img />` que aponta para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/images`.
+O *helper* [`image_tag`][] monta uma tag `<img />` que aponta para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/images`.
 
 WARNING: Note que você deve especificar a extensão da imagem.
 
@@ -935,7 +963,7 @@ Além da tag especial acima, você pode fornecer um *hash* final de opções HTM
 
 #### Ligando a Vídeos com o método `video_tag`
 
-O *helper* `video_tag` monta uma tag HTML 5 `<video>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/videos`.
+O *helper* [`video_tag`][] monta uma tag HTML 5 `<video>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/videos`.
 
 ```erb
 <%= video_tag "movie.ogg" %>
@@ -974,7 +1002,7 @@ Isto irá produzir:
 
 #### Ligando a Arquivos de Áudio com o método `audio_tag`
 
-O *helper* `audio_tag` monta uma tag HTML 5 `<audio>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/audios`.
+O *helper* [`audio_tag`][] monta uma tag HTML 5 `<audio>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/audios`.
 
 ```erb
 <%= audio_tag "music.mp3" %>
@@ -1025,7 +1053,7 @@ O *body* principal da *view* sempre manda o conteúdo para dentro do `yield` sem
 
 ### Usando o Método `content_for`
 
-O método `content_for` lhe permite inserir conteúdo dentro de um bloco `yield` com nome no seu *layout*. Por exmeplo, esta *view* funcionaria com o *layout* que você acabou de ver:
+O método [`content_for`][] lhe permite inserir conteúdo dentro de um bloco `yield` com nome no seu *layout*. Por exmeplo, esta *view* funcionaria com o *layout* que você acabou de ver:
 
 ```html+erb
 <% content_for :head do %>
@@ -1056,7 +1084,7 @@ Templates parciais - normalmente chamados de *"partials"* - são outro dispositi
 
 #### Nomeando *Partials*
 
-Para renderizar uma *partial* como parte da *view*, usa-se o método `render` dentro da view:
+Para renderizar uma *partial* como parte da *view*, usa-se o método [`render`][view.render] dentro da _view_:
 
 ```ruby
 <%= render "menu" %>
@@ -1069,6 +1097,8 @@ Isto inclui o conteúdo de um arquivo chamado `_menu.html.erb` neste ponto dentr
 ```
 
 Este código puxará a *partial* de `app/views/shared/_menu`.
+
+[view.render]: https://api.rubyonrails.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render
 
 #### Usando *Partials* para Simplificar *Views*
 
@@ -1092,9 +1122,9 @@ Como em seções anteriores deste guia, o `yield` é uma ferramenta muito podero
 * `users/index.html.erb`
 
     ```html+erb
-    <%= render "shared/search_filters", search: @q do |f| %>
+    <%= render "shared/search_filters", search: @q do |form| %>
       <p>
-        Name contains: <%= f.text_field :name_contains %>
+        Name contains: <%= form.text_field :name_contains %>
       </p>
     <% end %>
     ```
@@ -1102,9 +1132,9 @@ Como em seções anteriores deste guia, o `yield` é uma ferramenta muito podero
 * `roles/index.html.erb`
 
     ```html+erb
-    <%= render "shared/search_filters", search: @q do |f| %>
+    <%= render "shared/search_filters", search: @q do |form| %>
       <p>
-        Title contains: <%= f.text_field :title_contains %>
+        Title contains: <%= form.text_field :title_contains %>
       </p>
     <% end %>
     ```
@@ -1112,13 +1142,13 @@ Como em seções anteriores deste guia, o `yield` é uma ferramenta muito podero
 * `shared/_search_filters.html.erb`
 
     ```html+erb
-    <%= form_for(search) do |f| %>
+    <%= form_with model: search do |form| %>
       <h1>Search form:</h1>
       <fieldset>
-        <%= yield f %>
+        <%= yield form %>
       </fieldset>
       <p>
-        <%= f.submit "Search" %>
+        <%= form.submit "Search" %>
       </p>
     <% end %>
     ```
@@ -1158,13 +1188,13 @@ Você também pode passar variáveis locais para os *partials*, tornando-os aind
 * `_form.html.erb`
 
     ```html+erb
-    <%= form_for(zone) do |f| %>
+    <%= form_with model: zone do |form| %>
       <p>
         <b>Zone name</b><br>
-        <%= f.text_field :name %>
+        <%= form.text_field :name %>
       </p>
       <p>
-        <%= f.submit %>
+        <%= form.submit %>
       </p>
     <% end %>
     ```
