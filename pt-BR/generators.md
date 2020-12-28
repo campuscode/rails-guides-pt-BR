@@ -22,18 +22,20 @@ Depois de ler esse guia, você irá saber:
 First Contact
 -------------
 
-When you create an application using the `rails` command, you are in fact using a Rails generator. After that, you can get a list of all available generators by just invoking `rails generate`:
+When you create an application using the `rails` command, you are in fact using a Rails generator. After that, you can get a list of all available generators by just invoking `bin/rails generate`:
 
 ```bash
 $ rails new myapp
 $ cd myapp
-$ rails generate
+$ bin/rails generate
 ```
 
-You will get a list of all generators that comes with Rails. If you need a detailed description of the helper generator, for example, you can simply do:
+NOTE: To create a rails application we use the `rails` global command, the rails gem installed via `gem install rails`. When inside the directory of your application, we use  the command `bin/rails` which uses the bundled rails inside this application.
+
+You will get a list of all generators that come with Rails. If you need a detailed description of the helper generator, for example, you can simply do:
 
 ```bash
-$ rails generate helper --help
+$ bin/rails generate helper --help
 ```
 
 Creating Your First Generator
@@ -58,13 +60,13 @@ Our new generator is quite simple: it inherits from `Rails::Generators::Base` an
 To invoke our new generator, we just need to do:
 
 ```bash
-$ rails generate initializer
+$ bin/rails generate initializer
 ```
 
 Before we go on, let's see our brand new generator description:
 
 ```bash
-$ rails generate initializer --help
+$ bin/rails generate initializer --help
 ```
 
 Rails is usually able to generate good descriptions if a generator is namespaced, as `ActiveRecord::Generators::ModelGenerator`, but not in this particular case. We can solve this problem in two ways. The first one is calling `desc` inside our generator:
@@ -86,7 +88,7 @@ Creating Generators with Generators
 Generators themselves have a generator:
 
 ```bash
-$ rails generate generator initializer
+$ bin/rails generate generator initializer
       create  lib/generators/initializer
       create  lib/generators/initializer/initializer_generator.rb
       create  lib/generators/initializer/USAGE
@@ -108,9 +110,9 @@ First, notice that we are inheriting from `Rails::Generators::NamedBase` instead
 We can see that by invoking the description of this new generator (don't forget to delete the old generator file):
 
 ```bash
-$ rails generate initializer --help
+$ bin/rails generate initializer --help
 Usage:
-  rails generate initializer NAME [options]
+  bin/rails generate initializer NAME [options]
 ```
 
 We can also see that our new generator has a class method called `source_root`. This method points to where our generator templates will be placed, if any, and by default it points to the created directory `lib/generators/initializer/templates`.
@@ -136,7 +138,7 @@ end
 And let's execute our generator:
 
 ```bash
-$ rails generate initializer core_extensions
+$ bin/rails generate initializer core_extensions
 ```
 
 We can see that now an initializer named core_extensions was created at `config/initializers/core_extensions.rb` with the contents of our template. That means that `copy_file` copied a file in our source root to the destination path we gave. The method `file_name` is automatically created when we inherit from `Rails::Generators::NamedBase`.
@@ -146,9 +148,9 @@ The methods that are available for generators are covered in the [final section]
 Generators Lookup
 -----------------
 
-When you run `rails generate initializer core_extensions` Rails requires these files in turn until one is found:
+When you run `bin/rails generate initializer core_extensions` Rails requires these files in turn until one is found:
 
-```bash
+```
 rails/generators/initializer/initializer_generator.rb
 generators/initializer/initializer_generator.rb
 rails/generators/initializer_generator.rb
@@ -175,7 +177,7 @@ end
 Before we customize our workflow, let's first see what our scaffold looks like:
 
 ```bash
-$ rails generate scaffold User name:string
+$ bin/rails generate scaffold User name:string
       invoke  active_record
       create    db/migrate/20130924151154_create_users.rb
       create    app/models/user.rb
@@ -236,7 +238,7 @@ If we generate another resource with the scaffold generator, we can see that sty
 To demonstrate this, we are going to create a new helper generator that simply adds some instance variable readers. First, we create a generator within the rails namespace, as this is where rails searches for generators used as hooks:
 
 ```bash
-$ rails generate generator rails/my_helper
+$ bin/rails generate generator rails/my_helper
       create  lib/generators/rails/my_helper
       create  lib/generators/rails/my_helper/my_helper_generator.rb
       create  lib/generators/rails/my_helper/USAGE
@@ -265,7 +267,7 @@ end
 We can try out our new generator by creating a helper for products:
 
 ```bash
-$ rails generate my_helper products
+$ bin/rails generate my_helper products
       create  app/helpers/products_helper.rb
 ```
 
@@ -292,7 +294,7 @@ end
 and see it in action when invoking the generator:
 
 ```bash
-$ rails generate scaffold Article body:text
+$ bin/rails generate scaffold Article body:text
       [...]
       invoke    my_helper
       create      app/helpers/articles_helper.rb
@@ -392,7 +394,7 @@ end
 Now, if you create a Comment scaffold, you will see that the shoulda generators are being invoked, and at the end, they are just falling back to TestUnit generators:
 
 ```bash
-$ rails generate scaffold Comment body:text
+$ bin/rails generate scaffold Comment body:text
       invoke  active_record
       create    db/migrate/20130924143118_create_comments.rb
       create    app/models/comment.rb
@@ -467,14 +469,14 @@ Adding Command Line Arguments
 -----------------------------
 Rails generators can be easily modified to accept custom command line arguments. This functionality comes from [Thor](https://www.rubydoc.info/github/erikhuda/thor/master/Thor/Base/ClassMethods#class_option-instance_method):
 
-```
+```ruby
 class_option :scope, type: :string, default: 'read_products'
 ```
 
 Now our generator can be invoked as follows:
 
 ```bash
-rails generate initializer --scope write_products
+$ bin/rails generate initializer --scope write_products
 ```
 
 The command line arguments are accessed through the `options` method inside the generator class. e.g:
