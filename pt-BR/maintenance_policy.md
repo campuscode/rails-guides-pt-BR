@@ -6,7 +6,7 @@ Maintenance Policy for Ruby on Rails
 
 Support of the Rails framework is divided into four groups: New features, bug
 fixes, security issues, and severe security issues. They are handled as
-follows, all versions in `X.Y.Z` format.
+follows, all versions, except for security releases, in `X.Y.Z`, format.
 
 --------------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ from.
 In special situations, where someone from the Core Team agrees to support more series,
 they are included in the list of supported series.
 
-**Currently included series:** `6.0.Z`.
+**Currently included series:** `6.1.Z`.
 
 Security Issues
 ---------------
@@ -60,7 +60,7 @@ be built from 1.2.2, and then added to the end of 1-2-stable. This means that
 security releases are easy to upgrade to if you're running the latest version
 of Rails.
 
-**Currently included series:** `6.0.Z`, `5.2.Z`.
+**Currently included series:** `6.1.Z`, `6.0.Z`, `5.2.Z`.
 
 Severe Security Issues
 ----------------------
@@ -69,7 +69,7 @@ For severe security issues all releases in the current major series, and also th
 last release in the previous major series will receive patches and new versions. The
 classification of the security issue is judged by the core team.
 
-**Currently included series:** `6.0.Z`, `5.2.Z`.
+**Currently included series:** `6.1.Z`, `6.0.Z`, `5.2.Z`.
 
 Unsupported Release Series
 --------------------------
