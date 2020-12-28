@@ -26,9 +26,13 @@ Creating Responses
 
 From the controller's point of view, there are three ways to create an HTTP response:
 
-* Call `render` to create a full response to send back to the browser
-* Call `redirect_to` to send an HTTP redirect status code to the browser
-* Call `head` to create a response consisting solely of HTTP headers to send back to the browser
+* Call [`render`][controller.render] to create a full response to send back to the browser
+* Call [`redirect_to`][] to send an HTTP redirect status code to the browser
+* Call [`head`][] to create a response consisting solely of HTTP headers to send back to the browser
+
+[controller.render]: https://api.rubyonrails.org/classes/AbstractController/Rendering.html#method-i-render
+[`redirect_to`]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
+[`head`]: https://api.rubyonrails.org/classes/ActionController/Head.html#method-i-head
 
 ### Rendering by Default: Convention Over Configuration in Action
 
@@ -53,7 +57,7 @@ And you have a view file `app/views/books/index.html.erb`:
 
 Rails will automatically render `app/views/books/index.html.erb` when you navigate to `/books` and you will see "Books are coming soon!" on your screen.
 
-However a coming soon screen is only minimally useful, so you will soon create your `Book` model and add the index action to `BooksController`:
+However, a coming soon screen is only minimally useful, so you will soon create your `Book` model and add the index action to `BooksController`:
 
 ```ruby
 class BooksController < ApplicationController
@@ -101,7 +105,7 @@ NOTE: The actual rendering is done by nested classes of the module [`ActionView:
 
 ### Using `render`
 
-In most cases, the `ActionController::Base#render` method does the heavy lifting of rendering your application's content for use by a browser. There are a variety of ways to customize the behavior of `render`. You can render the default view for a Rails template, or a specific template, or a file, or inline code, or nothing at all. You can render text, JSON, or XML. You can specify the content type or HTTP status of the rendered response as well.
+In most cases, the [`ActionController::Base#render`][controller.render] method does the heavy lifting of rendering your application's content for use by a browser. There are a variety of ways to customize the behavior of `render`. You can render the default view for a Rails template, or a specific template, or a file, or inline code, or nothing at all. You can render text, JSON, or XML. You can specify the content type or HTTP status of the rendered response as well.
 
 TIP: If you want to see the exact results of a call to `render` without needing to inspect it in a browser, you can call `render_to_string`. This method takes exactly the same options as `render`, but it returns a string instead of sending a response back to the browser.
 
@@ -151,7 +155,7 @@ render template: "products/show"
 
 #### Wrapping it up
 
-The above three ways of rendering (rendering another template within the controller, rendering a template within another controller, and rendering an arbitrary file on the file system) are actually variants of the same action.
+The above two ways of rendering (rendering the template of another action in the same controller, and rendering the template of another action in a different controller) are actually variants of the same operation.
 
 In fact, in the BooksController class, inside of the update action where we want to render the edit template if the book does not update successfully, all of the following render calls would all render the `edit.html.erb` template in the `views/books` directory:
 
@@ -277,9 +281,19 @@ since an attacker could use this action to access security sensitive files in yo
 
 TIP: `send_file` is often a faster and better option if a layout isn't required.
 
+#### Rendering objects
+
+Rails can render objects responding to `:render_in`.
+
+```ruby
+render MyRenderable.new
+```
+
+This calls `render_in` on the provided object with the current view context.
+
 #### Options for `render`
 
-Calls to the `render` method generally accept six options:
+Calls to the [`render`][controller.render] method generally accept six options:
 
 * `:content_type`
 * `:layout`
@@ -411,7 +425,7 @@ If a template with the specified format does not exist an `ActionView::MissingTe
 ##### The `:variants` Option
 
 This tells Rails to look for template variations of the same format.
-You can specify a list of variants by passing the `:variants` option with a symbol or an array. 
+You can specify a list of variants by passing the `:variants` option with a symbol or an array.
 
 An example of use would be this.
 
@@ -438,11 +452,11 @@ end
 private
 
 def determine_variant
-  variant = nil 
+  variant = nil
   # some code to determine the variant(s) to use
   variant = :mobile if session[:use_mobile]
-  
-  variant    
+
+  variant
 end
 ```
 
@@ -452,7 +466,7 @@ To find the current layout, Rails first looks for a file in `app/views/layouts` 
 
 ##### Specifying Layouts for Controllers
 
-You can override the default layout conventions in your controllers by using the `layout` declaration. For example:
+You can override the default layout conventions in your controllers by using the [`layout`][] declaration. For example:
 
 ```ruby
 class ProductsController < ApplicationController
@@ -473,6 +487,8 @@ end
 ```
 
 With this declaration, all of the views in the entire application will use `app/views/layouts/main.html.erb` for their layout.
+
+[`layout`]: https://api.rubyonrails.org/classes/ActionView/Layouts/ClassMethods.html#method-i-layout
 
 ##### Choosing Layouts at Runtime
 
@@ -650,13 +666,13 @@ This will render a book with `special?` set with the `special_show` template, wh
 
 ### Using `redirect_to`
 
-Another way to handle returning responses to an HTTP request is with `redirect_to`. As you've seen, `render` tells Rails which view (or other asset) to use in constructing a response. The `redirect_to` method does something completely different: it tells the browser to send a new request for a different URL. For example, you could redirect from wherever you are in your code to the index of photos in your application with this call:
+Another way to handle returning responses to an HTTP request is with [`redirect_to`][]. As you've seen, `render` tells Rails which view (or other asset) to use in constructing a response. The `redirect_to` method does something completely different: it tells the browser to send a new request for a different URL. For example, you could redirect from wherever you are in your code to the index of photos in your application with this call:
 
 ```ruby
 redirect_to photos_url
 ```
 
-You can use `redirect_back` to return the user to the page they just came from.
+You can use [`redirect_back`][] to return the user to the page they just came from.
 This location is pulled from the `HTTP_REFERER` header which is not guaranteed
 to be set by the browser, so you must provide the `fallback_location`
 to use in this case.
@@ -666,6 +682,8 @@ redirect_back(fallback_location: root_path)
 ```
 
 NOTE: `redirect_to` and `redirect_back` do not halt and return immediately from method execution, but simply set HTTP responses. Statements occurring after them in a method will be executed. You can halt by an explicit `return` or some other halting mechanism, if needed.
+
+[`redirect_back`]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_back
 
 #### Getting a Different Redirect Status Code
 
@@ -736,7 +754,7 @@ This would detect that there are no books with the specified ID, populate the `@
 
 ### Using `head` To Build Header-Only Responses
 
-The `head` method can be used to send responses with only headers to the browser. The `head` method accepts a number or symbol (see [reference table](#the-status-option)) representing an HTTP status code. The options argument is interpreted as a hash of header names and values. For example, you can return only an error header:
+The [`head`][] method can be used to send responses with only headers to the browser. The `head` method accepts a number or symbol (see [reference table](#the-status-option)) representing an HTTP status code. The options argument is interpreted as a hash of header names and values. For example, you can return only an error header:
 
 ```ruby
 head :bad_request
@@ -744,7 +762,7 @@ head :bad_request
 
 This would produce the following header:
 
-```
+```http
 HTTP/1.1 400 Bad Request
 Connection: close
 Date: Sun, 24 Jan 2010 12:15:53 GMT
@@ -763,7 +781,7 @@ head :created, location: photo_path(@photo)
 
 Which would produce:
 
-```
+```http
 HTTP/1.1 201 Created
 Connection: close
 Date: Sun, 24 Jan 2010 12:16:44 GMT
@@ -781,27 +799,36 @@ Structuring Layouts
 When Rails renders a view as a response, it does so by combining the view with the current layout, using the rules for finding the current layout that were covered earlier in this guide. Within a layout, you have access to three tools for combining different bits of output to form the overall response:
 
 * Asset tags
-* `yield` and `content_for`
+* `yield` and [`content_for`][]
 * Partials
+
+[`content_for`]: https://api.rubyonrails.org/classes/ActionView/Helpers/CaptureHelper.html#method-i-content_for
 
 ### Asset Tag Helpers
 
 Asset tag helpers provide methods for generating HTML that link views to feeds, JavaScript, stylesheets, images, videos, and audios. There are six asset tag helpers available in Rails:
 
-* `auto_discovery_link_tag`
-* `javascript_include_tag`
-* `stylesheet_link_tag`
-* `image_tag`
-* `video_tag`
-* `audio_tag`
+* [`auto_discovery_link_tag`][]
+* [`javascript_include_tag`][]
+* [`stylesheet_link_tag`][]
+* [`image_tag`][]
+* [`video_tag`][]
+* [`audio_tag`][]
 
 You can use these tags in layouts or other views, although the `auto_discovery_link_tag`, `javascript_include_tag`, and `stylesheet_link_tag`, are most commonly used in the `<head>` section of a layout.
 
 WARNING: The asset tag helpers do _not_ verify the existence of the assets at the specified locations; they simply assume that you know what you're doing and generate the link.
 
+[`auto_discovery_link_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-auto_discovery_link_tag
+[`javascript_include_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-javascript_include_tag
+[`stylesheet_link_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-stylesheet_link_tag
+[`image_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-image_tag
+[`video_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-video_tag
+[`audio_tag`]: https://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html#method-i-audio_tag
+
 #### Linking to Feeds with the `auto_discovery_link_tag`
 
-The `auto_discovery_link_tag` helper builds HTML that most browsers and feed readers can use to detect the presence of RSS, Atom, or JSON feeds. It takes the type of the link (`:rss`, `:atom`, or `:json`), a hash of options that are passed through to url_for, and a hash of options for the tag:
+The [`auto_discovery_link_tag`][] helper builds HTML that most browsers and feed readers can use to detect the presence of RSS, Atom, or JSON feeds. It takes the type of the link (`:rss`, `:atom`, or `:json`), a hash of options that are passed through to url_for, and a hash of options for the tag:
 
 ```erb
 <%= auto_discovery_link_tag(:rss, {action: "feed"},
@@ -816,7 +843,7 @@ There are three tag options available for the `auto_discovery_link_tag`:
 
 #### Linking to JavaScript Files with the `javascript_include_tag`
 
-The `javascript_include_tag` helper returns an HTML `script` tag for each source provided.
+The [`javascript_include_tag`][] helper returns an HTML `script` tag for each source provided.
 
 If you are using Rails with the [Asset Pipeline](asset_pipeline.html) enabled, this helper will generate a link to `/assets/javascripts/` rather than `public/javascripts` which was used in earlier versions of Rails. This link is then served by the asset pipeline.
 
@@ -856,7 +883,7 @@ To include `http://example.com/main.js`:
 
 #### Linking to CSS Files with the `stylesheet_link_tag`
 
-The `stylesheet_link_tag` helper returns an HTML `<link>` tag for each source provided.
+The [`stylesheet_link_tag`][] helper returns an HTML `<link>` tag for each source provided.
 
 If you are using Rails with the "Asset Pipeline" enabled, this helper will generate a link to `/assets/stylesheets/`. This link is then processed by the Sprockets gem. A stylesheet file can be stored in one of three locations: `app/assets`, `lib/assets` or `vendor/assets`.
 
@@ -892,7 +919,7 @@ By default, the `stylesheet_link_tag` creates links with `media="screen" rel="st
 
 #### Linking to Images with the `image_tag`
 
-The `image_tag` helper builds an HTML `<img />` tag to the specified file. By default, files are loaded from `public/images`.
+The [`image_tag`][] helper builds an HTML `<img />` tag to the specified file. By default, files are loaded from `public/images`.
 
 WARNING: Note that you must specify the extension of the image.
 
@@ -935,7 +962,7 @@ In addition to the above special tags, you can supply a final hash of standard H
 
 #### Linking to Videos with the `video_tag`
 
-The `video_tag` helper builds an HTML 5 `<video>` tag to the specified file. By default, files are loaded from `public/videos`.
+The [`video_tag`][] helper builds an HTML 5 `<video>` tag to the specified file. By default, files are loaded from `public/videos`.
 
 ```erb
 <%= video_tag "movie.ogg" %>
@@ -974,7 +1001,7 @@ This will produce:
 
 #### Linking to Audio Files with the `audio_tag`
 
-The `audio_tag` helper builds an HTML 5 `<audio>` tag to the specified file. By default, files are loaded from `public/audios`.
+The [`audio_tag`][] helper builds an HTML 5 `<audio>` tag to the specified file. By default, files are loaded from `public/audios`.
 
 ```erb
 <%= audio_tag "music.mp3" %>
@@ -1025,7 +1052,7 @@ The main body of the view will always render into the unnamed `yield`. To render
 
 ### Using the `content_for` Method
 
-The `content_for` method allows you to insert content into a named `yield` block in your layout. For example, this view would work with the layout that you just saw:
+The [`content_for`][] method allows you to insert content into a named `yield` block in your layout. For example, this view would work with the layout that you just saw:
 
 ```html+erb
 <% content_for :head do %>
@@ -1056,7 +1083,7 @@ Partial templates - usually just called "partials" - are another device for brea
 
 #### Naming Partials
 
-To render a partial as part of a view, you use the `render` method within the view:
+To render a partial as part of a view, you use the [`render`][view.render] method within the view:
 
 ```ruby
 <%= render "menu" %>
@@ -1069,6 +1096,8 @@ This will render a file named `_menu.html.erb` at that point within the view bei
 ```
 
 That code will pull in the partial from `app/views/shared/_menu.html.erb`.
+
+[view.render]: https://api.rubyonrails.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render
 
 #### Using Partials to Simplify Views
 
@@ -1097,9 +1126,9 @@ definitions for several similar resources:
 * `users/index.html.erb`
 
     ```html+erb
-    <%= render "shared/search_filters", search: @q do |f| %>
+    <%= render "shared/search_filters", search: @q do |form| %>
       <p>
-        Name contains: <%= f.text_field :name_contains %>
+        Name contains: <%= form.text_field :name_contains %>
       </p>
     <% end %>
     ```
@@ -1107,9 +1136,9 @@ definitions for several similar resources:
 * `roles/index.html.erb`
 
     ```html+erb
-    <%= render "shared/search_filters", search: @q do |f| %>
+    <%= render "shared/search_filters", search: @q do |form| %>
       <p>
-        Title contains: <%= f.text_field :title_contains %>
+        Title contains: <%= form.text_field :title_contains %>
       </p>
     <% end %>
     ```
@@ -1117,13 +1146,13 @@ definitions for several similar resources:
 * `shared/_search_filters.html.erb`
 
     ```html+erb
-    <%= form_for(search) do |f| %>
+    <%= form_with model: search do |form| %>
       <h1>Search form:</h1>
       <fieldset>
-        <%= yield f %>
+        <%= yield form %>
       </fieldset>
       <p>
-        <%= f.submit "Search" %>
+        <%= form.submit "Search" %>
       </p>
     <% end %>
     ```
@@ -1163,13 +1192,13 @@ You can also pass local variables into partials, making them even more powerful 
 * `_form.html.erb`
 
     ```html+erb
-    <%= form_for(zone) do |f| %>
+    <%= form_with model: zone do |form| %>
       <p>
         <b>Zone name</b><br>
-        <%= f.text_field :name %>
+        <%= form.text_field :name %>
       </p>
       <p>
-        <%= f.submit %>
+        <%= form.submit %>
       </p>
     <% end %>
     ```
