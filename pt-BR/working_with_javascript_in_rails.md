@@ -31,26 +31,24 @@ Ele analisa a resposta, traz todos os *assets* associados, como arquivos JavaScr
 repete o mesmo processo: encontra a página, encontra os *assets*, coloca eles juntos
 e mostra o resultado. Isso é chamado de 'ciclo de requisição e resposta'.
 
-
 JavaScript também pode fazer requisições para o servidor, e analisar a resposta.
 Ele também tem a habilidade de atualizar informações na página. Combinando
 esses dois poderes, o JavaScript permite que uma página web atualize partes
 do seu próprio conteúdo, sem precisar pegar a página inteira do servidor.
 Essa é uma técnica poderosa que nós chamamos de Ajax.
 
-O Rails é distribuído por padrão com CoffeeScript, então o resto dos exemplos neste
-guia serão em CoffeeScript. Todos essas lições, naturalmente, também funcionam para
-o JavaScript puro (*vanilla*).
+Como exemplo, aqui está um código JavaScript que faz uma requisição Ajax:
 
-Como exemplo, aqui está um código CoffeeScript que faz uma requisição Ajax
-usando a biblioteca jQuery:
-
-```coffeescript
-$.ajax(url: "/test").done (html) ->
-  $("#results").append html
+```js
+fetch("/test")
+  .then((data) => data.text())
+  .then((html) => {
+    const results = document.querySelector("#results");
+    results.insertAdjacentHTML("beforeend", data);
+  });
 ```
 
-Este código pega os dados do "/test", e então anexa o resultado na `div` com
+Este código pega os dados do "/test", e então anexa o resultado no elemento com
 o id `results`.
 
 O Rails fornece muito suporte interno para a criação de páginas web
@@ -70,57 +68,68 @@ Aqui está o modo mais simples de escrever JavaScript. Você pode ver ele sendo
 referido como *'Inline JavaScript'*:
 
 ```html
-<a href="#" onclick="this.style.backgroundColor='#990000'">Paint it red</a>
+<a href="#" onclick="this.style.backgroundColor='#990000';event.preventDefault();">Paint it red</a>
 ```
 
 Ao clicar no link, ele ficará vermelho. Aqui está o problema: o que
 acontece quando queremos que mais JavaScript seja executado no clique?
 
 ```html
-<a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';">Paint it green</a>
+<a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';event.preventDefault();">Paint it green</a>
 ```
 
 Estranho, certo? Poderíamos retirar a definição da função do manipulador de cliques,
-e transformar em CoffeeScript:
+e transformar em uma função:
 
-```coffeescript
-@paintIt = (element, backgroundColor, textColor) ->
-  element.style.backgroundColor = backgroundColor
-  if textColor?
-    element.style.color = textColor
+```js
+window.paintIt = function(event, backgroundColor, textColor) {
+  event.preventDefault();
+  event.target.style.backgroundColor = backgroundColor;
+  if (textColor) {
+    event.target.style.color = textColor;
+  }
+}
 ```
 
 E então na nossa página:
 
 ```html
-<a href="#" onclick="paintIt(this, '#990000')">Paint it red</a>
+<a href="#" onclick="paintIt(event, '#990000')">Paint it red</a>
 ```
 
 Esse é um pouco melhor, mas que tal múltiplos links com o mesmo efeito?
 
 ```html
-<a href="#" onclick="paintIt(this, '#990000')">Paint it red</a>
-<a href="#" onclick="paintIt(this, '#009900', '#FFFFFF')">Paint it green</a>
-<a href="#" onclick="paintIt(this, '#000099', '#FFFFFF')">Paint it blue</a>
+<a href="#" onclick="paintIt(event, '#990000')">Paint it red</a>
+<a href="#" onclick="paintIt(event, '#009900', '#FFFFFF')">Paint it green</a>
+<a href="#" onclick="paintIt(event, '#000099', '#FFFFFF')">Paint it blue</a>
 ```
 Não muito [DRY](https://pt.wikipedia.org/wiki/Don%27t_repeat_yourself), ahn?
 Podemos corrigir usando eventos. Vamos adicionar o atributo `data-*` nos
 nossos links, e então vincular o manipulador ao evento clique de cada link
 que tenha esse atributo:
 
-```coffeescript
-@paintIt = (element, backgroundColor, textColor) ->
-  element.style.backgroundColor = backgroundColor
-  if textColor?
-    element.style.color = textColor
+```js
+function paintIt(element, backgroundColor, textColor) {
+  element.style.backgroundColor = backgroundColor;
+  if (textColor) {
+    element.style.color = textColor;
+  }
+}
 
-$ ->
-  $("a[data-background-color]").click (e) ->
-    e.preventDefault()
+window.addEventListener("load", () => {
+  const links = document.querySelectorAll(
+    "a[data-background-color]"
+  );
+  links.forEach((element) => {
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
 
-    backgroundColor = $(this).data("background-color")
-    textColor = $(this).data("text-color")
-    paintIt(this, backgroundColor, textColor)
+      const {backgroundColor, textColor} = element.dataset;
+      paintIt(element, backgroundColor, textColor);
+    });
+  });
+});
 ```
 ```html
 <a href="#" data-background-color="#990000">Paint it red</a>
@@ -135,9 +144,6 @@ adicionando o atributo *data*. Podemos rodar todo nosso JavaScript através de u
 e concatenador. Podemos entregar todo nosso pacote JavaScript em cada página, o que significa
 que ele terá de ser baixado quando a primeira página carregar e então será salvo na memória
 cache (*cached*) em todas as páginas depois disso. Muitos pequenos benefícios realmente se somam.
-
-O time Rails fortemente lhe encoraja a escrever seu CoffeeScript (e JavaScript) nesse estilo,
-e você pode esperar que muitas bibliotecas também seguirão esse padrão.
 
 *Helpers* Internos
 ----------------
@@ -162,12 +168,10 @@ elementos remotos dentro da sua aplicação.
 #### form_with
 
 [o `form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
-é um *helper* que auxilia na escrita de formulários. Por padrão, o `form_with` assume
-que seu formulário estará usando Ajax. Você pode desativar esse comportamento passando
-a opção *`:local`* no *`form_with`*
+é um *helper* que auxilia na escrita de formulários. Para usar Ajax nos formulários você pode passar a opção `:local` no `form_with`.
 
 ```erb
-<%= form_with(model: @article) do |f| %>
+<%= form_with(model: @article, id: "new-article", local: false) do |form| %>
   ...
 <% end %>
 ```
@@ -175,7 +179,7 @@ a opção *`:local`* no *`form_with`*
 Isso irá gerar o seguinte HTML:
 
 ```html
-<form action="/articles" accept-charset="UTF-8" method="post" data-remote="true">
+<form id="new-article" action="/articles" accept-charset="UTF-8" method="post" data-remote="true">
   ...
 </form>
 ```
@@ -187,21 +191,21 @@ Você provavelmente não quer só ficar sentado com um `<form>` preenchido, entr
 Você provavelmente quer que algo aconteça após um envio bem-sucedido. Para fazer isso,
 vincule o evento `ajax:success`. Em caso de falha, use `ajax:error`. confira:
 
-```coffeescript
-$(document).ready ->
-  $("#new_article").on("ajax:success", (event) ->
-    [data, status, xhr] = event.detail
-    $("#new_article").append xhr.responseText
-  ).on "ajax:error", (event) ->
-    $("#new_article").append "<p>ERROR</p>"
+```js
+window.addEventListener("load", () => {
+  const element = document.querySelector("#new-article");
+  element.addEventListener("ajax:success", (event) => {
+    const [_data, _status, xhr] = event.detail;
+    element.insertAdjacentHTML("beforeend", xhr.responseText);
+  });
+  element.addEventListener("ajax:error", () => {
+    element.insertAdjacentHTML("beforeend", "<p>ERROR</p>");
+  });
+});
 ```
 
 Obviamente, você irá querer ser um pouco mais sofisticado que isso, mas
 é um começo.
-
-NOTE: A partir do Rails 5.1 e do novo `rails-ujs`, os parâmetros
-`data, status, xhr` foram empacotados no `event.detail`. Para informações
-sobre o `jquery-ujs` usado anteriormente no Rails 5 e anteriores, leia a [wiki do `jquery-ujs`](https://github.com/rails/jquery-ujs/wiki/ajax)
 
 #### link_to
 
@@ -227,12 +231,17 @@ um clique. Iríamos gerar um HTML como este:
 <%= link_to "Delete article", @article, remote: true, method: :delete %>
 ```
 
-e escrever um pouco de CoffeeScript como este:
+e escrever um pouco de JavaScript como este:
 
-```coffeescript
-$ ->
-  $("a[data-remote]").on "ajax:success", (event) ->
-    alert "The article was deleted."
+```js
+window.addEventListener("load", () => {
+  const links = document.querySelectorAll("a[data-remote]");
+  links.forEach((element) => {
+    element.addEventListener("ajax:success", () => {
+      alert("The article was deleted.");
+    });
+  });
+});
 ```
 
 #### button_to
@@ -254,7 +263,7 @@ Isso gera
 
 Uma vez que é apenas um `<form>`, todas as informações do `form_with` também se aplicam.
 
-### Personalize elementos remotos
+### Personalize Elementos Remotos
 
 É possível personalizar o comportamento dos elementos com o atributo `data-remote`
 sem escrever uma linha de JavaScript. Você pode especificar extras atributos `data-`
@@ -339,9 +348,9 @@ Isso também funciona para links com o atributo `data-method`.
 Por exemplo:
 
 ```erb
-<%= form_with(model: @article.new) do |f| %>
-  <%= f.submit data: { "disable-with": "Saving..." } %>
-<%= end %>
+<%= form_with(model: Article.new) do |form| %>
+  <%= form.submit data: { disable_with: "Saving..." } %>
+<% end %>
 ```
 
 Isso gera um formulário com:
@@ -359,6 +368,7 @@ Estas introduções causam pequenas mudanças para os eventos personalizados exe
 NOTE: A assinatura de chamadas para os manipuladores de eventos do `UJS` mudaram.
 Diferente da versão com jQuery, todos os eventos personalizados retornam apenas um parâmetro: `event`.
 Nesse parâmetro, existe um atributo adicional, o `detail`, ao qual contém um *array* de parâmetros extra.
+Para mais informação sobre o `jquery-ujs` usado previamente no Rails 5 e anteriores, leia a [wiki `jquery-ujs`](https://github.com/rails/jquery-ujs/wiki/ajax).
 
 | Nome do evento      | Parâmetros extra (event.detail) | Quando é executado                                          |
 |---------------------|---------------------------------|-------------------------------------------------------------|
@@ -372,15 +382,11 @@ Nesse parâmetro, existe um atributo adicional, o `detail`, ao qual contém um *
 
 Exemplo de uso:
 
-```html
-document.body.addEventListener('ajax:success', function(event) {
-  var detail = event.detail;
-  var data = detail[0], status = detail[1], xhr = detail[2];
-})
+```js
+document.body.addEventListener("ajax:success", (event) => {
+  const [data, status, xhr] = event.detail;
+});
 ```
-NOTE: A partir do Rails 5.1 e o novo `rails-ujs`, os parâmetros `data, status, xhr`
-foram empacotados dentro do `event.detail`. Para informações sobre o `jquery-ujs` anteriormente
-usado no Rails 5 e anteriores, leia a [wiki do `jquery-ujs`](https://github.com/rails/jquery-ujs/wiki/ajax).
 
 ### Eventos Paravéis
 
@@ -394,8 +400,8 @@ que o navegador envie o formulário por meios normais (i.e. requisição sem *Aj
 será cancelada e o formulário não será enviado de nenhuma forma. Isso é útil para
 implementar seu próprio ambiente de *upload* de arquivos via *Ajax*.
 
-Observação, você deveria usar o `return false` para prevenir eventos para o `jquery-ujs`
-e `e.preventDefault()` para o `rails-ujs`
+Observação, você deveria usar o `return false` para prevenir um evento para o `jquery-ujs`
+e `event.preventDefault()` para o `rails-ujs`.
 
 Preocupações Do Lado Do Servidor
 --------------------
@@ -431,10 +437,10 @@ A *view index* (`app/views/users/index.html.erb`) contém:
 
 <br>
 
-<%= form_with(model: @user) do |f| %>
-  <%= f.label :name %><br>
-  <%= f.text_field :name %>
-  <%= f.submit %>
+<%= form_with model: @user do |form| %>
+  <%= form.label :name %><br>
+  <%= form.text_field :name %>
+  <%= form.submit %>
 <% end %>
 ```
 
@@ -476,9 +482,12 @@ a sua requisição *Ajax*. Então você tem um correspondente arquivo *view*
 `app/views/users/create.js.erb` que gera o atual código JavaScript que será enviado
 e executado no lado do cliente.
 
-```erb
-$("<%= escape_javascript(render @user) %>").appendTo("#users");
+```js
+var users = document.querySelector("#users");
+users.insertAdjacentHTML("beforeend", "<%= j render(@user) %>");
 ```
+
+NOTE: Renderização de _views_ JavaScript não faz nenhum pré-processamente, então você não deve usar a sintaxe ES6 aqui.
 
 Turbolinks
 ----------
@@ -503,21 +512,23 @@ Se você quiser desabilitar o Turbolinks para certos links, adicione o atributo
 
 ### Eventos de Mudança de Página
 
-Quando for escrever CoffeeScript, muitas vezes você vai querer fazer algum tipo de
-mudança no carregamento da página. Com jQuery, você escreveria assim:
+Muitas vezes você vai querer fazer algum tipo de
+mudança no carregamento da página. Usando o DOM, você escreveria algo assim:
 
-```coffeescript
-$(document).ready ->
-  alert "page has loaded!"
+```js
+window.addEventListener("load", () => {
+  alert("page has loaded!");
+});
 ```
 
 Contudo, como o Turbolinks sobreescreve o processo padrão de carregamento da página,
 o evento no qual ele depende não será disparado. Se você tem um código que se parece com isso,
 você deve mudar seu código para fazer isso no lugar:
 
-```coffeescript
-$(document).on "turbolinks:load", ->
-  alert "page has loaded!"
+```js
+document.addEventListener("turbolinks:load", () => {
+  alert("page has loaded!");
+});
 ```
 
 Para mais detalhes, incluindo outros eventos que você pode disparar, veja o [README
@@ -530,23 +541,22 @@ Ao usar outra biblioteca para fazer chamadas *Ajax*, é necessário adicionar
 o token de segurança como um *header* padrão para chamadas *Ajax* na sua biblioteca.
 Para pegar o token:
 
-```javascript
-var token = document.getElementsByName('csrf-token')[0].content
+```js
+const token = document.getElementsByName(
+  "csrf-token"
+)[0].content;
 ```
 
-Você pode então enviar esse token como um *X-CSRF-Token* no seu *header*
-para requisições *Ajax*. Você não precisa adicionar o CSRF para requisições GET,
-apenas para requisições *non-GET*.
+Você pode então enviar esse token como um `X-CSRF-Token` no seu *header*
+para requisições *Ajax*. Você não precisa adicionar o *token* CSRF para requisições GET, apenas para requisições "não GET".
 
-Você pode ler mais sobre Falsa Requisição Entre Sites (CSRF) na [segurança](#cross-site-request-forgery-csrf-token-in-ajax)
+Você pode ler mais sobre Falsa Requisição Entre Sites (CSRF) no [guia de segurança](https://guiarails.com.br/#cross-site-request-forgery-csrf-token-in-ajax).
 
 Outros recursos
 ---------------
 
 Aqui estão alguns links úteis para te ajudar a aprender mais:
 
-* [jquery-ujs wiki](https://github.com/rails/jquery-ujs/wiki)
-* [jquery-ujs list of external articles](https://github.com/rails/jquery-ujs/wiki/External-articles)
-* [Rails 3 Remote Links and Forms: A Definitive Guide](http://www.alfajango.com/blog/rails-3-remote-links-and-forms/)
+* [rails-ujs wiki](https://github.com/rails/rails/tree/master/actionview/app/assets/javascripts)
 * [Railscasts: Unobtrusive JavaScript](http://railscasts.com/episodes/205-unobtrusive-javascript)
 * [Railscasts: Turbolinks](http://railscasts.com/episodes/390-turbolinks)
