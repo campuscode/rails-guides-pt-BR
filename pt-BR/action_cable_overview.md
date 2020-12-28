@@ -126,8 +126,8 @@ O *cookie* é então enviado automaticamente para a instância da *connection* q
 a tentativa de criar uma nova *connection*, e você o usa para definir o `current_user`.
 Ao identificar a *connection* para o mesmo usuário, você também garante que você pode retornar todas as *connections* em aberto para um usuário específico (e potencialmente desconectá-los, caso o usuário seja deletado ou desautorizado).
 
-Se a sua abordagem de autenticação inclui o uso de uma sessão (*session*), você usa o armazenamento com cookies para a
-sessão, seu cookie de sessão é denominado `_session` e a chave de ID do usuário é `user_id` você
+Se a sua abordagem de autenticação inclui o uso de uma sessão (*session*), você usa o armazenamento com _cookies_ para a
+sessão, seu _cookie_ de sessão é denominado `_session` e a chave de ID do usuário é `user_id` você
 pode usar esta abordagem:
 
 ```ruby
@@ -745,8 +745,8 @@ no ambiente de desenvolvimento.
 
 ### Configuração do Consumidor
 
-Para configurar o URL, adicione uma chamada para [`action_cable_meta_tag`][] em seu _layout_ HTML
-HEAD. Isso usa uma URL ou caminho (_path_) normalmente definido via `config.action_cable.url` no
+Para configurar a URL, adicione uma chamada para [`action_cable_meta_tag`][] em seu _layout_ HTML
+HEAD. Isso usa uma URL ou caminho (_path_) normalmente definido via `config.action_cable.url` nos
 arquivos de configuração de ambiente.
 
 [`action_cable_meta_tag`]: https://api.rubyonrails.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
@@ -768,7 +768,7 @@ isso significa que você deve disponibilizar pelo menos 4 conexões de banco de 
 
 ### Log no lado do client
 
-Log *client side* é desabilitado por padrão. Você pode habilitar essa configuração em `ActionCable.logger.enable` trocando para `true`.
+O log *client side* é desabilitado por padrão. Você pode habilitar essa configuração em `ActionCable.logger.enable` trocando para `true`.
 
 ```ruby
 import * as ActionCable from '@rails/actioncable'

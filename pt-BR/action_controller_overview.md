@@ -59,7 +59,7 @@ end
 
 O [Guia de Layouts e Renderização](layouts_and_rendering.html) explica essa etapa mais detalhadamente.
 
-`ApplicationController` herda de [`ActionController::Base`][], que define uma quantidade de métodos úteis. Este guia irá cobrir alguns destes métodos, mas se você estiver com curiosidade para ver o que há neles, você pode ver todos eles na [Documentação da API](https://api.rubyonrails.org/classes/ActionController.html) ou no próprio código fonte.
+O `ApplicationController` herda de [`ActionController::Base`][], que define uma quantidade de métodos úteis. Este guia vai cobrir alguns destes métodos, mas se você tiver curiosidade para ver o que há neles, você pode ver todos eles na [Documentação da API](https://api.rubyonrails.org/classes/ActionController.html) ou no próprio código fonte.
 
 Apenas métodos públicos são executáveis como *actions*. É uma boa prática diminuir a visibilidade de métodos (utilizando `private` ou `protected`) que não foram designados para serem *actions*, como métodos auxiliares ou filtros.
 
@@ -652,7 +652,7 @@ Filtros são métodos que rodam "before" (antes de), "after" (depois de) ou "aro
 
 Filtros são herdados, então se você configurou um filtro em `ApplicationController`, o mesmo irá rodar em cada *controller* da sua aplicação.
 
-Filtros "before" são registrador através método [`before_action`][]. Eles podem interromper o ciclo de uma requisição. Um filtro comum para "before" é o que requer que um usuário está logado para que uma ação seja executada. Você pode definir o método do filtro dessa forma:
+Filtros "before" são registrados através do método [`before_action`][]. Eles podem interromper o ciclo de uma requisição. Um filtro comum para "before" é o que requer que um usuário está logado para que uma ação seja executada. Você pode definir o método do filtro dessa forma:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -714,7 +714,7 @@ class ChangesController < ApplicationController
 end
 ```
 
-Note que um filtro "around" também envolvem a renderização. Em particular, no exemplo acima, se a view efetuar uma leitura no banco de dados (p. ex. usando um *scope*), a mesma é efetuada dentro de uma transação e então apresenta a informação para visualização.
+Note que um filtro "around" também envolve a renderização. Em particular, no exemplo acima, se a _view_ efetuar uma leitura no banco de dados (p. ex. usando um *scope*), a mesma é efetuada dentro de uma transação e então apresenta a informação para visualização.
 
 Você pode escolher não efetuar *yield* e montar a resposta você mesmo, o que faria com que a ação não fosse executada.
 
@@ -829,7 +829,7 @@ O objeto de requisição contém muitas informações úteis sobre a requisiçã
 
 #### `path_parameters`, `query_parameters`, e `request_parameters`
 
-O *Rails* armazena todos os parâmetros enviados com a requisição no *hash* `params`, não importando se eles foram enviados como parte da *query string* ou no corpo da requisição. O objeto de requisição tem três métodos de acesso que te fornecem acesso a estes parâmetros dependendo de onde eles vieram. O *hash* [`query_parameters`][] contem os parâmetros que foram enviados por meio da *query_string* enquanto o *hash* [`request_parameters`][] contem os parâmetros enviados através do corpo da requisição. O *hash* [`path_parameters`][] contém os parâmetros que foram reconhecidos pelo roteamento como parte do caminho que leva ao *controller* e *action* sendo executados.
+O *Rails* armazena todos os parâmetros enviados com a requisição no *hash* `params`, não importando se eles foram enviados como parte da *query string* ou no corpo da requisição. O objeto de requisição tem três métodos de acesso que te fornecem acesso a estes parâmetros dependendo de onde eles vieram. O *hash* [`query_parameters`][] contem os parâmetros que foram enviados por meio da *query_string* enquanto o *hash* [`request_parameters`][] contém os parâmetros enviados através do corpo da requisição. O *hash* [`path_parameters`][] contém os parâmetros que foram reconhecidos pelo roteamento como parte do caminho que leva ao *controller* e *action* sendo executados.
 
 [`path_parameters`]: https://api.rubyonrails.org/classes/ActionDispatch/Http/Parameters.html#method-i-path_parameters
 [`query_parameters`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html#method-i-query_parameters
@@ -906,9 +906,9 @@ Como visto no exemplo acima, o bloco `authenticate_or_request_with_http_digest` 
 
 ### Autenticação HTTP *Token*
 
-A autenticação de token HTTP é um esquema para habilitar o uso de tokens *Bearer* no *header* HTTP `Authorization`. Existem muitos formatos de *token* disponíveis e sua descrição está fora do escopo desta documentação.
+A autenticação de *token* HTTP é um esquema para habilitar o uso de *tokens Bearer* no *header* HTTP `Authorization`. Existem muitos formatos de *token* disponíveis e sua descrição está fora do escopo desta documentação.
 
-Por exemplo, suponha que você queira usar um token de autenticação emitido com antecedência para realizar a autenticação e o acesso. Implementar autenticação via *token* com Rails é bastante fácil e requer apenas o uso de um método, [`authenticate_or_request_with_http_token`][].
+Por exemplo, suponha que você queira usar um *token* de autenticação emitido com antecedência para realizar a autenticação e o acesso. Implementar autenticação via *token* com Rails é bastante fácil e requer apenas o uso de um método, [`authenticate_or_request_with_http_token`][].
 
 ```ruby
 class PostsController < ApplicationController
