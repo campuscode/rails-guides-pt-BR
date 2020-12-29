@@ -209,8 +209,8 @@ class GuestsCleanupJob < ApplicationJob
   #....
 end
 
-# Now your job's queue won't be prefixed, overriding what
-# was configured in `config.active_job.queue_name_prefix`.
+# Agora a fila do seu job não terá um prefixo, sobrescrevendo o que
+# foi configurado em `config.active_job.queue_name_prefix`.
 ```
 
 O prefixo delimitador padrão de nome de fila é '\_'. Isso pode ser alterado configurando o
@@ -450,7 +450,7 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-Se a exceção não for tratada dentro do job, como mostrado acima, então o job é reconhecido como "*failed* (falhado)"
+Se a exceção não for tratada dentro do _job_, como mostrado acima, então o _job_ é reconhecido como "*failed* (falhado)"
 
 ### Reexecução ou Descarte de *jobs* falhos
 
