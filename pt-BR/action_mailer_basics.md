@@ -18,7 +18,7 @@ Após a leitura deste guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-Introdução
+O que é o Action Mailer?
 ------------
 
 *Action Mailer* permite que você envie emails direto da sua aplicação usando as
@@ -44,7 +44,7 @@ Esta seção irá te guiar no processo de criação de um _Mailer_ e sua _view_.
 #### Criando um _Mailer_
 
 ```bash
-$ rails generate mailer UserMailer
+$ bin/rails generate mailer UserMailer
 create  app/mailers/user_mailer.rb
 create  app/mailers/application_mailer.rb
 invoke  erb
@@ -150,15 +150,18 @@ Quando você chamar o método `mail`, `ActionMailer` detectará que existem dois
 
 #### Chamando o _Mailer_
 
-_Mailers_ são somente outra maneira de renderizar uma _view_. Ao invés de renderizar uma _view_ e envia-la usando o protocolo HTTP, um _Mailer_ envia através dos protocolos de e-mail. Por esse motivo, faz sentido, para o exemplo anterior, que o _controller_ informe ao _mailer_ para enviar uma mensagem assim que um usuário complete seu cadastro com sucesso.
+_Mailers_ são somente outra maneira de renderizar uma _view_. Ao invés de renderizar uma
+_view_ e envia-la usando o protocolo HTTP, um _Mailer_ envia através
+dos protocolos de e-mail. Por esse motivo, faz sentido, para o exemplo anterior, que o
+_controller_ informe ao _mailer_ para enviar uma mensagem assim que um usuário complete seu cadastro com sucesso.
 
 Configurar isto é muito simples.
 
-Primeiro, criaremos um simples _scaffold_ (Esqueleto) para nosso _model_ `User`:
+Primeiro, criaremos um _scaffold_ (esqueleto) para nosso _model_ `User`:
 
 ```bash
-$ rails generate scaffold user name e-mail login
-$ rails db:migrate
+$ bin/rails generate scaffold user name e-mail login
+$ bin/rails db:migrate
 ```
 
 Agora que já temos o _model_ para nossos usuários, podemos começar a criar a funcionalidade. Para isso vamos editar o arquivo `app/controllers/users_controller.rb` para chamar o `UserMailer` para enviar um e-mail ao novo usuário registrado. Vamos editar a _action_ `create` inserindo a seguinte chamada: `UserMailer.with(user: @user).welcome_email` logo após o usuário ter sido salvo com sucesso.
@@ -209,7 +212,7 @@ end
 Qualquer chave-valor passado para o `with` se torna parte da _Hash_ `params` que será usado na _action_ do _Mailer_. Então `with(user: @user, account: @user.account)` cria `params[:user]` e `params[:account]` disponíveis na _action_ do _Mailer_. Como acontece nos _controllers_ que também tem `params`.
 
 O método `welcome_email` tem como retorno um objeto do tipo `ActionMailer::MessageDelivery` que você pode encadear os métodos `deliver_now` ou `deliver_later` para assim ele se enviar como um e-mail.
-O objeto `ActionMailer::MessageDelivery` é somente um _wrapper_ (Embrulho) para a classe `Mail::Message`. Se você quiser inspecionar, alterar, ou fazer qualquer coisa com o objeto `Mail::Message` você pode acessa-lo através do método `message` do objeto `ActionMailer::MessageDelivery`.
+O objeto `ActionMailer::MessageDelivery` é um _wrapper_ (Embrulho) para a classe `Mail::Message`. Se você quiser inspecionar, alterar, ou fazer qualquer coisa com o objeto `Mail::Message` você pode acessa-lo através do método `message` do objeto `ActionMailer::MessageDelivery`.
 
 ### Codificação automática
 
@@ -317,13 +320,16 @@ O mesmo formato pode ser usado para enviar e-mails com cópia (Cc:) ou com cópi
 
 #### Enviando E-mail com Nome
 
-Em alguns momentos você deseja exibir o nome da pessoa que enviou ou recebe a mensagem ao invés de mostrar somente o e-mail. O truque para conseguir isso é usar a seguinte formatação no endereço de e-mail `"Nome Completo" <endereço_de_email>`.
+Em alguns momentos você deseja exibir o nome da pessoa que enviou a mensagem ao invés de mostrar somente o e-mail.
+Você pode usar `email_address_with_name` para isso:
 
 ```ruby
 def welcome_email
   @user = params[:user]
-  email_with_name = %("#{@user.name}" <#{@user.email}>)
-  mail(to: email_with_name, subject: 'Welcome to My Awesome Site')
+  mail(
+    to: email_address_with_name(((((nc(@user.email, @user.name),
+    subject: 'Welcome to My Awesome Site'
+  )
 end
 ```
 
@@ -399,7 +405,7 @@ You can also consider using the [append_view_path](https://guides.rubyonrails.or
 
 You can perform fragment caching in mailer views like in application views using the `cache` method.
 
-```
+```html+erb
 <% cache do %>
   <%= @company.name %>
 <% end %>
@@ -407,8 +413,8 @@ You can perform fragment caching in mailer views like in application views using
 
 And in order to use this feature, you need to configure your application with this:
 
-```
-  config.action_mailer.perform_caching = true
+```ruby
+config.action_mailer.perform_caching = true
 ```
 
 Fragment caching is also supported in multipart emails.
@@ -498,13 +504,13 @@ Because of this behavior you cannot use any of the `*_path` helpers inside of
 an email. Instead you will need to use the associated `*_url` helper. For example
 instead of using
 
-```
+```html+erb
 <%= link_to 'welcome', welcome_path %>
 ```
 
 You will need to use:
 
-```
+```html+erb
 <%= link_to 'welcome', welcome_url %>
 ```
 
@@ -550,7 +556,7 @@ As the `:asset_host` usually is consistent across the application you can
 configure it globally in `config/application.rb`:
 
 ```ruby
-config.action_mailer.asset_host = 'http://example.com'
+config.asset_host = 'http://example.com'
 ```
 
 Now you can display an image inside your email.
@@ -617,11 +623,12 @@ Callbacks do _Action Mailer_
 
 * Filtros podem ser especificados com um bloco ou um *symbol* para um  método no *Mailer*, similar a um *controller*
 
-* Você pode usar um `before_action` para preencher o objeto de email com valores padrões, `delivery_method_options` ou inserir *headers* e anexos padrões. 
+* Você pode usar um `before_action` para definir variáveis de instância,
+popule o objeto de email com valores padrões, ou insira *headers* e anexos padrões.
 
 ```ruby
 class InvitationsMailer < ApplicationMailer
-  before_action { @inviter, @invitee = params[:inviter], params[:invitee] }
+  before_action :set_inviter_and_invitee
   before_action { @account = params[:inviter].account }
 
   default to:       -> { @invitee.email_address },
@@ -638,10 +645,20 @@ class InvitationsMailer < ApplicationMailer
 
     mail subject: "#{@inviter.name.familiar} added you to a project in Basecamp (#{@account.name})"
   end
+
+  private
+
+    def set_inviter_and_invitee
+      @inviter = params[:inviter]
+      @invitee = params[:invitee]
+    end
 end
 ```
 
 * Você pode usar um `after_action` para fazer uma configuração semelhante ao `before_action`, mas usando variáveis de instância definidas em sua *action* do *mailer*.
+
+* Usando um `after_action` também vai te permitir sobreescrever o método de
+  entrega definido por atualizar `mail.delivery_method.settings`.
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -686,7 +703,17 @@ end
 Usando os *helpers* do *Action Mailer*
 ---------------------------
 
-O *Action Mailer* agora herda apenas do `AbstractController`, para que você tenha acesso aos mesmos *helpers* genéricos que no *Action Controller*.
+O *Action Mailer* agora herda de `AbstractController`, para que você tenha acesso aos mesmos
+*helpers* genéricos que um *Action Controller*.
+
+Existem também alguns métodos auxiliares específicos do Action Mailer disponíveis em
+`ActionMailer::MailHelper`. Por exemplo, estes permitem acessar a instância de mailer
+a partir da *view* com `mailer`, e acessando a mensagem usando `message`:
+
+```erb
+<%= stylesheet_link_tag mailer.name.underscore %>
+<h1><%= message.subject %></h1>
+```
 
 Configuração do _Action Mailer_
 ---------------------------

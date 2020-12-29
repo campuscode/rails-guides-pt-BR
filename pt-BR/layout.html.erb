@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,9 +24,9 @@
   <meta property="og:type" content="website" />
 </head>
 <body class="guide">
-  <% if @edge %>
+  <% if badge_version = @edge ? "edge" : @version %>
   <div>
-    <img src="images/edge_badge.png" alt="edge-badge" id="edge-badge" />
+    <div id="version-badge"><%= badge_version %></div>
   </div>
   <% end %>
   <div id="topNav">
@@ -39,7 +39,7 @@
         <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
         <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
       </ul>
     </div>
@@ -58,7 +58,7 @@
           <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
-            <div class="guides-section-container">
+            <dl class="guides-section-container">
               <% documents_by_section.each do |section| %>
                 <div class="guides-section">
                   <dt><%= section['name'] %></dt>
@@ -68,7 +68,7 @@
                 </div>
               <% end %>
             </div>
-          </div>
+          </dl>
         </li>
         <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
         <li class="guides-search guides-search-small">

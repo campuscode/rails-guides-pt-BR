@@ -16,8 +16,8 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-Introduction
-------------
+What is Action Mailer?
+----------------------
 
 Action Mailer allows you to send emails from your application using mailer classes
 and views.
@@ -44,7 +44,7 @@ views.
 #### Create the Mailer
 
 ```bash
-$ rails generate mailer UserMailer
+$ bin/rails generate mailer UserMailer
 create  app/mailers/user_mailer.rb
 create  app/mailers/application_mailer.rb
 invoke  erb
@@ -164,21 +164,21 @@ When you call the `mail` method now, Action Mailer will detect the two templates
 #### Calling the Mailer
 
 Mailers are really just another way to render a view. Instead of rendering a
-view and sending it over the HTTP protocol, they are just sending it out through
-the email protocols instead. Due to this, it makes sense to just have your
+view and sending it over the HTTP protocol, they are sending it out through
+the email protocols instead. Due to this, it makes sense to have your
 controller tell the Mailer to send an email when a user is successfully created.
 
 Setting this up is simple.
 
-First, let's create a simple `User` scaffold:
+First, let's create a `User` scaffold:
 
 ```bash
-$ rails generate scaffold user name email login
-$ rails db:migrate
+$ bin/rails generate scaffold user name email login
+$ bin/rails db:migrate
 ```
 
-Now that we have a user model to play with, we will just edit the
-`app/controllers/users_controller.rb` make it instruct the `UserMailer` to deliver
+Now that we have a user model to play with, we will edit the
+`app/controllers/users_controller.rb` file, make it instruct the `UserMailer` to deliver
 an email to the newly created user by editing the create action and inserting a
 call to `UserMailer.with(user: @user).welcome_email` right after the user is successfully saved.
 
@@ -208,8 +208,8 @@ class UsersController < ApplicationController
 end
 ```
 
-NOTE: Active Job's default behavior is to execute jobs via the `:async` adapter. So, you can use
-`deliver_later` now to send emails asynchronously.
+NOTE: Active Job's default behavior is to execute jobs via the `:async` adapter. 
+So, you can use `deliver_later` to send emails asynchronously.
 Active Job's default adapter runs jobs with an in-process thread pool.
 It's well-suited for the development/test environments, since it doesn't require
 any external infrastructure, but it's a poor fit for production since it drops
@@ -217,7 +217,7 @@ pending jobs on restart.
 If you need a persistent backend, you will need to use an Active Job adapter
 that has a persistent backend (Sidekiq, Resque, etc).
 
-NOTE: When calling `deliver_later` the job will be placed under `mailers` queue. Make sure Active Job adapter support it otherwise the job may be silently ignored preventing email delivery. You can change that by specifying `config.action_mailer.deliver_later_queue_name` option.
+NOTE: When calling `deliver_later` the job will be placed under `mailers` queue. Make sure Active Job adapter supports this queue, otherwise the job may be silently ignored preventing email delivery. You can change this queue name by specifying `config.action_mailer.deliver_later_queue_name` option.
 
 If you want to send emails right away (from a cronjob for example) just call
 `deliver_now`:
@@ -238,8 +238,8 @@ action. So `with(user: @user, account: @user.account)` makes `params[:user]` and
 params.
 
 The method `welcome_email` returns an `ActionMailer::MessageDelivery` object which
-can then just be told `deliver_now` or `deliver_later` to send itself out. The
-`ActionMailer::MessageDelivery` object is just a wrapper around a `Mail::Message`. If
+can then be told to `deliver_now` or `deliver_later` to send itself out. The
+`ActionMailer::MessageDelivery` object is a wrapper around a `Mail::Message`. If
 you want to inspect, alter, or do anything else with the `Mail::Message` object you can
 access it with the `message` method on the `ActionMailer::MessageDelivery` object.
 
@@ -358,14 +358,16 @@ The same format can be used to set carbon copy (Cc:) and blind carbon copy
 #### Sending Email With Name
 
 Sometimes you wish to show the name of the person instead of just their email
-address when they receive the email. The trick to doing that is to format the
-email address in the format `"Full Name" <email>`.
+address when they receive the email. You can use `email_address_with_name` for
+that:
 
 ```ruby
 def welcome_email
   @user = params[:user]
-  email_with_name = %("#{@user.name}" <#{@user.email}>)
-  mail(to: email_with_name, subject: 'Welcome to My Awesome Site')
+  mail(
+    to: email_address_with_name(@user.email, @user.name),
+    subject: 'Welcome to My Awesome Site'
+  )
 end
 ```
 
@@ -441,7 +443,7 @@ You can also consider using the [append_view_path](https://guides.rubyonrails.or
 
 You can perform fragment caching in mailer views like in application views using the `cache` method.
 
-```
+```html+erb
 <% cache do %>
   <%= @company.name %>
 <% end %>
@@ -449,8 +451,8 @@ You can perform fragment caching in mailer views like in application views using
 
 And in order to use this feature, you need to configure your application with this:
 
-```
-  config.action_mailer.perform_caching = true
+```ruby
+config.action_mailer.perform_caching = true
 ```
 
 Fragment caching is also supported in multipart emails.
@@ -540,13 +542,13 @@ Because of this behavior you cannot use any of the `*_path` helpers inside of
 an email. Instead you will need to use the associated `*_url` helper. For example
 instead of using
 
-```
+```html+erb
 <%= link_to 'welcome', welcome_path %>
 ```
 
 You will need to use:
 
-```
+```html+erb
 <%= link_to 'welcome', welcome_url %>
 ```
 
@@ -592,7 +594,7 @@ As the `:asset_host` usually is consistent across the application you can
 configure it globally in `config/application.rb`:
 
 ```ruby
-config.action_mailer.asset_host = 'http://example.com'
+config.asset_host = 'http://example.com'
 ```
 
 Now you can display an image inside your email.
@@ -660,12 +662,12 @@ Action Mailer allows for you to specify a `before_action`, `after_action` and
 * Filters can be specified with a block or a symbol to a method in the mailer
   class similar to controllers.
 
-* You could use a `before_action` to populate the mail object with defaults,
-  delivery_method_options or insert default headers and attachments.
+* You could use a `before_action` to set instance variables, populate the mail
+  object with defaults, or insert default headers and attachments.
 
 ```ruby
 class InvitationsMailer < ApplicationMailer
-  before_action { @inviter, @invitee = params[:inviter], params[:invitee] }
+  before_action :set_inviter_and_invitee
   before_action { @account = params[:inviter].account }
 
   default to:       -> { @invitee.email_address },
@@ -682,11 +684,21 @@ class InvitationsMailer < ApplicationMailer
 
     mail subject: "#{@inviter.name.familiar} added you to a project in Basecamp (#{@account.name})"
   end
+
+  private
+
+  def set_inviter_and_invitee
+    @inviter = params[:inviter]
+    @invitee = params[:invitee]
+  end
 end
 ```
 
 * You could use an `after_action` to do similar setup as a `before_action` but
   using instance variables set in your mailer action.
+  
+* Using an `after_action` callback also enables you to override delivery method
+  settings by updating `mail.delivery_method.settings`.
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -731,8 +743,17 @@ end
 Using Action Mailer Helpers
 ---------------------------
 
-Action Mailer now just inherits from `AbstractController`, so you have access to
-the same generic helpers as you do in Action Controller.
+Action Mailer inherits from `AbstractController`, so you have access to most
+of the same helpers as you do in Action Controller.
+
+There are also some Action Mailer-specific helper methods available in
+`ActionMailer::MailHelper`. For example, these allow accessing the mailer
+instance from your view with `mailer`, and accessing the message as `message`:
+
+```erb
+<%= stylesheet_link_tag mailer.name.underscore %>
+<h1><%= message.subject %></h1>
+```
 
 Action Mailer Configuration
 ---------------------------
