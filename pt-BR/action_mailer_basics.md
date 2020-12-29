@@ -18,8 +18,8 @@ Após a leitura deste guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-O que é o Action Mailer?
-------------
+O que é o *Action Mailer*?
+------------------------
 
 *Action Mailer* permite que você envie emails direto da sua aplicação usando as
 classes e _Mailer views_

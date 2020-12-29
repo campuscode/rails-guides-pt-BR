@@ -18,8 +18,8 @@ como eles são utilizados no Rails.
 
 --------------------------------------------------------------------------------
 
-O que é Active Record?
-----------------------
+O que é *Active Record*?
+------------------------
 
 *Active Record* é o M em [MVC](https://pt.wikipedia.org/wiki/MVC) - o
 *model* - que é a camada do sistema responsável pela representação da lógica e
@@ -142,8 +142,7 @@ que você está modelando.
 Criando Models do Active Record
 -----------------------------
 
-É muito fácil criar *models* do *Active Record*. Tudo que você precisa fazer é
-subclassificar a classe `ApplicationRecord` e estará tudo pronto:
+Para criar *models* do *Active Record*, use a subclasse `ApplicationRecord` e você está pronto para começar:
 
 ```ruby
 class Product < ApplicationRecord
@@ -216,8 +215,8 @@ primária nomeadas `id`.
 CRUD: Lendo e Escrevendo Dados
 ------------------------------
 
-CRUD é um acrônimo para os quatro verbos que utilizamos na operação dos dados: ***C**reate* (criar),
-***R**ead* (ler, consultar), ***U**pdate* (atualizar) e ***D**elete* (deletar, destruir). O *Active Record*
+CRUD é um acrônimo para os quatro verbos que utilizamos na operação dos dados: _**C**reate_ (criar),
+_**R**ead_ (ler, consultar), _**U**pdate_ (atualizar) e _**D**elete_ (deletar, destruir). O *Active Record*
 criará, automaticamente, métodos que permitem uma aplicação ler e manipular dados armazenados em suas tabelas.
 
 ### *Create*
@@ -351,10 +350,14 @@ Um rápido exemplo para ilustrar:
 class User < ApplicationRecord
   validates :name, presence: true
 end
+```
 
-user = User.new
-user.save  # => false
-user.save! # => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
+```irb
+irb> user = User.new
+irb> user.save
+=> false
+irb> user.save!
+ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
 ```
 
 Você pode aprender mais sobre validações no [Guia de Validaçes de Active Record (em inglês)](active_record_validations.html).
@@ -378,7 +381,7 @@ diante de qualquer banco de dados que o *Active Record* suporta utilizando o `ra
 uma *migration* que cria uma tabela:
 
 ```ruby
-class CreatePublications < ActiveRecord::Migration[5.0]
+class CreatePublications < ActiveRecord::Migration[6.0]
   def change
     create_table :publications do |t|
       t.string :title
@@ -397,7 +400,7 @@ end
 
 O Rails mantém o controle de quais arquivos foram enviados ao banco de dados e fornece
 ferramentas de reversão. Para realmente criar uma tabela, você deverá executar
-`rails db:migrate` e para reverter, `rails db:rollback`
+`bin/rails db:migrate` e para reverter, `bin/rails db:rollback`
 
 Observe que o código acima é agnóstico em relação ao banco de dados: irá rodar em MySQL,
 PostgreSQL, Oracle, entre outros. Você pode aprender mais sobre *migrations*
