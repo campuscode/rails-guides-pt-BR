@@ -59,14 +59,16 @@ end
 
 O [Guia de Layouts e Renderização](layouts_and_rendering.html) explica essa etapa mais detalhadamente.
 
-`ApplicationController` herda de `ActionController::Base`, que define uma quantidade de métodos úteis. Este guia irá cobrir alguns destes métodos, mas se você estiver com curiosidade para ver o que há neles, você pode ver todos eles na [Documentação da API](https://api.rubyonrails.org/classes/ActionController.html) ou no próprio código fonte.
+O `ApplicationController` herda de [`ActionController::Base`][], que define uma quantidade de métodos úteis. Este guia vai cobrir alguns destes métodos, mas se você tiver curiosidade para ver o que há neles, você pode ver todos eles na [Documentação da API](https://api.rubyonrails.org/classes/ActionController.html) ou no próprio código fonte.
 
 Apenas métodos públicos são executáveis como *actions*. É uma boa prática diminuir a visibilidade de métodos (utilizando `private` ou `protected`) que não foram designados para serem *actions*, como métodos auxiliares ou filtros.
+
+[`ActionController::Base`]: https://api.rubyonrails.org/classes/ActionController/Base.html
 
 Parâmetros
 ----------
 
-Você provavelmente vai querer acessar os dados enviados pelo usuário ou outros parâmetros nas *actions* do seu *controller*. Existem dois tipos de parâmetros possíveis numa aplicação *web*. O primeiro são os parâmetros que são enviados como parte da URL, chamados parâmetros de *query string*. A *query string* é tudo o que vem após o "?" na URL. O segundo tipo de parâmetro é geralmente referido como os dados de POST. Essa informação geralmente vem de um formulário HTML que foi preenchido pelo usuário. Se chamam dados de POST porque estes dados somente podem ser enviados como parte de uma requisição HTTP usando o verbo POST. O Rails não faz distinção sobre parâmetros de *query string* e parâmetros de POST, ambos são acessíveis por meio do *hash* `params` no seu *controller*:
+Você provavelmente vai querer acessar os dados enviados pelo usuário ou outros parâmetros nas *actions* do seu *controller*. Existem dois tipos de parâmetros possíveis numa aplicação *web*. O primeiro são os parâmetros que são enviados como parte da URL, chamados parâmetros de *query string*. A *query string* é tudo o que vem após o "?" na URL. O segundo tipo de parâmetro é geralmente referido como os dados de POST. Essa informação geralmente vem de um formulário HTML que foi preenchido pelo usuário. Se chamam dados de POST porque estes dados somente podem ser enviados como parte de uma requisição HTTP usando o verbo POST. O Rails não faz distinção sobre parâmetros de *query string* e parâmetros de POST, ambos são acessíveis por meio do *hash* [`params`][] no seu *controller*:
 
 ```ruby
 class ClientsController < ApplicationController
@@ -99,6 +101,8 @@ class ClientsController < ApplicationController
   end
 end
 ```
+
+[`params`]: https://api.rubyonrails.org/classes/ActionController/StrongParameters.html#method-i-params
 
 ### Hash e Parâmetros de Array
 
@@ -141,7 +145,7 @@ Então por exemplo, se você estiver enviando este conteúdo JSON:
 
 O seu *controller* vai receber `params[:company]` no formato `{ "name" => "acme", "address" => "123 Carrot Street" }`.
 
-Além disso, se você tiver ativado `config.wrap_parameters` no seu inicializador ou chamado `wrap_parameters` no seu *controller*, você pode omitir o elemento raiz no seu parâmetro JSON. Neste caso, os parâmetros serão clonados e enpacotados sob uma chave baseada no nome do seu *controller*. Então a requisição JSON acima pode ser escrita como:
+Além disso, se você tiver ativado `config.wrap_parameters` no seu inicializador ou chamado [`wrap_parameters`][] no seu *controller*, você pode omitir o elemento raiz no seu parâmetro JSON. Neste caso, os parâmetros serão clonados e enpacotados sob uma chave baseada no nome do seu *controller*. Então a requisição JSON acima pode ser escrita como:
 
 ```json
 { "name": "acme", "address": "123 Carrot Street" }
@@ -157,15 +161,20 @@ Você pode customizar o nome da chave ou parâmetros específicos que você quer
 
 NOTE: Suporte para interpretar parâmetros XML foi extraído para uma *gem* chamada `actionpack-xml_parser`.
 
+[`wrap_parameters`]: https://api.rubyonrails.org/classes/ActionController/ParamsWrapper/Options/ClassMethods.html#method-i-wrap_parameters
+
 ### Parâmetros de Rota
 
-O *hash* `params` sempre irá conter as chaves `:controller` e `:action`, mas você deve usar os métodos `nome_do_controller` e `nome_da_action` para acessar estes valores. Quaisquer outros parâmetros definidos pela rota, como `:id`, também estarão disponíveis. Por exemplo, considere uma listagem de clientes onde a lista pode mostrar os clientes ativos e inativos. Nós podemos adicionar uma rota que captura o parâmetro `:status` numa URL "normalizada":
+O *hash* `params` sempre irá conter as chaves `:controller` e `:action`, mas você deve usar os métodos [`controller_name`][] e [`action_name`][] para acessar estes valores. Quaisquer outros parâmetros definidos pela rota, como `:id`, também estarão disponíveis. Por exemplo, considere uma listagem de clientes onde a lista pode mostrar os clientes ativos e inativos. Nós podemos adicionar uma rota que captura o parâmetro `:status` numa URL "normalizada":
 
 ```ruby
 get '/clients/:status', to: 'clients#index', foo: 'bar'
 ```
 
 Neste caso, quando um usuário abrir a URL `/clients/active`, `params[:status]` estará definido como "active". Quando esta rota é usada, `params[:foo]` também será definido como "bar", como se tivesse sido enviado por meio da *query string*. O seu *controller* também irá receber `params[:action]` com o valor "index" e `params[:controller]` com o valor "clients".
+
+[`controller_name`]: https://api.rubyonrails.org/classes/ActionController/Metal.html#method-i-controller_name
+[`action_name`]: https://api.rubyonrails.org/classes/AbstractController/Base.html#method-i-action_name
 
 ### `default_url_options`
 
@@ -224,13 +233,13 @@ end
 
 #### Valores Escalares Permitidos
 
-Dado o seguinte código:
+Chamando [`permit`][] como:
 
 ```ruby
 params.permit(:id)
 ```
 
-a chave `:id` será permitida para inclusão se ela aparecer em `params` e ela tiver um valor escalar permitido associado a ela. Caso contrário a chave será filtrada, então *arrays*, *hashes*, ou quaisquer outros objetos não poderão ser adicionados.
+permite a chave especificada (`:id`) para inclusão se ela aparecer em `params` e ela tiver um valor escalar permitido associado a ela. Caso contrário a chave será filtrada, então *arrays*, *hashes*, ou quaisquer outros objetos não poderão ser adicionados.
 
 Os tipos escalares permitidos são `String`, `Symbol`, `NilClass`, `Numeric`, `TrueClass`, `FalseClass`, `Date`, `Time`, `DateTime`, `StringIO`, `IO`, `ActionDispatch::Http::UploadedFile`, e `Rack::Test::UploadedFile`.
 
@@ -248,7 +257,7 @@ params.permit(preferences: {})
 
 entretanto fique atento porque isso abre a porta para *input* arbitrário. Neste caso, `permit` garante que os valores na estrutura retornada são valores escalares permitidos e faz a filtragem de tudo o que houver além deles.
 
-Para permitir um *hash* completo de parâmetros, o método `permit!` pode ser usado:
+Para permitir um *hash* completo de parâmetros, o método [`permit!`][] pode ser usado:
 
 ```ruby
 params.require(:log_entry).permit!
@@ -256,6 +265,9 @@ params.require(:log_entry).permit!
 
 Este código marca o *hash* de parâmetros `:log_entry` e qualquer *sub-hash* dele como valores permitidos e não verifica por escalares permitidos, sendo qualquer coisa a partir dele aceita.
 Extremo cuidado deve ser considerado ao usar o método `permit!`, visto que ele irá permitir que todos os atuais e futuros atributos do `model` sejam preenchidos em massa.
+
+[`permit`]: https://api.rubyonrails.org/classes/ActionController/Parameters.html#method-i-permit
+[`permit!`]: https://api.rubyonrails.org/classes/ActionController/Parameters.html#method-i-permit-21
 
 #### Parâmetros Aninhados
 
@@ -271,7 +283,7 @@ Esta declaração permite o preenchimento dos atributos `name`, `emails`, e `fri
 
 #### Mais Exemplos
 
-Você pode também querer usar os atributos permitidos na sua *action* `new`. Isso traz o problema que você não pode chamar `require` na chave raiz porque normalmente ela não existe no momento da chamada de `new`
+Você pode também querer usar os atributos permitidos na sua *action* `new`. Isso traz o problema que você não pode chamar [`require`][] na chave raiz porque normalmente ela não existe no momento da chamada de `new`
 
 ```ruby
 # usando fetch você pode fornecer um valor padrão e visualizar
@@ -304,6 +316,8 @@ def product_params
 end
 ```
 
+[`require`]: https://api.rubyonrails.org/classes/ActionController/Parameters.html#method-i-require
+
 #### Fora do Escopo de Parâmetros Fortes
 
 A API de parâmetros fortes foi desenhada com os casos mais comuns em mente. Não houve a intenção de torná-la uma bala prateada para lidar com todos os seus problemas de filtragem de parâmetros. Entretanto, você pode facilmente misturar a API com seu próprio código para se adaptar à sua situação.
@@ -313,15 +327,16 @@ Sessão
 
 Sua aplicação possui uma sessão para cada usuário, na qual pode-se armazenar quantidades pequenas de dados que serão persistidos entre as requisições. A sessão fica disponível apenas no *controller* e na *view* e pode utilizar um dentre vários mecanismos diferentes de armazenamento:
 
-* `ActionDispatch::Session::CookieStore` - Armazena tudo no cliente.
-* `ActionDispatch::Session::CacheStore` - Armazena os dados no *cache* do Rails.
-* `ActionDispatch::Session::ActiveRecordStore` - Armazena os dados em um banco de dados utilizando o *Active Record*. (a gem `activerecord-session_store` é necessária).
-* `ActionDispatch::Session::MemCacheStore` - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o *CacheStore* como alternativa)
+* [`ActionDispatch::Session::CookieStore`][] - Armazena tudo no cliente.
+* [`ActionDispatch::Session::CacheStore`][] - Armazena os dados no *cache* do Rails.
+* [`ActionDispatch::Session::ActiveRecordStore`][] - Armazena os dados em um banco de dados utilizando o *Active Record*. (a gem `activerecord-session_store` é necessária).
+* [`ActionDispatch::Session::MemCacheStore`][] - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o *CacheStore* como alternativa)
 
 Todos os armazenamentos de sessão utilizam um *cookie* para armazenar um ID único para cada sessão (você deve utilizar um *cookie*, o Rails não permitirá que você passe o ID da sessão na URL, pois isso é menos seguro).
 
 Para a maioria dos armazenamentos, esse ID é utilizado para procurar os dados da sessão no servidor, por exemplo, em uma tabela do banco de dados. Há apenas uma exceção, que é o armazenamento de sessão recomendado por padrão - o *CookieStore* - que armazena todos os dados da sessão no próprio *cookie* (o ID ainda estará disponível para você, se você precisar). A vantagem é a de ser muito leve e requer zero configuração em uma nova aplicação para utilizar a sessão. Os dados do *cookie* são assinados criptograficamente para torná-los invioláveis, e também é criptografado para que qualquer pessoa com acesso não leia o seu conteúdo. (O Rails não aceitará se estiver sido editado).
-O *CookieStore* pode armazenar cerca de 4kB de dados - muito menos que os demais - mas geralmente é o suficiente. O armazenamento de grandes quantidades de dados na sessão não é recomendado, independentemente de qual armazenamento de sessão sua aplicação utiliza. Você deve evitar armazenar objetos complexos (qualquer coisa que não sejam objetos Ruby básicos, o exemplo mais comum são instâncias de um *model*) na sessão, pois o servidor pode não ser capaz de remontá-los entre as requisições, o que resultará em um erro.
+
+O *CookieStore* pode armazenar cerca de 4kB de dados - muito menos que os demais - mas geralmente é o suficiente. O armazenamento de grandes quantidades de dados na sessão não é recomendado, independentemente de qual armazenamento de sessão sua aplicação utiliza. Você deve evitar armazenar objetos complexos (como instâncias de `model`) na sessão, pois o servidor pode não ser capaz de remontá-los entre as requisições, o que resultará em um erro.
 
 Se as suas sessões de usuário não armazenam dados críticos ou não precisam durar por longos períodos (por exemplo, se você apenas utiliza o *flash* para mensagens), considere o uso do `ActionDispatch::Session::CacheStore`. Isso armazenará as sessões utilizando a implementação de *cache* que você configurou para a sua aplicação. A vantagem é que você pode utilizar sua infraestrutura de *cache* existente para armazenar sessões sem precisar de nenhuma configuração ou administração adicional. A desvantagem é que as sessões serão temporárias e poderão desaparecer a qualquer momento.
 
@@ -350,9 +365,9 @@ Você também pode passar uma chave `:domain` e especificar o nome do domínio p
 Rails.application.config.session_store :cookie_store, key: '_your_app_session', domain: ".example.com"
 ```
 
-O Rails configura (para o *CookieStore*) uma chave secreta utilizada para assinar os dados da sessão em `config/credentials.yml.enc`. Isso pode ser alterado com o comando `rails credentials:edit`.
+O Rails configura (para o *CookieStore*) uma chave secreta utilizada para assinar os dados da sessão em `config/credentials.yml.enc`. Isso pode ser alterado com o comando `bin/rails credentials:edit`.
 
-```ruby
+```yaml
 # aws:
 #   access_key_id: 123
 #   secret_access_key: 345
@@ -362,6 +377,10 @@ secret_key_base: 492f...
 ```
 
 NOTE: Alterar a `secret_key_base` ao utilizar o `CookieStore` invalidará todas as sessões existentes.
+
+[`ActionDispatch::Session::CookieStore`]: https://api.rubyonrails.org/classes/ActionDispatch/Session/CookieStore.html
+[`ActionDispatch::Session::CacheStore`]: https://api.rubyonrails.org/classes/ActionDispatch/Session/CacheStore.html
+[`ActionDispatch::Session::MemCacheStore`]: https://api.rubyonrails.org/classes/ActionDispatch/Session/MemCacheStore.html
 
 ### Acessando a Sessão
 
@@ -418,13 +437,15 @@ class LoginsController < ApplicationController
 end
 ```
 
-Para redefinir a sessão inteira, utilize `reset_session`.
+Para redefinir a sessão inteira, utilize [`reset_session`][].
+
+[`reset_session`]: https://api.rubyonrails.org/classes/ActionController/Metal.html#method-i-reset_session
 
 ### The Flash
 
 The flash is a special part of the session which is cleared with each request. This means that values stored there will only be available in the next request, which is useful for passing error messages etc.
 
-It is accessed in much the same way as the session, as a hash (it's a [FlashHash](https://api.rubyonrails.org/classes/ActionDispatch/Flash/FlashHash.html) instance).
+The flash is accessed via the [`flash`][] method. Like the session, the flash is represented as a hash.
 
 Let's use the act of logging out as an example. The controller can send a message which will be displayed to the user on the next request:
 
@@ -471,7 +492,7 @@ You can pass anything that the session can store; you're not limited to notices 
 <% end %>
 ```
 
-If you want a flash value to be carried over to another request, use the `keep` method:
+If you want a flash value to be carried over to another request, use [`flash.keep`][]:
 
 ```ruby
 class MainController < ApplicationController
@@ -491,14 +512,17 @@ class MainController < ApplicationController
 end
 ```
 
+[`flash`]: https://api.rubyonrails.org/classes/ActionDispatch/Flash/RequestMethods.html#method-i-flash
+[`flash.keep`]: https://api.rubyonrails.org/classes/ActionDispatch/Flash/FlashHash.html#method-i-keep
+
 #### `flash.now`
 
-By default, adding values to the flash will make them available to the next request, but sometimes you may want to access those values in the same request. For example, if the `create` action fails to save a resource and you render the `new` template directly, that's not going to result in a new request, but you may still want to display a message using the flash. To do this, you can use `flash.now` in the same way you use the normal `flash`:
+By default, adding values to the flash will make them available to the next request, but sometimes you may want to access those values in the same request. For example, if the `create` action fails to save a resource and you render the `new` template directly, that's not going to result in a new request, but you may still want to display a message using the flash. To do this, you can use [`flash.now`][] in the same way you use the normal `flash`:
 
 ```ruby
 class ClientsController < ApplicationController
   def create
-    @client = Client.new(params[:client])
+    @client = Client.new(client_params)
     if @client.save
       # ...
     else
@@ -509,10 +533,12 @@ class ClientsController < ApplicationController
 end
 ```
 
+[`flash.now`]: https://api.rubyonrails.org/classes/ActionDispatch/Flash/FlashHash.html#method-i-now
+
 Cookies
 -------
 
-Sua Aplicação pode armazemar pequenas quantidades de dados no cliente - chamados de *cookies* - que serão mantidas entre requisições e até as sessões. O Rails fornece um fácil acesso para os *cookies* através do método `cookies`, que - assim como a `session` - funciona como um hash:
+Sua Aplicação pode armazemar pequenas quantidades de dados no cliente - chamados de *cookies* - que serão mantidas entre requisições e até as sessões. O Rails fornece um fácil acesso para os *cookies* através do método [`cookies`][], que - assim como a `session` - funciona como um hash:
 
 ```ruby
 class CommentsController < ApplicationController
@@ -522,7 +548,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(params[:comment])
+    @comment = Comment.new(comment_params)
     if @comment.save
       flash[:notice] = "Thanks for your comment!"
       if params[:remember_name]
@@ -540,7 +566,7 @@ class CommentsController < ApplicationController
 end
 ```
 
-Perceba que enquanto para valores de sessão você define a chave como `nil`, para deletar um valor de *cookie* você deve usar ` cookies.delete(:key)`.
+Perceba que enquanto para valores de sessão você pode definir a chave como `nil`, para deletar um valor de *cookie* você deve usar ` cookies.delete(:key)`.
 
 O Rails também fornece um *cookie jar* assinado e um *cookie jar* criptografado para amazenar
 dados sensíveis. O *cookie jar* assinado anexa uma assinaura criptográfica nos
@@ -597,6 +623,8 @@ manualmente ao ler os valores em requisições subsequentes.
 
 Se você usar o *cookie* de armazenamento de sessão, isso também se aplicaria aos *hashes* `session` e `flash`.
 
+[`cookies`]: https://api.rubyonrails.org/classes/ActionController/Cookies.html#method-i-cookies
+
 Renderizando dados XML e JSON
 ---------------------------
 
@@ -624,7 +652,7 @@ Filtros são métodos que rodam "before" (antes de), "after" (depois de) ou "aro
 
 Filtros são herdados, então se você configurou um filtro em `ApplicationController`, o mesmo irá rodar em cada *controller* da sua aplicação.
 
-Filtros "before" podem interromper o ciclo de uma requisição. Um filtro comum para "before" é o que requer que um usuário está logado para que uma ação seja executada. Você pode definir o método do filtro dessa forma:
+Filtros "before" são registrados através do método [`before_action`][]. Eles podem interromper o ciclo de uma requisição. Um filtro comum para "before" é o que requer que um usuário está logado para que uma ação seja executada. Você pode definir o método do filtro dessa forma:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -642,7 +670,7 @@ end
 ```
 Esse método simplesmente armazena uma mensagem de erro no *flash* e redireciona para o formulário de login se o usuário não estiver logado. Se um filtro "before" renderiza ou redireciona, a ação não será executada. Se filtros adicionais estão programados para executar após esse filtro, eles são cancelados também.
 
-Nesse exemplo o filtro é adicionado ao `ApplicationController` e dessa forma todos os *controllers* na aplicação irão herdar ele. Isso fará com que tudo na aplicação requeira que o usuário esteja logado para que ele possa usar. Por razões óbvias (o usuário não conseguiria fazer o log in para começo de conversa!), nem todos os *controllers* devem requerer isso. Você pode evitar esse filtro de ser executado antes de ações em particular com `skip_before_action`:
+Nesse exemplo o filtro é adicionado ao `ApplicationController` e dessa forma todos os *controllers* na aplicação irão herdar ele. Isso fará com que tudo na aplicação requeira que o usuário esteja logado para que ele possa usar. Por razões óbvias (o usuário não conseguiria fazer o log in para começo de conversa!), nem todos os *controllers* devem requerer isso. Você pode evitar esse filtro de ser executado antes de ações em particular com [`skip_before_action`][]:
 
 ```ruby
 class LoginsController < ApplicationController
@@ -655,13 +683,16 @@ Agora, as ações de `new` e `create` do `LoginsController` irão funcionar como
 NOTE: Chamar o mesmo filtro múltiplas vezes com diferentes opções não irá funcionar,
 já que a última definição do filtro irá sobreescrever as anteriores.
 
+[`before_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-before_action
+[`skip_before_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-skip_before_action
+
 ### Filtros after e around
 
 Além de filtros "before", você pode também executar filtros depois que uma ação tenha sido executada, ou antes e depois em conjunto.
 
-Filtros "after" são similares aos filtros "before", mas porque a ação já foi executada eles tem acesso a dados da resposta que serão enviados para o cliente. Obviamente, filtros "after" não podem impedir uma ação de ser executada. Note também que filtros "after" são executados somente após uma ação bem sucedida, mas não quando uma exceção é gerada durante o ciclo de uma requisição.
+Filtros "after" são registrados através do método [`after_action`][]. Eles são similares aos filtros "before", mas porque a ação já foi executada eles tem acesso a dados da resposta que serão enviados para o cliente. Obviamente, filtros "after" não podem impedir uma ação de ser executada. Note também que filtros "after" são executados somente após uma ação bem sucedida, mas não quando uma exceção é gerada durante o ciclo de uma requisição.
 
-Filtros "around" são responsáveis por executar as ações associadas por *yield*, simular a como os *middlewares* do Rack funcionam.
+Filtros "around" são registrados através do método [`around_action`][]. Eles são responsáveis por executar as ações associadas por *yield*, simular a como os *middlewares* do Rack funcionam.
 
 Por exemplo, em um *website* aonde alterações possuem um fluxo de aprovação, um administrador pode pré-visualizar as mesmas facilmente, aplicando-as dentro de uma transação.
 
@@ -683,9 +714,12 @@ class ChangesController < ApplicationController
 end
 ```
 
-Note que um filtro "around" também envolvem a renderização. Em particular, se no exemplo acima, a view efetuar uma leitura no banco de dados (p. ex. usando um *scope*), a mesma é efetuada dentro de uma transação e então apresenta a informação para visualização.
+Note que um filtro "around" também envolve a renderização. Em particular, no exemplo acima, se a _view_ efetuar uma leitura no banco de dados (p. ex. usando um *scope*), a mesma é efetuada dentro de uma transação e então apresenta a informação para visualização.
 
 Você pode escolher não efetuar *yield* e montar a resposta você mesmo, o que faria com que a ação não fosse executada.
+
+[`after_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action
+[`around_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action
 
 ### Outras formas de usar
 
@@ -704,7 +738,7 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-Note nesse caso que o filtro utiliza `send` porque o método `logged_in?` é privado e o filtro não é executado no escopo do *controller*. Essa não é a forma recomendada para implementar esse filtro em particular, mas ele pode ser útil em casos mais simples.
+Note nesse caso que o filtro utiliza `send` porque o método `logged_in?` é privado e o filtro não é executado no escopo do *controller*. Essa não é a forma recomendada para implementar esse filtro em particular, mas em casos mais simples ele pode ser útil.
 
 Especificamente para `around_action`, o bloco também acessa a `action`:
 
@@ -743,7 +777,7 @@ A forma como isso é feito é adicionando um *token* não adivinhável que é co
 Se você gera um *form* como este:
 
 ```erb
-<%= form_with model: @user, local: true do |form| %>
+<%= form_with model: @user do |form| %>
   <%= form.text_field :username %>
   <%= form.text_field :password %>
 <% end %>
@@ -769,7 +803,11 @@ O [Guia de segurança](security.html) possui mais informações sobre isso e mui
 Os Objetos de Requisição e Resposta
 --------------------------------
 
-Em todo *controller* existem dois métodos de acesso apontando para os objetos de requisição e de resposta associados com o ciclo de requisição que estiver em execução no momento. O método `request` contém uma instância de `ActionDispatch::Request` e o método `response` retorna um objeto de resposta representando o que será enviado de volta ao cliente.
+Em todo *controller* existem dois métodos de acesso apontando para os objetos de requisição e de resposta associados com o ciclo de requisição que estiver em execução no momento. O método [`request`][] contém uma instância de [`ActionDispatch::Request`][] e o método [`response`][] retorna um objeto de resposta representando o que será enviado de volta ao cliente.
+
+ [`ActionDispatch::Request`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html
+ [`request`]: https://api.rubyonrails.org/classes/ActionController/Base.html#method-i-request
+ [`response`]: https://api.rubyonrails.org/classes/ActionController/Base.html#method-i-response
 
 ### O Objeto `request`
 
@@ -791,7 +829,11 @@ O objeto de requisição contém muitas informações úteis sobre a requisiçã
 
 #### `path_parameters`, `query_parameters`, e `request_parameters`
 
-O *Rails* armazena todos os parâmetros enviados com a requisição no *hash* `params`, não importando se eles foram enviados como parte da *query string* ou no corpo da requisição. O objeto de requisição tem três métodos de acesso que te fornecem acesso a estes parâmetros dependendo de onde eles vieram. O *hash* `query_parameters` contem os parâmetros que foram enviados por meio da *query_string* enquanto o *hash* `request_parameters` contem os parâmetros enviados através do corpo da requisição. O *hash* `path_parameters` contém os parâmetros que foram reconhecidos pelo roteamento como parte do caminho que leva ao *controller* e *action* sendo executados.
+O *Rails* armazena todos os parâmetros enviados com a requisição no *hash* `params`, não importando se eles foram enviados como parte da *query string* ou no corpo da requisição. O objeto de requisição tem três métodos de acesso que te fornecem acesso a estes parâmetros dependendo de onde eles vieram. O *hash* [`query_parameters`][] contem os parâmetros que foram enviados por meio da *query_string* enquanto o *hash* [`request_parameters`][] contém os parâmetros enviados através do corpo da requisição. O *hash* [`path_parameters`][] contém os parâmetros que foram reconhecidos pelo roteamento como parte do caminho que leva ao *controller* e *action* sendo executados.
+
+[`path_parameters`]: https://api.rubyonrails.org/classes/ActionDispatch/Http/Parameters.html#method-i-path_parameters
+[`query_parameters`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html#method-i-query_parameters
+[`request_parameters`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html#method-i-request_parameters
 
 ### O Objeto `response`
 
@@ -819,14 +861,15 @@ NOTE: No caso acima faria mais sentido utilizar o *setter* `content_type` direta
 Autenticações HTTP
 ------------------
 
-O Rails vem com dois mecanismos de autenticação HTTP embutidos:
+O Rails vem com três mecanismos de autenticação HTTP embutidos:
 
 * Autenticação *Basic*
 * Autenticação *Digest*
+* Autenticação *Token*
 
 ### Autenticação HTTP *Basic*
 
-Autenticação HTTP *basic* é um esquema de autenticação que é suportado pela maioria dos navegadores e outros clientes HTTP. Como um exemplo, considere uma página de administração que será acessável apenas informando um nome de usuário e uma senha na janela de autenticação HTTP *basic* do navegador. Usar a autenticação embutida é bem fácil e apenas requer que você use um método, `http_basic_authenticate_with`.
+Autenticação HTTP *basic* é um esquema de autenticação que é suportado pela maioria dos navegadores e outros clientes HTTP. Como um exemplo, considere uma página de administração que será acessável apenas informando um nome de usuário e uma senha na janela de autenticação HTTP *basic* do navegador. Usar a autenticação embutida é bem fácil e apenas requer que você use um método, [`http_basic_authenticate_with`][].
 
 ```ruby
 class AdminsController < ApplicationController
@@ -836,9 +879,11 @@ end
 
 Com isso, você pode criar *controllers* com *namespaces* que herdam de `AdminsController`. O filtro vai, assim, ser executado para todas as ações nos *controllers*, protegendo-os com a autenticação HTTP *basic*.
 
+[`http_basic_authenticate_with`]: https://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Basic/ControllerMethods/ClassMethods.html#method-i-http_basic_authenticate_with
+
 ### Autenticação HTTP *Digest*
 
-A autenticação HTTP *digest* é superior à autenticação *basic* porque ela não requer que o cliente envie uma senha sem criptografia pela rede (embora a autenticação HTTP *basic* seja segura via HTTPS). Usar a autenticação *digest* com Rails é bem fácil e requer apenas o uso de um método, `authenticate_or_request_with_http_digest`.
+A autenticação HTTP *digest* é superior à autenticação *basic* porque ela não requer que o cliente envie uma senha sem criptografia pela rede (embora a autenticação HTTP *basic* seja segura via HTTPS). Usar a autenticação *digest* com Rails é bem fácil e requer apenas o uso de um método, [`authenticate_or_request_with_http_digest`][].
 
 ```ruby
 class AdminsController < ApplicationController
@@ -847,7 +892,6 @@ class AdminsController < ApplicationController
   before_action :authenticate
 
   private
-
     def authenticate
       authenticate_or_request_with_http_digest do |username|
         USERS[username]
@@ -858,17 +902,44 @@ end
 
 Como visto no exemplo acima, o bloco `authenticate_or_request_with_http_digest` recebe apenas um argumento - o nome de usuário. E o bloco retorna a senha. Retornar `false` ou `nil` em `authenticate_or_request_with_http_digest` causará falha de autenticação.
 
+[`authenticate_or_request_with_http_digest`]: https://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Digest/ControllerMethods.html#method-i-authenticate_or_request_with_http_digest
+
+### Autenticação HTTP *Token*
+
+A autenticação de *token* HTTP é um esquema para habilitar o uso de *tokens Bearer* no *header* HTTP `Authorization`. Existem muitos formatos de *token* disponíveis e sua descrição está fora do escopo desta documentação.
+
+Por exemplo, suponha que você queira usar um *token* de autenticação emitido com antecedência para realizar a autenticação e o acesso. Implementar autenticação via *token* com Rails é bastante fácil e requer apenas o uso de um método, [`authenticate_or_request_with_http_token`][].
+
+```ruby
+class PostsController < ApplicationController
+  TOKEN = "secret"
+
+  before_action :authenticate
+
+  private
+    def authenticate
+      authenticate_or_request_with_http_token do |token, options|
+        ActiveSupport::SecurityUtils.secure_compare(token, TOKEN)
+      end
+    end
+end
+```
+
+Como visto no exemplo acima, o bloco `authenticate_or_request_with_http_token` recebe dois argumentos: o *token* e um` Hash` contendo as opções que foram analisadas a partir do *header* HTTP `Authorization`. O bloco deve retornar `true` se a autenticação for bem-sucedida. Retornar `false` ou` nil` causará uma falha de autenticação.
+
+[`authenticate_or_request_with_http_token`]: https://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Token/ControllerMethods.html#method-i-authenticate_or_request_with_http_token
+
 *Streaming* e *Downloads* de Arquivos
 ----------------------------
 
-Às vezes você pode querer enviar um arquivo para o usuário ao invés de uma página HTML. Todos os _controllers_ no Rails possuem os métodos `send_data` e `send_file`, que transmitem dados ao navegador. O método `send_file` permite que você proveja o nome do arquivo no disco e seu conteúdo será transmitido.
+Às vezes você pode querer enviar um arquivo para o usuário ao invés de uma página HTML. Todos os _controllers_ no Rails possuem os métodos [`send_data`][] e [`send_file`][], que transmitem dados ao navegador. O método `send_file` permite que você proveja o nome do arquivo no disco e seu conteúdo será transmitido.
 
 Para transmitir dados para o navegador, use `send_data`:
 
 ```ruby
 require "prawn"
 class ClientsController < ApplicationController
-  # Gera um documento PDF com informações no navegador e 
+  # Gera um documento PDF com informações no navegador e
   # o retorna. O usuário receberá o documento PDF como um download.
   def download_pdf
     client = Client.find(params[:id])
@@ -878,7 +949,6 @@ class ClientsController < ApplicationController
   end
 
   private
-
     def generate_pdf(client)
       Prawn::Document.new do
         text client.name, align: :center
@@ -890,6 +960,9 @@ end
 ```
 
 A _action_ `download_pdf` no exemplo acima está chamando um método privado que na verdade cria o documento PDF e o retorna como uma _string_. Essa _string_ será então transmitida ao navegador como um arquivo para download e o nome do arquivo será sugerido ao usuário. Às vezes, quando arquivos são transmitidos aos usuários, você pode não querer que façam o download do arquivo. Imagens, por exemplo, podem ser embutidas em páginas HTML. Para comunicar ao navegador que não deve ser feito o download do arquivo, você pode utilizar a propriedade `inline` na opção `:disposition`. A propriedade oposta e padrão para essa opção é "_attachment_".
+
+[`send_data`]: https://api.rubyonrails.org/classes/ActionController/DataStreaming.html#method-i-send_data
+[`send_file`]: https://api.rubyonrails.org/classes/ActionController/DataStreaming.html#method-i-send_file
 
 ### Enviando Arquivos
 
@@ -943,13 +1016,18 @@ NOTE: Arquivos de configuração não são recarregados a cada requisição, ent
 
 Agora os usuários podem requerer um arquivo em PDF só adicionando ".pdf" ao final da _URL_:
 
-```bash
+```
 GET /clients/1.pdf
 ```
 
 ### Transmissão Ao Vivo de Dado Arbitrários
 
-O Rails permite que você transmita mais do que apenas arquivos. Na verdade, você pode transmitir o que você desejar como um objeto de resposta. O modulo `ActionController::Live` permite a você criar uma conexão persistente com o navegador. Utilizando esse módulo, você é capaz de enviar dados arbitrários ao navegador sem depender de uma requisição _HTTP_.
+O Rails permite que você transmita mais do que apenas arquivos. Na verdade, você pode transmitir o que você desejar
+como um objeto de resposta. O modulo [`ActionController::Live`][] permite
+a você criar uma conexão persistente com o navegador. Utilizando esse módulo, você é capaz
+de enviar dados arbitrários ao navegador sem depender de uma requisição _HTTP_.
+
+[`ActionController::Live`]: https://api.rubyonrails.org/classes/ActionController/Live.html
 
 #### Implementando Transmissão Ao Vivo ( _Live Streaming_ )
 
@@ -971,9 +1049,14 @@ class MyController < ActionController::Base
 end
 ```
 
-O código acima manterá uma conexão constante com o navegador e mandará 100 mensagens de `"hello world\n"`, cada uma com um segundo de diferença. 
+O código acima manterá uma conexão constante com o navegador e mandará 100 mensagens de `"hello world\n"`, cada uma com um segundo de diferença.
 
-Existem algumas coisas a serem notadas no exemplo acima. Nós precisamos ter certeza de que a resposta da transmissão foi terminada. Esquecer de encerrar a transmissão deixará o *socket* aberto pra sempre. Nós também precisamos estabelecer o tipo de conteúdo (_`content_type`_) para `text/event-stream` antes de responder a transmissão. Isso é necessário, pois _headers_ não podem ser escritos depois que uma resposta foi enviada (quando `response.committed?` retorna um valor _truthy_ ), que ocorre quando você escreve ou envia (`commit`) a resposta de uma transmissão.
+Existem algumas coisas a serem notadas no exemplo acima. Nós precisamos
+ter certeza de que a resposta da transmissão foi terminada. Esquecer de encerrar a transmissão deixará
+o *socket* aberto pra sempre. Nós também precisamos estabelecer o tipo de conteúdo (`content_type`) para `text/event-stream`
+antes de responder a transmissão. Isso é necessário, pois _headers_ não podem ser escritos
+depois que uma resposta foi enviada (quando `response.committed?` retorna um
+valor _truthy_), que ocorre quando você escreve ou envia (`commit`) a resposta de uma transmissão.
 
 #### Exemplo de Uso
 
@@ -1005,15 +1088,15 @@ O código acima envia a próxima linha apenas depois que a pessoa cantando compl
 
 Transmitir dados arbitrários é uma ferramenta extremamente poderosa. Como mostrado nos exemplos anteriores, você pode escolher quando e o que enviar na resposta da transmissão. Entretanto, você deveria se atentar aos seguintes pontos:
 
-* Cada transmissão cria uma nova _thread_ e copia sobre as variáveis locais da 
+* Cada transmissão cria uma nova _thread_ e copia sobre as variáveis locais da
   _thread_, as variáveis da _thread_ original. Ter muitas variáveis locais em uma
-  _thread_ local pode impactar negativamente na performance. Da mesma forma, um 
+  _thread_ local pode impactar negativamente na performance. Da mesma forma, um
   grande número de _threads_ pode também piorar a performance.
-* Deixar de encerrar a transmissão deixará o _socket_ correspondente aberto para 
+* Deixar de encerrar a transmissão deixará o _socket_ correspondente aberto para
   sempre. Certifique-se de chamar o método `close` sempre que estiver transmitindo
   dados.
-* Os servidores WEBrick armazena todas as respostas, então apenas incluir no 
-  _controller_ `ActionController::Live` não irá funcionar. Você deve usar um 
+* Os servidores WEBrick armazena todas as respostas, então apenas incluir no
+  _controller_ `ActionController::Live` não irá funcionar. Você deve usar um
   servidor web que não armazene automaticamente as respostas.
 
 Filtragem de Log
@@ -1057,11 +1140,11 @@ A exceção padrão do Rails apresenta a mensagem "500 Server Error" para todas 
 
 ### Os *Templates* 404 e 500 Padrão
 
-Por padrão uma aplicação em produção irá renderizar uma mensagem em um template de erro 404 ou 500, no ambiente de produção todas as mensagens de erro são disparadas. Essas mensagens são armazenadas em templates estáticos de HTML na pasta *public*, em `404.html` e `500.html` respectivamente. Você pode customizar essas páginas e adicionar algumas estilizações, mas lembre-se elas são HTML estático; i.e. você não pode usar ERB, SCSS, CoffeeScript, ou layouts para elas.
+Por padrão no ambiente de produção a aplicação irá renderizar uma mensagem em um template de erro 404 ou 500. No ambiente de desenvolvimento todas as mensagens de erro são disparadas. Essas mensagens são armazenadas em templates estáticos de HTML na pasta *public*, em `404.html` e `500.html` respectivamente. Você pode customizar essas páginas e adicionar algumas estilizações, mas lembre-se elas são HTML estáticos; i.e. você não pode usar ERB, SCSS, CoffeeScript, ou layouts para elas.
 
 ### `rescue_from`
 
-Se você quiser fazer algo mais elaborado quando estiver lidando com erros, você pode usar `rescue_from`, que trata as exceções de um certo tipo (ou de vários tipos) em um *controller* inteiro e nas subclasses.
+Se você quiser fazer algo mais elaborado quando estiver lidando com erros, você pode usar [`rescue_from`][], que trata as exceções de um certo tipo (ou de vários tipos) em um *controller* inteiro e nas subclasses.
 
 Quando uma exceção acontece e é pega por uma diretiva `rescue_from`, o objeto da exceção é passado ao *handler*. O *handler* pode ser um método ou um objeto `Proc` passado com a opção `:with`. Você também pode usar um bloco diretamente ao invés de um objeto `Proc`.
 
@@ -1072,7 +1155,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   private
-
     def record_not_found
       render plain: "404 Not Found", status: 404
     end
@@ -1086,7 +1168,6 @@ class ApplicationController < ActionController::Base
   rescue_from User::NotAuthorized, with: :user_not_authorized
 
   private
-
     def user_not_authorized
       flash[:error] = "You don't have access to this section."
       redirect_back(fallback_location: root_path)
@@ -1103,7 +1184,6 @@ class ClientsController < ApplicationController
   end
 
   private
-
     # If the user is not authorized, just throw the exception.
     def check_authorization
       raise User::NotAuthorized unless current_user.admin?
@@ -1118,9 +1198,13 @@ NOTE: Quando rodando em ambiente de desenvolvimento, todos os erros
 
 NOTE: Certas exceções são tratadas apenas pela classe `ApplicationController`, já que são acionadas antes do controller ser iniciado a exceção é executada.
 
+[`rescue_from`]: https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
+
 Forçar protocolo HTTPS
 --------------------
 
 Se você quiser garantir que a comunicação com seu *controller* seja possível apenas
-via HTTPS, você deve fazer isso ativando o middleware `ActionDispatch::SSL` via
+via HTTPS, você deve fazer isso ativando o middleware [`ActionDispatch::SSL`][] via
 `config.force_ssl` na configuração do seu ambiente.
+
+[`ActionDispatch::SSL`]: https://api.rubyonrails.org/classes/ActionDispatch/SSL.html
