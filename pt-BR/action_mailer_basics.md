@@ -706,9 +706,6 @@ Usando os *helpers* do *Action Mailer*
 O *Action Mailer* agora herda de `AbstractController`, para que você tenha acesso aos mesmos
 *helpers* genéricos que um *Action Controller*.
 
-There are also some Action Mailer-specific helper methods available in
-`ActionMailer::MailHelper`. For example, these allow accessing the mailer
-instance from your view with `mailer`, and accessing the message as `message`:
 Existem também alguns métodos auxiliares específicos do Action Mailer disponíveis em
 `ActionMailer::MailHelper`. Por exemplo, estes permitem acessar a instância de mailer
 a partir da *view* com `mailer`, e acessando a mensagem usando `message`:
