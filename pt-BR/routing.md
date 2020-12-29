@@ -284,9 +284,11 @@ Em cada um desses casos, a rota nomeada continua a mesma, como se você não tiv
 | GET        | /admin/articles/:id/edit | articles#edit        | edit_article_path(:id) |
 | PATCH/PUT  | /admin/articles/:id      | articles#update      | article_path(:id)      |
 | DELETE     | /admin/articles/:id      | articles#destroy     | article_path(:id)      |
+
 TIP: Se você precisar usar um _namespace_ de _controller_ diferente dentro de um bloco `namespace` você pode especificar um _path_ absoluto de _controller_, e.g: `get '/foo', to: '/foo#index'`.
 
 [`namespace`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-namespace
+[`scope`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-scope
 
 ### Nested Resources (Recursos Aninhados)
 
