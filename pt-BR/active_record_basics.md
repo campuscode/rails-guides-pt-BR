@@ -215,8 +215,8 @@ primária nomeadas `id`.
 CRUD: Lendo e Escrevendo Dados
 ------------------------------
 
-CRUD é um acrônimo para os quatro verbos que utilizamos na operação dos dados: ***C**reate* (criar),
-***R**ead* (ler, consultar), ***U**pdate* (atualizar) e ***D**elete* (deletar, destruir). O *Active Record*
+CRUD é um acrônimo para os quatro verbos que utilizamos na operação dos dados: _**C**reate_ (criar),
+_**R**ead_ (ler, consultar), _**U**pdate_ (atualizar) e _**D**elete_ (deletar, destruir). O *Active Record*
 criará, automaticamente, métodos que permitem uma aplicação ler e manipular dados armazenados em suas tabelas.
 
 ### *Create*

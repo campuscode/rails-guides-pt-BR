@@ -403,13 +403,13 @@ Com o método `human_attribute_name`, você pode transformar nomes de atributos 
 
 * config/locales/app.pt-BR.yml
 
-  ```yaml
-  pt-BR:
-    activemodel:
-      attributes:
-        person:
-          name: 'Nome'
-  ```
+```yaml
+pt-BR:
+  activemodel:
+    attributes:
+      person:
+        name: 'Nome'
+```
 
 ```ruby
 Person.human_attribute_name('name') # => "Nome"
