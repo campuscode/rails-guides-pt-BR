@@ -621,7 +621,7 @@ Se você usar `form_with` sem o `:model`, você deve preencher os campos:
 <% end %>
 ```
 
-Observe que, de acordo com as convenções do `form_with`, os nomes dos campos nas duas formas acima também serão diferentes. Ou seja, o nome do campo no primeiro formulário será `person[picture]` (acessível via `params[:person][: picture]`), e o nome do campo no segundo formulário será apenas `picture` (acessível via `params[:picture]`).
+Observe que, de acordo com as convenções do `form_with`, os nomes dos campos nas duas formas acima também serão diferentes. Ou seja, o nome do campo no primeiro formulário será `person[picture]` (acessível via `params[:person][:picture]`), e o nome do campo no segundo formulário será apenas `picture` (acessível via `params[:picture]`).
 
 ### O que é enviado
 
