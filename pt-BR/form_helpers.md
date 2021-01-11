@@ -51,7 +51,7 @@ Um dos formulários mais básicos que você vê na web é um formulário de pesq
 * Um *input* de entrada de texto.
 * Um *input* de envio.
 
-Para criar este formulário você irá usar `form_with` e o objeto para contrução de formulário que o método nos dá. Como o exemplo abaixo:
+Para criar este formulário você usará `form_with` e o objeto para contrução de formulário que o método nos dá. Como o exemplo abaixo:
 
 ```erb
 <%= form_with url: "/search", method: :get do |form| %>
@@ -131,7 +131,7 @@ NOTE: Sempre use *labels* para a caixa de seleção e botões de opção. Eles a
 
 ### Outros auxiliares interessantes
 
-Outros controles de formulários que vale a pena falar são áreas de texto, campos ocultos, campos de senha, campos de número, campos de data e hora, e muitos outros:
+Outros controles de formulários que valem a pena falar são áreas de texto, campos ocultos, campos de senha, campos de número, campos de data e hora e muitos outros:
 
 ```erb
 <%= form.text_area :message, size: "70x5" %>
