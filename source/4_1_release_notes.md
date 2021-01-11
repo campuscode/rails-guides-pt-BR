@@ -1,3 +1,4 @@
+**NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
 Ruby on Rails 4.1 Release Notes
@@ -44,19 +45,19 @@ spring environments.
 
 **Running rake tasks:**
 
-```
-bin/rake test:models
+```bash
+$ bin/rake test:models
 ```
 
 **Running a Rails command:**
 
-```
-bin/rails console
+```bash
+$ bin/rails console
 ```
 
 **Spring introspection:**
 
-```
+```bash
 $ bin/spring status
 Spring is running:
 

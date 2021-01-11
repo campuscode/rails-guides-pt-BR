@@ -14,8 +14,8 @@ Após a leitura desse guia você saberá:
 
 --------------------------------------------------------------------------------
 
-Introdução
-------------
+O que é *Active Model*?
+-----------------------
 
 O Active Model é uma biblioteca que contém vários módulos utilizados para desenvolvimento de classes que precisam de algumas funções (`features`) existentes no Active Record.
 
@@ -45,12 +45,17 @@ class Person
       send(attribute) > 100
     end
 end
+```
 
-person = Person.new
-person.age = 110
-person.age_highest?  # => true
-person.reset_age     # => 0
-person.age_highest?  # => false
+```irb
+irb> person = Person.new
+irb> person.age = 110
+irb> person.age_highest?
+=> true
+irb> person.reset_age
+=> 0
+irb> person.age_highest?
+=> false
 ```
 
 ### Callbacks
@@ -94,11 +99,16 @@ class Person
     nil
   end
 end
+```
 
-person = Person.new
-person.to_model == person  # => true
-person.to_key              # => nil
-person.to_param            # => nil
+```irb
+irb> person = Person.new
+irb> person.to_model == person
+=> true
+irb> person.to_key
+=> nil
+irb> person.to_param
+=> nil
 ```
 
 ### Sujeira
@@ -138,51 +148,62 @@ end
 
 #### Consultando o objeto diretamente para obter uma lista de todos os atributos alterados.
 
-```ruby
-person = Person.new
-person.changed? # => false
+```irb
+irb> person = Person.new
+irb> person.changed?
+=> false
 
-person.first_name = "First Name"
-person.first_name # => "First Name"
+irb> person.first_name = "First Name"
+irb> person.first_name
+=> "First Name"
 
-# returns true if any of the attributes have unsaved changes.
-person.changed? # => true
+# Retorna true se algum dos atributos tem mudanças não salvas.
+irb> person.changed?
+=> true
 
-# returns a list of attributes that have changed before saving.
-person.changed # => ["first_name"]
+# Retorna uma lista de atributos que mudaram antes de salvar.
+irb> person.changed
+=> ["first_name"]
 
-# returns a Hash of the attributes that have changed with their original values.
-person.changed_attributes # => {"first_name"=>nil}
+# Retorna um Hash dos atributos que mudaram junto com seu valor original.
+irb> person.changed_attributes
+=> {"first_name"=>nil}
 
-# returns a Hash of changes, with the attribute names as the keys, and the
-# values as an array of the old and new values for that field.
-person.changes # => {"first_name"=>[nil, "First Name"]}
+# Retorna um Hash de mudanças, com o nome dos atributos como chave, e o valor da chave como um array de valores antigos e novos para aquele campo.
+irb> person.changes
+=> {"first_name"=>[nil, "First Name"]}
 ```
 
 #### Atributos baseados em métodos de acesso
 
 Acompanhe se o atributo específico foi alterado ou não.
 
-```ruby
+```irb
+irb> person.first_name
+=> "First Name"
+
 # attr_name_changed?
-person.first_name # => "First Name"
-person.first_name_changed? # => true
+irb> person.first_name_changed?
+=> true
 ```
 
 Track the previous value of the attribute.
 
-```ruby
+```irb
 # attr_name_was accessor
-person.first_name_was # => nil
+irb> person.first_name_was
+=> nil
 ```
 
 Track both previous and current value of the changed attribute. Returns an array
 if changed, otherwise returns nil.
 
-```ruby
+```irb
 # attr_name_change
-person.first_name_change # => [nil, "First Name"]
-person.last_name_change # => nil
+irb> person.first_name_change
+=> [nil, "First Name"]
+irb> person.last_name_change
+=> nil
 ```
 
 ### Validações
@@ -199,18 +220,25 @@ class Person
   validates_format_of :email, with: /\A([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})\z/i
   validates! :token, presence: true
 end
-
-person = Person.new
-person.token = "2b1f325"
-person.valid?                        # => false
-person.name = 'vishnu'
-person.email = 'me'
-person.valid?                        # => false
-person.email = 'me@vishnuatrai.com'
-person.valid?                        # => true
-person.token = nil
-person.valid?                        # => raises ActiveModel::StrictValidationFailed
 ```
+
+```irb
+irb> person = Person.new
+irb> person.token = "2b1f325"
+irb> person.valid?
+=> false
+irb> person.name = 'vishnu'
+irb> person.email = 'me'
+irb> person.valid?
+=> false
+irb> person.email = 'me@vishnuatrai.com'
+irb> person.valid?
+=> true
+irb> person.token = nil
+irb> person.valid?
+ActiveModel::StrictValidationFailed
+```
+
 ### Nomeação
 
 `ActiveModel::Naming` adiciona vários métodos de classe que tornam a nomeação e o roteamento mais fácil de administrar. O módulo define o método da classe `model_name` que definirá vários acessadores usando alguns métodos do `ActiveSupport::Inflector`.
@@ -260,17 +288,19 @@ Ao incluir o `ActiveModel::Model`, você obtém alguns recursos como:
 
 Também oferece a capacidade de inicializar um objeto com um hash de atributos, muito parecido com qualquer objeto *Active Record*.
 
-```ruby
-email_contact = EmailContact.new(name: 'David',
-                                 email: 'david@example.com',
-                                 message: 'Hello World')
-email_contact.name       # => 'David'
-email_contact.email      # => 'david@example.com'
-email_contact.valid?     # => true
-email_contact.persisted? # => false
+```irb
+irb> email_contact = EmailContact.new(name: 'David', email: 'david@example.com', message: 'Hello World')
+irb> email_contact.name
+=> "David"
+irb> email_contact.email
+=> "david@example.com"
+irb> email_contact.valid?
+=> true
+irb> email_contact.persisted?
+=> false
 ```
 
-Qualquer classe que inclua `ActiveModel::Model` pode ser usada com `form_for`, `render` e quaisquer outros métodos auxiliares do *Action View*, assim como o *Active Record* objetos.
+Qualquer classe que inclua `ActiveModel::Model` pode ser usada com `form_with`, `render` e quaisquer outros métodos auxiliares do *Action View*, assim como o *Active Record* objetos.
 
 ### Serialização
 
@@ -289,11 +319,13 @@ end
 ```
 Agora você pode acessar um Hash serializado do seu objeto usando o método `serializable_hash`.
 
-```ruby
-person = Person.new
-person.serializable_hash   # => {"name"=>nil}
-person.name = "Bob"
-person.serializable_hash   # => {"name"=>"Bob"}
+```irb
+irb> person = Person.new
+irb> person.serializable_hash
+=> {"name"=>nil}
+irb> person.name = "Bob"
+irb> person.serializable_hash
+=> {"name"=>"Bob"}
 ```
 
 #### ActiveModel::Serializers
@@ -317,14 +349,16 @@ end
 ```
 O método `as_json`, semelhante ao` serializable_hash`, fornece um Hash representando o modelo.
 
-
-```ruby
-person = Person.new
-person.as_json # => {"name"=>nil}
-person.name = "Bob"
-person.as_json # => {"name"=>"Bob"}
+```irb
+irb> person = Person.new
+irb> person.as_json
+=> {"name"=>nil}
+irb> person.name = "Bob"
+irb> person.as_json
+=> {"name"=>"Bob"}
 ```
-Você também pode definir os atributos para um modelo a partir de uma sequência JSON. No entanto, você precisa definir o método `attribute =` na sua classe:
+
+Você também pode definir os atributos para um modelo a partir de uma sequência JSON. No entanto, você precisa definir o método `attribute=` na sua classe:
 
 ```ruby
 class Person
@@ -343,13 +377,16 @@ class Person
   end
 end
 ```
+
 Agora é possível criar uma instância de `Person` e definir atributos usando` from_json`.
 
-```ruby
-json = { name: 'Bob' }.to_json
-person = Person.new
-person.from_json(json) # => #<Person:0x00000100c773f0 @name="Bob">
-person.name            # => "Bob"
+```irb
+irb> json = { name: 'Bob' }.to_json
+irb> person = Person.new
+irb> person.from_json(json)
+=> #<Person:0x00000100c773f0 @name="Bob">
+irb> person.name
+=> "Bob"
 ```
 
 ### Tradução
@@ -366,13 +403,13 @@ Com o método `human_attribute_name`, você pode transformar nomes de atributos 
 
 * config/locales/app.pt-BR.yml
 
-  ```yml
-  pt-BR:
-    activemodel:
-      attributes:
-        person:
-          name: 'Nome'
-  ```
+```yaml
+pt-BR:
+  activemodel:
+    attributes:
+      person:
+        name: 'Nome'
+```
 
 ```ruby
 Person.human_attribute_name('name') # => "Nome"
@@ -393,7 +430,7 @@ O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a AP
 * `test/models/person_test.rb`
 
     ```ruby
-    require 'test_helper'
+    require "test_helper"
 
     class PersonTest < ActiveSupport::TestCase
       include ActiveModel::Lint::Tests
@@ -405,7 +442,7 @@ O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a AP
     ```
 
 ```bash
-$ rails test
+$ bin/rails test
 
 Run options: --seed 14596
 
@@ -438,7 +475,6 @@ As seguintes validações são adicionadas automaticamente:
 
 #### Exemplos
 
-
 ```ruby
 class Person
   include ActiveModel::SecurePassword
@@ -447,39 +483,54 @@ class Person
 
   attr_accessor :password_digest, :recovery_password_digest
 end
+```
 
-person = Person.new
+```irb
+irb> person = Person.new
 
-# When password is blank.
-person.valid? # => false
+# Quando a senha está em branco.
+irb> person.valid?
+=> false
 
-# When the confirmation doesn't match the password.
-person.password = 'aditya'
-person.password_confirmation = 'nomatch'
-person.valid? # => false
+# Quando a confirmação não é igual a senha.
+irb> person.password = 'aditya'
+irb> person.password_confirmation = 'nomatch'
+irb> person.valid?
+=> false
 
-# When the length of password exceeds 72.
-person.password = person.password_confirmation = 'a' * 100
-person.valid? # => false
+# Quando o tamanho da senha é maior que 72 caracteres.
+irb> person.password = person.password_confirmation = 'a' * 100
+irb> person.valid?
+=> false
 
-# When only password is supplied with no password_confirmation.
-person.password = 'aditya'
-person.valid? # => true
+# Quando só a senha é enviada sem a password_confirmation.
+irb> person.password = 'aditya'
+irb> person.valid?
+=> true
 
-# When all validations are passed.
-person.password = person.password_confirmation = 'aditya'
-person.valid? # => true
+# Quando todas as validações foram atendidas.
+irb> person.password = person.password_confirmation = 'aditya'
+irb> person.valid?
+=> true
 
-person.recovery_password = "42password"
+irb> person.recovery_password = "42password"
 
-person.authenticate('aditya') # => person
-person.authenticate('notright') # => false
-person.authenticate_password('aditya') # => person
-person.authenticate_password('notright') # => false
+irb> person.authenticate('aditya')
+=> #<Person> # == person
+irb> person.authenticate('notright')
+=> false
+irb> person.authenticate_password('aditya')
+=> #<Person> # == person
+irb> person.authenticate_password('notright')
+=> false
 
-person.authenticate_recovery_password('42password') # => person
-person.authenticate_recovery_password('notright') # => false
+irb> person.authenticate_recovery_password('42password')
+=> #<Person> # == person
+irb> person.authenticate_recovery_password('notright')
+=> false
 
-person.password_digest # => "$2a$04$gF8RfZdoXHvyTjHhiU4ZsO.kQqV9oonYZu31PRE4hLQn3xM2qkpIy"
-person.recovery_password_digest # => "$2a$04$iOfhwahFymCs5weB3BNH/uXkTG65HR.qpW.bNhEjFP3ftli3o5DQC"
+irb> person.password_digest
+=> "$2a$04$gF8RfZdoXHvyTjHhiU4ZsO.kQqV9oonYZu31PRE4hLQn3xM2qkpIy"
+irb> person.recovery_password_digest
+=> "$2a$04$iOfhwahFymCs5weB3BNH/uXkTG65HR.qpW.bNhEjFP3ftli3o5DQC"
 ```

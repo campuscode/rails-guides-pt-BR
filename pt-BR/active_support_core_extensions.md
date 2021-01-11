@@ -532,52 +532,52 @@ NOTE: Definido em `active_support/core_ext/object/inclusion.rb`.
 
 [Object#in?]: https://api.rubyonrails.org/classes/Object.html#method-i-in-3F
 
-Extensions to `Module`
+Extensões de `Module`
 ----------------------
 
-### Attributes
+### Atributos
 
 #### `alias_attribute`
 
-Model attributes have a reader, a writer, and a predicate. You can alias a model attribute having the corresponding three methods all defined for you by using [`alias_attribute`][Module#alias_attribute]. As in other aliasing methods, the new name is the first argument, and the old name is the second (one mnemonic is that they go in the same order as if you did an assignment):
+Atributos de _models_ podem ser lidos, escritos e condicionados. Você pode criar um _alias_ para um atributo de _model_ correspondendo todos os três métodos definidos por você usando [`alias_attribute`][Module#alias_attribute]. Em outro métodos de _alias_, o novo nome é o primeiro argumento, e o antigo nome é o segundo (uma forma de memorizar é pensar que eles se apresentam na mesma ordem como se você fizesse uma atribuição):
 
 ```ruby
 class User < ApplicationRecord
-  # You can refer to the email column as "login".
-  # This can be meaningful for authentication code.
+  # Você pode referenciar a coluna email como "login".
+  # Isso pode ser importante para o código de autenticação.
   alias_attribute :login, :email
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/module/aliasing.rb`.
+NOTE: Definido em `active_support/core_ext/module/aliasing.rb`.
 
 [Module#alias_attribute]: https://api.rubyonrails.org/classes/Module.html#method-i-alias_attribute
 
-#### Internal Attributes
+#### Atributos Internos
 
-When you are defining an attribute in a class that is meant to be subclassed, name collisions are a risk. That's remarkably important for libraries.
+Quando você esta definindo um atributo em uma classe que pode ser uma subclasse, os conflitos de nomes são um risco. Isso é extremamente importante para as bibliotecas.
 
-Active Support defines the macros [`attr_internal_reader`][Module#attr_internal_reader], [`attr_internal_writer`][Module#attr_internal_writer], and [`attr_internal_accessor`][Module#attr_internal_accessor]. They behave like their Ruby built-in `attr_*` counterparts, except they name the underlying instance variable in a way that makes collisions less likely.
+_Active Support_ define as macros [`attr_internal_reader`][Module#attr_internal_reader], [`attr_internal_writer`][Module#attr_internal_writer], e [`attr_internal_accessor`][Module#attr_internal_accessor]. Elas comportam-se como seu próprio Ruby `attr_*` embutido, exceto pelos nomes de variáveis de instância que faz com que os conflitos sejam menos comuns.
 
-The macro [`attr_internal`][Module#attr_internal] is a synonym for `attr_internal_accessor`:
+A macro [`attr_internal`][Module#attr_internal] é um sinônimo para `attr_internal_accessor`:
 
 ```ruby
-# library
+# biblioteca
 class ThirdPartyLibrary::Crawler
   attr_internal :log_level
 end
 
-# client code
+# código do cliente
 class MyCrawler < ThirdPartyLibrary::Crawler
   attr_accessor :log_level
 end
 ```
 
-In the previous example it could be the case that `:log_level` does not belong to the public interface of the library and it is only used for development. The client code, unaware of the potential conflict, subclasses and defines its own `:log_level`. Thanks to `attr_internal` there's no collision.
+No exemplo anterior, poderia ser que no caso `:log_level` não pertença a interface pública da biblioteca e só seria usada em desenvolvimento. O código do cliente, não sabe do potencial conflito, subclasses e definições de seus próprios `:log_level`. Graças ao `attr_internal` não há conflito.
 
-By default the internal instance variable is named with a leading underscore, `@_log_level` in the example above. That's configurable via `Module.attr_internal_naming_format` though, you can pass any `sprintf`-like format string with a leading `@` and a `%s` somewhere, which is where the name will be placed. The default is `"@_%s"`.
+Por padrão, a variável de instancia interna é nomeada com uma _underscore_ na frente, `@_log_level` no exemplo acima. Isso é configurável via `Module.attr_internal_naming_format` apesar disso, você pode passar qualquer tipo de `sprintf` no formato _string_ com a inicial `@` e um `%s` em algum lugar, no qual é onde o nome será colocado. O padrão é `"@_%s"`.
 
-Rails uses internal attributes in a few spots, for examples for views:
+Rails usa atributos internos em alguns pontos, para _views_ como por exemplo:
 
 ```ruby
 module ActionView
@@ -589,18 +589,18 @@ module ActionView
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/module/attr_internal.rb`.
+NOTE: Definido em `active_support/core_ext/module/attr_internal.rb`.
 
 [Module#attr_internal]: https://api.rubyonrails.org/classes/Module.html#method-i-attr_internal
 [Module#attr_internal_accessor]: https://api.rubyonrails.org/classes/Module.html#method-i-attr_internal_accessor
 [Module#attr_internal_reader]: https://api.rubyonrails.org/classes/Module.html#method-i-attr_internal_reader
 [Module#attr_internal_writer]: https://api.rubyonrails.org/classes/Module.html#method-i-attr_internal_writer
 
-#### Module Attributes
+#### Atributos de Módulo
 
-The macros [`mattr_reader`][Module#mattr_reader], [`mattr_writer`][Module#mattr_writer], and [`mattr_accessor`][Module#mattr_accessor] are the same as the `cattr_*` macros defined for class. In fact, the `cattr_*` macros are just aliases for the `mattr_*` macros. Check [Class Attributes](#class-attributes).
+As macros [`mattr_reader`][Module#mattr_reader], [`mattr_writer`][Module#mattr_writer], e [`mattr_accessor`][Module#mattr_accessor] São iguais a `cattr_*` macros definidas na classe. De fato, `cattr_*` macros são apenas _aliases_ para as `mattr_*` macros. Confira a seção [Atributos de Classe](#class-attributes).
 
-For example, the dependencies mechanism uses them:
+Por exemplo, os mecanismos de dependências usam:
 
 ```ruby
 module ActiveSupport
@@ -619,7 +619,7 @@ module ActiveSupport
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/module/attribute_accessors.rb`.
+NOTE: Definido em `active_support/core_ext/module/attribute_accessors.rb`.
 
 [Module#mattr_accessor]: https://api.rubyonrails.org/classes/Module.html#method-i-mattr_accessor
 [Module#mattr_reader]: https://api.rubyonrails.org/classes/Module.html#method-i-mattr_reader
@@ -627,9 +627,11 @@ NOTE: Defined in `active_support/core_ext/module/attribute_accessors.rb`.
 
 ### Parents
 
+### _Parents_
+
 #### `module_parent`
 
-The [`module_parent`][Module#module_parent] method on a nested named module returns the module that contains its corresponding constant:
+O método [`module_parent`][Module#module_parent] em um módulo nomeado aninhado que retorna o módulo que contém uma constante correspondente:
 
 ```ruby
 module X
@@ -644,17 +646,17 @@ X::Y::Z.module_parent # => X::Y
 M.module_parent       # => X::Y
 ```
 
-If the module is anonymous or belongs to the top-level, `module_parent` returns `Object`.
+Se o módulo é anônimo ou pertence a um nível superior, `module_parent` retorna `Object`.
 
-WARNING: Note that in that case `module_parent_name` returns `nil`.
+WARNING: Note que neste caso `module_parent_name` retorna `nil`.
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: Definido em `active_support/core_ext/module/introspection.rb`.
 
 [Module#module_parent]: https://api.rubyonrails.org/classes/Module.html#method-i-module_parent
 
 #### `module_parent_name`
 
-The [`module_parent_name`][Module#module_parent_name] method on a nested named module returns the fully qualified name of the module that contains its corresponding constant:
+O método [`module_parent_name`][Module#module_parent_name] em um modulo nomeado aninhado  retorna o nome completamente qualificado do módulo que contém sua constante correspondente:
 
 ```ruby
 module X
@@ -669,17 +671,17 @@ X::Y::Z.module_parent_name # => "X::Y"
 M.module_parent_name       # => "X::Y"
 ```
 
-For top-level or anonymous modules `module_parent_name` returns `nil`.
+Para módulos de nível superior ou anônimos `module_parent_name` retorna `nil`.
 
-WARNING: Note that in that case `module_parent` returns `Object`.
+WARNING: Note que nesse caso `module_parent` retorna `Object`.
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: Definido em `active_support/core_ext/module/introspection.rb`.
 
 [Module#module_parent_name]: https://api.rubyonrails.org/classes/Module.html#method-i-module_parent_name
 
 #### `module_parents`
 
-The method [`module_parents`][Module#module_parents] calls `module_parent` on the receiver and upwards until `Object` is reached. The chain is returned in an array, from bottom to top:
+O método [`module_parents`][Module#module_parents] chama `module_parent` no receptor e sobe até `Object` ser alcançado. A cadeia é retornada em uma matriz, de baixo para cima:
 
 ```ruby
 module X
@@ -694,13 +696,13 @@ X::Y::Z.module_parents # => [X::Y, X, Object]
 M.module_parents       # => [X::Y, X, Object]
 ```
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: Definido em `active_support/core_ext/module/introspection.rb`.
 
 [Module#module_parents]: https://api.rubyonrails.org/classes/Module.html#method-i-module_parents
 
-### Anonymous
+### Anônimo
 
-A module may or may not have a name:
+Um módulo pode ou não ter um nome:
 
 ```ruby
 module M
@@ -713,7 +715,7 @@ N.name # => "N"
 Module.new.name # => nil
 ```
 
-You can check whether a module has a name with the predicate [`anonymous?`][Module#anonymous?]:
+Você pode verificar se um módulo possui um nome com a condicional [`anonymous?`][Module#anonymous?]:
 
 ```ruby
 module M
@@ -723,7 +725,7 @@ M.anonymous? # => false
 Module.new.anonymous? # => true
 ```
 
-Note that being unreachable does not imply being anonymous:
+Observe que estar inacessível não significa ser anônimo:
 
 ```ruby
 module M
@@ -734,19 +736,19 @@ m = Object.send(:remove_const, :M)
 m.anonymous? # => false
 ```
 
-though an anonymous module is unreachable by definition.
+Embora um módulo anônimo seja inacessível por definição.
 
-NOTE: Defined in `active_support/core_ext/module/anonymous.rb`.
+NOTE: Definido em `active_support/core_ext/module/anonymous.rb`.
 
 [Module#anonymous?]: https://api.rubyonrails.org/classes/Module.html#method-i-anonymous-3F
 
-### Method Delegation
+### Delegação de Método
 
 #### `delegate`
 
-The macro [`delegate`][Module#delegate] offers an easy way to forward methods.
+A macro [`delegate`][Module#delegate] oferece uma maneira fácil de encaminhar métodos.
 
-Let's imagine that users in some application have login information in the `User` model but name and other data in a separate `Profile` model:
+Vamos imaginar que os usuários de alguma aplicação possuem informações de _login_ no _model_ `User` além de nome e outro dado em um _model_ `Profile` separado:
 
 ```ruby
 class User < ApplicationRecord
@@ -754,7 +756,7 @@ class User < ApplicationRecord
 end
 ```
 
-With that configuration you get a user's name via their profile, `user.profile.name`, but it could be handy to still be able to access such attribute directly:
+Com essa configuração você consegue o nome dos usuários partir da classe perfil, `user.profile.name`, mas isso poderia ser conveniente para habilitar o acesso ao atributo diretamente:
 
 ```ruby
 class User < ApplicationRecord
@@ -766,7 +768,7 @@ class User < ApplicationRecord
 end
 ```
 
-That is what `delegate` does for you:
+Isso é o que o `delegate` faz por você:
 
 ```ruby
 class User < ApplicationRecord
@@ -776,71 +778,71 @@ class User < ApplicationRecord
 end
 ```
 
-It is shorter, and the intention more obvious.
+É mais curto e a intenção mais óbvia.
 
-The method must be public in the target.
+O método deve ser público.
 
-The `delegate` macro accepts several methods:
+A macro `delegate` aceita vários métodos:
 
 ```ruby
 delegate :name, :age, :address, :twitter, to: :profile
 ```
 
-When interpolated into a string, the `:to` option should become an expression that evaluates to the object the method is delegated to. Typically a string or symbol. Such an expression is evaluated in the context of the receiver:
+Quando interpolado em uma _string_, a opção `:to` deve se tornar uma expressão que avalia o objeto ao qual o método é delegado. Normalmente uma _string_ ou um _symbol_. Tal expressão é avaliada no contexto do receptor:
 
 ```ruby
-# delegates to the Rails constant
+# delega para as constantes Rails
 delegate :logger, to: :Rails
 
-# delegates to the receiver's class
+# delega para as classes receptoras
 delegate :table_name, to: :class
 ```
 
-WARNING: If the `:prefix` option is `true` this is less generic, see below.
+WARNING: Se a opção `:prefix` for `true` é menos genérica, veja abaixo.
 
-By default, if the delegation raises `NoMethodError` and the target is `nil` the exception is propagated. You can ask that `nil` is returned instead with the `:allow_nil` option:
+Por padrão, se a delegação resulta em `NoMethodError` e o objeto é `nil` a exceção se propaga. Você pode perguntar se `nil` é retornado ao invés com a opção `:allow_nil`:
 
 ```ruby
 delegate :name, to: :profile, allow_nil: true
 ```
 
-With `:allow_nil` the call `user.name` returns `nil` if the user has no profile.
+Com `:allow_nil` a chamada `user.name` retorna `nil` se o usuário não tiver um perfil.
 
-The option `:prefix` adds a prefix to the name of the generated method. This may be handy for example to get a better name:
+A opção `:prefix` adiciona um prefixo ao nome do método gerado. Isso pode ser útil, por exemplo, para obter um nome melhor:
 
 ```ruby
 delegate :street, to: :address, prefix: true
 ```
 
-The previous example generates `address_street` rather than `street`.
+Os exemplos prévios geram `address_street` ao invés de `street`.
 
-WARNING: Since in this case the name of the generated method is composed of the target object and target method names, the `:to` option must be a method name.
+WARNING: Já que neste caso o nome do método gerado é composto pelos nomes do objeto alvo e do método alvo, a opção `:to` deve ser um nome de método.
 
-A custom prefix may also be configured:
+Um prefixo customizado pode também ser configurado:
 
 ```ruby
 delegate :size, to: :attachment, prefix: :avatar
 ```
 
-In the previous example the macro generates `avatar_size` rather than `size`.
+Os macro exemplos prévios geram `avatar_size` ao invés de `size`.
 
-The option `:private` changes methods scope:
+A opção `:private` mudam o escopo do método:
 
 ```ruby
 delegate :date_of_birth, to: :profile, private: true
 ```
 
-The delegated methods are public by default. Pass `private: true` to change that.
+Os métodos delegados são públicos por padrão. Passe `private: true` para mudar isso.
 
-NOTE: Defined in `active_support/core_ext/module/delegation.rb`
+NOTE: Definido em `active_support/core_ext/module/delegation.rb`
 
 [Module#delegate]: https://api.rubyonrails.org/classes/Module.html#method-i-delegate
 
 #### `delegate_missing_to`
 
-Imagine you would like to delegate everything missing from the `User` object,
-to the `Profile` one. The [`delegate_missing_to`][Module#delegate_missing_to] macro lets you implement this
-in a breeze:
+Imagine que você gostaria de delegar tudo o que está faltando no objeto `User`,
+para um `Profile`. A macro [`delegate_missing_to`][Module#delegate_missing_to] permite que você implemente isso
+de forma facilitada:
 
 ```ruby
 class User < ApplicationRecord
@@ -850,24 +852,24 @@ class User < ApplicationRecord
 end
 ```
 
-The target can be anything callable within the object, e.g. instance variables,
-methods, constants, etc. Only the public methods of the target are delegated.
+O destino pode ser qualquer coisa que possa ser chamada dentro do objeto, por exemplo: instância de variáveis,
+métodos, constantes etc. Somente métodos públicos do alvo são delegados.
 
-NOTE: Defined in `active_support/core_ext/module/delegation.rb`.
+NOTE: Definido em `active_support/core_ext/module/delegation.rb`.
 
 [Module#delegate_missing_to]: https://api.rubyonrails.org/classes/Module.html#method-i-delegate_missing_to
 
-### Redefining Methods
+### Redefinindo Métodos
 
-There are cases where you need to define a method with `define_method`, but don't know whether a method with that name already exists. If it does, a warning is issued if they are enabled. No big deal, but not clean either.
+Existem casos onde você precisa definir um método com `define_method`, mas não sei se já existe um método com esse nome. Caso sim, um _warning_ é exibido se estiverem habilitados. Não é muito perigoso, mas não é uma boa prática.
 
-The method [`redefine_method`][Module#redefine_method] prevents such a potential warning, removing the existing method before if needed.
+O método [`redefine_method`][Module#redefine_method] previne um potencial _warning_, removendo um método existente, se necessário.
 
-You can also use [`silence_redefinition_of_method`][Module#silence_redefinition_of_method] if you need to define
-the replacement method yourself (because you're using `delegate`, for
-example).
+Você pode também usar [`silence_redefinition_of_method`][Module#silence_redefinition_of_method] se você precisa definir
+o método de substituição (porque você está usando `delegate`, por
+exemplo).
 
-NOTE: Defined in `active_support/core_ext/module/redefine_method.rb`.
+NOTE: Definido em `active_support/core_ext/module/redefine_method.rb`.
 
 [Module#redefine_method]: https://api.rubyonrails.org/classes/Module.html#method-i-redefine_method
 [Module#silence_redefinition_of_method]: https://api.rubyonrails.org/classes/Module.html#method-i-silence_redefinition_of_method
