@@ -266,7 +266,7 @@ Embora todos os serviços secundários recebam uploads, os downloads são sempre
 tratados pelo serviço principal.
 
 Os serviços de espelho são compatíveis com uploads diretos. Novos arquivos são
-diretamente carregado para o serviço principal. Quando um arquivo enviado é
+diretamente carregados para o serviço principal. Quando um arquivo enviado é
 anexado a um registro, um *job* em segundo plano é enfileirado para copiá-lo para os
 serviços secundários.
 

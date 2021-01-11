@@ -47,7 +47,7 @@ que todo usuário forneça um endereço de e-mail e endereço de correspondênci
 válidos. Validações de *model* são a melhor maneira de garantir que só
 dados válidos sejam salvos em seu banco de dados. Eles são bancos de dados
 agnósticos, não podem ser contornados por usuários, e são fáceis de manter e
-de testar. Rails fornece ajudantes
+de testar. O Rails fornece ajudantes
 *build-in* para necessidades comuns, e também permite que você crie seus
 próprios métodos de validação.
 
@@ -571,7 +571,7 @@ adicionar restrições aos valores aceitáveis:
 NOTE: Por padrão, `numericality` não permite valores `nil`. Você pode utilizar
 `allow_nil: true` para permitir isso.
 
-A mensagem de erro padrão é quando nenhuma opção é especificada é _"is not a number"_.
+A mensagem de erro padrão para quando nenhuma opção é especificada é _"is not a number"_.
 
 ### `presence`
 
@@ -1213,7 +1213,7 @@ irb> person.errors.full_messages
 
 ### `errors[]`
 
-[`errors[]`][Errors#squarebrackets] é utilizado quando você quiser verificar as mensagens de erro de um atributo em específico. O método um *array* de *strings* com todas as mensagens de erro para o atributo informado, cada *string* contendo uma mensagem de erro. Se não há erros relacionados com o atributo, o método retorna um *array* vazio.
+[`errors[]`][Errors#squarebrackets] é utilizado quando você quiser verificar as mensagens de erro de um atributo em específico. O método retorna um *array* de *strings* com todas as mensagens de erro para o atributo informado, cada *string* contendo uma mensagem de erro. Se não houver erros relacionados com o atributo, o método retorna um *array* vazio.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1294,7 +1294,7 @@ O método [`full_message`][] gera uma mensagem mais legível, que começa com o 
 
 ### `errors.add`
 
-O método [`add`][] permite a você cria um objeto de erro usando o atributo em particular, o tipo do erro e um *hash* de opções adicional. Isso pode ser útil quando tiver escrevendo seus validadores (*validators*).
+O método [`add`][] permite que você crie um objeto de erro usando o atributo em particular, o tipo do erro e um *hash* de opções adicional. Isso pode ser útil quando tiver escrevendo seus validadores (*validators*).
 
 ```ruby
 class Person < ApplicationRecord
@@ -1316,7 +1316,7 @@ irb> person.errors.where(:name).first.full_message
 
 ### `errors[:base]`
 
-Voce pode adicionar erros relacionadas ao estado do objeto como um todo, ao invés de estarem relacionadas a um atributo em específico. Você pode adicionado a `:base` quando você quiser dizer que o objeto é inválido, não importando os valores de seus atributos.
+Voce pode adicionar erros relacionadas ao estado do objeto como um todo, ao invés de estarem relacionadas a um atributo em específico. Você pode adicionar erros ao `:base` quando quiser dizer que o objeto é inválido, não importando os valores de seus atributos.
 
 ```ruby
 class Person < ApplicationRecord

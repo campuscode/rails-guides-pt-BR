@@ -42,7 +42,7 @@ no seu `Gemfile`, o qual é usado pelo Sprockets para comprimir
 gem 'sass-rails'
 ```
 
-Usando a opção `--skip-sprockets` previnirá que o Rails adicione essa gem seu `Gemfile`,
+Usando a opção `--skip-sprockets` previnirá que o Rails adicione essa gem ao seu `Gemfile`,
 então se mais tarde você quiser habilitar o *asset pipeline* você terá que adicionar
 essas *gems* ao seu `Gemfile` manualmente. Além disso, criando uma aplicação com a opção `--skip-sprockets`
 gerará um arquivo `config/application.rb` levemente diferente, com a declaração de requerimento
@@ -514,7 +514,7 @@ Por exemplo, você pode concatenar três arquivos CSS juntos da seguinte maneira
 
 As extensões de arquivos usadas em um *asset* determinam qual pré-processamento é aplicado.
 Quando um *controller* ou um *scaffold* é gerado com o gemset padrão do Rails, um arquivo
-SCSS é gerados no lugar de um arquivo comum CSS.
+SCSS é gerado no lugar de um arquivo comum CSS.
 O exemplo usado anteriormente era um *controller* chamado "*projects*", que gerou um
 arquivo `app/assets/stylesheets/projects.scss`.
 
