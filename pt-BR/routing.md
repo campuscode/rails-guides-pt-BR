@@ -1007,7 +1007,7 @@ Isso irá gerar uma URL singular `/basket` ​​em vez da habitual `/baskets/:i
 Customizando Rotas com Recursos
 ------------------------------
 
-Enquanto as rotas padrão e *helpers* gerados por [`resources`][] normalmente atendem a maior parte dos casos de uso, você pode querer customizá-los de alguma forma. O Rails lhe permite customizar virtualmente qualquer parte genérica dos *helpers* de recursos.
+Enquanto as rotas padrões e *helpers* gerados por [`resources`][] normalmente atendem a maior parte dos casos de uso, você pode querer customizá-los de alguma forma. O Rails lhe permite customizar virtualmente qualquer parte genérica dos *helpers* de recursos.
 
 ### Especificando um *Controller* para Usar
 

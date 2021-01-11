@@ -28,10 +28,10 @@ achar a curva de aprendizado bastante íngrime começando direto com Rails.
 Existem diversas listas organizadas de materiais online para aprender Ruby:
 
 * [Site Oficial da Linguagem de Programação Ruby (Em inglês)](https://www.ruby-lang.org/en/documentation/)
-* [Lista de Livros Grátis de Programação (Em inglês)](https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md#ruby)
+* [Lista de Livros Grátis de Programação (Em inglês)](https://github.com/EbookFoundation/free-programming-books/blob/master/books/free-programming-books.md#ruby)
 
 Fique atento que alguns materiais, apesar de excelentes, envolvem versões antigas
-do Ruby e podem não incluem parte da sintaxe que você
+do Ruby e podem não incluir parte da sintaxe que você
 vai ver no seu dia-a-dia desenvolvendo com Rails.
 
 O que é o Rails?
@@ -310,7 +310,7 @@ Vamos abrir o arquivo `app/views/articles/index.html.erb`, e substituir todo có
 ```
 
 Se você parou anteriormente o servidor web para executar o gerador do _controller_,
-reinicie-o com `bin/rails server`. Agora visite <http://localhost:3000/articles>,
+reinicie-o com `bin/rails server`. Agora visite <http://localhost:3000/articles>
 e veja nosso texto exibido!
 
 ### Configuração da Página Inicial da Aplicação
@@ -1672,7 +1672,7 @@ porque o definimos como uma variável de instância.
 
 ### Usando *Concerns*
 
-*Concerns* são uma forma de tornar grandes _controllers_ ou _models_ mais fáceis de entender e gerenciar. Isso também tem a vantagem de ser reutilizável quando vários _models_ (ou _controllers_) compartilham tem as mesmas preocupações. As *concerns* são implementadas usando módulos (`module`) que contêm métodos que representam uma fatia bem definida da funcionalidade pela qual um _model_ ou _controller_ é responsável. Em outras linguagens, os módulos costumam ser conhecidos como *mixins*.
+*Concerns* são uma forma de tornar grandes _controllers_ ou _models_ mais fáceis de entender e gerenciar. Isso também tem a vantagem de ser reutilizável quando vários _models_ (ou _controllers_) compartilham as mesmas preocupações. As *concerns* são implementadas usando módulos (`module`) que contêm métodos que representam uma fatia bem definida da funcionalidade pela qual um _model_ ou _controller_ é responsável. Em outras linguagens, os módulos costumam ser conhecidos como *mixins*.
 
 Você pode usar as *concerns* em seu _controller_ ou _model_ da mesma forma que usaria qualquer módulo. Quando você criou sua aplicação pela primeira vez com `rails new blog`, duas pastas foram criadas dentro de `app/` junto com o resto:
 
@@ -1736,7 +1736,7 @@ Então, em nossa _action_ `index` (`app/views/articles/index.html.erb`), usaría
 <%= link_to "New Article", new_article_path %>
 ```
 
-No entanto, se você olhar novamente para nossos _models_ agora, pode ver que a lógica está duplicada. Se, no futuro, aumentarmos a funcionalidade do nosso blog - para incluir mensagens privadas, por exemplo - podemos nos ver duplicação de lógica mais uma vez. É aqui que as *concerns* são úteis.
+No entanto, se você olhar novamente para nossos _models_ agora, pode ver que a lógica está duplicada. Se, no futuro, aumentarmos a funcionalidade do nosso blog - para incluir mensagens privadas, por exemplo - podemos ver a duplicação de lógica mais uma vez. É aqui que as *concerns* são úteis.
 
 Uma *concerns* é responsável apenas por um subconjunto específico da responsabilidade do _model_; os métodos na nossa *concern* estarão todos relacionados à visibilidade de um _model_. Vamos chamar nossa nova *concern* (módulo) de `Visible`. Podemos criar um novo arquivo dentro de `app/models/concerns` chamado` visible.rb`, e armazenar todos os métodos de status que foram duplicados nos _models_.
 
@@ -1917,7 +1917,7 @@ Segurança
 Se fosse fosse publicar o seu blog online, qualquer um poderia adicionar, editar
 e deletar seus artigos ou comentários.
 
-O Rails disponibiliza um sistema de autenticação HTTP que irá funcionar
+O Rails disponibiliza um sistema de autenticação HTTP que funcionará
 tranquilamente nesta situação.
 
 No `ArticlesController` nós precisamos que tenha um meio de bloquear o acesso à

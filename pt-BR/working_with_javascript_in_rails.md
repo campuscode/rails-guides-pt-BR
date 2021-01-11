@@ -487,7 +487,7 @@ var users = document.querySelector("#users");
 users.insertAdjacentHTML("beforeend", "<%= j render(@user) %>");
 ```
 
-NOTE: Renderização de _views_ JavaScript não faz nenhum pré-processamente, então você não deve usar a sintaxe ES6 aqui.
+NOTE: Renderização de _views_ JavaScript não faz nenhum pré-processamento, então você não deve usar a sintaxe ES6 aqui.
 
 Turbolinks
 ----------
