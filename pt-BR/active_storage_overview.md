@@ -38,10 +38,12 @@ Usando *Active Storage*, uma aplicação pode transformar *uploads* de imagens c
 O *Active Storage* usa duas tabelas no banco de dados da sua aplicação chamadas
 `active_storage_blobs` e `active_storage_attachments`. Depois de criar uma nova
 aplicação (ou atualizar sua aplicação para Rails 5.2), execute
-`rails active_storage:install` para gerar uma *migration* que cria essas
-tabelas. Use `rails db:migrate` para executar a *migration*.
+`bin/rails active_storage:install` para gerar uma *migration* que cria essas
+tabelas. Use `bin/rails db:migrate` para executar a *migration*.
 
 WARNING: `active_storage_attachments` é uma tabela de junção (*join table*) polimórfica que armazena o nome da classe do seu *model*. Se o nome da classe do seu *model* mudar, você precisará executar uma *migration* nesta tabela para atualizar o `record_type` implícito para o novo nome da classe do seu *model*.
+
+WARNING: Se você estiver usando UUIDs em vez de inteiros como a chave primária em seus *models*, você precisará alterar o tipo de coluna de `record_id` da tabela` active_storage_attachments` na migração.
 
 Declare os serviços do *Active Storage* em `config/storage.yml`. Para cada serviço que sua
 aplicação usa, forneça um nome e a configuração necessária. O exemplo
@@ -76,7 +78,7 @@ development environment, you would add the following to
 config.active_storage.service = :local
 ```
 
-Para usar o serviço Amazon S3 em produção, você adiciona o seguinte ao
+Para usar o serviço S3 em produção, você adiciona o seguinte ao
 `config/environments/production.rb`:
 
 ```ruby
@@ -95,6 +97,10 @@ config.active_storage.service = :test
 Continue lendo para obter mais informações sobre os adaptadores de serviço integrados (por exemplo,
 `Disk` e `S3`) e configurações que ele exigem.
 
+NOTE: Os arquivos de configuração específicos do ambiente terão precedência:
+em produção, por exemplo, o arquivo `config/storage/production.yml` (se existente)
+terá precedência sobre o arquivo `config/storage.yml`.
+
 ### Serviço Disk
 
 Declare um serviço Disk em `config/storage.yml`:
@@ -105,9 +111,9 @@ local:
   root: <%= Rails.root.join("storage") %>
 ```
 
-### Serviço Amazon S3
+### Serviço S3 (Amazon S3 e APIs compatíveis com S3)
 
-Declare um serviço S3 em `config/storage.yml`:
+Para conectar ao Amazon S3, declare um serviço S3 em `config/storage.yml`:
 
 ```yaml
 amazon:
@@ -117,6 +123,26 @@ amazon:
   region: ""
   bucket: ""
 ```
+
+Opcionalmente, você pode fornecer opções de cliente e upload:
+
+```yaml
+amazon:
+  service: S3
+  access_key_id: ""
+  secret_access_key: ""
+  region: ""
+  bucket: ""
+  http_open_timeout: 0
+  http_read_timeout: 0
+  retry_limit: 0
+  upload: 
+    server_side_encryption: "" # 'aws:kms' or 'AES256'
+```
+
+TIP: Defina tempos limites de HTTP *timeout* e limites de nova tentativa para sua aplicação.
+Em certos cenários de falha, a configuração do cliente AWS padrão pode fazer
+com que as conexões sejam retidas por vários minutos e levar à enfileiramento de requisições.
 
 Adicione a gem [`aws-sdk-s3`](https://github.com/aws/aws-sdk-ruby) no seu `Gemfile`:
 
@@ -128,9 +154,19 @@ NOTE: Os principais recursos do *Active Storage* requerem as seguintes permissõ
 
 NOTE: Se você quiser usar variáveis de ambiente, arquivos de configuração padrão do SDK, perfis,
 perfis de instância do IAM ou funções de tarefa, você pode omitir as chaves `access_key_id`, `secret_access_key`,
-e `region` no exemplo acima. O serviço Amazon S3 suporta todas as opções de
+e `region` no exemplo acima. O serviço S3 suporta todas as opções de
 autenticação descritas na [documentação AWS SDK](https://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html).
 
+Para se conectar a uma API de armazenamento de objetos compatíveis com S3, como DigitalOcean Spaces, forneça o `endpoint`:
+
+```yaml
+digitalocean:
+  service: S3
+  endpoint: https://nyc3.digitaloceanspaces.com
+  access_key_id: ...
+  secret_access_key: ...
+  # ...and other options
+```
 
 ### Serviço Armazenamento da Microsoft Azure
 
@@ -144,10 +180,10 @@ azure:
   container: ""
 ```
 
-Adicione a gem [`azure-storage`](https://github.com/Azure/azure-storage-ruby) no seu `Gemfile`:
+Adicione a gem [`azure-storage-blob`](https://github.com/Azure/azure-storage-ruby) no seu `Gemfile`:
 
 ```ruby
-gem "azure-storage", require: false
+gem "azure-storage-blob", require: false
 ```
 
 ### Serviço Google Cloud Storage
@@ -190,12 +226,18 @@ gem "google-cloud-storage", "~> 1.11", require: false
 
 ### Serviço Espelho
 
-Você pode manter múltiplos serviços sincronizados definindo um serviço espelho. Quando um arquivo
-é carregado ou deletado, isso é feito em todos serviços espelhados. Serviços
-espelhados podem ser usados para facilitar a migração entre serviços em produção.
+Você pode manter múltiplos serviços sincronizados definindo um serviço espelho.
+Quando um arquivo é carregado ou deletado, isso é feito em todos serviços espelhados.
+
+Serviços espelhados podem ser usados para facilitar a migração entre serviços em produção.
 Você pode começar a espelhar para o novo serviço, copiar os arquivos existentes do antigo
-serviço para o novo, e então muda para o novo serviço. Defina cada um dos
-serviços que você gostaria de usar conforme descrito acima e faça referência para um serviço
+serviço para o novo, e então muda para o novo serviço. 
+
+NOTE: O espelhamento não é atômico. É possível que um upload seja bem-sucedido no
+serviço principal e falha em qualquer um dos serviços subordinados. Antes de ir
+totalmente para um novo serviço, verifique se todos os arquivos foram copiados.
+
+Defina cada um dos serviços que você gostaria de usar conforme descrito acima e faça referência para um serviço
 espelhado.
 
 ```yaml
@@ -220,16 +262,43 @@ production:
     - s3_west_coast
 ```
 
-NOTE: Os arquivos são servidos pelo serviço principal.
+Embora todos os serviços secundários recebam uploads, os downloads são sempre
+tratados pelo serviço principal.
 
-NOTE: Isso não é compatível com a *feature* [direct uploads](#direct-uploads).
+Os serviços de espelho são compatíveis com uploads diretos. Novos arquivos são
+diretamente carregados para o serviço principal. Quando um arquivo enviado é
+anexado a um registro, um *job* em segundo plano é enfileirado para copiá-lo para os
+serviços secundários.
+
+### Acesso público
+
+Por padrão, o *Active Storage* assume acesso privado aos serviços. Isso significa gerar URLs assinadas e de uso único para os blobs. Se você preferir tornar os blobs acessíveis publicamente, especifique `public: true` em `config/storage.yml` na sua aplicação:
+
+```yaml
+gcs: &gcs
+  service: GCS
+  project: ""
+
+private_gcs:
+  <<: *gcs
+  credentials: <%= Rails.root.join("path/to/private_keyfile.json") %>
+  bucket: ""
+
+public_gcs:
+  <<: *gcs
+  credentials: <%= Rails.root.join("path/to/public_keyfile.json") %>
+  bucket: ""
+  public: true
+```
+
+Tenha certeza que seus *buckets* estão configurados para acesso público. Veja a documentação sobre como ativar permissão de leitura pública para os serviços [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/block-public-access-bucket.html), [Google Cloud Storage](https://cloud.google.com/storage/docs/access-control/making-data-public#buckets), e [Microsoft Azure](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-manage-access-to-resources#set-container-public-access-level-in-the-azure-portal).
 
 Anexar Arquivos a Registros
 --------------------------
 
 ### `has_one_attached`
 
-O macro `has_one_attached` configura um mapeamento um-para-um entre registros e
+O macro [`has_one_attached`][] configura um mapeamento um-para-um entre registros e
 arquivos. Cada registro pode ter um arquivo anexado a ele.
 
 Por exemplo, imagine que sua aplicação tenha um *model* `User`. Se você quiser que cada usuário
@@ -262,21 +331,35 @@ class SignupController < ApplicationController
 end
 ```
 
-Chamar `avatar.attach` para anexar um avatar a um usuário existente:
+Chamar [`avatar.attach`][Attached::One#attach] para anexar um avatar a um usuário existente:
 
 ```ruby
 user.avatar.attach(params[:avatar])
 ```
 
-Chamar `avatar.attached?` para determinar se um usuário em particular tem um avatar:
+Chamar [`avatar.attached?`][Attached::One#attached?] para determinar se um usuário em particular tem um avatar:
 
 ```ruby
 user.avatar.attached?
 ```
 
+Em alguns casos, você pode querer substituir um serviço padrão para um anexo específico.
+Você pode configurar serviços específicos por anexo usando a opção `service`:
+
+```ruby
+class User < ApplicationRecord
+  has_one_attached :avatar, service: :s3
+end
+```
+
+[`has_one_attached`]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached
+[Attached::One#attach]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-attach
+[Attached::One#attached?]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-attached-3F
+
+
 ### `has_many_attached`
 
-O macro `has_many_attached` configura um relacionamento um-para-muitos entre os registros
+O macro [`has_many_attached`][] configura um relacionamento um-para-muitos entre os registros
 e arquivos. Cada registro pode ter muitos arquivos anexados a ele.
 
 Por exemplo, imagine que sua aplicação tem um *model* `Message`. Se você quiser que cada
@@ -304,17 +387,29 @@ class MessagesController < ApplicationController
 end
 ```
 
-Chamar `images.attach` para adicionar novas imagens para uma mensagem existente:
+Chamar [`images.attach`][Attached::Many#attach] para adicionar novas imagens para uma mensagem existente:
 
 ```ruby
 @message.images.attach(params[:images])
 ```
 
-Chamar `images.attached?` para determinar se uma mensagem em particular alguma imagem:
+Chamar [`images.attached?`][Attached::Many#attached?] para determinar se uma mensagem em particular alguma imagem:
 
 ```ruby
 @message.images.attached?
 ```
+
+Substituir o serviço padrão é feito da mesma maneira que `has_one_attached`, usando a opção `service`:
+
+```ruby
+class Message < ApplicationRecord
+  has_many_attached :images, service: :s3
+end
+```
+
+[`has_many_attached`]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached
+[Attached::Many#attach]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Many.html#method-i-attach
+[Attached::Many#attached?]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/Many.html#method-i-attached-3F
 
 ### Anexando Objetos *File/IO*
 
@@ -355,10 +450,9 @@ tipo de conteúdo do arquivo automaticamente, o padrão é *application/octet-st
 Removendo arquivos
 --------------
 
-Para remover um arquivo anexado de um _model_, use o método `purge` no anexo. A
-remoção pode ser feita de maneira assíncrona na sua aplicação se ela estiver
-configurada para usar o _Active Job_.
-`Purge` remove o _blob_ (O arquivo em sua versão binaria salvo no banco de
+Para remover um arquivo anexado de um _model_, use o método [`purge`][Attached::One#purge] no anexo.
+Se a aplicação está configurada para usar *Active Job*, a remoção pode ser feita de maneira assíncrona
+chamando [`purge_later`][Attached::One#purge_later]. `Purge` remove o _blob_ (O arquivo em sua versão binaria salvo no banco de
 dados) e o arquivo do seu serviço de armazenamento.
 
 ```ruby
@@ -369,12 +463,15 @@ user.avatar.purge
 user.avatar.purge_later
 ```
 
+[Attached::One#purge]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-purge
+[Attached::One#purge_later]: https://api.rubyonrails.org/classes/ActiveStorage/Attached/One.html#method-i-purge_later
+
 Conectando (_Linking_) arquivos
 ----------------
 
 Cria uma _URL_ permanente da sua aplicação para o _blob_. Quando acessado,
 o cliente é redirecionado para a rota (_endpoint_) correta. Está indireção
-desacopla a URL pública da atual, e permite, por exemplo, espelhar anexos em
+desacopla a URL do serviço da atual, e permite, por exemplo, espelhar anexos em
 diferentes serviços de grande disponibilidade. O redirecionamento tem um tempo
 de expiração de 5 minutos.
 
@@ -390,6 +487,10 @@ disposição (`disposition`) de como deseja apresentar:
 rails_blob_path(user.avatar, disposition: "attachment")
 ```
 
+WARNING: Para evitar ataques XSS, *ActiveStorage* força o cabeçalho Content-Disposition para "anexos" 
+para alguns tipos de arquivo. Para alterar este comportamento, consulte as
+opções de configuração disponíveis em [Configurando aplicações Rails](configuring.html#configuring-active-storage).
+
 Se você precisar criar um _link_ fora do escopo do _controller_ ou _view_ (Um
 serviço que execute tarefas assíncronas, _Cronjob_ etc), você pode acessar o
 _helper_ `rails_blob_path` desta maneira:
@@ -404,7 +505,7 @@ Baixando arquivos
 Algumas vezes você vai precisar processar um _blob_ depois dele ter sido
 _uploaded_ (Transferir um arquivo da maquina do cliente para o servidor da sua
 aplicação) para, por exemplo, converte-lo para um formato diferente. Use o
-`ActiveStorage::Blob#download` para carregar o conteúdo binário do _blob_ na
+[`download`][Blob#download] para ler o conteúdo binário do _blob_ na
 memória:
 
 ```ruby
@@ -412,7 +513,7 @@ binary = user.avatar.download
 ```
 
 Caso deseje baixar o _blob_ para um arquivo no disco para um programa externo
-(Um antivírus, por exemplo) possa operar nele use o `ActiveStorage::Blob#open`
+(Um antivírus, por exemplo) possa operar nele. Use o método [`open`][Blob#open]
 para baixar o _blob_ para um arquivo temporário no disco:
 
 ```ruby
@@ -422,19 +523,26 @@ message.video.open do |file|
 end
 ```
 
+É importante saber que o arquivo ainda não está disponível no *callback* `after_create`, mas apenas no `after_create_commit`.
+
+[Blob#download]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-download
+[Blob#open]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-open
+
 Analisando arquivos
 ---------------
 
 O *Active Storage* [analisa](https://api.rubyonrails.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyze)
 arquivos assim que eles são enviados através do enfileiramento de um *job* no *Active Job*. Arquivos analisados armazenarão
 informações adicionais no *hash* de metadados, incluindo `analyzed: true`. Você pode verificar se um *blob* foi analisado
-chamando `analyzed?` nele.
+chamando [`analyzed?`][] nele.
 
 A análise de imagens fornece os atributos `width` e `height`. A análise de vídeos fornece ambos citados anteriormente, assim
 como `duration`, `angle` e `display_aspect_ratio`.
 
 A análise necessita da gem `mini_magick`. A análise de vídeos também necessita da biblioteca [FFmpeg](https://www.ffmpeg.org/),
 que você deve incluir separadamente.
+
+[`analyzed?`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyzed-3F
 
 Transformando Imagens
 -------------------
@@ -445,7 +553,7 @@ Para ativar variações, adicione a _gem_  `image_processing`  no seu `Gemfile`:
 gem 'image_processing'
 ```
 
-Para criar uma variação de uma imagem, chame `variant` no `Blob`. Você pode passar qualquer transformação para o método suportado pelo processador. O processador padrão para _Active Storage_ é o MiniMagick, mas você também pode usar o [Vips](https://www.rubydoc.info/gems/ruby-vips/Vips/Image).
+Para criar uma variação de uma imagem, chame [`variant`][] no `Blob`. Você pode passar qualquer transformação para o método suportado pelo processador. O processador padrão para _Active Storage_ é o MiniMagick, mas você também pode usar o [Vips](https://www.rubydoc.info/gems/ruby-vips/Vips/Image).
 
 Quando o navegador acessa a _URL_ da variação, o _Active Storage_ vai lentamente transformar o _blob+ original para o formato especificado e redirecionar para sua nova localização de serviço.
 
@@ -460,13 +568,16 @@ Para trocar para o processador Vips, você teria que adicionar o seguinte trecho
 config.active_storage.variant_processor = :vips
 ```
 
+[`variant`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-variant
+
 Pré-visualização de arquivos
 ----------------
 
 Alguns arquivos que não são imagens podem ser pré-visualizados: isto é, eles podem
 ser apresentados como imagens. Por exemplo, um arquivo de vídeo pode ser pré-visualizado
 através da extração de seu primeiro *frame*. O *Active Storage* por padrão já oferece
-suporte para a pré-visualização de vídeos e documentos PDF.
+suporte para a pré-visualização de vídeos e documentos PDF. Para criar um link e
+gerar um preview use o método [`preview`][]:
 
 ```erb
 <ul>
@@ -485,6 +596,7 @@ utilizar as pré-visualizações embutidas no *Active Storage*. Antes de instala
 o *software* de terceiros, certifique-se de entender as implicações da licença para
 essas ações.
 
+[`preview`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-preview
 
 Direct Uploads
 --------------
@@ -506,13 +618,20 @@ directly from the client to the cloud.
     Using the npm package:
 
     ```js
-    require("@rails/activestorage").start()
+    import * as ActiveStorage from "@rails/activestorage"
+    ActiveStorage.start()
     ```
 
-2. Annotate file inputs with the direct upload URL.
+2. Add `direct_upload: true` to your [`file_field`](form_helpers.html#uploading-files).
 
     ```erb
     <%= form.file_field :attachments, multiple: true, direct_upload: true %>
+    ```
+
+    If you aren't using a [FormBuilder](form_helpers.html#customizing-form-builders), add the data attribute directly:
+
+    ```erb
+    <input type=file data-direct-upload-url="<%= rails_direct_uploads_url %>" />
     ```
 
 3. Configure CORS on third-party storage services to allow direct upload requests.
@@ -543,19 +662,27 @@ No CORS configuration is required for the Disk service since it shares your app�
 
 #### Example: S3 CORS configuration
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-<CORSRule>
-    <AllowedOrigin>https://www.example.com</AllowedOrigin>
-    <AllowedMethod>PUT</AllowedMethod>
-    <AllowedHeader>Origin</AllowedHeader>
-    <AllowedHeader>Content-Type</AllowedHeader>
-    <AllowedHeader>Content-MD5</AllowedHeader>
-    <AllowedHeader>Content-Disposition</AllowedHeader>
-    <MaxAgeSeconds>3600</MaxAgeSeconds>
-</CORSRule>
-</CORSConfiguration>
+```json
+[
+  {
+    "AllowedHeaders": [
+      "*"
+    ],
+    "AllowedMethods": [
+      "PUT"
+    ],
+    "AllowedOrigins": [
+      "https://www.example.com"
+    ],
+    "ExposeHeaders": [
+      "Origin",
+      "Content-Type",
+      "Content-MD5",
+      "Content-Disposition"
+    ],
+    "MaxAgeSeconds": 3600
+  }
+]
 ```
 
 #### Example: Google Cloud Storage CORS configuration

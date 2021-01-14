@@ -20,7 +20,7 @@ The [Rails API documentation](https://api.rubyonrails.org) is generated with
 in the rails root directory, run `bundle install` and execute:
 
 ```bash
-  bundle exec rake rdoc
+$ bundle exec rake rdoc
 ```
 
 Resulting HTML files can be found in the ./doc/rdoc directory.
@@ -181,7 +181,7 @@ An example with a predicate:
 # If the collection has been loaded
 # it is equivalent to <tt>collection.size.zero?</tt>. If the
 # collection has not been loaded, it is equivalent to
-# <tt>collection.exists?</tt>. If the collection has not already been
+# <tt>!collection.exists?</tt>. If the collection has not already been
 # loaded and you are going to fetch the records anyway it is better to
 # check <tt>collection.length.zero?</tt>.
 def empty?
@@ -238,7 +238,7 @@ namespace as in `<tt>ActiveRecord::Base</tt>`.
 
 You can quickly test the RDoc output with the following command:
 
-```
+```bash
 $ echo "+:to_param+" | rdoc --pipe
 # => <p><code>:to_param</code></p>
 ```

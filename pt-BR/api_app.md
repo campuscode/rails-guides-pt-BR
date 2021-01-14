@@ -93,7 +93,7 @@ Controlado na camada *Action Pack*:
   *controllers* significa não ter que gastar tempo pensando em como modelar sua
   API em termos de HTTP.
 - Geração de URL: O outro lado do roteamento é a geração de URL. Uma boa API
-  baseada em HTTP inclui URLs (veja [o GitHub Gist API](https://developer.github.com/v3/gists/) como exemplo).
+  baseada em HTTP inclui URLs (veja [o GitHub Gist API](https://docs.github.com/en/rest/reference/gists) como exemplo)
 - Respostas de Cabeçalho e Redirecionamento: `head :no_content` e
   `redirect_to user_url(current_user)` são bem convenientes. Claro, você pode
   adicionar cabeçalhos de respostas manualmente, mas por quê?
@@ -193,6 +193,7 @@ Escolhendo o Middleware
 
 Uma aplicação de API vem com os seguintes *middlewares* por padrão:
 
+- `ActionDispatch::HostAuthorization`
 - `Rack::Sendfile`
 - `ActionDispatch::Static`
 - `ActionDispatch::Executor`
@@ -203,6 +204,7 @@ Uma aplicação de API vem com os seguintes *middlewares* por padrão:
 - `Rails::Rack::Logger`
 - `ActionDispatch::ShowExceptions`
 - `ActionDispatch::DebugExceptions`
+- `ActionDispatch::ActionableExceptions`
 - `ActionDispatch::Reloader`
 - `ActionDispatch::Callbacks`
 - `ActiveRecord::Migration::CheckPending`
@@ -221,7 +223,7 @@ Rails.
 Você pode recuperar uma lista com todos os *middlewares* de sua aplicação via:
 
 ```bash
-$ rails middleware
+$ bin/rails middleware
 ```
 
 ### Usando o Middleware de Cache
@@ -307,7 +309,7 @@ _JSON-encoded_ e especificar o `Content-Type` como `application/json`.
 
 Aqui um exemplo em _JQuery_:
 
-```javascript
+```js
 jQuery.ajax({
   type: 'POST',
   url: '/people',
@@ -324,6 +326,32 @@ O `ActionDispatch::Request` verá o `Content-Type` e seus parâmetros serão:
 { :person => { :firstName => "Yehuda", :lastName => "Katz" } }
 ```
 
+### Usando *Middlewares* de Sessão (*Session*)
+
+Os *middlewares* a seguir, usados para gerenciamento de sessão, são excluídos das aplicações de API, pois normalmente não precisam de sessões. Se um de seus clientes de API forem um navegador, convém adicionar um deles novamente em:
+
+- `ActionDispatch::Session::CacheStore`
+- `ActionDispatch::Session::CookieStore`
+- `ActionDispatch::Session::MemCacheStore`
+
+O truque para adicioná-los de volta é que, por padrão, eles são passados para `session_options`
+quando adicionado (incluindo a chave de sessão), então você não pode simplesmente adicionar um inicializador `session_store.rb`, adicione
+`use ActionDispatch::Session::CookieStore` e tenha as sessões funcionando normalmente. (Para ser claro: sessões
+pode funcionar, mas suas opções de sessão serão ignoradas - ou seja, a chave de sessão será padronizada para `_session_id`)
+
+Em vez do inicializador, você terá que definir as opções relevantes em algum lugar antes que seu middleware seja
+construído (como `config/application.rb`) e passá-los para o seu middleware preferido, assim:
+
+```ruby
+# Isso também configura session_options para uso abaixo
+config.session_store :cookie_store, key: '_interslice_session'
+
+# Obrigatório para todo o gerenciamento de sessão (independentemente de session_store)
+config.middleware.use ActionDispatch::Cookies
+
+config.middleware.use config.session_store, config.session_options
+```
+
 ### Outros _Middleware_
 
 O Rails vem com vários outros _middlewares_ que você pode querer usar em uma
@@ -332,10 +360,6 @@ aplicação _API_, especialmente se um de seus clientes da API é o navegador:
 - `Rack::MethodOverride`
 - `ActionDispatch::Cookies`
 - `ActionDispatch::Flash`
-- Para gerenciamento de sessão
-    * `ActionDispatch::Session::CacheStore`
-    * `ActionDispatch::Session::CookieStore`
-    * `ActionDispatch::Session::MemCacheStore`
 
 Qualquer um desses _middlewares_ pode ser adicionado via:
 
@@ -372,13 +396,12 @@ Uma aplicação API (utilizando `ActionController::API`) vem com os seguintes m�
 - `ActionController::Rescue`: Suporte para `rescue_from`.
 - `ActionController::Instrumentation`: Suporte para ganchos de instrumentação definidos pela *Action Controller* (veja [o guia da instrumentação](active_support_instrumentation.html#action-controller) para mais informações a respeito disso)
 - `ActionController::ParamsWrapper`: Agrupa o hash dos parâmetros em um hash encadeado, para que você não precise especificar elementos raiz enviando requisições POST, por exemplo.
-- `ActionController::Head`: Suporte para o retorno de uma resposta sem conteúdo, apenas *headers*
+- `ActionController::Head`: Suporte para o retorno de uma resposta sem conteúdo, apenas *headers*.
 
 Outros plugins podem adicionar mais módulos. Você pode obter uma lista de todos os módulos incluídos no `ActionController::API` no console do Rails:
 
-```bash
-$ rails c
->> ActionController::API.ancestors - ActionController::Metal.ancestors
+```irb
+irb> ActionController::API.ancestors - ActionController::Metal.ancestors
 => [ActionController::API,
     ActiveRecord::Railties::ControllerRuntime,
     ActionDispatch::Routing::RouteSet::MountedHelpers,
@@ -397,20 +420,22 @@ Alguns módulos comuns que você pode querer adicionar:
 
 - `AbstractController::Translation`: Suporte para os métodos de localização e tradução `l` e `t`
 - Suporte para autenticações HTTP basic, digest ou por token:
-  * `ActionController::HttpAuthentication::Basic::ControllerMethods`,
-  * `ActionController::HttpAuthentication::Digest::ControllerMethods`,
+  * `ActionController::HttpAuthentication::Basic::ControllerMethods`
+  * `ActionController::HttpAuthentication::Digest::ControllerMethods`
   * `ActionController::HttpAuthentication::Token::ControllerMethods`
 - `ActionView::Layouts`: Suporte para layouts ao renderizar.
 - `ActionController::MimeResponds`: Suporte para `respond_to`.
 - `ActionController::Cookies`: Suporte para `cookies`, que inclui suporte para cookies assinados e criptografados. Isso requer um middleware de cookies
 - `ActionController::Caching`: Suporte para cache da *view* do *controller* da API. Lembre-se que você precisará especificar manualmente o armazenamento em cache dentro do *controller*, como por exemplo:
-  ```ruby
-  class ApplicationController < ActionController::API
-    include ::ActionController::Caching
-    self.cache_store = :mem_cache_store
-  end
-  ```
+
+    ```ruby
+    class ApplicationController < ActionController::API
+      include ::ActionController::Caching
+      self.cache_store = :mem_cache_store
+    end
+    ```
+
   O Rails *não* faz essa configuração automaticamente
 
-O melhor lugar para adicionar um módulo é em sua `ApplicationController`, mas 
+O melhor lugar para adicionar um módulo é em sua `ApplicationController`, mas
 você também pode adicionar módulos em *controllers* individuais.
