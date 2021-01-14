@@ -23,10 +23,10 @@ NOTE: Este guia não pretende ser uma documentação completa dos métodos auxil
 Trabalhando com formulários básicos.
 ------------------------------------
 
-O principal auxiliar de formulário (*form helper*) é o `form_with` .
+O principal auxiliar de formulário (*form helper*) é o [`form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
 
 ```erb
-<%= form_with do %>
+<%= form_with do |form| %>
   Conteúdo do formulário
 <% end %>
 ```
@@ -34,13 +34,13 @@ O principal auxiliar de formulário (*form helper*) é o `form_with` .
 Quando chamado sem nenhum argumento como este, é criado uma *tag* de formulário que, quando enviado, fará uma requisição HTTP usando o verbo POST para a página atual. Por exemplo, supondo que a página atual seja a inicial, o HTML gerado terá a seguinte aparência:
 
 ```html
-<form accept-charset="UTF-8" action="/" data-remote="true" method="post">
+<form accept-charset="UTF-8" action="/" method="post">
   <input name="authenticity_token" type="hidden" value="J7CBxfHalt49OSHp27hblqK20c9PgwJ108nDHX/8Cts=" />
   Form contents
 </form>
 ```
 
-Note que o HTML contém um elemento `input` do tipo `hidden`. Este `input` é importante porque o formulário não pode ser enviado com sucesso sem ele, exceto formulários com método GET. Esse elemento oculto com o nome `authenticity_token` é um recurso de segurança do Rails chamado **proteção contra falsificação de solicitação entre sites** ([**cross-site request forgery protection**](https://pt.wikipedia.org/wiki/Cross-site_request_forgery)), e os *helpers* de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Você poderá ler mais sobre isso no guia [Segurança em Aplicações Rails](security.html#cross-site-request-forgery-csrf).
+Note que o HTML contém um elemento `input` do tipo `hidden`. Este `input` é importante porque os formulários não podem ser enviados com sucesso sem ele, exceto formulários com método GET. Esse elemento oculto com o nome `authenticity_token` é um recurso de segurança do Rails chamado **proteção contra falsificação de solicitação entre sites** ([**cross-site request forgery protection**](https://pt.wikipedia.org/wiki/Cross-site_request_forgery)), e os *helpers* de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Você poderá ler mais sobre isso no guia [Segurança em Aplicações Rails](security.html#cross-site-request-forgery-csrf).
 
 ### Formulário de pesquisa genérica
 
@@ -51,22 +51,22 @@ Um dos formulários mais básicos que você vê na web é um formulário de pesq
 * Um *input* de entrada de texto.
 * Um *input* de envio.
 
-Para criar este formulário você irá usar `form_with`, `label_tag`, `text_field_tag`, e `submit_tag`, respectivamente. Como o exemplo abaixo:
+Para criar este formulário você usará `form_with` e o objeto para contrução de formulário que o método nos dá. Como o exemplo abaixo:
 
 ```erb
-<%= form_with(url: "/search", method: "get") do %>
-  <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
+<%= form_with url: "/search", method: :get do |form| %>
+  <%= form.label :query, "Search for:" %>
+  <%= form.text_field :query %>
+  <%= form.submit "Search" %>
 <% end %>
 ```
 
 Isso irá gerar o seguinte HTML:
 
 ```html
-<form accept-charset="UTF-8" action="/search" data-remote="true" method="get">
-  <label for="q">Search for:</label>
-  <input id="q" name="q" type="text" />
+<form action="/search" method="get" accept-charset="UTF-8" >
+  <label for="query">Search for:</label>
+  <input id="query" name="query" type="text" />
   <input name="commit" type="submit" value="Search" data-disable-with="Search" />
 </form>
 ```
@@ -79,7 +79,7 @@ IMPORTANT: Use "GET" como o método para buscas em formulários. Isso permitirá
 
 ### Helpers para gerar elementos de formulário
 
-O Rails fornece  uma série de auxiliares para gerar elementos de formulário, como caixas de seleção, campos de texto e botões de opção. Esses auxiliares básicos, com nomes terminados em `_tag`(como `text_field` e `check_box_tag`), geram apenas um único elemento `<input>`. O primeiro parâmetro para estes será sempre o nome da entrada. Quando o formulário for enviado, o nome será passado junto com os dados do formulário e será direcionado para `params` o controlador com o valor inserido pelo usuário para esse campo. Por exemplo, se o formulário contiver `<%= text_field_tag(:query) %>`, podendo obter o valor deste campo no controlador com `params[:query]` .
+O objeto construtor de formulário gerado pelo `form_with` fornece vários métodos auxiliares para gerar elementos de formulário, como campos de texto, caixas de seleção (*checkboxes*) e botões de rádio (*radio buttons*). O primeiro parâmetro para esses métodos é sempre o nome do *input*. Quando o formulário for enviado, o nome será passado junto com os dados do formulário e será direcionado para `params` o controlador com o valor inserido pelo usuário para esse campo. Por exemplo, se o formulário contiver `<%= form.text_field :query %>`, podendo obter o valor deste campo no controlador com `params[:query]` .
 
 Ao nomear entradas, o Rails usa certas convenções que possibilitam enviar parâmetros com valores não escalares, como matrizes ou hashes, que também estarão acessíveis `params`. Poderá ser lido mais sobre eles no capítulo [Noções básicas sobre convenções de nomenclatura de parâmetros](#understanding-parameter-naming-conventions) deste guia. Para detalhes de como usar com precisão esses auxiliares, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
 
@@ -88,87 +88,87 @@ Ao nomear entradas, o Rails usa certas convenções que possibilitam enviar par�
 As caixas de seleção são controles de formulário que fornecem ao usuário um conjunto de opções que podem ser ativados ou desativados pelo usuário.
 
 ```erb
-<%= check_box_tag(:pet_dog) %>
-<%= label_tag(:pet_dog, "I own a dog") %>
-<%= check_box_tag(:pet_cat) %>
-<%= label_tag(:pet_cat, "I own a cat") %>
+<%= form.check_box :pet_dog %>
+<%= form.label :pet_dog, "I own a dog" %>
+<%= form.check_box :pet_cat %>
+<%= form.label :pet_cat, "I own a cat" %>
 ```
 
 Isso gera o seguinte:
 
 ```html
-<input id="pet_dog" name="pet_dog" type="checkbox" value="1" />
+<input type="checkbox" id="pet_dog" name="pet_dog" value="1" />
 <label for="pet_dog">I own a dog</label>
-<input id="pet_cat" name="pet_cat" type="checkbox" value="1" />
+<input type="checkbox" id="pet_cat" name="pet_cat" value="1" />
 <label for="pet_cat">I own a cat</label>
 ```
 
-O primeiro parâmetro para `check_box_tag`, é claro, é o nome da entrada. O segundo parâmetro, naturalmente, é o valor da entrada. Este valor será incluído nos dados do formulário (e está presente em `params`) quando a caixa de seleção estiver marcada.
+O primeiro parâmetro para [`check_box`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-check_box), é o nome da entrada. O segundo parâmetro, é o valor da entrada. Este valor será incluído nos dados do formulário (e está presente em `params`) quando a caixa de seleção estiver marcada.
 
 #### *Radio Buttons* Botões de opção
 
 Os botões de opção embora semelhantes às caixas de seleção, são controles que especificam um conjunto de opções mutuamente exclusivos (ou seja, o usuário pode escolher apenas uma).
 
 ```erb
-<%= radio_button_tag(:age, "child") %>
-<%= label_tag(:age_child, "I am younger than 21") %>
-<%= radio_button_tag(:age, "adult") %>
-<%= label_tag(:age_adult, "I am over 21") %>
+<%= form.radio_button :age, "child" %>
+<%= form.label :age_child, "I am younger than 21" %>
+<%= form.radio_button :age, "adult" %>
+<%= form.label :age_adult, "I am over 21" %>
 ```
 
 Resultado:
 
 ```html
-<input id="age_child" name="age" type="radio" value="child" />
+<input type="radio" id="age_child" name="age" value="child" />
 <label for="age_child">I am younger than 21</label>
-<input id="age_adult" name="age" type="radio" value="adult" />
+<input type="radio" id="age_adult" name="age" value="adult" />
 <label for="age_adult">I am over 21</label>
 ```
 
-Assim como `check_box_tag`, o segundo parâmetro para `radio_button_tag` é o valor da entrada. Como esses dois botões compartilham o mesmo nome (`age`), o usuário poderá selecionar apenas um deles, e `params[:age]` receberá `"child"` ou `"adult"`.
+Assim como `check_box`, o segundo parâmetro para [`radio_button`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-radio_button) é o valor da entrada. Como esses dois botões compartilham o mesmo nome (`age`), o usuário poderá selecionar apenas um deles, e `params[:age]` receberá `"child"` ou `"adult"`.
 
 NOTE: Sempre use *labels* para a caixa de seleção e botões de opção. Eles associam o texto a uma opção específica e, ao expandir a região clicável, facilita o clique dos usuários nas entradas.
 
 ### Outros auxiliares interessantes
 
-Outros controles de formulários que vale a pena falar são áreas de texto, campos de senha, campos ocultos, campos de pesquisa, campos telefônicos, campos de data, campos de hora, campos de cores, campos locais de data e hora, campos de mês, mês, semana, URL, campo de email, número e campos de intervalo:
+Outros controles de formulários que valem a pena falar são áreas de texto, campos ocultos, campos de senha, campos de número, campos de data e hora e muitos outros:
 
 ```erb
-<%= text_area_tag(:message, "Hi, nice site", size: "24x6") %>
-<%= password_field_tag(:password) %>
-<%= hidden_field_tag(:parent_id, "5") %>
-<%= search_field(:user, :name) %>
-<%= telephone_field(:user, :phone) %>
-<%= date_field(:user, :born_on) %>
-<%= datetime_local_field(:user, :graduation_day) %>
-<%= month_field(:user, :birthday_month) %>
-<%= week_field(:user, :birthday_week) %>
-<%= url_field(:user, :homepage) %>
-<%= email_field(:user, :address) %>
-<%= color_field(:user, :favorite_color) %>
-<%= time_field(:task, :started_at) %>
-<%= number_field(:product, :price, in: 1.0..20.0, step: 0.5) %>
-<%= range_field(:product, :discount, in: 1..100) %>
+<%= form.text_area :message, size: "70x5" %>
+<%= form.hidden_field :parent_id, value: "foo" %>
+<%= form.password_field :password %>
+<%= form.number_field :price, in: 1.0..20.0, step: 0.5 %>
+<%= form.range_field :discount, in: 1..100 %>
+<%= form.date_field :born_on %>
+<%= form.time_field :started_at %>
+<%= form.datetime_local_field :graduation_day %>
+<%= form.month_field :birthday_month %>
+<%= form.week_field :birthday_week %>
+<%= form.search_field :name %>
+<%= form.email_field :address %>
+<%= form.telephone_field :phone %>
+<%= form.url_field :homepage %>
+<%= form.color_field :favorite_color %>
 ```
 
 Resultado:
 
 ```html
-<textarea id="message" name="message" cols="24" rows="6">Hi, nice site</textarea>
-<input id="password" name="password" type="password" />
-<input id="parent_id" name="parent_id" type="hidden" value="5" />
-<input id="user_name" name="user[name]" type="search" />
-<input id="user_phone" name="user[phone]" type="tel" />
-<input id="user_born_on" name="user[born_on]" type="date" />
-<input id="user_graduation_day" name="user[graduation_day]" type="datetime-local" />
-<input id="user_birthday_month" name="user[birthday_month]" type="month" />
-<input id="user_birthday_week" name="user[birthday_week]" type="week" />
-<input id="user_homepage" name="user[homepage]" type="url" />
-<input id="user_address" name="user[address]" type="email" />
-<input id="user_favorite_color" name="user[favorite_color]" type="color" value="#000000" />
-<input id="task_started_at" name="task[started_at]" type="time" />
-<input id="product_price" max="20.0" min="1.0" name="product[price]" step="0.5" type="number" />
-<input id="product_discount" max="100" min="1" name="product[discount]" type="range" />
+<textarea name="message" id="message" cols="70" rows="5"></textarea>
+<input type="hidden" name="parent_id" id="parent_id" value="foo" />
+<input type="password" name="password" id="password" />
+<input type="number" name="price" id="price" step="0.5" min="1.0" max="20.0" />
+<input type="range" name="discount" id="discount" min="1" max="100" />
+<input type="date" name="born_on" id="born_on" />
+<input type="time" name="started_at" id="started_at" />
+<input type="datetime-local" name="graduation_day" id="graduation_day" />
+<input type="month" name="birthday_month" id="birthday_month" />
+<input type="week" name="birthday_week" id="birthday_week" />
+<input type="search" name="name" id="name" />
+<input type="email" name="address" id="address" />
+<input type="tel" name="phone" id="phone" />
+<input type="url" name="homepage" id="homepage" />
+<input type="color" name="favorite_color" id="favorite_color" value="#000000" />
 ```
 
 Entradas ocultas não são exibidas ao usuário, mas retêm dados como qualquer entrada de texto. Os valores dentro deles podem ser alterados com JavaScript.
@@ -181,76 +181,52 @@ TIP: Se você estiver usando campos de entradas de senha (para qualquer finalida
 Trabalhando com Objetos *Model*
 --------------------------
 
-### *Helpers* de Objetos *Model*
-
-Uma tarefa particularmente comum para um formulário é editar ou criar um objeto *model*. Embora os *helpers* `*_tag` possam ser usados para essa tarefa, eles são um pouco verbosos, pois para cada *tag* você teria que garantir que o nome do parâmetro correto seja usado e atribuir o valor padrão de entrada de maneira apropriada. O Rails fornece *helpers* personalizados para essa função. Esses *helpers* não possuem o sufixo `_tag`, por exemplo `text_field`, `text_area`.
-
-Para esses *helpers* o primeiro argumento é o nome de uma variável de instância e o segundo é o nome de um método (geralmente um atributo) para chamar esse objeto. O Rails vai definir o valor do controle de entrada para o valor de retorno daquele método para o objeto e definirá um nome de entrada apropriado. Se o seu *controller* definiu `@person` e o nome dessa pessoa é Henry, um formulário contendo:
-
-```erb
-<%= text_field(:person, :name) %>
-```
-
-produz uma saída semelhante à 
-
-```erb
-<input id="person_name" name="person[name]" type="text" value="Henry" />
-```
-
-Após o envio do formulário, o valor inserido pelo usuário fica armazenado em `params[:person][:name]`.
-
-WARNING: Você deve passar o nome da instância da variável, i.e. `:person` ou `"person"`, não a instância atual do objeto *model*.
-
-O Rails fornece *helpers* para exibição de validação de erros associados ao objeto *model*. Esses são abordados em detalhes no guia de [Validação do *Active Record*](active_record_validations.html#displaying-validation-errors-in-views).
-
 ### Vinculando um Formulário a um Objeto
 
-Embora isso seja muito confortável, está longe de ser perfeito. Se `Person` tiver muitos atributos para editar, estaríamos repetindo o nome do objeto editado várias vezes. O que queremos fazer é de alguma forma vincular um formulário a um objeto *model*, que é exatamente o que `form_with` com `:model` faz.
+O argumento `:model` do `form_with` nos permite ligar o objeto construtor de um formulário a um objeto *model*. Isso significa que o escopo do formulário será aquele objeto *model* e os campos do formulário serão preenchidos com valores desse objeto.
 
-Suponha que temos um *controller* para lidar com *articles* `app/controllers/articles_controller.rb`:
+Por exemplo, se temos um objeto *model* como `@article`:
 
 ```ruby
-def new
-  @article = Article.new
-end
+@article = Article.find(42)
+# => #<Article id: 42, title: "My Title", body: "My Body">
 ```
 
-A *view* correspondente `app/views/articles/new.html.erb` usando `form_with` fica algo parecido com:
+O seguinte formulário:
 
 ```erb
-<%= form_with model: @article, class: "nifty_form" do |f| %>
-  <%= f.text_field :title %>
-  <%= f.text_area :body, size: "60x12" %>
-  <%= f.submit "Create" %>
+<%= form_with model: @article do |form| %>
+  <%= form.text_field :title %>
+  <%= form.text_area :body, size: "60x10" %>
+  <%= form.submit %>
 <% end %>
+```
+
+Cria o seguinte código:
+
+```html
+<form action="/articles/42" method="post" accept-charset="UTF-8" >
+  <input name="authenticity_token" type="hidden" value="..." />
+  <input type="text" name="article[title]" id="article_title" value="My Title" />
+  <textarea name="article[body]" id="article_body" cols="60" rows="10">
+    My Body
+  </textarea>
+  <input type="submit" name="commit" value="Update Article" data-disable-with="Update Article">
+</form>
 ```
 
 Existem algumas coisas a serem observadas aqui:
 
-* `@article` é o objeto real que está sendo editado.
-* Existe um único *hash* de opções. Opções HTML (exceto `id` e `class`) são passadas no *hash* `:html`. Além disso, você pode fornecer uma opção `:namespace` no seu formulário para garantir a exclusividade dos atributos de *id* nos elementos do formulário. O atributo de escopo será prefixado com sublinhado no id HTML gerado.
-* O método `form_with` produz um objeto **construtor de formulário** (a variável `f`).
-* Se você deseja direcionar sua requisição de formulário para uma URL específica, use `form_with url: my_nifty_url_path`. Para ver as opções mais detalhadas sobre o que `form_with` aceita, [verifique a documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with).
-* Métodos para criar controles de formulário são chamados **no** objeto construtor de formulário `f`.
-
-O HTML produzido é:
-
-```html
-<form class="nifty_form" action="/articles" accept-charset="UTF-8" data-remote="true" method="post">
-  <input type="hidden" name="authenticity_token" value="NRkFyRWxdYNfUg7vYxLOp2SLf93lvnl+QwDWorR42Dp6yZXPhHEb6arhDOIWcqGit8jfnrPwL781/xlrzj63TA==" />
-  <input type="text" name="article[title]" id="article_title" />
-  <textarea name="article[body]" id="article_body" cols="60" rows="12"></textarea>
-  <input type="submit" name="commit" value="Create" data-disable-with="Create" />
-</form>
-```
-
-O objeto passado como `:model` em `form_with` controla a chave usada em `params` para acessar os valores do fomulário. Aqui está o nome `article` e, portanto, todas as entradas tem nomes do formulário `article[attribute_name]`. Assim, na ação `create` haverá um *hash* `params[:article]` com as chaves `:title` e `:body`. Você pode ler mais sobre a importância dos nomes de entrada no capítulo [Entendendo Convenções de Nomeação de Parâmetros](#entendendo-convencoes-de-nomeacao-de-parametros) deste guia.
+* A `action` do formulário é automaticamente preenchida com um valor apropriado para `@article`.
+* Os campos do formulário são preenchidos automaticamente com os valores correspondentes do `@article`.
+* Os nomes dos campos do formulário têm como escopo `article[...]`. Isso significa que `params[:article]` será um *hash* contendo todos os valores desses campos. Você pode ler mais sobre a importância dos nomes de entradas no capítulo [Entendendo as Convenções de Nomeação de Parâmetros](#entendendo-convencoes-de-nomeacao-de-parametros) deste guia.
+* O botão de envio (*submit*) recebe automaticamente um valor de texto apropriado.
 
 TIP: Convencionalmente, suas entradas espelharão os atributos do *model*. No entanto, eles não precisam! Se houver outras informações de que você precisa, você pode incluí-las em seu formulário da mesma forma que os atributos e acessá-las via `params[:article][:my_nifty_non_attribute_input]`.
 
-Os métodos *helper* chamados no construtor de formulário (*form builder*) são identicos ao objeto *model helper*, exceto que não é necessário especificar qual objeto está sendo editado, pois isso já é gerenciado pelo construtor de formulário.
+#### O auxiliar `fields_for`
 
-Você pode criar uma vinculação semelhante sem realmente criar uma tag `<form>` com o *helper* `fields_for`. Isso é útil para editar objetos *model* adicionais com o mesmo formulário. Por exemplo, se você tem um *model* `Person` vinculado à um *model* `ContactDetail`, você pode criar um formulário para criar os dois, assim:
+Você pode criar uma vinculação semelhante sem realmente criar uma tag `<form>` com o *helper* [`fields_for`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-fields_for). Isso é útil para editar objetos *model* adicionais com o mesmo formulário. Por exemplo, se você tem um *model* `Person` vinculado à um *model* `ContactDetail`, você pode criar um formulário para criar os dois, assim:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -264,7 +240,7 @@ Você pode criar uma vinculação semelhante sem realmente criar uma tag `<form>
 que produz a seguinte saída:
 
 ```html
-<form action="/people" accept-charset="UTF-8" data-remote="true" method="post">
+<form action="/people" accept-charset="UTF-8" method="post">
   <input type="hidden" name="authenticity_token" value="bL13x72pldyDD8bgtkjKQakJCpd4A8JdXGbfksxBDHdf1uC0kCMqe2tvVdUYfidJt0fj3ihC4NxiVHv8GVYxJA==" />
   <input type="text" name="person[name]" id="person_name" />
   <input type="text" name="contact_detail[phone_number]" id="contact_detail_phone_number" />
@@ -332,7 +308,7 @@ form_with(url: search_path, method: "patch")
 Resultado:
 
 ```html
-<form accept-charset="UTF-8" action="/search" data-remote="true" method="post">
+<form accept-charset="UTF-8" action="/search" method="post">
   <input name="_method" type="hidden" value="patch" />
   <input name="authenticity_token" type="hidden" value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" />
   ...
@@ -341,286 +317,311 @@ Resultado:
 
 Ao analisar os dados submetidos pelo *POST*, o Rails levará em consideração o parâmetro especial `_method` e agirá como se o método HTTP fosse aquele especificado dentro dele (*"PATCH"* nesse exemplo).
 
-IMPORTANT: Todos os formulários usando `form_with` implementam `remote: true` por padrão. Esses formulários enviarão dados usando requisições XHR (*Ajax*). Para desabilitar isso, inclua `local: true`. Para se aprofundar, veja o guia [Trabalhando com JavaScript no Rails](working_with_javascript_in_rails.html#elementos-remotos).
+IMPORTANT: No Rails 6.0 e 5.2, todos os formulários usando `form_with` implementam `remote: true` por padrão. Esses formulários enviarão dados usando requisições XHR (*Ajax*). Para desabilitar isso, inclua `local: true`. Para se aprofundar, veja o guia [Trabalhando com JavaScript no Rails](working_with_javascript_in_rails.html#elementos-remotos).
 
 Criando Caixas de Seleção (*Select Boxes*) com Facilidade
 -----------------------------
 
-As caixas de seleção em HTML requerem uma quantidade significativa de marcação (um elemento `OPTION` para cada opção de escolha), portanto, faz mais sentido que sejam geradas dinamicamente.
+As caixas de seleção em HTML requerem uma quantidade significativa de marcação, um elemento `<option>` para cada opção de escolha. Então o Rails provê métodos auxiliares para reduzir esse fardo.
 
-Esta é a aparência da marcação:
+Por exemplo, digamos que temos uma lista de cidades para o usuário escolher. Podemos usar o auxiliar [`select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-select) assim:
+
+```erb
+<%= form.select :city, ["Berlin", "Chicago", "Madrid"] %>
+```
+
+que gera:
 
 ```html
-<select name="city_id" id="city_id">
-  <option value="1">Lisbon</option>
-  <option value="2">Madrid</option>
-  <option value="3">Berlin</option>
+<select name="city" id="city">
+  <option value="Berlin">Berlin</option>
+  <option value="Chicago">Chicago</option>
+  <option value="Madrid">Madrid</option>
 </select>
 ```
 
-Aqui você tem uma lista de cidades cujos nomes são apresentados ao usuário. Internamente, o aplicativo deseja apenas manipular seus IDs, para que sejam usados como o atributo de valor das opções. Vamos ver como o Rails pode ajudar aqui.
 
-### As Tags de Seleção (*Select*) e Opção (*Option*)
-
-O *helper* mais genérico é `select_tag`, que - como o nome indica - simplesmente gera a tag `SELECT` que encapsula uma *string* de opções:
+Também podemos designar valores para `<option>` que diferem de seus rótulos:
 
 ```erb
-<%= select_tag(:city_id, raw('<option value="1">Lisbon</option><option value="2">Madrid</option><option value="3">Berlin</option>')) %>
+<%= form.select :city, [["Berlin", "BE"], ["Chicago", "CHI"], ["Madrid", "MD"]] %>
 ```
 
-Isso é um começo, porém o *helper* `select_tag` não cria as tags de opção dinamicamente. Você pode gerar tags de opção com o *helper* `options_for_select`:
-
-```html+erb
-<%= options_for_select([['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
-```
-
-Resultado:
+que gera: 
 
 ```html
-<option value="1">Lisbon</option>
-<option value="2">Madrid</option>
-<option value="3">Berlin</option>
+<select name="city" id="city">
+  <option value="BE">Berlin</option>
+  <option value="CHI">Chicago</option>
+  <option value="MD">Madrid</option>
+</select>
 ```
 
-O primeiro argumento para `options_for_select` é um *array* aninhado onde cada elemento tem dois elementos: texto da opção (nome da cidade) e valor da opção (id da cidade). O valor da opção é o que será enviado ao seu *controller*. Frequentemente, esse será o id de um objeto de banco de dados correspondente, mas não precisa ser o caso.
+Desta forma, o usuário verá o nome completo da cidade, mas `params[: city]` será um dos tipos `"BE"`, `"CHI"` ou `"MD"`.
 
-Sabendo disso, é possível combinar `select_tag` e `options_for_select` para obter a marcação completa desejada:
+Por último, podemos especificar uma escolha padrão para a caixa de seleção com o argumento `:selected`:
 
 ```erb
-<%= select_tag(:city_id, options_for_select(...)) %>
+<%= form.select :city, [["Berlin", "BE"], ["Chicago", "CHI"], ["Madrid", "MD"]], selected: "CHI" %>
 ```
 
-`options_for_select` permite pré-selecionar uma opção passando seu valor.
-
-```html+erb
-<%= options_for_select([['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]], 2) %>
-```
-
-Resultado:
+que gera:
 
 ```html
-<option value="1">Lisbon</option>
-<option value="2" selected="selected">Madrid</option>
-<option value="3">Berlin</option>
+<select name="city" id="city">
+  <option value="BE">Berlin</option>
+  <option value="CHI" selected="selected">Chicago</option>
+  <option value="MD">Madrid</option>
+</select>
 ```
 
-Sempre que o Rails vê que o valor interno de uma opção sendo gerada corresponde a este valor, ele adicionará o atributo `selected` aquela opção.
+### Grupos de Opção
 
-É possível adicionar atributos arbitrários às opções usando hashes:
+Em alguns casos, podemos querer melhorar a experiência do usuário agrupando opções relacionadas. Podemos fazer isso passando um `Hash` (ou `Array` compatível) para `select`:
 
-```html+erb
-<%= options_for_select(
-  [
-    ['Lisbon', 1, { 'data-size' => '2.8 million' }],
-    ['Madrid', 2, { 'data-size' => '3.2 million' }],
-    ['Berlin', 3, { 'data-size' => '3.4 million' }]
-  ], 2
-) %>
+```erb
+<%= form.select :city,
+      {
+        "Europe" => [ ["Berlin", "BE"], ["Madrid", "MD"] ],
+        "North America" => [ ["Chicago", "CHI"] ],
+      },
+      selected: "CHI" %>
 ```
 
-Resultado:
+que gera:
 
 ```html
-<option value="1" data-size="2.8 million">Lisbon</option>
-<option value="2" selected="selected" data-size="3.2 million">Madrid</option>
-<option value="3" data-size="3.4 million">Berlin</option>
+<select name="city" id="city">
+  <optgroup label="Europe">
+    <option value="BE">Berlin</option>
+    <option value="MD">Madrid</option>
+  </optgroup>
+  <optgroup label="North America">
+    <option value="CHI" selected="selected">Chicago</option>
+  </optgroup>
+</select>
 ```
 
 ### Caixas de Seleção (*Select Boxes*) com Objetos *Model*
 
-Na maioria dos casos, os controles de formulário serão vinculados a um *model* específico e, como você pode esperar, o Rails fornece *helpers* personalizados para esse propósito. Consistente com outros *helpers* de formulário, ao lidar com um objeto de *model* elimine o sufixo `_tag` de `select_tag`:
-
-Se o *controller* definiu `@person` e o `city_id` dessa pessoa é 2:
+Como outros formulários, uma caixa de seleção pode ser associada a um atributo de *model*. Por exemplo, se tivermos um objeto *model* `@person` como:
 
 ```ruby
-@person = Person.new(city_id: 2)
+@person = Person.new(city: "MD")
 ```
+
+O seguinte formulário:
 
 ```erb
-<%= select(:person, :city_id, [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
+<%= form_with model: @person do |form| %>
+  <%= form.select :city, [["Berlin", "BE"], ["Chicago", "CHI"], ["Madrid", "MD"]] %>
+<% end %>
 ```
 
-produz um resultado semelhante a
+produz um resultado semelhante a:
 
 ```html
-<select name="person[city_id]" id="person_city_id">
-  <option value="1">Lisbon</option>
-  <option value="2" selected="selected">Madrid</option>
-  <option value="3">Berlin</option>
+<select name="person[city]" id="person_city">
+  <option value="BE">Berlin</option>
+  <option value="CHI">Chicago</option>
+  <option value="MD" selected="selected">Madrid</option>
 </select>
 ```
 
-Observe que o terceiro parâmetro, o *array* de opções, é o mesmo tipo de argumento que você passa para `options_for_select`. Uma vantagem aqui é que você não precisa se preocupar em pré-selecionar a cidade correta se o usuário já tiver uma - o Rails fará isso para você lendo o atributo `@person.city_id`.
-
-Tal como acontece com outros *helpers*, se você fosse usar o *helper* `select` em um construtor de formulário com escopo para o objeto `@person`, a sintaxe seria:
-
-```erb
-<%= form_with model: @person do |person_form| %>
-  <%= person_form.select(:city_id, [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]]) %>
-<% end %>
-```
-
-Você também pode passar um bloco para o *helper* `select`:
-
-```erb
-<%= form_with model: @person do |person_form| %>
-  <%= person_form.select(:city_id) do %>
-    <% [['Lisbon', 1], ['Madrid', 2], ['Berlin', 3]].each do |c| %>
-      <%= content_tag(:option, c.first, value: c.last) %>
-    <% end %>
-  <% end %>
-<% end %>
-```
-
-WARNING: Se você estiver usando `select` ou *helpers* semelhantes para definir uma associação `belongs_to`, você deve passar o nome da chave estrangeira (no exemplo acima `city_id`), não o nome da própria associação.
-
-WARNING: Quando `:include_blank` ou `:prompt` não estão presentes, `:include_blank` é forçado a *true* se o atributo de seleção `required` for *true*, display `size` é um e `multiple` não é *true*.
-
-### Tags de Opção (*Option Tags*) de uma Coleção de Objetos Arbitrários
-
-Gerar tags de opções com `options_for_select` requer que você crie um *array* contendo o texto e valor para cada opção. Mas e se você tivesse um *model* `City` (talvez um Active Record) e quisesse gerar tags de opção de uma coleção desses objetos? Uma solução seria fazer um *array* aninhada iterando sobre eles:
-
-```erb
-<% cities_array = City.all.map { |city| [city.name, city.id] } %>
-<%= options_for_select(cities_array) %>
-```
-
-Esta é uma solução perfeitamente válida, entretanto o Rails fornece uma alternativa menos verbosa: `options_from_collection_for_select`. Este *helper* espera uma coleção de objetos arbitrários e dois argumentos adicionais: os nomes dos métodos para ler a opção **value** e **text**, respectivamente:
-
-```erb
-<%= options_from_collection_for_select(City.all, :id, :name) %>
-```
-
-Como o nome indica, isso só gera *tags* de opção. Para gerar uma *select box* funcional, você precisará usar `collection_select`:
-
-```erb
-<%= collection_select(:person, :city_id, City.all, :id, :name) %>
-```
-
-Como com outros *helpers*, se você fosse usar o *helper* `collection_select` em um construtor de formulário com escopo para o objeto `@person`, a sintaxe seria:
-
-```erb
-<%= form_with model: @person do |person_form| %>
-  <%= person_form.collection_select(:city_id, City.all, :id, :name) %>
-<% end %>
-```
-
-NOTE: Pares passados para `options_for_select` devem ter o texto primeiro e o valor depois, entretanto, com `options_from_collection_for_select` devem ter o método do valor primeiro e o método do texto depois.
+Observe que a opção apropriada foi marcada automaticamente como `selected=" selected"`. Visto que esta caixa de seleção estava ligada a um *model*, não precisamos especificar um argumento `:selected`!
 
 ### Fuso horário e Seleção de País
 
-Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus usuários em que fuso horário eles estão. Fazer isso exigiria a geração de opções selecionadas de uma lista de objetos *[`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html)* usando `collection_select`, mas você pode simplesmente usar o *helper* `time_zone_select` que já envolve isto:
+Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus usuários em que fuso horário eles estão. Fazer isso exigiria a geração de opções selecionadas de uma lista de objetos *[`ActiveSupport::TimeZone`](https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html)* usando `collection_select`, mas você pode simplesmente usar o *helper* [`time_zone_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-time_zone_select) que já resolve isto:
 
 ```erb
-<%= time_zone_select(:person, :time_zone) %>
+<%= form.time_zone_select :time_zone %>
 ```
-
-Existe também o *helper* `time_zone_options_for_select` para uma maneira mais manual (portanto mais customizável) de fazer isso. Leia a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-time_zone_options_for_select) para aprender sobre os possíveis argumentos para esses dois métodos.
 
 O Rails tinha um *helper* `country_select` para escolher os países, mas foi extraído para o [plugin country_select](https://github.com/stefanpenner/country_select).
 
 Usando *Form Helpers* para Data e Hora
 --------------------------------
 
-Você pode optar por não usar os *helpers* de formulário que geram campos de data e hora em HTML5 e usar os *helpers* de data e hora alternativos. Esses *helpers* de data e hora diferem de todos os outros *helpers* de formulário em dois aspectos importantes:
-
-* Datas e horas não são representáveis por um único elemento de entrada. Em vez disso, você tem vários, um para cada componente (ano, mês, dia, etc.) e, portanto, não há um valor único em seu hash `params` com sua data ou hora.
-* Outros *helpers* usam o sufixo `_tag` para indicar quando um *helper* é um  *barebone helper* ou um que trabalha em objetos *model*. Com datas e horas, `select_date`, `select_time` e `select_datetime` são *helpers* essenciais, `date_select`, `time_select` e `datetime_select` são os *helpers* equivalentes.
-
-Ambas as famílias de *helpers* criarão uma série de caixas de seleção para os diferentes componentes (ano, mês, dia, etc.).
-
-### *Helpers* Essenciais
-
-A família de *helpers* `select_*` usam como primeiro argumento, uma instância de `Date`, `Time`, ou `DateTime` que é utilizada como o valor selecionado no momento. É possível omitir esse parâmetro, onde a data atual é utilizada. Por exemplo:
-
-```erb
-<%= select_date Date.today, prefix: :start_date %>
-```
-
-produz (com os valores das opções reais omitidos para simplificação)
-
-```html
-<select id="start_date_year" name="start_date[year]">
-</select>
-<select id="start_date_month" name="start_date[month]">
-</select>
-<select id="start_date_day" name="start_date[day]">
-</select>
-```
-
-As entradas acima resultariam em um *hash* `params[:start_date]` com as chaves `:year`, `:month`, `:day`. Para pegar objetos com `Date`, `Time`, ou `DateTime` atuais,você deve extrair os valores e passá-los para o construtor apropriado, por exemplo: 
+Se você não deseja usar os *helpers* de formulário que geram campos de data e hora em HTML5, o Rails fornece *helpers* de data e hora alternativos que renderizam formulários em texto simples. Esses *helpers* renderizam uma caixa de seleção para cada componente de tempo (por exemplo, ano, mês, dia, etc.). Por exemplo, se tivermos um objeto de *model* `@person` como:
 
 ```ruby
-Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
+@person = Person.new(birth_date: Date.new(1995, 12, 21))
 ```
 
-A opção `:prefix` é a chave utilizada para retornar a *hash* dos componentes de datas da *hash* `params`. Aqui foi definido como `start_date`, se omitido o valor padrão será `date`.
-
-### *Helpers* para Objetos *Model*
-
-O objeto `select_date` não funciona muito bem com formulários que atualizam ou criam objetos *Active Record* , pois *Active Record* espera que cada elemento da *hash* `params` corresponda a um atributo.
-Os *helpers* para objetos *model* em datas e horas enviam parâmetros com nomes especiais; quando *Active Record* vê os parâmetros com estes nomes, ele sabe que eles devem ser combinados com os outros parâmetros e fornecidos a um construtor apropriado para o tipo de coluna. Por exemplo:
+O seguinte formulário:
 
 ```erb
-<%= date_select :person, :birth_date %>
+<%= form_with model: @person do |form| %>
+  <%= form.date_select :birth_date %>
+<% end %>
 ```
 
-produz (com os valores das opções reais omitidos para simplificação)
+vai gerar algo como:
 
 ```html
-<select id="person_birth_date_1i" name="person[birth_date(1i)]">
+<select name="person[birth_date(1i)]" id="person_birth_date_1i">
+  <option value="1990">1990</option>
+  <option value="1991">1991</option>
+  <option value="1992">1992</option>
+  <option value="1993">1993</option>
+  <option value="1994">1994</option>
+  <option value="1995" selected="selected">1995</option>
+  <option value="1996">1996</option>
+  <option value="1997">1997</option>
+  <option value="1998">1998</option>
+  <option value="1999">1999</option>
+  <option value="2000">2000</option>
 </select>
-<select id="person_birth_date_2i" name="person[birth_date(2i)]">
+<select name="person[birth_date(2i)]" id="person_birth_date_2i">
+  <option value="1">January</option>
+  <option value="2">February</option>
+  <option value="3">March</option>
+  <option value="4">April</option>
+  <option value="5">May</option>
+  <option value="6">June</option>
+  <option value="7">July</option>
+  <option value="8">August</option>
+  <option value="9">September</option>
+  <option value="10">October</option>
+  <option value="11">November</option>
+  <option value="12" selected="selected">December</option>
 </select>
-<select id="person_birth_date_3i" name="person[birth_date(3i)]">
+<select name="person[birth_date(3i)]" id="person_birth_date_3i">
+  <option value="1">1</option>
+  ...
+  <option value="21" selected="selected">21</option>
+  ...
+  <option value="31">31</option>
 </select>
 ```
 
-que produz um hash `params`
+Observe que, quando o formulário for enviado, não haverá um único valor no _hash_ `params` que contenha a data completa. Em vez disso, haverá vários valores com nomes especiais como `"birth_date(1i) "`. O _Active Record_ sabe como reunir esses valores com nomes especiais em uma data ou hora completa, com base no tipo declarado do atributo do *model*. Portanto, podemos passar `params [:person]` para, por exemplo, `Person.new` ou `Person#update` exatamente como faríamos se o formulário usasse um único campo para representar a data completa.
 
-```ruby
-{'person' => {'birth_date(1i)' => '2008', 'birth_date(2i)' => '11', 'birth_date(3i)' => '22'}}
-```
+Além do auxiliar [`date_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-date_select), o Rails provê os auxiliares [`time_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-time_select) e [`datetime_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-datetime_select).
 
-Quando isso é passado para o `Person.new` (ou `update`), o *Active Record* mostra que todos esses parâmetros devem ser usados para construir o atributo `birth_date` e usa a informação no sufixo para determinar em que ordem deve passar esses parâmetros para funções como `Date.civil`.
+### Caixas de Sseleção (*Select Boxes*) para Componentes Indiduais de Tempo
 
-### Opções Frequentes
-
-Ambas familias de *helpers* usam o mesmo core de funções parar gerar as tags *select* individuais e ambas aceitam praticamente as mesmas opções. Em particular, por padrão o Rails gera opções de ano 5 anos em cada lado do ano atual. Se este intervalo não for suficiente, as opções `:start_year` e `:end_year` substituem esse intervalo. Para uma lista das opções completas disponível, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html).
-
-Como regra geral, você deve usar `date_select` ao trabalhar com objetos *model* e `select_date` em outros casos, como em um formulário de pesquisa que filtra resultados por data.
-
-### Componentes Individuais
-
-Ocasionalmente, você precisa exibir apenas um único componente de data, como um ano ou um mês. O Rails fornece uma série de *helpers* para isso, uma para cada componente `select_year`, `select_month`, `select_day`, `select_hour`, `select_minute`, `select_second`. Esses *helpers* são bastante diretos. Por padrão eles geram um campo de entrada com o nome do componente de tempo (por exemplo, *"year"* para `select_year`, *"month"* para `select_month` etc.) embora isso possa ser substituído com a opção  `:field_name`. A opção `:prefix` funciona da mesma maneira em que `select_date` e `select_time` com o mesmo valor padrão.
-
-O primeiro parâmetro especifica quais valores devem ser selecionados e pode ser uma instância de  `Date`, `Time`, ou `DateTime`, no caso em que o componente relevante irá ser extraído, ou um valor numérico. Por exemplo:
+O Rails também fornece auxiliares para renderizar caixas de seleção para componentes temporais individuais: [`select_year`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_year), [`select_month`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_month), [`select_day`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_day), [`select_hour`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_hour), [`select_minute`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_minute), and [`select_second`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_second). Esses auxiliares são métodos "básicos", o que significa que não são chamados em uma instância do construtor de formulários. Por exemplo: 
 
 ```erb
-<%= select_year(2009) %>
-<%= select_year(Time.new(2009)) %>
+<%= select_year 1999, prefix: "party" %>
 ```
 
-irá produzir o mesmo resultado e o valor escolhido pode ser retornado por `params[:date][:year]`.
+Cria uma caixa de seleção como essa:
+
+```html
+<select name="party[year]" id="party_year">
+  <option value="1994">1994</option>
+  <option value="1995">1995</option>
+  <option value="1996">1996</option>
+  <option value="1997">1997</option>
+  <option value="1998">1998</option>
+  <option value="1999" selected="selected">1999</option>
+  <option value="2000">2000</option>
+  <option value="2001">2001</option>
+  <option value="2002">2002</option>
+  <option value="2003">2003</option>
+  <option value="2004">2004</option>
+</select>
+```
+
+Para cada um desses auxiliares, você pode especificar um objeto de data ou hora em vez de um número como o valor padrão e o componente temporal apropriado será extraído e usado.
+
+Choices from a Collection of Arbitrary Objects
+----------------------------------------------
+
+Often, we want to generate a set of choices in a form from a collection of objects. For example, when we want the user to choose from cities in our database, and we have a `City` model like:
+
+```ruby
+City.order(:name).to_a
+# => [
+#      #<City id: 3, name: "Berlin">,
+#      #<City id: 1, name: "Chicago">,
+#      #<City id: 2, name: "Madrid">
+#    ]
+```
+
+Rails provides helpers that generate choices from a collection without having to explicitly iterate over it. These helpers determine the value and text label of each choice by calling specified methods on each object in the collection.
+
+### The `collection_select` Helper
+
+To generate a select box for our cities, we can use [`collection_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select):
+
+```erb
+<%= form.collection_select :city_id, City.order(:name), :id, :name %>
+```
+
+Output:
+
+```html
+<select name="city_id" id="city_id">
+  <option value="3">Berlin</option>
+  <option value="1">Chicago</option>
+  <option value="2">Madrid</option>
+</select>
+```
+
+NOTE: With `collection_select` we specify the value method first (`:id` in the example above), and the text label method second (`:name` in the example above).  This is opposite of the order used when specifying choices for the `select` helper, where the text label comes first and the value second.
+
+### The `collection_radio_buttons` Helper
+
+To generate a set of radio buttons for our cities, we can use [`collection_radio_buttons`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons):
+
+```erb
+<%= form.collection_radio_buttons :city_id, City.order(:name), :id, :name %>
+```
+
+Output:
+
+```html
+<input type="radio" name="city_id" value="3" id="city_id_3">
+<label for="city_id_3">Berlin</label>
+<input type="radio" name="city_id" value="1" id="city_id_1">
+<label for="city_id_1">Chicago</label>
+<input type="radio" name="city_id" value="2" id="city_id_2">
+<label for="city_id_2">Madrid</label>
+```
+
+### The `collection_check_boxes` Helper
+
+To generate a set of check boxes for our cities (which allows users to choose more than one), we can use [`collection_check_boxes`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_check_boxes):
+
+```erb
+<%= form.collection_check_boxes :city_id, City.order(:name), :id, :name %>
+```
+
+Output:
+
+```html
+<input type="checkbox" name="city_id[]" value="3" id="city_id_3">
+<label for="city_id_3">Berlin</label>
+<input type="checkbox" name="city_id[]" value="1" id="city_id_1">
+<label for="city_id_1">Chicago</label>
+<input type="checkbox" name="city_id[]" value="2" id="city_id_2">
+<label for="city_id_2">Madrid</label>
+```
 
 Enviando Arquivos
 ---------------
 
-Uma tarefa muito comum é fazer o envio de arquivos, seja a imagem de uma pessoa ou um arquivo CSV contendo dados a serem processados. O mais importante a se lembrar quando se faz envio de arquivos é que o atributo `enctype` do formulário renderizado **deve** ser "multipart/form-data". Se você usar `form_with` com `:model`, isso é feito automaticamente. Se você usar `form_with` sem `:model`, você deve colocar manualmente, assim como no exemplo a seguir.
-
-Ambos formulários a seguir realizam o envio de um arquivo.
+Uma tarefa muito comum é fazer o envio de arquivos, seja a imagem de uma pessoa ou um arquivo CSV contendo dados a serem processados. Campos para upload de arquivos podem ser renderizados com o auxiliar [`file_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field). O mais importante a se lembrar quando se faz envio de arquivos é que o atributo `enctype` do formulário renderizado **deve** ser "multipart/form-data". Se você usar `form_with` com `:model`, isso é feito automaticamente:
 
 ```erb
-<%= form_with(url: {action: :upload}, multipart: true) do %>
-  <%= file_field_tag 'picture' %>
-<% end %>
-
-<%= form_with model: @person do |f| %>
-  <%= f.file_field :picture %>
+<%= form_with model: @person do |form| %>
+  <%= form.file_field :picture %>
 <% end %>
 ```
 
-O Rails já disponibiliza dois *helpers*: o simples `file_field_tag` e o orientado a *model* `file_field`. No primeiro caso, o arquivo enviado está no `params[:picture]` e no segundo está em `params[:person][:picture]`, assim como esperado.
+Se você usar `form_with` sem o `:model`, você deve preencher os campos:
+
+```erb
+<%= form_with url: "/uploads", multipart: true do |form| %>
+  <%= form.file_field :picture %>
+<% end %>
+```
+
+Observe que, de acordo com as convenções do `form_with`, os nomes dos campos nas duas formas acima também serão diferentes. Ou seja, o nome do campo no primeiro formulário será `person[picture]` (acessível via `params[:person][:picture]`), e o nome do campo no segundo formulário será apenas `picture` (acessível via `params[:picture]`).
 
 ### O que é enviado
 
@@ -647,16 +648,16 @@ Enquanto você pode escrever *helpers* para seus formulários da forma usual, vo
 de `ActionView::Helpers::FormBuilder` e adicionar os *helpers* lá. Por exemplo:
 
 ```erb
-<%= form_with model: @person do |f| %>
-  <%= text_field_with_label f, :first_name %>
+<%= form_with model: @person do |form| %>
+  <%= text_field_with_label form, :first_name %>
 <% end %>
 ```
 
 pode ser substituído por
 
 ```erb
-<%= form_with model: @person, builder: LabellingFormBuilder do |f| %>
-  <%= f.text_field :first_name %>
+<%= form_with model: @person, builder: LabellingFormBuilder do |form| %>
+  <%= form.text_field :first_name %>
 <% end %>
 ```
 
@@ -725,7 +726,7 @@ resultará no *hash* `params` como
 {'person' => {'address' => {'city' => 'New York'}}}
 ```
 
-Normalmente o Rails ignora nomes de parâmetros duplicados. Se o parâmetro *name* contém um conjunto vazio de colchetes `[]` então eles serão acumulados em um *array*. Se você queria que os usuários pudessem informar vários números de telefone, você poderia colocar isto no formulário:
+Normalmente o Rails ignora nomes de parâmetros duplicados. Se o parâmetro *name* termina em um conjunto vazio de colchetes `[]` então eles serão acumulados em um *array*. Se você queria que os usuários pudessem informar vários números de telefone, você poderia colocar isto no formulário:
 
 ```html
 <input name="person[phone_number][]" type="text"/>
@@ -754,10 +755,9 @@ Porém, há uma restrição. Enquanto os *hashes* podem ser aninhados de forma a
 
 WARNING: Parâmetros de *array* não funcionam bem com o *helper* `check_box`. De acordo com a especificação HTML *checkboxes* desmarcadas não enviam nenhum valor. Porém pode ser conveniente fazer com que uma *checkbox* sempre envie um valor. O *helper* `check_box` simula isto ao criar um *input* auxiliar com o mesmo nome. Se a *checkbox* estiver desmarcada apenas o *input* escondido será enviado e se estiver marcada então os dois serão enviados mas o valor da *checkbox* recebe uma prioridade maior.
 
-### Utilizando *Form Helpers*
+### Utilizando o auxiliar `fields_for` Helper
 
-As seções anteriores não utilizavam os *form helpers* do Rails de maneira alguma. Embora você possa criar os nomes de *input* por conta própria e passá-los diretamente para *helpers* como `text_field_tag`, o Rails também fornece suporte em um nível maior. As duas ferramentas à sua disposição aqui são o nome de parâmetro para `form_with` e `fields_for` e a opção `:index` que os *helpers* recebem.
-
+Digamos que queremos renderizar um formulário com um conjunto de campos para cada endereço de uma pessoa. O auxiliar `fields_for` e seu argumento`: index` podem ajudar com isso:
 Você pode querer renderizar um formulário com um conjunto de campos de edição pra cada *address* de uma `person`. Por exemplo:
 
 ```erb
@@ -774,7 +774,7 @@ Você pode querer renderizar um formulário com um conjunto de campos de ediçã
 Presumindo que a pessoa (person) tenha dois endereços (addresses), com *ids* 23 e 45 isto trará um resultado similar a este:
 
 ```html
-<form accept-charset="UTF-8" action="/people/1" data-remote="true" method="post">
+<form accept-charset="UTF-8" action="/people/1" method="post">
   <input name="_method" type="hidden" value="patch" />
   <input id="person_name" name="person[name]" type="text" />
   <input id="person_address_23_city" name="person[address][23][city]" type="text" />
@@ -847,7 +847,7 @@ Many apps grow beyond simple forms editing a single object. For example, when cr
 
 ### Configuring the Model
 
-Active Record provides model level support via the `accepts_nested_attributes_for` method:
+Active Record provides model level support via the [`accepts_nested_attributes_for`](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for) method:
 
 ```ruby
 class Person < ApplicationRecord
@@ -867,10 +867,10 @@ This creates an `addresses_attributes=` method on `Person` that allows you to cr
 The following form allows a user to create a `Person` and its associated addresses.
 
 ```html+erb
-<%= form_with model: @person do |f| %>
+<%= form_with model: @person do |form| %>
   Addresses:
   <ul>
-    <%= f.fields_for :addresses do |addresses_form| %>
+    <%= form_with model: @person do |f| %>
       <li>
         <%= addresses_form.label :kind %>
         <%= addresses_form.text_field :kind %>
@@ -950,14 +950,14 @@ end
 ```
 
 If the hash of attributes for an object contains the key `_destroy` with a value that
-evaluates to `true` (eg. 1, '1', true, or 'true') then the object will be destroyed.
+evaluates to `true` (e.g. 1, '1', true, or 'true') then the object will be destroyed.
 This form allows users to remove addresses:
 
 ```erb
-<%= form_with model: @person do |f| %>
+<%= form_with model: @person do |form| %>
   Addresses:
   <ul>
-    <%= f.fields_for :addresses do |addresses_form| %>
+    <%= form.fields_for :addresses do |addresses_form| %>
       <li>
         <%= addresses_form.check_box :_destroy %>
         <%= addresses_form.label :kind %>
@@ -996,7 +996,24 @@ As a convenience you can instead pass the symbol `:all_blank` which will create 
 
 Rather than rendering multiple sets of fields ahead of time you may wish to add them only when a user clicks on an 'Add new address' button. Rails does not provide any built-in support for this. When generating new sets of fields you must ensure the key of the associated array is unique - the current JavaScript date (milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time)) is a common choice.
 
+Using Tag Helpers Without a Form Builder
+----------------------------------------
+
+In case you need to render form fields outside of the context of a form builder, Rails provides tag helpers for common form elements. For example, [`check_box_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-check_box_tag):
+
+```erb
+<%= check_box_tag "accept" %>
+```
+
+Output:
+
+```html
+<input type="checkbox" name="accept" id="accept" value="1" />
+```
+
+Generally, these helpers have the same name as their form builder counterparts plus a `_tag` suffix.  For a complete list, see the [`FormTagHelper` API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
+
 Usando `form_for` e `form_tag`
 ---------------------------
 
-Antes do `form_with` ser introduzido no Rails 5.1 sua funcionalidade costumava ser divida entre `form_tag` e `form_for`. Ambos estão agora depreciados (_soft-deprecated_). A documentação sobre seu uso pode ser encontrada na [versão antiga deste guia](https://guides.rubyonrails.org/v5.2/form_helpers.html).
+Antes do `form_with` ser introduzido no Rails 5.1 sua funcionalidade costumava ser divida entre [`form_tag`](https://api.rubyonrails.org/v5.2/classes/ActionView/Helpers/FormTagHelper.html#method-i-form_tag) e [`form_for`](https://api.rubyonrails.org/v5.2/classes/ActionView/Helpers/FormHelper.html#method-i-form_for). Ambos estão agora depreciados (_soft-deprecated_). A documentação sobre seu uso pode ser encontrada na [versão antiga deste guia](https://guides.rubyonrails.org/v5.2/form_helpers.html).
