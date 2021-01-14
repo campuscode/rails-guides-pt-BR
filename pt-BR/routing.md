@@ -99,9 +99,10 @@ Roteando _Resources_ (Recursos): O padrão do Rails
 -----------------------------------
 
 O roteamento de _resources_ permite que você rapidamente declare todas as rotas
-comuns para um _controller_. Em contrapartida a declarar cada uma das rotas
-das _actions_ `index`, `show`, `new`, `edit`, `create`, `update` e `destroy`,
-uma rota de _resources_ declara todas elas em uma única linha de código.
+comuns para um _controller_. Uma chamada única para [`resources`][] pode declarar todas as rotas
+necessárias para as _actions_ `index`, `show`, `new`, `edit`, `create`, `update` e `destroy`.
+
+[`resources`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources
 
 ### _Resources_ na Web
 
@@ -225,7 +226,7 @@ Assim como com _resources_ no plural, os mesmos _helpers_ que terminam com `_url
 
 ### Controller Namespaces e Routing
 
-Você pode querer organizar grupos de _controllers_ em um _namespace_. Mais comumente, você pode querer agrupar _controllers_ administrativos sob um _namespace_ `Admin::`. Você deverá por esses _controllers_ sob o diretório `app/controllers/admin`, e você pode agrupá-los em um _router_:
+Você pode querer organizar grupos de _controllers_ em um _namespace_. Mais comumente, você pode querer agrupar _controllers_ administrativos sob um _namespace_ `Admin::`, colocar esses _controllers_ no diretório `app/controllers/admin`. Você pode agrupar _routes_ como um grupo usando o bloco [`namespace`][]:
 
 ```ruby
 namespace :admin do
@@ -245,7 +246,7 @@ Isto criará um número de rotas para cada _controller_ de `articles` e `comment
 | PATCH/PUT  | /admin/articles/:id      | admin/articles#update  | admin_article_path(:id)      |
 | DELETE     | /admin/articles/:id      | admin/articles#destroy | admin_article_path(:id)      |
 
-Se você quiser rotear `/articles` (sem o prefixo `/admin`) para `Admin::ArticlesController`, você poderia usar:
+Se ao invés você quiser rotear `/articles` (sem o prefixo `/admin`) para `Admin::ArticlesController`, você poderia especificar um *module* com um bloco [`scope`][]:
 
 ```ruby
 scope module: 'admin' do
@@ -253,20 +254,20 @@ scope module: 'admin' do
 end
 ```
 
-ou, para um único caso:
+Isso também pode ser feito para uma única rota:
 
 ```ruby
 resources :articles, module: 'admin'
 ```
 
-Se você quiser rotear `/admin/articles` para `ArticlesController` (Sem o prefixo do modulo `Admin::`), você poderia usar:
+Se ao invés você quiser rotear `/admin/articles` para `ArticlesController` (Sem o prefixo do modulo `Admin::`), você poderia especificar o caminho usando um bloco `scope`:
 
 ```ruby
 scope '/admin' do
   resources :articles, :comments
 end
 ```
-ou, para um único caso:
+Isso também pode ser feito para uma única rota:
 
 ```ruby
 resources :articles, path: '/admin/articles'
@@ -283,7 +284,11 @@ Em cada um desses casos, a rota nomeada continua a mesma, como se você não tiv
 | GET        | /admin/articles/:id/edit | articles#edit        | edit_article_path(:id) |
 | PATCH/PUT  | /admin/articles/:id      | articles#update      | article_path(:id)      |
 | DELETE     | /admin/articles/:id      | articles#destroy     | article_path(:id)      |
+
 TIP: Se você precisar usar um _namespace_ de _controller_ diferente dentro de um bloco `namespace` você pode especificar um _path_ absoluto de _controller_, e.g: `get '/foo', to: '/foo#index'`.
+
+[`namespace`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-namespace
+[`scope`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-scope
 
 ### Nested Resources (Recursos Aninhados)
 
@@ -427,9 +432,9 @@ O _resource_ _comments_ aqui terá gerado as seguintes rotas para si:
 | PATCH/PUT | /comments/:id(.:format)                      | comments#update   | sekret_comment_path         |
 | DELETE    | /comments/:id(.:format)                      | comments#destroy  | sekret_comment_path         |
 
-### Roteamento com método concerns
+### Roteamento com método *Concerns*
 
-Roteamento com método concerns permitem você declarar rotas comuns que podem ser reutilizadas dentro de outros _resources_ e rotas. Para definir um _concern_:
+Roteamento com método concerns permitem você declarar rotas comuns que podem ser reutilizadas dentro de outros _resources_ e rotas. Para definir um _concern_, use um bloco [`concern`][]:
 
 ```ruby
 concern :commentable do
@@ -462,13 +467,16 @@ resources :articles do
 end
 ```
 
-Além disso você pode usá-los em qualquer lugar que você quiser dentro das rotas, por exemplo, em uma chamada `scope` ou `namespace`:
+Além disso você pode usá-los em qualquer lugar que você quiser chamando [`concerns`][]. Por exemplo, em um bloco de `scope` ou `namespace`:
 
 ```ruby
 namespace :articles do
   concerns :commentable
 end
 ```
+
+[`concern`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Concerns.html#method-i-concern
+[`concerns`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Concerns.html#method-i-concerns
 
 ### Criando Paths e URLs de Objetos
 
@@ -518,7 +526,7 @@ Você não esta limitado as sete rotas que o _RESTful routing_ cria por padrão.
 
 #### Adicionando Rotas de Membros
 
-Para adicionar uma rota para um membro, apenas adicione um bloco `member` em um bloco de _resource_:
+Para adicionar uma rota para um membro, apenas adicione um bloco [`member`][] em um bloco de _resource_:
 
 ```ruby
 resources :photos do
@@ -530,8 +538,8 @@ end
 Isso vai reconhecer `/photos/1/preview` com GET, e rotear para a _action_ `preview` de `PhotosController`, com o valor do _resource id_  passado em `params[:id]`. Isso vai tambem criar os _helpers_ `preview_photo_url` e `preview_photo_path`.
 
 Dentro do bloco de rotas para membros, cada nome de rota especifica o verbo HTTP
-que vai ser reconhecido. Você pode usar `get`, `patch`, `put`, `post` ou
-`delete` aqui. Se você não tiver múltiplas rotas para membros, você pode também
+que vai ser reconhecido. Você pode usar [`get`][], [`patch`][], [`put`][], [`post`][] ou
+[`delete`][] aqui. Se você não tiver múltiplas rotas para membros, você pode também
 passar `:on` para a rota, eliminando o bloco:
 
 ```ruby
@@ -542,9 +550,17 @@ end
 
 Você pode deixar fora a opção `:on`, isso vai criar o mesmo _member route_ exceto que o valor do _resource id_ estará disponível em `params[:photo_id]` ao invés de `params[:id]`. _Helpers_ de rota tambem serão renomeados de `preview_photo_url` para `photo_preview_url` e `photo_preview_path`.
 
+[`delete`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-delete
+[`get`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-get
+[`member`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-member
+[`patch`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-patch
+[`post`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-post
+[`put`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-put
+[`put`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/HttpHelpers.html#method-i-put
+
 #### Adicionando Collection Routes
 
-Para adicionar uma rota para uma coleção:
+Para adicionar uma rota para uma coleção, use um bloco [`collection`][]:
 
 ```ruby
 resources :photos do
@@ -565,6 +581,8 @@ end
 ```
 
 NOTE: Se vocês estão definindo rotas de _resource_ adicionais com um _symbol_ como o primeiro argumento posicional, tenha em mente que não é igual a usar uma _string_. _Symbols_ inferem _actions_ do _controller_ enquanto _strings_ inferem _paths_.
+
+[`collection`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-collection
 
 #### Adicionando Rotas para Novas Actions Adicionais
 
@@ -613,7 +631,7 @@ TIP: Por padrão, os segmentos dinâmicos não aceitam pontos - isso ocorre porq
 
 ### Segmentos Estáticos
 
-Você pode especificar segmentos estáticos ao criar uma rota somente não acrescentando dois pontos a um fragmento:
+Você pode especificar segmentos estáticos ao criar uma rota somente não acrescentando dois pontos a um segmento:
 
 ```ruby
 get 'photos/:id/with_user/:user_id', to: 'photos#show'
@@ -641,7 +659,7 @@ get 'photos/:id', to: 'photos#show', defaults: { format: 'jpg' }
 
 O Rails corresponderia `photos/12` com a *action* `show` do `PhotosController` e definiria `params[:format]` como `"jpg"`.
 
-Você também pode usar `defaults` em um formato de bloco para definir os padrões para múltiplos itens:
+Você também pode usar [`defaults`][] em um formato de bloco para definir os padrões para múltiplos itens:
 
 ```ruby
 defaults format: :json do
@@ -650,6 +668,8 @@ end
 ```
 
 NOTE: Você não pode substituir os padrões via *query parameters* por motivos de segurança. Os únicos padrões que podem ser substituídos são segmentos dinâmicos via substituição no caminho da URL.
+
+[`defaults`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-defaults
 
 ### Nomeando Rotas
 
@@ -661,17 +681,18 @@ get 'exit', to: 'sessions#destroy', as: :logout
 
 Isso criará `logout_path` e `logout_url` como *helpers* de rota em sua aplicação. Chamar `logout_path` retornará `/exit`.
 
-Você também pode usar isso para substituir os métodos de roteamento definidos pelos *resources*, como este:
+Você também pode usar isso para substituir os métodos de roteamento definidos pelos *resources* usando rotas customizadas antes do *resource* ser definido, da seguinte forma:
 
 ```ruby
 get ':username', to: 'users#show', as: :user
+resources :users
 ```
 
 Isso definirá um método `user_path` que estará disponível em *controllers*, *helpers* e *views* que irão para uma rota como `/bob`. Dentro da *action* `show` do `UsersController`, `params[:username]` conterá o nome do usuário. Altere `:username` na definição da rota se você não quiser que o nome do seu parâmetro seja `:username`.
 
 ### Restringindo Verbos HTTP
 
-Em geral, você deve usar os métodos `get`, `post`, `put`, `patch` e `delete` para restringir uma rota a um verbo específico. Você pode usar o método `match` com a opção `:via` para combinar vários verbos ao mesmo tempo:
+Em geral, você deve usar os métodos [`get`][], [`post`][], [`put`][], [`patch`][] e [`delete`][] para restringir uma rota a um verbo específico. Você pode usar o método [`match`][] com a opção `:via` para combinar vários verbos ao mesmo tempo:
 
 ```ruby
 match 'photos', to: 'photos#show', via: [:get, :post]
@@ -686,6 +707,8 @@ match 'photos', to: 'photos#show', via: :all
 NOTE: Rotear solicitações `GET` e `POST` para uma única *action* tem implicações de segurança. Em geral, você deve evitar rotear todos os verbos para uma *action*, a menos que tenha um bom motivo.
 
 NOTE: `GET` no Rails não verificará o token CSRF. Você nunca deve escrever no banco de dados a partir de solicitações `GET`, para obter mais informações, consulte o [guia de segurança](security.html#csrf-countermeasures) para contramedidas CSRF.
+
+[`match`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Base.html#method-i-match
 
 ### Restrições de Segmento
 
@@ -707,7 +730,7 @@ get 'photos/:id', to: 'photos#show', id: /[A-Z]\d{5}/
 get '/:id', to: 'articles#show', constraints: { id: /^\d/ }
 ```
 
-No entanto, note que você não precisa usar âncoras porque todas as rotas estão ancoradas no início.
+No entanto, note que você não precisa usar âncoras porque todas as rotas estão ancoradas no início e no fim.
 
 Por exemplo, as rotas a seguir permitiriam `articles` com valores `to_param` como `1-hello-world` que sempre começam com um número e `users` com valores `to_param` como `david` que nunca começam com um número compartilhem o mesmo *namespace* raiz:
 
@@ -726,7 +749,7 @@ Você especifica uma restrição baseada em requisições da mesma maneira que e
 get 'photos', to: 'photos#index', constraints: { subdomain: 'admin' }
 ```
 
-Você também pode especificar restrições usando blocos:
+Você também pode especificar restrições usando blocos de [`constraints`][]:
 
 ```ruby
 namespace :admin do
@@ -736,9 +759,11 @@ namespace :admin do
 end
 ```
 
-NOTE: As restrições de requisição funcionam chamando um método no [Objeto `request`](action_controller_overview.html#o-objeto-request) com o mesmo nome que a chave de hash e, em seguida, compara o valor retornado com o valor de hash. Portanto, os valores de restrição devem corresponder ao tipo de retorno do método no objeto `request` correspondente. Por exemplo: `constraints: { subdomain: 'api' }` corresponderá a um subdomínio `api` conforme o esperado, no entanto, o uso de um símbolo `constraints: { subdomain: :api }` não será, porque `request.subdomain` retorna `'api'` como uma *String*.
+NOTE: As restrições de requisição funcionam chamando um método no [Objeto `request`](action_controller_overview.html#o-objeto-request) com o mesmo nome que a chave de hash e, em seguida, compara o valor retornado com o valor de hash. Portanto, os valores de restrição devem corresponder ao tipo de retorno do método no objeto `request` correspondente. Por exemplo: `constraints: { subdomain: 'api' }` corresponderá a um subdomínio `api` conforme o esperado. No entanto, o uso de um símbolo `constraints: { subdomain: :api }` não será, porque `request.subdomain` retorna `'api'` como uma *String*.
 
 NOTE: Há uma exceção para a restrição `format`: embora seja um método no objeto `request`, também é um parâmetro opcional implícito em todos os endereços. Restrições de segmento têm precedência e a restrição de `format` só é aplicada quando através de um hash. Por exemplo, `get 'foo', constraints: { format: 'json' }` corresponderão a `GET /foo` porque o formato é opcional por padrão. No entanto, você pode [usar uma expressão lambda](#restricoes-avancadas) como em `get 'foo', constraints: lambda { |req| req.format == :json }` assim a rota corresponderá apenas a requisições JSON explícitas.
+
+[`constraints`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Scoping.html#method-i-constraints
 
 ### Restrições Avançadas
 
@@ -772,6 +797,34 @@ end
 
 Tanto o método `matches?` quanto a lambda usam o objeto `request` como argumento.
 
+#### *Constraints* em forma de bloco
+
+Você pode especificar restrições em forma de bloco. Isso é útil quando você precisa aplicar a mesma regra a várias rotas. Por exemplo
+
+```
+class RestrictedListConstraint
+  # ...Same as the example above
+end
+
+Rails.application.routes.draw do
+  constraints(RestrictedListConstraint.new) do
+    get '*path', to: 'restricted_list#index',
+    get '*other-path', to: 'other_restricted_list#index',
+  end
+end
+```
+
+Você também pode usar `lambda`:
+
+```
+Rails.application.routes.draw do
+  constraints(lambda { |request| RestrictedList.retrieve_ips.include?(request.remote_ip) }) do
+    get '*path', to: 'restricted_list#index',
+    get '*other-path', to: 'other_restricted_list#index',
+  end
+end
+```
+
 ### Rotas Englobadas (*Glob*) e Segmentos Curinga
 
 O englobamento de rota é uma maneira de especificar que um parâmetro em particular deve corresponder a todas as partes restantes de uma rota. Por exemplo:
@@ -780,7 +833,7 @@ O englobamento de rota é uma maneira de especificar que um parâmetro em partic
 get 'photos/*other', to: 'photos#unknown'
 ```
 
-Esta rota irá corresponder a `photos/12` ou `/photos/long/path/to/12`, definindo `params[:other]` como `"12"` ou `"long/path/to/12"`. Os fragmentos prefixados com um asterisco são chamados de "segmentos curinga".
+Esta rota irá corresponder a `photos/12` ou `/photos/long/path/to/12`, definindo `params[:other]` como `"12"` ou `"long/path/to/12"`. Os segmentos prefixados com um asterisco são chamados de "segmentos curinga".
 
 Segmentos curinga podem ocorrer em qualquer lugar da rota. Por exemplo:
 
@@ -812,7 +865,7 @@ get '*pages', to: 'pages#show', format: true
 
 ### Redirecionamento
 
-Você pode redirecionar qualquer rota para outra usando o auxiliar `redirect` no seu roteador:
+Você pode redirecionar qualquer rota para outra usando o auxiliar [`redirect`][] no seu roteador:
 
 ```ruby
 get '/stories', to: redirect('/articles')
@@ -840,6 +893,8 @@ get '/stories/:name', to: redirect('/articles/%{name}', status: 302)
 
 Em todos esses casos, se você não fornecer o host principal (`http://www.example.com`), o Rails obterá esses detalhes da requisição atual.
 
+[`redirect`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Redirection.html#method-i-redirect
+
 ### Roteamento para Aplicações Rack
 
 Em vez de uma String como `'articles#index'`, que corresponde à *action* `index` no `ArticlesController`, você pode especificar qualquer [aplicação Rack](rails_on_rack.html) como o *endpoint*:
@@ -861,15 +916,17 @@ match '/admin', to: AdminApp, via: :all
 ```
 
 Se você preferir que sua aplicação Rack receba requisições no *root
-path* em vez disso, use `mount`:
+path* em vez disso, use [`mount`][]:
 
 ```ruby
 mount AdminApp, at: '/admin'
 ```
 
+[`mount`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Base.html#method-i-mount
+
 ### Usando `root`
 
-Você pode especificar para onde o Rails deve rotear `'/'` com o método `root`:
+Você pode especificar para onde o Rails deve rotear `'/'` com o método [`root`][]:
 
 ```ruby
 root to: 'pages#main'
@@ -890,6 +947,8 @@ end
 root to: "home#index"
 ```
 
+[`root`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-root
+
 ### Rotas com Caracteres Unicode
 
 Você pode especificar rotas de caracteres unicode diretamente. Por exemplo:
@@ -898,9 +957,9 @@ Você pode especificar rotas de caracteres unicode diretamente. Por exemplo:
 get 'こんにちは', to: 'welcome#index'
 ```
 
-### Rotas diretas
+### Rotas Diretas
 
-Você pode criar *URL helpers* personalizados diretamente. Por exemplo:
+Você pode criar *URL helpers* personalizados diretamente chamando [`direct`][]. Por exemplo:
 
 ```ruby
 direct :homepage do
@@ -923,9 +982,11 @@ direct :main do
 end
 ```
 
+[`direct`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/CustomUrls.html#method-i-direct
+
 ### Usando `resolve`
 
-O método `resolve` permite personalizar o mapeamento polimórfico de *models*. Por exemplo:
+O método [`resolve`][] permite personalizar o mapeamento polimórfico de *models*. Por exemplo:
 
 ``` ruby
 resource :basket
@@ -934,17 +995,19 @@ resolve("Basket") { [:basket] }
 ```
 
 ```erb
-<%= form_for @basket do |form| %>
+<%= form_with model: @basket do |form| %>
   <!-- basket form -->
 <% end %>
 ```
 
 Isso irá gerar uma URL singular `/basket` ​​em vez da habitual `/baskets/:id`.
 
+[`resolve`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/CustomUrls.html#method-i-resolve
+
 Customizando Rotas com Recursos
 ------------------------------
 
-Enquanto as rotas padrão e *helpers* gerados por `resources :articles` normalmente atendem a maior parte dos casos de uso, você pode querer customizá-los de alguma forma. O Rails lhe permite customizar virtualmente qualquer parte genérica dos *helpers* de recursos.
+Enquanto as rotas padrões e *helpers* gerados por [`resources`][] normalmente atendem a maior parte dos casos de uso, você pode querer customizá-los de alguma forma. O Rails lhe permite customizar virtualmente qualquer parte genérica dos *helpers* de recursos.
 
 ### Especificando um *Controller* para Usar
 
@@ -1131,13 +1194,15 @@ O Rails agora cria rotas para o `CategoriesController`.
 
 ### Sobrescrevendo a Forma Singular
 
-Se você quer definir a forma singular de um recurso, você deve colocar regras adicionais para o `Inflector`:
+Se você quer definir a forma singular de um recurso, você deve colocar regras adicionais para o `Inflector` via [`inflections`][]:
 
 ```ruby
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'tooth', 'teeth'
 end
 ```
+
+[`inflections`]: https://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-inflections
 
 ### Usando `:as` em Recursos Aninhados
 
@@ -1170,7 +1235,7 @@ edit_video GET  /videos/:identifier/edit(.:format) videos#edit
 Video.find_by(identifier: params[:identifier])
 ```
 
-Você pode sobrescrever `ActiveRecord::Base#to_param` de um *model* relacionado para construir a URL:
+Você pode sobrescrever `ActiveRecord::Base#to_param` de um *model* associado para construir a URL:
 
 ```ruby
 class Video < ApplicationRecord
@@ -1183,6 +1248,44 @@ video = Video.find_by(identifier: "Roman-Holiday")
 edit_video_path(video) # => "/videos/Roman-Holiday/edit"
 ```
 
+Breaking up *very* large route file into multiple small ones:
+-------------------------------------------------------
+
+If you work in a large application with thousands of routes,
+a single `config/routes.rb` file can become cumbersome and hard to read.
+
+Rails offers a way to break a gigantic single `routes.rb` file into multiple small ones using the [`draw`][] macro.
+
+```ruby
+# config/routes.rb
+
+Rails.application.routes.draw do
+  get 'foo', to: 'foo#bar'
+
+  draw(:admin) # Will load another route file located in `config/routes/admin.rb`
+end
+
+# config/routes/admin.rb
+
+namespace :admin do
+  resources :comments
+end
+```
+
+Calling `draw(:admin)` inside the `Rails.application.routes.draw` block itself will try to load a route
+file that has the same name as the argument given (`admin.rb` in this case).
+The file needs to be located inside the `config/routes` directory or any sub-directory (i.e. `config/routes/admin.rb` or `config/routes/external/admin.rb`).
+
+You can use the normal routing DSL inside the `admin.rb` routing file, **however** you shouldn't surround it with the `Rails.application.routes.draw` block like you did in the main `config/routes.rb` file.
+
+[`draw`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-draw
+
+### When to use and not use this feature
+
+Drawing routes from external files can be very useful to organise a large set of routes into multiple organised ones. You could have a `admin.rb` route that contains all the routes for the admin area, another `api.rb` file to route API related resources etc...
+
+However, you shouldn't abuse this feature as having too many route files make discoverability and understandability more difficult. Depending on the application, it might be easier for developers to have a single routing file even if you have few hundreds routes. You shouldn't try to create a new routing file for each category (admin, api ...) at all cost; the Rails routing DSL already offers a way to break routes in a organised manner with `namespaces` and `scopes`.
+
 Inspecionando e Testando Rotas
 -----------------------------
 
@@ -1190,7 +1293,7 @@ Rails oferece recursos para inspecionar e testar suas rotas.
 
 ### Listando Rotas Existentes
 
-Para obter uma lista completa de rotas disponíveis na sua aplicação, visite `http://localhost:3000/rails/info/routes` no browser quando o servidor estiver rodando em ambiente de desenvolvimento. Você pode também executar o comando `rails routes` no terminal para reproduzir o mesmo resultado.
+Para obter uma lista completa de rotas disponíveis na sua aplicação, visite `http://localhost:3000/rails/info/routes` no browser quando o servidor estiver rodando em ambiente de desenvolvimento. Você pode também executar o comando `bin/rails routes` no terminal para reproduzir o mesmo resultado.
 
 Ambos os métodos irão listas todas suas rotas, na mesma ordem que aparece em `config/routes.rb`. Para cada rota, você irá ver:
 
@@ -1199,7 +1302,7 @@ Ambos os métodos irão listas todas suas rotas, na mesma ordem que aparece em `
 * O padrão ao qual a URL deve corresponder
 * Os parâmetros para a cada rota
 
-Por exemplo, segue uma pequena parte da resposta `rails routes` para uma rota RESTful:
+Por exemplo, segue uma pequena parte da resposta `bin/rails routes` para uma rota RESTful:
 
 ```
     users GET    /users(.:format)          users#index
@@ -1210,8 +1313,8 @@ edit_user GET    /users/:id/edit(.:format) users#edit
 
 Você pode também utilizar a opção `--expanded` para ativar o modo de formatação por tabela expandida.
 
-```
-$ rails routes --expanded
+```bash
+$ bin/rails routes --expanded
 
 --[ Route 1 ]----------------------------------------------------
 Prefix            | users
@@ -1237,34 +1340,38 @@ Controller#Action | users#edit
 
 Você pode procurar por rotas utilizando a opção grep: -g. Isso resulta qualquer rota que corresponda parcialmente ao nome do método da URL, o verbo HTTP, ou a URL.
 
-```
-$ rails routes -g new_comment
-$ rails routes -g POST
-$ rails routes -g admin
+```bash
+$ bin/rails routes -g new_comment
+$ bin/rails routes -g POST
+$ bin/rails routes -g admin
 ```
 
 Se você quiser ver somente as rotas que mapeiam um controller especifico, existe a opção `-c`.
 
-```
-$ rails routes -c users
-$ rails routes -c admin/users
-$ rails routes -c Comments
-$ rails routes -c Articles::CommentsController
+```bash
+$ bin/rails routes -c users
+$ bin/rails routes -c admin/users
+$ bin/rails routes -c Comments
+$ bin/rails routes -c Articles::CommentsController
 ```
 
-TIP: O resultado do comando `rails routes` fica muito mais legível se você ampliar a janela do seu terminal até que não haja quebra de linha.
+TIP: O resultado do comando `bin/rails routes` fica muito mais legível se você ampliar a janela do seu terminal até que não haja quebra de linha.
 
 ### Testando Rotas
 
-Rotas deveriam ser incluidas na sua estratégia de testes (assim como resto da sua aplicação). Rails oferece três [validações nativas](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html) desenvolvidas para fazer os testes de rotas mais simples:
+Rotas deveriam ser incluidas na sua estratégia de testes (assim como resto da sua aplicação). Rails oferece três validações nativas desenvolvidas para fazer os testes de rotas mais simples:
 
-* `assert_generates`
-* `assert_recognizes`
-* `assert_routing`
+* [`assert_generates`][]
+* [`assert_recognizes`][]
+* [`assert_routing`][]
+
+[`assert_generates`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates
+[`assert_recognizes`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes
+[`assert_routing`]: https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_routing
 
 #### A validação `assert_generates`
 
-`assert_generates` valida que um conjunto de opções em particular gera um caminho equivalente que pode ser usar com rota padrão ou rota customizada. Por exemplo:
+[`assert_generates`][] valida que um conjunto de opções em particular gera um caminho equivalente que pode ser usar com rota padrão ou rota customizada. Por exemplo:
 
 ```ruby
 assert_generates '/photos/1', { controller: 'photos', action: 'show', id: '1' }
@@ -1273,7 +1380,7 @@ assert_generates '/about', controller: 'pages', action: 'about'
 
 #### A validação `assert_recognizes`
 
-`assert_recognizes` é o inverso de `assert_generates`. Valida que um dado caminho é reconhecido e roteia-o a um lugar determinado na sua aplicação. Por exemplo:
+[`assert_recognizes`][] é o inverso de `assert_generates`. Valida que um dado caminho é reconhecido e roteia-o a um lugar determinado na sua aplicação. Por exemplo:
 
 ```ruby
 assert_recognizes({ controller: 'photos', action: 'show', id: '1' }, '/photos/1')
@@ -1287,7 +1394,7 @@ assert_recognizes({ controller: 'photos', action: 'create' }, { path: 'photos', 
 
 #### A validação `assert_routing`
 
-A validação `assert_routing` testa a rota dos dois jeitos: Testa que um caminho gera opções, e que opções gera um caminho. Logo, Ela combina as validações `assert_generates` e `assert_recognizes`:
+A validação [`assert_routing`][] testa a rota dos dois jeitos: Testa que um caminho gera opções, e que opções gera um caminho. Logo, Ela combina as validações `assert_generates` e `assert_recognizes`:
 
 ```ruby
 assert_routing({ path: 'photos', method: :post }, { controller: 'photos', action: 'create' })
