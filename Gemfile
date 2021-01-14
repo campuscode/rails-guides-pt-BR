@@ -10,6 +10,7 @@ gem 'execjs'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'kindlerb', '~> 1.2.0'
+gem 'rake', '>= 11.1'
 gem 'redcarpet', '~> 3.2.3', platforms: :ruby
 gem 'rouge'
 gem 'sdoc', '>= 2.0.3'
