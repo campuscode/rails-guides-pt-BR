@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,9 @@
   <meta property="og:type" content="website" />
 </head>
 <body class="guide">
+  <div>
+    <div id="version-badge">v6.1.0</div>
+  </div>
   <div id="topNav">
     <div class="wrapper">
       <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
@@ -34,7 +37,7 @@
         <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
         <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
       </ul>
     </div>
@@ -53,7 +56,7 @@
           <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
-            <div class="guides-section-container">
+            <dl class="guides-section-container">
                 <div class="guides-section">
                   <dt>Comece aqui</dt>
                   <dd><a href="getting_started.html">Começando com Rails</a></dd>
@@ -143,7 +146,7 @@
                   <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
                 </div>
             </div>
-          </div>
+          </dl>
         </li>
         <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
         <li class="guides-search guides-search-small">
@@ -306,7 +309,7 @@ that are supported by the PostgreSQL adapter.</p><h4 id="bytea"><a class="anchor
 <span class="n">data</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span> <span class="o">+</span> <span class="s2">"tmp/output.pdf"</span><span class="p">)</span>
 <span class="no">Document</span><span class="p">.</span><span class="nf">create</span> <span class="ss">payload: </span><span class="n">data</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4adf439798887520ae50042d7d3eaef3"># db/migrate/20140207133952_create_documents.rb
+<textarea class="clipboard-content" id="clipboard-39755a54a92ed46bb1988a6ca30ef6cd"># db/migrate/20140207133952_create_documents.rb
 create_table :documents do |t|
   t.binary 'payload'
 end
@@ -319,7 +322,7 @@ end
 data = File.read(Rails.root + "tmp/output.pdf")
 Document.create payload: data
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4adf439798887520ae50042d7d3eaef3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-39755a54a92ed46bb1988a6ca30ef6cd">Copiar</button>
 </div>
 <h4 id="array"><a class="anchorlink" href="#array">1.2 Array</a></h4>
 <ul>
@@ -354,7 +357,7 @@ Document.create payload: data
 <span class="c1">## Books with 3 or more ratings</span>
 <span class="no">Book</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"array_length(ratings, 1) &gt;= 3"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f1f96b2115329fa2a8deae062e2042ea"># db/migrate/20140207133952_create_books.rb
+<textarea class="clipboard-content" id="clipboard-bd7cd5b4befa0b944de25ad8403b8bbb"># db/migrate/20140207133952_create_books.rb
 create_table :books do |t|
   t.string 'title'
   t.string 'tags', array: true
@@ -381,7 +384,7 @@ Book.where("tags @&gt; ARRAY[?]::varchar[]", ["fantasy", "fiction"])
 ## Books with 3 or more ratings
 Book.where("array_length(ratings, 1) &gt;= 3")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f1f96b2115329fa2a8deae062e2042ea">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bd7cd5b4befa0b944de25ad8403b8bbb">Copiar</button>
 </div>
 <h4 id="hstore"><a class="anchorlink" href="#hstore">1.3 Hstore</a></h4>
 <ul>
@@ -413,7 +416,7 @@ Book.where("array_length(ratings, 1) &gt;= 3")
 <span class="no">Profile</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"settings-&gt;'color' = ?"</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">)</span>
 <span class="c1"># =&gt; #&lt;ActiveRecord::Relation [#&lt;Profile id: 1, settings: {"color"=&gt;"yellow", "resolution"=&gt;"1280x1024"}&gt;]&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0a8498130299ca6060bed11bad3357ba"># db/migrate/20131009135255_create_profiles.rb
+<textarea class="clipboard-content" id="clipboard-d1aa984c75f9e729922901c21339c737"># db/migrate/20131009135255_create_profiles.rb
 ActiveRecord::Schema.define do
   enable_extension 'hstore' unless extension_enabled?('hstore')
   create_table :profiles do |t|
@@ -437,7 +440,7 @@ profile.save!
 Profile.where("settings-&gt;'color' = ?", "yellow")
 # =&gt; #&lt;ActiveRecord::Relation [#&lt;Profile id: 1, settings: {"color"=&gt;"yellow", "resolution"=&gt;"1280x1024"}&gt;]&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0a8498130299ca6060bed11bad3357ba">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d1aa984c75f9e729922901c21339c737">Copiar</button>
 </div>
 <h4 id="json-and-jsonb"><a class="anchorlink" href="#json-and-jsonb">1.4 JSON and JSONB</a></h4>
 <ul>
@@ -469,7 +472,7 @@ Profile.where("settings-&gt;'color' = ?", "yellow")
 <span class="c1"># The -&gt; operator returns the original JSON type (which might be an object), whereas -&gt;&gt; returns text</span>
 <span class="no">Event</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"payload-&gt;&gt;'kind' = ?"</span><span class="p">,</span> <span class="s2">"user_renamed"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-636a26e3f46e1e1fb1d7dd7006a92763"># db/migrate/20131220144913_create_events.rb
+<textarea class="clipboard-content" id="clipboard-866ac134c86f39fe2e1e47573ae595f6"># db/migrate/20131220144913_create_events.rb
 # ... for json datatype:
 create_table :events do |t|
   t.json 'payload'
@@ -493,7 +496,7 @@ event.payload # =&gt; {"kind"=&gt;"user_renamed", "change"=&gt;["jack", "john"]}
 # The -&gt; operator returns the original JSON type (which might be an object), whereas -&gt;&gt; returns text
 Event.where("payload-&gt;&gt;'kind' = ?", "user_renamed")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-636a26e3f46e1e1fb1d7dd7006a92763">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-866ac134c86f39fe2e1e47573ae595f6">Copiar</button>
 </div>
 <h4 id="range-types"><a class="anchorlink" href="#range-types">1.5 Range Types</a></h4>
 <ul>
@@ -527,7 +530,7 @@ Event.where("payload-&gt;&gt;'kind' = ?", "user_renamed")
 <span class="n">event</span><span class="p">.</span><span class="nf">starts_at</span> <span class="c1"># =&gt; Tue, 11 Feb 2014</span>
 <span class="n">event</span><span class="p">.</span><span class="nf">ends_at</span> <span class="c1"># =&gt; Thu, 13 Feb 2014</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-27f32f2c233e3799c0f3d273302a9d06"># db/migrate/20130923065404_create_events.rb
+<textarea class="clipboard-content" id="clipboard-00232f0fd556e96cb7513b1fe8243dea"># db/migrate/20130923065404_create_events.rb
 create_table :events do |t|
   t.daterange 'duration'
 end
@@ -553,7 +556,7 @@ event = Event.
 event.starts_at # =&gt; Tue, 11 Feb 2014
 event.ends_at # =&gt; Thu, 13 Feb 2014
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-27f32f2c233e3799c0f3d273302a9d06">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-00232f0fd556e96cb7513b1fe8243dea">Copiar</button>
 </div>
 <h4 id="composite-types"><a class="anchorlink" href="#composite-types">1.6 Composite Types</a></h4>
 <ul>
@@ -567,13 +570,13 @@ normal text columns:</p><div class="code_container">
   <span class="n">street</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9df03e0869b09db4f706e47c29e05391">CREATE TYPE full_address AS
+<textarea class="clipboard-content" id="clipboard-a76d4446bf389d453ecd7a5fc866d204">CREATE TYPE full_address AS
 (
   city VARCHAR(90),
   street VARCHAR(90)
 );
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9df03e0869b09db4f706e47c29e05391">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a76d4446bf389d453ecd7a5fc866d204">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20140207133952_create_contacts.rb</span>
@@ -599,7 +602,7 @@ normal text columns:</p><div class="code_container">
 <span class="n">contact</span><span class="p">.</span><span class="nf">address</span> <span class="o">=</span> <span class="s2">"(Paris,Rue Basse)"</span>
 <span class="n">contact</span><span class="p">.</span><span class="nf">save!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ab2cd0aa89abcf15982976c7401e9b5c"># db/migrate/20140207133952_create_contacts.rb
+<textarea class="clipboard-content" id="clipboard-4ec3d117958784c3b25fdfd60567d63c"># db/migrate/20140207133952_create_contacts.rb
 execute &lt;&lt;-SQL
  CREATE TYPE full_address AS
  (
@@ -622,7 +625,7 @@ contact.address # =&gt; "(Paris,Champs-Élysées)"
 contact.address = "(Paris,Rue Basse)"
 contact.save!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ab2cd0aa89abcf15982976c7401e9b5c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4ec3d117958784c3b25fdfd60567d63c">Copiar</button>
 </div>
 <h4 id="enumerated-types"><a class="anchorlink" href="#enumerated-types">1.7 Enumerated Types</a></h4>
 <ul>
@@ -661,7 +664,7 @@ normal text columns:</p><div class="code_container">
 <span class="n">article</span><span class="p">.</span><span class="nf">status</span> <span class="o">=</span> <span class="s2">"published"</span>
 <span class="n">article</span><span class="p">.</span><span class="nf">save!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-831ae63cfe160114e509fec3b2ea28a1"># db/migrate/20131220144913_create_articles.rb
+<textarea class="clipboard-content" id="clipboard-8c69a3468023686dd701e316b5b8fda6"># db/migrate/20131220144913_create_articles.rb
 def up
   execute &lt;&lt;-SQL
     CREATE TYPE article_status AS ENUM ('draft', 'published');
@@ -692,7 +695,7 @@ article.status # =&gt; "draft"
 article.status = "published"
 article.save!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-831ae63cfe160114e509fec3b2ea28a1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8c69a3468023686dd701e316b5b8fda6">Copiar</button>
 </div>
 <p>To add a new value before/after existing one you should use <a href="https://www.postgresql.org/docs/current/static/sql-altertype.html">ALTER TYPE</a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20150720144913_add_new_state_to_articles.rb</span>
@@ -705,7 +708,7 @@ article.save!
 </span><span class="no">  SQL</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9ac2b9de69c734734b463b2635a317f2"># db/migrate/20150720144913_add_new_state_to_articles.rb
+<textarea class="clipboard-content" id="clipboard-26c533938881f8d461621c8158878e07"># db/migrate/20150720144913_add_new_state_to_articles.rb
 # NOTE: ALTER TYPE ... ADD VALUE cannot be executed inside of a transaction block so here we are using disable_ddl_transaction!
 disable_ddl_transaction!
 
@@ -715,7 +718,7 @@ def up
   SQL
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9ac2b9de69c734734b463b2635a317f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-26c533938881f8d461621c8158878e07">Copiar</button>
 </div>
 <div class="note"><p>ENUM values can't be dropped currently. You can read why <a href="https://www.postgresql.org/message-id/29F36C7C98AB09499B1A209D48EAA615B7653DBC8A@mail2a.alliedtesting.com">here</a>.</p></div><p>Hint: to show all the values of the all enums you have, you should call this query in <code>rails db</code> or <code>psql</code> console:</p><div class="code_container">
 <pre><code class="highlight sql"><span class="k">SELECT</span> <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="k">AS</span> <span class="n">enum_schema</span><span class="p">,</span>
@@ -725,14 +728,14 @@ end
       <span class="k">JOIN</span> <span class="n">pg_enum</span> <span class="n">e</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">enumtypid</span>
       <span class="k">JOIN</span> <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_namespace</span> <span class="n">n</span> <span class="k">ON</span> <span class="n">n</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">typnamespace</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5ec3f67ee16c3d00694be88b0872e28b">SELECT n.nspname AS enum_schema,
+<textarea class="clipboard-content" id="clipboard-27d6d031f19c4cf49e7b38bd81adabba">SELECT n.nspname AS enum_schema,
        t.typname AS enum_name,
        e.enumlabel AS enum_value
   FROM pg_type t
       JOIN pg_enum e ON t.oid = e.enumtypid
       JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5ec3f67ee16c3d00694be88b0872e28b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-27d6d031f19c4cf49e7b38bd81adabba">Copiar</button>
 </div>
 <h4 id="uuid"><a class="anchorlink" href="#uuid">1.8 UUID</a></h4>
 <ul>
@@ -757,7 +760,7 @@ extension to use uuid.</p></div><div class="code_container">
 <span class="n">revision</span> <span class="o">=</span> <span class="no">Revision</span><span class="p">.</span><span class="nf">first</span>
 <span class="n">revision</span><span class="p">.</span><span class="nf">identifier</span> <span class="c1"># =&gt; "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fa0d478a2cd4ddb574955886f1b55288"># db/migrate/20131220144913_create_revisions.rb
+<textarea class="clipboard-content" id="clipboard-238ff8e052ff311d2b85fdd26ac7f16b"># db/migrate/20131220144913_create_revisions.rb
 create_table :revisions do |t|
   t.uuid :identifier
 end
@@ -772,7 +775,7 @@ Revision.create identifier: "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"
 revision = Revision.first
 revision.identifier # =&gt; "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fa0d478a2cd4ddb574955886f1b55288">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-238ff8e052ff311d2b85fdd26ac7f16b">Copiar</button>
 </div>
 <p>You can use <code>uuid</code> type to define references in migrations:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20150418012400_create_blog.rb</span>
@@ -794,7 +797,7 @@ revision.identifier # =&gt; "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
   <span class="n">belongs_to</span> <span class="ss">:post</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f8ce829668505233c5180db5e6bd0934"># db/migrate/20150418012400_create_blog.rb
+<textarea class="clipboard-content" id="clipboard-aa6837e61ad1ad8f8867996bc59897b0"># db/migrate/20150418012400_create_blog.rb
 enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
 create_table :posts, id: :uuid, default: 'gen_random_uuid()'
 
@@ -813,7 +816,7 @@ class Comment &lt; ApplicationRecord
   belongs_to :post
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f8ce829668505233c5180db5e6bd0934">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aa6837e61ad1ad8f8867996bc59897b0">Copiar</button>
 </div>
 <p>See <a href="#uuid-primary-keys">this section</a> for more details on using UUIDs as primary key.</p><h4 id="bit-string-types"><a class="anchorlink" href="#bit-string-types">1.9 Bit String Types</a></h4>
 <ul>
@@ -838,7 +841,7 @@ end
 <span class="n">user</span><span class="p">.</span><span class="nf">settings</span> <span class="c1"># =&gt; 10101111</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">save!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e19a690160ff520e5d8366771356f748"># db/migrate/20131220144913_create_users.rb
+<textarea class="clipboard-content" id="clipboard-b6a553d2a67856fe0145447266000fd8"># db/migrate/20131220144913_create_users.rb
 create_table :users, force: true do |t|
   t.column :settings, "bit(8)"
 end
@@ -855,7 +858,7 @@ user.settings = "0xAF"
 user.settings # =&gt; 10101111
 user.save!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e19a690160ff520e5d8366771356f748">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b6a553d2a67856fe0145447266000fd8">Copiar</button>
 </div>
 <h4 id="network-address-types"><a class="anchorlink" href="#network-address-types">1.10 Network Address Types</a></h4>
 <ul>
@@ -889,7 +892,7 @@ objects. The <code>macaddr</code> type is mapped to normal text.</p><div class="
 <span class="n">macbook</span><span class="p">.</span><span class="nf">address</span>
 <span class="c1"># =&gt; "32:01:16:6d:05:ef"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6ed96088ca711c00d1c0c09a4415ca26"># db/migrate/20140508144913_create_devices.rb
+<textarea class="clipboard-content" id="clipboard-704cc4d438450125db3eedf8f904dc69"># db/migrate/20140508144913_create_devices.rb
 create_table(:devices, force: true) do |t|
   t.inet 'ip'
   t.cidr 'network'
@@ -914,7 +917,7 @@ macbook.network
 macbook.address
 # =&gt; "32:01:16:6d:05:ef"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6ed96088ca711c00d1c0c09a4415ca26">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-704cc4d438450125db3eedf8f904dc69">Copiar</button>
 </div>
 <h4 id="geometric-types"><a class="anchorlink" href="#geometric-types">1.11 Geometric Types</a></h4>
 <ul>
@@ -937,7 +940,7 @@ extension to generate random UUIDs.</p></div><div class="code_container">
 <span class="n">device</span> <span class="o">=</span> <span class="no">Device</span><span class="p">.</span><span class="nf">create</span>
 <span class="n">device</span><span class="p">.</span><span class="nf">id</span> <span class="c1"># =&gt; "814865cd-5a1d-4771-9306-4268f188fe9e"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3bfc6f69ef739dc4cc8ee5a6f56a503f"># db/migrate/20131220144913_create_devices.rb
+<textarea class="clipboard-content" id="clipboard-30a12cef05bf4f89eabd7a93a77ba841"># db/migrate/20131220144913_create_devices.rb
 enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
 create_table :devices, id: :uuid, default: 'gen_random_uuid()' do |t|
   t.string :kind
@@ -951,7 +954,7 @@ end
 device = Device.create
 device.id # =&gt; "814865cd-5a1d-4771-9306-4268f188fe9e"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3bfc6f69ef739dc4cc8ee5a6f56a503f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-30a12cef05bf4f89eabd7a93a77ba841">Copiar</button>
 </div>
 <div class="note"><p><code>gen_random_uuid()</code> (from <code>pgcrypto</code>) is assumed if no <code>:default</code> option was
 passed to <code>create_table</code>.</p></div><h3 id="full-text-search"><a class="anchorlink" href="#full-text-search">3 Full Text Search</a></h3><div class="code_container">
@@ -974,7 +977,7 @@ passed to <code>create_table</code>.</p></div><h3 id="full-text-search"><a class
 <span class="no">Document</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)"</span><span class="p">,</span>
                  <span class="s2">"cat &amp; dog"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-288edc89912698a5412d41ec61bd3f0c"># db/migrate/20131220144913_create_documents.rb
+<textarea class="clipboard-content" id="clipboard-33eb6c70a197d1cf2fefbf695491ce5c"># db/migrate/20131220144913_create_documents.rb
 create_table :documents do |t|
   t.string 'title'
   t.string 'body'
@@ -993,7 +996,7 @@ Document.create(title: "Cats and Dogs", body: "are nice!")
 Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
                  "cat &amp; dog")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-288edc89912698a5412d41ec61bd3f0c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-33eb6c70a197d1cf2fefbf695491ce5c">Copiar</button>
 </div>
 <h3 id="database-views"><a class="anchorlink" href="#database-views">4 Database Views</a></h3>
 <ul>
@@ -1012,7 +1015,7 @@ Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
 Indexes:
     "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5d72c2b3eca10e086f93b103bcaf3f47">rails_pg_guide=# \d "TBL_ART"
+<textarea class="clipboard-content" id="clipboard-535f48f501e54bad53bec68664057f13">rails_pg_guide=# \d "TBL_ART"
                                         Table "public.TBL_ART"
    Column   |            Type             |                         Modifiers
 ------------+-----------------------------+------------------------------------------------------------
@@ -1024,7 +1027,7 @@ Indexes:
 Indexes:
     "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5d72c2b3eca10e086f93b103bcaf3f47">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-535f48f501e54bad53bec68664057f13">Copiar</button>
 </div>
 <p>This table does not follow the Rails conventions at all.
 Because simple PostgreSQL views are updateable by default,
@@ -1061,7 +1064,7 @@ CREATE VIEW articles AS
 <span class="n">first</span><span class="p">.</span><span class="nf">archive!</span>
 <span class="no">Article</span><span class="p">.</span><span class="nf">count</span> <span class="c1"># =&gt; 1</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e11d5cc7110e4b36c4120973ae2d0fe7"># db/migrate/20131220144913_create_articles_view.rb
+<textarea class="clipboard-content" id="clipboard-283f4eaf77d096b25717823906877f57"># db/migrate/20131220144913_create_articles_view.rb
 execute &lt;&lt;-SQL
 CREATE VIEW articles AS
   SELECT "INT_ID" AS id,
@@ -1093,7 +1096,7 @@ Article.count # =&gt; 2
 first.archive!
 Article.count # =&gt; 1
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e11d5cc7110e4b36c4120973ae2d0fe7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-283f4eaf77d096b25717823906877f57">Copiar</button>
 </div>
 <div class="note"><p>This application only cares about non-archived <code>Articles</code>. A view also
 allows for conditions so we can exclude the archived <code>Articles</code> directly.</p></div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,9 @@
   <meta property="og:type" content="website" />
 </head>
 <body class="guide">
+  <div>
+    <div id="version-badge">v6.1.0</div>
+  </div>
   <div id="topNav">
     <div class="wrapper">
       <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
@@ -34,7 +37,7 @@
         <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
         <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
       </ul>
     </div>
@@ -53,7 +56,7 @@
           <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
-            <div class="guides-section-container">
+            <dl class="guides-section-container">
                 <div class="guides-section">
                   <dt>Comece aqui</dt>
                   <dd><a href="getting_started.html">Começando com Rails</a></dd>
@@ -143,7 +146,7 @@
                   <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
                 </div>
             </div>
-          </div>
+          </dl>
         </li>
         <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
         <li class="guides-search guides-search-small">
@@ -254,7 +257,7 @@ emails to your application.</p><p>After reading this guide, you will know:</p>
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#introduction">Introduction</a></li>
+<li><a href="#what-is-action-mailbox-questionmark">What is Action Mailbox?</a></li>
 <li><a href="#setup">Setup</a></li>
 <li>
 <a href="#configuration">Configuration</a>
@@ -283,7 +286,7 @@ emails to your application.</p><p>After reading this guide, you will know:</p>
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="introduction"><a class="anchorlink" href="#introduction">1 Introduction</a></h3><p>Action Mailbox routes incoming emails to controller-like mailboxes for
+        <h3 id="what-is-action-mailbox-questionmark"><a class="anchorlink" href="#what-is-action-mailbox-questionmark">1 What is Action Mailbox?</a></h3><p>Action Mailbox routes incoming emails to controller-like mailboxes for
 processing in Rails. It ships with ingresses for Mailgun, Mandrill, Postmark,
 and SendGrid. You can also handle inbound mails directly via the built-in Exim,
 Postfix, and Qmail ingresses.</p><p>The inbound emails are turned into <code>InboundEmail</code> records using Active Record
@@ -292,90 +295,90 @@ via Active Storage, and responsible data handling with
 on-by-default incineration.</p><p>These inbound emails are routed asynchronously using Active Job to one or
 several dedicated mailboxes, which are capable of interacting directly
 with the rest of your domain model.</p><h3 id="setup"><a class="anchorlink" href="#setup">2 Setup</a></h3><p>Install migrations needed for <code>InboundEmail</code> and ensure Active Storage is set up:</p><div class="code_container">
-<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>action_mailbox:install
-<span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>db:migrate
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>action_mailbox:install
+<span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b6a93483eb5a0956c5fe920e2127a46d">rails action_mailbox:install
-rails db:migrate
+<textarea class="clipboard-content" id="clipboard-1a98a0be99f7dd8c5555e497b71a3962">bin/rails action_mailbox:install
+bin/rails db:migrate
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b6a93483eb5a0956c5fe920e2127a46d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1a98a0be99f7dd8c5555e497b71a3962">Copiar</button>
 </div>
 <h3 id="configuration"><a class="anchorlink" href="#configuration">3 Configuration</a></h3><h4 id="exim"><a class="anchorlink" href="#exim">3.1 Exim</a></h4><p>Tell Action Mailbox to accept emails from an SMTP relay:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:relay</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0196ffe38f4d6b00c6fb2ef137e3a62c"># config/environments/production.rb
+<textarea class="clipboard-content" id="clipboard-2925a19cb6cadbd6f5c55596005f2368"># config/environments/production.rb
 config.action_mailbox.ingress = :relay
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0196ffe38f4d6b00c6fb2ef137e3a62c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2925a19cb6cadbd6f5c55596005f2368">Copiar</button>
 </div>
-<p>Generate a strong password that Action Mailbox can use to authenticate requests to the relay ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's encrypted credentials under
+<p>Generate a strong password that Action Mailbox can use to authenticate requests to the relay ingress.</p><p>Use <code>bin/rails credentials:edit</code> to add the password to your application's encrypted credentials under
 <code>action_mailbox.ingress_password</code>, where Action Mailbox will automatically find it:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
   <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dfb8b200dcb33cf82962d94de338069d">action_mailbox:
+<textarea class="clipboard-content" id="clipboard-bb7f78088e088a3e2f1180ca5b0db69d">action_mailbox:
   ingress_password: ...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dfb8b200dcb33cf82962d94de338069d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bb7f78088e088a3e2f1180ca5b0db69d">Copiar</button>
 </div>
 <p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code> environment variable.</p><p>Configure Exim to pipe inbound emails to <code>bin/rails action_mailbox:ingress:exim</code>,
 providing the <code>URL</code> of the relay ingress and the <code>INGRESS_PASSWORD</code> you
 previously generated. If your application lived at <code>https://example.com</code>, the
 full command would look like this:</p><div class="code_container">
-<pre><code class="highlight shell"><span class="nb">bin/rails </span>action_mailbox:ingress:exim <span class="nv">URL</span><span class="o">=</span>https://example.com/rails/action_mailbox/relay/inbound_emails <span class="nv">INGRESS_PASSWORD</span><span class="o">=</span>...
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>action_mailbox:ingress:exim <span class="nv">URL</span><span class="o">=</span>https://example.com/rails/action_mailbox/relay/inbound_emails <span class="nv">INGRESS_PASSWORD</span><span class="o">=</span>...
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d7f8388e8e1c568a5047559ff3c407c2">bin/rails action_mailbox:ingress:exim URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
+<textarea class="clipboard-content" id="clipboard-9773690a372414b0b1f46069d8863cb7">bin/rails action_mailbox:ingress:exim URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d7f8388e8e1c568a5047559ff3c407c2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9773690a372414b0b1f46069d8863cb7">Copiar</button>
 </div>
 <h4 id="mailgun"><a class="anchorlink" href="#mailgun">3.2 Mailgun</a></h4><p>Give Action Mailbox your
-<a href="https://help.mailgun.com/hc/en-us/articles/203380100-Where-can-I-find-my-API-key-and-SMTP-credentials">Mailgun API key</a>
-so it can authenticate requests to the Mailgun ingress.</p><p>Use <code>rails credentials:edit</code> to add your API key to your application's
-encrypted credentials under <code>action_mailbox.mailgun_api_key</code>,
+Mailgun Signing key (which you can find under Settings -&gt; Security &amp; Users -&gt; API security in Mailgun)
+so it can authenticate requests to the Mailgun ingress.</p><p>Use <code>bin/rails credentials:edit</code> to add your Signing key to your application's
+encrypted credentials under <code>action_mailbox.mailgun_signing_key</code>,
 where Action Mailbox will automatically find it:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
-  <span class="na">mailgun_api_key</span><span class="pi">:</span> <span class="s">...</span>
+  <span class="na">mailgun_signing_key</span><span class="pi">:</span> <span class="s">...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-15064e0b6978adbd7e99828e64043ce2">action_mailbox:
-  mailgun_api_key: ...
+<textarea class="clipboard-content" id="clipboard-70b15d7487f3f7bd1a31e58d1e71e2f0">action_mailbox:
+  mailgun_signing_key: ...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-15064e0b6978adbd7e99828e64043ce2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-70b15d7487f3f7bd1a31e58d1e71e2f0">Copiar</button>
 </div>
-<p>Alternatively, provide your API key in the <code>MAILGUN_INGRESS_API_KEY</code> environment
+<p>Alternatively, provide your Signing key in the <code>MAILGUN_INGRESS_SIGNING_KEY</code> environment
 variable.</p><p>Tell Action Mailbox to accept emails from Mailgun:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:mailgun</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d76bead2d4f5878ba01931702ab7590f"># config/environments/production.rb
+<textarea class="clipboard-content" id="clipboard-cd33ee868e11cf9d0edbf42518351ed7"># config/environments/production.rb
 config.action_mailbox.ingress = :mailgun
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d76bead2d4f5878ba01931702ab7590f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cd33ee868e11cf9d0edbf42518351ed7">Copiar</button>
 </div>
 <p><a href="https://documentation.mailgun.com/en/latest/user_manual.html#receiving-forwarding-and-storing-messages">Configure Mailgun</a>
 to forward inbound emails to <code>/rails/action_mailbox/mailgun/inbound_emails/mime</code>.
 If your application lived at <code>https://example.com</code>, you would specify the
 fully-qualified URL <code>https://example.com/rails/action_mailbox/mailgun/inbound_emails/mime</code>.</p><h4 id="mandrill"><a class="anchorlink" href="#mandrill">3.3 Mandrill</a></h4><p>Give Action Mailbox your Mandrill API key so it can authenticate requests to
-the Mandrill ingress.</p><p>Use <code>rails credentials:edit</code> to add your API key to your application's
+the Mandrill ingress.</p><p>Use <code>bin/rails credentials:edit</code> to add your API key to your application's
 encrypted credentials under <code>action_mailbox.mandrill_api_key</code>,
 where Action Mailbox will automatically find it:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
   <span class="na">mandrill_api_key</span><span class="pi">:</span> <span class="s">...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5b50469d8c67dba4e88e474d4f2f09e0">action_mailbox:
+<textarea class="clipboard-content" id="clipboard-78de7795b15a25c04282232c4e67aa91">action_mailbox:
   mandrill_api_key: ...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5b50469d8c67dba4e88e474d4f2f09e0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-78de7795b15a25c04282232c4e67aa91">Copiar</button>
 </div>
 <p>Alternatively, provide your API key in the <code>MANDRILL_INGRESS_API_KEY</code>
 environment variable.</p><p>Tell Action Mailbox to accept emails from Mandrill:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:mandrill</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-afcbe4a1102f52ae1b583ec2e5b71ecb"># config/environments/production.rb
+<textarea class="clipboard-content" id="clipboard-32f9a237a2b92f7039b98a15289d9501"># config/environments/production.rb
 config.action_mailbox.ingress = :mandrill
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-afcbe4a1102f52ae1b583ec2e5b71ecb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-32f9a237a2b92f7039b98a15289d9501">Copiar</button>
 </div>
 <p><a href="https://mandrill.zendesk.com/hc/en-us/articles/205583197-Inbound-Email-Processing-Overview">Configure Mandrill</a>
 to route inbound emails to <code>/rails/action_mailbox/mandrill/inbound_emails</code>.
@@ -384,52 +387,52 @@ the fully-qualified URL <code>https://example.com/rails/action_mailbox/mandrill/
 <pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:relay</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-49347cab39cdb2bfec3c468fa4166839"># config/environments/production.rb
+<textarea class="clipboard-content" id="clipboard-73665867d33d51ede582542bb1982aef"># config/environments/production.rb
 config.action_mailbox.ingress = :relay
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-49347cab39cdb2bfec3c468fa4166839">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-73665867d33d51ede582542bb1982aef">Copiar</button>
 </div>
-<p>Generate a strong password that Action Mailbox can use to authenticate requests to the relay ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's encrypted credentials under
+<p>Generate a strong password that Action Mailbox can use to authenticate requests to the relay ingress.</p><p>Use <code>bin/rails credentials:edit</code> to add the password to your application's encrypted credentials under
 <code>action_mailbox.ingress_password</code>, where Action Mailbox will automatically find it:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
   <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-695bb43948c1acb2152a1eff9933b862">action_mailbox:
+<textarea class="clipboard-content" id="clipboard-aa1d8477c77158b2ca9c0b3984885d73">action_mailbox:
   ingress_password: ...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-695bb43948c1acb2152a1eff9933b862">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aa1d8477c77158b2ca9c0b3984885d73">Copiar</button>
 </div>
 <p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code> environment variable.</p><p><a href="https://serverfault.com/questions/258469/how-to-configure-postfix-to-pipe-all-incoming-email-to-a-script">Configure Postfix</a>
 to pipe inbound emails to <code>bin/rails action_mailbox:ingress:postfix</code>, providing
 the <code>URL</code> of the Postfix ingress and the <code>INGRESS_PASSWORD</code> you previously
 generated. If your application lived at <code>https://example.com</code>, the full command
 would look like this:</p><div class="code_container">
-<pre><code class="highlight shell"><span class="nv">$ </span><span class="nb">bin/rails </span>action_mailbox:ingress:postfix <span class="nv">URL</span><span class="o">=</span>https://example.com/rails/action_mailbox/relay/inbound_emails <span class="nv">INGRESS_PASSWORD</span><span class="o">=</span>...
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>action_mailbox:ingress:postfix <span class="nv">URL</span><span class="o">=</span>https://example.com/rails/action_mailbox/relay/inbound_emails <span class="nv">INGRESS_PASSWORD</span><span class="o">=</span>...
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b248e64f8f258eb249eedcded8ee434d">$ bin/rails action_mailbox:ingress:postfix URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
+<textarea class="clipboard-content" id="clipboard-13d89230ab0099415864d8dd3b5b73b2">bin/rails action_mailbox:ingress:postfix URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b248e64f8f258eb249eedcded8ee434d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-13d89230ab0099415864d8dd3b5b73b2">Copiar</button>
 </div>
 <h4 id="postmark"><a class="anchorlink" href="#postmark">3.5 Postmark</a></h4><p>Tell Action Mailbox to accept emails from Postmark:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:postmark</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8a68a298c3940e384a494d09e7a98a3e"># config/environments/production.rb
+<textarea class="clipboard-content" id="clipboard-ca101fb128741d8e69f582f6f211fe9e"># config/environments/production.rb
 config.action_mailbox.ingress = :postmark
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8a68a298c3940e384a494d09e7a98a3e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ca101fb128741d8e69f582f6f211fe9e">Copiar</button>
 </div>
 <p>Generate a strong password that Action Mailbox can use to authenticate
-requests to the Postmark ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's
+requests to the Postmark ingress.</p><p>Use <code>bin/rails credentials:edit</code> to add the password to your application's
 encrypted credentials under <code>action_mailbox.ingress_password</code>,
 where Action Mailbox will automatically find it:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
   <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5427fb20968013b90ec157f4b3232adc">action_mailbox:
+<textarea class="clipboard-content" id="clipboard-63db216bbd99b9386a866b02dee26d9a">action_mailbox:
   ingress_password: ...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5427fb20968013b90ec157f4b3232adc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-63db216bbd99b9386a866b02dee26d9a">Copiar</button>
 </div>
 <p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code>
 environment variable.</p><p><a href="https://postmarkapp.com/manual#configure-your-inbound-webhook-url">Configure Postmark inbound webhook</a>
@@ -438,60 +441,60 @@ and the password you previously generated. If your application lived at <code>ht
 configure Postmark with the following fully-qualified URL:</p><div class="code_container">
 <pre><code class="highlight plaintext">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/postmark/inbound_emails
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b0a8711a725fa25644df9284efc31544">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/postmark/inbound_emails
+<textarea class="clipboard-content" id="clipboard-0151d145d83c9a1998c53b6aeb3b65bd">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/postmark/inbound_emails
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b0a8711a725fa25644df9284efc31544">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0151d145d83c9a1998c53b6aeb3b65bd">Copiar</button>
 </div>
 <div class="note"><p>When configuring your Postmark inbound webhook, be sure to check the box labeled <strong>"Include raw email content in JSON payload"</strong>.
 Action Mailbox needs the raw email content to work.</p></div><h4 id="qmail"><a class="anchorlink" href="#qmail">3.6 Qmail</a></h4><p>Tell Action Mailbox to accept emails from an SMTP relay:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:relay</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b6b8f503c3619e1390fdf86555fcbff3"># config/environments/production.rb
+<textarea class="clipboard-content" id="clipboard-2a7ce248b0c28df35c37ab2622000a57"># config/environments/production.rb
 config.action_mailbox.ingress = :relay
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b6b8f503c3619e1390fdf86555fcbff3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a7ce248b0c28df35c37ab2622000a57">Copiar</button>
 </div>
-<p>Generate a strong password that Action Mailbox can use to authenticate requests to the relay ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's encrypted credentials under
+<p>Generate a strong password that Action Mailbox can use to authenticate requests to the relay ingress.</p><p>Use <code>bin/rails credentials:edit</code> to add the password to your application's encrypted credentials under
 <code>action_mailbox.ingress_password</code>, where Action Mailbox will automatically find it:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
   <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c9bf1cb7672e3d61fa6a55732dbcffa7">action_mailbox:
+<textarea class="clipboard-content" id="clipboard-8d2ccf7552ba09d3e90815ea0e25284d">action_mailbox:
   ingress_password: ...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c9bf1cb7672e3d61fa6a55732dbcffa7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8d2ccf7552ba09d3e90815ea0e25284d">Copiar</button>
 </div>
 <p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code> environment variable.</p><p>Configure Qmail to pipe inbound emails to <code>bin/rails action_mailbox:ingress:qmail</code>,
 providing the <code>URL</code> of the relay ingress and the <code>INGRESS_PASSWORD</code> you
 previously generated. If your application lived at <code>https://example.com</code>, the
 full command would look like this:</p><div class="code_container">
-<pre><code class="highlight shell"><span class="nb">bin/rails </span>action_mailbox:ingress:qmail <span class="nv">URL</span><span class="o">=</span>https://example.com/rails/action_mailbox/relay/inbound_emails <span class="nv">INGRESS_PASSWORD</span><span class="o">=</span>...
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>action_mailbox:ingress:qmail <span class="nv">URL</span><span class="o">=</span>https://example.com/rails/action_mailbox/relay/inbound_emails <span class="nv">INGRESS_PASSWORD</span><span class="o">=</span>...
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-43d8c5b00962a219725b014286ede085">bin/rails action_mailbox:ingress:qmail URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
+<textarea class="clipboard-content" id="clipboard-18580f4c8b08e75321e22bbf2673bac5">bin/rails action_mailbox:ingress:qmail URL=https://example.com/rails/action_mailbox/relay/inbound_emails INGRESS_PASSWORD=...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-43d8c5b00962a219725b014286ede085">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-18580f4c8b08e75321e22bbf2673bac5">Copiar</button>
 </div>
 <h4 id="sendgrid"><a class="anchorlink" href="#sendgrid">3.7 SendGrid</a></h4><p>Tell Action Mailbox to accept emails from SendGrid:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailbox</span><span class="p">.</span><span class="nf">ingress</span> <span class="o">=</span> <span class="ss">:sendgrid</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-32191cba8ea3ba15a0d5365080a8b592"># config/environments/production.rb
+<textarea class="clipboard-content" id="clipboard-82524b4b2fa745d1b1701c1c6241a1c8"># config/environments/production.rb
 config.action_mailbox.ingress = :sendgrid
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-32191cba8ea3ba15a0d5365080a8b592">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-82524b4b2fa745d1b1701c1c6241a1c8">Copiar</button>
 </div>
 <p>Generate a strong password that Action Mailbox can use to authenticate
-requests to the SendGrid ingress.</p><p>Use <code>rails credentials:edit</code> to add the password to your application's
+requests to the SendGrid ingress.</p><p>Use <code>bin/rails credentials:edit</code> to add the password to your application's
 encrypted credentials under <code>action_mailbox.ingress_password</code>,
 where Action Mailbox will automatically find it:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">action_mailbox</span><span class="pi">:</span>
   <span class="na">ingress_password</span><span class="pi">:</span> <span class="s">...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ce5f5aafb64e3300a306658c42138ac2">action_mailbox:
+<textarea class="clipboard-content" id="clipboard-bc616ded12a300cfdbcc3047e8a95a21">action_mailbox:
   ingress_password: ...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ce5f5aafb64e3300a306658c42138ac2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bc616ded12a300cfdbcc3047e8a95a21">Copiar</button>
 </div>
 <p>Alternatively, provide the password in the <code>RAILS_INBOUND_EMAIL_PASSWORD</code>
 environment variable.</p><p><a href="https://sendgrid.com/docs/for-developers/parsing-email/setting-up-the-inbound-parse-webhook/">Configure SendGrid Inbound Parse</a>
@@ -501,9 +504,9 @@ and the password you previously generated. If your application lived at <code>ht
 you would configure SendGrid with the following URL:</p><div class="code_container">
 <pre><code class="highlight plaintext">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/sendgrid/inbound_emails
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f0596672eff275a519670dc0ca8d9f7c">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/sendgrid/inbound_emails
+<textarea class="clipboard-content" id="clipboard-84afb23c46ec5d029daef1530a161fc9">https://actionmailbox:PASSWORD@example.com/rails/action_mailbox/sendgrid/inbound_emails
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f0596672eff275a519670dc0ca8d9f7c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-84afb23c46ec5d029daef1530a161fc9">Copiar</button>
 </div>
 <div class="note"><p>When configuring your SendGrid Inbound Parse webhook, be sure to check the box labeled <strong>“Post the raw, full MIME message.”</strong> Action Mailbox needs the raw MIME message to work.</p></div><h3 id="examples"><a class="anchorlink" href="#examples">4 Examples</a></h3><p>Configure basic routing:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/mailboxes/application_mailbox.rb</span>
@@ -512,22 +515,21 @@ you would configure SendGrid with the following URL:</p><div class="code_contain
   <span class="n">routing</span> <span class="sr">/@replies\./i</span> <span class="o">=&gt;</span> <span class="ss">:replies</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-504f75b18d9a63402988ae2200f2c43a"># app/mailboxes/application_mailbox.rb
+<textarea class="clipboard-content" id="clipboard-06680d5b5c3034362d20781357239766"># app/mailboxes/application_mailbox.rb
 class ApplicationMailbox &lt; ActionMailbox::Base
   routing /^save@/i     =&gt; :forwards
   routing /@replies\./i =&gt; :replies
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-504f75b18d9a63402988ae2200f2c43a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-06680d5b5c3034362d20781357239766">Copiar</button>
 </div>
 <p>Then set up a mailbox:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="c1"># Generate new mailbox</span>
-<span class="err">$</span> <span class="n">bin</span><span class="o">/</span><span class="n">rails</span> <span class="n">generate</span> <span class="n">mailbox</span> <span class="n">forwards</span>
+<pre><code class="highlight console"><span class="gp">#</span><span class="w"> </span>Generate new mailbox
+<span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate mailbox forwards
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-114e02a8bcda8a868cb897463f9e0332"># Generate new mailbox
-$ bin/rails generate mailbox forwards
+<textarea class="clipboard-content" id="clipboard-d900a54c89f89bca8098efae414a19f1">bin/rails generate mailbox forwards
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-114e02a8bcda8a868cb897463f9e0332">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d900a54c89f89bca8098efae414a19f1">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/mailboxes/forwards_mailbox.rb</span>
@@ -566,7 +568,7 @@ $ bin/rails generate mailbox forwards
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4b16eb102363ab59306090ed6bd35cda"># app/mailboxes/forwards_mailbox.rb
+<textarea class="clipboard-content" id="clipboard-e7c5e4cf195a8960358b675a9a6cb9f0"># app/mailboxes/forwards_mailbox.rb
 class ForwardsMailbox &lt; ApplicationMailbox
   # Callbacks specify prerequisites to processing
   before_processing :require_projects
@@ -602,7 +604,7 @@ class ForwardsMailbox &lt; ApplicationMailbox
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4b16eb102363ab59306090ed6bd35cda">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e7c5e4cf195a8960358b675a9a6cb9f0">Copiar</button>
 </div>
 <h3 id="incineration-of-inboundemails"><a class="anchorlink" href="#incineration-of-inboundemails">5 Incineration of InboundEmails</a></h3><p>By default, an InboundEmail that has been successfully processed will be
 incinerated after 30 days. This ensures you're not holding on to people's data
@@ -641,7 +643,7 @@ state of processing, and a form to create a new InboundEmail as well.</p><h3 id=
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0e3511c947e9f0aef499d38e8cde76f2">class ForwardsMailboxTest &lt; ActionMailbox::TestCase
+<textarea class="clipboard-content" id="clipboard-696201bdf9645f74a7b72d633fec4f40">class ForwardsMailboxTest &lt; ActionMailbox::TestCase
   test "directly recording a client forward for a forwarder and forwardee corresponding to one project" do
     assert_difference -&gt; { people(:david).buckets.first.recordings.count } do
       receive_inbound_email_from_mail \
@@ -663,7 +665,7 @@ state of processing, and a form to create a new InboundEmail as well.</p><h3 id=
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0e3511c947e9f0aef499d38e8cde76f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-696201bdf9645f74a7b72d633fec4f40">Copiar</button>
 </div>
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,9 @@
   <meta property="og:type" content="website" />
 </head>
 <body class="guide">
+  <div>
+    <div id="version-badge">v6.1.0</div>
+  </div>
   <div id="topNav">
     <div class="wrapper">
       <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
@@ -34,7 +37,7 @@
         <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
         <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
       </ul>
     </div>
@@ -53,7 +56,7 @@
           <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
-            <div class="guides-section-container">
+            <dl class="guides-section-container">
                 <div class="guides-section">
                   <dt>Comece aqui</dt>
                   <dd><a href="getting_started.html">Começando com Rails</a></dd>
@@ -143,7 +146,7 @@
                   <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
                 </div>
             </div>
-          </div>
+          </dl>
         </li>
         <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
         <li class="guides-search guides-search-small">
@@ -258,7 +261,7 @@
 
 <ul>
 <li><a href="#rails-application-s-rack-object">Rails Application's Rack Object</a></li>
-<li><a href="#rails-server"><code>rails server</code></a></li>
+<li><a href="#bin-rails-server"><code>bin/rails server</code></a></li>
 <li><a href="#rackup"><code>rackup</code></a></li>
 <li><a href="#development-and-auto-reloading">Development and auto-reloading</a></li>
 </ul>
@@ -294,20 +297,20 @@
 are not familiar with Rack's basics, you should check out the <a href="#resources">Resources</a>
 section below.</p><h3 id="rails-on-rack"><a class="anchorlink" href="#rails-on-rack">2 Rails on Rack</a></h3><h4 id="rails-application-s-rack-object"><a class="anchorlink" href="#rails-application-s-rack-object">2.1 Rails Application's Rack Object</a></h4><p><code>Rails.application</code> is the primary Rack application object of a Rails
 application. Any Rack compliant web server should be using
-<code>Rails.application</code> object to serve a Rails application.</p><h4 id="rails-server"><a class="anchorlink" href="#rails-server">2.2 <code>rails server</code></a></h4><p><code>rails server</code> does the basic job of creating a <code>Rack::Server</code> object and starting the web server.</p><p>Here's how <code>rails server</code> creates an instance of <code>Rack::Server</code></p><div class="code_container">
+<code>Rails.application</code> object to serve a Rails application.</p><h4 id="bin-rails-server"><a class="anchorlink" href="#bin-rails-server">2.2 <code>bin/rails server</code></a></h4><p><code>bin/rails server</code> does the basic job of creating a <code>Rack::Server</code> object and starting the web server.</p><p>Here's how <code>bin/rails server</code> creates an instance of <code>Rack::Server</code></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="o">::</span><span class="no">Server</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">server</span><span class="o">|</span>
   <span class="nb">require</span> <span class="no">APP_PATH</span>
   <span class="no">Dir</span><span class="p">.</span><span class="nf">chdir</span><span class="p">(</span><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">root</span><span class="p">)</span>
   <span class="n">server</span><span class="p">.</span><span class="nf">start</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1065867513bd96ddcfa3396018095703">Rails::Server.new.tap do |server|
+<textarea class="clipboard-content" id="clipboard-0f33c752ba04146c352eca42b4823925">Rails::Server.new.tap do |server|
   require APP_PATH
   Dir.chdir(Rails.application.root)
   server.start
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1065867513bd96ddcfa3396018095703">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f33c752ba04146c352eca42b4823925">Copiar</button>
 </div>
 <p>The <code>Rails::Server</code> inherits from <code>Rack::Server</code> and calls the <code>Rack::Server#start</code> method this way:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Server</span> <span class="o">&lt;</span> <span class="o">::</span><span class="no">Rack</span><span class="o">::</span><span class="no">Server</span>
@@ -317,47 +320,47 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6580a60abbe6d94e1e2a40c0ca0777f7">class Server &lt; ::Rack::Server
+<textarea class="clipboard-content" id="clipboard-87db0fcfec8433cbb10c49af1198a472">class Server &lt; ::Rack::Server
   def start
     ...
     super
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6580a60abbe6d94e1e2a40c0ca0777f7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-87db0fcfec8433cbb10c49af1198a472">Copiar</button>
 </div>
-<h4 id="rackup"><a class="anchorlink" href="#rackup">2.3 <code>rackup</code></a></h4><p>To use <code>rackup</code> instead of Rails' <code>rails server</code>, you can put the following inside <code>config.ru</code> of your Rails application's root directory:</p><div class="code_container">
+<h4 id="rackup"><a class="anchorlink" href="#rackup">2.3 <code>rackup</code></a></h4><p>To use <code>rackup</code> instead of Rails' <code>bin/rails server</code>, you can put the following inside <code>config.ru</code> of your Rails application's root directory:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Rails.root/config.ru</span>
-<span class="nb">require_relative</span> <span class="s1">'config/environment'</span>
+<span class="nb">require_relative</span> <span class="s2">"config/environment"</span>
 <span class="n">run</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-abf9154681f5da43049398397117b69f"># Rails.root/config.ru
-require_relative 'config/environment'
+<textarea class="clipboard-content" id="clipboard-e2ca356776f80fd5ae3430461a885314"># Rails.root/config.ru
+require_relative "config/environment"
 run Rails.application
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-abf9154681f5da43049398397117b69f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e2ca356776f80fd5ae3430461a885314">Copiar</button>
 </div>
 <p>And start the server:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span>rackup config.ru
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e6d7f02dad72276129693265bec5470d">rackup config.ru
+<textarea class="clipboard-content" id="clipboard-b8f8acc0ca7c295718a1921f6f321e58">rackup config.ru
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e6d7f02dad72276129693265bec5470d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b8f8acc0ca7c295718a1921f6f321e58">Copiar</button>
 </div>
 <p>To find out more about different <code>rackup</code> options, you can run:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span>rackup <span class="nt">--help</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf9241433fa32f5758a1ebd8846c0747">rackup --help
+<textarea class="clipboard-content" id="clipboard-a8b1bbe94d4d0276a526ecf518a528dd">rackup --help
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf9241433fa32f5758a1ebd8846c0747">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a8b1bbe94d4d0276a526ecf518a528dd">Copiar</button>
 </div>
 <h4 id="development-and-auto-reloading"><a class="anchorlink" href="#development-and-auto-reloading">2.4 Development and auto-reloading</a></h4><p>Middlewares are loaded once and are not monitored for changes. You will have to restart the server for changes to be reflected in the running application.</p><h3 id="action-dispatcher-middleware-stack"><a class="anchorlink" href="#action-dispatcher-middleware-stack">3 Action Dispatcher Middleware Stack</a></h3><p>Many of Action Dispatcher's internal components are implemented as Rack middlewares. <code>Rails::Application</code> uses <code>ActionDispatch::MiddlewareStack</code> to combine various internal and external middlewares to form a complete Rails Rack application.</p><div class="note"><p><code>ActionDispatch::MiddlewareStack</code> is Rails' equivalent of <code>Rack::Builder</code>,
 but is built for better flexibility and more features to meet Rails' requirements.</p></div><h4 id="inspecting-middleware-stack"><a class="anchorlink" href="#inspecting-middleware-stack">3.1 Inspecting Middleware Stack</a></h4><p>Rails has a handy command for inspecting the middleware stack in use:</p><div class="code_container">
-<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>middleware
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>middleware
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b0a91eaa4a1b67bddaeaa1d297a357b3">rails middleware
+<textarea class="clipboard-content" id="clipboard-2b029992729483735f7453be5f80ce5e">bin/rails middleware
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b0a91eaa4a1b67bddaeaa1d297a357b3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2b029992729483735f7453be5f80ce5e">Copiar</button>
 </div>
 <p>For a freshly generated Rails application, this might produce something like:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Sendfile</span>
@@ -373,6 +376,7 @@ but is built for better flexibility and more features to meet Rails' requirement
 <span class="n">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">ShowExceptions</span>
 <span class="n">use</span> <span class="no">WebConsole</span><span class="o">::</span><span class="no">Middleware</span>
 <span class="n">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">DebugExceptions</span>
+<span class="n">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">ActionableExceptions</span>
 <span class="n">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Reloader</span>
 <span class="n">use</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Callbacks</span>
 <span class="n">use</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="o">::</span><span class="no">CheckPending</span>
@@ -386,7 +390,7 @@ but is built for better flexibility and more features to meet Rails' requirement
 <span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">TempfileReaper</span>
 <span class="n">run</span> <span class="no">MyApp</span><span class="o">::</span><span class="no">Application</span><span class="p">.</span><span class="nf">routes</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-625ff0384b158a3a9b76b2e5b4d39214">use Rack::Sendfile
+<textarea class="clipboard-content" id="clipboard-7264b457ba8e48ed90e9cadfccfea725">use Rack::Sendfile
 use ActionDispatch::Static
 use ActionDispatch::Executor
 use ActiveSupport::Cache::Strategy::LocalCache::Middleware
@@ -399,6 +403,7 @@ use Rails::Rack::Logger
 use ActionDispatch::ShowExceptions
 use WebConsole::Middleware
 use ActionDispatch::DebugExceptions
+use ActionDispatch::ActionableExceptions
 use ActionDispatch::Reloader
 use ActionDispatch::Callbacks
 use ActiveRecord::Migration::CheckPending
@@ -412,7 +417,7 @@ use Rack::ETag
 use Rack::TempfileReaper
 run MyApp::Application.routes
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-625ff0384b158a3a9b76b2e5b4d39214">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7264b457ba8e48ed90e9cadfccfea725">Copiar</button>
 </div>
 <p>The default middlewares shown here (and some others) are each summarized in the <a href="#internal-middleware-stack">Internal Middlewares</a> section, below.</p><h4 id="configuring-middleware-stack"><a class="anchorlink" href="#configuring-middleware-stack">3.2 Configuring Middleware Stack</a></h4><p>Rails provides a simple configuration interface <code>config.middleware</code> for adding, removing, and modifying the middlewares in the middleware stack via <code>application.rb</code> or the environment specific configuration file <code>environments/&lt;environment&gt;.rb</code>.</p><h5 id="adding-a-middleware"><a class="anchorlink" href="#adding-a-middleware">3.2.1 Adding a Middleware</a></h5><p>You can add a new middleware to the middleware stack using any of the following methods:</p>
 <ul>
@@ -430,7 +435,7 @@ run MyApp::Application.routes
 <span class="c1"># Pass { page_cache: false } argument to Lifo::Cache.</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">insert_after</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Executor</span><span class="p">,</span> <span class="no">Lifo</span><span class="o">::</span><span class="no">Cache</span><span class="p">,</span> <span class="ss">page_cache: </span><span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6b1c370e30f36eefc857de9dfa9277c5"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-8445e3034a936804cfd44b4cd2c7d282"># config/application.rb
 
 # Push Rack::BounceFavicon at the bottom
 config.middleware.use Rack::BounceFavicon
@@ -439,7 +444,7 @@ config.middleware.use Rack::BounceFavicon
 # Pass { page_cache: false } argument to Lifo::Cache.
 config.middleware.insert_after ActionDispatch::Executor, Lifo::Cache, page_cache: false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6b1c370e30f36eefc857de9dfa9277c5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8445e3034a936804cfd44b4cd2c7d282">Copiar</button>
 </div>
 <h5 id="swapping-a-middleware"><a class="anchorlink" href="#swapping-a-middleware">3.2.2 Swapping a Middleware</a></h5><p>You can swap an existing middleware in the middleware stack using <code>config.middleware.swap</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
@@ -447,34 +452,34 @@ config.middleware.insert_after ActionDispatch::Executor, Lifo::Cache, page_cache
 <span class="c1"># Replace ActionDispatch::ShowExceptions with Lifo::ShowExceptions</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">swap</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">ShowExceptions</span><span class="p">,</span> <span class="no">Lifo</span><span class="o">::</span><span class="no">ShowExceptions</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e500ffb06822947188892628a8a7a049"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-de2ad0df3d8e1b3e3a65ef2c58848968"># config/application.rb
 
 # Replace ActionDispatch::ShowExceptions with Lifo::ShowExceptions
 config.middleware.swap ActionDispatch::ShowExceptions, Lifo::ShowExceptions
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e500ffb06822947188892628a8a7a049">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-de2ad0df3d8e1b3e3a65ef2c58848968">Copiar</button>
 </div>
 <h5 id="deleting-a-middleware"><a class="anchorlink" href="#deleting-a-middleware">3.2.3 Deleting a Middleware</a></h5><p>Add the following lines to your application configuration:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">delete</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Runtime</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5d105310619c63fd28a4da99728d409e"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-e13f36fe6a2e4f4533106db8c6b32758"># config/application.rb
 config.middleware.delete Rack::Runtime
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5d105310619c63fd28a4da99728d409e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e13f36fe6a2e4f4533106db8c6b32758">Copiar</button>
 </div>
 <p>And now if you inspect the middleware stack, you'll find that <code>Rack::Runtime</code> is
 not a part of it.</p><div class="code_container">
-<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>middleware
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>middleware
 <span class="go">(in /Users/lifo/Rails/blog)
 use ActionDispatch::Static
 </span><span class="gp">use #</span>&lt;ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x00000001c304c8&gt;
 <span class="c">...
 </span><span class="go">run Rails.application.routes
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-224a44ede478629b97ca0462c6533d5b">rails middleware
+<textarea class="clipboard-content" id="clipboard-aa3296024c7529a7346510b3fb5246a9">bin/rails middleware
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-224a44ede478629b97ca0462c6533d5b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aa3296024c7529a7346510b3fb5246a9">Copiar</button>
 </div>
 <p>If you want to remove session related middleware, do the following:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
@@ -482,21 +487,21 @@ use ActionDispatch::Static
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">delete</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Session</span><span class="o">::</span><span class="no">CookieStore</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">delete</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Flash</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6b7a6007e695c47aaf1afa9c2db99666"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-51afbb01c2af55439b8b8d1db85b5743"># config/application.rb
 config.middleware.delete ActionDispatch::Cookies
 config.middleware.delete ActionDispatch::Session::CookieStore
 config.middleware.delete ActionDispatch::Flash
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6b7a6007e695c47aaf1afa9c2db99666">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-51afbb01c2af55439b8b8d1db85b5743">Copiar</button>
 </div>
 <p>And to remove browser related middleware,</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">delete</span> <span class="no">Rack</span><span class="o">::</span><span class="no">MethodOverride</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a2841acc5cd710e928783d78a7f5d1e0"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-7b357319da334cbc92e6998870607d5a"># config/application.rb
 config.middleware.delete Rack::MethodOverride
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a2841acc5cd710e928783d78a7f5d1e0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7b357319da334cbc92e6998870607d5a">Copiar</button>
 </div>
 <h4 id="internal-middleware-stack"><a class="anchorlink" href="#internal-middleware-stack">3.3 Internal Middleware Stack</a></h4><p>Much of Action Controller's functionality is implemented as Middlewares. The following list explains the purpose of each of them:</p><p><strong><code>Rack::Sendfile</code></strong></p>
 <ul>
@@ -549,6 +554,10 @@ config.middleware.delete Rack::MethodOverride
 <p><strong><code>ActionDispatch::DebugExceptions</code></strong></p>
 <ul>
 <li>Responsible for logging exceptions and showing a debugging page in case the request is local.</li>
+</ul>
+<p><strong><code>ActionDispatch::ActionableExceptions</code></strong></p>
+<ul>
+<li>Provides a way to dispatch actions from Rails' error pages.</li>
 </ul>
 <p><strong><code>ActionDispatch::Reloader</code></strong></p>
 <ul>

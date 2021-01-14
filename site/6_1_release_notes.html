@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruby on Rails 6.1 Release Notes — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Ruby on Rails 6.1 Release Notes — Ruby on Rails Guides" />
+  <meta name="description" content="Ruby on Rails 6.1 Release NotesHighlights in Rails 6.1: Per-database Connection Switching Horizontal Sharding Strict Loading Associations Delegated Types Destroy Associations Async These release notes cover only the major changes. To learn about various bug fixes and changes, please refer to the change logs or check out the list of commits in the main Rails repository on GitHub." />
+  <meta property="og:description" content="Ruby on Rails 6.1 Release NotesHighlights in Rails 6.1: Per-database Connection Switching Horizontal Sharding Strict Loading Associations Delegated Types Destroy Associations Async These release notes cover only the major changes. To learn about various bug fixes and changes, please refer to the change logs or check out the list of commits in the main Rails repository on GitHub." />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div>
+    <div id="version-badge">v6.1.0</div>
+  </div>
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <dl class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </dl>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
+                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Ruby on Rails 6.1 Release Notes</h2><p>Highlights in Rails 6.1:</p>
+<ul>
+<li>Per-database Connection Switching</li>
+<li>Horizontal Sharding</li>
+<li>Strict Loading Associations</li>
+<li>Delegated Types</li>
+<li>Destroy Associations Async</li>
+</ul>
+<p>These release notes cover only the major changes. To learn about various bug
+fixes and changes, please refer to the change logs or check out the <a href="https://github.com/rails/rails/commits/master">list of
+commits</a> in the main Rails
+repository on GitHub.</p>
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#upgrading-to-rails-6-1">Upgrading to Rails 6.1</a></li>
+<li>
+<a href="#major-features">Major Features</a>
+
+<ul>
+<li><a href="#per-database-connection-switching">Per-database Connection Switching</a></li>
+<li><a href="#horizontal-sharding">Horizontal Sharding</a></li>
+<li><a href="#strict-loading-associations">Strict Loading Associations</a></li>
+<li><a href="#delegated-types">Delegated Types</a></li>
+<li><a href="#destroy-associations-async">Destroy Associations Async</a></li>
+</ul>
+</li>
+<li>
+<a href="#railties">Railties</a>
+
+<ul>
+<li><a href="#railties-removals">Removals</a></li>
+<li><a href="#railties-deprecations">Deprecations</a></li>
+<li><a href="#railties-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-cable">Action Cable</a>
+
+<ul>
+<li><a href="#action-cable-removals">Removals</a></li>
+<li><a href="#action-cable-deprecations">Deprecations</a></li>
+<li><a href="#action-cable-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-pack">Action Pack</a>
+
+<ul>
+<li><a href="#action-pack-removals">Removals</a></li>
+<li><a href="#action-pack-deprecations">Deprecations</a></li>
+<li><a href="#action-pack-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-view">Action View</a>
+
+<ul>
+<li><a href="#action-view-removals">Removals</a></li>
+<li><a href="#action-view-deprecations">Deprecations</a></li>
+<li><a href="#action-view-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-mailer">Action Mailer</a>
+
+<ul>
+<li><a href="#action-mailer-removals">Removals</a></li>
+<li><a href="#action-mailer-deprecations">Deprecations</a></li>
+<li><a href="#action-mailer-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#active-record">Active Record</a>
+
+<ul>
+<li><a href="#active-record-removals">Removals</a></li>
+<li><a href="#active-record-deprecations">Deprecations</a></li>
+<li><a href="#active-record-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#active-storage">Active Storage</a>
+
+<ul>
+<li><a href="#active-storage-removals">Removals</a></li>
+<li><a href="#active-storage-deprecations">Deprecations</a></li>
+<li><a href="#active-storage-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#active-model">Active Model</a>
+
+<ul>
+<li><a href="#active-model-removals">Removals</a></li>
+<li><a href="#active-model-deprecations">Deprecations</a></li>
+<li><a href="#active-model-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#active-support">Active Support</a>
+
+<ul>
+<li><a href="#active-support-removals">Removals</a></li>
+<li><a href="#active-support-deprecations">Deprecations</a></li>
+<li><a href="#active-support-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#active-job">Active Job</a>
+
+<ul>
+<li><a href="#active-job-removals">Removals</a></li>
+<li><a href="#active-job-deprecations">Deprecations</a></li>
+<li><a href="#active-job-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-text">Action Text</a>
+
+<ul>
+<li><a href="#action-text-removals">Removals</a></li>
+<li><a href="#action-text-deprecations">Deprecations</a></li>
+<li><a href="#action-text-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-mailbox">Action Mailbox</a>
+
+<ul>
+<li><a href="#action-mailbox-removals">Removals</a></li>
+<li><a href="#action-mailbox-deprecations">Deprecations</a></li>
+<li><a href="#action-mailbox-notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li>
+<a href="#ruby-on-rails-guides">Ruby on Rails Guides</a>
+
+<ul>
+<li><a href="#notable-changes">Notable changes</a></li>
+</ul>
+</li>
+<li><a href="#credits">Credits</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="upgrading-to-rails-6-1"><a class="anchorlink" href="#upgrading-to-rails-6-1">1 Upgrading to Rails 6.1</a></h3><p>If you're upgrading an existing application, it's a great idea to have good test
+coverage before going in. You should also first upgrade to Rails 6.0 in case you
+haven't and make sure your application still runs as expected before attempting
+an update to Rails 6.1. A list of things to watch out for when upgrading is
+available in the
+<a href="upgrading_ruby_on_rails.html#upgrading-from-rails-6-0-to-rails-6-1">Upgrading Ruby on Rails</a>
+guide.</p><h3 id="major-features"><a class="anchorlink" href="#major-features">2 Major Features</a></h3><h4 id="per-database-connection-switching"><a class="anchorlink" href="#per-database-connection-switching">2.1 Per-database Connection Switching</a></h4><p>Rails 6.1 provides you with the ability to <a href="https://github.com/rails/rails/pull/40370">switch connections per-database</a>. In 6.0 if you switched to the <code>reading</code> role then all database connections also switched to the reading role. Now in 6.1 if you set <code>legacy_connection_handling</code> to <code>false</code> in your configuration, Rails will allow you to switch connections for a single database by calling <code>connected_to</code> on the corresponding abstract class.</p><h4 id="horizontal-sharding"><a class="anchorlink" href="#horizontal-sharding">2.2 Horizontal Sharding</a></h4><p>Rails 6.0 provided the ability to functionally partition (multiple partitions, different schemas) your database but wasn't able to support horizontal sharding (same schema, multiple partitions). Rails wasn't able to support horizontal sharding because models in Active Record could only have one connection per-role per-class. This is now fixed and <a href="https://github.com/rails/rails/pull/38531">horizontal sharding</a> with Rails is available.</p><h4 id="strict-loading-associations"><a class="anchorlink" href="#strict-loading-associations">2.3 Strict Loading Associations</a></h4><p><a href="https://github.com/rails/rails/pull/37400">Strict loading associations</a> allows you to ensure that all
+your associations are loaded eagerly and stop N+1's before they happen.</p><h4 id="delegated-types"><a class="anchorlink" href="#delegated-types">2.4 Delegated Types</a></h4><p><a href="https://github.com/rails/rails/pull/39341">Delegated Types</a> is an alternative to single-table inheritance. This is helpful for representing class hierarchies allowing the superclass to be a concrete class that is represented by its own table. Each subclass has its own table for additional attributes.</p><h4 id="destroy-associations-async"><a class="anchorlink" href="#destroy-associations-async">2.5 Destroy Associations Async</a></h4><p><a href="https://github.com/rails/rails/pull/40157">Destroy associations async</a> adds the ability for applications to <code>destroy</code> associations in a background job. This can help you avoid timeouts and other performance issues in your application when destroying data.</p><h3 id="railties"><a class="anchorlink" href="#railties">3 Railties</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/railties/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="railties-removals"><a class="anchorlink" href="#railties-removals">3.1 Removals</a></h4>
+<ul>
+<li><p>  Remove deprecated <code>rake notes</code> tasks.</p></li>
+<li><p>  Remove deprecated <code>connection</code> option in the <code>rails dbconsole</code> command.</p></li>
+<li><p>  Remove deprecated <code>SOURCE_ANNOTATION_DIRECTORIES</code> environment variable support from <code>rails notes</code>.</p></li>
+<li><p>  Remove deprecated <code>server</code> argument from the rails server command.</p></li>
+<li><p>  Remove deprecated support for using the <code>HOST</code> environment variable to specify the server IP.</p></li>
+<li><p>  Remove deprecated <code>rake dev:cache</code> tasks.</p></li>
+<li><p>  Remove deprecated <code>rake routes</code> tasks.</p></li>
+<li><p>  Remove deprecated <code>rake initializers</code> tasks.</p></li>
+</ul>
+<h4 id="railties-deprecations"><a class="anchorlink" href="#railties-deprecations">3.2 Deprecations</a></h4><h4 id="railties-notable-changes"><a class="anchorlink" href="#railties-notable-changes">3.3 Notable changes</a></h4><h3 id="action-cable"><a class="anchorlink" href="#action-cable">4 Action Cable</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actioncable/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-cable-removals"><a class="anchorlink" href="#action-cable-removals">4.1 Removals</a></h4><h4 id="action-cable-deprecations"><a class="anchorlink" href="#action-cable-deprecations">4.2 Deprecations</a></h4><h4 id="action-cable-notable-changes"><a class="anchorlink" href="#action-cable-notable-changes">4.3 Notable changes</a></h4><h3 id="action-pack"><a class="anchorlink" href="#action-pack">5 Action Pack</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actionpack/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-pack-removals"><a class="anchorlink" href="#action-pack-removals">5.1 Removals</a></h4>
+<ul>
+<li><p>  Remove deprecated <code>ActionDispatch::Http::ParameterFilter</code>.</p></li>
+<li><p>  Remove deprecated <code>force_ssl</code> at the controller level.</p></li>
+</ul>
+<h4 id="action-pack-deprecations"><a class="anchorlink" href="#action-pack-deprecations">5.2 Deprecations</a></h4>
+<ul>
+<li>  Deprecate <code>config.action_dispatch.return_only_media_type_on_content_type</code>.</li>
+</ul>
+<h4 id="action-pack-notable-changes"><a class="anchorlink" href="#action-pack-notable-changes">5.3 Notable changes</a></h4>
+<ul>
+<li>  Change <code>ActionDispatch::Response#content_type</code> to return the full Content-Type header.</li>
+</ul>
+<h3 id="action-view"><a class="anchorlink" href="#action-view">6 Action View</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actionview/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-view-removals"><a class="anchorlink" href="#action-view-removals">6.1 Removals</a></h4>
+<ul>
+<li><p>  Remove deprecated <code>escape_whitelist</code> from <code>ActionView::Template::Handlers::ERB</code>.</p></li>
+<li><p>  Remove deprecated <code>find_all_anywhere</code> from <code>ActionView::Resolver</code>.</p></li>
+<li><p>  Remove deprecated <code>formats</code> from <code>ActionView::Template::HTML</code>.</p></li>
+<li><p>  Remove deprecated <code>formats</code> from <code>ActionView::Template::RawFile</code>.</p></li>
+<li><p>  Remove deprecated <code>formats</code> from <code>ActionView::Template::Text</code>.</p></li>
+<li><p>  Remove deprecated <code>find_file</code> from <code>ActionView::PathSet</code>.</p></li>
+<li><p>  Remove deprecated <code>rendered_format</code> from <code>ActionView::LookupContext</code>.</p></li>
+<li><p>  Remove deprecated <code>find_file</code> from <code>ActionView::ViewPaths</code>.</p></li>
+<li><p>  Remove deprecated support to pass an object that is not a <code>ActionView::LookupContext</code> as the first argument
+in <code>ActionView::Base#initialize</code>.</p></li>
+<li><p>  Remove deprecated <code>format</code> argument <code>ActionView::Base#initialize</code>.</p></li>
+<li><p>  Remove deprecated <code>ActionView::Template#refresh</code>.</p></li>
+<li><p>  Remove deprecated <code>ActionView::Template#original_encoding</code>.</p></li>
+<li><p>  Remove deprecated <code>ActionView::Template#variants</code>.</p></li>
+<li><p>  Remove deprecated <code>ActionView::Template#formats</code>.</p></li>
+<li><p>  Remove deprecated <code>ActionView::Template#virtual_path=</code>.</p></li>
+<li><p>  Remove deprecated <code>ActionView::Template#updated_at</code>.</p></li>
+<li><p>  Remove deprecated <code>updated_at</code> argument required on <code>ActionView::Template#initialize</code>.</p></li>
+<li><p>  Remove deprecated <code>ActionView::Template.finalize_compiled_template_methods</code>.</p></li>
+<li><p>  Remove deprecated <code>config.action_view.finalize_compiled_template_methods</code></p></li>
+<li><p>  Remove deprecated support to calling <code>ActionView::ViewPaths#with_fallback</code> with a block.</p></li>
+<li><p>  Remove deprecated support to passing absolute paths to <code>render template:</code>.</p></li>
+<li><p>  Remove deprecated support to passing relative paths to <code>render file:</code>.</p></li>
+<li><p>  Remove support to template handlers that don't accept two arguments.</p></li>
+<li><p>  Remove deprecated pattern argument in <code>ActionView::Template::PathResolver</code>.</p></li>
+<li><p>  Remove deprecated support to call private methods from object in some view helpers.</p></li>
+</ul>
+<h4 id="action-view-deprecations"><a class="anchorlink" href="#action-view-deprecations">6.2 Deprecations</a></h4><h4 id="action-view-notable-changes"><a class="anchorlink" href="#action-view-notable-changes">6.3 Notable changes</a></h4>
+<ul>
+<li><p>  Require that <code>ActionView::Base</code> subclasses implement <code>#compiled_method_container</code>.</p></li>
+<li><p>  Make <code>locals</code> argument required on <code>ActionView::Template#initialize</code>.</p></li>
+</ul>
+<h3 id="action-mailer"><a class="anchorlink" href="#action-mailer">7 Action Mailer</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actionmailer/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-mailer-removals"><a class="anchorlink" href="#action-mailer-removals">7.1 Removals</a></h4>
+<ul>
+<li>  Remove deprecated <code>ActionMailer::Base.receive</code> in favor of <a href="https://github.com/rails/rails/tree/master/actionmailbox">Action Mailbox</a>.</li>
+</ul>
+<h4 id="action-mailer-deprecations"><a class="anchorlink" href="#action-mailer-deprecations">7.2 Deprecations</a></h4><h4 id="action-mailer-notable-changes"><a class="anchorlink" href="#action-mailer-notable-changes">7.3 Notable changes</a></h4><h3 id="active-record"><a class="anchorlink" href="#active-record">8 Active Record</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activerecord/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-record-removals"><a class="anchorlink" href="#active-record-removals">8.1 Removals</a></h4>
+<ul>
+<li>
+<p>  Remove deprecated methods from <code>ActiveRecord::ConnectionAdapters::DatabaseLimits</code>.</p>
+<p><code>column_name_length</code>
+<code>table_name_length</code>
+<code>columns_per_table</code>
+<code>indexes_per_table</code>
+<code>columns_per_multicolumn_index</code>
+<code>sql_query_length</code>
+<code>joins_per_query</code></p>
+</li>
+<li><p>  Remove deprecated <code>ActiveRecord::ConnectionAdapters::AbstractAdapter#supports_multi_insert?</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::ConnectionAdapters::AbstractAdapter#supports_foreign_keys_in_create?</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::ConnectionAdapters::PostgreSQLAdapter#supports_ranges?</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::Base#update_attributes</code> and <code>ActiveRecord::Base#update_attributes!</code>.</p></li>
+<li><p>  Remove deprecated <code>migrations_path</code> argument in
+<code>ActiveRecord::ConnectionAdapter::SchemaStatements#assume_migrated_upto_version</code>.</p></li>
+<li><p>  Remove deprecated <code>config.active_record.sqlite3.represent_boolean_as_integer</code>.</p></li>
+<li>
+<p>  Remove deprecated methods from <code>ActiveRecord::DatabaseConfigurations</code>.</p>
+<p><code>fetch</code>
+<code>each</code>
+<code>first</code>
+<code>values</code>
+<code>[]=</code></p>
+</li>
+<li><p>  Remove deprecated <code>ActiveRecord::Result#to_hash</code> method.</p></li>
+<li><p>  Remove deprecated support for using unsafe raw SQL in <code>ActiveRecord::Relation</code> methods.</p></li>
+</ul>
+<h4 id="active-record-deprecations"><a class="anchorlink" href="#active-record-deprecations">8.2 Deprecations</a></h4>
+<ul>
+<li>  Deprecate <code>ActiveRecord::Base.allow_unsafe_raw_sql</code>.</li>
+</ul>
+<h4 id="active-record-notable-changes"><a class="anchorlink" href="#active-record-notable-changes">8.3 Notable changes</a></h4>
+<ul>
+<li><p>  MySQL: Uniqueness validator now respects default database collation,
+no longer enforce case sensitive comparison by default.</p></li>
+<li>
+<p>  <code>relation.create</code> does no longer leak scope to class level querying methods
+in initialization block and callbacks.</p>
+<p>Before:</p>
+<div class="code_container">
+<pre><code class="highlight plaintext">User.where(name: "John").create do |john|
+  User.find_by(name: "David") # =&gt; nil
+end
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-181151bed9cfecda5143a4bef4b8f913">User.where(name: "John").create do |john|
+  User.find_by(name: "David") # =&gt; nil
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-181151bed9cfecda5143a4bef4b8f913">Copiar</button>
+</div>
+<p>After:</p>
+<div class="code_container">
+<pre><code class="highlight plaintext">User.where(name: "John").create do |john|
+  User.find_by(name: "David") # =&gt; #&lt;User name: "David", ...&gt;
+end
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e540c7966da9aa0a0c09d5162d8a7213">User.where(name: "John").create do |john|
+  User.find_by(name: "David") # =&gt; #&lt;User name: "David", ...&gt;
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e540c7966da9aa0a0c09d5162d8a7213">Copiar</button>
+</div>
+</li>
+<li>
+<p>  Named scope chain does no longer leak scope to class level querying methods.</p>
+<div class="code_container">
+<pre><code class="highlight plaintext">class User &lt; ActiveRecord::Base
+  scope :david, -&gt; { User.where(name: "David") }
+end
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2f548edc4d6be7d7a4fef47b2d6cbc99">class User &lt; ActiveRecord::Base
+  scope :david, -&gt; { User.where(name: "David") }
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2f548edc4d6be7d7a4fef47b2d6cbc99">Copiar</button>
+</div>
+<p>Before:</p>
+<div class="code_container">
+<pre><code class="highlight plaintext">User.where(name: "John").david
+# SELECT * FROM users WHERE name = 'John' AND name = 'David'
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0c8cf2204e94d3fb01d60938288f5223">User.where(name: "John").david
+# SELECT * FROM users WHERE name = 'John' AND name = 'David'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0c8cf2204e94d3fb01d60938288f5223">Copiar</button>
+</div>
+<p>After:</p>
+<div class="code_container">
+<pre><code class="highlight plaintext">User.where(name: "John").david
+# SELECT * FROM users WHERE name = 'David'
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5d393129244b0a56d56d3c0595881433">User.where(name: "John").david
+# SELECT * FROM users WHERE name = 'David'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5d393129244b0a56d56d3c0595881433">Copiar</button>
+</div>
+</li>
+<li>
+<p>  <code>where.not</code> now generates NAND predicates instead of NOR.</p>
+<p> Before:</p>
+<div class="code_container">
+<pre><code class="highlight plaintext"> User.where.not(name: "Jon", role: "admin")
+ # SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cfa14114f9542e6bc1b8d89b70ca9b36"> User.where.not(name: "Jon", role: "admin")
+ # SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cfa14114f9542e6bc1b8d89b70ca9b36">Copiar</button>
+</div>
+<p> After:</p>
+<div class="code_container">
+<pre><code class="highlight plaintext"> User.where.not(name: "Jon", role: "admin")
+ # SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f528bcd0eb91baad021775b08ea4d9a4"> User.where.not(name: "Jon", role: "admin")
+ # SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f528bcd0eb91baad021775b08ea4d9a4">Copiar</button>
+</div>
+</li>
+</ul>
+<h3 id="active-storage"><a class="anchorlink" href="#active-storage">9 Active Storage</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activestorage/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-storage-removals"><a class="anchorlink" href="#active-storage-removals">9.1 Removals</a></h4>
+<ul>
+<li><p>  Remove deprecated support to pass <code>:combine_options</code> operations to <code>ActiveStorage::Transformers::ImageProcessing</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveStorage::Transformers::MiniMagickTransformer</code>.</p></li>
+<li><p>  Remove deprecated <code>config.active_storage.queue</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveStorage::Downloading</code>.</p></li>
+</ul>
+<h4 id="active-storage-deprecations"><a class="anchorlink" href="#active-storage-deprecations">9.2 Deprecations</a></h4>
+<ul>
+<li>  Deprecate <code>Blob.create_after_upload</code> in favor of <code>Blob.create_and_upload</code>.
+(<a href="https://github.com/rails/rails/pull/34827">Pull Request</a>)</li>
+</ul>
+<h4 id="active-storage-notable-changes"><a class="anchorlink" href="#active-storage-notable-changes">9.3 Notable changes</a></h4>
+<ul>
+<li>  Add <code>Blob.create_and_upload</code> to create a new blob and upload the given <code>io</code>
+to the service.
+(<a href="https://github.com/rails/rails/pull/34827">Pull Request</a>)</li>
+</ul>
+<h3 id="active-model"><a class="anchorlink" href="#active-model">10 Active Model</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activemodel/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-model-removals"><a class="anchorlink" href="#active-model-removals">10.1 Removals</a></h4><h4 id="active-model-deprecations"><a class="anchorlink" href="#active-model-deprecations">10.2 Deprecations</a></h4><h4 id="active-model-notable-changes"><a class="anchorlink" href="#active-model-notable-changes">10.3 Notable changes</a></h4>
+<ul>
+<li>  Active Model's errors are now objects with an interface that allows your application to more
+easily handle and interact with errors thrown by models.
+<a href="https://github.com/rails/rails/pull/32313">The feature</a> includes a query interface, enables
+more precise testing, and access to error details.</li>
+</ul>
+<h3 id="active-support"><a class="anchorlink" href="#active-support">11 Active Support</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activesupport/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-support-removals"><a class="anchorlink" href="#active-support-removals">11.1 Removals</a></h4>
+<ul>
+<li><p>  Remove deprecated fallback to <code>I18n.default_local</code> when <code>config.i18n.fallbacks</code> is empty.</p></li>
+<li><p>  Remove deprecated <code>LoggerSilence</code> constant.</p></li>
+<li><p>  Remove deprecated <code>ActiveSupport::LoggerThreadSafeLevel#after_initialize</code>.</p></li>
+<li><p>  Remove deprecated <code>Module#parent_name</code>, <code>Module#parent</code> and <code>Module#parents</code>.</p></li>
+<li><p>  Remove deprecated file <code>active_support/core_ext/module/reachable</code>.</p></li>
+<li><p>  Remove deprecated file <code>active_support/core_ext/numeric/inquiry</code>.</p></li>
+<li><p>  Remove deprecated file <code>active_support/core_ext/array/prepend_and_append</code>.</p></li>
+<li><p>  Remove deprecated file <code>active_support/core_ext/hash/compact</code>.</p></li>
+<li><p>  Remove deprecated file <code>active_support/core_ext/hash/transform_values</code>.</p></li>
+<li><p>  Remove deprecated file <code>active_support/core_ext/range/include_range</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveSupport::Multibyte::Chars#consumes?</code> and <code>ActiveSupport::Multibyte::Chars#normalize</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveSupport::Multibyte::Unicode.pack_graphemes</code>,
+<code>ActiveSupport::Multibyte::Unicode.unpack_graphemes</code>,
+<code>ActiveSupport::Multibyte::Unicode.normalize</code>,
+<code>ActiveSupport::Multibyte::Unicode.downcase</code>,
+<code>ActiveSupport::Multibyte::Unicode.upcase</code> and <code>ActiveSupport::Multibyte::Unicode.swapcase</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveSupport::Notifications::Instrumenter#end=</code>.</p></li>
+</ul>
+<h4 id="active-support-deprecations"><a class="anchorlink" href="#active-support-deprecations">11.2 Deprecations</a></h4>
+<ul>
+<li>  Deprecate <code>ActiveSupport::Multibyte::Unicode.default_normalization_form</code>.</li>
+</ul>
+<h4 id="active-support-notable-changes"><a class="anchorlink" href="#active-support-notable-changes">11.3 Notable changes</a></h4><h3 id="active-job"><a class="anchorlink" href="#active-job">12 Active Job</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activejob/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-job-removals"><a class="anchorlink" href="#active-job-removals">12.1 Removals</a></h4><h4 id="active-job-deprecations"><a class="anchorlink" href="#active-job-deprecations">12.2 Deprecations</a></h4>
+<ul>
+<li>  Deprecate <code>config.active_job.return_false_on_aborted_enqueue</code>.</li>
+</ul>
+<h4 id="active-job-notable-changes"><a class="anchorlink" href="#active-job-notable-changes">12.3 Notable changes</a></h4>
+<ul>
+<li>  Return <code>false</code> when enqueuing a job is aborted.</li>
+</ul>
+<h3 id="action-text"><a class="anchorlink" href="#action-text">13 Action Text</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actiontext/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-text-removals"><a class="anchorlink" href="#action-text-removals">13.1 Removals</a></h4><h4 id="action-text-deprecations"><a class="anchorlink" href="#action-text-deprecations">13.2 Deprecations</a></h4><h4 id="action-text-notable-changes"><a class="anchorlink" href="#action-text-notable-changes">13.3 Notable changes</a></h4>
+<ul>
+<li><p>  Add method to confirm rich text content existence by adding <code>?</code> after
+name of the rich text attribute.
+(<a href="https://github.com/rails/rails/pull/37951">Pull Request</a>)</p></li>
+<li><p>  Add <code>fill_in_rich_text_area</code> system test case helper to find a trix
+editor and fill it with given HTML content.
+(<a href="https://github.com/rails/rails/pull/35885">Pull Request</a>)</p></li>
+<li><p>  Add <code>ActionText::FixtureSet.attachment</code> to generate
+<code>&lt;action-text-attachment&gt;</code> elements in database fixtures.
+(<a href="https://github.com/rails/rails/pull/40289">Pull Request</a>)</p></li>
+</ul>
+<h3 id="action-mailbox"><a class="anchorlink" href="#action-mailbox">14 Action Mailbox</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actionmailbox/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-mailbox-removals"><a class="anchorlink" href="#action-mailbox-removals">14.1 Removals</a></h4><h4 id="action-mailbox-deprecations"><a class="anchorlink" href="#action-mailbox-deprecations">14.2 Deprecations</a></h4><h4 id="action-mailbox-notable-changes"><a class="anchorlink" href="#action-mailbox-notable-changes">14.3 Notable changes</a></h4><h3 id="ruby-on-rails-guides"><a class="anchorlink" href="#ruby-on-rails-guides">15 Ruby on Rails Guides</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/guides/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="notable-changes"><a class="anchorlink" href="#notable-changes">15.1 Notable changes</a></h4><h3 id="credits"><a class="anchorlink" href="#credits">16 Credits</a></h3><p>See the
+<a href="https://contributors.rubyonrails.org/">full list of contributors to Rails</a>
+for the many people who spent many hours making Rails, the stable and robust
+framework it is. Kudos to all of them.</p>
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch master.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+</body>
+</html>

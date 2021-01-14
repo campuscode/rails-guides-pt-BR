@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,9 @@
   <meta property="og:type" content="website" />
 </head>
 <body class="guide">
+  <div>
+    <div id="version-badge">v6.1.0</div>
+  </div>
   <div id="topNav">
     <div class="wrapper">
       <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
@@ -34,7 +37,7 @@
         <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
         <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
       </ul>
     </div>
@@ -53,7 +56,7 @@
           <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
-            <div class="guides-section-container">
+            <dl class="guides-section-container">
                 <div class="guides-section">
                   <dt>Comece aqui</dt>
                   <dd><a href="getting_started.html">Começando com Rails</a></dd>
@@ -143,7 +146,7 @@
                   <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
                 </div>
             </div>
-          </div>
+          </dl>
         </li>
         <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
         <li class="guides-search guides-search-small">
@@ -258,13 +261,14 @@
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#enabling-zeitwerk-mode">Enabling Zeitwerk Mode</a></li>
 <li><a href="#project-structure">Project Structure</a></li>
-<li><a href="#autoload-paths">Autoload paths</a></li>
+<li><a href="#autoload-paths">Autoload Paths</a></li>
 <li><a href="#load-path">$LOAD_PATH</a></li>
 <li>
 <a href="#reloading">Reloading</a>
 
 <ul>
 <li><a href="#reloading-and-stale-objects">Reloading and Stale Objects</a></li>
+<li><a href="#autoloading-when-the-application-boots">Autoloading when the application boots</a></li>
 </ul>
 </li>
 <li><a href="#eager-loading">Eager Loading</a></li>
@@ -272,6 +276,17 @@
 <li><a href="#customizing-inflections">Customizing Inflections</a></li>
 <li><a href="#troubleshooting">Troubleshooting</a></li>
 <li><a href="#rails-autoloaders">Rails.autoloaders</a></li>
+<li>
+<a href="#differences-with-classic-mode">Differences with Classic Mode</a>
+
+<ul>
+<li><a href="#ruby-constant-lookup-compliance">Ruby Constant Lookup Compliance</a></li>
+<li><a href="#less-file-lookups">Less File Lookups</a></li>
+<li><a href="#underscore-vs-camelize">Underscore vs Camelize</a></li>
+<li><a href="#more-differences">More Differences</a></li>
+</ul>
+</li>
+<li><a href="#classic-mode-is-deprecated">Classic Mode is Deprecated</a></li>
 <li><a href="#opting-out">Opting Out</a></li>
 </ol>
 
@@ -295,7 +310,7 @@
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4f64697a0db2f252403eaecd2cb1becb"># DO NOT DO THIS.
+<textarea class="clipboard-content" id="clipboard-8d82501603dc0da2dd4f9e944690761e"># DO NOT DO THIS.
 require "application_controller"
 require "post"
 # DO NOT DO THIS.
@@ -306,7 +321,7 @@ class PostsController &lt; ApplicationController
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4f64697a0db2f252403eaecd2cb1becb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8d82501603dc0da2dd4f9e944690761e">Copiar</button>
 </div>
 <p>This is not the case in Rails applications, where application classes and modules are just available everywhere:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -315,103 +330,121 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-24fd324e460f4ad657dd925e9e421abd">class PostsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-80193d8e377fd3d6bd4d82cbd2ae9b6f">class PostsController &lt; ApplicationController
   def index
     @posts = Post.all
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-24fd324e460f4ad657dd925e9e421abd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80193d8e377fd3d6bd4d82cbd2ae9b6f">Copiar</button>
 </div>
 <p>Idiomatic Rails applications only issue <code>require</code> calls to load stuff from their <code>lib</code> directory, the Ruby standard library, Ruby gems, etc. That is, anything that does not belong to their autoload paths, explained below.</p><h3 id="enabling-zeitwerk-mode"><a class="anchorlink" href="#enabling-zeitwerk-mode">2 Enabling Zeitwerk Mode</a></h3><p>The autoloading <code>zeitwerk</code> mode is enabled by default in Rails 6 applications running on CRuby:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
-<span class="n">config</span><span class="p">.</span><span class="nf">load_defaults</span> <span class="s2">"6.0"</span> <span class="c1"># enables zeitwerk mode in CRuby</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">load_defaults</span> <span class="mf">6.0</span> <span class="c1"># enables zeitwerk mode in CRuby</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d7030a6abca340416c53d4c01c24e20a"># config/application.rb
-config.load_defaults "6.0" # enables zeitwerk mode in CRuby
+<textarea class="clipboard-content" id="clipboard-867a33ebf1d98c534984897e8fb393a5"># config/application.rb
+config.load_defaults 6.0 # enables zeitwerk mode in CRuby
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d7030a6abca340416c53d4c01c24e20a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-867a33ebf1d98c534984897e8fb393a5">Copiar</button>
 </div>
 <p>In <code>zeitwerk</code> mode, Rails uses <a href="https://github.com/fxn/zeitwerk">Zeitwerk</a> internally to autoload, reload, and eager load. Rails instantiates and configures a dedicated Zeitwerk instance that manages the project.</p><div class="info"><p>You do not configure Zeitwerk manually in a Rails application. Rather, you configure the application using the portable configuration points explained in this guide, and Rails translates that to Zeitwerk on your behalf.</p></div><h3 id="project-structure"><a class="anchorlink" href="#project-structure">3 Project Structure</a></h3><p>In a Rails application file names have to match the constants they define, with directories acting as namespaces.</p><p>For example, the file <code>app/helpers/users_helper.rb</code> should define <code>UsersHelper</code> and the file <code>app/controllers/admin/payments_controller.rb</code> should define <code>Admin::PaymentsController</code>.</p><p>By default, Rails configures Zeitwerk to inflect file names with <code>String#camelize</code>. For example, it expects that <code>app/controllers/users_controller.rb</code> defines the constant <code>UsersController</code> because</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="s2">"users_controller"</span><span class="p">.</span><span class="nf">camelize</span> <span class="c1"># =&gt; UsersController</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1cd282e4cfbd91ac9dfa38e9906e347c">"users_controller".camelize # =&gt; UsersController
+<textarea class="clipboard-content" id="clipboard-c8fb2246c2e1041ad9428889ca9ad030">"users_controller".camelize # =&gt; UsersController
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1cd282e4cfbd91ac9dfa38e9906e347c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c8fb2246c2e1041ad9428889ca9ad030">Copiar</button>
 </div>
-<p>The section <em>Customizing Inflections</em> below documents ways to override this default.</p><p>Please, check the <a href="https://github.com/fxn/zeitwerk#file-structure">Zeitwerk documentation</a> for further details.</p><h3 id="autoload-paths"><a class="anchorlink" href="#autoload-paths">4 Autoload paths</a></h3><p>We call <em>autoload paths</em> to the list of application directories whose contents are to be autoloaded. For example, <code>app/models</code>. Such directories represent the root namespace: <code>Object</code>.</p><div class="info"><p>Autoload paths are called <em>root directories</em> in Zeitwerk documentation, but we'll stay with "autoload path" in this guide.</p></div><p>Within an autoload path, file names must match the constants they define as documented <a href="https://github.com/fxn/zeitwerk#file-structure">here</a>.</p><p>By default, the autoload paths of an application consist of all the subdirectories of <code>app</code> that exist when the application boots ---except for <code>assets</code>, <code>javascripts</code>, <code>views</code>,--- plus the autoload paths of engines it might depend on.</p><p>For example, if <code>UsersHelper</code> is implemented in <code>app/helpers/users_helper.rb</code>, the module is autoloadable, you do not need (and should not write) a <code>require</code> call for it:</p><div class="code_container">
-<pre><code class="highlight plaintext">$ bin/rails runner 'p UsersHelper'
-UsersHelper
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-a3c9352b8a8fdd281714cc45ca058f7e">$ bin/rails runner 'p UsersHelper'
-UsersHelper
+<p>The section <em>Customizing Inflections</em> below documents ways to override this default.</p><p>Please, check the <a href="https://github.com/fxn/zeitwerk#file-structure">Zeitwerk documentation</a> for further details.</p><h3 id="autoload-paths"><a class="anchorlink" href="#autoload-paths">4 Autoload Paths</a></h3><p>We refer to the list of application directories whose contents are to be autoloaded as <em>autoload paths</em>. For example, <code>app/models</code>. Such directories represent the root namespace: <code>Object</code>.</p><div class="info"><p>Autoload paths are called <em>root directories</em> in Zeitwerk documentation, but we'll stay with "autoload path" in this guide.</p></div><p>Within an autoload path, file names must match the constants they define as documented <a href="https://github.com/fxn/zeitwerk#file-structure">here</a>.</p><p>By default, the autoload paths of an application consist of all the subdirectories of <code>app</code> that exist when the application boots ---except for <code>assets</code>, <code>javascript</code>, <code>views</code>,--- plus the autoload paths of engines it might depend on.</p><p>For example, if <code>UsersHelper</code> is implemented in <code>app/helpers/users_helper.rb</code>, the module is autoloadable, you do not need (and should not write) a <code>require</code> call for it:</p><div class="code_container">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>runner <span class="s1">'p UsersHelper'</span>
+<span class="go">UsersHelper
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-c7cfcf25e4d929e6fb2f9127db36c076">bin/rails runner 'p UsersHelper'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a3c9352b8a8fdd281714cc45ca058f7e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c7cfcf25e4d929e6fb2f9127db36c076">Copiar</button>
 </div>
 <p>Autoload paths automatically pick any custom directories under <code>app</code>. For example, if your application has <code>app/presenters</code>, or <code>app/services</code>, etc., they are added to autoload paths.</p><p>The array of autoload paths can be extended by mutating <code>config.autoload_paths</code>, in <code>config/application.rb</code>, but nowadays this is discouraged.</p><div class="warning"><p>Please, do not mutate <code>ActiveSupport::Dependencies.autoload_paths</code>, the public interface to change autoload paths is <code>config.autoload_paths</code>.</p></div><h3 id="load-path"><a class="anchorlink" href="#load-path">5 $LOAD_PATH</a></h3><p>Autoload paths are added to <code>$LOAD_PATH</code> by default. However, Zeitwerk uses absolute file names internally, and your application should not issue <code>require</code> calls for autoloadable files, so those directories are actually not needed there. You can opt-out with this flag:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">add_autoload_paths_to_load_path</span> <span class="o">=</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ce34ceb3c2f40161a83556d8c36dafa2">config.add_autoload_paths_to_load_path = false
+<textarea class="clipboard-content" id="clipboard-f819f8c66032636f2197deb1512a822b">config.add_autoload_paths_to_load_path = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ce34ceb3c2f40161a83556d8c36dafa2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f819f8c66032636f2197deb1512a822b">Copiar</button>
 </div>
-<p>That may speed legit <code>require</code> calls a bit, since there are less lookups. Also, if your application uses <a href="https://github.com/Shopify/bootsnap">Bootsnap</a>, that saves the library from building unnecessary indexes, and saves the RAM they would need.</p><h3 id="reloading"><a class="anchorlink" href="#reloading">6 Reloading</a></h3><p>Rails automatically reloads classes and modules if application files change.</p><p>More precisely, if the web server is running and application files have been modified, Rails unloads all autoloaded constants just before the next request is processed. That way, application classes or modules used during that request are going to be autoloaded, thus picking up their current implementation in the file system.</p><p>Reloading can be enabled or disabled. The setting that controls this behavior is <code>config.cache_classes</code>, which is false by default in <code>development</code> mode (reloading enabled), and true by default in <code>production</code> mode (reloading disabled).</p><p>Rails detects files have changed using an evented file monitor (default), or walking the autoload paths, depending on <code>config.file_watcher</code>.</p><p>In a Rails console there is no file watcher active regardless of the value of <code>config.cache_classes</code>. This is so because, normally, it would be confusing to have code reloaded in the middle of a console session, the same way you generally want an individual request to be served by a consistent, non-changing set of application classes and modules.</p><p>However, you can force a reload in the console executing <code>reload!</code>:</p><div class="code_container">
-<pre><code class="highlight plaintext">$ bin/rails c
-Loading development environment (Rails 6.0.0)
-irb(main):001:0&gt; User.object_id
-=&gt; 70136277390120
-irb(main):002:0&gt; reload!
-Reloading...
-=&gt; true
-irb(main):003:0&gt; User.object_id
-=&gt; 70136284426020
+<p>That may speed legit <code>require</code> calls a bit, since there are less lookups. Also, if your application uses <a href="https://github.com/Shopify/bootsnap">Bootsnap</a>, that saves the library from building unnecessary indexes, and saves the RAM they would need.</p><h3 id="reloading"><a class="anchorlink" href="#reloading">6 Reloading</a></h3><p>Rails automatically reloads classes and modules if application files change.</p><p>More precisely, if the web server is running and application files have been modified, Rails unloads all autoloaded constants just before the next request is processed. That way, application classes or modules used during that request are going to be autoloaded, thus picking up their current implementation in the file system.</p><p>Reloading can be enabled or disabled. The setting that controls this behavior is <code>config.cache_classes</code>, which is false by default in <code>development</code> mode (reloading enabled), and true by default in <code>production</code> mode (reloading disabled).</p><p>Rails detects files have changed using an evented file monitor (default), or walking the autoload paths, depending on <code>config.file_watcher</code>.</p><p>In a Rails console there is no file watcher active regardless of the value of <code>config.cache_classes</code>. This is so because, normally, it would be confusing to have code reloaded in the middle of a console session, the same way you generally want an individual request to be served by a consistent, non-changing set of application classes and modules.</p><p>However, you can force a reload in the console by executing <code>reload!</code>:</p><div class="code_container">
+<pre><code class="highlight irb"><span class="gp">irb(main):001:0&gt;</span><span class="w"> </span><span class="no">User</span><span class="p">.</span><span class="nf">object_id</span>
+<span class="p">=&gt;</span> <span class="mi">70136277390120</span>
+<span class="gp">irb(main):002:0&gt;</span><span class="w"> </span><span class="n">reload!</span>
+<span class="go">Reloading...
+</span><span class="p">=&gt;</span> <span class="kp">true</span>
+<span class="gp">irb(main):003:0&gt;</span><span class="w"> </span><span class="no">User</span><span class="p">.</span><span class="nf">object_id</span>
+<span class="p">=&gt;</span> <span class="mi">70136284426020</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e37b9ab60c68d578ab1fc046ca60e476">$ bin/rails c
-Loading development environment (Rails 6.0.0)
-irb(main):001:0&gt; User.object_id
-=&gt; 70136277390120
-irb(main):002:0&gt; reload!
-Reloading...
-=&gt; true
-irb(main):003:0&gt; User.object_id
-=&gt; 70136284426020
+<textarea class="clipboard-content" id="clipboard-b2b42216330647c342d511136f98c76a">User.object_id
+reload!
+User.object_id
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e37b9ab60c68d578ab1fc046ca60e476">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b2b42216330647c342d511136f98c76a">Copiar</button>
 </div>
-<p>as you can see, the class object stored in the <code>User</code> constant is different after reloading.</p><h4 id="reloading-and-stale-objects"><a class="anchorlink" href="#reloading-and-stale-objects">6.1 Reloading and Stale Objects</a></h4><p>It is very important to understand that Ruby does not have a way to truly reload classes and modules in memory, and have that reflected everywhere they are already used. Technically, "unloading" the <code>User</code> class means removing the <code>User</code> constant via <code>Object.send(:remove_const, "User")</code>.</p><p>Therefore, if you store a reloadable class or module object in a place that is not reloaded, that value is going to become stale.</p><p>For example, if an initializer stores and caches a certain class object</p><div class="code_container">
+<p>as you can see, the class object stored in the <code>User</code> constant is different after reloading.</p><h4 id="reloading-and-stale-objects"><a class="anchorlink" href="#reloading-and-stale-objects">6.1 Reloading and Stale Objects</a></h4><p>It is very important to understand that Ruby does not have a way to truly reload classes and modules in memory, and have that reflected everywhere they are already used. Technically, "unloading" the <code>User</code> class means removing the <code>User</code> constant via <code>Object.send(:remove_const, "User")</code>.</p><p>Therefore, code that references a reloadable class or module, but that is not executed again on reload, becomes stale. Let's see an example next.</p><p>Let's consider this initializer:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/initializers/configure_payment_gateway.rb</span>
 <span class="c1"># DO NOT DO THIS.</span>
 <span class="vg">$PAYMENT_GATEWAY</span> <span class="o">=</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">env</span><span class="p">.</span><span class="nf">production?</span> <span class="p">?</span> <span class="no">RealGateway</span> <span class="p">:</span> <span class="no">MockedGateway</span>
 <span class="c1"># DO NOT DO THIS.</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-013b808fba0110876c2dd069e3c07455"># config/initializers/configure_payment_gateway.rb
+<textarea class="clipboard-content" id="clipboard-9399e9e1509adb9d91702b65db3c470d"># config/initializers/configure_payment_gateway.rb
 # DO NOT DO THIS.
 $PAYMENT_GATEWAY = Rails.env.production? ? RealGateway : MockedGateway
 # DO NOT DO THIS.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-013b808fba0110876c2dd069e3c07455">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9399e9e1509adb9d91702b65db3c470d">Copiar</button>
 </div>
-<p>and <code>MockedGateway</code> gets reloaded, <code>$PAYMENT_GATEWAY</code> still stores the class object <code>MockedGateway</code> evaluated to when the initializer ran. Reloading does not change the class object stored in <code>$PAYMENT_GATEWAY</code>.</p><p>Similarly, in the Rails console, if you have a user instance and reload:</p><div class="code_container">
-<pre><code class="highlight plaintext">&gt; user = User.new
-&gt; reload!
+<p>The idea would be to use <code>$PAYMENT_GATEWAY</code> in the code, and let the initializer set that to the actual implementation dependending on the environment.</p><p>On reload, <code>MockedGateway</code> is reloaded, but <code>$PAYMENT_GATEWAY</code> is not updated because initializers only run on boot. Therefore, it won't reflect the changes.</p><p>There are several ways to do this safely. For instance, the application could define a class method <code>PaymentGateway.impl</code> whose definition depends on the environment; or could define <code>PaymentGateway</code> to have a parent class or mixin that depends on the environment; or use the same global variable trick, but in a reloader callback, as explained below.</p><p>Let's see other situations that involve stale class or module objects.</p><p>Check this Rails console session:</p><div class="code_container">
+<pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">joe</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span>
+<span class="gp">irb&gt;</span><span class="w"> </span><span class="n">reload!</span>
+<span class="gp">irb&gt;</span><span class="w"> </span><span class="n">alice</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span>
+<span class="gp">irb&gt;</span><span class="w"> </span><span class="n">joe</span><span class="p">.</span><span class="nf">class</span> <span class="o">==</span> <span class="n">alice</span><span class="p">.</span><span class="nf">class</span>
+<span class="p">=&gt;</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7fa7b9c842144358a9913f447699ec27">&gt; user = User.new
-&gt; reload!
+<textarea class="clipboard-content" id="clipboard-63f887f1a7beae88ecfd213b16e069b1">joe = User.new
+reload!
+alice = User.new
+joe.class == alice.class
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7fa7b9c842144358a9913f447699ec27">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-63f887f1a7beae88ecfd213b16e069b1">Copiar</button>
 </div>
-<p>the <code>user</code> object is instance of a stale class object. Ruby gives you a new class if you evaluate <code>User</code> again, but does not update the class <code>user</code> is instance of.</p><p>Another use case of this gotcha is subclassing reloadable classes in a place that is not reloaded:</p><div class="code_container">
+<p><code>joe</code> is an instance of the original <code>User</code> class. When there is a reload, the <code>User</code> constant evaluates to a different, reloaded class. <code>alice</code> is an instance of the current one, but <code>joe</code> is not, his class is stale. You may define <code>joe</code> again, start an IRB subsession, or just launch a new console instead of calling <code>reload!</code>.</p><p>Another situation in which you may find this gotcha is subclassing reloadable classes in a place that is not reloaded:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># lib/vip_user.rb</span>
 <span class="k">class</span> <span class="nc">VipUser</span> <span class="o">&lt;</span> <span class="no">User</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4ed1fcc99d07a58d4f432226b380d5e3"># lib/vip_user.rb
+<textarea class="clipboard-content" id="clipboard-f6bf0b1d9ed3740ba9b4a186fd68a395"># lib/vip_user.rb
 class VipUser &lt; User
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4ed1fcc99d07a58d4f432226b380d5e3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f6bf0b1d9ed3740ba9b4a186fd68a395">Copiar</button>
 </div>
-<p>if <code>User</code> is reloaded, since <code>VipUser</code> is not, the superclass of <code>VipUser</code> is the original stale class object.</p><p>Bottom line: <strong>do not cache reloadable classes or modules</strong>.</p><h3 id="eager-loading"><a class="anchorlink" href="#eager-loading">7 Eager Loading</a></h3><p>In production-like environments it is generally better to load all the application code when the application boots. Eager loading puts everything in memory ready to serve requests right away, and it is also <a href="https://en.wikipedia.org/wiki/Copy-on-write">CoW</a>-friendly.</p><p>Eager loading is controlled by the flag <code>config.eager_load</code>, which is enabled by default in <code>production</code> mode.</p><p>The order in which files are eager loaded is undefined.</p><p>if the <code>Zeitwerk</code> constant is defined, Rails invokes <code>Zeitwerk::Loader.eager_load_all</code> regardless of the application autoloading mode. That ensures dependencies managed by Zeitwerk are eager loaded.</p><h3 id="single-table-inheritance"><a class="anchorlink" href="#single-table-inheritance">8 Single Table Inheritance</a></h3><p>Single Table Inheritance is a feature that doesn't play well with lazy loading. Reason is, its API generally needs to be able to enumerate the STI hierarchy to work correctly, whereas lazy loading defers loading classes until they are referenced. You can't enumerate what you haven't referenced yet.</p><p>In a sense, applications need to eager load STI hierarchies regardless of the loading mode.</p><p>Of course, if the application eager loads on boot, that is already accomplished. When it does not, it is in practice enough to instantiate the existing types in the database, which in development or test modes is usually fine. One way to do that is to throw this module into the <code>lib</code> directory:</p><div class="code_container">
+<p>if <code>User</code> is reloaded, since <code>VipUser</code> is not, the superclass of <code>VipUser</code> is the original stale class object.</p><p>Bottom line: <strong>do not cache reloadable classes or modules</strong>.</p><h4 id="autoloading-when-the-application-boots"><a class="anchorlink" href="#autoloading-when-the-application-boots">6.2 Autoloading when the application boots</a></h4><p>Applications can safely autoload constants during boot using a reloader callback:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">reloader</span><span class="p">.</span><span class="nf">to_prepare</span> <span class="k">do</span>
+  <span class="vg">$PAYMENT_GATEWAY</span> <span class="o">=</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">env</span><span class="p">.</span><span class="nf">production?</span> <span class="p">?</span> <span class="no">RealGateway</span> <span class="p">:</span> <span class="no">MockedGateway</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a542a5af9eca08cc4fd2cf8a60b9efa1">Rails.application.reloader.to_prepare do
+  $PAYMENT_GATEWAY = Rails.env.production? ? RealGateway : MockedGateway
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a542a5af9eca08cc4fd2cf8a60b9efa1">Copiar</button>
+</div>
+<p>That block runs when the application boots, and every time code is reloaded.</p><div class="note"><p>For historical reasons, this callback may run twice. The code it executes must be idempotent.</p></div><p>However, if you do not need to reload the class, it is easier to define it in a directory which does not belong to the autoload paths. For instance, <code>lib</code> is an idiomatic choice, it does not belong to the autoload paths by default but it belongs to <code>$LOAD_PATH</code>. Then, in the place the class is needed at boot time, just perform a regular <code>require</code> to load it.</p><p>For example, there is no point in defining reloadable Rack middleware, because changes would not be reflected in the instance stored in the middleware stack anyway. If <code>lib/my_app/middleware/foo.rb</code> defines a middleware class, then in <code>config/application.rb</code> you write:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"my_app/middleware/foo"</span>
+<span class="o">...</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="no">MyApp</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">Foo</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-01f2b7ce7bc06222abce18b88a8852a6">require "my_app/middleware/foo"
+...
+config.middleware.use MyApp::Middleware::Foo
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-01f2b7ce7bc06222abce18b88a8852a6">Copiar</button>
+</div>
+<p>To have changes in that middleware reflected, you need to restart the server.</p><h3 id="eager-loading"><a class="anchorlink" href="#eager-loading">7 Eager Loading</a></h3><p>In production-like environments it is generally better to load all the application code when the application boots. Eager loading puts everything in memory ready to serve requests right away, and it is also <a href="https://en.wikipedia.org/wiki/Copy-on-write">CoW</a>-friendly.</p><p>Eager loading is controlled by the flag <code>config.eager_load</code>, which is enabled by default in <code>production</code> mode.</p><p>The order in which files are eager loaded is undefined.</p><p>if the <code>Zeitwerk</code> constant is defined, Rails invokes <code>Zeitwerk::Loader.eager_load_all</code> regardless of the application autoloading mode. That ensures dependencies managed by Zeitwerk are eager loaded.</p><h3 id="single-table-inheritance"><a class="anchorlink" href="#single-table-inheritance">8 Single Table Inheritance</a></h3><p>Single Table Inheritance is a feature that doesn't play well with lazy loading. Reason is, its API generally needs to be able to enumerate the STI hierarchy to work correctly, whereas lazy loading defers loading classes until they are referenced. You can't enumerate what you haven't referenced yet.</p><p>In a sense, applications need to eager load STI hierarchies regardless of the loading mode.</p><p>Of course, if the application eager loads on boot, that is already accomplished. When it does not, it is in practice enough to instantiate the existing types in the database, which in development or test modes is usually fine. One way to do that is to throw this module into the <code>lib</code> directory:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">StiPreload</span>
   <span class="k">unless</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">eager_load</span>
     <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Concern</span>
@@ -451,7 +484,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d25a2c49c910a3f4543a94f0780f4ea">module StiPreload
+<textarea class="clipboard-content" id="clipboard-2752db800c59972b24aa4dc01bd0c491">module StiPreload
   unless Rails.application.config.eager_load
     extend ActiveSupport::Concern
 
@@ -490,7 +523,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d25a2c49c910a3f4543a94f0780f4ea">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2752db800c59972b24aa4dc01bd0c491">Copiar</button>
 </div>
 <p>and then include it in the STI root classes of your project:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/shape.rb</span>
@@ -508,7 +541,7 @@ end
 <span class="k">class</span> <span class="nc">Triangle</span> <span class="o">&lt;</span> <span class="no">Polygon</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-11bdb0d2323e19a848101ea6cf708689"># app/models/shape.rb
+<textarea class="clipboard-content" id="clipboard-7f3ecdc468db93c802d895f120a2f44e"># app/models/shape.rb
 require "sti_preload"
 
 class Shape &lt; ApplicationRecord
@@ -523,7 +556,7 @@ end
 class Triangle &lt; Polygon
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-11bdb0d2323e19a848101ea6cf708689">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7f3ecdc468db93c802d895f120a2f44e">Copiar</button>
 </div>
 <h3 id="customizing-inflections"><a class="anchorlink" href="#customizing-inflections">9 Customizing Inflections</a></h3><p>By default, Rails uses <code>String#camelize</code> to know which constant should a given file or directory name define. For example, <code>posts_controller.rb</code> should define <code>PostsController</code> because that is what <code>"posts_controller".camelize</code> returns.</p><p>It could be the case that some particular file or directory name does not get inflected as you want. For instance, <code>html_parser.rb</code> is expected to define <code>HtmlParser</code> by default. What if you prefer the class to be <code>HTMLParser</code>? There are a few ways to customize this.</p><p>The easiest way is to define acronyms in <code>config/initializers/inflections.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Inflector</span><span class="p">.</span><span class="nf">inflections</span><span class="p">(</span><span class="ss">:en</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">inflect</span><span class="o">|</span>
@@ -531,12 +564,12 @@ end
   <span class="n">inflect</span><span class="p">.</span><span class="nf">acronym</span> <span class="s2">"SSL"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0049cebd92662882429d968c6ad9aeb6">ActiveSupport::Inflector.inflections(:en) do |inflect|
+<textarea class="clipboard-content" id="clipboard-7cf5333c5aff917e1dfc521b7a9ff6c7">ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "HTML"
   inflect.acronym "SSL"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0049cebd92662882429d968c6ad9aeb6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7cf5333c5aff917e1dfc521b7a9ff6c7">Copiar</button>
 </div>
 <p>Doing so affects how Active Support inflects globally. That may be fine in some applications, but you can also customize how to camelize individual basenames independently from Active Support by passing a collection of overrides to the default inflectors:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/initializers/zeitwerk.rb</span>
@@ -547,7 +580,7 @@ end
   <span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5cd24fd7ba783ddc3563ae817fcb4e2d"># config/initializers/zeitwerk.rb
+<textarea class="clipboard-content" id="clipboard-f11de1a3e6ddc0c9a3b271443e7c4729"># config/initializers/zeitwerk.rb
 Rails.autoloaders.each do |autoloader|
   autoloader.inflector.inflect(
     "html_parser" =&gt; "HTMLParser",
@@ -555,7 +588,7 @@ Rails.autoloaders.each do |autoloader|
   )
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5cd24fd7ba783ddc3563ae817fcb4e2d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f11de1a3e6ddc0c9a3b271443e7c4729">Copiar</button>
 </div>
 <p>That technique still depends on <code>String#camelize</code>, though, because that is what the default inflectors use as fallback. If you instead prefer not to depend on Active Support inflections at all and have absolute control over inflections, configure the inflectors to be instances of <code>Zeitwerk::Inflector</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/initializers/zeitwerk.rb</span>
@@ -567,7 +600,7 @@ end
   <span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-856ac90aefa7956dbd2f868f1d48ae37"># config/initializers/zeitwerk.rb
+<textarea class="clipboard-content" id="clipboard-e756222ed9a662e30238da152439aadb"># config/initializers/zeitwerk.rb
 Rails.autoloaders.each do |autoloader|
   autoloader.inflector = Zeitwerk::Inflector.new
   autoloader.inflector.inflect(
@@ -576,57 +609,79 @@ Rails.autoloaders.each do |autoloader|
   )
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-856ac90aefa7956dbd2f868f1d48ae37">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e756222ed9a662e30238da152439aadb">Copiar</button>
 </div>
 <p>There is no global configuration that can affect said instances, they are deterministic.</p><p>You can even define a custom inflector for full flexibility. Please, check the <a href="https://github.com/fxn/zeitwerk#custom-inflector">Zeitwerk documentation</a> for further details.</p><h3 id="troubleshooting"><a class="anchorlink" href="#troubleshooting">10 Troubleshooting</a></h3><p>The best way to follow what the loaders are doing is to inspect their activity.</p><p>The easiest way to do that is to throw</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">autoloaders</span><span class="p">.</span><span class="nf">log!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8053cd79ce429eb8c81d3d873fd1e37d">Rails.autoloaders.log!
+<textarea class="clipboard-content" id="clipboard-f19ac5f683da3e38c0f5ab516247d02b">Rails.autoloaders.log!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8053cd79ce429eb8c81d3d873fd1e37d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f19ac5f683da3e38c0f5ab516247d02b">Copiar</button>
 </div>
 <p>to <code>config/application.rb</code> after loading the framework defaults. That will print traces to standard output.</p><p>If you prefer logging to a file, configure this instead:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">autoloaders</span><span class="p">.</span><span class="nf">logger</span> <span class="o">=</span> <span class="no">Logger</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/log/autoloading.log"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-92a181521250efba68a5dc292d5daf43">Rails.autoloaders.logger = Logger.new("#{Rails.root}/log/autoloading.log")
+<textarea class="clipboard-content" id="clipboard-c6f168dec7e6b27c9f5fc095c3ba283e">Rails.autoloaders.logger = Logger.new("#{Rails.root}/log/autoloading.log")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-92a181521250efba68a5dc292d5daf43">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c6f168dec7e6b27c9f5fc095c3ba283e">Copiar</button>
 </div>
 <p>The Rails logger is still not ready in <code>config/application.rb</code>, but it is in initializers:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/initializers/log_autoloaders.rb</span>
 <span class="no">Rails</span><span class="p">.</span><span class="nf">autoloaders</span><span class="p">.</span><span class="nf">logger</span> <span class="o">=</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a96742b4de32439f7e26177516c640ec"># config/initializers/log_autoloaders.rb
+<textarea class="clipboard-content" id="clipboard-6773b7de9866e6e5ce7a65ac122a4a30"># config/initializers/log_autoloaders.rb
 Rails.autoloaders.logger = Rails.logger
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a96742b4de32439f7e26177516c640ec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6773b7de9866e6e5ce7a65ac122a4a30">Copiar</button>
 </div>
 <h3 id="rails-autoloaders"><a class="anchorlink" href="#rails-autoloaders">11 Rails.autoloaders</a></h3><p>The Zeitwerk instances managing your application are available at</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">autoloaders</span><span class="p">.</span><span class="nf">main</span>
 <span class="no">Rails</span><span class="p">.</span><span class="nf">autoloaders</span><span class="p">.</span><span class="nf">once</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-037012e762cf3f46d3c3641aaf252d35">Rails.autoloaders.main
+<textarea class="clipboard-content" id="clipboard-ef220652d3ab263e15d350efae76a348">Rails.autoloaders.main
 Rails.autoloaders.once
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-037012e762cf3f46d3c3641aaf252d35">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ef220652d3ab263e15d350efae76a348">Copiar</button>
 </div>
 <p>The former is the main one. The latter is there mostly for backwards compatibility reasons, in case the application has something in <code>config.autoload_once_paths</code> (this is discouraged nowadays).</p><p>You can check if <code>zeitwerk</code> mode is enabled with</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">autoloaders</span><span class="p">.</span><span class="nf">zeitwerk_enabled?</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-512efec84b5c857fd5250679a437b66e">Rails.autoloaders.zeitwerk_enabled?
+<textarea class="clipboard-content" id="clipboard-9cdfaa6e889d0ea75edc465a81d63cb1">Rails.autoloaders.zeitwerk_enabled?
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-512efec84b5c857fd5250679a437b66e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9cdfaa6e889d0ea75edc465a81d63cb1">Copiar</button>
 </div>
-<h3 id="opting-out"><a class="anchorlink" href="#opting-out">12 Opting Out</a></h3><p>Applications can load Rails 6 defaults and still use the classic autoloader this way:</p><div class="code_container">
+<h3 id="differences-with-classic-mode"><a class="anchorlink" href="#differences-with-classic-mode">12 Differences with Classic Mode</a></h3><h4 id="ruby-constant-lookup-compliance"><a class="anchorlink" href="#ruby-constant-lookup-compliance">12.1 Ruby Constant Lookup Compliance</a></h4><p><code>classic</code> mode cannot match constant lookup semantics due to fundamental limitations of the technique it is based on, whereas <code>zeitwerk</code> mode works like Ruby.</p><p>For example, in <code>classic</code> mode defining classes or modules in namespaces with qualified constants this way</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Admin::UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7d9c1690bdc1fdac3fe09c7be6f21d32">class Admin::UsersController &lt; ApplicationController
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7d9c1690bdc1fdac3fe09c7be6f21d32">Copiar</button>
+</div>
+<p>was not recommended because the resolution of constants inside their body was britle. You'd better write them in this style:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">Admin</span>
+  <span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0aa978afa0224ec63cd794fdbc0222e2">module Admin
+  class UsersController &lt; ApplicationController
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0aa978afa0224ec63cd794fdbc0222e2">Copiar</button>
+</div>
+<p>In <code>zeitwerk</code> mode that does not matter anymore, you can pick either style.</p><p>The resolution of a constant could depend on load order, the definition of a class or module object could depend on load order, there was edge cases with singleton classes, oftentimes you had to use <code>require_dependency</code> as a workaround, .... The guide for <code>classic</code> mode documents <a href="autoloading_and_reloading_constants_classic_mode.html#common-gotchas">these issues</a>.</p><p>All these problems are solved in <code>zeitwerk</code> mode, it just works as expected, and <code>require_dependency</code> should not be used anymore, it is no longer needed.</p><h4 id="less-file-lookups"><a class="anchorlink" href="#less-file-lookups">12.2 Less File Lookups</a></h4><p>In <code>classic</code> mode, every single missing constant triggers a file lookup that walks the autoload paths.</p><p>In <code>zeitwerk</code> mode there is only one pass. That pass is done once, not per missing constant, and so it is generally more performant. Subdirectories are visited only if their namespace is used.</p><h4 id="underscore-vs-camelize"><a class="anchorlink" href="#underscore-vs-camelize">12.3 Underscore vs Camelize</a></h4><p>Inflections go the other way around.</p><p>In <code>classic</code> mode, given a missing constant Rails <em>underscores</em> its name and performs a file lookup. On the other hand, <code>zeitwerk</code> mode checks first the file system, and <em>camelizes</em> file names to know the constant those files are expected to define.</p><p>While in common names these operations match, if acronyms or custom inflection rules are configured, they may not. For example, by default <code>"HTMLParser".underscore</code> is <code>"html_parser"</code>, and <code>"html_parser".camelize</code> is <code>"HtmlParser"</code>.</p><h4 id="more-differences"><a class="anchorlink" href="#more-differences">12.4 More Differences</a></h4><p>There are some other subtle differences, please check <a href="upgrading_ruby_on_rails.html#autoloading">this section of <em>Upgrading Ruby on Rails</em></a> guide for details.</p><h3 id="classic-mode-is-deprecated"><a class="anchorlink" href="#classic-mode-is-deprecated">13 Classic Mode is Deprecated</a></h3><p>By now, it is still possible to use <code>classic</code> mode. However, <code>classic</code> is deprecated and will be eventually removed.</p><p>New applications should use <code>zeitwerk</code> mode (which is the default), and applications being upgrade are strongly encouraged to migrate to <code>zeitwerk</code> mode. Please check the <a href="upgrading_ruby_on_rails.html#autoloading"><em>Upgrading Ruby on Rails</em></a> guide for details.</p><h3 id="opting-out"><a class="anchorlink" href="#opting-out">14 Opting Out</a></h3><p>Applications can load Rails 6 defaults and still use the classic autoloader this way:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
-<span class="n">config</span><span class="p">.</span><span class="nf">load_defaults</span> <span class="s2">"6.0"</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">load_defaults</span> <span class="mf">6.0</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">autoloader</span> <span class="o">=</span> <span class="ss">:classic</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8791ccce057418945af1f0223f0d7aeb"># config/application.rb
-config.load_defaults "6.0"
+<textarea class="clipboard-content" id="clipboard-1cb5b260832c2141bbdf6ece9d3e4e9c"># config/application.rb
+config.load_defaults 6.0
 config.autoloader = :classic
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8791ccce057418945af1f0223f0d7aeb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1cb5b260832c2141bbdf6ece9d3e4e9c">Copiar</button>
 </div>
 <p>That may be handy if upgrading to Rails 6 in different phases, but classic mode is discouraged for new applications.</p><p><code>zeitwerk</code> mode is not available in versions of Rails previous to 6.0.</p>
 

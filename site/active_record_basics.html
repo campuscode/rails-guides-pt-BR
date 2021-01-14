@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,9 @@
   <meta property="og:type" content="website" />
 </head>
 <body class="guide">
+  <div>
+    <div id="version-badge">v6.1.0</div>
+  </div>
   <div id="topNav">
     <div class="wrapper">
       <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
@@ -34,7 +37,7 @@
         <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
         <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
       </ul>
     </div>
@@ -53,7 +56,7 @@
           <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
-            <div class="guides-section-container">
+            <dl class="guides-section-container">
                 <div class="guides-section">
                   <dt>Comece aqui</dt>
                   <dd><a href="getting_started.html">Começando com Rails</a></dd>
@@ -143,7 +146,7 @@
                   <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
                 </div>
             </div>
-          </div>
+          </dl>
         </li>
         <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
         <li class="guides-search guides-search-small">
@@ -257,7 +260,7 @@ bancos de dados relacionais.</li>
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
 <li>
-<a href="#o-que-e-active-record-questionmark">O que é Active Record?</a>
+<a href="#o-que-e-active-record-questionmark">O que é <em>Active Record</em>?</a>
 
 <ul>
 <li><a href="#o-padrao-active-record">O Padrão Active Record</a></li>
@@ -298,7 +301,7 @@ bancos de dados relacionais.</li>
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="o-que-e-active-record-questionmark"><a class="anchorlink" href="#o-que-e-active-record-questionmark">1 O que é Active Record?</a></h3><p><em>Active Record</em> é o M em <a href="https://pt.wikipedia.org/wiki/MVC">MVC</a> - o
+        <h3 id="o-que-e-active-record-questionmark"><a class="anchorlink" href="#o-que-e-active-record-questionmark">1 O que é <em>Active Record</em>?</a></h3><p><em>Active Record</em> é o M em <a href="https://pt.wikipedia.org/wiki/MVC">MVC</a> - o
 <em>model</em> - que é a camada do sistema responsável pela representação da lógica e
 dados de negócio. O <em>Active Record</em> facilita a criação e uso de objetos de
 negócio cujos dados precisam ser persistidos num banco. Essa é uma implementação
@@ -405,10 +408,10 @@ de quando o registro foi criado.</li>
 <code>updated_at</code> - Automaticamente informado com a data e hora atual
 de quando o registor foi criado ou atualizado.</li>
 <li>
-<code>lock_version</code> - Adiciona <a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActiveRecord/Locking.html">bloqueio otimista</a> para
+<code>lock_version</code> - Adiciona <a href="https://api.rubyonrails.org/v6.1.0/classes/ActiveRecord/Locking.html">bloqueio otimista</a> para
 um <em>model</em>.</li>
 <li>
-<code>type</code> - Especifica que um <em>model</em> utiliza <a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance">Herança de tabela única</a>.</li>
+<code>type</code> - Especifica que um <em>model</em> utiliza <a href="https://api.rubyonrails.org/v6.1.0/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance">Herança de tabela única</a>.</li>
 <li>
 <code>(nome_da_associacao)_type</code> - Armazena o tipo
 <a href="association_basics.html#polymorphic-associations">associação polimórfica</a>.</li>
@@ -422,15 +425,14 @@ comentários existentes para cada artigo.</li>
 palavras-chave reservadas a não ser que você deseje a funcionalidade adicional. Por exemplo, <code>type</code> é uma
 palavra-chave reservada para designar que uma tabela está usando Herança de tabela única (STI). Se você não está
 utilizando STI, tente utilizar análogos como <code>context</code>, que ainda descrevem de forma correta o tipo de dado
-que você está modelando.</p></div><h3 id="criando-models-do-active-record"><a class="anchorlink" href="#criando-models-do-active-record">3 Criando Models do Active Record</a></h3><p>É muito fácil criar <em>models</em> do <em>Active Record</em>. Tudo que você precisa fazer é
-subclassificar a classe <code>ApplicationRecord</code> e estará tudo pronto:</p><div class="code_container">
+que você está modelando.</p></div><h3 id="criando-models-do-active-record"><a class="anchorlink" href="#criando-models-do-active-record">3 Criando Models do Active Record</a></h3><p>Para criar <em>models</em> do <em>Active Record</em>, use a subclasse <code>ApplicationRecord</code> e você está pronto para começar:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Product</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5c69a9216f3514df227c0652764b5e72">class Product &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-83ff0f824d4f076286283dbb8ab3c060">class Product &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5c69a9216f3514df227c0652764b5e72">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-83ff0f824d4f076286283dbb8ab3c060">Copiar</button>
 </div>
 <p>Isso criará o <em>model</em> <code>Product</code>, mapeado em uma tabela <code>products</code> na base de dados. Fazendo isso, você também
 possuirá a habilidade de mapear as colunas de cada linha da tabela com os atributos das instâncias do seu
@@ -441,13 +443,13 @@ possuirá a habilidade de mapear as colunas de cada linha da tabela com os atrib
    <span class="k">PRIMARY</span> <span class="k">KEY</span>  <span class="p">(</span><span class="n">id</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aefe5fc590b31beba650a90ae7380467">CREATE TABLE products (
+<textarea class="clipboard-content" id="clipboard-3a48472b801f297f235e55858b63b4ba">CREATE TABLE products (
    id int(11) NOT NULL auto_increment,
    name varchar(255),
    PRIMARY KEY  (id)
 );
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aefe5fc590b31beba650a90ae7380467">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3a48472b801f297f235e55858b63b4ba">Copiar</button>
 </div>
 <p>O esquema acima declara uma tabela com duas colunas: <code>id</code> e <code>name</code>. Cada uma das
 linhas dessa tabela representa um certo produto com dois parâmetros. Portanto,
@@ -456,11 +458,11 @@ você será capaz de escrever códigos como o seguinte:</p><div class="code_cont
 <span class="nb">p</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"Some Book"</span>
 <span class="nb">puts</span> <span class="nb">p</span><span class="p">.</span><span class="nf">name</span> <span class="c1"># "Some Book"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-87017fb2c6320cbc3d4bb09e18272417">p = Product.new
+<textarea class="clipboard-content" id="clipboard-a8cb2587d9b899a6cb4494b621fed26d">p = Product.new
 p.name = "Some Book"
 puts p.name # "Some Book"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-87017fb2c6320cbc3d4bb09e18272417">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a8cb2587d9b899a6cb4494b621fed26d">Copiar</button>
 </div>
 <h3 id="sobrepondo-convecoes-de-nomes"><a class="anchorlink" href="#sobrepondo-convecoes-de-nomes">4 Sobrepondo Conveções de Nomes</a></h3><p>E se você precisar seguir convenções diferentes ou usar sua aplicação
 Rails com um banco de dados legado? Sem problemas, você pode facilmente sobrepor
@@ -471,11 +473,11 @@ o nome da tabela que deve ser usada:</p><div class="code_container">
   <span class="nb">self</span><span class="p">.</span><span class="nf">table_name</span> <span class="o">=</span> <span class="s2">"my_products"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-417b6c5fa2088a0cfb86a671bc0262d4">class Product &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-d47cd02aeeaf11378b53b4f77ee79823">class Product &lt; ApplicationRecord
   self.table_name = "my_products"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-417b6c5fa2088a0cfb86a671bc0262d4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d47cd02aeeaf11378b53b4f77ee79823">Copiar</button>
 </div>
 <p>Se assim o fizer, você tem que definir manualmente o nome da classe que hospeda
 as <em>fixtures</em> (my_products.yml) usando o método <code>set_fixture_class</code> na definição
@@ -486,13 +488,13 @@ do seu teste:</p><div class="code_container">
   <span class="o">...</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16f7496750833ccd9352011a0daea248">class ProductTest &lt; ActiveSupport::TestCase
+<textarea class="clipboard-content" id="clipboard-b1f26363d06b48612ffc4f8ed0d456e6">class ProductTest &lt; ActiveSupport::TestCase
   set_fixture_class my_products: Product
   fixtures :my_products
   ...
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16f7496750833ccd9352011a0daea248">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b1f26363d06b48612ffc4f8ed0d456e6">Copiar</button>
 </div>
 <p>É possível sobrepor a coluna que deve ser usada como chave primária da tabela
 usando o método <code>ActiveRecord::Base.primary_key=</code> method:</p><div class="code_container">
@@ -500,35 +502,35 @@ usando o método <code>ActiveRecord::Base.primary_key=</code> method:</p><div cl
   <span class="nb">self</span><span class="p">.</span><span class="nf">primary_key</span> <span class="o">=</span> <span class="s2">"product_id"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7e43852cdfc7e6525b089a757513e5f9">class Product &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-66b8418daa62e63d08479a943f324b57">class Product &lt; ApplicationRecord
   self.primary_key = "product_id"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7e43852cdfc7e6525b089a757513e5f9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-66b8418daa62e63d08479a943f324b57">Copiar</button>
 </div>
 <div class="note"><p>O <em>Active Record</em> não suporta o uso de colunas que não são do tipo chave
-primária nomeadas <code>id</code>.</p></div><h3 id="crud-lendo-e-escrevendo-dados"><a class="anchorlink" href="#crud-lendo-e-escrevendo-dados">5 CRUD: Lendo e Escrevendo Dados</a></h3><p>CRUD é um acrônimo para os quatro verbos que utilizamos na operação dos dados: <em>**C</em><em>reate</em> (criar),
-<em>**R</em><em>ead</em> (ler, consultar), <em>**U</em><em>pdate</em> (atualizar) e <em>**D</em><em>elete</em> (deletar, destruir). O <em>Active Record</em>
+primária nomeadas <code>id</code>.</p></div><h3 id="crud-lendo-e-escrevendo-dados"><a class="anchorlink" href="#crud-lendo-e-escrevendo-dados">5 CRUD: Lendo e Escrevendo Dados</a></h3><p>CRUD é um acrônimo para os quatro verbos que utilizamos na operação dos dados: <em><strong>C</strong>reate</em> (criar),
+<em><strong>R</strong>ead</em> (ler, consultar), <em><strong>U</strong>pdate</em> (atualizar) e <em><strong>D</strong>elete</em> (deletar, destruir). O <em>Active Record</em>
 criará, automaticamente, métodos que permitem uma aplicação ler e manipular dados armazenados em suas tabelas.</p><h4 id="create"><a class="anchorlink" href="#create">5.1 <em>Create</em></a></h4><p>Os objetos do <em>Active Record</em> podem ser criados a partir de um <em>hash</em>, um bloco ou
 ter seus atributos definidos manualmente após a criação. O método <code>new</code> retornará
 um novo objeto, enquanto <code>create</code> retornará o objeto e o salvará no banco de dados.</p><p>Por exemplo, dado um <em>model</em> <code>User</code> com os atributos <code>name</code> e <code>occupation</code>,
 chamando o método <code>create</code> criará e salvará um novo registro no banco de dados:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">,</span> <span class="ss">occupation: </span><span class="s2">"Code Artist"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0539fb8f5a4fd173bbafb2e74b8ac252">user = User.create(name: "David", occupation: "Code Artist")
+<textarea class="clipboard-content" id="clipboard-a03f53bec5550217ba5f6d752cb511a2">user = User.create(name: "David", occupation: "Code Artist")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0539fb8f5a4fd173bbafb2e74b8ac252">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a03f53bec5550217ba5f6d752cb511a2">Copiar</button>
 </div>
 <p>Usando o método <code>new</code>, um objeto pode ser instanciado sem ser salvo:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s2">"David"</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">occupation</span> <span class="o">=</span> <span class="s2">"Code Artist"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e7f75ee2bb763af2a46ce9c24becf90b">user = User.new
+<textarea class="clipboard-content" id="clipboard-fd42ab3db58eaf7a4e28a45c50295325">user = User.new
 user.name = "David"
 user.occupation = "Code Artist"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e7f75ee2bb763af2a46ce9c24becf90b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fd42ab3db58eaf7a4e28a45c50295325">Copiar</button>
 </div>
 <p>Uma chamada para <code>user.save</code> salvará o registro no banco de dados.</p><p>Finalmente, se um bloco for fornecido, ambos <code>create</code> e <code>new</code> passarão
 o novo objeto para aquele bloco executar a inicialização:</p><div class="code_container">
@@ -537,12 +539,12 @@ o novo objeto para aquele bloco executar a inicialização:</p><div class="code_
   <span class="n">u</span><span class="p">.</span><span class="nf">occupation</span> <span class="o">=</span> <span class="s2">"Code Artist"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bfc486240a03cb8fb34f50a7367fca65">user = User.new do |u|
+<textarea class="clipboard-content" id="clipboard-9960591ff3d8a4c90bbffee56da56b5c">user = User.new do |u|
   u.name = "David"
   u.occupation = "Code Artist"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bfc486240a03cb8fb34f50a7367fca65">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9960591ff3d8a4c90bbffee56da56b5c">Copiar</button>
 </div>
 <h4 id="read"><a class="anchorlink" href="#read">5.2 <em>Read</em></a></h4><p>O <em>Active Record</em> fornece uma API rica para acessar dados no banco de dados. Abaixo
 temos alguns exemplos de diferentes métodos para acessar os dados fornecidos pelo
@@ -550,37 +552,37 @@ temos alguns exemplos de diferentes métodos para acessar os dados fornecidos pe
 <pre><code class="highlight ruby"><span class="c1"># retorna uma coleção com todos os usuários</span>
 <span class="n">users</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">all</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-96d0c2ebfbc1bc7014a00c6a8ea796fa"># retorna uma coleção com todos os usuários
+<textarea class="clipboard-content" id="clipboard-55b27dca8c367c5b2c40879919fd9ac9"># retorna uma coleção com todos os usuários
 users = User.all
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-96d0c2ebfbc1bc7014a00c6a8ea796fa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-55b27dca8c367c5b2c40879919fd9ac9">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># retorna o primeiro usuário da lista</span>
 <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">first</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-50f24b8964bb4481052d0c2f0c5c84d7"># retorna o primeiro usuário da lista
+<textarea class="clipboard-content" id="clipboard-a2254381f6c0acd24c1a931f9d725405"># retorna o primeiro usuário da lista
 user = User.first
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-50f24b8964bb4481052d0c2f0c5c84d7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a2254381f6c0acd24c1a931f9d725405">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># retorna o primeiro usuário com o nome David</span>
 <span class="n">david</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'David'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b3e2adef252d30bab65eb81202af8949"># retorna o primeiro usuário com o nome David
+<textarea class="clipboard-content" id="clipboard-df4c0248f09e5149b97bba55e7be0e1e"># retorna o primeiro usuário com o nome David
 david = User.find_by(name: 'David')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b3e2adef252d30bab65eb81202af8949">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-df4c0248f09e5149b97bba55e7be0e1e">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># encontra todos os usuários com o nome David que são Code Artists e os ordena por created_at em ordem cronológica inversa</span>
 <span class="n">users</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'David'</span><span class="p">,</span> <span class="ss">occupation: </span><span class="s1">'Code Artist'</span><span class="p">).</span><span class="nf">order</span><span class="p">(</span><span class="ss">created_at: :desc</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-38ab60442258fa373b77b9302868951d"># encontra todos os usuários com o nome David que são Code Artists e os ordena por created_at em ordem cronológica inversa
+<textarea class="clipboard-content" id="clipboard-e31ef65a8a02fbf64ee8433e6e99bb0c"># encontra todos os usuários com o nome David que são Code Artists e os ordena por created_at em ordem cronológica inversa
 users = User.where(name: 'David', occupation: 'Code Artist').order(created_at: :desc)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-38ab60442258fa373b77b9302868951d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e31ef65a8a02fbf64ee8433e6e99bb0c">Copiar</button>
 </div>
 <p>Você pode aprender mais sobre como consultar um <em>model</em> do <em>Active Record</em> no guia
 <a href="active_record_querying.html">Active Record
@@ -590,40 +592,40 @@ ser modificados e salvos no banco de dados.</p><div class="code_container">
 <span class="n">user</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Dave'</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">save</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-162580a5819634b96df814744f2e2bb5">user = User.find_by(name: 'David')
+<textarea class="clipboard-content" id="clipboard-bd6e5c48a83c6d3c7300ac749fcc86aa">user = User.find_by(name: 'David')
 user.name = 'Dave'
 user.save
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-162580a5819634b96df814744f2e2bb5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bd6e5c48a83c6d3c7300ac749fcc86aa">Copiar</button>
 </div>
 <p>Um atalho para isso seria usar um <em>hash</em> mapeando o nome dos atributos para o valor
 desejado, como a seguir:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'David'</span><span class="p">)</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'Dave'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-85b107a22c255d0b4446c65465df34fa">user = User.find_by(name: 'David')
+<textarea class="clipboard-content" id="clipboard-ef9e2d8f62fc73eaa1f94bd0ae19cc7d">user = User.find_by(name: 'David')
 user.update(name: 'Dave')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-85b107a22c255d0b4446c65465df34fa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ef9e2d8f62fc73eaa1f94bd0ae19cc7d">Copiar</button>
 </div>
 <p>Isto é mais útil quando atualizamos diversos atributos de uma vez. Se, por outro lado,
 você gostaria de atualizar diversos registros em massa, você pode achar o método de
 classe <code>update_all</code> útil:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">update_all</span> <span class="s2">"max_login_attempts = 3, must_change_password = 'true'"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-398b4af6d48114b9a41edf989a2129a3">User.update_all "max_login_attempts = 3, must_change_password = 'true'"
+<textarea class="clipboard-content" id="clipboard-b99efe3e0ec63499b153529d560bc832">User.update_all "max_login_attempts = 3, must_change_password = 'true'"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-398b4af6d48114b9a41edf989a2129a3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b99efe3e0ec63499b153529d560bc832">Copiar</button>
 </div>
 <h4 id="delete"><a class="anchorlink" href="#delete">5.4 <em>Delete</em></a></h4><p>Da mesma forma, uma vez recuperado um objeto do <em>Active Record</em>, o mesmo pode ser
 destruído, o que o remove do banco de dados.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'David'</span><span class="p">)</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">destroy</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7feea46b90522376e8c2aa7c7641b165">user = User.find_by(name: 'David')
+<textarea class="clipboard-content" id="clipboard-b9b7169cac4cf794b3e10c1bc5e21e99">user = User.find_by(name: 'David')
 user.destroy
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7feea46b90522376e8c2aa7c7641b165">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b9b7169cac4cf794b3e10c1bc5e21e99">Copiar</button>
 </div>
 <p>Se você deseja excluir diversos registros em massa, você pode utilizar os métodos
 <code>destroy_by</code> ou <code>destroy_all</code>:</p><div class="code_container">
@@ -633,13 +635,13 @@ user.destroy
 <span class="c1"># deleta todos os usuários</span>
 <span class="no">User</span><span class="p">.</span><span class="nf">destroy_all</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-74a09b82258f1a8ad709b485eeada19d"># encontra e deleta todos os usuários com o nome David
+<textarea class="clipboard-content" id="clipboard-16738ded3dea760c0b3feb33f77250b3"># encontra e deleta todos os usuários com o nome David
 User.destroy_by(name: 'David')
 
 # deleta todos os usuários
 User.destroy_all
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-74a09b82258f1a8ad709b485eeada19d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-16738ded3dea760c0b3feb33f77250b3">Copiar</button>
 </div>
 <h3 id="validacoes"><a class="anchorlink" href="#validacoes">6 Validações</a></h3><p>O <em>Active Record</em> permite que você valide o estado de um <em>model</em> antes que ele
 seja gravado no banco de dados. Existem diversos métodos que você pode usar para
@@ -654,20 +656,25 @@ Um rápido exemplo para ilustrar:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
 <span class="k">end</span>
-
-<span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span>
-<span class="n">user</span><span class="p">.</span><span class="nf">save</span>  <span class="c1"># =&gt; false</span>
-<span class="n">user</span><span class="p">.</span><span class="nf">save!</span> <span class="c1"># =&gt; ActiveRecord::RecordInvalid: Validation failed: Name can't be blank</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d955e69f9953a4d23a4ec793349fd6df">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-15732654143faf293c4ab72ce5c29386">class User &lt; ApplicationRecord
   validates :name, presence: true
 end
-
-user = User.new
-user.save  # =&gt; false
-user.save! # =&gt; ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d955e69f9953a4d23a4ec793349fd6df">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-15732654143faf293c4ab72ce5c29386">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span>
+<span class="gp">irb&gt;</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="nf">save</span>
+<span class="p">=&gt;</span> <span class="kp">false</span>
+<span class="gp">irb&gt;</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="nf">save!</span>
+<span class="go">ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-80b58c868e19c607c759ded2e95374d0">user = User.new
+user.save
+user.save!
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80b58c868e19c607c759ded2e95374d0">Copiar</button>
 </div>
 <p>Você pode aprender mais sobre validações no <a href="active_record_validations.html">Guia de Validaçes de Active Record (em inglês)</a>.</p><h3 id="callbacks"><a class="anchorlink" href="#callbacks">7 Callbacks</a></h3><p>Os <em>callbacks</em> de um <em>Active Record</em> permitem que você vincule códigos para
 alguns eventos no ciclo de vida de seus modelos. Isso permite que você adicione
@@ -678,7 +685,7 @@ e outros. Você pode aprender mais sobre <em>callbacks</em> no
 dados, chamada de <em>migrations</em>. As <em>Migrations</em> são armazenadas em arquivos que são executados
 diante de qualquer banco de dados que o <em>Active Record</em> suporta utilizando o <code>rake</code>. Aqui está
 uma <em>migration</em> que cria uma tabela:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreatePublications</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">5.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreatePublications</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">create_table</span> <span class="ss">:publications</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:title</span>
@@ -694,7 +701,7 @@ uma <em>migration</em> que cria uma tabela:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2766ae6254404aafc99783f737d38372">class CreatePublications &lt; ActiveRecord::Migration[5.0]
+<textarea class="clipboard-content" id="clipboard-300a955432e876745e8dd0ad1b3341a0">class CreatePublications &lt; ActiveRecord::Migration[6.0]
   def change
     create_table :publications do |t|
       t.string :title
@@ -710,11 +717,11 @@ uma <em>migration</em> que cria uma tabela:</p><div class="code_container">
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2766ae6254404aafc99783f737d38372">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-300a955432e876745e8dd0ad1b3341a0">Copiar</button>
 </div>
 <p>O Rails mantém o controle de quais arquivos foram enviados ao banco de dados e fornece
 ferramentas de reversão. Para realmente criar uma tabela, você deverá executar
-<code>rails db:migrate</code> e para reverter, <code>rails db:rollback</code></p><p>Observe que o código acima é agnóstico em relação ao banco de dados: irá rodar em MySQL,
+<code>bin/rails db:migrate</code> e para reverter, <code>bin/rails db:rollback</code></p><p>Observe que o código acima é agnóstico em relação ao banco de dados: irá rodar em MySQL,
 PostgreSQL, Oracle, entre outros. Você pode aprender mais sobre <em>migrations</em>
 no <a href="active_record_migrations.html">Guia de <em>Migrations</em> do <em>Active Record</em></a>.</p>
 

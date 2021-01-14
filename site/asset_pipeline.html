@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,9 @@
   <meta property="og:type" content="website" />
 </head>
 <body class="guide">
+  <div>
+    <div id="version-badge">v6.1.0</div>
+  </div>
   <div id="topNav">
     <div class="wrapper">
       <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
@@ -34,7 +37,7 @@
         <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
         <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
       </ul>
     </div>
@@ -53,7 +56,7 @@
           <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
-            <div class="guides-section-container">
+            <dl class="guides-section-container">
                 <div class="guides-section">
                   <dt>Comece aqui</dt>
                   <dd><a href="getting_started.html">Começando com Rails</a></dd>
@@ -143,7 +146,7 @@
                   <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
                 </div>
             </div>
-          </div>
+          </dl>
         </li>
         <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
         <li class="guides-search guides-search-small">
@@ -325,30 +328,32 @@ Isso permite que os <em>assets</em> da sua aplicação sejam automaticamente com
 <a href="https://github.com/rails/sprockets-rails">sprockets-rails</a>,
 e é habilitado por padrão. Você pode desabilitar enquanto está criando uma nova aplicação
 passando a opção <code>--skip-sprockets</code>.</p><div class="code_container">
-<pre><code class="highlight console"><span class="go">rails new appname --skip-sprockets
-</span></code></pre>
-<textarea class="clipboard-content" id="clipboard-39f2c3f4021b8e7d86b3533f5975e6c8"></textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-39f2c3f4021b8e7d86b3533f5975e6c8">Copiar</button>
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new appname <span class="nt">--skip-sprockets</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-77797ca002c1137342f1a4c1f7f9a054">rails new appname --skip-sprockets
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-77797ca002c1137342f1a4c1f7f9a054">Copiar</button>
 </div>
-<p>O Rails automaticamente adiciona a <em>gem</em> <code>sass-rails</code> no seu <code>Gemfile</code>, o qual é
-usado pelo Sprockets para comprimir o <em>asset</em>:</p><div class="code_container">
+<p>O Rails automaticamente adiciona a <em>gem</em> <a href="https://github.com/rails/sass-rails"><code>sass-rails</code></a>
+no seu <code>Gemfile</code>, o qual é usado pelo Sprockets para comprimir
+<a href="https://sass-lang.com">Sass</a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'sass-rails'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f34b11824603f04030dacb714d891d09">gem 'sass-rails'
+<textarea class="clipboard-content" id="clipboard-c54c4a2f47bdcb4a89cb9eda5b611633">gem 'sass-rails'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f34b11824603f04030dacb714d891d09">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c54c4a2f47bdcb4a89cb9eda5b611633">Copiar</button>
 </div>
-<p>Usando a opção <code>--skip-sprockets</code> previnirá que o Rails adicione ao seu <code>Gemfile</code>,
+<p>Usando a opção <code>--skip-sprockets</code> previnirá que o Rails adicione essa gem ao seu <code>Gemfile</code>,
 então se mais tarde você quiser habilitar o <em>asset pipeline</em> você terá que adicionar
-essas <em>gems</em> ao seu <code>Gemfile</code>. Além disso, criando uma aplicação com a opção <code>--skip-sprockets</code>
+essas <em>gems</em> ao seu <code>Gemfile</code> manualmente. Além disso, criando uma aplicação com a opção <code>--skip-sprockets</code>
 gerará um arquivo <code>config/application.rb</code> levemente diferente, com a declaração de requerimento
 para o <em>sprockets</em> que está comentado. Você terá de remover o operador de comentário nessa linha
 para depois habilitar o <em>asset pipeline</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># require "sprockets/railtie"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3b575923e4fcab452326862f8b6bb7be"># require "sprockets/railtie"
+<textarea class="clipboard-content" id="clipboard-1f338a104164add7a026d134e767ed08"># require "sprockets/railtie"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3b575923e4fcab452326862f8b6bb7be">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1f338a104164add7a026d134e767ed08">Copiar</button>
 </div>
 <p>Para configurar os métodos de compactação do <em>asset</em>, coloque as opções de configuração
 apropriadas no <code>production.rb</code> - <code>config.assets.css_compressor</code> para o seu CSS e
@@ -356,10 +361,10 @@ apropriadas no <code>production.rb</code> - <code>config.assets.css_compressor</
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">css_compressor</span> <span class="o">=</span> <span class="ss">:yui</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">js_compressor</span> <span class="o">=</span> <span class="ss">:uglifier</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a41549c604d9c2d335e5f99cb26cd62f">config.assets.css_compressor = :yui
+<textarea class="clipboard-content" id="clipboard-8f2dc76214fd2e722672f2e1645e63c3">config.assets.css_compressor = :yui
 config.assets.js_compressor = :uglifier
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a41549c604d9c2d335e5f99cb26cd62f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8f2dc76214fd2e722672f2e1645e63c3">Copiar</button>
 </div>
 <div class="note"><p>A <em>gem</em> <code>sass-rails</code> é automaticamente usada para a compactação de CSS se estiver
 incluída no <code>Gemfile</code> e nenhuma opção <code>config.assets.css_compressor</code> é definida.</p></div><h4 id="principais-caracteristicas"><a class="anchorlink" href="#principais-caracteristicas">1.1 Principais Características</a></h4><p>A primeira característica do <em>pipeline</em> é concatenar os <em>assets</em>, o qual pode
@@ -389,18 +394,18 @@ Isso é geralmente conhecido como <em>cache busting</em>.</p><p>A técnica que o
 conteúdo no nome, geralmente no final. Por exemplo o arquivo CSS <code>global.css</code></p><div class="code_container">
 <pre><code class="highlight plaintext">global-908e25f4bf641868d8683022a5b62f54.css
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ecb01f8719ef1e827bd950671fa675ec">global-908e25f4bf641868d8683022a5b62f54.css
+<textarea class="clipboard-content" id="clipboard-482589a30ad443f12cd946896ce94c00">global-908e25f4bf641868d8683022a5b62f54.css
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ecb01f8719ef1e827bd950671fa675ec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-482589a30ad443f12cd946896ce94c00">Copiar</button>
 </div>
 <p>Essa é a estratégia adotada pelo <em>asset pipeline</em> do Rails.</p><p>A antiga estratégia do Rails era anexar uma <em>Query String</em>(string de consulta) baseada em data
 para cada <em>asset</em> vinculado com um <em>helper</em> interno. Em resumo o código gerado
 parecia com isso:</p><div class="code_container">
 <pre><code class="highlight plaintext">/stylesheets/global.css?1309495796
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-451dd090fc37558c9ad3f6cc66bed42e">/stylesheets/global.css?1309495796
+<textarea class="clipboard-content" id="clipboard-cf35895b5fb37686f887e84d43b80d5b">/stylesheets/global.css?1309495796
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-451dd090fc37558c9ad3f6cc66bed42e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cf35895b5fb37686f887e84d43b80d5b">Copiar</button>
 </div>
 <p>A estratégia de <em>Query String</em>(string de consulta) tinha várias desvantagens:</p>
 <ol>
@@ -466,11 +471,11 @@ adicionando o seguinte à sua configuração <code>config/application.rb</code>:
     <span class="n">g</span><span class="p">.</span><span class="nf">assets</span> <span class="kp">false</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b3ddd42a053a172e581ad2ec25ff7564">  config.generators do |g|
+<textarea class="clipboard-content" id="clipboard-3aaf4d131f190e8023418f64ac34df03">  config.generators do |g|
     g.assets false
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b3ddd42a053a172e581ad2ec25ff7564">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3aaf4d131f190e8023418f64ac34df03">Copiar</button>
 </div>
 <h4 id="organizacao-dos-assets"><a class="anchorlink" href="#organizacao-dos-assets">2.2 Organização dos <em>Assets</em></a></h4><p>Os <em>pipeline assets</em> podem ser colocados dentro de uma aplicação nos três locais seguintes:
 <code>app/assets</code>, <code>lib/assets</code> ou <code>vendor/assets</code>.</p>
@@ -493,12 +498,12 @@ lib/assets/javascripts/moovinator.js
 vendor/assets/javascripts/slider.js
 vendor/assets/somepackage/phonebox.js
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9dc61e41b2e81b38b9e917af12882e30">app/assets/javascripts/home.js
+<textarea class="clipboard-content" id="clipboard-13642f8a984bd2e9f698ffefe9307b51">app/assets/javascripts/home.js
 lib/assets/javascripts/moovinator.js
 vendor/assets/javascripts/slider.js
 vendor/assets/somepackage/phonebox.js
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9dc61e41b2e81b38b9e917af12882e30">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-13642f8a984bd2e9f698ffefe9307b51">Copiar</button>
 </div>
 <p>poderiam ser referenciados em um manifesto da seguinte maneira:</p><div class="code_container">
 <pre><code class="highlight js"><span class="c1">//= require home</span>
@@ -506,35 +511,35 @@ vendor/assets/somepackage/phonebox.js
 <span class="c1">//= require slider</span>
 <span class="c1">//= require phonebox</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7b906f61cdfe52406184ca67b282e5a8">//= require home
+<textarea class="clipboard-content" id="clipboard-a8dab595311c7a6e64ceb3eecf93de02">//= require home
 //= require moovinator
 //= require slider
 //= require phonebox
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7b906f61cdfe52406184ca67b282e5a8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a8dab595311c7a6e64ceb3eecf93de02">Copiar</button>
 </div>
 <p>Os <em>assets</em> dentro dos subdiretórios também podem ser acessados.</p><div class="code_container">
 <pre><code class="highlight plaintext">app/assets/javascripts/sub/something.js
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f2cb321c65db9693c67603f8b325a911">app/assets/javascripts/sub/something.js
+<textarea class="clipboard-content" id="clipboard-b50a2f77e4fab398440dc30aa35b91ad">app/assets/javascripts/sub/something.js
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f2cb321c65db9693c67603f8b325a911">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b50a2f77e4fab398440dc30aa35b91ad">Copiar</button>
 </div>
 <p>é referenciado como:</p><div class="code_container">
 <pre><code class="highlight js"><span class="c1">//= require sub/something</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-afea0458a47d278a57fae837c8b8e233">//= require sub/something
+<textarea class="clipboard-content" id="clipboard-146cf03e6ed5162bc3ef5826a28e12fd">//= require sub/something
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-afea0458a47d278a57fae837c8b8e233">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-146cf03e6ed5162bc3ef5826a28e12fd">Copiar</button>
 </div>
 <p>Você pode visualizar o caminho de busca inspecionando
 <code>Rails.application.config.assets.paths</code> no <em>console</em> do Rails.</p><p>Adicionalmente, além do caminho padrão <code>assets/*</code>, caminhos (completos)
 podem ser adicionados ao <em>pipeline</em> em <code>config/initializers/assets.rb</code>. Por exemplo:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">paths</span> <span class="o">&lt;&lt;</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"lib"</span><span class="p">,</span> <span class="s2">"videoplayer"</span><span class="p">,</span> <span class="s2">"flash"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f5aa3d0f979cdc9ace421662126e9ca8">Rails.application.config.assets.paths &lt;&lt; Rails.root.join("lib", "videoplayer", "flash")
+<textarea class="clipboard-content" id="clipboard-5e230aeeb6341f096c382a02bbf04b04">Rails.application.config.assets.paths &lt;&lt; Rails.root.join("lib", "videoplayer", "flash")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f5aa3d0f979cdc9ace421662126e9ca8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5e230aeeb6341f096c382a02bbf04b04">Copiar</button>
 </div>
 <p>Os caminhos são percorridos na ordem em que eles aparecem no caminho de busca. Por padrão,
 isso significa que os arquivos em <code>app/assets</code> tem precedência, e mascararão caminhos
@@ -547,9 +552,9 @@ manifesto para todos os arquivos desta biblioteca. Esse arquivo poderia incluir 
 ordenada de todos os arquivos necessários ou uma simples diretiva <code>require_tree</code>.</p><p>A biblioteca como um todo pode ser acessada no manifesto da aplicação como:</p><div class="code_container">
 <pre><code class="highlight js"><span class="c1">//= require library_name</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e0b627047f6e6ae430947a1bd956ccfc">//= require library_name
+<textarea class="clipboard-content" id="clipboard-f19a703b17842b96e6c67d98ec06fe49">//= require library_name
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e0b627047f6e6ae430947a1bd956ccfc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f19a703b17842b96e6c67d98ec06fe49">Copiar</button>
 </div>
 <p>Isso simplifica a manutenção e mantém as coisas limpas, permitindo que o código relacionado
 seja agrupado antes da inclusão em outro lugar.</p><h4 id="codificando-links-para-assets"><a class="anchorlink" href="#codificando-links-para-assets">2.3 Codificando <em>Links</em> para <em>Assets</em></a></h4><p>O <em>Sprockets</em> não adiciona nenhum método para acessar seus <em>assets</em> - você ainda usa
@@ -557,10 +562,10 @@ as familiares <code>javascript_include_tag</code> e <code>stylesheet_link_tag</c
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"application"</span><span class="p">,</span> <span class="ss">media: </span><span class="s2">"all"</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"application"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d82703ec3063d4ddc411aac1a75885ad">&lt;%= stylesheet_link_tag "application", media: "all" %&gt;
+<textarea class="clipboard-content" id="clipboard-e3575befa48588726b0b95bc191aa0e1">&lt;%= stylesheet_link_tag "application", media: "all" %&gt;
 &lt;%= javascript_include_tag "application" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d82703ec3063d4ddc411aac1a75885ad">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e3575befa48588726b0b95bc191aa0e1">Copiar</button>
 </div>
 <p>Se você estiver usando a <em>gem turbolinks</em>, que é incluída por padrão no Rails, então
 inclua a opção 'data-turbolinks-track' que faz com que a turbolinks verifique se um <em>asset</em>
@@ -568,18 +573,18 @@ foi atualizado e então o carrega naquela página:</p><div class="code_container
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"application"</span><span class="p">,</span> <span class="ss">media: </span><span class="s2">"all"</span><span class="p">,</span> <span class="s2">"data-turbolinks-track"</span> <span class="o">=&gt;</span> <span class="s2">"reload"</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"application"</span><span class="p">,</span> <span class="s2">"data-turbolinks-track"</span> <span class="o">=&gt;</span> <span class="s2">"reload"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf587379d13164569ad7dc530ab7b004">&lt;%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" =&gt; "reload" %&gt;
+<textarea class="clipboard-content" id="clipboard-f7c44f227eca4ddc2834e33b1786d7f4">&lt;%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" =&gt; "reload" %&gt;
 &lt;%= javascript_include_tag "application", "data-turbolinks-track" =&gt; "reload" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf587379d13164569ad7dc530ab7b004">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f7c44f227eca4ddc2834e33b1786d7f4">Copiar</button>
 </div>
 <p>Em <em>views</em> comuns você pode acessar imagens no diretório <code>app/assets/images</code>
 como essa:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"rails.png"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e87b686886cfbc3d3b37cb4ea9026f17">&lt;%= image_tag "rails.png" %&gt;
+<textarea class="clipboard-content" id="clipboard-2843af54ca799509272b5edd0858f6f9">&lt;%= image_tag "rails.png" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e87b686886cfbc3d3b37cb4ea9026f17">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2843af54ca799509272b5edd0858f6f9">Copiar</button>
 </div>
 <p>Se o <em>pipeline</em> estiver ativo na sua aplicação (e não desativado no contexto
 do ambiente atual), esse arquivo é servido pelo <em>Sprockets</em>. Se um arquivo
@@ -592,9 +597,9 @@ do Rails.</p><p>As imagens também podem ser organizadas em subdiretórios se ne
 podem ser acessadas pelo nome do diretório na tag:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"icons/rails.png"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a97836b9adade6e5d5d3caa5127f1d30">&lt;%= image_tag "icons/rails.png" %&gt;
+<textarea class="clipboard-content" id="clipboard-a6ad7317883352e04d2e0296bdc73e84">&lt;%= image_tag "icons/rails.png" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a97836b9adade6e5d5d3caa5127f1d30">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a6ad7317883352e04d2e0296bdc73e84">Copiar</button>
 </div>
 <div class="warning"><p>Se você estiver pré-compilando seus <em>assets</em> (veja <a href="#in-production">Em Produção</a>
 abaixo), fazer um <em>link</em> com um <em>asset</em> que não exista irá levantar uma <em>exception</em> 
@@ -604,9 +609,9 @@ uma extensão <code>erb</code> a um <em>asset</em> CSS (por exemplo, <code>appli
 <em>helpers</em> como <code>asset_path</code> estarão disponíveis nas suas regras de CSS:</p><div class="code_container">
 <pre><code class="highlight css"><span class="nc">.class</span> <span class="p">{</span> <span class="nl">background-image</span><span class="p">:</span> <span class="sx">url(&lt;%= asset_path 'image.png' %&gt;)</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-861e6d4711b5497bcdb21fbaf8c64491">.class { background-image: url(&lt;%= asset_path 'image.png' %&gt;) }
+<textarea class="clipboard-content" id="clipboard-532ec2e151bd7b4bd098bf49d14a051e">.class { background-image: url(&lt;%= asset_path 'image.png' %&gt;) }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-861e6d4711b5497bcdb21fbaf8c64491">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-532ec2e151bd7b4bd098bf49d14a051e">Copiar</button>
 </div>
 <p>Isso escreve o caminho ao <em>asset</em> em particular que está sendo referenciado. Nesse exemplo,
 faria sentido ter uma imagem em um dos caminhos carregados de <em>assets</em>, como 
@@ -617,9 +622,9 @@ um método para embutir a imagem diretamente no arquivo de CSS - você pode usar
 o <em>helper</em> <code>asset_data_uri</code>.</p><div class="code_container">
 <pre><code class="highlight css"><span class="nf">#logo</span> <span class="p">{</span> <span class="nl">background</span><span class="p">:</span> <span class="sx">url(&lt;%= asset_data_uri 'logo.png' %&gt;)</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9a8c90264d34c89a76dda9ac585dc590">#logo { background: url(&lt;%= asset_data_uri 'logo.png' %&gt;) }
+<textarea class="clipboard-content" id="clipboard-696ee0c2f68c02a24afacb45ea5b6f66">#logo { background: url(&lt;%= asset_data_uri 'logo.png' %&gt;) }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9a8c90264d34c89a76dda9ac585dc590">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-696ee0c2f68c02a24afacb45ea5b6f66">Copiar</button>
 </div>
 <p>Isso insere uma URI de dados corretamente formatada no CSS fonte.</p><p>Note que a tag de fechamento não pode ser do estilo <code>-%&gt;</code>.</p><h5 id="css-e-sass"><a class="anchorlink" href="#css-e-sass">2.3.2 CSS e Sass</a></h5><p>Ao utilizar o <em>asset pipeline</em>, os caminhos para os <em>assets</em> devem ser reescritos e
 o <code>sass-rails</code> provê os <em>helpers</em> <code>-url</code> e <code>-path</code> (hifenizados em Sass,
@@ -647,17 +652,17 @@ imagem, fonte, vídeo, áudio, JavaScript e folha de estilo.</p>
 código JavaScript:</p><div class="code_container">
 <pre><code class="highlight js"><span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#logo</span><span class="dl">'</span><span class="p">).</span><span class="nx">attr</span><span class="p">({</span> <span class="na">src</span><span class="p">:</span> <span class="dl">"</span><span class="s2">&lt;%= asset_path('logo.png') %&gt;</span><span class="dl">"</span> <span class="p">});</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ef31ec514854254f2727477ac369cfa5">$('#logo').attr({ src: "&lt;%= asset_path('logo.png') %&gt;" });
+<textarea class="clipboard-content" id="clipboard-2a98a3ac0319629aff612cff0afed609">$('#logo').attr({ src: "&lt;%= asset_path('logo.png') %&gt;" });
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ef31ec514854254f2727477ac369cfa5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a98a3ac0319629aff612cff0afed609">Copiar</button>
 </div>
 <p>Isso escreve o caminho ao <em>asset</em> em particular que está sendo referenciado.</p><p>Similarmente, você pode usar o <em>helper</em> <code>asset_path</code> em arquivos CoffeeScript com
 a extensão <code>erb</code> (i.e., <code>application.coffee.erb</code>).</p><div class="code_container">
 <pre><code class="highlight js"><span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#logo</span><span class="dl">'</span><span class="p">).</span><span class="nx">attr</span> <span class="nx">src</span><span class="p">:</span> <span class="dl">"</span><span class="s2">&lt;%= asset_path('logo.png') %&gt;</span><span class="dl">"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-080ef30ab6ae01404970e34b0c35a29f">$('#logo').attr src: "&lt;%= asset_path('logo.png') %&gt;"
+<textarea class="clipboard-content" id="clipboard-77c9b2216fc4b1b7a6c7b2b7dc683814">$('#logo').attr src: "&lt;%= asset_path('logo.png') %&gt;"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-080ef30ab6ae01404970e34b0c35a29f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-77c9b2216fc4b1b7a6c7b2b7dc683814">Copiar</button>
 </div>
 <h4 id="arquivos-de-manifesto-e-diretivas"><a class="anchorlink" href="#arquivos-de-manifesto-e-diretivas">2.4 Arquivos de Manifesto e Diretivas</a></h4><p>O <em>Sprockets</em> usa arquivos de manifesto para determinar quais <em>assets</em> incluir e servir.
 Esses arquivos de manifesto contém <em>diretivas</em> - instruções que dirão ao <em>Sprockets</em>
@@ -674,12 +679,12 @@ seguintes linhas:</p><div class="code_container">
 <span class="c1">//= require turbolinks</span>
 <span class="c1">//= require_tree .</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-245c77cc5980e6f276ba83713f8b1a20">// ...
+<textarea class="clipboard-content" id="clipboard-00c54ef9d10614e31e9c4e4107365113">// ...
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-245c77cc5980e6f276ba83713f8b1a20">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-00c54ef9d10614e31e9c4e4107365113">Copiar</button>
 </div>
 <p>Nos arquivos JavaScript, as diretivas do Sprocket começam com <code>//=</code>. No caso acima,
 o arquivo está usando as diretivas <code>require</code> e <code>require_tree</code>. A diretiva <code>require</code>
@@ -703,15 +708,15 @@ que contém essas linhas:</p><div class="code_container">
 *= require_tree .
 */</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6de88abf2fe1b2f87c27e7ebba8fa4c1">/* ...
+<textarea class="clipboard-content" id="clipboard-42ec58c9e18ce745db445242595b9bb3">/* ...
 *= require_self
 *= require_tree .
 */
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6de88abf2fe1b2f87c27e7ebba8fa4c1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-42ec58c9e18ce745db445242595b9bb3">Copiar</button>
 </div>
 <p>O Rails cria o <code>app/assets/stylesheets/application.css</code> independentemente se
-a opção --skip-sprockets é usada ao criar uma nova aplicação Rails. Isso permite
+a opção <code>--skip-sprockets</code> é usada ao criar uma nova aplicação Rails. Isso permite
 que você facilmente adicione o <em>asset pipelining</em> mais tarde se assim o quiser.</p><p>As diretivas que funcionam nos arquivos JavaScript também funcionam nas folhas de estilo
 (que obviamente incluem folhas de estilo além de arquivos JavaScript). A diretiva
 <code>require_tree</code> em um manifesto CSS funciona da mesma maneira que no JavaScript,
@@ -729,22 +734,22 @@ Por exemplo, você pode concatenar três arquivos CSS juntos da seguinte maneira
 *= require chrome
 */</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-455555064b274e7078ed535e8dd16c32">/* ...
+<textarea class="clipboard-content" id="clipboard-3581b854a245ad4c0b025aa7be1a5434">/* ...
 *= require reset
 *= require layout
 *= require chrome
 */
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-455555064b274e7078ed535e8dd16c32">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3581b854a245ad4c0b025aa7be1a5434">Copiar</button>
 </div>
 <h4 id="pre-processamento"><a class="anchorlink" href="#pre-processamento">2.5 Pré-processamento</a></h4><p>As extensões de arquivos usadas em um <em>asset</em> determinam qual pré-processamento é aplicado.
 Quando um <em>controller</em> ou um <em>scaffold</em> é gerado com o gemset padrão do Rails, um arquivo
-CoffeeScript e um arquivo SCSS são gerados no lugar de um arquivo comum de JavaScript e CSS.
+SCSS é gerado no lugar de um arquivo comum CSS.
 O exemplo usado anteriormente era um <em>controller</em> chamado "<em>projects</em>", que gerou um
 arquivo <code>app/assets/stylesheets/projects.scss</code>.</p><p>Em modo de desenvolvimento, se o <em>asset pipeline</em> estiver desabilitado, quando esses
 arquivos são solicitados, eles serão processados pelos <em>processors</em> especificados
-pelas gems de <code>coffee-script</code> e <code>sass</code> e então enviados de volta ao navegador como
-JavaScript e CSS respectivamente. Quando o <em>asset pipelining</em> está habilitado, esses
+pela gem <code>sass-rails</code> e então enviados de volta ao navegador como
+CSS. Quando o <em>asset pipelining</em> está habilitado, esses
 arquivos são pré-processados e colocados no diretório <code>public/assets</code>, para serem servidos
 seja pela aplicação Rails ou pelo servidor <em>web</em>.</p><p>Camadas adicionais de pré-processamento podem ser solicitadas ao se adicionar outras extensões,
 onde cada extensão é processada da direita para a esquerda. Essas devem ser usadas para que
@@ -761,57 +766,57 @@ specified in the manifest file.</p><p>This manifest <code>app/assets/javascripts
 <span class="c1">//= require projects</span>
 <span class="c1">//= require tickets</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-acdcb013e5ae0042dc7a7ecbc56c3739">//= require core
+<textarea class="clipboard-content" id="clipboard-22b0879e703336e666c37aac753e276d">//= require core
 //= require projects
 //= require tickets
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-acdcb013e5ae0042dc7a7ecbc56c3739">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-22b0879e703336e666c37aac753e276d">Copiar</button>
 </div>
 <p>would generate this HTML:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/assets/core.js?body=1"</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/assets/projects.js?body=1"</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/assets/tickets.js?body=1"</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-113f214ceeca992c66412e5262433a36">&lt;script src="/assets/core.js?body=1"&gt;&lt;/script&gt;
+<textarea class="clipboard-content" id="clipboard-009834b04a158113cfac16fda8512f8d">&lt;script src="/assets/core.js?body=1"&gt;&lt;/script&gt;
 &lt;script src="/assets/projects.js?body=1"&gt;&lt;/script&gt;
 &lt;script src="/assets/tickets.js?body=1"&gt;&lt;/script&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-113f214ceeca992c66412e5262433a36">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-009834b04a158113cfac16fda8512f8d">Copiar</button>
 </div>
 <p>The <code>body</code> param is required by Sprockets.</p><h4 id="raise-an-error-when-an-asset-is-not-found"><a class="anchorlink" href="#raise-an-error-when-an-asset-is-not-found">3.1 Raise an Error When an Asset is Not Found</a></h4><p>If you are using sprockets-rails &gt;= 3.2.0 you can configure what happens
 when an asset lookup is performed and nothing is found. If you turn off "asset fallback"
 then an error will be raised when an asset cannot be found.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">unknown_asset_fallback</span> <span class="o">=</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-74ff20c32803313441ce264aefe43e73">config.assets.unknown_asset_fallback = false
+<textarea class="clipboard-content" id="clipboard-df70094367f8eb52b51ecba25120241d">config.assets.unknown_asset_fallback = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-74ff20c32803313441ce264aefe43e73">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-df70094367f8eb52b51ecba25120241d">Copiar</button>
 </div>
 <p>If "asset fallback" is enabled then when an asset cannot be found the path will be
 output instead and no error raised. The asset fallback behavior is disabled by default.</p><h4 id="turning-digests-off"><a class="anchorlink" href="#turning-digests-off">3.2 Turning Digests Off</a></h4><p>You can turn off digests by updating <code>config/environments/development.rb</code> to
 include:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">digest</span> <span class="o">=</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a8c35a4c4fb3de5600576607219b0b2e">config.assets.digest = false
+<textarea class="clipboard-content" id="clipboard-eb5154af7295e2aa9a3b6778c4cc94cd">config.assets.digest = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a8c35a4c4fb3de5600576607219b0b2e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eb5154af7295e2aa9a3b6778c4cc94cd">Copiar</button>
 </div>
 <p>When this option is true, digests will be generated for asset URLs.</p><h4 id="turning-debugging-off"><a class="anchorlink" href="#turning-debugging-off">3.3 Turning Debugging Off</a></h4><p>You can turn off debug mode by updating <code>config/environments/development.rb</code> to
 include:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">debug</span> <span class="o">=</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3f72a15c72ac5fc61aee74a4d06214da">config.assets.debug = false
+<textarea class="clipboard-content" id="clipboard-45f68cb6c074965fe0432153d28a5d16">config.assets.debug = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3f72a15c72ac5fc61aee74a4d06214da">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-45f68cb6c074965fe0432153d28a5d16">Copiar</button>
 </div>
 <p>When debug mode is off, Sprockets concatenates and runs the necessary
 preprocessors on all files. With debug mode turned off the manifest above would
 generate instead:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/assets/application.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fd8fa249f264ffe53501ba1d155a19b4">&lt;script src="/assets/application.js"&gt;&lt;/script&gt;
+<textarea class="clipboard-content" id="clipboard-9694f199dbb7c9d192ec7dfacb450ae1">&lt;script src="/assets/application.js"&gt;&lt;/script&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fd8fa249f264ffe53501ba1d155a19b4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9694f199dbb7c9d192ec7dfacb450ae1">Copiar</button>
 </div>
 <p>Assets are compiled and cached on the first request after the server is started.
 Sprockets sets a <code>must-revalidate</code> Cache-Control HTTP header to reduce request
@@ -821,10 +826,10 @@ responds with a new compiled file.</p><p>Debug mode can also be enabled in Rails
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"application"</span><span class="p">,</span> <span class="ss">debug: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"application"</span><span class="p">,</span> <span class="ss">debug: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a11bcc74b4afd7573f2cac4d5b4edafa">&lt;%= stylesheet_link_tag "application", debug: true %&gt;
+<textarea class="clipboard-content" id="clipboard-b65dc89708c12e4cdabf005dde7317e3">&lt;%= stylesheet_link_tag "application", debug: true %&gt;
 &lt;%= javascript_include_tag "application", debug: true %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a11bcc74b4afd7573f2cac4d5b4edafa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b65dc89708c12e4cdabf005dde7317e3">Copiar</button>
 </div>
 <p>The <code>:debug</code> option is redundant if debug mode is already on.</p><p>You can also enable compression in development mode as a sanity check, and
 disable it on-demand as required for debugging.</p><h3 id="in-production"><a class="anchorlink" href="#in-production">4 In Production</a></h3><p>In the production environment Sprockets uses the fingerprinting scheme outlined
@@ -836,21 +841,21 @@ name.</p><p>For example this:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"application"</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"application"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-848380003498d5235c1ca3e4cf000554">&lt;%= javascript_include_tag "application" %&gt;
+<textarea class="clipboard-content" id="clipboard-5ca79b28c13b97e45174972153a9ef73">&lt;%= javascript_include_tag "application" %&gt;
 &lt;%= stylesheet_link_tag "application" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-848380003498d5235c1ca3e4cf000554">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5ca79b28c13b97e45174972153a9ef73">Copiar</button>
 </div>
 <p>generates something like this:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/assets/application-908e25f4bf641868d8683022a5b62f54.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"/assets/application-4dd5b109ee3439da54f5bdfd78a80473.css"</span> <span class="na">media=</span><span class="s">"screen"</span>
 <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eeaa392bc0eac519dc94cc4b2dc90037">&lt;script src="/assets/application-908e25f4bf641868d8683022a5b62f54.js"&gt;&lt;/script&gt;
+<textarea class="clipboard-content" id="clipboard-cfcb4b92b6445caf780a969af1ec1b7d">&lt;script src="/assets/application-908e25f4bf641868d8683022a5b62f54.js"&gt;&lt;/script&gt;
 &lt;link href="/assets/application-4dd5b109ee3439da54f5bdfd78a80473.css" media="screen"
 rel="stylesheet" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eeaa392bc0eac519dc94cc4b2dc90037">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cfcb4b92b6445caf780a969af1ec1b7d">Copiar</button>
 </div>
 <div class="note"><p>with the Asset Pipeline the <code>:cache</code> and <code>:concat</code> options aren't used
 anymore, delete these options from the <code>javascript_include_tag</code> and
@@ -865,17 +870,9 @@ versions of your assets directly on the server. See the next section for
 information on compiling locally.</p><p>The command is:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nv">RAILS_ENV</span><span class="o">=</span>production <span class="nb">rails </span>assets:precompile
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0ac73a6ad483cc7cdc110de8f715f494">RAILS_ENV=production rails assets:precompile
+<textarea class="clipboard-content" id="clipboard-bf12ec4990a112d2fd49f58991336e43">RAILS_ENV=production rails assets:precompile
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0ac73a6ad483cc7cdc110de8f715f494">Copiar</button>
-</div>
-<p>Capistrano (v2.15.1 and above) includes a recipe to handle this in deployment.
-Add the following line to <code>Capfile</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="nb">load</span> <span class="s1">'deploy/assets'</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-d33f85bcf8586085bc741016fb539676">load 'deploy/assets'
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d33f85bcf8586085bc741016fb539676">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bf12ec4990a112d2fd49f58991336e43">Copiar</button>
 </div>
 <p>This links the folder specified in <code>config.assets.prefix</code> to <code>shared/assets</code>.
 If you already use this shared folder you'll need to write your own deployment
@@ -884,13 +881,13 @@ cached pages referencing the old compiled assets still work for the life of
 the cached page.</p><p>The default matcher for compiling files includes <code>application.js</code>,
 <code>application.css</code> and all non-JS/CSS files (this will include all image assets
 automatically) from <code>app/assets</code> folders including your gems:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="p">[</span> <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">filename</span><span class="p">,</span> <span class="n">path</span><span class="o">|</span> <span class="n">path</span> <span class="o">=~</span> <span class="sr">/app\/assets/</span><span class="err"> &amp;&amp; !%w(.j</span><span class="sr">s</span> <span class="p">.</span><span class="nf">css</span><span class="p">).</span><span class="nf">include?</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">extname</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span> <span class="p">},</span>
-<span class="sr">/application.(css|js)$/</span><span class="err"> ]
-</span></code></pre>
-<textarea class="clipboard-content" id="clipboard-cbd0001ef9ce53c95445409278567ff3">[ Proc.new { |filename, path| path =~ /app\/assets/ &amp;&amp; !%w(.js .css).include?(File.extname(filename)) },
+<pre><code class="highlight ruby"><span class="p">[</span> <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">filename</span><span class="p">,</span> <span class="n">path</span><span class="o">|</span> <span class="n">path</span> <span class="o">=~</span> <span class="sr">/app\/assets/</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="sx">%w(.js .css)</span><span class="p">.</span><span class="nf">include?</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">extname</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span> <span class="p">},</span>
+<span class="sr">/application.(css|js)$/</span> <span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a5e0ce75b2dfd6146501319193712fa4">[ Proc.new { |filename, path| path =~ /app\/assets/ &amp;&amp; !%w(.js .css).include?(File.extname(filename)) },
 /application.(css|js)$/ ]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cbd0001ef9ce53c95445409278567ff3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a5e0ce75b2dfd6146501319193712fa4">Copiar</button>
 </div>
 <div class="note"><p>The matcher (and other members of the precompile array; see below) is
 applied to final compiled file names. This means anything that compiles to
@@ -899,9 +896,9 @@ JS/CSS is excluded, as well as raw JS/CSS files; for example, <code>.coffee</cod
 include, you can add them to the <code>precompile</code> array in <code>config/initializers/assets.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">precompile</span> <span class="o">+=</span> <span class="sx">%w( admin.js admin.css )</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7fe02ecdbe838c3450e473dff1676d43">Rails.application.config.assets.precompile += %w( admin.js admin.css )
+<textarea class="clipboard-content" id="clipboard-8ce3eb34f6b21d8c0c15ddfa96588ab6">Rails.application.config.assets.precompile += %w( admin.js admin.css )
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7fe02ecdbe838c3450e473dff1676d43">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ce3eb34f6b21d8c0c15ddfa96588ab6">Copiar</button>
 </div>
 <div class="note"><p>Always specify an expected compiled filename that ends with <code>.js</code> or <code>.css</code>,
 even if you want to add Sass or CoffeeScript files to the precompile array.</p></div><p>The command also generates a <code>.sprockets-manifest-randomhex.json</code> (where <code>randomhex</code> is
@@ -921,7 +918,7 @@ mapping requests back to Sprockets. A typical manifest file looks like:</p><div 
 <span class="s2">"favicon.ico"</span><span class="ss">:"favicon-8d2387b8d4d32cecd93fa3900df0e9ff89d01aacd84f50e780c17c9f6b3d0eda.ico"</span><span class="p">,</span>
 <span class="s2">"my_image.png"</span><span class="ss">:"my_image-f4028156fd7eca03584d5f2fc0470df1e0dbc7369eaae638b2ff033f988ec493.png"</span><span class="p">}}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-67a0db215964d67a339f6058f2271eab">{"files":{"application-aee4be71f1288037ae78b997df388332edfd246471b533dcedaa8f9fe156442b.js":{"logical_path":"application.js","mtime":"2016-12-23T20:12:03-05:00","size":412383,
+<textarea class="clipboard-content" id="clipboard-fdff6803c71f36b2e972ced35d0dbef7">{"files":{"application-aee4be71f1288037ae78b997df388332edfd246471b533dcedaa8f9fe156442b.js":{"logical_path":"application.js","mtime":"2016-12-23T20:12:03-05:00","size":412383,
 "digest":"aee4be71f1288037ae78b997df388332edfd246471b533dcedaa8f9fe156442b","integrity":"sha256-ruS+cfEogDeueLmX3ziDMu39JGRxtTPc7aqPn+FWRCs="},
 "application-86a292b5070793c37e2c0e5f39f73bb387644eaeada7f96e6fc040a028b16c18.css":{"logical_path":"application.css","mtime":"2016-12-23T19:12:20-05:00","size":2994,
 "digest":"86a292b5070793c37e2c0e5f39f73bb387644eaeada7f96e6fc040a028b16c18","integrity":"sha256-hqKStQcHk8N+LA5fOfc7s4dkTq6tp/lub8BAoCixbBg="},
@@ -934,7 +931,7 @@ mapping requests back to Sprockets. A typical manifest file looks like:</p><div 
 "favicon.ico":"favicon-8d2387b8d4d32cecd93fa3900df0e9ff89d01aacd84f50e780c17c9f6b3d0eda.ico",
 "my_image.png":"my_image-f4028156fd7eca03584d5f2fc0470df1e0dbc7369eaae638b2ff033f988ec493.png"}}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-67a0db215964d67a339f6058f2271eab">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fdff6803c71f36b2e972ced35d0dbef7">Copiar</button>
 </div>
 <p>The default location for the manifest is the root of the location specified in
 <code>config.assets.prefix</code> ('/assets' by default).</p><div class="note"><p>If there are missing precompiled files in production you will get a
@@ -954,7 +951,7 @@ headers.</p><p>For Apache:</p><div class="code_container">
   <span class="nc">ExpiresDefault</span> "access plus 1 year"
 <span class="p">&lt;/</span><span class="nl">Location</span><span class="p">&gt;
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-c211cf85e6f9a08c7e29eb234782492f"># The Expires* directives requires the Apache module
+<textarea class="clipboard-content" id="clipboard-cb7d041d82d60b5fd1e00dfb5f13bfac"># The Expires* directives requires the Apache module
 # `mod_expires` to be enabled.
 &lt;Location /assets/&gt;
   # Use of ETag is discouraged when Last-Modified is present
@@ -965,7 +962,7 @@ headers.</p><p>For Apache:</p><div class="code_container">
   ExpiresDefault "access plus 1 year"
 &lt;/Location&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c211cf85e6f9a08c7e29eb234782492f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cb7d041d82d60b5fd1e00dfb5f13bfac">Copiar</button>
 </div>
 <p>For NGINX:</p><div class="code_container">
 <pre><code class="highlight nginx"><span class="k">location</span> <span class="p">~</span> <span class="sr">^/assets/</span> <span class="p">{</span>
@@ -975,55 +972,66 @@ headers.</p><p>For Apache:</p><div class="code_container">
   <span class="kn">add_header</span> <span class="s">ETag</span> <span class="s">""</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0e61be0419eb2b69e536b56143dc7d14">location ~ ^/assets/ {
+<textarea class="clipboard-content" id="clipboard-35684ada4b27fbc1629a8ec710f580e5">location ~ ^/assets/ {
   expires 1y;
   add_header Cache-Control public;
 
   add_header ETag "";
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0e61be0419eb2b69e536b56143dc7d14">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-35684ada4b27fbc1629a8ec710f580e5">Copiar</button>
 </div>
-<h4 id="local-precompilation"><a class="anchorlink" href="#local-precompilation">4.2 Local Precompilation</a></h4><p>There are several reasons why you might want to precompile your assets locally.
-Among them are:</p>
-<ul>
-<li>You may not have write access to your production file system.</li>
-<li>You may be deploying to more than one server, and want to avoid
-duplication of work.</li>
-<li>You may be doing frequent deploys that do not include asset changes.</li>
-</ul>
-<p>Local compilation allows you to commit the compiled files into source control,
-and deploy as normal.</p><p>There are three caveats:</p>
-<ul>
-<li>You must not run the Capistrano deployment task that precompiles assets.</li>
-<li>You must ensure any necessary compressors or minifiers are
-available on your development system.</li>
-<li>You must change the following application configuration setting:</li>
-</ul>
-<p>In <code>config/environments/development.rb</code>, place the following line:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">prefix</span> <span class="o">=</span> <span class="s2">"/dev-assets"</span>
+<h4 id="local-precompilation"><a class="anchorlink" href="#local-precompilation">4.2 Local Precompilation</a></h4><p>Sometimes, you may not want or be able to compile assets on the production
+server. For instance, you may have limited write access to your production
+filesystem, or you may plan to deploy frequently without making any changes to
+your assets.</p><p>In such cases, you can precompile assets <em>locally</em> — that is, add a finalized
+set of compiled, production-ready assets to your source code repository before
+pushing to production. This way, they do not need to be precompiled separately
+on the production server upon each deployment.</p><p>As above, you can perform this step using</p><div class="code_container">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nv">RAILS_ENV</span><span class="o">=</span>production <span class="nb">rails </span>assets:precompile
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c4a7b9a52ce68f80be805f9ad01137a7">config.assets.prefix = "/dev-assets"
+<textarea class="clipboard-content" id="clipboard-c140c749201f156066362699c1167ea2">RAILS_ENV=production rails assets:precompile
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c4a7b9a52ce68f80be805f9ad01137a7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c140c749201f156066362699c1167ea2">Copiar</button>
 </div>
-<p>The <code>prefix</code> change makes Sprockets use a different URL for serving assets in
-development mode, and pass all requests to Sprockets. The prefix is still set to
-<code>/assets</code> in the production environment. Without this change, the application
-would serve the precompiled assets from <code>/assets</code> in development, and you would
-not see any local changes until you compile assets again.</p><p>In practice, this will allow you to precompile locally, have those files in your
-working tree, and commit those files to source control when needed.  Development
-mode will work as expected.</p><h4 id="live-compilation"><a class="anchorlink" href="#live-compilation">4.3 Live Compilation</a></h4><p>In some circumstances you may wish to use live compilation. In this mode all
+<p>Note the following caveats:</p>
+<ul>
+<li>If precompiled assets are available, they will be served — even if they no
+longer match the original (uncompiled) assets, <em>even on the development
+server.</em>
+</li>
+</ul>
+<p>  To ensure that the development server always compiles assets on-the-fly (and
+  thus always reflects the most recent state of the code), the development
+  environment <em>must be configured to keep precompiled assets in a different
+  location than production does.</em> Otherwise, any assets precompiled for use in
+  production will clobber requests for them in development (<em>i.e.,</em> subsequent
+  changes you make to assets will not be reflected in the browser).</p><p>  You can do this by adding the following line to
+  <code>config/environments/development.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby">  <span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">prefix</span> <span class="o">=</span> <span class="s2">"/dev-assets"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c01b116db29be2b8797cbe6fde973a86">  config.assets.prefix = "/dev-assets"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c01b116db29be2b8797cbe6fde973a86">Copiar</button>
+</div>
+
+<ul>
+<li>The asset precompile task in your deployment tool (<em>e.g.,</em> Capistrano) should
+be disabled.</li>
+<li>Any necessary compressors or minifiers must be available on your development
+system.</li>
+</ul>
+<h4 id="live-compilation"><a class="anchorlink" href="#live-compilation">4.3 Live Compilation</a></h4><p>In some circumstances you may wish to use live compilation. In this mode all
 requests for assets in the pipeline are handled by Sprockets directly.</p><p>To enable this option set:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">compile</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d401d19b49e5313bc7dd7763e67e911">config.assets.compile = true
+<textarea class="clipboard-content" id="clipboard-f1cab8352746240f6bdcd15e25e6dfa8">config.assets.compile = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d401d19b49e5313bc7dd7763e67e911">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f1cab8352746240f6bdcd15e25e6dfa8">Copiar</button>
 </div>
-<p>On the first request the assets are compiled and cached as outlined in
-development above, and the manifest names used in the helpers are altered to
-include the SHA256 hash.</p><p>Sprockets also sets the <code>Cache-Control</code> HTTP header to <code>max-age=31536000</code>. This
+<p>On the first request the assets are compiled and cached as outlined in <a href="#assets-cache-store">Assets
+Cache Store</a>, and the manifest names used in the helpers
+are altered to include the SHA256 hash.</p><p>Sprockets also sets the <code>Cache-Control</code> HTTP header to <code>max-age=31536000</code>. This
 signals all caches between your server and the client browser that this content
 (the file served) can be cached for 1 year. The effect of this is to reduce the
 number of requests for this asset from your server; the asset has a good chance
@@ -1034,11 +1042,11 @@ pre-existing JavaScript runtimes, you may want to add one to your <code>Gemfile<
   <span class="n">gem</span> <span class="s1">'mini_racer'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9fad5b085527cf28a21e9b7effb2ec0b">group :production do
+<textarea class="clipboard-content" id="clipboard-7b717c06a3758461b131238b1f221601">group :production do
   gem 'mini_racer'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9fad5b085527cf28a21e9b7effb2ec0b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7b717c06a3758461b131238b1f221601">Copiar</button>
 </div>
 <h4 id="cdns"><a class="anchorlink" href="#cdns">4.4 CDNs</a></h4><p>CDN stands for <a href="https://en.wikipedia.org/wiki/Content_delivery_network">Content Delivery
 Network</a>, they are
@@ -1068,13 +1076,13 @@ valid CDN provider at the time of this writing). Now that you have configured
 your CDN server, you need to tell browsers to use your CDN to grab assets
 instead of your Rails server directly. You can do this by configuring Rails to
 set your CDN as the asset host instead of using a relative path. To set your
-asset host in Rails, you need to set <code>config.action_controller.asset_host</code> in
+asset host in Rails, you need to set <code>config.asset_host</code> in
 <code>config/environments/production.rb</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_controller</span><span class="p">.</span><span class="nf">asset_host</span> <span class="o">=</span> <span class="s1">'mycdnsubdomain.fictional-cdn.com'</span>
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">asset_host</span> <span class="o">=</span> <span class="s1">'mycdnsubdomain.fictional-cdn.com'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-31bc4c412facd6d6bc50102e47dc9e83">config.action_controller.asset_host = 'mycdnsubdomain.fictional-cdn.com'
+<textarea class="clipboard-content" id="clipboard-e469f420c8c512cf50849f739e591a4d">config.asset_host = 'mycdnsubdomain.fictional-cdn.com'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-31bc4c412facd6d6bc50102e47dc9e83">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e469f420c8c512cf50849f739e591a4d">Copiar</button>
 </div>
 <div class="note"><p>You only need to provide the "host", this is the subdomain and root
 domain, you do not need to specify a protocol or "scheme" such as <code>http://</code> or
@@ -1082,28 +1090,28 @@ domain, you do not need to specify a protocol or "scheme" such as <code>http://<
 that is generated will match how the webpage is accessed by default.</p></div><p>You can also set this value through an <a href="https://en.wikipedia.org/wiki/Environment_variable">environment
 variable</a> to make running a
 staging copy of your site easier:</p><div class="code_container">
-<pre><code class="highlight plaintext">config.action_controller.asset_host = ENV['CDN_HOST']
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">asset_host</span> <span class="o">=</span> <span class="no">ENV</span><span class="p">[</span><span class="s1">'CDN_HOST'</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e64b43a8d07d6f2fa05369ad55cdc347">config.action_controller.asset_host = ENV['CDN_HOST']
+<textarea class="clipboard-content" id="clipboard-a23cdba31be284a32eb90dbcbaa16412">config.asset_host = ENV['CDN_HOST']
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e64b43a8d07d6f2fa05369ad55cdc347">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a23cdba31be284a32eb90dbcbaa16412">Copiar</button>
 </div>
 <div class="note"><p>You would need to set <code>CDN_HOST</code> on your server to <code>mycdnsubdomain
 .fictional-cdn.com</code> for this to work.</p></div><p>Once you have configured your server and your CDN when you serve a webpage that
 has an asset:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">asset_path</span><span class="p">(</span><span class="s1">'smile.png'</span><span class="p">)</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-74d5ae81fdfa8bd24e3031a808b1dfa9">&lt;%= asset_path('smile.png') %&gt;
+<textarea class="clipboard-content" id="clipboard-7418bd880fdd3e9c3a8524c6106ffb1d">&lt;%= asset_path('smile.png') %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-74d5ae81fdfa8bd24e3031a808b1dfa9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7418bd880fdd3e9c3a8524c6106ffb1d">Copiar</button>
 </div>
 <p>Instead of returning a path such as <code>/assets/smile.png</code> (digests are left out
 for readability). The URL generated will have the full path to your CDN.</p><div class="code_container">
 <pre><code class="highlight plaintext">http://mycdnsubdomain.fictional-cdn.com/assets/smile.png
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-de5b749fc9d490c6e7bd7ed7b8df2f10">http://mycdnsubdomain.fictional-cdn.com/assets/smile.png
+<textarea class="clipboard-content" id="clipboard-e8bfcadd6240acf8b352878c42294892">http://mycdnsubdomain.fictional-cdn.com/assets/smile.png
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-de5b749fc9d490c6e7bd7ed7b8df2f10">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e8bfcadd6240acf8b352878c42294892">Copiar</button>
 </div>
 <p>If the CDN has a copy of <code>smile.png</code> it will serve it to the browser and your
 server doesn't even know it was requested. If the CDN does not have a copy it
@@ -1113,9 +1121,9 @@ option your asset helper, which overwrites value set in
 <code>config.action_controller.asset_host</code>.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">asset_path</span> <span class="s1">'image.png'</span><span class="p">,</span> <span class="ss">host: </span><span class="s1">'mycdnsubdomain.fictional-cdn.com'</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ef0888b7dd05561b85d765f218970447">&lt;%= asset_path 'image.png', host: 'mycdnsubdomain.fictional-cdn.com' %&gt;
+<textarea class="clipboard-content" id="clipboard-f637a46933903f0515cf9f84669f43eb">&lt;%= asset_path 'image.png', host: 'mycdnsubdomain.fictional-cdn.com' %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ef0888b7dd05561b85d765f218970447">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f637a46933903f0515cf9f84669f43eb">Copiar</button>
 </div>
 <h5 id="customize-cdn-caching-behavior"><a class="anchorlink" href="#customize-cdn-caching-behavior">4.4.2 Customize CDN Caching Behavior</a></h5><p>A CDN works by caching content. If the CDN has stale or bad content, then it is
 hurting rather than helping your application. The purpose of this section is to
@@ -1129,8 +1137,8 @@ then your CDN will likely cache the 404 page if a valid <code>Cache-Control</cod
 is present.</p><h6 id="cdn-header-debugging"><a class="anchorlink" href="#cdn-header-debugging">4.4.2.2 CDN Header Debugging</a></h6><p>One way to check the headers are cached properly in your CDN is by using <a href="https://explainshell.com/explain?cmd=curl+-I+http%3A%2F%2Fwww.example.com">curl</a>. You
 can request the headers from both your server and your CDN to verify they are
 the same:</p><div class="code_container">
-<pre><code class="highlight plaintext">$ curl -I http://www.example/assets/application-
-d0e099e021c95eb0de3615fd1d8c4d83.css
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span>curl <span class="nt">-I</span> http://www.example/assets/application-
+<span class="go">d0e099e021c95eb0de3615fd1d8c4d83.css
 HTTP/1.1 200 OK
 Server: Cowboy
 Date: Sun, 24 Aug 2014 20:27:50 GMT
@@ -1140,24 +1148,14 @@ Content-Type: text/css
 Cache-Control: public, max-age=2592000
 Content-Length: 126560
 Via: 1.1 vegur
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-e6a898763685e5abffcca4db1cee8d86">$ curl -I http://www.example/assets/application-
-d0e099e021c95eb0de3615fd1d8c4d83.css
-HTTP/1.1 200 OK
-Server: Cowboy
-Date: Sun, 24 Aug 2014 20:27:50 GMT
-Connection: keep-alive
-Last-Modified: Thu, 08 May 2014 01:24:14 GMT
-Content-Type: text/css
-Cache-Control: public, max-age=2592000
-Content-Length: 126560
-Via: 1.1 vegur
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-a0218e06135e27980b0eb484b9143f95">curl -I http://www.example/assets/application-
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e6a898763685e5abffcca4db1cee8d86">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a0218e06135e27980b0eb484b9143f95">Copiar</button>
 </div>
 <p>Versus the CDN copy.</p><div class="code_container">
-<pre><code class="highlight plaintext">$ curl -I http://mycdnsubdomain.fictional-cdn.com/application-
-d0e099e021c95eb0de3615fd1d8c4d83.css
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span>curl <span class="nt">-I</span> http://mycdnsubdomain.fictional-cdn.com/application-
+<span class="go">d0e099e021c95eb0de3615fd1d8c4d83.css
 HTTP/1.1 200 OK Server: Cowboy Last-
 Modified: Thu, 08 May 2014 01:24:14 GMT Content-Type: text/css
 Cache-Control:
@@ -1175,28 +1173,10 @@ X-Cache: HIT
 X-Cache-Hits:
 68
 X-Timer: S1408912125.211638212,VS0,VE0
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-8168bba1cbfb32071d0ce5263764c298">$ curl -I http://mycdnsubdomain.fictional-cdn.com/application-
-d0e099e021c95eb0de3615fd1d8c4d83.css
-HTTP/1.1 200 OK Server: Cowboy Last-
-Modified: Thu, 08 May 2014 01:24:14 GMT Content-Type: text/css
-Cache-Control:
-public, max-age=2592000
-Via: 1.1 vegur
-Content-Length: 126560
-Accept-Ranges:
-bytes
-Date: Sun, 24 Aug 2014 20:28:45 GMT
-Via: 1.1 varnish
-Age: 885814
-Connection: keep-alive
-X-Served-By: cache-dfw1828-DFW
-X-Cache: HIT
-X-Cache-Hits:
-68
-X-Timer: S1408912125.211638212,VS0,VE0
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-bda119ac0ff27c532dac98e06365f7e8">curl -I http://mycdnsubdomain.fictional-cdn.com/application-
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8168bba1cbfb32071d0ce5263764c298">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bda119ac0ff27c532dac98e06365f7e8">Copiar</button>
 </div>
 <p>Check your CDN documentation for any additional information they may provide
 such as <code>X-Cache</code> or for any additional headers they may add.</p><h6 id="cdns-and-the-cache-control-header"><a class="anchorlink" href="#cdns-and-the-cache-control-header">4.4.2.3 CDNs and the Cache-Control Header</a></h6><p>The <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9">cache control
@@ -1210,15 +1190,15 @@ can store the request. Also we commonly want to set <code>max-age</code> which i
 the cache will store the object before invalidating the cache. The <code>max-age</code>
 value is set to seconds with a maximum possible value of <code>31536000</code> which is one
 year. You can do this in your Rails application by setting</p><div class="code_container">
-<pre><code class="highlight plaintext">config.public_file_server.headers = {
-  'Cache-Control' =&gt; 'public, max-age=31536000'
-}
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">public_file_server</span><span class="p">.</span><span class="nf">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Cache-Control'</span> <span class="o">=&gt;</span> <span class="s1">'public, max-age=31536000'</span>
+<span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-70a9ce9e15c5e58557a2fe6c6a1095c9">config.public_file_server.headers = {
+<textarea class="clipboard-content" id="clipboard-ad3455aa9aa45712865939b2cd678db6">config.public_file_server.headers = {
   'Cache-Control' =&gt; 'public, max-age=31536000'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-70a9ce9e15c5e58557a2fe6c6a1095c9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ad3455aa9aa45712865939b2cd678db6">Copiar</button>
 </div>
 <p>Now when your application serves an asset in production, the CDN will store the
 asset for up to a year. Since most CDNs also cache headers of the request, this
@@ -1228,16 +1208,16 @@ needing to re-request it.</p><h6 id="cdns-and-url-based-cache-invalidation"><a c
 that a request to</p><div class="code_container">
 <pre><code class="highlight plaintext">http://mycdnsubdomain.fictional-cdn.com/assets/smile-123.png
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-80186b0aa66d6a3a8b49f3e889000f45">http://mycdnsubdomain.fictional-cdn.com/assets/smile-123.png
+<textarea class="clipboard-content" id="clipboard-10605152ff06858d0354770ea0cb9e94">http://mycdnsubdomain.fictional-cdn.com/assets/smile-123.png
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-80186b0aa66d6a3a8b49f3e889000f45">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-10605152ff06858d0354770ea0cb9e94">Copiar</button>
 </div>
 <p>Will be a completely different cache from</p><div class="code_container">
 <pre><code class="highlight plaintext">http://mycdnsubdomain.fictional-cdn.com/assets/smile.png
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a4e3f4df70c69efce5f1b8186a333a02">http://mycdnsubdomain.fictional-cdn.com/assets/smile.png
+<textarea class="clipboard-content" id="clipboard-38fe88f383733394a171dc935625cf23">http://mycdnsubdomain.fictional-cdn.com/assets/smile.png
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a4e3f4df70c69efce5f1b8186a333a02">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-38fe88f383733394a171dc935625cf23">Copiar</button>
 </div>
 <p>If you want to set far future <code>max-age</code> in your <code>Cache-Control</code> (and you do),
 then make sure when you change your assets that your cache is invalidated. For
@@ -1252,16 +1232,16 @@ minification.</p><p>The following line enables YUI compression, and requires the
 gem.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">css_compressor</span> <span class="o">=</span> <span class="ss">:yui</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3172aaedf0697a11a8fda498334c9d45">config.assets.css_compressor = :yui
+<textarea class="clipboard-content" id="clipboard-f187d2d00342c715eb94f8d072ff0ecc">config.assets.css_compressor = :yui
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3172aaedf0697a11a8fda498334c9d45">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f187d2d00342c715eb94f8d072ff0ecc">Copiar</button>
 </div>
 <p>The other option for compressing CSS if you have the sass-rails gem installed is</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">css_compressor</span> <span class="o">=</span> <span class="ss">:sass</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bfa2477800545d504a136dba7926e7ea">config.assets.css_compressor = :sass
+<textarea class="clipboard-content" id="clipboard-dc6d10727acdf4824585b0ebb4c47c35">config.assets.css_compressor = :sass
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bfa2477800545d504a136dba7926e7ea">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dc6d10727acdf4824585b0ebb4c47c35">Copiar</button>
 </div>
 <h4 id="javascript-compression"><a class="anchorlink" href="#javascript-compression">5.2 JavaScript Compression</a></h4><p>Possible options for JavaScript compression are <code>:closure</code>, <code>:uglifier</code> and
 <code>:yui</code>. These require the use of the <code>closure-compiler</code>, <code>uglifier</code> or
@@ -1272,9 +1252,9 @@ shortening local variable names, and performing other micro-optimizations such
 as changing <code>if</code> and <code>else</code> statements to ternary operators where possible.</p><p>The following line invokes <code>uglifier</code> for JavaScript compression.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">js_compressor</span> <span class="o">=</span> <span class="ss">:uglifier</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9f08e39744c7f450cd0c1dee1d87a751">config.assets.js_compressor = :uglifier
+<textarea class="clipboard-content" id="clipboard-fd0be48310205ffd6994b823e5ad9771">config.assets.js_compressor = :uglifier
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9f08e39744c7f450cd0c1dee1d87a751">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fd0be48310205ffd6994b823e5ad9771">Copiar</button>
 </div>
 <div class="note"><p>You will need an <a href="https://github.com/rails/execjs#readme">ExecJS</a>
 supported runtime in order to use <code>uglifier</code>. If you are using macOS or
@@ -1283,9 +1263,9 @@ the non-gzipped version of assets. Gzipped assets help reduce the transmission
 of data over the wire. You can configure this by setting the <code>gzip</code> flag.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">gzip</span> <span class="o">=</span> <span class="kp">false</span> <span class="c1"># disable gzipped assets generation</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8ebda78ccf6eab456ff1ab42374846e5">config.assets.gzip = false # disable gzipped assets generation
+<textarea class="clipboard-content" id="clipboard-c9b8a273dc7955846b0f875a11f353ed">config.assets.gzip = false # disable gzipped assets generation
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8ebda78ccf6eab456ff1ab42374846e5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c9b8a273dc7955846b0f875a11f353ed">Copiar</button>
 </div>
 <p>Refer to your web server's documentation for instructions on how to serve gzipped assets.</p><h4 id="using-your-own-compressor"><a class="anchorlink" href="#using-your-own-compressor">5.4 Using Your Own Compressor</a></h4><p>The compressor config settings for CSS and JavaScript also take any object.
 This object must have a <code>compress</code> method that takes a string as the sole
@@ -1296,27 +1276,27 @@ argument and it must return a string.</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2f5bae9da5d8ae9ed0118ac30cdef073">class Transformer
+<textarea class="clipboard-content" id="clipboard-8708ea9e4c85368f716666b11a08d6e1">class Transformer
   def compress(string)
     do_something_returning_a_string(string)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2f5bae9da5d8ae9ed0118ac30cdef073">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8708ea9e4c85368f716666b11a08d6e1">Copiar</button>
 </div>
 <p>To enable this, pass a new object to the config option in <code>application.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">css_compressor</span> <span class="o">=</span> <span class="no">Transformer</span><span class="p">.</span><span class="nf">new</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2c20b9885ae235fc1bef8473a9d5d18e">config.assets.css_compressor = Transformer.new
+<textarea class="clipboard-content" id="clipboard-55e34fdd40a1de73ab55b3c0af1dc77a">config.assets.css_compressor = Transformer.new
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2c20b9885ae235fc1bef8473a9d5d18e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-55e34fdd40a1de73ab55b3c0af1dc77a">Copiar</button>
 </div>
 <h4 id="changing-the-assets-path"><a class="anchorlink" href="#changing-the-assets-path">5.5 Changing the <em>assets</em> Path</a></h4><p>The public path that Sprockets uses by default is <code>/assets</code>.</p><p>This can be changed to something else:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">prefix</span> <span class="o">=</span> <span class="s2">"/some_other_path"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2c19d5fd8398c121da03cd62e2c526d9">config.assets.prefix = "/some_other_path"
+<textarea class="clipboard-content" id="clipboard-3510e2585261652ad56a0457cf8175c5">config.assets.prefix = "/some_other_path"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2c19d5fd8398c121da03cd62e2c526d9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3510e2585261652ad56a0457cf8175c5">Copiar</button>
 </div>
 <p>This is a handy option if you are updating an older project that didn't use the
 asset pipeline and already uses this path or you wish to use this path for
@@ -1324,16 +1304,16 @@ a new resource.</p><h4 id="x-sendfile-headers"><a class="anchorlink" href="#x-se
 from the application, and instead serve a specified file from disk. This option
 is off by default, but can be enabled if your server supports it. When enabled,
 this passes responsibility for serving the file to the web server, which is
-faster. Have a look at <a href="https://api.rubyonrails.org/v6.0.3.4/classes/ActionController/DataStreaming.html#method-i-send_file">send_file</a>
+faster. Have a look at <a href="https://api.rubyonrails.org/v6.1.0/classes/ActionController/DataStreaming.html#method-i-send_file">send_file</a>
 on how to use this feature.</p><p>Apache and NGINX support this option, which can be enabled in
 <code>config/environments/production.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache</span>
 <span class="c1"># config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c7ae7a31538b3b594db035125b6c6a9c"># config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
+<textarea class="clipboard-content" id="clipboard-84ef5937a5cbc9a9364affd84dcac87b"># config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
 # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c7ae7a31538b3b594db035125b6c6a9c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-84ef5937a5cbc9a9364affd84dcac87b">Copiar</button>
 </div>
 <div class="warning"><p>If you are upgrading an existing application and intend to use this
 option, take care to paste this configuration option only into <code>production.rb</code>
@@ -1347,23 +1327,23 @@ and production environments. This can be changed as follows:</p><div class="code
                                                 <span class="p">{</span> <span class="ss">size: </span><span class="mi">32</span><span class="p">.</span><span class="nf">megabytes</span> <span class="p">})</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0f6e811385cbe2f0fcd0158900d90569">config.assets.configure do |env|
+<textarea class="clipboard-content" id="clipboard-c72f5cd59736ee2463fa28863ceebacd">config.assets.configure do |env|
   env.cache = ActiveSupport::Cache.lookup_store(:memory_store,
                                                 { size: 32.megabytes })
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0f6e811385cbe2f0fcd0158900d90569">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c72f5cd59736ee2463fa28863ceebacd">Copiar</button>
 </div>
 <p>To disable the assets cache store:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">env</span><span class="o">|</span>
   <span class="n">env</span><span class="p">.</span><span class="nf">cache</span> <span class="o">=</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Cache</span><span class="p">.</span><span class="nf">lookup_store</span><span class="p">(</span><span class="ss">:null_store</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-87bd1f48078f38e458d53ad1fb04f2f6">config.assets.configure do |env|
+<textarea class="clipboard-content" id="clipboard-7cab9b267dc13844bbd4b704fe86ff96">config.assets.configure do |env|
   env.cache = ActiveSupport::Cache.lookup_store(:null_store)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-87bd1f48078f38e458d53ad1fb04f2f6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7cab9b267dc13844bbd4b704fe86ff96">Copiar</button>
 </div>
 <h3 id="adding-assets-to-your-gems"><a class="anchorlink" href="#adding-assets-to-your-gems">7 Adding Assets to Your Gems</a></h3><p>Assets can also come from external sources in the form of gems.</p><p>A good example of this is the <code>jquery-rails</code> gem.
 This gem contains an engine class which inherits from <code>Rails::Engine</code>.
@@ -1381,21 +1361,21 @@ of text/css (<code>.css</code>) files.</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b00c0c93ef12b049688d9aa1380743f9">module AddComment
+<textarea class="clipboard-content" id="clipboard-d82108945b102c594cc26234521dff17">module AddComment
   def self.call(input)
     { data: input[:data] + "/* Hello From my sprockets extension */" }
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b00c0c93ef12b049688d9aa1380743f9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d82108945b102c594cc26234521dff17">Copiar</button>
 </div>
 <p>Now that you have a module that modifies the input data, it's time to register
 it as a preprocessor for your mime type.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Sprockets</span><span class="p">.</span><span class="nf">register_preprocessor</span> <span class="s1">'text/css'</span><span class="p">,</span> <span class="no">AddComment</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7a2c88e7f18bd84871241518d2b45069">Sprockets.register_preprocessor 'text/css', AddComment
+<textarea class="clipboard-content" id="clipboard-52ce18eef214f9477a31093024d081f7">Sprockets.register_preprocessor 'text/css', AddComment
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7a2c88e7f18bd84871241518d2b45069">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-52ce18eef214f9477a31093024d081f7">Copiar</button>
 </div>
 
 

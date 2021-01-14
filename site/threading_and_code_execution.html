@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,9 @@
   <meta property="og:type" content="website" />
 </head>
 <body class="guide">
+  <div>
+    <div id="version-badge">v6.1.0</div>
+  </div>
   <div id="topNav">
     <div class="wrapper">
       <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
@@ -34,7 +37,7 @@
         <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="https://stackoverflow.com/questions/tagged/ruby-on-rails">Peça por ajuda</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
         <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
       </ul>
     </div>
@@ -53,7 +56,7 @@
           <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
-            <div class="guides-section-container">
+            <dl class="guides-section-container">
                 <div class="guides-section">
                   <dt>Comece aqui</dt>
                   <dd><a href="getting_started.html">Começando com Rails</a></dd>
@@ -143,7 +146,7 @@
                   <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
                 </div>
             </div>
-          </div>
+          </dl>
         </li>
         <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
         <li class="guides-search guides-search-small">
@@ -327,11 +330,11 @@ should wrap it with a call to the executor:</p><div class="code_container">
   <span class="c1"># call application code here</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16968ed5b48fe9bafe6fa16b18189a4e">Rails.application.executor.wrap do
+<textarea class="clipboard-content" id="clipboard-db3aec4f79bb709eb1d20cf69dfb3950">Rails.application.executor.wrap do
   # call application code here
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16968ed5b48fe9bafe6fa16b18189a4e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-db3aec4f79bb709eb1d20cf69dfb3950">Copiar</button>
 </div>
 <div class="info"><p>If you repeatedly invoke application code from a long-running process, you
 may want to wrap using the Reloader instead.</p></div><p>Each thread should be wrapped before it runs application code, so if your
@@ -344,13 +347,13 @@ the block:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f794b0042379b3c86ea1021e10ad7806">Thread.new do
+<textarea class="clipboard-content" id="clipboard-caca82e53c68ac4f3d646e8f714e226c">Thread.new do
   Rails.application.executor.wrap do
     # your code here
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f794b0042379b3c86ea1021e10ad7806">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-caca82e53c68ac4f3d646e8f714e226c">Copiar</button>
 </div>
 <div class="note"><p>Concurrent Ruby uses a <code>ThreadPoolExecutor</code>, which it sometimes configures
 with an <code>executor</code> option. Despite the name, it is unrelated.</p></div><p>The Executor is safely re-entrant; if it is already active on the current
@@ -364,14 +367,14 @@ example, the Rack API makes this problematic), you can also use the <code>run!</
   <span class="n">execution_context</span><span class="p">.</span><span class="nf">complete!</span> <span class="k">if</span> <span class="n">execution_context</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d8f7b656109fe32ee1464f448454806a">Thread.new do
+<textarea class="clipboard-content" id="clipboard-446be75f7f93e11438041ce0cd8d8234">Thread.new do
   execution_context = Rails.application.executor.run!
   # your code here
 ensure
   execution_context.complete! if execution_context
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d8f7b656109fe32ee1464f448454806a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-446be75f7f93e11438041ce0cd8d8234">Copiar</button>
 </div>
 <h4 id="executor-concurrency"><a class="anchorlink" href="#executor-concurrency">2.3 Concurrency</a></h4><p>The Executor will put the current thread into <code>running</code> mode in the Load
 Interlock. This operation will block temporarily if another thread is currently
@@ -384,11 +387,11 @@ Executor.</p><div class="code_container">
   <span class="c1"># call application code here</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0aa5e777c75ef759672d4d9dcb803696">Rails.application.reloader.wrap do
+<textarea class="clipboard-content" id="clipboard-10f34ddb4ad7e82fb251697ca2c0b70c">Rails.application.reloader.wrap do
   # call application code here
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0aa5e777c75ef759672d4d9dcb803696">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-10f34ddb4ad7e82fb251697ca2c0b70c">Copiar</button>
 </div>
 <p>The Reloader is only suitable where a long-running framework-level process
 repeatedly calls into application code, such as for a web server or job queue.
@@ -414,13 +417,13 @@ Executor, it would cause an unavoidable deadlock: the reload must occur before
 the child thread is executed, but it cannot be safely performed while the parent
 thread is mid-execution. Child threads should use the Executor instead.</p><h3 id="framework-behavior"><a class="anchorlink" href="#framework-behavior">4 Framework Behavior</a></h3><p>The Rails framework components use these tools to manage their own concurrency
 needs too.</p><p><code>ActionDispatch::Executor</code> and <code>ActionDispatch::Reloader</code> are Rack middlewares
-that wraps the request with a supplied Executor or Reloader, respectively. They
+that wrap requests with a supplied Executor or Reloader, respectively. They
 are automatically included in the default application stack. The Reloader will
 ensure any arriving HTTP request is served with a freshly-loaded copy of the
 application if any code changes have occurred.</p><p>Active Job also wraps its job executions with the Reloader, loading the latest
 code to execute each job as it comes off the queue.</p><p>Action Cable uses the Executor instead: because a Cable connection is linked to
 a specific instance of a class, it's not possible to reload for every arriving
-websocket message. Only the message handler is wrapped, though; a long-running
+WebSocket message. Only the message handler is wrapped, though; a long-running
 Cable connection does not prevent a reload that's triggered by a new incoming
 request or job. Instead, Action Cable uses the Reloader's <code>before_class_unload</code>
 callback to disconnect all its connections. When the client automatically
@@ -463,7 +466,7 @@ deadlock.</p><p>For example, assuming <code>User</code> is not yet loaded, the f
   <span class="n">th</span><span class="p">.</span><span class="nf">join</span> <span class="c1"># outer thread waits here, holding 'running' lock</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-06103000d7616f7765fe70089afb7383">Rails.application.executor.wrap do
+<textarea class="clipboard-content" id="clipboard-f9835486d6051d8f74e8f2417c4fa9ad">Rails.application.executor.wrap do
   th = Thread.new do
     Rails.application.executor.wrap do
       User # inner thread waits here; it cannot load
@@ -474,7 +477,7 @@ deadlock.</p><p>For example, assuming <code>User</code> is not yet loaded, the f
   th.join # outer thread waits here, holding 'running' lock
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-06103000d7616f7765fe70089afb7383">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f9835486d6051d8f74e8f2417c4fa9ad">Copiar</button>
 </div>
 <p>To prevent this deadlock, the outer thread can <code>permit_concurrent_loads</code>. By
 calling this method, the thread guarantees it will not dereference any
@@ -493,7 +496,7 @@ that promise is to put it as close as possible to the blocking call:</p><div cla
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2e3b4416a79a4cbb64f601f1904538a7">Rails.application.executor.wrap do
+<textarea class="clipboard-content" id="clipboard-9c9434e90708cd174549668197837b03">Rails.application.executor.wrap do
   th = Thread.new do
     Rails.application.executor.wrap do
       User # inner thread can acquire the 'load' lock,
@@ -506,7 +509,7 @@ that promise is to put it as close as possible to the blocking call:</p><div cla
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2e3b4416a79a4cbb64f601f1904538a7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9c9434e90708cd174549668197837b03">Copiar</button>
 </div>
 <p>Another example, using Concurrent Ruby:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
@@ -523,7 +526,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b9d00536afae4e0c65ac69678a243e8f">Rails.application.executor.wrap do
+<textarea class="clipboard-content" id="clipboard-daef7d593be6d8e2973437701b47293d">Rails.application.executor.wrap do
   futures = 3.times.collect do |i|
     Concurrent::Future.execute do
       Rails.application.executor.wrap do
@@ -537,7 +540,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b9d00536afae4e0c65ac69678a243e8f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-daef7d593be6d8e2973437701b47293d">Copiar</button>
 </div>
 <h4 id="actiondispatch-debuglocks"><a class="anchorlink" href="#actiondispatch-debuglocks">5.2 ActionDispatch::DebugLocks</a></h4><p>If your application is deadlocking and you think the Load Interlock may be
 involved, you can temporarily add the ActionDispatch::DebugLocks middleware to
@@ -545,10 +548,10 @@ involved, you can temporarily add the ActionDispatch::DebugLocks middleware to
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">insert_before</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Sendfile</span><span class="p">,</span>
                                   <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">DebugLocks</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6e6c9a5db0ce3fb9acfac0ab85fffe7a">config.middleware.insert_before Rack::Sendfile,
+<textarea class="clipboard-content" id="clipboard-9a72e50fdf07d4513613e69873df6a07">config.middleware.insert_before Rack::Sendfile,
                                   ActionDispatch::DebugLocks
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6e6c9a5db0ce3fb9acfac0ab85fffe7a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9a72e50fdf07d4513613e69873df6a07">Copiar</button>
 </div>
 <p>If you then restart the application and re-trigger the deadlock condition,
 <code>/rails/locks</code> will show a summary of all threads currently known to the
