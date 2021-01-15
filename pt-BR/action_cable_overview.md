@@ -184,7 +184,9 @@ Então, você criaria suas próprias classes de *channel*. Por exemplo, você po
 # app/channels/chat_channel.rb
 class ChatChannel < ApplicationCable::Channel
 end
+```
 
+```ruby
 # app/channels/appearance_channel.rb
 class AppearanceChannel < ApplicationCable::Channel
 end
@@ -764,7 +766,7 @@ config.action_cable.worker_pool_size = 4
 Além disso, observe que seu servidor deve fornecer pelo menos o mesmo número de conexões de banco de dados
 que você tem de _workers_. O tamanho do _worker pool_ de trabalho padrão é definido como 4, então
 isso significa que você deve disponibilizar pelo menos 4 conexões de banco de dados.
- Você pode mudar isso em `config/database.yml` através do atributo `pool`.
+Você pode mudar isso em `config/database.yml` através do atributo `pool`.
 
 ### Log no lado do client
 

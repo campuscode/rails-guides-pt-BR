@@ -136,16 +136,16 @@ module YourApp
 end
 ```
 
-Você também pode configurar seu *backend* por um *job* base.
+Você também pode configurar seu *backend* por um *job* base:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
   self.queue_adapter = :resque
-  #....
+  # ...
 end
 
-# Now your job will use `resque` as its backend queue adapter overriding what
-# was configured in `config.active_job.queue_adapter`.
+# Agora o seu job vai usar `resque` como gerenciados de fials sobrescrevendo o
+# que estava configurado em `config.active_job.queue_adapter`.
 ```
 
 ### Iniciando o *Backend*
@@ -174,7 +174,7 @@ o *job* para executar em uma fila específica:
 ```ruby
 class GuestsCleanupJob < ApplicationJob
   queue_as :low_priority
-  #....
+  # ...
 end
 ```
 
@@ -188,11 +188,13 @@ module YourApp
     config.active_job.queue_name_prefix = Rails.env
   end
 end
+```
 
+```ruby
 # app/jobs/guests_cleanup_job.rb
 class GuestsCleanupJob < ApplicationJob
   queue_as :low_priority
-  #....
+  # ...
 end
 
 # Agora seu job irá executar na fila production_low_priority no seu
@@ -206,7 +208,7 @@ Você também pode configurar o prefixo para cada *job*.
 class GuestsCleanupJob < ApplicationJob
   queue_as :low_priority
   self.queue_name_prefix = nil
-  #....
+  # ...
 end
 
 # Agora a fila do seu job não terá um prefixo, sobrescrevendo o que
@@ -224,11 +226,13 @@ module YourApp
     config.active_job.queue_name_delimiter = '.'
   end
 end
+```
 
+```ruby
 # app/jobs/guests_cleanup_job.rb
 class GuestsCleanupJob < ApplicationJob
   queue_as :low_priority
-  #....
+  # ...
 end
 
 # Agora seu job irá executar na fila production.low_priority no seu
@@ -237,14 +241,14 @@ end
 ```
 
 Se você quiser mais controle em qual fila um *job* será executado, você pode passar
-uma opção `:queue` ao `#set`:
+uma opção `:queue` ao `set`:
 
 ```ruby
 MyJob.set(queue: :another_queue).perform_later(record)
 ```
 
-Para controlar a fila a partir do nível do *job*, você pode passar um bloco para `#queue_as`.
-O bloco será executado no contexto do *job* (o que te permite acessar `self.arguments`) e você
+Para controlar a fila a partir do nível do *job*, você pode passar um bloco para `queue_as`.
+O bloco será executado no contexto do *job* (o que te permite acessar `self.arguments`), e ele
 deve retornar o nome da fila:
 
 ```ruby
@@ -262,7 +266,9 @@ class ProcessVideoJob < ApplicationJob
     # Processa o vídeo
   end
 end
+```
 
+```ruby
 ProcessVideoJob.perform_later(Video.last)
 ```
 
@@ -372,7 +378,7 @@ O *ActiveJob* suporta os seguintes tipos de argumentos por padrão:
 
 ### GlobalID
 
-O *Active Job* suporta o GlobalID como parâmetros. 
+O *Active Job* suporta o [GlobalID](https://github.com/rails/globalid/blob/master/README.md) como parâmetros.
 Isso possibilita passar objetos ativos do *Active Record* para o *job* ao invés do par classe/id, que você deve desserializar manualmente.
 Anteriormente, os *jobs* eram feitos dessa forma:
 
@@ -450,7 +456,7 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-Se a exceção não for tratada dentro do _job_, como mostrado acima, então o _job_ é reconhecido como "*failed* (falhado)"
+Se a exceção não for tratada dentro do _job_, então o _job_ é reconhecido como "*failed* (falhado)"
 
 ### Reexecução ou Descarte de *jobs* falhos
 

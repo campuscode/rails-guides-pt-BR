@@ -463,7 +463,6 @@ Active Record
     end
 
     Post.table_name # => "special_posts"
-
     ```
 
 Active Model

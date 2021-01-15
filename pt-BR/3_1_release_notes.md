@@ -222,7 +222,7 @@ Railties
 
 * Added `Rack::Cache` to the default middleware stack.
 
-* Engines received a major update - You can mount them at any path, enable assets, run generators etc.
+* Engines received a major update - You can mount them at any path, enable assets, run generators, etc.
 
 Action Pack
 -----------
@@ -456,7 +456,7 @@ Active Record
     ```ruby
     class FooMigration < ActiveRecord::Migration
       def up # Not self.up
-        ...
+        # ...
       end
     end
     ```

@@ -466,7 +466,6 @@ Esse exemplo usa a opção `:message` para mostrar como você pode incluir o val
 do atributo na mensagem de erro. Para uma lista completa das opções do argumento
 de mensagem por favor veja a [documentação da mensagem](#message).
 
-
 A mensagem de erro padrão para esse *helper* é _"is not included in the list"_.
 
 ### `length`
@@ -495,7 +494,7 @@ As possíveis opções de restrições de tamanho são:
 * `:is` - O tamanho do atributo deve ser igual ao valor passado.
 
 O valor padrão da mensagem de erro depende do tipo de validação sendo usado.
-Você pode personalizar essas mensagens usando as opções `:wrong_length`,
+Você pode customizar essas mensagens usando as opções `:wrong_length`,
 `:too_long` e `:muito curto` e `%{count}` como um espaço reservado para o número
 correspondente ao do tamanho da restrição sendo utilizada. Você ainda pode
 utilizar a opção `:message` para especificar uma mensagem de erro.
@@ -507,17 +506,11 @@ class Person < ApplicationRecord
 end
 ```
 
-Note that the default error messages are plural (e.g., "is too short (minimum
-is %{count} characters)"). For this reason, when `:minimum` is 1 you should
-provide a personalized message or use `presence: true` instead. When
-`:in` or `:within` have a lower limit of 1, you should either provide a
-personalized message or call `presence` prior to `length`.
-
 Note que as mensagens de erro padrão estão em plural (por exemplo: "is too short
 (minimum is %{count} characters)"). Por essa razão, quando `:minimum` é 1 você
-deve disponibilizar uma mensagem personalizada ou utilizar `presence: true` no
+deve disponibilizar uma mensagem customizada ou utilizar `presence: true` no
 lugar. Quando `:in` ou `:within` tem um limite menor que 1, você deve
-disponibilizar ou uma mensagem personalizada ou usar `presence` antes do
+disponibilizar ou uma mensagem customizada ou usar `presence` antes do
 `length`.
 
 ### `numericality`
@@ -1221,7 +1214,7 @@ class Person < ApplicationRecord
 end
 ```
 
-```irb>
+```irb
 irb> person = Person.new(name: "John Doe")
 irb> person.valid?
 => true
@@ -1403,7 +1396,7 @@ de `_form.html.erb` que ele gera, exibindo a lista completa de erros naquele
 Supondo que temos um modelo que foi salvo em uma variável de instância chamada
 `@article`, terá a seguinte aparência:
 
-```ruby
+```html+erb
 <% if @article.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>

@@ -88,47 +88,66 @@ Aqui está uma lista com todos os *Active Record callbacks*, listados na mesma o
 
 ### Criando um Objeto
 
-* `before_validation`
-* `after_validation`
-* `before_save`
-* `around_save`
-* `before_create`
-* `around_create`
-* `after_create`
-* `after_save`
-* `after_commit/after_rollback`
+* [`before_validation`][]
+* [`after_validation`][]
+* [`before_save`][]
+* [`around_save`][]
+* [`before_create`][]
+* [`around_create`][]
+* [`after_create`][]
+* [`after_save`][]
+* [`after_commit`][] / [`after_rollback`][]
+
+[`after_create`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_create
+[`after_commit`]: https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit
+[`after_rollback`]: https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback
+[`after_save`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_save
+[`after_validation`]: https://api.rubyonrails.org/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-after_validation
+[`around_create`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_create
+[`around_save`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_save
+[`before_create`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_create
+[`before_save`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_save
+[`before_validation`]: https://api.rubyonrails.org/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-before_validation
 
 ### Atualizando um Objeto
 
-* `before_validation`
-* `after_validation`
-* `before_save`
-* `around_save`
-* `before_update`
-* `around_update`
-* `after_update`
-* `after_save`
-* `after_commit/after_rollback`
+* [`before_validation`][]
+* [`after_validation`][]
+* [`before_save`][]
+* [`around_save`][]
+* [`before_update`][]
+* [`around_update`][]
+* [`after_update`][]
+* [`after_save`][]
+* [`after_commit`][] / [`after_rollback`][]
+
+[`after_update`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_update
+[`around_update`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_update
+[`before_update`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_update
 
 ### Destruindo um Objeto 
 
-* `before_destroy`
-* `around_destroy`
-* `after_destroy`
-* `after_commit/after_rollback`
+* [`before_destroy`][]
+* [`around_destroy`][]
+* [`after_destroy`][]
+* [`after_commit`][] / [`after_rollback`][]
+
+[`after_destroy`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_destroy
+[`around_destroy`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_destroy
+[`before_destroy`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_destroy
 
 WARNING. `after_save` roda tanto na criação quanto na atualização, mas sempre *depois* de *callbacks* mais específicos `after_create` e `after_update`, não importa a ordem que uma chamada macro foi executada.
 
-WARNING. Deve-se tomar cuidado em *callbacks* para evitar atualizar atributos. Por exemplo, evite rodar `update(attribute: "value")` e código semelhante durante *callbacks*. Isto pode alterar o estado do *model* e pode resultar em efeitos colaterais inesperados durante o *commit*. Em vez disto, você deveria tentar atribuir valores no `before_create` ou *callbacks* recentes.
+WARNING. Evite atualizar ou salvar atributos em *callbacks*. Por exemplo, não chame `update(attribute: "value")` em um *callback*. Isso pode alterar o estado do *model* e resultar em efeitos colaterais inesperados durante a confirmação. Em vez disso, você pode atribuir valores diretamente com segurança (por exemplo, `self.attribute = "value"`) em `before_create` / `before_update` ou *callbacks* anteriores.
 
 NOTE: Os *callbacks* `before_destroy` devem ser posicionados antes de associações `dependent: :destroy` (ou use a opção `prepend: true`), para garantir que executem antes dos registros serem deletados pelo `dependent: :destroy`.
 
 ### `after_initialize` e `after_find`
 
-O *callback* `after_initialize` será chamado sempre que um objeto *Active Record* for instanciado, usando diretamente `new` ou quando um registro é carregado do banco de dados.
+O *callback* [`after_initialize`][] será chamado sempre que um objeto *Active Record* for instanciado, usando diretamente `new` ou quando um registro é carregado do banco de dados.
 Isto pode ser útil para evitar a necessidade de substituir diretamente seu método `initialize` do *Active Record*.
 
-O *callback* `after_find` será chamado sempre que o *Active Record* carregar um registro do banco de dados. `after_find` é chamado antes de `after_initialize` se ambos estiverem definidos. 
+O *callback* [`after_find`][] será chamado sempre que o *Active Record* carregar um registro do banco de dados. `after_find` é chamado antes de `after_initialize` se ambos estiverem definidos. 
 
 Os *callbacks* `after_initialize` e `after_find` não possuem complementos `before_*`, mas podem ser registrados como os outros *callbacks* de *Active Record*.
 
@@ -142,20 +161,25 @@ class User < ApplicationRecord
     puts "You have found an object!"
   end
 end
+```
 
->> User.new
+```irb
+irb> User.new
 You have initialized an object!
 => #<User id: nil>
 
->> User.first
+irb> User.first
 You have found an object!
 You have initialized an object!
 => #<User id: 1>
 ```
 
+[`after_find`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_find
+[`after_initialize`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_initialize
+
 ### `after_touch`
 
-O *callback* `after_touch` será chamado sempre que um objeto *Active Record* for alcançado.
+O *callback* [`after_touch`][] será chamado sempre que um objeto *Active Record* for alcançado.
 
 ```ruby
 class User < ApplicationRecord
@@ -163,14 +187,17 @@ class User < ApplicationRecord
     puts "You have touched an object"
   end
 end
+```
 
->> u = User.create(name: 'Kuldeep')
+```irb
+irb> u = User.create(name: 'Kuldeep')
 => #<User id: 1, name: "Kuldeep", created_at: "2013-11-25 12:17:49", updated_at: "2013-11-25 12:17:49">
 
->> u.touch
+irb> u.touch
 You have touched an object
 => true
 ```
+
 Pode ser usado junto de `belongs_to`:
 
 ```ruby
@@ -190,16 +217,19 @@ class Company < ApplicationRecord
       puts 'Employee/Company was touched'
     end
 end
+```
 
->> @employee = Employee.last
+```irb
+irb> @employee = Employee.last
 => #<Employee id: 1, company_id: 1, created_at: "2013-11-25 17:04:22", updated_at: "2013-11-25 17:05:05">
 
-# triggers @employee.company.touch
->> @employee.touch
+irb> @employee.touch # também executa @employee.company.touch
 An Employee was touched
 Employee/Company was touched
 => true
 ```
+
+[`after_touch`]: https://api.rubyonrails.org/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_touch
 
 Executando *Callbacks*
 -----------------
@@ -211,6 +241,7 @@ Os métodos a seguir acionam *callbacks*:
 * `destroy`
 * `destroy!`
 * `destroy_all`
+* `destroy_by`
 * `save`
 * `save!`
 * `save(validate: false)`
@@ -245,12 +276,20 @@ Assim como nas validações, também é possível ignorar os *callbacks* usando 
 * `decrement_counter`
 * `delete`
 * `delete_all`
+* `delete_by`
 * `increment!`
 * `increment_counter`
+* `insert`
+* `insert!`
+* `insert_all`
+* `insert_all!`
+* `touch_all`
 * `update_column`
 * `update_columns`
 * `update_all`
 * `update_counters`
+* `upsert`
+* `upsert_all`
 
 Contudo, esses métodos devem ser usados com cautela, porque regras de negócio importantes e lógica da aplicação podem ser mantidos nos *callbacks*. Contorná-los sem entender as potenciais implicações pode levar a dados inválidos.
 
@@ -284,12 +323,14 @@ class Article < ApplicationRecord
     puts 'Article destroyed'
   end
 end
+```
 
->> user = User.first
+```irb
+irb> user = User.first
 => #<User id: 1>
->> user.articles.create!
+irb> user.articles.create!
 => #<Article id: 1, user_id: 1>
->> user.destroy
+irb> user.destroy
 Article destroyed
 => #<User id: 1>
 ```
@@ -356,7 +397,7 @@ The callback only runs when all the `:if` conditions and none of the `:unless` c
 Classes *Callback*
 ----------------
 
-Em algumas situações, os métodos de *Callback* que iremos escrever serão úteis para serem reutilizados por outros *models*. O *Active Record* possibilita a criação de classes que encapsulam os métodos *Callback* e, por isso, se tornam muito fáceis de reusá-los.
+Em algumas situações, os métodos de *Callback* que iremos escrever serão úteis para serem reutilizados por outros *models*. O *Active Record* possibilita a criação de classes que encapsulam os métodos *callback* , para que eles possam ser reutilizados.
 
 Aqui está um exemplo onde criamos uma classe com um *callback* `after_destroy` para o *model* `PictureFile`:
 
@@ -403,7 +444,7 @@ Você pode declarar dentro de suas classes *callback* quantos *callback* achar n
 *Callbacks* de Transação
 ---------------------
 
-Existem dois *callbacks* adicionais que são disparados quando se completa uma transação de banco de dados: `after_commit` e `after_rollback`. Estes *callbacks* são muito parecidos com o *callback* `after_save`, exceto que eles não são executados até que as mudanças no banco de dados sejam confirmadas ou desfeitas. Eles são mais úteis quando seus *active record models* precisam de interagir com sistemas externos que não fazem parte da transação do banco de dados.
+Existem dois *callbacks* adicionais que são disparados quando se completa uma transação de banco de dados: [`after_commit`][] e [`after_rollback`][]. Estes *callbacks* são muito parecidos com o *callback* `after_save`, exceto que eles não são executados até que as mudanças no banco de dados sejam confirmadas ou desfeitas. Eles são mais úteis quando seus *active record models* precisam de interagir com sistemas externos que não fazem parte da transação do banco de dados.
 
 Considere, por exemplo, o exemplo anterior onde o *model* `PictureFile` precisa de apagar um arquivo depois que um registro correspondente é destruído. Se algo lançar uma exceção depois que o *callback* `after_destroy` for chamado e a transação for desfeita, o arquivo terá sido deletado e o *model* será deixado em um estado inconsistente. Por exemplo, suponha que `picture_file_2` no código abaixo não é valido e o método `save!` lança um erro.
 
@@ -434,9 +475,9 @@ não fornecer a opção `:on` o *callback* será disparado para cada ação.
 Já que usar o *callback* `after_commit` para criar, atualizar ou deletar é
 comum, existem *aliases* para as operações:
 
-* `after_create_commit`
-* `after_update_commit`
-* `after_destroy_commit`
+* [`after_create_commit`][]
+* [`after_update_commit`][]
+* [`after_destroy_commit`][]
 
 ```ruby
 class PictureFile < ApplicationRecord
@@ -466,18 +507,18 @@ class User < ApplicationRecord
     puts 'User was saved to database'
   end
 end
+```
 
-# prints nothing
->> @user = User.create
+```irb
+irb> @user = User.create # não imprime nada
 
-# updating @user
->> @user.save
-=> User was saved to database
+irb> @user.save # atualizando @user
+User was saved to database
 ```
 
 Existe também um *alias* para o usar o *callback* `after_commit`, juntamente, tanto para criar quanto para atualizar:
 
-* `after_save_commit`
+* [`after_save_commit`][]
 
 ```ruby
 class User < ApplicationRecord
@@ -488,12 +529,17 @@ class User < ApplicationRecord
     puts 'User was saved to database'
   end
 end
-
-# criando um Usuário
->> @user = User.create
-=> User was saved to database
-
-# atualizando o Usuário @user
->> @user.save
-=> User was saved to database
 ```
+
+```irb
+irb> @user = User.create # criando um Usuário
+User was saved to database
+
+irb> @user.save # atualizando o Usuário @user
+User was saved to database
+```
+
+[`after_create_commit`]: https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_create_commit
+[`after_destroy_commit`]: https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_destroy_commit
+[`after_save_commit`]: https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_save_commit
+[`after_update_commit`]: https://api.rubyonrails.org/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_update_commit

@@ -589,18 +589,28 @@ Segue algumas coisas que você deve saber para utilizar as associações do *Act
 Todos os métodos de associação são construídos em torno de *caching*, o que mantém o resultado da *query* mais recente disponível para operações futuras. O *cache* é até compartilhado entre métodos. Por exemplo:
 
 ```ruby
-author.books.load            # retorna *books* do banco de dados
-author.books.size            # usa a versão salva em cache da busca por *books*
-author.books.empty?          # usa a versão salva em cache da busca por *books*
+# retorna books do banco de dados
+author.books.load
+
+# usa a versão salva em cache da busca por books
+author.books.size
+
+# usa a versão salva em cache da busca por books
+author.books.empty?
 ```
 
 Mas e se você quiser recarregar o *cache*, porque pode haver alterações nos dados devido a outra parte da aplicação? Simplesmente chame `reload` na associação:
 
 ```ruby
-author.books                 # retorna *books* do banco de dados
-author.books.size            # usa a versão salva em cache da busca por *books*
-author.books.reload.empty?   # descarta a resposta da busca salva em cache por *books*
-                             # e volta a olhar para o banco de dados
+# retorna books do banco de dados
+author.books
+
+# usa a versão salva em cache da busca por books
+author.books.size
+
+# descarta a resposta da busca salva em cache por books
+# e volta a olhar para o banco de dados
+author.books.reload.empty?
 ```
 
 ### Evitando Colisões de Nome
@@ -902,7 +912,7 @@ O método `build_association` retorna um objeto novo do tipo associado. Este obj
 
 ```ruby
 @author = @book.build_author(author_number: 123,
-                                  author_name: "John Doe")
+                             author_name: "John Doe")
 ```
 
 ##### `create_association(attributes = {})`
@@ -911,7 +921,7 @@ O método `create_association` retorna um objeto novo do tipo associado. Este ob
 
 ```ruby
 @author = @book.create_author(author_number: 123,
-                                   author_name: "John Doe")
+                              author_name: "John Doe")
 ```
 
 ##### `create_association!(attributes = {})`
@@ -965,6 +975,7 @@ A opção `:counter_cache` pode ser usada para tornar a busca pela quantidade de
 class Book < ApplicationRecord
   belongs_to :author
 end
+
 class Author < ApplicationRecord
   has_many :books
 end
@@ -976,6 +987,7 @@ Com estas declarações, pedir o valor de `@author.books.size` requer fazer uma 
 class Book < ApplicationRecord
   belongs_to :author, counter_cache: true
 end
+
 class Author < ApplicationRecord
   has_many :books
 end
@@ -996,6 +1008,7 @@ exemplo, para usar `count_of_books` ao invés de `books_count`:
 class Book < ApplicationRecord
   belongs_to :author, counter_cache: :count_of_books
 end
+
 class Author < ApplicationRecord
   has_many :books
 end
@@ -1023,7 +1036,7 @@ Por convenção, o Rails presume que a coluna usada para armazenar a chave estra
 ```ruby
 class Book < ApplicationRecord
   belongs_to :author, class_name: "Patron",
-                        foreign_key: "patron_id"
+                      foreign_key: "patron_id"
 end
 ```
 
@@ -1526,7 +1539,7 @@ Quando você declara uma associação `has_many`, a classe declarada ganha autom
 * [`collection.find(...)`][`collection.find`]
 * [`collection.where(...)`][`collection.where`]
 * [`collection.exists?(...)`][`collection.exists?`]
-* [`collection.build(attributes = {}, ...)`][`collection.build`]
+* [`collection.build(attributes = {})`][`collection.build`]
 * [`collection.create(attributes = {})`][`collection.create`]
 * [`collection.create!(attributes = {})`][`collection.create!`]
 * [`collection.reload`][]
@@ -1679,13 +1692,13 @@ O método [`collection.where`][] procura objetos dentro da coleção com base na
 O método [`collection.exists?`][] confere se um objeto que atende às condições fornecidas
 existe na tabela da coleção.
 
-##### `collection.build(attributes = {}, ...)`
+##### `collection.build(attributes = {})`
 
 O método [`collection.build`][] retorna apenas um objeto ou um *array* de objetos. Os objetos serão instanciados com base nos atributos passados para o método e será criada uma ligação através de chaves estrangeiras, mas os objetos associados _não_ serão salvos ainda.
 
 ```ruby
 @book = @author.books.build(published_at: Time.now,
-                                book_number: "A12345")
+                            book_number: "A12345")
 
 @books = @author.books.build([
   { published_at: Time.now, book_number: "A12346" },
@@ -1699,7 +1712,7 @@ O método [`collection.create`][] retorna um objeto ou um *array* de novos objet
 
 ```ruby
 @book = @author.books.create(published_at: Time.now,
-                                 book_number: "A12345")
+                             book_number: "A12345")
 
 @books = @author.books.create([
   { published_at: Time.now, book_number: "A12346" },
@@ -1822,7 +1835,6 @@ end
 Agora ao executar `@todo = @user.todos.create` o valor de `user_id` no
 registro `@todo` será o valor `guid` de `@user`.
 
-
 ##### `:source`
 
 A opção `:source` especifica a associação fonte para uma associação `has_many :through`. Você só precisa utilizar esta opção se não for possível inferir o nome da associação fonte automaticamente.
@@ -1892,7 +1904,7 @@ Você também pode especificar condições através de um *hash*:
 ```ruby
 class Author < ApplicationRecord
   has_many :confirmed_books, -> { where confirmed: true },
-                              class_name: "Book"
+    class_name: "Book"
 end
 ```
 
@@ -2084,7 +2096,7 @@ A associação `has_and_belongs_to_many` cria uma relação muitos-para-muitos c
 
 #### Métodos Adicionados por `has_and_belongs_to_many`
 
-Quando você declara uma associação `has_and_belongs_to_many`, a classe declarada ganha automaticamente 17 métodos relacionados à associação:
+Quando você declara uma associação `has_and_belongs_to_many`, a classe declarada ganha automaticamente vários métodos relacionados à associação:
 
 * `collection`
 * [`collection<<(object, ...)`][`collection<<`]
@@ -2139,7 +2151,6 @@ assemblies.reload
 Se a tabela de junção para uma associação `has_and_belongs_to_many` tem colunas adicionais além das duas chaves estrangeiras, estas colunas serão adicionadas como atributos dos registros retornados através da associação. Registros retornados com atributos adicionais apenas poderão ter acesso de leitura, porque o Rails não pode salvar mudanças destes atributos.
 
 WARNING: O uso de atributos extras na tabela de junção em uma associação `has_and_belongs_to_many` está deprecado. Se você necessitar deste tipo de comportamento complexo na tabela que liga dois *models* em uma relação muitos-para-muitos, você deve utilizar uma associação `has_many :through` ao invés de uma associação `has_and_belongs_to_many`.
-
 
 ##### `collection`
 
@@ -2199,7 +2210,7 @@ O método [`collection.clear`][] remove todos os objetos da coleção deletando 
 
 O método [`collection.empty?`][] retorna `true` se a coleção não contiver nenhum objeto associado.
 
-```ruby
+```html+erb
 <% if @part.assemblies.empty? %>
   This part is not used in any assemblies
 <% end %>
@@ -2461,7 +2472,7 @@ class Author < ApplicationRecord
   has_many :books, before_add: :check_credit_limit
 
   def check_credit_limit(book)
-    ...
+    # ...
   end
 end
 ```
@@ -2476,11 +2487,11 @@ class Author < ApplicationRecord
     before_add: [:check_credit_limit, :calculate_shipping_charges]
 
   def check_credit_limit(book)
-    ...
+    # ...
   end
 
   def calculate_shipping_charges(book)
-    ...
+    # ...
   end
 end
 ```

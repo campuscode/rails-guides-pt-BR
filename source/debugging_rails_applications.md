@@ -217,7 +217,7 @@ irb(main):001:0> Article.pamplemousse
 => #<Comment id: 2, author: "1", body: "Well, actually...", article_id: 1, created_at: "2018-10-19 00:56:10", updated_at: "2018-10-19 00:56:10">
 ```
 
-After running `ActiveRecord::Base.verbose_query_logs = true` in the `rails console` session to enable verbose query logs and running the method again, it becomes obvious what single line of code is generating all these discrete database calls:
+After running `ActiveRecord::Base.verbose_query_logs = true` in the `bin/rails console` session to enable verbose query logs and running the method again, it becomes obvious what single line of code is generating all these discrete database calls:
 
 ```
 irb(main):003:0> Article.pamplemousse
@@ -331,7 +331,7 @@ application server, and you will be placed at the debugger's prompt `(byebug)`.
 Before the prompt, the code around the line that is about to be run will be
 displayed and the current line will be marked by '=>', like this:
 
-```
+```ruby
 [1, 10] in /PathTo/project/app/controllers/articles_controller.rb
     3:
     4:   # GET /articles
@@ -353,10 +353,10 @@ processing the entire request.
 
 For example:
 
-```bash
+```
 => Booting Puma
 => Rails 6.0.0 application starting in development
-=> Run `rails server --help` for more startup options
+=> Run `bin/rails server --help` for more startup options
 Puma starting in single mode...
 * Version 3.12.1 (ruby 2.5.7-p206), codename: Llamas in Pajamas
 * Min threads: 5, max threads: 5
@@ -638,7 +638,7 @@ You can also inspect for an object method this way:
 
 ```
 (byebug) var instance Article.new
-@_start_transaction_state = {}
+@_start_transaction_state = nil
 @aggregation_cache = {}
 @association_cache = {}
 @attributes = #<ActiveRecord::AttributeSet:0x007fd0682a9b18 @attributes={"id"=>#<ActiveRecord::Attribute::FromDatabase:0x007fd0682a9a00 @name="id", @value_be...
@@ -876,7 +876,7 @@ will be stopped and you will have to start it again.
 TIP: You can save these settings in an `.byebugrc` file in your home directory.
 The debugger reads these global settings when it starts. For example:
 
-```bash
+```
 set callstyle short
 set listsize 25
 ```
@@ -930,7 +930,7 @@ do that with `local_variables`.
 
 ### Settings
 
-* `config.web_console.whitelisted_ips`: Authorized list of IPv4 or IPv6
+* `config.web_console.allowed_ips`: Authorized list of IPv4 or IPv6
 addresses and networks (defaults: `127.0.0.1/8, ::1`).
 * `config.web_console.whiny_requests`: Log a message when a console rendering
 is prevented (defaults: `true`).
@@ -944,7 +944,7 @@ Debugging Memory Leaks
 A Ruby application (on Rails or not), can leak memory — either in the Ruby code
 or at the C code level.
 
-In this section, you will learn how to find and fix such leaks by using tool
+In this section, you will learn how to find and fix such leaks by using tools
 such as Valgrind.
 
 ### Valgrind
@@ -958,8 +958,12 @@ extension in the interpreter calls `malloc()` but doesn't properly call
 `free()`, this memory won't be available until the app terminates.
 
 For further information on how to install Valgrind and use with Ruby, refer to
-[Valgrind and Ruby](http://blog.evanweaver.com/articles/2008/02/05/valgrind-and-ruby/)
+[Valgrind and Ruby](https://blog.evanweaver.com/2008/02/05/valgrind-and-ruby/)
 by Evan Weaver.
+
+### Find a Memory Leak
+There is an excellent article about detecting and fixing memory leaks at Derailed, [which you can read here](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
+
 
 Plugins for Debugging
 ---------------------
