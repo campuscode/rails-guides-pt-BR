@@ -645,7 +645,7 @@ O objeto que é dado para o *yield* no `form_with` e `fields_for` é uma instân
 [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html).
 Construtores de Formulários encapsulam a noção de exibir os elementos do formulário para um único objeto.
 Enquanto você pode escrever *helpers* para seus formulários da forma usual, você também pode criar uma subclasse
-de `ActionView::Helpers::FormBuilder` e adicionar os *helpers* lá. Por exemplo:
+de `ActionView::Helpers::FormBuilder` e adicionar os *helpers* lá. Por exemplo,
 
 ```erb
 <%= form_with model: @person do |form| %>
@@ -681,13 +681,13 @@ def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, 
 end
 ```
 
-O construtor de formulários utilizado também determina o que acontece quando você escreve
+O construtor de formulários utilizado também determina o que acontece quando você escreve:
 
 ```erb
 <%= render partial: f %>
 ```
 
-Se `f` for uma instância de `ActionView::Helpers::FormBuilder` então isso vai renderizar a *partial* `form`,
+Se `f` for uma instância de `ActionView::Helpers::FormBuilder`, então isso vai renderizar a *partial* `form`,
 passando o objeto da *partial* para o construtor de formulários. Se o construtor de formulário for da classe
 `LabellingFormBuilder` então a partial `labelling_form` é que seria renderizada.
 
@@ -994,7 +994,7 @@ As a convenience you can instead pass the symbol `:all_blank` which will create 
 
 ### Adding Fields on the Fly
 
-Rather than rendering multiple sets of fields ahead of time you may wish to add them only when a user clicks on an 'Add new address' button. Rails does not provide any built-in support for this. When generating new sets of fields you must ensure the key of the associated array is unique - the current JavaScript date (milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time)) is a common choice.
+Rather than rendering multiple sets of fields ahead of time you may wish to add them only when a user clicks on an "Add new address" button. Rails does not provide any built-in support for this. When generating new sets of fields you must ensure the key of the associated array is unique - the current JavaScript date (milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time)) is a common choice.
 
 Using Tag Helpers Without a Form Builder
 ----------------------------------------

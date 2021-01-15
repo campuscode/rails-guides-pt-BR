@@ -28,7 +28,7 @@ curve diving straight into Rails. There are several curated lists of online reso
 for learning Ruby:
 
 * [Official Ruby Programming Language website](https://www.ruby-lang.org/en/documentation/)
-* [List of Free Programming Books](https://github.com/EbookFoundation/free-programming-books/blob/master/free-programming-books.md#ruby)
+* [List of Free Programming Books](https://github.com/EbookFoundation/free-programming-books/blob/master/books/free-programming-books.md#ruby)
 
 Be aware that some resources, while still excellent, cover older versions of
 Ruby, and may not include some syntax that you will see in day-to-day
@@ -980,7 +980,7 @@ display any error messages for `title` and `body`:
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
-    <%= @article.errors.full_messages_for(:title).each do |message| %>
+    <% @article.errors.full_messages_for(:title).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -988,7 +988,7 @@ display any error messages for `title` and `body`:
   <div>
     <%= form.label :body %><br>
     <%= form.text_area :body %><br>
-    <%= @article.errors.full_messages_for(:body).each do |message| %>
+    <% @article.errors.full_messages_for(:body).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -1144,7 +1144,7 @@ the following contents:
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
-    <%= article.errors.full_messages_for(:title).each do |message| %>
+    <% article.errors.full_messages_for(:title).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -1152,7 +1152,7 @@ the following contents:
   <div>
     <%= form.label :body %><br>
     <%= form.text_area :body %><br>
-    <%= article.errors.full_messages_for(:body).each do |message| %>
+    <% article.errors.full_messages_for(:body).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -1704,17 +1704,16 @@ the `app/views/comments` directory.
 The `@article` object is available to any partials rendered in the view because
 we defined it as an instance variable.
 
-
 ### Using Concerns
 
 Concerns are a way to make large controllers or models easier to understand and manage. This also has the advantage of reusability when multiple models (or controllers) share the same concerns. Concerns are implemented using modules that contain methods representing a well-defined slice of the functionality that a model or controller is responsible for. In other languages, modules are often known as mixins.
 
 You can use concerns in your controller or model the same way you would use any module. When you first created your app with `rails new blog`, two folders were created within `app/` along with the rest:
 
- ```
- app/controllers/concerns
- app/models/concerns
- ```
+```
+app/controllers/concerns
+app/models/concerns
+```
 
 A given blog article might have various statuses - for instance, it might be visible to everyone (i.e. `public`), or only visible to the author (i.e. `private`). It may also be hidden to all but still retrievable (i.e. `archived`). Comments may similarly be hidden or visible. This could be represented using a `status` column in each model.
 
@@ -1729,7 +1728,7 @@ class Article < ApplicationRecord
 
   VALID_STATUSES = ['public', 'private', 'archived']
 
-  validates :status, in: VALID_STATUSES
+  validates :status, inclusion: { in: VALID_STATUSES }
 
   def archived?
     status == 'archived'
@@ -1745,7 +1744,7 @@ class Comment < ApplicationRecord
 
   VALID_STATUSES = ['public', 'private', 'archived']
 
-  validates :status, in: VALID_STATUSES
+  validates :status, inclusion: { in: VALID_STATUSES }
 
   def archived?
     status == 'archived'
@@ -1791,10 +1790,10 @@ We can add our status validation to the concern, but this is slightly more compl
 module Visible
   extend ActiveSupport::Concern
 
-  included do
-    VALID_STATUSES = ['public', 'private', 'archived']
+  VALID_STATUSES = ['public', 'private', 'archived']
 
-    validates :status, in: VALID_STATUSES
+  included do
+    validates :status, inclusion: { in: VALID_STATUSES }
   end
 
   def archived?
@@ -1836,7 +1835,7 @@ module Visible
   VALID_STATUSES = ['public', 'private', 'archived']
 
   included do
-    validates :status, in: VALID_STATUSES
+    validates :status, inclusion: { in: VALID_STATUSES }
   end
 
   class_methods do
@@ -1869,6 +1868,52 @@ Our blog has <%= Article.public_count %> articles and counting!
 <%= link_to "New Article", new_article_path %>
 ```
 
+There are a few more steps to be carried out before our application works with the addition of `status` column. First, let's run the following migrations to add `status` to `Articles` and `Comments`:
+
+```bash
+$ bin/rails generate migration AddStatusToArticles status:string
+$ bin/rails generate migration AddStatusToComments status:string
+```
+
+TIP: To learn more about migrations, see [Active Record Migrations](
+active_record_migrations.html).
+
+We also have to permit the `:status` key as part of the strong parameter, in `app/controllers/articles_controller.rb`:
+
+```ruby
+private
+    def article_params
+      params.require(:comment).permit(:commenter, :body, :status)
+    end
+```
+
+and in `app/controllers/comments_controller.rb`:
+
+```ruby
+private
+    def comment_params
+      params.require(:comment).permit(:commenter, :body, :status)
+    end
+```
+
+To finish up, we will add a select box to the forms, and let the user select the status when they create a new article or post a new comment. We can also specify the default status as `public`. In `app/views/articles/_form.html.erb`, we can add:
+
+```html+erb
+<div>
+  <%= form.label :status %><br>
+  <%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %>
+</div>
+```
+
+and in `app/views/comments/_form.html.erb`:
+
+```html+erb
+<p>
+  <%= form.label :status %><br>
+  <%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %>
+</p>
+```
+
 Deleting Comments
 -----------------
 
@@ -1892,8 +1937,8 @@ So first, let's add the delete link in the
 
 <p>
   <%= link_to 'Destroy Comment', [comment.article, comment],
-               method: :delete,
-               data: { confirm: "Are you sure?" } %>
+              method: :delete,
+              data: { confirm: "Are you sure?" } %>
 </p>
 ```
 
@@ -1927,7 +1972,6 @@ end
 The `destroy` action will find the article we are looking at, locate the comment
 within the `@article.comments` collection, and then remove it from the
 database and send us back to the show action for the article.
-
 
 ### Deleting Associated Objects
 
@@ -2006,7 +2050,6 @@ authentication add-ons for Rails are the
 [Devise](https://github.com/plataformatec/devise) rails engine and
 the [Authlogic](https://github.com/binarylogic/authlogic) gem,
 along with a number of others.
-
 
 ### Other Security Considerations
 

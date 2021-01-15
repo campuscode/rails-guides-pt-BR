@@ -42,7 +42,7 @@ Start comments in upper case. Follow regular punctuation rules:
 # Declares an attribute reader backed by an internally-named
 # instance variable.
 def attr_internal_reader(*attrs)
-  ...
+  # ...
 end
 ```
 
@@ -258,7 +258,7 @@ When "true" and "false" are English words rather than Ruby keywords use a regula
 # matter the context. Validations with # some <tt>:on</tt>
 # option will only run in the specified context.
 def valid?(context = nil)
-  ...
+  # ...
 end
 ```
 

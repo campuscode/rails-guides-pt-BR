@@ -35,17 +35,12 @@ fragment caching. By default Rails provides fragment caching. In order to use
 page and action caching you will need to add `actionpack-page_caching` and
 `actionpack-action_caching` to your `Gemfile`.
 
-By default, caching is only enabled in your production environment. To play
-around with caching locally you'll want to enable caching in your local
-environment by setting `config.action_controller.perform_caching` to `true` in
-the relevant `config/environments/*.rb` file:
-
-```ruby
-config.action_controller.perform_caching = true
-```
+By default, caching is only enabled in your production environment. You can play
+around with caching locally by running `rails dev:cache`, or by setting
+`config.action_controller.perform_caching` to `true` in `config/environments/development.rb`.
 
 NOTE: Changing the value of `config.action_controller.perform_caching` will
-only have an effect on the caching provided by the Action Controller component.
+only have an effect on the caching provided by Action Controller.
 For instance, it will not impact low-level caching, that we address
 [below](#low-level-caching).
 
@@ -89,21 +84,17 @@ When your application receives its first request to this page, Rails will write
 a new cache entry with a unique key. A key looks something like this:
 
 ```
-views/products/1-201505056193031061005000/bea67108094918eeba42cd4a6e786901
+views/products/index:bea67108094918eeba42cd4a6e786901/products/1
 ```
 
-The number in the middle is the `product_id` followed by the timestamp value in
-the `updated_at` attribute of the product record. Rails uses the timestamp value
-to make sure it is not serving stale data. If the value of `updated_at` has
-changed, a new key will be generated. Then Rails will write a new cache to that
-key, and the old cache written to the old key will never be used again. This is
-called key-based expiration.
+The string of characters in the middle is a template tree digest. It is a hash
+digest computed based on the contents of the view fragment you are caching. If
+you change the view fragment (e.g., the HTML changes), the digest will change,
+expiring the existing file.
 
-Cache fragments will also be expired when the view fragment changes (e.g., the
-HTML in the view changes). The string of characters at the end of the key is a
-template tree digest. It is a hash digest computed based on the contents of the
-view fragment you are caching. If you change the view fragment, the digest will
-change, expiring the existing file.
+A cache version, derived from the product record, is stored in the cache entry.
+When the product is touched, the cache version changes, and any cached fragments
+that contain the previous version are ignored.
 
 TIP: Cache stores like Memcached will automatically delete old cache files.
 
@@ -129,7 +120,6 @@ templates at once instead of one by one. This is done by passing `cached: true` 
 All cached templates from previous renders will be fetched at once with much
 greater speed. Additionally, the templates that haven't yet been cached will be
 written to cache and multi fetched on the next render.
-
 
 ### Russian Doll Caching
 
@@ -321,7 +311,7 @@ class ProductsController < ApplicationController
     # Run a find query
     @products = Product.all
 
-    ...
+    # ...
 
     # Run the same query again
     @products = Product.all
@@ -374,6 +364,30 @@ There are some common options that can be used by all cache implementations. The
 * `:expires_in` - This option sets an expiration time in seconds for the cache entry, if the cache store supports it, when it will be automatically removed from the cache.
 
 * `:race_condition_ttl` - This option is used in conjunction with the `:expires_in` option. It will prevent race conditions when cache entries expire by preventing multiple processes from simultaneously regenerating the same entry (also known as the dog pile effect). This option sets the number of seconds that an expired entry can be reused while a new value is being regenerated. It's a good practice to set this value if you use the `:expires_in` option.
+
+#### Connection Pool Options
+
+By default the `MemCacheStore` and `RedisCacheStore` use a single connection
+per process. This means that if you're using Puma, or another threaded server,
+you can have multiple threads waiting for the connection to become available.
+To increase the number of available connections you can enable connection
+pooling.
+
+First, add the `connection_pool` gem to your Gemfile:
+
+```ruby
+gem 'connection_pool'
+```
+
+Next, pass the `:pool_size` and/or `:pool_timeout` options when configuring the cache store:
+
+```ruby
+config.cache_store = :mem_cache_store, "cache.example.com", { pool_size: 5, pool_timeout: 5 }
+```
+
+* `:pool_size` - This option sets the number of connections per process (defaults to 5).
+
+* `:pool_timeout` - This option sets the number of seconds to wait for a connection (defaults to 5). If no connection is available within the timeout, a `Timeout::Error` will be raised.
 
 #### Custom Cache Stores
 
@@ -434,16 +448,21 @@ no explicit `config.cache_store` is supplied.
 
 This cache store uses Danga's `memcached` server to provide a centralized cache for your application. Rails uses the bundled `dalli` gem by default. This is currently the most popular cache store for production websites. It can be used to provide a single, shared cache cluster with very high performance and redundancy.
 
-When initializing the cache, you need to specify the addresses for all
-memcached servers in your cluster. If none are specified, it will assume
-memcached is running on localhost on the default port, but this is not an ideal
-setup for larger sites.
-
-The `write` and `fetch` methods on this cache accept two additional options that take advantage of features specific to memcached. You can specify `:raw` to send a value directly to the server with no serialization. The value must be a string or number. You can use memcached direct operations like `increment` and `decrement` only on raw values. You can also specify `:unless_exist` if you don't want memcached to overwrite an existing entry.
+When initializing the cache, you should specify the addresses for all memcached servers in your cluster, or ensure the `MEMCACHE_SERVERS` environment variable has been set appropriately.
 
 ```ruby
 config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.com"
 ```
+
+If neither are specified, it will assume memcached is running on localhost on the default port (`127.0.0.1:11211`), but this is not an ideal setup for larger sites.
+
+```ruby
+config.cache_store = :mem_cache_store # Will fallback to $MEMCACHE_SERVERS, then 127.0.0.1:11211
+```
+
+See the [`Dalli::Client` documentation](https://www.rubydoc.info/github/mperham/dalli/Dalli%2FClient:initialize) for supported address types.
+
+The `write` and `fetch` methods on this cache accept two additional options that take advantage of features specific to memcached. You can specify `:raw` to send a value directly to the server with no serialization. The value must be a string or number. You can use memcached direct operations like `increment` and `decrement` only on raw values. You can also specify `:unless_exist` if you don't want memcached to overwrite an existing entry.
 
 ### ActiveSupport::Cache::RedisCacheStore
 
@@ -489,7 +508,7 @@ connection library by additionally adding its ruby wrapper to your Gemfile:
 gem 'hiredis'
 ```
 
-Redis cache store will automatically require & use hiredis if available. No further
+Redis cache store will automatically require and use hiredis if available. No further
 configuration is needed.
 
 Finally, add the configuration in the relevant `config/environments/*.rb` file:
@@ -643,8 +662,8 @@ response body.
 Weak ETags have a leading `W/` to differentiate them from strong ETags.
 
 ```
-  W/"618bbc92e2d35ea1945008b42799b0e7" → Weak ETag
-  "618bbc92e2d35ea1945008b42799b0e7" → Strong ETag
+W/"618bbc92e2d35ea1945008b42799b0e7" → Weak ETag
+"618bbc92e2d35ea1945008b42799b0e7" → Strong ETag
 ```
 
 Unlike weak ETag, strong ETag implies that response should be exactly the same
@@ -653,18 +672,18 @@ large video or PDF file. Some CDNs support only strong ETags, like Akamai.
 If you absolutely need to generate a strong ETag, it can be done as follows.
 
 ```ruby
-  class ProductsController < ApplicationController
-    def show
-      @product = Product.find(params[:id])
-      fresh_when last_modified: @product.published_at.utc, strong_etag: @product
-    end
+class ProductsController < ApplicationController
+  def show
+    @product = Product.find(params[:id])
+    fresh_when last_modified: @product.published_at.utc, strong_etag: @product
   end
+end
 ```
 
 You can also set the strong ETag directly on the response.
 
 ```ruby
-  response.strong_etag = response.body # => "618bbc92e2d35ea1945008b42799b0e7"
+response.strong_etag = response.body # => "618bbc92e2d35ea1945008b42799b0e7"
 ```
 
 Caching in Development
@@ -675,9 +694,9 @@ in development mode. Rails provides the rails command `dev:cache` to
 easily toggle caching on/off.
 
 ```bash
-$ rails dev:cache
+$ bin/rails dev:cache
 Development mode is now being cached.
-$ rails dev:cache
+$ bin/rails dev:cache
 Development mode is no longer being cached.
 ```
 

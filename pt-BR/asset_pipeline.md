@@ -65,7 +65,6 @@ config.assets.js_compressor = :uglifier
 NOTE: A *gem* `sass-rails` é automaticamente usada para a compactação de CSS se estiver
 incluída no `Gemfile` e nenhuma opção `config.assets.css_compressor` é definida.
 
-
 ### Principais Características
 
 A primeira característica do *pipeline* é concatenar os *assets*, o qual pode
@@ -128,7 +127,7 @@ A estratégia de *Query String*(string de consulta) tinha várias desvantagens:
 diferencia apenas por parâmetros de busca**
 
     [recommendação do Steve Souders](https://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/),
- "...Evitando uma *Query String*(string de consulta) para recursos de armazenamento de *cache*".
+"...Evitando uma *Query String*(string de consulta) para recursos de armazenamento de *cache*".
 Ele descobriu que nesse caso 5-20% das requisições não irão ser armazenadas em cache.
 *Query String*(string de consulta) em particular nem sempre funcionam com alguns CDNs por invalidação de cache.
 
@@ -471,9 +470,9 @@ que contém essas linhas:
 
 ```css
 /* ...
-*= require_self
-*= require_tree .
-*/
+ *= require_self
+ *= require_tree .
+ */
 ```
 
 O Rails cria o `app/assets/stylesheets/application.css` independentemente se
@@ -504,10 +503,10 @@ Por exemplo, você pode concatenar três arquivos CSS juntos da seguinte maneira
 
 ```js
 /* ...
-*= require reset
-*= require layout
-*= require chrome
-*/
+ *= require reset
+ *= require layout
+ *= require chrome
+ */
 ```
 
 ### Pré-processamento
@@ -793,23 +792,23 @@ $ RAILS_ENV=production rails assets:precompile
 
 Note the following caveats:
 
-* If precompiled assets are available, they will be served — even if they no
-  longer match the original (uncompiled) assets, _even on the development
-  server._
+*   If precompiled assets are available, they will be served — even if they no
+    longer match the original (uncompiled) assets, _even on the development
+    server._
 
-  To ensure that the development server always compiles assets on-the-fly (and
-  thus always reflects the most recent state of the code), the development
-  environment _must be configured to keep precompiled assets in a different
-  location than production does._ Otherwise, any assets precompiled for use in
-  production will clobber requests for them in development (_i.e.,_ subsequent
-  changes you make to assets will not be reflected in the browser).
+    To ensure that the development server always compiles assets on-the-fly (and
+    thus always reflects the most recent state of the code), the development
+    environment _must be configured to keep precompiled assets in a different
+    location than production does._ Otherwise, any assets precompiled for use in
+    production will clobber requests for them in development (_i.e.,_ subsequent
+    changes you make to assets will not be reflected in the browser).
 
-  You can do this by adding the following line to
-  `config/environments/development.rb`:
+    You can do this by adding the following line to
+    `config/environments/development.rb`:
 
-  ```ruby
-  config.assets.prefix = "/dev-assets"
-  ```
+    ```ruby
+    config.assets.prefix = "/dev-assets"
+    ```
 * The asset precompile task in your deployment tool (_e.g.,_ Capistrano) should
   be disabled.
 * Any necessary compressors or minifiers must be available on your development
@@ -1068,6 +1067,7 @@ gem.
 ```ruby
 config.assets.css_compressor = :yui
 ```
+
 The other option for compressing CSS if you have the sass-rails gem installed is
 
 ```ruby
@@ -1095,8 +1095,6 @@ config.assets.js_compressor = :uglifier
 NOTE: You will need an [ExecJS](https://github.com/rails/execjs#readme)
 supported runtime in order to use `uglifier`. If you are using macOS or
 Windows you have a JavaScript runtime installed in your operating system.
-
-
 
 ### GZipping your assets
 
@@ -1129,7 +1127,6 @@ To enable this, pass a new object to the config option in `application.rb`:
 ```ruby
 config.assets.css_compressor = Transformer.new
 ```
-
 
 ### Changing the _assets_ Path
 

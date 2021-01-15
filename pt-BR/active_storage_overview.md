@@ -136,7 +136,7 @@ amazon:
   http_open_timeout: 0
   http_read_timeout: 0
   retry_limit: 0
-  upload: 
+  upload:
     server_side_encryption: "" # 'aws:kms' or 'AES256'
 ```
 
@@ -292,6 +292,8 @@ public_gcs:
 ```
 
 Tenha certeza que seus *buckets* estão configurados para acesso público. Veja a documentação sobre como ativar permissão de leitura pública para os serviços [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/block-public-access-bucket.html), [Google Cloud Storage](https://cloud.google.com/storage/docs/access-control/making-data-public#buckets), e [Microsoft Azure](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-manage-access-to-resources#set-container-public-access-level-in-the-azure-portal).
+
+Ao converter uma aplicação existente para usar `public: true`, certifique-se de atualizar cada arquivo individual no *bucket* para ser lido publicamente antes de alternar.
 
 Anexar Arquivos a Registros
 --------------------------
@@ -589,7 +591,7 @@ gerar um preview use o método [`preview`][]:
 </ul>
 ```
 
-WARNING: Extrair pré-visualizações necessita de aplicações de terceiros, *FFmpeg* para
+WARNING: Extrair pré-visualizações necessita de aplicações de terceiros, *FFmpeg v3.4+* para
 vídeo e *muPDF* para PDFs, e no *macOS* também são necessários *XQuartz* e *Poppler*.
 Estas bibliotecas não são fornecidas pelo Rails. Você deve instalá-las para poder
 utilizar as pré-visualizações embutidas no *Active Storage*. Antes de instalar e utilizar
@@ -612,7 +614,6 @@ directly from the client to the cloud.
 
     ```js
     //= require activestorage
-
     ```
 
     Using the npm package:
@@ -622,13 +623,13 @@ directly from the client to the cloud.
     ActiveStorage.start()
     ```
 
-2. Add `direct_upload: true` to your [`file_field`](form_helpers.html#uploading-files).
+2. Add `direct_upload: true` to your [file field](form_helpers.html#uploading-files):
 
     ```erb
     <%= form.file_field :attachments, multiple: true, direct_upload: true %>
     ```
 
-    If you aren't using a [FormBuilder](form_helpers.html#customizing-form-builders), add the data attribute directly:
+    Or, if you aren't using a `FormBuilder`, add the data attribute directly:
 
     ```erb
     <input type=file data-direct-upload-url="<%= rails_direct_uploads_url %>" />

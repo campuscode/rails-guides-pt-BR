@@ -948,7 +948,7 @@ display any error messages for `title` and `body`:
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
-    <%= @article.errors.full_messages_for(:title).each do |message| %>
+    <% @article.errors.full_messages_for(:title).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -956,7 +956,7 @@ display any error messages for `title` and `body`:
   <div>
     <%= form.label :body %><br>
     <%= form.text_area :body %><br>
-    <%= @article.errors.full_messages_for(:body).each do |message| %>
+    <% @article.errors.full_messages_for(:body).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -1112,7 +1112,7 @@ the following contents:
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
-    <%= article.errors.full_messages_for(:title).each do |message| %>
+    <% article.errors.full_messages_for(:title).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -1120,7 +1120,7 @@ the following contents:
   <div>
     <%= form.label :body %><br>
     <%= form.text_area :body %><br>
-    <%= article.errors.full_messages_for(:body).each do |message| %>
+    <% article.errors.full_messages_for(:body).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -1676,10 +1676,10 @@ porque o definimos como uma variável de instância.
 
 Você pode usar as *concerns* em seu _controller_ ou _model_ da mesma forma que usaria qualquer módulo. Quando você criou sua aplicação pela primeira vez com `rails new blog`, duas pastas foram criadas dentro de `app/` junto com o resto:
 
- ```
- app/controllers/concerns
- app/models/concerns
- ```
+```
+app/controllers/concerns
+app/models/concerns
+```
 
  Um determinado artigo do blog pode ter vários status - por exemplo, pode ser visível para todos (ou seja, `public`), ou visível apenas para o autor (ou seja, `private`). Também pode estar oculto para todos, mas ainda pode ser recuperado (ou seja, `archived`). Os comentários também podem estar ocultos ou visíveis. Isso pode ser representado usando uma coluna `status` em cada um dos _models_.
 
@@ -1694,7 +1694,7 @@ class Article < ApplicationRecord
 
   VALID_STATUSES = ['public', 'private', 'archived']
 
-  validates :status, in: VALID_STATUSES
+  validates :status, inclusion: { in: VALID_STATUSES }
 
   def archived?
     status == 'archived'
@@ -1710,7 +1710,7 @@ class Comment < ApplicationRecord
 
   VALID_STATUSES = ['public', 'private', 'archived']
 
-  validates :status, in: VALID_STATUSES
+  validates :status, inclusion: { in: VALID_STATUSES }
 
   def archived?
     status == 'archived'
@@ -1756,10 +1756,10 @@ Podemos adicionar nossa validação de status à *concern*, mas isso é um pouco
 module Visible
   extend ActiveSupport::Concern
 
-  included do
-    VALID_STATUSES = ['public', 'private', 'archived']
+  VALID_STATUSES = ['public', 'private', 'archived']
 
-    validates :status, in: VALID_STATUSES
+  included do
+    validates :status, inclusion: { in: VALID_STATUSES }
   end
 
   def archived?
@@ -1800,7 +1800,7 @@ module Visible
   VALID_STATUSES = ['public', 'private', 'archived']
 
   included do
-    validates :status, in: VALID_STATUSES
+    validates :status, inclusion: { in: VALID_STATUSES }
   end
 
   class_methods do
@@ -1833,6 +1833,52 @@ Our blog has <%= Article.public_count %> articles and counting!
 <%= link_to "New Article", new_article_path %>
 ```
 
+Existem mais algumas etapas a serem realizadas antes que nossa aplicaçãi funcione com a adição da coluna `status`. Primeiro, vamos executar as seguintes *migrations* para adicionar `status` aos `Articles` e `Comments`:
+
+```bash
+$ bin/rails generate migration AddStatusToArticles status:string
+$ bin/rails generate migration AddStatusToComments status:string
+```
+
+TIP: Para aprender mais sobre *migrations*, veja em [Active Record Migrations](
+active_record_migrations.html).
+
+Também temos que permitir a chave `:status` como parte do parâmetro (usando *strong parameters*), em `app/controllers/articles_controller.rb`:
+
+```ruby
+private
+    def article_params
+      params.require(:comment).permit(:commenter, :body, :status)
+    end
+```
+
+e em `app/controllers/comments_controller.rb`:
+
+```ruby
+private
+    def comment_params
+      params.require(:comment).permit(:commenter, :body, :status)
+    end
+```
+
+Para finalizar, adicionaremos uma caixa de seleção aos formulários e permitiremos que o usuário selecione o status ao criar um novo artigo ou postar um novo comentário. Também podemos especificar o status padrão como `public`. Em `app/views/articles/_form.html.erb`, podemos adicionar:
+
+```html+erb
+<div>
+  <%= form.label :status %><br>
+  <%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %>
+</div>
+```
+
+e em `app/views/comments/_form.html.erb`:
+
+```html+erb
+<p>
+  <%= form.label :status %><br>
+  <%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %>
+</p>
+```
+
 Deletando Comentários
 -----------------
 
@@ -1856,8 +1902,8 @@ Primeiro, vamos adicionar o link *delete* na *partial*
 
 <p>
   <%= link_to 'Destruir comentário', [comment.article, comment],
-               method: :delete,
-               data: { confirm: "Você tem certeza?" } %>
+              method: :delete,
+              data: { confirm: "Are you sure?" } %>
 </p>
 ```
 
@@ -1891,7 +1937,6 @@ end
 A *action* `destroy` vai encontrar o artigo que estamos vendo, localizar o
 comentário na *collection* `@article.comments`, removê-lo do seu banco de
 dados e nos enviar de volta para a *action* `show` do artigo.
-
 
 ### Excluindo objetos associados
 
@@ -1967,13 +2012,11 @@ Outros métodos de autenticação estão disponíveis para aplicações Rails. D
 [Devise](https://github.com/plataformatec/devise) e o
 [Authlogic](https://github.com/binarylogic/authlogic) entre outros.
 
-
 ### Outras Considerações de Segurança
 
 Segurança, especialmente em aplicações web, é uma area ampla e detalhada. O
 tópico de segurança aplicações Rails é coberto com mais detalhes em
 [Guia de Segurança Ruby on Rails](security.html).
-
 
 O que vem depois?
 -----------------
