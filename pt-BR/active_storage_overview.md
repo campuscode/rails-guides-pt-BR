@@ -724,13 +724,13 @@ Se você for utilizar seu disco como armazenamento e ele compartilhar a mesma or
 | `direct-upload:end` | `<input>` | `{id, file}` | Um *upload* direto foi finalizado. |
 | `direct-uploads:end` | `<form>` | Nenhum | Todos os *uploads* diretos foram finalizados. |
 
-### Example
+### Exemplo
 
-You can use these events to show the progress of an upload.
+Você pode usar esses eventos para exibir o progresso de um *upload*.
 
 ![direct-uploads](https://user-images.githubusercontent.com/5355/28694528-16e69d0c-72f8-11e7-91a7-c0b8cfc90391.gif)
 
-To show the uploaded files in a form:
+Para mostrar os arquivos enviados em um formulário:
 
 ```js
 // direct_uploads.js
@@ -774,7 +774,7 @@ addEventListener("direct-upload:end", event => {
 })
 ```
 
-Add styles:
+Adicionar estilos:
 
 ```css
 /* direct_uploads.css */
