@@ -637,29 +637,29 @@ O *Active Storage* com a sua biblioteca JavaScript incluída suporta *uploads* d
 
 4. E é isso! Os *uploads* começam após o envio do formulário.
 
-### Cross-Origin Resource Sharing (CORS) configuration
+### Configuração do *Cross-Origin Resource Sharing* (CORS)
 
-To make direct uploads to a third-party service work, you’ll need to configure the service to allow cross-origin requests from your app. Consult the CORS documentation for your service:
+Para que o *upload* direto a partir de terceiros funcione você vai precisar configurar o seu serviço de nuvem para aceitar requisições de múltiplas origens. Consulte a documentação sobre CORS do seu serviço:
 
 * [S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html#how-do-i-enable-cors)
 * [Google Cloud Storage](https://cloud.google.com/storage/docs/configuring-cors)
 * [Azure Storage](https://docs.microsoft.com/en-us/rest/api/storageservices/cross-origin-resource-sharing--cors--support-for-the-azure-storage-services)
 
-Take care to allow:
+Tome cuidado em permitir:
 
-* All origins from which your app is accessed
-* The `PUT` request method
-* The following headers:
+* Todas as origens pela qual a sua aplicação é acessada.
+* O método de requisição `PUT`
+* Os seguintes cabeçalhos de requisição:
   * `Origin`
   * `Content-Type`
   * `Content-MD5`
-  * `Content-Disposition` (except for Azure Storage)
-  * `x-ms-blob-content-disposition` (for Azure Storage only)
-  * `x-ms-blob-type` (for Azure Storage only)
+  * `Content-Disposition` (exceto para o Azure Storage)
+  * `x-ms-blob-content-disposition` (somente para o Azure Storage)
+  * `x-ms-blob-type` (somente para o Azure Storage)
 
-No CORS configuration is required for the Disk service since it shares your app’s origin.
+Se você for utilizar seu disco como armazenamento e ele compartilhar a mesma origem da sua aplicação não é necessário configurar o CORS.
 
-#### Example: S3 CORS configuration
+#### Exemplo: Configuração do CORS para o S3
 
 ```json
 [
@@ -684,7 +684,7 @@ No CORS configuration is required for the Disk service since it shares your app�
 ]
 ```
 
-#### Example: Google Cloud Storage CORS configuration
+#### Exemplo: Configuração do CORS para o Google Cloud Storage
 
 ```json
 [
@@ -697,7 +697,7 @@ No CORS configuration is required for the Disk service since it shares your app�
 ]
 ```
 
-#### Example: Azure Storage CORS configuration
+#### Exemplo: Configuração do CORS para o Azure Storage
 
 ```xml
 <Cors>
