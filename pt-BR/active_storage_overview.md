@@ -710,19 +710,19 @@ Se você for utilizar seu disco como armazenamento e ele compartilhar a mesma or
 <Cors>
 ```
 
-### Direct upload JavaScript events
+### Eventos de *upload* do JavaScript
 
-| Event name | Event target | Event data (`event.detail`) | Description |
+| Nome do evento | Alvo do evento | Dados do evento (`event.detail`) | Descrição |
 | --- | --- | --- | --- |
-| `direct-uploads:start` | `<form>` | None | A form containing files for direct upload fields was submitted. |
-| `direct-upload:initialize` | `<input>` | `{id, file}` | Dispatched for every file after form submission. |
-| `direct-upload:start` | `<input>` | `{id, file}` | A direct upload is starting. |
-| `direct-upload:before-blob-request` | `<input>` | `{id, file, xhr}` | Before making a request to your application for direct upload metadata. |
-| `direct-upload:before-storage-request` | `<input>` | `{id, file, xhr}` | Before making a request to store a file. |
-| `direct-upload:progress` | `<input>` | `{id, file, progress}` | As requests to store files progress. |
-| `direct-upload:error` | `<input>` | `{id, file, error}` | An error occurred. An `alert` will display unless this event is canceled. |
-| `direct-upload:end` | `<input>` | `{id, file}` | A direct upload has ended. |
-| `direct-uploads:end` | `<form>` | None | All direct uploads have ended. |
+| `direct-uploads:start` | `<form>` | Nenhum | Um formulário contendo campos para *upload* direto foi submetido. |
+| `direct-upload:initialize` | `<input>` | `{id, file}` | Disparado para cada arquivo após a submissão do formulário. |
+| `direct-upload:start` | `<input>` | `{id, file}` | O *upload* direto está iniciando. |
+| `direct-upload:before-blob-request` | `<input>` | `{id, file, xhr}` | Antes de fazer uma requisição de *upload* direto de metadados para a sua aplicação. |
+| `direct-upload:before-storage-request` | `<input>` | `{id, file, xhr}` | Antes de fazer uma requisição para armazenar um arquivo. |
+| `direct-upload:progress` | `<input>` | `{id, file, progress}` | O progresso da requisição para armazenar um arqivo. |
+| `direct-upload:error` | `<input>` | `{id, file, error}` | Um erro ocorreu. Um `alert` deve ser exibido, a menos que esse evento seja cancelado. |
+| `direct-upload:end` | `<input>` | `{id, file}` | Um *upload* direto foi finalizado. |
+| `direct-uploads:end` | `<form>` | Nenhum | Todos os *uploads* diretos foram finalizados. |
 
 ### Example
 
