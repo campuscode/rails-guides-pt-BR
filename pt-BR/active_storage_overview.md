@@ -601,42 +601,41 @@ essas ações.
 *Uploads* diretos
 --------------
 
-Active Storage, with its included JavaScript library, supports uploading
-directly from the client to the cloud.
+O *Active Storage* com a sua biblioteca JavaScript incluída suporta *uploads* direto do cliente (*front-end*) para a nuvem.
 
-### Usage
+### Uso
 
-1. Include `activestorage.js` in your application's JavaScript bundle.
+1. Inclua o `activestorage.js` na sua aplicação.
 
-    Using the asset pipeline:
+    Usando o *asset pipeline*:
 
     ```js
     //= require activestorage
 
     ```
 
-    Using the npm package:
+    Usando o pacote npm:
 
     ```js
     import * as ActiveStorage from "@rails/activestorage"
     ActiveStorage.start()
     ```
 
-2. Add `direct_upload: true` to your [`file_field`](form_helpers.html#uploading-files).
+2. Adicione `direct_upload: true` no seu [`file_field`](form_helpers.html#uploading-files).
 
     ```erb
     <%= form.file_field :attachments, multiple: true, direct_upload: true %>
     ```
 
-    If you aren't using a [FormBuilder](form_helpers.html#customizing-form-builders), add the data attribute directly:
+    Se você não está usando um [FormBuilder](form_helpers.html#customizing-form-builders) adicione o `direct_upload: true` diretamente:
 
     ```erb
     <input type=file data-direct-upload-url="<%= rails_direct_uploads_url %>" />
     ```
 
-3. Configure CORS on third-party storage services to allow direct upload requests.
+3. Configure o serviço de armazenamente de terceiros do CORS para permitir requisições de *upload* diretos.
 
-4. That's it! Uploads begin upon form submission.
+4. E é isso! Os *uploads* começam após o envio do formulário.
 
 ### Cross-Origin Resource Sharing (CORS) configuration
 
