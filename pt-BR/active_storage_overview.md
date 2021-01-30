@@ -818,47 +818,43 @@ input[type=file][data-direct-upload-url][disabled] {
 }
 ```
 
-### Integrating with Libraries or Frameworks
+### Integrando com bibliotecas ou *Frameworks*
 
-If you want to use the Direct Upload feature from a JavaScript framework, or
-you want to integrate custom drag and drop solutions, you can use the
-`DirectUpload` class for this purpose. Upon receiving a file from your library
-of choice, instantiate a DirectUpload and call its create method. Create takes
-a callback to invoke when the upload completes.
+Se você quer utilizar a funcionalidade de *upload* direto a partir de um *framework* JavaScript, ou se você quiser integrar uma funcionalidade de *drag and drop* (arrastar e soltar), você poderá utilizar a classe `DirectUpload` para fazer a integração. Ao receber um arquivo da sua biblioteca de escolha, instancie um `DirectUpload` e chame o seu método de criação. O método de criação recebe uma *callback* para ser executada quando o *upload* é concluído.
 
 ```js
 import { DirectUpload } from "@rails/activestorage"
 
 const input = document.querySelector('input[type=file]')
 
-// Bind to file drop - use the ondrop on a parent element or use a
-//  library like Dropzone
+// Vincular ao arquivo solto - use o onDrop em um elemento pai ou use uma
+//  biblioteca com o Dropzone
 const onDrop = (event) => {
   event.preventDefault()
   const files = event.dataTransfer.files;
   Array.from(files).forEach(file => uploadFile(file))
 }
 
-// Bind to normal file selection
+// Vincular à seleção de arquivo normal
 input.addEventListener('change', (event) => {
   Array.from(input.files).forEach(file => uploadFile(file))
-  // you might clear the selected files from the input
+  // você pode limpar os arquivos selecionados da entrada
   input.value = null
 })
 
 const uploadFile = (file) => {
-  // your form needs the file_field direct_upload: true, which
-  //  provides data-direct-upload-url
+  // seu formulário precisa do file_field direct_upload: true, que
+  //  fornece o data-direct-upload-url
   const url = input.dataset.directUploadUrl
   const upload = new DirectUpload(file, url)
 
   upload.create((error, blob) => {
     if (error) {
-      // Handle the error
+      // Trata o erro
     } else {
-      // Add an appropriately-named hidden input to the form with a
-      //  value of blob.signed_id so that the blob ids will be
-      //  transmitted in the normal upload flow
+      // Adiciona uma entrada oculta apropriadamente nomeada ao formulário com o
+      //  valor blob.signed_id, assim os blob ids podem ser
+      //  transmitidos no fluxo normal de upload
       const hiddenField = document.createElement('input')
       hiddenField.setAttribute("type", "hidden");
       hiddenField.setAttribute("value", blob.signed_id);
@@ -869,10 +865,10 @@ const uploadFile = (file) => {
 }
 ```
 
-If you need to track the progress of the file upload, you can pass a third
-parameter to the `DirectUpload` constructor. During the upload, DirectUpload
-will call the object's `directUploadWillStoreFileWithXHR` method. You can then
-bind your own progress handler on the XHR.
+Se você precisa acomponhar o progresso de  *upload* do arquivo, você pode passar um terceiro
+parâmetro para o construtor do `DirectUpload`. Durante o *upload*, o DirectUpload
+irá chamar o método `directUploadWillStoreFileWithXHR` do objeto. Você poderá então
+vincular o seu manipulador de progresoo no XHR.
 
 ```js
 import { DirectUpload } from "@rails/activestorage"
@@ -885,10 +881,10 @@ class Uploader {
   upload(file) {
     this.upload.create((error, blob) => {
       if (error) {
-        // Handle the error
+        // Trata o erro
       } else {
-        // Add an appropriately-named hidden input to the form
-        // with a value of blob.signed_id
+        // Adiciona uma entrada oculta apropriadamente nomeada no formulário
+        // com o valor blob.signed_id
       }
     })
   }
@@ -899,7 +895,7 @@ class Uploader {
   }
 
   directUploadDidProgress(event) {
-    // Use event.loaded and event.total to update the progress bar
+    // Usa o event.loaded e o event.total para atualizar a barra de progresso
   }
 }
 ```
