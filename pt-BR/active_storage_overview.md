@@ -719,7 +719,7 @@ Se você for utilizar seu disco como armazenamento e ele compartilhar a mesma or
 | `direct-upload:start` | `<input>` | `{id, file}` | O *upload* direto está iniciando. |
 | `direct-upload:before-blob-request` | `<input>` | `{id, file, xhr}` | Antes de fazer uma requisição de *upload* direto de metadados para a sua aplicação. |
 | `direct-upload:before-storage-request` | `<input>` | `{id, file, xhr}` | Antes de fazer uma requisição para armazenar um arquivo. |
-| `direct-upload:progress` | `<input>` | `{id, file, progress}` | O progresso da requisição para armazenar um arqivo. |
+| `direct-upload:progress` | `<input>` | `{id, file, progress}` | O progresso da requisição para armazenar um arquivo. |
 | `direct-upload:error` | `<input>` | `{id, file, error}` | Um erro ocorreu. Um `alert` deve ser exibido, a menos que esse evento seja cancelado. |
 | `direct-upload:end` | `<input>` | `{id, file}` | Um *upload* direto foi finalizado. |
 | `direct-uploads:end` | `<form>` | Nenhum | Todos os *uploads* diretos foram finalizados. |
