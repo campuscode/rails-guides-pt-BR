@@ -598,7 +598,7 @@ essas ações.
 
 [`preview`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-preview
 
-*Uploads* diretos
+*Uploads* Diretos
 --------------
 
 O *Active Storage* com a sua biblioteca JavaScript incluída suporta *uploads* direto do cliente (*front-end*) para a nuvem.
