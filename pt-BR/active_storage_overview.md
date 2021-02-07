@@ -621,7 +621,7 @@ O *Active Storage* com a sua biblioteca JavaScript incluída suporta *uploads* d
     ActiveStorage.start()
     ```
 
-2. Adicione `direct_upload: true` no seu [`file_field`](form_helpers.html#uploading-files).
+2. Adicione `direct_upload: true` no seu [`file_field`](form_helpers.html#enviando-arquivos).
 
     ```erb
     <%= form.file_field :attachments, multiple: true, direct_upload: true %>
