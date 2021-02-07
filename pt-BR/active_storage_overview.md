@@ -633,7 +633,7 @@ O *Active Storage* com a sua biblioteca JavaScript incluída suporta *uploads* d
     <input type=file data-direct-upload-url="<%= rails_direct_uploads_url %>" />
     ```
 
-3. Configure o serviço de armazenamente de terceiros do CORS para permitir requisições de *upload* direto.
+3. Configure o serviço de armazenamento de terceiros do CORS para permitir requisições de *upload* direto.
 
 4. E é isso! Os *uploads* começam após o envio do formulário.
 
