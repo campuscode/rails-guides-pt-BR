@@ -818,7 +818,7 @@ input[type=file][data-direct-upload-url][disabled] {
 }
 ```
 
-### Integrando com bibliotecas ou *Frameworks*
+### Integrando com Bibliotecas ou *Frameworks*
 
 Se você quer utilizar a funcionalidade de *upload* direto a partir de um *framework* JavaScript, ou se você quiser integrar uma funcionalidade de *drag and drop* (arrastar e soltar), você poderá utilizar a classe `DirectUpload` para fazer a integração. Ao receber um arquivo da sua biblioteca de escolha, instancie um `DirectUpload` e chame o seu método de criação. O método de criação recebe uma *callback* para ser executada quando o *upload* é concluído.
 
