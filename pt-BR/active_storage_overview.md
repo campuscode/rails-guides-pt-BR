@@ -627,7 +627,7 @@ O *Active Storage* com a sua biblioteca JavaScript incluída suporta *uploads* d
     <%= form.file_field :attachments, multiple: true, direct_upload: true %>
     ```
 
-    Se você não está usando um [FormBuilder](form_helpers.html#customizing-form-builders) adicione o `direct_upload: true` diretamente:
+    Se você não está usando um [FormBuilder](form_helpers.html#customizando-os-construtores-de-formularios) adicione o `direct_upload: true` diretamente:
 
     ```erb
     <input type=file data-direct-upload-url="<%= rails_direct_uploads_url %>" />
