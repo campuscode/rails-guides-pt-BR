@@ -865,7 +865,7 @@ const uploadFile = (file) => {
 }
 ```
 
-Se você precisa acompanhar o progresso de  *upload* do arquivo, você pode passar um terceiro
+Se você precisa acompanhar o progresso de *upload* do arquivo, você pode passar um terceiro
 parâmetro para o construtor do `DirectUpload`. Durante o *upload*, o DirectUpload
 irá chamar o método `directUploadWillStoreFileWithXHR` do objeto. Você poderá então
 vincular o seu manipulador de progresso no XHR.
