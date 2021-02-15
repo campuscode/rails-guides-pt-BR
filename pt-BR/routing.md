@@ -808,8 +808,8 @@ end
 
 Rails.application.routes.draw do
   constraints(RestrictedListConstraint.new) do
-    get '*path', to: 'restricted_list#index',
-    get '*other-path', to: 'other_restricted_list#index',
+    get '*path', to: 'restricted_list#index'
+    get '*other-path', to: 'other_restricted_list#index'
   end
 end
 ```
@@ -819,8 +819,8 @@ Você também pode usar `lambda`:
 ```ruby
 Rails.application.routes.draw do
   constraints(lambda { |request| RestrictedList.retrieve_ips.include?(request.remote_ip) }) do
-    get '*path', to: 'restricted_list#index',
-    get '*other-path', to: 'other_restricted_list#index',
+    get '*path', to: 'restricted_list#index'
+    get '*other-path', to: 'other_restricted_list#index'
   end
 end
 ```

@@ -324,7 +324,7 @@ Then, elsewhere in your Rails application, you can broadcast to such a room by
 calling [`broadcast`][]:
 
 ```ruby
-ActionCable.server.broadcast("chat_Best Room", body: "This Room is Best Room.")
+ActionCable.server.broadcast("chat_Best Room", { body: "This Room is Best Room." })
 ```
 
 If you have a stream that is related to a model, then the broadcasting name
@@ -444,8 +444,10 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
 # from a NewCommentJob.
 ActionCable.server.broadcast(
   "chat_#{room}",
-  sent_by: 'Paul',
-  body: 'This is a cool chat app.'
+  {
+    sent_by: 'Paul',
+    body: 'This is a cool chat app.'
+  }
 )
 ```
 
