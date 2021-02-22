@@ -520,10 +520,10 @@ active_record_querying.html).
 Os _Models_ são a peça final do quebra-cabeça MVC. A seguir, conectaremos todas
 as peças.
 
-### Showing a List of Articles
+### Exibindo uma Lista de Artigos
 
-Let's go back to our controller in `app/controllers/articles_controller.rb`, and
-change the `index` action to fetch all articles from the database:
+Vamos voltar ao nosso _controller_ em `app/controllers/articles_controller.rb` e
+alterar a _action_ `index` para buscar todos os artigos do banco de dados:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -533,9 +533,10 @@ class ArticlesController < ApplicationController
 end
 ```
 
-Controller instance variables can be accessed by the view. That means we can
-reference `@articles` in `app/views/articles/index.html.erb`. Let's open that
-file, and replace its contents with:
+As variáveis de instância do _controller_ podem ser acessadas pela _view_. Isso
+significa que podemos referenciar `@articles` em
+`app/views/articles/index.html.erb`. Vamos abrir esse arquivo e substituir seu
+conteúdo por:
 
 ```html+erb
 <h1>Articles</h1>
@@ -549,32 +550,36 @@ file, and replace its contents with:
 </ul>
 ```
 
-The above code is a mixture of HTML and *ERB*. ERB is a templating system that
-evaluates Ruby code embedded in a document. Here, we can see two types of ERB
-tags: `<% %>` and `<%= %>`. The `<% %>` tag means "evaluate the enclosed Ruby
-code." The `<%= %>` tag means "evaluate the enclosed Ruby code, and output the
-value it returns." Anything you could write in a regular Ruby program can go
-inside these ERB tags, though it's usually best to keep the contents of ERB tags
-short, for readability.
+O código acima é uma mistura de HTML e *ERB*. ERB é um sistema de _template_ que
+avalia código Ruby embarcado em um documento. Aqui, podemos ver dois tipos de
+_tags_ ERB: `<% %>` e `<%= %>`. A _tag_ `<% %>` significa "avaliar o código Ruby
+incluso". A _tag_ `<%= %>` significa "avaliar o código Ruby incluso e retornar o
+valor de saída". Qualquer coisa que possa ser escrita em um programa normal em
+Ruby pode ir dentro dessas _tags_ ERB, embora geralmente seja melhor manter o
+conteúdo das _tags_ ERB de forma curta para facilitar a leitura.
 
-Since we don't want to output the value returned by `@articles.each`, we've
-enclosed that code in `<% %>`. But, since we *do* want to output the value
-returned by `article.title` (for each article), we've enclosed that code in
-`<%= %>`.
+Já que não queremos gerar o valor retornado por `@articles.each`, vamos colocar
+esse código em `<% %>`. Porém, uma vez que *queremos* exibir o valor retornado
+em `article.title` (para cada artigo), incluímos esse códido em `<%= %>`.
 
-We can see the final result by visiting <http://localhost:3000>. (Remember that
-`bin/rails server` must be running!) Here's what happens when we do that:
+Nós podemos visualizar o resultado final visitando <http://localhost:3000>
+(lembre-se de que `bin/rails server` deve estar em execução!). Aqui estão as
+etapas do que acontece quando fazemos isso:
 
-1. The browser makes a request: `GET http://localhost:3000`.
-2. Our Rails application receives this request.
-3. The Rails router maps the root route to the `index` action of `ArticlesController`.
-4. The `index` action uses the `Article` model to fetch all articles in the database.
-5. Rails automatically renders the `app/views/articles/index.html.erb` view.
-6. The ERB code in the view is evaluated to output HTML.
-7. The server sends a response containing the HTML back to the browser.
+1. O navegador faz uma requisição (_request_): `GET http://localhost:3000`.
+2. Nossa aplicação Rails recebe essa requisição.
+3. O roteador do Rails mapeia a rota raiz para a _action_ `index` de
+   `ArticlesController`.
+4. A _action_ `index`utiliza o _model_ `Article` para buscar todos os artigos no
+   banco de dados.
+5. O Rails renderiza automaticamente a _view_
+   `app/views/articles/index.html.erb`.
+6. O código ERB na _view_ é avaliado para gerar código HTML.
+7. O servidor envia uma resposta (_response_) de volta ao navegador contendo o
+   HTML.
 
-We've connected all the MVC pieces together, and we have our first controller
-action! Next, we'll move on to the second action.
+Conectamos todas as peças do MVC e temos nossa primeira _action_ no
+_controller_! A seguir, passaremos para a segunda _action_.
 
 CRUDit Where CRUDit Is Due
 --------------------------
