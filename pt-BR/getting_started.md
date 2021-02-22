@@ -436,35 +436,36 @@ active_record_migrations.html).
 
 Agora podemos interagir com a tabela utilizando o nosso _model_.
 
-### Using a Model to Interact with the Database
+### Utilizando um _Model_ para Interagir com o Banco de Dados
 
-To play with our model a bit, we're going to use a feature of Rails called the
-*console*. The console is an interactive coding environment just like `irb`, but
-it also automatically loads Rails and our application code.
+Para brincar um pouco com o nosso _model_, vamos utilizar um recurso do Rails
+chamado *console*. O *console* é um ambiente de codificação interativo como o
+`irb`, mas que também carrega automaticamente o Rails e o código da nossa
+aplicação.
 
-Let's launch the console with this command:
+Vamos iniciar o console com o comando:
 
 ```bash
 $ bin/rails console
 ```
 
-You should see an `irb` prompt like:
+Você deve visualizar um *prompt* `irb`:
 
 ```irb
 Loading development environment (Rails 6.0.2.1)
 irb(main):001:0>
 ```
 
-At this prompt, we can initialize a new `Article` object:
+Neste *prompt*, podemos inicializar um novo objeto `Article`:
 
 ```irb
 irb> article = Article.new(title: "Hello Rails", body: "I am on Rails!")
 ```
 
-It's important to note that we have only *initialized* this object. This object
-is not saved to the database at all. It's only available in the console at the
-moment. To save the object to the database, we must call [`save`](
-https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-save):
+É importante notar que apenas *inicializamos* este objeto. O objeto não é salvo
+no banco de dados e no momento está disponível apenas no *console*. Para salvar o
+objeto no banco de dados, devemos chamar
+[`save`](https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-save):
 
 ```irb
 irb> article.save
@@ -478,42 +479,46 @@ The above output shows an `INSERT INTO "articles" ...` database query. This
 indicates that the article has been inserted into our table. And if we take a
 look at the `article` object again, we see something interesting has happened:
 
+A saída acima mostra uma *query* `INSERT INTO "articles" ...`. ao banco de dados.
+Isso indica que o artigo foi inserido em nossa tabela. Se dermos uma olhada no
+objeto `article` novamente, vemos que algo interessante aconteceu:
+
 ```irb
 irb> article
 => #<Article id: 1, title: "Hello Rails", body: "I am on Rails!", created_at: "2020-01-18 23:47:30", updated_at: "2020-01-18 23:47:30">
 ```
 
-The `id`, `created_at`, and `updated_at` attributes of the object are now set.
-Rails did this for us when we saved the object.
+Os atributos `id`, `created_at` e `updated_at` agora estão definidos.
+O Rails fez isso por nós quando salvamos o objeto.
 
-When we want to fetch this article from the database, we can call [`find`](
-https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find)
-on the model and pass the `id` as an argument:
+Quando quisermos buscar este artigo no banco de dados, podemos chamar
+[`find`](https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find)
+no _model_ e passar o `id` como argumento:
 
 ```irb
 irb> Article.find(1)
 => #<Article id: 1, title: "Hello Rails", body: "I am on Rails!", created_at: "2020-01-18 23:47:30", updated_at: "2020-01-18 23:47:30">
 ```
 
-And when we want to fetch all articles from the database, we can call [`all`](
+E quando quisermos obter todos os artigos do banco de dados, podemos chamar [`all`](
 https://api.rubyonrails.org/classes/ActiveRecord/Scoping/Named/ClassMethods.html#method-i-all)
-on the model:
+no _model_:
 
 ```irb
 irb> Article.all
 => #<ActiveRecord::Relation [#<Article id: 1, title: "Hello Rails", body: "I am on Rails!", created_at: "2020-01-18 23:47:30", updated_at: "2020-01-18 23:47:30">]>
 ```
 
-This method returns an [`ActiveRecord::Relation`](
-https://api.rubyonrails.org/classes/ActiveRecord/Relation.html) object, which
-you can think of as a super-powered array.
+Esté método retorna um objeto [`ActiveRecord::Relation`](
+https://api.rubyonrails.org/classes/ActiveRecord/Relation.html), que você pode
+considerar como um _array_ superpotente.
 
-TIP: To learn more about models, see [Active Record Basics](
-active_record_basics.html) and [Active Record Query Interface](
+TIP: Para saber mais sobre _models_, consulte o [Básico do Active Record](
+active_record_basics.html) e [Interface de Consulta do Active Record](
 active_record_querying.html).
 
-Models are the final piece of the MVC puzzle. Next, we will connect all of the
-pieces together.
+Os _Models_ são a peça final do quebra-cabeça MVC. A seguir, conectaremos todas
+as peças.
 
 ### Showing a List of Articles
 
