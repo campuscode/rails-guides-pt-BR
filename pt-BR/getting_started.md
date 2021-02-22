@@ -475,7 +475,7 @@ Article Create (0.4ms)  INSERT INTO "articles" ("title", "body", "created_at", "
 => true
 ```
 
-A saída acima mostra uma *query* `INSERT INTO "articles" ...`. ao banco de dados.
+A saída acima mostra uma *query* `INSERT INTO "articles" ...` de banco de dados.
 Isso indica que o artigo foi inserido em nossa tabela. Se dermos uma olhada no
 objeto `article` novamente, vemos que algo interessante aconteceu:
 
