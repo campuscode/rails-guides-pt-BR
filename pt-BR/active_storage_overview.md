@@ -598,69 +598,68 @@ essas ações.
 
 [`preview`]: https://api.rubyonrails.org/classes/ActiveStorage/Blob/Representable.html#method-i-preview
 
-Direct Uploads
+*Uploads* Diretos
 --------------
 
-Active Storage, with its included JavaScript library, supports uploading
-directly from the client to the cloud.
+O *Active Storage* com a sua biblioteca JavaScript incluída suporta *uploads* direto do cliente (*front-end*) para a nuvem.
 
-### Usage
+### Uso
 
-1. Include `activestorage.js` in your application's JavaScript bundle.
+1. Inclua o `activestorage.js` na sua aplicação.
 
-    Using the asset pipeline:
+    Usando o *asset pipeline*:
 
     ```js
     //= require activestorage
 
     ```
 
-    Using the npm package:
+    Usando o pacote npm:
 
     ```js
     import * as ActiveStorage from "@rails/activestorage"
     ActiveStorage.start()
     ```
 
-2. Add `direct_upload: true` to your [`file_field`](form_helpers.html#uploading-files).
+2. Adicione `direct_upload: true` no seu [`file_field`](form_helpers.html#enviando-arquivos).
 
     ```erb
     <%= form.file_field :attachments, multiple: true, direct_upload: true %>
     ```
 
-    If you aren't using a [FormBuilder](form_helpers.html#customizing-form-builders), add the data attribute directly:
+    Se você não está usando um [FormBuilder](form_helpers.html#customizando-os-construtores-de-formularios) adicione o `direct_upload: true` diretamente:
 
     ```erb
     <input type=file data-direct-upload-url="<%= rails_direct_uploads_url %>" />
     ```
 
-3. Configure CORS on third-party storage services to allow direct upload requests.
+3. Configure o serviço de armazenamento de terceiros do CORS para permitir requisições de *upload* direto.
 
-4. That's it! Uploads begin upon form submission.
+4. E é isso! Os *uploads* começam após o envio do formulário.
 
-### Cross-Origin Resource Sharing (CORS) configuration
+### Configuração do *Cross-Origin Resource Sharing* (CORS)
 
-To make direct uploads to a third-party service work, you’ll need to configure the service to allow cross-origin requests from your app. Consult the CORS documentation for your service:
+Para que o *upload* direto a partir de terceiros funcione você vai precisar configurar o seu serviço de nuvem para aceitar requisições de múltiplas origens. Consulte a documentação sobre CORS do seu serviço:
 
 * [S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html#how-do-i-enable-cors)
 * [Google Cloud Storage](https://cloud.google.com/storage/docs/configuring-cors)
 * [Azure Storage](https://docs.microsoft.com/en-us/rest/api/storageservices/cross-origin-resource-sharing--cors--support-for-the-azure-storage-services)
 
-Take care to allow:
+Tome cuidado em permitir:
 
-* All origins from which your app is accessed
-* The `PUT` request method
-* The following headers:
+* Todas as origens pela qual a sua aplicação é acessada.
+* O método de requisição `PUT`
+* Os seguintes cabeçalhos de requisição:
   * `Origin`
   * `Content-Type`
   * `Content-MD5`
-  * `Content-Disposition` (except for Azure Storage)
-  * `x-ms-blob-content-disposition` (for Azure Storage only)
-  * `x-ms-blob-type` (for Azure Storage only)
+  * `Content-Disposition` (exceto para o Azure Storage)
+  * `x-ms-blob-content-disposition` (somente para o Azure Storage)
+  * `x-ms-blob-type` (somente para o Azure Storage)
 
-No CORS configuration is required for the Disk service since it shares your app’s origin.
+Se você for utilizar seu disco como armazenamento e ele compartilhar a mesma origem da sua aplicação não é necessário configurar o CORS.
 
-#### Example: S3 CORS configuration
+#### Exemplo: Configuração do CORS para o S3
 
 ```json
 [
@@ -685,7 +684,7 @@ No CORS configuration is required for the Disk service since it shares your app�
 ]
 ```
 
-#### Example: Google Cloud Storage CORS configuration
+#### Exemplo: Configuração do CORS para o Google Cloud Storage
 
 ```json
 [
@@ -698,7 +697,7 @@ No CORS configuration is required for the Disk service since it shares your app�
 ]
 ```
 
-#### Example: Azure Storage CORS configuration
+#### Exemplo: Configuração do CORS para o Azure Storage
 
 ```xml
 <Cors>
@@ -711,27 +710,27 @@ No CORS configuration is required for the Disk service since it shares your app�
 <Cors>
 ```
 
-### Direct upload JavaScript events
+### Eventos de *upload* do JavaScript
 
-| Event name | Event target | Event data (`event.detail`) | Description |
+| Nome do evento | Alvo do evento | Dados do evento (`event.detail`) | Descrição |
 | --- | --- | --- | --- |
-| `direct-uploads:start` | `<form>` | None | A form containing files for direct upload fields was submitted. |
-| `direct-upload:initialize` | `<input>` | `{id, file}` | Dispatched for every file after form submission. |
-| `direct-upload:start` | `<input>` | `{id, file}` | A direct upload is starting. |
-| `direct-upload:before-blob-request` | `<input>` | `{id, file, xhr}` | Before making a request to your application for direct upload metadata. |
-| `direct-upload:before-storage-request` | `<input>` | `{id, file, xhr}` | Before making a request to store a file. |
-| `direct-upload:progress` | `<input>` | `{id, file, progress}` | As requests to store files progress. |
-| `direct-upload:error` | `<input>` | `{id, file, error}` | An error occurred. An `alert` will display unless this event is canceled. |
-| `direct-upload:end` | `<input>` | `{id, file}` | A direct upload has ended. |
-| `direct-uploads:end` | `<form>` | None | All direct uploads have ended. |
+| `direct-uploads:start` | `<form>` | Nenhum | Um formulário contendo campos para *upload* direto foi submetido. |
+| `direct-upload:initialize` | `<input>` | `{id, file}` | Disparado para cada arquivo após a submissão do formulário. |
+| `direct-upload:start` | `<input>` | `{id, file}` | O *upload* direto está iniciando. |
+| `direct-upload:before-blob-request` | `<input>` | `{id, file, xhr}` | Antes de fazer uma requisição de *upload* direto de metadados para a sua aplicação. |
+| `direct-upload:before-storage-request` | `<input>` | `{id, file, xhr}` | Antes de fazer uma requisição para armazenar um arquivo. |
+| `direct-upload:progress` | `<input>` | `{id, file, progress}` | O progresso da requisição para armazenar um arquivo. |
+| `direct-upload:error` | `<input>` | `{id, file, error}` | Um erro ocorreu. Um `alert` deve ser exibido, a menos que esse evento seja cancelado. |
+| `direct-upload:end` | `<input>` | `{id, file}` | Um *upload* direto foi finalizado. |
+| `direct-uploads:end` | `<form>` | Nenhum | Todos os *uploads* diretos foram finalizados. |
 
-### Example
+### Exemplo
 
-You can use these events to show the progress of an upload.
+Você pode usar esses eventos para exibir o progresso de um *upload*.
 
 ![direct-uploads](https://user-images.githubusercontent.com/5355/28694528-16e69d0c-72f8-11e7-91a7-c0b8cfc90391.gif)
 
-To show the uploaded files in a form:
+Para mostrar os arquivos enviados em um formulário:
 
 ```js
 // direct_uploads.js
@@ -775,7 +774,7 @@ addEventListener("direct-upload:end", event => {
 })
 ```
 
-Add styles:
+Adicionar estilos:
 
 ```css
 /* direct_uploads.css */
@@ -819,47 +818,43 @@ input[type=file][data-direct-upload-url][disabled] {
 }
 ```
 
-### Integrating with Libraries or Frameworks
+### Integrando com Bibliotecas ou *Frameworks*
 
-If you want to use the Direct Upload feature from a JavaScript framework, or
-you want to integrate custom drag and drop solutions, you can use the
-`DirectUpload` class for this purpose. Upon receiving a file from your library
-of choice, instantiate a DirectUpload and call its create method. Create takes
-a callback to invoke when the upload completes.
+Se você quer utilizar a funcionalidade de *upload* direto a partir de um *framework* JavaScript, ou se você quiser integrar uma funcionalidade de *drag and drop* (arrastar e soltar), você poderá utilizar a classe `DirectUpload` para fazer a integração. Ao receber um arquivo da sua biblioteca de escolha, instancie um `DirectUpload` e chame o seu método de criação. O método de criação recebe uma *callback* para ser executada quando o *upload* é concluído.
 
 ```js
 import { DirectUpload } from "@rails/activestorage"
 
 const input = document.querySelector('input[type=file]')
 
-// Bind to file drop - use the ondrop on a parent element or use a
-//  library like Dropzone
+// Vincular ao arquivo solto - use o onDrop em um elemento pai ou use uma
+//  biblioteca com o Dropzone
 const onDrop = (event) => {
   event.preventDefault()
   const files = event.dataTransfer.files;
   Array.from(files).forEach(file => uploadFile(file))
 }
 
-// Bind to normal file selection
+// Vincular à seleção de arquivo normal
 input.addEventListener('change', (event) => {
   Array.from(input.files).forEach(file => uploadFile(file))
-  // you might clear the selected files from the input
+  // você pode limpar os arquivos selecionados da entrada
   input.value = null
 })
 
 const uploadFile = (file) => {
-  // your form needs the file_field direct_upload: true, which
-  //  provides data-direct-upload-url
+  // seu formulário precisa do file_field direct_upload: true, que
+  //  fornece o data-direct-upload-url
   const url = input.dataset.directUploadUrl
   const upload = new DirectUpload(file, url)
 
   upload.create((error, blob) => {
     if (error) {
-      // Handle the error
+      // Trata o erro
     } else {
-      // Add an appropriately-named hidden input to the form with a
-      //  value of blob.signed_id so that the blob ids will be
-      //  transmitted in the normal upload flow
+      // Adiciona uma entrada oculta apropriadamente nomeada ao formulário com o
+      //  valor blob.signed_id, assim os blob ids podem ser
+      //  transmitidos no fluxo normal de upload
       const hiddenField = document.createElement('input')
       hiddenField.setAttribute("type", "hidden");
       hiddenField.setAttribute("value", blob.signed_id);
@@ -870,10 +865,10 @@ const uploadFile = (file) => {
 }
 ```
 
-If you need to track the progress of the file upload, you can pass a third
-parameter to the `DirectUpload` constructor. During the upload, DirectUpload
-will call the object's `directUploadWillStoreFileWithXHR` method. You can then
-bind your own progress handler on the XHR.
+Se você precisa acompanhar o progresso de *upload* do arquivo, você pode passar um terceiro
+parâmetro para o construtor do `DirectUpload`. Durante o *upload*, o DirectUpload
+irá chamar o método `directUploadWillStoreFileWithXHR` do objeto. Você poderá então
+vincular o seu manipulador de progresso no XHR.
 
 ```js
 import { DirectUpload } from "@rails/activestorage"
@@ -886,10 +881,10 @@ class Uploader {
   upload(file) {
     this.upload.create((error, blob) => {
       if (error) {
-        // Handle the error
+        // Trata o erro
       } else {
-        // Add an appropriately-named hidden input to the form
-        // with a value of blob.signed_id
+        // Adiciona uma entrada oculta apropriadamente nomeada no formulário
+        // com o valor blob.signed_id
       }
     })
   }
@@ -900,7 +895,7 @@ class Uploader {
   }
 
   directUploadDidProgress(event) {
-    // Use event.loaded and event.total to update the progress bar
+    // Usa o event.loaded e o event.total para atualizar a barra de progresso
   }
 }
 ```
