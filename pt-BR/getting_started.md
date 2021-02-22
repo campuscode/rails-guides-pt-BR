@@ -334,36 +334,38 @@ Agora podemos ver a mensagem "Olá, Rails!", quando visitamos <http://localhost:
 TIP: Para mais informações sobre roteamento, consulte [Roteamento do Rails de Fora para Dentro](routing.html).
 
 
-MVC and You
+MVC e Você
 -----------
 
-So far, we've discussed routes, controllers, actions, and views. All of these
-are typical pieces of a web application that follows the [MVC (Model-View-Controller)](
-https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) pattern.
-MVC is a design pattern that divides the responsibilities of an application to
-make it easier to reason about. Rails follows this design pattern by convention.
+Até agora, discutimos rotas, _controllers_, _actions_ e _views_. Todas essas
+são peças típicas de uma aplicação web que segue o padrão [MVC (Model-View-Controller)](
+https://pt.wikipedia.org/wiki/MVC).
 
-Since we have a controller and a view to work with, let's generate the next
-piece: a model.
+MVC é um padrão de projeto que divide as responsabilidades de uma aplicação para
+facilitar nosso entendimento. O Rails segue esse padrão de projeto por
+convenção.
 
-### Generating a Model
+Já que temos um _controller_ e uma _view_ para trabalhar, agora vamos gerar a próxima
+peça: o _model_.
 
-A *model* is a Ruby class that is used to represent data. Additionally, models
-can interact with the application's database through a feature of Rails called
-*Active Record*.
+### Gerando um _Model_
 
-To define a model, we will use the model generator:
+Um _Model_ é uma classe Ruby utilizada para representar dados. Além disso, os
+_models_ podem interagir com o banco de dados da aplicação através de um recurso
+do Rails chamado _Active Record_.
+
+Para definir um _model_, utilizaremos um gerador de _models_:
 
 ```bash
 $ bin/rails generate model Article title:string body:text
 ```
 
-NOTE: Model names are **singular**, because an instantiated model represents a
-single data record. To help remember this convention, think of how you would
-call the model's constructor: we want to write `Article.new(...)`, **not**
-`Articles.new(...)`.
+NOTE: Os nomes dos _models_ são no **singular**, pois um _model_ instanciado
+representa um único registro de dados. Para ajudar a lembrar esta convenção,
+pense em como você chamaria o construtor do _model_: queremos escrever
+`Article.new(...)`, **não** `Articles.new(...)`.
 
-This will create several files:
+O comando utilizando o gerador criará vários arquivos:
 
 ```
 invoke  active_record
@@ -374,17 +376,17 @@ create      test/models/article_test.rb
 create      test/fixtures/articles.yml
 ```
 
-The two files we'll focus on are the migration file
-(`db/migrate/<timestamp>_create_articles.rb`) and the model file
+Os dois arquivos em que vamos nos concentrar são o arquivo da _migration_
+(`db/migrate/<timestamp>_create_articles.rb`) e o arquivo do _model_
 (`app/models/article.rb`).
 
-### Database Migrations
+### Migrações de Banco de Dados
 
-*Migrations* are used to alter the structure of an application's database. In
-Rails applications, migrations are written in Ruby so that they can be
-database-agnostic.
+As *Migrations* são utilizadas para alterar a estrutura do banco de dados de uma
+aplicação. Em aplicações Rails, as _migrations_ são escritas em Ruby para que
+possam ser independentes do banco de dados.
 
-Let's take a look at the contents of our new migration file:
+Vamos dar uma olhada no conteúdo do nosso novo arquivo de _migration_:
 
 ```ruby
 class CreateArticles < ActiveRecord::Migration[6.0]
@@ -399,27 +401,28 @@ class CreateArticles < ActiveRecord::Migration[6.0]
 end
 ```
 
-The call to `create_table` specifies how the `articles` table should be
-constructed. By default, the `create_table` method adds an `id` column as an
-auto-incrementing primary key. So the first record in the table will have an
-`id` of 1, the next record will have an `id` of 2, and so on.
+A chamada para `create_table` especifica como a tabela `articles` deve ser
+construída. Por padrão, o método `create_table` adiciona uma coluna `id` como
+chave primária de auto incremento. Portanto, o primeiro registro na tabela terá
+um `id` de valor 1, o próximo registro terá um `id` de valor 2 e assim por
+diante.
 
-Inside the block for `create_table`, two columns are defined: `title` and
-`body`. These were added by the generator because we included them in our
-generate command (`bin/rails generate model Article title:string body:text`).
+Dentro do bloco de `create_table`, duas colunas são definidas: `title` e `body`.
+Elas foram adicionadas pelo gerador, pois incluímos a instrução no nosso comando
+(`bin/rails generate model Article title:string body:text`).
 
-On the last line of the block is a call to `t.timestamps`. This method defines
-two additional columns named `created_at` and `updated_at`. As we will see,
-Rails will manage these for us, setting the values when we create or update a
-model object.
+Na última linha do bloco há uma chamada para `t.timestamps`. Este método define
+duas colunas adicionais chamadas `created_at` and `updated_at`. Como veremos
+mais pra frente, o Rails gerenciará isso para nós, definindo os valores quando
+criamos ou atualizamos um objeto _model_.
 
-Let's run our migration with the following command:
+Vamos executar a nossa _migration_ com o seguinte comando:
 
 ```bash
 $ bin/rails db:migrate
 ```
 
-The command will display output indicating that the table was created:
+O comando exibirá o resultado do processamento indicando que a tabela foi criada:
 
 ```
 ==  CreateArticles: migrating ===================================
@@ -428,10 +431,10 @@ The command will display output indicating that the table was created:
 ==  CreateArticles: migrated (0.0018s) ==========================
 ```
 
-TIP: To learn more about migrations, see [Active Record Migrations](
+TIP: Para saber mais sobre _migrations_, consulte [Active Record Migrations](
 active_record_migrations.html).
 
-Now we can interact with the table using our model.
+Agora podemos interagir com a tabela utilizando o nosso _model_.
 
 ### Using a Model to Interact with the Database
 
