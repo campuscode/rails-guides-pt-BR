@@ -412,7 +412,7 @@ Elas foram adicionadas pelo gerador, pois incluímos a instrução no nosso coma
 (`bin/rails generate model Article title:string body:text`).
 
 Na última linha do bloco há uma chamada para `t.timestamps`. Este método define
-duas colunas adicionais chamadas `created_at` and `updated_at`. Como veremos
+duas colunas adicionais chamadas `created_at` e `updated_at`. Como veremos
 mais pra frente, o Rails gerenciará isso para nós, definindo os valores quando
 criamos ou atualizamos um objeto _model_.
 
@@ -513,7 +513,7 @@ TIP: Para saber mais sobre _models_, consulte o [Básico do Active Record](
 active_record_basics.html) e [Interface de Consulta do Active Record](
 active_record_querying.html).
 
-Os _Models_ são a peça final do quebra-cabeça MVC. A seguir, conectaremos todas
+Os _models_ são a peça final do quebra-cabeça MVC. A seguir, conectaremos todas
 as peças.
 
 ### Exibindo uma Lista de Artigos
@@ -555,7 +555,7 @@ Ruby pode ir dentro dessas _tags_ ERB, embora geralmente seja melhor manter o
 conteúdo das _tags_ ERB de forma curta para facilitar a leitura.
 
 Já que não queremos gerar o valor retornado por `@articles.each`, vamos colocar
-esse código em `<% %>`. Porém, uma vez que *queremos* exibir o valor retornado
+esse código em `<% %>`. Porém, uma vez que **queremos** exibir o valor retornado
 em `article.title` (para cada artigo), incluímos esse códido em `<%= %>`.
 
 Nós podemos visualizar o resultado final visitando <http://localhost:3000>
