@@ -577,24 +577,27 @@ etapas do que acontece quando fazemos isso:
 Conectamos todas as peças do MVC e temos nossa primeira _action_ no
 _controller_! A seguir, passaremos para a segunda _action_.
 
-CRUDit Where CRUDit Is Due
+Operações CRUD
 --------------------------
 
-Almost all web applications involve [CRUD (Create, Read, Update, and Delete)](
-https://en.wikipedia.org/wiki/Create,_read,_update,_and_delete) operations. You
-may even find that the majority of the work your application does is CRUD. Rails
-acknowledges this, and provides many features to help simplify code doing CRUD.
+Quase todas as aplicações web abrangem operações [CRUD (Create, Read, Update e
+Delete)](https://pt.wikipedia.org/wiki/CRUD), traduzidos como criação, consulta,
+atualização e destruição de dados. Você pode até descobrir que a maior parte do
+trabalho que a sua aplicação faz é o CRUD. O Rails reconhece isso e fornece
+muitos recursos para ajudar a simplificar o código na hora de fazer o CRUD.
 
-Let's begin exploring these features by adding more functionality to our
-application.
+Vamos começar a explorar esses recursos adicionando mais funcionalidades à nossa
+aplicação.
 
-### Showing a Single Article
+### Exibindo um Único Artigo
 
-We currently have a view that lists all articles in our database. Let's add a
-new view that shows the title and body of a single article.
+Atualmente, temos uma _view_ que lista todos os artigos em nosso banco de dados.
+Vamos adicionar uma nova _view_ que exibe o título (_title_) e o corpo (_body_)
+de um único artigo.
 
-We start by adding a new route that maps to a new controller action (which we
-will add next). Open `config/routes.rb`, and insert the last route shown here:
+Começamos adicionando uma nova rota que mapeia para uma nova _action_ do
+_controller_ (que adicionaremos a seguir). Abra o arquivo `config/routes.rb` e
+insira a última rota exibida aqui:
 
 ```ruby
 Rails.application.routes.draw do
@@ -605,15 +608,15 @@ Rails.application.routes.draw do
 end
 ```
 
-The new route is another `get` route, but it has something extra in its path:
-`:id`. This designates a route *parameter*. A route parameter captures a segment
-of the request's path, and puts that value into the `params` Hash, which is
-accessible by the controller action. For example, when handling a request like
-`GET http://localhost:3000/articles/1`, `1` would be captured as the value for
-`:id`, which would then be accessible as `params[:id]` in the `show` action of
-`ArticlesController`.
+A nova rota é outra rota do tipo `get`, mas tem algo extra no seu caminho
+(_path_): `:id`. Isso denomina um **parâmetro** de rota. Um parâmetro de rota
+captura um pedaço do caminho da requisição e coloca esse valor no _Hash_
+`params`, que pode ser acessado pela _action_ do _controller_. Por exemplo, ao
+lidar com uma requisição como `GET http://localhost:3000/articles/1`, `1` seria
+capturado como o valor para `id`, que seria então acessível em `params[:id]` na
+_action_ `show` de `ArticlesController`.
 
-Let's add that `show` action now, below the `index` action in
+Vamos adicionar a _action_ `show` agora, abaixo da _action_ `index` em
 `app/controllers/articles_controller.rb`:
 
 ```ruby
@@ -628,13 +631,13 @@ class ArticlesController < ApplicationController
 end
 ```
 
-The `show` action calls `Article.find` ([mentioned
-previously](#using-a-model-to-interact-with-the-database)) with the ID captured
-by the route parameter. The returned article is stored in the `@article`
-instance variable, so it is accessible by the view. By default, the `show`
-action will render `app/views/articles/show.html.erb`.
+A _action_ `show` chama `Article.find` ([mencionado
+anteriormente](#utilizando-um-model-para-interagir-com-o-banco-de-dados)) com o
+ID capturado pelo parâmetro de rota. O artigo retornado é armazenado na variável
+de instância `@article`, portanto, pode ser acessado pela _view_. Por padrão, a
+_action_ `show` vai renderizar `app/views/articles/show.html.erb`.
 
-Let's create `app/views/articles/show.html.erb`, with the following contents:
+Vamos criar `app/views/articles/show.html.erb`, com o seguinte conteúdo:
 
 ```html+erb
 <h1><%= @article.title %></h1>
@@ -642,10 +645,11 @@ Let's create `app/views/articles/show.html.erb`, with the following contents:
 <p><%= @article.body %></p>
 ```
 
-Now we can see the article when we visit <http://localhost:3000/articles/1>!
+Agora podemos ver o artigo quando visitarmos <http://localhost:3000/articles/1>!
 
-To finish up, let's add a convenient way to get to an article's page. We'll link
-each article's title in `app/views/articles/index.html.erb` to its page:
+Para finalizar, vamos adicionar uma maneira mais prática para chegar à página
+de um artigo. Iremos vincular o título de cada artigo em
+`app/views/articles/index.html.erb` para sua página:
 
 ```html+erb
 <h1>Articles</h1>
@@ -661,7 +665,7 @@ each article's title in `app/views/articles/index.html.erb` to its page:
 </ul>
 ```
 
-### Resourceful Routing
+### Roteamento de _Resources_ (recursos)
 
 So far, we've covered the "R" (Read) of CRUD. We will eventually cover the "C"
 (Create), "U" (Update), and "D" (Delete). As you might have guessed, we will do
@@ -669,6 +673,10 @@ so by adding new routes, controller actions, and views. Whenever we have such a
 combination of routes, controller actions, and views that work together to
 perform CRUD operations on an entity, we call that entity a *resource*. For
 example, in our application, we would say an article is a resource.
+
+Até agora, nós vimos o "R" (_Read_, consulta) do CRUD. Iremos eventualmente
+cobrir o "C" (_Create_, criação), "U" (_Update_, atualização) e o "D" (_Delete_,
+destruição).
 
 Rails provides a routes method named [`resources`](
 https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources)
