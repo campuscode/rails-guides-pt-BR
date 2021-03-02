@@ -591,15 +591,19 @@ Nesta aplicação:
 Similar à lógica de herança de *layout*, se um *template* ou _partial_ não for encontrado no caminho convencional, o _controller_ procurará um *template* ou _partial_ para renderizar em sua cadeia de herança. Por exemplo:
 
 ```ruby
-# in app/controllers/application_controller
+# app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
 end
+```
 
-# in app/controllers/admin_controller
+```ruby
+# app/controllers/admin_controller.rb
 class AdminController < ApplicationController
 end
+```
 
-# in app/controllers/admin/products_controller
+```ruby
+# app/controllers/admin/products_controller.rb
 class Admin::ProductsController < AdminController
   def index
   end
@@ -1086,13 +1090,13 @@ Templates parciais - normalmente chamados de *"partials"* - são outro dispositi
 
 Para renderizar uma *partial* como parte da *view*, usa-se o método [`render`][view.render] dentro da _view_:
 
-```ruby
+```html+erb
 <%= render "menu" %>
 ```
 
 Isto inclui o conteúdo de um arquivo chamado `_menu.html.erb` neste ponto dentro da view renderizada. Note o *underscore* inicial no nome do arquivo: *partials* recebem nomes com um *underscore* inicial para distingui-los de *views* regulares, mesmo sem usar esta notação em casos mais comuns. Isso continua sendo verdade mesmo quando você incluir uma *partial* de outro diretório:
 
-```ruby
+```html+erb
 <%= render "shared/menu" %>
 ```
 
@@ -1205,27 +1209,27 @@ Para passar uma variável local para uma *partial* apenas em casos específicos 
 
 * `index.html.erb`
 
-  ```erb
-  <%= render user.articles %>
-  ```
+    ```erb
+    <%= render user.articles %>
+    ```
 
 * `show.html.erb`
 
-  ```erb
-  <%= render article, full: true %>
-  ```
+    ```erb
+    <%= render article, full: true %>
+    ```
 
 * `_article.html.erb`
 
-  ```erb
-  <h2><%= article.title %></h2>
+    ```erb
+    <h2><%= article.title %></h2>
 
-  <% if local_assigns[:full] %>
-    <%= simple_format article.body %>
-  <% else %>
-    <%= truncate article.body %>
-  <% end %>
-  ```
+    <% if local_assigns[:full] %>
+      <%= simple_format article.body %>
+    <% else %>
+      <%= truncate article.body %>
+    <% end %>
+    ```
 
 Desta forma é possível utilizar a *partial* sem necessidade de declarar todas as variáveis locais.
 

@@ -33,7 +33,7 @@ Convenção para Nomeclatura de *Controllers*
 ----------------------------
 A convenção para nomenclatura de *controllers* no Rails favorece a pluralização da última palavra do nome do *controller*, embora não seja estritamente necessário (ex: `ApplicationController`). Por exemplo, `ClientsController` é recomendado ao invés de `ClientController`, `SiteAdminsController` é recomendado ao invés de `SiteAdminController` ou `SitesAdminsController`, e assim por diante.
 
-Seguindo essa convenção será possível utilizar o gerador de rotas padrão (ex: `resources`, etc) sem precisar configurar cada `:path` ou `:controller`, e ainda manter consistente o uso dos auxiliares de rotas em todo o seu projeto. Veja [Layouts & Guia de Renderização](layouts_and_rendering.html) para mais detalhes.
+Seguindo essa convenção será possível utilizar o gerador de rotas padrão (ex: `resources`, etc) sem precisar configurar cada `:path` ou `:controller`, e ainda manter consistente o uso dos auxiliares de rotas em todo o seu projeto. Veja [Layouts e Guia de Renderização](layouts_and_rendering.html) para mais detalhes.
 
 NOTE: A convenção para nomenclatura de *controllers* difere da convenção para nomenclatura de *models*, que devem ser nomeados na forma singular.
 
@@ -192,7 +192,7 @@ Estas opções serão usadas como um ponto de partida na geração de URLs, ent�
 
 Se você definir `default_url_options` em `ApplicationController`, como no exemplo acima, estes padrões irão ser usados para todas as gerações de URL. O método pode também ser definido num *controller* específico, neste caso afetando somente as URLs geradas a partir desse escopo.
 
-Numa requisição o método não é de fato chamado para toda URL gerada; por questões de performance o *hash* retornado é cacheado. Há no máximo uma invocação por requisição.
+Numa requisição o método não é de fato chamado para toda URL gerada. Por questões de performance o *hash* retornado é cacheado, e há no máximo uma invocação por requisição.
 
 ### Parâmetros Fortes
 
@@ -329,7 +329,7 @@ Sua aplicação possui uma sessão para cada usuário, na qual pode-se armazenar
 
 * [`ActionDispatch::Session::CookieStore`][] - Armazena tudo no cliente.
 * [`ActionDispatch::Session::CacheStore`][] - Armazena os dados no *cache* do Rails.
-* [`ActionDispatch::Session::ActiveRecordStore`][] - Armazena os dados em um banco de dados utilizando o *Active Record*. (a gem `activerecord-session_store` é necessária).
+* `ActionDispatch::Session::ActiveRecordStore` - Armazena os dados em um banco de dados utilizando o *Active Record*. (a gem `activerecord-session_store` é necessária).
 * [`ActionDispatch::Session::MemCacheStore`][] - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o *CacheStore* como alternativa)
 
 Todos os armazenamentos de sessão utilizam um *cookie* para armazenar um ID único para cada sessão (você deve utilizar um *cookie*, o Rails não permitirá que você passe o ID da sessão na URL, pois isso é menos seguro).
@@ -443,7 +443,7 @@ Para redefinir a sessão inteira, utilize [`reset_session`][].
 
 ### The Flash
 
-The flash is a special part of the session which is cleared with each request. This means that values stored there will only be available in the next request, which is useful for passing error messages etc.
+The flash is a special part of the session which is cleared with each request. This means that values stored there will only be available in the next request, which is useful for passing error messages, etc.
 
 The flash is accessed via the [`flash`][] method. Like the session, the flash is represented as a hash.
 
@@ -721,11 +721,11 @@ Você pode escolher não efetuar *yield* e montar a resposta você mesmo, o que 
 [`after_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action
 [`around_action`]: https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action
 
-### Outras formas de usar
+### Outras Formas de Usar Filtros
 
-Enquanto a forma mais comum de se utilizar filtros é criando métodos privados e usando *_action para adicioná-los, existem duas outras formas para fazer a mesma coisa.
+Enquanto a forma mais comum de se utilizar filtros é criando métodos privados e usando `before_action`, `after_action`, ou `around_action` para adicioná-los, existem duas outras formas para fazer a mesma coisa.
 
-A primeira é utilizar um bloco diretamente com método *\_action. O bloco recebe o *controller* como um argumento. O filtro `require_login` acima pode ser reescrito para utilizar um bloco:
+A primeira é utilizar um bloco diretamente com método `*_action`. O bloco recebe o *controller* como um argumento. O filtro `require_login` acima pode ser reescrito para utilizar um bloco:
 
 ```ruby
 class ApplicationController < ActionController::Base
@@ -805,27 +805,27 @@ Os Objetos de Requisição e Resposta
 
 Em todo *controller* existem dois métodos de acesso apontando para os objetos de requisição e de resposta associados com o ciclo de requisição que estiver em execução no momento. O método [`request`][] contém uma instância de [`ActionDispatch::Request`][] e o método [`response`][] retorna um objeto de resposta representando o que será enviado de volta ao cliente.
 
- [`ActionDispatch::Request`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html
- [`request`]: https://api.rubyonrails.org/classes/ActionController/Base.html#method-i-request
- [`response`]: https://api.rubyonrails.org/classes/ActionController/Base.html#method-i-response
+[`ActionDispatch::Request`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html
+[`request`]: https://api.rubyonrails.org/classes/ActionController/Base.html#method-i-request
+[`response`]: https://api.rubyonrails.org/classes/ActionController/Base.html#method-i-response
 
 ### O Objeto `request`
 
 O objeto de requisição contém muitas informações úteis sobre a requisição proveniente do cliente. Para obter uma lista completa dos métodos disponíveis verifique a [documentação da API do Rails](https://api.rubyonrails.org/classes/ActionDispatch/Request.html) e a [documentação do Rack](https://www.rubydoc.info/github/rack/rack/Rack/Request). Entre as propriedades que você pode acessar estão:
 
 | Propriedade de `request`                     | Propósito                                                                          |
-| ----------------------------------------- | --------------------------------------------------------------------------------  |
-| host                                      | O *hostname* utilizado para esta requisição.                                      |
-| domain(n=2)                               | Os primeiros `n` segmentos do *hostname*, iniciando pela direita (o domínio de primeiro nível).       |
-| format                                    | O tipo de conteúdo requisitado pelo cliente.                                      |
-| method                                    | O método HTTP utilizado para a requisição.                                        |
-| get?, post?, patch?, put?, delete?, head? | Retorna *true* se o método HTTP é GET/POST/PATCH/PUT/DELETE/HEAD.                 |
-| headers                                   | Retorna um *hash* contendo os *headers* associados com a requisição.              |
-| port                                      | O número (*integer*) da porta utilizada para a requisição.                        |
-| protocol                                  | Retorna uma *string* contendo o protocolo utilizado, além do trecho "://". Por exemplo: "http://". |
-| query_string                              | A *query string* da URL (todo o trecho após "?").                                 |
-| remote_ip                                 | O endereço IP do cliente.                                                         |
-| url                                       | A URL completa utilizada para a requisição.                                       |
+| -------------------------------------------- | --------------------------------------------------------------------------------  |
+| `host`                                       | O *hostname* utilizado para esta requisição.                                      |
+| `domain(n=2)`                                | Os primeiros `n` segmentos do *hostname*, iniciando pela direita (o domínio de primeiro nível).       |
+| `format`                                     | O tipo de conteúdo requisitado pelo cliente.                                      |
+| `method`                                     | O método HTTP utilizado para a requisição.                                        |
+| `get?`, `post?`, `patch?`, `put?`, `delete?`, `head?` | Retorna *true* se o método HTTP é GET/POST/PATCH/PUT/DELETE/HEAD.                 |
+| `headers`                                    | Retorna um *hash* contendo os *headers* associados com a requisição.              |
+| `port`                                       | O número (*integer*) da porta utilizada para a requisição.                        |
+| `protocol`                                   | Retorna uma *string* contendo o protocolo utilizado, além do trecho "://". Por exemplo: "http://". |
+| `query_string`                               | A *query string* da URL (todo o trecho após "?").                                 |
+| `remote_ip`                                  | O endereço IP do cliente.                                                         |
+| `url`                                        | A URL completa utilizada para a requisição.                                       |
 
 #### `path_parameters`, `query_parameters`, e `request_parameters`
 
@@ -840,13 +840,13 @@ O *Rails* armazena todos os parâmetros enviados com a requisição no *hash* `p
 O objeto de resposta geralmente não é usado diretamente, mas é construído durante a execução da *action* e renderização dos dados que serão enviados de volta ao usuário, porém às vezes - como num filtro posterior - ele pode ser útil para acessar a resposta diretamente. Alguns destes métodos de acesso também possuem *setters*, lhe permitindo mudar seus valores. Para obter uma lista completa dos métodos disponíveis verifique a [documentação da API do Rails](https://api.rubyonrails.org/classes/ActionDispatch/Response.html) e a [documentação do Rack](https://www.rubydoc.info/github/rack/rack/Rack/Response);
 
 | Propriedade de `response` | Propósito                                                                                             |
-| ---------------------- | --------------------------------------------------------------------------------------------------- |
-| body                   | Esta é a *string* de dados sendo enviada de volta ao usuário. Na maioria dos casos se trata de código HTML.    |
-| status                 | O código de *status* HTTP para a resposta, como um código 200 para uma requisição bem sucedida ou 404 para um arquivo não encontrado.    |
-| location               | A URL que o cliente estiver sendo redirecionado para, caso haja alguma.                 |
-| content_type           | O tipo de conteúdo da resposta.                                                         |
-| charset                | O conjunto de caracteres sendo utilizado na resposta. O valor padrão é "utf-8".         |
-| headers                | *Headers* utilizados para a resposta.                                                   |
+| ------------------------- | --------------------------------------------------------------------------------------------------- |
+| `body`                    | Esta é a *string* de dados sendo enviada de volta ao usuário. Na maioria dos casos se trata de código HTML.    |
+| `status`                  | O código de *status* HTTP para a resposta, como um código 200 para uma requisição bem sucedida ou 404 para um arquivo não encontrado.    |
+| `location`                | A URL que o cliente estiver sendo redirecionado para, caso haja alguma.                 |
+| `content_type`            | O tipo de conteúdo da resposta.                                                         |
+| `charset`                 | O conjunto de caracteres sendo utilizado na resposta. O valor padrão é "utf-8".         |
+| `headers`                 | *Headers* utilizados para a resposta.                                                   |
 
 #### Definindo *Headers* customizados
 

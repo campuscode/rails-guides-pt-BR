@@ -799,9 +799,9 @@ Tanto o método `matches?` quanto a lambda usam o objeto `request` como argument
 
 #### *Constraints* em forma de bloco
 
-Você pode especificar restrições em forma de bloco. Isso é útil quando você precisa aplicar a mesma regra a várias rotas. Por exemplo
+Você pode especificar restrições em forma de bloco. Isso é útil quando você precisa aplicar a mesma regra a várias rotas. Por exemplo:
 
-```
+```ruby
 class RestrictedListConstraint
   # ...Same as the example above
 end
@@ -816,7 +816,7 @@ end
 
 Você também pode usar `lambda`:
 
-```
+```ruby
 Rails.application.routes.draw do
   constraints(lambda { |request| RestrictedList.retrieve_ips.include?(request.remote_ip) }) do
     get '*path', to: 'restricted_list#index',
@@ -988,7 +988,7 @@ end
 
 O método [`resolve`][] permite personalizar o mapeamento polimórfico de *models*. Por exemplo:
 
-``` ruby
+```ruby
 resource :basket
 
 resolve("Basket") { [:basket] }
@@ -1103,7 +1103,7 @@ Isso faz o roteamento reconhecer caminhos como:
 
 NOTE: Os nomes das ações não sofrem alterações devido a esta opção. Os dois caminhos exibidos ainda apontarão para as ações `new` e `edit`.
 
-TIP: Se você quiser mudar esta opção para todas as rotas, você pode usar um *scope*.
+TIP: Se você quiser mudar esta opção para todas as rotas, você pode usar um *scope*. Da seguinte forma:
 
 ```ruby
 scope path_names: { new: 'make' } do
@@ -1194,7 +1194,7 @@ O Rails agora cria rotas para o `CategoriesController`.
 
 ### Sobrescrevendo a Forma Singular
 
-Se você quer definir a forma singular de um recurso, você deve colocar regras adicionais para o `Inflector` via [`inflections`][]:
+Se você quer sobrescrever a forma singular de um recurso, você deve colocar regras adicionais para o `Inflector` via [`inflections`][]:
 
 ```ruby
 ActiveSupport::Inflector.inflections do |inflect|
@@ -1243,7 +1243,9 @@ class Video < ApplicationRecord
     identifier
   end
 end
+```
 
+```ruby
 video = Video.find_by(identifier: "Roman-Holiday")
 edit_video_path(video) # => "/videos/Roman-Holiday/edit"
 ```
@@ -1264,7 +1266,9 @@ Rails.application.routes.draw do
 
   draw(:admin) # Will load another route file located in `config/routes/admin.rb`
 end
+```
 
+```ruby
 # config/routes/admin.rb
 
 namespace :admin do
@@ -1282,9 +1286,9 @@ You can use the normal routing DSL inside the `admin.rb` routing file, **however
 
 ### When to use and not use this feature
 
-Drawing routes from external files can be very useful to organise a large set of routes into multiple organised ones. You could have a `admin.rb` route that contains all the routes for the admin area, another `api.rb` file to route API related resources etc...
+Drawing routes from external files can be very useful to organise a large set of routes into multiple organised ones. You could have a `admin.rb` route that contains all the routes for the admin area, another `api.rb` file to route API related resources, etc...
 
-However, you shouldn't abuse this feature as having too many route files make discoverability and understandability more difficult. Depending on the application, it might be easier for developers to have a single routing file even if you have few hundreds routes. You shouldn't try to create a new routing file for each category (admin, api ...) at all cost; the Rails routing DSL already offers a way to break routes in a organised manner with `namespaces` and `scopes`.
+However, you shouldn't abuse this feature as having too many route files make discoverability and understandability more difficult. Depending on the application, it might be easier for developers to have a single routing file even if you have few hundreds routes. You shouldn't try to create a new routing file for each category (e.g. admin, api, ...) at all cost; the Rails routing DSL already offers a way to break routes in a organised manner with `namespaces` and `scopes`.
 
 Inspecionando e Testando Rotas
 -----------------------------
@@ -1293,7 +1297,7 @@ Rails oferece recursos para inspecionar e testar suas rotas.
 
 ### Listando Rotas Existentes
 
-Para obter uma lista completa de rotas disponíveis na sua aplicação, visite `http://localhost:3000/rails/info/routes` no browser quando o servidor estiver rodando em ambiente de desenvolvimento. Você pode também executar o comando `bin/rails routes` no terminal para reproduzir o mesmo resultado.
+Para obter uma lista completa de rotas disponíveis na sua aplicação, visite <http://localhost:3000/rails/info/routes> no browser quando o servidor estiver rodando em ambiente de desenvolvimento. Você pode também executar o comando `bin/rails routes` no terminal para reproduzir o mesmo resultado.
 
 Ambos os métodos irão listas todas suas rotas, na mesma ordem que aparece em `config/routes.rb`. Para cada rota, você irá ver:
 

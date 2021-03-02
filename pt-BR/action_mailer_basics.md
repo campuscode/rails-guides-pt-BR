@@ -62,7 +62,9 @@ class ApplicationMailer < ActionMailer::Base
   default from: "para@exemplo.com"
   layout 'mailer'
 end
+```
 
+```ruby
 # app/mailers/user_mailer.rb
 class UserMailer < ApplicationMailer
 end
@@ -195,8 +197,6 @@ NOTE: O comportamento padrão do _Active Job_ é executar os serviços de maneir
 O adaptador padrão do _Active Job_ executa os serviços em um processo _Thread Pool_. Está abordagem é boa para os ambientes de desenvolvimento e teste, pois não requerem nenhuma infraestrutura externa/complexa, porém é uma abordagem ruim para o ambiente de produção, pois caso o sistema seja reiniciado você pode perder os registros desses serviços.
 Se você precisar de uma solução para que esses serviços sejam persistidos, de modo a evitar possíveis perdas, você precisará de um serviço a parte que tenha essa funcionalidade, exemplos: Sidekiq, Resque etc.
 
-NOTE: Quando chamar o método `deliver_later` o serviço será posto sob uma fila com o nome de `mailers`. Confirme se o adaptador de filas (_Active Job_, Sidekiq, Resque etc) é compatível com essa fila, caso contrário seu serviço vai acabar sendo ignorado, o que vai impedir os e-mails de serem enviados. Você pode mudar isso especificando uma opção de fila compatível na configuração `config.action_mailer.deliver_later_queue_name`.
-
 Se você deseja que os e-mail sejam enviados no mesmo tempo que chamar o _Mailer_, simplesmente chame `deliver_now`:
 
 ```ruby
@@ -226,14 +226,14 @@ Existem apenas três métodos que você precisa para enviar qualquer mensagem de
 
 * `headers` — Especifica qualquer cabeçalho no e-mail como você desejar. Você pode passar uma _hash_ contendo os campos do cabeçalho seguindo o padrão `chave: valor`, ou você pode chamar a variável `headers[:field_name] = value`.
 * `attachments` — Permite adicionar anexos ao e-mail. Exemplo: `attachments['file-name.jpg'] = File.read('file-name.jpg')` que irá adicionar o arquivo `file-name.jpg` como anexo no e-mail.
-* `mail` — Método usado para enviar o e-mail. Você pode usar a _hash_ `headers` como um dos parâmetros.
-`mail` vai criar o e-mail, tanto em texto puro ou _multipart_, dependendo dos modelos disponíveis que você definiu.
+* `mail` — Cria o e-mail de fato. Você pode usar a _hash_ `headers` como um dos parâmetros.
+  `mail` vai criar o e-mail, tanto em texto puro ou _multipart_, dependendo dos modelos disponíveis que você definiu.
 
 #### Adicionando Anexos
 
 Com o _Action Mailer_ é muito fácil trabalhar com anexos.
 
-* Passe o nome do arquivo e o conteúdo para o _Action Mailer_ e a [Mail gem](https://github.com/mikel/mail) irá descobrir o _mime type_ do arquivo, configurar a codificação e criar o anexo.
+* Passe o nome do arquivo e o conteúdo para o _Action Mailer_ e a [Mail gem](https://github.com/mikel/mail) irá descobrir o `mime_type` do arquivo, define a codificação (`encoding`) e criar o anexo.
 
     ```ruby
     attachments['filename.jpg'] = File.read('/caminho/para/o/arquivo.jpg')
@@ -384,7 +384,7 @@ end
 This will render the template 'another_template.html.erb' for the HTML part and
 use the rendered text for the text part. The render command is the same one used
 inside of Action Controller, so you can use all the same options, such as
-`:text`, `:inline` etc.
+`:text`, `:inline`, etc.
 
 If you would like to render a template located outside of the default `app/views/mailer_name/` directory, you can apply the `prepend_view_path`, like so:
 
@@ -533,7 +533,7 @@ If you did not configure the `:host` option globally make sure to pass it to
 #### Generating URLs with Named Routes
 
 Email clients have no web context and so paths have no base URL to form complete
-web addresses. Thus, you should always use the "_url" variant of named route
+web addresses. Thus, you should always use the `*_url` variant of named route
 helpers.
 
 If you did not configure the `:host` option globally make sure to pass it to the
@@ -561,7 +561,7 @@ config.asset_host = 'http://example.com'
 
 Now you can display an image inside your email.
 
-```ruby
+```html+erb
 <%= image_tag 'image.jpg' %>
 ```
 
@@ -769,6 +769,7 @@ config.action_mailer.smtp_settings = {
   authentication:       'plain',
   enable_starttls_auto: true }
 ```
+
 NOTE: Em 15 de julho de 2014, o Google aumentou [suas medidas de segurança](https://support.google.com/accounts/answer/6010255) e agora bloqueia as tentativas de aplicativos que considera menos seguros.
 Você pode alterar suas configurações do Gmail [aqui](https://www.google.com/settings/security/lesssecureapps) para permitir as tentativas. Se sua conta do Gmail tiver a autenticação de dois fatores ativada
 em seguida, você precisará definir uma [senha de aplicativo](https://myaccount.google.com/apppasswords) e usá-la em vez de sua senha normal. Alternativamente, você pode
@@ -787,7 +788,7 @@ _Action Mailer_ fornece ganchos para os métodos observador e interceptor do Mai
 
 ### Interceptando Emails
 
-Os interceptores permitem que você faça modificações em emails antes que eles sejam entregues aos agentes de entrega. Uma classe de interceptor deve implementar o método `:delivering_email(message)` que será chamado antes do e-mail ser enviado.
+Os interceptores permitem que você faça modificações em emails antes que eles sejam entregues aos agentes de entrega. Uma classe de interceptor deve implementar o método `::delivering_email(message)` que será chamado antes do e-mail ser enviado.
 
 ```ruby
 class SandboxEmailInterceptor
@@ -797,9 +798,9 @@ class SandboxEmailInterceptor
 end
 ```
 
-Antes que o interceptor possa fazer seu trabalho, você precisa registrá-lo com o _Action Mailer_. 
-Você pode fazer isso em um arquivo inicializador
-`config/initializers/sandbox_email_interceptor.rb`
+Antes que o interceptor possa fazer seu trabalho, você precisa registrá-lo
+usando `register_interceptor`. Você pode fazer isso em um arquivo inicializador
+como `config/initializers/sandbox_email_interceptor.rb`:
 
 ```ruby
 if Rails.env.staging?
@@ -809,7 +810,7 @@ end
 
 NOTE: O exemplo acima usa um ambiente personalizado chamado "staging" para um
 servidor como em produção, mas para fins de teste. Você pode ler
-[Criação de ambientes Rails](configuring.html#creating-rails-environments)
+[Criação de Ambientes Rails](configuring.html#creating-rails-environments)
 para mais informações sobre ambientes Rails personalizados.
 
 ### Observando Emails
@@ -823,8 +824,9 @@ class EmailDeliveryObserver
   end
 end
 ```
-Como os interceptores, você precisa registrar observadores com a estrutura do _Action Mailer_. Você pode fazer isso em um arquivo inicializador
-`config/initializers/email_delivery_observer.rb`
+
+Como os interceptores, você precisa registrar observadores usando `register_observer`. Você pode fazer isso em um arquivo inicializador
+como `config/initializers/email_delivery_observer.rb`
 
 ```ruby
 ActionMailer::Base.register_observer(EmailDeliveryObserver)

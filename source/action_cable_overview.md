@@ -188,7 +188,9 @@ Then you would create your own channel classes. For example, you could have a
 # app/channels/chat_channel.rb
 class ChatChannel < ApplicationCable::Channel
 end
+```
 
+```ruby
 # app/channels/appearance_channel.rb
 class AppearanceChannel < ApplicationCable::Channel
 end
@@ -765,7 +767,7 @@ config.action_cable.worker_pool_size = 4
 Also, note that your server must provide at least the same number of database
 connections as you have workers. The default worker pool size is set to 4, so
 that means you have to make at least 4 database connections available.
- You can change that in `config/database.yml` through the `pool` attribute.
+You can change that in `config/database.yml` through the `pool` attribute.
 
 ### Client side logging
 
@@ -776,7 +778,6 @@ import * as ActionCable from '@rails/actioncable'
 
 ActionCable.logger.enabled = true
 ```
-
 
 ### Other Configurations
 
