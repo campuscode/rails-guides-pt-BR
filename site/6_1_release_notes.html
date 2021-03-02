@@ -25,7 +25,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.0</div>
+    <div id="version-badge">v6.1.3</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -75,6 +75,7 @@
                   <dt>Views</dt>
                   <dd><a href="action_view_overview.html">Action View Overview</a></dd>
                   <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="action_view_helpers.html">Action View Helpers</a></dd>
                   <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
                 </div>
                 <div class="guides-section">
@@ -132,7 +133,8 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
-                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
+                  <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
                   <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
                   <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
@@ -172,6 +174,7 @@
               <optgroup label="Views">
                   <option value="action_view_overview.html">Action View Overview</option>
                   <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="action_view_helpers.html">Action View Helpers</option>
                   <option value="form_helpers.html">Action View Form Helpers</option>
               </optgroup>
               <optgroup label="Controllers">
@@ -222,7 +225,8 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
-                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
+                  <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
                   <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
                   <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
@@ -253,7 +257,7 @@
 <li>Destroy Associations Async</li>
 </ul>
 <p>These release notes cover only the major changes. To learn about various bug
-fixes and changes, please refer to the change logs or check out the <a href="https://github.com/rails/rails/commits/master">list of
+fixes and changes, please refer to the change logs or check out the <a href="https://github.com/rails/rails/commits/6-1-stable">list of
 commits</a> in the main Rails
 repository on GitHub.</p>
 
@@ -405,7 +409,7 @@ an update to Rails 6.1. A list of things to watch out for when upgrading is
 available in the
 <a href="upgrading_ruby_on_rails.html#upgrading-from-rails-6-0-to-rails-6-1">Upgrading Ruby on Rails</a>
 guide.</p><h3 id="major-features"><a class="anchorlink" href="#major-features">2 Major Features</a></h3><h4 id="per-database-connection-switching"><a class="anchorlink" href="#per-database-connection-switching">2.1 Per-database Connection Switching</a></h4><p>Rails 6.1 provides you with the ability to <a href="https://github.com/rails/rails/pull/40370">switch connections per-database</a>. In 6.0 if you switched to the <code>reading</code> role then all database connections also switched to the reading role. Now in 6.1 if you set <code>legacy_connection_handling</code> to <code>false</code> in your configuration, Rails will allow you to switch connections for a single database by calling <code>connected_to</code> on the corresponding abstract class.</p><h4 id="horizontal-sharding"><a class="anchorlink" href="#horizontal-sharding">2.2 Horizontal Sharding</a></h4><p>Rails 6.0 provided the ability to functionally partition (multiple partitions, different schemas) your database but wasn't able to support horizontal sharding (same schema, multiple partitions). Rails wasn't able to support horizontal sharding because models in Active Record could only have one connection per-role per-class. This is now fixed and <a href="https://github.com/rails/rails/pull/38531">horizontal sharding</a> with Rails is available.</p><h4 id="strict-loading-associations"><a class="anchorlink" href="#strict-loading-associations">2.3 Strict Loading Associations</a></h4><p><a href="https://github.com/rails/rails/pull/37400">Strict loading associations</a> allows you to ensure that all
-your associations are loaded eagerly and stop N+1's before they happen.</p><h4 id="delegated-types"><a class="anchorlink" href="#delegated-types">2.4 Delegated Types</a></h4><p><a href="https://github.com/rails/rails/pull/39341">Delegated Types</a> is an alternative to single-table inheritance. This is helpful for representing class hierarchies allowing the superclass to be a concrete class that is represented by its own table. Each subclass has its own table for additional attributes.</p><h4 id="destroy-associations-async"><a class="anchorlink" href="#destroy-associations-async">2.5 Destroy Associations Async</a></h4><p><a href="https://github.com/rails/rails/pull/40157">Destroy associations async</a> adds the ability for applications to <code>destroy</code> associations in a background job. This can help you avoid timeouts and other performance issues in your application when destroying data.</p><h3 id="railties"><a class="anchorlink" href="#railties">3 Railties</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/railties/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="railties-removals"><a class="anchorlink" href="#railties-removals">3.1 Removals</a></h4>
+your associations are loaded eagerly and stop N+1's before they happen.</p><h4 id="delegated-types"><a class="anchorlink" href="#delegated-types">2.4 Delegated Types</a></h4><p><a href="https://github.com/rails/rails/pull/39341">Delegated Types</a> is an alternative to single-table inheritance. This is helpful for representing class hierarchies allowing the superclass to be a concrete class that is represented by its own table. Each subclass has its own table for additional attributes.</p><h4 id="destroy-associations-async"><a class="anchorlink" href="#destroy-associations-async">2.5 Destroy Associations Async</a></h4><p><a href="https://github.com/rails/rails/pull/40157">Destroy associations async</a> adds the ability for applications to <code>destroy</code> associations in a background job. This can help you avoid timeouts and other performance issues in your application when destroying data.</p><h3 id="railties"><a class="anchorlink" href="#railties">3 Railties</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/railties/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="railties-removals"><a class="anchorlink" href="#railties-removals">3.1 Removals</a></h4>
 <ul>
 <li><p>  Remove deprecated <code>rake notes</code> tasks.</p></li>
 <li><p>  Remove deprecated <code>connection</code> option in the <code>rails dbconsole</code> command.</p></li>
@@ -416,7 +420,7 @@ your associations are loaded eagerly and stop N+1's before they happen.</p><h4 i
 <li><p>  Remove deprecated <code>rake routes</code> tasks.</p></li>
 <li><p>  Remove deprecated <code>rake initializers</code> tasks.</p></li>
 </ul>
-<h4 id="railties-deprecations"><a class="anchorlink" href="#railties-deprecations">3.2 Deprecations</a></h4><h4 id="railties-notable-changes"><a class="anchorlink" href="#railties-notable-changes">3.3 Notable changes</a></h4><h3 id="action-cable"><a class="anchorlink" href="#action-cable">4 Action Cable</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actioncable/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-cable-removals"><a class="anchorlink" href="#action-cable-removals">4.1 Removals</a></h4><h4 id="action-cable-deprecations"><a class="anchorlink" href="#action-cable-deprecations">4.2 Deprecations</a></h4><h4 id="action-cable-notable-changes"><a class="anchorlink" href="#action-cable-notable-changes">4.3 Notable changes</a></h4><h3 id="action-pack"><a class="anchorlink" href="#action-pack">5 Action Pack</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actionpack/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-pack-removals"><a class="anchorlink" href="#action-pack-removals">5.1 Removals</a></h4>
+<h4 id="railties-deprecations"><a class="anchorlink" href="#railties-deprecations">3.2 Deprecations</a></h4><h4 id="railties-notable-changes"><a class="anchorlink" href="#railties-notable-changes">3.3 Notable changes</a></h4><h3 id="action-cable"><a class="anchorlink" href="#action-cable">4 Action Cable</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/actioncable/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-cable-removals"><a class="anchorlink" href="#action-cable-removals">4.1 Removals</a></h4><h4 id="action-cable-deprecations"><a class="anchorlink" href="#action-cable-deprecations">4.2 Deprecations</a></h4><h4 id="action-cable-notable-changes"><a class="anchorlink" href="#action-cable-notable-changes">4.3 Notable changes</a></h4><h3 id="action-pack"><a class="anchorlink" href="#action-pack">5 Action Pack</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/actionpack/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-pack-removals"><a class="anchorlink" href="#action-pack-removals">5.1 Removals</a></h4>
 <ul>
 <li><p>  Remove deprecated <code>ActionDispatch::Http::ParameterFilter</code>.</p></li>
 <li><p>  Remove deprecated <code>force_ssl</code> at the controller level.</p></li>
@@ -429,7 +433,7 @@ your associations are loaded eagerly and stop N+1's before they happen.</p><h4 i
 <ul>
 <li>  Change <code>ActionDispatch::Response#content_type</code> to return the full Content-Type header.</li>
 </ul>
-<h3 id="action-view"><a class="anchorlink" href="#action-view">6 Action View</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actionview/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-view-removals"><a class="anchorlink" href="#action-view-removals">6.1 Removals</a></h4>
+<h3 id="action-view"><a class="anchorlink" href="#action-view">6 Action View</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/actionview/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-view-removals"><a class="anchorlink" href="#action-view-removals">6.1 Removals</a></h4>
 <ul>
 <li><p>  Remove deprecated <code>escape_whitelist</code> from <code>ActionView::Template::Handlers::ERB</code>.</p></li>
 <li><p>  Remove deprecated <code>find_all_anywhere</code> from <code>ActionView::Resolver</code>.</p></li>
@@ -462,12 +466,13 @@ in <code>ActionView::Base#initialize</code>.</p></li>
 <ul>
 <li><p>  Require that <code>ActionView::Base</code> subclasses implement <code>#compiled_method_container</code>.</p></li>
 <li><p>  Make <code>locals</code> argument required on <code>ActionView::Template#initialize</code>.</p></li>
+<li><p>  The <code>javascript_include_tag</code> and <code>stylesheet_link_tag</code> asset helpers generate a <code>Link</code> header that gives hints to modern browsers about preloading assets. This can be disabled by setting <code>config.action_view.preload_links_header</code> to <code>false</code>.</p></li>
 </ul>
-<h3 id="action-mailer"><a class="anchorlink" href="#action-mailer">7 Action Mailer</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actionmailer/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-mailer-removals"><a class="anchorlink" href="#action-mailer-removals">7.1 Removals</a></h4>
+<h3 id="action-mailer"><a class="anchorlink" href="#action-mailer">7 Action Mailer</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/actionmailer/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-mailer-removals"><a class="anchorlink" href="#action-mailer-removals">7.1 Removals</a></h4>
 <ul>
-<li>  Remove deprecated <code>ActionMailer::Base.receive</code> in favor of <a href="https://github.com/rails/rails/tree/master/actionmailbox">Action Mailbox</a>.</li>
+<li>  Remove deprecated <code>ActionMailer::Base.receive</code> in favor of <a href="https://github.com/rails/rails/tree/6-1-stable/actionmailbox">Action Mailbox</a>.</li>
 </ul>
-<h4 id="action-mailer-deprecations"><a class="anchorlink" href="#action-mailer-deprecations">7.2 Deprecations</a></h4><h4 id="action-mailer-notable-changes"><a class="anchorlink" href="#action-mailer-notable-changes">7.3 Notable changes</a></h4><h3 id="active-record"><a class="anchorlink" href="#active-record">8 Active Record</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activerecord/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-record-removals"><a class="anchorlink" href="#active-record-removals">8.1 Removals</a></h4>
+<h4 id="action-mailer-deprecations"><a class="anchorlink" href="#action-mailer-deprecations">7.2 Deprecations</a></h4><h4 id="action-mailer-notable-changes"><a class="anchorlink" href="#action-mailer-notable-changes">7.3 Notable changes</a></h4><h3 id="active-record"><a class="anchorlink" href="#active-record">8 Active Record</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/activerecord/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-record-removals"><a class="anchorlink" href="#active-record-removals">8.1 Removals</a></h4>
 <ul>
 <li>
 <p>  Remove deprecated methods from <code>ActiveRecord::ConnectionAdapters::DatabaseLimits</code>.</p>
@@ -499,7 +504,9 @@ in <code>ActionView::Base#initialize</code>.</p></li>
 </ul>
 <h4 id="active-record-deprecations"><a class="anchorlink" href="#active-record-deprecations">8.2 Deprecations</a></h4>
 <ul>
-<li>  Deprecate <code>ActiveRecord::Base.allow_unsafe_raw_sql</code>.</li>
+<li><p>  Deprecate <code>ActiveRecord::Base.allow_unsafe_raw_sql</code>.</p></li>
+<li><p>  Deprecate <code>database</code> kwarg on <code>connected_to</code>.</p></li>
+<li><p>  Deprecate <code>connection_handlers</code> when <code>legacy_connection_handling</code> is set to false.</p></li>
 </ul>
 <h4 id="active-record-notable-changes"><a class="anchorlink" href="#active-record-notable-changes">8.3 Notable changes</a></h4>
 <ul>
@@ -510,88 +517,92 @@ no longer enforce case sensitive comparison by default.</p></li>
 in initialization block and callbacks.</p>
 <p>Before:</p>
 <div class="code_container">
-<pre><code class="highlight plaintext">User.where(name: "John").create do |john|
-  User.find_by(name: "David") # =&gt; nil
-end
+<pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"John"</span><span class="p">).</span><span class="nf">create</span> <span class="k">do</span> <span class="o">|</span><span class="n">john</span><span class="o">|</span>
+  <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">)</span> <span class="c1"># =&gt; nil</span>
+<span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-181151bed9cfecda5143a4bef4b8f913">User.where(name: "John").create do |john|
+<textarea class="clipboard-content" id="clipboard-0f993fd974bbb4b47b52bfb701e1fd72">User.where(name: "John").create do |john|
   User.find_by(name: "David") # =&gt; nil
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-181151bed9cfecda5143a4bef4b8f913">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f993fd974bbb4b47b52bfb701e1fd72">Copiar</button>
 </div>
 <p>After:</p>
 <div class="code_container">
-<pre><code class="highlight plaintext">User.where(name: "John").create do |john|
-  User.find_by(name: "David") # =&gt; #&lt;User name: "David", ...&gt;
-end
+<pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"John"</span><span class="p">).</span><span class="nf">create</span> <span class="k">do</span> <span class="o">|</span><span class="n">john</span><span class="o">|</span>
+  <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">)</span> <span class="c1"># =&gt; #&lt;User name: "David", ...&gt;</span>
+<span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e540c7966da9aa0a0c09d5162d8a7213">User.where(name: "John").create do |john|
+<textarea class="clipboard-content" id="clipboard-ca1ac52b6cf657fef67152c672339340">User.where(name: "John").create do |john|
   User.find_by(name: "David") # =&gt; #&lt;User name: "David", ...&gt;
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e540c7966da9aa0a0c09d5162d8a7213">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ca1ac52b6cf657fef67152c672339340">Copiar</button>
 </div>
 </li>
 <li>
 <p>  Named scope chain does no longer leak scope to class level querying methods.</p>
 <div class="code_container">
-<pre><code class="highlight plaintext">class User &lt; ActiveRecord::Base
-  scope :david, -&gt; { User.where(name: "David") }
-end
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">scope</span> <span class="ss">:david</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2f548edc4d6be7d7a4fef47b2d6cbc99">class User &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-bcdbf267955e5be89721de0ac825bfbf">class User &lt; ActiveRecord::Base
   scope :david, -&gt; { User.where(name: "David") }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2f548edc4d6be7d7a4fef47b2d6cbc99">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bcdbf267955e5be89721de0ac825bfbf">Copiar</button>
 </div>
 <p>Before:</p>
 <div class="code_container">
-<pre><code class="highlight plaintext">User.where(name: "John").david
-# SELECT * FROM users WHERE name = 'John' AND name = 'David'
+<pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"John"</span><span class="p">).</span><span class="nf">david</span>
+<span class="c1"># SELECT * FROM users WHERE name = 'John' AND name = 'David'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0c8cf2204e94d3fb01d60938288f5223">User.where(name: "John").david
+<textarea class="clipboard-content" id="clipboard-e3c2de21d69f4900dbb29f155cdc5557">User.where(name: "John").david
 # SELECT * FROM users WHERE name = 'John' AND name = 'David'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0c8cf2204e94d3fb01d60938288f5223">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e3c2de21d69f4900dbb29f155cdc5557">Copiar</button>
 </div>
 <p>After:</p>
 <div class="code_container">
-<pre><code class="highlight plaintext">User.where(name: "John").david
-# SELECT * FROM users WHERE name = 'David'
+<pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"John"</span><span class="p">).</span><span class="nf">david</span>
+<span class="c1"># SELECT * FROM users WHERE name = 'David'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5d393129244b0a56d56d3c0595881433">User.where(name: "John").david
+<textarea class="clipboard-content" id="clipboard-c190a1e13c22f3ee41b0a99c78ec212f">User.where(name: "John").david
 # SELECT * FROM users WHERE name = 'David'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5d393129244b0a56d56d3c0595881433">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c190a1e13c22f3ee41b0a99c78ec212f">Copiar</button>
 </div>
 </li>
 <li>
 <p>  <code>where.not</code> now generates NAND predicates instead of NOR.</p>
-<p> Before:</p>
+<p>Before:</p>
 <div class="code_container">
-<pre><code class="highlight plaintext"> User.where.not(name: "Jon", role: "admin")
- # SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'
+<pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">.</span><span class="nf">not</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Jon"</span><span class="p">,</span> <span class="ss">role: </span><span class="s2">"admin"</span><span class="p">)</span>
+<span class="c1"># SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cfa14114f9542e6bc1b8d89b70ca9b36"> User.where.not(name: "Jon", role: "admin")
- # SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'
+<textarea class="clipboard-content" id="clipboard-7dfb7aaf07cb1213f6a0cfecbed9cbd2">User.where.not(name: "Jon", role: "admin")
+# SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cfa14114f9542e6bc1b8d89b70ca9b36">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7dfb7aaf07cb1213f6a0cfecbed9cbd2">Copiar</button>
 </div>
-<p> After:</p>
+<p>After:</p>
 <div class="code_container">
-<pre><code class="highlight plaintext"> User.where.not(name: "Jon", role: "admin")
- # SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')
+<pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">.</span><span class="nf">not</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Jon"</span><span class="p">,</span> <span class="ss">role: </span><span class="s2">"admin"</span><span class="p">)</span>
+<span class="c1"># SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f528bcd0eb91baad021775b08ea4d9a4"> User.where.not(name: "Jon", role: "admin")
- # SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')
+<textarea class="clipboard-content" id="clipboard-18a83fd68786431c253e4f703732fe38">User.where.not(name: "Jon", role: "admin")
+# SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f528bcd0eb91baad021775b08ea4d9a4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-18a83fd68786431c253e4f703732fe38">Copiar</button>
 </div>
 </li>
+<li><p>  To use the new per-database connection handling applications must change
+<code>legacy_connection_handling</code> to false and remove deprecated accessors on
+<code>connection_handlers</code>. Public methods for <code>connects_to</code> and <code>connected_to</code>
+require no changes.</p></li>
 </ul>
-<h3 id="active-storage"><a class="anchorlink" href="#active-storage">9 Active Storage</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activestorage/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-storage-removals"><a class="anchorlink" href="#active-storage-removals">9.1 Removals</a></h4>
+<h3 id="active-storage"><a class="anchorlink" href="#active-storage">9 Active Storage</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/activestorage/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-storage-removals"><a class="anchorlink" href="#active-storage-removals">9.1 Removals</a></h4>
 <ul>
 <li><p>  Remove deprecated support to pass <code>:combine_options</code> operations to <code>ActiveStorage::Transformers::ImageProcessing</code>.</p></li>
 <li><p>  Remove deprecated <code>ActiveStorage::Transformers::MiniMagickTransformer</code>.</p></li>
@@ -608,15 +619,16 @@ end
 <li>  Add <code>Blob.create_and_upload</code> to create a new blob and upload the given <code>io</code>
 to the service.
 (<a href="https://github.com/rails/rails/pull/34827">Pull Request</a>)</li>
+<li>  <code>ActiveStorage::Blob#service_name</code> column was added. It is required that a migration is run after the upgrade. Run <code>bin/rails app:update</code> to generate that migration.</li>
 </ul>
-<h3 id="active-model"><a class="anchorlink" href="#active-model">10 Active Model</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activemodel/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-model-removals"><a class="anchorlink" href="#active-model-removals">10.1 Removals</a></h4><h4 id="active-model-deprecations"><a class="anchorlink" href="#active-model-deprecations">10.2 Deprecations</a></h4><h4 id="active-model-notable-changes"><a class="anchorlink" href="#active-model-notable-changes">10.3 Notable changes</a></h4>
+<h3 id="active-model"><a class="anchorlink" href="#active-model">10 Active Model</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/activemodel/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-model-removals"><a class="anchorlink" href="#active-model-removals">10.1 Removals</a></h4><h4 id="active-model-deprecations"><a class="anchorlink" href="#active-model-deprecations">10.2 Deprecations</a></h4><h4 id="active-model-notable-changes"><a class="anchorlink" href="#active-model-notable-changes">10.3 Notable changes</a></h4>
 <ul>
 <li>  Active Model's errors are now objects with an interface that allows your application to more
 easily handle and interact with errors thrown by models.
 <a href="https://github.com/rails/rails/pull/32313">The feature</a> includes a query interface, enables
 more precise testing, and access to error details.</li>
 </ul>
-<h3 id="active-support"><a class="anchorlink" href="#active-support">11 Active Support</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activesupport/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-support-removals"><a class="anchorlink" href="#active-support-removals">11.1 Removals</a></h4>
+<h3 id="active-support"><a class="anchorlink" href="#active-support">11 Active Support</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/activesupport/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-support-removals"><a class="anchorlink" href="#active-support-removals">11.1 Removals</a></h4>
 <ul>
 <li><p>  Remove deprecated fallback to <code>I18n.default_local</code> when <code>config.i18n.fallbacks</code> is empty.</p></li>
 <li><p>  Remove deprecated <code>LoggerSilence</code> constant.</p></li>
@@ -640,7 +652,7 @@ more precise testing, and access to error details.</li>
 <ul>
 <li>  Deprecate <code>ActiveSupport::Multibyte::Unicode.default_normalization_form</code>.</li>
 </ul>
-<h4 id="active-support-notable-changes"><a class="anchorlink" href="#active-support-notable-changes">11.3 Notable changes</a></h4><h3 id="active-job"><a class="anchorlink" href="#active-job">12 Active Job</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/activejob/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-job-removals"><a class="anchorlink" href="#active-job-removals">12.1 Removals</a></h4><h4 id="active-job-deprecations"><a class="anchorlink" href="#active-job-deprecations">12.2 Deprecations</a></h4>
+<h4 id="active-support-notable-changes"><a class="anchorlink" href="#active-support-notable-changes">11.3 Notable changes</a></h4><h3 id="active-job"><a class="anchorlink" href="#active-job">12 Active Job</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/activejob/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="active-job-removals"><a class="anchorlink" href="#active-job-removals">12.1 Removals</a></h4><h4 id="active-job-deprecations"><a class="anchorlink" href="#active-job-deprecations">12.2 Deprecations</a></h4>
 <ul>
 <li>  Deprecate <code>config.active_job.return_false_on_aborted_enqueue</code>.</li>
 </ul>
@@ -648,7 +660,7 @@ more precise testing, and access to error details.</li>
 <ul>
 <li>  Return <code>false</code> when enqueuing a job is aborted.</li>
 </ul>
-<h3 id="action-text"><a class="anchorlink" href="#action-text">13 Action Text</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actiontext/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-text-removals"><a class="anchorlink" href="#action-text-removals">13.1 Removals</a></h4><h4 id="action-text-deprecations"><a class="anchorlink" href="#action-text-deprecations">13.2 Deprecations</a></h4><h4 id="action-text-notable-changes"><a class="anchorlink" href="#action-text-notable-changes">13.3 Notable changes</a></h4>
+<h3 id="action-text"><a class="anchorlink" href="#action-text">13 Action Text</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/actiontext/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-text-removals"><a class="anchorlink" href="#action-text-removals">13.1 Removals</a></h4><h4 id="action-text-deprecations"><a class="anchorlink" href="#action-text-deprecations">13.2 Deprecations</a></h4><h4 id="action-text-notable-changes"><a class="anchorlink" href="#action-text-notable-changes">13.3 Notable changes</a></h4>
 <ul>
 <li><p>  Add method to confirm rich text content existence by adding <code>?</code> after
 name of the rich text attribute.
@@ -660,7 +672,7 @@ editor and fill it with given HTML content.
 <code>&lt;action-text-attachment&gt;</code> elements in database fixtures.
 (<a href="https://github.com/rails/rails/pull/40289">Pull Request</a>)</p></li>
 </ul>
-<h3 id="action-mailbox"><a class="anchorlink" href="#action-mailbox">14 Action Mailbox</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/actionmailbox/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-mailbox-removals"><a class="anchorlink" href="#action-mailbox-removals">14.1 Removals</a></h4><h4 id="action-mailbox-deprecations"><a class="anchorlink" href="#action-mailbox-deprecations">14.2 Deprecations</a></h4><h4 id="action-mailbox-notable-changes"><a class="anchorlink" href="#action-mailbox-notable-changes">14.3 Notable changes</a></h4><h3 id="ruby-on-rails-guides"><a class="anchorlink" href="#ruby-on-rails-guides">15 Ruby on Rails Guides</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/master/guides/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="notable-changes"><a class="anchorlink" href="#notable-changes">15.1 Notable changes</a></h4><h3 id="credits"><a class="anchorlink" href="#credits">16 Credits</a></h3><p>See the
+<h3 id="action-mailbox"><a class="anchorlink" href="#action-mailbox">14 Action Mailbox</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/actionmailbox/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-mailbox-removals"><a class="anchorlink" href="#action-mailbox-removals">14.1 Removals</a></h4><h4 id="action-mailbox-deprecations"><a class="anchorlink" href="#action-mailbox-deprecations">14.2 Deprecations</a></h4><h4 id="action-mailbox-notable-changes"><a class="anchorlink" href="#action-mailbox-notable-changes">14.3 Notable changes</a></h4><h3 id="ruby-on-rails-guides"><a class="anchorlink" href="#ruby-on-rails-guides">15 Ruby on Rails Guides</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/guides/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="notable-changes"><a class="anchorlink" href="#notable-changes">15.1 Notable changes</a></h4><h3 id="credits"><a class="anchorlink" href="#credits">16 Credits</a></h3><p>See the
 <a href="https://contributors.rubyonrails.org/">full list of contributors to Rails</a>
 for the many people who spent many hours making Rails, the stable and robust
 framework it is. Kudos to all of them.</p>
@@ -675,9 +687,9 @@ framework it is. Kudos to all of them.</p>
         </p>
         <p>
           Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
-          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          Por favor, adicione qualquer documentação em falta na main do Rails. Certifique-se de checar o
           <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
-          se o problema já foi resolvido ou não no branch master.
+          se o problema já foi resolvido ou não no branch main.
           Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
           para estilo e convenções.
         </p>

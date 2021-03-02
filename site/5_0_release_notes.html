@@ -25,7 +25,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.0</div>
+    <div id="version-badge">v6.1.3</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -75,6 +75,7 @@
                   <dt>Views</dt>
                   <dd><a href="action_view_overview.html">Action View Overview</a></dd>
                   <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="action_view_helpers.html">Action View Helpers</a></dd>
                   <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
                 </div>
                 <div class="guides-section">
@@ -132,7 +133,8 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
-                  <dd><a href="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</a></dd>
+                  <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
+                  <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
                   <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
                   <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
@@ -172,6 +174,7 @@
               <optgroup label="Views">
                   <option value="action_view_overview.html">Action View Overview</option>
                   <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="action_view_helpers.html">Action View Helpers</option>
                   <option value="form_helpers.html">Action View Form Helpers</option>
               </optgroup>
               <optgroup label="Controllers">
@@ -222,7 +225,8 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
-                  <option value="6_0_release_notes.html">6.0 Release Notes - Agosto 2019</option>
+                  <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
+                  <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
                   <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
                   <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
@@ -372,9 +376,9 @@ This is useful for creating and serving APIs similar to <a href="https://dev.twi
 that can be used to serve public facing, as well as, for custom applications.</p><p>You can generate a new api Rails app using:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new my_api <span class="nt">--api</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-24e754cb24afd460224401f01b3e4e7e">rails new my_api --api
+<textarea class="clipboard-content" id="clipboard-e40ca036217c0ca6d18dd2d456455896">rails new my_api --api
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-24e754cb24afd460224401f01b3e4e7e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e40ca036217c0ca6d18dd2d456455896">Copiar</button>
 </div>
 <p>This will do three main things:</p>
 <ul>
@@ -400,18 +404,33 @@ without having to rely on implementation details or monkey patching.</p><p>Some 
 <li>Attributes do not need to be backed by a database column.</li>
 </ul>
 <div class="code_container">
-<pre><code class="highlight ruby">
-<span class="c1"># db/schema.rb</span>
+<pre><code class="highlight ruby"><span class="c1"># db/schema.rb</span>
 <span class="n">create_table</span> <span class="ss">:store_listings</span><span class="p">,</span> <span class="ss">force: </span><span class="kp">true</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
   <span class="n">t</span><span class="p">.</span><span class="nf">decimal</span> <span class="ss">:price_in_cents</span>
   <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:my_string</span><span class="p">,</span> <span class="ss">default: </span><span class="s2">"original default"</span>
 <span class="k">end</span>
-
-<span class="c1"># app/models/store_listing.rb</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-13ec6f204a8b19716a7c393a3ae8b1b3"># db/schema.rb
+create_table :store_listings, force: true do |t|
+  t.decimal :price_in_cents
+  t.string :my_string, default: "original default"
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-13ec6f204a8b19716a7c393a3ae8b1b3">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/models/store_listing.rb</span>
 <span class="k">class</span> <span class="nc">StoreListing</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
 <span class="k">end</span>
-
-<span class="n">store_listing</span> <span class="o">=</span> <span class="no">StoreListing</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">price_in_cents: </span><span class="s1">'10.1'</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-096f6dc04aa58fe378bb0a0ed9c7172a"># app/models/store_listing.rb
+class StoreListing &lt; ActiveRecord::Base
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-096f6dc04aa58fe378bb0a0ed9c7172a">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="n">store_listing</span> <span class="o">=</span> <span class="no">StoreListing</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">price_in_cents: </span><span class="s1">'10.1'</span><span class="p">)</span>
 
 <span class="c1"># before</span>
 <span class="n">store_listing</span><span class="p">.</span><span class="nf">price_in_cents</span> <span class="c1"># =&gt; BigDecimal.new(10.1)</span>
@@ -431,18 +450,7 @@ without having to rely on implementation details or monkey patching.</p><p>Some 
 <span class="n">model</span> <span class="o">=</span> <span class="no">StoreListing</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">field_without_db_column: </span><span class="p">[</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">])</span>
 <span class="n">model</span><span class="p">.</span><span class="nf">attributes</span> <span class="c1"># =&gt; {field_without_db_column: [1, 2, 3]}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-885176e30b4fdfc9a77627d3a44432a6">
-# db/schema.rb
-create_table :store_listings, force: true do |t|
-  t.decimal :price_in_cents
-  t.string :my_string, default: "original default"
-end
-
-# app/models/store_listing.rb
-class StoreListing &lt; ActiveRecord::Base
-end
-
-store_listing = StoreListing.new(price_in_cents: '10.1')
+<textarea class="clipboard-content" id="clipboard-56902e23a718a5a9091cba23af59d1b1">store_listing = StoreListing.new(price_in_cents: '10.1')
 
 # before
 store_listing.price_in_cents # =&gt; BigDecimal.new(10.1)
@@ -462,7 +470,7 @@ StoreListing.new.my_default_proc # =&gt; 2015-05-30 11:04:48 -0600
 model = StoreListing.new(field_without_db_column: ["1", "2", "3"])
 model.attributes # =&gt; {field_without_db_column: [1, 2, 3]}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-885176e30b4fdfc9a77627d3a44432a6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-56902e23a718a5a9091cba23af59d1b1">Copiar</button>
 </div>
 <p><strong>Creating Custom Types:</strong></p><p>You can define your own custom types, as long as they respond
 to the methods defined on the value type. The method <code>deserialize</code> or
@@ -1166,9 +1174,9 @@ framework it is. Kudos to all of them.</p>
         </p>
         <p>
           Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
-          Por favor, adicione qualquer documentação em falta na master do Rails. Certifique-se de checar o
+          Por favor, adicione qualquer documentação em falta na main do Rails. Certifique-se de checar o
           <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
-          se o problema já foi resolvido ou não no branch master.
+          se o problema já foi resolvido ou não no branch main.
           Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
           para estilo e convenções.
         </p>
