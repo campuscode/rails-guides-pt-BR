@@ -1848,7 +1848,7 @@ Também temos que permitir a chave `:status` como parte do parâmetro (usando *s
 ```ruby
 private
     def article_params
-      params.require(:comment).permit(:commenter, :body, :status)
+      params.require(:article).permit(:title, :body, :status)
     end
 ```
 
