@@ -289,7 +289,7 @@ invoke    scss
 create      app/assets/stylesheets/articles.scss
 ```
 
-Os mais importante desses é o arquivo _controller_, `app/controllers/welcome_controller.rb`. Vamos dar uma olhada nele:
+Os mais importante desses é o arquivo _controller_, `app/controllers/articles_controller.rb`. Vamos dar uma olhada nele:
 
 ```ruby
 class ArticlesController < ApplicationController
