@@ -289,7 +289,7 @@ invoke    scss
 create      app/assets/stylesheets/articles.scss
 ```
 
-Os mais importante desses é o arquivo _controller_, `app/controllers/articles_controller.rb`. Vamos dar uma olhada nele:
+O mais importante desses é o arquivo _controller_, `app/controllers/articles_controller.rb`. Vamos dar uma olhada nele:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -667,22 +667,18 @@ de um artigo. Iremos vincular o título de cada artigo em
 
 ### Roteamento de _Resources_ (recursos)
 
-So far, we've covered the "R" (Read) of CRUD. We will eventually cover the "C"
-(Create), "U" (Update), and "D" (Delete). As you might have guessed, we will do
-so by adding new routes, controller actions, and views. Whenever we have such a
-combination of routes, controller actions, and views that work together to
-perform CRUD operations on an entity, we call that entity a *resource*. For
-example, in our application, we would say an article is a resource.
-
 Até agora, nós vimos o "R" (_Read_, consulta) do CRUD. Iremos eventualmente
 cobrir o "C" (_Create_, criação), "U" (_Update_, atualização) e o "D" (_Delete_,
-destruição).
+destruição). Como você deve ter imaginado, faremos isso adicionando novas rotas,
+_actions_ no _controller_ e _views_ que funcionam em conjunto para realizar as
+operações CRUD em uma entidade. Chamamos essa entidade de _resource_ (recurso).
+Por exemplo, em nossa aplicação, diríamos que um artigo é um recurso.
 
-Rails provides a routes method named [`resources`](
+O Rails fornece um método de rotas chamado [`resources`](
 https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources)
-that maps all of the conventional routes for a collection of resources, such as
-articles. So before we proceed to the "C", "U", and "D" sections, let's replace
-the two `get` routes in `config/routes.rb` with `resources`:
+que mapeia todas as rotas convencionais para uma coleção de recursos, como
+artigos. Portanto, antes de prosseguir para as seções "C", "U" e "D", vamos
+substituir as duas rotas `get` em `config/routes.rb` por `resources`:
 
 ```ruby
 Rails.application.routes.draw do
@@ -692,7 +688,8 @@ Rails.application.routes.draw do
 end
 ```
 
-We can inspect what routes are mapped by running the `bin/rails routes` command:
+Nós podemos inspecionar quais rotas estão mapeadas executando o comando
+`bin/rails routes`:
 
 ```bash
 $ bin/rails routes
@@ -707,12 +704,13 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
              DELETE /articles/:id(.:format)      articles#destroy
 ```
 
-The `resources` method also sets up URL and path helper methods that we can use
-to keep our code from depending on a specific route configuration. The values
-in the "Prefix" column above plus a suffix of `_url` or `_path` form the names
-of these helpers. For example, the `article_path` helper returns
-`"/articles/#{article.id}"` when given an article. We can use it to tidy up our
-links in `app/views/articles/index.html.erb`:
+O método `resources` também configura URL e métodos auxiliares (_helper_) de
+caminhos que podemos utilizar para evitar que nosso código dependa de uma
+configuração de rota específica. Os valores na coluna "Prefix" acima, mais um
+sufixo `_url` ou `_path` formam os nomes desses _helpers_. Por exemplo, o
+_helper_ `article_path` retorna `"/articles/#{article.id}"` quando recebe um
+artigo. Podemos utilizá-lo para organizar nossos links em
+`app/views/articles/index.html.erb`:
 
 ```html+erb
 <h1>Articles</h1>
@@ -728,14 +726,14 @@ links in `app/views/articles/index.html.erb`:
 </ul>
 ```
 
-However, we will take this one step further by using the [`link_to`](
-https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
-helper. The `link_to` helper renders a link with its first argument as the
-link's text and its second argument as the link's destination. If we pass a
-model object as the second argument, `link_to` will call the appropriate path
-helper to convert the object to a path. For example, if we pass an article,
-`link_to` will call `article_path`. So `app/views/articles/index.html.erb`
-becomes:
+No entanto, daremos um passo adiante utilizando o _helper_ [`link_to`](
+https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to).
+O _helper_ `link_to` renderiza um link com seu primeiro argumento como o texto
+do link e seu segundo argumento como o destino do link. Se passarmos um objeto
+_model_ como segundo argumento, o `link_to` chamará o _helper_ de caminho
+apropriado para converter o objeto em um caminho. Por exemplo, se passarmos um
+artigo, o `link_to` chamará o `article_path`. Portanto,
+`app/views/articles/index.html.erb` se torna:
 
 ```html+erb
 <h1>Articles</h1>
@@ -749,9 +747,9 @@ becomes:
 </ul>
 ```
 
-Nice!
+Muito bom!
 
-TIP: To learn more about routing, see [Rails Routing from the Outside In](
+TIP: Para aprender mais sobre roteamento, consulte [Rotas do Rails de Fora pra Dentro](
 routing.html).
 
 ### Creating a New Article
@@ -1413,7 +1411,7 @@ TIP: Para mais informações sobre associações do *Active Record*, veja o guia
 
 ### Adicionando a Rota para Comentários
 
-Da mesma forma que o *controller* `welcome`, nós vamos precisar adicionar a
+Da mesma forma que o *controller* `articles`, nós vamos precisar adicionar a
 rota para que o Rails saiba para onde queremos navegar para encontrar
 `comments`. Abra o arquivo `config/routes.rb` novamente e o edite da seguinte
 maneira:
