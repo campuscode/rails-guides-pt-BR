@@ -752,17 +752,18 @@ Muito bom!
 TIP: Para aprender mais sobre roteamento, consulte [Rotas do Rails de Fora pra Dentro](
 routing.html).
 
-### Creating a New Article
+### Criando um Novo Artigo
 
-Now we move on to the "C" (Create) of CRUD. Typically, in web applications,
-creating a new resource is a multi-step process. First, the user requests a form
-to fill out. Then, the user submits the form. If there are no errors, then the
-resource is created and some kind of confirmation is displayed. Else, the form
-is redisplayed with error messages, and the process is repeated.
+Agora, seguimos para o "C" (_Create_, criação) do CRUD. Normalmente, em
+aplicações web, a criação de um novo recurso é um processo de várias etapas.
+Primeiro, o usuário solicita um formulário para preencher. Em seguida, o usuário
+envia o formulário. Se não houver erros, o recurso será criado e algum tipo de
+confirmação será exibido. Caso contrário, o formulário é exibido novamente com
+mensagens de erros e o processo é repetido.
 
-In a Rails application, these steps are conventionally handled by a controller's
-`new` and `create` actions. Let's add a typical implementation of these actions
-to `app/controllers/articles_controller.rb`, below the `show` action:
+Em uma aplicação Rails, esses passos não convencionalmente tratados pelas
+_actions_ `new` e `create` do _controller_. Vamos implementar essas _actions_ em
+`app/controllers/articles_controller.rb`, abaixo da _action_ `show`:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -790,23 +791,27 @@ class ArticlesController < ApplicationController
 end
 ```
 
-The `new` action instantiates a new article, but does not save it. This article
-will be used in the view when building the form. By default, the `new` action
-will render `app/views/articles/new.html.erb`, which we will create next.
+A _action_ `new` instancia um novo artigo, mas não o salva no banco de dados.
+Este artigo será utilizado na _view_ ao construirmos o formulário. Por padrão, a
+_action_ `new` renderizará `app/views/articles/new.html.erb`, que criaremos a
+seguir.
 
-The `create` action instantiates a new article with values for the title and
-body, and attempts to save it. If the article is saved successfully, the action
-redirects the browser to the article's page at `"http://localhost:3000/articles/#{@article.id}"`.
-Else, the action redisplays the form by rendering `app/views/articles/new.html.erb`.
-The title and body here are dummy values. After we create the form, we will come
-back and change these.
+A _action_ `create` instancia um novo artigo com os valores para o título e
+corpo e tenta salvá-lo no banco de dados. Se o artigo for salvo com sucesso, a
+_action_ redireciona o navegador para a página do artigo em
+`"http://localhost:3000/articles/#{@article.id}"`. Caso contrário, a _action_
+exibe novamente o formulário renderizando a _view_
+`app/views/articles/new.html.erb`. O título e o corpo aqui são valores
+fictícios. Depois de criarmos o formulário, vamos voltar no _controller_ e
+alterá-los.
 
 NOTE: [`redirect_to`](https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to)
-will cause the browser to make a new request,
-whereas [`render`](https://api.rubyonrails.org/classes/AbstractController/Rendering.html#method-i-render)
-renders the specified view for the current request.
-It is important to use `redirect_to` after mutating the database or application state.
-Otherwise, if the user refreshes the page, the browser will make the same request, and the mutation will be repeated.
+fará com que o navegador faça uma nova requisição, enquanto
+[`render`](https://api.rubyonrails.org/classes/AbstractController/Rendering.html#method-i-render)
+renderiza a _view_ especificada para a requisição atual.  É importante utilizar
+o `redirect_to` após alterar o banco de dados ou o estado da aplicação. Caso
+contrário, se o usuário atualizar a página, o navegador fará a mesma requisição
+e a mutação será repetida.
 
 #### Using a Form Builder
 
