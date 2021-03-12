@@ -408,12 +408,12 @@ listen to any notification.</p><p>The block receives the following arguments:</p
   <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">info</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> Received! (started: </span><span class="si">#{</span><span class="n">started</span><span class="si">}</span><span class="s2">, finished: </span><span class="si">#{</span><span class="n">finished</span><span class="si">}</span><span class="s2">)"</span> <span class="c1"># process_action.action_controller Received (started: 2019-05-05 13:43:57 -0800, finished: 2019-05-05 13:43:58 -0800)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-44fde2d58a51017c4f430a425a9641de">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
+<textarea class="clipboard-content" id="clipboard-37ade6d88d1b484f2ddedb62129873ae">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
   # your own custom stuff
   Rails.logger.info "#{name} Received! (started: #{started}, finished: #{finished})" # process_action.action_controller Received (started: 2019-05-05 13:43:57 -0800, finished: 2019-05-05 13:43:58 -0800)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-44fde2d58a51017c4f430a425a9641de">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-37ade6d88d1b484f2ddedb62129873ae">Copiar</button>
 </div>
 <p>If you are concerned about the accuracy of <code>started</code> and <code>finished</code> to compute a precise elapsed time then use <code>ActiveSupport::Notifications.monotonic_subscribe</code>. The given block would receive the same arguments as above but the <code>started</code> and <code>finished</code> will have values with an accurate monotonic time instead of wall-clock time.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">monotonic_subscribe</span> <span class="s2">"process_action.action_controller"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">started</span><span class="p">,</span> <span class="n">finished</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">,</span> <span class="n">data</span><span class="o">|</span>
@@ -421,12 +421,12 @@ end
   <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">info</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> Received! (started: </span><span class="si">#{</span><span class="n">started</span><span class="si">}</span><span class="s2">, finished: </span><span class="si">#{</span><span class="n">finished</span><span class="si">}</span><span class="s2">)"</span> <span class="c1"># process_action.action_controller Received (started: 1560978.425334, finished: 1560979.429234)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-26ecd3c814b936d337ccfd40c9dfe612">ActiveSupport::Notifications.monotonic_subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
+<textarea class="clipboard-content" id="clipboard-cc486b741bf0d07fb2d22b110c59633c">ActiveSupport::Notifications.monotonic_subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
   # your own custom stuff
   Rails.logger.info "#{name} Received! (started: #{started}, finished: #{finished})" # process_action.action_controller Received (started: 1560978.425334, finished: 1560979.429234)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26ecd3c814b936d337ccfd40c9dfe612">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cc486b741bf0d07fb2d22b110c59633c">Copiar</button>
 </div>
 <p>Defining all those block arguments each time can be tedious. You can easily create an <code>ActiveSupport::Notifications::Event</code>
 from block arguments like this:</p><div class="code_container">
@@ -440,7 +440,7 @@ from block arguments like this:</p><div class="code_container">
   <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">info</span> <span class="s2">"</span><span class="si">#{</span><span class="n">event</span><span class="si">}</span><span class="s2"> Received!"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a3417fb0c9ba4089312b81919373a968">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
+<textarea class="clipboard-content" id="clipboard-9c271da238cd70b048ffa6dfa34d0246">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
   event = ActiveSupport::Notifications::Event.new *args
 
   event.name      # =&gt; "process_action.action_controller"
@@ -450,7 +450,7 @@ from block arguments like this:</p><div class="code_container">
   Rails.logger.info "#{event} Received!"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a3417fb0c9ba4089312b81919373a968">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9c271da238cd70b048ffa6dfa34d0246">Copiar</button>
 </div>
 <p>You may also pass a block that accepts only one argument, and it will receive an event object:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">subscribe</span> <span class="s2">"process_action.action_controller"</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
@@ -461,7 +461,7 @@ end
   <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">info</span> <span class="s2">"</span><span class="si">#{</span><span class="n">event</span><span class="si">}</span><span class="s2"> Received!"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-738437ae81e99a592d0737973859c8d0">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |event|
+<textarea class="clipboard-content" id="clipboard-c3560d7ecd0aa6d691bb4616317cddd9">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |event|
   event.name      # =&gt; "process_action.action_controller"
   event.duration  # =&gt; 10 (in milliseconds)
   event.payload   # =&gt; {:extra=&gt;information}
@@ -469,7 +469,7 @@ end
   Rails.logger.info "#{event} Received!"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-738437ae81e99a592d0737973859c8d0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c3560d7ecd0aa6d691bb4616317cddd9">Copiar</button>
 </div>
 <p>Most times you only care about the data itself. Here is a shortcut to just get the data.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">subscribe</span> <span class="s2">"process_action.action_controller"</span> <span class="k">do</span> <span class="o">|*</span><span class="n">args</span><span class="o">|</span>
@@ -477,12 +477,12 @@ end
   <span class="n">data</span> <span class="c1"># { extra: :information }</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8e27039dabda291579b337d8d856b058">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
+<textarea class="clipboard-content" id="clipboard-8cfa950506461a2ea4d9695c91ddbf6d">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
   data = args.extract_options!
   data # { extra: :information }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8e27039dabda291579b337d8d856b058">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8cfa950506461a2ea4d9695c91ddbf6d">Copiar</button>
 </div>
 <p>You may also subscribe to events matching a regular expression. This enables you to subscribe to
 multiple events at once. Here's how to subscribe to everything from <code>ActionController</code>.</p><div class="code_container">
@@ -490,11 +490,11 @@ multiple events at once. Here's how to subscribe to everything from <code>Action
   <span class="c1"># inspect all ActionController events</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5a5fb5b6a0bbaa93e3bc4d6c745895a7">ActiveSupport::Notifications.subscribe /action_controller/ do |*args|
+<textarea class="clipboard-content" id="clipboard-25e64d972247c1ed0e853e8c0aaa680a">ActiveSupport::Notifications.subscribe /action_controller/ do |*args|
   # inspect all ActionController events
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5a5fb5b6a0bbaa93e3bc4d6c745895a7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-25e64d972247c1ed0e853e8c0aaa680a">Copiar</button>
 </div>
 <h3 id="rails-framework-hooks"><a class="anchorlink" href="#rails-framework-hooks">3 Rails framework hooks</a></h3><p>Within the Ruby on Rails framework, there are a number of hooks provided for common events. These are detailed below.</p><h3 id="action-controller"><a class="anchorlink" href="#action-controller">4 Action Controller</a></h3><h4 id="write-fragment-action-controller"><a class="anchorlink" href="#write-fragment-action-controller">4.1 write_fragment.action_controller</a></h4>
 <table>
@@ -516,11 +516,11 @@ end
   <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8fa63c4c7a2da4e56c9127c854707fab">{
+<textarea class="clipboard-content" id="clipboard-ccb36f97996c1865a01f0357d1ab9ba9">{
   key: 'posts/1-dashboard-view'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8fa63c4c7a2da4e56c9127c854707fab">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ccb36f97996c1865a01f0357d1ab9ba9">Copiar</button>
 </div>
 <h4 id="read-fragment-action-controller"><a class="anchorlink" href="#read-fragment-action-controller">4.2 read_fragment.action_controller</a></h4>
 <table>
@@ -542,11 +542,11 @@ end
   <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a0a9e1682172664d5caa70a209b0cad4">{
+<textarea class="clipboard-content" id="clipboard-24db703acbde6d168091c8ce2928b2bd">{
   key: 'posts/1-dashboard-view'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a0a9e1682172664d5caa70a209b0cad4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-24db703acbde6d168091c8ce2928b2bd">Copiar</button>
 </div>
 <h4 id="expire-fragment-action-controller"><a class="anchorlink" href="#expire-fragment-action-controller">4.3 expire_fragment.action_controller</a></h4>
 <table>
@@ -568,11 +568,11 @@ end
   <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e62a627225fa09486708a3adb85aa4d0">{
+<textarea class="clipboard-content" id="clipboard-6205edc1a84365f833321541bdb282c7">{
   key: 'posts/1-dashboard-view'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e62a627225fa09486708a3adb85aa4d0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6205edc1a84365f833321541bdb282c7">Copiar</button>
 </div>
 <h4 id="exist-fragment-questionmark-action-controller"><a class="anchorlink" href="#exist-fragment-questionmark-action-controller">4.4 exist_fragment?.action_controller</a></h4>
 <table>
@@ -594,11 +594,11 @@ end
   <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a56cfad569b47e195243d7943eed6372">{
+<textarea class="clipboard-content" id="clipboard-c796535b6720a69b8a5c32a483b13731">{
   key: 'posts/1-dashboard-view'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a56cfad569b47e195243d7943eed6372">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c796535b6720a69b8a5c32a483b13731">Copiar</button>
 </div>
 <h4 id="write-page-action-controller"><a class="anchorlink" href="#write-page-action-controller">4.5 write_page.action_controller</a></h4>
 <table>
@@ -620,11 +620,11 @@ end
   <span class="ss">path: </span><span class="s1">'/users/1'</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-df7db408401d58b1dbe5e7187053c84e">{
+<textarea class="clipboard-content" id="clipboard-c7f0cdc627af9921b7deaf8909ce0eba">{
   path: '/users/1'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-df7db408401d58b1dbe5e7187053c84e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c7f0cdc627af9921b7deaf8909ce0eba">Copiar</button>
 </div>
 <h4 id="expire-page-action-controller"><a class="anchorlink" href="#expire-page-action-controller">4.6 expire_page.action_controller</a></h4>
 <table>
@@ -646,11 +646,11 @@ end
   <span class="ss">path: </span><span class="s1">'/users/1'</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e187310f773416792247bb2d78ab7ad6">{
+<textarea class="clipboard-content" id="clipboard-2ed49ba54d5a6c4fbef891125dd29b1f">{
   path: '/users/1'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e187310f773416792247bb2d78ab7ad6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2ed49ba54d5a6c4fbef891125dd29b1f">Copiar</button>
 </div>
 <h4 id="start-processing-action-controller"><a class="anchorlink" href="#start-processing-action-controller">4.7 start_processing.action_controller</a></h4>
 <table>
@@ -702,7 +702,7 @@ end
   <span class="ss">path: </span><span class="s2">"/posts/new"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d432b356f7c7e33dcaf162be6a3e89fb">{
+<textarea class="clipboard-content" id="clipboard-5e030268d4c8f14da3ab027518eaf9b3">{
   controller: "PostsController",
   action: "new",
   params: { "action" =&gt; "new", "controller" =&gt; "posts" },
@@ -712,7 +712,7 @@ end
   path: "/posts/new"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d432b356f7c7e33dcaf162be6a3e89fb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5e030268d4c8f14da3ab027518eaf9b3">Copiar</button>
 </div>
 <h4 id="process-action-action-controller"><a class="anchorlink" href="#process-action-action-controller">4.8 process_action.action_controller</a></h4>
 <table>
@@ -789,7 +789,7 @@ end
   <span class="ss">db_runtime: </span><span class="mf">0.157</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bdbe912d132f1dc24c2d723b858597a7">{
+<textarea class="clipboard-content" id="clipboard-d43c21f534cbcbf25e162fe8f621b079">{
   controller: "PostsController",
   action: "index",
   params: {"action" =&gt; "index", "controller" =&gt; "posts"},
@@ -803,7 +803,7 @@ end
   db_runtime: 0.157
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bdbe912d132f1dc24c2d723b858597a7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d43c21f534cbcbf25e162fe8f621b079">Copiar</button>
 </div>
 <h4 id="send-file-action-controller"><a class="anchorlink" href="#send-file-action-controller">4.9 send_file.action_controller</a></h4>
 <table>
@@ -851,13 +851,13 @@ end
   <span class="ss">request: </span><span class="c1">#&lt;ActionDispatch::Request:0x00007ff1cb9bd7b8&gt;</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b7c82f32953536ca463ad71108c1fcdc">{
+<textarea class="clipboard-content" id="clipboard-7fab8d1beb9f73687a8e39fc9f74ee83">{
   status: 302,
   location: "http://localhost:3000/posts/new",
   request: #&lt;ActionDispatch::Request:0x00007ff1cb9bd7b8&gt;
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b7c82f32953536ca463ad71108c1fcdc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7fab8d1beb9f73687a8e39fc9f74ee83">Copiar</button>
 </div>
 <h4 id="halted-callback-action-controller"><a class="anchorlink" href="#halted-callback-action-controller">4.12 halted_callback.action_controller</a></h4>
 <table>
@@ -879,11 +879,11 @@ end
   <span class="ss">filter: </span><span class="s2">":halting_filter"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-37fabe227ca43163ca39033c50fbf89e">{
+<textarea class="clipboard-content" id="clipboard-4dafe8c4c37eaaa5eb0d7cd7a15363d8">{
   filter: ":halting_filter"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-37fabe227ca43163ca39033c50fbf89e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4dafe8c4c37eaaa5eb0d7cd7a15363d8">Copiar</button>
 </div>
 <h4 id="unpermitted-parameters-action-controller"><a class="anchorlink" href="#unpermitted-parameters-action-controller">4.13 unpermitted_parameters.action_controller</a></h4>
 <table>
@@ -940,12 +940,12 @@ end
   <span class="ss">layout: </span><span class="s2">"layouts/application"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-396326bbacceebab62f93c9faac83ac1">{
+<textarea class="clipboard-content" id="clipboard-b1abbab7ac090c1510143a7b20228088">{
   identifier: "/Users/adam/projects/notifications/app/views/posts/index.html.erb",
   layout: "layouts/application"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-396326bbacceebab62f93c9faac83ac1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b1abbab7ac090c1510143a7b20228088">Copiar</button>
 </div>
 <h4 id="render-partial-action-view"><a class="anchorlink" href="#render-partial-action-view">6.2 render_partial.action_view</a></h4>
 <table>
@@ -967,11 +967,11 @@ end
   <span class="ss">identifier: </span><span class="s2">"/Users/adam/projects/notifications/app/views/posts/_form.html.erb"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4fa17d287d6783e7cca563b702842488">{
+<textarea class="clipboard-content" id="clipboard-2a0e0ce7e91cbf94ff884416b434bb90">{
   identifier: "/Users/adam/projects/notifications/app/views/posts/_form.html.erb"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4fa17d287d6783e7cca563b702842488">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a0e0ce7e91cbf94ff884416b434bb90">Copiar</button>
 </div>
 <h4 id="render-collection-action-view"><a class="anchorlink" href="#render-collection-action-view">6.3 render_collection.action_view</a></h4>
 <table>
@@ -1003,13 +1003,13 @@ end
   <span class="ss">cache_hits: </span><span class="mi">0</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cc592a1f44af7780ecfc7080f39041fe">{
+<textarea class="clipboard-content" id="clipboard-a718575edcb8a100a1bb9dbb1aaa69fa">{
   identifier: "/Users/adam/projects/notifications/app/views/posts/_post.html.erb",
   count: 3,
   cache_hits: 0
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cc592a1f44af7780ecfc7080f39041fe">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a718575edcb8a100a1bb9dbb1aaa69fa">Copiar</button>
 </div>
 <h3 id="active-record"><a class="anchorlink" href="#active-record">7 Active Record</a></h3><h4 id="sql-active-record"><a class="anchorlink" href="#sql-active-record">7.1 sql.active_record</a></h4>
 <table>
@@ -1061,7 +1061,7 @@ end
   <span class="ss">statement_name: </span><span class="kp">nil</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-914dca038509a477fe075533b1e58e77">{
+<textarea class="clipboard-content" id="clipboard-c342822834a6283d1214212d67227faa">{
   sql: "SELECT \"posts\".* FROM \"posts\" ",
   name: "Post Load",
   connection: #&lt;ActiveRecord::ConnectionAdapters::SQLite3Adapter:0x00007f9f7a838850&gt;,
@@ -1070,7 +1070,7 @@ end
   statement_name: nil
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-914dca038509a477fe075533b1e58e77">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c342822834a6283d1214212d67227faa">Copiar</button>
 </div>
 <h4 id="instantiation-active-record"><a class="anchorlink" href="#instantiation-active-record">7.2 instantiation.active_record</a></h4>
 <table>
@@ -1097,12 +1097,12 @@ end
   <span class="ss">class_name: </span><span class="s2">"User"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ef49ff50681e27dacc7456e50a0a7db1">{
+<textarea class="clipboard-content" id="clipboard-7fd389bd7ff0edebc586a37d34e56b09">{
   record_count: 1,
   class_name: "User"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ef49ff50681e27dacc7456e50a0a7db1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7fd389bd7ff0edebc586a37d34e56b09">Copiar</button>
 </div>
 <h3 id="action-mailer"><a class="anchorlink" href="#action-mailer">8 Action Mailer</a></h3><h4 id="deliver-action-mailer"><a class="anchorlink" href="#deliver-action-mailer">8.1 deliver.action_mailer</a></h4>
 <table>
@@ -1167,7 +1167,7 @@ end
   <span class="ss">perform_deliveries: </span><span class="kp">true</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d294faa51fd258f6a3abeed54c40dd19">{
+<textarea class="clipboard-content" id="clipboard-1d79509a182ef8b17a6565fae366e469">{
   mailer: "Notification",
   message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
   subject: "Rails Guides",
@@ -1178,7 +1178,7 @@ end
   perform_deliveries: true
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d294faa51fd258f6a3abeed54c40dd19">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1d79509a182ef8b17a6565fae366e469">Copiar</button>
 </div>
 <h4 id="process-action-mailer"><a class="anchorlink" href="#process-action-mailer">8.2 process.action_mailer</a></h4>
 <table>
@@ -1210,13 +1210,13 @@ end
   <span class="ss">args: </span><span class="p">[]</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0f355c54a3dd3ceffe802eda12fffee3">{
+<textarea class="clipboard-content" id="clipboard-eaf8d01327fe2bf31486aa5d5d577d8d">{
   mailer: "Notification",
   action: "welcome_email",
   args: []
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0f355c54a3dd3ceffe802eda12fffee3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eaf8d01327fe2bf31486aa5d5d577d8d">Copiar</button>
 </div>
 <h3 id="active-support"><a class="anchorlink" href="#active-support">9 Active Support</a></h3><h4 id="cache-read-active-support"><a class="anchorlink" href="#cache-read-active-support">9.1 cache_read.active_support</a></h4>
 <table>
@@ -1271,12 +1271,12 @@ end
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-957fef9f4d382702d8df753ea306da46">{
+<textarea class="clipboard-content" id="clipboard-ab878ad3fdc87ab23d2c13a6ebe2ab62">{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-957fef9f4d382702d8df753ea306da46">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ab878ad3fdc87ab23d2c13a6ebe2ab62">Copiar</button>
 </div>
 <h4 id="cache-fetch-hit-active-support"><a class="anchorlink" href="#cache-fetch-hit-active-support">9.3 cache_fetch_hit.active_support</a></h4><p>This event is only used when <code>#fetch</code> is called with a block.</p>
 <table>
@@ -1303,12 +1303,12 @@ end
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0d29c2e50ede3c98c82cc67d400cec0d">{
+<textarea class="clipboard-content" id="clipboard-3043448912b3fc1a21b8804fb504b468">{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0d29c2e50ede3c98c82cc67d400cec0d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3043448912b3fc1a21b8804fb504b468">Copiar</button>
 </div>
 <h4 id="cache-write-active-support"><a class="anchorlink" href="#cache-write-active-support">9.4 cache_write.active_support</a></h4>
 <table>
@@ -1335,12 +1335,12 @@ end
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-166691670eaa87ddae52cf2fcaf9be3d">{
+<textarea class="clipboard-content" id="clipboard-0bbf1beea4370b8b1f198fc4b8c4b94d">{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-166691670eaa87ddae52cf2fcaf9be3d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0bbf1beea4370b8b1f198fc4b8c4b94d">Copiar</button>
 </div>
 <h4 id="cache-delete-active-support"><a class="anchorlink" href="#cache-delete-active-support">9.5 cache_delete.active_support</a></h4>
 <table>
@@ -1367,12 +1367,12 @@ end
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a60a3c104c56de924e21e03d7e1aa625">{
+<textarea class="clipboard-content" id="clipboard-db1cd57cbd15c5514a3ac7c46d0c4370">{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a60a3c104c56de924e21e03d7e1aa625">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-db1cd57cbd15c5514a3ac7c46d0c4370">Copiar</button>
 </div>
 <h4 id="cache-exist-questionmark-active-support"><a class="anchorlink" href="#cache-exist-questionmark-active-support">9.6 cache_exist?.active_support</a></h4>
 <table>
@@ -1399,12 +1399,12 @@ end
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-162b44ca66105043fab011d057b7ba28">{
+<textarea class="clipboard-content" id="clipboard-8fba1483ef88707fbf8b9ceacdcb25f3">{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-162b44ca66105043fab011d057b7ba28">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8fba1483ef88707fbf8b9ceacdcb25f3">Copiar</button>
 </div>
 <h3 id="active-job"><a class="anchorlink" href="#active-job">10 Active Job</a></h3><h4 id="enqueue-at-active-job"><a class="anchorlink" href="#enqueue-at-active-job">10.1 enqueue_at.active_job</a></h4>
 <table>
@@ -1928,22 +1928,22 @@ it into the payload.</p><p>Here's an example:</p><div class="code_container">
   <span class="c1"># do your custom stuff here</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-42650afe48c2f9f3b74f8c7a3b19e20c">ActiveSupport::Notifications.instrument "my.custom.event", this: :data do
+<textarea class="clipboard-content" id="clipboard-8672596b0962227dba64520970a7cc04">ActiveSupport::Notifications.instrument "my.custom.event", this: :data do
   # do your custom stuff here
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-42650afe48c2f9f3b74f8c7a3b19e20c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8672596b0962227dba64520970a7cc04">Copiar</button>
 </div>
 <p>Now you can listen to this event with:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">subscribe</span> <span class="s2">"my.custom.event"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">started</span><span class="p">,</span> <span class="n">finished</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">,</span> <span class="n">data</span><span class="o">|</span>
   <span class="nb">puts</span> <span class="n">data</span><span class="p">.</span><span class="nf">inspect</span> <span class="c1"># {:this=&gt;:data}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e01fa9178db22b352d552ef2fb0e6b79">ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, finished, unique_id, data|
+<textarea class="clipboard-content" id="clipboard-e8b703c7b57e635fbcd550f1d6c8fb3d">ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, finished, unique_id, data|
   puts data.inspect # {:this=&gt;:data}
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e01fa9178db22b352d552ef2fb0e6b79">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e8b703c7b57e635fbcd550f1d6c8fb3d">Copiar</button>
 </div>
 <p>You also have the option to call instrument without passing a block. This lets you leverage the
 instrumentation infrastructure for other messaging uses.</p><div class="code_container">
@@ -1953,13 +1953,13 @@ instrumentation infrastructure for other messaging uses.</p><div class="code_con
   <span class="nb">puts</span> <span class="n">data</span><span class="p">.</span><span class="nf">inspect</span> <span class="c1"># {:this=&gt;:data}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ce6c40a6eb0d42ddc02eaea492c17056">ActiveSupport::Notifications.instrument "my.custom.event", this: :data
+<textarea class="clipboard-content" id="clipboard-ec8a9d514a17842221c9f5bb42545b65">ActiveSupport::Notifications.instrument "my.custom.event", this: :data
 
 ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, finished, unique_id, data|
   puts data.inspect # {:this=&gt;:data}
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ce6c40a6eb0d42ddc02eaea492c17056">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ec8a9d514a17842221c9f5bb42545b65">Copiar</button>
 </div>
 <p>You should follow Rails conventions when defining your own events. The format is: <code>event.library</code>.
 If your application is sending Tweets, you should create an event named <code>tweet.twitter</code>.</p>
