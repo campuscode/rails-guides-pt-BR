@@ -334,36 +334,38 @@ Agora podemos ver a mensagem "Olá, Rails!", quando visitamos <http://localhost:
 TIP: Para mais informações sobre roteamento, consulte [Roteamento do Rails de Fora para Dentro](routing.html).
 
 
-MVC and You
+MVC e Você
 -----------
 
-So far, we've discussed routes, controllers, actions, and views. All of these
-are typical pieces of a web application that follows the [MVC (Model-View-Controller)](
-https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) pattern.
-MVC is a design pattern that divides the responsibilities of an application to
-make it easier to reason about. Rails follows this design pattern by convention.
+Até agora, discutimos rotas, _controllers_, _actions_ e _views_. Todas essas
+são peças típicas de uma aplicação web que segue o padrão [MVC (Model-View-Controller)](
+https://pt.wikipedia.org/wiki/MVC).
 
-Since we have a controller and a view to work with, let's generate the next
-piece: a model.
+MVC é um padrão de projeto que divide as responsabilidades de uma aplicação para
+facilitar nosso entendimento. O Rails segue esse padrão de projeto por
+convenção.
 
-### Generating a Model
+Já que temos um _controller_ e uma _view_ para trabalhar, agora vamos gerar a próxima
+peça: o _model_.
 
-A *model* is a Ruby class that is used to represent data. Additionally, models
-can interact with the application's database through a feature of Rails called
-*Active Record*.
+### Gerando um _Model_
 
-To define a model, we will use the model generator:
+Um _Model_ é uma classe Ruby utilizada para representar dados. Além disso, os
+_models_ podem interagir com o banco de dados da aplicação através de um recurso
+do Rails chamado _Active Record_.
+
+Para definir um _model_, utilizaremos um gerador de _models_:
 
 ```bash
 $ bin/rails generate model Article title:string body:text
 ```
 
-NOTE: Model names are **singular**, because an instantiated model represents a
-single data record. To help remember this convention, think of how you would
-call the model's constructor: we want to write `Article.new(...)`, **not**
-`Articles.new(...)`.
+NOTE: Os nomes dos _models_ são no **singular**, pois um _model_ instanciado
+representa um único registro de dados. Para ajudar a lembrar esta convenção,
+pense em como você chamaria o construtor do _model_: queremos escrever
+`Article.new(...)`, **não** `Articles.new(...)`.
 
-This will create several files:
+O comando utilizando o gerador criará vários arquivos:
 
 ```
 invoke  active_record
@@ -374,17 +376,17 @@ create      test/models/article_test.rb
 create      test/fixtures/articles.yml
 ```
 
-The two files we'll focus on are the migration file
-(`db/migrate/<timestamp>_create_articles.rb`) and the model file
+Os dois arquivos em que vamos nos concentrar são o arquivo da _migration_
+(`db/migrate/<timestamp>_create_articles.rb`) e o arquivo do _model_
 (`app/models/article.rb`).
 
-### Database Migrations
+### Migrações de Banco de Dados
 
-*Migrations* are used to alter the structure of an application's database. In
-Rails applications, migrations are written in Ruby so that they can be
-database-agnostic.
+As *Migrations* são utilizadas para alterar a estrutura do banco de dados de uma
+aplicação. Em aplicações Rails, as _migrations_ são escritas em Ruby para que
+possam ser independentes do banco de dados.
 
-Let's take a look at the contents of our new migration file:
+Vamos dar uma olhada no conteúdo do nosso novo arquivo de _migration_:
 
 ```ruby
 class CreateArticles < ActiveRecord::Migration[6.0]
@@ -399,27 +401,28 @@ class CreateArticles < ActiveRecord::Migration[6.0]
 end
 ```
 
-The call to `create_table` specifies how the `articles` table should be
-constructed. By default, the `create_table` method adds an `id` column as an
-auto-incrementing primary key. So the first record in the table will have an
-`id` of 1, the next record will have an `id` of 2, and so on.
+A chamada para `create_table` especifica como a tabela `articles` deve ser
+construída. Por padrão, o método `create_table` adiciona uma coluna `id` como
+chave primária de auto incremento. Portanto, o primeiro registro na tabela terá
+um `id` de valor 1, o próximo registro terá um `id` de valor 2 e assim por
+diante.
 
-Inside the block for `create_table`, two columns are defined: `title` and
-`body`. These were added by the generator because we included them in our
-generate command (`bin/rails generate model Article title:string body:text`).
+Dentro do bloco de `create_table`, duas colunas são definidas: `title` e `body`.
+Elas foram adicionadas pelo gerador, pois incluímos a instrução no nosso comando
+(`bin/rails generate model Article title:string body:text`).
 
-On the last line of the block is a call to `t.timestamps`. This method defines
-two additional columns named `created_at` and `updated_at`. As we will see,
-Rails will manage these for us, setting the values when we create or update a
-model object.
+Na última linha do bloco há uma chamada para `t.timestamps`. Este método define
+duas colunas adicionais chamadas `created_at` e `updated_at`. Como veremos
+mais pra frente, o Rails gerenciará isso para nós, definindo os valores quando
+criamos ou atualizamos um objeto _model_.
 
-Let's run our migration with the following command:
+Vamos executar a nossa _migration_ com o seguinte comando:
 
 ```bash
 $ bin/rails db:migrate
 ```
 
-The command will display output indicating that the table was created:
+O comando exibirá o resultado do processamento indicando que a tabela foi criada:
 
 ```
 ==  CreateArticles: migrating ===================================
@@ -428,40 +431,41 @@ The command will display output indicating that the table was created:
 ==  CreateArticles: migrated (0.0018s) ==========================
 ```
 
-TIP: To learn more about migrations, see [Active Record Migrations](
+TIP: Para saber mais sobre _migrations_, consulte [Active Record Migrations](
 active_record_migrations.html).
 
-Now we can interact with the table using our model.
+Agora podemos interagir com a tabela utilizando o nosso _model_.
 
-### Using a Model to Interact with the Database
+### Utilizando um _Model_ para Interagir com o Banco de Dados
 
-To play with our model a bit, we're going to use a feature of Rails called the
-*console*. The console is an interactive coding environment just like `irb`, but
-it also automatically loads Rails and our application code.
+Para brincar um pouco com o nosso _model_, vamos utilizar um recurso do Rails
+chamado *console*. O *console* é um ambiente de codificação interativo como o
+`irb`, mas que também carrega automaticamente o Rails e o código da nossa
+aplicação.
 
-Let's launch the console with this command:
+Vamos iniciar o console com o comando:
 
 ```bash
 $ bin/rails console
 ```
 
-You should see an `irb` prompt like:
+Você deve visualizar um *prompt* `irb`:
 
 ```irb
 Loading development environment (Rails 6.0.2.1)
 irb(main):001:0>
 ```
 
-At this prompt, we can initialize a new `Article` object:
+Neste *prompt*, podemos inicializar um novo objeto `Article`:
 
 ```irb
 irb> article = Article.new(title: "Hello Rails", body: "I am on Rails!")
 ```
 
-It's important to note that we have only *initialized* this object. This object
-is not saved to the database at all. It's only available in the console at the
-moment. To save the object to the database, we must call [`save`](
-https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-save):
+É importante notar que apenas *inicializamos* este objeto. O objeto não é salvo
+no banco de dados e no momento está disponível apenas no *console*. Para salvar o
+objeto no banco de dados, devemos chamar
+[`save`](https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-save):
 
 ```irb
 irb> article.save
@@ -471,51 +475,51 @@ Article Create (0.4ms)  INSERT INTO "articles" ("title", "body", "created_at", "
 => true
 ```
 
-The above output shows an `INSERT INTO "articles" ...` database query. This
-indicates that the article has been inserted into our table. And if we take a
-look at the `article` object again, we see something interesting has happened:
+A saída acima mostra uma *query* `INSERT INTO "articles" ...` de banco de dados.
+Isso indica que o artigo foi inserido em nossa tabela. Se dermos uma olhada no
+objeto `article` novamente, vemos que algo interessante aconteceu:
 
 ```irb
 irb> article
 => #<Article id: 1, title: "Hello Rails", body: "I am on Rails!", created_at: "2020-01-18 23:47:30", updated_at: "2020-01-18 23:47:30">
 ```
 
-The `id`, `created_at`, and `updated_at` attributes of the object are now set.
-Rails did this for us when we saved the object.
+Os atributos `id`, `created_at` e `updated_at` agora estão definidos.
+O Rails fez isso por nós quando salvamos o objeto.
 
-When we want to fetch this article from the database, we can call [`find`](
-https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find)
-on the model and pass the `id` as an argument:
+Quando quisermos buscar este artigo no banco de dados, podemos chamar
+[`find`](https://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find)
+no _model_ e passar o `id` como argumento:
 
 ```irb
 irb> Article.find(1)
 => #<Article id: 1, title: "Hello Rails", body: "I am on Rails!", created_at: "2020-01-18 23:47:30", updated_at: "2020-01-18 23:47:30">
 ```
 
-And when we want to fetch all articles from the database, we can call [`all`](
+E quando quisermos obter todos os artigos do banco de dados, podemos chamar [`all`](
 https://api.rubyonrails.org/classes/ActiveRecord/Scoping/Named/ClassMethods.html#method-i-all)
-on the model:
+no _model_:
 
 ```irb
 irb> Article.all
 => #<ActiveRecord::Relation [#<Article id: 1, title: "Hello Rails", body: "I am on Rails!", created_at: "2020-01-18 23:47:30", updated_at: "2020-01-18 23:47:30">]>
 ```
 
-This method returns an [`ActiveRecord::Relation`](
-https://api.rubyonrails.org/classes/ActiveRecord/Relation.html) object, which
-you can think of as a super-powered array.
+Esté método retorna um objeto [`ActiveRecord::Relation`](
+https://api.rubyonrails.org/classes/ActiveRecord/Relation.html), que você pode
+considerar como um _array_ superpotente.
 
-TIP: To learn more about models, see [Active Record Basics](
-active_record_basics.html) and [Active Record Query Interface](
+TIP: Para saber mais sobre _models_, consulte o [Básico do Active Record](
+active_record_basics.html) e [Interface de Consulta do Active Record](
 active_record_querying.html).
 
-Models are the final piece of the MVC puzzle. Next, we will connect all of the
-pieces together.
+Os _models_ são a peça final do quebra-cabeça MVC. A seguir, conectaremos todas
+as peças.
 
-### Showing a List of Articles
+### Exibindo uma Lista de Artigos
 
-Let's go back to our controller in `app/controllers/articles_controller.rb`, and
-change the `index` action to fetch all articles from the database:
+Vamos voltar ao nosso _controller_ em `app/controllers/articles_controller.rb` e
+alterar a _action_ `index` para buscar todos os artigos do banco de dados:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -525,9 +529,10 @@ class ArticlesController < ApplicationController
 end
 ```
 
-Controller instance variables can be accessed by the view. That means we can
-reference `@articles` in `app/views/articles/index.html.erb`. Let's open that
-file, and replace its contents with:
+As variáveis de instância do _controller_ podem ser acessadas pela _view_. Isso
+significa que podemos referenciar `@articles` em
+`app/views/articles/index.html.erb`. Vamos abrir esse arquivo e substituir seu
+conteúdo por:
 
 ```html+erb
 <h1>Articles</h1>
@@ -541,32 +546,36 @@ file, and replace its contents with:
 </ul>
 ```
 
-The above code is a mixture of HTML and *ERB*. ERB is a templating system that
-evaluates Ruby code embedded in a document. Here, we can see two types of ERB
-tags: `<% %>` and `<%= %>`. The `<% %>` tag means "evaluate the enclosed Ruby
-code." The `<%= %>` tag means "evaluate the enclosed Ruby code, and output the
-value it returns." Anything you could write in a regular Ruby program can go
-inside these ERB tags, though it's usually best to keep the contents of ERB tags
-short, for readability.
+O código acima é uma mistura de HTML e *ERB*. ERB é um sistema de _template_ que
+avalia código Ruby embarcado em um documento. Aqui, podemos ver dois tipos de
+_tags_ ERB: `<% %>` e `<%= %>`. A _tag_ `<% %>` significa "avaliar o código Ruby
+incluso". A _tag_ `<%= %>` significa "avaliar o código Ruby incluso e retornar o
+valor de saída". Qualquer coisa que possa ser escrita em um programa normal em
+Ruby pode ir dentro dessas _tags_ ERB, embora geralmente seja melhor manter o
+conteúdo das _tags_ ERB de forma curta para facilitar a leitura.
 
-Since we don't want to output the value returned by `@articles.each`, we've
-enclosed that code in `<% %>`. But, since we *do* want to output the value
-returned by `article.title` (for each article), we've enclosed that code in
-`<%= %>`.
+Já que não queremos gerar o valor retornado por `@articles.each`, vamos colocar
+esse código em `<% %>`. Porém, uma vez que **queremos** exibir o valor retornado
+em `article.title` (para cada artigo), incluímos esse códido em `<%= %>`.
 
-We can see the final result by visiting <http://localhost:3000>. (Remember that
-`bin/rails server` must be running!) Here's what happens when we do that:
+Nós podemos visualizar o resultado final visitando <http://localhost:3000>
+(lembre-se de que `bin/rails server` deve estar em execução!). Aqui estão as
+etapas do que acontece quando fazemos isso:
 
-1. The browser makes a request: `GET http://localhost:3000`.
-2. Our Rails application receives this request.
-3. The Rails router maps the root route to the `index` action of `ArticlesController`.
-4. The `index` action uses the `Article` model to fetch all articles in the database.
-5. Rails automatically renders the `app/views/articles/index.html.erb` view.
-6. The ERB code in the view is evaluated to output HTML.
-7. The server sends a response containing the HTML back to the browser.
+1. O navegador faz uma requisição (_request_): `GET http://localhost:3000`.
+2. Nossa aplicação Rails recebe essa requisição.
+3. O roteador do Rails mapeia a rota raiz para a _action_ `index` de
+   `ArticlesController`.
+4. A _action_ `index`utiliza o _model_ `Article` para buscar todos os artigos no
+   banco de dados.
+5. O Rails renderiza automaticamente a _view_
+   `app/views/articles/index.html.erb`.
+6. O código ERB na _view_ é avaliado para gerar código HTML.
+7. O servidor envia uma resposta (_response_) de volta ao navegador contendo o
+   HTML.
 
-We've connected all the MVC pieces together, and we have our first controller
-action! Next, we'll move on to the second action.
+Conectamos todas as peças do MVC e temos nossa primeira _action_ no
+_controller_! A seguir, passaremos para a segunda _action_.
 
 CRUDit Where CRUDit Is Due
 --------------------------
