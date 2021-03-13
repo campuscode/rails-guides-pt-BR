@@ -813,13 +813,14 @@ o `redirect_to` após alterar o banco de dados ou o estado da aplicação. Caso
 contrário, se o usuário atualizar a página, o navegador fará a mesma requisição
 e a mutação será repetida.
 
-#### Using a Form Builder
+#### Utilizando um Construtor de Formulário (*Form Builder*)
 
-We will use a feature of Rails called a *form builder* to create our form. Using
-a form builder, we can write a minimal amount of code to output a form that is
-fully configured and follows Rails conventions.
+Utilizaremos uma funcionalidade do Rails chamada *form builder* (construtor de
+formulário) para criar nosso formulário. Utilizando um construtor de formulário,
+podemos escrever uma quantidade mínima de código para gerar um formulário que
+está totalmente configurado e segue as convenções do Rails.
 
-Let's create `app/views/articles/new.html.erb` with the following contents:
+Vamor criar a _view_ `app/views/articles/new.html.erb` com o seguinte conteúdo:
 
 ```html+erb
 <h1>New Article</h1>
@@ -841,13 +842,13 @@ Let's create `app/views/articles/new.html.erb` with the following contents:
 <% end %>
 ```
 
-The [`form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
-helper method instantiates a form builder. In the `form_with` block we call
-methods like [`label`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-label)
-and [`text_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-text_field)
-on the form builder to output the appropriate form elements.
+O método auxiliar [`form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
+instancia um construtor de formulário. No bloco `form_with` chamamos métodos como
+[`label`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-label)
+e [`text_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-text_field)
+no construtor para gerar os elementos apropriados de um formulário.
 
-The resulting output from our `form_with` call will look like:
+O resultado de saída da nossa chamada `form_with` será parecido com:
 
 ```html
 <form action="/articles" accept-charset="UTF-8" method="post">
@@ -869,7 +870,7 @@ The resulting output from our `form_with` call will look like:
 </form>
 ```
 
-TIP: To learn more about form builders, see [Action View Form Helpers](
+TIP: Para saber mais sobre os construtores de formulários, consulte [Action View Form Helpers](
 form_helpers.html).
 
 #### Using Strong Parameters
