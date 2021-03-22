@@ -289,7 +289,7 @@ invoke    scss
 create      app/assets/stylesheets/articles.scss
 ```
 
-Os mais importante desses é o arquivo _controller_, `app/controllers/articles_controller.rb`. Vamos dar uma olhada nele:
+O mais importante desses é o arquivo _controller_, `app/controllers/articles_controller.rb`. Vamos dar uma olhada nele:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -577,24 +577,27 @@ etapas do que acontece quando fazemos isso:
 Conectamos todas as peças do MVC e temos nossa primeira _action_ no
 _controller_! A seguir, passaremos para a segunda _action_.
 
-CRUDit Where CRUDit Is Due
+Operações CRUD
 --------------------------
 
-Almost all web applications involve [CRUD (Create, Read, Update, and Delete)](
-https://en.wikipedia.org/wiki/Create,_read,_update,_and_delete) operations. You
-may even find that the majority of the work your application does is CRUD. Rails
-acknowledges this, and provides many features to help simplify code doing CRUD.
+Quase todas as aplicações web abrangem operações [CRUD (Create, Read, Update e
+Delete)](https://pt.wikipedia.org/wiki/CRUD), traduzidos como criação, consulta,
+atualização e destruição de dados. Você pode até descobrir que a maior parte do
+trabalho que a sua aplicação faz é o CRUD. O Rails reconhece isso e fornece
+muitos recursos para ajudar a simplificar o código na hora de fazer o CRUD.
 
-Let's begin exploring these features by adding more functionality to our
-application.
+Vamos começar a explorar esses recursos adicionando mais funcionalidades à nossa
+aplicação.
 
-### Showing a Single Article
+### Exibindo um Único Artigo
 
-We currently have a view that lists all articles in our database. Let's add a
-new view that shows the title and body of a single article.
+Atualmente, temos uma _view_ que lista todos os artigos em nosso banco de dados.
+Vamos adicionar uma nova _view_ que exibe o título (_title_) e o corpo (_body_)
+de um único artigo.
 
-We start by adding a new route that maps to a new controller action (which we
-will add next). Open `config/routes.rb`, and insert the last route shown here:
+Começamos adicionando uma nova rota que mapeia para uma nova _action_ do
+_controller_ (que adicionaremos a seguir). Abra o arquivo `config/routes.rb` e
+insira a última rota exibida aqui:
 
 ```ruby
 Rails.application.routes.draw do
@@ -605,15 +608,15 @@ Rails.application.routes.draw do
 end
 ```
 
-The new route is another `get` route, but it has something extra in its path:
-`:id`. This designates a route *parameter*. A route parameter captures a segment
-of the request's path, and puts that value into the `params` Hash, which is
-accessible by the controller action. For example, when handling a request like
-`GET http://localhost:3000/articles/1`, `1` would be captured as the value for
-`:id`, which would then be accessible as `params[:id]` in the `show` action of
-`ArticlesController`.
+A nova rota é outra rota do tipo `get`, mas tem algo extra no seu caminho
+(_path_): `:id`. Isso denomina um **parâmetro** de rota. Um parâmetro de rota
+captura um pedaço do caminho da requisição e coloca esse valor no _Hash_
+`params`, que pode ser acessado pela _action_ do _controller_. Por exemplo, ao
+lidar com uma requisição como `GET http://localhost:3000/articles/1`, `1` seria
+capturado como o valor para `id`, que seria então acessível em `params[:id]` na
+_action_ `show` de `ArticlesController`.
 
-Let's add that `show` action now, below the `index` action in
+Vamos adicionar a _action_ `show` agora, abaixo da _action_ `index` em
 `app/controllers/articles_controller.rb`:
 
 ```ruby
@@ -628,13 +631,13 @@ class ArticlesController < ApplicationController
 end
 ```
 
-The `show` action calls `Article.find` ([mentioned
-previously](#using-a-model-to-interact-with-the-database)) with the ID captured
-by the route parameter. The returned article is stored in the `@article`
-instance variable, so it is accessible by the view. By default, the `show`
-action will render `app/views/articles/show.html.erb`.
+A _action_ `show` chama `Article.find` ([mencionado
+anteriormente](#utilizando-um-model-para-interagir-com-o-banco-de-dados)) com o
+ID capturado pelo parâmetro de rota. O artigo retornado é armazenado na variável
+de instância `@article`, portanto, pode ser acessado pela _view_. Por padrão, a
+_action_ `show` vai renderizar `app/views/articles/show.html.erb`.
 
-Let's create `app/views/articles/show.html.erb`, with the following contents:
+Vamos criar `app/views/articles/show.html.erb`, com o seguinte conteúdo:
 
 ```html+erb
 <h1><%= @article.title %></h1>
@@ -642,10 +645,11 @@ Let's create `app/views/articles/show.html.erb`, with the following contents:
 <p><%= @article.body %></p>
 ```
 
-Now we can see the article when we visit <http://localhost:3000/articles/1>!
+Agora podemos ver o artigo quando visitarmos <http://localhost:3000/articles/1>!
 
-To finish up, let's add a convenient way to get to an article's page. We'll link
-each article's title in `app/views/articles/index.html.erb` to its page:
+Para finalizar, vamos adicionar uma maneira mais prática para chegar à página
+de um artigo. Iremos vincular o título de cada artigo em
+`app/views/articles/index.html.erb` para sua página:
 
 ```html+erb
 <h1>Articles</h1>
@@ -661,20 +665,20 @@ each article's title in `app/views/articles/index.html.erb` to its page:
 </ul>
 ```
 
-### Resourceful Routing
+### Roteamento de _Resources_ (recursos)
 
-So far, we've covered the "R" (Read) of CRUD. We will eventually cover the "C"
-(Create), "U" (Update), and "D" (Delete). As you might have guessed, we will do
-so by adding new routes, controller actions, and views. Whenever we have such a
-combination of routes, controller actions, and views that work together to
-perform CRUD operations on an entity, we call that entity a *resource*. For
-example, in our application, we would say an article is a resource.
+Até agora, nós vimos o "R" (_Read_, consulta) do CRUD. Iremos eventualmente
+cobrir o "C" (_Create_, criação), "U" (_Update_, atualização) e o "D" (_Delete_,
+destruição). Como você deve ter imaginado, faremos isso adicionando novas rotas,
+_actions_ no _controller_ e _views_ que funcionam em conjunto para realizar as
+operações CRUD em uma entidade. Chamamos essa entidade de _resource_ (recurso).
+Por exemplo, em nossa aplicação, diríamos que um artigo é um recurso.
 
-Rails provides a routes method named [`resources`](
+O Rails fornece um método de rotas chamado [`resources`](
 https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources)
-that maps all of the conventional routes for a collection of resources, such as
-articles. So before we proceed to the "C", "U", and "D" sections, let's replace
-the two `get` routes in `config/routes.rb` with `resources`:
+que mapeia todas as rotas convencionais para uma coleção de recursos, como
+artigos. Portanto, antes de prosseguir para as seções "C", "U" e "D", vamos
+substituir as duas rotas `get` em `config/routes.rb` por `resources`:
 
 ```ruby
 Rails.application.routes.draw do
@@ -684,7 +688,8 @@ Rails.application.routes.draw do
 end
 ```
 
-We can inspect what routes are mapped by running the `bin/rails routes` command:
+Nós podemos inspecionar quais rotas estão mapeadas executando o comando
+`bin/rails routes`:
 
 ```bash
 $ bin/rails routes
@@ -699,12 +704,13 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
              DELETE /articles/:id(.:format)      articles#destroy
 ```
 
-The `resources` method also sets up URL and path helper methods that we can use
-to keep our code from depending on a specific route configuration. The values
-in the "Prefix" column above plus a suffix of `_url` or `_path` form the names
-of these helpers. For example, the `article_path` helper returns
-`"/articles/#{article.id}"` when given an article. We can use it to tidy up our
-links in `app/views/articles/index.html.erb`:
+O método `resources` também configura URL e métodos auxiliares (_helper_) de
+caminhos que podemos utilizar para evitar que nosso código dependa de uma
+configuração de rota específica. Os valores na coluna "Prefix" acima, mais um
+sufixo `_url` ou `_path` formam os nomes desses _helpers_. Por exemplo, o
+_helper_ `article_path` retorna `"/articles/#{article.id}"` quando recebe um
+artigo. Podemos utilizá-lo para organizar nossos links em
+`app/views/articles/index.html.erb`:
 
 ```html+erb
 <h1>Articles</h1>
@@ -720,14 +726,14 @@ links in `app/views/articles/index.html.erb`:
 </ul>
 ```
 
-However, we will take this one step further by using the [`link_to`](
-https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
-helper. The `link_to` helper renders a link with its first argument as the
-link's text and its second argument as the link's destination. If we pass a
-model object as the second argument, `link_to` will call the appropriate path
-helper to convert the object to a path. For example, if we pass an article,
-`link_to` will call `article_path`. So `app/views/articles/index.html.erb`
-becomes:
+No entanto, daremos um passo adiante utilizando o _helper_ [`link_to`](
+https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to).
+O _helper_ `link_to` renderiza um link com seu primeiro argumento como o texto
+do link e seu segundo argumento como o destino do link. Se passarmos um objeto
+_model_ como segundo argumento, o `link_to` chamará o _helper_ de caminho
+apropriado para converter o objeto em um caminho. Por exemplo, se passarmos um
+artigo, o `link_to` chamará o `article_path`. Portanto,
+`app/views/articles/index.html.erb` se torna:
 
 ```html+erb
 <h1>Articles</h1>
@@ -741,22 +747,23 @@ becomes:
 </ul>
 ```
 
-Nice!
+Muito bom!
 
-TIP: To learn more about routing, see [Rails Routing from the Outside In](
+TIP: Para aprender mais sobre roteamento, consulte [Rotas do Rails de Fora pra Dentro](
 routing.html).
 
-### Creating a New Article
+### Criando um Novo Artigo
 
-Now we move on to the "C" (Create) of CRUD. Typically, in web applications,
-creating a new resource is a multi-step process. First, the user requests a form
-to fill out. Then, the user submits the form. If there are no errors, then the
-resource is created and some kind of confirmation is displayed. Else, the form
-is redisplayed with error messages, and the process is repeated.
+Agora, seguimos para o "C" (_Create_, criação) do CRUD. Normalmente, em
+aplicações web, a criação de um novo recurso é um processo de várias etapas.
+Primeiro, o usuário solicita um formulário para preencher. Em seguida, o usuário
+envia o formulário. Se não houver erros, o recurso será criado e algum tipo de
+confirmação será exibido. Caso contrário, o formulário é exibido novamente com
+mensagens de erros e o processo é repetido.
 
-In a Rails application, these steps are conventionally handled by a controller's
-`new` and `create` actions. Let's add a typical implementation of these actions
-to `app/controllers/articles_controller.rb`, below the `show` action:
+Em uma aplicação Rails, esses passos não convencionalmente tratados pelas
+_actions_ `new` e `create` do _controller_. Vamos implementar essas _actions_ em
+`app/controllers/articles_controller.rb`, abaixo da _action_ `show`:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -784,23 +791,27 @@ class ArticlesController < ApplicationController
 end
 ```
 
-The `new` action instantiates a new article, but does not save it. This article
-will be used in the view when building the form. By default, the `new` action
-will render `app/views/articles/new.html.erb`, which we will create next.
+A _action_ `new` instancia um novo artigo, mas não o salva no banco de dados.
+Este artigo será utilizado na _view_ ao construirmos o formulário. Por padrão, a
+_action_ `new` renderizará `app/views/articles/new.html.erb`, que criaremos a
+seguir.
 
-The `create` action instantiates a new article with values for the title and
-body, and attempts to save it. If the article is saved successfully, the action
-redirects the browser to the article's page at `"http://localhost:3000/articles/#{@article.id}"`.
-Else, the action redisplays the form by rendering `app/views/articles/new.html.erb`.
-The title and body here are dummy values. After we create the form, we will come
-back and change these.
+A _action_ `create` instancia um novo artigo com os valores para o título e
+corpo e tenta salvá-lo no banco de dados. Se o artigo for salvo com sucesso, a
+_action_ redireciona o navegador para a página do artigo em
+`"http://localhost:3000/articles/#{@article.id}"`. Caso contrário, a _action_
+exibe novamente o formulário renderizando a _view_
+`app/views/articles/new.html.erb`. O título e o corpo aqui são valores
+fictícios. Depois de criarmos o formulário, vamos voltar no _controller_ e
+alterá-los.
 
 NOTE: [`redirect_to`](https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to)
-will cause the browser to make a new request,
-whereas [`render`](https://api.rubyonrails.org/classes/AbstractController/Rendering.html#method-i-render)
-renders the specified view for the current request.
-It is important to use `redirect_to` after mutating the database or application state.
-Otherwise, if the user refreshes the page, the browser will make the same request, and the mutation will be repeated.
+fará com que o navegador faça uma nova requisição, enquanto
+[`render`](https://api.rubyonrails.org/classes/AbstractController/Rendering.html#method-i-render)
+renderiza a _view_ especificada para a requisição atual.  É importante utilizar
+o `redirect_to` após alterar o banco de dados ou o estado da aplicação. Caso
+contrário, se o usuário atualizar a página, o navegador fará a mesma requisição
+e a mutação será repetida.
 
 #### Using a Form Builder
 
@@ -1405,7 +1416,7 @@ TIP: Para mais informações sobre associações do *Active Record*, veja o guia
 
 ### Adicionando a Rota para Comentários
 
-Da mesma forma que o *controller* `welcome`, nós vamos precisar adicionar a
+Da mesma forma que o *controller* `articles`, nós vamos precisar adicionar a
 rota para que o Rails saiba para onde queremos navegar para encontrar
 `comments`. Abra o arquivo `config/routes.rb` novamente e o edite da seguinte
 maneira:
