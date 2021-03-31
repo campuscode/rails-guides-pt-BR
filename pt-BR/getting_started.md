@@ -873,27 +873,28 @@ O resultado de saída da nossa chamada `form_with` será parecido com:
 TIP: Para saber mais sobre os construtores de formulários, consulte [Action View Form Helpers](
 form_helpers.html).
 
-#### Using Strong Parameters
+#### Utilizando *Strong Parameters* (Parâmetros Fortes)
 
-Submitted form data is put into the `params` Hash, alongside captured route
-parameters. Thus, the `create` action can access the submitted title via
-`params[:article][:title]` and the submitted body via `params[:article][:body]`.
-We could pass these values individually to `Article.new`, but that would be
-verbose and possibly error-prone. And it would become worse as we add more
-fields.
+Os dados do formulário enviados são colocados no *Hash* `params`, junto com os
+parâmetros de rota capturados. Assim, a _action_ `create` pode acessar o título
+enviado via `params[:article][:title]` e o corpo enviado via
+`params[:article][:body]`. Poderíamos passar esses valores individualmente para
+`Article.new`, mas isso seria longo demais e possivelmente sujeito a erros. E
+ficaria pior a medida que adicionamos mais campos.
 
-Instead, we will pass a single Hash that contains the values. However, we must
-still specify what values are allowed in that Hash. Otherwise, a malicious user
-could potentially submit extra form fields and overwrite private data. In fact,
-if we pass the unfiltered `params[:article]` Hash directly to `Article.new`,
-Rails will raise a `ForbiddenAttributesError` to alert us about the problem.
-So we will use a feature of Rails called *Strong Parameters* to filter `params`.
-Think of it as [strong typing](https://en.wikipedia.org/wiki/Strong_and_weak_typing)
-for `params`.
+Em vez disso, passaremos um único *Hash* que contém os valores. No entanto,
+ainda devemos especificar quais valores são permitidos nesse *Hash*, caso
+contrário, um usuário mal intencionado pode enviar campos extras no formulário e
+sobrescrever dados privados. Na verdade, se passarmos o *Hash*
+`params[:article]` não filtrado diretamente para `Article.new`, o Rails lançará
+um `ForbiddenAttributesError` para nos alertar sobre o problema. Portanto,
+utilizaremos um recurso do Rails chamado *Strong Parameters* (Parâmetros Fortes)
+para filtrar `params`. Pense nisso como [tipagem
+forte](https://pt.wikipedia.org/wiki/Linguagem_tipada) para `params`.
 
-Let's add a private method to the bottom of `app/controllers/articles_controller.rb`
-named `article_params` that filters `params`. And let's change `create` to use
-it:
+Vamos adicionar um método privado na parte inferior de
+`app/controllers/articles_controller.rb` chamado `article_params` que filtra o
+`params`. E vamos alterar o método `create` para utilizá-lo:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -926,8 +927,8 @@ class ArticlesController < ApplicationController
 end
 ```
 
-TIP: To learn more about Strong Parameters, see [Action Controller Overview §
-Strong Parameters](action_controller_overview.html#strong-parameters).
+TIP: Para saber mais sobre *Strong Parameters*, consulte [Action Controller
+Overview § Parâmetros Fortes](action_controller_overview.html#parametros-fortes).
 
 #### Validations and Displaying Error Messages
 
