@@ -25,7 +25,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.3</div>
+    <div id="version-badge">v6.1.3.1</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -352,18 +352,18 @@ Issues are not a particularly good venue for the sometimes long and involved
 discussions new features require.</p><h3 id="helping-to-resolve-existing-issues"><a class="anchorlink" href="#helping-to-resolve-existing-issues">2 Helping to Resolve Existing Issues</a></h3><p>As a next step beyond reporting issues, you can help the core team resolve existing ones by providing feedback about them. If you are new to Rails core development, that might be a great way to walk your first steps, you'll get familiar with the code base and the processes.</p><p>If you check the <a href="https://github.com/rails/rails/issues">issues list</a> in GitHub Issues, you'll find lots of issues already requiring attention. What can you do for these? Quite a bit, actually:</p><h4 id="verifying-bug-reports"><a class="anchorlink" href="#verifying-bug-reports">2.1 Verifying Bug Reports</a></h4><p>For starters, it helps just to verify bug reports. Can you reproduce the reported issue on your own computer? If so, you can add a comment to the issue saying that you're seeing the same thing.</p><p>If an issue is very vague, can you help narrow it down to something more specific? Maybe you can provide additional information to help reproduce a bug, or help by eliminating needless steps that aren't required to demonstrate the problem.</p><p>If you find a bug report without a test, it's very useful to contribute a failing test. This is also a great way to get started exploring the source code: looking at the existing test files will teach you how to write more tests. New tests are best contributed in the form of a patch, as explained later on in the "<a href="#contributing-to-the-rails-code">Contributing to the Rails Code</a>" section.</p><p>Anything you can do to make bug reports more succinct or easier to reproduce helps folks trying to write code to fix those bugs - whether you end up writing the code yourself or not.</p><h4 id="testing-patches"><a class="anchorlink" href="#testing-patches">2.2 Testing Patches</a></h4><p>You can also help out by examining pull requests that have been submitted to Ruby on Rails via GitHub. In order to apply someone's changes, you need to first create a dedicated branch:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>checkout <span class="nt">-b</span> testing_branch
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0765a74d2066a95615ec801279197665">git checkout -b testing_branch
+<textarea class="clipboard-content" id="clipboard-32c3a353c66a518adad1cd38d21eeaac">git checkout -b testing_branch
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0765a74d2066a95615ec801279197665">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-32c3a353c66a518adad1cd38d21eeaac">Copiar</button>
 </div>
 <p>Then, you can use their remote branch to update your codebase. For example, let's say the GitHub user JohnSmith has forked and pushed to a topic branch "orange" located at <a href="https://github.com/JohnSmith/rails">https://github.com/JohnSmith/rails</a>.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>remote add JohnSmith https://github.com/JohnSmith/rails.git
 <span class="gp">$</span><span class="w"> </span><span class="nb">git </span>pull JohnSmith orange
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2e26561a6361d5a292d1028ec0aab03d">git remote add JohnSmith https://github.com/JohnSmith/rails.git
+<textarea class="clipboard-content" id="clipboard-eccc6546d1473179824fa9ace7329d4d">git remote add JohnSmith https://github.com/JohnSmith/rails.git
 git pull JohnSmith orange
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2e26561a6361d5a292d1028ec0aab03d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eccc6546d1473179824fa9ace7329d4d">Copiar</button>
 </div>
 <p>After applying their branch, test it out! Here are some things to think about:</p>
 <ul>
@@ -389,11 +389,11 @@ git pull JohnSmith orange
 <span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>guides/
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake </span>guides:generate:html <span class="nv">GUIDES_LANGUAGE</span><span class="o">=</span>it-IT
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ea65ad426c1b8da3603e631cc20bc8bf">bundle install --without job cable storage ujs test db
+<textarea class="clipboard-content" id="clipboard-a3fdf1133b4712fef679a6389b0481db">bundle install --without job cable storage ujs test db
 cd guides/
 bundle exec rake guides:generate:html GUIDES_LANGUAGE=it-IT
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ea65ad426c1b8da3603e631cc20bc8bf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a3fdf1133b4712fef679a6389b0481db">Copiar</button>
 </div>
 <p>This will generate the guides in an <em>output</em> directory.</p><div class="note"><p>The Redcarpet Gem doesn't work with JRuby.</p></div><p>Translation efforts we know about (various versions):</p>
 <ul>
@@ -437,34 +437,34 @@ bundle exec rake guides:generate:html GUIDES_LANGUAGE=it-IT
 <h3 id="contributing-to-the-rails-code"><a class="anchorlink" href="#contributing-to-the-rails-code">5 Contributing to the Rails Code</a></h3><h4 id="setting-up-a-development-environment"><a class="anchorlink" href="#setting-up-a-development-environment">5.1 Setting Up a Development Environment</a></h4><p>To move on from submitting bugs to helping resolve existing issues or contributing your own code to Ruby on Rails, you <em>must</em> be able to run its test suite. In this section of the guide, you'll learn how to set up the tests on your own computer.</p><h5 id="the-easy-way"><a class="anchorlink" href="#the-easy-way">5.1.1 The Easy Way</a></h5><p>The easiest and recommended way to get a development environment ready to hack is to use the <a href="https://github.com/rails/rails-dev-box">rails-dev-box</a>.</p><h5 id="the-hard-way"><a class="anchorlink" href="#the-hard-way">5.1.2 The Hard Way</a></h5><p>In case you can't use the Rails development box, see <a href="development_dependencies_install.html">this other guide</a>.</p><h4 id="clone-the-rails-repository"><a class="anchorlink" href="#clone-the-rails-repository">5.2 Clone the Rails Repository</a></h4><p>To be able to contribute code, you need to clone the Rails repository:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>clone https://github.com/rails/rails.git
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2d88230e2fc363ea73bed1ec28f871cc">git clone https://github.com/rails/rails.git
+<textarea class="clipboard-content" id="clipboard-cf1c7aeec4750b2aeb322be1b51f422c">git clone https://github.com/rails/rails.git
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2d88230e2fc363ea73bed1ec28f871cc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cf1c7aeec4750b2aeb322be1b51f422c">Copiar</button>
 </div>
 <p>and create a dedicated branch:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd rails</span>
 <span class="gp">$</span><span class="w"> </span><span class="nb">git </span>checkout <span class="nt">-b</span> my_new_branch
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-501eda838c685e38fda3d7f5e5fb39e4">cd rails
+<textarea class="clipboard-content" id="clipboard-9106949e28ba1cf02a938c2983d236e9">cd rails
 git checkout -b my_new_branch
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-501eda838c685e38fda3d7f5e5fb39e4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9106949e28ba1cf02a938c2983d236e9">Copiar</button>
 </div>
 <p>It doesn't matter much what name you use, because this branch will only exist on your local computer and your personal repository on GitHub. It won't be part of the Rails Git repository.</p><h4 id="bundle-install"><a class="anchorlink" href="#bundle-install">5.3 Bundle install</a></h4><p>Install the required gems.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bundle install</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3ba472636d5af79a7af72828da80eddf">bundle install
+<textarea class="clipboard-content" id="clipboard-082e942c67bcb73dc6559bb23eb3a0bb">bundle install
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3ba472636d5af79a7af72828da80eddf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-082e942c67bcb73dc6559bb23eb3a0bb">Copiar</button>
 </div>
 <h4 id="running-an-application-against-your-local-branch"><a class="anchorlink" href="#running-an-application-against-your-local-branch">5.4 Running an Application Against Your Local Branch</a></h4><p>In case you need a dummy Rails app to test changes, the <code>--dev</code> flag of <code>rails new</code> generates an application that uses your local branch:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd rails</span>
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rails </span>new ~/my-test-app <span class="nt">--dev</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-569259d4888aafef3b9a2812f06d2bd6">cd rails
+<textarea class="clipboard-content" id="clipboard-1d517d68439dfa349c0a6bcf9eefe88f">cd rails
 bundle exec rails new ~/my-test-app --dev
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-569259d4888aafef3b9a2812f06d2bd6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1d517d68439dfa349c0a6bcf9eefe88f">Copiar</button>
 </div>
 <p>The application generated in <code>~/my-test-app</code> runs against your local branch
 and in particular sees any modifications upon server reboot.</p><h4 id="write-your-code"><a class="anchorlink" href="#write-your-code">5.5 Write Your Code</a></h4><p>Now get busy and add/edit code. You're on your branch now, so you can write whatever you want (make sure you're on the right branch with <code>git branch -a</code>). But if you're planning to submit your change back for inclusion in Rails, keep a few things in mind:</p>
@@ -495,9 +495,9 @@ and in particular sees any modifications upon server reboot.</p><h4 id="write-yo
 </span><span class="go">
 1 file inspected, no offenses detected
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-610495b65d1fadc84773a7caf99787d2">rubocop actionpack/lib/action_controller/metal/strong_parameters.rb
+<textarea class="clipboard-content" id="clipboard-80312d83a55ac2daf85df87244975d42">rubocop actionpack/lib/action_controller/metal/strong_parameters.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-610495b65d1fadc84773a7caf99787d2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80312d83a55ac2daf85df87244975d42">Copiar</button>
 </div>
 <p>For <code>rails-ujs</code> CoffeeScript and JavaScript files, you can run <code>npm run lint</code> in <code>actionview</code> folder.</p><h4 id="benchmark-your-code"><a class="anchorlink" href="#benchmark-your-code">5.6 Benchmark Your Code</a></h4><p>For changes that might have an impact on performance, please benchmark your
 code and measure the impact. Please share the benchmark script you used as well
@@ -523,20 +523,20 @@ unexpected breakages elsewhere.</p><h5 id="entire-rails"><a class="anchorlink" h
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd rails</span>
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3117fd6894af06872ea86f7b963c2170">cd rails
+<textarea class="clipboard-content" id="clipboard-56c59f9f8b714e8fd1df2f5e3f8becff">cd rails
 bundle exec rake test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3117fd6894af06872ea86f7b963c2170">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-56c59f9f8b714e8fd1df2f5e3f8becff">Copiar</button>
 </div>
 <h5 id="for-a-particular-component"><a class="anchorlink" href="#for-a-particular-component">5.7.2 For a Particular Component</a></h5><p>You can run tests only for a particular component (e.g. Action Pack). For example,
 to run Action Mailer tests:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>actionmailer
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-11b7ba72c290ad85c0563f45f55a7c88">cd actionmailer
+<textarea class="clipboard-content" id="clipboard-acf86028231fe739a2abb043768bc9fc">cd actionmailer
 bundle exec rake test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-11b7ba72c290ad85c0563f45f55a7c88">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-acf86028231fe739a2abb043768bc9fc">Copiar</button>
 </div>
 <h5 id="for-a-specific-directory"><a class="anchorlink" href="#for-a-specific-directory">5.7.3 For a Specific Directory</a></h5><p>If you want to run the tests located in a specific directory use the <code>TEST_DIR</code>
 environment variable. For example, this will run the tests in the
@@ -544,28 +544,28 @@ environment variable. For example, this will run the tests in the
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>railties
 <span class="gp">$</span><span class="w"> </span><span class="nv">TEST_DIR</span><span class="o">=</span>generators <span class="nb">bundle exec rake test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-961d538b77082cb9f60f731b0b70d651">cd railties
+<textarea class="clipboard-content" id="clipboard-637ae79ea8534f980f8bc8fe21f179f9">cd railties
 TEST_DIR=generators bundle exec rake test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-961d538b77082cb9f60f731b0b70d651">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-637ae79ea8534f980f8bc8fe21f179f9">Copiar</button>
 </div>
 <h5 id="for-a-specific-file"><a class="anchorlink" href="#for-a-specific-file">5.7.4 For a Specific File</a></h5><p>You can run the tests for a particular file by using:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>actionview
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec ruby</span> <span class="nt">-w</span> <span class="nt">-Itest</span> <span class="nb">test</span>/template/form_helper_test.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-986531e4f7cbd05a29403211ffe1834b">cd actionview
+<textarea class="clipboard-content" id="clipboard-a296e7156c5634d05fcf7cd7e562b15e">cd actionview
 bundle exec ruby -w -Itest test/template/form_helper_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-986531e4f7cbd05a29403211ffe1834b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a296e7156c5634d05fcf7cd7e562b15e">Copiar</button>
 </div>
 <h5 id="running-a-single-test"><a class="anchorlink" href="#running-a-single-test">5.7.5 Running a Single Test</a></h5><p>You can run a single test through ruby. For instance:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>actionmailer
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec ruby</span> <span class="nt">-w</span> <span class="nt">-Itest</span> <span class="nb">test</span>/mail_layout_test.rb <span class="nt">-n</span> test_explicit_class_layout
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-96e6c0e85ca6b75d5746ff7e49797b5c">cd actionmailer
+<textarea class="clipboard-content" id="clipboard-b7ef6054e60b2ba683e050f37722a03a">cd actionmailer
 bundle exec ruby -w -Itest test/mail_layout_test.rb -n test_explicit_class_layout
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-96e6c0e85ca6b75d5746ff7e49797b5c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b7ef6054e60b2ba683e050f37722a03a">Copiar</button>
 </div>
 <p>The <code>-n</code> option allows you to run a single method instead of the whole file.</p><h5 id="running-tests-with-a-specific-seed"><a class="anchorlink" href="#running-tests-with-a-specific-seed">5.7.6 Running Tests with a Specific Seed</a></h5><p>Test execution is randomized with a randomization seed. If you are experiencing random
 test failures you can more accurately reproduce a failing test scenario by specifically
@@ -573,87 +573,87 @@ setting the randomization seed.</p><p>Running all tests for a component:</p><div
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>actionmailer
 <span class="gp">$</span><span class="w"> </span><span class="nv">SEED</span><span class="o">=</span>15002 <span class="nb">bundle exec rake test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-25d80f613c71d3e63750307268555bc3">cd actionmailer
+<textarea class="clipboard-content" id="clipboard-a6c5de52aaa160323fbcdcc369437e77">cd actionmailer
 SEED=15002 bundle exec rake test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-25d80f613c71d3e63750307268555bc3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a6c5de52aaa160323fbcdcc369437e77">Copiar</button>
 </div>
 <p>Running a single test file:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>actionmailer
 <span class="gp">$</span><span class="w"> </span><span class="nv">SEED</span><span class="o">=</span>15002 <span class="nb">bundle exec ruby</span> <span class="nt">-w</span> <span class="nt">-Itest</span> <span class="nb">test</span>/mail_layout_test.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0957f3dc31457722b42e6e04ac8bef71">cd actionmailer
+<textarea class="clipboard-content" id="clipboard-79d4f53da6094dd44cecc8f7b5ed826a">cd actionmailer
 SEED=15002 bundle exec ruby -w -Itest test/mail_layout_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0957f3dc31457722b42e6e04ac8bef71">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-79d4f53da6094dd44cecc8f7b5ed826a">Copiar</button>
 </div>
 <h5 id="running-tests-in-serial"><a class="anchorlink" href="#running-tests-in-serial">5.7.7 Running Tests in Serial</a></h5><p>Action Pack and Action View unit tests run in parallel by default. If you are experiencing random
 test failures you can set the randomization seed and let these unit tests run in serial by setting <code>PARALLEL_WORKERS=1</code></p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>actionview
 <span class="gp">$</span><span class="w"> </span><span class="nv">PARALLEL_WORKERS</span><span class="o">=</span>1 <span class="nv">SEED</span><span class="o">=</span>53708 <span class="nb">bundle exec ruby</span> <span class="nt">-w</span> <span class="nt">-Itest</span> <span class="nb">test</span>/template/test_case_test.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9c0d71b672696cc7966467dba18f52ad">cd actionview
+<textarea class="clipboard-content" id="clipboard-ca1dcc26e5214dadde2cdb548256c520">cd actionview
 PARALLEL_WORKERS=1 SEED=53708 bundle exec ruby -w -Itest test/template/test_case_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9c0d71b672696cc7966467dba18f52ad">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ca1dcc26e5214dadde2cdb548256c520">Copiar</button>
 </div>
 <h5 id="testing-active-record"><a class="anchorlink" href="#testing-active-record">5.7.8 Testing Active Record</a></h5><p>First, create the databases you'll need. You can find a list of the required
 table names, usernames, and passwords in <code>activerecord/test/config.example.yml</code>.</p><p>For MySQL and PostgreSQL, it is sufficient to run:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>activerecord
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake </span>db:mysql:build
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8a7c97d569183efb3084f4fe4bf5e021">cd activerecord
+<textarea class="clipboard-content" id="clipboard-9e54fd9fbfd73c04fe0b8394690c2865">cd activerecord
 bundle exec rake db:mysql:build
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8a7c97d569183efb3084f4fe4bf5e021">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9e54fd9fbfd73c04fe0b8394690c2865">Copiar</button>
 </div>
 <p>Or:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>activerecord
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake </span>db:postgresql:build
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-980946e2bd6ed712851d5e06e5d90097">cd activerecord
+<textarea class="clipboard-content" id="clipboard-dc98ba803d8062da283f8b842d3d6000">cd activerecord
 bundle exec rake db:postgresql:build
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-980946e2bd6ed712851d5e06e5d90097">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dc98ba803d8062da283f8b842d3d6000">Copiar</button>
 </div>
 <p>This is not necessary for SQLite3.</p><p>This is how you run the Active Record test suite only for SQLite3:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>activerecord
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake test</span>:sqlite3
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e4d6d6452228802f245cc4f5dbc43489">cd activerecord
+<textarea class="clipboard-content" id="clipboard-3887dd38246ef3163b968680cb1c3bdd">cd activerecord
 bundle exec rake test:sqlite3
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e4d6d6452228802f245cc4f5dbc43489">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3887dd38246ef3163b968680cb1c3bdd">Copiar</button>
 </div>
 <p>You can now run the tests as you did for <code>sqlite3</code>. The tasks are respectively:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake test</span>:mysql2
 <span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake test</span>:postgresql
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-78d57718ec8486f75cb240487782fbba">bundle exec rake test:mysql2
+<textarea class="clipboard-content" id="clipboard-e3ff2552d1a2581c9970545562f269fc">bundle exec rake test:mysql2
 bundle exec rake test:postgresql
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-78d57718ec8486f75cb240487782fbba">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e3ff2552d1a2581c9970545562f269fc">Copiar</button>
 </div>
 <p>Finally,</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-da8ce88efe017b2cbe3ac42e22d33ec1">bundle exec rake test
+<textarea class="clipboard-content" id="clipboard-858d8d63f197307cd3ddffbf153aed63">bundle exec rake test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-da8ce88efe017b2cbe3ac42e22d33ec1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-858d8d63f197307cd3ddffbf153aed63">Copiar</button>
 </div>
 <p>will now run the three of them in turn.</p><p>You can also run any single test separately:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nv">ARCONN</span><span class="o">=</span><span class="nb">sqlite3 bundle exec ruby</span> <span class="nt">-Itest</span> <span class="nb">test</span>/cases/associations/has_many_associations_test.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6d70af1c52e9ea9919922944bc0f3048">ARCONN=sqlite3 bundle exec ruby -Itest test/cases/associations/has_many_associations_test.rb
+<textarea class="clipboard-content" id="clipboard-9eae71d039529b9850a3cd3aab54d731">ARCONN=sqlite3 bundle exec ruby -Itest test/cases/associations/has_many_associations_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6d70af1c52e9ea9919922944bc0f3048">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9eae71d039529b9850a3cd3aab54d731">Copiar</button>
 </div>
 <p>To run a single test against all adapters, use:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake </span><span class="nv">TEST</span><span class="o">=</span><span class="nb">test</span>/cases/associations/has_many_associations_test.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4e6ba5ab74c93d63e709e7b517354541">bundle exec rake TEST=test/cases/associations/has_many_associations_test.rb
+<textarea class="clipboard-content" id="clipboard-5c2a979c77fb03bdde02a24a996f0fef">bundle exec rake TEST=test/cases/associations/has_many_associations_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4e6ba5ab74c93d63e709e7b517354541">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5c2a979c77fb03bdde02a24a996f0fef">Copiar</button>
 </div>
 <p>You can invoke <code>test_jdbcmysql</code>, <code>test_jdbcsqlite3</code> or <code>test_jdbcpostgresql</code> also. See the file <code>activerecord/RUNNING_UNIT_TESTS.rdoc</code> for information on running more targeted database tests.</p><h4 id="warnings"><a class="anchorlink" href="#warnings">5.8 Warnings</a></h4><p>The test suite runs with warnings enabled. Ideally, Ruby on Rails should issue no warnings, but there may be a few, as well as some from third-party libraries. Please ignore (or fix!) them, if any, and submit patches that do not issue new warnings.</p><h4 id="updating-the-changelog"><a class="anchorlink" href="#updating-the-changelog">5.9 Updating the CHANGELOG</a></h4><p>The CHANGELOG is an important part of every release. It keeps the list of changes for every Rails version.</p><p>You should add an entry <strong>to the top</strong> of the CHANGELOG of the framework that you modified if you're adding or removing a feature, committing a bug fix, or adding deprecation notices. Refactorings and documentation changes generally should not go to the CHANGELOG.</p><p>A CHANGELOG entry should summarize what was changed and should end with the author's name. You can use multiple lines if you need more space and you can attach code examples indented with 4 spaces. If a change is related to a specific issue, you should attach the issue's number. Here is an example CHANGELOG entry:</p><div class="code_container">
 <pre><code class="highlight plaintext">*   Summary of a change that briefly describes what was changed. You can use multiple
@@ -671,7 +671,7 @@ bundle exec rake test:postgresql
 
     *Your Name*
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a4bb74fa026cd92fd0a80060343a35a7">*   Summary of a change that briefly describes what was changed. You can use multiple
+<textarea class="clipboard-content" id="clipboard-7a48ea26d15e02fbc4464f39c9db11c4">*   Summary of a change that briefly describes what was changed. You can use multiple
     lines and wrap them at around 80 characters. Code examples are ok, too, if needed:
 
         class Foo
@@ -686,15 +686,15 @@ bundle exec rake test:postgresql
 
     *Your Name*
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a4bb74fa026cd92fd0a80060343a35a7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7a48ea26d15e02fbc4464f39c9db11c4">Copiar</button>
 </div>
 <p>Your name can be added directly after the last word if there are no code
 examples or multiple paragraphs. Otherwise, it's best to make a new paragraph.</p><h4 id="updating-the-gemfile-lock"><a class="anchorlink" href="#updating-the-gemfile-lock">5.10 Updating the Gemfile.lock</a></h4><p>Some changes require the dependencies to be upgraded. In these cases make sure you run <code>bundle update</code> to get the right version of the dependency and commit the <code>Gemfile.lock</code> file within your changes.</p><h4 id="commit-your-changes"><a class="anchorlink" href="#commit-your-changes">5.11 Commit Your Changes</a></h4><p>When you're happy with the code on your computer, you need to commit the changes to Git:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>commit <span class="nt">-a</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c0cf19972bb52742da61772b8bb2ae13">git commit -a
+<textarea class="clipboard-content" id="clipboard-8622e657b2ddeac270488116e9f9fd01">git commit -a
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c0cf19972bb52742da61772b8bb2ae13">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8622e657b2ddeac270488116e9f9fd01">Copiar</button>
 </div>
 <p>This should fire up your editor to write a commit message. When you have
 finished, save and close to continue.</p><p>A well-formatted and descriptive commit message is very helpful to others for
@@ -726,7 +726,7 @@ You can also add bullet points:
 - wrap lines at 72 characters, and indent any additional lines
   with 2 spaces for readability
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2784c9607f2e224a82e32066b1df0bda">Short summary (ideally 50 characters or less)
+<textarea class="clipboard-content" id="clipboard-5386d878ab8b62d8f9a4bb5eda2be054">Short summary (ideally 50 characters or less)
 
 More detailed description, if necessary. It should be wrapped to
 72 characters. Try to be as descriptive as you can. Even if you
@@ -753,47 +753,47 @@ You can also add bullet points:
 - wrap lines at 72 characters, and indent any additional lines
   with 2 spaces for readability
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2784c9607f2e224a82e32066b1df0bda">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5386d878ab8b62d8f9a4bb5eda2be054">Copiar</button>
 </div>
 <div class="info"><p>Please squash your commits into a single commit when appropriate. This
 simplifies future cherry picks and keeps the git log clean.</p></div><h4 id="update-your-branch"><a class="anchorlink" href="#update-your-branch">5.12 Update Your Branch</a></h4><p>It's pretty likely that other changes to main have happened while you were working. Go get them:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>checkout main
 <span class="gp">$</span><span class="w"> </span><span class="nb">git </span>pull <span class="nt">--rebase</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7ff348641d40077d120fdf5b02b2d65a">git checkout main
+<textarea class="clipboard-content" id="clipboard-8243bc2e405387daeedd97585984a5e5">git checkout main
 git pull --rebase
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7ff348641d40077d120fdf5b02b2d65a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8243bc2e405387daeedd97585984a5e5">Copiar</button>
 </div>
 <p>Now reapply your patch on top of the latest changes:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>checkout my_new_branch
 <span class="gp">$</span><span class="w"> </span><span class="nb">git </span>rebase main
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b8ec2f4cebf9585d6ac61a5d6634a3f3">git checkout my_new_branch
+<textarea class="clipboard-content" id="clipboard-0df9ba682fd21764508a9d822a34a8e2">git checkout my_new_branch
 git rebase main
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b8ec2f4cebf9585d6ac61a5d6634a3f3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0df9ba682fd21764508a9d822a34a8e2">Copiar</button>
 </div>
 <p>No conflicts? Tests still pass? Change still seems reasonable to you? Then move on.</p><h4 id="fork"><a class="anchorlink" href="#fork">5.13 Fork</a></h4><p>Navigate to the Rails <a href="https://github.com/rails/rails">GitHub repository</a> and press "Fork" in the upper right hand corner.</p><p>Add the new remote to your local repository on your local machine:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>remote add fork https://github.com/&lt;your user name&gt;/rails.git
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d36d6cd09e80a2790e3b2b458febcd64">git remote add fork https://github.com/&lt;your user name&gt;/rails.git
+<textarea class="clipboard-content" id="clipboard-547badd29799df660bd1032275d70eb4">git remote add fork https://github.com/&lt;your user name&gt;/rails.git
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d36d6cd09e80a2790e3b2b458febcd64">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-547badd29799df660bd1032275d70eb4">Copiar</button>
 </div>
 <p>You may have cloned your local repository from rails/rails or you may have cloned from your forked repository. To avoid ambiguity the following git commands assume that you have made a "rails" remote that points to rails/rails.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>remote add <span class="nb">rails </span>https://github.com/rails/rails.git
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1b3052756a57c1143309f0f4655c0974">git remote add rails https://github.com/rails/rails.git
+<textarea class="clipboard-content" id="clipboard-194955d23de7454f55c4a7cc0e39160b">git remote add rails https://github.com/rails/rails.git
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1b3052756a57c1143309f0f4655c0974">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-194955d23de7454f55c4a7cc0e39160b">Copiar</button>
 </div>
 <p>Download new commits and branches from the official repository:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>fetch <span class="nb">rails</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-35e7bb737b3c385bfc3fd39ff1c6feb5">git fetch rails
+<textarea class="clipboard-content" id="clipboard-ebc7566669423834359836d390fa63a3">git fetch rails
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-35e7bb737b3c385bfc3fd39ff1c6feb5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ebc7566669423834359836d390fa63a3">Copiar</button>
 </div>
 <p>Merge the new content:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>checkout main
@@ -801,21 +801,21 @@ git rebase main
 <span class="gp">$</span><span class="w"> </span><span class="nb">git </span>checkout my_new_branch
 <span class="gp">$</span><span class="w"> </span><span class="nb">git </span>rebase <span class="nb">rails</span>/main
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1dc09c431e89d83e52708961cae2f1fa">git checkout main
+<textarea class="clipboard-content" id="clipboard-1a76dd7bece14b9afbffc48c3f4f5d58">git checkout main
 git rebase rails/main
 git checkout my_new_branch
 git rebase rails/main
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1dc09c431e89d83e52708961cae2f1fa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1a76dd7bece14b9afbffc48c3f4f5d58">Copiar</button>
 </div>
 <p>Update your fork:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>push fork main
 <span class="gp">$</span><span class="w"> </span><span class="nb">git </span>push fork my_new_branch
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-47cab7957ea2a0d6f14fcb2bf8dea504">git push fork main
+<textarea class="clipboard-content" id="clipboard-39eb63ef170afa97648b02d18c2d623b">git push fork main
 git push fork my_new_branch
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-47cab7957ea2a0d6f14fcb2bf8dea504">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-39eb63ef170afa97648b02d18c2d623b">Copiar</button>
 </div>
 <h4 id="issue-a-pull-request"><a class="anchorlink" href="#issue-a-pull-request">5.14 Issue a Pull Request</a></h4><p>Navigate to the Rails repository you just pushed to (e.g.
 <a href="https://github.com/your-user-name/rails">https://github.com/your-user-name/rails</a>) and click on "Pull Requests" seen in
@@ -853,12 +853,12 @@ extraneous commits can add a lot of noise.</p><div class="code_container">
 </span><span class="go">
 </span><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>push fork my_new_branch <span class="nt">--force-with-lease</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-be0f74a5f6166762a7c4ceccb0dcadbc">git fetch rails
+<textarea class="clipboard-content" id="clipboard-0b47f2e6ae37f3273507e8d8c136fbe6">git fetch rails
 git checkout my_new_branch
 git rebase -i rails/main
 git push fork my_new_branch --force-with-lease
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-be0f74a5f6166762a7c4ceccb0dcadbc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0b47f2e6ae37f3273507e8d8c136fbe6">Copiar</button>
 </div>
 <p>You should be able to refresh the pull request on GitHub and see that it has
 been updated.</p><h5 id="updating-a-pull-request"><a class="anchorlink" href="#updating-a-pull-request">5.16.2 Updating a Pull Request</a></h5><p>Sometimes you will be asked to make some changes to the code you have
@@ -869,9 +869,9 @@ you can force push to your branch on GitHub as described earlier in
 squashing commits section:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>push fork my_new_branch <span class="nt">--force-with-lease</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6e669bf803e55d515a67f6670ef864e6">git push fork my_new_branch --force-with-lease
+<textarea class="clipboard-content" id="clipboard-6d9a3e3f98124b15e725cb8e6b107a63">git push fork my_new_branch --force-with-lease
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6e669bf803e55d515a67f6670ef864e6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6d9a3e3f98124b15e725cb8e6b107a63">Copiar</button>
 </div>
 <p>This will update the branch and pull request on GitHub with your new code.
 By force pushing with <code>--force-with-lease</code>, git will more safely update
@@ -880,33 +880,33 @@ that you don't already have.</p><h4 id="older-versions-of-ruby-on-rails"><a clas
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>branch <span class="nt">--track</span> 4-0-stable <span class="nb">rails</span>/4-0-stable
 <span class="gp">$</span><span class="w"> </span><span class="nb">git </span>checkout 4-0-stable
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3d5acf035327267c232ad3dadeefa8d4">git branch --track 4-0-stable rails/4-0-stable
+<textarea class="clipboard-content" id="clipboard-cb844fe33a276e72aa28a45e9ebe3708">git branch --track 4-0-stable rails/4-0-stable
 git checkout 4-0-stable
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3d5acf035327267c232ad3dadeefa8d4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cb844fe33a276e72aa28a45e9ebe3708">Copiar</button>
 </div>
 <div class="info"><p>You may want to <a href="http://qugstart.com/blog/git-and-svn/add-colored-git-branch-name-to-your-shell-prompt/">put your Git branch name in your shell prompt</a> to make it easier to remember which version of the code you're working with.</p></div><div class="note"><p>Before working on older versions, please check the <a href="maintenance_policy.html">maintenance policy</a>.</p></div><h5 id="backporting"><a class="anchorlink" href="#backporting">5.17.1 Backporting</a></h5><p>Changes that are merged into main are intended for the next major release of Rails. Sometimes, it might be beneficial for your changes to propagate back to the maintenance releases for older stable branches. Generally, security fixes and bug fixes are good candidates for a backport, while new features and patches that introduce a change in behavior will not be accepted. When in doubt, it is best to consult a Rails team member before backporting your changes to avoid wasted effort.</p><p>For simple fixes, the easiest way to backport your changes is to <a href="https://www.devroom.io/2009/10/26/how-to-create-and-apply-a-patch-with-git/">extract a diff from your changes in main and apply them to the target branch</a>.</p><p>First, make sure your changes are the only difference between your current branch and main:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>log main..HEAD
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-15b793e7b1007789258f48b9ac2e31b7">git log main..HEAD
+<textarea class="clipboard-content" id="clipboard-8f8437304725487259beecacdaf7b34d">git log main..HEAD
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-15b793e7b1007789258f48b9ac2e31b7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8f8437304725487259beecacdaf7b34d">Copiar</button>
 </div>
 <p>Then extract the diff:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>format-patch main <span class="nt">--stdout</span> <span class="o">&gt;</span> ~/my_changes.patch
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5cf4ddc57b26d9d129c2d3de5111afe7">git format-patch main --stdout &gt; ~/my_changes.patch
+<textarea class="clipboard-content" id="clipboard-191a6b9ff5690f073e895537265957ef">git format-patch main --stdout &gt; ~/my_changes.patch
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5cf4ddc57b26d9d129c2d3de5111afe7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-191a6b9ff5690f073e895537265957ef">Copiar</button>
 </div>
 <p>Switch over to the target branch and apply your changes:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">git </span>checkout <span class="nt">-b</span> my_backport_branch 4-2-stable
 <span class="gp">$</span><span class="w"> </span><span class="nb">git </span>apply ~/my_changes.patch
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-98a76466dffbdf85a2b6a853d87f7916">git checkout -b my_backport_branch 4-2-stable
+<textarea class="clipboard-content" id="clipboard-38881a05c5ad038c9406be47bf8ec07a">git checkout -b my_backport_branch 4-2-stable
 git apply ~/my_changes.patch
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-98a76466dffbdf85a2b6a853d87f7916">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-38881a05c5ad038c9406be47bf8ec07a">Copiar</button>
 </div>
 <p>This works well for simple changes. However, if your changes are complicated or if the code in main has deviated significantly from your target branch, it might require more work on your part. The difficulty of a backport varies greatly from case to case, and sometimes it is simply not worth the effort.</p><p>Once you have resolved all conflicts and made sure all the tests are passing, push your changes and open a separate pull request for your backport. It is also worth noting that older branches might have a different set of build targets than main. When possible, it is best to first test your backport locally against the oldest Ruby version permitted by the target branch's <code>rails.gemspec</code> before submitting your pull request.</p><p>And then... think about your next contribution!</p><h3 id="contribuintes-do-rails"><a class="anchorlink" href="#contribuintes-do-rails">6 Contribuintes do Rails</a></h3><p>Todas as contribuições recebem crédito em <a href="https://contributors.rubyonrails.org">Contribuintes do Rails</a>.</p>
 
