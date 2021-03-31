@@ -930,16 +930,17 @@ end
 TIP: Para saber mais sobre *Strong Parameters*, consulte [Action Controller
 Overview § Parâmetros Fortes](action_controller_overview.html#parametros-fortes).
 
-#### Validations and Displaying Error Messages
+#### Validações e Exibição de Mensagens de Erros
 
-As we have seen, creating a resource is a multi-step process. Handling invalid
-user input is another step of that process. Rails provides a feature called
-*validations* to help us deal with invalid user input. Validations are rules
-that are checked before a model object is saved. If any of the checks fail, the
-save will be aborted, and appropriate error messages will be added to the
-`errors` attribute of the model object.
+Como vimos, a criação de um recurso é um processo de várias etapas. Lidar com a
+entrada inválida do usuário é outra etapa desse processo. O Rails fornece um
+recurso chamado **validações** para nos ajudar a lidar com entradas inválidas do
+usuário. As validações são regras que são verificadas antes de um objeto *model*
+ser salvo. Se alguma das validações falhar, o objeto não será salvo e as
+mensagens de erros apropriadas serão adicionadas ao atributo `errors` do objeto
+*model*.
 
-Let's add some validations to our model in `app/models/article.rb`:
+Vamos adicionar algumas validações ao nosso *model* em `app/models/article.rb`:
 
 ```ruby
 class Article < ApplicationRecord
@@ -948,20 +949,21 @@ class Article < ApplicationRecord
 end
 ```
 
-The first validation declares that a `title` value must be present. Because
-`title` is a string, this means that the `title` value must contain at least one
-non-whitespace character.
+A primeira validação declara que um valor `title` deve estar presente. Como
+`title` é uma *string*, isso significa que o valor `title` deve conter pelo
+menos um caractere diferente de espaço em branco.
 
-The second validation declares that a `body` value must also be present.
-Additionally, it declares that the `body` value must be at least 10 characters
-long.
+A segunda validação declara que um valor `body` também deve estar presente. Além
+disso, declara que o valor `body` deve ter pelo menos 10 caracteres.
 
-NOTE: You may be wondering where the `title` and `body` attributes are defined.
-Active Record automatically defines model attributes for every table column, so
-you don't have to declare those attributes in your model file.
+NOTE: Você pode estar se perguntando onde os atributos `title` e `body` são
+definidos. O *Active Record* define automaticamente os atributos do *model* para
+cada coluna da tabela, então você não precisa declarar esses atributos em seu
+arquivo *model*.
 
-With our validations in place, let's modify `app/views/articles/new.html.erb` to
-display any error messages for `title` and `body`:
+Com nossas validações no lugar, vamos modificar
+`app/views/articles/new.html.erb` para exibir quaisquer mensagens de erro para
+`title` e `body`:
 
 ```html+erb
 <h1>New Article</h1>
@@ -989,12 +991,13 @@ display any error messages for `title` and `body`:
 <% end %>
 ```
 
-The [`full_messages_for`](https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-full_messages_for)
-method returns an array of user-friendly error messages for a specified
-attribute. If there are no errors for that attribute, the array will be empty.
+O método [`full_messages_for`](https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-full_messages_for)
+retorna um *array* de mensagens de erro amigáveis para um atributo especificado.
+Se não houver erros para esse atributo, o *array* ficará vazio.
 
-To understand how all of this works together, let's take another look at the
-`new` and `create` controller actions:
+
+Para entender como tudo isso funciona junto, vamos dar uma olhada nas *actions*
+de `new` e `create` do *controller*:
 
 ```ruby
   def new
@@ -1012,21 +1015,21 @@ To understand how all of this works together, let's take another look at the
   end
 ```
 
-When we visit <http://localhost:3000/articles/new>, the `GET /articles/new`
-request is mapped to the `new` action. The `new` action does not attempt to save
-`@article`. Therefore, validations are not checked, and there will be no error
-messages.
+Quando visitamos <http://localhost:3000/articles/new>, a solicitação `GET
+/articles/new` é mapeada para a *action* `new`. A *action* `new` não tenta
+salvar o `@article`. Portanto, as validações não são verificadas e não haverá
+mensagens de erro.
 
-When we submit the form, the `POST /articles` request is mapped to the `create`
-action. The `create` action *does* attempt to save `@article`. Therefore,
-validations *are* checked. If any validation fails, `@article` will not be
-saved, and `app/views/articles/new.html.erb` will be rendered with error
-messages.
+Quando enviamos o formulário, a solicitação `POST /articles` é mapeada para a
+*action* `create`. A *action* `create` **tenta** salvar o `@article`.
+Portanto, as validações **são** verificadas. Se alguma validação falhar,
+o `@article` não será salvo e a *view* `app/views/articles/new.html.erb` será
+renderizada com as mensagens de erro.
 
-TIP: To learn more about validations, see [Active Record Validations](
-active_record_validations.html). To learn more about validation error messages,
-see [Active Record Validations § Working with Validation Errors](
-active_record_validations.html#working-with-validation-errors).
+TIP: Para saber mais sobre validações, consulte [Validações do Active Record](
+active_record_validations.html). Para saber mais sobre as mensagens de erro de
+validação, consulte [Validações do Active Record § Trabalhando com Erros de
+Validação]( active_record_validations.html#trabalhando-com-erros-de-validacao).
 
 #### Finishing Up
 
