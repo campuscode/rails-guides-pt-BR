@@ -1031,11 +1031,11 @@ active_record_validations.html). Para saber mais sobre as mensagens de erro de
 validação, consulte [Validações do Active Record § Trabalhando com Erros de
 Validação]( active_record_validations.html#trabalhando-com-erros-de-validacao).
 
-#### Finishing Up
+#### Finalizando
 
-We can now create an article by visiting <http://localhost:3000/articles/new>.
-To finish up, let's link to that page from the bottom of
-`app/views/articles/index.html.erb`:
+Agora podemos criar um artigo visitando <http://localhost:3000/articles/new>.
+Para finalizar, vamos criar um *link* para essa página na parte inferior da
+*view* `app/views/articles/index.html.erb`:
 
 ```html+erb
 <h1>Articles</h1>
