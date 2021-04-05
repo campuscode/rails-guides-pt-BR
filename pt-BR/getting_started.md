@@ -995,7 +995,6 @@ O método [`full_messages_for`](https://api.rubyonrails.org/classes/ActiveModel/
 retorna um *array* de mensagens de erro amigáveis para um atributo especificado.
 Se não houver erros para esse atributo, o *array* ficará vazio.
 
-
 Para entender como tudo isso funciona junto, vamos dar uma olhada nas *actions*
 de `new` e `create` do *controller*:
 
