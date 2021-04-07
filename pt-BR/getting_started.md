@@ -1050,17 +1050,17 @@ Para finalizar, vamos criar um *link* para essa página na parte inferior da
 <%= link_to "New Article", new_article_path %>
 ```
 
-### Updating an Article
+### Atualizando um Artigo
 
-We've covered the "CR" of CRUD. Now let's move on to the "U" (Update). Updating
-a resource is very similar to creating a resource. They are both multi-step
-processes. First, the user requests a form to edit the data. Then, the user
-submits the form. If there are no errors, then the resource is updated. Else,
-the form is redisplayed with error messages, and the process is repeated.
+Nós cobrimos o "CR" do CRUD. Agora, vamos passar para o "U" (_Update_ -
+atualização). Atualizar um recurso é muito semelhante a criar um recurso. Ambos
+são processos de várias etapas. Primeiro, o usuário solicita um formulário para
+editar os dados. Se não houver erros, o recurso será atualizado. Caso contrário,
+o formulário é exibido novamente com mensagens de erro e o processo é repetido.
 
-These steps are conventionally handled by a controller's `edit` and `update`
-actions. Let's add a typical implementation of these actions to
-`app/controllers/articles_controller.rb`, below the `create` action:
+Essas etapas são convencionalmente tratadas pelas _actions_ `edit` e `update` de
+um _controller_. Vamos adicionar uma implementação típica dessas _actions_ em
+`app/controllers/articles_controller.rb`, abaixo da _action_ `create`:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -1107,18 +1107,19 @@ class ArticlesController < ApplicationController
 end
 ```
 
-Notice how the `edit` and `update` actions resemble the `new` and `create`
-actions.
+Observe como as _actions_ `edit` e `update` se assemelham às _actions_ `new` e
+`create`.
 
-The `edit` action fetches the article from the database, and stores it in
-`@article` so that it can be used when building the form. By default, the `edit`
-action will render `app/views/articles/edit.html.erb`.
+A _action_ `edit` busca o artigo do banco de dados e o armazena em `@article`
+para que possa ser utilizado ao construir o formulário. Por padrão, a _action_
+`edit` renderizará `app/views/articles/edit.html.erb`.
 
-The `update` action (re-)fetches the article from the database, and attempts
-to update it with the submitted form data filtered by `article_params`. If no
-validations fail and the update is successful, the action redirects the browser
-to the article's page. Else, the action redisplays the form, with error
-messages, by rendering `app/views/articles/edit.html.erb`.
+A _action_ `update` busca novamente o artigo do banco de dados e tenta
+atualizá-lo com os dados filtrados do formulário enviado por `article_params`.
+Se nenhuma validação falhar e a atualização for bem-sucedida, a _action_
+redireciona o navegador para a página do artigo. Caso contrário, a _action_
+exibe novamente o formulário com mensagens de erro, renderizando
+`app/views/articles/edit.html.erb`.
 
 #### Using Partials to Share View Code
 
