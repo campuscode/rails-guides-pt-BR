@@ -813,13 +813,14 @@ o `redirect_to` após alterar o banco de dados ou o estado da aplicação. Caso
 contrário, se o usuário atualizar a página, o navegador fará a mesma requisição
 e a mutação será repetida.
 
-#### Using a Form Builder
+#### Utilizando um Construtor de Formulário (*Form Builder*)
 
-We will use a feature of Rails called a *form builder* to create our form. Using
-a form builder, we can write a minimal amount of code to output a form that is
-fully configured and follows Rails conventions.
+Utilizaremos uma funcionalidade do Rails chamada *form builder* (construtor de
+formulário) para criar nosso formulário. Utilizando um construtor de formulário,
+podemos escrever uma quantidade mínima de código para gerar um formulário que
+está totalmente configurado e segue as convenções do Rails.
 
-Let's create `app/views/articles/new.html.erb` with the following contents:
+Vamor criar a _view_ `app/views/articles/new.html.erb` com o seguinte conteúdo:
 
 ```html+erb
 <h1>New Article</h1>
@@ -841,13 +842,13 @@ Let's create `app/views/articles/new.html.erb` with the following contents:
 <% end %>
 ```
 
-The [`form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
-helper method instantiates a form builder. In the `form_with` block we call
-methods like [`label`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-label)
-and [`text_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-text_field)
-on the form builder to output the appropriate form elements.
+O método auxiliar [`form_with`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)
+instancia um construtor de formulário. No bloco `form_with` chamamos métodos como
+[`label`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-label)
+e [`text_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-text_field)
+no construtor para gerar os elementos apropriados de um formulário.
 
-The resulting output from our `form_with` call will look like:
+O resultado de saída da nossa chamada `form_with` será parecido com:
 
 ```html
 <form action="/articles" accept-charset="UTF-8" method="post">
@@ -869,30 +870,31 @@ The resulting output from our `form_with` call will look like:
 </form>
 ```
 
-TIP: To learn more about form builders, see [Action View Form Helpers](
+TIP: Para saber mais sobre os construtores de formulários, consulte [Action View Form Helpers](
 form_helpers.html).
 
-#### Using Strong Parameters
+#### Utilizando *Strong Parameters* (Parâmetros Fortes)
 
-Submitted form data is put into the `params` Hash, alongside captured route
-parameters. Thus, the `create` action can access the submitted title via
-`params[:article][:title]` and the submitted body via `params[:article][:body]`.
-We could pass these values individually to `Article.new`, but that would be
-verbose and possibly error-prone. And it would become worse as we add more
-fields.
+Os dados do formulário enviados são colocados no *Hash* `params`, junto com os
+parâmetros de rota capturados. Assim, a _action_ `create` pode acessar o título
+enviado via `params[:article][:title]` e o corpo enviado via
+`params[:article][:body]`. Poderíamos passar esses valores individualmente para
+`Article.new`, mas isso seria longo demais e possivelmente sujeito a erros. E
+ficaria pior a medida que adicionamos mais campos.
 
-Instead, we will pass a single Hash that contains the values. However, we must
-still specify what values are allowed in that Hash. Otherwise, a malicious user
-could potentially submit extra form fields and overwrite private data. In fact,
-if we pass the unfiltered `params[:article]` Hash directly to `Article.new`,
-Rails will raise a `ForbiddenAttributesError` to alert us about the problem.
-So we will use a feature of Rails called *Strong Parameters* to filter `params`.
-Think of it as [strong typing](https://en.wikipedia.org/wiki/Strong_and_weak_typing)
-for `params`.
+Em vez disso, passaremos um único *Hash* que contém os valores. No entanto,
+ainda devemos especificar quais valores são permitidos nesse *Hash*, caso
+contrário, um usuário mal intencionado pode enviar campos extras no formulário e
+sobrescrever dados privados. Na verdade, se passarmos o *Hash*
+`params[:article]` não filtrado diretamente para `Article.new`, o Rails lançará
+um `ForbiddenAttributesError` para nos alertar sobre o problema. Portanto,
+utilizaremos um recurso do Rails chamado *Strong Parameters* (Parâmetros Fortes)
+para filtrar `params`. Pense nisso como [tipagem
+forte](https://pt.wikipedia.org/wiki/Linguagem_tipada) para `params`.
 
-Let's add a private method to the bottom of `app/controllers/articles_controller.rb`
-named `article_params` that filters `params`. And let's change `create` to use
-it:
+Vamos adicionar um método privado na parte inferior de
+`app/controllers/articles_controller.rb` chamado `article_params` que filtra o
+`params`. E vamos alterar o método `create` para utilizá-lo:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -925,19 +927,20 @@ class ArticlesController < ApplicationController
 end
 ```
 
-TIP: To learn more about Strong Parameters, see [Action Controller Overview §
-Strong Parameters](action_controller_overview.html#strong-parameters).
+TIP: Para saber mais sobre *Strong Parameters*, consulte [Action Controller
+Overview § Parâmetros Fortes](action_controller_overview.html#parametros-fortes).
 
-#### Validations and Displaying Error Messages
+#### Validações e Exibição de Mensagens de Erros
 
-As we have seen, creating a resource is a multi-step process. Handling invalid
-user input is another step of that process. Rails provides a feature called
-*validations* to help us deal with invalid user input. Validations are rules
-that are checked before a model object is saved. If any of the checks fail, the
-save will be aborted, and appropriate error messages will be added to the
-`errors` attribute of the model object.
+Como vimos, a criação de um recurso é um processo de várias etapas. Lidar com a
+entrada inválida do usuário é outra etapa desse processo. O Rails fornece um
+recurso chamado **validações** para nos ajudar a lidar com entradas inválidas do
+usuário. As validações são regras que são verificadas antes de um objeto *model*
+ser salvo. Se alguma das validações falhar, o objeto não será salvo e as
+mensagens de erros apropriadas serão adicionadas ao atributo `errors` do objeto
+*model*.
 
-Let's add some validations to our model in `app/models/article.rb`:
+Vamos adicionar algumas validações ao nosso *model* em `app/models/article.rb`:
 
 ```ruby
 class Article < ApplicationRecord
@@ -946,20 +949,21 @@ class Article < ApplicationRecord
 end
 ```
 
-The first validation declares that a `title` value must be present. Because
-`title` is a string, this means that the `title` value must contain at least one
-non-whitespace character.
+A primeira validação declara que um valor `title` deve estar presente. Como
+`title` é uma *string*, isso significa que o valor `title` deve conter pelo
+menos um caractere diferente de espaço em branco.
 
-The second validation declares that a `body` value must also be present.
-Additionally, it declares that the `body` value must be at least 10 characters
-long.
+A segunda validação declara que um valor `body` também deve estar presente. Além
+disso, declara que o valor `body` deve ter pelo menos 10 caracteres.
 
-NOTE: You may be wondering where the `title` and `body` attributes are defined.
-Active Record automatically defines model attributes for every table column, so
-you don't have to declare those attributes in your model file.
+NOTE: Você pode estar se perguntando onde os atributos `title` e `body` são
+definidos. O *Active Record* define automaticamente os atributos do *model* para
+cada coluna da tabela, então você não precisa declarar esses atributos em seu
+arquivo *model*.
 
-With our validations in place, let's modify `app/views/articles/new.html.erb` to
-display any error messages for `title` and `body`:
+Com nossas validações no lugar, vamos modificar
+`app/views/articles/new.html.erb` para exibir quaisquer mensagens de erro para
+`title` e `body`:
 
 ```html+erb
 <h1>New Article</h1>
@@ -987,12 +991,12 @@ display any error messages for `title` and `body`:
 <% end %>
 ```
 
-The [`full_messages_for`](https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-full_messages_for)
-method returns an array of user-friendly error messages for a specified
-attribute. If there are no errors for that attribute, the array will be empty.
+O método [`full_messages_for`](https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-full_messages_for)
+retorna um *array* de mensagens de erro amigáveis para um atributo especificado.
+Se não houver erros para esse atributo, o *array* ficará vazio.
 
-To understand how all of this works together, let's take another look at the
-`new` and `create` controller actions:
+Para entender como tudo isso funciona junto, vamos dar uma olhada nas *actions*
+de `new` e `create` do *controller*:
 
 ```ruby
   def new
@@ -1010,27 +1014,27 @@ To understand how all of this works together, let's take another look at the
   end
 ```
 
-When we visit <http://localhost:3000/articles/new>, the `GET /articles/new`
-request is mapped to the `new` action. The `new` action does not attempt to save
-`@article`. Therefore, validations are not checked, and there will be no error
-messages.
+Quando visitamos <http://localhost:3000/articles/new>, a solicitação `GET
+/articles/new` é mapeada para a *action* `new`. A *action* `new` não tenta
+salvar o `@article`. Portanto, as validações não são verificadas e não haverá
+mensagens de erro.
 
-When we submit the form, the `POST /articles` request is mapped to the `create`
-action. The `create` action *does* attempt to save `@article`. Therefore,
-validations *are* checked. If any validation fails, `@article` will not be
-saved, and `app/views/articles/new.html.erb` will be rendered with error
-messages.
+Quando enviamos o formulário, a solicitação `POST /articles` é mapeada para a
+*action* `create`. A *action* `create` **tenta** salvar o `@article`.
+Portanto, as validações **são** verificadas. Se alguma validação falhar,
+o `@article` não será salvo e a *view* `app/views/articles/new.html.erb` será
+renderizada com as mensagens de erro.
 
-TIP: To learn more about validations, see [Active Record Validations](
-active_record_validations.html). To learn more about validation error messages,
-see [Active Record Validations § Working with Validation Errors](
-active_record_validations.html#working-with-validation-errors).
+TIP: Para saber mais sobre validações, consulte [Validações do Active Record](
+active_record_validations.html). Para saber mais sobre as mensagens de erro de
+validação, consulte [Validações do Active Record § Trabalhando com Erros de
+Validação]( active_record_validations.html#trabalhando-com-erros-de-validacao).
 
-#### Finishing Up
+#### Finalizando
 
-We can now create an article by visiting <http://localhost:3000/articles/new>.
-To finish up, let's link to that page from the bottom of
-`app/views/articles/index.html.erb`:
+Agora podemos criar um artigo visitando <http://localhost:3000/articles/new>.
+Para finalizar, vamos criar um *link* para essa página na parte inferior da
+*view* `app/views/articles/index.html.erb`:
 
 ```html+erb
 <h1>Articles</h1>
