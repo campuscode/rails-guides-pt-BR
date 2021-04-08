@@ -1121,16 +1121,17 @@ redireciona o navegador para a página do artigo. Caso contrário, a _action_
 exibe novamente o formulário com mensagens de erro, renderizando
 `app/views/articles/edit.html.erb`.
 
-#### Using Partials to Share View Code
+#### Utilizando _Partials_ para Compartilhar Código de _View_
 
-Our `edit` form will look the same as our `new` form. Even the code will be the
-same, thanks to the Rails form builder and resourceful routing. The form builder
-automatically configures the form to make the appropriate kind of request, based
-on whether the model object has been previously saved.
+Nosso formulário `edit` terá a mesma aparência que o nosso formulário `new`. Até
+o código será o mesmo, graças ao construtor de formulários do Rails e ao
+roteamento de recursos. O construtor de formulários configura automaticamente o
+formulário para fazer o tipo apropriado de requisição, baseando-se sobre se o
+objeto do _model_ foi salvo anteriormente.
 
-Because the code will be the same, we're going to factor it out into a shared
-view called a *partial*. Let's create `app/views/articles/_form.html.erb` with
-the following contents:
+Como o código será o mesmo, vamos separá-lo em uma _view_ compartilhada chamada
+**partial**. Vamos criar a _view_ `app/views/articles/_form.html.erb` com o
+seguinte conteúdo:
 
 ```html+erb
 <%= form_with model: article do |form| %>
@@ -1156,13 +1157,14 @@ the following contents:
 <% end %>
 ```
 
-The above code is the same as our form in `app/views/articles/new.html.erb`,
-except that all occurrences of `@article` have been replaced with `article`.
-Because partials are shared code, it is best practice that they do not depend on
-specific instance variables set by a controller action. Instead, we will pass
-the article to the partial as a local variable.
+O código acima é igual ao nosso formulário em `app/views/articles/new.html.erb`,
+exceto que todas as ocorrências de `@article` foram substituídas por `article`.
+Como _partials_ são códigos compartilhados, a melhor prática é que elas não
+dependam de variáveis de instância específicas definidas por uma _action_ do
+_controller_. Em vez disso, passaremos o artigo para a _partial_ como uma
+variável local.
 
-Let's update `app/views/articles/new.html.erb` to use the partial via [`render`](
+Vamos atualizar `app/views/articles/new.html.erb` para utilizar a _partial_ via [`render`](
 https://api.rubyonrails.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render):
 
 ```html+erb
@@ -1171,11 +1173,12 @@ https://api.rubyonrails.org/classes/ActionView/Helpers/RenderingHelper.html#meth
 <%= render "form", article: @article %>
 ```
 
-NOTE: A partial's filename must be prefixed **with** an underscore, e.g.
-`_form.html.erb`. But when rendering, it is referenced **without** the
-underscore, e.g. `render "form"`.
+NOTE: O nome do arquivo da _partial_ deve ser prefixado **com** um sublinhado,
+por exemplo, `_form.html.erb`. Mas ao renderizar, ela é referenciada **sem** o
+sublinhado, por exemplo, `render form`.
 
-And now, let's create a very similar `app/views/articles/edit.html.erb`:
+E agora vamos criar uma _view_ `app/views/articles/edit.html.erb` muito
+semelhante:
 
 ```html+erb
 <h1>Edit Article</h1>
@@ -1183,8 +1186,8 @@ And now, let's create a very similar `app/views/articles/edit.html.erb`:
 <%= render "form", article: @article %>
 ```
 
-TIP: To learn more about partials, see [Layouts and Rendering in Rails § Using
-Partials](layouts_and_rendering.html#using-partials).
+TIP: Para saber mais sobre _partials_, consulte [Layouts e Renderização no Rails § Usando
+Partials](layouts_and_rendering.html#usando-partials).
 
 #### Finishing Up
 
