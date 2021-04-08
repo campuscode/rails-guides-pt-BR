@@ -4,14 +4,16 @@
 Active Record Callbacks
 =======================
 
-This guide teaches you how to hook into the life cycle of your Active Record
-objects.
+Este guia ensina como se conectar ao ciclo de vida de seus objetos _Active
+Record_.
 
-After reading this guide, you will know:
+Depois de ler esse guia, você saberá:
 
-* The life cycle of Active Record objects.
-* How to create callback methods that respond to events in the object life cycle.
-* How to create special classes that encapsulate common behavior for your callbacks.
+* O ciclo de vida de objetos _Active Record_.
+* Como criar métodos de _callback_ que respondem a eventos no ciclo de vida do
+  objeto.
+* Como criar classes especiais que encapsulam o comportamento comum para seus
+  _callbacks_.
 
 --------------------------------------------------------------------------------
 
