@@ -1052,7 +1052,7 @@ Para finalizar, vamos criar um *link* para essa página na parte inferior da
 
 ### Atualizando um Artigo
 
-Nós cobrimos o "CR" do CRUD. Agora, vamos passar para o "U" (_Update_ -
+Nós cobrimos o "CR" do CRUD. Agora, vamos passar para o "U" (_Update_, 
 atualização). Atualizar um recurso é muito semelhante a criar um recurso. Ambos
 são processos de várias etapas. Primeiro, o usuário solicita um formulário para
 editar os dados. Se não houver erros, o recurso será atualizado. Caso contrário,
@@ -1207,7 +1207,7 @@ para a página de edição na parte inferior de `app/views/articles/show.html.er
 
 ### Deletando um Artigo
 
-Finalmente chegamos do "D" (_Delete_ - destruição) do CRUD. Deletar um recurso é
+Finalmente chegamos do "D" (_Delete_ , destruição) do CRUD. Deletar um recurso é
 um processo mais simples do que criar ou atualizar. Requer apenas uma rota e uma
 _action_ do _controller_. E nosso roteamento de recursos (`resources :articles`)
 já fornece a rota que mapeia as requisições `DELETE /articles/:id` para a
