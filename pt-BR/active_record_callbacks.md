@@ -337,14 +337,28 @@ Article destroyed
 => #<User id: 1>
 ```
 
-Conditional Callbacks
----------------------
+_Callbacks_ Condicionais
+------------------------
 
-As with validations, we can also make the calling of a callback method conditional on the satisfaction of a given predicate. We can do this using the `:if` and `:unless` options, which can take a symbol, a `Proc` or an `Array`. You may use the `:if` option when you want to specify under which conditions the callback **should** be called. If you want to specify the conditions under which the callback **should not** be called, then you may use the `:unless` option.
+Tal como acontece com as validações, também podemos tornar a chamada de um
+método de _callback_ condicional à satisfação de um determinado predicado.
+Podemos fazer isso utilizando as opções `:if` e `:except`, que podemo recever um
+símbolo, uma `Proc` ou um `Array`. Você pode utilizar a opção `:if` quando
+quiser especificar sob quais condições o _callback_ **deve** ser chamado. Se
+você deseja especificar as condições sob as quais o _callback_ **não** deve ser
+chamado, você pode utilizar a opção `:unless`.
 
-### Using `:if` and `:unless` with a `Symbol`
 
-You can associate the `:if` and `:unless` options with a symbol corresponding to the name of a predicate method that will get called right before the callback. When using the `:if` option, the callback won't be executed if the predicate method returns false; when using the `:unless` option, the callback won't be executed if the predicate method returns true. This is the most common option. Using this form of registration it is also possible to register several different predicates that should be called to check if the callback should be executed.
+### Utilizando `:if` e `:unless` com um `Symbol`
+
+Você pode associar as opções `:if` e `:unless` com um _symbol_ correspondente ao
+nome de um método predicado que será chamado logo antes do _callback_. Ao
+utilizar a opção `:if`, o _callback_ não será executado se o método predicado
+retornar `false` (falso); ao utilizar a opção `:unless`, o _callback_ não será executado
+se o médoto predicado retornar `true` (verdadeiro). Esta é a opção mais comum.
+Utilizando esta forma de registro também é possível registrar vários predicados
+diferentes que devem ser chamado para verificar se o _callback_ deve ser
+executado.
 
 ```ruby
 class Order < ApplicationRecord
