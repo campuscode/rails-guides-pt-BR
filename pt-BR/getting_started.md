@@ -1205,16 +1205,16 @@ para a página de edição na parte inferior de `app/views/articles/show.html.er
 </ul>
 ```
 
-### Deleting an Article
+### Deletando um Artigo
 
-Finally, we arrive at the "D" (Delete) of CRUD. Deleting a resource is a simpler
-process than creating or updating. It only requires a route and a controller
-action. And our resourceful routing (`resources :articles`) already provides the
-route, which maps `DELETE /articles/:id` requests to the `destroy` action of
-`ArticlesController`.
+Finalmente chegamos do "D" (_Delete_ - destruição) do CRUD. Deletar um recurso é
+um processo mais simples do que criar ou atualizar. Requer apenas uma rota e uma
+_action_ do _controller_. E nosso roteamento de recursos (`resources :articles`)
+já fornece a rota que mapeia as requisições `DELETE /articles/:id` para a
+_action_ `destroy` de `ArticlesController`.
 
-So, let's add a typical `destroy` action to `app/controllers/articles_controller.rb`,
-below the `update` action:
+Então, vamos adicionar uma típica _action_ `destroy` em
+`app/controllers/articles_controller.rb`, abaixo da _action_ `update`:
 
 ```ruby
 class ArticlesController < ApplicationController
@@ -1268,16 +1268,18 @@ class ArticlesController < ApplicationController
 end
 ```
 
-The `destroy` action fetches the article from the database, and calls [`destroy`](
+A _action_ `destroy` busca o artigo do banco de dados e chama o método [`destroy`](
 https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-destroy)
-on it. Then, it redirects the browser to the root path.
+do artigo. Em seguida, redireciona o navegador para o caminho raiz (_root
+path_).
 
-We have chosen to redirect to the root path because that is our main access
-point for articles. But, in other circumstances, you might choose to redirect to
-e.g. `articles_path`.
+Nós optamos por redirecionar para o caminho raiz porque esse é o nosso principal
+ponto de acesso para os artigos. Mas, em outras circunstâncias, você pode optar
+por redirecionar para, por exemplo, `articles_path`
 
-Now let's add a link at the bottom of `app/views/articles/show.html.erb` so that
-we can delete an article from its own page:
+Agora vamos adicionar um _link_ na parte inferior de
+`app/views/articles/show.html.erb` para que possamos deletar um artigo de sua
+própria página:
 
 ```html+erb
 <h1><%= @article.title %></h1>
@@ -1292,19 +1294,20 @@ we can delete an article from its own page:
 </ul>
 ```
 
-In the above code, we're passing a few additional options to `link_to`. The
-`method: :delete` option causes the link to make a `DELETE` request instead of a
-`GET` request. The `data: { confirm: "Are you sure?" }` option causes a
-confirmation dialog to appear when the link is clicked. If the user cancels the
-dialog, the request is aborted. Both of these options are powered by a feature
-of Rails called *Unobtrusive JavaScript* (UJS). The JavaScript file that
-implements these behaviors is included by default in fresh Rails applications.
+Nó código acima, estamos passando algumas opções adicionais para o `link_to`. A
+opção `method: :delete` faz com que o _link_ faça uma requisição `DELETE` em vez
+de uma requisição `GET`. A opção `data: { confirm: "Are you sure?" }` faz com
+que uma caixa de diálogo de confirmação apareça quando o _link_ é clicado. Se o
+usuário cancelar a caixa de diálogo, a requisição será abortada. Ambas as opções
+são alimentadas por um recurso do Rails chamado _JavaScript Discreto_ (UJS). O
+arquivo JavaScript que implementa esses comportamentos é incluído por padrão em
+novas aplicações Rails.
 
-TIP: To learn more about Unobtrusive JavaScript, see [Working With JavaScript in
-Rails](working_with_javascript_in_rails.html).
+TIP: Para saber mais sobre Javascript Discreto (_unobtrusive_), consulte
+[Trabalhando com JavaScript no Rails](working_with_javascript_in_rails.html).
 
-And that's it! We can now list, show, create, update, and delete articles!
-InCRUDable!
+E é isso! Agora podemos listar, exibir, criar, atualizar e deletar artigos!
+Incrível!
 
 Adicionando um Segundo Model
 ----------------------------
