@@ -1189,11 +1189,11 @@ semelhante:
 TIP: Para saber mais sobre _partials_, consulte [Layouts e Renderização no Rails § Usando
 Partials](layouts_and_rendering.html#usando-partials).
 
-#### Finishing Up
+#### Finalizando
 
-We can now update an article by visiting its edit page, e.g.
-<http://localhost:3000/articles/1/edit>. To finish up, let's link to the edit
-page from the bottom of `app/views/articles/show.html.erb`:
+Agora podemos atualizar um artigo visitando sua página de edição, por exemplo,
+<http://localhost:3000/articles/1/edit>. Para finalizar, vamos criar um _link_
+para a página de edição na parte inferior de `app/views/articles/show.html.erb`:
 
 ```html+erb
 <h1><%= @article.title %></h1>
