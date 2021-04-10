@@ -382,10 +382,6 @@ No seu *template* de *view* você pode utilizar algo como
 <%= text_field :person, :email_confirmation %>
 ```
 
-This check is performed only if `email_confirmation` is not `nil`. To require
-confirmation, make sure to add a presence check for the confirmation attribute
-(we'll take a look at `presence` later on in this guide):
-
 Essa checagem só é feita se o `email_confirmation` não é `nil`. Para requisitar
 uma confirmação tenha certeza que adicionou uma checagem de presença para o
 atributo de confirmação (nós iremos ver `presence` em breve nesse guia):
@@ -736,10 +732,6 @@ adicionar manualmente erros à coleção de erros do registro na classe validado
 
 Para implementar o método validador, você deve ter um parâmetro `record`
 definido, que é o registro a ser validado.
-
-Like all other validations, `validates_with` takes the `:if`, `:unless` and
-`:on` options. If you pass any other options, it will send those options to the
-validator class as `options`:
 
 Como todas as outras validações, `validates_with` utiliza as opções`:if`,
 `:unless` e `:on`. Se você passar outras opções, essas opções serão enviadas
