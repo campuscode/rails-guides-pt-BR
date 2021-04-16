@@ -336,21 +336,21 @@ code:</p><div class="code_container">
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d01be0e9e7913020ef390bf77ee33009">&lt;% @products.each do |product| %&gt;
+<textarea class="clipboard-content" id="clipboard-77c3399a6e2c53bbe0746f8bd984bd52">&lt;% @products.each do |product| %&gt;
   &lt;% cache product do %&gt;
     &lt;%= render product %&gt;
   &lt;% end %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d01be0e9e7913020ef390bf77ee33009">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-77c3399a6e2c53bbe0746f8bd984bd52">Copiar</button>
 </div>
 <p>When your application receives its first request to this page, Rails will write
 a new cache entry with a unique key. A key looks something like this:</p><div class="code_container">
 <pre><code class="highlight plaintext">views/products/index:bea67108094918eeba42cd4a6e786901/products/1
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e2bcfcb2b5657c1365b055aa1caa3a65">views/products/index:bea67108094918eeba42cd4a6e786901/products/1
+<textarea class="clipboard-content" id="clipboard-fe6fa41cc14cef78f84b49494c657718">views/products/index:bea67108094918eeba42cd4a6e786901/products/1
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e2bcfcb2b5657c1365b055aa1caa3a65">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fe6fa41cc14cef78f84b49494c657718">Copiar</button>
 </div>
 <p>The string of characters in the middle is a template tree digest. It is a hash
 digest computed based on the contents of the view fragment you are caching. If
@@ -363,20 +363,20 @@ that contain the previous version are ignored.</p><div class="info"><p>Cache sto
   <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="n">product</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fd230beef28701e1cc7c0357dd75be9d">&lt;% cache_if admin?, product do %&gt;
+<textarea class="clipboard-content" id="clipboard-e5e34db8a9f19d32c029afea013bcf95">&lt;% cache_if admin?, product do %&gt;
   &lt;%= render product %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fd230beef28701e1cc7c0357dd75be9d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e5e34db8a9f19d32c029afea013bcf95">Copiar</button>
 </div>
 <h5 id="collection-caching"><a class="anchorlink" href="#collection-caching">1.3.1 Collection caching</a></h5><p>The <code>render</code> helper can also cache individual templates rendered for a collection.
 It can even one up the previous example with <code>each</code> by reading all cache
 templates at once instead of one by one. This is done by passing <code>cached: true</code> when rendering the collection:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s1">'products/product'</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@products</span><span class="p">,</span> <span class="ss">cached: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0f71d5a35237c397f57cb11e67b1e115">&lt;%= render partial: 'products/product', collection: @products, cached: true %&gt;
+<textarea class="clipboard-content" id="clipboard-9576dcad33c68a5c1ddc3752f6dd5b70">&lt;%= render partial: 'products/product', collection: @products, cached: true %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0f71d5a35237c397f57cb11e67b1e115">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9576dcad33c68a5c1ddc3752f6dd5b70">Copiar</button>
 </div>
 <p>All cached templates from previous renders will be fetched at once with much
 greater speed. Additionally, the templates that haven't yet been cached will be
@@ -390,22 +390,22 @@ However, this will not expire any cache the fragment is nested within.</p><p>For
   <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="n">product</span><span class="p">.</span><span class="nf">games</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b9dad007702bef62c38e7c7c282ba5c2">&lt;% cache product do %&gt;
+<textarea class="clipboard-content" id="clipboard-43a88bc522b196ceacbecaee39c4bbe2">&lt;% cache product do %&gt;
   &lt;%= render product.games %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b9dad007702bef62c38e7c7c282ba5c2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-43a88bc522b196ceacbecaee39c4bbe2">Copiar</button>
 </div>
 <p>Which in turn renders this view:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">cache</span> <span class="n">game</span> <span class="k">do</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="n">game</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fcc94859619977006141d49a828c61f1">&lt;% cache game do %&gt;
+<textarea class="clipboard-content" id="clipboard-de0807a7406e80b4fb970b0732e203d2">&lt;% cache game do %&gt;
   &lt;%= render game %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fcc94859619977006141d49a828c61f1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-de0807a7406e80b4fb970b0732e203d2">Copiar</button>
 </div>
 <p>If any attribute of game is changed, the <code>updated_at</code> value will be set to the
 current time, thereby expiring the cache. However, because <code>updated_at</code>
@@ -420,7 +420,7 @@ the <code>touch</code> method:</p><div class="code_container">
   <span class="n">belongs_to</span> <span class="ss">:product</span><span class="p">,</span> <span class="ss">touch: </span><span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2f478abac9f4589784f4ac404cff4e3e">class Product &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-c18250412bdc668bc9d3da95689ec574">class Product &lt; ApplicationRecord
   has_many :games
 end
 
@@ -428,23 +428,23 @@ class Game &lt; ApplicationRecord
   belongs_to :product, touch: true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2f478abac9f4589784f4ac404cff4e3e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c18250412bdc668bc9d3da95689ec574">Copiar</button>
 </div>
 <p>With <code>touch</code> set to <code>true</code>, any action which changes <code>updated_at</code> for a game
 record will also change it for the associated product, thereby expiring the
 cache.</p><h4 id="shared-partial-caching"><a class="anchorlink" href="#shared-partial-caching">1.5 Shared Partial Caching</a></h4><p>It is possible to share partials and associated caching between files with different mime types. For example shared partial caching allows template writers to share a partial between HTML and JavaScript files. When templates are collected in the template resolver file paths they only include the template language extension and not the mime type. Because of this templates can be used for multiple mime types. Both HTML and JavaScript requests will respond to the following code:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">render</span><span class="p">(</span><span class="ss">partial: </span><span class="s1">'hotels/hotel'</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@hotels</span><span class="p">,</span> <span class="ss">cached: </span><span class="kp">true</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-23e7b6319d1a3772a271fabd99f3cc6d">render(partial: 'hotels/hotel', collection: @hotels, cached: true)
+<textarea class="clipboard-content" id="clipboard-135dfe3cdcebd7b4e6a4a9ef2b0758fd">render(partial: 'hotels/hotel', collection: @hotels, cached: true)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-23e7b6319d1a3772a271fabd99f3cc6d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-135dfe3cdcebd7b4e6a4a9ef2b0758fd">Copiar</button>
 </div>
 <p>Will load a file named <code>hotels/hotel.erb</code>.</p><p>Another option is to include the full filename of the partial to render.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">render</span><span class="p">(</span><span class="ss">partial: </span><span class="s1">'hotels/hotel.html.erb'</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@hotels</span><span class="p">,</span> <span class="ss">cached: </span><span class="kp">true</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-286f61a802323ee5d1969efdc812bcf9">render(partial: 'hotels/hotel.html.erb', collection: @hotels, cached: true)
+<textarea class="clipboard-content" id="clipboard-e253c04336d5d41c46aab69943814814">render(partial: 'hotels/hotel.html.erb', collection: @hotels, cached: true)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-286f61a802323ee5d1969efdc812bcf9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e253c04336d5d41c46aab69943814814">Copiar</button>
 </div>
 <p>Will load a file named <code>hotels/hotel.html.erb</code> in any file mime type, for example you could include this partial in a JavaScript file.</p><h4 id="managing-dependencies"><a class="anchorlink" href="#managing-dependencies">1.6 Managing dependencies</a></h4><p>In order to correctly invalidate the cache, you need to properly define the
 caching dependencies. Rails is clever enough to handle common cases so you don't
@@ -463,7 +463,7 @@ how to decode:</p><div class="code_container">
 <span class="n">render</span><span class="p">(</span><span class="n">topics</span><span class="p">)</span>         <span class="n">translates</span> <span class="n">to</span> <span class="n">render</span><span class="p">(</span><span class="s2">"topics/topic"</span><span class="p">)</span>
 <span class="n">render</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="nf">topics</span><span class="p">)</span> <span class="n">translates</span> <span class="n">to</span> <span class="n">render</span><span class="p">(</span><span class="s2">"topics/topic"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7277051ab0fbf672ed1d00ba290c0f2a">render partial: "comments/comment", collection: commentable.comments
+<textarea class="clipboard-content" id="clipboard-8d38cd4fdb83a5f7b072bdd1a26d29c6">render partial: "comments/comment", collection: commentable.comments
 render "comments/comments"
 render 'comments/comments'
 render('comments/comments')
@@ -474,39 +474,39 @@ render(@topic)         translates to render("topics/topic")
 render(topics)         translates to render("topics/topic")
 render(message.topics) translates to render("topics/topic")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7277051ab0fbf672ed1d00ba290c0f2a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8d38cd4fdb83a5f7b072bdd1a26d29c6">Copiar</button>
 </div>
 <p>On the other hand, some calls need to be changed to make caching work properly.
 For instance, if you're passing a custom collection, you'll need to change:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">render</span> <span class="vi">@project</span><span class="p">.</span><span class="nf">documents</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">published: </span><span class="kp">true</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c7b9755d05d8639ab9caf8766171f445">render @project.documents.where(published: true)
+<textarea class="clipboard-content" id="clipboard-f4f6c0eb6db6ff88949a3188d59a7211">render @project.documents.where(published: true)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c7b9755d05d8639ab9caf8766171f445">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f4f6c0eb6db6ff88949a3188d59a7211">Copiar</button>
 </div>
 <p>to:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">render</span> <span class="ss">partial: </span><span class="s2">"documents/document"</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@project</span><span class="p">.</span><span class="nf">documents</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">published: </span><span class="kp">true</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a8aaa032a3822a70aab98f0736e3d6f0">render partial: "documents/document", collection: @project.documents.where(published: true)
+<textarea class="clipboard-content" id="clipboard-a423184d14006ebb405e1ce06a345a52">render partial: "documents/document", collection: @project.documents.where(published: true)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a8aaa032a3822a70aab98f0736e3d6f0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a423184d14006ebb405e1ce06a345a52">Copiar</button>
 </div>
 <h5 id="explicit-dependencies"><a class="anchorlink" href="#explicit-dependencies">1.6.2 Explicit dependencies</a></h5><p>Sometimes you'll have template dependencies that can't be derived at all. This
 is typically the case when rendering happens in helpers. Here's an example:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render_sortable_todolists</span> <span class="vi">@project</span><span class="p">.</span><span class="nf">todolists</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5b307d63f6b9cb13a7cac435c2b4b83f">&lt;%= render_sortable_todolists @project.todolists %&gt;
+<textarea class="clipboard-content" id="clipboard-d76d31f534009d50e23c97da5cbbdef0">&lt;%= render_sortable_todolists @project.todolists %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5b307d63f6b9cb13a7cac435c2b4b83f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d76d31f534009d50e23c97da5cbbdef0">Copiar</button>
 </div>
 <p>You'll need to use a special comment format to call those out:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="c">&lt;%# Template Dependency: todolists/todolist %&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">render_sortable_todolists</span> <span class="vi">@project</span><span class="p">.</span><span class="nf">todolists</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5dd144457dcbe1afa769c7f5e09df3e2">&lt;%# Template Dependency: todolists/todolist %&gt;
+<textarea class="clipboard-content" id="clipboard-b0c22eecbefa0fbe603c4ccce4d2ef72">&lt;%# Template Dependency: todolists/todolist %&gt;
 &lt;%= render_sortable_todolists @project.todolists %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5dd144457dcbe1afa769c7f5e09df3e2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b0c22eecbefa0fbe603c4ccce4d2ef72">Copiar</button>
 </div>
 <p>In some cases, like a single table inheritance setup, you might have a bunch of
 explicit dependencies. Instead of writing every template out, you can use a
@@ -514,10 +514,10 @@ wildcard to match any template in a directory:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="c">&lt;%# Template Dependency: events/* %&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">render_categorizable_events</span> <span class="vi">@person</span><span class="p">.</span><span class="nf">events</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5b50e093d079caa390210306b30496d3">&lt;%# Template Dependency: events/* %&gt;
+<textarea class="clipboard-content" id="clipboard-5b0883c3dcffb311666692bf60e9fed3">&lt;%# Template Dependency: events/* %&gt;
 &lt;%= render_categorizable_events @person.events %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5b50e093d079caa390210306b30496d3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5b0883c3dcffb311666692bf60e9fed3">Copiar</button>
 </div>
 <p>As for collection caching, if the partial template doesn't start with a clean
 cache call, you can still benefit from collection caching by adding a special
@@ -527,12 +527,12 @@ comment format anywhere in the template, like:</p><div class="code_container">
   <span class="cp">&lt;%=</span> <span class="n">notification</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-98d6eadaae59e7c79ba6417f13afa072">&lt;%# Template Collection: notification %&gt;
+<textarea class="clipboard-content" id="clipboard-bd5311a7d776997fec2b39e47415b7a3">&lt;%# Template Collection: notification %&gt;
 &lt;% my_helper_that_calls_cache(some_arg, notification) do %&gt;
   &lt;%= notification.name %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-98d6eadaae59e7c79ba6417f13afa072">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bd5311a7d776997fec2b39e47415b7a3">Copiar</button>
 </div>
 <h5 id="external-dependencies"><a class="anchorlink" href="#external-dependencies">1.6.3 External dependencies</a></h5><p>If you use a helper method, for example, inside a cached block and you then update
 that helper, you'll have to bump the cache as well. It doesn't really matter how
@@ -541,10 +541,10 @@ simply be explicit in a comment, like:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="c">&lt;%# Helper Dependency Updated: Jul 28, 2015 at 7pm %&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">some_helper_method</span><span class="p">(</span><span class="n">person</span><span class="p">)</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-42489637764263b8776494750017f815">&lt;%# Helper Dependency Updated: Jul 28, 2015 at 7pm %&gt;
+<textarea class="clipboard-content" id="clipboard-eb32dc7b8b041c7d4e512fcf11181a35">&lt;%# Helper Dependency Updated: Jul 28, 2015 at 7pm %&gt;
 &lt;%= some_helper_method(person) %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-42489637764263b8776494750017f815">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eb32dc7b8b041c7d4e512fcf11181a35">Copiar</button>
 </div>
 <h4 id="low-level-caching"><a class="anchorlink" href="#low-level-caching">1.7 Low-Level Caching</a></h4><p>Sometimes you need to cache a particular value or query result instead of caching view fragments. Rails' caching mechanism works great for storing <strong>any</strong> kind of information.</p><p>The most efficient way to implement low-level caching is using the <code>Rails.cache.fetch</code> method. This method does both reading and writing to the cache. When passed only a single argument, the key is fetched and value from the cache is returned. If a block is passed, that block will be executed in the event of a cache miss. The return value of the block will be written to the cache under the given cache key, and that return value will be returned. In case of cache hit, the cached value will be returned without executing the block.</p><p>Consider the following example. An application has a <code>Product</code> model with an instance method that looks up the product's price on a competing website. The data returned by this method would be perfect for low-level caching:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Product</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -555,7 +555,7 @@ simply be explicit in a comment, like:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e6d8c01342d9983f5eee2df246647838">class Product &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-f0eb39a80a23225011e9ddf86d73845c">class Product &lt; ApplicationRecord
   def competing_price
     Rails.cache.fetch("#{cache_key_with_version}/competing_price", expires_in: 12.hours) do
       Competitor::API.find_price(id)
@@ -563,7 +563,7 @@ simply be explicit in a comment, like:</p><div class="code_container">
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e6d8c01342d9983f5eee2df246647838">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f0eb39a80a23225011e9ddf86d73845c">Copiar</button>
 </div>
 <div class="note"><p>Notice that in this example we used the <code>cache_key_with_version</code> method, so the resulting cache key will be something like <code>products/233-20140225082222765838000/competing_price</code>. <code>cache_key_with_version</code> generates a string based on the model's class name, <code>id</code>, and <code>updated_at</code> attributes. This is a common convention and has the benefit of invalidating the cache whenever the product is updated. In general, when you use low-level caching for instance level information, you need to generate a cache key.</p></div><h4 id="sql-caching"><a class="anchorlink" href="#sql-caching">1.8 SQL Caching</a></h4><p>Query caching is a Rails feature that caches the result set returned by each
 query. If Rails encounters the same query again for that request, it will use
@@ -583,7 +583,7 @@ again.</p><p>For example:</p><div class="code_container">
 
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2debc421ad7b8f41bc89ab0c9ddafb69">class ProductsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-2e2f47556c22ef7cd1f211e64f9f1f40">class ProductsController &lt; ApplicationController
 
   def index
     # Run a find query
@@ -597,7 +597,7 @@ again.</p><p>For example:</p><div class="code_container">
 
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2debc421ad7b8f41bc89ab0c9ddafb69">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2e2f47556c22ef7cd1f211e64f9f1f40">Copiar</button>
 </div>
 <p>The second time the same query is run against the database, it's not actually going to hit the database. The first time the result is returned from the query it is stored in the query cache (in memory) and the second time it's pulled from memory.</p><p>However, it's important to note that query caches are created at the start of
 an action and destroyed at the end of that action and thus persist only for the
@@ -608,9 +608,9 @@ caching).</p><h4 id="configuration"><a class="anchorlink" href="#configuration">
 arguments to the cache store's constructor:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:memory_store</span><span class="p">,</span> <span class="p">{</span> <span class="ss">size: </span><span class="mi">64</span><span class="p">.</span><span class="nf">megabytes</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7bec25315ad32394a5a9b0e07aac3204">config.cache_store = :memory_store, { size: 64.megabytes }
+<textarea class="clipboard-content" id="clipboard-ac7d9a695afa07c6164e9a578fb5b254">config.cache_store = :memory_store, { size: 64.megabytes }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7bec25315ad32394a5a9b0e07aac3204">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ac7d9a695afa07c6164e9a578fb5b254">Copiar</button>
 </div>
 <div class="note"><p>Alternatively, you can call <code>ActionController::Base.cache_store</code> outside of a configuration block.</p></div><p>You can access the cache by calling <code>Rails.cache</code>.</p><h4 id="activesupport-cache-store"><a class="anchorlink" href="#activesupport-cache-store">2.2 ActiveSupport::Cache::Store</a></h4><p>This class provides the foundation for interacting with the cache in Rails. This is an abstract class and you cannot use it on its own. Rather you must use a concrete implementation of the class tied to a storage engine. Rails ships with several implementations documented below.</p><p>The main methods to call are <code>read</code>, <code>write</code>, <code>delete</code>, <code>exist?</code>, and <code>fetch</code>. The fetch method takes a block and will either return an existing value from the cache, or evaluate the block and write the result to the cache if no value exists.</p><p>There are some common options that can be used by all cache implementations. These can be passed to the constructor or the various methods to interact with entries.</p>
 <ul>
@@ -627,16 +627,16 @@ To increase the number of available connections you can enable connection
 pooling.</p><p>First, add the <code>connection_pool</code> gem to your Gemfile:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'connection_pool'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-708b74826671e3886af5d4cb790f6cb1">gem 'connection_pool'
+<textarea class="clipboard-content" id="clipboard-f989fd3bffcdd2a940dd89c047a0a298">gem 'connection_pool'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-708b74826671e3886af5d4cb790f6cb1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f989fd3bffcdd2a940dd89c047a0a298">Copiar</button>
 </div>
 <p>Next, pass the <code>:pool_size</code> and/or <code>:pool_timeout</code> options when configuring the cache store:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:mem_cache_store</span><span class="p">,</span> <span class="s2">"cache.example.com"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">pool_size: </span><span class="mi">5</span><span class="p">,</span> <span class="ss">pool_timeout: </span><span class="mi">5</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-41b01757c5c65cd4868ee31e9073c105">config.cache_store = :mem_cache_store, "cache.example.com", { pool_size: 5, pool_timeout: 5 }
+<textarea class="clipboard-content" id="clipboard-b2048901e564421e6c87dbaac1805d50">config.cache_store = :mem_cache_store, "cache.example.com", { pool_size: 5, pool_timeout: 5 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-41b01757c5c65cd4868ee31e9073c105">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b2048901e564421e6c87dbaac1805d50">Copiar</button>
 </div>
 
 <ul>
@@ -649,9 +649,9 @@ you can swap in any number of caching technologies into your Rails application.<
 custom class.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="no">MyCacheStore</span><span class="p">.</span><span class="nf">new</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2f86ec68e0ad0efb64c7ae857c37a12f">config.cache_store = MyCacheStore.new
+<textarea class="clipboard-content" id="clipboard-1738dd5a355e20b429fc59cecbedd3eb">config.cache_store = MyCacheStore.new
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2f86ec68e0ad0efb64c7ae857c37a12f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1738dd5a355e20b429fc59cecbedd3eb">Copiar</button>
 </div>
 <h4 id="activesupport-cache-memorystore"><a class="anchorlink" href="#activesupport-cache-memorystore">2.3 ActiveSupport::Cache::MemoryStore</a></h4><p>This cache store keeps entries in memory in the same Ruby process. The cache
 store has a bounded size specified by sending the <code>:size</code> option to the
@@ -659,9 +659,9 @@ initializer (default is 32Mb). When the cache exceeds the allotted size, a
 cleanup will occur and the least recently used entries will be removed.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:memory_store</span><span class="p">,</span> <span class="p">{</span> <span class="ss">size: </span><span class="mi">64</span><span class="p">.</span><span class="nf">megabytes</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a526a4b5251bdefe8cbf1dab7805a98f">config.cache_store = :memory_store, { size: 64.megabytes }
+<textarea class="clipboard-content" id="clipboard-07a0faa6e69032e5f99c4d19bbdb9aa6">config.cache_store = :memory_store, { size: 64.megabytes }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a526a4b5251bdefe8cbf1dab7805a98f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-07a0faa6e69032e5f99c4d19bbdb9aa6">Copiar</button>
 </div>
 <p>If you're running multiple Ruby on Rails server processes (which is the case
 if you're using Phusion Passenger or puma clustered mode), then your Rails server
@@ -672,9 +672,9 @@ as well as development and test environments.</p><p>New Rails projects are confi
 it will not be possible to manually read, write, or expire the cache via the Rails console.</p></div><h4 id="activesupport-cache-filestore"><a class="anchorlink" href="#activesupport-cache-filestore">2.4 ActiveSupport::Cache::FileStore</a></h4><p>This cache store uses the file system to store entries. The path to the directory where the store files will be stored must be specified when initializing the cache.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:file_store</span><span class="p">,</span> <span class="s2">"/path/to/cache/directory"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-988f27dd669395fd536380a3575a857f">config.cache_store = :file_store, "/path/to/cache/directory"
+<textarea class="clipboard-content" id="clipboard-3ce3254ea5f5541e84b9b1b2073c4658">config.cache_store = :file_store, "/path/to/cache/directory"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-988f27dd669395fd536380a3575a857f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3ce3254ea5f5541e84b9b1b2073c4658">Copiar</button>
 </div>
 <p>With this cache store, multiple server processes on the same host can share a
 cache. This cache store is appropriate for low to medium traffic sites that are
@@ -684,16 +684,16 @@ periodically clear out old entries.</p><p>This is the default cache store implem
 no explicit <code>config.cache_store</code> is supplied.</p><h4 id="activesupport-cache-memcachestore"><a class="anchorlink" href="#activesupport-cache-memcachestore">2.5 ActiveSupport::Cache::MemCacheStore</a></h4><p>This cache store uses Danga's <code>memcached</code> server to provide a centralized cache for your application. Rails uses the bundled <code>dalli</code> gem by default. This is currently the most popular cache store for production websites. It can be used to provide a single, shared cache cluster with very high performance and redundancy.</p><p>When initializing the cache, you should specify the addresses for all memcached servers in your cluster, or ensure the <code>MEMCACHE_SERVERS</code> environment variable has been set appropriately.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:mem_cache_store</span><span class="p">,</span> <span class="s2">"cache-1.example.com"</span><span class="p">,</span> <span class="s2">"cache-2.example.com"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-623415308c8a1e3cb3c361f7e493da55">config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.com"
+<textarea class="clipboard-content" id="clipboard-6c1eb642eca54dd2e3a959026540a5ce">config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.com"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-623415308c8a1e3cb3c361f7e493da55">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6c1eb642eca54dd2e3a959026540a5ce">Copiar</button>
 </div>
 <p>If neither are specified, it will assume memcached is running on localhost on the default port (<code>127.0.0.1:11211</code>), but this is not an ideal setup for larger sites.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:mem_cache_store</span> <span class="c1"># Will fallback to $MEMCACHE_SERVERS, then 127.0.0.1:11211</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2c9fb1f5bc27b6285d60634662083f19">config.cache_store = :mem_cache_store # Will fallback to $MEMCACHE_SERVERS, then 127.0.0.1:11211
+<textarea class="clipboard-content" id="clipboard-61c814c80bba178bd4e034cd1c5c6e9e">config.cache_store = :mem_cache_store # Will fallback to $MEMCACHE_SERVERS, then 127.0.0.1:11211
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2c9fb1f5bc27b6285d60634662083f19">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-61c814c80bba178bd4e034cd1c5c6e9e">Copiar</button>
 </div>
 <p>See the <a href="https://www.rubydoc.info/github/mperham/dalli/Dalli%2FClient:initialize"><code>Dalli::Client</code> documentation</a> for supported address types.</p><p>The <code>write</code> and <code>fetch</code> methods on this cache accept two additional options that take advantage of features specific to memcached. You can specify <code>:raw</code> to send a value directly to the server with no serialization. The value must be a string or number. You can use memcached direct operations like <code>increment</code> and <code>decrement</code> only on raw values. You can also specify <code>:unless_exist</code> if you don't want memcached to overwrite an existing entry.</p><h4 id="activesupport-cache-rediscachestore"><a class="anchorlink" href="#activesupport-cache-rediscachestore">2.6 ActiveSupport::Cache::RedisCacheStore</a></h4><p>The Redis cache store takes advantage of Redis support for automatic eviction
 when it reaches max memory, allowing it to behave much like a Memcached cache server.</p><p>Deployment note: Redis doesn't expire keys by default, so take care to use a
@@ -715,25 +715,25 @@ was returned to the user, typically <code>nil</code>; and <code>exception</code>
 was rescued.</p><p>To get started, add the redis gem to your Gemfile:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'redis'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-65abe59d6558756a7b5d3380cc2488b0">gem 'redis'
+<textarea class="clipboard-content" id="clipboard-33555eb3fbaf9a474075fb05d01379d6">gem 'redis'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-65abe59d6558756a7b5d3380cc2488b0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-33555eb3fbaf9a474075fb05d01379d6">Copiar</button>
 </div>
 <p>You can enable support for the faster <a href="https://github.com/redis/hiredis">hiredis</a>
 connection library by additionally adding its ruby wrapper to your Gemfile:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'hiredis'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5477ccf8f084ef034bd04fb0df39c09c">gem 'hiredis'
+<textarea class="clipboard-content" id="clipboard-69c163f0d31c75eb7b28648b550ba044">gem 'hiredis'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5477ccf8f084ef034bd04fb0df39c09c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-69c163f0d31c75eb7b28648b550ba044">Copiar</button>
 </div>
 <p>Redis cache store will automatically require and use hiredis if available. No further
 configuration is needed.</p><p>Finally, add the configuration in the relevant <code>config/environments/*.rb</code> file:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:redis_cache_store</span><span class="p">,</span> <span class="p">{</span> <span class="ss">url: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'REDIS_URL'</span><span class="p">]</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dc16561700b1025724206dd442e98032">config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
+<textarea class="clipboard-content" id="clipboard-77a9c6dcf0a664f55ae50ccb100cd615">config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dc16561700b1025724206dd442e98032">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-77a9c6dcf0a664f55ae50ccb100cd615">Copiar</button>
 </div>
 <p>A more complex, production Redis cache store may look something like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">cache_servers</span> <span class="o">=</span> <span class="sx">%w(redis://cache-01:6379/0 redis://cache-02:6379/0)</span>
@@ -751,7 +751,7 @@ configuration is needed.</p><p>Finally, add the configuration in the relevant <c
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3ab0908cd945d62cc29a6523425c02eb">cache_servers = %w(redis://cache-01:6379/0 redis://cache-02:6379/0)
+<textarea class="clipboard-content" id="clipboard-e14eb842627f878a87a326af8b7d5e45">cache_servers = %w(redis://cache-01:6379/0 redis://cache-02:6379/0)
 config.cache_store = :redis_cache_store, { url: cache_servers,
 
   connect_timeout:    30,  # Defaults to 20 seconds
@@ -766,14 +766,14 @@ config.cache_store = :redis_cache_store, { url: cache_servers,
   }
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3ab0908cd945d62cc29a6523425c02eb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e14eb842627f878a87a326af8b7d5e45">Copiar</button>
 </div>
 <h4 id="activesupport-cache-nullstore"><a class="anchorlink" href="#activesupport-cache-nullstore">2.7 ActiveSupport::Cache::NullStore</a></h4><p>This cache store implementation is meant to be used only in development or test environments and it never stores anything. This can be very useful in development when you have code that interacts directly with <code>Rails.cache</code> but caching may interfere with being able to see the results of code changes. With this cache store, all <code>fetch</code> and <code>read</code> operations will result in a miss.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:null_store</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-27d4190987d5558406b5e33d3d9d4045">config.cache_store = :null_store
+<textarea class="clipboard-content" id="clipboard-9d86ed357e70a936c1236d93e599aedf">config.cache_store = :null_store
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-27d4190987d5558406b5e33d3d9d4045">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9d86ed357e70a936c1236d93e599aedf">Copiar</button>
 </div>
 <h3 id="cache-keys"><a class="anchorlink" href="#cache-keys">3 Cache Keys</a></h3><p>The keys used in a cache can be any object that responds to either <code>cache_key</code> or
 <code>to_param</code>. You can implement the <code>cache_key</code> method on your classes if you need
@@ -782,10 +782,10 @@ and record id.</p><p>You can use Hashes and Arrays of values as cache keys.</p><
 <pre><code class="highlight ruby"><span class="c1"># This is a legal cache key</span>
 <span class="no">Rails</span><span class="p">.</span><span class="nf">cache</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="ss">site: </span><span class="s2">"mysite"</span><span class="p">,</span> <span class="ss">owners: </span><span class="p">[</span><span class="n">owner_1</span><span class="p">,</span> <span class="n">owner_2</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-95bd7be74c1c57ce02a6299c866312ab"># This is a legal cache key
+<textarea class="clipboard-content" id="clipboard-e676d648c333a9668656856a4a8759ad"># This is a legal cache key
 Rails.cache.read(site: "mysite", owners: [owner_1, owner_2])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-95bd7be74c1c57ce02a6299c866312ab">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e676d648c333a9668656856a4a8759ad">Copiar</button>
 </div>
 <p>The keys you use on <code>Rails.cache</code> will not be the same as those actually used with
 the storage engine. They may be modified with a namespace or altered to fit
@@ -813,7 +813,7 @@ violating syntax rules.</p><h3 id="conditional-get-support"><a class="anchorlink
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aa301962590a23ca70c1a517d9e9c0d7">class ProductsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-d1570b520ef4fcd9c07a9f0faf96fe54">class ProductsController &lt; ApplicationController
 
   def show
     @product = Product.find(params[:id])
@@ -833,7 +833,7 @@ violating syntax rules.</p><h3 id="conditional-get-support"><a class="anchorlink
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aa301962590a23ca70c1a517d9e9c0d7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d1570b520ef4fcd9c07a9f0faf96fe54">Copiar</button>
 </div>
 <p>Instead of an options hash, you can also simply pass in a model. Rails will use the <code>updated_at</code> and <code>cache_key_with_version</code> methods for setting <code>last_modified</code> and <code>etag</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -848,7 +848,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fef93dc1ed218e1948155c29c5c3a852">class ProductsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-c334725c19ea51a757fe0d8acaff3bbb">class ProductsController &lt; ApplicationController
   def show
     @product = Product.find(params[:id])
 
@@ -860,7 +860,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fef93dc1ed218e1948155c29c5c3a852">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c334725c19ea51a757fe0d8acaff3bbb">Copiar</button>
 </div>
 <p>If you don't have any special response processing and are using the default rendering mechanism (i.e. you're not using <code>respond_to</code> or calling render yourself) then you've got an easy helper in <code>fresh_when</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -874,7 +874,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-43fb67478138a442d8dd19dce70b4a96">class ProductsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-5816682be083988c54912f5bd338fe7b">class ProductsController &lt; ApplicationController
 
   # This will automatically send back a :not_modified if the request is fresh,
   # and will render the default template (product.*) if it's stale.
@@ -885,7 +885,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-43fb67478138a442d8dd19dce70b4a96">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5816682be083988c54912f5bd338fe7b">Copiar</button>
 </div>
 <p>Sometimes we want to cache response, for example a static page, that never gets
 expired. To achieve this, we can use <code>http_cache_forever</code> helper and by doing
@@ -902,7 +902,7 @@ the cached response unless browser cache is forcefully cleared.</p></div><div cl
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bd544d7f20ad5059d64b5145db1dcd4d">class HomeController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-8d7f9e3eb5a2e30ff78d9ccfb69445c7">class HomeController &lt; ApplicationController
   def index
     http_cache_forever(public: true) do
       render
@@ -910,7 +910,7 @@ the cached response unless browser cache is forcefully cleared.</p></div><div cl
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bd544d7f20ad5059d64b5145db1dcd4d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8d7f9e3eb5a2e30ff78d9ccfb69445c7">Copiar</button>
 </div>
 <h4 id="strong-v-s-weak-etags"><a class="anchorlink" href="#strong-v-s-weak-etags">4.1 Strong v/s Weak ETags</a></h4><p>Rails generates weak ETags by default. Weak ETags allow semantically equivalent
 responses to have the same ETags, even if their bodies do not match exactly.
@@ -919,10 +919,10 @@ response body.</p><p>Weak ETags have a leading <code>W/</code> to differentiate 
 <pre><code class="highlight plaintext">W/"618bbc92e2d35ea1945008b42799b0e7" → Weak ETag
 "618bbc92e2d35ea1945008b42799b0e7" → Strong ETag
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f722b3860960aa9102ce4ce26c5b237d">W/"618bbc92e2d35ea1945008b42799b0e7" → Weak ETag
+<textarea class="clipboard-content" id="clipboard-fa69811aa61c31e0569d2aad840f9edb">W/"618bbc92e2d35ea1945008b42799b0e7" → Weak ETag
 "618bbc92e2d35ea1945008b42799b0e7" → Strong ETag
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f722b3860960aa9102ce4ce26c5b237d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fa69811aa61c31e0569d2aad840f9edb">Copiar</button>
 </div>
 <p>Unlike weak ETag, strong ETag implies that response should be exactly the same
 and byte by byte identical. Useful when doing Range requests within a
@@ -935,21 +935,21 @@ If you absolutely need to generate a strong ETag, it can be done as follows.</p>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0b4b8bd42cbd7f9d205c063440c10c06">class ProductsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-419c199c0c84d6aa1257a2f688f13c37">class ProductsController &lt; ApplicationController
   def show
     @product = Product.find(params[:id])
     fresh_when last_modified: @product.published_at.utc, strong_etag: @product
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0b4b8bd42cbd7f9d205c063440c10c06">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-419c199c0c84d6aa1257a2f688f13c37">Copiar</button>
 </div>
 <p>You can also set the strong ETag directly on the response.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">response</span><span class="p">.</span><span class="nf">strong_etag</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="nf">body</span> <span class="c1"># =&gt; "618bbc92e2d35ea1945008b42799b0e7"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fb56831de2b8d19c0ec5c7d7b42f9c7c">response.strong_etag = response.body # =&gt; "618bbc92e2d35ea1945008b42799b0e7"
+<textarea class="clipboard-content" id="clipboard-875e7e1562a12286cfc4609f22aef0d4">response.strong_etag = response.body # =&gt; "618bbc92e2d35ea1945008b42799b0e7"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fb56831de2b8d19c0ec5c7d7b42f9c7c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-875e7e1562a12286cfc4609f22aef0d4">Copiar</button>
 </div>
 <h3 id="caching-in-development"><a class="anchorlink" href="#caching-in-development">5 Caching in Development</a></h3><p>It's common to want to test the caching strategy of your application
 in development mode. Rails provides the rails command <code>dev:cache</code> to
@@ -959,10 +959,10 @@ easily toggle caching on/off.</p><div class="code_container">
 </span><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>dev:cache
 <span class="go">Development mode is no longer being cached.
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-b599f6a389b9118fe3bafa1541e44e51">bin/rails dev:cache
+<textarea class="clipboard-content" id="clipboard-10ecfc14253b815fdd576b993c7c7a47">bin/rails dev:cache
 bin/rails dev:cache
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b599f6a389b9118fe3bafa1541e44e51">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-10ecfc14253b815fdd576b993c7c7a47">Copiar</button>
 </div>
 <h3 id="references"><a class="anchorlink" href="#references">6 References</a></h3>
 <ul>
