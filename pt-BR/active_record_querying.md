@@ -1752,7 +1752,7 @@ irb> order.complete?
 ```
 
 Esses métodos de instância são criados automaticamente e atualizarão primeiro o valor do `status` para o valor nomeado
-e em seguida consultar se o *status* foi ou não definido com sucesso para o valor:
+e, em seguida, consultar se o *status* foi ou não definido com sucesso para o valor:
 
 ```irb
 irb> order = Order.first
