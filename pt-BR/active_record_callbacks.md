@@ -387,9 +387,10 @@ class Order < ApplicationRecord
 end
 ```
 
-### Multiple Conditions for Callbacks
+### Múltiplas Condições para _Callbacks_
 
-When writing conditional callbacks, it is possible to mix both `:if` and `:unless` in the same callback declaration:
+Ao escrever _callbacks_ condicionais, é possível misturar `:if` e `:unless` na
+mesma declaração do _callback_:
 
 ```ruby
 class Comment < ApplicationRecord
@@ -398,9 +399,11 @@ class Comment < ApplicationRecord
 end
 ```
 
-### Combining Callback Conditions
+### Combinando Condições de _Callback_
 
-When multiple conditions define whether or not a callback should happen, an `Array` can be used. Moreover, you can apply both `:if` and `:unless` to the same callback.
+Quando várias condições definem se um _callback_ deve ou não acontecer, um
+`Array` pode ser utilizado. Além disso, você pode aplicar `:if` e `:unless` para
+o mesmo _callback_.
 
 ```ruby
 class Comment < ApplicationRecord
@@ -410,7 +413,8 @@ class Comment < ApplicationRecord
 end
 ```
 
-The callback only runs when all the `:if` conditions and none of the `:unless` conditions are evaluated to `true`.
+O _callback_ só é executado quando todas as condições `:if` e nenhuma das
+condições `:unless` retornarem `true`.
 
 Classes *Callback*
 ----------------
