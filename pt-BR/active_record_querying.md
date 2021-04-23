@@ -1741,7 +1741,7 @@ irb> Order.not_shipped
 => #<ActiveRecord::Relation> # all orders with status != :shipped
 ```
 
-Esses métodos de instância são criados automaticamente e consultam se o modelo tem esse valor para o *enum* `status`:
+Esses métodos de instância são criados automaticamente e consultam se o _model_ tem esse valor para o *enum* `status`:
 
 ```irb
 irb> order = Order.shipped.first
