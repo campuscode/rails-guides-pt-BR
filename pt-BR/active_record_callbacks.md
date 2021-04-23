@@ -366,9 +366,10 @@ class Order < ApplicationRecord
 end
 ```
 
-### Using `:if` and `:unless` with a `Proc`
+### Utilizando `:if` e `:unless` com uma `Proc`
 
-It is possible to associate `:if` and `:unless` with a `Proc` object. This option is best suited when writing short validation methods, usually one-liners:
+É possível associar `:if` e `:unless` com um objeto `Proc`. Esta opção é mais
+adequada ao escrever métodos curtos de validação, geralmente de uma linha:
 
 ```ruby
 class Order < ApplicationRecord
@@ -377,7 +378,8 @@ class Order < ApplicationRecord
 end
 ```
 
-As the proc is evaluated in the context of the object, it is also possible to write this as:
+Como a _proc_ é avaliada no contexto do objeto, também é possível escrever isso
+como:
 
 ```ruby
 class Order < ApplicationRecord
