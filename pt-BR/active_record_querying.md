@@ -1719,7 +1719,7 @@ Um *enum* permite que você defina um *Array* de valores para um atributo e se r
 Declarar um *enum* irá:
 
 * Criar escopos que podem ser usados para encontrar todos objetos que tem ou não um dos valores do *enum*
-* Cria um método de instância que pode ser usado para determinar se um objeto tem um valor específicio para o enum
+* Criar um método de instância que pode ser usado para determinar se um objeto tem um valor específicio para o *enum*
 * Cria um método de instância que pode ser usado para mudar o valor do *enum* de um objeto
 
 para todos os possíveis valores de um *enum*.
