@@ -1714,17 +1714,17 @@ Se você deseja localizar por *name* e *locked*, você pode encadear esses local
 Enums
 -----
 
-An enum lets you define an Array of values for an attribute and refer to them by name.  The actual value stored in the database is an integer that has been mapped to one of the values.
+Um *enum* permite que você defina um *Array* de valores para um atributo e se refira a eles pelo nome. O valor presente no banco de dados é um inteiro que foi mapeado para um dos valores.
 
-Declaring an enum will:
+Declarar um *enum* irá:
 
-* Create scopes that can be used to find all objects that have or do not have one of the enum values
-* Create an instance method that can be used to determine if an object has a particular value for the enum
-* Create an instance method that can be used to change the enum value of an object
+* Criar escopos que podem ser usados para encontrar todos objetos que tem ou não um dos valores do *enum*
+* Criar um método de instância que pode ser usado para determinar se um objeto tem um valor específicio para o *enum*
+* Criar um método de instância que pode ser usado para mudar o valor do *enum* de um objeto
 
-for all possible values of an enum.
+para todos os possíveis valores de um *enum*.
 
-For example, given this [`enum`][] declaration:
+Por exemplo, dada essa declaração [`enum`][]:
 
 ```ruby
 class Order < ApplicationRecord
@@ -1732,7 +1732,7 @@ class Order < ApplicationRecord
 end
 ```
 
-These [scopes](#scopes) are created automatically and can be used to find all objects with or without a particular value for `status`:
+Esses [scopes](#scopes) são criados automaticamente e podem ser usados para todos os objetos com ou sem um valor específico para `status`:
 
 ```irb
 irb> Order.shipped
@@ -1741,7 +1741,7 @@ irb> Order.not_shipped
 => #<ActiveRecord::Relation> # all orders with status != :shipped
 ```
 
-These instance methods are created automatically and query whether the model has that value for the `status` enum:
+Esses métodos de instância são criados automaticamente e consultam se o _model_ tem esse valor para o *enum* `status`:
 
 ```irb
 irb> order = Order.shipped.first
@@ -1751,8 +1751,8 @@ irb> order.complete?
 => false
 ```
 
-These instance methods are created automatically and will first update the value of `status` to the named value
-and then query whether or not the status has been successfully set to the value:
+Esses métodos de instância são criados automaticamente e atualizarão primeiro o valor do `status` para o valor nomeado
+e, em seguida, consultar se o *status* foi ou não definido com sucesso para o valor:
 
 ```irb
 irb> order = Order.first
@@ -1761,7 +1761,7 @@ UPDATE "orders" SET "status" = ?, "updated_at" = ? WHERE "orders"."id" = ?  [["s
 => true
 ```
 
-Full documentation about enums can be found [here](https://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
+A documentação completa sobre *enums* pode ser encontrada [aqui](https://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
 
 [`enum`]: https://api.rubyonrails.org/classes/ActiveRecord/Enum.html#method-i-enum
 
