@@ -4,14 +4,16 @@
 Active Record Callbacks
 =======================
 
-This guide teaches you how to hook into the life cycle of your Active Record
-objects.
+Este guia ensina como se conectar ao ciclo de vida de seus objetos _Active
+Record_.
 
-After reading this guide, you will know:
+Depois de ler esse guia, você saberá:
 
-* The life cycle of Active Record objects.
-* How to create callback methods that respond to events in the object life cycle.
-* How to create special classes that encapsulate common behavior for your callbacks.
+* O ciclo de vida de objetos _Active Record_.
+* Como criar métodos de _callback_ que respondem a eventos no ciclo de vida do
+  objeto.
+* Como criar classes especiais que encapsulam o comportamento comum para seus
+  _callbacks_.
 
 --------------------------------------------------------------------------------
 
@@ -335,14 +337,28 @@ Article destroyed
 => #<User id: 1>
 ```
 
-Conditional Callbacks
----------------------
+_Callbacks_ Condicionais
+------------------------
 
-As with validations, we can also make the calling of a callback method conditional on the satisfaction of a given predicate. We can do this using the `:if` and `:unless` options, which can take a symbol, a `Proc` or an `Array`. You may use the `:if` option when you want to specify under which conditions the callback **should** be called. If you want to specify the conditions under which the callback **should not** be called, then you may use the `:unless` option.
+Tal como acontece com as validações, também podemos tornar a chamada de um
+método de _callback_ condicional à satisfação de um determinado predicado.
+Podemos fazer isso utilizando as opções `:if` e `:except`, que podemo recever um
+símbolo, uma `Proc` ou um `Array`. Você pode utilizar a opção `:if` quando
+quiser especificar sob quais condições o _callback_ **deve** ser chamado. Se
+você deseja especificar as condições sob as quais o _callback_ **não** deve ser
+chamado, você pode utilizar a opção `:unless`.
 
-### Using `:if` and `:unless` with a `Symbol`
 
-You can associate the `:if` and `:unless` options with a symbol corresponding to the name of a predicate method that will get called right before the callback. When using the `:if` option, the callback won't be executed if the predicate method returns false; when using the `:unless` option, the callback won't be executed if the predicate method returns true. This is the most common option. Using this form of registration it is also possible to register several different predicates that should be called to check if the callback should be executed.
+### Utilizando `:if` e `:unless` com um `Symbol`
+
+Você pode associar as opções `:if` e `:unless` com um _symbol_ correspondente ao
+nome de um método predicado que será chamado logo antes do _callback_. Ao
+utilizar a opção `:if`, o _callback_ não será executado se o método predicado
+retornar `false` (falso); ao utilizar a opção `:unless`, o _callback_ não será executado
+se o método predicado retornar `true` (verdadeiro). Esta é a opção mais comum.
+Utilizando esta forma de registro também é possível registrar vários predicados
+diferentes que devem ser chamado para verificar se o _callback_ deve ser
+executado.
 
 ```ruby
 class Order < ApplicationRecord
@@ -350,9 +366,10 @@ class Order < ApplicationRecord
 end
 ```
 
-### Using `:if` and `:unless` with a `Proc`
+### Utilizando `:if` e `:unless` com uma `Proc`
 
-It is possible to associate `:if` and `:unless` with a `Proc` object. This option is best suited when writing short validation methods, usually one-liners:
+É possível associar `:if` e `:unless` com um objeto `Proc`. Esta opção é mais
+adequada ao escrever métodos curtos de validação, geralmente de uma linha:
 
 ```ruby
 class Order < ApplicationRecord
@@ -361,7 +378,8 @@ class Order < ApplicationRecord
 end
 ```
 
-As the proc is evaluated in the context of the object, it is also possible to write this as:
+Como a _proc_ é avaliada no contexto do objeto, também é possível escrever isso
+como:
 
 ```ruby
 class Order < ApplicationRecord
@@ -369,9 +387,10 @@ class Order < ApplicationRecord
 end
 ```
 
-### Multiple Conditions for Callbacks
+### Múltiplas Condições para _Callbacks_
 
-When writing conditional callbacks, it is possible to mix both `:if` and `:unless` in the same callback declaration:
+Ao escrever _callbacks_ condicionais, é possível misturar `:if` e `:unless` na
+mesma declaração do _callback_:
 
 ```ruby
 class Comment < ApplicationRecord
@@ -380,9 +399,11 @@ class Comment < ApplicationRecord
 end
 ```
 
-### Combining Callback Conditions
+### Combinando Condições de _Callback_
 
-When multiple conditions define whether or not a callback should happen, an `Array` can be used. Moreover, you can apply both `:if` and `:unless` to the same callback.
+Quando várias condições definem se um _callback_ deve ou não acontecer, um
+`Array` pode ser utilizado. Além disso, você pode aplicar `:if` e `:unless` para
+o mesmo _callback_.
 
 ```ruby
 class Comment < ApplicationRecord
@@ -392,7 +413,8 @@ class Comment < ApplicationRecord
 end
 ```
 
-The callback only runs when all the `:if` conditions and none of the `:unless` conditions are evaluated to `true`.
+O _callback_ só é executado quando todas as condições `:if` e nenhuma das
+condições `:unless` retornarem `true`.
 
 Classes *Callback*
 ----------------
