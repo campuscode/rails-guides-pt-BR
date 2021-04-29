@@ -355,7 +355,7 @@ Você pode associar as opções `:if` e `:unless` com um _symbol_ correspondente
 nome de um método predicado que será chamado logo antes do _callback_. Ao
 utilizar a opção `:if`, o _callback_ não será executado se o método predicado
 retornar `false` (falso); ao utilizar a opção `:unless`, o _callback_ não será executado
-se o médoto predicado retornar `true` (verdadeiro). Esta é a opção mais comum.
+se o método predicado retornar `true` (verdadeiro). Esta é a opção mais comum.
 Utilizando esta forma de registro também é possível registrar vários predicados
 diferentes que devem ser chamado para verificar se o _callback_ deve ser
 executado.
