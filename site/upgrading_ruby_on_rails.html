@@ -25,7 +25,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.3.1</div>
+    <div id="version-badge">v6.1.3.2</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -455,9 +455,9 @@ Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
     conflict  config/environment.rb
 </span><span class="c">...
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-26918937267a1fec20c8a031547801e1">bin/rails app:update
+<textarea class="clipboard-content" id="clipboard-ecd5bcb5a636549ae1fda868da665dc5">bin/rails app:update
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26918937267a1fec20c8a031547801e1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ecd5bcb5a636549ae1fda868da665dc5">Copiar</button>
 </div>
 <p>Não esqueça de revisar a diferença, para verificar se houveram mudanças inesperadas.</p><h4 id="configurar-padroes-de-framework"><a class="anchorlink" href="#configurar-padroes-de-framework">1.5 Configurar Padrões de Framework</a></h4><p>A nova versão do Rails pode ter configurações padrão diferentes da versão anterior. No entanto, após seguir os passos descritos acima, sua aplicação ainda estaria rodando com configurações padrão da versão <strong>anterior</strong> do Rails. Isso porque o valor para <code>config.load_defaults</code> em <code>config/application.rb</code> ainda não foi alterado.</p><p>Para permitir que você atualize para novos padrões um a um, a tarefa de atualização cria um arquivo <code>config/initializers/new_framework_defaults.rb</code>. Uma vez que a aplicação esteja pronta para rodar com as novas configurações padrão, você pode remover este arquivo e trocar o valor de <code>config.load_defaults</code>.</p><h3 id="upgrading-from-rails-6-0-to-rails-6-1"><a class="anchorlink" href="#upgrading-from-rails-6-0-to-rails-6-1">2 Upgrading from Rails 6.0 to Rails 6.1</a></h3><p>For more information on changes made to Rails 6.1 please see the <a href="6_1_release_notes.html">release notes</a>.</p><h4 id="rails-application-config-for-return-value-no-longer-supports-access-with-string-keys"><a class="anchorlink" href="#rails-application-config-for-return-value-no-longer-supports-access-with-string-keys">2.1 <code>Rails.application.config_for</code> return value no longer supports access with String keys.</a></h4><p>Given a configuration file like this:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># config/example.yml</span>
@@ -465,26 +465,26 @@ Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
   <span class="na">options</span><span class="pi">:</span>
     <span class="na">key</span><span class="pi">:</span> <span class="s">value</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1167c9d745ae2453d9b66b4a77cb417b"># config/example.yml
+<textarea class="clipboard-content" id="clipboard-d24829c6f5ee71901a952bf31677100a"># config/example.yml
 development:
   options:
     key: value
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1167c9d745ae2453d9b66b4a77cb417b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d24829c6f5ee71901a952bf31677100a">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config_for</span><span class="p">(</span><span class="ss">:example</span><span class="p">).</span><span class="nf">options</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ed3090c5ef146b5f012823febf4df450">Rails.application.config_for(:example).options
+<textarea class="clipboard-content" id="clipboard-57ed4f76a9834edf2b7233f8dc17d23a">Rails.application.config_for(:example).options
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ed3090c5ef146b5f012823febf4df450">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-57ed4f76a9834edf2b7233f8dc17d23a">Copiar</button>
 </div>
 <p>This used to return a hash on which you could access values with String keys. That was deprecated in 6.0, and now doesn't work anymore.</p><p>You can call <code>with_indifferent_access</code> on the return value of <code>config_for</code> if you still want to access values with String keys, e.g.:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config_for</span><span class="p">(</span><span class="ss">:example</span><span class="p">).</span><span class="nf">with_indifferent_access</span><span class="p">.</span><span class="nf">dig</span><span class="p">(</span><span class="s1">'options'</span><span class="p">,</span> <span class="s1">'key'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dbcf3535891fefda2f827790ec85e19d">Rails.application.config_for(:example).with_indifferent_access.dig('options', 'key')
+<textarea class="clipboard-content" id="clipboard-fca56874f5a349261a4e484ef10fe541">Rails.application.config_for(:example).with_indifferent_access.dig('options', 'key')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dbcf3535891fefda2f827790ec85e19d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fca56874f5a349261a4e484ef10fe541">Copiar</button>
 </div>
 <h4 id="response-s-content-type-when-using-respond-to-any"><a class="anchorlink" href="#response-s-content-type-when-using-respond-to-any">2.2 Response's Content-Type when using <code>respond_to#any</code></a></h4><p>The Content-Type header returned in the response can differ from what Rails 6.0 returned,
 more specifically if your application uses <code>respond_to { |format| format.any }</code>.
@@ -495,29 +495,29 @@ The Content-Type will now be based on the given block rather than the request's 
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b8ed4faa99d33804d0b95fbc679f38b1">def my_action
+<textarea class="clipboard-content" id="clipboard-a0e204384d40b59fcd1ec10249544887">def my_action
   respond_to do |format|
     format.any { render(json: { foo: 'bar' }) }
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b8ed4faa99d33804d0b95fbc679f38b1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a0e204384d40b59fcd1ec10249544887">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">get</span><span class="p">(</span><span class="s1">'my_action.csv'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3c626a3825be5188d2b29d4c7c2752d7">get('my_action.csv')
+<textarea class="clipboard-content" id="clipboard-4e5d07cb95c00f18009596ee12ab91a7">get('my_action.csv')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3c626a3825be5188d2b29d4c7c2752d7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4e5d07cb95c00f18009596ee12ab91a7">Copiar</button>
 </div>
 <p>Previous behaviour was returning a <code>text/csv</code> response's Content-Type which is inaccurate since a JSON response is being rendered.
 Current behaviour correctly returns a <code>application/json</code> response's Content-Type.</p><p>If your application relies on the previous incorrect behaviour, you are encouraged to specify
 which formats your action accepts, i.e.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">format</span><span class="p">.</span><span class="nf">any</span><span class="p">(</span><span class="ss">:xml</span><span class="p">,</span> <span class="ss">:json</span><span class="p">)</span> <span class="p">{</span> <span class="n">render</span> <span class="n">request</span><span class="p">.</span><span class="nf">format</span><span class="p">.</span><span class="nf">to_sym</span> <span class="o">=&gt;</span> <span class="vi">@people</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cd8232441192f8a03fbb7645cf89b34e">format.any(:xml, :json) { render request.format.to_sym =&gt; @people }
+<textarea class="clipboard-content" id="clipboard-24554914bcad0e1864dde4393be99c6f">format.any(:xml, :json) { render request.format.to_sym =&gt; @people }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cd8232441192f8a03fbb7645cf89b34e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-24554914bcad0e1864dde4393be99c6f">Copiar</button>
 </div>
 <h4 id="activesupport-callbacks-halted-callback-hook-now-receive-a-second-argument"><a class="anchorlink" href="#activesupport-callbacks-halted-callback-hook-now-receive-a-second-argument">2.3 <code>ActiveSupport::Callbacks#halted_callback_hook</code> now receive a second argument</a></h4><p>Active Support allows you to override the <code>halted_callback_hook</code> whenever a callback
 halts the chain. This method now receive a second argument which is the name of the callback being halted.
@@ -532,7 +532,7 @@ change without a prior deprecation cycle (for performance reasons).</p><p>Exampl
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6b435616080b8a8d3b0f4cf8203b9391">class Book &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-2ac69ddba16d2dbf61a6ce874524dd95">class Book &lt; ApplicationRecord
   before_save { throw(:abort) }
   before_create { throw(:abort) }
 
@@ -541,72 +541,72 @@ change without a prior deprecation cycle (for performance reasons).</p><p>Exampl
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6b435616080b8a8d3b0f4cf8203b9391">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2ac69ddba16d2dbf61a6ce874524dd95">Copiar</button>
 </div>
 <h4 id="the-helper-class-method-in-controllers-uses-string-constantize"><a class="anchorlink" href="#the-helper-class-method-in-controllers-uses-string-constantize">2.4 The <code>helper</code> class method in controllers uses <code>String#constantize</code></a></h4><p>Conceptually, before Rails 6.1</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">helper</span> <span class="s2">"foo/bar"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3384d400b6f9a2e22192b6503503ed59">helper "foo/bar"
+<textarea class="clipboard-content" id="clipboard-fc4c92ced0731ba839f5901a059a4af1">helper "foo/bar"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3384d400b6f9a2e22192b6503503ed59">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fc4c92ced0731ba839f5901a059a4af1">Copiar</button>
 </div>
 <p>resulted in</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">require_dependency</span> <span class="s2">"foo/bar_helper"</span>
 <span class="n">module_name</span> <span class="o">=</span> <span class="s2">"foo/bar_helper"</span><span class="p">.</span><span class="nf">camelize</span>
 <span class="n">module_name</span><span class="p">.</span><span class="nf">constantize</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ebdda90e5dcf362fffce00fc51f99224">require_dependency "foo/bar_helper"
+<textarea class="clipboard-content" id="clipboard-b5b80946998a22f1868ea0c2f1424eb4">require_dependency "foo/bar_helper"
 module_name = "foo/bar_helper".camelize
 module_name.constantize
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ebdda90e5dcf362fffce00fc51f99224">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b5b80946998a22f1868ea0c2f1424eb4">Copiar</button>
 </div>
 <p>Now it does this instead:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">prefix</span> <span class="o">=</span> <span class="s2">"foo/bar"</span><span class="p">.</span><span class="nf">camelize</span>
 <span class="s2">"</span><span class="si">#{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">Helper"</span><span class="p">.</span><span class="nf">constantize</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ded678eb3d861e40ec035e4d43f86e54">prefix = "foo/bar".camelize
+<textarea class="clipboard-content" id="clipboard-a7d2cb865fb2ac11dbfd102fc446427b">prefix = "foo/bar".camelize
 "#{prefix}Helper".constantize
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ded678eb3d861e40ec035e4d43f86e54">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a7d2cb865fb2ac11dbfd102fc446427b">Copiar</button>
 </div>
 <p>This change is backwards compatible for the majority of applications, in which case you do not need to do anything.</p><p>Technically, however, controllers could configure <code>helpers_path</code> to point to a directory in <code>$LOAD_PATH</code> that was not in the autoload paths. That use case is no longer supported out of the box. If the helper module is not autoloadable, the application is responsible for loading it before calling <code>helper</code>.</p><h4 id="redirection-to-https-from-http-will-now-use-the-308-http-status-code"><a class="anchorlink" href="#redirection-to-https-from-http-will-now-use-the-308-http-status-code">2.5 Redirection to HTTPS from HTTP will now use the 308 HTTP status code</a></h4><p>The default HTTP status code used in <code>ActionDispatch::SSL</code> when redirecting non-GET/HEAD requests from HTTP to HTTPS has been changed to <code>308</code> as defined in <a href="https://tools.ietf.org/html/rfc7538">https://tools.ietf.org/html/rfc7538</a>.</p><h4 id="active-storage-now-requires-image-processing"><a class="anchorlink" href="#active-storage-now-requires-image-processing">2.6 Active Storage now requires Image Processing</a></h4><p>When processing variants in Active Storage, it's now required to have the <a href="https://github.com/janko-m/image_processing">image_processing gem</a> bundled instead of directly using <code>mini_magick</code>. Image Processing is configured by default to use <code>mini_magick</code> behind the scenes, so the easiest way to upgrade is by replacing the <code>mini_magick</code> gem for the <code>image_processing</code> gem and making sure to remove the explicit usage of <code>combine_options</code> since it's no longer needed.</p><p>For readability, you may wish to change raw <code>resize</code> calls to <code>image_processing</code> macros. For example, instead of:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">video</span><span class="p">.</span><span class="nf">preview</span><span class="p">(</span><span class="ss">resize: </span><span class="s2">"100x100"</span><span class="p">)</span>
 <span class="n">video</span><span class="p">.</span><span class="nf">preview</span><span class="p">(</span><span class="ss">resize: </span><span class="s2">"100x100&gt;"</span><span class="p">)</span>
 <span class="n">video</span><span class="p">.</span><span class="nf">preview</span><span class="p">(</span><span class="ss">resize: </span><span class="s2">"100x100^"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9d63a176f697394bcf357cc570d5e2f2">video.preview(resize: "100x100")
+<textarea class="clipboard-content" id="clipboard-1727d5c8126e6e59a63277fa82d1ff13">video.preview(resize: "100x100")
 video.preview(resize: "100x100&gt;")
 video.preview(resize: "100x100^")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9d63a176f697394bcf357cc570d5e2f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1727d5c8126e6e59a63277fa82d1ff13">Copiar</button>
 </div>
 <p>you can respectively do:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">video</span><span class="p">.</span><span class="nf">preview</span><span class="p">(</span><span class="ss">resize_to_fit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
 <span class="n">video</span><span class="p">.</span><span class="nf">preview</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
 <span class="n">video</span><span class="p">.</span><span class="nf">preview</span><span class="p">(</span><span class="ss">resize_to_fill: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9a849ab1806b51d1ac071da6b1cb48cb">video.preview(resize_to_fit: [100, 100])
+<textarea class="clipboard-content" id="clipboard-d311d66049a73f39e6e1aac07c00808e">video.preview(resize_to_fit: [100, 100])
 video.preview(resize_to_limit: [100, 100])
 video.preview(resize_to_fill: [100, 100])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9a849ab1806b51d1ac071da6b1cb48cb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d311d66049a73f39e6e1aac07c00808e">Copiar</button>
 </div>
 <h3 id="upgrading-from-rails-5-2-to-rails-6-0"><a class="anchorlink" href="#upgrading-from-rails-5-2-to-rails-6-0">3 Upgrading from Rails 5.2 to Rails 6.0</a></h3><p>For more information on changes made to Rails 6.0 please see the <a href="6_0_release_notes.html">release notes</a>.</p><h4 id="using-webpacker"><a class="anchorlink" href="#using-webpacker">3.1 Using Webpacker</a></h4><p><a href="https://github.com/rails/webpacker">Webpacker</a>
 is the default JavaScript compiler for Rails 6. But if you are upgrading the app, it is not activated by default.
 If you want to use Webpacker, then include it in your Gemfile and install it:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s2">"webpacker"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-69bf71dd7e8466e3d8588617623ed2f3">gem "webpacker"
+<textarea class="clipboard-content" id="clipboard-c9c1a1c09674db819cafe4d84abef5ff">gem "webpacker"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-69bf71dd7e8466e3d8588617623ed2f3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c9c1a1c09674db819cafe4d84abef5ff">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>webpacker:install
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fa760349589415e33c5102035ce3804d">bin/rails webpacker:install
+<textarea class="clipboard-content" id="clipboard-819845ff4cedf785951db593a4638306">bin/rails webpacker:install
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fa760349589415e33c5102035ce3804d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-819845ff4cedf785951db593a4638306">Copiar</button>
 </div>
 <h4 id="force-ssl"><a class="anchorlink" href="#force-ssl">3.2 Force SSL</a></h4><p>The <code>force_ssl</code> method on controllers has been deprecated and will be removed in
 Rails 6.1. You are encouraged to enable <code>config.force_ssl</code> to enforce HTTPS
@@ -621,11 +621,11 @@ dependencies before you can upgrade them to <code>6.0.0</code>:</p><div class="c
 activestorage → @rails/activestorage
 rails-ujs     → @rails/ujs
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-48fb9474bc4fdecd37b0f0ced7a10252">actioncable   → @rails/actioncable
+<textarea class="clipboard-content" id="clipboard-9b3895c8efa3d0bfac89a93a0b35e9a0">actioncable   → @rails/actioncable
 activestorage → @rails/activestorage
 rails-ujs     → @rails/ujs
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-48fb9474bc4fdecd37b0f0ced7a10252">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9b3895c8efa3d0bfac89a93a0b35e9a0">Copiar</button>
 </div>
 <h4 id="action-cable-javascript-api-changes"><a class="anchorlink" href="#action-cable-javascript-api-changes">3.5 Action Cable JavaScript API Changes</a></h4><p>The Action Cable JavaScript package has been converted from CoffeeScript
 to ES2015, and we now publish the source code in the npm distribution.</p><p>This release includes some breaking changes to optional parts of the
@@ -640,19 +640,19 @@ these changes:</p>
 <pre><code class="highlight diff"><span class="gd">-    ActionCable.WebSocket = MyWebSocket
 </span><span class="gi">+    ActionCable.adapters.WebSocket = MyWebSocket
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-60e950c3372c58e94e6df9699aa46d10">-    ActionCable.WebSocket = MyWebSocket
+<textarea class="clipboard-content" id="clipboard-eba85942df5573333f4f273df7c77e6c">-    ActionCable.WebSocket = MyWebSocket
 +    ActionCable.adapters.WebSocket = MyWebSocket
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-60e950c3372c58e94e6df9699aa46d10">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eba85942df5573333f4f273df7c77e6c">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight diff"><span class="gd">-    ActionCable.logger = myLogger
 </span><span class="gi">+    ActionCable.adapters.logger = myLogger
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-eb6c2bacfad1345343fe970cf1d5204e">-    ActionCable.logger = myLogger
+<textarea class="clipboard-content" id="clipboard-b1eadbd65f74ae85283aef90e88fcc4d">-    ActionCable.logger = myLogger
 +    ActionCable.adapters.logger = myLogger
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eb6c2bacfad1345343fe970cf1d5204e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b1eadbd65f74ae85283aef90e88fcc4d">Copiar</button>
 </div>
 </li>
 <li>
@@ -664,19 +664,19 @@ will need to make these changes:</p>
 <pre><code class="highlight diff"><span class="gd">-    ActionCable.startDebugging()
 </span><span class="gi">+    ActionCable.logger.enabled = true
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-1ae522723dc645e2ac1b4ffd0cc69eb5">-    ActionCable.startDebugging()
+<textarea class="clipboard-content" id="clipboard-ad389eba25973b0d4c70c2d960aa78d1">-    ActionCable.startDebugging()
 +    ActionCable.logger.enabled = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1ae522723dc645e2ac1b4ffd0cc69eb5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ad389eba25973b0d4c70c2d960aa78d1">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight diff"><span class="gd">-    ActionCable.stopDebugging()
 </span><span class="gi">+    ActionCable.logger.enabled = false
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-cb3db09f9cdd459785c6386c43351e60">-    ActionCable.stopDebugging()
+<textarea class="clipboard-content" id="clipboard-6f9258ec708126f14dcf80cd684f2070">-    ActionCable.stopDebugging()
 +    ActionCable.logger.enabled = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cb3db09f9cdd459785c6386c43351e60">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6f9258ec708126f14dcf80cd684f2070">Copiar</button>
 </div>
 </li>
 </ul>
@@ -685,48 +685,48 @@ This behavior has changed to include the previously omitted charset part as well
 <pre><code class="highlight ruby"><span class="n">resp</span> <span class="o">=</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Response</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"text/csv; header=present; charset=utf-16"</span><span class="p">)</span>
 <span class="n">resp</span><span class="p">.</span><span class="nf">content_type</span> <span class="c1">#=&gt; "text/csv; header=present"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bcd55a5279a08aeb7328dcf9e6003ec0">resp = ActionDispatch::Response.new(200, "Content-Type" =&gt; "text/csv; header=present; charset=utf-16")
+<textarea class="clipboard-content" id="clipboard-d6cb841030d7abb6d63f35e269d5a4d3">resp = ActionDispatch::Response.new(200, "Content-Type" =&gt; "text/csv; header=present; charset=utf-16")
 resp.content_type #=&gt; "text/csv; header=present"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bcd55a5279a08aeb7328dcf9e6003ec0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d6cb841030d7abb6d63f35e269d5a4d3">Copiar</button>
 </div>
 <p>After:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">resp</span> <span class="o">=</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Response</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s2">"Content-Type"</span> <span class="o">=&gt;</span> <span class="s2">"text/csv; header=present; charset=utf-16"</span><span class="p">)</span>
 <span class="n">resp</span><span class="p">.</span><span class="nf">content_type</span> <span class="c1">#=&gt; "text/csv; header=present; charset=utf-16"</span>
 <span class="n">resp</span><span class="p">.</span><span class="nf">media_type</span>   <span class="c1">#=&gt; "text/csv"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9718f34b506644eb32d21e9fb0787486">resp = ActionDispatch::Response.new(200, "Content-Type" =&gt; "text/csv; header=present; charset=utf-16")
+<textarea class="clipboard-content" id="clipboard-118ab8a958633800040befae2fe012ab">resp = ActionDispatch::Response.new(200, "Content-Type" =&gt; "text/csv; header=present; charset=utf-16")
 resp.content_type #=&gt; "text/csv; header=present; charset=utf-16"
 resp.media_type   #=&gt; "text/csv"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9718f34b506644eb32d21e9fb0787486">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-118ab8a958633800040befae2fe012ab">Copiar</button>
 </div>
 <h4 id="autoloading"><a class="anchorlink" href="#autoloading">3.7 Autoloading</a></h4><p>The default configuration for Rails 6</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
 
 <span class="n">config</span><span class="p">.</span><span class="nf">load_defaults</span> <span class="mf">6.0</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9634dc5f38ddb2d2d9f39c232cac5f3b"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-f76d0b0c8f6aa14d11daf0a09f334a14"># config/application.rb
 
 config.load_defaults 6.0
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9634dc5f38ddb2d2d9f39c232cac5f3b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f76d0b0c8f6aa14d11daf0a09f334a14">Copiar</button>
 </div>
 <p>enables <code>zeitwerk</code> autoloading mode on CRuby. In that mode, autoloading, reloading, and eager loading are managed by <a href="https://github.com/fxn/zeitwerk">Zeitwerk</a>.</p><h5 id="public-api"><a class="anchorlink" href="#public-api">3.7.1 Public API</a></h5><p>In general, applications do not need to use the API of Zeitwerk directly. Rails sets things up according to the existing contract: <code>config.autoload_paths</code>, <code>config.cache_classes</code>, etc.</p><p>While applications should stick to that interface, the actual Zeitwerk loader object can be accessed as</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">autoloaders</span><span class="p">.</span><span class="nf">main</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-21ab496ead2d20ad576d52eae3f798d0">Rails.autoloaders.main
+<textarea class="clipboard-content" id="clipboard-237f5f7558c0be30e07524520ab400fa">Rails.autoloaders.main
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-21ab496ead2d20ad576d52eae3f798d0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-237f5f7558c0be30e07524520ab400fa">Copiar</button>
 </div>
 <p>That may be handy if you need to preload STIs or configure a custom inflector, for example.</p><h5 id="project-structure"><a class="anchorlink" href="#project-structure">3.7.2 Project Structure</a></h5><p>If the application being upgraded autoloads correctly, the project structure should be already mostly compatible.</p><p>However, <code>classic</code> mode infers file names from missing constant names (<code>underscore</code>), whereas <code>zeitwerk</code> mode infers constant names from file names (<code>camelize</code>). These helpers are not always inverse of each other, in particular if acronyms are involved. For instance, <code>"FOO".underscore</code> is <code>"foo"</code>, but <code>"foo".camelize</code> is <code>"Foo"</code>, not <code>"FOO"</code>.</p><p>Compatibility can be checked with the <code>zeitwerk:check</code> task:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>zeitwerk:check
 <span class="go">Hold on, I am eager loading the application.
 All is good!
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-e0618950ea40e0c064475216adbe3903">bin/rails zeitwerk:check
+<textarea class="clipboard-content" id="clipboard-a3372d7b044cc591dd921e2a3e9c3d3a">bin/rails zeitwerk:check
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e0618950ea40e0c064475216adbe3903">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a3372d7b044cc591dd921e2a3e9c3d3a">Copiar</button>
 </div>
 <h5 id="require-dependency"><a class="anchorlink" href="#require-dependency">3.7.3 require_dependency</a></h5><p>All known use cases of <code>require_dependency</code> have been eliminated, you should grep the project and delete them.</p><p>If your application has STIs, please check their section in the guide <a href="autoloading_and_reloading_constants.html#single-table-inheritance">Autoloading and Reloading Constants (Zeitwerk Mode)</a>.</p><h5 id="qualified-names-in-class-and-module-definitions"><a class="anchorlink" href="#qualified-names-in-class-and-module-definitions">3.7.4 Qualified names in class and module definitions</a></h5><p>You can now robustly use constant paths in class and module definitions:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Autoloading in this class' body matches Ruby semantics now.</span>
@@ -734,34 +734,34 @@ All is good!
   <span class="c1"># ...</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ed9bd124890cde1436b5298230b5e9f9"># Autoloading in this class' body matches Ruby semantics now.
+<textarea class="clipboard-content" id="clipboard-d916e63056ff66cbcf05da736133e30e"># Autoloading in this class' body matches Ruby semantics now.
 class Admin::UsersController &lt; ApplicationController
   # ...
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ed9bd124890cde1436b5298230b5e9f9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d916e63056ff66cbcf05da736133e30e">Copiar</button>
 </div>
 <p>A gotcha to be aware of is that, depending on the order of execution, the classic autoloader could sometimes be able to autoload <code>Foo::Wadus</code> in</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Foo::Bar</span>
   <span class="nc">Wadus</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b49f9b0e60ca6b78df0375e07543bc71">class Foo::Bar
+<textarea class="clipboard-content" id="clipboard-c2f98899a14b2d80373f5a8aff676e4e">class Foo::Bar
   Wadus
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b49f9b0e60ca6b78df0375e07543bc71">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c2f98899a14b2d80373f5a8aff676e4e">Copiar</button>
 </div>
 <p>That does not match Ruby semantics because <code>Foo</code> is not in the nesting, and won't work at all in <code>zeitwerk</code> mode. If you find such corner case you can use the qualified name <code>Foo::Wadus</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Foo::Bar</span>
   <span class="nc">Foo::Wadus</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3a016ac940a77c92586691416029fbae">class Foo::Bar
+<textarea class="clipboard-content" id="clipboard-99f1ade0c3967a1e814f7e7e4da9d44c">class Foo::Bar
   Foo::Wadus
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3a016ac940a77c92586691416029fbae">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-99f1ade0c3967a1e814f7e7e4da9d44c">Copiar</button>
 </div>
 <p>or add <code>Foo</code> to the nesting:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">Foo</span>
@@ -770,61 +770,61 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dac5915c2eb8187d45595bc2f128bc1a">module Foo
+<textarea class="clipboard-content" id="clipboard-41fa5bc1cb22c5d1d4d2d111c92c6dbf">module Foo
   class Bar
     Wadus
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dac5915c2eb8187d45595bc2f128bc1a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-41fa5bc1cb22c5d1d4d2d111c92c6dbf">Copiar</button>
 </div>
 <h5 id="concerns"><a class="anchorlink" href="#concerns">3.7.5 Concerns</a></h5><p>You can autoload and eager load from a standard structure like</p><div class="code_container">
 <pre><code class="highlight plaintext">app/models
 app/models/concerns
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4cd7caab99000d089dd119b945c4acd5">app/models
+<textarea class="clipboard-content" id="clipboard-32e137d962e20ac07c6dddcf67757ec8">app/models
 app/models/concerns
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4cd7caab99000d089dd119b945c4acd5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-32e137d962e20ac07c6dddcf67757ec8">Copiar</button>
 </div>
 <p>In that case, <code>app/models/concerns</code> is assumed to be a root directory (because it belongs to the autoload paths), and it is ignored as namespace. So, <code>app/models/concerns/foo.rb</code> should define <code>Foo</code>, not <code>Concerns::Foo</code>.</p><p>The <code>Concerns::</code> namespace worked with the classic autoloader as a side-effect of the implementation, but it was not really an intended behavior. An application using <code>Concerns::</code> needs to rename those classes and modules to be able to run in <code>zeitwerk</code> mode.</p><h5 id="having-app-in-the-autoload-paths"><a class="anchorlink" href="#having-app-in-the-autoload-paths">3.7.6 Having <code>app</code> in the autoload paths</a></h5><p>Some projects want something like <code>app/api/base.rb</code> to define <code>API::Base</code>, and add <code>app</code> to the autoload paths to accomplish that in <code>classic</code> mode. Since Rails adds all subdirectories of <code>app</code> to the autoload paths automatically, we have another situation in which there are nested root directories, so that setup no longer works. Similar principle we explained above with <code>concerns</code>.</p><p>If you want to keep that structure, you'll need to delete the subdirectory from the autoload paths in an initializer:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Dependencies</span><span class="p">.</span><span class="nf">autoload_paths</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/app/api"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6c0a57dee398ecb590dada305fb86ce4">ActiveSupport::Dependencies.autoload_paths.delete("#{Rails.root}/app/api")
+<textarea class="clipboard-content" id="clipboard-db1303434f60ad7c91d989c0f92995a1">ActiveSupport::Dependencies.autoload_paths.delete("#{Rails.root}/app/api")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6c0a57dee398ecb590dada305fb86ce4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-db1303434f60ad7c91d989c0f92995a1">Copiar</button>
 </div>
 <h5 id="autoloaded-constants-and-explicit-namespaces"><a class="anchorlink" href="#autoloaded-constants-and-explicit-namespaces">3.7.7 Autoloaded Constants and Explicit Namespaces</a></h5><p>If a namespace is defined in a file, as <code>Hotel</code> is here:</p><div class="code_container">
 <pre><code class="highlight plaintext">app/models/hotel.rb         # Defines Hotel.
 app/models/hotel/pricing.rb # Defines Hotel::Pricing.
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-225df7525d35f5fdf5cff9b412f61a03">app/models/hotel.rb         # Defines Hotel.
+<textarea class="clipboard-content" id="clipboard-c68b6db149e9b2f54f1c1610407e70b2">app/models/hotel.rb         # Defines Hotel.
 app/models/hotel/pricing.rb # Defines Hotel::Pricing.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-225df7525d35f5fdf5cff9b412f61a03">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c68b6db149e9b2f54f1c1610407e70b2">Copiar</button>
 </div>
 <p>the <code>Hotel</code> constant has to be set using the <code>class</code> or <code>module</code> keywords. For example:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Hotel</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-edd0e024d89d1437e726ef52dc1994fd">class Hotel
+<textarea class="clipboard-content" id="clipboard-f66756320b78103de523bc3450fd79ab">class Hotel
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-edd0e024d89d1437e726ef52dc1994fd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f66756320b78103de523bc3450fd79ab">Copiar</button>
 </div>
 <p>is good.</p><p>Alternatives like</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Hotel</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a80484674211e425dc242617ad7fa906">Hotel = Class.new
+<textarea class="clipboard-content" id="clipboard-6a7393836ca7349f24a216da75952d12">Hotel = Class.new
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a80484674211e425dc242617ad7fa906">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6a7393836ca7349f24a216da75952d12">Copiar</button>
 </div>
 <p>or</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Hotel</span> <span class="o">=</span> <span class="no">Struct</span><span class="p">.</span><span class="nf">new</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-27022ffdaa30108bc3600d1a34aa4161">Hotel = Struct.new
+<textarea class="clipboard-content" id="clipboard-e26e1f57a840c2c6fda08656ea9d0d90">Hotel = Struct.new
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-27022ffdaa30108bc3600d1a34aa4161">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e26e1f57a840c2c6fda08656ea9d0d90">Copiar</button>
 </div>
 <p>won't work, child objects like <code>Hotel::Pricing</code> won't be found.</p><p>This restriction only applies to explicit namespaces. Classes and modules not defining a namespace can be defined using those idioms.</p><h5 id="one-file-one-constant-at-the-same-top-level"><a class="anchorlink" href="#one-file-one-constant-at-the-same-top-level">3.7.8 One file, one constant (at the same top-level)</a></h5><p>In <code>classic</code> mode you could technically define several constants at the same top-level and have them all reloaded. For example, given</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/foo.rb</span>
@@ -835,7 +835,7 @@ end
 <span class="k">class</span> <span class="nc">Bar</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-06dc41eb4dbe68190f70cc9cc3e58378"># app/models/foo.rb
+<textarea class="clipboard-content" id="clipboard-70eb97d3124bceefe4c45f329fd0f213"># app/models/foo.rb
 
 class Foo
 end
@@ -843,7 +843,7 @@ end
 class Bar
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-06dc41eb4dbe68190f70cc9cc3e58378">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-70eb97d3124bceefe4c45f329fd0f213">Copiar</button>
 </div>
 <p>while <code>Bar</code> could not be autoloaded, autoloading <code>Foo</code> would mark <code>Bar</code> as autoloaded too. This is not the case in <code>zeitwerk</code> mode, you need to move <code>Bar</code> to its own file <code>bar.rb</code>. One file, one constant.</p><p>This affects only to constants at the same top-level as in the example above. Inner classes and modules are fine. For example, consider</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/foo.rb</span>
@@ -853,53 +853,53 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-43fe5731ebd559c593aff6915899aa42"># app/models/foo.rb
+<textarea class="clipboard-content" id="clipboard-c16141c854fcbd6c69fc98c1b9b55451"># app/models/foo.rb
 
 class Foo
   class InnerClass
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-43fe5731ebd559c593aff6915899aa42">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c16141c854fcbd6c69fc98c1b9b55451">Copiar</button>
 </div>
 <p>If the application reloads <code>Foo</code>, it will reload <code>Foo::InnerClass</code> too.</p><h5 id="spring-and-the-test-environment"><a class="anchorlink" href="#spring-and-the-test-environment">3.7.9 Spring and the <code>test</code> Environment</a></h5><p>Spring reloads the application code if something changes. In the <code>test</code> environment you need to enable reloading for that to work:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/environments/test.rb</span>
 
 <span class="n">config</span><span class="p">.</span><span class="nf">cache_classes</span> <span class="o">=</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-581985200b509fa4919717a321ed2859"># config/environments/test.rb
+<textarea class="clipboard-content" id="clipboard-ea17cee0f52e13a8c538fe17c8e1a9d6"># config/environments/test.rb
 
 config.cache_classes = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-581985200b509fa4919717a321ed2859">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ea17cee0f52e13a8c538fe17c8e1a9d6">Copiar</button>
 </div>
 <p>Otherwise you'll get this error:</p><div class="code_container">
 <pre><code class="highlight plaintext">reloading is disabled because config.cache_classes is true
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-21cf9bc79410dc0eb360f81f92219a86">reloading is disabled because config.cache_classes is true
+<textarea class="clipboard-content" id="clipboard-ef85b535bafb8d823a19799cb64478b0">reloading is disabled because config.cache_classes is true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-21cf9bc79410dc0eb360f81f92219a86">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ef85b535bafb8d823a19799cb64478b0">Copiar</button>
 </div>
 <h5 id="autoloading-bootsnap"><a class="anchorlink" href="#autoloading-bootsnap">3.7.10 Bootsnap</a></h5><p>Bootsnap should be at least version 1.4.2.</p><p>In addition to that, Bootsnap needs to disable the iseq cache due to a bug in the interpreter if running Ruby 2.5. Please make sure to depend on at least Bootsnap 1.4.4 in that case.</p><h5 id="config-add-autoload-paths-to-load-path"><a class="anchorlink" href="#config-add-autoload-paths-to-load-path">3.7.11 <code>config.add_autoload_paths_to_load_path</code></a></h5><p>The new configuration point</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">add_autoload_paths_to_load_path</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5e138d608e1a8427027fe8c03b62a1b5">config.add_autoload_paths_to_load_path
+<textarea class="clipboard-content" id="clipboard-e2d7b7050074a9d8ef1d754e1125a6f1">config.add_autoload_paths_to_load_path
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5e138d608e1a8427027fe8c03b62a1b5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e2d7b7050074a9d8ef1d754e1125a6f1">Copiar</button>
 </div>
 <p>is <code>true</code> by default for backwards compatibility, but allows you to opt-out from adding the autoload paths to <code>$LOAD_PATH</code>.</p><p>This makes sense in most applications, since you never should require a file in <code>app/models</code>, for example, and Zeitwerk only uses absolute file names internally.</p><p>By opting-out you optimize <code>$LOAD_PATH</code> lookups (less directories to check), and save Bootsnap work and memory consumption, since it does not need to build an index for these directories.</p><h5 id="thread-safety"><a class="anchorlink" href="#thread-safety">3.7.12 Thread-safety</a></h5><p>In classic mode, constant autoloading is not thread-safe, though Rails has locks in place for example to make web requests thread-safe when autoloading is enabled, as it is common in the development environment.</p><p>Constant autoloading is thread-safe in <code>zeitwerk</code> mode. For example, you can now autoload in multi-threaded scripts executed by the <code>runner</code> command.</p><h5 id="globs-in-config-autoload-paths"><a class="anchorlink" href="#globs-in-config-autoload-paths">3.7.13 Globs in config.autoload_paths</a></h5><p>Beware of configurations like</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">+=</span> <span class="no">Dir</span><span class="p">[</span><span class="s2">"</span><span class="si">#{</span><span class="n">config</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/lib/**/"</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dd5c8dfe8d8d654dd8ef0c949e665374">config.autoload_paths += Dir["#{config.root}/lib/**/"]
+<textarea class="clipboard-content" id="clipboard-1a06a26d7fb989ecc55d9647437919fd">config.autoload_paths += Dir["#{config.root}/lib/**/"]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dd5c8dfe8d8d654dd8ef0c949e665374">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1a06a26d7fb989ecc55d9647437919fd">Copiar</button>
 </div>
 <p>Every element of <code>config.autoload_paths</code> should represent the top-level namespace (<code>Object</code>) and they cannot be nested in consequence (with the exception of <code>concerns</code> directories explained above).</p><p>To fix this, just remove the wildcards:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">&lt;&lt;</span> <span class="s2">"</span><span class="si">#{</span><span class="n">config</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/lib"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-210d5794726eda8807b0bba25ef07c77">config.autoload_paths &lt;&lt; "#{config.root}/lib"
+<textarea class="clipboard-content" id="clipboard-61b275ed4ab2ffff03642d3576d8489c">config.autoload_paths &lt;&lt; "#{config.root}/lib"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-210d5794726eda8807b0bba25ef07c77">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-61b275ed4ab2ffff03642d3576d8489c">Copiar</button>
 </div>
 <h5 id="eager-loading-and-autoloading-are-consistent"><a class="anchorlink" href="#eager-loading-and-autoloading-are-consistent">3.7.14 Eager loading and autoloading are consistent</a></h5><p>In <code>classic</code> mode, if <code>app/models/foo.rb</code> defines <code>Bar</code>, you won't be able to autoload that file, but eager loading will work because it loads files recursively blindly. This can be a source of errors if you test things first eager loading, execution may fail later autoloading.</p><p>In <code>zeitwerk</code> mode both loading modes are consistent, they fail and err in the same files.</p><h5 id="how-to-use-the-classic-autoloader-in-rails-6"><a class="anchorlink" href="#how-to-use-the-classic-autoloader-in-rails-6">3.7.15 How to Use the Classic Autoloader in Rails 6</a></h5><p>Applications can load Rails 6 defaults and still use the classic autoloader by setting <code>config.autoloader</code> this way:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
@@ -907,12 +907,12 @@ config.cache_classes = false
 <span class="n">config</span><span class="p">.</span><span class="nf">load_defaults</span> <span class="mf">6.0</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">autoloader</span> <span class="o">=</span> <span class="ss">:classic</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-739dacbf19e4653e7c78d0dfbe549934"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-587214306722cd4cb389dc9b20b9fac2"># config/application.rb
 
 config.load_defaults 6.0
 config.autoloader = :classic
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-739dacbf19e4653e7c78d0dfbe549934">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-587214306722cd4cb389dc9b20b9fac2">Copiar</button>
 </div>
 <p>When using the Classic Autoloader in Rails 6 application it is recommended to set concurrency level to 1 in development environment, for the web servers and background processors, due to the thread-safety concerns.</p><h4 id="active-storage-assignment-behavior-change"><a class="anchorlink" href="#active-storage-assignment-behavior-change">3.8 Active Storage assignment behavior change</a></h4><p>With the configuration defaults for Rails 5.2, assigning to a collection of attachments declared with <code>has_many_attached</code> appends new files:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -929,7 +929,7 @@ config.autoloader = :classic
 <span class="n">user</span><span class="p">.</span><span class="nf">highlights</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">filename</span> <span class="c1"># =&gt; "funky.jpg"</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">highlights</span><span class="p">.</span><span class="nf">second</span><span class="p">.</span><span class="nf">filename</span> <span class="c1"># =&gt; "town.jpg"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e4247d5aa33f9b3929958e49940286f8">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-f5a7d916465ab8f882489836a3e2d1dc">class User &lt; ApplicationRecord
   has_many_attached :highlights
 end
 
@@ -943,7 +943,7 @@ user.highlights.count # =&gt; 2
 user.highlights.first.filename # =&gt; "funky.jpg"
 user.highlights.second.filename # =&gt; "town.jpg"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e4247d5aa33f9b3929958e49940286f8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5a7d916465ab8f882489836a3e2d1dc">Copiar</button>
 </div>
 <p>With the configuration defaults for Rails 6.0, assigning to a collection of attachments replaces existing files instead of appending to them. This matches Active Record behavior when assigning to a collection association:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">user</span><span class="p">.</span><span class="nf">highlights</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="ss">filename: </span><span class="s2">"funky.jpg"</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
@@ -955,7 +955,7 @@ user.highlights.second.filename # =&gt; "town.jpg"
 <span class="n">user</span><span class="p">.</span><span class="nf">highlights</span><span class="p">.</span><span class="nf">count</span> <span class="c1"># =&gt; 1</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">highlights</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">filename</span> <span class="c1"># =&gt; "town.jpg"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a882dcabf394646437d1a55277bba4fa">user.highlights.attach(filename: "funky.jpg", ...)
+<textarea class="clipboard-content" id="clipboard-d56ff57b5c0229e5b2ddc531d72b826d">user.highlights.attach(filename: "funky.jpg", ...)
 user.highlights.count # =&gt; 1
 
 blob = ActiveStorage::Blob.create_after_upload!(filename: "town.jpg", ...)
@@ -964,7 +964,7 @@ user.update!(highlights: [ blob ])
 user.highlights.count # =&gt; 1
 user.highlights.first.filename # =&gt; "town.jpg"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a882dcabf394646437d1a55277bba4fa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d56ff57b5c0229e5b2ddc531d72b826d">Copiar</button>
 </div>
 <p><code>#attach</code> can be used to add new attachments without removing the existing ones:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">blob</span> <span class="o">=</span> <span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">create_after_upload!</span><span class="p">(</span><span class="ss">filename: </span><span class="s2">"town.jpg"</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
@@ -974,14 +974,14 @@ user.highlights.first.filename # =&gt; "town.jpg"
 <span class="n">user</span><span class="p">.</span><span class="nf">highlights</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">filename</span> <span class="c1"># =&gt; "funky.jpg"</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">highlights</span><span class="p">.</span><span class="nf">second</span><span class="p">.</span><span class="nf">filename</span> <span class="c1"># =&gt; "town.jpg"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-81ddbb9c9bf5c32558ca0a6e79913d81">blob = ActiveStorage::Blob.create_after_upload!(filename: "town.jpg", ...)
+<textarea class="clipboard-content" id="clipboard-a93336cc05048c42305d37c2e6c16c91">blob = ActiveStorage::Blob.create_after_upload!(filename: "town.jpg", ...)
 user.highlights.attach(blob)
 
 user.highlights.count # =&gt; 2
 user.highlights.first.filename # =&gt; "funky.jpg"
 user.highlights.second.filename # =&gt; "town.jpg"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-81ddbb9c9bf5c32558ca0a6e79913d81">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a93336cc05048c42305d37c2e6c16c91">Copiar</button>
 </div>
 <p>Existing applications can opt in to this new behavior by setting <code>config.active_storage.replace_on_assign_to_many</code> to <code>true</code>. The old behavior will be deprecated in Rails 6.1 and removed in a subsequent release.</p><h3 id="upgrading-from-rails-5-1-to-rails-5-2"><a class="anchorlink" href="#upgrading-from-rails-5-1-to-rails-5-2">4 Upgrading from Rails 5.1 to Rails 5.2</a></h3><p>For more information on changes made to Rails 5.2 please see the <a href="5_2_release_notes.html">release notes</a>.</p><h4 id="upgrading-from-rails-5-1-to-rails-5-2-bootsnap"><a class="anchorlink" href="#upgrading-from-rails-5-1-to-rails-5-2-bootsnap">4.1 Bootsnap</a></h4><p>Rails 5.2 adds bootsnap gem in the <a href="https://github.com/rails/rails/pull/29313">newly generated app's Gemfile</a>.
 The <code>app:update</code> command sets it up in <code>boot.rb</code>. If you want to use it, then add it in the Gemfile,
@@ -996,16 +996,16 @@ the right constant, and that loading them won't break in the future.</p><h4 id="
 are now loaded as symbols, so access using strings should be changed.</p><p>From:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">secrets</span><span class="p">[</span><span class="ss">:smtp_settings</span><span class="p">][</span><span class="s2">"address"</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4d0a49b46a5a89c8d79ae1571e7d9d00">Rails.application.secrets[:smtp_settings]["address"]
+<textarea class="clipboard-content" id="clipboard-9a25a2496d5645e514da21096147111f">Rails.application.secrets[:smtp_settings]["address"]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4d0a49b46a5a89c8d79ae1571e7d9d00">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9a25a2496d5645e514da21096147111f">Copiar</button>
 </div>
 <p>To:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">secrets</span><span class="p">[</span><span class="ss">:smtp_settings</span><span class="p">][</span><span class="ss">:address</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-472885c12a7fba1afafaeeae41ce6c70">Rails.application.secrets[:smtp_settings][:address]
+<textarea class="clipboard-content" id="clipboard-d458a370a31e4c4ba81cea39c69f20cb">Rails.application.secrets[:smtp_settings][:address]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-472885c12a7fba1afafaeeae41ce6c70">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d458a370a31e4c4ba81cea39c69f20cb">Copiar</button>
 </div>
 <h4 id="removed-deprecated-support-to-text-and-nothing-in-render"><a class="anchorlink" href="#removed-deprecated-support-to-text-and-nothing-in-render">5.3 Removed deprecated support to <code>:text</code> and <code>:nothing</code> in <code>render</code></a></h4><p>If your views are using <code>render :text</code>, they will no longer work. The new method
 of rendering text with MIME type of <code>text/plain</code> is to use <code>render :plain</code>.</p><p>Similarly, <code>render :nothing</code> is also removed and you should use the <code>head</code> method
@@ -1021,11 +1021,11 @@ model behavior.</p><p>When upgrading from Rails 4.2 to Rails 5.0, you need to cr
   <span class="nb">self</span><span class="p">.</span><span class="nf">abstract_class</span> <span class="o">=</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0c37623821bd25f704818ca4e398d106">class ApplicationRecord &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-86ad7de9caab1be26436a9e0205220e0">class ApplicationRecord &lt; ActiveRecord::Base
   self.abstract_class = true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0c37623821bd25f704818ca4e398d106">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-86ad7de9caab1be26436a9e0205220e0">Copiar</button>
 </div>
 <p>Then make sure that all your models inherit from it.</p><h4 id="halting-callback-chains-via-throw-abort"><a class="anchorlink" href="#halting-callback-chains-via-throw-abort">6.3 Halting Callback Chains via <code>throw(:abort)</code></a></h4><p>In Rails 4.2, when a 'before' callback returns <code>false</code> in Active Record
 and Active Model, then the entire callback chain is halted. In other words,
@@ -1038,9 +1038,9 @@ warning about this upcoming change.</p><p>When you are ready, you can opt into t
 warning by adding the following configuration to your <code>config/application.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="p">.</span><span class="nf">halt_callback_chains_on_return_false</span> <span class="o">=</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ebdf946721b80a19034bf30fe88c721b">ActiveSupport.halt_callback_chains_on_return_false = false
+<textarea class="clipboard-content" id="clipboard-d3db4e87648381dfa1c6b4cf29118acb">ActiveSupport.halt_callback_chains_on_return_false = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ebdf946721b80a19034bf30fe88c721b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d3db4e87648381dfa1c6b4cf29118acb">Copiar</button>
 </div>
 <p>Note that this option will not affect Active Support callbacks since they never
 halted the chain when any value was returned.</p><p>See <a href="https://github.com/rails/rails/pull/17227">#17227</a> for more details.</p><h4 id="activejob-now-inherits-from-applicationjob-by-default"><a class="anchorlink" href="#activejob-now-inherits-from-applicationjob-by-default">6.4 ActiveJob Now Inherits from ApplicationJob by Default</a></h4><p>In Rails 4.2, an Active Job inherits from <code>ActiveJob::Base</code>. In Rails 5.0, this
@@ -1049,10 +1049,10 @@ behavior has changed to now inherit from <code>ApplicationJob</code>.</p><p>When
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationJob</span> <span class="o">&lt;</span> <span class="no">ActiveJob</span><span class="o">::</span><span class="no">Base</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a01c5623b66624bd6df901e258c9f816">class ApplicationJob &lt; ActiveJob::Base
+<textarea class="clipboard-content" id="clipboard-f277c92fb665d2a729ece050874b3fa0">class ApplicationJob &lt; ActiveJob::Base
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a01c5623b66624bd6df901e258c9f816">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f277c92fb665d2a729ece050874b3fa0">Copiar</button>
 </div>
 <p>Then make sure that all your job classes inherit from it.</p><p>See <a href="https://github.com/rails/rails/pull/19034">#19034</a> for more details.</p><h4 id="rails-controller-testing"><a class="anchorlink" href="#rails-controller-testing">6.5 Rails Controller Testing</a></h4><h5 id="extraction-of-some-helper-methods-to-rails-controller-testing"><a class="anchorlink" href="#extraction-of-some-helper-methods-to-rails-controller-testing">6.5.1 Extraction of some helper methods to <code>rails-controller-testing</code></a></h5><p><code>assigns</code> and <code>assert_template</code> have been extracted to the <code>rails-controller-testing</code> gem. To
 continue using these methods in your controller tests, add <code>gem 'rails-controller-testing'</code> to
@@ -1075,9 +1075,9 @@ and other methods that depend on being able to read the hash regardless of <code
 need to upgrade your application to first permit and then convert to a hash.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">params</span><span class="p">.</span><span class="nf">permit</span><span class="p">([</span><span class="ss">:proceed_to</span><span class="p">,</span> <span class="ss">:return_to</span><span class="p">]).</span><span class="nf">to_h</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-adad49e2082c2598d6d17fa13908e587">params.permit([:proceed_to, :return_to]).to_h
+<textarea class="clipboard-content" id="clipboard-509380e5ed19ba6e9f71be5ac39ec7c0">params.permit([:proceed_to, :return_to]).to_h
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-adad49e2082c2598d6d17fa13908e587">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-509380e5ed19ba6e9f71be5ac39ec7c0">Copiar</button>
 </div>
 <h4 id="protect-from-forgery-now-defaults-to-prepend-false"><a class="anchorlink" href="#protect-from-forgery-now-defaults-to-prepend-false">6.12 <code>protect_from_forgery</code> Now Defaults to <code>prepend: false</code></a></h4><p><code>protect_from_forgery</code> defaults to <code>prepend: false</code> which means that it will be inserted into
 the callback chain at the point in which you call it in your application. If you want
@@ -1090,25 +1090,25 @@ defining your templates as such:</p><div class="code_container">
 <span class="cp">&lt;%</span> <span class="c1"># Template Dependency: recordings/threads/events/completed </span><span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="c1"># Template Dependency: recordings/threads/events/uncompleted </span><span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ea5c00f5529e27b2f1ada4838474f7c6">&lt;% # Template Dependency: recordings/threads/events/subscribers_changed %&gt;
+<textarea class="clipboard-content" id="clipboard-5671536f415fa51835704aa7cd490033">&lt;% # Template Dependency: recordings/threads/events/subscribers_changed %&gt;
 &lt;% # Template Dependency: recordings/threads/events/completed %&gt;
 &lt;% # Template Dependency: recordings/threads/events/uncompleted %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ea5c00f5529e27b2f1ada4838474f7c6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5671536f415fa51835704aa7cd490033">Copiar</button>
 </div>
 <p>You can now just call the dependency once with a wildcard.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="c1"># Template Dependency: recordings/threads/events/* </span><span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ff2198184737996e134d082ef1115550">&lt;% # Template Dependency: recordings/threads/events/* %&gt;
+<textarea class="clipboard-content" id="clipboard-c1dfae3070e40308dec401801ad261a2">&lt;% # Template Dependency: recordings/threads/events/* %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ff2198184737996e134d082ef1115550">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c1dfae3070e40308dec401801ad261a2">Copiar</button>
 </div>
 <h4 id="actionview-helpers-recordtaghelper-moved-to-external-gem-record-tag-helper"><a class="anchorlink" href="#actionview-helpers-recordtaghelper-moved-to-external-gem-record-tag-helper">6.15 <code>ActionView::Helpers::RecordTagHelper</code> moved to external gem (record_tag_helper)</a></h4><p><code>content_tag_for</code> and <code>div_for</code> have been removed in favor of just using <code>content_tag</code>. To continue using the older methods, add the <code>record_tag_helper</code> gem to your <code>Gemfile</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'record_tag_helper'</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9ed1ca649508712331704b377190e3d0">gem 'record_tag_helper', '~&gt; 1.0'
+<textarea class="clipboard-content" id="clipboard-3d2b9b05ba03b8758992b9e8e5e0025b">gem 'record_tag_helper', '~&gt; 1.0'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9ed1ca649508712331704b377190e3d0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3d2b9b05ba03b8758992b9e8e5e0025b">Copiar</button>
 </div>
 <p>See <a href="https://github.com/rails/rails/pull/18411">#18411</a> for more details.</p><h4 id="removed-support-for-protected-attributes-gem"><a class="anchorlink" href="#removed-support-for-protected-attributes-gem">6.16 Removed Support for <code>protected_attributes</code> Gem</a></h4><p>The <code>protected_attributes</code> gem is no longer supported in Rails 5.</p><h4 id="removed-support-for-activerecord-deprecated-finders-gem"><a class="anchorlink" href="#removed-support-for-activerecord-deprecated-finders-gem">6.17 Removed support for <code>activerecord-deprecated_finders</code> gem</a></h4><p>The <code>activerecord-deprecated_finders</code> gem is no longer supported in Rails 5.</p><h4 id="activesupport-testcase-default-test-order-is-now-random"><a class="anchorlink" href="#activesupport-testcase-default-test-order-is-now-random">6.18 <code>ActiveSupport::TestCase</code> Default Test Order is Now Random</a></h4><p>When tests are run in your application, the default order is now <code>:random</code>
 instead of <code>:sorted</code>. Use the following config option to set it back to <code>:sorted</code>.</p><div class="code_container">
@@ -1117,12 +1117,12 @@ instead of <code>:sorted</code>. Use the following config option to set it back 
   <span class="n">config</span><span class="p">.</span><span class="nf">active_support</span><span class="p">.</span><span class="nf">test_order</span> <span class="o">=</span> <span class="ss">:sorted</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c9de2e7a8b05117c5f50363538c81a78"># config/environments/test.rb
+<textarea class="clipboard-content" id="clipboard-8d95fdc734233aec41ac7f929239e07c"># config/environments/test.rb
 Rails.application.configure do
   config.active_support.test_order = :sorted
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c9de2e7a8b05117c5f50363538c81a78">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8d95fdc734233aec41ac7f929239e07c">Copiar</button>
 </div>
 <h4 id="actioncontroller-live-became-a-concern"><a class="anchorlink" href="#actioncontroller-live-became-a-concern">6.19 <code>ActionController::Live</code> became a <code>Concern</code></a></h4><p>If you include <code>ActionController::Live</code> in another module that is included in your controller, then you
 should also extend the module with <code>ActiveSupport::Concern</code>. Alternatively, you can use the <code>self.included</code> hook
@@ -1146,7 +1146,7 @@ would break in production:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-96e775ac2f36a2523ee3273d9f6c2632"># This is a work-around for streamed controllers performing authentication with Warden/Devise.
+<textarea class="clipboard-content" id="clipboard-6baae70b9583ec623084bb6d17531203"># This is a work-around for streamed controllers performing authentication with Warden/Devise.
 # See https://github.com/plataformatec/devise/issues/2332
 # Authenticating in the router is another solution as suggested in that issue
 class StreamingSupport
@@ -1164,15 +1164,15 @@ class StreamingSupport
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-96e775ac2f36a2523ee3273d9f6c2632">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6baae70b9583ec623084bb6d17531203">Copiar</button>
 </div>
 <h4 id="new-framework-defaults"><a class="anchorlink" href="#new-framework-defaults">6.20 New Framework Defaults</a></h4><h5 id="active-record-belongs-to-required-by-default-option"><a class="anchorlink" href="#active-record-belongs-to-required-by-default-option">6.20.1 Active Record <code>belongs_to</code> Required by Default Option</a></h5><p><code>belongs_to</code> will now trigger a validation error by default if the association is not present.</p><p>This can be turned off per-association with <code>optional: true</code>.</p><p>This default will be automatically configured in new applications. If an existing application
 wants to add this feature it will need to be turned on in an initializer:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">belongs_to_required_by_default</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c224f5ba9a16d493a118aaf9fcd279be">config.active_record.belongs_to_required_by_default = true
+<textarea class="clipboard-content" id="clipboard-ae5dd46326beb8c0bc102966a9b1fa92">config.active_record.belongs_to_required_by_default = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c224f5ba9a16d493a118aaf9fcd279be">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ae5dd46326beb8c0bc102966a9b1fa92">Copiar</button>
 </div>
 <p>The configuration is by default global for all your models, but you can
 override it on a per model basis. This should help you migrate all your models to have their
@@ -1191,7 +1191,7 @@ associations required by default.</p><div class="code_container">
   <span class="n">belongs_to</span><span class="p">(</span><span class="ss">:pilot</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-95bdd93875a84e1d4964c7354bfa753a">class Book &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-af6341f6a2ce33c68afcc1e51583016e">class Book &lt; ApplicationRecord
   # model is not yet ready to have its association required by default
 
   self.belongs_to_required_by_default = false
@@ -1205,63 +1205,63 @@ class Car &lt; ApplicationRecord
   belongs_to(:pilot)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-95bdd93875a84e1d4964c7354bfa753a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-af6341f6a2ce33c68afcc1e51583016e">Copiar</button>
 </div>
 <h5 id="per-form-csrf-tokens"><a class="anchorlink" href="#per-form-csrf-tokens">6.20.2 Per-form CSRF Tokens</a></h5><p>Rails 5 now supports per-form CSRF tokens to mitigate against code-injection attacks with forms
 created by JavaScript. With this option turned on, forms in your application will each have their
 own CSRF token that is specific to the action and method for that form.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_controller</span><span class="p">.</span><span class="nf">per_form_csrf_tokens</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6726b4d9a729e7be9887575e8df6d3e2">config.action_controller.per_form_csrf_tokens = true
+<textarea class="clipboard-content" id="clipboard-16f88dfb2fe12d9d6f4a48d1a496c35c">config.action_controller.per_form_csrf_tokens = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6726b4d9a729e7be9887575e8df6d3e2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-16f88dfb2fe12d9d6f4a48d1a496c35c">Copiar</button>
 </div>
 <h5 id="forgery-protection-with-origin-check"><a class="anchorlink" href="#forgery-protection-with-origin-check">6.20.3 Forgery Protection with Origin Check</a></h5><p>You can now configure your application to check if the HTTP <code>Origin</code> header should be checked
 against the site's origin as an additional CSRF defense. Set the following in your config to
 true:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_controller</span><span class="p">.</span><span class="nf">forgery_protection_origin_check</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-12479e4a88a8e8804829a07787a0a850">config.action_controller.forgery_protection_origin_check = true
+<textarea class="clipboard-content" id="clipboard-2824c5aa22130e6e5721dc98709ca34e">config.action_controller.forgery_protection_origin_check = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-12479e4a88a8e8804829a07787a0a850">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2824c5aa22130e6e5721dc98709ca34e">Copiar</button>
 </div>
 <h5 id="allow-configuration-of-action-mailer-queue-name"><a class="anchorlink" href="#allow-configuration-of-action-mailer-queue-name">6.20.4 Allow Configuration of Action Mailer Queue Name</a></h5><p>The default mailer queue name is <code>mailers</code>. This configuration option allows you to globally change
 the queue name. Set the following in your config:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">deliver_later_queue_name</span> <span class="o">=</span> <span class="ss">:new_queue_name</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d5174ff2c8e2ee9dc0b7925197868cb">config.action_mailer.deliver_later_queue_name = :new_queue_name
+<textarea class="clipboard-content" id="clipboard-f417a794b79f6a6e4ba0bc0c51fc5764">config.action_mailer.deliver_later_queue_name = :new_queue_name
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d5174ff2c8e2ee9dc0b7925197868cb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f417a794b79f6a6e4ba0bc0c51fc5764">Copiar</button>
 </div>
 <h5 id="support-fragment-caching-in-action-mailer-views"><a class="anchorlink" href="#support-fragment-caching-in-action-mailer-views">6.20.5 Support Fragment Caching in Action Mailer Views</a></h5><p>Set <code>config.action_mailer.perform_caching</code> in your config to determine whether your Action Mailer views
 should support caching.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">perform_caching</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3af7547b8e8f84cae09e3d3a5bf26e52">config.action_mailer.perform_caching = true
+<textarea class="clipboard-content" id="clipboard-9756869145ed30d6cd7e6620b9f95af2">config.action_mailer.perform_caching = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3af7547b8e8f84cae09e3d3a5bf26e52">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9756869145ed30d6cd7e6620b9f95af2">Copiar</button>
 </div>
 <h5 id="configure-the-output-of-db-structure-dump"><a class="anchorlink" href="#configure-the-output-of-db-structure-dump">6.20.6 Configure the Output of <code>db:structure:dump</code></a></h5><p>If you're using <code>schema_search_path</code> or other PostgreSQL extensions, you can control how the schema is
 dumped. Set to <code>:all</code> to generate all dumps, or to <code>:schema_search_path</code> to generate from schema search path.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">dump_schemas</span> <span class="o">=</span> <span class="ss">:all</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-627cf98f724939a3dedb3829c463c9f3">config.active_record.dump_schemas = :all
+<textarea class="clipboard-content" id="clipboard-db173ba9884e7affba2bc90486974ece">config.active_record.dump_schemas = :all
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-627cf98f724939a3dedb3829c463c9f3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-db173ba9884e7affba2bc90486974ece">Copiar</button>
 </div>
 <h5 id="configure-ssl-options-to-enable-hsts-with-subdomains"><a class="anchorlink" href="#configure-ssl-options-to-enable-hsts-with-subdomains">6.20.7 Configure SSL Options to Enable HSTS with Subdomains</a></h5><p>Set the following in your config to enable HSTS when using subdomains:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">ssl_options</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">hsts: </span><span class="p">{</span> <span class="ss">subdomains: </span><span class="kp">true</span> <span class="p">}</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a1d25dbc3156e15461c6de44fddab234">config.ssl_options = { hsts: { subdomains: true } }
+<textarea class="clipboard-content" id="clipboard-b6be7dd0dd9d39c808defb868b7f57ed">config.ssl_options = { hsts: { subdomains: true } }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a1d25dbc3156e15461c6de44fddab234">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b6be7dd0dd9d39c808defb868b7f57ed">Copiar</button>
 </div>
 <h5 id="preserve-timezone-of-the-receiver"><a class="anchorlink" href="#preserve-timezone-of-the-receiver">6.20.8 Preserve Timezone of the Receiver</a></h5><p>When using Ruby 2.4, you can preserve the timezone of the receiver when calling <code>to_time</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="p">.</span><span class="nf">to_time_preserves_timezone</span> <span class="o">=</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0b3e70b6868d4105f4c1326288a5c283">ActiveSupport.to_time_preserves_timezone = false
+<textarea class="clipboard-content" id="clipboard-27785e73305b97fe80635763c28b6a72">ActiveSupport.to_time_preserves_timezone = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0b3e70b6868d4105f4c1326288a5c283">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-27785e73305b97fe80635763c28b6a72">Copiar</button>
 </div>
 <h4 id="changes-with-json-jsonb-serialization"><a class="anchorlink" href="#changes-with-json-jsonb-serialization">6.21 Changes with JSON/JSONB serialization</a></h4><p>In Rails 5.0, how JSON/JSONB attributes are serialized and deserialized changed. Now, if
 you set a column equal to a <code>String</code>, Active Record will no longer turn that string
@@ -1280,7 +1280,7 @@ instead, which will be converted to and from a JSON string automatically.</p><h3
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-61ebb845f35d7994ba45087a8937f4c1"># app/controllers/users_controller.rb
+<textarea class="clipboard-content" id="clipboard-e5dcfe65fe100c5d1888a29a564733ce"># app/controllers/users_controller.rb
 
 class UsersController &lt; ApplicationController
   respond_to :html, :json
@@ -1291,7 +1291,7 @@ class UsersController &lt; ApplicationController
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-61ebb845f35d7994ba45087a8937f4c1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e5dcfe65fe100c5d1888a29a564733ce">Copiar</button>
 </div>
 <p>Instance-level <code>respond_to</code> is unaffected and does not require the additional gem:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/controllers/users_controller.rb</span>
@@ -1306,7 +1306,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-72300213657905a337f93a10dc0ffb65"># app/controllers/users_controller.rb
+<textarea class="clipboard-content" id="clipboard-f0d61da650b6105679c1d6cd2a79ec6b"># app/controllers/users_controller.rb
 
 class UsersController &lt; ApplicationController
   def show
@@ -1318,7 +1318,7 @@ class UsersController &lt; ApplicationController
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-72300213657905a337f93a10dc0ffb65">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f0d61da650b6105679c1d6cd2a79ec6b">Copiar</button>
 </div>
 <p>See <a href="https://github.com/rails/rails/pull/16526">#16526</a> for more details.</p><h4 id="error-handling-in-transaction-callbacks"><a class="anchorlink" href="#error-handling-in-transaction-callbacks">7.3 Error handling in transaction callbacks</a></h4><p>Currently, Active Record suppresses errors raised
 within <code>after_rollback</code> or <code>after_commit</code> callbacks and only prints them to
@@ -1331,9 +1331,9 @@ deprecation warning by adding following configuration to your
 <code>config/application.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">raise_in_transactional_callbacks</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e47f9a3d600c37cb1689545725296b23">config.active_record.raise_in_transactional_callbacks = true
+<textarea class="clipboard-content" id="clipboard-2f451ad09315a2537e47c8f47fb851f4">config.active_record.raise_in_transactional_callbacks = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e47f9a3d600c37cb1689545725296b23">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2f451ad09315a2537e47c8f47fb851f4">Copiar</button>
 </div>
 <p>See <a href="https://github.com/rails/rails/pull/14488">#14488</a> and
 <a href="https://github.com/rails/rails/pull/16537">#16537</a> for more details.</p><h4 id="ordering-of-test-cases"><a class="anchorlink" href="#ordering-of-test-cases">7.4 Ordering of test cases</a></h4><p>In Rails 5.0, test cases will be executed in random order by default. In
@@ -1347,12 +1347,12 @@ emitted. To avoid this, add the following line to your test environment:</p><div
   <span class="n">config</span><span class="p">.</span><span class="nf">active_support</span><span class="p">.</span><span class="nf">test_order</span> <span class="o">=</span> <span class="ss">:sorted</span> <span class="c1"># or `:random` if you prefer</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8714684d06103a25aeabc65f6fe4cd82"># config/environments/test.rb
+<textarea class="clipboard-content" id="clipboard-a516c72c6ee6d15efa6d56b97107e640"># config/environments/test.rb
 Rails.application.configure do
   config.active_support.test_order = :sorted # or `:random` if you prefer
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8714684d06103a25aeabc65f6fe4cd82">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a516c72c6ee6d15efa6d56b97107e640">Copiar</button>
 </div>
 <h4 id="serialized-attributes"><a class="anchorlink" href="#serialized-attributes">7.5 Serialized attributes</a></h4><p>When using a custom coder (e.g. <code>serialize :metadata, JSON</code>),
 assigning <code>nil</code> to a serialized attribute will save it to the database
@@ -1364,11 +1364,11 @@ line to your <code>production.rb</code>:</p><div class="code_container">
 <span class="c1"># the future default.</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">log_level</span> <span class="o">=</span> <span class="ss">:info</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-95401bd24fa926bcab8bcdbb99acd762"># Set to `:info` to match the current default, or set to `:debug` to opt-into
+<textarea class="clipboard-content" id="clipboard-8ce15b828a43d0bfbfa3d1d4d98b4c31"># Set to `:info` to match the current default, or set to `:debug` to opt-into
 # the future default.
 config.log_level = :info
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-95401bd24fa926bcab8bcdbb99acd762">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ce15b828a43d0bfbfa3d1d4d98b4c31">Copiar</button>
 </div>
 <h4 id="after-bundle-in-rails-templates"><a class="anchorlink" href="#after-bundle-in-rails-templates">7.7 <code>after_bundle</code> in Rails templates</a></h4><p>If you have a Rails template that adds all the files in version control, it
 fails to add the generated binstubs because it gets executed before Bundler:</p><div class="code_container">
@@ -1381,7 +1381,7 @@ fails to add the generated binstubs because it gets executed before Bundler:</p>
 <span class="n">git</span> <span class="ss">add: </span><span class="s2">"."</span>
 <span class="n">git</span> <span class="ss">commit: </span><span class="sx">%Q{ -m 'Initial commit' }</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-198a6dd13821eb37df712749770430e7"># template.rb
+<textarea class="clipboard-content" id="clipboard-dbf6b833cc7950383274b5cc3e6cba26"># template.rb
 generate(:scaffold, "person name:string")
 route "root to: 'people#index'"
 rake("db:migrate")
@@ -1390,7 +1390,7 @@ git :init
 git add: "."
 git commit: %Q{ -m 'Initial commit' }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-198a6dd13821eb37df712749770430e7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dbf6b833cc7950383274b5cc3e6cba26">Copiar</button>
 </div>
 <p>You can now wrap the <code>git</code> calls in an <code>after_bundle</code> block. It will be run
 after the binstubs have been generated.</p><div class="code_container">
@@ -1405,7 +1405,7 @@ after the binstubs have been generated.</p><div class="code_container">
   <span class="n">git</span> <span class="ss">commit: </span><span class="sx">%Q{ -m 'Initial commit' }</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2bbd29736d1506cb45378ee8542b8b53"># template.rb
+<textarea class="clipboard-content" id="clipboard-5caf7eb7315161a982cce50a5eb4715f"># template.rb
 generate(:scaffold, "person name:string")
 route "root to: 'people#index'"
 rake("db:migrate")
@@ -1416,7 +1416,7 @@ after_bundle do
   git commit: %Q{ -m 'Initial commit' }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2bbd29736d1506cb45378ee8542b8b53">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5caf7eb7315161a982cce50a5eb4715f">Copiar</button>
 </div>
 <h4 id="rails-html-sanitizer"><a class="anchorlink" href="#rails-html-sanitizer">7.8 Rails HTML Sanitizer</a></h4><p>There's a new choice for sanitizing HTML fragments in your applications. The
 venerable html-scanner approach is now officially being deprecated in favor of
@@ -1430,9 +1430,9 @@ Read the <a href="https://github.com/rails/rails-html-sanitizer">gem's readme</a
 can gain complete control over when and how elements should be stripped.</p><p>If your application needs to use the old sanitizer implementation, include <code>rails-deprecated_sanitizer</code> in your <code>Gemfile</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'rails-deprecated_sanitizer'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-24336215982e62ff8257c7c2ce23c214">gem 'rails-deprecated_sanitizer'
+<textarea class="clipboard-content" id="clipboard-824637336948d3d99b653cfbf0a17474">gem 'rails-deprecated_sanitizer'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-24336215982e62ff8257c7c2ce23c214">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-824637336948d3d99b653cfbf0a17474">Copiar</button>
 </div>
 <h4 id="rails-dom-testing"><a class="anchorlink" href="#rails-dom-testing">7.9 Rails DOM Testing</a></h4><p>The <a href="https://api.rubyonrails.org/v4.1/classes/ActionDispatch/Assertions/TagAssertions.html"><code>TagAssertions</code> module</a> (containing methods such as <code>assert_tag</code>), <a href="https://github.com/rails/rails/blob/6061472b8c310158a2a2e8e9a6b81a1aef6b60fe/actionpack/lib/action_dispatch/testing/assertions/dom.rb">has been deprecated</a> in favor of the <code>assert_select</code> methods from the <code>SelectorAssertions</code> module, which has been extracted into the <a href="https://github.com/rails/rails-dom-testing">rails-dom-testing gem</a>.</p><h4 id="masked-authenticity-tokens"><a class="anchorlink" href="#masked-authenticity-tokens">7.10 Masked Authenticity Tokens</a></h4><p>In order to mitigate SSL attacks, <code>form_authenticity_token</code> is now masked so that it varies with each request.  Thus, tokens are validated by unmasking and then decrypting.  As a result, any strategies for verifying requests from non-rails forms that relied on a static session CSRF token have to take this into account.</p><h4 id="action-mailer"><a class="anchorlink" href="#action-mailer">7.11 Action Mailer</a></h4><p>Previously, calling a mailer method on a mailer class will result in the
 corresponding instance method being executed directly. With the introduction of
@@ -1446,23 +1446,23 @@ invocation of the instance methods are deferred until either <code>deliver_now</
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4b67cd95dad57ba918459db421a290fc">class Notifier &lt; ActionMailer::Base
+<textarea class="clipboard-content" id="clipboard-e2e245a26470360cc9a9e595d69c4735">class Notifier &lt; ActionMailer::Base
   def notify(user, ...)
     puts "Called"
     mail(to: user.email, ...)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4b67cd95dad57ba918459db421a290fc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e2e245a26470360cc9a9e595d69c4735">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">mail</span> <span class="o">=</span> <span class="no">Notifier</span><span class="p">.</span><span class="nf">notify</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span> <span class="c1"># Notifier#notify is not yet called at this point</span>
 <span class="n">mail</span> <span class="o">=</span> <span class="n">mail</span><span class="p">.</span><span class="nf">deliver_now</span>           <span class="c1"># Prints "Called"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8b3735d9ba6bfb3ec67c9bcdf3a16b6f">mail = Notifier.notify(user, ...) # Notifier#notify is not yet called at this point
+<textarea class="clipboard-content" id="clipboard-2aa72d7d0e769a38c3da000941af69b4">mail = Notifier.notify(user, ...) # Notifier#notify is not yet called at this point
 mail = mail.deliver_now           # Prints "Called"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8b3735d9ba6bfb3ec67c9bcdf3a16b6f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2aa72d7d0e769a38c3da000941af69b4">Copiar</button>
 </div>
 <p>This should not result in any noticeable differences for most applications.
 However, if you need some non-mailer methods to be executed synchronously, and
@@ -1474,13 +1474,13 @@ define them as class methods on the mailer class directly:</p><div class="code_c
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fc3416081bcae00ef8aa629ecb2916c6">class Notifier &lt; ActionMailer::Base
+<textarea class="clipboard-content" id="clipboard-790cd25641d7d4d8ff6a280a237b383b">class Notifier &lt; ActionMailer::Base
   def self.broadcast_notifications(users, ...)
     users.each { |user| Notifier.notify(user, ...) }
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fc3416081bcae00ef8aa629ecb2916c6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-790cd25641d7d4d8ff6a280a237b383b">Copiar</button>
 </div>
 <h4 id="foreign-key-support"><a class="anchorlink" href="#foreign-key-support">7.12 Foreign Key Support</a></h4><p>The migration DSL has been expanded to support foreign key definitions. If
 you've been using the Foreigner gem, you might want to consider removing it.
@@ -1499,16 +1499,16 @@ JavaScript responses, too. This prevents a third-party site from remotely
 referencing your JavaScript with a <code>&lt;script&gt;</code> tag to extract sensitive data.</p><p>This means that your functional and integration tests that use</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">get</span> <span class="ss">:index</span><span class="p">,</span> <span class="ss">format: :js</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1c3bcafea28a5e0b6d7bfe343e216d72">get :index, format: :js
+<textarea class="clipboard-content" id="clipboard-8eb15fa07c0a694ddbda1664e55736e2">get :index, format: :js
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1c3bcafea28a5e0b6d7bfe343e216d72">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8eb15fa07c0a694ddbda1664e55736e2">Copiar</button>
 </div>
 <p>will now trigger CSRF protection. Switch to</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">xhr</span> <span class="ss">:get</span><span class="p">,</span> <span class="ss">:index</span><span class="p">,</span> <span class="ss">format: :js</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c14a54ed3f1b7bcb1de63680c05c46d2">xhr :get, :index, format: :js
+<textarea class="clipboard-content" id="clipboard-3e24831f66f8a8ecb8841e78e237da00">xhr :get, :index, format: :js
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c14a54ed3f1b7bcb1de63680c05c46d2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3e24831f66f8a8ecb8841e78e237da00">Copiar</button>
 </div>
 <p>to explicitly test an <code>XmlHttpRequest</code>.</p><div class="note"><p>Your own <code>&lt;script&gt;</code> tags are treated as cross-origin and blocked by
 default, too. If you really mean to load JavaScript from <code>&lt;script&gt;</code> tags,
@@ -1535,7 +1535,7 @@ secrets, you need to:</p>
 <span class="na">production</span><span class="pi">:</span>
   <span class="na">secret_key_base</span><span class="pi">:</span> <span class="s">&lt;%= ENV["SECRET_KEY_BASE"] %&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c4966445991ead67ac1f4431f0430e4f">development:
+<textarea class="clipboard-content" id="clipboard-6df43e8540853d8f12fecb07a97c18b5">development:
   secret_key_base:
 
 test:
@@ -1544,7 +1544,7 @@ test:
 production:
   secret_key_base: &lt;%= ENV["SECRET_KEY_BASE"] %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c4966445991ead67ac1f4431f0430e4f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6df43e8540853d8f12fecb07a97c18b5">Copiar</button>
 </div>
 </li>
 <li><p>Use your existing <code>secret_key_base</code> from the <code>secret_token.rb</code> initializer to
@@ -1564,9 +1564,9 @@ the signed and encrypted cookie jars. If you want to use the new <code>JSON</cod
 in your application, you can add an initializer file with the following content:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">action_dispatch</span><span class="p">.</span><span class="nf">cookies_serializer</span> <span class="o">=</span> <span class="ss">:hybrid</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7d4f6158d7b0016b74b06cdea576e9cf">Rails.application.config.action_dispatch.cookies_serializer = :hybrid
+<textarea class="clipboard-content" id="clipboard-a01c8ab18d938bc2bcfd78e1471a1c87">Rails.application.config.action_dispatch.cookies_serializer = :hybrid
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7d4f6158d7b0016b74b06cdea576e9cf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a01c8ab18d938bc2bcfd78e1471a1c87">Copiar</button>
 </div>
 <p>This would transparently migrate your existing <code>Marshal</code>-serialized cookies into the
 new <code>JSON</code>-based format.</p><p>When using the <code>:json</code> or <code>:hybrid</code> serializer, you should beware that not all
@@ -1583,7 +1583,7 @@ will be serialized as strings, and <code>Hash</code>es will have their keys stri
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ffccefcbb8add94d2ae4d12570063782">class CookiesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-a002466b38d04a60c2080754b0a5084d">class CookiesController &lt; ApplicationController
   def set_cookie
     cookies.encrypted[:expiration_date] = Date.tomorrow # =&gt; Thu, 20 Mar 2014
     redirect_to action: 'read_cookie'
@@ -1594,7 +1594,7 @@ will be serialized as strings, and <code>Hash</code>es will have their keys stri
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ffccefcbb8add94d2ae4d12570063782">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a002466b38d04a60c2080754b0a5084d">Copiar</button>
 </div>
 <p>It's advisable that you only store simple data (strings and numbers) in cookies.
 If you have to store complex objects, you would need to handle the conversion
@@ -1612,7 +1612,7 @@ will always yield string keys:</p><div class="code_container">
 <span class="c1"># Rails &gt;= 4.1</span>
 <span class="n">flash</span><span class="p">.</span><span class="nf">keys</span> <span class="c1"># =&gt; ["string", "symbol"]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-be17168b69c635913ed02778a4723034">flash["string"] = "a string"
+<textarea class="clipboard-content" id="clipboard-1b0cf38102bf2df6ed2bc696629363ab">flash["string"] = "a string"
 flash[:symbol] = "a symbol"
 
 # Rails &lt; 4.1
@@ -1621,7 +1621,7 @@ flash.keys # =&gt; ["string", :symbol]
 # Rails &gt;= 4.1
 flash.keys # =&gt; ["string", "symbol"]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-be17168b69c635913ed02778a4723034">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1b0cf38102bf2df6ed2bc696629363ab">Copiar</button>
 </div>
 <p>Make sure you are comparing Flash message keys against strings.</p><h4 id="changes-in-json-handling"><a class="anchorlink" href="#changes-in-json-handling">8.7 Changes in JSON handling</a></h4><p>There are a few major changes related to JSON handling in Rails 4.1.</p><h5 id="multijson-removal"><a class="anchorlink" href="#multijson-removal">8.7.1 MultiJSON removal</a></h5><p>MultiJSON has reached its <a href="https://github.com/rails/rails/pull/10576">end-of-life</a>
 and has been removed from Rails.</p><p>If your application currently depends on MultiJSON directly, you have a few options:</p>
@@ -1642,13 +1642,13 @@ Rails-specific features. For example:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-93a167fea6fe49e54733a8e263fc4d29">class FooBar
+<textarea class="clipboard-content" id="clipboard-0b9da05b014c4125fe536bd1be5ecb8c">class FooBar
   def as_json(options = nil)
     { foo: 'bar' }
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-93a167fea6fe49e54733a8e263fc4d29">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0b9da05b014c4125fe536bd1be5ecb8c">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">FooBar</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">to_json</span>
@@ -1656,10 +1656,10 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="no">JSON</span><span class="p">.</span><span class="nf">generate</span><span class="p">(</span><span class="no">FooBar</span><span class="p">.</span><span class="nf">new</span><span class="p">,</span> <span class="ss">quirks_mode: </span><span class="kp">true</span><span class="p">)</span>
 <span class="p">=&gt;</span> <span class="s2">"</span><span class="se">\"</span><span class="s2">#&lt;FooBar:0x007fa80a481610&gt;</span><span class="se">\"</span><span class="s2">"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0ef825059c080ab577ccd21c4d30476c">FooBar.new.to_json
+<textarea class="clipboard-content" id="clipboard-691689ea7a5cd1697099fa39a02c45b5">FooBar.new.to_json
 JSON.generate(FooBar.new, quirks_mode: true)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0ef825059c080ab577ccd21c4d30476c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-691689ea7a5cd1697099fa39a02c45b5">Copiar</button>
 </div>
 <h5 id="new-json-encoder"><a class="anchorlink" href="#new-json-encoder">8.7.3 New JSON encoder</a></h5><p>The JSON encoder in Rails 4.1 has been rewritten to take advantage of the JSON
 gem. For most applications, this should be a transparent change. However, as
@@ -1676,20 +1676,20 @@ now returns millisecond precision by default. If you need to keep old behavior w
 precision, set the following in an initializer:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">JSON</span><span class="o">::</span><span class="no">Encoding</span><span class="p">.</span><span class="nf">time_precision</span> <span class="o">=</span> <span class="mi">0</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c6794169f980e0952740ae7f788dd01e">ActiveSupport::JSON::Encoding.time_precision = 0
+<textarea class="clipboard-content" id="clipboard-6277d2d0b1012599c3ba5d9e01ad7859">ActiveSupport::JSON::Encoding.time_precision = 0
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c6794169f980e0952740ae7f788dd01e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6277d2d0b1012599c3ba5d9e01ad7859">Copiar</button>
 </div>
 <h4 id="usage-of-return-within-inline-callback-blocks"><a class="anchorlink" href="#usage-of-return-within-inline-callback-blocks">8.8 Usage of <code>return</code> within inline callback blocks</a></h4><p>Previously, Rails allowed inline callback blocks to use <code>return</code> this way:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ReadOnlyModel</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
   <span class="n">before_save</span> <span class="p">{</span> <span class="k">return</span> <span class="kp">false</span> <span class="p">}</span> <span class="c1"># BAD</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-44547af341639346262f88dc9159cbe8">class ReadOnlyModel &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-a525bc94e446844c317b8dc7ff562c25">class ReadOnlyModel &lt; ActiveRecord::Base
   before_save { return false } # BAD
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-44547af341639346262f88dc9159cbe8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a525bc94e446844c317b8dc7ff562c25">Copiar</button>
 </div>
 <p>This behavior was never intentionally supported. Due to a change in the internals
 of <code>ActiveSupport::Callbacks</code>, this is no longer allowed in Rails 4.1. Using a
@@ -1700,11 +1700,11 @@ returned value:</p><div class="code_container">
   <span class="n">before_save</span> <span class="p">{</span> <span class="kp">false</span> <span class="p">}</span> <span class="c1"># GOOD</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a8c36aac7edd3d387a9c9d03fc93e780">class ReadOnlyModel &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-d6bbffa7afaad61cc51c88086cdfaa4d">class ReadOnlyModel &lt; ActiveRecord::Base
   before_save { false } # GOOD
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a8c36aac7edd3d387a9c9d03fc93e780">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d6bbffa7afaad61cc51c88086cdfaa4d">Copiar</button>
 </div>
 <p>Alternatively, if <code>return</code> is preferred it is recommended to explicitly define
 a method:</p><div class="code_container">
@@ -1717,7 +1717,7 @@ a method:</p><div class="code_container">
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-05a592dca9c52f45ba9631ad6509900d">class ReadOnlyModel &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-3b0d5a0c3e18fc525cf843848a98665d">class ReadOnlyModel &lt; ActiveRecord::Base
   before_save :before_save_callback # GOOD
 
   private
@@ -1726,7 +1726,7 @@ a method:</p><div class="code_container">
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-05a592dca9c52f45ba9631ad6509900d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3b0d5a0c3e18fc525cf843848a98665d">Copiar</button>
 </div>
 <p>This change applies to most places in Rails where callbacks are used, including
 Active Record and Active Model callbacks, as well as filters in Action
@@ -1743,7 +1743,7 @@ included in the newly introduced <code>ActiveRecord::FixtureSet.context_class</c
 
 <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">FixtureSet</span><span class="p">.</span><span class="nf">context_class</span><span class="p">.</span><span class="nf">include</span> <span class="no">FixtureFileHelpers</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3f4e502de8651087dec39c421fe737f7">module FixtureFileHelpers
+<textarea class="clipboard-content" id="clipboard-4c5f2a1b1540bf9b34101674209f27bc">module FixtureFileHelpers
   def file_sha(path)
     Digest::SHA2.hexdigest(File.read(Rails.root.join('test/fixtures', path)))
   end
@@ -1751,7 +1751,7 @@ end
 
 ActiveRecord::FixtureSet.context_class.include FixtureFileHelpers
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3f4e502de8651087dec39c421fe737f7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4c5f2a1b1540bf9b34101674209f27bc">Copiar</button>
 </div>
 <h4 id="i18n-enforcing-available-locales"><a class="anchorlink" href="#i18n-enforcing-available-locales">8.10 I18n enforcing available locales</a></h4><p>Rails 4.1 now defaults the I18n option <code>enforce_available_locales</code> to <code>true</code>. This
 means that it will make sure that all locales passed to it must be declared in
@@ -1759,9 +1759,9 @@ the <code>available_locales</code> list.</p><p>To disable it (and allow I18n to 
 configuration to your application:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">i18n</span><span class="p">.</span><span class="nf">enforce_available_locales</span> <span class="o">=</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cb0cffef5ca80e0a9438a0567e7b3259">config.i18n.enforce_available_locales = false
+<textarea class="clipboard-content" id="clipboard-0ef661b61fbba8de9dbcea80d0d21d4b">config.i18n.enforce_available_locales = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cb0cffef5ca80e0a9438a0567e7b3259">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0ef661b61fbba8de9dbcea80d0d21d4b">Copiar</button>
 </div>
 <p>Note that this option was added as a security measure, to ensure user input
 cannot be used as locale information unless it is previously known. Therefore,
@@ -1776,14 +1776,14 @@ methods directly on the <code>Relation</code>.</p><div class="code_container">
 <span class="n">authors</span> <span class="o">=</span> <span class="no">Author</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'Hank Moody'</span><span class="p">).</span><span class="nf">to_a</span>
 <span class="n">authors</span><span class="p">.</span><span class="nf">compact!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5630813d5c8b97e6dab173d443c45a89"># Instead of this
+<textarea class="clipboard-content" id="clipboard-af7ec2bd06efac20c2302530b5610aea"># Instead of this
 Author.where(name: 'Hank Moody').compact!
 
 # Now you have to do this
 authors = Author.where(name: 'Hank Moody').to_a
 authors.compact!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5630813d5c8b97e6dab173d443c45a89">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-af7ec2bd06efac20c2302530b5610aea">Copiar</button>
 </div>
 <h4 id="changes-on-default-scopes"><a class="anchorlink" href="#changes-on-default-scopes">8.12 Changes on Default Scopes</a></h4><p>Default scopes are no longer overridden by chained conditions.</p><p>In previous versions when you defined a <code>default_scope</code> in a model
 it was overridden by chained conditions in the same field. Now it
@@ -1803,7 +1803,7 @@ is merged like any other scope.</p><p>Before:</p><div class="code_container">
 <span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">state: </span><span class="s1">'inactive'</span><span class="p">)</span>
 <span class="c1"># SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-faf6c61d9ff2e21c02ea2483edfd319d">class User &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-3aae7fba8752491db58be785724fefe9">class User &lt; ActiveRecord::Base
   default_scope { where state: 'pending' }
   scope :active, -&gt; { where state: 'active' }
   scope :inactive, -&gt; { where state: 'inactive' }
@@ -1818,7 +1818,7 @@ User.active
 User.where(state: 'inactive')
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-faf6c61d9ff2e21c02ea2483edfd319d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3aae7fba8752491db58be785724fefe9">Copiar</button>
 </div>
 <p>After:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
@@ -1836,7 +1836,7 @@ User.where(state: 'inactive')
 <span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">state: </span><span class="s1">'inactive'</span><span class="p">)</span>
 <span class="c1"># SELECT "users".* FROM "users" WHERE "users"."state" = 'pending' AND "users"."state" = 'inactive'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0ffa529d0672115695fff1974b74abc9">class User &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-695a9ed659f34907a99669a71ae609a3">class User &lt; ActiveRecord::Base
   default_scope { where state: 'pending' }
   scope :active, -&gt; { where state: 'active' }
   scope :inactive, -&gt; { where state: 'inactive' }
@@ -1851,7 +1851,7 @@ User.active
 User.where(state: 'inactive')
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'pending' AND "users"."state" = 'inactive'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0ffa529d0672115695fff1974b74abc9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-695a9ed659f34907a99669a71ae609a3">Copiar</button>
 </div>
 <p>To get the previous behavior it is needed to explicitly remove the
 <code>default_scope</code> condition using <code>unscoped</code>, <code>unscope</code>, <code>rewhere</code> or
@@ -1871,7 +1871,7 @@ User.where(state: 'inactive')
 <span class="no">User</span><span class="p">.</span><span class="nf">inactive</span>
 <span class="c1"># SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b3a0e8d005720baed3f1d22a50aff79c">class User &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-7ba842fc95b8ceabc6fbf1a1d40d4555">class User &lt; ActiveRecord::Base
   default_scope { where state: 'pending' }
   scope :active, -&gt; { unscope(where: :state).where(state: 'active') }
   scope :inactive, -&gt; { rewhere state: 'inactive' }
@@ -1886,7 +1886,7 @@ User.active
 User.inactive
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b3a0e8d005720baed3f1d22a50aff79c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7ba842fc95b8ceabc6fbf1a1d40d4555">Copiar</button>
 </div>
 <h4 id="rendering-content-from-string"><a class="anchorlink" href="#rendering-content-from-string">8.13 Rendering content from string</a></h4><p>Rails 4.1 introduces <code>:plain</code>, <code>:html</code>, and <code>:body</code> options to <code>render</code>. Those
 options are now the preferred way to render string-based content, as it allows
@@ -1919,13 +1919,13 @@ string keys consistently.</p><h4 id="explicit-block-use-for-activesupport-callba
 <span class="c1"># Now in Rails 4.1</span>
 <span class="n">set_callback</span> <span class="ss">:save</span><span class="p">,</span> <span class="ss">:around</span><span class="p">,</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span> <span class="p">{</span> <span class="n">stuff</span><span class="p">;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">block</span><span class="p">.</span><span class="nf">call</span><span class="p">;</span> <span class="n">stuff</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b873e0353f49880a6fb55d31586fd564"># Previously in Rails 4.0
+<textarea class="clipboard-content" id="clipboard-b5c4aa4d227001fbf50eca90fc2b8ead"># Previously in Rails 4.0
 set_callback :save, :around, -&gt;(r, &amp;block) { stuff; result = block.call; stuff }
 
 # Now in Rails 4.1
 set_callback :save, :around, -&gt;(r, block) { stuff; result = block.call; stuff }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b873e0353f49880a6fb55d31586fd564">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b5c4aa4d227001fbf50eca90fc2b8ead">Copiar</button>
 </div>
 <h3 id="upgrading-from-rails-3-2-to-rails-4-0"><a class="anchorlink" href="#upgrading-from-rails-3-2-to-rails-4-0">9 Upgrading from Rails 3.2 to Rails 4.0</a></h3><p>If your application is currently on any version of Rails older than 3.2.x, you should upgrade to Rails 3.2 before attempting one to Rails 4.0.</p><p>The following changes are meant for upgrading your application to Rails 4.0.</p><h4 id="http-patch"><a class="anchorlink" href="#http-patch">9.1 HTTP PATCH</a></h4><p>Rails 4 now uses <code>PATCH</code> as the primary HTTP verb for updates when a RESTful
 resource is declared in <code>config/routes.rb</code>. The <code>update</code> action is still used,
@@ -1933,16 +1933,16 @@ and <code>PUT</code> requests will continue to be routed to the <code>update</co
 So, if you're using only the standard RESTful routes, no changes need to be made:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:users</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8fd27212679017843087516e7119a61f">resources :users
+<textarea class="clipboard-content" id="clipboard-f9df305bd96ab2477d3876284cbe737f">resources :users
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8fd27212679017843087516e7119a61f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f9df305bd96ab2477d3876284cbe737f">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_for</span> <span class="vi">@user</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bffecdf5b3d9794638377126cefd1c2c">&lt;%= form_for @user do |f| %&gt;
+<textarea class="clipboard-content" id="clipboard-7646cb8417269f034d9f3ce5e8135d7f">&lt;%= form_for @user do |f| %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bffecdf5b3d9794638377126cefd1c2c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7646cb8417269f034d9f3ce5e8135d7f">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -1951,13 +1951,13 @@ So, if you're using only the standard RESTful routes, no changes need to be made
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-38329a92b45d8ed6ff0b5fd12719b294">class UsersController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-a5bcbf3b8e1efcb378fc4f8dda92c06c">class UsersController &lt; ApplicationController
   def update
     # No change needed; PATCH will be preferred, and PUT will still work.
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-38329a92b45d8ed6ff0b5fd12719b294">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a5bcbf3b8e1efcb378fc4f8dda92c06c">Copiar</button>
 </div>
 <p>However, you will need to make a change if you are using <code>form_for</code> to update
 a resource in conjunction with a custom route using the <code>PUT</code> HTTP method:</p><div class="code_container">
@@ -1965,18 +1965,18 @@ a resource in conjunction with a custom route using the <code>PUT</code> HTTP me
   <span class="n">put</span> <span class="ss">:update_name</span><span class="p">,</span> <span class="ss">on: :member</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-53a08c65f45982cd5ca31d510f80cc66">resources :users do
+<textarea class="clipboard-content" id="clipboard-ffc2689a006ae346111bf93be23ab82c">resources :users do
   put :update_name, on: :member
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-53a08c65f45982cd5ca31d510f80cc66">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ffc2689a006ae346111bf93be23ab82c">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_for</span> <span class="p">[</span> <span class="ss">:update_name</span><span class="p">,</span> <span class="vi">@user</span> <span class="p">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0599cbd49f583c990cdb4fe53df92f5a">&lt;%= form_for [ :update_name, @user ] do |f| %&gt;
+<textarea class="clipboard-content" id="clipboard-c5a3a1ebb1c42fe8a07dfaa60ad61ebb">&lt;%= form_for [ :update_name, @user ] do |f| %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0599cbd49f583c990cdb4fe53df92f5a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c5a3a1ebb1c42fe8a07dfaa60ad61ebb">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -1985,13 +1985,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-35e41a14c003aba602aaa3c3771fd433">class UsersController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-eb20573804045b479c707d79e02f4281">class UsersController &lt; ApplicationController
   def update_name
     # Change needed; form_for will try to use a non-existent PATCH route.
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-35e41a14c003aba602aaa3c3771fd433">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eb20573804045b479c707d79e02f4281">Copiar</button>
 </div>
 <p>If the action is not being used in a public API and you are free to change the
 HTTP method, you can update your route to use <code>patch</code> instead of <code>put</code>:</p><div class="code_container">
@@ -1999,11 +1999,11 @@ HTTP method, you can update your route to use <code>patch</code> instead of <cod
   <span class="n">patch</span> <span class="ss">:update_name</span><span class="p">,</span> <span class="ss">on: :member</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-810d07b6edabd7ff3ad52c786513f788">resources :users do
+<textarea class="clipboard-content" id="clipboard-efe50f136a9e7055511ed49e0908fe27">resources :users do
   patch :update_name, on: :member
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-810d07b6edabd7ff3ad52c786513f788">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-efe50f136a9e7055511ed49e0908fe27">Copiar</button>
 </div>
 <p><code>PUT</code> requests to <code>/users/:id</code> in Rails 4 get routed to <code>update</code> as they are
 today. So, if you have an API that gets real PUT requests it is going to work.
@@ -2011,9 +2011,9 @@ The router also routes <code>PATCH</code> requests to <code>/users/:id</code> to
 being used, you can update your form to use the <code>PUT</code> method instead:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_for</span> <span class="p">[</span> <span class="ss">:update_name</span><span class="p">,</span> <span class="vi">@user</span> <span class="p">],</span> <span class="ss">method: :put</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d8f4ee3291e506176a6c299684f9ce31">&lt;%= form_for [ :update_name, @user ], method: :put do |f| %&gt;
+<textarea class="clipboard-content" id="clipboard-bec1c74cb8d0ca236386dcd422ab0786">&lt;%= form_for [ :update_name, @user ], method: :put do |f| %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d8f4ee3291e506176a6c299684f9ce31">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bec1c74cb8d0ca236386dcd422ab0786">Copiar</button>
 </div>
 <p>For more on PATCH and why this change was made, see <a href="https://weblog.rubyonrails.org/2012/2/26/edge-rails-patch-is-the-new-primary-http-method-for-updates/">this post</a>
 on the Rails blog.</p><h5 id="a-note-about-media-types"><a class="anchorlink" href="#a-note-about-media-types">9.1.1 A note about media types</a></h5><p>The errata for the <code>PATCH</code> verb <a href="http://www.rfc-editor.org/errata_search.php?rfc=5789">specifies that a 'diff' media type should be
@@ -2034,7 +2034,7 @@ does not support JSON Patch natively, it's easy enough to add support:</p><div c
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-618144b8c9c201417437e041b2dceeae"># in your controller:
+<textarea class="clipboard-content" id="clipboard-b7c33fc2d4c40c8c0ad145921dd32830"># in your controller:
 def update
   respond_to do |format|
     format.json do
@@ -2048,16 +2048,16 @@ def update
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-618144b8c9c201417437e041b2dceeae">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b7c33fc2d4c40c8c0ad145921dd32830">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/initializers/json_patch.rb</span>
 <span class="no">Mime</span><span class="o">::</span><span class="no">Type</span><span class="p">.</span><span class="nf">register</span> <span class="s1">'application/json-patch+json'</span><span class="p">,</span> <span class="ss">:json_patch</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-676901450036bb2c2da86b638f47f187"># config/initializers/json_patch.rb
+<textarea class="clipboard-content" id="clipboard-b439cf6e72b0f3c20ee375cb5f644bb2"># config/initializers/json_patch.rb
 Mime::Type.register 'application/json-patch+json', :json_patch
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-676901450036bb2c2da86b638f47f187">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b439cf6e72b0f3c20ee375cb5f644bb2">Copiar</button>
 </div>
 <p>As JSON Patch was only recently made into an RFC, there aren't a lot of great
 Ruby libraries yet. Aaron Patterson's
@@ -2069,11 +2069,11 @@ file (in <code>config/application.rb</code>):</p><div class="code_container">
 <span class="c1"># you've limited to :test, :development, or :production.</span>
 <span class="no">Bundler</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="o">*</span><span class="no">Rails</span><span class="p">.</span><span class="nf">groups</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fd6cda0af315d0730bb645b3cb1e54a9"># Require the gems listed in Gemfile, including any gems
+<textarea class="clipboard-content" id="clipboard-bbe084ecdda644aeef57131194ccd7d1"># Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fd6cda0af315d0730bb645b3cb1e54a9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bbe084ecdda644aeef57131194ccd7d1">Copiar</button>
 </div>
 <h4 id="upgrading-from-rails-3-2-to-rails-4-0-vendor-plugins"><a class="anchorlink" href="#upgrading-from-rails-3-2-to-rails-4-0-vendor-plugins">9.3 vendor/plugins</a></h4><p>Rails 4.0 no longer supports loading plugins from <code>vendor/plugins</code>. You must replace any plugins by extracting them to gems and adding them to your <code>Gemfile</code>. If you choose not to make them gems, you can move them into, say, <code>lib/my_plugin/*</code> and add an appropriate initializer in <code>config/initializers/my_plugin.rb</code>.</p><h4 id="upgrading-from-rails-3-2-to-rails-4-0-active-record"><a class="anchorlink" href="#upgrading-from-rails-3-2-to-rails-4-0-active-record">9.4 Active Record</a></h4>
 <ul>
@@ -2094,12 +2094,12 @@ this gem such as <code>whitelist_attributes</code> or <code>mass_assignment_sani
   <span class="c1"># becomes</span>
   <span class="n">scope</span> <span class="ss">:active</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">where</span> <span class="ss">active: </span><span class="kp">true</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8802ffb1f4a21b05257b4a1b5a18a484">  scope :active, where(active: true)
+<textarea class="clipboard-content" id="clipboard-b44024b84777b83cd63a678f63f92455">  scope :active, where(active: true)
 
   # becomes
   scope :active, -&gt; { where active: true }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8802ffb1f4a21b05257b4a1b5a18a484">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b44024b84777b83cd63a678f63f92455">Copiar</button>
 </div>
 </li>
 <li><p>Rails 4.0 has deprecated <code>ActiveRecord::Fixtures</code> in favor of <code>ActiveRecord::FixtureSet</code>.</p></li>
@@ -2136,7 +2136,7 @@ Here's how you can handle the changes:</p>
   <span class="n">has_and_belongs_to_many</span> <span class="ss">:catalog_categories</span><span class="p">,</span> <span class="ss">join_table: </span><span class="s1">'catalog_categories_catalog_products'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1539b5672ae361c2ec0612f87b9b6eb5">CatalogCategory &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-8f6666214d7ed7b72cc5290de02eb8b5">CatalogCategory &lt; ActiveRecord::Base
   has_and_belongs_to_many :catalog_products, join_table: 'catalog_categories_catalog_products'
 end
 
@@ -2144,7 +2144,7 @@ CatalogProduct &lt; ActiveRecord::Base
   has_and_belongs_to_many :catalog_categories, join_table: 'catalog_categories_catalog_products'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1539b5672ae361c2ec0612f87b9b6eb5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8f6666214d7ed7b72cc5290de02eb8b5">Copiar</button>
 </div>
 </li>
 <li><p>Note that the prefix takes scopes into account as well, so relations between <code>Catalog::Category</code> and <code>Catalog::Product</code> or <code>Catalog::Category</code> and <code>CatalogProduct</code> need to be updated similarly.</p></li>
@@ -2160,12 +2160,12 @@ end
 <span class="c1">#   self.include_root_in_json = false</span>
 <span class="c1"># end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0227e047e09ac1c6a8f572efd2b6e06b"># Disable root element in JSON by default.
+<textarea class="clipboard-content" id="clipboard-7dfd18c22efdc8445ba12e826b18e0a0"># Disable root element in JSON by default.
 # ActiveSupport.on_load(:active_record) do
 #   self.include_root_in_json = false
 # end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0227e047e09ac1c6a8f572efd2b6e06b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7dfd18c22efdc8445ba12e826b18e0a0">Copiar</button>
 </div>
 </li>
 </ul>
@@ -2178,11 +2178,11 @@ end
   <span class="no">Myapp</span><span class="o">::</span><span class="no">Application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">secret_token</span> <span class="o">=</span> <span class="s1">'existing secret token'</span>
   <span class="no">Myapp</span><span class="o">::</span><span class="no">Application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">secret_key_base</span> <span class="o">=</span> <span class="s1">'new secret key base'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b78232a8c954315af3adf7633fb8fa41">  # config/initializers/secret_token.rb
+<textarea class="clipboard-content" id="clipboard-83d4b77e7df40ec507b4148ff9814c8f">  # config/initializers/secret_token.rb
   Myapp::Application.config.secret_token = 'existing secret token'
   Myapp::Application.config.secret_key_base = 'new secret key base'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b78232a8c954315af3adf7633fb8fa41">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-83d4b77e7df40ec507b4148ff9814c8f">Copiar</button>
 </div>
 <p>Please note that you should wait to set <code>secret_key_base</code> until you have 100% of your userbase on Rails 4.x and are reasonably sure you will not need to rollback to Rails 3.x. This is because cookies signed based on the new <code>secret_key_base</code> in Rails 4.x are not backwards compatible with Rails 3.x. You are free to leave your existing <code>secret_token</code> in place, not set the new <code>secret_key_base</code>, and ignore the deprecation warnings until you are reasonably sure that your upgrade is otherwise complete.</p>
 <p>If you are relying on the ability for external applications or JavaScript to be able to read your Rails app's signed session cookies (or signed cookies in general) you should not set <code>secret_key_base</code> until you have decoupled these concerns.</p>
@@ -2209,19 +2209,19 @@ or <code>link_to_unless</code>).</p></li>
 <pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'one'</span> <span class="o">=&gt;</span> <span class="s1">'test#example'</span><span class="p">,</span> <span class="ss">as: :example</span>
 <span class="n">get</span> <span class="s1">'two'</span> <span class="o">=&gt;</span> <span class="s1">'test#example'</span><span class="p">,</span> <span class="ss">as: :example</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9e0a01fbeebc2fa6f3dfb88c2d438b08">get 'one' =&gt; 'test#example', as: :example
+<textarea class="clipboard-content" id="clipboard-f779442c989b37af97fa12bc04a7a39f">get 'one' =&gt; 'test#example', as: :example
 get 'two' =&gt; 'test#example', as: :example
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9e0a01fbeebc2fa6f3dfb88c2d438b08">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f779442c989b37af97fa12bc04a7a39f">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:examples</span>
 <span class="n">get</span> <span class="s1">'clashing/:id'</span> <span class="o">=&gt;</span> <span class="s1">'test#example'</span><span class="p">,</span> <span class="ss">as: :example</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d6e58c6e017c3f4d73609d62f271e2eb">resources :examples
+<textarea class="clipboard-content" id="clipboard-f4865897f3a0eaed9e60ad8ffeefd9e4">resources :examples
 get 'clashing/:id' =&gt; 'test#example', as: :example
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d6e58c6e017c3f4d73609d62f271e2eb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f4865897f3a0eaed9e60ad8ffeefd9e4">Copiar</button>
 </div>
 <p>In the first case, you can simply avoid using the same name for multiple
 routes. In the second, you can use the <code>only</code> or <code>except</code> options provided by
@@ -2233,17 +2233,17 @@ the <code>resources</code> method to restrict the routes created as detailed in 
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">get</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Utils</span><span class="p">.</span><span class="nf">escape</span><span class="p">(</span><span class="s1">'こんにちは'</span><span class="p">),</span> <span class="ss">controller: </span><span class="s1">'welcome'</span><span class="p">,</span> <span class="ss">action: </span><span class="s1">'index'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d9f2d33f0ccc8a9d77865b565b95949">get Rack::Utils.escape('こんにちは'), controller: 'welcome', action: 'index'
+<textarea class="clipboard-content" id="clipboard-89effac993e992c0baf4cea4b0b7ee65">get Rack::Utils.escape('こんにちは'), controller: 'welcome', action: 'index'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d9f2d33f0ccc8a9d77865b565b95949">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-89effac993e992c0baf4cea4b0b7ee65">Copiar</button>
 </div>
 <p>becomes</p>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'こんにちは'</span><span class="p">,</span> <span class="ss">controller: </span><span class="s1">'welcome'</span><span class="p">,</span> <span class="ss">action: </span><span class="s1">'index'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4eb0482e2806450eda497436eccd533d">get 'こんにちは', controller: 'welcome', action: 'index'
+<textarea class="clipboard-content" id="clipboard-2c556eeddba584375dbe1b1830a99705">get 'こんにちは', controller: 'welcome', action: 'index'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4eb0482e2806450eda497436eccd533d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2c556eeddba584375dbe1b1830a99705">Copiar</button>
 </div>
 </li>
 <li>
@@ -2258,7 +2258,7 @@ the <code>resources</code> method to restrict the routes created as detailed in 
   <span class="c1"># or</span>
   <span class="n">get</span> <span class="s1">'/'</span> <span class="o">=&gt;</span> <span class="s1">'root#index'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-da026f7b18a51d4d41365bf953a81b1e">  # Rails 3.x
+<textarea class="clipboard-content" id="clipboard-cd17950d6be1fccb024ac99bf1d3d1b6">  # Rails 3.x
   match '/' =&gt; 'root#index'
 
   # becomes
@@ -2267,7 +2267,7 @@ the <code>resources</code> method to restrict the routes created as detailed in 
   # or
   get '/' =&gt; 'root#index'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-da026f7b18a51d4d41365bf953a81b1e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cd17950d6be1fccb024ac99bf1d3d1b6">Copiar</button>
 </div>
 </li>
 <li>
@@ -2277,10 +2277,10 @@ the <code>resources</code> method to restrict the routes created as detailed in 
 <pre><code class="highlight ruby"><span class="c1"># Raise exception</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">insert_before</span><span class="p">(</span><span class="no">Rack</span><span class="o">::</span><span class="no">Lock</span><span class="p">,</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">BestStandardsSupport</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5f35f4619fd1d1ec2a188379663338a9"># Raise exception
+<textarea class="clipboard-content" id="clipboard-b29a13602206f800221c306e3b65c0e4"># Raise exception
 config.middleware.insert_before(Rack::Lock, ActionDispatch::BestStandardsSupport)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5f35f4619fd1d1ec2a188379663338a9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b29a13602206f800221c306e3b65c0e4">Copiar</button>
 </div>
 <p>Also check your environment settings for <code>config.action_dispatch.best_standards_support</code> and remove it if present.</p>
 </li>
@@ -2292,12 +2292,12 @@ config.middleware.insert_before(Rack::Lock, ActionDispatch::BestStandardsSupport
     <span class="s1">'X-XSS-Protection'</span> <span class="o">=&gt;</span> <span class="s1">'1; mode=block'</span>
   <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2635e23123a691a56d9223c92ea5bfd3">  config.action_dispatch.default_headers = {
+<textarea class="clipboard-content" id="clipboard-20062c3c688cb5a88699f5cd2fd949ed">  config.action_dispatch.default_headers = {
     'X-Frame-Options' =&gt; 'SAMEORIGIN',
     'X-XSS-Protection' =&gt; '1; mode=block'
   }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2635e23123a691a56d9223c92ea5bfd3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-20062c3c688cb5a88699f5cd2fd949ed">Copiar</button>
 </div>
 <p>Please note that if your application is dependent on loading certain pages in a <code>&lt;frame&gt;</code> or <code>&lt;iframe&gt;</code>, then you may need to explicitly set <code>X-Frame-Options</code> to <code>ALLOW-FROM ...</code> or <code>ALLOWALL</code>.</p>
 </li>
@@ -2323,9 +2323,9 @@ config.middleware.insert_before(Rack::Lock, ActionDispatch::BestStandardsSupport
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">js_compressor</span> <span class="o">=</span> <span class="ss">:uglifier</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-64f351321809c8fdb913615bb3e8eb4b">config.assets.js_compressor = :uglifier
+<textarea class="clipboard-content" id="clipboard-bb3b896d4a0e39ba624b6d2ad28ce035">config.assets.js_compressor = :uglifier
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-64f351321809c8fdb913615bb3e8eb4b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bb3b896d4a0e39ba624b6d2ad28ce035">Copiar</button>
 </div>
 </li>
 </ul>
@@ -2345,7 +2345,7 @@ should upgrade to Rails 3.1 before attempting an update to Rails 3.2.</p><p>The 
   <span class="n">gem</span> <span class="s1">'uglifier'</span><span class="p">,</span>     <span class="s1">'&gt;= 1.0.3'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1a39618aad02003277191f17a0b5f3b9">gem 'rails', '3.2.21'
+<textarea class="clipboard-content" id="clipboard-e41e09243ae97450a5085561c3568648">gem 'rails', '3.2.21'
 
 group :assets do
   gem 'sass-rails',   '~&gt; 3.2.6'
@@ -2353,7 +2353,7 @@ group :assets do
   gem 'uglifier',     '&gt;= 1.0.3'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1a39618aad02003277191f17a0b5f3b9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e41e09243ae97450a5085561c3568648">Copiar</button>
 </div>
 <h4 id="upgrading-from-rails-3-1-to-rails-3-2-config-environments-development-rb"><a class="anchorlink" href="#upgrading-from-rails-3-1-to-rails-3-2-config-environments-development-rb">10.2 config/environments/development.rb</a></h4><p>There are a couple of new configuration settings that you should add to your development environment:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Raise exception on mass assignment protection for Active Record models</span>
@@ -2363,23 +2363,23 @@ end
 <span class="c1"># with SQLite, MySQL, and PostgreSQL)</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">auto_explain_threshold_in_seconds</span> <span class="o">=</span> <span class="mf">0.5</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f0d990469e49638c3e06a894baebd139"># Raise exception on mass assignment protection for Active Record models
+<textarea class="clipboard-content" id="clipboard-59f5fb270b8c2e9399fada83a1da60a4"># Raise exception on mass assignment protection for Active Record models
 config.active_record.mass_assignment_sanitizer = :strict
 
 # Log the query plan for queries taking more than this (works
 # with SQLite, MySQL, and PostgreSQL)
 config.active_record.auto_explain_threshold_in_seconds = 0.5
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f0d990469e49638c3e06a894baebd139">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-59f5fb270b8c2e9399fada83a1da60a4">Copiar</button>
 </div>
 <h4 id="upgrading-from-rails-3-1-to-rails-3-2-config-environments-test-rb"><a class="anchorlink" href="#upgrading-from-rails-3-1-to-rails-3-2-config-environments-test-rb">10.3 config/environments/test.rb</a></h4><p>The <code>mass_assignment_sanitizer</code> configuration setting should also be added to <code>config/environments/test.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Raise exception on mass assignment protection for Active Record models</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">mass_assignment_sanitizer</span> <span class="o">=</span> <span class="ss">:strict</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bd08c124df06a48dcf4d635ceb46e3c2"># Raise exception on mass assignment protection for Active Record models
+<textarea class="clipboard-content" id="clipboard-4cb4482e9f3a32bc19c9e0ae12874670"># Raise exception on mass assignment protection for Active Record models
 config.active_record.mass_assignment_sanitizer = :strict
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bd08c124df06a48dcf4d635ceb46e3c2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4cb4482e9f3a32bc19c9e0ae12874670">Copiar</button>
 </div>
 <h4 id="upgrading-from-rails-3-1-to-rails-3-2-vendor-plugins"><a class="anchorlink" href="#upgrading-from-rails-3-1-to-rails-3-2-vendor-plugins">10.4 vendor/plugins</a></h4><p>Rails 3.2 deprecates <code>vendor/plugins</code> and Rails 4.0 will remove them completely. While it's not strictly necessary as part of a Rails 3.2 upgrade, you can start replacing any plugins by extracting them to gems and adding them to your <code>Gemfile</code>. If you choose not to make them gems, you can move them into, say, <code>lib/my_plugin/*</code> and add an appropriate initializer in <code>config/initializers/my_plugin.rb</code>.</p><h4 id="upgrading-from-rails-3-1-to-rails-3-2-active-record"><a class="anchorlink" href="#upgrading-from-rails-3-1-to-rails-3-2-active-record">10.5 Active Record</a></h4><p>Option <code>:dependent =&gt; :restrict</code> has been removed from <code>belongs_to</code>. If you want to prevent deleting the object if there are any associated objects, you can set <code>:dependent =&gt; :destroy</code> and return <code>false</code> after checking for existence of association from any of the associated object's destroy callbacks.</p><h3 id="upgrading-from-rails-3-0-to-rails-3-1"><a class="anchorlink" href="#upgrading-from-rails-3-0-to-rails-3-1">11 Upgrading from Rails 3.0 to Rails 3.1</a></h3><p>If your application is currently on any version of Rails older than 3.0.x, you should upgrade to Rails 3.0 before attempting an update to Rails 3.1.</p><p>The following changes are meant for upgrading your application to Rails 3.1.12, the last 3.1.x version of Rails.</p><h4 id="gemfile"><a class="anchorlink" href="#gemfile">11.1 Gemfile</a></h4><p>Make the following changes to your <code>Gemfile</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'3.1.12'</span>
@@ -2395,7 +2395,7 @@ config.active_record.mass_assignment_sanitizer = :strict
 <span class="c1"># jQuery is the default JavaScript library in Rails 3.1</span>
 <span class="n">gem</span> <span class="s1">'jquery-rails'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-216fd49eb2346a7046284e2270022049">gem 'rails', '3.1.12'
+<textarea class="clipboard-content" id="clipboard-7cb30c3f02de96f242afe2c7fbd17016">gem 'rails', '3.1.12'
 gem 'mysql2'
 
 # Needed for the new asset pipeline
@@ -2408,25 +2408,25 @@ end
 # jQuery is the default JavaScript library in Rails 3.1
 gem 'jquery-rails'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-216fd49eb2346a7046284e2270022049">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7cb30c3f02de96f242afe2c7fbd17016">Copiar</button>
 </div>
 <h4 id="config-application-rb"><a class="anchorlink" href="#config-application-rb">11.2 config/application.rb</a></h4><p>The asset pipeline requires the following additions:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">enabled</span> <span class="o">=</span> <span class="kp">true</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">version</span> <span class="o">=</span> <span class="s1">'1.0'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-35296908035555043be6a77244dcc6b4">config.assets.enabled = true
+<textarea class="clipboard-content" id="clipboard-4a74951a644c4d2893cf189c8dffbd25">config.assets.enabled = true
 config.assets.version = '1.0'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-35296908035555043be6a77244dcc6b4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4a74951a644c4d2893cf189c8dffbd25">Copiar</button>
 </div>
 <p>If your application is using an "/assets" route for a resource you may want to change the prefix used for assets to avoid conflicts:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Defaults to '/assets'</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">prefix</span> <span class="o">=</span> <span class="s1">'/asset-files'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9539fe0077b5ed0327a6fce83a490452"># Defaults to '/assets'
+<textarea class="clipboard-content" id="clipboard-31958bec0b3ec8975116a07dc0f93531"># Defaults to '/assets'
 config.assets.prefix = '/asset-files'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9539fe0077b5ed0327a6fce83a490452">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-31958bec0b3ec8975116a07dc0f93531">Copiar</button>
 </div>
 <h4 id="upgrading-from-rails-3-0-to-rails-3-1-config-environments-development-rb"><a class="anchorlink" href="#upgrading-from-rails-3-0-to-rails-3-1-config-environments-development-rb">11.3 config/environments/development.rb</a></h4><p>Remove the RJS setting <code>config.action_view.debug_rjs = true</code>.</p><p>Add these settings if you enable the asset pipeline:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Do not compress assets</span>
@@ -2435,13 +2435,13 @@ config.assets.prefix = '/asset-files'
 <span class="c1"># Expands the lines which load the assets</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">debug</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0c4e23a42df44b334035013309e8aa8b"># Do not compress assets
+<textarea class="clipboard-content" id="clipboard-b2f4edc7d9deec3115151b3abdb88214"># Do not compress assets
 config.assets.compress = false
 
 # Expands the lines which load the assets
 config.assets.debug = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0c4e23a42df44b334035013309e8aa8b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b2f4edc7d9deec3115151b3abdb88214">Copiar</button>
 </div>
 <h4 id="config-environments-production-rb"><a class="anchorlink" href="#config-environments-production-rb">11.4 config/environments/production.rb</a></h4><p>Again, most of the changes below are for the asset pipeline. You can read more about these in the <a href="asset_pipeline.html">Asset Pipeline</a> guide.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Compress JavaScripts and CSS</span>
@@ -2462,7 +2462,7 @@ config.assets.debug = true
 <span class="c1"># Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.</span>
 <span class="c1"># config.force_ssl = true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0b021b1d5d50916c21d6543af4113100"># Compress JavaScripts and CSS
+<textarea class="clipboard-content" id="clipboard-fef44fc29a67fe2529f349663838c2b8"># Compress JavaScripts and CSS
 config.assets.compress = true
 
 # Don't fallback to assets pipeline if a precompiled asset is missed
@@ -2480,7 +2480,7 @@ config.assets.digest = true
 # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
 # config.force_ssl = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0b021b1d5d50916c21d6543af4113100">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fef44fc29a67fe2529f349663838c2b8">Copiar</button>
 </div>
 <h4 id="upgrading-from-rails-3-0-to-rails-3-1-config-environments-test-rb"><a class="anchorlink" href="#upgrading-from-rails-3-0-to-rails-3-1-config-environments-test-rb">11.5 config/environments/test.rb</a></h4><p>You can help test performance with these additions to your test environment:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Configure static asset server for tests with Cache-Control for performance</span>
@@ -2489,13 +2489,13 @@ config.assets.digest = true
   <span class="s1">'Cache-Control'</span> <span class="o">=&gt;</span> <span class="s1">'public, max-age=3600'</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-728ceaaf5735fef466c4ebe81ca88f2a"># Configure static asset server for tests with Cache-Control for performance
+<textarea class="clipboard-content" id="clipboard-9932cb179e4fc986d501558e5ef005cd"># Configure static asset server for tests with Cache-Control for performance
 config.public_file_server.enabled = true
 config.public_file_server.headers = {
   'Cache-Control' =&gt; 'public, max-age=3600'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-728ceaaf5735fef466c4ebe81ca88f2a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9932cb179e4fc986d501558e5ef005cd">Copiar</button>
 </div>
 <h4 id="config-initializers-wrap-parameters-rb"><a class="anchorlink" href="#config-initializers-wrap-parameters-rb">11.6 config/initializers/wrap_parameters.rb</a></h4><p>Add this file with the following contents, if you wish to wrap parameters into a nested hash. This is on by default in new applications.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Be sure to restart your server when you modify this file.</span>
@@ -2512,7 +2512,7 @@ config.public_file_server.headers = {
   <span class="nb">self</span><span class="p">.</span><span class="nf">include_root_in_json</span> <span class="o">=</span> <span class="kp">false</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-babce2fbccb66664b276e7dff663cfef"># Be sure to restart your server when you modify this file.
+<textarea class="clipboard-content" id="clipboard-4d846337a2b8a659f7e5ff0cb2a4a146"># Be sure to restart your server when you modify this file.
 # This file contains settings for ActionController::ParamsWrapper which
 # is enabled by default.
 
@@ -2526,23 +2526,23 @@ ActiveSupport.on_load(:active_record) do
   self.include_root_in_json = false
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-babce2fbccb66664b276e7dff663cfef">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4d846337a2b8a659f7e5ff0cb2a4a146">Copiar</button>
 </div>
 <h4 id="config-initializers-session-store-rb"><a class="anchorlink" href="#config-initializers-session-store-rb">11.7 config/initializers/session_store.rb</a></h4><p>You need to change your session key to something new, or remove all sessions:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># in config/initializers/session_store.rb</span>
 <span class="no">AppName</span><span class="o">::</span><span class="no">Application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">session_store</span> <span class="ss">:cookie_store</span><span class="p">,</span> <span class="ss">key: </span><span class="s1">'SOMETHINGNEW'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5521511e83047b9d051d38840fdb568d"># in config/initializers/session_store.rb
+<textarea class="clipboard-content" id="clipboard-b3a75025e00f8064fcc9798f367914a7"># in config/initializers/session_store.rb
 AppName::Application.config.session_store :cookie_store, key: 'SOMETHINGNEW'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5521511e83047b9d051d38840fdb568d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b3a75025e00f8064fcc9798f367914a7">Copiar</button>
 </div>
 <p>or</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span>bin/rake db:sessions:clear
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b9da924effa9dc955615ffa4f7978fe9">bin/rake db:sessions:clear
+<textarea class="clipboard-content" id="clipboard-7d94b9239b0187926ab43793443aa085">bin/rake db:sessions:clear
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b9da924effa9dc955615ffa4f7978fe9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7d94b9239b0187926ab43793443aa085">Copiar</button>
 </div>
 <h4 id="remove-cache-and-concat-options-in-asset-helpers-references-in-views"><a class="anchorlink" href="#remove-cache-and-concat-options-in-asset-helpers-references-in-views">11.8 Remove :cache and :concat options in asset helpers references in views</a></h4>
 <ul>
