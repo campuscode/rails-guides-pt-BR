@@ -4,7 +4,7 @@
 Básico de *Active Model*
 ===================
 Esse guia deverá prover tudo que você precisa para começar a usar classes de modelo (`models`).
-O *Active Model* permite que o *Ation Pack Helpers* interaja com os objetos ruby. O *Active model* também auxilia a criação de *ORMs* (mapeamento de objetos relacionais) para o uso fora do framework Rails.
+O *Active Model* permite que o *Action Pack Helpers* interaja com os objetos ruby. O *Active model* também auxilia a criação de *ORMs* (mapeamento de objetos relacionais) para o uso fora do framework Rails.
 
 Após a leitura desse guia você saberá:
 * Como um *Active Record* se comporta.
