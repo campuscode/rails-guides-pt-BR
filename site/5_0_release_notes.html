@@ -15,6 +15,7 @@
   <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/toggle-theme.js" data-turbolinks-track="reload"></script>
   <meta property="og:title" content="Ruby on Rails 5.0 Release Notes — Ruby on Rails Guides" />
   <meta name="description" content="Ruby on Rails 5.0 Release NotesHighlights in Rails 5.0: Action Cable Rails API Active Record Attributes API Test Runner Exclusive use of rails CLI over Rake Sprockets 3 Turbolinks 5 Ruby 2.2.2+ required These release notes cover only the major changes. To learn about various bug fixes and changes, please refer to the change logs or check out the list of commits in the main Rails repository on GitHub." />
   <meta property="og:description" content="Ruby on Rails 5.0 Release NotesHighlights in Rails 5.0: Action Cable Rails API Active Record Attributes API Test Runner Exclusive use of rails CLI over Rake Sprockets 3 Turbolinks 5 Ruby 2.2.2+ required These release notes cover only the major changes. To learn about various bug fixes and changes, please refer to the change logs or check out the list of commits in the main Rails repository on GitHub." />
@@ -376,9 +377,9 @@ This is useful for creating and serving APIs similar to <a href="https://dev.twi
 that can be used to serve public facing, as well as, for custom applications.</p><p>You can generate a new api Rails app using:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new my_api <span class="nt">--api</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9d0de6c7f3bc0984a00f08572fb3818c">rails new my_api --api
+<textarea class="clipboard-content" id="clipboard-ead7dcddb1cad7f530fed15e3146109f">rails new my_api --api
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9d0de6c7f3bc0984a00f08572fb3818c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ead7dcddb1cad7f530fed15e3146109f">Copiar</button>
 </div>
 <p>This will do three main things:</p>
 <ul>
@@ -410,24 +411,24 @@ without having to rely on implementation details or monkey patching.</p><p>Some 
   <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:my_string</span><span class="p">,</span> <span class="ss">default: </span><span class="s2">"original default"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7cc5022966d30279658270fd83d87fc1"># db/schema.rb
+<textarea class="clipboard-content" id="clipboard-5af22cecce2ae03b65f27f82d3842adb"># db/schema.rb
 create_table :store_listings, force: true do |t|
   t.decimal :price_in_cents
   t.string :my_string, default: "original default"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7cc5022966d30279658270fd83d87fc1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5af22cecce2ae03b65f27f82d3842adb">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/store_listing.rb</span>
 <span class="k">class</span> <span class="nc">StoreListing</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e8c928fa438dc737e5ee90beaa3300b3"># app/models/store_listing.rb
+<textarea class="clipboard-content" id="clipboard-2fb00c63f4dc65580c0c801f18618f46"># app/models/store_listing.rb
 class StoreListing &lt; ActiveRecord::Base
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e8c928fa438dc737e5ee90beaa3300b3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2fb00c63f4dc65580c0c801f18618f46">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">store_listing</span> <span class="o">=</span> <span class="no">StoreListing</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">price_in_cents: </span><span class="s1">'10.1'</span><span class="p">)</span>
@@ -450,7 +451,7 @@ end
 <span class="n">model</span> <span class="o">=</span> <span class="no">StoreListing</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">field_without_db_column: </span><span class="p">[</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">])</span>
 <span class="n">model</span><span class="p">.</span><span class="nf">attributes</span> <span class="c1"># =&gt; {field_without_db_column: [1, 2, 3]}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1c8e0fe817ce34fc75ce66f9bfcad3f0">store_listing = StoreListing.new(price_in_cents: '10.1')
+<textarea class="clipboard-content" id="clipboard-b37ef4bde86e0de9f7e89f87fb10bd0f">store_listing = StoreListing.new(price_in_cents: '10.1')
 
 # before
 store_listing.price_in_cents # =&gt; BigDecimal.new(10.1)
@@ -470,7 +471,7 @@ StoreListing.new.my_default_proc # =&gt; 2015-05-30 11:04:48 -0600
 model = StoreListing.new(field_without_db_column: ["1", "2", "3"])
 model.attributes # =&gt; {field_without_db_column: [1, 2, 3]}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1c8e0fe817ce34fc75ce66f9bfcad3f0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b37ef4bde86e0de9f7e89f87fb10bd0f">Copiar</button>
 </div>
 <p><strong>Creating Custom Types:</strong></p><p>You can define your own custom types, as long as they respond
 to the methods defined on the value type. The method <code>deserialize</code> or
@@ -1200,6 +1201,9 @@ framework it is. Kudos to all of them.</p>
 <p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
 
     </div>
+  </div>
+  <div id="toggle">
+    <img class="icon">
   </div>
 </body>
 </html>

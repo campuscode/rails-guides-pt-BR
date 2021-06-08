@@ -15,6 +15,7 @@
   <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/toggle-theme.js" data-turbolinks-track="reload"></script>
   <meta property="og:title" content="Action Text Overview — Ruby on Rails Guides" />
   <meta name="description" content="Action Text OverviewThis guide provides you with all you need to get started in handling rich text content.After reading this guide, you will know: How to configure Action Text. How to handle rich text content. How to style rich text content." />
   <meta property="og:description" content="Action Text OverviewThis guide provides you with all you need to get started in handling rich text content.After reading this guide, you will know: How to configure Action Text. How to handle rich text content. How to style rich text content." />
@@ -302,11 +303,11 @@ happens after every keystroke, and avoids the need to use execCommand at all.</p
 <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">trix</span><span class="dl">"</span><span class="p">)</span>
 <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@rails/actiontext</span><span class="dl">"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e9c71a88892298351e140887c5f18b67">// application.js
+<textarea class="clipboard-content" id="clipboard-ca0fdb58ffebc07b08e784c8977862a7">// application.js
 require("trix")
 require("@rails/actiontext")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e9c71a88892298351e140887c5f18b67">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ca0fdb58ffebc07b08e784c8977862a7">Copiar</button>
 </div>
 </li>
 <li>
@@ -314,19 +315,19 @@ require("@rails/actiontext")
 <div class="code_container">
 <pre><code class="highlight scss"><span class="k">@import</span> <span class="s2">"trix/dist/trix"</span><span class="p">;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7039584baa42a792e3c531dfd5a7bc8e">@import "trix/dist/trix";
+<textarea class="clipboard-content" id="clipboard-25b21b2d106fee4d4093268a94b0010a">@import "trix/dist/trix";
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7039584baa42a792e3c531dfd5a7bc8e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-25b21b2d106fee4d4093268a94b0010a">Copiar</button>
 </div>
 <p>Additionally, this <code>actiontext.scss</code> file should be imported into your stylesheet pack.</p>
 <div class="code_container">
 <pre><code class="highlight scss"><span class="c1">// application.scss</span>
 <span class="k">@import</span> <span class="s2">"./actiontext.scss"</span><span class="p">;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ea5ceefd17d2d844d6c1fc48fe76b673">// application.scss
+<textarea class="clipboard-content" id="clipboard-ed678b83beda290ac3514678fe23aad7">// application.scss
 @import "./actiontext.scss";
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ea5ceefd17d2d844d6c1fc48fe76b673">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ed678b83beda290ac3514678fe23aad7">Copiar</button>
 </div>
 </li>
 </ol>
@@ -336,12 +337,12 @@ require("@rails/actiontext")
   <span class="n">has_rich_text</span> <span class="ss">:content</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-992e6f1253dbcb87a91165dee55173c7"># app/models/message.rb
+<textarea class="clipboard-content" id="clipboard-33a5644deeed8199876f2e1bdd6c1491"># app/models/message.rb
 class Message &lt; ApplicationRecord
   has_rich_text :content
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-992e6f1253dbcb87a91165dee55173c7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-33a5644deeed8199876f2e1bdd6c1491">Copiar</button>
 </div>
 <p>Note that you don't need to add a <code>content</code> field to your <code>messages</code> table.</p><p>Then refer to this field in the form for the model:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="c">&lt;%# app/views/messages/_form.html.erb %&gt;</span>
@@ -352,7 +353,7 @@ end
   <span class="nt">&lt;/div&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a25d4a82068953ab76495b16782115cf">&lt;%# app/views/messages/_form.html.erb %&gt;
+<textarea class="clipboard-content" id="clipboard-62204787bd6fee5c689cbdb2280e89a2">&lt;%# app/views/messages/_form.html.erb %&gt;
 &lt;%= form_with model: message do |form| %&gt;
   &lt;div class="field"&gt;
     &lt;%= form.label :content %&gt;
@@ -360,14 +361,14 @@ end
   &lt;/div&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a25d4a82068953ab76495b16782115cf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-62204787bd6fee5c689cbdb2280e89a2">Copiar</button>
 </div>
 <p>And finally, display the sanitized rich text on a page:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="vi">@message</span><span class="p">.</span><span class="nf">content</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5c7fcd619519e48dbf277667e807a882">&lt;%= @message.content %&gt;
+<textarea class="clipboard-content" id="clipboard-2017b6abe68102edfed0e0150fce7636">&lt;%= @message.content %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5c7fcd619519e48dbf277667e807a882">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2017b6abe68102edfed0e0150fce7636">Copiar</button>
 </div>
 <p>To accept the rich text content, all you have to do is permit the referenced attribute:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">MessagesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -377,23 +378,23 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dc277d927efab2cca82f33c506017acb">class MessagesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-2edfbb7c05a2eeff3a36727b9e7a0e6b">class MessagesController &lt; ApplicationController
   def create
     message = Message.create! params.require(:message).permit(:title, :content)
     redirect_to message
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dc277d927efab2cca82f33c506017acb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2edfbb7c05a2eeff3a36727b9e7a0e6b">Copiar</button>
 </div>
 <h3 id="avoid-n-1-queries"><a class="anchorlink" href="#avoid-n-1-queries">5 Avoid N+1 queries</a></h3><p>If you wish to preload the dependent <code>ActionText::RichText</code> model, assuming your rich text field is named <code>content</code>, you can use the named scope:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Message</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">with_rich_text_content</span> <span class="c1"># Preload the body without attachments.</span>
 <span class="no">Message</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">with_rich_text_content_and_embeds</span> <span class="c1"># Preload both body and attachments.</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6d99431ba4af770cb450202c964237a0">Message.all.with_rich_text_content # Preload the body without attachments.
+<textarea class="clipboard-content" id="clipboard-256bd4c6d2804bef3bec4ec5b4a45354">Message.all.with_rich_text_content # Preload the body without attachments.
 Message.all.with_rich_text_content_and_embeds # Preload both body and attachments.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6d99431ba4af770cb450202c964237a0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-256bd4c6d2804bef3bec4ec5b4a45354">Copiar</button>
 </div>
 <h3 id="custom-styling"><a class="anchorlink" href="#custom-styling">6 Custom styling</a></h3><p>By default, the Action Text editor and content is styled by the Trix defaults.
 If you want to change these defaults, you'll want to remove
@@ -409,11 +410,11 @@ On installation, Action Text will copy over a partial to
   </span><span class="nl">"attachable_sgid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAh7CEkiCG…"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-7392e5403563c392e95ca01cbae34ad8">{
+<textarea class="clipboard-content" id="clipboard-47f610b445f2d88667f409b838f6b270">{
   "attachable_sgid": "BAh7CEkiCG…"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7392e5403563c392e95ca01cbae34ad8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-47f610b445f2d88667f409b838f6b270">Copiar</button>
 </div>
 </li>
 <li>
@@ -421,9 +422,9 @@ On installation, Action Text will copy over a partial to
 <div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;action-text-attachment</span> <span class="na">sgid=</span><span class="s">"BAh7CEkiCG…"</span><span class="nt">&gt;&lt;/action-text-attachment&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-febfab39b2089c69ab89b6179e132668">&lt;action-text-attachment sgid="BAh7CEkiCG…"&gt;&lt;/action-text-attachment&gt;
+<textarea class="clipboard-content" id="clipboard-df9323e6a1a4642e8c3d89a828324915">&lt;action-text-attachment sgid="BAh7CEkiCG…"&gt;&lt;/action-text-attachment&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-febfab39b2089c69ab89b6179e132668">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-df9323e6a1a4642e8c3d89a828324915">Copiar</button>
 </div>
 </li>
 </ol>
@@ -465,6 +466,9 @@ On installation, Action Text will copy over a partial to
 <p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
 
     </div>
+  </div>
+  <div id="toggle">
+    <img class="icon">
   </div>
 </body>
 </html>

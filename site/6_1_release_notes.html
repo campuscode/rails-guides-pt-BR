@@ -15,6 +15,7 @@
   <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/toggle-theme.js" data-turbolinks-track="reload"></script>
   <meta property="og:title" content="Ruby on Rails 6.1 Release Notes — Ruby on Rails Guides" />
   <meta name="description" content="Ruby on Rails 6.1 Release NotesHighlights in Rails 6.1: Per-database Connection Switching Horizontal Sharding Strict Loading Associations Delegated Types Destroy Associations Async These release notes cover only the major changes. To learn about various bug fixes and changes, please refer to the change logs or check out the list of commits in the main Rails repository on GitHub." />
   <meta property="og:description" content="Ruby on Rails 6.1 Release NotesHighlights in Rails 6.1: Per-database Connection Switching Horizontal Sharding Strict Loading Associations Delegated Types Destroy Associations Async These release notes cover only the major changes. To learn about various bug fixes and changes, please refer to the change logs or check out the list of commits in the main Rails repository on GitHub." />
@@ -521,11 +522,11 @@ in initialization block and callbacks.</p>
   <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">)</span> <span class="c1"># =&gt; nil</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-921353d5833491c1b4ac01b43f8a6f21">User.where(name: "John").create do |john|
+<textarea class="clipboard-content" id="clipboard-f76f493cddb93f569e7ea67cbf660224">User.where(name: "John").create do |john|
   User.find_by(name: "David") # =&gt; nil
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-921353d5833491c1b4ac01b43f8a6f21">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f76f493cddb93f569e7ea67cbf660224">Copiar</button>
 </div>
 <p>After:</p>
 <div class="code_container">
@@ -533,11 +534,11 @@ end
   <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">)</span> <span class="c1"># =&gt; #&lt;User name: "David", ...&gt;</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8f049064e0245dc7900d742e586fcb2b">User.where(name: "John").create do |john|
+<textarea class="clipboard-content" id="clipboard-6e6c7abd30ec91011bc4d9bc4172cdfa">User.where(name: "John").create do |john|
   User.find_by(name: "David") # =&gt; #&lt;User name: "David", ...&gt;
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8f049064e0245dc7900d742e586fcb2b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6e6c7abd30ec91011bc4d9bc4172cdfa">Copiar</button>
 </div>
 </li>
 <li>
@@ -547,31 +548,31 @@ end
   <span class="n">scope</span> <span class="ss">:david</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">)</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ec6e1a5c334aac848ce2570d1291f161">class User &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-65805ca3fe25aafe0fba0e902408e3ae">class User &lt; ActiveRecord::Base
   scope :david, -&gt; { User.where(name: "David") }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ec6e1a5c334aac848ce2570d1291f161">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-65805ca3fe25aafe0fba0e902408e3ae">Copiar</button>
 </div>
 <p>Before:</p>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"John"</span><span class="p">).</span><span class="nf">david</span>
 <span class="c1"># SELECT * FROM users WHERE name = 'John' AND name = 'David'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aead95d3a16dd4f05d505faa2731ddd2">User.where(name: "John").david
+<textarea class="clipboard-content" id="clipboard-4a37465625301cd1775bf26b2d2656ff">User.where(name: "John").david
 # SELECT * FROM users WHERE name = 'John' AND name = 'David'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aead95d3a16dd4f05d505faa2731ddd2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4a37465625301cd1775bf26b2d2656ff">Copiar</button>
 </div>
 <p>After:</p>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"John"</span><span class="p">).</span><span class="nf">david</span>
 <span class="c1"># SELECT * FROM users WHERE name = 'David'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3e2d0ae0709c2d8ea0b087f253f39b6f">User.where(name: "John").david
+<textarea class="clipboard-content" id="clipboard-bc81c2548b4d107277d8cb333ae3ef35">User.where(name: "John").david
 # SELECT * FROM users WHERE name = 'David'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3e2d0ae0709c2d8ea0b087f253f39b6f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bc81c2548b4d107277d8cb333ae3ef35">Copiar</button>
 </div>
 </li>
 <li>
@@ -581,20 +582,20 @@ end
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">.</span><span class="nf">not</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Jon"</span><span class="p">,</span> <span class="ss">role: </span><span class="s2">"admin"</span><span class="p">)</span>
 <span class="c1"># SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4902bab5da9507274310740c826e5703">User.where.not(name: "Jon", role: "admin")
+<textarea class="clipboard-content" id="clipboard-272e81206f3fa62798f413712e3ea9a4">User.where.not(name: "Jon", role: "admin")
 # SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4902bab5da9507274310740c826e5703">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-272e81206f3fa62798f413712e3ea9a4">Copiar</button>
 </div>
 <p>After:</p>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">.</span><span class="nf">not</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Jon"</span><span class="p">,</span> <span class="ss">role: </span><span class="s2">"admin"</span><span class="p">)</span>
 <span class="c1"># SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ecebbfc1963084ffde08df1237a6c1ed">User.where.not(name: "Jon", role: "admin")
+<textarea class="clipboard-content" id="clipboard-b6a46fa94284acacd910eaf0c28b4eb3">User.where.not(name: "Jon", role: "admin")
 # SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ecebbfc1963084ffde08df1237a6c1ed">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b6a46fa94284acacd910eaf0c28b4eb3">Copiar</button>
 </div>
 </li>
 <li><p>  To use the new per-database connection handling applications must change
@@ -713,6 +714,9 @@ framework it is. Kudos to all of them.</p>
 <p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
 
     </div>
+  </div>
+  <div id="toggle">
+    <img class="icon">
   </div>
 </body>
 </html>
