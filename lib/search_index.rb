@@ -14,7 +14,7 @@ module RailsGuides
       guides_to_generate = Dir.entries("#{guides_dir}/pt-BR").grep(/\.(?:erb|md)\z/)
       @guides = guides_to_generate.reject { |guide| guide.end_with?(".erb")  }
                                   .map    { |guide| guide.gsub(".md", ".html") }
-      @site_dir = "#{guides_dir}/site"
+      @files_dir = "#{guides_dir}/pt-BR"
     end
 
     def generate
@@ -67,14 +67,14 @@ module RailsGuides
 
       documents_js = "var lunrDocuments = #{documents.to_json};"
       link_map_js = "var linkMap = #{link_map.to_json};"
-      File.write("#{@site_dir}/javascripts/lunr-documents.js", documents_js + link_map_js)
+      File.write("#{@output_dir}/javascripts/lunr-documents.js", documents_js + link_map_js)
 
       root = File.expand_path(".", __dir__)
-      lunr = File.read("#{@site_dir}/javascripts/lunr.js")
+      lunr = File.read("#{@files_dir}/assets/javascripts/lunr.js")
       lunr_indexer = File.read("#{root}/lunr-indexer.js")
       lunr_index = ExecJS.eval("(function() {" + lunr + documents_js + lunr_indexer + "})()")
       file_content = "var lunrIndexData = #{lunr_index};"
-      File.write("#{@site_dir}/javascripts/lunr-index.js", file_content)
+      File.write("#{@output_dir}/javascripts/lunr-index.js", file_content)
     end
   end
 end

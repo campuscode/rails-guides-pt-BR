@@ -30,6 +30,7 @@ namespace :guides do
       ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
       system 'rm -rf output'
       system 'mv rails/guides/output output'
+      system 'cp -r ./pt-BR/assets/* output/pt-BR'
       system 'rm -rf rails/guides/source/pt-BR'
       RailsGuides::SearchIndex.new.generate
     end
@@ -47,7 +48,6 @@ namespace :guides do
       ENV["RAILS_VERSION"] = "v6.1.3.2"
       ENV["GUIDES_LANGUAGE"] = "pt-BR"
       system('git apply rails.patch')
-      # Rake::Task["guides:generate:html"].invoke
       system 'cp -r ./pt-BR rails/guides/source'
       ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
       system 'cp -r rails/guides/output output'
@@ -111,5 +111,6 @@ namespace :assets do
   task :precompile do
     system('rake guides:generate:html')
     system('cp $(find output/pt-BR -name "*.html") site')
+    system('cp -r ./pt-BR/assets/* site')
   end
 end
