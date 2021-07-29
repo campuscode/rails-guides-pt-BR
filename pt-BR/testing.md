@@ -1,27 +1,27 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Testing Rails Applications
+Testando Applicações Rails
 ==========================
 
-This guide covers built-in mechanisms in Rails for testing your application.
+Este guia cobre mecanismos nativos do Rails para testar suas aplicações.
 
-After reading this guide, you will know:
+Após ler este guia, você saberá:
 
-* Rails testing terminology.
-* How to write unit, functional, integration, and system tests for your application.
-* Other popular testing approaches and plugins.
+* A terminologia de testes.
+* Como escrever testes unitários, funcionais, de integração e de sistema para a sua aplicação.
+* Outras abordagens e plugins populares de testes.
 
 --------------------------------------------------------------------------------
 
-Why Write Tests for your Rails Applications?
---------------------------------------------
+Por que escrever testes para a sua aplicação Rails?
+---------------------------------------------------
 
-Rails makes it super easy to write your tests. It starts by producing skeleton test code while you are creating your models and controllers.
+O Rails torna super fácil escrever seus testes. Ele começa produzindo um esqueleto de código de teste enquanto você cria seus *models* e *controllers*.
 
-By running your Rails tests you can ensure your code adheres to the desired functionality even after some major code refactoring.
+Ao rodar seus testes no Rails você pode garantir que seu código continua com a funcionalidade desejada mesmo após algumas grandes refatorações no código.
 
-Rails tests can also simulate browser requests and thus you can test your application's response without having to test it through your browser.
+Os testes no Rails podem simular requisições no browser e com isso, você pode testar a resposta da sua aplicação sem ter que testar utilizando de fato seu o browser.
 
 Introduction to Testing
 -----------------------
