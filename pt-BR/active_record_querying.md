@@ -1305,7 +1305,7 @@ Ou, em Português: "retorne todas os autores que têm livros com avalições **e
 
 #### Especificando Condições em Tabelas Associadas
 
-Você pode especificar condições nas tabelas associadas com condições [Array](#array-conditions) e [String](#pure-string-conditions). [Hash conditions](#hash-conditions) fornecem uma sintaxe especial para especificar condições para as tabelas associadas:
+Você pode especificar condições nas tabelas associadas com condições [Array](#condicoes-de-array) e [String](#condicoes-de-strings-puras). [Hash conditions](#condicoes-de-hash) fornecem uma sintaxe especial para especificar condições para as tabelas associadas:
 
 ```ruby
 time_range = (Time.now.midnight - 1.day)..Time.now.midnight

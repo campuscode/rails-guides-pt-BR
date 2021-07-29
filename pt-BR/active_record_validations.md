@@ -269,10 +269,7 @@ irb> Person.create.errors[:name].any?
 ```
 
 Nós vamos cobrir os erros das validações em maior detalhe na seção [Trabalhando com
-Erros de Validações](#working-with-validation-errors).
-
-O uso de `details` juntamente com validadores é tratado na seção
-[Trabalhando com Erros de Validações](#working-with-validation-errors).
+Erros de Validações](#trabalhando-com-erros-de-validacao).
 
 [Errors#squarebrackets]: https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-5B-5D
 
@@ -822,7 +819,7 @@ end
 ```
 
 Para opções completas para argumento de mensagem, consulte
-[documentação de mensagem](#mensagem).
+[documentação de mensagem](#message).
 
 ### `:allow_blank`
 

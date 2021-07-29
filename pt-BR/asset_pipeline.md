@@ -186,7 +186,7 @@ estiver no `Gemfile`.)
 Por exemplo, se você gerar um `ProjectsController`, o Rails também adicionará um novo
 arquivo em `app/assets/stylesheets/projects.scss`. Por padrão, os arquivos estarão prontos
 para serem usados pela sua aplicação imediatamente usando a diretiva `require_tree`.
-Veja [Arquivos de Manifesto e Diretivas](#manifest-files-and-directives) para mais detalhes
+Veja [Arquivos de Manifesto e Diretivas](#arquivos-de-manifesto-e-diretivas) para mais detalhes
 sobre `require_tree`.
 
 Você também pode optar por incluir *stylesheets* específicas do *controller* e

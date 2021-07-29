@@ -287,7 +287,7 @@ Você pode utilizar quantos pares de nome/tipo de coluna desejar.
 
 ### Usando Modificadores
 
-Alguns [modificadores de tipo](#column-modifiers) podem utilizados diretamente via
+Alguns [modificadores de tipo](#modificadores-de-coluna) podem utilizados diretamente via
 linha de comando. Eles são delimitados por chaves e vem após o tipo de campo:
 
 Por exemplo, executando:
@@ -469,7 +469,7 @@ NOTE: `null` e `default` não podem ser especificados via linha de comando.
 ### Foreign Keys (Chaves Estrangeiras)
 
 Embora não seja necessário, você pode adicionar restrições de foreign key (chave estrangeira) para
-[garantir a integridade referencial](#active-record-and-referential-integrity).
+[garantir a integridade referencial](#active-record-e-integridade-referencial).
 
 ```ruby
 add_foreign_key :articles, :authors
@@ -975,7 +975,7 @@ Conflitos de *merge* podem acontecer no seu arquivo de *schema* quando duas *bra
 
 A maneira do *Active Record* trabalhar presume que a inteligência pertence aos seus *models*, não ao banco de dados. Desta forma, funcionalidades como *triggers* ou *constraints*, que enviam um pouco desta inteligência de volta para o banco de dados, não são usadas com frequência.
 
-Validações como `validates :foreign_key, uniqueness: true` são uma maneira pela qual os *models* podem impor integridade dos dados. A opção `:dependent` nas associações permite aos *models* destruir automaticamente objetos filhos quando o objeto pai é destruído. Como qualquer coisa que opera no nível da aplicação, estas validações não podem garantir integridade referencial e assim algumas pessoas as aprimoram com [vínculos de chaves estrangeiras](#foreign-keys) no banco de dados.
+Validações como `validates :foreign_key, uniqueness: true` são uma maneira pela qual os *models* podem impor integridade dos dados. A opção `:dependent` nas associações permite aos *models* destruir automaticamente objetos filhos quando o objeto pai é destruído. Como qualquer coisa que opera no nível da aplicação, estas validações não podem garantir integridade referencial e assim algumas pessoas as aprimoram com [vínculos de chaves estrangeiras](#foreign-keys-chaves-estrangeiras) no banco de dados.
 
 Embora o *Active Record* não forneça todas as ferramentas para trabalhar diretamente com estas funcionalidades, o método `execute` pode ser usado para executar SQL arbitrário.
 

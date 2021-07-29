@@ -490,9 +490,9 @@ you subscribed to the channel.
 
 The following setup steps are common to both examples:
 
-  1. [Setup your connection](#connection-setup).
-  2. [Setup your parent channel](#parent-channel-setup).
-  3. [Connect your consumer](#connect-consumer).
+  1. [Setup your connection](#componentes-server-side-connections).
+  2. [Setup your parent channel](#configuracao-do-channel-pai).
+  3. [Connect your consumer](#conectar-o-consumidor).
 
 ### Example 1: User Appearances
 
@@ -693,7 +693,7 @@ O _Action Cable_ tem duas configurações necessárias: um adaptador de assinatu
 
 Por padrão, _Action Cable_ procura um arquivo de configuração em `config/cable.yml`.
 O arquivo deve especificar um adaptador (_adapter_) para cada ambiente Rails. Veja o
-[Dependências](#dependecias) seção para obter informações adicionais sobre adaptadores.
+[Dependências](#dependencias) seção para obter informações adicionais sobre adaptadores.
 
 ```yaml
 development:

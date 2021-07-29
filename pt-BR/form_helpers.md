@@ -81,7 +81,7 @@ IMPORTANT: Use "GET" como o método para buscas em formulários. Isso permitirá
 
 O objeto construtor de formulário gerado pelo `form_with` fornece vários métodos auxiliares para gerar elementos de formulário, como campos de texto, caixas de seleção (*checkboxes*) e botões de rádio (*radio buttons*). O primeiro parâmetro para esses métodos é sempre o nome do *input*. Quando o formulário for enviado, o nome será passado junto com os dados do formulário e será direcionado para `params` o controlador com o valor inserido pelo usuário para esse campo. Por exemplo, se o formulário contiver `<%= form.text_field :query %>`, podendo obter o valor deste campo no controlador com `params[:query]` .
 
-Ao nomear entradas, o Rails usa certas convenções que possibilitam enviar parâmetros com valores não escalares, como matrizes ou hashes, que também estarão acessíveis `params`. Poderá ser lido mais sobre eles no capítulo [Noções básicas sobre convenções de nomenclatura de parâmetros](#understanding-parameter-naming-conventions) deste guia. Para detalhes de como usar com precisão esses auxiliares, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
+Ao nomear entradas, o Rails usa certas convenções que possibilitam enviar parâmetros com valores não escalares, como matrizes ou hashes, que também estarão acessíveis `params`. Poderá ser lido mais sobre eles no capítulo [Noções básicas sobre convenções de nomenclatura de parâmetros](#entendendo-convencoes-de-nomeacao-de-parametros) deste guia. Para detalhes de como usar com precisão esses auxiliares, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
 
 #### *Checkboxes* Caixas de seleção
 
