@@ -1026,9 +1026,9 @@ Se você executar o comando `bin/rails db:migrate:status`, que mostra o estado (
 próximo a cada arquivo de *migration* excluído que foi anteriormente executado
 em um ambiente específico mas não se encontra mais no diretório `db/migrate/`.
 
-Porém, há uma advertência. As tarefas `rake` para instalar *migrations* de *engines* são idempotentes. As *migrations* presentes na aplicação principal devido a uma instalação anterior são ignoradas e as que faltam são copiadas com um novo carimbo de data/hora (*timestamp*) inicial. Se você excluiu as *migrations* de *engines* antigas e executou a tarefa de instalação novamente, você obteria novos arquivos com novos carimbos de data/hora e `db: migrate` tentaria executá-los novamente.
+Porém, há uma advertência. As tarefas `rake` para instalar *migrations* de *engines* são idempotentes. As *migrations* presentes na aplicação principal vindas de uma instalação anterior são ignoradas e as que faltam são copiadas com um novo carimbo de data/hora (*timestamp*). Se você excluiu as *migrations* de *engines* antigas e executou a tarefa de instalação novamente, você obteria novos arquivos com novos carimbos de data/hora e e o comando `db: migrate` tentaria executá-las novamente.
 
-Portanto, geralmente você deseja preservar as *migrations* provenientes de *engines*. Eles têm um comentário especial como este:
+Portanto, geralmente você deseja preservar as *migrations* provenientes de *engines*. Elas têm um comentário especial como este:
 
 ```
 # This migration comes from blorgh (originally 20210621082949)
