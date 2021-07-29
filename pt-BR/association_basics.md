@@ -1026,6 +1026,9 @@ Se você configurar a opção `:dependent` para:
   seus objetos associados.
 * `:delete`, quando o objeto for destruído, todos os objetos associados serão
   deletados diretamente do banco de dados sem chamar o método `destroy`.
+* `:destroy_async`: quando o objeto é destruído, um `ActiveRecord::DestroyAssociationAsyncJob`
+o *job* é enfileirado, o que chamará `destroy` em seus objetos associados. O *Active Job* deve ser configurado
+para que isso funcione.
 
 WARNING: Você não deve especificar esta opção numa associação `belongs_to` que estiver conectada com uma associação `has_many` com outra classe. Isto pode resultar em registros órfãos no seu banco de dados.
 
@@ -1329,6 +1332,7 @@ Controla o que acontece com o objeto associado quando o dono dele é destruído:
 
 * `:destroy` faz com que o objeto associado também seja destruído
 * `:delete` faz com que o objeto associado seja deletado diretamente do banco de dados (dessa forma os *callbacks* não serão executados)
+* `:destroy_async`: quando o objeto é destruído, um *job* `ActiveRecord::DestroyAssociationAsyncJob` é enfileirado, que chamará `destroy` em seus objetos associados. O *Active Job* deve ser configurado para que funcione.
 * `:nullify` faz com que a chave estrangeira seja configurada para `NULL`. Colunas polimórficas também recebem `NULL` em associações polimórficas. *Callbacks* não são executados.
 * `:restrict_with_exception` faz com que a exceção `ActiveRecord::DeleteRestrictionError` seja retornada se houver um registro associado
 * `:restrict_with_error` adiciona um erro ao dono se já houver um objeto associado
@@ -1649,7 +1653,7 @@ O método [`collection.clear`][] remove todos os objetos da coleção de acordo 
 @author.books.clear
 ```
 
-WARNING: Objetos serão deletados se eles forem associados com `dependent: :destroy`,
+WARNING: Objetos serão deletados se eles forem associados com `dependent: :destroy` ou `dependent: :destroy_async`,
 assim como `dependent: :delete_all`.
 
 ##### `collection.empty?`
@@ -1785,6 +1789,7 @@ Controla o que acontece com os objetos associados quando o dono deles é destru�
 
 * `:destroy` faz com que todos os objetos associados também sejam destruídos
 * `:delete_all` faz com que todos os objetos associados sejam deletados diretamente do banco de dados (dessa forma os *callbacks* não serão executados)
+* `:destroy_async`: quando o objeto é destruído, um *job* `ActiveRecord::DestroyAssociationAsyncJob` é enfileirado, que chamará `destroy` em seus objetos associados. O *Active Job* deve ser configurado para que funcione.
 * `:nullify` faz com que a chave estrangeira seja configurada para `NULL`. Colunas polimórficas também recebem `NULL` em associações polimórficas. *Callbacks* não são executados.
 * `:restrict_with_exception` faz com a exceção `ActiveRecord::DeleteRestrictionError` seja retornada se houverem objetos associados
 * `:restrict_with_error` adiciona um erro ao objeto dono se houverem objetos associados
