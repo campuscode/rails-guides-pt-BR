@@ -1026,8 +1026,8 @@ Se você configurar a opção `:dependent` para:
   seus objetos associados.
 * `:delete`, quando o objeto for destruído, todos os objetos associados serão
   deletados diretamente do banco de dados sem chamar o método `destroy`.
-* `:destroy_async`: quando o objeto é destruído, um `ActiveRecord::DestroyAssociationAsyncJob`
-o *job* é enfileirado, o que chamará `destroy` em seus objetos associados. O *Active Job* deve ser configurado
+* `:destroy_async`: quando o objeto é destruído, um *job* `ActiveRecord::DestroyAssociationAsyncJob`
+é enfileirado, o que chamará `destroy` em seus objetos associados. O *Active Job* deve ser configurado
 para que isso funcione.
 
 WARNING: Você não deve especificar esta opção numa associação `belongs_to` que estiver conectada com uma associação `has_many` com outra classe. Isto pode resultar em registros órfãos no seu banco de dados.
