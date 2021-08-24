@@ -22,3 +22,5 @@ ADD Gemfile.lock Gemfile.lock
 RUN bundle install
 
 ADD . /rails-guides-pt-BR
+
+RUN tar -xzf "kindlegen_linux_2.6_i386_v$KINDLEGEN_VERSION.tar.gz" -C /usr/local/bin
