@@ -71,14 +71,14 @@ A nova versão do Rails pode ter configurações padrão diferentes da versão a
 
 Para permitir que você atualize para novos padrões um a um, a tarefa de atualização cria um arquivo `config/initializers/new_framework_defaults.rb`. Uma vez que a aplicação esteja pronta para rodar com as novas configurações padrão, você pode remover este arquivo e trocar o valor de `config.load_defaults`.
 
-Upgrading from Rails 6.0 to Rails 6.1
+Atualizando do Rails 6.0 para o Rails 6.1
 -------------------------------------
 
-For more information on changes made to Rails 6.1 please see the [release notes](6_1_release_notes.html).
+Para mais informações sobre as mudanças feitas no Rails 6.1 consulte as [notas de lançamento](6_1_release_notes.html).
 
-### `Rails.application.config_for` return value no longer supports access with String keys.
+### `Rails.application.config_for` o valor de retorno não oferece mais suporte para acesso com chaves String.
 
-Given a configuration file like this:
+Dado um arquivo de configuração como este:
 
 ```yaml
 # config/example.yml
@@ -91,9 +91,9 @@ development:
 Rails.application.config_for(:example).options
 ```
 
-This used to return a hash on which you could access values with String keys. That was deprecated in 6.0, and now doesn't work anymore.
+Isso costumava retornar um hash no qual você podia acessar valores com chaves String. Isso foi descontinuado no 6.0 e agora não funciona mais.
 
-You can call `with_indifferent_access` on the return value of `config_for` if you still want to access values with String keys, e.g.:
+Você pode chamar `with_indifferent_access` no valor de retorno de` config_for` se ainda quiser acessar valores com chaves String, por exemplo:
 
 ```ruby
 Rails.application.config_for(:example).with_indifferent_access.dig('options', 'key')
