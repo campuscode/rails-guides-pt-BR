@@ -23,10 +23,10 @@ Ao rodar seus testes no Rails você pode garantir que seu código continua com a
 
 Os testes no Rails podem simular requisições no browser e com isso, você pode testar a resposta da sua aplicação sem ter que testar utilizando de fato seu o browser.
 
-Introduction to Testing
+Introdução a testes
 -----------------------
 
-Testing support was woven into the Rails fabric from the beginning. It wasn't an "oh! let's bolt on support for running tests because they're new and cool" epiphany.
+Suporte a testes foi implantado no Rails desde os primórdios. Não foi uma epifania do tipo: "Vamos adicionar suporte para testes porque eles são novos e legais!"
 
 ### Rails Sets up for Testing from the Word Go
 
