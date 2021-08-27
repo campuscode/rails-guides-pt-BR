@@ -99,13 +99,13 @@ Você pode chamar `with_indifferent_access` no valor de retorno de` config_for` 
 Rails.application.config_for(:example).with_indifferent_access.dig('options', 'key')
 ```
 
-### Response's Content-Type when using `respond_to#any`
+### Respostas do tipo de conteúdo quando utilizando `respond_to#any`
 
-The Content-Type header returned in the response can differ from what Rails 6.0 returned,
-more specifically if your application uses `respond_to { |format| format.any }`.
-The Content-Type will now be based on the given block rather than the request's format.
+O cabeçalho do tipo de conteúdo retornado na resposta pode ser diferente do que o Rails 6.0 retornou,
+mais especificamente se sua aplicação usa o formato `respond_to { |format| format.any }`.
+O tipo de conteúdo será baseado no bloco fornecido e não no formato da solicitação.
 
-Example:
+Exemplo:
 
 ```ruby
 def my_action
@@ -119,11 +119,11 @@ end
 get('my_action.csv')
 ```
 
-Previous behaviour was returning a `text/csv` response's Content-Type which is inaccurate since a JSON response is being rendered.
-Current behaviour correctly returns a `application/json` response's Content-Type.
+O comportamento anterior era retornar um tipo de conteúdo de resposta `text/csv` que é impreciso uma vez que uma resposta JSON está sendo renderizada.
+O comportamento atual retorna corretamente o tipo de conteúdo de uma resposta `application/json`.
 
-If your application relies on the previous incorrect behaviour, you are encouraged to specify
-which formats your action accepts, i.e.
+Se sua aplicação depende do comportamento incorreto anterior, você é incentivado a especificar
+quais formatos sua ação aceita, ou seja.
 
 ```ruby
 format.any(:xml, :json) { render request.format.to_sym => @people }
