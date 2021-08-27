@@ -28,9 +28,9 @@ Introdução a testes
 
 Suporte a testes foi implantado no Rails desde os primórdios. Não foi uma epifania do tipo: "Vamos adicionar suporte para testes porque eles são novos e legais!"
 
-### Rails Sets up for Testing from the Word Go
+### Configurações para testes em aplicações Rails
 
-Rails creates a `test` directory for you as soon as you create a Rails project using `rails new` _application_name_. If you list the contents of this directory then you shall see:
+Rails cria um diretório `test` para você logo que você cria um projeto Rails usando o comando `rails new` _nome_da_aplicacao_. Se você deseja listar o conteúdo deste diretório, então você vai ver:
 
 ```bash
 $ ls -F test
@@ -38,22 +38,19 @@ application_system_test_case.rb  controllers/                     helpers/      
 channels/                        fixtures/                        integration/                     models/                          test_helper.rb
 ```
 
-The `helpers`, `mailers`, and `models` directories are meant to hold tests for view helpers, mailers, and models, respectively. The `channels` directory is meant to hold tests for Action Cable connection and channels. The `controllers` directory is meant to hold tests for controllers, routes, and views. The `integration` directory is meant to hold tests for interactions between controllers.
+Os diretórios `helpers`, `mailers` e `models` são destinados a realizar os testes para view helpers, mailers e models, respectivamente. O diretório `channel` é destinado a realizar os testes para a conexão e canais do ActionCable. O diretório `controllers` se destina a realizar testes para os controllers, rotas e views. O diretório `integration` se destina a realizar testes entre a interação entre controllers.
 
-The system test directory holds system tests, which are used for full browser
-testing of your application. System tests allow you to test your application
-the way your users experience it and help you test your JavaScript as well.
-System tests inherit from Capybara and perform in browser tests for your
-application.
+O diretório `system` é destinado a realizar os testes do sistema, que são usados para testes completos da aplicação no browser. Testes de Sistema permitem você testar a aplicação do jeito que seu usuário experiencia e ajuda você a testar seu JavaScript também.
+Testes de sistemas herdam de Capybara e performam os testes do browser para a sua aplicação
 
-Fixtures are a way of organizing test data; they reside in the `fixtures` directory.
+Fixtures são um jeito de organizar dados de testes; ficam no diretório `fixtures`
 
-A `jobs` directory will also be created when an associated test is first generated.
 
-The `test_helper.rb` file holds the default configuration for your tests.
+Um diretório `jobs` também será criado quando um teste associado é gerado.
 
-The `application_system_test_case.rb` holds the default configuration for your system
-tests.
+O `test_helper.rb` é responsável por realizar as configurações padrão para seus testes.
+
+O `application_system_test_case.rb` é responsável por realizar as configurações padrão para seus testes de sistema.
 
 ### The Test Environment
 
