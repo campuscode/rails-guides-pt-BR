@@ -52,13 +52,13 @@ O `test_helper.rb` é responsável por realizar as configurações padrão para 
 
 O `application_system_test_case.rb` é responsável por realizar as configurações padrão para seus testes de sistema.
 
-### The Test Environment
+### O Ambiente de Teste
 
-By default, every Rails application has three environments: development, test, and production.
+Por padrão, toda aplicação Rals tem três ambientes: desenvolvimento, teste e produção.
 
-Each environment's configuration can be modified similarly. In this case, we can modify our test environment by changing the options found in `config/environments/test.rb`.
+Cada configuração de ambiente pode ser modificada similarmente. Neste caso, nós podemos modificar nosso ambiente de teste por alterar as opções encontradas em `config/environments/test.rb`.
 
-NOTE: Your tests are run under `RAILS_ENV=test`.
+NOTE: Seus testes são executados sob o comando `RAILS_ENV=test`.
 
 ### Rails meets Minitest
 
