@@ -462,8 +462,8 @@ Known extensions: rails, pride
     -p, --pride                      Pride. Show your testing pride!
 ```
 
-Parallel Testing
-----------------
+Testes em Paralelo
+------------------
 
 Parallel testing allows you to parallelize your test suite. While forking processes is the
 default method, threading is supported as well. Running tests in parallel reduces the time it
