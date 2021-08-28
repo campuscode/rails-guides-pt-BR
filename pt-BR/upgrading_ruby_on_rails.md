@@ -149,15 +149,15 @@ class Book < ApplicationRecord
 end
 ```
 
-### The `helper` class method in controllers uses `String#constantize`
+### O método de classe `helper` nos controllers usa `String#constantize`
 
-Conceptually, before Rails 6.1
+Conceitualmente antes do Rails 6.1
 
 ```ruby
 helper "foo/bar"
 ```
 
-resulted in
+resultou em
 
 ```ruby
 require_dependency "foo/bar_helper"
@@ -165,16 +165,16 @@ module_name = "foo/bar_helper".camelize
 module_name.constantize
 ```
 
-Now it does this instead:
+Agora ele faz isso:
 
 ```ruby
 prefix = "foo/bar".camelize
 "#{prefix}Helper".constantize
 ```
 
-This change is backwards compatible for the majority of applications, in which case you do not need to do anything.
+Essa mudança é compatível com as versões anteriores para a maioria das aplicações, nesse caso, você não precisa fazer nada.
 
-Technically, however, controllers could configure `helpers_path` to point to a directory in `$LOAD_PATH` that was not in the autoload paths. That use case is no longer supported out of the box. If the helper module is not autoloadable, the application is responsible for loading it before calling `helper`.
+Tecnicamente, no entanto, os controllers podem configurar `helpers_path` para apontar para um diretório em `$LOAD_PATH` que não estava nos caminhos de carregamento automático. Esse caso de uso não é mais compatível com o uso imediato. Se o módulo auxiliar não for auto-carregável, a aplicação é responsável por carregá-lo antes de chamar o `helper`.
 
 ### Redirection to HTTPS from HTTP will now use the 308 HTTP status code
 
