@@ -180,11 +180,11 @@ Tecnicamente, no entanto, os controllers podem configurar `helpers_path` para ap
 
 O código de status HTTP padrão usado em `ActionDispatch::SSL` ao redirecionar solicitações não GET/HEAD de HTTP para HTTPS foi alterado para `308` conforme definido em https://tools.ietf.org/html/rfc7538.
 
-### Active Storage now requires Image Processing
+### Active Storage agora requer processamento de imagem
 
-When processing variants in Active Storage, it's now required to have the [image_processing gem](https://github.com/janko-m/image_processing) bundled instead of directly using `mini_magick`. Image Processing is configured by default to use `mini_magick` behind the scenes, so the easiest way to upgrade is by replacing the `mini_magick` gem for the `image_processing` gem and making sure to remove the explicit usage of `combine_options` since it's no longer needed.
+Ao processar variantes no Active Storage, agora é necessário ter a [image_processing gem](https://github.com/janko-m/image_processing) empacotada em vez de usar diretamente `mini_magick`. O processamento de imagem é configurado por padrão para usar `mini_magick` nos bastidores, então a maneira mais fácil de atualizar é substituindo a gem `mini_magick` pela gem `image_processing` e certificando-se de remover o uso explícito de `combine_options`, uma vez que não é mais necessário.
 
-For readability, you may wish to change raw `resize` calls to `image_processing` macros. For example, instead of:
+Para facilitar a leitura, você pode desejar alterar as chamadas `resize` brutas para macros `image_processing`. Por exemplo, em vez de:
 
 ```ruby
 video.preview(resize: "100x100")
@@ -192,7 +192,7 @@ video.preview(resize: "100x100>")
 video.preview(resize: "100x100^")
 ```
 
-you can respectively do:
+você pode fazer respectivamente:
 
 ```ruby
 video.preview(resize_to_fit: [100, 100])
