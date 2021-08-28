@@ -129,21 +129,21 @@ quais formatos sua ação aceita, ou seja.
 format.any(:xml, :json) { render request.format.to_sym => @people }
 ```
 
-### `ActiveSupport::Callbacks#halted_callback_hook` now receive a second argument
+### `ActiveSupport::Callbacks#halted_callback_hook` agora recebe um segundo argumento
 
-Active Support allows you to override the `halted_callback_hook` whenever a callback
-halts the chain. This method now receive a second argument which is the name of the callback being halted.
-If you have classes that override this method, make sure it accepts two arguments. Note that this is a breaking
-change without a prior deprecation cycle (for performance reasons).
+*Active Support* permite que você substitua o `halted_callback_hook` sempre que um retorno de chamada
+pare a corrente. Este método agora recebe um segundo argumento que é o nome do retorno de chamada que está sendo interrompido.
+Se você tiver classes que substituem esse método, certifique-se de que ele aceite dois argumentos. Observe que isso é uma mudança
+significativa sem um ciclo de depreciação anterior (por motivos de desempenho).
 
-Example:
+Exemplo:
 
 ```ruby
 class Book < ApplicationRecord
   before_save { throw(:abort) }
   before_create { throw(:abort) }
 
-  def halted_callback_hook(filter, callback_name) # => This method now accepts 2 arguments instead of 1
+  def halted_callback_hook(filter, callback_name) # => Este método agora aceita 2 argumentos em vez de 1
     Rails.logger.info("Book couldn't be #{callback_name}d")
   end
 end
