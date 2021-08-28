@@ -214,9 +214,9 @@ Finished in 0.027476s, 36.3952 runs/s, 36.3952 assertions/s.
 Agora, se você notou, nós escrevemos um teste que falha para uma funcionalidade desejada, então nós escrevemos um código básico que adiciona a funcionalidade e finalmente nós tivemos certeza que nosso testes passam. Essa abordagem em desenvolvimento de software é referida como
 [_Test-Driven Development_ (TDD)](http://c2.com/cgi/wiki?TestDrivenDevelopment).
 
-#### What an Error Looks Like
+#### Como um erro se parece
 
-To see how an error gets reported, here's a test containing an error:
+Para ver como um é reportado, aqui está um teste contendo um erro:
 
 ```ruby
 test "should report error" do
@@ -226,7 +226,7 @@ test "should report error" do
 end
 ```
 
-Now you can see even more output in the console from running the tests:
+Agora você pode ver mais saída no console ao rodar os testes:
 
 ```bash
 $ bin/rails test test/models/article_test.rb
@@ -251,25 +251,21 @@ Finished in 0.040609s, 49.2500 runs/s, 24.6250 assertions/s.
 2 runs, 1 assertions, 0 failures, 1 errors, 0 skips
 ```
 
-Notice the 'E' in the output. It denotes a test with error.
+Observe o 'E' na saída. Isso significa um teste com erro.
 
-NOTE: The execution of each test method stops as soon as any error or an
-assertion failure is encountered, and the test suite continues with the next
-method. All test methods are executed in random order. The
-[`config.active_support.test_order` option](configuring.html#configuring-active-support)
-can be used to configure test order.
+NOTE: A execução de cada método de teste para assim que qualquer erro ou uma falha de teste é encontrada, e a suíte de teste continua com o próximo método. Todos os métodos de testes são executados numa ordem aleatória. A [opção `config.active_support.test_order`](configuring.html#configuring-active-support) pode ser usada para configurar a ordem do teste.
 
-When a test fails you are presented with the corresponding backtrace. By default
-Rails filters that backtrace and will only print lines relevant to your
-application. This eliminates the framework noise and helps to focus on your
-code. However there are situations when you want to see the full
-backtrace. Set the `-b` (or `--backtrace`) argument to enable this behavior:
+Quando um teste falha você é apresentado ao _backtrace_ correspondente. Por padrão
+Rails filtra o _backtrace_ e mostrará apenas linhas relevantes para sua
+aplicação. Isso elimina qualquer reclamação do _framework_ e isso  ajuda a focar no seu
+código. No entanto existem situações que você quer ver o _backtrace_
+completo. Coloque o argumento `-b` (ou `--backtrace`) para habilitar esse comportamento:
 
 ```bash
 $ bin/rails test -b test/models/article_test.rb
 ```
 
-If we want this test to pass we can modify it to use `assert_raises` like so:
+Se nós queremos que este teste passe nós devemos modificar isto para usar `assert_raises` assim:
 
 ```ruby
 test "should report error" do
@@ -280,7 +276,7 @@ test "should report error" do
 end
 ```
 
-This test should now pass.
+Este teste agora deveria passar.
 
 ### Available Assertions
 
