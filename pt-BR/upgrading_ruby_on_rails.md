@@ -176,9 +176,9 @@ Essa mudança é compatível com as versões anteriores para a maioria das aplic
 
 Tecnicamente, no entanto, os controllers podem configurar `helpers_path` para apontar para um diretório em `$LOAD_PATH` que não estava nos caminhos de carregamento automático. Esse caso de uso não é mais compatível com o uso imediato. Se o módulo auxiliar não for auto-carregável, a aplicação é responsável por carregá-lo antes de chamar o `helper`.
 
-### Redirection to HTTPS from HTTP will now use the 308 HTTP status code
+### Redirecionamento para HTTPS vindo de HTTP agora usará o código de status 308 HTTP
 
-The default HTTP status code used in `ActionDispatch::SSL` when redirecting non-GET/HEAD requests from HTTP to HTTPS has been changed to `308` as defined in https://tools.ietf.org/html/rfc7538.
+O código de status HTTP padrão usado em `ActionDispatch::SSL` ao redirecionar solicitações não GET/HEAD de HTTP para HTTPS foi alterado para `308` conforme definido em https://tools.ietf.org/html/rfc7538.
 
 ### Active Storage now requires Image Processing
 
