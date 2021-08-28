@@ -136,9 +136,9 @@ Uma asserção é uma linha de código que pode se tornar um objeto (ou express�
 
 Todo teste pode conter uma ou mais asserções, sem restrições em quantas asserções são permitidas. Apenas quando todas as asserções serem bem-sucedidas o teste vai passar.
 
-#### Your first failing test
+#### Sua primeira falha no teste
 
-To see how a test failure is reported, you can add a failing test to the `article_test.rb` test case.
+Para ver como uma falha no teste é reportada, você pode adicionar um teste que falha no caso de teste do arquivo `article_test.rb`.
 
 ```ruby
 test "should not save article without title" do
@@ -147,7 +147,7 @@ test "should not save article without title" do
 end
 ```
 
-Let us run this newly added test (where `6` is the number of line where the test is defined).
+Vamos executar o teste com esse caso de teste adicionado (one 6 é o número da linha onde o teste é definido).
 
 ```bash
 $ bin/rails test test/models/article_test.rb:6
@@ -171,7 +171,7 @@ Finished in 0.023918s, 41.8090 runs/s, 41.8090 assertions/s.
 1 runs, 1 assertions, 1 failures, 0 errors, 0 skips
 ```
 
-In the output, `F` denotes a failure. You can see the corresponding trace shown under `Failure` along with the name of the failing test. The next few lines contain the stack trace followed by a message that mentions the actual value and the expected value by the assertion. The default assertion messages provide just enough information to help pinpoint the error. To make the assertion failure message more readable, every assertion provides an optional message parameter, as shown here:
+Na saída do teste, `F` significa uma falha. Você pode ver o _trace_ correspondendente mostrado abaixo de `Failure` junto com o nome do teste que está falhando. As próximas linhas contém as origens do erro seguido por uma mensagem que menciona o valor atual e o valor esperado pela asserção. A mensagem de asserção padrão provê informação o suficiente para ajudar a localizar o erro. Para fazer a asserção mais legível, toda asserção tem um parâmetro de mensagem opcional, como foi mostrado aqui:
 
 ```ruby
 test "should not save article without title" do
@@ -196,7 +196,7 @@ class Article < ApplicationRecord
 end
 ```
 
-Now the test should pass. Let us verify by running the test again:
+Agora o teste deveria passar. Vamos verificar executando o teste novamente:
 
 ```bash
 $ bin/rails test test/models/article_test.rb:6
@@ -211,10 +211,7 @@ Finished in 0.027476s, 36.3952 runs/s, 36.3952 assertions/s.
 1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-Now, if you noticed, we first wrote a test which fails for a desired
-functionality, then we wrote some code which adds the functionality and finally
-we ensured that our test passes. This approach to software development is
-referred to as
+Agora, se você notou, nós escrevemos um teste que falha para uma funcionalidade desejada, então nós escrevemos um código básico que adiciona a funcionalidade e finalmente nós tivemos certeza que nosso testes passam. Essa abordagem em desenvolvimento de software é referida como
 [_Test-Driven Development_ (TDD)](http://c2.com/cgi/wiki?TestDrivenDevelopment).
 
 #### What an Error Looks Like
