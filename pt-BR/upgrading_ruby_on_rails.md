@@ -91,7 +91,7 @@ development:
 Rails.application.config_for(:example).options
 ```
 
-Isso costumava retornar um hash no qual você podia acessar valores com chaves String. Isso foi descontinuado no 6.0 e agora não funciona mais.
+Isso costumava retornar um *hash* no qual você podia acessar valores com chaves *String*. Isso foi descontinuado no 6.0 e agora não funciona mais.
 
 Você pode chamar `with_indifferent_access` no valor de retorno de` config_for` se ainda quiser acessar valores com chaves String, por exemplo:
 
