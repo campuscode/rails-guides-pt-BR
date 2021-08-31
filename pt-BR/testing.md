@@ -485,7 +485,7 @@ end
 ```
 
 O número de *workers* informado é o número de vezes que o processo sofrerá *fork*.
-Voce pode querer paralelizar sua suíte de testes de maneira diferente de seu *CI*,
+Voce pode querer paralelizar sua suíte de testes local de maneira diferente de seu *CI*,
 por isso uma variável de ambiente está disponível para que seja possível mudar facilmente
 o número de *workers* que uma execução dos testes deve usar:
 
@@ -497,7 +497,7 @@ Quando testes são paralelizados, o *Active Record* automaticamente lida com a c
 Os bancos de dados de dados criados serão sufixados de acordo com a numeração do *worker*.
 Por exemplo, se há 2 *workers*, os testes criarão os bancos `test-database-0` e `test-database-1` respectivamente.
 
-Se o número de *workers* passado for 1 ou menos, os processos não sofrerão *fork* e os testes não serão paralilizados.
+Se o número de *workers* passado for 1 ou menos, os processos não sofrerão *fork* e os testes não serão paralelizados.
 Além disso, o banco de original `test-database` será usado.
 
 Dois *hooks* são disponibilizados, um que roda quando o processo sofre *fork* e outro quando o *fork* é encerrado.
@@ -522,9 +522,9 @@ end
 
 Esses métodos não são necessários ou estão indisponíveis quando testes paralelos com *threads* são utilizados.
 
-### Testes em paralelo com *threads*
+### Testes em Paralelo com *Threads*
 
-Se você preferir utilizar threads ou está utilizando JRuby, a opção de paralelizar com *threads* está disponível.
+Se você preferir utilizar *threads* ou está utilizando JRuby, a opção de paralelizar com *threads* está disponível.
 O paralelizador com *threads* utiliza por baixo dos panos a classe `Parallel::Executor` do *Minitest*.
 
 Para mudar o método de paralelização para utilizar *threads* ao invés de *forks*, escreva o seguinte em seu `test_helper.rb`:
