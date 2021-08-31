@@ -149,7 +149,7 @@ class Book < ApplicationRecord
 end
 ```
 
-### O método de classe `helper` nos controllers usa `String#constantize`
+### O método de classe `helper` nos *controllers* usa `String#constantize`
 
 Conceitualmente antes do Rails 6.1
 
