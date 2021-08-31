@@ -76,7 +76,7 @@ Atualizando do Rails 6.0 para o Rails 6.1
 
 Para mais informações sobre as mudanças feitas no Rails 6.1 consulte as [notas de lançamento](6_1_release_notes.html).
 
-### `Rails.application.config_for` o valor de retorno não oferece mais suporte para acesso com chaves String.
+### `Rails.application.config_for` o valor de retorno não oferece mais suporte para acesso com chaves *String*.
 
 Dado um arquivo de configuração como este:
 
