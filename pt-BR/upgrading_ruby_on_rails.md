@@ -180,7 +180,7 @@ Tecnicamente, no entanto, os controllers podem configurar `helpers_path` para ap
 
 O código de status HTTP padrão usado em `ActionDispatch::SSL` ao redirecionar solicitações não GET/HEAD de HTTP para HTTPS foi alterado para `308` conforme definido em https://tools.ietf.org/html/rfc7538.
 
-### Active Storage agora requer processamento de imagem
+### Active Storage agora requer Processamento de Imagem
 
 Ao processar variantes no Active Storage, agora é necessário ter a [image_processing gem](https://github.com/janko-m/image_processing) empacotada em vez de usar diretamente `mini_magick`. O processamento de imagem é configurado por padrão para usar `mini_magick` nos bastidores, então a maneira mais fácil de atualizar é substituindo a gem `mini_magick` pela gem `image_processing` e certificando-se de remover o uso explícito de `combine_options`, uma vez que não é mais necessário.
 
