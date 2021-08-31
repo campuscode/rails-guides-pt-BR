@@ -101,7 +101,7 @@ Rails.application.config_for(:example).with_indifferent_access.dig('options', 'k
 
 ### Respostas do tipo de conteúdo quando utilizando `respond_to#any`
 
-O cabeçalho do tipo de conteúdo retornado na resposta pode ser diferente do que o Rails 6.0 retornou,
+O cabeçalho (*header*) do tipo de conteúdo (*Content-Type*) retornado na resposta pode ser diferente do que o Rails 6.0 retornou,
 mais especificamente se sua aplicação usa o formato `respond_to { |format| format.any }`.
 O tipo de conteúdo será baseado no bloco fornecido e não no formato da solicitação.
 
