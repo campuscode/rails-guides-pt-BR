@@ -132,7 +132,7 @@ format.any(:xml, :json) { render request.format.to_sym => @people }
 ### `ActiveSupport::Callbacks#halted_callback_hook` agora recebe um segundo argumento
 
 *Active Support* permite que você substitua o `halted_callback_hook` sempre que um retorno de chamada
-pare a corrente. Este método agora recebe um segundo argumento que é o nome do retorno de chamada que está sendo interrompido.
+pare a sequência. Este método agora recebe um segundo argumento que é o nome do retorno de chamada que está sendo interrompido.
 Se você tiver classes que substituem esse método, certifique-se de que ele aceite dois argumentos. Observe que isso é uma mudança
 significativa sem um ciclo de depreciação anterior (por motivos de desempenho).
 
