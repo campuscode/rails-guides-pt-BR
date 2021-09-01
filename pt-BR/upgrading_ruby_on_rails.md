@@ -182,7 +182,7 @@ O código de status HTTP padrão usado em `ActionDispatch::SSL` ao redirecionar 
 
 ### Active Storage agora requer Processamento de Imagem
 
-Ao processar variantes no Active Storage, agora é necessário ter a [image_processing gem](https://github.com/janko-m/image_processing) empacotada em vez de usar diretamente `mini_magick`. O processamento de imagem é configurado por padrão para usar `mini_magick` nos bastidores, então a maneira mais fácil de atualizar é substituindo a gem `mini_magick` pela gem `image_processing` e certificando-se de remover o uso explícito de `combine_options`, uma vez que não é mais necessário.
+Ao processar variantes no Active Storage, agora é necessário ter a *gem* [image_processing](https://github.com/janko-m/image_processing) empacotada em vez de usar diretamente `mini_magick`. O processamento de imagem é configurado por padrão para usar `mini_magick` nos bastidores, então a maneira mais fácil de atualizar é substituindo a gem `mini_magick` pela gem `image_processing` e certificando-se de remover o uso explícito de `combine_options`, uma vez que não é mais necessário.
 
 Para facilitar a leitura, você pode desejar alterar as chamadas `resize` brutas para macros `image_processing`. Por exemplo, em vez de:
 
