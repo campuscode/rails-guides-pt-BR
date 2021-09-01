@@ -99,7 +99,7 @@ Você pode chamar `with_indifferent_access` no valor de retorno de` config_for` 
 Rails.application.config_for(:example).with_indifferent_access.dig('options', 'key')
 ```
 
-### Respostas do tipo de conteúdo quando utilizando `respond_to#any`
+### Respostas do tipo de conteúdo ao utilizar `respond_to#any`
 
 O cabeçalho (*header*) do tipo de conteúdo (*Content-Type*) retornado na resposta pode ser diferente do que o Rails 6.0 retornou,
 mais especificamente se sua aplicação usa o formato `respond_to { |format| format.any }`.
