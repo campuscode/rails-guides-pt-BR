@@ -200,7 +200,7 @@ video.preview(resize_to_limit: [100, 100])
 video.preview(resize_to_fill: [100, 100])
 ```
 
-Upgrading from Rails 5.2 to Rails 6.0
+Atualizando do Rails 5.2 para o Rails 6.0
 -------------------------------------
 
 For more information on changes made to Rails 6.0 please see the [release notes](6_0_release_notes.html).
