@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.3.2</div>
+    <div id="version-badge">v6.1.4</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -340,7 +340,7 @@ aninhados? Isto funciona também.</li>
 processando os cabeçalhos de requisição e retornando os cabeçalhos corretos de
 resposta e o código de status. Tudo que você precisa para isso é usar a
 checagem
-<a href="https://api.rubyonrails.org/v6.1.3.2/classes/ActionController/ConditionalGet.html#method-i-stale-3F"><code>stale?</code></a>
+<a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/ConditionalGet.html#method-i-stale-3F"><code>stale?</code></a>
 em seu <em>controller</em>, e o Rails vai cuidar de todos os detalhes do HTTP para
 você.</li>
 <li>Requisições HEAD: O Rails vai converter de forma transparente requisições
@@ -389,9 +389,9 @@ resposta é que a maioria delas continua.</p><h3 id="configuracao-basica"><a cla
 com um subconjunto mais limitado do Rails e adicionar recursos, conforme necessário.</p><h4 id="criando-uma-nova-aplicacao"><a class="anchorlink" href="#criando-uma-nova-aplicacao">3.1 Criando uma nova aplicação</a></h4><p>Você pode gerar uma nova API Rails:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new my_api <span class="nt">--api</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1ff084c5f126a4ef870a3b843ce8a8cc">rails new my_api --api
+<textarea class="clipboard-content" id="clipboard-0af1e114704210b997d558d5d6378a75">rails new my_api --api
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1ff084c5f126a4ef870a3b843ce8a8cc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0af1e114704210b997d558d5d6378a75">Copiar</button>
 </div>
 <p>Esse comando fará três coisas principais para você:</p>
 <ul>
@@ -404,42 +404,42 @@ Como nos <em>middlewares</em>, isso exclui qualquer <em>Action Controller</em> o
 <h4 id="alterando-uma-aplicacao-existente"><a class="anchorlink" href="#alterando-uma-aplicacao-existente">3.2 Alterando uma aplicação existente</a></h4><p>Se você deseja usar uma aplicação que já existe e transformá-la em API, siga os passos a seguir.</p><p>Em <code>config/application.rb</code> adicione a seguinte linha no começo da classe <code>Application</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">api_only</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9fb1b15ffbffad9556de5e6d28d8d1eb">config.api_only = true
+<textarea class="clipboard-content" id="clipboard-15aca79b36f182aa7b0a39417accc229">config.api_only = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9fb1b15ffbffad9556de5e6d28d8d1eb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-15aca79b36f182aa7b0a39417accc229">Copiar</button>
 </div>
 <p>Em <code>config/environments/development.rb</code>, defina <code>config.debug_exception_response_format</code>
 para configurar o formato usado nas respostas quando ocorrer um erro no modo de desenvolvimento.</p><p>Para renderizar uma página HTML com as informações de <em>debugging</em>, use o valor <code>:default</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">debug_exception_response_format</span> <span class="o">=</span> <span class="ss">:default</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-702bf44f96a2acef93133497c0e5224c">config.debug_exception_response_format = :default
+<textarea class="clipboard-content" id="clipboard-d393d06d0784e9849655e67cbec5590e">config.debug_exception_response_format = :default
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-702bf44f96a2acef93133497c0e5224c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d393d06d0784e9849655e67cbec5590e">Copiar</button>
 </div>
 <p>Para renderizar as informações de <em>debugging</em> preservando o formato da resposta, use o valor <code>:api</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">debug_exception_response_format</span> <span class="o">=</span> <span class="ss">:api</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ace23a83281bbc6bdc7f60e52f362b48">config.debug_exception_response_format = :api
+<textarea class="clipboard-content" id="clipboard-0c4ee1bf980d89a4e1a01c78c6c24d7a">config.debug_exception_response_format = :api
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ace23a83281bbc6bdc7f60e52f362b48">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0c4ee1bf980d89a4e1a01c78c6c24d7a">Copiar</button>
 </div>
 <p>Por padrão, <code>config.debug_exception_response_format</code> está definido para <code>:api</code>, quando <code>config.api_only</code> está com o valor <em>true</em>.</p><p>Finalmente, no arquivo <code>app/controllers/application_controller.rb</code>, ao invés de</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1a34218942a33073bfc8d8c202d61102">class ApplicationController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-832ac673732f5166834ac463e2ad63eb">class ApplicationController &lt; ActionController::Base
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1a34218942a33073bfc8d8c202d61102">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-832ac673732f5166834ac463e2ad63eb">Copiar</button>
 </div>
 <p>troque por:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">API</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-24578def62451294ad0777af56304a86">class ApplicationController &lt; ActionController::API
+<textarea class="clipboard-content" id="clipboard-37b061cf507eade792c8b21bc106f192">class ApplicationController &lt; ActionController::API
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-24578def62451294ad0777af56304a86">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-37b061cf507eade792c8b21bc106f192">Copiar</button>
 </div>
 <h3 id="escolhendo-o-middleware"><a class="anchorlink" href="#escolhendo-o-middleware">4 Escolhendo o Middleware</a></h3><p>Uma aplicação de API vem com os seguintes <em>middlewares</em> por padrão:</p>
 <ul>
@@ -469,9 +469,9 @@ aplicação que você está construindo, e isso faz sentido em uma aplicação d
 Rails.</p><p>Você pode recuperar uma lista com todos os <em>middlewares</em> de sua aplicação via:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>middleware
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ae3c51d47a76849565d3d1b34152d7f5">bin/rails middleware
+<textarea class="clipboard-content" id="clipboard-5c3169b90b8af3cee8f267a00fc23399">bin/rails middleware
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ae3c51d47a76849565d3d1b34152d7f5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5c3169b90b8af3cee8f267a00fc23399">Copiar</button>
 </div>
 <h4 id="usando-o-middleware-de-cache"><a class="anchorlink" href="#usando-o-middleware-de-cache">4.1 Usando o Middleware de Cache</a></h4><p>Por padrão, o Rails vai adicionar um <em>middleware</em> que fornece um armazenamento de
 <em>cache</em> baseado na configuração de sua aplicação (<em>memcache</em> por padrão). Isso
@@ -484,7 +484,7 @@ significa que o <em>cache</em> embutido no HTTP pode confiar nisso.</p><p>Por ex
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2ebd4c67aa69d0bb1040b841882f0ead">def show
+<textarea class="clipboard-content" id="clipboard-4754007a5f6addd1bf27a09ebc16241d">def show
   @post = Post.find(params[:id])
 
   if stale?(last_modified: @post.updated_at)
@@ -492,7 +492,7 @@ significa que o <em>cache</em> embutido no HTTP pode confiar nisso.</p><p>Por ex
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2ebd4c67aa69d0bb1040b841882f0ead">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4754007a5f6addd1bf27a09ebc16241d">Copiar</button>
 </div>
 <p>A chamada <code>stale?</code> vai comparar o cabeçalho <code>If-Modified-Since</code> na requisição
 com o <code>@post.updated_at</code>. Se o cabeçalho é mais novo que a ultima modificação,
@@ -508,7 +508,7 @@ clientes. Nós podemos ativar o cache <em>cross-client</em> na chamada para <cod
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6f3a1443afa1545e39ed16e34b420feb">def show
+<textarea class="clipboard-content" id="clipboard-2b1aae07279cf0391f4d3608191f74cb">def show
   @post = Post.find(params[:id])
 
   if stale?(last_modified: @post.updated_at, public: true)
@@ -516,7 +516,7 @@ clientes. Nós podemos ativar o cache <em>cross-client</em> na chamada para <cod
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6f3a1443afa1545e39ed16e34b420feb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2b1aae07279cf0391f4d3608191f74cb">Copiar</button>
 </div>
 <p>Isto significa que o cache de <em>middleware</em> vai guardar o valor de
 <code>Last-Modified</code> para a URL no cache do Rails, e adiciona um cabeçalho
@@ -534,13 +534,13 @@ estes servidores são configurados para suportar envio de arquivo acelerado.</p>
 <span class="c1"># Nginx</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_dispatch</span><span class="p">.</span><span class="nf">x_sendfile_header</span> <span class="o">=</span> <span class="s2">"X-Accel-Redirect"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-321677e1c724542e35b40d61ce8ef277"># Apache e lighttpd
+<textarea class="clipboard-content" id="clipboard-8b163436025479de6da3499ae968000f"># Apache e lighttpd
 config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
 # Nginx
 config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-321677e1c724542e35b40d61ce8ef277">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8b163436025479de6da3499ae968000f">Copiar</button>
 </div>
 <p>Se certifique de configurar seu servidor para suportar estas opções seguindo as
 instruções na documentação do <code>Rack::Sendfile</code>.</p><h4 id="usando-actiondispatch-request"><a class="anchorlink" href="#usando-actiondispatch-request">4.3 Usando ActionDispatch::Request</a></h4><p><code>ActionDispatch::Request#params</code> vai pegar os parâmetros do cliente no formato
@@ -555,7 +555,7 @@ instruções na documentação do <code>Rack::Sendfile</code>.</p><h4 id="usando
   <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
 <span class="p">});</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-913d8edba4f7a9948344dca5f589d1d0">jQuery.ajax({
+<textarea class="clipboard-content" id="clipboard-13f57c24e3ae7fb935bc9bb4e07e7db6">jQuery.ajax({
   type: 'POST',
   url: '/people',
   dataType: 'json',
@@ -564,14 +564,14 @@ instruções na documentação do <code>Rack::Sendfile</code>.</p><h4 id="usando
   success: function(json) { }
 });
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-913d8edba4f7a9948344dca5f589d1d0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-13f57c24e3ae7fb935bc9bb4e07e7db6">Copiar</button>
 </div>
 <p>O <code>ActionDispatch::Request</code> verá o <code>Content-Type</code> e seus parâmetros serão:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span> <span class="ss">:person</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:firstName</span> <span class="o">=&gt;</span> <span class="s2">"Yehuda"</span><span class="p">,</span> <span class="ss">:lastName</span> <span class="o">=&gt;</span> <span class="s2">"Katz"</span> <span class="p">}</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9ed674eaa426f99635d3c4d024b8838c">{ :person =&gt; { :firstName =&gt; "Yehuda", :lastName =&gt; "Katz" } }
+<textarea class="clipboard-content" id="clipboard-e4abfae4e9a3d7ab560300bc2c61260e">{ :person =&gt; { :firstName =&gt; "Yehuda", :lastName =&gt; "Katz" } }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9ed674eaa426f99635d3c4d024b8838c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e4abfae4e9a3d7ab560300bc2c61260e">Copiar</button>
 </div>
 <h4 id="usando-middlewares-de-sessao-session"><a class="anchorlink" href="#usando-middlewares-de-sessao-session">4.4 Usando <em>Middlewares</em> de Sessão (<em>Session</em>)</a></h4><p>Os <em>middlewares</em> a seguir, usados para gerenciamento de sessão, são excluídos das aplicações de API, pois normalmente não precisam de sessões. Se um de seus clientes de API forem um navegador, convém adicionar um deles novamente em:</p>
 <ul>
@@ -592,7 +592,7 @@ construído (como <code>config/application.rb</code>) e passá-los para o seu mi
 
 <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="n">config</span><span class="p">.</span><span class="nf">session_store</span><span class="p">,</span> <span class="n">config</span><span class="p">.</span><span class="nf">session_options</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6733ab976358b13b1526560297483945"># Isso também configura session_options para uso abaixo
+<textarea class="clipboard-content" id="clipboard-cf446b2c5977045fc63b44f3f23a8bb5"># Isso também configura session_options para uso abaixo
 config.session_store :cookie_store, key: '_interslice_session'
 
 # Obrigatório para todo o gerenciamento de sessão (independentemente de session_store)
@@ -600,7 +600,7 @@ config.middleware.use ActionDispatch::Cookies
 
 config.middleware.use config.session_store, config.session_options
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6733ab976358b13b1526560297483945">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cf446b2c5977045fc63b44f3f23a8bb5">Copiar</button>
 </div>
 <h4 id="outros-middleware"><a class="anchorlink" href="#outros-middleware">4.5 Outros <em>Middleware</em></a></h4><p>O Rails vem com vários outros <em>middlewares</em> que você pode querer usar em uma
 aplicação <em>API</em>, especialmente se um de seus clientes da API é o navegador:</p>
@@ -612,17 +612,17 @@ aplicação <em>API</em>, especialmente se um de seus clientes da API é o naveg
 <p>Qualquer um desses <em>middlewares</em> pode ser adicionado via:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">MethodOverride</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8eb1f5cc1a599e6d37effe07a927fd29">config.middleware.use Rack::MethodOverride
+<textarea class="clipboard-content" id="clipboard-72602312e698053604d56e8d2a17d901">config.middleware.use Rack::MethodOverride
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8eb1f5cc1a599e6d37effe07a927fd29">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-72602312e698053604d56e8d2a17d901">Copiar</button>
 </div>
 <h4 id="removendo-middleware"><a class="anchorlink" href="#removendo-middleware">4.6 Removendo <em>Middleware</em></a></h4><p>Se você não quer usar um <em>middleware</em> que está incluído por padrão no conjunto de
 <em>middlewares</em> <em>API-only</em>, você pode remove-lo com:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">delete</span> <span class="o">::</span><span class="no">Rack</span><span class="o">::</span><span class="no">Sendfile</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-34ea415e859e27556eb15777983d5354">config.middleware.delete ::Rack::Sendfile
+<textarea class="clipboard-content" id="clipboard-bf52cbefa8263e2050cd98b15dae28fe">config.middleware.delete ::Rack::Sendfile
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-34ea415e859e27556eb15777983d5354">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bf52cbefa8263e2050cd98b15dae28fe">Copiar</button>
 </div>
 <p>Tenha em mente que removendo estes <em>middlewares</em> vai remover suporte para
 alguns recursos no <em>Action Controller</em>.</p><h3 id="escolhendo-os-modulos-do-controller"><a class="anchorlink" href="#escolhendo-os-modulos-do-controller">5 Escolhendo os módulos do <em>controller</em></a></h3><p>Uma aplicação API (utilizando <code>ActionController::API</code>) vem com os seguintes módulos do <em>controller</em> por padrão:</p>
@@ -664,9 +664,9 @@ alguns recursos no <em>Action Controller</em>.</p><h3 id="escolhendo-os-modulos-
     <span class="no">AbstractController</span><span class="o">::</span><span class="no">Rendering</span><span class="p">,</span>
     <span class="no">ActionView</span><span class="o">::</span><span class="no">ViewPaths</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-67ef9fc1cadf25ed33b82dbe9bf6dd16">ActionController::API.ancestors - ActionController::Metal.ancestors
+<textarea class="clipboard-content" id="clipboard-83792cd62cb6fb2ac80f92595a544e41">ActionController::API.ancestors - ActionController::Metal.ancestors
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-67ef9fc1cadf25ed33b82dbe9bf6dd16">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-83792cd62cb6fb2ac80f92595a544e41">Copiar</button>
 </div>
 <h4 id="adicionando-outros-modulos"><a class="anchorlink" href="#adicionando-outros-modulos">5.1 Adicionando Outros Módulos</a></h4><p>Todos os módulos do <em>Action Controller</em> conhecem seus módulos dependentes. Assim, você pode incluir qualquer módulo em seus controllers, e todas as dependências serão
 incluídas e configuradas também.</p><p>Alguns módulos comuns que você pode querer adicionar:</p>
@@ -696,12 +696,12 @@ incluídas e configuradas também.</p><p>Alguns módulos comuns que você pode q
   <span class="nb">self</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:mem_cache_store</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-06fab376754eac7a869ab6e50bce4104">class ApplicationController &lt; ActionController::API
+<textarea class="clipboard-content" id="clipboard-6ac465ccf0fd6c3a1fd027616306fcac">class ApplicationController &lt; ActionController::API
   include ::ActionController::Caching
   self.cache_store = :mem_cache_store
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-06fab376754eac7a869ab6e50bce4104">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6ac465ccf0fd6c3a1fd027616306fcac">Copiar</button>
 </div>
 </li>
 </ul>

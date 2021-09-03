@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.3.2</div>
+    <div id="version-badge">v6.1.4</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -341,7 +341,7 @@
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a6f10edbdcfbf04553c7adefabfba376">require "application_controller"
+<textarea class="clipboard-content" id="clipboard-0ba8cc1ea8ff3db9a191e73083a40852">require "application_controller"
 require "post"
 
 class PostsController &lt; ApplicationController
@@ -350,7 +350,7 @@ class PostsController &lt; ApplicationController
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a6f10edbdcfbf04553c7adefabfba376">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0ba8cc1ea8ff3db9a191e73083a40852">Copiar</button>
 </div>
 <p>Our Rubyist instinct quickly sees some redundancy in there: If classes were
 defined in files matching their name, couldn't their loading be automated
@@ -364,13 +364,13 @@ production.</p><p>Indeed, those features are provided by Ruby on Rails, where we
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-70a63f45cd2947ad5a516d5bf4a098b2">class PostsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-f30de973a76c373d3c24da722c0cd195">class PostsController &lt; ApplicationController
   def index
     @posts = Post.all
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-70a63f45cd2947ad5a516d5bf4a098b2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f30de973a76c373d3c24da722c0cd195">Copiar</button>
 </div>
 <p>This guide documents how that works.</p><h3 id="constants-refresher"><a class="anchorlink" href="#constants-refresher">2 Constants Refresher</a></h3><p>While constants are trivial in most programming languages, they are a rich
 topic in Ruby.</p><p>It is beyond the scope of this guide to document Ruby constants, but we are
@@ -382,13 +382,13 @@ sections is instrumental to understanding constant autoloading and reloading.</p
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-515cebdde6c0359caaea73dabfde25f6">module XML
+<textarea class="clipboard-content" id="clipboard-6489f88bfa8da53e7828c1c6d93bc6ec">module XML
   class SAXParser
     # (1)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-515cebdde6c0359caaea73dabfde25f6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6489f88bfa8da53e7828c1c6d93bc6ec">Copiar</button>
 </div>
 <p>The <em>nesting</em> at any given place is the collection of enclosing nested class and
 module objects outwards. The nesting at any given place can be inspected with
@@ -396,9 +396,9 @@ module objects outwards. The nesting at any given place can be inspected with
 (1) is</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">[</span><span class="no">XML</span><span class="o">::</span><span class="no">SAXParser</span><span class="p">,</span> <span class="no">XML</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b077ebd164425a66702ceee868daf719">[XML::SAXParser, XML]
+<textarea class="clipboard-content" id="clipboard-eca61f34ed752591ec5e24bceabdc675">[XML::SAXParser, XML]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b077ebd164425a66702ceee868daf719">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eca61f34ed752591ec5e24bceabdc675">Copiar</button>
 </div>
 <p>It is important to understand that the nesting is composed of class and module
 <em>objects</em>, it has nothing to do with the constants used to access them, and is
@@ -407,18 +407,18 @@ also unrelated to their names.</p><p>For instance, while this definition is simi
   <span class="c1"># (2)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3b3e587f0501b4c9b83ffaf9046c6592">class XML::SAXParser
+<textarea class="clipboard-content" id="clipboard-a78eb9931d8d8a7a178338aaf3693c03">class XML::SAXParser
   # (2)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3b3e587f0501b4c9b83ffaf9046c6592">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a78eb9931d8d8a7a178338aaf3693c03">Copiar</button>
 </div>
 <p>the nesting in (2) is different:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">[</span><span class="no">XML</span><span class="o">::</span><span class="no">SAXParser</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-81205189c22a922bb80546ac3790e27e">[XML::SAXParser]
+<textarea class="clipboard-content" id="clipboard-aaa768f32d58212a47ac3b612bac9d71">[XML::SAXParser]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-81205189c22a922bb80546ac3790e27e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aaa768f32d58212a47ac3b612bac9d71">Copiar</button>
 </div>
 <p><code>XML</code> does not belong to it.</p><p>We can see in this example that the name of a class or module that belongs to a
 certain nesting does not necessarily correlate with the namespaces at the spot.</p><p>Even more, they are totally independent, take for instance</p><div class="code_container">
@@ -438,7 +438,7 @@ certain nesting does not necessarily correlate with the namespaces at the spot.<
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cdc3c3690750ec7c57761dd2f7149201">module X
+<textarea class="clipboard-content" id="clipboard-e9eddf7740b9c6fd1f102dd039bfd3a1">module X
   module Y
   end
 end
@@ -454,14 +454,14 @@ module X::Y
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cdc3c3690750ec7c57761dd2f7149201">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e9eddf7740b9c6fd1f102dd039bfd3a1">Copiar</button>
 </div>
 <p>The nesting in (3) consists of two module objects:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">[</span><span class="no">A</span><span class="o">::</span><span class="no">B</span><span class="p">,</span> <span class="no">X</span><span class="o">::</span><span class="no">Y</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dda4477dba1eb9f9f50fd6346e7ab3da">[A::B, X::Y]
+<textarea class="clipboard-content" id="clipboard-6ccbcc4658c7a8933ba11228a2ba45d4">[A::B, X::Y]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dda4477dba1eb9f9f50fd6346e7ab3da">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6ccbcc4658c7a8933ba11228a2ba45d4">Copiar</button>
 </div>
 <p>So, it not only doesn't end in <code>A</code>, which does not even belong to the nesting,
 but it also contains <code>X::Y</code>, which is independent from <code>A::B</code>.</p><p>The nesting is an internal stack maintained by the interpreter, and it gets
@@ -487,10 +487,10 @@ differences between defining classes and modules in one way or another.</p><h4 i
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">C</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-54f23be7cae7a4623af475e345171149">class C
+<textarea class="clipboard-content" id="clipboard-e6a619a84d53488602202179504593ac">class C
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-54f23be7cae7a4623af475e345171149">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e6a619a84d53488602202179504593ac">Copiar</button>
 </div>
 <p>Ruby creates a constant <code>C</code> in <code>Object</code> and stores in that constant a class
 object. The name of the class instance is "C", a string, named after the
@@ -498,24 +498,24 @@ constant.</p><p>That is,</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Project</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8cfb354d3c69cf708c930cd2534ae940">class Project &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-6621a8b452a9bcc531ef3ca30606d612">class Project &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8cfb354d3c69cf708c930cd2534ae940">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6621a8b452a9bcc531ef3ca30606d612">Copiar</button>
 </div>
 <p>performs a constant assignment equivalent to</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Project</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">ApplicationRecord</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7305e6f0070244e38e6d04ef8ebe5aad">Project = Class.new(ApplicationRecord)
+<textarea class="clipboard-content" id="clipboard-10398d7b068700944a37cad3128d8ef9">Project = Class.new(ApplicationRecord)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7305e6f0070244e38e6d04ef8ebe5aad">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-10398d7b068700944a37cad3128d8ef9">Copiar</button>
 </div>
 <p>including setting the name of the class as a side-effect:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Project</span><span class="p">.</span><span class="nf">name</span> <span class="c1"># =&gt; "Project"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b74c54a5f8b9a87449610a7ae305eba9">Project.name # =&gt; "Project"
+<textarea class="clipboard-content" id="clipboard-0f3c431ea969a1a954b66c5529d249b9">Project.name # =&gt; "Project"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b74c54a5f8b9a87449610a7ae305eba9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f3c431ea969a1a954b66c5529d249b9">Copiar</button>
 </div>
 <p>Constant assignment has a special rule to make that happen: if the object
 being assigned is an anonymous class or module, Ruby sets the object's name to
@@ -526,24 +526,24 @@ the name is set, it doesn't change.</p></div><p>Similarly, module creation using
 <pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">Admin</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-277beb134d4588ff511564dbce13b8f5">module Admin
+<textarea class="clipboard-content" id="clipboard-73dab89e76fc60e917831f758b6613a0">module Admin
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-277beb134d4588ff511564dbce13b8f5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-73dab89e76fc60e917831f758b6613a0">Copiar</button>
 </div>
 <p>performs a constant assignment equivalent to</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Admin</span> <span class="o">=</span> <span class="no">Module</span><span class="p">.</span><span class="nf">new</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ddcc879c430643c5198e7183253af926">Admin = Module.new
+<textarea class="clipboard-content" id="clipboard-ff0c9dd7b0a714ad0215f0d202fc58fb">Admin = Module.new
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ddcc879c430643c5198e7183253af926">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ff0c9dd7b0a714ad0215f0d202fc58fb">Copiar</button>
 </div>
 <p>including setting the name as a side-effect:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Admin</span><span class="p">.</span><span class="nf">name</span> <span class="c1"># =&gt; "Admin"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8dcc7b230028b823258b4e2514dda062">Admin.name # =&gt; "Admin"
+<textarea class="clipboard-content" id="clipboard-b3abc8741a7bd5a0efbb898ca54116c4">Admin.name # =&gt; "Admin"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8dcc7b230028b823258b4e2514dda062">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b3abc8741a7bd5a0efbb898ca54116c4">Copiar</button>
 </div>
 <div class="warning"><p>The execution context of a block passed to <code>Class.new</code> or <code>Module.new</code>
 is not entirely equivalent to the one of the body of the definitions using the
@@ -558,13 +558,13 @@ resolution algorithms applies to it.</p><p>Likewise, in the controller</p><div c
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-51c51ad6a38eb21a65a5cb5a71f1837a">class PostsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-49f72cee1d9a1e49618592a2dbdeff0a">class PostsController &lt; ApplicationController
   def index
     @posts = Post.all
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-51c51ad6a38eb21a65a5cb5a71f1837a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-49f72cee1d9a1e49618592a2dbdeff0a">Copiar</button>
 </div>
 <p><code>Post</code> is not syntax for a class. Rather, <code>Post</code> is a regular Ruby constant. If
 all is good, the constant is evaluated to an object that responds to <code>all</code>.</p><p>That is why we talk about <em>constant</em> autoloading, Rails has the ability to
@@ -576,11 +576,11 @@ going to be precise here for didactic purposes.</p><p>Let's consider the followi
   <span class="no">RED</span> <span class="o">=</span> <span class="s1">'0xff0000'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6abcc0dc5862768e88515d2854f8daee">module Colors
+<textarea class="clipboard-content" id="clipboard-1aa8594f7ebe69cb31470406a2aeb9d8">module Colors
   RED = '0xff0000'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6abcc0dc5862768e88515d2854f8daee">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1aa8594f7ebe69cb31470406a2aeb9d8">Copiar</button>
 </div>
 <p>First, when the <code>module</code> keyword is processed, the interpreter creates a new
 entry in the constant table of the class object stored in the <code>Object</code> constant.
@@ -608,9 +608,9 @@ the name of the constant to be autoloaded, and the cref. See more in <a href="#a
 References</a>.</p><h5 id="resolution-algorithm-for-qualified-constants"><a class="anchorlink" href="#resolution-algorithm-for-qualified-constants">2.4.2 Resolution Algorithm for Qualified Constants</a></h5><p>Qualified constants look like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Billing</span><span class="o">::</span><span class="no">Invoice</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ef43570bd00c98dbf844bf5dcf202c23">Billing::Invoice
+<textarea class="clipboard-content" id="clipboard-4147657342e9786c52b28f0b64f54288">Billing::Invoice
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ef43570bd00c98dbf844bf5dcf202c23">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4147657342e9786c52b28f0b64f54288">Copiar</button>
 </div>
 <p><code>Billing::Invoice</code> is composed of two constants: <code>Billing</code> is relative and is
 resolved using the algorithm of the previous section.</p><div class="info"><p>Leading colons would make the first segment absolute rather than
@@ -664,9 +664,9 @@ example the <code>runner</code> command autoloads:</p><div class="code_container
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>runner <span class="s1">'p User.column_names'</span>
 <span class="go">["id", "email", "created_at", "updated_at"]
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-8552128a37194c4ea02f62b0cefc1a39">bin/rails runner 'p User.column_names'
+<textarea class="clipboard-content" id="clipboard-5853fa6084c36660f1783a8c7c61f2e5">bin/rails runner 'p User.column_names'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8552128a37194c4ea02f62b0cefc1a39">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5853fa6084c36660f1783a8c7c61f2e5">Copiar</button>
 </div>
 <p>The console autoloads, the test suite autoloads, and of course the application
 autoloads.</p><p>By default, Rails eager loads the application files when it boots in production
@@ -675,18 +675,18 @@ autoloading may still be triggered during eager loading.</p><p>For example, give
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">BeachHouse</span> <span class="o">&lt;</span> <span class="no">House</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b5facf10ba3db1e7f3dcd5e8188b41bd">class BeachHouse &lt; House
+<textarea class="clipboard-content" id="clipboard-40b03dd6b454f20e39470700efc9f238">class BeachHouse &lt; House
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b5facf10ba3db1e7f3dcd5e8188b41bd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-40b03dd6b454f20e39470700efc9f238">Copiar</button>
 </div>
 <p>if <code>House</code> is still unknown when <code>app/models/beach_house.rb</code> is being eager
 loaded, Rails autoloads it.</p><h3 id="autoload-paths-and-eager-load-paths"><a class="anchorlink" href="#autoload-paths-and-eager-load-paths">5 autoload_paths and eager_load_paths</a></h3><p>As you probably know, when <code>require</code> gets a relative file name:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"erb"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a6edd3c270d5c5f48934cb6cbf2b7a25">require "erb"
+<textarea class="clipboard-content" id="clipboard-51bcd3582d9e56f71251dda82510577d">require "erb"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a6edd3c270d5c5f48934cb6cbf2b7a25">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-51bcd3582d9e56f71251dda82510577d">Copiar</button>
 </div>
 <p>Ruby looks for the file in the directories listed in <code>$LOAD_PATH</code>. That is, Ruby
 iterates over all its directories and for each one of them checks whether they
@@ -742,9 +742,9 @@ it is (edited):</p><div class="code_container">
 .../actionview/app/assets
 .../test/mailers/previews
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-7eeabf74a892a2425636cdce4ccedd39">bin/rails runner 'puts ActiveSupport::Dependencies.autoload_paths'
+<textarea class="clipboard-content" id="clipboard-38b94f7fe8ebcd3d4edfe30276aea2bd">bin/rails runner 'puts ActiveSupport::Dependencies.autoload_paths'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7eeabf74a892a2425636cdce4ccedd39">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-38b94f7fe8ebcd3d4edfe30276aea2bd">Copiar</button>
 </div>
 <div class="info"><p><code>autoload_paths</code> is computed and cached during the initialization process.
 The application needs to be restarted to reflect any changes in the directory
@@ -755,13 +755,13 @@ structure.</p></div><h3 id="autoloading-algorithms"><a class="anchorlink" href="
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-340bf9fc9250c1b43da8835e9690a67e">class PostsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-a57a2c4343693e06bd88bf52280147f6">class PostsController &lt; ApplicationController
   def index
     @posts = Post.all
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-340bf9fc9250c1b43da8835e9690a67e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a57a2c4343693e06bd88bf52280147f6">Copiar</button>
 </div>
 <p>all three constant references are relative.</p><h5 id="constants-after-the-class-and-module-keywords"><a class="anchorlink" href="#constants-after-the-class-and-module-keywords">6.1.1 Constants after the <code>class</code> and <code>module</code> Keywords</a></h5><p>Ruby performs a lookup for the constant that follows a <code>class</code> or <code>module</code>
 keyword because it needs to know if the class or module is going to be created
@@ -777,10 +777,10 @@ which is normally the case, it continues and finds
 <pre><code class="highlight plaintext">unable to autoload constant ApplicationController, expected
 &lt;full path to application_controller.rb&gt; to define it (LoadError)
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0c262f67575b49766687deb581c85c02">unable to autoload constant ApplicationController, expected
+<textarea class="clipboard-content" id="clipboard-c2439d799038cffded25724e9edbfd13">unable to autoload constant ApplicationController, expected
 &lt;full path to application_controller.rb&gt; to define it (LoadError)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0c262f67575b49766687deb581c85c02">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c2439d799038cffded25724e9edbfd13">Copiar</button>
 </div>
 <div class="info"><p>Rails does not require the value of autoloaded constants to be a class or
 module object. For example, if the file <code>app/models/max_clients.rb</code> defines
@@ -794,13 +794,13 @@ for namespaces comes into play.</p><p>The basic idea is that given</p><div class
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-73aee1e60df9f5470921ed2a4d0a15ea">module Admin
+<textarea class="clipboard-content" id="clipboard-2e77f425c0ef51ef5f381f57f9c5afcf">module Admin
   class BaseController &lt; ApplicationController
     @@all_roles = Role.all
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-73aee1e60df9f5470921ed2a4d0a15ea">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2e77f425c0ef51ef5f381f57f9c5afcf">Copiar</button>
 </div>
 <p>to autoload <code>Role</code> we are going to check if it is defined in the current or
 parent namespaces, one at a time. So, conceptually we want to try to autoload
@@ -809,11 +809,11 @@ any of</p><div class="code_container">
 Admin::Role
 Role
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-92b270c3f23aeea60b2d77c563fbf8d9">Admin::BaseController::Role
+<textarea class="clipboard-content" id="clipboard-dc6d43cc98b9060d738b7ad566567682">Admin::BaseController::Role
 Admin::Role
 Role
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-92b270c3f23aeea60b2d77c563fbf8d9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dc6d43cc98b9060d738b7ad566567682">Copiar</button>
 </div>
 <p>in that order. That's the idea. To do so, Rails looks in <code>autoload_paths</code>
 respectively for file names like these:</p><div class="code_container">
@@ -821,11 +821,11 @@ respectively for file names like these:</p><div class="code_container">
 admin/role.rb
 role.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a987fd1e104a854b6283350bb1ee5c27">admin/base_controller/role.rb
+<textarea class="clipboard-content" id="clipboard-ad9c1ee4c70cb292cf2ced73ff772fc0">admin/base_controller/role.rb
 admin/role.rb
 role.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a987fd1e104a854b6283350bb1ee5c27">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ad9c1ee4c70cb292cf2ced73ff772fc0">Copiar</button>
 </div>
 <p>modulus some additional directory lookups we are going to cover soon.</p><div class="info"><p><code>'Constant::Name'.underscore</code> gives the relative path without extension of
 the file name where <code>Constant::Name</code> is expected to be defined.</p></div><p>Let's see how Rails autoloads the <code>Post</code> constant in the <code>PostsController</code>
@@ -837,13 +837,13 @@ app/helpers/posts_controller/post.rb
 ...
 test/mailers/previews/posts_controller/post.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f6084702c156a3e53357d437f1c5b043">app/assets/posts_controller/post.rb
+<textarea class="clipboard-content" id="clipboard-12cdcc6db1b411b7c13e67df1f989947">app/assets/posts_controller/post.rb
 app/controllers/posts_controller/post.rb
 app/helpers/posts_controller/post.rb
 ...
 test/mailers/previews/posts_controller/post.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f6084702c156a3e53357d437f1c5b043">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-12cdcc6db1b411b7c13e67df1f989947">Copiar</button>
 </div>
 <p>Since the lookup is exhausted without success, a similar search for a directory
 is performed, we are going to see why in the <a href="#automatic-modules">next section</a>:</p><div class="code_container">
@@ -853,13 +853,13 @@ app/helpers/posts_controller/post
 ...
 test/mailers/previews/posts_controller/post
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b832d07c491a7803253024ac9963ec9b">app/assets/posts_controller/post
+<textarea class="clipboard-content" id="clipboard-2a3203216604e4e87d0c9fa8acfc65cd">app/assets/posts_controller/post
 app/controllers/posts_controller/post
 app/helpers/posts_controller/post
 ...
 test/mailers/previews/posts_controller/post
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b832d07c491a7803253024ac9963ec9b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a3203216604e4e87d0c9fa8acfc65cd">Copiar</button>
 </div>
 <p>If all those attempts fail, then Rails starts the lookup again in the parent
 namespace. In this case only the top-level remains:</p><div class="code_container">
@@ -869,13 +869,13 @@ app/helpers/post.rb
 app/mailers/post.rb
 app/models/post.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b9e6bd1f627e22173284298e6d1bfdc3">app/assets/post.rb
+<textarea class="clipboard-content" id="clipboard-408c850973b549cbaccb744ec874243c">app/assets/post.rb
 app/controllers/post.rb
 app/helpers/post.rb
 app/mailers/post.rb
 app/models/post.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b9e6bd1f627e22173284298e6d1bfdc3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-408c850973b549cbaccb744ec874243c">Copiar</button>
 </div>
 <p>A matching file is found in <code>app/models/post.rb</code>. The lookup stops there and the
 file is loaded. If the file actually defines <code>Post</code> all is fine, otherwise
@@ -886,18 +886,18 @@ unable to tell if the trigger was a relative reference or a qualified one.</p><p
   <span class="no">User</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2f315fff358fa87cee0e27e343541b76">module Admin
+<textarea class="clipboard-content" id="clipboard-180c096143e2aa6ad0e32ad8d9f7833b">module Admin
   User
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2f315fff358fa87cee0e27e343541b76">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-180c096143e2aa6ad0e32ad8d9f7833b">Copiar</button>
 </div>
 <p>and</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Admin</span><span class="o">::</span><span class="no">User</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0f187df61f69a3d729a46603cc3e8979">Admin::User
+<textarea class="clipboard-content" id="clipboard-eb4461adb5660deb829e46442dcfb4e6">Admin::User
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0f187df61f69a3d729a46603cc3e8979">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eb4461adb5660deb829e46442dcfb4e6">Copiar</button>
 </div>
 <p>If <code>User</code> is missing, in either case all Rails knows is that a constant called
 "User" was missing in a module called "Admin".</p><p>If there is a top-level <code>User</code> Ruby would resolve it in the former example, but
@@ -910,9 +910,9 @@ constant then Rails assumes the reference is relative. Otherwise qualified.</p>
 <p>For example, if this code triggers autoloading</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Admin</span><span class="o">::</span><span class="no">User</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8b7f397840f803b9760c950a2b94d6de">Admin::User
+<textarea class="clipboard-content" id="clipboard-7d716447e6d4e484d84b89a7cd44cab3">Admin::User
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8b7f397840f803b9760c950a2b94d6de">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7d716447e6d4e484d84b89a7cd44cab3">Copiar</button>
 </div>
 <p>and the <code>User</code> constant is already present in <code>Object</code>, it is not possible that
 the situation is</p><div class="code_container">
@@ -920,11 +920,11 @@ the situation is</p><div class="code_container">
   <span class="no">User</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5307d553dc4cf2b253575339b397c239">module Admin
+<textarea class="clipboard-content" id="clipboard-fe2dc90df521358a0546a832dedc1931">module Admin
   User
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5307d553dc4cf2b253575339b397c239">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fe2dc90df521358a0546a832dedc1931">Copiar</button>
 </div>
 <p>because otherwise Ruby would have resolved <code>User</code> and no autoloading would have
 been triggered in the first place. Thus, Rails assumes a qualified reference and
@@ -998,7 +998,7 @@ loop do
   end
 end
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bf66a9ea4ac5a44bff301c1cb1527590">if the class or module in which C is missing is Object
+<textarea class="clipboard-content" id="clipboard-a22dc1c05c7c8aa298e7f77aaecd5090">if the class or module in which C is missing is Object
   let ns = ''
 else
   let M = the class or module in which C is missing
@@ -1049,7 +1049,7 @@ loop do
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bf66a9ea4ac5a44bff301c1cb1527590">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a22dc1c05c7c8aa298e7f77aaecd5090">Copiar</button>
 </div>
 <h3 id="require-dependency"><a class="anchorlink" href="#require-dependency">7 require_dependency</a></h3><p>Constant autoloading is triggered on demand and therefore code that uses a
 certain constant may have it already defined or may trigger an autoload. That
@@ -1066,9 +1066,9 @@ constants.</p><p>For example, if you're in a console session and edit some file 
 scenes, the code can be reloaded with the <code>reload!</code> command:</p><div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">reload!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f9321d112e482f9ce366edd6b10a7ad4">reload!
+<textarea class="clipboard-content" id="clipboard-f7de10a0d360efa0bbd6ec7b71942efb">reload!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f9321d112e482f9ce366edd6b10a7ad4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f7de10a0d360efa0bbd6ec7b71942efb">Copiar</button>
 </div>
 <p>When the application runs, code is reloaded when something relevant to this
 logic changes. In order to do that, Rails monitors a number of things:</p>
@@ -1093,7 +1093,7 @@ Instead, everything is wiped.</p></div><h3 id="common-gotchas"><a class="anchorl
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eee2205710e204e5b9cca72c097b1b11">module Admin
+<textarea class="clipboard-content" id="clipboard-77b193bbfab738487512cf2a9d929142">module Admin
   class UsersController &lt; ApplicationController
     def index
       @users = User.all
@@ -1101,7 +1101,7 @@ Instead, everything is wiped.</p></div><h3 id="common-gotchas"><a class="anchorl
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eee2205710e204e5b9cca72c097b1b11">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-77b193bbfab738487512cf2a9d929142">Copiar</button>
 </div>
 <p>and</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Admin::UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -1110,13 +1110,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9b38888c779f7573bf66140e55d0a571">class Admin::UsersController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-02b35b1e4079f8aa037632d34dc75e09">class Admin::UsersController &lt; ApplicationController
   def index
     @users = User.all
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9b38888c779f7573bf66140e55d0a571">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-02b35b1e4079f8aa037632d34dc75e09">Copiar</button>
 </div>
 <p>To resolve <code>User</code> Ruby checks <code>Admin</code> in the former case, but it does not in
 the latter because it does not belong to the nesting (see <a href="#nesting">Nesting</a>
@@ -1133,7 +1133,7 @@ instead:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8a44213d446afd3b7550edf36ada9584">module Admin
+<textarea class="clipboard-content" id="clipboard-2e664d3e1bb194fff80479a672196f90">module Admin
   class UsersController &lt; ApplicationController
     def index
       @users = User.all
@@ -1141,7 +1141,7 @@ instead:</p><div class="code_container">
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8a44213d446afd3b7550edf36ada9584">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2e664d3e1bb194fff80479a672196f90">Copiar</button>
 </div>
 <h4 id="defining-vs-reopening-namespaces"><a class="anchorlink" href="#defining-vs-reopening-namespaces">9.2 Defining vs Reopening Namespaces</a></h4><p>Let's consider:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/blog.rb</span>
@@ -1151,14 +1151,14 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b8a7b4fc1a4fb2f5fb1d864b3cc8a5cf"># app/models/blog.rb
+<textarea class="clipboard-content" id="clipboard-28b6e37e784476b306041cb69a8ba6a5"># app/models/blog.rb
 module Blog
   def self.table_name_prefix
     "blog_"
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b8a7b4fc1a4fb2f5fb1d864b3cc8a5cf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-28b6e37e784476b306041cb69a8ba6a5">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/blog/post.rb</span>
@@ -1167,13 +1167,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ad5fc128b4f5ac1dba786867e9f3b4d9"># app/models/blog/post.rb
+<textarea class="clipboard-content" id="clipboard-d4d3b2661d416b82375fd7164499cfa9"># app/models/blog/post.rb
 module Blog
   class Post &lt; ApplicationRecord
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ad5fc128b4f5ac1dba786867e9f3b4d9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d4d3b2661d416b82375fd7164499cfa9">Copiar</button>
 </div>
 <p>The table name for <code>Blog::Post</code> should be <code>blog_posts</code> due to the existence of
 the method <code>Blog.table_name_prefix</code>. However, if <code>app/models/blog/post.rb</code> is
@@ -1191,7 +1191,7 @@ first using <code>require_dependency</code>:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-472751fe6941375d620e9d8f3212170b"># app/models/blog/post.rb
+<textarea class="clipboard-content" id="clipboard-230a3d28dde3c75b8371cdd6f2309760"># app/models/blog/post.rb
 
 require_dependency "blog"
 
@@ -1200,7 +1200,7 @@ module Blog
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-472751fe6941375d620e9d8f3212170b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-230a3d28dde3c75b8371cdd6f2309760">Copiar</button>
 </div>
 <h4 id="autoloading-and-sti"><a class="anchorlink" href="#autoloading-and-sti">9.3 Autoloading and STI</a></h4><p>Single Table Inheritance (STI) is a feature of Active Record that enables
 storing a hierarchy of models in one single table. The API of such models is
@@ -1210,33 +1210,33 @@ these classes:</p><div class="code_container">
 <span class="k">class</span> <span class="nc">Polygon</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-42a26e09e51503533f27c9b63113c8a0"># app/models/polygon.rb
+<textarea class="clipboard-content" id="clipboard-9c45f7e1f339bd9f57fdbb2c9803defd"># app/models/polygon.rb
 class Polygon &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-42a26e09e51503533f27c9b63113c8a0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9c45f7e1f339bd9f57fdbb2c9803defd">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/triangle.rb</span>
 <span class="k">class</span> <span class="nc">Triangle</span> <span class="o">&lt;</span> <span class="no">Polygon</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dd7857c928bb698b480b0b8077ac59c7"># app/models/triangle.rb
+<textarea class="clipboard-content" id="clipboard-a5b7039c31749323561086d5568aba49"># app/models/triangle.rb
 class Triangle &lt; Polygon
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dd7857c928bb698b480b0b8077ac59c7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a5b7039c31749323561086d5568aba49">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/rectangle.rb</span>
 <span class="k">class</span> <span class="nc">Rectangle</span> <span class="o">&lt;</span> <span class="no">Polygon</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-acf5639cf9e779add2c9e4196c21c95b"># app/models/rectangle.rb
+<textarea class="clipboard-content" id="clipboard-bd6032304f43b82ed9f42456e49a4659"># app/models/rectangle.rb
 class Rectangle &lt; Polygon
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-acf5639cf9e779add2c9e4196c21c95b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bd6032304f43b82ed9f42456e49a4659">Copiar</button>
 </div>
 <p><code>Triangle.create</code> creates a row that represents a triangle, and
 <code>Rectangle.create</code> creates a row that represents a rectangle. If <code>id</code> is the
@@ -1254,30 +1254,30 @@ for. Let's see an example.</p><p><code>Rectangle.all</code> only loads rectangle
 <pre><code class="highlight sql"><span class="k">SELECT</span> <span class="nv">"polygons"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"polygons"</span>
 <span class="k">WHERE</span> <span class="nv">"polygons"</span><span class="p">.</span><span class="nv">"type"</span> <span class="k">IN</span> <span class="p">(</span><span class="nv">"Rectangle"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e8e4e29b0583018cddb883da96a7e166">SELECT "polygons".* FROM "polygons"
+<textarea class="clipboard-content" id="clipboard-3962edee17719dcaffca7af7980b2c72">SELECT "polygons".* FROM "polygons"
 WHERE "polygons"."type" IN ("Rectangle")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e8e4e29b0583018cddb883da96a7e166">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3962edee17719dcaffca7af7980b2c72">Copiar</button>
 </div>
 <p>Let's introduce now a subclass of <code>Rectangle</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/square.rb</span>
 <span class="k">class</span> <span class="nc">Square</span> <span class="o">&lt;</span> <span class="no">Rectangle</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0fa16d8e2c1d78343856df831037e645"># app/models/square.rb
+<textarea class="clipboard-content" id="clipboard-9a55cf954436213c9a8753ae8d264299"># app/models/square.rb
 class Square &lt; Rectangle
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0fa16d8e2c1d78343856df831037e645">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9a55cf954436213c9a8753ae8d264299">Copiar</button>
 </div>
 <p><code>Rectangle.all</code> should now return rectangles <strong>and</strong> squares:</p><div class="code_container">
 <pre><code class="highlight sql"><span class="k">SELECT</span> <span class="nv">"polygons"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"polygons"</span>
 <span class="k">WHERE</span> <span class="nv">"polygons"</span><span class="p">.</span><span class="nv">"type"</span> <span class="k">IN</span> <span class="p">(</span><span class="nv">"Rectangle"</span><span class="p">,</span> <span class="nv">"Square"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a3f5268496bd9f2d67a005e72251368f">SELECT "polygons".* FROM "polygons"
+<textarea class="clipboard-content" id="clipboard-75e2238ae2e9b0efdb3bd230b61a5bd7">SELECT "polygons".* FROM "polygons"
 WHERE "polygons"."type" IN ("Rectangle", "Square")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a3f5268496bd9f2d67a005e72251368f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-75e2238ae2e9b0efdb3bd230b61a5bd7">Copiar</button>
 </div>
 <p>But there's a caveat here: How does Active Record know that the class <code>Square</code>
 exists at all?</p><p>Even if the file <code>app/models/square.rb</code> exists and defines the <code>Square</code> class,
@@ -1285,10 +1285,10 @@ if no code yet used that class, <code>Rectangle.all</code> issues the query</p><
 <pre><code class="highlight sql"><span class="k">SELECT</span> <span class="nv">"polygons"</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="nv">"polygons"</span>
 <span class="k">WHERE</span> <span class="nv">"polygons"</span><span class="p">.</span><span class="nv">"type"</span> <span class="k">IN</span> <span class="p">(</span><span class="nv">"Rectangle"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a62368ad7b4d4e53f0d8f0c7216c1b3a">SELECT "polygons".* FROM "polygons"
+<textarea class="clipboard-content" id="clipboard-b33e2f47bcb55369df618cd37ee89644">SELECT "polygons".* FROM "polygons"
 WHERE "polygons"."type" IN ("Rectangle")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a62368ad7b4d4e53f0d8f0c7216c1b3a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b33e2f47bcb55369df618cd37ee89644">Copiar</button>
 </div>
 <p>That is not a bug, the query includes all <em>known</em> descendants of <code>Rectangle</code>.</p><p>A way to ensure this works correctly regardless of the order of execution is to
 manually load the direct subclasses at the bottom of the file that defines each
@@ -1298,12 +1298,12 @@ intermediate class:</p><div class="code_container">
 <span class="k">end</span>
 <span class="n">require_dependency</span> <span class="s1">'square'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-65cddcac6ee30a63ccaa27df2a5c9278"># app/models/rectangle.rb
+<textarea class="clipboard-content" id="clipboard-3327f0058194a99349b5b69cd70e418d"># app/models/rectangle.rb
 class Rectangle &lt; Polygon
 end
 require_dependency 'square'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-65cddcac6ee30a63ccaa27df2a5c9278">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3327f0058194a99349b5b69cd70e418d">Copiar</button>
 </div>
 <p>This needs to happen for every intermediate (non-root and non-leaf) class. The
 root class does not scope the query by type, and therefore does not necessarily
@@ -1314,13 +1314,13 @@ have to know all its descendants.</p><h4 id="autoloading-and-require"><a class="
   <span class="c1"># ...</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e58fa220fcf4841213e30f9b066875ec">require "user" # DO NOT DO THIS
+<textarea class="clipboard-content" id="clipboard-4b088a1ee63b3a4a77863556434d6196">require "user" # DO NOT DO THIS
 
 class UsersController &lt; ApplicationController
   # ...
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e58fa220fcf4841213e30f9b066875ec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4b088a1ee63b3a4a77863556434d6196">Copiar</button>
 </div>
 <p>There are two possible gotchas here in development mode:</p>
 <ol>
@@ -1341,13 +1341,13 @@ not marked as autoloaded.</p><h4 id="autoloading-and-initializers"><a class="anc
   <span class="no">MockedAuthService</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8f04bf1e033cf3c962ee5ebf9d82440f">AUTH_SERVICE = if Rails.env.production?
+<textarea class="clipboard-content" id="clipboard-8e83236a2b55f0a5366cc31f353fcfb7">AUTH_SERVICE = if Rails.env.production?
   RealAuthService
 else
   MockedAuthService
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8f04bf1e033cf3c962ee5ebf9d82440f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8e83236a2b55f0a5366cc31f353fcfb7">Copiar</button>
 </div>
 <p>The purpose of this setup would be that the application uses the class that
 corresponds to the environment via <code>AUTH_SERVICE</code>. In development mode
@@ -1368,7 +1368,7 @@ using the original constant, but perfectly functional.</p><p>The following code 
 <span class="no">X</span><span class="p">.</span><span class="nf">name</span>      <span class="c1"># =&gt; C</span>
 <span class="no">C</span>           <span class="c1"># =&gt; uninitialized constant C (NameError)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8f98802b6bf7942153f1342545775e10">class C
+<textarea class="clipboard-content" id="clipboard-e78602fe52e72011aeb7cf393612661c">class C
   def quack
     'quack!'
   end
@@ -1380,7 +1380,7 @@ X.new.quack # =&gt; quack!
 X.name      # =&gt; C
 C           # =&gt; uninitialized constant C (NameError)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8f98802b6bf7942153f1342545775e10">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e78602fe52e72011aeb7cf393612661c">Copiar</button>
 </div>
 <p>Because of that, it is not a good idea to autoload constants on application
 initialization.</p><p>In the case above we could implement a dynamic access point:</p><div class="code_container">
@@ -1397,7 +1397,7 @@ initialization.</p><p>In the case above we could implement a dynamic access poin
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-56f383ea163cd6db65049d53867e9fab"># app/models/auth_service.rb
+<textarea class="clipboard-content" id="clipboard-83dc5643a704832cc0f52f43a5f02b3d"># app/models/auth_service.rb
 class AuthService
   if Rails.env.production?
     def self.instance
@@ -1410,7 +1410,7 @@ class AuthService
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-56f383ea163cd6db65049d53867e9fab">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-83dc5643a704832cc0f52f43a5f02b3d">Copiar</button>
 </div>
 <p>and have the application use <code>AuthService.instance</code> instead. <code>AuthService</code>
 would be loaded on demand and be autoload-friendly.</p><h4 id="require-dependency-and-initializers"><a class="anchorlink" href="#require-dependency-and-initializers">9.6 <code>require_dependency</code> and Initializers</a></h4><p>As we saw before, <code>require_dependency</code> loads files in an autoloading-friendly
@@ -1424,11 +1424,11 @@ spots.</p><h4 id="when-constants-aren-t-missed"><a class="anchorlink" href="#whe
 <span class="k">class</span> <span class="nc">FlightModel</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-398def6ee600e25d4e431310ef98fc2b"># app/models/flight_model.rb
+<textarea class="clipboard-content" id="clipboard-8fe8e0618e914eed4d069de754a9c305"># app/models/flight_model.rb
 class FlightModel
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-398def6ee600e25d4e431310ef98fc2b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8fe8e0618e914eed4d069de754a9c305">Copiar</button>
 </div>
 <p>that can be overridden by each airplane, for instance</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/bell_x1/flight_model.rb</span>
@@ -1437,13 +1437,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-95d36cf4a055a6a5431e838d34bbaafe"># app/models/bell_x1/flight_model.rb
+<textarea class="clipboard-content" id="clipboard-ced998c8aab89d2801344da6a49e2fba"># app/models/bell_x1/flight_model.rb
 module BellX1
   class FlightModel &lt; FlightModel
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-95d36cf4a055a6a5431e838d34bbaafe">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ced998c8aab89d2801344da6a49e2fba">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/bell_x1/aircraft.rb</span>
@@ -1455,7 +1455,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-62f1d7e0b0dc8ad0739adca9c85778e1"># app/models/bell_x1/aircraft.rb
+<textarea class="clipboard-content" id="clipboard-b3e22cd8c87c0ad4c9c347de4a1896c6"># app/models/bell_x1/aircraft.rb
 module BellX1
   class Aircraft
     def initialize
@@ -1464,7 +1464,7 @@ module BellX1
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-62f1d7e0b0dc8ad0739adca9c85778e1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b3e22cd8c87c0ad4c9c347de4a1896c6">Copiar</button>
 </div>
 <p>The initializer wants to create a <code>BellX1::FlightModel</code> and nesting has
 <code>BellX1</code>, that looks good. But if the default flight model is loaded and the
@@ -1478,7 +1478,7 @@ one for the Bell-X1 is not, the interpreter is able to resolve the top-level
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ba086b1127614151b87586bd38a6d352">module BellX1
+<textarea class="clipboard-content" id="clipboard-3ea520f578dade34d3cdd3d1cd487414">module BellX1
   class Plane
     def flight_model
       @flight_model ||= BellX1::FlightModel.new
@@ -1486,7 +1486,7 @@ one for the Bell-X1 is not, the interpreter is able to resolve the top-level
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ba086b1127614151b87586bd38a6d352">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3ea520f578dade34d3cdd3d1cd487414">Copiar</button>
 </div>
 <p>Also, <code>require_dependency</code> is a solution:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">require_dependency</span> <span class="s1">'bell_x1/flight_model'</span>
@@ -1499,7 +1499,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5c705c36f5b495edaaba85aede7d0c23">require_dependency 'bell_x1/flight_model'
+<textarea class="clipboard-content" id="clipboard-f47867a5bcdf3a9709d7f0da0dd5e4ff">require_dependency 'bell_x1/flight_model'
 
 module BellX1
   class Plane
@@ -1509,29 +1509,29 @@ module BellX1
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5c705c36f5b495edaaba85aede7d0c23">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f47867a5bcdf3a9709d7f0da0dd5e4ff">Copiar</button>
 </div>
 <h5 id="when-constants-aren-t-missed-qualified-references"><a class="anchorlink" href="#when-constants-aren-t-missed-qualified-references">9.7.2 Qualified References</a></h5><div class="warning"><p>This gotcha is only possible in Ruby &lt; 2.5.</p></div><p>Given</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/hotel.rb</span>
 <span class="k">class</span> <span class="nc">Hotel</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9a623345939f701687e76f2310227d5b"># app/models/hotel.rb
+<textarea class="clipboard-content" id="clipboard-0357b3252c2bc9fbcc4c61e04bfbf495"># app/models/hotel.rb
 class Hotel
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9a623345939f701687e76f2310227d5b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0357b3252c2bc9fbcc4c61e04bfbf495">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/image.rb</span>
 <span class="k">class</span> <span class="nc">Image</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-41cc69449cd3507618ca24032f4d3a53"># app/models/image.rb
+<textarea class="clipboard-content" id="clipboard-91d4bd2431b545ba27a4593ecf46430a"># app/models/image.rb
 class Image
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-41cc69449cd3507618ca24032f4d3a53">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-91d4bd2431b545ba27a4593ecf46430a">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/hotel/image.rb</span>
@@ -1540,13 +1540,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-03ddcd790ff884a837e475b2887b60f2"># app/models/hotel/image.rb
+<textarea class="clipboard-content" id="clipboard-883a28f5d29f2809b5eb3c717c295e67"># app/models/hotel/image.rb
 class Hotel
   class Image &lt; Image
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-03ddcd790ff884a837e475b2887b60f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-883a28f5d29f2809b5eb3c717c295e67">Copiar</button>
 </div>
 <p>the expression <code>Hotel::Image</code> is ambiguous because it depends on the execution
 path.</p><p>As <a href="#resolution-algorithm-for-qualified-constants">we saw before</a>, Ruby looks
@@ -1556,27 +1556,27 @@ in <code>Hotel</code>, but it does in <code>Object</code>:</p><div class="code_c
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>runner <span class="s1">'Image; p Hotel::Image'</span> 2&gt;/dev/null
 <span class="gp">Image #</span><span class="w"> </span>NOT Hotel::Image!
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f19c311d13a67f91a8c65b3df3771eb0">bin/rails runner 'Image; p Hotel::Image' 2&gt;/dev/null
+<textarea class="clipboard-content" id="clipboard-d3096d712110be6f98c27acf7abbaba8">bin/rails runner 'Image; p Hotel::Image' 2&gt;/dev/null
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f19c311d13a67f91a8c65b3df3771eb0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d3096d712110be6f98c27acf7abbaba8">Copiar</button>
 </div>
 <p>The code evaluating <code>Hotel::Image</code> needs to make sure
 <code>app/models/hotel/image.rb</code> has been loaded, possibly with
 <code>require_dependency</code>.</p><p>In these cases the interpreter issues a warning though:</p><div class="code_container">
 <pre><code class="highlight plaintext">warning: toplevel constant Image referenced by Hotel::Image
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-daac25a0491ed6c97fe5eb9553901e30">warning: toplevel constant Image referenced by Hotel::Image
+<textarea class="clipboard-content" id="clipboard-f685b3b1110a9ba91be7302be7089445">warning: toplevel constant Image referenced by Hotel::Image
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-daac25a0491ed6c97fe5eb9553901e30">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f685b3b1110a9ba91be7302be7089445">Copiar</button>
 </div>
 <p>This surprising constant resolution can be observed with any qualifying class:</p><div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb(main):001:0&gt;</span><span class="w"> </span><span class="no">String</span><span class="o">::</span><span class="no">Array</span>
 <span class="go">(irb):1: warning: toplevel constant Array referenced by String::Array
 </span><span class="p">=&gt;</span> <span class="no">Array</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-54f4f0ddb0d68d8f0ac3d91e1fde331a">String::Array
+<textarea class="clipboard-content" id="clipboard-53f01256047bec25570ccc0ab1d7e0e1">String::Array
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-54f4f0ddb0d68d8f0ac3d91e1fde331a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-53f01256047bec25570ccc0ab1d7e0e1">Copiar</button>
 </div>
 <div class="warning"><p>To find this gotcha the qualifying namespace has to be a class,
 <code>Object</code> is not an ancestor of modules.</p></div><h4 id="autoloading-within-singleton-classes"><a class="anchorlink" href="#autoloading-within-singleton-classes">9.8 Autoloading within Singleton Classes</a></h4><p>Let's suppose we have these class definitions:</p><div class="code_container">
@@ -1586,13 +1586,13 @@ in <code>Hotel</code>, but it does in <code>Object</code>:</p><div class="code_c
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dc0f74fa9e33faee8f1b9e1b0d4fa91f"># app/models/hotel/services.rb
+<textarea class="clipboard-content" id="clipboard-d1cba81378fac8086d76acfc4875769d"># app/models/hotel/services.rb
 module Hotel
   class Services
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dc0f74fa9e33faee8f1b9e1b0d4fa91f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d1cba81378fac8086d76acfc4875769d">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/hotel/geo_location.rb</span>
@@ -1604,7 +1604,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eb9927f19509082a0f1915ce0b247c5a"># app/models/hotel/geo_location.rb
+<textarea class="clipboard-content" id="clipboard-1e36ae1900eec571861649146357e117"># app/models/hotel/geo_location.rb
 module Hotel
   class GeoLocation
     class &lt;&lt; self
@@ -1613,7 +1613,7 @@ module Hotel
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eb9927f19509082a0f1915ce0b247c5a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1e36ae1900eec571861649146357e117">Copiar</button>
 </div>
 <p>If <code>Hotel::Services</code> is known by the time <code>app/models/hotel/geo_location.rb</code>
 is being loaded, <code>Services</code> is resolved by Ruby because <code>Hotel</code> belongs to the
@@ -1629,7 +1629,7 @@ top-level namespace in that edge case.</p><p>An easy solution to this caveat is 
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-411e67c472cc42af66a4d4f275c92c2f">module Hotel
+<textarea class="clipboard-content" id="clipboard-8080d3006df2f59d11ebf1db1d134f9f">module Hotel
   class GeoLocation
     class &lt;&lt; self
       Hotel::Services
@@ -1637,7 +1637,7 @@ top-level namespace in that edge case.</p><p>An easy solution to this caveat is 
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-411e67c472cc42af66a4d4f275c92c2f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8080d3006df2f59d11ebf1db1d134f9f">Copiar</button>
 </div>
 <h4 id="autoloading-in-basicobject"><a class="anchorlink" href="#autoloading-in-basicobject">9.9 Autoloading in <code>BasicObject</code></a></h4><p>Direct descendants of <code>BasicObject</code> do not have <code>Object</code> among their ancestors
 and cannot resolve top-level constants:</p><div class="code_container">
@@ -1645,11 +1645,11 @@ and cannot resolve top-level constants:</p><div class="code_container">
   <span class="no">String</span> <span class="c1"># NameError: uninitialized constant C::String</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5b40a11622361dc144021dd31ab46863">class C &lt; BasicObject
+<textarea class="clipboard-content" id="clipboard-59aaf87c3abb0446d3484a25ef8516c5">class C &lt; BasicObject
   String # NameError: uninitialized constant C::String
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5b40a11622361dc144021dd31ab46863">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-59aaf87c3abb0446d3484a25ef8516c5">Copiar</button>
 </div>
 <p>When autoloading is involved that plot has a twist. Let's consider:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">C</span> <span class="o">&lt;</span> <span class="no">BasicObject</span>
@@ -1658,13 +1658,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6a8dfe86bbf531dfd5442259b407a4ef">class C &lt; BasicObject
+<textarea class="clipboard-content" id="clipboard-d766e5514143bbf9dd497492ead3534a">class C &lt; BasicObject
   def user
     User # WRONG
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6a8dfe86bbf531dfd5442259b407a4ef">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d766e5514143bbf9dd497492ead3534a">Copiar</button>
 </div>
 <p>Since Rails checks the top-level namespace <code>User</code> gets autoloaded just fine the
 first time the <code>user</code> method is invoked. You only get the exception if the
@@ -1674,11 +1674,11 @@ first time the <code>user</code> method is invoked. You only get the exception i
 <span class="n">c</span><span class="p">.</span><span class="nf">user</span> <span class="c1"># surprisingly fine, User</span>
 <span class="n">c</span><span class="p">.</span><span class="nf">user</span> <span class="c1"># NameError: uninitialized constant C::User</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-99c3b7b5b3653380337f438856444832">c = C.new
+<textarea class="clipboard-content" id="clipboard-68ee35e050a24a2714942be6a94da17d">c = C.new
 c.user # surprisingly fine, User
 c.user # NameError: uninitialized constant C::User
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-99c3b7b5b3653380337f438856444832">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-68ee35e050a24a2714942be6a94da17d">Copiar</button>
 </div>
 <p>because it detects that a parent namespace already has the constant (see <a href="#autoloading-algorithms-qualified-references">Qualified
 References</a>).</p><p>As with pure Ruby, within the body of a direct descendant of <code>BasicObject</code> use
@@ -1691,7 +1691,7 @@ always absolute constant paths:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bbaf6bd592a4cd56668ee57edb71e158">class C &lt; BasicObject
+<textarea class="clipboard-content" id="clipboard-ac489ac6604f7a4772a6f1dcd943c394">class C &lt; BasicObject
   ::String # RIGHT
 
   def user
@@ -1699,7 +1699,7 @@ always absolute constant paths:</p><div class="code_container">
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bbaf6bd592a4cd56668ee57edb71e158">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ac489ac6604f7a4772a6f1dcd943c394">Copiar</button>
 </div>
 <h4 id="autoloading-in-the-test-environment"><a class="anchorlink" href="#autoloading-in-the-test-environment">9.10 Autoloading in the Test Environment</a></h4><p>When configuring the <code>test</code> environment for autoloading you might consider multiple factors.</p><p>For example it might be worth running your tests with an identical setup to production (<code>config.eager_load = true</code>, <code>config.cache_classes = true</code>) in order to catch any problems before they hit production (this is compensation for the lack of dev-prod parity). However this will slow down the boot time for individual tests on a dev machine (and is not immediately compatible with spring see below). So one possibility is to do this on a
 <a href="https://en.wikipedia.org/wiki/Continuous_integration">CI</a> machine only (which should run without spring).</p><p>On a development machine you can then have your tests running with whatever is fastest (ideally <code>config.eager_load = false</code>).</p><p>With the <a href="https://github.com/rails/spring">Spring</a> pre-loader (included with new Rails apps), you ideally keep <code>config.eager_load = false</code> as per development. Sometimes you may end up with a hybrid configuration (<code>config.eager_load = true</code>, <code>config.cache_classes = true</code> AND <code>config.enable_dependency_loading = true</code>), see <a href="https://github.com/rails/spring/issues/519#issuecomment-348324369">spring issue</a>. However it might be simpler to keep the same configuration as development, and work out whatever it is that is causing autoloading to fail (perhaps by the results of your CI test results).</p><p>Occasionally you may need to explicitly eager_load by using <code>Rails
@@ -1707,24 +1707,24 @@ end
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Dependencies</span><span class="p">.</span><span class="nf">logger</span> <span class="o">=</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span>
 <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Dependencies</span><span class="p">.</span><span class="nf">verbose</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-454a0e7e428f8a4816a55244c391255c">ActiveSupport::Dependencies.logger = Rails.logger
+<textarea class="clipboard-content" id="clipboard-0aac98f5ccd32b0c7089ea7a2cba5af7">ActiveSupport::Dependencies.logger = Rails.logger
 ActiveSupport::Dependencies.verbose = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-454a0e7e428f8a4816a55244c391255c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0aac98f5ccd32b0c7089ea7a2cba5af7">Copiar</button>
 </div>
 <h4 id="where-is-a-given-autoload-triggered-questionmark"><a class="anchorlink" href="#where-is-a-given-autoload-triggered-questionmark">10.2 Where is a Given Autoload Triggered?</a></h4><p>If constant <code>Foo</code> is being autoloaded, and you'd like to know where is that autoload coming from, just throw</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">puts</span> <span class="nb">caller</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-26fec6de5c3249055cb9d681a1b48380">puts caller
+<textarea class="clipboard-content" id="clipboard-cd24f2c750cca7312df628c3ab32bc3b">puts caller
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26fec6de5c3249055cb9d681a1b48380">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cd24f2c750cca7312df628c3ab32bc3b">Copiar</button>
 </div>
 <p>at the top of <code>foo.rb</code> and inspect the printed stack trace.</p><h4 id="which-constants-have-been-autoloaded-questionmark"><a class="anchorlink" href="#which-constants-have-been-autoloaded-questionmark">10.3 Which Constants Have Been Autoloaded?</a></h4><p>At any given time,</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Dependencies</span><span class="p">.</span><span class="nf">autoloaded_constants</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a7578ff6476d7eb8fa4f3ebb736efcfb">ActiveSupport::Dependencies.autoloaded_constants
+<textarea class="clipboard-content" id="clipboard-333c43b525fa806e605e91e21b1a9d42">ActiveSupport::Dependencies.autoloaded_constants
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a7578ff6476d7eb8fa4f3ebb736efcfb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-333c43b525fa806e605e91e21b1a9d42">Copiar</button>
 </div>
 <p>has the collection of constants that have been autoloaded so far.</p>
 
