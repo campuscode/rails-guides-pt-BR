@@ -535,7 +535,7 @@ class ActiveSupport::TestCase
 end
 ```
 
-Aplicações Rails geradas com JRuby ou TruffleRuby irão utilizar incluir automaticamente a opção `with: :threads`.
+Aplicações Rails geradas com JRuby ou TruffleRuby irão incluir automaticamente a opção `with: :threads`.
 
 o número de *workers* passado para `parallelize` determina o número de *threads* que os testes irão utilizar.
 Voce pode querer paralelizar sua suíte de testes de maneira diferente de seu *CI*,
