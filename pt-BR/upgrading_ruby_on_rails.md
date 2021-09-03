@@ -71,14 +71,14 @@ A nova versão do Rails pode ter configurações padrão diferentes da versão a
 
 Para permitir que você atualize para novos padrões um a um, a tarefa de atualização cria um arquivo `config/initializers/new_framework_defaults.rb`. Uma vez que a aplicação esteja pronta para rodar com as novas configurações padrão, você pode remover este arquivo e trocar o valor de `config.load_defaults`.
 
-Upgrading from Rails 6.0 to Rails 6.1
+Atualizando do Rails 6.0 para o Rails 6.1
 -------------------------------------
 
-For more information on changes made to Rails 6.1 please see the [release notes](6_1_release_notes.html).
+Para mais informações sobre as mudanças feitas no Rails 6.1 consulte as [notas de lançamento](6_1_release_notes.html).
 
-### `Rails.application.config_for` return value no longer supports access with String keys.
+### `Rails.application.config_for` o valor de retorno não oferece mais suporte para acesso com chaves *String*.
 
-Given a configuration file like this:
+Dado um arquivo de configuração como este:
 
 ```yaml
 # config/example.yml
@@ -91,21 +91,21 @@ development:
 Rails.application.config_for(:example).options
 ```
 
-This used to return a hash on which you could access values with String keys. That was deprecated in 6.0, and now doesn't work anymore.
+Isso costumava retornar um *hash* no qual você podia acessar valores com chaves *String*. Isso foi descontinuado no 6.0 e agora não funciona mais.
 
-You can call `with_indifferent_access` on the return value of `config_for` if you still want to access values with String keys, e.g.:
+Você pode chamar `with_indifferent_access` no valor de retorno de` config_for` se ainda quiser acessar valores com chaves *String*, por exemplo:
 
 ```ruby
 Rails.application.config_for(:example).with_indifferent_access.dig('options', 'key')
 ```
 
-### Response's Content-Type when using `respond_to#any`
+### Respostas do tipo de conteúdo ao utilizar `respond_to#any`
 
-The Content-Type header returned in the response can differ from what Rails 6.0 returned,
-more specifically if your application uses `respond_to { |format| format.any }`.
-The Content-Type will now be based on the given block rather than the request's format.
+O cabeçalho (*header*) do tipo de conteúdo (*Content-Type*) retornado na resposta pode ser diferente do que o Rails 6.0 retornou,
+mais especificamente se sua aplicação usa o formato `respond_to { |format| format.any }`.
+O tipo de conteúdo será baseado no bloco fornecido e não no formato da solicitação.
 
-Example:
+Exemplo:
 
 ```ruby
 def my_action
@@ -119,45 +119,45 @@ end
 get('my_action.csv')
 ```
 
-Previous behaviour was returning a `text/csv` response's Content-Type which is inaccurate since a JSON response is being rendered.
-Current behaviour correctly returns a `application/json` response's Content-Type.
+O comportamento anterior era retornar um tipo de conteúdo de resposta `text/csv` que é impreciso uma vez que uma resposta JSON está sendo renderizada.
+O comportamento atual retorna corretamente o tipo de conteúdo de uma resposta `application/json`.
 
-If your application relies on the previous incorrect behaviour, you are encouraged to specify
-which formats your action accepts, i.e.
+Se sua aplicação depende do comportamento incorreto anterior, você é incentivado a especificar
+quais formatos sua ação aceita, ou seja.
 
 ```ruby
 format.any(:xml, :json) { render request.format.to_sym => @people }
 ```
 
-### `ActiveSupport::Callbacks#halted_callback_hook` now receive a second argument
+### `ActiveSupport::Callbacks#halted_callback_hook` agora recebe um segundo argumento
 
-Active Support allows you to override the `halted_callback_hook` whenever a callback
-halts the chain. This method now receive a second argument which is the name of the callback being halted.
-If you have classes that override this method, make sure it accepts two arguments. Note that this is a breaking
-change without a prior deprecation cycle (for performance reasons).
+*Active Support* permite que você substitua o `halted_callback_hook` sempre que um retorno de chamada
+pare a sequência. Este método agora recebe um segundo argumento que é o nome do retorno de chamada que está sendo interrompido.
+Se você tiver classes que substituem esse método, certifique-se de que ele aceite dois argumentos. Observe que isso é uma mudança
+significativa sem um ciclo de depreciação anterior (por motivos de desempenho).
 
-Example:
+Exemplo:
 
 ```ruby
 class Book < ApplicationRecord
   before_save { throw(:abort) }
   before_create { throw(:abort) }
 
-  def halted_callback_hook(filter, callback_name) # => This method now accepts 2 arguments instead of 1
+  def halted_callback_hook(filter, callback_name) # => Este método agora aceita 2 argumentos em vez de 1
     Rails.logger.info("Book couldn't be #{callback_name}d")
   end
 end
 ```
 
-### The `helper` class method in controllers uses `String#constantize`
+### O método de classe `helper` nos *controllers* usa `String#constantize`
 
-Conceptually, before Rails 6.1
+Conceitualmente antes do Rails 6.1
 
 ```ruby
 helper "foo/bar"
 ```
 
-resulted in
+resultou em
 
 ```ruby
 require_dependency "foo/bar_helper"
@@ -165,26 +165,26 @@ module_name = "foo/bar_helper".camelize
 module_name.constantize
 ```
 
-Now it does this instead:
+Agora ele faz isso:
 
 ```ruby
 prefix = "foo/bar".camelize
 "#{prefix}Helper".constantize
 ```
 
-This change is backwards compatible for the majority of applications, in which case you do not need to do anything.
+Essa mudança é compatível com as versões anteriores para a maioria das aplicações, nesse caso, você não precisa fazer nada.
 
-Technically, however, controllers could configure `helpers_path` to point to a directory in `$LOAD_PATH` that was not in the autoload paths. That use case is no longer supported out of the box. If the helper module is not autoloadable, the application is responsible for loading it before calling `helper`.
+Tecnicamente, no entanto, os controllers podem configurar `helpers_path` para apontar para um diretório em `$LOAD_PATH` que não estava nos caminhos de carregamento automático. Esse caso de uso não é mais compatível com o uso imediato. Se o módulo auxiliar não for auto-carregável, a aplicação é responsável por carregá-lo antes de chamar o `helper`.
 
-### Redirection to HTTPS from HTTP will now use the 308 HTTP status code
+### Redirecionamento para HTTPS vindo de HTTP agora usará o código de status 308 HTTP
 
-The default HTTP status code used in `ActionDispatch::SSL` when redirecting non-GET/HEAD requests from HTTP to HTTPS has been changed to `308` as defined in https://tools.ietf.org/html/rfc7538.
+O código de status HTTP padrão usado em `ActionDispatch::SSL` ao redirecionar solicitações não GET/HEAD de HTTP para HTTPS foi alterado para `308` conforme definido em https://tools.ietf.org/html/rfc7538.
 
-### Active Storage now requires Image Processing
+### Active Storage agora requer Processamento de Imagem
 
-When processing variants in Active Storage, it's now required to have the [image_processing gem](https://github.com/janko-m/image_processing) bundled instead of directly using `mini_magick`. Image Processing is configured by default to use `mini_magick` behind the scenes, so the easiest way to upgrade is by replacing the `mini_magick` gem for the `image_processing` gem and making sure to remove the explicit usage of `combine_options` since it's no longer needed.
+Ao processar variantes no Active Storage, agora é necessário ter a *gem* [image_processing](https://github.com/janko-m/image_processing) empacotada em vez de usar diretamente `mini_magick`. O processamento de imagem é configurado por padrão para usar `mini_magick` nos bastidores, então a maneira mais fácil de atualizar é substituindo a gem `mini_magick` pela gem `image_processing` e certificando-se de remover o uso explícito de `combine_options`, uma vez que não é mais necessário.
 
-For readability, you may wish to change raw `resize` calls to `image_processing` macros. For example, instead of:
+Para facilitar a leitura, você pode desejar alterar as chamadas `resize` brutas para macros `image_processing`. Por exemplo, em vez de:
 
 ```ruby
 video.preview(resize: "100x100")
@@ -192,7 +192,7 @@ video.preview(resize: "100x100>")
 video.preview(resize: "100x100^")
 ```
 
-you can respectively do:
+você pode fazer respectivamente:
 
 ```ruby
 video.preview(resize_to_fit: [100, 100])
