@@ -1262,8 +1262,8 @@ Isso produz:
 
 ```sql
 SELECT books.* FROM books
-  INNER JOIN authors ON authors.id = books.author_id
   INNER JOIN reviews ON reviews.book_id = books.id
+  INNER JOIN customers ON customers.id = reviews.customer_id
 ```
 
 Ou, em Português: "retorne todos os livros que o seu autor tem no mínimo uma avalição". Observe novamente que livros com múltiplas avalições aparecerão múltiplas vezes.
