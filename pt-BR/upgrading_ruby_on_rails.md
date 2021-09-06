@@ -219,12 +219,12 @@ gem "webpacker"
 $ bin/rails webpacker:install
 ```
 
-### Force SSL
+### Forçar SSL
 
-The `force_ssl` method on controllers has been deprecated and will be removed in
-Rails 6.1. You are encouraged to enable `config.force_ssl` to enforce HTTPS
-connections throughout your application. If you need to exempt certain endpoints
-from redirection, you can use `config.ssl_options` to configure that behavior.
+O método `force_ssl` nos *controllers* foi descontinuado e será removido no
+Rails 6.1. Você é encorajado a habilitar `config.force_ssl` para impor conexões
+HTTPS ao longo de sua aplicação. Se você precisar isentar certos *endpoints*
+do redirecionamento, você pode usar `config.ssl_options` para configurar esse comportamento.
 
 ### Purpose and expiry metadata is now embedded inside signed and encrypted cookies for increased security
 
