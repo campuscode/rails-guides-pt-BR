@@ -238,11 +238,11 @@ Esses novos metadados incorporados tornam esses *cookies* incompatíveis com ver
 Se você deseja que seus *cookies* sejam lidos pelo Rails 5.2 e anteriores, ou ainda está validando seu *deploy* do 6.0 e deseja ser capaz de reverter (*rollback*)
 `Rails.application.config.action_dispatch.use_cookies_with_metadata` para `false`.
 
-### All npm packages have been moved to the `@rails` scope
+### Todos os pacotes npm foram movidos para o escopo `@rails`
 
-If you were previously loading any of the `actioncable`, `activestorage`,
-or `rails-ujs` packages through npm/yarn, you must update the names of these
-dependencies before you can upgrade them to `6.0.0`:
+Se você estava anteriormente carregando qualquer um dos pacotes `actioncable`, `activestorage`,
+ou `rails-ujs` através de npm/yarn, você deve atualizar os nomes destas
+dependências antes de atualizá-los para o `6.0.0`:
 
 ```
 actioncable   → @rails/actioncable
