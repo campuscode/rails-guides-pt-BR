@@ -203,13 +203,13 @@ video.preview(resize_to_fill: [100, 100])
 Atualizando do Rails 5.2 para o Rails 6.0
 -------------------------------------
 
-For more information on changes made to Rails 6.0 please see the [release notes](6_0_release_notes.html).
+Para mais informações sobre as mudanças feitas no Rails 6.0 consulte as [notas de lançamento](6_0_release_notes.html).
 
-### Using Webpacker
+### Usando Webpacker
 
 [Webpacker](https://github.com/rails/webpacker)
-is the default JavaScript compiler for Rails 6. But if you are upgrading the app, it is not activated by default.
-If you want to use Webpacker, then include it in your Gemfile and install it:
+é o compilador *JavaScript* padrão para Rails 6. Mas se você estiver atualizando a aplicação, ele não é ativado por padrão.
+Se você quiser usar o *Webpacker*, adicione ele em seu *Gemfile* e instale:
 
 ```ruby
 gem "webpacker"
