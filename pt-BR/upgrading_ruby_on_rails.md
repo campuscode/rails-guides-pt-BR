@@ -226,18 +226,17 @@ Rails 6.1. Você é encorajado a habilitar `config.force_ssl` para impor conexõ
 HTTPS ao longo de sua aplicação. Se você precisar isentar certos *endpoints*
 do redirecionamento, você pode usar `config.ssl_options` para configurar esse comportamento.
 
-### Purpose and expiry metadata is now embedded inside signed and encrypted cookies for increased security
+### Propósito (*Purpose*) e metadados de expiração agora estão incorporados em cookies assinados e criptografados para maior segurança
 
-To improve security, Rails embeds the purpose and expiry metadata inside encrypted or signed cookies value.
+Para melhorar a segurança, o Rails incorpora os metadados de propósito e expiração dentro do valor de cookies criptografados ou assinados.
 
-Rails can then thwart attacks that attempt to copy the signed/encrypted value
-of a cookie and use it as the value of another cookie.
+Rails pode então impedir ataques que tentam copiar o valor assinado/criptografado
+de um *cookie* e usá-lo como o valor de outro *cookie*.
 
-This new embed metadata make those cookies incompatible with versions of Rails older than 6.0.
+Esses novos metadados incorporados tornam esses *cookies* incompatíveis com versões do Rails anteriores a 6.0.
 
-If you require your cookies to be read by Rails 5.2 and older, or you are still validating your 6.0 deploy and want
-to be able to rollback set
-`Rails.application.config.action_dispatch.use_cookies_with_metadata` to `false`.
+Se você deseja que seus *cookies* sejam lidos pelo Rails 5.2 e anteriores, ou ainda está validando seu *deploy* do 6.0 e deseja ser capaz de reverter (*rollback*)
+`Rails.application.config.action_dispatch.use_cookies_with_metadata` para `false`.
 
 ### All npm packages have been moved to the `@rails` scope
 
