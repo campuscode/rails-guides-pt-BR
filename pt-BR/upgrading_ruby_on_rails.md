@@ -250,18 +250,18 @@ activestorage → @rails/activestorage
 rails-ujs     → @rails/ujs
 ```
 
-### Action Cable JavaScript API Changes
+### Mudanças na API do *Action Cable JavaScript*
 
-The Action Cable JavaScript package has been converted from CoffeeScript
-to ES2015, and we now publish the source code in the npm distribution.
+O pacote *Action Cable JavaScript* foi convertido do *CoffeeScript*
+para *ES2015*, e agora publicamos o código-fonte via distribuição pelo npm.
 
-This release includes some breaking changes to optional parts of the
-Action Cable JavaScript API:
+Esta versão inclui algumas mudanças importantes para partes opcionais da
+*API JavaScript Action Cable*:
 
-- Configuration of the WebSocket adapter and logger adapter have been moved
-  from properties of `ActionCable` to properties of `ActionCable.adapters`.
-  If you are configuring these adapters you will need to make
-  these changes:
+- A configuração do adaptador *WebSocket* e do adaptador *logger* foi movida
+  das propriedades de `ActionCable` para as propriedades de `ActionCable.adapters`.
+  Se você estiver configurando esses adaptadores, você precisará fazer
+  estas alterações:
 
     ```diff
     -    ActionCable.WebSocket = MyWebSocket
@@ -273,10 +273,10 @@ Action Cable JavaScript API:
     +    ActionCable.adapters.logger = myLogger
     ```
 
-- The `ActionCable.startDebugging()` and `ActionCable.stopDebugging()`
-  methods have been removed and replaced with the property
-  `ActionCable.logger.enabled`. If you are using these methods you
-  will need to make these changes:
+- Os métodos `ActionCable.startDebugging()` e `ActionCable.stopDebugging()`
+  foram movidos e substituídos pela propriedade
+  `ActionCable.logger.enabled`. Se você estiver usando esse métodos, você
+  precisará fazer estas alterações:
 
     ```diff
     -    ActionCable.startDebugging()
