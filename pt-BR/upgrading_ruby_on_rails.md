@@ -288,21 +288,21 @@ Esta versão inclui algumas mudanças importantes para partes opcionais da
     +    ActionCable.logger.enabled = false
     ```
 
-### `ActionDispatch::Response#content_type` now returns the Content-Type header without modification
+### `ActionDispatch::Response#content_type` agora retorna o cabeçalho (*header*) do tipo de conteúdo (*Content-Type*) sem modificação
 
-Previously, the return value of `ActionDispatch::Response#content_type` did NOT contain the charset part.
-This behavior has changed to include the previously omitted charset part as well.
+Anteriormente, o valor de retorno de `ActionDispatch::Response#content_type` NÃO continha a parte do conjunto de caracteres.
+Este comportamento foi alterado para incluir também a parte do conjunto de caracteres omitida anteriormente.
 
-If you want just the MIME type, please use `ActionDispatch::Response#media_type` instead.
+Se você quiser apenas o tipo *MIME*, use `ActionDispatch::Response#media_type` em seu lugar.
 
-Before:
+Antes:
 
 ```ruby
 resp = ActionDispatch::Response.new(200, "Content-Type" => "text/csv; header=present; charset=utf-16")
 resp.content_type #=> "text/csv; header=present"
 ```
 
-After:
+Depois:
 
 ```ruby
 resp = ActionDispatch::Response.new(200, "Content-Type" => "text/csv; header=present; charset=utf-16")
@@ -310,9 +310,9 @@ resp.content_type #=> "text/csv; header=present; charset=utf-16"
 resp.media_type   #=> "text/csv"
 ```
 
-### Autoloading
+### Carregamento Automático
 
-The default configuration for Rails 6
+A configuração padrão para Rails 6
 
 ```ruby
 # config/application.rb
@@ -320,19 +320,19 @@ The default configuration for Rails 6
 config.load_defaults 6.0
 ```
 
-enables `zeitwerk` autoloading mode on CRuby. In that mode, autoloading, reloading, and eager loading are managed by [Zeitwerk](https://github.com/fxn/zeitwerk).
+ativa o modo de carregamento automático `zeitwerk` no CRuby. Nesse modo, o carregamento automático, o recarregamento e o carregamento antecipado são gerenciados pelo [Zeitwerk](https://github.com/fxn/zeitwerk).
 
-#### Public API
+#### API Pública
 
-In general, applications do not need to use the API of Zeitwerk directly. Rails sets things up according to the existing contract: `config.autoload_paths`, `config.cache_classes`, etc.
+Em geral, as aplicações não precisam usar a API do *Zeitwerk* diretamente. Rails configura as coisas de acordo com o contrato existente: `config.autoload_paths`,`config.cache_classes`, etc.
 
-While applications should stick to that interface, the actual Zeitwerk loader object can be accessed as
+Embora as aplicações devam seguir essa interface, o objeto do carregador Zeitwerk atual pode ser acessado como
 
 ```ruby
 Rails.autoloaders.main
 ```
 
-That may be handy if you need to preload STIs or configure a custom inflector, for example.
+Isso pode ser útil se você precisar pré-carregar STIs ou configurar um *inflector* customizado, por exemplo.
 
 #### Project Structure
 
