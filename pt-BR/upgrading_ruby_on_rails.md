@@ -334,13 +334,13 @@ Rails.autoloaders.main
 
 Isso pode ser útil se você precisar pré-carregar STIs ou configurar um *inflector* customizado, por exemplo.
 
-#### Project Structure
+#### Estrutura do Projeto
 
-If the application being upgraded autoloads correctly, the project structure should be already mostly compatible.
+Se a aplicação que está sendo atualizada for carregada automaticamente de forma correta, a estrutura do projeto já deve ser compatível.
 
-However, `classic` mode infers file names from missing constant names (`underscore`), whereas `zeitwerk` mode infers constant names from file names (`camelize`). These helpers are not always inverse of each other, in particular if acronyms are involved. For instance, `"FOO".underscore` is `"foo"`, but `"foo".camelize` is `"Foo"`, not `"FOO"`.
+No entanto, o modo `clássico` entende nomes de arquivos com (`underscore`), enquanto o modo `zeitwerk` entende nomes de arquivos (`camelize`). Esses *helpers* nem sempre são inversos entre si, especialmente se houver acrônimos envolvidos. Por exemplo, `"FOO".underscore` é `"foo"`, mas `"foo".camelize` é `"Foo"`, não `"FOO "`.
 
-Compatibility can be checked with the `zeitwerk:check` task:
+A compatibilidade pode ser verificada com a tarefa `zeitwerk:check`:
 
 ```bash
 $ bin/rails zeitwerk:check
@@ -348,11 +348,11 @@ Hold on, I am eager loading the application.
 All is good!
 ```
 
-#### require_dependency
+#### *require_dependency*
 
-All known use cases of `require_dependency` have been eliminated, you should grep the project and delete them.
+Todos os casos de uso conhecidos de `require_dependency` foram eliminados, você deve executar o *grep* no projeto e excluí-los.
 
-If your application has STIs, please check their section in the guide [Autoloading and Reloading Constants (Zeitwerk Mode)](autoloading_and_reloading_constants.html#single-table-inheritance).
+Se sua aplicação tiver STIs, verifique a seção no guia [Carregamento Automático e Recarregando Constantes (Modo Zeitwerk)](autoloading_and_reloading_constants.html#single-table-inheritance).
 
 #### Qualified names in class and module definitions
 
