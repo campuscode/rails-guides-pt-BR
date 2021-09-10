@@ -536,11 +536,11 @@ Para corrigir isso, basta remover os curingas (*wildcards*):
 config.autoload_paths << "#{config.root}/lib"
 ```
 
-#### Eager loading and autoloading are consistent
+#### Carregamento rápido (*Eager loading*) e carregamento automático são consistentes
 
-In `classic` mode, if `app/models/foo.rb` defines `Bar`, you won't be able to autoload that file, but eager loading will work because it loads files recursively blindly. This can be a source of errors if you test things first eager loading, execution may fail later autoloading.
+No modo `clássico`, se `app/models/foo.rb` define `Bar`, você não será capaz de carregar automaticamente aquele arquivo, mas o carregamento rápido funcionará porque carrega os arquivos recursivamente às cegas. Isso pode ser uma fonte de erros se você testar as coisas primeiro com carregamento rápido; a execução pode falhar no carregamento automático posterior.
 
-In `zeitwerk` mode both loading modes are consistent, they fail and err in the same files.
+No modo `zeitwerk` ambos os modos de carregamento são consistentes, eles falham e erram nos mesmos arquivos.
 
 #### How to Use the Classic Autoloader in Rails 6
 
