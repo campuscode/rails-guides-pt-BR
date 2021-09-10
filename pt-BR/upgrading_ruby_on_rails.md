@@ -514,11 +514,11 @@ Isso faz sentido na maioria das aplicações, já que você nunca deve requerer 
 
 Ao optar pela exclusão, você otimiza as pesquisas ao `$LOAD_PATH` (menos diretórios para verificar) e economiza o trabalho do *Bootsnap* e o consumo de memória, já que não é necessário construir um índice para esses diretórios.
 
-#### Thread-safety
+#### *Thread-safety*
 
-In classic mode, constant autoloading is not thread-safe, though Rails has locks in place for example to make web requests thread-safe when autoloading is enabled, as it is common in the development environment.
+No modo clássico, o carregamento automático constante não é *thread-safe*, embora o Rails tenha travas, por exemplo, para tornar as solicitações da web *thread-safe* quando o carregamento automático está habilitado, como é comum no ambiente de desenvolvimento.
 
-Constant autoloading is thread-safe in `zeitwerk` mode. For example, you can now autoload in multi-threaded scripts executed by the `runner` command.
+O carregamento automático constante é *thread-safe* no modo `zeitwerk`. Por exemplo, agora você pode carregar automaticamente em scripts *multi-threaded* executados pelo comando `runner`.
 
 #### Globs in config.autoload_paths
 
