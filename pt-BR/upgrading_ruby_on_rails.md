@@ -354,9 +354,9 @@ Todos os casos de uso conhecidos de `require_dependency` foram eliminados, você
 
 Se sua aplicação tiver STIs, verifique a seção no guia [Carregamento Automático e Recarregando Constantes (Modo Zeitwerk)](autoloading_and_reloading_constants.html#single-table-inheritance).
 
-#### Qualified names in class and module definitions
+#### Nomes qualificados nas definições de classe e módulo
 
-You can now robustly use constant paths in class and module definitions:
+Agora você pode usar *constant paths* de forma robusta nas definições de classe e módulo:
 
 ```ruby
 # Autoloading in this class' body matches Ruby semantics now.
@@ -365,7 +365,7 @@ class Admin::UsersController < ApplicationController
 end
 ```
 
-A gotcha to be aware of is that, depending on the order of execution, the classic autoloader could sometimes be able to autoload `Foo::Wadus` in
+Um problema a ter em conta é que, dependendo da ordem de execução, o auto carregamento clássico pode às vezes ser capaz de carregar automaticamente `Foo::Wadus` em
 
 ```ruby
 class Foo::Bar
@@ -373,7 +373,7 @@ class Foo::Bar
 end
 ```
 
-That does not match Ruby semantics because `Foo` is not in the nesting, and won't work at all in `zeitwerk` mode. If you find such corner case you can use the qualified name `Foo::Wadus`:
+Isso não corresponde à semântica Ruby porque `Foo` não está no aninhamento e não funcionará no modo `zeitwerk`. Se você encontrar esse caso, você pode usar o nome qualificado `Foo::Wadus`:
 
 ```ruby
 class Foo::Bar
@@ -381,7 +381,7 @@ class Foo::Bar
 end
 ```
 
-or add `Foo` to the nesting:
+ou adicione `Foo` ao aninhamento:
 
 ```ruby
 module Foo
