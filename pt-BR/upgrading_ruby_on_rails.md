@@ -449,9 +449,9 @@ não funcionará, objetos filhos como `Hotel::Pricing` não serão encontrados.
 
 Essa restrição se aplica apenas a *namespaces* explícitos. Classes e módulos que não definem um *namespace* podem ser definidos usando esses idiomas.
 
-#### One file, one constant (at the same top-level)
+#### Um arquivo, uma constante (no mesmo nível superior)
 
-In `classic` mode you could technically define several constants at the same top-level and have them all reloaded. For example, given
+No modo `clssico`, você pode definir tecnicamente várias constantes no mesmo nível superior e ter todas elas recarregadas. Por exemplo, dado
 
 ```ruby
 # app/models/foo.rb
@@ -463,9 +463,9 @@ class Bar
 end
 ```
 
-while `Bar` could not be autoloaded, autoloading `Foo` would mark `Bar` as autoloaded too. This is not the case in `zeitwerk` mode, you need to move `Bar` to its own file `bar.rb`. One file, one constant.
+enquanto `Bar` não pôde ser carregado automaticamente, o carregamento automático de `Foo` marcaria `Bar` como carregado automaticamente também. Este não é o caso no modo `zeitwerk`, você precisa mover `Bar` para seu próprio arquivo `bar.rb`. Um arquivo, uma constante.
 
-This affects only to constants at the same top-level as in the example above. Inner classes and modules are fine. For example, consider
+Isso afeta apenas as constantes no mesmo nível superior do exemplo acima. Classes e módulos internos são adequados. Por exemplo, considere
 
 ```ruby
 # app/models/foo.rb
@@ -476,7 +476,7 @@ class Foo
 end
 ```
 
-If the application reloads `Foo`, it will reload `Foo::InnerClass` too.
+Se a aplicação recarregar `Foo`, ela irá recarregar `Foo::InnerClass` também.
 
 #### Spring and the `test` Environment
 
