@@ -494,11 +494,11 @@ Caso contrário, você obterá este erro:
 reloading is disabled because config.cache_classes is true
 ```
 
-#### Bootsnap
+#### *Bootsnap*
 
-Bootsnap should be at least version 1.4.2.
+O *Bootsnap* deve ter pelo menos a versão 1.4.2.
 
-In addition to that, Bootsnap needs to disable the iseq cache due to a bug in the interpreter if running Ruby 2.5. Please make sure to depend on at least Bootsnap 1.4.4 in that case.
+Além disso, o *Bootsnap* precisa desabilitar o cache *iseq* devido a um bug no interpretador se estiver executando o Ruby 2.5. Certifique-se de depender de pelo menos Bootsnap 1.4.4 nesse caso.
 
 #### `config.add_autoload_paths_to_load_path`
 
