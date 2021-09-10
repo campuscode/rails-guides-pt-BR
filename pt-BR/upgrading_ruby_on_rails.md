@@ -415,39 +415,39 @@ Se quiser manter essa estrutura, você precisará excluir o subdiretório dos ca
 ActiveSupport::Dependencies.autoload_paths.delete("#{Rails.root}/app/api")
 ```
 
-#### Autoloaded Constants and Explicit Namespaces
+#### Constantes carregadas automaticamente e *namespaces* explícitos
 
-If a namespace is defined in a file, as `Hotel` is here:
+Se um *namespace* for definido em um arquivo, como `Hotel` está aqui:
 
 ```
 app/models/hotel.rb         # Defines Hotel.
 app/models/hotel/pricing.rb # Defines Hotel::Pricing.
 ```
 
-the `Hotel` constant has to be set using the `class` or `module` keywords. For example:
+a constante `Hotel` deve ser definida usando as palavras-chave `class` ou `module`. Por exemplo:
 
 ```ruby
 class Hotel
 end
 ```
 
-is good.
+é bom.
 
-Alternatives like
+Alternativas como
 
 ```ruby
 Hotel = Class.new
 ```
 
-or
+ou
 
 ```ruby
 Hotel = Struct.new
 ```
 
-won't work, child objects like `Hotel::Pricing` won't be found.
+não funcionará, objetos filhos como `Hotel::Pricing` não serão encontrados.
 
-This restriction only applies to explicit namespaces. Classes and modules not defining a namespace can be defined using those idioms.
+Essa restrição se aplica apenas a *namespaces* explícitos. Classes e módulos que não definem um *namespace* podem ser definidos usando esses idiomas.
 
 #### One file, one constant (at the same top-level)
 
