@@ -391,7 +391,7 @@ module Foo
 end
 ```
 
-#### Preocupações
+#### Preocupações (*Concerns*)
 
 Você pode carregar automaticamente e antecipadamente a partir de uma estrutura padrão como
 
@@ -404,11 +404,12 @@ Nesse caso, `app/models/concerns` é considerado um diretório raiz (porque pert
 
 O *namespace* `Concerns::` funcionou com o carregamento automático clássico como um efeito colateral da implementação, mas não foi realmente um comportamento pretendido. Uma aplicação que usa `Concerns::` precisa renomear essas classes e módulos para poder rodar no modo `zeitwerk`.
 
-#### Having `app` in the autoload paths
+#### Tendo `app` nos caminhos de carregamento automático
 
 Some projects want something like `app/api/base.rb` to define `API::Base`, and add `app` to the autoload paths to accomplish that in `classic` mode. Since Rails adds all subdirectories of `app` to the autoload paths automatically, we have another situation in which there are nested root directories, so that setup no longer works. Similar principle we explained above with `concerns`.
+Alguns projetos querem algo como `app/api/base.rb` para definir `API::Base`, e adicionar `app` aos caminhos de carregamento automático para fazer isso no modo `clássico`. Já que Rails adiciona todos os subdiretórios de `app` aos caminhos de carregamento automático automaticamente, temos outra situação em que há diretórios raiz aninhados, de forma que a configuração não funciona mais. Princípio semelhante que explicamos acima com `concerns`.
 
-If you want to keep that structure, you'll need to delete the subdirectory from the autoload paths in an initializer:
+Se quiser manter essa estrutura, você precisará excluir o subdiretório dos caminhos de carregamento automático em um inicializador:
 
 ```ruby
 ActiveSupport::Dependencies.autoload_paths.delete("#{Rails.root}/app/api")
