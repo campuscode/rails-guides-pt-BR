@@ -391,18 +391,18 @@ module Foo
 end
 ```
 
-#### Concerns
+#### Preocupações
 
-You can autoload and eager load from a standard structure like
+Você pode carregar automaticamente e antecipadamente a partir de uma estrutura padrão como
 
 ```
 app/models
 app/models/concerns
 ```
 
-In that case, `app/models/concerns` is assumed to be a root directory (because it belongs to the autoload paths), and it is ignored as namespace. So, `app/models/concerns/foo.rb` should define `Foo`, not `Concerns::Foo`.
+Nesse caso, `app/models/concerns` é considerado um diretório raiz (porque pertence aos caminhos de carregamento automático) e é ignorado como *namespace*. Portanto, `app/models/concern/foo.rb` deve definir `Foo`, não `Concerns::Foo`.
 
-The `Concerns::` namespace worked with the classic autoloader as a side-effect of the implementation, but it was not really an intended behavior. An application using `Concerns::` needs to rename those classes and modules to be able to run in `zeitwerk` mode.
+O *namespace* `Concerns::` funcionou com o carregamento automático clássico como um efeito colateral da implementação, mas não foi realmente um comportamento pretendido. Uma aplicação que usa `Concerns::` precisa renomear essas classes e módulos para poder rodar no modo `zeitwerk`.
 
 #### Having `app` in the autoload paths
 
