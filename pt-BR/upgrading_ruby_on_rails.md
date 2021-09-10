@@ -502,17 +502,17 @@ Além disso, o *Bootsnap* precisa desabilitar o cache *iseq* devido a um bug no 
 
 #### `config.add_autoload_paths_to_load_path`
 
-The new configuration point
+O novo ponto de configuração
 
 ```ruby
 config.add_autoload_paths_to_load_path
 ```
 
-is `true` by default for backwards compatibility, but allows you to opt-out from adding the autoload paths to `$LOAD_PATH`.
+é `true` por padrão para compatibilidade com versões anteriores, mas permite que você opte por não adicionar os caminhos de carregamento automático a `$LOAD_PATH`.
 
-This makes sense in most applications, since you never should require a file in `app/models`, for example, and Zeitwerk only uses absolute file names internally.
+Isso faz sentido na maioria das aplicações, já que você nunca deve requerer um arquivo em `app/models`, por exemplo, e o *Zeitwerk* só usa nomes de arquivo absolutos internamente.
 
-By opting-out you optimize `$LOAD_PATH` lookups (less directories to check), and save Bootsnap work and memory consumption, since it does not need to build an index for these directories.
+Ao optar pela exclusão, você otimiza as pesquisas ao `$LOAD_PATH` (menos diretórios para verificar) e economiza o trabalho do *Bootsnap* e o consumo de memória, já que não é necessário construir um índice para esses diretórios.
 
 #### Thread-safety
 
