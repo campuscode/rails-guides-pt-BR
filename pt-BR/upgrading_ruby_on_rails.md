@@ -599,7 +599,7 @@ user.highlights.first.filename # => "funky.jpg"
 user.highlights.second.filename # => "town.jpg"
 ```
 
-As aplicações existentes podem aceitar este novo comportamento definindo `config.active_storage.replace_on_assign_to_many` como` true`. O comportamento antigo será descontinuado no Rails 6.1 e removido em uma versão subsequente.
+As aplicações existentes podem aceitar este novo comportamento definindo `config.active_storage.replace_on_assign_to_many` como `true`. O comportamento antigo será descontinuado no Rails 6.1 e removido em uma versão subsequente.
 
 Upgrading from Rails 5.1 to Rails 5.2
 -------------------------------------
