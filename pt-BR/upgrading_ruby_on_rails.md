@@ -520,17 +520,17 @@ No modo clássico, o carregamento automático constante não é *thread-safe*, e
 
 O carregamento automático constante é *thread-safe* no modo `zeitwerk`. Por exemplo, agora você pode carregar automaticamente em scripts *multi-threaded* executados pelo comando `runner`.
 
-#### Globs in config.autoload_paths
+#### *Globs* em *config.autoload_paths*
 
-Beware of configurations like
+Cuidado com configurações como
 
 ```ruby
 config.autoload_paths += Dir["#{config.root}/lib/**/"]
 ```
 
-Every element of `config.autoload_paths` should represent the top-level namespace (`Object`) and they cannot be nested in consequence (with the exception of `concerns` directories explained above).
+Cada elemento de `config.autoload_paths` deve representar o *namespace* de nível superior (`Object`) e eles não podem ser aninhados em conseqüência (com exceção dos diretórios `concerns` explicados acima).
 
-To fix this, just remove the wildcards:
+Para corrigir isso, basta remover os curingas (*wildcards*):
 
 ```ruby
 config.autoload_paths << "#{config.root}/lib"
