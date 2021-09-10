@@ -478,9 +478,9 @@ end
 
 Se a aplicação recarregar `Foo`, ela irá recarregar `Foo::InnerClass` também.
 
-#### Spring and the `test` Environment
+#### *Spring* e o ambiente `test`
 
-Spring reloads the application code if something changes. In the `test` environment you need to enable reloading for that to work:
+*Spring* recarrega o código da aplicação se algo mudar. No ambiente `test`, você precisa habilitar o recarregamento para que funcione:
 
 ```ruby
 # config/environments/test.rb
@@ -488,7 +488,7 @@ Spring reloads the application code if something changes. In the `test` environm
 config.cache_classes = false
 ```
 
-Otherwise you'll get this error:
+Caso contrário, você obterá este erro:
 
 ```
 reloading is disabled because config.cache_classes is true
