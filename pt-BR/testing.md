@@ -570,50 +570,57 @@ end
 NOTE: Com os testes transacionais desligados, você terá que que limpar os dados de teste criados,
 já que a as mudanças não são automaticamente desfeitas depois que o teste termina.
 
-The Test Database
------------------
+O Banco de Dados de Teste
+--------------------------
 
-Just about every Rails application interacts heavily with a database and, as a result, your tests will need a database to interact with as well. To write efficient tests, you'll need to understand how to set up this database and populate it with sample data.
+Quase tudo em uma aplicação Rails interage fortemente com um banco de dados e, como resultado, seus testes também precisarão interagir com um banco de dados.
+Para escrever testes eficientes, você precisará entender como configurar e como popular esse banco de dados com dados de exemplo.
 
-By default, every Rails application has three environments: development, test, and production. The database for each one of them is configured in `config/database.yml`.
+Por padrão, toda aplicação Rails tem 3 ambientes (*environments*): `development`, `test` e `production`.
+O banco de dados de cada ambiente é configurado em `config/database.yml`.
 
-A dedicated test database allows you to set up and interact with test data in isolation. This way your tests can mangle test data with confidence, without worrying about the data in the development or production databases.
+Um banco de dados dedicado aos testes permite a configuração e a interação com os dados de teste separadamente.
+Desse jeito, seus testes podem manipular dados de teste com confiança, sem se preocupar com os bancos de desenvolvimento ou produção.
 
-### Maintaining the test database schema
+### Mantendo o esquema do banco de dados de teste
 
-In order to run your tests, your test database will need to have the current
-structure. The test helper checks whether your test database has any pending
-migrations. It will try to load your `db/schema.rb` or `db/structure.sql`
-into the test database. If migrations are still pending, an error will be
-raised. Usually this indicates that your schema is not fully migrated. Running
-the migrations against the development database (`bin/rails db:migrate`) will
-bring the schema up to date.
+Para rodar os testes, seu banco de dados precisará ter a estrutura atual.
+A classe *test helper* checa se seu banco de teste tem alguma migração pendente.
+Ela vai tentar carregar seu `db/schema.rb` ou `db/structure.sql` dentro do banco de teste.
+Se alguma migração ainda estiver faltando, um erro vai ser levantado.
+Isso indica que seu esquema (*schema*) ainda não foi totalmenta migrado.
+Rodar as migrações do banco de desenvolvimento (`bin/rails db:migrate`) irá atualizar o esquema para a última versão.
 
-NOTE: If there were modifications to existing migrations, the test database needs to
-be rebuilt. This can be done by executing `bin/rails db:test:prepare`.
+NOTE: Se migrações que já existiam forem modificadas, o banco de dados de teste precisará ser refeito.
+Isso pode ser feito executando `bin/rails db:test:prepare`.
 
-### The Low-Down on Fixtures
+### O Essencial sobre *Fixtures*
 
-For good tests, you'll need to give some thought to setting up test data.
-In Rails, you can handle this by defining and customizing fixtures.
-You can find comprehensive documentation in the [Fixtures API documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+Para fazer bons testes, você precisará pensar bastante em como irá preparar seus dados de teste.
+No Rails, você pode lidar com isso definindo e customizando *fixtures*.
+Você pode encontrar a documentação completa em [Fixtures API documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
 
-#### What are Fixtures?
+#### O que são *Fixtures*?
 
-_Fixtures_ is a fancy word for sample data. Fixtures allow you to populate your testing database with predefined data before your tests run. Fixtures are database independent and written in YAML. There is one file per model.
+*Fixtures* é uma palavra bonita pra dados de teste.
+*Fixtures* permitem você popular seu banco de teste com dados predefinidos antes dos testes rodarem.
+*Fixtures* funcionam indepententemente do banco de dados e são escritas em YAML.
+Há um arquivo por *model*.
 
-NOTE: Fixtures are not designed to create every object that your tests need, and are best managed when only used for default data that can be applied to the common case.
+NOTE: *Fixtures* não foram feitas para criar todos os objetos que seus testes precisam e são melhor gerenciadas quando usadas somente para dados padrão que podem ser usados em casos comuns.
 
-You'll find fixtures under your `test/fixtures` directory. When you run `bin/rails generate model` to create a new model, Rails automatically creates fixture stubs in this directory.
+Você encontrará *fixtures* dentro da pasta `test/fixtures`.
+Quando se roda `bin/rails generate model` para criar um *model*, o Rails automaticamente cria um esqueleto de *fixture* nessa pasta.
 
 #### YAML
 
-YAML-formatted fixtures are a human-friendly way to describe your sample data. These types of fixtures have the **.yml** file extension (as in `users.yml`).
+*Fixtures* escritas em YAML são um jeito amigável para humanos para escrever seus dados de teste.
+Esse tipo de *fixture* vai ter a extensão **.yml** (como em `users.yml`).
 
-Here's a sample YAML fixture file:
+Segue um exemplo de *fixture* em arquivo YAML:
 
 ```yaml
-# lo & behold! I am a YAML comment!
+# Veja e contemplem! Eu sou um comentário em YAML!
 david:
   name: David Heinemeier Hansson
   birthday: 1979-10-15
@@ -625,11 +632,12 @@ steve:
   profession: guy with keyboard
 ```
 
-Each fixture is given a name followed by an indented list of colon-separated key/value pairs. Records are typically separated by a blank line. You can place comments in a fixture file by using the # character in the first column.
+Cada *fixture* recebe um nome, seguido de uma lista identada de chaves/valores separados por dois pontos.
+Registros são separados uns dos outros por uma linha em branco.
+Você pode colocar comentários em uma arquivo *fixture* usando o caractere # na primeira coluna do texto.
 
-If you are working with [associations](/association_basics.html), you can
-define a reference node between two different fixtures. Here's an example with
-a `belongs_to`/`has_many` association:
+Se você está trabalhando com [associações](/association_basics.html), você pode definir uma referência entre duas *fixtures* diferentes.
+Aqui está um exemplo com uma associação `belongs_to`/`has_many`:
 
 ```yaml
 # fixtures/categories.yml
@@ -645,7 +653,10 @@ first:
   category: about
 ```
 
-Notice the `category` key of the `first` article found in `fixtures/articles.yml` has a value of `about`. This tells Rails to load the category `about` found in `fixtures/categories.yml`.
+Veja que a chave de `category` do artigo `first` encontrado em `fixtures/articles.yml` tem o valor `about`.
+Isso diz ao Rails para carregar a categoria `about` encontrada em `fixtures/categories.yml`.
+
+NOTE: Para que associações façam referência umas as outras pelo nome, você pode usar o nome da *fixture* ao invés de especificar a chave `id:` nas *fixtures* associadas. O Rails vai dar automaticamente uma chave primária
 
 NOTE: For associations to reference one another by name, you can use the fixture name instead of specifying the `id:` attribute on the associated fixtures. Rails will auto assign a primary key to be consistent between runs. For more information on this association behavior please read the [Fixtures API documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
 
