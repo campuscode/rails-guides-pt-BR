@@ -494,7 +494,7 @@ $ PARALLEL_WORKERS=15 bin/rails test
 ```
 
 Quando testes são paralelizados, o *Active Record* automaticamente lida com a criação dos bancos de dados e do carregamento do esquema (*schema*) no banco de dados de cada processo.
-Os bancos de dados de dados criados serão sufixados de acordo com a numeração do *worker*.
+Os bancos de dados criados serão sufixados de acordo com a numeração do *worker*.
 Por exemplo, se há 2 *workers*, os testes criarão os bancos `test-database-0` e `test-database-1` respectivamente.
 
 Se o número de *workers* passado for 1 ou menos, os processos não sofrerão *fork* e os testes não serão paralelizados.
