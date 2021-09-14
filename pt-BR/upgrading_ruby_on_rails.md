@@ -451,7 +451,7 @@ Essa restrição se aplica apenas a *namespaces* explícitos. Classes e módulos
 
 #### Um arquivo, uma constante (no mesmo nível superior)
 
-No modo `clssico`, você pode definir tecnicamente várias constantes no mesmo nível superior e ter todas elas recarregadas. Por exemplo, dado
+No modo `classic`, você pode definir tecnicamente várias constantes no mesmo nível superior e ter todas elas recarregadas. Por exemplo, dado
 
 ```ruby
 # app/models/foo.rb
