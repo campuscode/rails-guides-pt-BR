@@ -326,7 +326,7 @@ ativa o modo de carregamento automático `zeitwerk` no CRuby. Nesse modo, o carr
 
 Em geral, as aplicações não precisam usar a API do *Zeitwerk* diretamente. Rails configura as coisas de acordo com o contrato existente: `config.autoload_paths`,`config.cache_classes`, etc.
 
-Embora as aplicações devam seguir essa interface, o objeto do carregador Zeitwerk atual pode ser acessado como
+Embora as aplicações devam seguir essa interface, o objeto do carregador *Zeitwerk* atual pode ser acessado como
 
 ```ruby
 Rails.autoloaders.main
