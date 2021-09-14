@@ -391,7 +391,7 @@ module Foo
 end
 ```
 
-#### Preocupações (*Concerns*)
+#### (*Concerns*)
 
 Você pode carregar automaticamente e antecipadamente a partir de uma estrutura padrão como
 
