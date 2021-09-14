@@ -544,7 +544,7 @@ No modo `zeitwerk` ambos os modos de carregamento são consistentes, eles falham
 
 #### Como usar o Carretamento Automático Clássico no Rails 6
 
-As aplicações podem carregar os padrões do Rails 6 e ainda usar o carretamento automático clássico definindo `config.autoloader` desta forma:
+As aplicações podem carregar os padrões do Rails 6 e ainda usar o carregamento automático clássico definindo `config.autoloader` desta forma:
 
 ```ruby
 # config/application.rb
