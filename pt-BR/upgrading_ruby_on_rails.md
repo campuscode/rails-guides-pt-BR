@@ -601,26 +601,25 @@ user.highlights.second.filename # => "town.jpg"
 
 Existing applications can opt in to this new behavior by setting `config.active_storage.replace_on_assign_to_many` to `true`. The old behavior will be deprecated in Rails 6.1 and removed in a subsequent release.
 
-Upgrading from Rails 5.1 to Rails 5.2
+Atualizando do Rails 5.1 para o Rails 5.2
 -------------------------------------
 
-For more information on changes made to Rails 5.2 please see the [release notes](5_2_release_notes.html).
+Para mais informações sobre as mudanças feitas no Rails 5.2 consulte as [notas de lançamento](5_2_release_notes.html).
 
-### Bootsnap
+### *Bootsnap*
 
-Rails 5.2 adds bootsnap gem in the [newly generated app's Gemfile](https://github.com/rails/rails/pull/29313).
-The `app:update` command sets it up in `boot.rb`. If you want to use it, then add it in the Gemfile,
-otherwise change the `boot.rb` to not use bootsnap.
+Rails 5.2 adiciona a *gem bootsnap* no [novo Gemfile](https://github.com/rails/rails/pull/29313).
+O comando `app:update` o configura em `boot.rb`. Se você quiser utilizá-lo, então adicione-o no Gemfile,
+caso contrário, mude o `boot.rb` para não utilizar o *bootsnap*.
 
-### Expiry in signed or encrypted cookie is now embedded in the cookies values
+### A expiração em *cookies* assinados ou criptografados está agora incorporada nos valores dos *cookies*
 
-To improve security, Rails now embeds the expiry information also in encrypted or signed cookies value.
+Para melhorar a segurança, Rails agora incorpora as informações de expiração também no valor de cookies criptografados ou assinados.
 
-This new embed information make those cookies incompatible with versions of Rails older than 5.2.
+Estas novas informações incorporadas tornam estes *cookies* incompatíveis com versões do Rails mais antigas que 5.2.
 
-If you require your cookies to be read by 5.1 and older, or you are still validating your 5.2 deploy and want
-to allow you to rollback set
-`Rails.application.config.action_dispatch.use_authenticated_cookie_encryption` to `false`.
+Se você quer que seus cookies sejam lidos até 5.1 e anteriores, ou se ainda estiver validando seu *deploy* 5.2 e quiser permitir o *rollback* configure
+ `Rails.application.config.action_dispatch.use_authenticated_cookie_encryption` para `false'.
 
 Upgrading from Rails 5.0 to Rails 5.1
 -------------------------------------
