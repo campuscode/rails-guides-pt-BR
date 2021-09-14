@@ -359,7 +359,7 @@ Se sua aplicação tiver STIs, verifique a seção no guia [Carregamento Automá
 Agora você pode usar *constant paths* de forma robusta nas definições de classe e módulo:
 
 ```ruby
-# Autoloading in this class' body matches Ruby semantics now.
+# O carregamento automático no corpo desta classe corresponde à semântica Ruby agora.
 class Admin::UsersController < ApplicationController
   # ...
 end
