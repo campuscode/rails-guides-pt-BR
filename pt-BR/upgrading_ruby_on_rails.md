@@ -542,7 +542,7 @@ No modo `clássico`, se `app/models/foo.rb` define `Bar`, você não será capaz
 
 No modo `zeitwerk` ambos os modos de carregamento são consistentes, eles falham e erram nos mesmos arquivos.
 
-#### Como usar o Carretamento Automático Clássico no Rails 6
+#### Como usar o Carregamento Automático Clássico no Rails 6
 
 As aplicações podem carregar os padrões do Rails 6 e ainda usar o carregamento automático clássico definindo `config.autoloader` desta forma:
 
