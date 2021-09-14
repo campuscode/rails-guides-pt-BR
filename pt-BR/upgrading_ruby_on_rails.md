@@ -667,28 +667,25 @@ to send responses that contain only headers. For example, `head :ok` sends a
 200 response with no body to render.
 
 
-Upgrading from Rails 4.2 to Rails 5.0
+Atualizando do Rails 4.2 para o Rails 5.0
 -------------------------------------
 
-For more information on changes made to Rails 5.0 please see the [release notes](5_0_release_notes.html).
+Para mais informações sobre as mudanças feitas no Rails 5.0 consulte as [notas de lançamento](5_0_release_notes.html).
 
-### Ruby 2.2.2+ required
+### Necessário Ruby 2.2.2+
 
-From Ruby on Rails 5.0 onwards, Ruby 2.2.2+ is the only supported Ruby version.
-Make sure you are on Ruby 2.2.2 version or greater, before you proceed.
+Do Ruby on Rails 5.0 em diante, Ruby 2.2.2+ é a única versão do Ruby suportada.
+ Certifique-se de ter a versão Ruby 2.2.2 ou superior, antes de prosseguir.
 
-### Active Record Models Now Inherit from ApplicationRecord by Default
+### *Active Record Models* agora herdam de *ApplicationRecord* por padrão
 
-In Rails 4.2, an Active Record model inherits from `ActiveRecord::Base`. In Rails 5.0,
-all models inherit from `ApplicationRecord`.
+No Rails 4.2, um *Active Record model* herda de `ActiveRecord::Base`. No Rails 5.0,
+ todos os *models* são herdados de `ApplicationRecord`.
 
-`ApplicationRecord` is a new superclass for all app models, analogous to app
-controllers subclassing `ApplicationController` instead of
-`ActionController::Base`. This gives apps a single spot to configure app-wide
-model behavior.
+`ApplicationRecord` é uma nova superclasse para todos os *models* da aplicação, análogo ao que o
+ `ApplicationController` é para os *controllers* em vez de `ActionController::Base`. Isso dá as aplicações um único local para configurar o comportamento dos *models*.
 
-When upgrading from Rails 4.2 to Rails 5.0, you need to create an
-`application_record.rb` file in `app/models/` and add the following content:
+Ao atualizar do Rails 4.2 para o Rails 5.0, você precisa criar um arquivo `application_record.rb` em `app/models/` e adicionar o seguinte conteúdo:
 
 ```ruby
 class ApplicationRecord < ActiveRecord::Base
@@ -696,85 +693,80 @@ class ApplicationRecord < ActiveRecord::Base
 end
 ```
 
-Then make sure that all your models inherit from it.
+Em seguida, certifique-se de que todos os seus *models* herdem dele.
 
-### Halting Callback Chains via `throw(:abort)`
+### Interrompendo Sequências de *Callback* via `throw (:abort)`
 
-In Rails 4.2, when a 'before' callback returns `false` in Active Record
-and Active Model, then the entire callback chain is halted. In other words,
-successive 'before' callbacks are not executed, and neither is the action wrapped
-in callbacks.
+No Rails 4.2, quando um *'before' callback* retorna 'falso' no *Active Record*
+ e *Active Model*, então toda a sequência de *callback* é interrompida. Em outras palavras,
+ sucessivos *'before' callback* não são executados, e nem é a ação encapsulada
+ em *callbacks*.
 
-In Rails 5.0, returning `false` in an Active Record or Active Model callback
-will not have this side effect of halting the callback chain. Instead, callback
-chains must be explicitly halted by calling `throw(:abort)`.
+No Rails 5.0, ao retornar `false` em um *callback* no *Active Record* ou *Active Model*
+ não terá o efeito colateral de interromper a sequência de *callback*. Em vez disso, a sequência de *callback*
+ deve ser interrompida explicitamente chamando `throw(:abort)`.
 
-When you upgrade from Rails 4.2 to Rails 5.0, returning `false` in those kind of
-callbacks will still halt the callback chain, but you will receive a deprecation
-warning about this upcoming change.
+Quando você atualiza do Rails 4.2 para o Rails 5.0, retornando `false` nesse tipo de
+ *callback* a sequência de *callback* ainda será interrompida, mas você receberá um aviso de suspensão de uso
+ sobre esta mudança futura.
 
-When you are ready, you can opt into the new behavior and remove the deprecation
-warning by adding the following configuration to your `config/application.rb`:
+Quando estiver pronto, você pode optar pelo novo comportamento e remover o aviso de suspensão de uso adicionando a seguinte configuração ao seu `config/application.rb`:
 
 ```ruby
 ActiveSupport.halt_callback_chains_on_return_false = false
 ```
 
-Note that this option will not affect Active Support callbacks since they never
-halted the chain when any value was returned.
+Observe que esta opção não afetará os *callbacks* do *Active Support*, uma vez que eles nunca
+ interrompem a sequência quando algum valor foi retornado.
 
-See [#17227](https://github.com/rails/rails/pull/17227) for more details.
+Consulte [#17227](https://github.com/rails/rails/pull/17227) para obter mais detalhes.
 
-### ActiveJob Now Inherits from ApplicationJob by Default
+### *ActiveJob* agora herda de *ApplicationJob* por padrão
 
-In Rails 4.2, an Active Job inherits from `ActiveJob::Base`. In Rails 5.0, this
-behavior has changed to now inherit from `ApplicationJob`.
+No Rails 4.2, um *Active Job* herda de `ActiveJob::Base`. No Rails 5.0, este
+ comportamento mudou para agora herdar de `ApplicationJob`.
 
-When upgrading from Rails 4.2 to Rails 5.0, you need to create an
-`application_job.rb` file in `app/jobs/` and add the following content:
+Ao atualizar do Rails 4.2 para o Rails 5.0, você precisa criar um
+ arquivo `application_job.rb` em `app/jobs/` e adicionar o seguinte conteúdo:
 
 ```ruby
 class ApplicationJob < ActiveJob::Base
 end
 ```
 
-Then make sure that all your job classes inherit from it.
+Em seguida, certifique-se de que todas as classes *job* herdam dele.
 
-See [#19034](https://github.com/rails/rails/pull/19034) for more details.
+Veja [#19034](https://github.com/rails/rails/pull/19034) para maiores detalhes.
 
-### Rails Controller Testing
+### Testando Rails *Controller*
 
-#### Extraction of some helper methods to `rails-controller-testing`
+#### Extração de alguns métodos auxiliares (*helper*) para `rails-controller-testing`
 
-`assigns` and `assert_template` have been extracted to the `rails-controller-testing` gem. To
-continue using these methods in your controller tests, add `gem 'rails-controller-testing'` to
-your `Gemfile`.
+`assigns` e `assert_template` foram extraídos para a gem `rails-controller-testing`. Para
+ continuar usando esses métodos em seus testes de *controller*, adicione a `gem 'rails-controller-testing'` para
+ seu `Gemfile`.
 
-If you are using RSpec for testing, please see the extra configuration required in the gem's
-documentation.
+Se você estiver usando RSpec para teste, consulte a configuração extra necessária na
+ documentação da gem.
 
-#### New behavior when uploading files
+#### Novo comportamento ao enviar arquivos
 
-If you are using `ActionDispatch::Http::UploadedFile` in your tests to
-upload files, you will need to change to use the similar `Rack::Test::UploadedFile`
-class instead.
+Se você estiver usando `ActionDispatch::Http::UploadedFile` em seus testes para
+ envio de arquivos, você precisará alterar para usar a classe `Rack::Test::UploadedFile`.
 
-See [#26404](https://github.com/rails/rails/issues/26404) for more details.
+Veja [#26404](https://github.com/rails/rails/issues/26404) para maiores detalhes.
 
-### Autoloading is Disabled After Booting in the Production Environment
+### Carregamento automático é desabilitado após a inicialização no ambiente de produção
 
-Autoloading is now disabled after booting in the production environment by
-default.
+O carregamento automático agora está desativado após a inicialização no ambiente de produção por padrão.
 
-Eager loading the application is part of the boot process, so top-level
-constants are fine and are still autoloaded, no need to require their files.
+O carregamento rápido (*Eager loading*) da aplicação faz parte do processo de inicialização, portanto, constantes de alto nível estão bem e ainda são carregadas automaticamente, não há necessidade de exigir seus arquivos.
 
-Constants in deeper places only executed at runtime, like regular method bodies,
-are also fine because the file defining them will have been eager loaded while booting.
+Constantes em locais mais profundos são executados apenas em tempo de execução, como corpos de métodos regulares, também estão bem porque o arquivo que os define terá sido carregado durante a inicialização.
 
-For the vast majority of applications this change needs no action. But in the
-very rare event that your application needs autoloading while running in
-production, set `Rails.application.config.enable_dependency_loading` to true.
+Para a grande maioria das aplicações, essa alteração não exige nenhuma ação. Mas no
+ evento muito raro em que sua aplicação precisa de carregamento automático durante a execução em
+ produção, defina `Rails.application.config.enable_dependency_loading` para *true*.
 
 ### XML Serialization
 
