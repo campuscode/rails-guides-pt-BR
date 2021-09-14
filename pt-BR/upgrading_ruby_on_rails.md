@@ -528,7 +528,7 @@ Cuidado com configurações como
 config.autoload_paths += Dir["#{config.root}/lib/**/"]
 ```
 
-Cada elemento de `config.autoload_paths` deve representar o *namespace* de nível superior (`Object`) e eles não podem ser aninhados em conseqüência (com exceção dos diretórios `concerns` explicados acima).
+Cada elemento de `config.autoload_paths` deve representar o *namespace* de nível superior (`Object`) e eles não podem ser aninhados em consequência (com exceção dos diretórios `concerns` explicados acima).
 
 Para corrigir isso, basta remover os curingas (*wildcards*):
 
