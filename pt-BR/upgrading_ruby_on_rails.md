@@ -622,49 +622,41 @@ If you require your cookies to be read by 5.1 and older, or you are still valida
 to allow you to rollback set
 `Rails.application.config.action_dispatch.use_authenticated_cookie_encryption` to `false`.
 
-Upgrading from Rails 5.0 to Rails 5.1
+Atualizando do Rails 5.0 para o Rails 5.1
 -------------------------------------
 
-For more information on changes made to Rails 5.1 please see the [release notes](5_1_release_notes.html).
+Para mais informações sobre as mudanças feitas no Rails 5.1 consulte as [notas de lançamento](5_1_release_notes.html).
 
-### Top-level `HashWithIndifferentAccess` is soft-deprecated
+### `HashWithIndifferentAccess` de nível superior está descontinuado
 
-If your application uses the top-level `HashWithIndifferentAccess` class, you
-should slowly move your code to instead use `ActiveSupport::HashWithIndifferentAccess`.
+Se sua aplicação usa a classe `HashWithIndifferentAccess` de nível superior, você
+ deve mover lentamente seu código para usar `ActiveSupport::HashWithIndifferentAccess`.
 
-It is only soft-deprecated, which means that your code will not break at the
-moment and no deprecation warning will be displayed, but this constant will be
-removed in the future.
+Está apenas descontinuado, o que significa que seu código não quebrará no momento e nenhum aviso de descontinuação será exibido, mas esta constante será removida no futuro.
 
-Also, if you have pretty old YAML documents containing dumps of such objects,
-you may need to load and dump them again to make sure that they reference
-the right constant, and that loading them won't break in the future.
+Além disso, se você tiver documentos *YAML* muito antigos contendo despejos (*dumps*) de tais objetos, pode ser necessário carregá-los e despejá-los novamente para ter certeza de que referenciam à constante correta, e que carregá-los não quebrará no futuro.
 
-### `application.secrets` now loaded with all keys as symbols
+### `application.secrets` agora é carregado com todas as chaves como símbolos
 
-If your application stores nested configuration in `config/secrets.yml`, all keys
-are now loaded as symbols, so access using strings should be changed.
+Se sua aplicação armazena configuração aninhada em `config/secrets.yml`, todas as chaves agora são carregadas como símbolos, então o acesso usando *strings* deve ser alterado.
 
-From:
+De:
 
 ```ruby
 Rails.application.secrets[:smtp_settings]["address"]
 ```
 
-To:
+Para:
 
 ```ruby
 Rails.application.secrets[:smtp_settings][:address]
 ```
 
-### Removed deprecated support to `:text` and `:nothing` in `render`
+### Removido suporte obsoleto para `:text` e `:nothing` em `render`
 
-If your views are using `render :text`, they will no longer work. The new method
-of rendering text with MIME type of `text/plain` is to use `render :plain`.
+Se suas *views* estiverem usando `render:text`, elas não funcionarão mais. O novo método de renderização de texto com o tipo MIME de `text/plain` é usar `render:plain`.
 
-Similarly, `render :nothing` is also removed and you should use the `head` method
-to send responses that contain only headers. For example, `head :ok` sends a
-200 response with no body to render.
+Similarmente, `render:nothing` também é removido e você deve usar o método `head` para enviar respostas que contenham apenas cabeçalhos (*headers*). Por exemplo, `head:ok` envia uma resposta 200 sem corpo (*body*) para renderizar.
 
 
 Upgrading from Rails 4.2 to Rails 5.0
