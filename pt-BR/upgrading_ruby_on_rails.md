@@ -675,15 +675,15 @@ Para mais informações sobre as mudanças feitas no Rails 5.0 consulte as [nota
 ### Necessário Ruby 2.2.2+
 
 Do Ruby on Rails 5.0 em diante, Ruby 2.2.2+ é a única versão do Ruby suportada.
- Certifique-se de ter a versão Ruby 2.2.2 ou superior, antes de prosseguir.
+Certifique-se de ter a versão Ruby 2.2.2 ou superior, antes de prosseguir.
 
 ### *Active Record Models* agora herdam de *ApplicationRecord* por padrão
 
 No Rails 4.2, um *Active Record model* herda de `ActiveRecord::Base`. No Rails 5.0,
- todos os *models* são herdados de `ApplicationRecord`.
+todos os *models* são herdados de `ApplicationRecord`.
 
 `ApplicationRecord` é uma nova superclasse para todos os *models* da aplicação, análogo ao que o
- `ApplicationController` é para os *controllers* em vez de `ActionController::Base`. Isso dá as aplicações um único local para configurar o comportamento dos *models*.
+`ApplicationController` é para os *controllers* em vez de `ActionController::Base`. Isso dá as aplicações um único local para configurar o comportamento dos *models*.
 
 Ao atualizar do Rails 4.2 para o Rails 5.0, você precisa criar um arquivo `application_record.rb` em `app/models/` e adicionar o seguinte conteúdo:
 
@@ -698,17 +698,15 @@ Em seguida, certifique-se de que todos os seus *models* herdem dele.
 ### Interrompendo Sequências de *Callback* via `throw (:abort)`
 
 No Rails 4.2, quando um *'before' callback* retorna 'falso' no *Active Record*
- e *Active Model*, então toda a sequência de *callback* é interrompida. Em outras palavras,
- sucessivos *'before' callback* não são executados, e nem é a ação encapsulada
- em *callbacks*.
+e *Active Model*, então toda a sequência de *callback* é interrompida. Em outras palavras,
+sucessivos *'before' callback* não são executados, e nem é a ação encapsulada
+em *callbacks*.
 
 No Rails 5.0, ao retornar `false` em um *callback* no *Active Record* ou *Active Model*
- não terá o efeito colateral de interromper a sequência de *callback*. Em vez disso, a sequência de *callback*
- deve ser interrompida explicitamente chamando `throw(:abort)`.
+não terá o efeito colateral de interromper a sequência de *callback*. Em vez disso, a sequência de *callback* deve ser interrompida explicitamente chamando `throw(:abort)`.
 
 Quando você atualiza do Rails 4.2 para o Rails 5.0, retornando `false` nesse tipo de
- *callback* a sequência de *callback* ainda será interrompida, mas você receberá um aviso de suspensão de uso
- sobre esta mudança futura.
+*callback* a sequência de *callback* ainda será interrompida, mas você receberá um aviso de suspensão de uso sobre esta mudança futura.
 
 Quando estiver pronto, você pode optar pelo novo comportamento e remover o aviso de suspensão de uso adicionando a seguinte configuração ao seu `config/application.rb`:
 
@@ -717,17 +715,17 @@ ActiveSupport.halt_callback_chains_on_return_false = false
 ```
 
 Observe que esta opção não afetará os *callbacks* do *Active Support*, uma vez que eles nunca
- interrompem a sequência quando algum valor foi retornado.
+interrompem a sequência quando algum valor foi retornado.
 
 Consulte [#17227](https://github.com/rails/rails/pull/17227) para obter mais detalhes.
 
 ### *ActiveJob* agora herda de *ApplicationJob* por padrão
 
 No Rails 4.2, um *Active Job* herda de `ActiveJob::Base`. No Rails 5.0, este
- comportamento mudou para agora herdar de `ApplicationJob`.
+comportamento mudou para agora herdar de `ApplicationJob`.
 
 Ao atualizar do Rails 4.2 para o Rails 5.0, você precisa criar um
- arquivo `application_job.rb` em `app/jobs/` e adicionar o seguinte conteúdo:
+arquivo `application_job.rb` em `app/jobs/` e adicionar o seguinte conteúdo:
 
 ```ruby
 class ApplicationJob < ActiveJob::Base
@@ -743,16 +741,15 @@ Veja [#19034](https://github.com/rails/rails/pull/19034) para maiores detalhes.
 #### Extração de alguns métodos auxiliares (*helper*) para `rails-controller-testing`
 
 `assigns` e `assert_template` foram extraídos para a gem `rails-controller-testing`. Para
- continuar usando esses métodos em seus testes de *controller*, adicione a `gem 'rails-controller-testing'` para
- seu `Gemfile`.
+continuar usando esses métodos em seus testes de *controller*, adicione a `gem 'rails-controller-testing'` para seu `Gemfile`.
 
 Se você estiver usando RSpec para teste, consulte a configuração extra necessária na
- documentação da gem.
+documentação da gem.
 
 #### Novo comportamento ao enviar arquivos
 
 Se você estiver usando `ActionDispatch::Http::UploadedFile` em seus testes para
- envio de arquivos, você precisará alterar para usar a classe `Rack::Test::UploadedFile`.
+envio de arquivos, você precisará alterar para usar a classe `Rack::Test::UploadedFile`.
 
 Veja [#26404](https://github.com/rails/rails/issues/26404) para maiores detalhes.
 
@@ -765,8 +762,8 @@ O carregamento rápido (*Eager loading*) da aplicação faz parte do processo de
 Constantes em locais mais profundos são executados apenas em tempo de execução, como corpos de métodos regulares, também estão bem porque o arquivo que os define terá sido carregado durante a inicialização.
 
 Para a grande maioria das aplicações, essa alteração não exige nenhuma ação. Mas no
- evento muito raro em que sua aplicação precisa de carregamento automático durante a execução em
- produção, defina `Rails.application.config.enable_dependency_loading` para *true*.
+evento muito raro em que sua aplicação precisa de carregamento automático durante a execução em
+produção, defina `Rails.application.config.enable_dependency_loading` para *true*.
 
 ### XML Serialization
 
