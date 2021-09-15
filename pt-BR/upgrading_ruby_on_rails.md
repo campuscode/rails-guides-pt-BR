@@ -765,11 +765,10 @@ Para a grande maioria das aplicações, essa alteração não exige nenhuma aç�
 evento muito raro em que sua aplicação precisa de carregamento automático durante a execução em
 produção, defina `Rails.application.config.enable_dependency_loading` para *true*.
 
-### XML Serialization
+### Serialização XML
 
-`ActiveModel::Serializers::Xml` has been extracted from Rails to the `activemodel-serializers-xml`
-gem. To continue using XML serialization in your application, add `gem 'activemodel-serializers-xml'`
-to your `Gemfile`.
+`ActiveModel::Serializers::Xml` foi extraído do Rails para a *gem* `activemodel-serializers-xml`.
+Para continuar usando a serialização XML em sua aplicação, adicione a `gem 'activemodel-serializers-xml'` para o seu `Gemfile`.
 
 ### Removed Support for Legacy `mysql` Database Adapter
 
