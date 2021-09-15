@@ -200,16 +200,16 @@ video.preview(resize_to_limit: [100, 100])
 video.preview(resize_to_fill: [100, 100])
 ```
 
-Upgrading from Rails 5.2 to Rails 6.0
+Atualizando do Rails 5.2 para o Rails 6.0
 -------------------------------------
 
-For more information on changes made to Rails 6.0 please see the [release notes](6_0_release_notes.html).
+Para mais informações sobre as mudanças feitas no Rails 6.0 consulte as [notas de lançamento](6_0_release_notes.html).
 
-### Using Webpacker
+### Usando Webpacker
 
 [Webpacker](https://github.com/rails/webpacker)
-is the default JavaScript compiler for Rails 6. But if you are upgrading the app, it is not activated by default.
-If you want to use Webpacker, then include it in your Gemfile and install it:
+é o compilador *JavaScript* padrão para Rails 6. Mas se você estiver atualizando a aplicação, ele não é ativado por padrão.
+Se você quiser usar o *Webpacker*, adicione ele em seu *Gemfile* e instale:
 
 ```ruby
 gem "webpacker"
@@ -219,31 +219,30 @@ gem "webpacker"
 $ bin/rails webpacker:install
 ```
 
-### Force SSL
+### Forçar SSL
 
-The `force_ssl` method on controllers has been deprecated and will be removed in
-Rails 6.1. You are encouraged to enable `config.force_ssl` to enforce HTTPS
-connections throughout your application. If you need to exempt certain endpoints
-from redirection, you can use `config.ssl_options` to configure that behavior.
+O método `force_ssl` nos *controllers* foi descontinuado e será removido no
+Rails 6.1. Você é encorajado a habilitar `config.force_ssl` para impor conexões
+HTTPS ao longo de sua aplicação. Se você precisar isentar certos *endpoints*
+do redirecionamento, você pode usar `config.ssl_options` para configurar esse comportamento.
 
-### Purpose and expiry metadata is now embedded inside signed and encrypted cookies for increased security
+### Propósito (*Purpose*) e metadados de expiração agora estão incorporados em cookies assinados e criptografados para maior segurança
 
-To improve security, Rails embeds the purpose and expiry metadata inside encrypted or signed cookies value.
+Para melhorar a segurança, o Rails incorpora os metadados de propósito e expiração dentro do valor de cookies criptografados ou assinados.
 
-Rails can then thwart attacks that attempt to copy the signed/encrypted value
-of a cookie and use it as the value of another cookie.
+Rails pode então impedir ataques que tentam copiar o valor assinado/criptografado
+de um *cookie* e usá-lo como o valor de outro *cookie*.
 
-This new embed metadata make those cookies incompatible with versions of Rails older than 6.0.
+Esses novos metadados incorporados tornam esses *cookies* incompatíveis com versões do Rails anteriores a 6.0.
 
-If you require your cookies to be read by Rails 5.2 and older, or you are still validating your 6.0 deploy and want
-to be able to rollback set
-`Rails.application.config.action_dispatch.use_cookies_with_metadata` to `false`.
+Se você deseja que seus *cookies* sejam lidos pelo Rails 5.2 e anteriores, ou ainda está validando seu *deploy* do 6.0 e deseja ser capaz de reverter (*rollback*)
+`Rails.application.config.action_dispatch.use_cookies_with_metadata` para `false`.
 
-### All npm packages have been moved to the `@rails` scope
+### Todos os pacotes npm foram movidos para o escopo `@rails`
 
-If you were previously loading any of the `actioncable`, `activestorage`,
-or `rails-ujs` packages through npm/yarn, you must update the names of these
-dependencies before you can upgrade them to `6.0.0`:
+Se você estava anteriormente carregando qualquer um dos pacotes `actioncable`, `activestorage`,
+ou `rails-ujs` através de npm/yarn, você deve atualizar os nomes destas
+dependências antes de atualizá-los para o `6.0.0`:
 
 ```
 actioncable   → @rails/actioncable
@@ -251,18 +250,18 @@ activestorage → @rails/activestorage
 rails-ujs     → @rails/ujs
 ```
 
-### Action Cable JavaScript API Changes
+### Mudanças na API do *Action Cable JavaScript*
 
-The Action Cable JavaScript package has been converted from CoffeeScript
-to ES2015, and we now publish the source code in the npm distribution.
+O pacote *Action Cable JavaScript* foi convertido do *CoffeeScript*
+para *ES2015*, e agora publicamos o código-fonte via distribuição pelo npm.
 
-This release includes some breaking changes to optional parts of the
-Action Cable JavaScript API:
+Esta versão inclui algumas mudanças importantes para partes opcionais da
+*API JavaScript Action Cable*:
 
-- Configuration of the WebSocket adapter and logger adapter have been moved
-  from properties of `ActionCable` to properties of `ActionCable.adapters`.
-  If you are configuring these adapters you will need to make
-  these changes:
+- A configuração do adaptador *WebSocket* e do adaptador *logger* foi movida
+  das propriedades de `ActionCable` para as propriedades de `ActionCable.adapters`.
+  Se você estiver configurando esses adaptadores, você precisará fazer
+  estas alterações:
 
     ```diff
     -    ActionCable.WebSocket = MyWebSocket
@@ -274,10 +273,10 @@ Action Cable JavaScript API:
     +    ActionCable.adapters.logger = myLogger
     ```
 
-- The `ActionCable.startDebugging()` and `ActionCable.stopDebugging()`
-  methods have been removed and replaced with the property
-  `ActionCable.logger.enabled`. If you are using these methods you
-  will need to make these changes:
+- Os métodos `ActionCable.startDebugging()` e `ActionCable.stopDebugging()`
+  foram movidos e substituídos pela propriedade
+  `ActionCable.logger.enabled`. Se você estiver usando esse métodos, você
+  precisará fazer estas alterações:
 
     ```diff
     -    ActionCable.startDebugging()
@@ -289,21 +288,21 @@ Action Cable JavaScript API:
     +    ActionCable.logger.enabled = false
     ```
 
-### `ActionDispatch::Response#content_type` now returns the Content-Type header without modification
+### `ActionDispatch::Response#content_type` agora retorna o cabeçalho (*header*) do tipo de conteúdo (*Content-Type*) sem modificação
 
-Previously, the return value of `ActionDispatch::Response#content_type` did NOT contain the charset part.
-This behavior has changed to include the previously omitted charset part as well.
+Anteriormente, o valor de retorno de `ActionDispatch::Response#content_type` NÃO continha a parte do conjunto de caracteres.
+Este comportamento foi alterado para incluir também a parte do conjunto de caracteres omitida anteriormente.
 
-If you want just the MIME type, please use `ActionDispatch::Response#media_type` instead.
+Se você quiser apenas o tipo *MIME*, use `ActionDispatch::Response#media_type` em seu lugar.
 
-Before:
+Antes:
 
 ```ruby
 resp = ActionDispatch::Response.new(200, "Content-Type" => "text/csv; header=present; charset=utf-16")
 resp.content_type #=> "text/csv; header=present"
 ```
 
-After:
+Depois:
 
 ```ruby
 resp = ActionDispatch::Response.new(200, "Content-Type" => "text/csv; header=present; charset=utf-16")
@@ -311,9 +310,9 @@ resp.content_type #=> "text/csv; header=present; charset=utf-16"
 resp.media_type   #=> "text/csv"
 ```
 
-### Autoloading
+### Carregamento Automático
 
-The default configuration for Rails 6
+A configuração padrão para Rails 6
 
 ```ruby
 # config/application.rb
@@ -321,27 +320,27 @@ The default configuration for Rails 6
 config.load_defaults 6.0
 ```
 
-enables `zeitwerk` autoloading mode on CRuby. In that mode, autoloading, reloading, and eager loading are managed by [Zeitwerk](https://github.com/fxn/zeitwerk).
+ativa o modo de carregamento automático `zeitwerk` no CRuby. Nesse modo, o carregamento automático, o recarregamento e o carregamento antecipado são gerenciados pelo [Zeitwerk](https://github.com/fxn/zeitwerk).
 
-#### Public API
+#### API Pública
 
-In general, applications do not need to use the API of Zeitwerk directly. Rails sets things up according to the existing contract: `config.autoload_paths`, `config.cache_classes`, etc.
+Em geral, as aplicações não precisam usar a API do *Zeitwerk* diretamente. Rails configura as coisas de acordo com o contrato existente: `config.autoload_paths`,`config.cache_classes`, etc.
 
-While applications should stick to that interface, the actual Zeitwerk loader object can be accessed as
+Embora as aplicações devam seguir essa interface, o objeto do carregador *Zeitwerk* atual pode ser acessado como
 
 ```ruby
 Rails.autoloaders.main
 ```
 
-That may be handy if you need to preload STIs or configure a custom inflector, for example.
+Isso pode ser útil se você precisar pré-carregar STIs ou configurar um *inflector* customizado, por exemplo.
 
-#### Project Structure
+#### Estrutura do Projeto
 
-If the application being upgraded autoloads correctly, the project structure should be already mostly compatible.
+Se a aplicação que está sendo atualizada for carregada automaticamente de forma correta, a estrutura do projeto já deve ser compatível.
 
-However, `classic` mode infers file names from missing constant names (`underscore`), whereas `zeitwerk` mode infers constant names from file names (`camelize`). These helpers are not always inverse of each other, in particular if acronyms are involved. For instance, `"FOO".underscore` is `"foo"`, but `"foo".camelize` is `"Foo"`, not `"FOO"`.
+No entanto, o modo `clássico` entende nomes de arquivos com (`underscore`), enquanto o modo `zeitwerk` entende nomes de arquivos (`camelize`). Esses *helpers* nem sempre são inversos entre si, especialmente se houver acrônimos envolvidos. Por exemplo, `"FOO".underscore` é `"foo"`, mas `"foo".camelize` é `"Foo"`, não `"FOO "`.
 
-Compatibility can be checked with the `zeitwerk:check` task:
+A compatibilidade pode ser verificada com a tarefa `zeitwerk:check`:
 
 ```bash
 $ bin/rails zeitwerk:check
@@ -349,24 +348,24 @@ Hold on, I am eager loading the application.
 All is good!
 ```
 
-#### require_dependency
+#### *require_dependency*
 
-All known use cases of `require_dependency` have been eliminated, you should grep the project and delete them.
+Todos os casos de uso conhecidos de `require_dependency` foram eliminados, você deve executar o *grep* no projeto e excluí-los.
 
-If your application has STIs, please check their section in the guide [Autoloading and Reloading Constants (Zeitwerk Mode)](autoloading_and_reloading_constants.html#single-table-inheritance).
+Se sua aplicação tiver STIs, verifique a seção no guia [Carregamento Automático e Recarregando Constantes (Modo Zeitwerk)](autoloading_and_reloading_constants.html#single-table-inheritance).
 
-#### Qualified names in class and module definitions
+#### Nomes qualificados nas definições de classe e módulo
 
-You can now robustly use constant paths in class and module definitions:
+Agora você pode usar *constant paths* de forma robusta nas definições de classe e módulo:
 
 ```ruby
-# Autoloading in this class' body matches Ruby semantics now.
+# O carregamento automático no corpo desta classe corresponde à semântica Ruby agora.
 class Admin::UsersController < ApplicationController
   # ...
 end
 ```
 
-A gotcha to be aware of is that, depending on the order of execution, the classic autoloader could sometimes be able to autoload `Foo::Wadus` in
+Um problema a ter em conta é que, dependendo da ordem de execução, o auto carregamento clássico pode às vezes ser capaz de carregar automaticamente `Foo::Wadus` em
 
 ```ruby
 class Foo::Bar
@@ -374,7 +373,7 @@ class Foo::Bar
 end
 ```
 
-That does not match Ruby semantics because `Foo` is not in the nesting, and won't work at all in `zeitwerk` mode. If you find such corner case you can use the qualified name `Foo::Wadus`:
+Isso não corresponde à semântica Ruby porque `Foo` não está no aninhamento e não funcionará no modo `zeitwerk`. Se você encontrar esse caso, você pode usar o nome qualificado `Foo::Wadus`:
 
 ```ruby
 class Foo::Bar
@@ -382,7 +381,7 @@ class Foo::Bar
 end
 ```
 
-or add `Foo` to the nesting:
+ou adicione `Foo` ao aninhamento:
 
 ```ruby
 module Foo
@@ -392,66 +391,66 @@ module Foo
 end
 ```
 
-#### Concerns
+#### (*Concerns*)
 
-You can autoload and eager load from a standard structure like
+Você pode carregar automaticamente e antecipadamente a partir de uma estrutura padrão como
 
 ```
 app/models
 app/models/concerns
 ```
 
-In that case, `app/models/concerns` is assumed to be a root directory (because it belongs to the autoload paths), and it is ignored as namespace. So, `app/models/concerns/foo.rb` should define `Foo`, not `Concerns::Foo`.
+Nesse caso, `app/models/concerns` é considerado um diretório raiz (porque pertence aos caminhos de carregamento automático) e é ignorado como *namespace*. Portanto, `app/models/concern/foo.rb` deve definir `Foo`, não `Concerns::Foo`.
 
-The `Concerns::` namespace worked with the classic autoloader as a side-effect of the implementation, but it was not really an intended behavior. An application using `Concerns::` needs to rename those classes and modules to be able to run in `zeitwerk` mode.
+O *namespace* `Concerns::` funcionou com o carregamento automático clássico como um efeito colateral da implementação, mas não foi realmente um comportamento pretendido. Uma aplicação que usa `Concerns::` precisa renomear essas classes e módulos para poder rodar no modo `zeitwerk`.
 
-#### Having `app` in the autoload paths
+#### Tendo `app` nos caminhos de carregamento automático
 
-Some projects want something like `app/api/base.rb` to define `API::Base`, and add `app` to the autoload paths to accomplish that in `classic` mode. Since Rails adds all subdirectories of `app` to the autoload paths automatically, we have another situation in which there are nested root directories, so that setup no longer works. Similar principle we explained above with `concerns`.
+Alguns projetos querem algo como `app/api/base.rb` para definir `API::Base`, e adicionar `app` aos caminhos de carregamento automático para fazer isso no modo `clássico`. Já que Rails adiciona todos os subdiretórios de `app` aos caminhos de carregamento automático automaticamente, temos outra situação em que há diretórios raiz aninhados, de forma que a configuração não funciona mais. Princípio semelhante que explicamos acima com `concerns`.
 
-If you want to keep that structure, you'll need to delete the subdirectory from the autoload paths in an initializer:
+Se quiser manter essa estrutura, você precisará excluir o subdiretório dos caminhos de carregamento automático em um inicializador:
 
 ```ruby
 ActiveSupport::Dependencies.autoload_paths.delete("#{Rails.root}/app/api")
 ```
 
-#### Autoloaded Constants and Explicit Namespaces
+#### Constantes carregadas automaticamente e *namespaces* explícitos
 
-If a namespace is defined in a file, as `Hotel` is here:
+Se um *namespace* for definido em um arquivo, como `Hotel` está aqui:
 
 ```
 app/models/hotel.rb         # Defines Hotel.
 app/models/hotel/pricing.rb # Defines Hotel::Pricing.
 ```
 
-the `Hotel` constant has to be set using the `class` or `module` keywords. For example:
+a constante `Hotel` deve ser definida usando as palavras-chave `class` ou `module`. Por exemplo:
 
 ```ruby
 class Hotel
 end
 ```
 
-is good.
+é bom.
 
-Alternatives like
+Alternativas como
 
 ```ruby
 Hotel = Class.new
 ```
 
-or
+ou
 
 ```ruby
 Hotel = Struct.new
 ```
 
-won't work, child objects like `Hotel::Pricing` won't be found.
+não funcionará, objetos filhos como `Hotel::Pricing` não serão encontrados.
 
-This restriction only applies to explicit namespaces. Classes and modules not defining a namespace can be defined using those idioms.
+Essa restrição se aplica apenas a *namespaces* explícitos. Classes e módulos que não definem um *namespace* podem ser definidos usando esses idiomas.
 
-#### One file, one constant (at the same top-level)
+#### Um arquivo, uma constante (no mesmo nível superior)
 
-In `classic` mode you could technically define several constants at the same top-level and have them all reloaded. For example, given
+No modo `classic`, você pode definir tecnicamente várias constantes no mesmo nível superior e ter todas elas recarregadas. Por exemplo, dado
 
 ```ruby
 # app/models/foo.rb
@@ -463,9 +462,9 @@ class Bar
 end
 ```
 
-while `Bar` could not be autoloaded, autoloading `Foo` would mark `Bar` as autoloaded too. This is not the case in `zeitwerk` mode, you need to move `Bar` to its own file `bar.rb`. One file, one constant.
+enquanto `Bar` não pôde ser carregado automaticamente, o carregamento automático de `Foo` marcaria `Bar` como carregado automaticamente também. Este não é o caso no modo `zeitwerk`, você precisa mover `Bar` para seu próprio arquivo `bar.rb`. Um arquivo, uma constante.
 
-This affects only to constants at the same top-level as in the example above. Inner classes and modules are fine. For example, consider
+Isso afeta apenas as constantes no mesmo nível superior do exemplo acima. Classes e módulos internos são adequados. Por exemplo, considere
 
 ```ruby
 # app/models/foo.rb
@@ -476,11 +475,11 @@ class Foo
 end
 ```
 
-If the application reloads `Foo`, it will reload `Foo::InnerClass` too.
+Se a aplicação recarregar `Foo`, ela irá recarregar `Foo::InnerClass` também.
 
-#### Spring and the `test` Environment
+#### *Spring* e o ambiente `test`
 
-Spring reloads the application code if something changes. In the `test` environment you need to enable reloading for that to work:
+*Spring* recarrega o código da aplicação se algo mudar. No ambiente `test`, você precisa habilitar o recarregamento para que funcione:
 
 ```ruby
 # config/environments/test.rb
@@ -488,63 +487,63 @@ Spring reloads the application code if something changes. In the `test` environm
 config.cache_classes = false
 ```
 
-Otherwise you'll get this error:
+Caso contrário, você obterá este erro:
 
 ```
 reloading is disabled because config.cache_classes is true
 ```
 
-#### Bootsnap
+#### *Bootsnap*
 
-Bootsnap should be at least version 1.4.2.
+O *Bootsnap* deve ter pelo menos a versão 1.4.2.
 
-In addition to that, Bootsnap needs to disable the iseq cache due to a bug in the interpreter if running Ruby 2.5. Please make sure to depend on at least Bootsnap 1.4.4 in that case.
+Além disso, o *Bootsnap* precisa desabilitar o cache *iseq* devido a um bug no interpretador se estiver executando o Ruby 2.5. Certifique-se de depender de pelo menos Bootsnap 1.4.4 nesse caso.
 
 #### `config.add_autoload_paths_to_load_path`
 
-The new configuration point
+O novo ponto de configuração
 
 ```ruby
 config.add_autoload_paths_to_load_path
 ```
 
-is `true` by default for backwards compatibility, but allows you to opt-out from adding the autoload paths to `$LOAD_PATH`.
+é `true` por padrão para compatibilidade com versões anteriores, mas permite que você opte por não adicionar os caminhos de carregamento automático a `$LOAD_PATH`.
 
-This makes sense in most applications, since you never should require a file in `app/models`, for example, and Zeitwerk only uses absolute file names internally.
+Isso faz sentido na maioria das aplicações, já que você nunca deve requerer um arquivo em `app/models`, por exemplo, e o *Zeitwerk* só usa nomes de arquivo absolutos internamente.
 
-By opting-out you optimize `$LOAD_PATH` lookups (less directories to check), and save Bootsnap work and memory consumption, since it does not need to build an index for these directories.
+Ao optar pela exclusão, você otimiza as pesquisas ao `$LOAD_PATH` (menos diretórios para verificar) e economiza o trabalho do *Bootsnap* e o consumo de memória, já que não é necessário construir um índice para esses diretórios.
 
-#### Thread-safety
+#### *Thread-safety*
 
-In classic mode, constant autoloading is not thread-safe, though Rails has locks in place for example to make web requests thread-safe when autoloading is enabled, as it is common in the development environment.
+No modo clássico, o carregamento automático constante não é *thread-safe*, embora o Rails tenha travas, por exemplo, para tornar as solicitações da web *thread-safe* quando o carregamento automático está habilitado, como é comum no ambiente de desenvolvimento.
 
-Constant autoloading is thread-safe in `zeitwerk` mode. For example, you can now autoload in multi-threaded scripts executed by the `runner` command.
+O carregamento automático constante é *thread-safe* no modo `zeitwerk`. Por exemplo, agora você pode carregar automaticamente em scripts *multi-threaded* executados pelo comando `runner`.
 
-#### Globs in config.autoload_paths
+#### *Globs* em *config.autoload_paths*
 
-Beware of configurations like
+Cuidado com configurações como
 
 ```ruby
 config.autoload_paths += Dir["#{config.root}/lib/**/"]
 ```
 
-Every element of `config.autoload_paths` should represent the top-level namespace (`Object`) and they cannot be nested in consequence (with the exception of `concerns` directories explained above).
+Cada elemento de `config.autoload_paths` deve representar o *namespace* de nível superior (`Object`) e eles não podem ser aninhados em consequência (com exceção dos diretórios `concerns` explicados acima).
 
-To fix this, just remove the wildcards:
+Para corrigir isso, basta remover os curingas (*wildcards*):
 
 ```ruby
 config.autoload_paths << "#{config.root}/lib"
 ```
 
-#### Eager loading and autoloading are consistent
+#### Carregamento rápido (*Eager loading*) e carregamento automático são consistentes
 
-In `classic` mode, if `app/models/foo.rb` defines `Bar`, you won't be able to autoload that file, but eager loading will work because it loads files recursively blindly. This can be a source of errors if you test things first eager loading, execution may fail later autoloading.
+No modo `clássico`, se `app/models/foo.rb` define `Bar`, você não será capaz de carregar automaticamente aquele arquivo, mas o carregamento rápido funcionará porque carrega os arquivos recursivamente às cegas. Isso pode ser uma fonte de erros se você testar as coisas primeiro com carregamento rápido; a execução pode falhar no carregamento automático posterior.
 
-In `zeitwerk` mode both loading modes are consistent, they fail and err in the same files.
+No modo `zeitwerk` ambos os modos de carregamento são consistentes, eles falham e erram nos mesmos arquivos.
 
-#### How to Use the Classic Autoloader in Rails 6
+#### Como usar o Carregamento Automático Clássico no Rails 6
 
-Applications can load Rails 6 defaults and still use the classic autoloader by setting `config.autoloader` this way:
+As aplicações podem carregar os padrões do Rails 6 e ainda usar o carregamento automático clássico definindo `config.autoloader` desta forma:
 
 ```ruby
 # config/application.rb
@@ -553,11 +552,11 @@ config.load_defaults 6.0
 config.autoloader = :classic
 ```
 
-When using the Classic Autoloader in Rails 6 application it is recommended to set concurrency level to 1 in development environment, for the web servers and background processors, due to the thread-safety concerns.
+Ao usar o Carregamento Automático Clássico na aplicação Rails 6, é recomendado definir o nível de simultaneidade (*concurrency*) como 1 no ambiente de desenvolvimento, para os servidores web e processadores de segundo plano, devido às questões de *thread-safety*.
 
-### Active Storage assignment behavior change
+### Alteração de comportamento de atribuição do *Active Storage*
 
-With the configuration defaults for Rails 5.2, assigning to a collection of attachments declared with `has_many_attached` appends new files:
+Com os padrões de configuração para Rails 5.2, atribuir a uma coleção de anexos declarados com `has_many_attached` acrescenta novos arquivos:
 
 ```ruby
 class User < ApplicationRecord
@@ -575,7 +574,7 @@ user.highlights.first.filename # => "funky.jpg"
 user.highlights.second.filename # => "town.jpg"
 ```
 
-With the configuration defaults for Rails 6.0, assigning to a collection of attachments replaces existing files instead of appending to them. This matches Active Record behavior when assigning to a collection association:
+Com os padrões de configuração do Rails 6.0, atribuir a uma coleção de anexos substitui os arquivos existentes em vez de anexar a eles. Isso corresponde ao comportamento do *Active Record* ao atribuir a uma associação de coleção:
 
 ```ruby
 user.highlights.attach(filename: "funky.jpg", ...)
@@ -588,7 +587,7 @@ user.highlights.count # => 1
 user.highlights.first.filename # => "town.jpg"
 ```
 
-`#attach` can be used to add new attachments without removing the existing ones:
+`#attach` pode ser usado para adicionar novos anexos sem remover os existentes:
 
 ```ruby
 blob = ActiveStorage::Blob.create_after_upload!(filename: "town.jpg", ...)
@@ -599,7 +598,7 @@ user.highlights.first.filename # => "funky.jpg"
 user.highlights.second.filename # => "town.jpg"
 ```
 
-Existing applications can opt in to this new behavior by setting `config.active_storage.replace_on_assign_to_many` to `true`. The old behavior will be deprecated in Rails 6.1 and removed in a subsequent release.
+As aplicações existentes podem aceitar este novo comportamento definindo `config.active_storage.replace_on_assign_to_many` como `true`. O comportamento antigo será descontinuado no Rails 6.1 e removido em uma versão subsequente.
 
 Upgrading from Rails 5.1 to Rails 5.2
 -------------------------------------
