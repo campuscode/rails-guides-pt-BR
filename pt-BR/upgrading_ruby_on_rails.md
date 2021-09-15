@@ -777,9 +777,9 @@ use `mysql2` instead. It will be converted to a separate gem when we find someon
 it.
 O Rails 5 remove o suporte para o antigo adaptador de banco de dados `mysql`. A maioria dos usuários devem usar o `mysql2` em vez disso. Será convertido em uma *gem* separada quando encontrarmos alguém para manter.
 
-### Removed Support for Debugger
+### Removido suporte para o *Debugger*
 
-`debugger` is not supported by Ruby 2.2 which is required by Rails 5. Use `byebug` instead.
+`debugger` não é suportado pelo Ruby 2.2 que é requerido pelo Rails 5. Use `byebug` ao invés.
 
 ### Use `bin/rails` for running tasks and tests
 
