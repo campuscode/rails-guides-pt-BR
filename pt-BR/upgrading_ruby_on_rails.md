@@ -781,16 +781,16 @@ O Rails 5 remove o suporte para o antigo adaptador de banco de dados `mysql`. A 
 
 `debugger` não é suportado pelo Ruby 2.2 que é requerido pelo Rails 5. Use `byebug` ao invés.
 
-### Use `bin/rails` for running tasks and tests
+### Use `bin/rails` para executar tarefas e testes
 
-Rails 5 adds the ability to run tasks and tests through `bin/rails` instead of rake. Generally
-these changes are in parallel with rake, but some were ported over altogether.
+Rails 5 adiciona a habilidade de executar tarefas e testes através de `bin/rails` ao invés de *rake*.
+Geralmente essas mudanças ocorrem em paralelo com o *rake*, mas algumas foram portadas completamente.
 
-To use the new test runner simply type `bin/rails test`.
+Para usar o novo executor de teste, simplesmente digite `bin/rails test`.
 
-`rake dev:cache` is now `bin/rails dev:cache`.
+`rake dev:cache` é agora `bin/rails dev:cache`.
 
-Run `bin/rails` inside your application's root directory to see the list of commands available.
+Execute `bin/rails` dentro do diretório raiz da sua aplicação para ver a lista de comandos disponíveis.
 
 ### `ActionController::Parameters` No Longer Inherits from `HashWithIndifferentAccess`
 
