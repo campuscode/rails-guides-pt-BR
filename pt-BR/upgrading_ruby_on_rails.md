@@ -818,10 +818,10 @@ Anteriormente, o Rails renderizava arquivos usando o *ERB template handler*.
 Se você não deseja que seu arquivo seja tratado por meio do *raw handler*, você deve adicionar uma extensão
 ao seu arquivo que pode ser analisado pelo *template handler* apropriado.
 
-### Added Wildcard Matching for Template Dependencies
+### Adicionada correspondência de curinga (*Wildcard*) para *Template Dependencies*
 
-You can now use wildcard matching for your template dependencies. For example, if you were
-defining your templates as such:
+Agora você pode usar a correspondência de curinga para suas *template dependencies*. Por exemplo, se você
+definisse seus *templates* como:
 
 ```erb
 <% # Template Dependency: recordings/threads/events/subscribers_changed %>
@@ -829,7 +829,7 @@ defining your templates as such:
 <% # Template Dependency: recordings/threads/events/uncompleted %>
 ```
 
-You can now just call the dependency once with a wildcard.
+Agora você pode chamar a dependência apenas uma vez com um curinga.
 
 ```erb
 <% # Template Dependency: recordings/threads/events/* %>
