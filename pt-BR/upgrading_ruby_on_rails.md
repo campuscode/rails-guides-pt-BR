@@ -835,15 +835,15 @@ Agora você pode chamar a dependência apenas uma vez com um curinga.
 <% # Template Dependency: recordings/threads/events/* %>
 ```
 
-### `ActionView::Helpers::RecordTagHelper` moved to external gem (record_tag_helper)
+### `ActionView::Helpers::RecordTagHelper` movido para a *gem* externa (record_tag_helper)
 
-`content_tag_for` and `div_for` have been removed in favor of just using `content_tag`. To continue using the older methods, add the `record_tag_helper` gem to your `Gemfile`:
+`content_tag_for` e `div_for` foram removidos em favor de usar apenas `content_tag`. Para continuar usando os métodos mais antigos, adicione a *gem* `record_tag_helper` ao seu `Gemfile`:
 
 ```ruby
 gem 'record_tag_helper', '~> 1.0'
 ```
 
-See [#18411](https://github.com/rails/rails/pull/18411) for more details.
+Veja [#18411](https://github.com/rails/rails/pull/18411) para mais detalhes.
 
 ### Removed Support for `protected_attributes` Gem
 
