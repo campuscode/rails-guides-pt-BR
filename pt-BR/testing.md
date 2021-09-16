@@ -598,11 +598,11 @@ Isso pode ser feito executando `bin/rails db:test:prepare`.
 
 Para fazer bons testes, você precisará pensar bastante em como irá preparar seus dados de teste.
 No Rails, você pode lidar com isso definindo e customizando *fixtures*.
-Você pode encontrar a documentação completa em [Fixtures API documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+Você pode encontrar a documentação completa em [documentação da API de Fixtures](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
 
 #### O que são *Fixtures*?
 
-*Fixtures* é uma palavra bonita pra dados de teste.
+*Fixtures* é uma apenas uma palavra bonita pra dados de teste.
 *Fixtures* permitem você popular seu banco de teste com dados predefinidos antes dos testes rodarem.
 *Fixtures* funcionam indepententemente do banco de dados e são escritas em YAML.
 Há um arquivo por *model*.
@@ -614,13 +614,13 @@ Quando se roda `bin/rails generate model` para criar um *model*, o Rails automat
 
 #### YAML
 
-*Fixtures* escritas em YAML são um jeito amigável para humanos para escrever seus dados de teste.
+*Fixtures* escritas em YAML são um jeito amigável para humanos de escrever seus dados de teste.
 Esse tipo de *fixture* vai ter a extensão **.yml** (como em `users.yml`).
 
 Segue um exemplo de *fixture* em arquivo YAML:
 
 ```yaml
-# Veja e contemplem! Eu sou um comentário em YAML!
+# Vejam e contemplem! Eu sou um comentário em YAML!
 david:
   name: David Heinemeier Hansson
   birthday: 1979-10-15
@@ -636,7 +636,7 @@ Cada *fixture* recebe um nome, seguido de uma lista identada de chaves/valores s
 Registros são separados uns dos outros por uma linha em branco.
 Você pode colocar comentários em uma arquivo *fixture* usando o caractere # na primeira coluna do texto.
 
-Se você está trabalhando com [associações](/association_basics.html), você pode definir uma referência entre duas *fixtures* diferentes.
+Se você está trabalhando com [associações](/association_basics.html), você pode definir referências entre duas *fixtures* diferentes.
 Aqui está um exemplo com uma associação `belongs_to`/`has_many`:
 
 ```yaml
@@ -656,13 +656,16 @@ first:
 Veja que a chave de `category` do artigo `first` encontrado em `fixtures/articles.yml` tem o valor `about`.
 Isso diz ao Rails para carregar a categoria `about` encontrada em `fixtures/categories.yml`.
 
-NOTE: Para que associações façam referência umas as outras pelo nome, você pode usar o nome da *fixture* ao invés de especificar a chave `id:` nas *fixtures* associadas. O Rails vai dar automaticamente uma chave primária
+NOTE: Para que associações façam referência umas as outras pelo nome, você pode usar o nome da *fixture* ao invés de especificar a chave `id:` nas *fixtures* associadas.
+O Rails vai dar automaticamente uma chave para que haja consistência entre execuções dos testes.
+Para mais informações sobre esse comportamento das associações, leia a página [documentação da API de Fixtures](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
 
-NOTE: For associations to reference one another by name, you can use the fixture name instead of specifying the `id:` attribute on the associated fixtures. Rails will auto assign a primary key to be consistent between runs. For more information on this association behavior please read the [Fixtures API documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+#### ERBzando as Fixtures
 
-#### ERB'in It Up
-
-ERB allows you to embed Ruby code within templates. The YAML fixture format is pre-processed with ERB when Rails loads fixtures. This allows you to use Ruby to help you generate some sample data. For example, the following code generates a thousand users:
+A linguagem ERB permite que você coloque código Ruby dentro de templates.
+As *fixtures* em formato YAML são pré-processadas com ERB antes do Rails carregar as *fixtures*.
+Isso faz com que você possa usar Ruby para ajudar a gerar dados de teste.
+Por exemplo, o código a seguir vai gerar mil usuários:
 
 ```erb
 <% 1000.times do |n| %>
@@ -672,40 +675,46 @@ user_<%= n %>:
 <% end %>
 ```
 
-#### Fixtures in Action
+#### Fixtures em ação
 
-Rails automatically loads all fixtures from the `test/fixtures` directory by
-default. Loading involves three steps:
+O Rails automaticamente carrega todas as *fixtures* dentro do diretório `test/fixtures` por padrão.
+O carregamento envolve três passos:
 
-1. Remove any existing data from the table corresponding to the fixture
-2. Load the fixture data into the table
-3. Dump the fixture data into a method in case you want to access it directly
 
-TIP: In order to remove existing data from the database, Rails tries to disable referential integrity triggers (like foreign keys and check constraints). If you are getting annoying permission errors on running tests, make sure the database user has privilege to disable these triggers in testing environment. (In PostgreSQL, only superusers can disable all triggers. Read more about PostgreSQL permissions [here](http://blog.endpoint.com/2012/10/postgres-system-triggers-error.html)).
+1. Remover qualquer dado existente da tabela que corresponde a *fixture*
+2. Carregar os dados da *fixture* na tabela
+3. Copiar os dados da *fixture* para dentro de um método caso você queira acessá-los diretamente
 
-#### Fixtures are Active Record objects
+TIP: Para remover todos os dados existentes, o Rails tenta desabilitar os *triggers* de integridade referencial (como chaves estrangeiras e *constraints*).
+Se você estiver recebendo erros irritantes de permissão na hora de rodar os testes, garanta que o usuário do banco de dados tenha permissão para desabilitar esses *triggers* no ambiente de teste.
+(No PostgreSQL, somente superusuários podem desatival todos os *triggers*.
+Leia mais sobre as permissões do PostgreSQL [aqui](http://blog.endpoint.com/2012/10/postgres-system-triggers-error.html)).
 
-Fixtures are instances of Active Record. As mentioned in point #3 above, you can access the object directly because it is automatically available as a method whose scope is local of the test case. For example:
+#### Fixtures são objetos do Acive Record
+
+*Fixtures* são instâncias de Active Record.
+Como mencionado no ponto #3 acima, você pode acessar o objeto diretamente, já que ele está automaticamente acessível como um método cujo escopo é local para cada teste.
+Por exemplo:
 
 ```ruby
-# this will return the User object for the fixture named david
+# isso retornará um objeto User para a fixture chamada david
 users(:david)
 
-# this will return the property for david called id
+# isso retornará a propriedade id de david
 users(:david).id
 
-# one can also access methods available on the User class
+# também é possível acessar os métodos disponíveis dentro de User
 david = users(:david)
 david.call(david.partner)
 ```
 
-To get multiple fixtures at once, you can pass in a list of fixture names. For example:
+Para acessar várias *fixtures* de uma vez, você pode passar uma lista de nomes de *fixtures*.
+Por exemplo:
 
 ```ruby
-# this will return an array containing the fixtures david and steve
+# isso retornará uma array contendo as fixtures david e steve
 users(:david, :steve)
 ```
-
 
 Model Testing
 -------------
