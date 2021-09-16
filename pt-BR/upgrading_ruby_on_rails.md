@@ -810,13 +810,13 @@ O padrão `protect_from_forgery` é `prepend: false`, o que significa que será 
 `protect_from_forgery` para sempre executar primeiro, então você deve alterar sua aplicação para usar
 `protect_from_forgery prepend: true`.
 
-### Default Template Handler is Now RAW
+### O *Template Handler* padrão agora é *RAW*
 
-Files without a template handler in their extension will be rendered using the raw handler.
-Previously Rails would render files using the ERB template handler.
+Os arquivos sem um *template handler* em sua extensão serão renderizados usando o *raw handler*.
+Anteriormente, o Rails renderizava arquivos usando o *ERB template handler*.
 
-If you do not want your file to be handled via the raw handler, you should add an extension
-to your file that can be parsed by the appropriate template handler.
+Se você não deseja que seu arquivo seja tratado por meio do *raw handler*, você deve adicionar uma extensão
+ao seu arquivo que pode ser analisado pelo *template handler* apropriado.
 
 ### Added Wildcard Matching for Template Dependencies
 
