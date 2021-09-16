@@ -792,12 +792,12 @@ Para usar o novo executor de teste, simplesmente digite `bin/rails test`.
 
 Execute `bin/rails` dentro do diretório raiz da sua aplicação para ver a lista de comandos disponíveis.
 
-### `ActionController::Parameters` No Longer Inherits from `HashWithIndifferentAccess`
+### `ActionController::Parameters` Não herda mais de `HashWithIndifferentAccess`
 
-Calling `params` in your application will now return an object instead of a hash. If your
-parameters are already permitted, then you will not need to make any changes. If you are using `map`
-and other methods that depend on being able to read the hash regardless of `permitted?` you will
-need to upgrade your application to first permit and then convert to a hash.
+Chamar `params` em sua aplicação agora retornará um objeto em vez de um *hash*. Se seus
+parâmetros já são permitidos, então você não precisará fazer nenhuma alteração. Se você estiver usando `map`
+e outros métodos que dependem de ser capaz de ler o *hash* independentemente de `permitted?` você
+precisará atualizar sua aplicação para primeiro permitir e depois converter para um *hash*.
 
 ```ruby
 params.permit([:proceed_to, :return_to]).to_h
