@@ -180,7 +180,7 @@ test "should not save article without title" do
 end
 ```
 
-Running this test shows the friendlier assertion message:
+Executando esse teste mostra uma mensagem de asserção mais amigável:
 
 ```
 Failure:
@@ -188,7 +188,7 @@ ArticleTest#test_should_not_save_article_without_title [/path/to/blog/test/model
 Saved the article without a title
 ```
 
-Now to get this test to pass we can add a model level validation for the _title_ field.
+Agora para fazer esse teste pasar nós podemos adicionar uma validação no nível do model para o campo _title_.
 
 ```ruby
 class Article < ApplicationRecord
