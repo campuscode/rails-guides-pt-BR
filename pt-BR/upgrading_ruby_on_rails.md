@@ -803,11 +803,11 @@ precisará atualizar sua aplicação para primeiro permitir e depois converter p
 params.permit([:proceed_to, :return_to]).to_h
 ```
 
-### `protect_from_forgery` Now Defaults to `prepend: false`
+### `protect_from_forgery` Agora assume como padrão `prepend:false`
 
-`protect_from_forgery` defaults to `prepend: false` which means that it will be inserted into
-the callback chain at the point in which you call it in your application. If you want
-`protect_from_forgery` to always run first, then you should change your application to use
+O padrão `protect_from_forgery` é `prepend: false`, o que significa que será inserido no
+*callback* no ponto em que você a chama em sua aplicação. Se você quiser
+`protect_from_forgery` para sempre executar primeiro, então você deve alterar sua aplicação para usar
 `protect_from_forgery prepend: true`.
 
 ### Default Template Handler is Now RAW
