@@ -656,7 +656,7 @@ Rails.application.secrets[:smtp_settings][:address]
 
 Se suas *views* estiverem usando `render :text`, elas não funcionarão mais. O novo método de renderização de texto com o tipo MIME de `text/plain` é usar `render :plain`.
 
-Similarmente, `render:nothing` também é removido e você deve usar o método `head` para enviar respostas que contenham apenas cabeçalhos (*headers*). Por exemplo, `head:ok` envia uma resposta 200 sem corpo (*body*) para renderizar.
+Similarmente, `render :nothing` também é removido e você deve usar o método `head` para enviar respostas que contenham apenas cabeçalhos (*headers*). Por exemplo, `head :ok` envia uma resposta 200 sem corpo (*body*) para renderizar.
 
 
 Upgrading from Rails 4.2 to Rails 5.0
