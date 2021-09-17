@@ -853,10 +853,10 @@ A *gem* `protected_attributes` não é mais suportada no Rails 5.
 
 A *gem* `activerecord-deprecated_finders` não é mais suportada no Rails 5.
 
-### `ActiveSupport::TestCase` Default Test Order is Now Random
+### A ordem do teste padrão `ActiveSupport::TestCase` agora é aleatória
 
-When tests are run in your application, the default order is now `:random`
-instead of `:sorted`. Use the following config option to set it back to `:sorted`.
+Quando os testes são executados em sua aplicação, a ordem padrão agora é `:random`
+em vez de `:sorted`. Use a seguinte opção de configuração para defini-lo de volta para `:sorted`.
 
 ```ruby
 # config/environments/test.rb
