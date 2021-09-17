@@ -307,34 +307,34 @@ that are supported by the PostgreSQL adapter.</p><h4 id="bytea"><a class="anchor
   <span class="n">t</span><span class="p">.</span><span class="nf">binary</span> <span class="s1">'payload'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4563e1aa95484a6f0c69e9822dec922d"># db/migrate/20140207133952_create_documents.rb
+<textarea class="clipboard-content" id="clipboard-3aa9635de50865ad12b8e9c3a28b2a8f"># db/migrate/20140207133952_create_documents.rb
 create_table :documents do |t|
   t.binary 'payload'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4563e1aa95484a6f0c69e9822dec922d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3aa9635de50865ad12b8e9c3a28b2a8f">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/document.rb</span>
 <span class="k">class</span> <span class="nc">Document</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f93817dc818331d38594c3075c4a80b4"># app/models/document.rb
+<textarea class="clipboard-content" id="clipboard-e5bcf0368ad719a6e9fecc3343133bd4"># app/models/document.rb
 class Document &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f93817dc818331d38594c3075c4a80b4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e5bcf0368ad719a6e9fecc3343133bd4">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Usage</span>
 <span class="n">data</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span> <span class="o">+</span> <span class="s2">"tmp/output.pdf"</span><span class="p">)</span>
 <span class="no">Document</span><span class="p">.</span><span class="nf">create</span> <span class="ss">payload: </span><span class="n">data</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf08f72bce1730842b7fa0e89719148a"># Usage
+<textarea class="clipboard-content" id="clipboard-d06fbbc7c62c3049b76790680568df2d"># Usage
 data = File.read(Rails.root + "tmp/output.pdf")
 Document.create payload: data
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf08f72bce1730842b7fa0e89719148a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d06fbbc7c62c3049b76790680568df2d">Copiar</button>
 </div>
 <h4 id="array"><a class="anchorlink" href="#array">1.2 Array</a></h4>
 <ul>
@@ -351,7 +351,7 @@ Document.create payload: data
 <span class="n">add_index</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">using: </span><span class="s1">'gin'</span>
 <span class="n">add_index</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">:ratings</span><span class="p">,</span> <span class="ss">using: </span><span class="s1">'gin'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1a9732de66ac91cd0089a7edfb5cf968"># db/migrate/20140207133952_create_books.rb
+<textarea class="clipboard-content" id="clipboard-2cbef8f155b4c41cfc045ca9257c9191"># db/migrate/20140207133952_create_books.rb
 create_table :books do |t|
   t.string 'title'
   t.string 'tags', array: true
@@ -360,18 +360,18 @@ end
 add_index :books, :tags, using: 'gin'
 add_index :books, :ratings, using: 'gin'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1a9732de66ac91cd0089a7edfb5cf968">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2cbef8f155b4c41cfc045ca9257c9191">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/book.rb</span>
 <span class="k">class</span> <span class="nc">Book</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3fa83ac20769d2efe8f80d10548922b1"># app/models/book.rb
+<textarea class="clipboard-content" id="clipboard-02f9b02e1afac4312cd12ccbe0c31da5"># app/models/book.rb
 class Book &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3fa83ac20769d2efe8f80d10548922b1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-02f9b02e1afac4312cd12ccbe0c31da5">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Usage</span>
@@ -388,7 +388,7 @@ end
 <span class="c1">## Books with 3 or more ratings</span>
 <span class="no">Book</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"array_length(ratings, 1) &gt;= 3"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b2a70fc05f54e1ae21eafc72d1570dc1"># Usage
+<textarea class="clipboard-content" id="clipboard-c8fa61f9dc40665057ce53eb92055caa"># Usage
 Book.create title: "Brave New World",
             tags: ["fantasy", "fiction"],
             ratings: [4, 5]
@@ -402,7 +402,7 @@ Book.where("tags @&gt; ARRAY[?]::varchar[]", ["fantasy", "fiction"])
 ## Books with 3 or more ratings
 Book.where("array_length(ratings, 1) &gt;= 3")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b2a70fc05f54e1ae21eafc72d1570dc1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c8fa61f9dc40665057ce53eb92055caa">Copiar</button>
 </div>
 <h4 id="hstore"><a class="anchorlink" href="#hstore">1.3 Hstore</a></h4>
 <ul>
@@ -418,7 +418,7 @@ Book.where("array_length(ratings, 1) &gt;= 3")
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3b26ee281ecf062b457759097c5f6dbf"># db/migrate/20131009135255_create_profiles.rb
+<textarea class="clipboard-content" id="clipboard-49a51f59b0792a57a578b6d7f8ed554c"># db/migrate/20131009135255_create_profiles.rb
 ActiveRecord::Schema.define do
   enable_extension 'hstore' unless extension_enabled?('hstore')
   create_table :profiles do |t|
@@ -426,18 +426,18 @@ ActiveRecord::Schema.define do
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3b26ee281ecf062b457759097c5f6dbf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-49a51f59b0792a57a578b6d7f8ed554c">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/profile.rb</span>
 <span class="k">class</span> <span class="nc">Profile</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-50a173fb0d1174900b076372f4351876"># app/models/profile.rb
+<textarea class="clipboard-content" id="clipboard-b346f965764434e8f4860c85b803b6f5"># app/models/profile.rb
 class Profile &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-50a173fb0d1174900b076372f4351876">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b346f965764434e8f4860c85b803b6f5">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Profile</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">settings: </span><span class="p">{</span> <span class="s2">"color"</span> <span class="o">=&gt;</span> <span class="s2">"blue"</span><span class="p">,</span> <span class="s2">"resolution"</span> <span class="o">=&gt;</span> <span class="s2">"800x600"</span> <span class="p">})</span>
@@ -452,14 +452,14 @@ end
 </span><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Profile</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"settings-&gt;'color' = ?"</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">)</span>
 <span class="p">=&gt;</span> <span class="kt">#&lt;</span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Relation</span> <span class="p">[</span><span class="kt">#&lt;</span><span class="no">Profile</span> <span class="ss">id: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">settings: </span><span class="p">{</span><span class="s2">"color"</span><span class="o">=</span><span class="kt">&gt;</span><span class="s2">"yellow"</span><span class="p">,</span> <span class="s2">"resolution"</span><span class="o">=</span><span class="kt">&gt;</span><span class="s2">"1280x1024"</span><span class="p">}</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3290038152a5dd4fb0f785c4a68cc338">Profile.create(settings: { "color" =&gt; "blue", "resolution" =&gt; "800x600" })
+<textarea class="clipboard-content" id="clipboard-30b17e7c3cbd093a574fd2cc07e7203d">Profile.create(settings: { "color" =&gt; "blue", "resolution" =&gt; "800x600" })
 profile = Profile.first
 profile.settings
 profile.settings = {"color" =&gt; "yellow", "resolution" =&gt; "1280x1024"}
 profile.save!
 Profile.where("settings-&gt;'color' = ?", "yellow")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3290038152a5dd4fb0f785c4a68cc338">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-30b17e7c3cbd093a574fd2cc07e7203d">Copiar</button>
 </div>
 <h4 id="json-and-jsonb"><a class="anchorlink" href="#json-and-jsonb">1.4 JSON and JSONB</a></h4>
 <ul>
@@ -477,7 +477,7 @@ Profile.where("settings-&gt;'color' = ?", "yellow")
   <span class="n">t</span><span class="p">.</span><span class="nf">jsonb</span> <span class="s1">'payload'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4e2383f3194923e89d9204bda7b66f1e"># db/migrate/20131220144913_create_events.rb
+<textarea class="clipboard-content" id="clipboard-3d1374e5fa8b865938e65adb3ccb0599"># db/migrate/20131220144913_create_events.rb
 # ... for json datatype:
 create_table :events do |t|
   t.json 'payload'
@@ -487,18 +487,18 @@ create_table :events do |t|
   t.jsonb 'payload'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4e2383f3194923e89d9204bda7b66f1e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3d1374e5fa8b865938e65adb3ccb0599">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/event.rb</span>
 <span class="k">class</span> <span class="nc">Event</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dc9c382ceb2e8ed87c939f6dc19226ba"># app/models/event.rb
+<textarea class="clipboard-content" id="clipboard-2a3c8c12dcc681660a26c5349a0b956b"># app/models/event.rb
 class Event &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dc9c382ceb2e8ed87c939f6dc19226ba">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a3c8c12dcc681660a26c5349a0b956b">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Event</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">payload: </span><span class="p">{</span> <span class="ss">kind: </span><span class="s2">"user_renamed"</span><span class="p">,</span> <span class="ss">change: </span><span class="p">[</span><span class="s2">"jack"</span><span class="p">,</span> <span class="s2">"john"</span><span class="p">]})</span>
@@ -511,12 +511,12 @@ end
 # The -&gt; operator returns the original JSON type (which might be an object), whereas -&gt;&gt; returns text
 </span><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Event</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"payload-&gt;&gt;'kind' = ?"</span><span class="p">,</span> <span class="s2">"user_renamed"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-667f76ce8203b7038ecb087f6cf496ff">Event.create(payload: { kind: "user_renamed", change: ["jack", "john"]})
+<textarea class="clipboard-content" id="clipboard-96d34d6f14f42be29b86344b36f0d907">Event.create(payload: { kind: "user_renamed", change: ["jack", "john"]})
 event = Event.first
 event.payload
 Event.where("payload-&gt;&gt;'kind' = ?", "user_renamed")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-667f76ce8203b7038ecb087f6cf496ff">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-96d34d6f14f42be29b86344b36f0d907">Copiar</button>
 </div>
 <h4 id="range-types"><a class="anchorlink" href="#range-types">1.5 Range Types</a></h4>
 <ul>
@@ -529,23 +529,23 @@ Event.where("payload-&gt;&gt;'kind' = ?", "user_renamed")
   <span class="n">t</span><span class="p">.</span><span class="nf">daterange</span> <span class="s1">'duration'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8b30d210ea31e6ac099030186597970b"># db/migrate/20130923065404_create_events.rb
+<textarea class="clipboard-content" id="clipboard-d948953e215c1215552bcefc5a680fb5"># db/migrate/20130923065404_create_events.rb
 create_table :events do |t|
   t.daterange 'duration'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8b30d210ea31e6ac099030186597970b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d948953e215c1215552bcefc5a680fb5">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/event.rb</span>
 <span class="k">class</span> <span class="nc">Event</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7d8e45f84255822fc5ce22de59475420"># app/models/event.rb
+<textarea class="clipboard-content" id="clipboard-57e775ad6fe5cb244591ad36cdc58851"># app/models/event.rb
 class Event &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7d8e45f84255822fc5ce22de59475420">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-57e775ad6fe5cb244591ad36cdc58851">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Event</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">duration: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span><span class="o">..</span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
@@ -565,7 +565,7 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="nf">ends_at</span>
 <span class="p">=&gt;</span> <span class="no">Thu</span><span class="p">,</span> <span class="mi">13</span> <span class="no">Feb</span> <span class="mi">2014</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-573854e0830ffa2dbcd6291eb99c9a17">Event.create(duration: Date.new(2014, 2, 11)..Date.new(2014, 2, 12))
+<textarea class="clipboard-content" id="clipboard-79dbca769542f929d6deffc6d13f75b7">Event.create(duration: Date.new(2014, 2, 11)..Date.new(2014, 2, 12))
 event = Event.first
 event.duration
 Event.where("duration @&gt; ?::date", Date.new(2014, 2, 12))
@@ -573,7 +573,7 @@ event = Event.select("lower(duration) AS starts_at").select("upper(duration) AS 
 event.starts_at
 event.ends_at
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-573854e0830ffa2dbcd6291eb99c9a17">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-79dbca769542f929d6deffc6d13f75b7">Copiar</button>
 </div>
 <h4 id="composite-types"><a class="anchorlink" href="#composite-types">1.6 Composite Types</a></h4>
 <ul>
@@ -587,13 +587,13 @@ normal text columns:</p><div class="code_container">
   <span class="n">street</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-90c4b18d1aade99e06aad9dc0f6a6d62">CREATE TYPE full_address AS
+<textarea class="clipboard-content" id="clipboard-314b49251dcf6ff91978356c2edbe4cd">CREATE TYPE full_address AS
 (
   city VARCHAR(90),
   street VARCHAR(90)
 );
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-90c4b18d1aade99e06aad9dc0f6a6d62">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-314b49251dcf6ff91978356c2edbe4cd">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20140207133952_create_contacts.rb</span>
@@ -608,7 +608,7 @@ normal text columns:</p><div class="code_container">
   <span class="n">t</span><span class="p">.</span><span class="nf">column</span> <span class="ss">:address</span><span class="p">,</span> <span class="ss">:full_address</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b91af2d9e4da58308b7ed45de38880d2"># db/migrate/20140207133952_create_contacts.rb
+<textarea class="clipboard-content" id="clipboard-db509e71b0668907c7f6b663a7d6083b"># db/migrate/20140207133952_create_contacts.rb
 execute &lt;&lt;-SQL
   CREATE TYPE full_address AS
   (
@@ -620,18 +620,18 @@ create_table :contacts do |t|
   t.column :address, :full_address
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b91af2d9e4da58308b7ed45de38880d2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-db509e71b0668907c7f6b663a7d6083b">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/contact.rb</span>
 <span class="k">class</span> <span class="nc">Contact</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-94f1dba8cc96d8b494aa5948c09c6151"># app/models/contact.rb
+<textarea class="clipboard-content" id="clipboard-711ab2c1dea50c0c92b8bad504cbfa78"># app/models/contact.rb
 class Contact &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-94f1dba8cc96d8b494aa5948c09c6151">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-711ab2c1dea50c0c92b8bad504cbfa78">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Contact</span><span class="p">.</span><span class="nf">create</span> <span class="ss">address: </span><span class="s2">"(Paris,Champs-Élysées)"</span>
@@ -641,13 +641,13 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">contact</span><span class="p">.</span><span class="nf">address</span> <span class="o">=</span> <span class="s2">"(Paris,Rue Basse)"</span>
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">contact</span><span class="p">.</span><span class="nf">save!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e10439d2b821e7c8ba24175776481b8f">Contact.create address: "(Paris,Champs-Élysées)"
+<textarea class="clipboard-content" id="clipboard-3e36382b10313e67d5d2a36063b5f959">Contact.create address: "(Paris,Champs-Élysées)"
 contact = Contact.first
 contact.address
 contact.address = "(Paris,Rue Basse)"
 contact.save!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e10439d2b821e7c8ba24175776481b8f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3e36382b10313e67d5d2a36063b5f959">Copiar</button>
 </div>
 <h4 id="enumerated-types"><a class="anchorlink" href="#enumerated-types">1.7 Enumerated Types</a></h4>
 <ul>
@@ -674,7 +674,7 @@ normal text columns:</p><div class="code_container">
 </span><span class="no">  SQL</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f8ce059d646f9ae18c0db60c1695c688"># db/migrate/20131220144913_create_articles.rb
+<textarea class="clipboard-content" id="clipboard-c270a4f1d1926cee27ed68c18a06c0ee"># db/migrate/20131220144913_create_articles.rb
 def up
   execute &lt;&lt;-SQL
     CREATE TYPE article_status AS ENUM ('draft', 'published');
@@ -693,18 +693,18 @@ def down
   SQL
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f8ce059d646f9ae18c0db60c1695c688">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c270a4f1d1926cee27ed68c18a06c0ee">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/article.rb</span>
 <span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e4d48c23248cd9bdfb1cdd3774e2a656"># app/models/article.rb
+<textarea class="clipboard-content" id="clipboard-3d8e81ed8bf68fb5fc28a0e6e98178bf"># app/models/article.rb
 class Article &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e4d48c23248cd9bdfb1cdd3774e2a656">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3d8e81ed8bf68fb5fc28a0e6e98178bf">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Article</span><span class="p">.</span><span class="nf">create</span> <span class="ss">status: </span><span class="s2">"draft"</span>
@@ -715,13 +715,13 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span><span class="p">.</span><span class="nf">status</span> <span class="o">=</span> <span class="s2">"published"</span>
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span><span class="p">.</span><span class="nf">save!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a921bc1680f075fdde3ae96045dbeb22">Article.create status: "draft"
+<textarea class="clipboard-content" id="clipboard-05ac08a665cbd59dfecf45be8e7a90ee">Article.create status: "draft"
 article = Article.first
 article.status
 article.status = "published"
 article.save!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a921bc1680f075fdde3ae96045dbeb22">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-05ac08a665cbd59dfecf45be8e7a90ee">Copiar</button>
 </div>
 <p>To add a new value before/after existing one you should use <a href="https://www.postgresql.org/docs/current/static/sql-altertype.html">ALTER TYPE</a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20150720144913_add_new_state_to_articles.rb</span>
@@ -734,7 +734,7 @@ article.save!
 </span><span class="no">  SQL</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f467a1c64fd91bd27c3a458a4bd6ef46"># db/migrate/20150720144913_add_new_state_to_articles.rb
+<textarea class="clipboard-content" id="clipboard-875df02e1e60181cd5a850987143324b"># db/migrate/20150720144913_add_new_state_to_articles.rb
 # NOTE: ALTER TYPE ... ADD VALUE cannot be executed inside of a transaction block so here we are using disable_ddl_transaction!
 disable_ddl_transaction!
 
@@ -744,7 +744,7 @@ def up
   SQL
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f467a1c64fd91bd27c3a458a4bd6ef46">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-875df02e1e60181cd5a850987143324b">Copiar</button>
 </div>
 <div class="note"><p>ENUM values can't be dropped currently. You can read why <a href="https://www.postgresql.org/message-id/29F36C7C98AB09499B1A209D48EAA615B7653DBC8A@mail2a.alliedtesting.com">here</a>.</p></div><p>Hint: to show all the values of the all enums you have, you should call this query in <code>bin/rails db</code> or <code>psql</code> console:</p><div class="code_container">
 <pre><code class="highlight sql"><span class="k">SELECT</span> <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="k">AS</span> <span class="n">enum_schema</span><span class="p">,</span>
@@ -754,14 +754,14 @@ end
       <span class="k">JOIN</span> <span class="n">pg_enum</span> <span class="n">e</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">enumtypid</span>
       <span class="k">JOIN</span> <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_namespace</span> <span class="n">n</span> <span class="k">ON</span> <span class="n">n</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">typnamespace</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-af00fbaea98d6fe7dbc436420c1bea80">SELECT n.nspname AS enum_schema,
+<textarea class="clipboard-content" id="clipboard-e6e4ed2e20aa13a4a9734700594814e8">SELECT n.nspname AS enum_schema,
        t.typname AS enum_name,
        e.enumlabel AS enum_value
   FROM pg_type t
       JOIN pg_enum e ON t.oid = e.enumtypid
       JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-af00fbaea98d6fe7dbc436420c1bea80">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e6e4ed2e20aa13a4a9734700594814e8">Copiar</button>
 </div>
 <h4 id="uuid"><a class="anchorlink" href="#uuid">1.8 UUID</a></h4>
 <ul>
@@ -776,23 +776,23 @@ extension to use uuid.</p></div><div class="code_container">
   <span class="n">t</span><span class="p">.</span><span class="nf">uuid</span> <span class="ss">:identifier</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3c5843b780200c6f1159961babc907e0"># db/migrate/20131220144913_create_revisions.rb
+<textarea class="clipboard-content" id="clipboard-247aeddeb0ece04e10f898008010e5eb"># db/migrate/20131220144913_create_revisions.rb
 create_table :revisions do |t|
   t.uuid :identifier
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3c5843b780200c6f1159961babc907e0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-247aeddeb0ece04e10f898008010e5eb">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/revision.rb</span>
 <span class="k">class</span> <span class="nc">Revision</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e8cf3663ce2ecdf32aee5c1895be430b"># app/models/revision.rb
+<textarea class="clipboard-content" id="clipboard-19ba3b69b6e80e27112e79e767eb1b7a"># app/models/revision.rb
 class Revision &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e8cf3663ce2ecdf32aee5c1895be430b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-19ba3b69b6e80e27112e79e767eb1b7a">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Revision</span><span class="p">.</span><span class="nf">create</span> <span class="ss">identifier: </span><span class="s2">"A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"</span>
@@ -801,11 +801,11 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">revision</span><span class="p">.</span><span class="nf">identifier</span>
 <span class="p">=&gt;</span> <span class="s2">"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6399dce03a3999fc345b32fe42598563">Revision.create identifier: "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"
+<textarea class="clipboard-content" id="clipboard-713c652d40c48b298db09d77632fc3fa">Revision.create identifier: "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"
 revision = Revision.first
 revision.identifier
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6399dce03a3999fc345b32fe42598563">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-713c652d40c48b298db09d77632fc3fa">Copiar</button>
 </div>
 <p>You can use <code>uuid</code> type to define references in migrations:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20150418012400_create_blog.rb</span>
@@ -817,7 +817,7 @@ revision.identifier
   <span class="n">t</span><span class="p">.</span><span class="nf">references</span> <span class="ss">:post</span><span class="p">,</span> <span class="ss">type: :uuid</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d6d83798df7df7211848278de4b40937"># db/migrate/20150418012400_create_blog.rb
+<textarea class="clipboard-content" id="clipboard-f8e764fe2d4b767216b97f1ea24d9afc"># db/migrate/20150418012400_create_blog.rb
 enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
 create_table :posts, id: :uuid
 
@@ -826,7 +826,7 @@ create_table :comments, id: :uuid do |t|
   t.references :post, type: :uuid
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d6d83798df7df7211848278de4b40937">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f8e764fe2d4b767216b97f1ea24d9afc">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/post.rb</span>
@@ -834,12 +834,12 @@ end
   <span class="n">has_many</span> <span class="ss">:comments</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0eea7dd6366f685fa568f611317a0b95"># app/models/post.rb
+<textarea class="clipboard-content" id="clipboard-a44bb0bff0d0b6f9df6eb0c6ea13982e"># app/models/post.rb
 class Post &lt; ApplicationRecord
   has_many :comments
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0eea7dd6366f685fa568f611317a0b95">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a44bb0bff0d0b6f9df6eb0c6ea13982e">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/comment.rb</span>
@@ -847,12 +847,12 @@ end
   <span class="n">belongs_to</span> <span class="ss">:post</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-62e0effd07da244cfeaf87ea105db156"># app/models/comment.rb
+<textarea class="clipboard-content" id="clipboard-0f4b1da21746009ec2728a0042fa5ef3"># app/models/comment.rb
 class Comment &lt; ApplicationRecord
   belongs_to :post
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-62e0effd07da244cfeaf87ea105db156">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f4b1da21746009ec2728a0042fa5ef3">Copiar</button>
 </div>
 <p>See <a href="#uuid-primary-keys">this section</a> for more details on using UUIDs as primary key.</p><h4 id="bit-string-types"><a class="anchorlink" href="#bit-string-types">1.9 Bit String Types</a></h4>
 <ul>
@@ -865,23 +865,23 @@ end
   <span class="n">t</span><span class="p">.</span><span class="nf">column</span> <span class="ss">:settings</span><span class="p">,</span> <span class="s2">"bit(8)"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-40e60d9ec2313f6b3edfa54ae43bf638"># db/migrate/20131220144913_create_users.rb
+<textarea class="clipboard-content" id="clipboard-d9c9c941f16c8e5651b3739e2ad6f164"># db/migrate/20131220144913_create_users.rb
 create_table :users, force: true do |t|
   t.column :settings, "bit(8)"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-40e60d9ec2313f6b3edfa54ae43bf638">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d9c9c941f16c8e5651b3739e2ad6f164">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/user.rb</span>
 <span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b199b12e0426680d705c1e268125f25f"># app/models/user.rb
+<textarea class="clipboard-content" id="clipboard-736b2a975025f85614bce0165f819274"># app/models/user.rb
 class User &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b199b12e0426680d705c1e268125f25f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-736b2a975025f85614bce0165f819274">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">User</span><span class="p">.</span><span class="nf">create</span> <span class="ss">settings: </span><span class="s2">"01010011"</span>
@@ -893,14 +893,14 @@ end
 <span class="p">=&gt;</span> <span class="mi">10101111</span>
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="nf">save!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-79637ab7bc4c32a5e6a0c385bc431601">User.create settings: "01010011"
+<textarea class="clipboard-content" id="clipboard-cf1a977cee8febffabd95c3d538f297c">User.create settings: "01010011"
 user = User.first
 user.settings
 user.settings = "0xAF"
 user.settings
 user.save!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-79637ab7bc4c32a5e6a0c385bc431601">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cf1a977cee8febffabd95c3d538f297c">Copiar</button>
 </div>
 <h4 id="network-address-types"><a class="anchorlink" href="#network-address-types">1.10 Network Address Types</a></h4>
 <ul>
@@ -916,25 +916,25 @@ objects. The <code>macaddr</code> type is mapped to normal text.</p><div class="
   <span class="n">t</span><span class="p">.</span><span class="nf">macaddr</span> <span class="s1">'address'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6bb7ba69d30f9e1c841db9b6cbe91eae"># db/migrate/20140508144913_create_devices.rb
+<textarea class="clipboard-content" id="clipboard-06a084a8a9208c5cbcd24e2bccabc985"># db/migrate/20140508144913_create_devices.rb
 create_table(:devices, force: true) do |t|
   t.inet 'ip'
   t.cidr 'network'
   t.macaddr 'address'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6bb7ba69d30f9e1c841db9b6cbe91eae">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-06a084a8a9208c5cbcd24e2bccabc985">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/device.rb</span>
 <span class="k">class</span> <span class="nc">Device</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-51f8ff809e498ad9f8e77a9361e48dfe"># app/models/device.rb
+<textarea class="clipboard-content" id="clipboard-558d1ee7d521d5119ea4bd98b2b1ced2"># app/models/device.rb
 class Device &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-51f8ff809e498ad9f8e77a9361e48dfe">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-558d1ee7d521d5119ea4bd98b2b1ced2">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">macbook</span> <span class="o">=</span> <span class="no">Device</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">ip: </span><span class="s2">"192.168.1.12"</span><span class="p">,</span> <span class="ss">network: </span><span class="s2">"192.168.2.0/24"</span><span class="p">,</span> <span class="ss">address: </span><span class="s2">"32:01:16:6d:05:ef"</span><span class="p">)</span>
@@ -948,12 +948,12 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">macbook</span><span class="p">.</span><span class="nf">address</span>
 <span class="p">=&gt;</span> <span class="s2">"32:01:16:6d:05:ef"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3ccc5083236645c8a0ecfbe8f5e57f46">macbook = Device.create(ip: "192.168.1.12", network: "192.168.2.0/24", address: "32:01:16:6d:05:ef")
+<textarea class="clipboard-content" id="clipboard-cd669c7091d9c121703512da4ebbf7e4">macbook = Device.create(ip: "192.168.1.12", network: "192.168.2.0/24", address: "32:01:16:6d:05:ef")
 macbook.ip
 macbook.network
 macbook.address
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3ccc5083236645c8a0ecfbe8f5e57f46">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cd669c7091d9c121703512da4ebbf7e4">Copiar</button>
 </div>
 <h4 id="geometric-types"><a class="anchorlink" href="#geometric-types">1.11 Geometric Types</a></h4>
 <ul>
@@ -971,23 +971,23 @@ A point is casted to an array containing <code>x</code> and <code>y</code> coord
   <span class="n">t</span><span class="p">.</span><span class="nf">interval</span> <span class="s1">'duration'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c4a76ca142109823e90e359ae6f3b2c7"># db/migrate/20200120000000_create_events.rb
+<textarea class="clipboard-content" id="clipboard-736f4411a51ac4c0f988ea258ec21160"># db/migrate/20200120000000_create_events.rb
 create_table :events do |t|
   t.interval 'duration'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c4a76ca142109823e90e359ae6f3b2c7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-736f4411a51ac4c0f988ea258ec21160">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/event.rb</span>
 <span class="k">class</span> <span class="nc">Event</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6a451f8f6a216a8c084ccb355ebcdef6"># app/models/event.rb
+<textarea class="clipboard-content" id="clipboard-452d72be302fb7a1a38c22be47ee7bd9"># app/models/event.rb
 class Event &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6a451f8f6a216a8c084ccb355ebcdef6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-452d72be302fb7a1a38c22be47ee7bd9">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Event</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">duration: </span><span class="mi">2</span><span class="p">.</span><span class="nf">days</span><span class="p">)</span>
@@ -996,11 +996,11 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="nf">duration</span>
 <span class="p">=&gt;</span> <span class="mi">2</span> <span class="n">days</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b5122f590f50755dcea040925873028a">Event.create(duration: 2.days)
+<textarea class="clipboard-content" id="clipboard-cad08a2affa2db5d70fcdd43c948e43e">Event.create(duration: 2.days)
 event = Event.first
 event.duration
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b5122f590f50755dcea040925873028a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cad08a2affa2db5d70fcdd43c948e43e">Copiar</button>
 </div>
 <h3 id="uuid-primary-keys"><a class="anchorlink" href="#uuid-primary-keys">2 UUID Primary Keys</a></h3><div class="note"><p>You need to enable the <code>pgcrypto</code> (only PostgreSQL &gt;= 9.4) or <code>uuid-ossp</code>
 extension to generate random UUIDs.</p></div><div class="code_container">
@@ -1010,35 +1010,35 @@ extension to generate random UUIDs.</p></div><div class="code_container">
   <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:kind</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-04e1a8b952600afd443564ded4328528"># db/migrate/20131220144913_create_devices.rb
+<textarea class="clipboard-content" id="clipboard-60db703fc6e6b9f70769141b6ac430af"># db/migrate/20131220144913_create_devices.rb
 enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
 create_table :devices, id: :uuid do |t|
   t.string :kind
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-04e1a8b952600afd443564ded4328528">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-60db703fc6e6b9f70769141b6ac430af">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/device.rb</span>
 <span class="k">class</span> <span class="nc">Device</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eed9219502961f9a8f60e37b8be05970"># app/models/device.rb
+<textarea class="clipboard-content" id="clipboard-c4e0d4b24b7db71dad65ea4dca7f865e"># app/models/device.rb
 class Device &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eed9219502961f9a8f60e37b8be05970">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c4e0d4b24b7db71dad65ea4dca7f865e">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="n">device</span> <span class="o">=</span> <span class="no">Device</span><span class="p">.</span><span class="nf">create</span>
 <span class="n">irb</span><span class="o">&gt;</span> <span class="n">device</span><span class="p">.</span><span class="nf">id</span>
 <span class="o">=&gt;</span> <span class="s2">"814865cd-5a1d-4771-9306-4268f188fe9e"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3fcd9f17907fab3a0737d30ea7243246">irb&gt; device = Device.create
+<textarea class="clipboard-content" id="clipboard-f81e18ed683769e41d8433a3ecc0b4c1">irb&gt; device = Device.create
 irb&gt; device.id
 =&gt; "814865cd-5a1d-4771-9306-4268f188fe9e"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3fcd9f17907fab3a0737d30ea7243246">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f81e18ed683769e41d8433a3ecc0b4c1">Copiar</button>
 </div>
 <div class="note"><p><code>gen_random_uuid()</code> (from <code>pgcrypto</code>) is assumed if no <code>:default</code> option was
 passed to <code>create_table</code>.</p></div><h3 id="full-text-search"><a class="anchorlink" href="#full-text-search">3 Full Text Search</a></h3><div class="code_container">
@@ -1050,7 +1050,7 @@ passed to <code>create_table</code>.</p></div><h3 id="full-text-search"><a class
 
 <span class="n">add_index</span> <span class="ss">:documents</span><span class="p">,</span> <span class="s2">"to_tsvector('english', title || ' ' || body)"</span><span class="p">,</span> <span class="ss">using: :gin</span><span class="p">,</span> <span class="ss">name: </span><span class="s1">'documents_idx'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8f01b1e425ca329f705de1fdd86c4533"># db/migrate/20131220144913_create_documents.rb
+<textarea class="clipboard-content" id="clipboard-7d4640f6d3af6110ba2bc3ae9422acae"># db/migrate/20131220144913_create_documents.rb
 create_table :documents do |t|
   t.string 'title'
   t.string 'body'
@@ -1058,18 +1058,18 @@ end
 
 add_index :documents, "to_tsvector('english', title || ' ' || body)", using: :gin, name: 'documents_idx'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8f01b1e425ca329f705de1fdd86c4533">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7d4640f6d3af6110ba2bc3ae9422acae">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/document.rb</span>
 <span class="k">class</span> <span class="nc">Document</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-53d4ecf4c871f78fd0c7b2ed8dcaca38"># app/models/document.rb
+<textarea class="clipboard-content" id="clipboard-c1e8887ad200dbed40727dbf914dc81f"># app/models/document.rb
 class Document &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-53d4ecf4c871f78fd0c7b2ed8dcaca38">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c1e8887ad200dbed40727dbf914dc81f">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Usage</span>
@@ -1079,14 +1079,14 @@ end
 <span class="no">Document</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)"</span><span class="p">,</span>
                  <span class="s2">"cat &amp; dog"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5f5699e8b76be199753e3aed22d9dad5"># Usage
+<textarea class="clipboard-content" id="clipboard-34bfadafdcdacaea1de10968e2575981"># Usage
 Document.create(title: "Cats and Dogs", body: "are nice!")
 
 ## all documents matching 'cat &amp; dog'
 Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
                  "cat &amp; dog")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5f5699e8b76be199753e3aed22d9dad5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-34bfadafdcdacaea1de10968e2575981">Copiar</button>
 </div>
 <h3 id="database-views"><a class="anchorlink" href="#database-views">4 Database Views</a></h3>
 <ul>
@@ -1105,7 +1105,7 @@ Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
 Indexes:
     "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-19e7581d642be38a424403367317b17c">rails_pg_guide=# \d "TBL_ART"
+<textarea class="clipboard-content" id="clipboard-032b0276319565fe3d3d945b88923492">rails_pg_guide=# \d "TBL_ART"
                                         Table "public.TBL_ART"
    Column   |            Type             |                         Modifiers
 ------------+-----------------------------+------------------------------------------------------------
@@ -1117,7 +1117,7 @@ Indexes:
 Indexes:
     "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-19e7581d642be38a424403367317b17c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-032b0276319565fe3d3d945b88923492">Copiar</button>
 </div>
 <p>This table does not follow the Rails conventions at all.
 Because simple PostgreSQL views are updateable by default,
@@ -1134,7 +1134,7 @@ CREATE VIEW articles AS
   WHERE "BL_ARCH" = 'f'
 </span><span class="no">  SQL</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dea6b439444b6846ea4b2c02b01a3207"># db/migrate/20131220144913_create_articles_view.rb
+<textarea class="clipboard-content" id="clipboard-d6926af953bd1aeaf20660675558241e"># db/migrate/20131220144913_create_articles_view.rb
 execute &lt;&lt;-SQL
 CREATE VIEW articles AS
   SELECT "INT_ID" AS id,
@@ -1146,7 +1146,7 @@ CREATE VIEW articles AS
   WHERE "BL_ARCH" = 'f'
   SQL
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dea6b439444b6846ea4b2c02b01a3207">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d6926af953bd1aeaf20660675558241e">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/article.rb</span>
@@ -1157,7 +1157,7 @@ CREATE VIEW articles AS
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d3fe25615eb9838fb86a1a27939d637"># app/models/article.rb
+<textarea class="clipboard-content" id="clipboard-edcb11883b663ab823b741375ff23688"># app/models/article.rb
 class Article &lt; ApplicationRecord
   self.primary_key = "id"
   def archive!
@@ -1165,7 +1165,7 @@ class Article &lt; ApplicationRecord
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d3fe25615eb9838fb86a1a27939d637">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-edcb11883b663ab823b741375ff23688">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">first</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">title: </span><span class="s2">"Winter is coming"</span><span class="p">,</span> <span class="ss">status: </span><span class="s2">"published"</span><span class="p">,</span> <span class="ss">published_at: </span><span class="mi">1</span><span class="p">.</span><span class="nf">year</span><span class="p">.</span><span class="nf">ago</span>
@@ -1177,13 +1177,13 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Article</span><span class="p">.</span><span class="nf">count</span>
 <span class="p">=&gt;</span> <span class="mi">1</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aa261f9b2eec87c991cc2284391d90cb">first = Article.create! title: "Winter is coming", status: "published", published_at: 1.year.ago
+<textarea class="clipboard-content" id="clipboard-a0da1a000097156616f70370a234866a">first = Article.create! title: "Winter is coming", status: "published", published_at: 1.year.ago
 second = Article.create! title: "Brace yourself", status: "draft", published_at: 1.month.ago
 Article.count
 first.archive!
 Article.count
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aa261f9b2eec87c991cc2284391d90cb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a0da1a000097156616f70370a234866a">Copiar</button>
 </div>
 <div class="note"><p>This application only cares about non-archived <code>Articles</code>. A view also
 allows for conditions so we can exclude the archived <code>Articles</code> directly.</p></div>

@@ -357,23 +357,23 @@
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-71427af83e971b5a96be1726c76d7d10">class ClientsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-8711191762f18091cddcdbd0443d3b4a">class ClientsController &lt; ApplicationController
   def new
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-71427af83e971b5a96be1726c76d7d10">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8711191762f18091cddcdbd0443d3b4a">Copiar</button>
 </div>
 <p>Como exemplo, se um usuário acessar <code>/clients/new</code> na sua aplicação para adicionar um novo cliente, o Rails irá criar uma instância de <code>ClientsController</code> e irá chamar o método <code>new</code> dele. Repare que o método vazio do exemplo acima funcionaria normalmente porque o Rails por padrão vai renderizar a <em>view</em> <code>new.html.erb</code> a menos que a <code>action</code> indique outro caminho. Ao criar um novo <code>Client</code> o método <code>new</code> pode tornar uma variável de instância <code>@client</code> acessível na <code>view</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">new</span>
   <span class="vi">@client</span> <span class="o">=</span> <span class="no">Client</span><span class="p">.</span><span class="nf">new</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aa81885c7f7d0d32f8c2d7ae43cbb8c4">def new
+<textarea class="clipboard-content" id="clipboard-d238d28e6de2b5a6e6f9ba88aaa337b4">def new
   @client = Client.new
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aa81885c7f7d0d32f8c2d7ae43cbb8c4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d238d28e6de2b5a6e6f9ba88aaa337b4">Copiar</button>
 </div>
 <p>O <a href="layouts_and_rendering.html">Guia de Layouts e Renderização</a> explica essa etapa mais detalhadamente.</p><p>O <code>ApplicationController</code> herda de <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Base.html"><code>ActionController::Base</code></a>, que define uma quantidade de métodos úteis. Este guia vai cobrir alguns destes métodos, mas se você tiver curiosidade para ver o que há neles, você pode ver todos eles na <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController.html">Documentação da API</a> ou no próprio código fonte.</p><p>Apenas métodos públicos são executáveis como <em>actions</em>. É uma boa prática diminuir a visibilidade de métodos (utilizando <code>private</code> ou <code>protected</code>) que não foram designados para serem <em>actions</em>, como métodos auxiliares ou filtros.</p><h3 id="parametros"><a class="anchorlink" href="#parametros">4 Parâmetros</a></h3><p>Você provavelmente vai querer acessar os dados enviados pelo usuário ou outros parâmetros nas <em>actions</em> do seu <em>controller</em>. Existem dois tipos de parâmetros possíveis numa aplicação <em>web</em>. O primeiro são os parâmetros que são enviados como parte da URL, chamados parâmetros de <em>query string</em>. A <em>query string</em> é tudo o que vem após o "?" na URL. O segundo tipo de parâmetro é geralmente referido como os dados de POST. Essa informação geralmente vem de um formulário HTML que foi preenchido pelo usuário. Se chamam dados de POST porque estes dados somente podem ser enviados como parte de uma requisição HTTP usando o verbo POST. O Rails não faz distinção sobre parâmetros de <em>query string</em> e parâmetros de POST, ambos são acessíveis por meio do <em>hash</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/StrongParameters.html#method-i-params"><code>params</code></a> no seu <em>controller</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ClientsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -406,7 +406,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-970639d27b87143efa568f909433743b">class ClientsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-d8758ebc622a9fda60bcc19c0ef807f0">class ClientsController &lt; ApplicationController
   # Essa action usa parâmetros de query string porque ela é
   # executada através de uma requisição HTTP GET, mas isso
   # não faz nenhuma diferença para a maneira como os parâmetros
@@ -436,14 +436,14 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-970639d27b87143efa568f909433743b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d8758ebc622a9fda60bcc19c0ef807f0">Copiar</button>
 </div>
 <h4 id="hash-e-parametros-de-array"><a class="anchorlink" href="#hash-e-parametros-de-array">4.1 Hash e Parâmetros de Array</a></h4><p>O <em>hash</em> <code>params</code> não é limitado a um vetor unidimensional de chaves e valores. Ele pode conter <em>arrays</em> e <em>hashes</em> aninhados. Para enviar um <em>array</em> de valores, concatene um par de colchetes vazio "[]" ao nome da chave:</p><div class="code_container">
 <pre><code class="highlight plaintext">GET /clients?ids[]=1&amp;ids[]=2&amp;ids[]=3
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-43ad6834cbf28c1aa53578d469514dfa">GET /clients?ids[]=1&amp;ids[]=2&amp;ids[]=3
+<textarea class="clipboard-content" id="clipboard-106ccaeae56220161fefa2730083faa1">GET /clients?ids[]=1&amp;ids[]=2&amp;ids[]=3
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-43ad6834cbf28c1aa53578d469514dfa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-106ccaeae56220161fefa2730083faa1">Copiar</button>
 </div>
 <div class="note"><p>A URL efetiva neste neste exemplo será codificada como "/clients?ids%5b%5d=1&amp;ids%5b%5d=2&amp;ids%5b%5d=3", visto que os caracteres "[" e "]" não são permitidos em URLs. Na maioria do tempo você não precisa se preocupar com isso porque o navegador irá codificar os dados para você, e o Rails vai decodificá-los automaticamente, porém se por acaso você se encontrar na situação de ter que enviar este tipo de requisição ao servidor manualmente você deve ter em mente essa questão.</p></div><p>O valor de <code>params[:ids]</code> será neste caso <code>["1", "2", "3"]</code>. Note que os valores de parâmetros são sempre <em>strings</em>; o Rails não tenta adivinhar ou converter o tipo.</p><div class="note"><p>Valores como <code>[nil]</code> ou <code>[nil, nil, ...]</code> em <code>params</code> são substituídos por <code>[]</code> por motivos de segurança por padrão. Veja o <a href="security.html#unsafe-query-generation">Guia de Segurança</a> para mais informações.</p></div><p>Para enviar um <em>hash</em>, você inclui o nome da chave dentro dos colchetes:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">action=</span><span class="s">"/clients"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
@@ -453,42 +453,42 @@ end
   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"client[address][city]"</span> <span class="na">value=</span><span class="s">"Carrot City"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d5ec32204af23136e5f07ec67886b997">&lt;form accept-charset="UTF-8" action="/clients" method="post"&gt;
+<textarea class="clipboard-content" id="clipboard-92a46118448ad6ef5996bdf35778ec6f">&lt;form accept-charset="UTF-8" action="/clients" method="post"&gt;
   &lt;input type="text" name="client[name]" value="Acme" /&gt;
   &lt;input type="text" name="client[phone]" value="12345" /&gt;
   &lt;input type="text" name="client[address][postcode]" value="12345" /&gt;
   &lt;input type="text" name="client[address][city]" value="Carrot City" /&gt;
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d5ec32204af23136e5f07ec67886b997">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-92a46118448ad6ef5996bdf35778ec6f">Copiar</button>
 </div>
 <p>Quando esse formulário é enviado o valor de <code>params[:client]</code> será <code>{ "name" =&gt; "Acme", "phone" =&gt; "12345", "address" =&gt; { "postcode" =&gt; "12345", "city" =&gt; "Carrot City" } }</code>. Repare o <em>hash</em> aninhado em <code>params[:client][:address]</code>.</p><p>O objeto <code>params</code> atua como um <em>hash</em>, mas permite que você use <em>symbols</em> e <em>strings</em> indistintamente como chaves.</p><h4 id="parametros-json"><a class="anchorlink" href="#parametros-json">4.2 Parâmetros JSON</a></h4><p>Se você está construindo uma aplicação <em>web</em>, você pode achar mais confortável receber parâmetros no formato JSON. Se o <em>header</em> "Content-Type" da sua requisição estiver definido como "application/json" o Rails vai automaticamente carregar os seus parâmetros no <em>hash</em> <code>params</code>, que você pode acessar como acessaria normalmente.</p><p>Então por exemplo, se você estiver enviando este conteúdo JSON:</p><div class="code_container">
 <pre><code class="highlight json"><span class="p">{</span><span class="w"> </span><span class="nl">"company"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acme"</span><span class="p">,</span><span class="w"> </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Carrot Street"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-28153a5b52e72ae62651c7a9533b4245">{ "company": { "name": "acme", "address": "123 Carrot Street" } }
+<textarea class="clipboard-content" id="clipboard-5afa7ac2d0b04c585d5b34330862ce66">{ "company": { "name": "acme", "address": "123 Carrot Street" } }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-28153a5b52e72ae62651c7a9533b4245">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5afa7ac2d0b04c585d5b34330862ce66">Copiar</button>
 </div>
 <p>O seu <em>controller</em> vai receber <code>params[:company]</code> no formato <code>{ "name" =&gt; "acme", "address" =&gt; "123 Carrot Street" }</code>.</p><p>Além disso, se você tiver ativado <code>config.wrap_parameters</code> no seu inicializador ou chamado <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/ParamsWrapper/Options/ClassMethods.html#method-i-wrap_parameters"><code>wrap_parameters</code></a> no seu <em>controller</em>, você pode omitir o elemento raiz no seu parâmetro JSON. Neste caso, os parâmetros serão clonados e enpacotados sob uma chave baseada no nome do seu <em>controller</em>. Então a requisição JSON acima pode ser escrita como:</p><div class="code_container">
 <pre><code class="highlight json"><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acme"</span><span class="p">,</span><span class="w"> </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Carrot Street"</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-a99a7ed072df52844422daefe0d2ee04">{ "name": "acme", "address": "123 Carrot Street" }
+<textarea class="clipboard-content" id="clipboard-eaa7da2837514c72ed66f99d25664cc9">{ "name": "acme", "address": "123 Carrot Street" }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a99a7ed072df52844422daefe0d2ee04">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eaa7da2837514c72ed66f99d25664cc9">Copiar</button>
 </div>
 <p>E, assumindo que você está enviando os dados para <code>CompaniesController</code>, eles serão então encapsulados na chave <code>:company</code> desta maneira:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span> <span class="ss">name: </span><span class="s2">"acme"</span><span class="p">,</span> <span class="ss">address: </span><span class="s2">"123 Carrot Street"</span><span class="p">,</span> <span class="ss">company: </span><span class="p">{</span> <span class="ss">name: </span><span class="s2">"acme"</span><span class="p">,</span> <span class="ss">address: </span><span class="s2">"123 Carrot Street"</span> <span class="p">}</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-54472e726e24e65fd404d664781fed40">{ name: "acme", address: "123 Carrot Street", company: { name: "acme", address: "123 Carrot Street" } }
+<textarea class="clipboard-content" id="clipboard-e7657d155b8a42036785fe820e410957">{ name: "acme", address: "123 Carrot Street", company: { name: "acme", address: "123 Carrot Street" } }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-54472e726e24e65fd404d664781fed40">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e7657d155b8a42036785fe820e410957">Copiar</button>
 </div>
 <p>Você pode customizar o nome da chave ou parâmetros específicos que você quer envelopar consultando a <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/ParamsWrapper.html">documentação da API</a></p><div class="note"><p>Suporte para interpretar parâmetros XML foi extraído para uma <em>gem</em> chamada <code>actionpack-xml_parser</code>.</p></div><h4 id="parametros-de-rota"><a class="anchorlink" href="#parametros-de-rota">4.3 Parâmetros de Rota</a></h4><p>O <em>hash</em> <code>params</code> sempre irá conter as chaves <code>:controller</code> e <code>:action</code>, mas você deve usar os métodos <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Metal.html#method-i-controller_name"><code>controller_name</code></a> e <a href="https://api.rubyonrails.org/v6.1.4/classes/AbstractController/Base.html#method-i-action_name"><code>action_name</code></a> para acessar estes valores. Quaisquer outros parâmetros definidos pela rota, como <code>:id</code>, também estarão disponíveis. Por exemplo, considere uma listagem de clientes onde a lista pode mostrar os clientes ativos e inativos. Nós podemos adicionar uma rota que captura o parâmetro <code>:status</code> numa URL "normalizada":</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">get</span> <span class="s1">'/clients/:status'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'clients#index'</span><span class="p">,</span> <span class="ss">foo: </span><span class="s1">'bar'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bd2d9a40e79dd6a148b0a16e0462c5d5">get '/clients/:status', to: 'clients#index', foo: 'bar'
+<textarea class="clipboard-content" id="clipboard-9f4c02799fb1e5d71ebdb4bbc0614da1">get '/clients/:status', to: 'clients#index', foo: 'bar'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bd2d9a40e79dd6a148b0a16e0462c5d5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f4c02799fb1e5d71ebdb4bbc0614da1">Copiar</button>
 </div>
 <p>Neste caso, quando um usuário abrir a URL <code>/clients/active</code>, <code>params[:status]</code> estará definido como "active". Quando esta rota é usada, <code>params[:foo]</code> também será definido como "bar", como se tivesse sido enviado por meio da <em>query string</em>. O seu <em>controller</em> também irá receber <code>params[:action]</code> com o valor "index" e <code>params[:controller]</code> com o valor "clients".</p><h4 id="default-url-options"><a class="anchorlink" href="#default-url-options">4.4 <code>default_url_options</code></a></h4><p>Você pode determinar parâmetros padrão globais para a geração de URLs definindo um método chamado <code>default_url_options</code> no seu <em>controller</em>. Este método deve retornar um <em>hash</em> com os dados padrão desejados, cujas chaves devem ser símbolos:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
@@ -497,13 +497,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1d6430123c1379ed5b978bb58c136252">class ApplicationController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-11726080b52435782ec1a08e57fc0d8e">class ApplicationController &lt; ActionController::Base
   def default_url_options
     { locale: I18n.locale }
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1d6430123c1379ed5b978bb58c136252">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-11726080b52435782ec1a08e57fc0d8e">Copiar</button>
 </div>
 <p>Estas opções serão usadas como um ponto de partida na geração de URLs, então é possível que elas sejam sobrescritas pelas opções passadas para chamadas a <code>url_for</code>.</p><p>Se você definir <code>default_url_options</code> em <code>ApplicationController</code>, como no exemplo acima, estes padrões irão ser usados para todas as gerações de URL. O método pode também ser definido num <em>controller</em> específico, neste caso afetando somente as URLs geradas a partir desse escopo.</p><p>Numa requisição o método não é de fato chamado para toda URL gerada. Por questões de performance o <em>hash</em> retornado é cacheado, e há no máximo uma invocação por requisição.</p><h4 id="parametros-fortes"><a class="anchorlink" href="#parametros-fortes">4.5 Parâmetros Fortes</a></h4><p>Com parâmetros fortes (<em>strong parameters</em>), os parâmetros do <em>Action Controller</em> são proibidos de serem usados nas atribuições em massa no <em>Active Model</em> até que sejam deliberadamente permitidos. Isso significa que você tem que tomar uma decisão consciente sobre quais atributos podem ser permitidos para um <em>update</em> em massa. Esta é uma prática mais segura para ajudar a prevenir que acidentalmente os usuários atualizem atributos sensíveis do <em>model</em>.</p><p>Além disso, os parâmetros podem ser marcados como obrigatórios e irão seguir por um fluxo de erro e tratamento predefinido que irá resultar num código 400 <em>Bad Request</em> sendo retornado caso todos os parâmetros obrigatórios não forem informados.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">PeopleController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
@@ -535,7 +535,7 @@ end
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-45ea4642c79d8aa0e66f53f563671d04">class PeopleController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-4e3efb984f0bc69a8ee9c14295b0e24c">class PeopleController &lt; ActionController::Base
   # Isso vai lançar uma exceção do tipo ActiveModel::ForbiddenAttributesError
   # porque está usando atribuição em massa sem passar pela etapa de permitir
   # explicitamente os parâmetros.
@@ -564,35 +564,35 @@ end
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-45ea4642c79d8aa0e66f53f563671d04">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4e3efb984f0bc69a8ee9c14295b0e24c">Copiar</button>
 </div>
 <h5 id="valores-escalares-permitidos"><a class="anchorlink" href="#valores-escalares-permitidos">4.5.1 Valores Escalares Permitidos</a></h5><p>Chamando <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Parameters.html#method-i-permit"><code>permit</code></a> como:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">params</span><span class="p">.</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:id</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-40f382a15d54deb82fb290d8246e1460">params.permit(:id)
+<textarea class="clipboard-content" id="clipboard-88743bc89cca1fccd6b3362815ab1c65">params.permit(:id)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-40f382a15d54deb82fb290d8246e1460">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-88743bc89cca1fccd6b3362815ab1c65">Copiar</button>
 </div>
 <p>permite a chave especificada (<code>:id</code>) para inclusão se ela aparecer em <code>params</code> e ela tiver um valor escalar permitido associado a ela. Caso contrário a chave será filtrada, então <em>arrays</em>, <em>hashes</em>, ou quaisquer outros objetos não poderão ser adicionados.</p><p>Os tipos escalares permitidos são <code>String</code>, <code>Symbol</code>, <code>NilClass</code>, <code>Numeric</code>, <code>TrueClass</code>, <code>FalseClass</code>, <code>Date</code>, <code>Time</code>, <code>DateTime</code>, <code>StringIO</code>, <code>IO</code>, <code>ActionDispatch::Http::UploadedFile</code>, e <code>Rack::Test::UploadedFile</code>.</p><p>Para declarar que o valor em <code>params</code> deve ser um <em>array</em> de valores escalares permitidos, mapeie a chave para um <em>array</em> vazio.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">params</span><span class="p">.</span><span class="nf">permit</span><span class="p">(</span><span class="ss">id: </span><span class="p">[])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4ffd664fb92fc5098e22ff76b1808c25">params.permit(id: [])
+<textarea class="clipboard-content" id="clipboard-a6e206e823fcf671ea56b9b30931e191">params.permit(id: [])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4ffd664fb92fc5098e22ff76b1808c25">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a6e206e823fcf671ea56b9b30931e191">Copiar</button>
 </div>
 <p>Às vezes não é possível ou conveniente declarar as chaves válidas de um parâmetro de <em>hash</em> ou sua estrutura interna. Apenas mapeie para um <em>hash</em> vazio:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">params</span><span class="p">.</span><span class="nf">permit</span><span class="p">(</span><span class="ss">preferences: </span><span class="p">{})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a739104364a56ad786ca46bfe4ff282d">params.permit(preferences: {})
+<textarea class="clipboard-content" id="clipboard-d57faace47c2ec277296479b1c9f6368">params.permit(preferences: {})
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a739104364a56ad786ca46bfe4ff282d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d57faace47c2ec277296479b1c9f6368">Copiar</button>
 </div>
 <p>entretanto fique atento porque isso abre a porta para <em>input</em> arbitrário. Neste caso, <code>permit</code> garante que os valores na estrutura retornada são valores escalares permitidos e faz a filtragem de tudo o que houver além deles.</p><p>Para permitir um <em>hash</em> completo de parâmetros, o método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Parameters.html#method-i-permit-21"><code>permit!</code></a> pode ser usado:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:log_entry</span><span class="p">).</span><span class="nf">permit!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2fba73dc35aa92a6afbdf6c3809e04d0">params.require(:log_entry).permit!
+<textarea class="clipboard-content" id="clipboard-9ccf1f215d4a1f6d37839c56a34606ba">params.require(:log_entry).permit!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2fba73dc35aa92a6afbdf6c3809e04d0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9ccf1f215d4a1f6d37839c56a34606ba">Copiar</button>
 </div>
 <p>Este código marca o <em>hash</em> de parâmetros <code>:log_entry</code> e qualquer <em>sub-hash</em> dele como valores permitidos e não verifica por escalares permitidos, sendo qualquer coisa a partir dele aceita.
 Extremo cuidado deve ser considerado ao usar o método <code>permit!</code>, visto que ele irá permitir que todos os atuais e futuros atributos do <code>model</code> sejam preenchidos em massa.</p><h5 id="parametros-aninhados"><a class="anchorlink" href="#parametros-aninhados">4.5.2 Parâmetros Aninhados</a></h5><p>Você também pode usar <code>permit</code> em parâmetros aninhados, da seguinte forma:</p><div class="code_container">
@@ -600,31 +600,31 @@ Extremo cuidado deve ser considerado ao usar o método <code>permit!</code>, vis
               <span class="ss">friends: </span><span class="p">[</span> <span class="ss">:name</span><span class="p">,</span>
                          <span class="p">{</span> <span class="ss">family: </span><span class="p">[</span> <span class="ss">:name</span> <span class="p">],</span> <span class="ss">hobbies: </span><span class="p">[]</span> <span class="p">}])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-00e2889171ac4e90ee374e71dbb31366">params.permit(:name, { emails: [] },
+<textarea class="clipboard-content" id="clipboard-8ec39980ee67b66145a27541b623f080">params.permit(:name, { emails: [] },
               friends: [ :name,
                          { family: [ :name ], hobbies: [] }])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-00e2889171ac4e90ee374e71dbb31366">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ec39980ee67b66145a27541b623f080">Copiar</button>
 </div>
 <p>Esta declaração permite o preenchimento dos atributos <code>name</code>, <code>emails</code>, e <code>friends</code>. É esperado que <code>emails</code> seja um <em>array</em> de valores permitidos escalares, e que <code>friends</code> seja um <em>array</em> de recursos com atributos específicos: deve possuir um atributo <code>name</code> (com quaisquer valores escalares permitidos), um atributo <code>hobbies</code> como um <em>array</em> de valores permitidos escalares, e um atributo <code>family</code> que é restrito a ter um <code>name</code> (com qualquer valor escalar permitido também).</p><h5 id="mais-exemplos"><a class="anchorlink" href="#mais-exemplos">4.5.3 Mais Exemplos</a></h5><p>Você pode também querer usar os atributos permitidos na sua <em>action</em> <code>new</code>. Isso traz o problema que você não pode chamar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Parameters.html#method-i-require"><code>require</code></a> na chave raiz porque normalmente ela não existe no momento da chamada de <code>new</code></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># usando fetch você pode fornecer um valor padrão e visualizar</span>
 <span class="c1"># a API de Parâmetros Fortes a partir dele.</span>
 <span class="n">params</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="ss">:blog</span><span class="p">,</span> <span class="p">{}).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:author</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-708189a45faaa2771666f0c6e61423de"># usando fetch você pode fornecer um valor padrão e visualizar
+<textarea class="clipboard-content" id="clipboard-b5260f13f85d376369b7361c91a1c848"># usando fetch você pode fornecer um valor padrão e visualizar
 # a API de Parâmetros Fortes a partir dele.
 params.fetch(:blog, {}).permit(:title, :author)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-708189a45faaa2771666f0c6e61423de">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b5260f13f85d376369b7361c91a1c848">Copiar</button>
 </div>
 <p>O método da classe <em>model</em> <code>accepts_nested_attributes_for</code> te permite atualizar e destruir outros <em>models</em> associados. Isso é baseado nos parâmetros <code>id</code> e <code>_destroy</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># permite :id e :_destroy</span>
 <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:author</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:name</span><span class="p">,</span> <span class="ss">books_attributes: </span><span class="p">[</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:_destroy</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5a1249b73b0506b182a0a6b828562cd2"># permite :id e :_destroy
+<textarea class="clipboard-content" id="clipboard-5d6ff13bda077d9a3aeeedf7ab780fc4"># permite :id e :_destroy
 params.require(:author).permit(:name, books_attributes: [:title, :id, :_destroy])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5a1249b73b0506b182a0a6b828562cd2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5d6ff13bda077d9a3aeeedf7ab780fc4">Copiar</button>
 </div>
 <p><em>Hashes</em> com chaves de valor do tipo inteiro são tratados de maneira diferente, e você pode declarar os atributos como se eles fossem atributos filhos imediatos. Você obtém estes tipos de parâmetros quando você usa <code>accepts_nested_attributes_for</code> combinado com uma associação <code>has_many</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Para permitir os seguintes dados:</span>
@@ -633,24 +633,24 @@ params.require(:author).permit(:name, books_attributes: [:title, :id, :_destroy]
 <span class="c1">#                                        "2" =&gt; {"title" =&gt; "Second Chapter"}}}}</span>
 <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:book</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">chapters_attributes: </span><span class="p">[</span><span class="ss">:title</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f43cfeba4563db97739ad3e6498cb749"># Para permitir os seguintes dados:
+<textarea class="clipboard-content" id="clipboard-2c6b90e7eb7ab6ab08f94123179cffc2"># Para permitir os seguintes dados:
 # {"book" =&gt; {"title" =&gt; "Some Book",
 #             "chapters_attributes" =&gt; { "1" =&gt; {"title" =&gt; "First Chapter"},
 #                                        "2" =&gt; {"title" =&gt; "Second Chapter"}}}}
 params.require(:book).permit(:title, chapters_attributes: [:title])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f43cfeba4563db97739ad3e6498cb749">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2c6b90e7eb7ab6ab08f94123179cffc2">Copiar</button>
 </div>
 <p>Imagine um cenário onde você tem parâmetros representando um nome de produto e um <em>hash</em> de dados arbitrários associado a esse produto, e você queira permitir o preenchimento do atributo de nome do produto e também o <em>hash</em> de dados:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">product_params</span>
   <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:product</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:name</span><span class="p">,</span> <span class="ss">data: </span><span class="p">{})</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2392c361f1404fbb75836cf6b6e2b729">def product_params
+<textarea class="clipboard-content" id="clipboard-9699eb67d003ee56e751e70df17208e8">def product_params
   params.require(:product).permit(:name, data: {})
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2392c361f1404fbb75836cf6b6e2b729">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9699eb67d003ee56e751e70df17208e8">Copiar</button>
 </div>
 <h5 id="fora-do-escopo-de-parametros-fortes"><a class="anchorlink" href="#fora-do-escopo-de-parametros-fortes">4.5.4 Fora do Escopo de Parâmetros Fortes</a></h5><p>A API de parâmetros fortes foi desenhada com os casos mais comuns em mente. Não houve a intenção de torná-la uma bala prateada para lidar com todos os seus problemas de filtragem de parâmetros. Entretanto, você pode facilmente misturar a API com seu próprio código para se adaptar à sua situação.</p><h3 id="sessao"><a class="anchorlink" href="#sessao">5 Sessão</a></h3><p>Sua aplicação possui uma sessão para cada usuário, na qual pode-se armazenar quantidades pequenas de dados que serão persistidos entre as requisições. A sessão fica disponível apenas no <em>controller</em> e na <em>view</em> e pode utilizar um dentre vários mecanismos diferentes de armazenamento:</p>
 <ul>
@@ -669,30 +669,30 @@ end
 <span class="c1"># (create the session table with "rails g active_record:session_migration")</span>
 <span class="c1"># Rails.application.config.session_store :active_record_store</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dc252ff26313721f572ba35584fe945c"># Use the database for sessions instead of the cookie-based default,
+<textarea class="clipboard-content" id="clipboard-c52b8ff6b7715aa16c81ee6d26d3ba7b"># Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails g active_record:session_migration")
 # Rails.application.config.session_store :active_record_store
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dc252ff26313721f572ba35584fe945c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c52b8ff6b7715aa16c81ee6d26d3ba7b">Copiar</button>
 </div>
 <p>O Rails configura uma chave de sessão (o nome do <em>cookie</em>) ao assinar os dados da sessão. Estes também podem ser alterados no <em>initializer</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Be sure to restart your server when you modify this file.</span>
 <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">session_store</span> <span class="ss">:cookie_store</span><span class="p">,</span> <span class="ss">key: </span><span class="s1">'_your_app_session'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7bad87b689b5579d8781a98b1c3ce4cf"># Be sure to restart your server when you modify this file.
+<textarea class="clipboard-content" id="clipboard-8827ab25937c8bcf644fd4307e6a7ec8"># Be sure to restart your server when you modify this file.
 Rails.application.config.session_store :cookie_store, key: '_your_app_session'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7bad87b689b5579d8781a98b1c3ce4cf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8827ab25937c8bcf644fd4307e6a7ec8">Copiar</button>
 </div>
 <p>Você também pode passar uma chave <code>:domain</code> e especificar o nome do domínio para o <em>cookie</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Be sure to restart your server when you modify this file.</span>
 <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">session_store</span> <span class="ss">:cookie_store</span><span class="p">,</span> <span class="ss">key: </span><span class="s1">'_your_app_session'</span><span class="p">,</span> <span class="ss">domain: </span><span class="s2">".example.com"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5310c430daca521e3a48611a182f8fd8"># Be sure to restart your server when you modify this file.
+<textarea class="clipboard-content" id="clipboard-d35b84669a9a6f3c715c41815757a4eb"># Be sure to restart your server when you modify this file.
 Rails.application.config.session_store :cookie_store, key: '_your_app_session', domain: ".example.com"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5310c430daca521e3a48611a182f8fd8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d35b84669a9a6f3c715c41815757a4eb">Copiar</button>
 </div>
 <p>O Rails configura (para o <em>CookieStore</em>) uma chave secreta utilizada para assinar os dados da sessão em <code>config/credentials.yml.enc</code>. Isso pode ser alterado com o comando <code>bin/rails credentials:edit</code>.</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># aws:</span>
@@ -702,14 +702,14 @@ Rails.application.config.session_store :cookie_store, key: '_your_app_session', 
 <span class="c1"># Used as the base secret for all MessageVerifiers in Rails, including the one protecting cookies.</span>
 <span class="na">secret_key_base</span><span class="pi">:</span> <span class="s">492f...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-adba94cc030ce1d0c091a0bf7e834009"># aws:
+<textarea class="clipboard-content" id="clipboard-c54aaac0b35f785916eee34b45577f3e"># aws:
 #   access_key_id: 123
 #   secret_access_key: 345
 
 # Used as the base secret for all MessageVerifiers in Rails, including the one protecting cookies.
 secret_key_base: 492f...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-adba94cc030ce1d0c091a0bf7e834009">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c54aaac0b35f785916eee34b45577f3e">Copiar</button>
 </div>
 <div class="note"><p>Alterar a <code>secret_key_base</code> ao utilizar o <code>CookieStore</code> invalidará todas as sessões existentes.</p></div><h4 id="acessando-a-sessao"><a class="anchorlink" href="#acessando-a-sessao">5.1 Acessando a Sessão</a></h4><p>No seu <em>controller</em>, você pode acessar a sessão através do método de instância <code>session</code>.</p><div class="note"><p>As sessões são <a href="https://pt.wikipedia.org/wiki/Lazy_loading"><em>lazy loading</em></a> (carregamento lento). Se você não acessá-las no código da sua <em>action</em>, elas não serão carregadas. Portanto, você nunca precisará desativar as sessões, basta apenas não acessá-las.</p></div><p>Os valores da sessão são armazenados utilizando pares de chave/valor como em um <em>hash</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
@@ -726,7 +726,7 @@ secret_key_base: 492f...
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8a3366a6a9d7718948fb48127dc577bd">class ApplicationController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-b8e3fc3678ee70ae3ab19feb1b637814">class ApplicationController &lt; ActionController::Base
 
   private
 
@@ -740,7 +740,7 @@ secret_key_base: 492f...
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8a3366a6a9d7718948fb48127dc577bd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b8e3fc3678ee70ae3ab19feb1b637814">Copiar</button>
 </div>
 <p>Para armazenar algo na sessão, basta atribuí-lo à chave como em um <em>hash</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">LoginsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -755,7 +755,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-657c4ee00835e17921cfb973c9b884cd">class LoginsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-292b4fabc1371bd673170dce27dc9853">class LoginsController &lt; ApplicationController
   # "Create" a login, aka "log the user in"
   def create
     if user = User.authenticate(params[:username], params[:password])
@@ -767,7 +767,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-657c4ee00835e17921cfb973c9b884cd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-292b4fabc1371bd673170dce27dc9853">Copiar</button>
 </div>
 <p>Para remover algo da sessão, exclua o par de chave/valor:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">LoginsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -781,7 +781,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7bdbd9c03354f27d9cb8bae0093b6b47">class LoginsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-71f09c385ab9d872a0421c0ae03fb96d">class LoginsController &lt; ApplicationController
   # "Delete" a login, aka "log the user out"
   def destroy
     # Remove the user id from the session
@@ -792,7 +792,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7bdbd9c03354f27d9cb8bae0093b6b47">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-71f09c385ab9d872a0421c0ae03fb96d">Copiar</button>
 </div>
 <p>Para redefinir a sessão inteira, utilize <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Metal.html#method-i-reset_session"><code>reset_session</code></a>.</p><h4 id="the-flash"><a class="anchorlink" href="#the-flash">5.2 The Flash</a></h4><p>The flash is a special part of the session which is cleared with each request. This means that values stored there will only be available in the next request, which is useful for passing error messages, etc.</p><p>The flash is accessed via the <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Flash/RequestMethods.html#method-i-flash"><code>flash</code></a> method. Like the session, the flash is represented as a hash.</p><p>Let's use the act of logging out as an example. The controller can send a message which will be displayed to the user on the next request:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">LoginsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -803,7 +803,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d3dae7dabb57a400f04a6799f3b7799e">class LoginsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-cba30f5524d81244628fcb41a1756ea2">class LoginsController &lt; ApplicationController
   def destroy
     session.delete(:current_user_id)
     flash[:notice] = "You have successfully logged out."
@@ -811,18 +811,18 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d3dae7dabb57a400f04a6799f3b7799e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cba30f5524d81244628fcb41a1756ea2">Copiar</button>
 </div>
 <p>Note that it is also possible to assign a flash message as part of the redirection. You can assign <code>:notice</code>, <code>:alert</code> or the general purpose <code>:flash</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">redirect_to</span> <span class="n">root_url</span><span class="p">,</span> <span class="ss">notice: </span><span class="s2">"You have successfully logged out."</span>
 <span class="n">redirect_to</span> <span class="n">root_url</span><span class="p">,</span> <span class="ss">alert: </span><span class="s2">"You're stuck here!"</span>
 <span class="n">redirect_to</span> <span class="n">root_url</span><span class="p">,</span> <span class="ss">flash: </span><span class="p">{</span> <span class="ss">referral_code: </span><span class="mi">1234</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3d82cb28438504028fb55ca3f0d51d44">redirect_to root_url, notice: "You have successfully logged out."
+<textarea class="clipboard-content" id="clipboard-7e19c014c7a8022b672de5dd3aa566e4">redirect_to root_url, notice: "You have successfully logged out."
 redirect_to root_url, alert: "You're stuck here!"
 redirect_to root_url, flash: { referral_code: 1234 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3d82cb28438504028fb55ca3f0d51d44">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7e19c014c7a8022b672de5dd3aa566e4">Copiar</button>
 </div>
 <p>The <code>destroy</code> action redirects to the application's <code>root_url</code>, where the message will be displayed. Note that it's entirely up to the next action to decide what, if anything, it will do with what the previous action put in the flash. It's conventional to display any error alerts or notices from the flash in the application's layout:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;html&gt;</span>
@@ -836,7 +836,7 @@ redirect_to root_url, flash: { referral_code: 1234 }
   <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-330c1c4472459d4100e229bcbe33d722">&lt;html&gt;
+<textarea class="clipboard-content" id="clipboard-6e2f4931b30cb2e43130222c03b5f01a">&lt;html&gt;
   &lt;!-- &lt;head/&gt; --&gt;
   &lt;body&gt;
     &lt;% flash.each do |name, msg| -%&gt;
@@ -847,18 +847,18 @@ redirect_to root_url, flash: { referral_code: 1234 }
   &lt;/body&gt;
 &lt;/html&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-330c1c4472459d4100e229bcbe33d722">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6e2f4931b30cb2e43130222c03b5f01a">Copiar</button>
 </div>
 <p>This way, if an action sets a notice or an alert message, the layout will display it automatically.</p><p>You can pass anything that the session can store; you're not limited to notices and alerts:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="k">if</span> <span class="n">flash</span><span class="p">[</span><span class="ss">:just_signed_up</span><span class="p">]</span> <span class="cp">%&gt;</span>
   <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"welcome"</span><span class="nt">&gt;</span>Welcome to our site!<span class="nt">&lt;/p&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-62d3009edab136301367d7025ac16b44">&lt;% if flash[:just_signed_up] %&gt;
+<textarea class="clipboard-content" id="clipboard-c0ec965b3962b920881514359103db59">&lt;% if flash[:just_signed_up] %&gt;
   &lt;p class="welcome"&gt;Welcome to our site!&lt;/p&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-62d3009edab136301367d7025ac16b44">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c0ec965b3962b920881514359103db59">Copiar</button>
 </div>
 <p>If you want a flash value to be carried over to another request, use <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Flash/FlashHash.html#method-i-keep"><code>flash.keep</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">MainController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -877,7 +877,7 @@ redirect_to root_url, flash: { referral_code: 1234 }
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a1cd306c2960deddd8148aaa7976f57b">class MainController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-6a687e36679f788e97a9ab606ff37aaf">class MainController &lt; ApplicationController
   # Let's say this action corresponds to root_url, but you want
   # all requests here to be redirected to UsersController#index.
   # If an action sets the flash and redirects here, the values
@@ -893,7 +893,7 @@ redirect_to root_url, flash: { referral_code: 1234 }
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a1cd306c2960deddd8148aaa7976f57b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6a687e36679f788e97a9ab606ff37aaf">Copiar</button>
 </div>
 <h5 id="flash-now"><a class="anchorlink" href="#flash-now">5.2.1 <code>flash.now</code></a></h5><p>By default, adding values to the flash will make them available to the next request, but sometimes you may want to access those values in the same request. For example, if the <code>create</code> action fails to save a resource and you render the <code>new</code> template directly, that's not going to result in a new request, but you may still want to display a message using the flash. To do this, you can use <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Flash/FlashHash.html#method-i-now"><code>flash.now</code></a> in the same way you use the normal <code>flash</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ClientsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -908,7 +908,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-369cc1cb2030a6690337c2e3c0a446cc">class ClientsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-bb31fe91b1a76049f3d894c06701b9c4">class ClientsController &lt; ApplicationController
   def create
     @client = Client.new(client_params)
     if @client.save
@@ -920,7 +920,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-369cc1cb2030a6690337c2e3c0a446cc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bb31fe91b1a76049f3d894c06701b9c4">Copiar</button>
 </div>
 <h3 id="cookies"><a class="anchorlink" href="#cookies">6 Cookies</a></h3><p>Sua Aplicação pode armazemar pequenas quantidades de dados no cliente - chamados de <em>cookies</em> - que serão mantidas entre requisições e até as sessões. O Rails fornece um fácil acesso para os <em>cookies</em> através do método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Cookies.html#method-i-cookies"><code>cookies</code></a>, que - assim como a <code>session</code> - funciona como um hash:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CommentsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -947,7 +947,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-669103d3937c73dbffd77ad083fd1b6d">class CommentsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-6fd69052a17c72c6c88cfb97395bbb48">class CommentsController &lt; ApplicationController
   def new
     # Preencher automaticamente o nome de quem comentou se ele estiver armazenado em um cookie
     @comment = Comment.new(author: cookies[:commenter_name])
@@ -971,7 +971,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-669103d3937c73dbffd77ad083fd1b6d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6fd69052a17c72c6c88cfb97395bbb48">Copiar</button>
 </div>
 <p>Perceba que enquanto para valores de sessão você pode definir a chave como <code>nil</code>, para deletar um valor de <em>cookie</em> você deve usar <code>cookies.delete(:key)</code>.</p><p>O Rails também fornece um <em>cookie jar</em> assinado e um <em>cookie jar</em> criptografado para amazenar
 dados sensíveis. O <em>cookie jar</em> assinado anexa uma assinaura criptográfica nos
@@ -982,9 +982,9 @@ para mais detalhes.</p><p>Esses <em>cookie jars</em> especiais usam um <em>seria
 strings e desserializa-os em objetos Ruby na leitura.</p><p>Você pode especificar qual <em>serializer</em> usar:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">action_dispatch</span><span class="p">.</span><span class="nf">cookies_serializer</span> <span class="o">=</span> <span class="ss">:json</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-33fb6ce40ff7929047356a43e0febb74">Rails.application.config.action_dispatch.cookies_serializer = :json
+<textarea class="clipboard-content" id="clipboard-dca6f185cb7c1ead2ec05b948c56202b">Rails.application.config.action_dispatch.cookies_serializer = :json
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-33fb6ce40ff7929047356a43e0febb74">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dca6f185cb7c1ead2ec05b948c56202b">Copiar</button>
 </div>
 <p>O <em>serializer</em> padrão para novas aplicações é <code>:json</code>. Para compatibilidade com
 aplicações antigas que usam <em>cookies</em>, o <code>:marshal</code> é usado quando a opção
@@ -995,9 +995,9 @@ no formaro <code>JSON</code>. Isso é útil para migrar aplicações existentes 
 <code>dump</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">action_dispatch</span><span class="p">.</span><span class="nf">cookies_serializer</span> <span class="o">=</span> <span class="no">MyCustomSerializer</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e983c835edad7c81871ed1c869ca262e">Rails.application.config.action_dispatch.cookies_serializer = MyCustomSerializer
+<textarea class="clipboard-content" id="clipboard-bc7621e6f4a67a9f6bc6533ca75c5210">Rails.application.config.action_dispatch.cookies_serializer = MyCustomSerializer
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e983c835edad7c81871ed1c869ca262e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bc7621e6f4a67a9f6bc6533ca75c5210">Copiar</button>
 </div>
 <p>Ao usar o <em>serializer</em> <code>:json</code> ou <code>:hybrid</code>, lembre-se de que nem todos os
 os objetos Ruby podem ser serializados como JSON. Por exemplo, objetos <code>Date</code> e<code>Time</code>
@@ -1013,7 +1013,7 @@ serão serializados como strings, e os <code>Hash</code>es terão suas chaves tr
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-539389ecc8f448529aed1039c01c5567">class CookiesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-fdce448072a43bf5c82e9eacda337366">class CookiesController &lt; ApplicationController
   def set_cookie
     cookies.encrypted[:expiration_date] = Date.tomorrow # =&gt; Thu, 20 Mar 2014
     redirect_to action: 'read_cookie'
@@ -1024,7 +1024,7 @@ serão serializados como strings, e os <code>Hash</code>es terão suas chaves tr
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-539389ecc8f448529aed1039c01c5567">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fdce448072a43bf5c82e9eacda337366">Copiar</button>
 </div>
 <p>É aconselhável que você armazene apenas dados simples (strings e números) nos <em>cookies</em>.
 Se você precisar armazenar objetos complexos, precisará lidar com a conversão
@@ -1040,7 +1040,7 @@ manualmente ao ler os valores em requisições subsequentes.</p><p>Se você usar
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1bddd69e262dae2198b33243c2bab391">class UsersController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-8a116a84f827228f7fed9749dfff0f3e">class UsersController &lt; ApplicationController
   def index
     @users = User.all
     respond_to do |format|
@@ -1051,7 +1051,7 @@ manualmente ao ler os valores em requisições subsequentes.</p><p>Se você usar
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1bddd69e262dae2198b33243c2bab391">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8a116a84f827228f7fed9749dfff0f3e">Copiar</button>
 </div>
 <p>Você pode observar que no código acima estamos usando <code>render xml: @users</code>, e não <code>render xml: @users.to_xml</code>. Se o objeto não é uma <em>String</em>, então o Rails automaticamente chama <code>to_xml</code> por nós.</p><h3 id="filtros"><a class="anchorlink" href="#filtros">8 Filtros</a></h3><p>Filtros são métodos que rodam "before" (antes de), "after" (depois de) ou "around" (em torno de) de uma ação de <em>controller</em>.</p><p>Filtros são herdados, então se você configurou um filtro em <code>ApplicationController</code>, o mesmo irá rodar em cada <em>controller</em> da sua aplicação.</p><p>Filtros "before" são registrados através do método <a href="https://api.rubyonrails.org/v6.1.4/classes/AbstractController/Callbacks/ClassMethods.html#method-i-before_action"><code>before_action</code></a>. Eles podem interromper o ciclo de uma requisição. Um filtro comum para "before" é o que requer que um usuário está logado para que uma ação seja executada. Você pode definir o método do filtro dessa forma:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
@@ -1067,7 +1067,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b138988dd4c7ef978ec9dc5147f8a4d6">class ApplicationController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-fa13be6ce0ff8380c0606171de925b59">class ApplicationController &lt; ActionController::Base
   before_action :require_login
 
   private
@@ -1080,18 +1080,18 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b138988dd4c7ef978ec9dc5147f8a4d6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fa13be6ce0ff8380c0606171de925b59">Copiar</button>
 </div>
 <p>Esse método simplesmente armazena uma mensagem de erro no <em>flash</em> e redireciona para o formulário de login se o usuário não estiver logado. Se um filtro "before" renderiza ou redireciona, a ação não será executada. Se filtros adicionais estão programados para executar após esse filtro, eles são cancelados também.</p><p>Nesse exemplo o filtro é adicionado ao <code>ApplicationController</code> e dessa forma todos os <em>controllers</em> na aplicação irão herdar ele. Isso fará com que tudo na aplicação requeira que o usuário esteja logado para que ele possa usar. Por razões óbvias (o usuário não conseguiria fazer o log in para começo de conversa!), nem todos os <em>controllers</em> devem requerer isso. Você pode evitar esse filtro de ser executado antes de ações em particular com <a href="https://api.rubyonrails.org/v6.1.4/classes/AbstractController/Callbacks/ClassMethods.html#method-i-skip_before_action"><code>skip_before_action</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">LoginsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="n">skip_before_action</span> <span class="ss">:require_login</span><span class="p">,</span> <span class="ss">only: </span><span class="p">[</span><span class="ss">:new</span><span class="p">,</span> <span class="ss">:create</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-15eaaa99c97b6ff687733a653c8b52c4">class LoginsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-a42aa4ec9568c647fb3d57575f2919da">class LoginsController &lt; ApplicationController
   skip_before_action :require_login, only: [:new, :create]
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-15eaaa99c97b6ff687733a653c8b52c4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a42aa4ec9568c647fb3d57575f2919da">Copiar</button>
 </div>
 <p>Agora, as ações de <code>new</code> e <code>create</code> do <code>LoginsController</code> irão funcionar como antes sem requerer que o usuário esteja logado. A opção <code>:only</code> é usada para pular esse filtro somente para essas ações, e existe também a opção <code>:except</code> que funciona de maneira contrária. Essas opções podem ser utilizadas quando adicionamos filtros também, para que você possa adicionar um filtro que somente executa para as ações selecionadas.</p><div class="note"><p>Chamar o mesmo filtro múltiplas vezes com diferentes opções não irá funcionar,
 já que a última definição do filtro irá sobreescrever as anteriores.</p></div><h4 id="filtros-after-e-around"><a class="anchorlink" href="#filtros-after-e-around">8.1 Filtros after e around</a></h4><p>Além de filtros "before", você pode também executar filtros depois que uma ação tenha sido executada, ou antes e depois em conjunto.</p><p>Filtros "after" são registrados através do método <a href="https://api.rubyonrails.org/v6.1.4/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action"><code>after_action</code></a>. Eles são similares aos filtros "before", mas porque a ação já foi executada eles tem acesso a dados da resposta que serão enviados para o cliente. Obviamente, filtros "after" não podem impedir uma ação de ser executada. Note também que filtros "after" são executados somente após uma ação bem sucedida, mas não quando uma exceção é gerada durante o ciclo de uma requisição.</p><p>Filtros "around" são registrados através do método <a href="https://api.rubyonrails.org/v6.1.4/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action"><code>around_action</code></a>. Eles são responsáveis por executar as ações associadas por <em>yield</em>, simular a como os <em>middlewares</em> do Rack funcionam.</p><p>Por exemplo, em um <em>website</em> aonde alterações possuem um fluxo de aprovação, um administrador pode pré-visualizar as mesmas facilmente, aplicando-as dentro de uma transação.</p><div class="code_container">
@@ -1111,7 +1111,7 @@ já que a última definição do filtro irá sobreescrever as anteriores.</p></d
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1be6b506dfafb80cdc225cd6e8fda48c">class ChangesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-740312866d10a433e1b23a26faba7dfd">class ChangesController &lt; ApplicationController
   around_action :wrap_in_transaction, only: :show
 
   private
@@ -1127,7 +1127,7 @@ já que a última definição do filtro irá sobreescrever as anteriores.</p></d
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1be6b506dfafb80cdc225cd6e8fda48c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-740312866d10a433e1b23a26faba7dfd">Copiar</button>
 </div>
 <p>Note que um filtro "around" também envolve a renderização. Em particular, no exemplo acima, se a <em>view</em> efetuar uma leitura no banco de dados (p. ex. usando um <em>scope</em>), a mesma é efetuada dentro de uma transação e então apresenta a informação para visualização.</p><p>Você pode escolher não efetuar <em>yield</em> e montar a resposta você mesmo, o que faria com que a ação não fosse executada.</p><h4 id="outras-formas-de-usar-filtros"><a class="anchorlink" href="#outras-formas-de-usar-filtros">8.2 Outras Formas de Usar Filtros</a></h4><p>Enquanto a forma mais comum de se utilizar filtros é criando métodos privados e usando <code>before_action</code>, <code>after_action</code>, ou <code>around_action</code> para adicioná-los, existem duas outras formas para fazer a mesma coisa.</p><p>A primeira é utilizar um bloco diretamente com método <code>*_action</code>. O bloco recebe o <em>controller</em> como um argumento. O filtro <code>require_login</code> acima pode ser reescrito para utilizar um bloco:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
@@ -1139,7 +1139,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3bc6c2897b8be12c6da5e84c7d518022">class ApplicationController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-53b1ce70854d99670fb68f5ee9cbe97f">class ApplicationController &lt; ActionController::Base
   before_action do |controller|
     unless controller.send(:logged_in?)
       flash[:error] = "Você deve estar logado para acessar essa seção"
@@ -1148,14 +1148,14 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3bc6c2897b8be12c6da5e84c7d518022">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-53b1ce70854d99670fb68f5ee9cbe97f">Copiar</button>
 </div>
 <p>Note nesse caso que o filtro utiliza <code>send</code> porque o método <code>logged_in?</code> é privado e o filtro não é executado no escopo do <em>controller</em>. Essa não é a forma recomendada para implementar esse filtro em particular, mas em casos mais simples ele pode ser útil.</p><p>Especificamente para <code>around_action</code>, o bloco também acessa a <code>action</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">around_action</span> <span class="p">{</span> <span class="o">|</span><span class="n">_controller</span><span class="p">,</span> <span class="n">action</span><span class="o">|</span> <span class="n">time</span><span class="p">(</span><span class="o">&amp;</span><span class="n">action</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-41b2add9d44d1fe34ce934ef6084e4df">around_action { |_controller, action| time(&amp;action) }
+<textarea class="clipboard-content" id="clipboard-90422b840d4d58ec17db35aa756615ab">around_action { |_controller, action| time(&amp;action) }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-41b2add9d44d1fe34ce934ef6084e4df">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-90422b840d4d58ec17db35aa756615ab">Copiar</button>
 </div>
 <p>A segunda forma é utilizar uma classe (na verdade, qualquer objeto que responda aos métodos corretos serve) para gerenciar a filtragem. Isto é útil em casos mais complexos que não são possíveis de serem implementados de uma forma de fácil leitura e reutilizados usando as outras duas abordagens. Por exemplo, você pode reescrever o filtro de login novamente utilizando uma classe:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
@@ -1171,7 +1171,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-04fc2d03ffa1284188c52466ac3892f4">class ApplicationController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-bd8c2011d34bbbf6407047d3906324a0">class ApplicationController &lt; ActionController::Base
   before_action LoginFilter
 end
 
@@ -1184,7 +1184,7 @@ class LoginFilter
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-04fc2d03ffa1284188c52466ac3892f4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bd8c2011d34bbbf6407047d3906324a0">Copiar</button>
 </div>
 <p>Novamente, esse não é um exemplo ideal para esse filtro, pois não é executado dentro do escopo do <em>controller</em> mas recebe o mesmo como um argumento. A classe de filtro deve implementar um método com o mesmo nome do filtro, então para o filtro de <code>before_action</code> a classe deve implementar um método <code>before</code>, e assim em diante. O método <code>around</code> deve efetuar <code>yield</code> para executar a ação.</p><h3 id="protecao-de-falsificacao-de-requisicao"><a class="anchorlink" href="#protecao-de-falsificacao-de-requisicao">9 Proteção de falsificação de requisição</a></h3><p>Falsificação de requisições <em>cross-site</em> é um tipo de ataque no qual o site engana o usuário a fim de que ele faça requisições em outro site, possivelmente adicionando, alterando ou deletando informações naquela site sem o conhecimento ou a permissão do usuário.</p><p>O primeiro passo para evitar isso é ter certeza que todas as ações "destrutivas" (criar, atualizar, e destruir) possam ser acessadas somente via requisições que não sejam <em>GET</em>. Se você está seguindo as convenções <em>RESTful</em> você já está fazendo isso. Contudo, sites maliciosos continuam podendo enviar requisições não <em>GET</em> para o seu site facilmente, e é aí que a proteção de falsificação de requisição entra. Como o nome diz, ela te protege de requisições falsas.</p><p>A forma como isso é feito é adicionando um <em>token</em> não adivinhável que é conhecido apenas pelo seu servidor para cada requisição. Desta forma, se uma requisição chega sem um token conhecido, o seu acesso será negado.</p><p>Se você gera um <em>form</em> como este:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@user</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
@@ -1192,12 +1192,12 @@ end
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:password</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a4a1d5ba6fcc81c5781a9969b27b1368">&lt;%= form_with model: @user do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-c48e8d55e6155197dabece189e2a4f1e">&lt;%= form_with model: @user do |form| %&gt;
   &lt;%= form.text_field :username %&gt;
   &lt;%= form.text_field :password %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a4a1d5ba6fcc81c5781a9969b27b1368">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c48e8d55e6155197dabece189e2a4f1e">Copiar</button>
 </div>
 <p>Você perceberá como o <em>token</em> é adicionado como um campo invisível.</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">action=</span><span class="s">"/users/1"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
@@ -1207,14 +1207,14 @@ end
 <span class="c">&lt;!-- fields --&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f5ad5ce996cd9ea23fce5ebd9abbae11">&lt;form accept-charset="UTF-8" action="/users/1" method="post"&gt;
+<textarea class="clipboard-content" id="clipboard-5967314a4a2b994a4f66f36eed8f2193">&lt;form accept-charset="UTF-8" action="/users/1" method="post"&gt;
 &lt;input type="hidden"
        value="67250ab105eb5ad10851c00a5621854a23af5489"
        name="authenticity_token"/&gt;
 &lt;!-- fields --&gt;
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f5ad5ce996cd9ea23fce5ebd9abbae11">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5967314a4a2b994a4f66f36eed8f2193">Copiar</button>
 </div>
 <p>O Rails adiciona esse <em>token</em> para cada <em>form</em> que é gerado usando o <a href="form_helpers.html"><em>form helpers</em></a>, então na maior parte das vezes você não precisa se preocupar com isso. Se você está escrevendo um <em>form</em> manualmente ou precisa adicionar o <em>token</em> para outra sessão, ele está disponível por meio do método <code>form_authenticity_token</code>.</p><p>O <code>form_authenticity_token</code> gera um <em>token</em> de autenticação válido. Isso é útil em lugar aonde o Rails não adiciona o mesmo automaticamente, como em chamadas Ajax personalizadas.</p><p>O <a href="security.html">Guia de segurança</a> possui mais informações sobre isso e muitos outros problemas relacionados a segurança que você deve estar ciente quando desenvolve uma aplicação <em>web</em>.</p><h3 id="os-objetos-de-requisicao-e-resposta"><a class="anchorlink" href="#os-objetos-de-requisicao-e-resposta">10 Os Objetos de Requisição e Resposta</a></h3><p>Em todo <em>controller</em> existem dois métodos de acesso apontando para os objetos de requisição e de resposta associados com o ciclo de requisição que estiver em execução no momento. O método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Base.html#method-i-request"><code>request</code></a> contém uma instância de <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Request.html"><code>ActionDispatch::Request</code></a> e o método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Base.html#method-i-response"><code>response</code></a> retorna um objeto de resposta representando o que será enviado de volta ao cliente.</p><h4 id="o-objeto-request"><a class="anchorlink" href="#o-objeto-request">10.1 O Objeto <code>request</code></a></h4><p>O objeto de requisição contém muitas informações úteis sobre a requisição proveniente do cliente. Para obter uma lista completa dos métodos disponíveis verifique a <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Request.html">documentação da API do Rails</a> e a <a href="https://www.rubydoc.info/github/rack/rack/Rack/Request">documentação do Rack</a>. Entre as propriedades que você pode acessar estão:</p>
 <table>
@@ -1314,9 +1314,9 @@ end
 <h5 id="definindo-headers-customizados"><a class="anchorlink" href="#definindo-headers-customizados">10.2.1 Definindo <em>Headers</em> customizados</a></h5><p>Se você quer definir <em>headers</em> customizados para uma resposta então <code>response.headers</code> é o local indicado para ajustar isto. O atributo <em>headers</em> é um <em>hash</em> que mapeia os nomes dos <em>headers</em> para seus respectivos valores, e o Rails irá definir alguns deles automaticamente. Se você quiser adicionar ou modificar um <em>header</em>, basta sinalizá-lo para <code>response.headers</code> da seguinte maneira:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">response</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s2">"Content-Type"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"application/pdf"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16c577aa052fecade087487f04e89596">response.headers["Content-Type"] = "application/pdf"
+<textarea class="clipboard-content" id="clipboard-d2a981781341b394f6f93f630b1b1043">response.headers["Content-Type"] = "application/pdf"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16c577aa052fecade087487f04e89596">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d2a981781341b394f6f93f630b1b1043">Copiar</button>
 </div>
 <div class="note"><p>No caso acima faria mais sentido utilizar o <em>setter</em> <code>content_type</code> diretamente.</p></div><h3 id="autenticacoes-http"><a class="anchorlink" href="#autenticacoes-http">11 Autenticações HTTP</a></h3><p>O Rails vem com três mecanismos de autenticação HTTP embutidos:</p>
 <ul>
@@ -1332,11 +1332,11 @@ end
   <span class="n">http_basic_authenticate_with</span> <span class="ss">name: </span><span class="s2">"humbaba"</span><span class="p">,</span> <span class="ss">password: </span><span class="s2">"5baa61e4"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-796e2bceb1e941c27e07b03887a1932b">class AdminsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-31271cf2f948019166bcdbeb5125320c">class AdminsController &lt; ApplicationController
   http_basic_authenticate_with name: "humbaba", password: "5baa61e4"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-796e2bceb1e941c27e07b03887a1932b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-31271cf2f948019166bcdbeb5125320c">Copiar</button>
 </div>
 <p>Com isso, você pode criar <em>controllers</em> com <em>namespaces</em> que herdam de <code>AdminsController</code>. O filtro vai, assim, ser executado para todas as ações nos <em>controllers</em>, protegendo-os com a autenticação HTTP <em>basic</em>.</p><h4 id="autenticacao-http-digest"><a class="anchorlink" href="#autenticacao-http-digest">11.2 Autenticação HTTP <em>Digest</em></a></h4><p>A autenticação HTTP <em>digest</em> é superior à autenticação <em>basic</em> porque ela não requer que o cliente envie uma senha sem criptografia pela rede (embora a autenticação HTTP <em>basic</em> seja segura via HTTPS). Usar a autenticação <em>digest</em> com Rails é bem fácil e requer apenas o uso de um método, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/HttpAuthentication/Digest/ControllerMethods.html#method-i-authenticate_or_request_with_http_digest"><code>authenticate_or_request_with_http_digest</code></a>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AdminsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -1352,7 +1352,7 @@ end
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a833c3f44a688ae252b5b92d772fa50f">class AdminsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-c7cc3c1dce77ef07c7cf9a9337fd2765">class AdminsController &lt; ApplicationController
   USERS = { "lifo" =&gt; "world" }
 
   before_action :authenticate
@@ -1365,7 +1365,7 @@ end
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a833c3f44a688ae252b5b92d772fa50f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c7cc3c1dce77ef07c7cf9a9337fd2765">Copiar</button>
 </div>
 <p>Como visto no exemplo acima, o bloco <code>authenticate_or_request_with_http_digest</code> recebe apenas um argumento - o nome de usuário. E o bloco retorna a senha. Retornar <code>false</code> ou <code>nil</code> em <code>authenticate_or_request_with_http_digest</code> causará falha de autenticação.</p><h4 id="autenticacao-http-token"><a class="anchorlink" href="#autenticacao-http-token">11.3 Autenticação HTTP <em>Token</em></a></h4><p>A autenticação de <em>token</em> HTTP é um esquema para habilitar o uso de <em>tokens Bearer</em> no <em>header</em> HTTP <code>Authorization</code>. Existem muitos formatos de <em>token</em> disponíveis e sua descrição está fora do escopo desta documentação.</p><p>Por exemplo, suponha que você queira usar um <em>token</em> de autenticação emitido com antecedência para realizar a autenticação e o acesso. Implementar autenticação via <em>token</em> com Rails é bastante fácil e requer apenas o uso de um método, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/HttpAuthentication/Token/ControllerMethods.html#method-i-authenticate_or_request_with_http_token"><code>authenticate_or_request_with_http_token</code></a>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -1381,7 +1381,7 @@ end
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ecc595d2fc359c71bbc524e6bfe56d8b">class PostsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-8896fbcfb6fd0953a9ccb3278f81edb0">class PostsController &lt; ApplicationController
   TOKEN = "secret"
 
   before_action :authenticate
@@ -1394,7 +1394,7 @@ end
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ecc595d2fc359c71bbc524e6bfe56d8b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8896fbcfb6fd0953a9ccb3278f81edb0">Copiar</button>
 </div>
 <p>Como visto no exemplo acima, o bloco <code>authenticate_or_request_with_http_token</code> recebe dois argumentos: o <em>token</em> e um<code>Hash</code> contendo as opções que foram analisadas a partir do <em>header</em> HTTP <code>Authorization</code>. O bloco deve retornar <code>true</code> se a autenticação for bem-sucedida. Retornar <code>false</code> ou<code>nil</code> causará uma falha de autenticação.</p><h3 id="streaming-e-downloads-de-arquivos"><a class="anchorlink" href="#streaming-e-downloads-de-arquivos">12 <em>Streaming</em> e <em>Downloads</em> de Arquivos</a></h3><p>Às vezes você pode querer enviar um arquivo para o usuário ao invés de uma página HTML. Todos os <em>controllers</em> no Rails possuem os métodos <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/DataStreaming.html#method-i-send_data"><code>send_data</code></a> e <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/DataStreaming.html#method-i-send_file"><code>send_file</code></a>, que transmitem dados ao navegador. O método <code>send_file</code> permite que você proveja o nome do arquivo no disco e seu conteúdo será transmitido.</p><p>Para transmitir dados para o navegador, use <code>send_data</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"prawn"</span>
@@ -1418,7 +1418,7 @@ end
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dee955d0765537ef03b998c2d85250d6">require "prawn"
+<textarea class="clipboard-content" id="clipboard-7b7ce007a4ab67b74333a646b4a80009">require "prawn"
 class ClientsController &lt; ApplicationController
   # Gera um documento PDF com informações no navegador e
   # o retorna. O usuário receberá o documento PDF como um download.
@@ -1439,7 +1439,7 @@ class ClientsController &lt; ApplicationController
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dee955d0765537ef03b998c2d85250d6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7b7ce007a4ab67b74333a646b4a80009">Copiar</button>
 </div>
 <p>A <em>action</em> <code>download_pdf</code> no exemplo acima está chamando um método privado que na verdade cria o documento PDF e o retorna como uma <em>string</em>. Essa <em>string</em> será então transmitida ao navegador como um arquivo para download e o nome do arquivo será sugerido ao usuário. Às vezes, quando arquivos são transmitidos aos usuários, você pode não querer que façam o download do arquivo. Imagens, por exemplo, podem ser embutidas em páginas HTML. Para comunicar ao navegador que não deve ser feito o download do arquivo, você pode utilizar a propriedade <code>inline</code> na opção <code>:disposition</code>. A propriedade oposta e padrão para essa opção é "<em>attachment</em>".</p><h4 id="enviando-arquivos"><a class="anchorlink" href="#enviando-arquivos">12.1 Enviando Arquivos</a></h4><p>Se você deseja enviar um arquivo que já existe no disco, utilize o método <code>send_file</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ClientsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -1452,7 +1452,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-22e44bdec9dda92db97e3070c6c153fd">class ClientsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-822143d4cc71be7ed7db3c4b7c55a53f">class ClientsController &lt; ApplicationController
   # Transmite um arquivo que já foi gerado e salvo no disco.
   def download_pdf
     client = Client.find(params[:id])
@@ -1462,7 +1462,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-22e44bdec9dda92db97e3070c6c153fd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-822143d4cc71be7ed7db3c4b7c55a53f">Copiar</button>
 </div>
 <p>Esse método irá ler e transmitir o arquivo 4kb por vez, evitando carregar o arquivo inteiro em memória de uma vez. Você pode desativar a transmissão com a opção <code>:stream</code> ou ajustar o tamanho do bloco com a opção <code>:buffer_size</code>.</p><p>Se a opção <code>:type</code> não for especificada, será presumido de acordo com a extensão especificada no <code>:filename</code>. Se o tipo do conteúdo (<code>content_type</code>) não estiver registrado para a extensão, será usado <code>application/octet-stream</code>.</p><div class="warning"><p>Tenha cuidado ao utilizar dados vindos do navegador ( <em>params</em>, <em>cookies</em>, etc.) para localizar um arquivo no disco, pois é um risco de segurança que pode permitir a alguém ter acesso a arquivos não permitidos.</p></div><div class="info"><p>Não é recomendado que você transmita arquivos estáticos através do Rails, você pode, ao invés disso, mantê-los em uma pasta pública no seu servidor <em>web</em>. É muito mais eficiente deixar os usuários baixarem os arquivos diretamente utilizando <em>Apache</em> ou outro servidor <em>web</em>, evitando que a requisição passe, sem necessidade, por todo o fluxo do Rails.</p></div><h4 id="restful-downloads"><a class="anchorlink" href="#restful-downloads">12.2 <em>RESTful</em> <em>Downloads</em></a></h4><p>Apesar de o método <code>send_data</code> funcionar tranquilamente, se você está criando uma aplicação <em>RESTful</em>, geralmente não é necessário ter <em>actions</em> separadas para o <em>download</em> de arquivos. Na terminologia <em>REST</em>, o arquivo PDF do exemplo acima pode ser considerado apenas uma outra representação do recurso do navegador. Rails provê um jeito fácil e prático de fazer "downloads <em>RESTful</em>". Veja como você pode re-escrever o exemplo para que o <em>download</em> do PDF seja parte da <em>action</em> <code>show</code>, sem qualquer transmissão:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ClientsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -1477,7 +1477,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7613628db212e6d73a3584b9a3efea59">class ClientsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-c191cb2902ca6362942bf2bd3e68c105">class ClientsController &lt; ApplicationController
   # O usuário pode solicitar receber este recurso como HTML ou PDF.
   def show
     @client = Client.find(params[:id])
@@ -1489,21 +1489,21 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7613628db212e6d73a3584b9a3efea59">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c191cb2902ca6362942bf2bd3e68c105">Copiar</button>
 </div>
 <p>Para que este exemplo funcione, você deve adicionar o <code>MIME type</code> ao Rails. Isso pode ser feito adicionando a seguinte linha ao arquivo <code>config/initializers/mime_types.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Mime</span><span class="o">::</span><span class="no">Type</span><span class="p">.</span><span class="nf">register</span> <span class="s2">"application/pdf"</span><span class="p">,</span> <span class="ss">:pdf</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-269e56481d8a5fa15685907c84be3f6d">Mime::Type.register "application/pdf", :pdf
+<textarea class="clipboard-content" id="clipboard-6e048b6189bbd280769b21ea60935930">Mime::Type.register "application/pdf", :pdf
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-269e56481d8a5fa15685907c84be3f6d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6e048b6189bbd280769b21ea60935930">Copiar</button>
 </div>
 <div class="note"><p>Arquivos de configuração não são recarregados a cada requisição, então você precisa reiniciar seu servidor para que as mudanças façam afeito.</p></div><p>Agora os usuários podem requerer um arquivo em PDF só adicionando ".pdf" ao final da <em>URL</em>:</p><div class="code_container">
 <pre><code class="highlight plaintext">GET /clients/1.pdf
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bc2b333a52950eb6a41bde1ec64afa54">GET /clients/1.pdf
+<textarea class="clipboard-content" id="clipboard-74ee8a6933e518a78f63e0917d974621">GET /clients/1.pdf
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bc2b333a52950eb6a41bde1ec64afa54">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-74ee8a6933e518a78f63e0917d974621">Copiar</button>
 </div>
 <h4 id="transmissao-ao-vivo-de-dado-arbitrarios"><a class="anchorlink" href="#transmissao-ao-vivo-de-dado-arbitrarios">12.3 Transmissão Ao Vivo de Dado Arbitrários</a></h4><p>O Rails permite que você transmita mais do que apenas arquivos. Na verdade, você pode transmitir o que você desejar
 como um objeto de resposta. O modulo <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Live.html"><code>ActionController::Live</code></a> permite
@@ -1523,7 +1523,7 @@ de enviar dados arbitrários ao navegador sem depender de uma requisição <em>H
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aae644c9f68ddeb8dbeb96aa5b67f15a">class MyController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-25c3aa74064a2ff371f31e867b412076">class MyController &lt; ActionController::Base
   include ActionController::Live
 
   def stream
@@ -1537,7 +1537,7 @@ de enviar dados arbitrários ao navegador sem depender de uma requisição <em>H
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aae644c9f68ddeb8dbeb96aa5b67f15a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-25c3aa74064a2ff371f31e867b412076">Copiar</button>
 </div>
 <p>O código acima manterá uma conexão constante com o navegador e mandará 100 mensagens de <code>"hello world\n"</code>, cada uma com um segundo de diferença.</p><p>Existem algumas coisas a serem notadas no exemplo acima. Nós precisamos
 ter certeza de que a resposta da transmissão foi terminada. Esquecer de encerrar a transmissão deixará
@@ -1561,7 +1561,7 @@ valor <em>truthy</em>), que ocorre quando você escreve ou envia (<code>commit</
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a20424f8e8b6923961bd857b7b66e237">class LyricsController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-41391d00b4c6b849fd01751c14201583">class LyricsController &lt; ActionController::Base
   include ActionController::Live
 
   def show
@@ -1577,7 +1577,7 @@ valor <em>truthy</em>), que ocorre quando você escreve ou envia (<code>commit</
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a20424f8e8b6923961bd857b7b66e237">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-41391d00b4c6b849fd01751c14201583">Copiar</button>
 </div>
 <p>O código acima envia a próxima linha apenas depois que a pessoa cantando completou a linha anterior.</p><h5 id="consideracoes-da-transmissao"><a class="anchorlink" href="#consideracoes-da-transmissao">12.3.3 Considerações da Transmissão</a></h5><p>Transmitir dados arbitrários é uma ferramenta extremamente poderosa. Como mostrado nos exemplos anteriores, você pode escolher quando e o que enviar na resposta da transmissão. Entretanto, você deveria se atentar aos seguintes pontos:</p>
 <ul>
@@ -1595,24 +1595,24 @@ servidor web que não armazene automaticamente as respostas.</li>
 <h3 id="filtragem-de-log"><a class="anchorlink" href="#filtragem-de-log">13 Filtragem de Log</a></h3><p>Rails mantém um arquivo de log pra cada ambiente na pasta <code>log</code>. Eles são bastante úteis quando estamos depurando o que está de fato acontecendo na sua aplicação, porém você pode não querer que sejam salvos todas as informações sejam armazenadas no arquivo de log em uma aplicação ativa.</p><h4 id="filtrando-parametros"><a class="anchorlink" href="#filtrando-parametros">13.1 Filtrando Parâmetros</a></h4><p>Você pode evitar que parâmetros sensíveis da requisição sejam salvos no seu arquivo de log adicionando-os a <code>config.filter_parameters</code> na configuração da aplicação. Esses parâmetros aparecerão como [FILTERED] no arquivo de log.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">filter_parameters</span> <span class="o">&lt;&lt;</span> <span class="ss">:password</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d59bf2875ea00cc4e6f29a1118ad5fb3">config.filter_parameters &lt;&lt; :password
+<textarea class="clipboard-content" id="clipboard-b9bbdaa1e0bbb98fcfb2393ba9324a07">config.filter_parameters &lt;&lt; :password
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d59bf2875ea00cc4e6f29a1118ad5fb3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b9bbdaa1e0bbb98fcfb2393ba9324a07">Copiar</button>
 </div>
 <div class="note"><p>Os Parâmetros fornecidos serão filtrados correspondendo parcialmente a uma expressão regular. Rails por padrão adiciona <code>:password</code> no <em>initializer</em> apropriado (<code>initializers/filter_parameter_logging.</code>) e se preocupa com parâmetros típicos da aplicação <code>password</code> e <code>password_confirmation</code>.</p></div><h4 id="filtrando-redirecionamentos"><a class="anchorlink" href="#filtrando-redirecionamentos">13.2 Filtrando Redirecionamentos</a></h4><p>Às vezes é desejável que sejam filtrados dos arquivos de log alguns locais sensíveis para os quais sua aplicação está redirecionando.
 Você pode fazer isso utilizando uma opção de configuração <code>config.filter_redirect</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">filter_redirect</span> <span class="o">&lt;&lt;</span> <span class="s1">'s3.amazonaws.com'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-81880d55a73aed0448968dcdb695eb1b">config.filter_redirect &lt;&lt; 's3.amazonaws.com'
+<textarea class="clipboard-content" id="clipboard-8b349f3b88db23f89425b224a759c5aa">config.filter_redirect &lt;&lt; 's3.amazonaws.com'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-81880d55a73aed0448968dcdb695eb1b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8b349f3b88db23f89425b224a759c5aa">Copiar</button>
 </div>
 <p>Você pode utilizar uma <em>String</em>, uma expressão regular ou um array com ambos.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">filter_redirect</span><span class="p">.</span><span class="nf">concat</span> <span class="p">[</span><span class="s1">'s3.amazonaws.com'</span><span class="p">,</span> <span class="sr">/private_path/</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1c422e6bd41a7cd4f8ff3c27fdfc6319">config.filter_redirect.concat ['s3.amazonaws.com', /private_path/]
+<textarea class="clipboard-content" id="clipboard-740c511c45cb6579e05ec45953c200f5">config.filter_redirect.concat ['s3.amazonaws.com', /private_path/]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1c422e6bd41a7cd4f8ff3c27fdfc6319">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-740c511c45cb6579e05ec45953c200f5">Copiar</button>
 </div>
 <p><em>URLs</em> correspondentes com a expressão regular serão marcadas como  '[FILTERED]'.</p><h3 id="rescue"><a class="anchorlink" href="#rescue">14 Rescue</a></h3><p>Muito provavelmente sua aplicação irá conter bugs ou enviar exceções que precisam ser tratadas. Por exemplo, se o usuário acessar um link que não possui uma fonte no banco de dados, o Active Record enviará <code>ActiveRecord::RecordNotFound</code> como exceção.</p><p>A exceção padrão do Rails apresenta a mensagem "500 Server Error" para todas as exceções. Se a requisição for feita localmente, um belo <em>traceback</em> e outras informações serão mostradas assim você pode verificar o que deu errado e tratar o problema. Se a requisição for remota o Rails apenas apresentará a mensagem "500 Server Error" para o usuário, ou um "404 Not Found" se houver um erro na rota ou o registro não puder ser encontrado. As vezes você pode querer customizar como esses erros são encontrados e como são apresentados ao usuário. Há diversos níveis de tratamento de excessões disponiveis em uma aplicação Rails:</p><h4 id="os-templates-404-e-500-padrao"><a class="anchorlink" href="#os-templates-404-e-500-padrao">14.1 Os <em>Templates</em> 404 e 500 Padrão</a></h4><p>Por padrão no ambiente de produção a aplicação irá renderizar uma mensagem em um template de erro 404 ou 500. No ambiente de desenvolvimento todas as mensagens de erro são disparadas. Essas mensagens são armazenadas em templates estáticos de HTML na pasta <em>public</em>, em <code>404.html</code> e <code>500.html</code> respectivamente. Você pode customizar essas páginas e adicionar algumas estilizações, mas lembre-se elas são HTML estáticos; i.e. você não pode usar ERB, SCSS, CoffeeScript, ou layouts para elas.</p><h4 id="rescue-from"><a class="anchorlink" href="#rescue-from">14.2 <code>rescue_from</code></a></h4><p>Se você quiser fazer algo mais elaborado quando estiver lidando com erros, você pode usar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from"><code>rescue_from</code></a>, que trata as exceções de um certo tipo (ou de vários tipos) em um <em>controller</em> inteiro e nas subclasses.</p><p>Quando uma exceção acontece e é pega por uma diretiva <code>rescue_from</code>, o objeto da exceção é passado ao <em>handler</em>. O <em>handler</em> pode ser um método ou um objeto <code>Proc</code> passado com a opção <code>:with</code>. Você também pode usar um bloco diretamente ao invés de um objeto <code>Proc</code>.</p><p>Aqui está um exemplo de como você pode usar <code>rescue_from</code> para interceptar todos os erros <code>ActiveRecord::RecordNotFound</code> e fazer algo com eles.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
@@ -1624,7 +1624,7 @@ Você pode fazer isso utilizando uma opção de configuração <code>config.filt
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f017ced5c5217587d7aed66474aef8f2">class ApplicationController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-fc355d1e2939188e24e396a5c26432be">class ApplicationController &lt; ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   private
@@ -1633,7 +1633,7 @@ Você pode fazer isso utilizando uma opção de configuração <code>config.filt
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f017ced5c5217587d7aed66474aef8f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fc355d1e2939188e24e396a5c26432be">Copiar</button>
 </div>
 <p>É claro, que este exemplo não é nada elaborado e não melhora muito a forma original de lidar com os erros, mas uma vez que você capture todas essas exceções você é livre para fazer o que quiser com elas. Por exemplo, você pode criar uma exceção personalizada para quando o usuário não tem acesso a uma parte da aplicação:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
@@ -1662,7 +1662,7 @@ end
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bb9aea3500446460269b391062543f52">class ApplicationController &lt; ActionController::Base
+<textarea class="clipboard-content" id="clipboard-682028ba6f2a681e46eddaf1349428ae">class ApplicationController &lt; ActionController::Base
   rescue_from User::NotAuthorized, with: :user_not_authorized
 
   private
@@ -1688,7 +1688,7 @@ class ClientsController &lt; ApplicationController
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bb9aea3500446460269b391062543f52">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-682028ba6f2a681e46eddaf1349428ae">Copiar</button>
 </div>
 <div class="warning"><p>Ao usar <code>rescue_from</code> com <code>Exception</code> ou <code>StandardError</code> pode causar efeitos colaterais já que previne o Rails de lidar com as exceções apropriadamente. Dessa forma, não é recomendado fazer sem uma boa razão.</p></div><div class="note"><p>Quando rodando em ambiente de desenvolvimento, todos os erros
 <code>ActiveRecord::RecordNotFound</code> renderizam uma página 404. A não ser que você precise de uma forma especifica de tratar isso você não precisa tratar isso.</p></div><div class="note"><p>Certas exceções são tratadas apenas pela classe <code>ApplicationController</code>, já que são acionadas antes do controller ser iniciado a exceção é executada.</p></div><h3 id="forcar-protocolo-https"><a class="anchorlink" href="#forcar-protocolo-https">15 Forçar protocolo HTTPS</a></h3><p>Se você quiser garantir que a comunicação com seu <em>controller</em> seja possível apenas
