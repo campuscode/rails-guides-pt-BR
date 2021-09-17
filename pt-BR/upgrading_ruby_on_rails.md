@@ -1002,7 +1002,7 @@ interacting with models, but also affects `:default` column settings in `db/sche
 It is recommended that you do not set columns equal to a `String`, but pass a `Hash`
 instead, which will be converted to and from a JSON string automatically.
 
-Upgrading from Rails 4.1 to Rails 4.2
+Atualizando do Rails 4.1 para o Rails 4.2
 -------------------------------------
 
 ### Web Console
