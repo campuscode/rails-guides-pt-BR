@@ -929,77 +929,77 @@ class Car < ApplicationRecord
 end
 ```
 
-#### Per-form CSRF Tokens
+#### *Tokens* CSRF por formulário
 
-Rails 5 now supports per-form CSRF tokens to mitigate against code-injection attacks with forms
-created by JavaScript. With this option turned on, forms in your application will each have their
-own CSRF token that is specific to the action and method for that form.
+Rails 5 agora suporta *tokens* CSRF por formulário para mitigar ataques de injeção de código com formulários
+criados por JavaScript. Com esta opção ativada, cada formulário em sua aplicação terá seu
+próprio *token* CSRF que é específico para a ação e o método desse formulário.
 
 ```ruby
 config.action_controller.per_form_csrf_tokens = true
 ```
 
-#### Forgery Protection with Origin Check
+#### Proteção contra Falsificação com Verificação de Origem
 
-You can now configure your application to check if the HTTP `Origin` header should be checked
-against the site's origin as an additional CSRF defense. Set the following in your config to
+Agora você pode configurar sua aplicação para verificar se o cabeçalho (*header*) HTTP `Origin` deve ser
+verificado contra a origem do site como uma defesa adicional de CSRF. Defina o seguinte em sua configuração para
 true:
 
 ```ruby
 config.action_controller.forgery_protection_origin_check = true
 ```
 
-#### Allow Configuration of Action Mailer Queue Name
+#### Permitir Configuração do Nome da Fila do *Action Mailer*
 
-The default mailer queue name is `mailers`. This configuration option allows you to globally change
-the queue name. Set the following in your config:
+O nome da fila do *mailer* padrão é `mailers`. Esta opção de configuração permite que você mude globalmente
+o nome da fila. Defina o seguinte em sua configuração:
 
 ```ruby
 config.action_mailer.deliver_later_queue_name = :new_queue_name
 ```
 
-#### Support Fragment Caching in Action Mailer Views
+#### Suportar *Fragment Caching* na *Action Mailer Views*
 
-Set `config.action_mailer.perform_caching` in your config to determine whether your Action Mailer views
-should support caching.
+Defina `config.action_mailer.perform_caching` em sua configuração para determinar se sua *Action Mailer views*
+deve suportar cache.
 
 ```ruby
 config.action_mailer.perform_caching = true
 ```
 
-#### Configure the Output of `db:structure:dump`
+#### Configure a Saída de `db:structure:dump`
 
-If you're using `schema_search_path` or other PostgreSQL extensions, you can control how the schema is
-dumped. Set to `:all` to generate all dumps, or to `:schema_search_path` to generate from schema search path.
+Se você estiver usando `schema_search_path` ou outras extensões PostgreSQL, você pode controlar como o esquema é
+despejado. Defina como `:all` para gerar todos os *dumps*, ou como `:schema_search_path` para gerar a partir do caminho de pesquisa do esquema.
 
 ```ruby
 config.active_record.dump_schemas = :all
 ```
 
-#### Configure SSL Options to Enable HSTS with Subdomains
+#### Configurar Opções de SSL para Habilitar HSTS com Subdomínios
 
-Set the following in your config to enable HSTS when using subdomains:
+Defina o seguinte em sua configuração para habilitar HSTS ao usar subdomínios:
 
 ```ruby
 config.ssl_options = { hsts: { subdomains: true } }
 ```
 
-#### Preserve Timezone of the Receiver
+#### Preservar Fuso Horário do Receptor
 
-When using Ruby 2.4, you can preserve the timezone of the receiver when calling `to_time`.
+Ao usar Ruby 2.4, você pode preservar o fuso horário do receptor ao chamar `to_time`.
 
 ```ruby
 ActiveSupport.to_time_preserves_timezone = false
 ```
 
-### Changes with JSON/JSONB serialization
+### Mudanças na Serialização JSON/JSONB
 
-In Rails 5.0, how JSON/JSONB attributes are serialized and deserialized changed. Now, if
-you set a column equal to a `String`, Active Record will no longer turn that string
-into a `Hash`, and will instead only return the string. This is not limited to code
-interacting with models, but also affects `:default` column settings in `db/schema.rb`.
-It is recommended that you do not set columns equal to a `String`, but pass a `Hash`
-instead, which will be converted to and from a JSON string automatically.
+No Rails 5.0, como os atributos JSON/JSONB são serializados e desserializados foram alterados. Agora se
+você definir uma coluna igual a uma `String`, *Active Record* não irá mais transformar essa *string*
+em um `Hash` e, em vez disso, apenas retornará a *string*. Isso não se limita ao código que
+interage com os *models*, mas também afeta as configurações da coluna `:default` em `db/schema.rb`.
+É recomendado que você não defina colunas iguais a `String`, mas passe `Hash`
+em vez disso, que será convertido de e para uma *string* JSON automaticamente.
 
 Upgrading from Rails 4.1 to Rails 4.2
 -------------------------------------
