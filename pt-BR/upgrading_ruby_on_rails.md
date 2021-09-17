@@ -865,22 +865,22 @@ Rails.application.configure do
 end
 ```
 
-### `ActionController::Live` became a `Concern`
+### `ActionController::Live` tornou-se uma `Concern`
 
-If you include `ActionController::Live` in another module that is included in your controller, then you
-should also extend the module with `ActiveSupport::Concern`. Alternatively, you can use the `self.included` hook
-to include `ActionController::Live` directly to the controller once the `StreamingSupport` is included.
+Se você incluir `ActionController::Live` em outro módulo que está incluído em seu *controller*, então você
+também deve estender o módulo com `ActiveSupport::Concern`. Alternativamente, você pode usar o gancho (*hook*)
+`self.included` para incluir `ActionController::Live` diretamente no *controller* uma vez que o `StreamingSupport` está incluído.
 
-This means that if your application used to have its own streaming module, the following code
-would break in production:
+Isso significa que se sua aplicação costumava ter seu próprio módulo de *streaming*, o código a seguir
+seria interrompido em produção:
 
 ```ruby
-# This is a work-around for streamed controllers performing authentication with Warden/Devise.
-# See https://github.com/plataformatec/devise/issues/2332
-# Authenticating in the router is another solution as suggested in that issue
+# Esta é uma solução alternativa para *streamed controllers* realizando autenticação com *Warden/Devise*.
+# Veja https://github.com/plataformatec/devise/issues/2332
+# Autenticando no *router* é outra solução, conforme sugerido nessa *issue*
 class StreamingSupport
-  include ActionController::Live # this won't work in production for Rails 5
-  # extend ActiveSupport::Concern # unless you uncomment this line.
+  include ActionController::Live # isso não funcionará em produção para Rails 5
+  # extend ActiveSupport::Concern # a menos que você descomente esta linha.
 
   def process(name)
     super(name)
