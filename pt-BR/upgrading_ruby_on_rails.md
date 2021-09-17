@@ -845,9 +845,9 @@ gem 'record_tag_helper', '~> 1.0'
 
 Veja [#18411](https://github.com/rails/rails/pull/18411) para mais detalhes.
 
-### Removed Support for `protected_attributes` Gem
+### Removido suporte para a *Gem* `protected_attributes`
 
-The `protected_attributes` gem is no longer supported in Rails 5.
+A *gem* `protected_attributes` não é mais suportada no Rails 5.
 
 ### Removed support for `activerecord-deprecated_finders` gem
 
