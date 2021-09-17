@@ -849,9 +849,9 @@ Veja [#18411](https://github.com/rails/rails/pull/18411) para mais detalhes.
 
 A *gem* `protected_attributes` não é mais suportada no Rails 5.
 
-### Removed support for `activerecord-deprecated_finders` gem
+### Removido o suporte para a *gem* `activerecord-deprecated_finders`
 
-The `activerecord-deprecated_finders` gem is no longer supported in Rails 5.
+A *gem* `activerecord-deprecated_finders` não é mais suportada no Rails 5.
 
 ### `ActiveSupport::TestCase` Default Test Order is Now Random
 
