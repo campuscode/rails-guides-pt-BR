@@ -44,7 +44,7 @@ Esta seção irá te guiar no processo de criação de um _Mailer_ e sua _view_.
 #### Criando um _Mailer_
 
 ```bash
-$ bin/rails generate mailer UserMailer
+$ bin/rails generate mailer User
 create  app/mailers/user_mailer.rb
 create  app/mailers/application_mailer.rb
 invoke  erb

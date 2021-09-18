@@ -446,20 +446,21 @@ Known extensions: rails, pride
     -p, --pride                      Pride. Show your testing pride!
 ```
 
-Parallel Testing
-----------------
+Testes em Paralelo
+------------------
 
-Parallel testing allows you to parallelize your test suite. While forking processes is the
-default method, threading is supported as well. Running tests in parallel reduces the time it
-takes your entire test suite to run.
+Testes em paralelo permitem a paralelização da sua suíte de testes.
+Ao passo que fazer *fork* de processos é o método padrão, também é suportado o uso de *threads*.
+Rodar testes em paralelo reduz o tempo que leva para rodar sua suíte de testes inteira.
 
-### Parallel Testing with Processes
+### Testes em Paralelo com Processos
 
-The default parallelization method is to fork processes using Ruby's DRb system. The processes
-are forked based on the number of workers provided. The default number is the actual core count
-on the machine you are on, but can be changed by the number passed to the parallelize method.
+O método padrão de paralelização é fazer *fork* de processos utilizando o sistema DRb do Ruby.
+Os número de processos utilizados depende do número de *workers* fornecidos.
+O número padrão é a quantidade de núcleos de seu computador, mas pode ser mudado para a quantidade
+passada para o método `parallelize`.
 
-To enable parallelization add the following to your `test_helper.rb`:
+Para habilitar a paralelização adicione o seguinte em seu arquivo `test_helper.rb`:
 
 ```ruby
 class ActiveSupport::TestCase
@@ -467,50 +468,50 @@ class ActiveSupport::TestCase
 end
 ```
 
-The number of workers passed is the number of times the process will be forked. You may want to
-parallelize your local test suite differently from your CI, so an environment variable is provided
-to be able to easily change the number of workers a test run should use:
+O número de *workers* informado é o número de vezes que o processo sofrerá *fork*.
+Voce pode querer paralelizar sua suíte de testes local de maneira diferente de seu *CI*,
+por isso uma variável de ambiente está disponível para que seja possível mudar facilmente
+o número de *workers* que uma execução dos testes deve usar:
 
 ```bash
 $ PARALLEL_WORKERS=15 bin/rails test
 ```
 
-When parallelizing tests, Active Record automatically handles creating a database and loading the schema into the database for each
-process. The databases will be suffixed with the number corresponding to the worker. For example, if you
-have 2 workers the tests will create `test-database-0` and `test-database-1` respectively.
+Quando testes são paralelizados, o *Active Record* automaticamente lida com a criação dos bancos de dados e do carregamento do esquema (*schema*) no banco de dados de cada processo.
+Os bancos de dados de dados criados serão sufixados de acordo com a numeração do *worker*.
+Por exemplo, se há 2 *workers*, os testes criarão os bancos `test-database-0` e `test-database-1` respectivamente.
 
-If the number of workers passed is 1 or fewer the processes will not be forked and the tests will not
-be parallelized and the tests will use the original `test-database` database.
+Se o número de *workers* passado for 1 ou menos, os processos não sofrerão *fork* e os testes não serão paralelizados.
+Além disso, o banco de original `test-database` será usado.
 
-Two hooks are provided, one runs when the process is forked, and one runs before the forked process is closed.
-These can be useful if your app uses multiple databases or perform other tasks that depend on the number of
-workers.
+Dois *hooks* são disponibilizados, um que roda quando o processo sofre *fork* e outro quando o *fork* é encerrado.
+Isso pode ser útil se sua aplicação usa múltiplos bancos de dados ou executa outras atividades que dependem da quantidade de *workers*.
 
-The `parallelize_setup` method is called right after the processes are forked. The `parallelize_teardown` method
-is called right before the processes are closed.
+O método `parallelize_setup` é chamado logo após o *fork* do processo.
+O método `parallelize_teardown` é chamado no momento antes do processo ser finalizado.
 
 ```ruby
 class ActiveSupport::TestCase
   parallelize_setup do |worker|
-    # setup databases
+    # configuração dos bancos de dados
   end
 
   parallelize_teardown do |worker|
-    # cleanup databases
+    # limpeza dos bancos de dados
   end
 
   parallelize(workers: :number_of_processors)
 end
 ```
 
-These methods are not needed or available when using parallel testing with threads.
+Esses métodos não são necessários ou estão indisponíveis quando testes paralelos com *threads* são utilizados.
 
-### Parallel Testing with Threads
+### Testes em Paralelo com *Threads*
 
-If you prefer using threads or are using JRuby, a threaded parallelization option is provided. The threaded
-parallelizer is backed by Minitest's `Parallel::Executor`.
+Se você preferir utilizar *threads* ou está utilizando JRuby, a opção de paralelizar com *threads* está disponível.
+O paralelizador com *threads* utiliza por baixo dos panos a classe `Parallel::Executor` do *Minitest*.
 
-To change the parallelization method to use threads over forks put the following in your `test_helper.rb`
+Para mudar o método de paralelização para utilizar *threads* ao invés de *forks*, escreva o seguinte em seu `test_helper.rb`:
 
 ```ruby
 class ActiveSupport::TestCase
@@ -518,41 +519,40 @@ class ActiveSupport::TestCase
 end
 ```
 
-Rails applications generated from JRuby or TruffleRuby will automatically include the `with: :threads` option.
+Aplicações Rails geradas com JRuby ou TruffleRuby irão incluir automaticamente a opção `with: :threads`.
 
-The number of workers passed to `parallelize` determines the number of threads the tests will use. You may
-want to parallelize your local test suite differently from your CI, so an environment variable is provided
-to be able to easily change the number of workers a test run should use:
+o número de *workers* passado para `parallelize` determina o número de *threads* que os testes irão utilizar.
+Voce pode querer paralelizar sua suíte de testes de maneira diferente de seu *CI*,
+por isso uma variável de ambiente está disponível para que seja possível mudar facilmente
+o número de *workers* que uma execução dos testes deve usar:
 
 ```bash
 $ PARALLEL_WORKERS=15 bin/rails test
 ```
 
-### Testing Parallel Transactions
+### Testando Transações em Paralelo
 
-Rails automatically wraps any test case in a database transaction that is rolled
-back after the test completes.  This makes test cases independent of each other
-and changes to the database are only visible within a single test.
+O Rails automaticamente envolve todo caso de teste em uma transação do banco de dados, que é desfeita depois que o teste é concluído.
+Isso faz com que os casos de teste sejam independentes uns dos outros e faz com que as mudanças no banco de dados sejam visíveis somente dentro daquele teste.
 
-When you want to test code that runs parallel transactions in threads,
-transactions can block each other because they are already nested under the test
-transaction.
 
-You can disable transactions in a test case class by setting
-`self.use_transactional_tests = false`:
+Quando você testa código que roda transações paralelas em *threads*,
+as transações podem bloquear umas às outras, pois eles já estão aninhadas com a transação do caso de teste.
+
+Você pode desabilitar transações na classe de um caso de teste, através da configuração `self.use_transactional_tests = false`:
 
 ```ruby
 class WorkerTest < ActiveSupport::TestCase
   self.use_transactional_tests = false
 
   test "parallel transactions" do
-    # start some threads that create transactions
+    # inicia threads que criam transações
   end
 end
 ```
 
-NOTE: With disabled transactional tests, you have to clean up any data tests
-create as changes are not automatically rolled back after the test completes.
+NOTE: Com os testes transacionais desligados, você terá que que limpar os dados de teste criados,
+já que a as mudanças não são automaticamente desfeitas depois que o teste termina.
 
 The Test Database
 -----------------
