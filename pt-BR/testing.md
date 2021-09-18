@@ -278,57 +278,56 @@ end
 
 Este teste agora deveria passar.
 
-### Available Assertions
+### Asserções disponíveis
 
-By now you've caught a glimpse of some of the assertions that are available. Assertions are the worker bees of testing. They are the ones that actually perform the checks to ensure that things are going as planned.
+Por agora você viu pouco de algumas asserções que estão disponíveis. Asserções são as obreiras dos testes. Elas são as únicas que na verdade performam para checar se as coisas estão indo conforme o planejado.
 
-Here's an extract of the assertions you can use with
-[`Minitest`](https://github.com/seattlerb/minitest), the default testing library
-used by Rails. The `[msg]` parameter is an optional string message you can
-specify to make your test failure messages clearer.
+Aqui está um resumo das asserções que você pode usar com
+[`Minitest`](https://github.com/seattlerb/minitest), a biblioteca padrão
+usada pelo Rails. O parâmetro `[msg]` é uma mensagem opcional do tipo string que você pode
+especificar para fazer as falhas do teste mais claras.
 
-| Assertion                                                        | Purpose |
+| Asserção                                                         | Propósito |
 | ---------------------------------------------------------------- | ------- |
-| `assert( test, [msg] )`                                          | Ensures that `test` is true.|
-| `assert_not( test, [msg] )`                                      | Ensures that `test` is false.|
-| `assert_equal( expected, actual, [msg] )`                        | Ensures that `expected == actual` is true.|
-| `assert_not_equal( expected, actual, [msg] )`                    | Ensures that `expected != actual` is true.|
-| `assert_same( expected, actual, [msg] )`                         | Ensures that `expected.equal?(actual)` is true.|
-| `assert_not_same( expected, actual, [msg] )`                     | Ensures that `expected.equal?(actual)` is false.|
-| `assert_nil( obj, [msg] )`                                       | Ensures that `obj.nil?` is true.|
-| `assert_not_nil( obj, [msg] )`                                   | Ensures that `obj.nil?` is false.|
-| `assert_empty( obj, [msg] )`                                     | Ensures that `obj` is `empty?`.|
-| `assert_not_empty( obj, [msg] )`                                 | Ensures that `obj` is not `empty?`.|
-| `assert_match( regexp, string, [msg] )`                          | Ensures that a string matches the regular expression.|
-| `assert_no_match( regexp, string, [msg] )`                       | Ensures that a string doesn't match the regular expression.|
-| `assert_includes( collection, obj, [msg] )`                      | Ensures that `obj` is in `collection`.|
-| `assert_not_includes( collection, obj, [msg] )`                  | Ensures that `obj` is not in `collection`.|
-| `assert_in_delta( expected, actual, [delta], [msg] )`            | Ensures that the numbers `expected` and `actual` are within `delta` of each other.|
-| `assert_not_in_delta( expected, actual, [delta], [msg] )`        | Ensures that the numbers `expected` and `actual` are not within `delta` of each other.|
-| `assert_in_epsilon ( expected, actual, [epsilon], [msg] )`       | Ensures that the numbers `expected` and `actual` have a relative error less than `epsilon`.|
-| `assert_not_in_epsilon ( expected, actual, [epsilon], [msg] )`   | Ensures that the numbers `expected` and `actual` have a relative error not less than `epsilon`.|
-| `assert_throws( symbol, [msg] ) { block }`                       | Ensures that the given block throws the symbol.|
-| `assert_raises( exception1, exception2, ... ) { block }`         | Ensures that the given block raises one of the given exceptions.|
-| `assert_instance_of( class, obj, [msg] )`                        | Ensures that `obj` is an instance of `class`.|
-| `assert_not_instance_of( class, obj, [msg] )`                    | Ensures that `obj` is not an instance of `class`.|
-| `assert_kind_of( class, obj, [msg] )`                            | Ensures that `obj` is an instance of `class` or is descending from it.|
-| `assert_not_kind_of( class, obj, [msg] )`                        | Ensures that `obj` is not an instance of `class` and is not descending from it.|
-| `assert_respond_to( obj, symbol, [msg] )`                        | Ensures that `obj` responds to `symbol`.|
-| `assert_not_respond_to( obj, symbol, [msg] )`                    | Ensures that `obj` does not respond to `symbol`.|
-| `assert_operator( obj1, operator, [obj2], [msg] )`               | Ensures that `obj1.operator(obj2)` is true.|
-| `assert_not_operator( obj1, operator, [obj2], [msg] )`           | Ensures that `obj1.operator(obj2)` is false.|
-| `assert_predicate ( obj, predicate, [msg] )`                     | Ensures that `obj.predicate` is true, e.g. `assert_predicate str, :empty?`|
-| `assert_not_predicate ( obj, predicate, [msg] )`                 | Ensures that `obj.predicate` is false, e.g. `assert_not_predicate str, :empty?`|
-| `flunk( [msg] )`                                                 | Ensures failure. This is useful to explicitly mark a test that isn't finished yet.|
+| `assert( test, [msg] )`                                          | Checa se `test` é verdadeiro.|
+| `assert_not( test, [msg] )`                                      | Checa se `test` é falso.|
+| `assert_equal( expected, actual, [msg] )`                        | Checa se `expected == actual` é verdadeiro.|
+| `assert_not_equal( expected, actual, [msg] )`                    | Checa se `expected != actual` é verdadeiro.|
+| `assert_same( expected, actual, [msg] )`                         | Checa se `expected.equal?(actual)` é verdadeiro.|
+| `assert_not_same( expected, actual, [msg] )`                     | Checa se `expected.equal?(actual)` é falso.|
+| `assert_nil( obj, [msg] )`                                       | Checa se `obj.nil?` é verdadeiro.|
+| `assert_not_nil( obj, [msg] )`                                   | Checa se `obj.nil?` é falso.|
+| `assert_empty( obj, [msg] )`                                     | Checa se `obj` is `empty?` (`obj` é vazio).|
+| `assert_not_empty( obj, [msg] )`                                 | Checa se `obj` is not `empty?` (`obj` não é vazio).|
+| `assert_match( regexp, string, [msg] )`                          | Checa se uma string bate com a expressão regular dada.|
+| `assert_no_match( regexp, string, [msg] )`                       | Checa se uma string não bate com a expressão regular dada.|
+| `assert_includes( collection, obj, [msg] )`                      | Checa se `obj` está incluído na `collection`.|
+| `assert_not_includes( collection, obj, [msg] )`                  | Checa se `obj` não está incluído na `collection`.|
+| `assert_in_delta( expected, actual, [delta], [msg] )`            | Checa se os números `expected` e atual estão aproximados com o `delta` de cada.|
+| `assert_not_in_delta( expected, actual, [delta], [msg] )`        | Checa se os números `expected` e atual não estão aproximados com o `delta` de cada.|
+| `assert_in_epsilon ( expected, actual, [epsilon], [msg] )`       | Checa se os números `expected` e `actual` tem um erro relativo menor que `epsilon`.|
+| `assert_not_in_epsilon ( expected, actual, [epsilon], [msg] )`   | Checa se os números `expected` e `actual` não tem um erro relativo menor que `epsilon`.|
+| `assert_throws( symbol, [msg] ) { block }`                       | Checa se um dado _bloco_ dispara um erro com o `symbol`|
+| `assert_raises( exception1, exception2, ... ) { block }`         | Checa se um dado bloco dispara uma das exceções dadas.|
+| `assert_instance_of( class, obj, [msg] )`                        | Checa se `obj` é uma instância de `class`.|
+| `assert_not_instance_of( class, obj, [msg] )`                    | Checa se `obj` não é uma instância de `class`.|
+| `assert_kind_of( class, obj, [msg] )`                            | Checa se `obj` é uma instância de `class` or uma descendente dela.|
+| `assert_not_kind_of( class, obj, [msg] )`                        | Checa se `obj` não é uma instância de `class` e não é uma descendente dela.|
+| `assert_respond_to( obj, symbol, [msg] )`                        | Checa se `obj` responde a `symbol`.|
+| `assert_not_respond_to( obj, symbol, [msg] )`                    | Checa se `obj` não responde a `symbol`.|
+| `assert_operator( obj1, operator, [obj2], [msg] )`               | Checa se `obj1.operator(obj2)` é verdadeiro.|
+| `assert_not_operator( obj1, operator, [obj2], [msg] )`           | Checa se `obj1.operator(obj2)` é falso.|
+| `assert_predicate ( obj, predicate, [msg] )`                     | Checa se `obj.predicate` é verdadeiro, ex: `assert_predicate str, :empty?`|
+| `assert_not_predicate ( obj, predicate, [msg] )`                 | Checa se `obj.predicate` é falso, ex: `assert_not_predicate str, :empty?`|
+| `flunk( [msg] )`                                                 | Checa que o teste falha. Isso é útil para marcar explicitamente que o teste não está finalizado ainda.|
 
-The above are a subset of assertions that minitest supports. For an exhaustive &
-more up-to-date list, please check
-[Minitest API documentation](http://docs.seattlerb.org/minitest/), specifically
+As asserções acima são um subconjunto de asserções que `minitest` suporta. Para uma lista mais atualizada, por favor cheque
+[Minitest API documentation](http://docs.seattlerb.org/minitest/), especificamente
 [`Minitest::Assertions`](http://docs.seattlerb.org/minitest/Minitest/Assertions.html).
 
-Because of the modular nature of the testing framework, it is possible to create your own assertions. In fact, that's exactly what Rails does. It includes some specialized assertions to make your life easier.
+Por conta da natureza modular de `frameworks` de testes, é possível criar suas próprias asserções. De fato, isso é exatamente o que Rails faz. Isso inclui algumas asserções especializadas para deixar sua vida mais fácil.
 
-NOTE: Creating your own assertions is an advanced topic that we won't cover in this tutorial.
+NOTE: Criar suas próprias asserções é um tópico avançado que não cobriremos nesse tutorial.
 
 ### Rails Specific Assertions
 
