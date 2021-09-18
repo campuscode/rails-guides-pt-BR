@@ -363,11 +363,11 @@ Cada uma dessas asserções inclui `Minitest::Assertions`, nos permitindo usar t
 
 NOTE: Para mais informações em `Minitest`, procure na sua [própria documentação](http://docs.seattlerb.org/minitest).
 
-### The Rails Test Runner
+### O `Teste Runner` do rails
 
-We can run all of our tests at once by using the `bin/rails test` command.
+Nós podemos executar todos os nossos testes de uma vez usando o comando `bin/rails test`.
 
-Or we can run a single test file by passing the `bin/rails test` command the filename containing the test cases.
+Ou podemos executar um uníco arquivo de teste passando no comando `bin/rails test` o arquivo contendo os casos de testes.
 
 ```bash
 $ bin/rails test test/models/article_test.rb
@@ -382,10 +382,9 @@ Finished in 0.027034s, 73.9810 runs/s, 110.9715 assertions/s.
 2 runs, 3 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-This will run all test methods from the test case.
+Isso vai executar todos os métodos do caso de teste.
 
-You can also run a particular test method from the test case by providing the
-`-n` or `--name` flag and the test's method name.
+Você também pode executar um método particular do caso de teste provendo a opção `-n` ou `--name` e o nome do método de teste.
 
 ```bash
 $ bin/rails test test/models/article_test.rb -n test_the_truth
@@ -400,20 +399,20 @@ Finished tests in 0.009064s, 110.3266 tests/s, 110.3266 assertions/s.
 1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-You can also run a test at a specific line by providing the line number.
+Você pode também executar uma linha específica de um teste colocando o número da linha.
 
 ```bash
 $ bin/rails test test/models/article_test.rb:6 # run specific test and line
 ```
 
-You can also run an entire directory of tests by providing the path to the directory.
+Você também pode executar um diretório inteiro de testes colocando o caminho do diretório.
 
 ```bash
 $ bin/rails test test/controllers # run all tests from specific directory
 ```
 
-The test runner also provides a lot of other features like failing fast, deferring test output
-at the end of the test run and so on. Check the documentation of the test runner as follows:
+O Teste Runner provê muitas feature como _failing fast_, adiando a saída do teste
+no fim da execução do teste e assim por diante. Cheque a documentação do Test Runner conferme a seguir:
 
 ```bash
 $ bin/rails test -h
