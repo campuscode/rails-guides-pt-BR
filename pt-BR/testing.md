@@ -347,9 +347,9 @@ Rails adiciona algumas asserções customizadas o framework `minitest`:
 
 Agora você verá alguns usos de algumas dessas asserções no próximo capítulo.
 
-### A Brief Note About Test Cases
+### Uma breve nota sobre os Casos de Testes
 
-All the basic assertions such as `assert_equal` defined in `Minitest::Assertions` are also available in the classes we use in our own test cases. In fact, Rails provides the following classes for you to inherit from:
+Todas as asserções tais como `assert_equal` são definidas em `Minitest::Assertions` são também disponíveis nas classes que nós usamos em nossos próprios casos de teste. De fato, Rails provê as seguintes classes que você pode herdar de:
 
 * [`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html)
 * [`ActionMailer::TestCase`](https://api.rubyonrails.org/classes/ActionMailer/TestCase.html)
@@ -359,10 +359,9 @@ All the basic assertions such as `assert_equal` defined in `Minitest::Assertions
 * [`ActionDispatch::SystemTestCase`](https://api.rubyonrails.org/classes/ActionDispatch/SystemTestCase.html)
 * [`Rails::Generators::TestCase`](https://api.rubyonrails.org/classes/Rails/Generators/TestCase.html)
 
-Each of these classes include `Minitest::Assertions`, allowing us to use all of the basic assertions in our tests.
+Cada uma dessas asserções inclui `Minitest::Assertions`, nos permitindo usar todas as asserções básicas de nossos testes.
 
-NOTE: For more information on `Minitest`, refer to [its
-documentation](http://docs.seattlerb.org/minitest).
+NOTE: Para mais informações em `Minitest`, procure na sua [própria documentação](http://docs.seattlerb.org/minitest).
 
 ### The Rails Test Runner
 
