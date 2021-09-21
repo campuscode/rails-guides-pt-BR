@@ -362,7 +362,7 @@ Cada uma dessas asserções inclui `Minitest::Assertions`, nos permitindo usar t
 
 NOTE: Para mais informações em `Minitest`, procure na sua [própria documentação](http://docs.seattlerb.org/minitest).
 
-### O `Teste Runner` do rails
+### O `Teste Runner` do Rails
 
 Nós podemos executar todos os nossos testes de uma vez usando o comando `bin/rails test`.
 
