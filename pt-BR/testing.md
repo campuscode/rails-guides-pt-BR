@@ -324,7 +324,7 @@ As asserções acima são um subconjunto de asserções que `minitest` suporta. 
 [Minitest API documentation](http://docs.seattlerb.org/minitest/), especificamente
 [`Minitest::Assertions`](http://docs.seattlerb.org/minitest/Minitest/Assertions.html).
 
-Por conta da natureza modular de `frameworks` de testes, é possível criar suas próprias asserções. De fato, isso é exatamente o que Rails faz. Isso inclui algumas asserções especializadas para deixar sua vida mais fácil.
+Por conta da natureza modular do `framework` de testes, é possível criar suas próprias asserções. De fato, isso é exatamente o que Rails faz. Isso inclui algumas asserções especializadas para deixar sua vida mais fácil.
 
 NOTE: Criar suas próprias asserções é um tópico avançado que não cobriremos nesse tutorial.
 
