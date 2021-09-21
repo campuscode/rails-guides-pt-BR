@@ -366,7 +366,7 @@ NOTE: Para mais informações em `Minitest`, procure na sua [própria documenta�
 
 Nós podemos executar todos os nossos testes de uma vez usando o comando `bin/rails test`.
 
-Ou podemos executar um uníco arquivo de teste passando no comando `bin/rails test` o arquivo contendo os casos de testes.
+Ou podemos executar um único arquivo de teste passando no comando `bin/rails test` o arquivo contendo os casos de testes.
 
 ```bash
 $ bin/rails test test/models/article_test.rb
