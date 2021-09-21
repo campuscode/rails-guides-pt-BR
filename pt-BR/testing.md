@@ -53,7 +53,7 @@ O arquivo `application_system_test_case.rb` é responsável por realizar as conf
 
 ### O Ambiente de Teste
 
-Por padrão, toda aplicação Rals tem três ambientes: desenvolvimento, teste e produção.
+Por padrão, toda aplicação Rails tem três ambientes: desenvolvimento, teste e produção.
 
 Cada configuração de ambiente pode ser modificada similarmente. Neste caso, nós podemos modificar nosso ambiente de teste por alterar as opções encontradas em `config/environments/test.rb`.
 
