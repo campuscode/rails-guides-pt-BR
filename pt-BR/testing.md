@@ -411,7 +411,7 @@ $ bin/rails test test/controllers # run all tests from specific directory
 ```
 
 O Teste Runner provê muitas feature como _failing fast_, adiando a saída do teste
-no fim da execução do teste e assim por diante. Cheque a documentação do Test Runner conferme a seguir:
+no fim da execução do teste e assim por diante. Cheque a documentação do Test Runner da seguinte forma:
 
 ```bash
 $ bin/rails test -h
