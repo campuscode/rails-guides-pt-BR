@@ -45,7 +45,6 @@ Testes de sistemas herdam de Capybara e performam os testes do browser para a su
 
 Fixtures são um jeito de organizar dados de testes; ficam no diretório `fixtures`
 
-
 Um diretório `jobs` também será criado quando um teste associado é gerado.
 
 O `test_helper.rb` é responsável por realizar as configurações padrão para seus testes.
