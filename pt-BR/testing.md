@@ -187,7 +187,7 @@ ArticleTest#test_should_not_save_article_without_title [/path/to/blog/test/model
 Saved the article without a title
 ```
 
-Agora para fazer esse teste pasar nós podemos adicionar uma validação no nível do model para o campo _title_.
+Agora para fazer esse teste passar nós podemos adicionar uma validação no nível do model para o campo _title_.
 
 ```ruby
 class Article < ApplicationRecord
