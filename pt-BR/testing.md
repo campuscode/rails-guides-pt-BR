@@ -118,7 +118,7 @@ end
 
 Apesar de você ainda poder usar definições comuns de métodos, usando o prefixo `test` permite você ter um teste mais legível.
 
-NOTE: O nome do método é gerado por alterar espaços com undescores(*_*). O resultado não precisa ser um identificador Ruby valido embora o nome possa conter caracteres de pontuação, etc. Isso é porque em Ruby tecnicamente qualquer string pode ser o nome de um método. Isso pode requerir a chamada dos métodos `define_method` e `send` para funcionar corretamente, mas formalmente há uma pequena restrição no nome.
+NOTE: O nome do método é gerado por alterar espaços com undescores(*_*). O resultado não precisa ser um identificador Ruby valido embora o nome possa conter caracteres de pontuação, etc. Isso é porque em Ruby tecnicamente qualquer string pode ser o nome de um método. Isso pode requerer a chamada dos métodos `define_method` e `send` para funcionar corretamente, mas formalmente há uma pequena restrição no nome.
 
 Próximo, vamos olhar para nossa primeira asserção:
 
