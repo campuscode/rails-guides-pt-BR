@@ -38,7 +38,7 @@ application_system_test_case.rb  controllers/                     helpers/      
 channels/                        fixtures/                        integration/                     models/                          test_helper.rb
 ```
 
-Os diretórios `helpers`, `mailers` e `models` são destinados a realizar os testes para view helpers, mailers e models, respectivamente. O diretório `channel` é destinado a realizar os testes para a conexão e canais do ActionCable. O diretório `controllers` se destina a realizar testes para os controllers, rotas e views. O diretório `integration` se destina a realizar testes entre a interação entre controllers.
+Os diretórios `helpers`, `mailers` e `models` são destinados a realizar os testes para *view helpers*, *mailers* e *models*, respectivamente. O diretório `channel` é destinado a realizar os testes para a conexão e canais do *ActionCable*. O diretório `controllers` se destina a realizar testes para os *controllers*, rotas e *views*. O diretório `integration` se destina a realizar testes entre a interação entre *controllers*.
 
 O diretório `system` é destinado a realizar os testes do sistema, que são usados para testes completos da aplicação no browser. Testes de Sistema permitem você testar a aplicação do jeito que seu usuário experiencia e ajuda você a testar seu JavaScript também.
 Testes de sistemas herdam de Capybara e performam os testes do browser para a sua aplicação
