@@ -49,7 +49,7 @@ Um diretório `jobs` também será criado quando um teste associado é gerado.
 
 O arquivo `test_helper.rb` é responsável por realizar as configurações padrão para seus testes.
 
-O `application_system_test_case.rb` é responsável por realizar as configurações padrão para seus testes de sistema.
+O arquivo `application_system_test_case.rb` é responsável por realizar as configurações padrão para seus testes de sistema.
 
 ### O Ambiente de Teste
 
