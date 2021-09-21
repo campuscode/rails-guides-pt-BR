@@ -170,7 +170,7 @@ Finished in 0.023918s, 41.8090 runs/s, 41.8090 assertions/s.
 1 runs, 1 assertions, 1 failures, 0 errors, 0 skips
 ```
 
-Na saída do teste, `F` significa uma falha. Você pode ver o _trace_ correspondendente mostrado abaixo de `Failure` junto com o nome do teste que está falhando. As próximas linhas contém as origens do erro seguido por uma mensagem que menciona o valor atual e o valor esperado pela asserção. A mensagem de asserção padrão provê informação o suficiente para ajudar a localizar o erro. Para fazer a asserção mais legível, toda asserção tem um parâmetro de mensagem opcional, como foi mostrado aqui:
+Na saída do teste, `F` significa uma falha. Você pode ver o _trace_ correspondente mostrado abaixo de `Failure` junto com o nome do teste que está falhando. As próximas linhas contém as origens do erro seguido por uma mensagem que menciona o valor atual e o valor esperado pela asserção. A mensagem de asserção padrão provê informação o suficiente para ajudar a localizar o erro. Para fazer a asserção mais legível, toda asserção tem um parâmetro de mensagem opcional, como foi mostrado aqui:
 
 ```ruby
 test "should not save article without title" do
