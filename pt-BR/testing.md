@@ -43,7 +43,7 @@ Os diretórios `helpers`, `mailers` e `models` são destinados a realizar os tes
 O diretório `system` é destinado a realizar os testes do sistema, que são usados para testes completos da aplicação no browser. Testes de Sistema permitem você testar a aplicação do jeito que seu usuário experiência e ajuda você a testar seu JavaScript também.
 Testes de sistemas herdam de Capybara e performam os testes do browser para a sua aplicação
 
-Fixtures são um jeito de organizar dados de testes; ficam no diretório `fixtures`
+*Fixtures* são um jeito de organizar dados de testes; ficam no diretório `fixtures`
 
 Um diretório `jobs` também será criado quando um teste associado é gerado.
 
