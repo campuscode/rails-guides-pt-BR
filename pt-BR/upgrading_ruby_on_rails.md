@@ -772,9 +772,6 @@ Para continuar usando a serialização XML em sua aplicação, adicione a `gem '
 
 ### Removido o suporte para o antigo adaptador de banco de dados `mysql`
 
-Rails 5 removes support for the legacy `mysql` database adapter. Most users should be able to
-use `mysql2` instead. It will be converted to a separate gem when we find someone to maintain
-it.
 O Rails 5 remove o suporte para o antigo adaptador de banco de dados `mysql`. A maioria dos usuários devem usar o `mysql2` em vez disso. Será convertido em uma *gem* separada quando encontrarmos alguém para manter.
 
 ### Removido suporte para o *Debugger*
