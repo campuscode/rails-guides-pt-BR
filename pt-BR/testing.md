@@ -135,7 +135,7 @@ Uma asserção é uma linha de código que pode se tornar um objeto (ou express�
 
 Todo teste pode conter uma ou mais asserções, sem restrições em quantas asserções são permitidas. Apenas quando todas as asserções serem bem-sucedidas o teste vai passar.
 
-#### Sua primeira falha no teste
+#### Seu primeiro teste que falha
 
 Para ver como uma falha no teste é reportada, você pode adicionar um teste que falha no caso de teste do arquivo `article_test.rb`.
 
