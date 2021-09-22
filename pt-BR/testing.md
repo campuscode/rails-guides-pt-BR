@@ -588,7 +588,7 @@ Para rodar os testes, seu banco de dados precisará ter a estrutura atual.
 A classe *test helper* checa se seu banco de teste tem alguma migração pendente.
 Ela vai tentar carregar seu `db/schema.rb` ou `db/structure.sql` dentro do banco de teste.
 Se alguma migração ainda estiver faltando, um erro vai ser levantado.
-Isso indica que seu esquema (*schema*) ainda não foi totalmenta migrado.
+Isso indica que seu esquema (*schema*) ainda não foi totalmente migrado.
 Rodar as migrações do banco de desenvolvimento (`bin/rails db:migrate`) irá atualizar o esquema para a última versão.
 
 NOTE: Se migrações que já existiam forem modificadas, o banco de dados de teste precisará ser refeito.
@@ -604,7 +604,7 @@ Você pode encontrar a documentação completa em [documentação da API de Fixt
 
 *Fixtures* é uma apenas uma palavra bonita pra dados de teste.
 *Fixtures* permitem você popular seu banco de teste com dados predefinidos antes dos testes rodarem.
-*Fixtures* funcionam indepententemente do banco de dados e são escritas em YAML.
+*Fixtures* funcionam independentemente do banco de dados e são escritas em YAML.
 Há um arquivo por *model*.
 
 NOTE: *Fixtures* não foram feitas para criar todos os objetos que seus testes precisam e são melhor gerenciadas quando usadas somente para dados padrão que podem ser usados em casos comuns.
@@ -632,7 +632,7 @@ steve:
   profession: guy with keyboard
 ```
 
-Cada *fixture* recebe um nome, seguido de uma lista identada de chaves/valores separados por dois pontos.
+Cada *fixture* recebe um nome, seguido de uma lista indentada de chaves/valores separados por dois pontos.
 Registros são separados uns dos outros por uma linha em branco.
 Você pode colocar comentários em uma arquivo *fixture* usando o caractere # na primeira coluna do texto.
 
@@ -675,11 +675,10 @@ user_<%= n %>:
 <% end %>
 ```
 
-#### Fixtures em ação
+#### Fixtures em Ação
 
 O Rails automaticamente carrega todas as *fixtures* dentro do diretório `test/fixtures` por padrão.
 O carregamento envolve três passos:
-
 
 1. Remover qualquer dado existente da tabela que corresponde a *fixture*
 2. Carregar os dados da *fixture* na tabela
@@ -687,10 +686,10 @@ O carregamento envolve três passos:
 
 TIP: Para remover todos os dados existentes, o Rails tenta desabilitar os *triggers* de integridade referencial (como chaves estrangeiras e *constraints*).
 Se você estiver recebendo erros irritantes de permissão na hora de rodar os testes, garanta que o usuário do banco de dados tenha permissão para desabilitar esses *triggers* no ambiente de teste.
-(No PostgreSQL, somente superusuários podem desatival todos os *triggers*.
+(No PostgreSQL, somente superusuários podem desativar todos os *triggers*.
 Leia mais sobre as permissões do PostgreSQL [aqui](http://blog.endpoint.com/2012/10/postgres-system-triggers-error.html)).
 
-#### Fixtures são objetos do Acive Record
+#### Fixtures são objetos do Active Record
 
 *Fixtures* são instâncias de Active Record.
 Como mencionado no ponto #3 acima, você pode acessar o objeto diretamente, já que ele está automaticamente acessível como um método cujo escopo é local para cada teste.
