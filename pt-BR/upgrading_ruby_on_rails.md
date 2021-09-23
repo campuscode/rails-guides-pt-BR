@@ -1082,8 +1082,7 @@ como `NULL` em vez de passar o valor `nil` através do codificador (por exemplo,
 
 ### Nível de *log* em produção
 
-No Rails 5, o nível de *log* padrão para o ambiente de produção será alterado para `:debug` (de `:info`). Para preservar o padrão atual, adicione a seguinte
-linha para o seu `production.rb`:
+No Rails 5, o nível de *log* padrão para o ambiente de produção será alterado para `:debug` (de `:info`). Para preservar o padrão atual, adicione a seguinte linha para o seu `production.rb`:
 
 ```ruby
 # Defina como `:info` para corresponder ao padrão atual, ou defina como `:debug` para ativar o padrão futuro.
