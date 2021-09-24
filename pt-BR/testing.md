@@ -26,7 +26,7 @@ Os testes no Rails podem simular requisições no browser e com isso, você pode
 Introdução a testes
 -----------------------
 
-Suporte a testes foi implantado no Rails desde os primórdios. Não foi uma epifania do tipo: "Vamos adicionar suporte para testes porque eles são novos e legais!"
+O suporte a testes foi implantado no Rails desde os primórdios. Não foi uma epifania do tipo: "Vamos adicionar suporte para testes porque eles são novos e legais!"
 
 ### Configurações para testes em aplicações Rails
 
