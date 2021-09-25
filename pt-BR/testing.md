@@ -72,7 +72,7 @@ create  test/fixtures/articles.yml
 ...
 ```
 
-O teste padrão esboçado em `test/models/article_test.rb` parece assim:
+O _stub_ teste padrão em `test/models/article_test.rb` parece assim:
 
 ```ruby
 require "test_helper"
