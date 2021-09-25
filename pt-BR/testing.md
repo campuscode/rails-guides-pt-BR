@@ -30,7 +30,7 @@ O suporte a testes foi implantado no Rails desde os primórdios. Não foi uma ep
 
 ### Configurações para testes em aplicações Rails
 
-Rails cria um diretório `test` para você logo que você cria um projeto Rails usando o comando `rails new` _nome_da_aplicacao_. Se você deseja listar o conteúdo deste diretório, então você vai ver:
+O Rails cria um diretório `test` para você logo que você cria um projeto Rails usando o comando `rails new` _nome_da_aplicacao_. Se você listar o conteúdo deste diretório, você verá:
 
 ```bash
 $ ls -F test
