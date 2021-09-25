@@ -61,7 +61,7 @@ NOTE: Seus testes são executados sob o comando `RAILS_ENV=test`.
 
 ### Rails conhece Minitest
 
-Se você se lembra, nós usamos o comando `bin/rails generate model` no guia [Começando com Rails](getting_started.html). Nós criamos nosso primeiro model, e entre outras coisas foi criado rascunho de testes no diretório `test`:
+Se você se lembra, nós usamos o comando `bin/rails generate model` no guia [Começando com Rails](getting_started.html). Nós criamos nosso primeiro model e, entre outras coisas, foi criado [_stub_](https://pt.wikipedia.org/wiki/Stub) de testes no diretório `test`:
 
 ```bash
 $ bin/rails generate model article title:string body:text
