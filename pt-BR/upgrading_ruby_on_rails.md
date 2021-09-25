@@ -1194,7 +1194,7 @@ DSL de migração Rails.
 
 O procedimento de migração é o seguinte:
 
-1. remova `gem "foreigner "` do `Gemfile`.
+1. remova `gem "foreigner"` do `Gemfile`.
 2. execute `bundle install`.
 3. execute `bin/rake db:schema:dump`.
 4. certifique-se de que `db/schema.rb` contém todas as definições de chave estrangeira com
