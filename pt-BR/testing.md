@@ -100,7 +100,7 @@ A classe `ArticleTest` define um _test case_ porque ela herda de `ActiveSupport:
 
 Qualquer método definido com uma classe herdada de `Minitest::Test` (que é uma superclasse de `ActiveSupport::TestCase`) que começa com `test_` é simplesmente chamada em um teste. Então, métodos definidos como `test_password` e `test_valid_password` são nomes de testes legais e serão executados automaticamente quando o caso de teste (_test_case_) é executado.
 
-Rails também adiciona um método `test` que leva um nome _test_ e um bloco. Isso gera um teste normal `Minitest::Unit` com nomes de métodos prefixados com `test_`. Então você não precisa se preocupar com nomear os métodos, e você pode escrever algo assim:
+O Rails também adiciona um método `test` que leva um nome _test_ e um bloco. Isso gera um teste normal `Minitest::Unit` com nomes de métodos prefixados com `test_`. Então você não precisa se preocupar com nomear os métodos, e você pode escrever algo assim:
 
 ```ruby
 test "the truth" do
