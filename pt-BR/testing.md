@@ -90,7 +90,7 @@ Uma inspeção linha a linha desse arquivo ajudará você a se orientar a termin
 require "test_helper"
 ```
 
-Por fazer *require* desse arquivo, `test_helper.rb` as configurações padrão para executar nossos testes são carregadas. Nós vamos incluir isso em todos os testes que escrevermos, então qualquer método adicionado a este arquivo vão estar disponíveis em todos os nossos testes.
+Por fazer *require* desse arquivo, `test_helper.rb` as configurações padrões para executar nossos testes são carregadas. Nós vamos incluir isso em todos os testes que escrevermos, então qualquer método adicionado a este arquivo vai estar disponível em todos os nossos testes.
 
 ```ruby
 class ArticleTest < ActiveSupport::TestCase
