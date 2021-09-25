@@ -179,7 +179,7 @@ test "should not save article without title" do
 end
 ```
 
-Executando esse teste mostra uma mensagem de asserção mais amigável:
+A execução desse teste exibe uma mensagem de asserção mais amigável:
 
 ```
 Failure:
