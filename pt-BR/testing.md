@@ -146,7 +146,7 @@ test "should not save article without title" do
 end
 ```
 
-Vamos executar o teste com esse caso de teste adicionado (one 6 é o número da linha onde o teste é definido).
+Vamos executar o teste com esse caso de teste adicionado (onde 6 é o número da linha onde o teste é definido).
 
 ```bash
 $ bin/rails test test/models/article_test.rb:6
