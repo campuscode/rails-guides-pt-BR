@@ -580,7 +580,7 @@ Por padrão, toda aplicação Rails tem 3 ambientes (*environments*): `developme
 O banco de dados de cada ambiente é configurado em `config/database.yml`.
 
 Um banco de dados dedicado aos testes permite a configuração e a interação com os dados de teste separadamente.
-Desse jeito, seus testes podem manipular dados de teste com confiança, sem se preocupar com os bancos de desenvolvimento ou produção.
+Dessa forma, seus testes podem manipular dados de teste com confiança, sem se preocupar com os bancos de desenvolvimento ou produção.
 
 ### Mantendo o esquema do banco de dados de teste
 
