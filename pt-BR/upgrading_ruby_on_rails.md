@@ -1002,16 +1002,16 @@ interacting with models, but also affects `:default` column settings in `db/sche
 It is recommended that you do not set columns equal to a `String`, but pass a `Hash`
 instead, which will be converted to and from a JSON string automatically.
 
-Upgrading from Rails 4.1 to Rails 4.2
+Atualizando do Rails 4.1 para o Rails 4.2
 -------------------------------------
 
-### Web Console
+### *Web Console*
 
-First, add `gem 'web-console', '~> 2.0'` to the `:development` group in your `Gemfile` and run `bundle install` (it won't have been included when you upgraded Rails). Once it's been installed, you can simply drop a reference to the console helper (i.e., `<%= console %>`) into any view you want to enable it for. A console will also be provided on any error page you view in your development environment.
+Primeiro, adicione a `gem 'web-console', '~> 2.0'` ao grupo `:development` em seu `Gemfile` e execute `bundle install` (ela não foi incluída quando você atualizou o Rails). Depois de instalado, você pode simplesmente colocar uma referência ao *console helper* (ou seja, `<%= console %>`) em qualquer *view* para a qual deseja habilitá-lo. Um *console* também será fornecido em qualquer página de erro exibida em seu ambiente de desenvolvimento.
 
-### Responders
+### *Responders*
 
-`respond_with` and the class-level `respond_to` methods have been extracted to the `responders` gem. To use them, simply add `gem 'responders', '~> 2.0'` to your `Gemfile`. Calls to `respond_with` and `respond_to` (again, at the class level) will no longer work without having included the `responders` gem in your dependencies:
+Os métodos de classe `respond_with` e `respond_to` foram extraídos para a *gem* `responders`. Para usá-los, simplesmente adicione a `gem 'responders', '~> 2.0'` ao seu `Gemfile`. Chamadas para `respond_with` e `respond_to` (novamente, no nível de classe) não funcionarão mais sem incluir a *gem* `responders` em suas dependências:
 
 ```ruby
 # app/controllers/users_controller.rb
@@ -1026,7 +1026,7 @@ class UsersController < ApplicationController
 end
 ```
 
-Instance-level `respond_to` is unaffected and does not require the additional gem:
+`respond_to` em nível de instância não é afetado e não requer a *gem* adicional:
 
 ```ruby
 # app/controllers/users_controller.rb
@@ -1042,70 +1042,56 @@ class UsersController < ApplicationController
 end
 ```
 
-See [#16526](https://github.com/rails/rails/pull/16526) for more details.
+Veja [#16526](https://github.com/rails/rails/pull/16526) para mais detalhes.
 
-### Error handling in transaction callbacks
+### Tratamento de erros em *transaction callbacks*
 
-Currently, Active Record suppresses errors raised
-within `after_rollback` or `after_commit` callbacks and only prints them to
-the logs. In the next version, these errors will no longer be suppressed.
-Instead, the errors will propagate normally just like in other Active
-Record callbacks.
+Atualmente, o *Active Record* suprime os erros levantados dentro de *callbacks* `after_rollback` ou `after_commit` e apenas os imprime para os logs.
+Na próxima versão, esses erros não serão mais suprimidos. Em vez disso, os erros serão propagados normalmente como em outros *Active Record callbacks*.
 
-When you define an `after_rollback` or `after_commit` callback, you
-will receive a deprecation warning about this upcoming change. When
-you are ready, you can opt into the new behavior and remove the
-deprecation warning by adding following configuration to your
+Quando você define um *callback* `after_rollback` ou `after_commit`, você receberá um aviso de suspensão de uso sobre essa mudança futura.
+Quando você estiver pronto, pode optar pelo novo comportamento e remover o aviso de suspensão de uso, adicionando a seguinte configuração ao seu
 `config/application.rb`:
 
 ```ruby
 config.active_record.raise_in_transactional_callbacks = true
 ```
 
-See [#14488](https://github.com/rails/rails/pull/14488) and
-[#16537](https://github.com/rails/rails/pull/16537) for more details.
+Veja [#14488](https://github.com/rails/rails/pull/14488) e
+[#16537](https://github.com/rails/rails/pull/16537) para mais detalhes.
 
-### Ordering of test cases
+### Ordenando os casos de teste
 
-In Rails 5.0, test cases will be executed in random order by default. In
-anticipation of this change, Rails 4.2 introduced a new configuration option
-`active_support.test_order` for explicitly specifying the test ordering. This
-allows you to either lock down the current behavior by setting the option to
-`:sorted`, or opt into the future behavior by setting the option to `:random`.
+No Rails 5.0, os casos de teste serão executados em ordem aleatória por padrão. Em antecipação a esta mudança, Rails 4.2 introduziu uma nova opção de configuração
+`active_support.test_order` para especificar explicitamente a ordem dos testes. Isso permite que você bloqueie o comportamento atual, definindo a opção para
+`:sorted`, ou opte pelo comportamento futuro configurando a opção para `:random`.
 
-If you do not specify a value for this option, a deprecation warning will be
-emitted. To avoid this, add the following line to your test environment:
+Se você não especificar um valor para esta opção, um aviso de suspensão de uso será emitido. Para evitar isso, adicione a seguinte linha ao seu ambiente de teste:
 
 ```ruby
 # config/environments/test.rb
 Rails.application.configure do
-  config.active_support.test_order = :sorted # or `:random` if you prefer
+  config.active_support.test_order = :sorted # ou `:random` se você preferir
 end
 ```
 
-### Serialized attributes
+### Atributos serializados
 
-When using a custom coder (e.g. `serialize :metadata, JSON`),
-assigning `nil` to a serialized attribute will save it to the database
-as `NULL` instead of passing the `nil` value through the coder (e.g. `"null"`
-when using the `JSON` coder).
+Ao usar um codificador personalizado (por exemplo, `serialize :metadata, JSON`), atribuir `nil` a um atributo serializado irá salvá-lo no banco de dados
+como `NULL` em vez de passar o valor `nil` através do codificador (por exemplo, `"null"` quando usando o codificador `JSON`).
 
-### Production log level
+### Nível de *log* em produção
 
-In Rails 5, the default log level for the production environment will be changed
-to `:debug` (from `:info`). To preserve the current default, add the following
-line to your `production.rb`:
+No Rails 5, o nível de *log* padrão para o ambiente de produção será alterado para `:debug` (de `:info`). Para preservar o padrão atual, adicione a seguinte linha para o seu `production.rb`:
 
 ```ruby
-# Set to `:info` to match the current default, or set to `:debug` to opt-into
-# the future default.
+# Defina como `:info` para corresponder ao padrão atual, ou defina como `:debug` para ativar o padrão futuro.
 config.log_level = :info
 ```
 
-### `after_bundle` in Rails templates
+### `after_bundle` em Rails *templates*
 
-If you have a Rails template that adds all the files in version control, it
-fails to add the generated binstubs because it gets executed before Bundler:
+Se você tem um *Rails template* que adiciona todos os arquivos no controle de versão, isso falhará ao adicionar os *binstubs* gerados porque ele é executado antes do Bundler:
 
 ```ruby
 # template.rb
@@ -1118,8 +1104,7 @@ git add: "."
 git commit: %Q{ -m 'Initial commit' }
 ```
 
-You can now wrap the `git` calls in an `after_bundle` block. It will be run
-after the binstubs have been generated.
+Agora você pode envolver as chamadas `git` em um bloco `after_bundle`. Isso será executado depois que os *binstubs* foram gerados.
 
 ```ruby
 # template.rb
@@ -1134,50 +1119,43 @@ after_bundle do
 end
 ```
 
-### Rails HTML Sanitizer
+### Rails *HTML Sanitizer*
 
-There's a new choice for sanitizing HTML fragments in your applications. The
-venerable html-scanner approach is now officially being deprecated in favor of
+Há uma nova opção para sanitizar fragmentos de HTML em suas aplicações. A venerável abordagem *html-scanner* agora está oficialmente sendo descontinuada em favor de
 [`Rails HTML Sanitizer`](https://github.com/rails/rails-html-sanitizer).
 
-This means the methods `sanitize`, `sanitize_css`, `strip_tags` and
-`strip_links` are backed by a new implementation.
+Isso significa que os métodos `sanitize`, `sanitize_css`, `strip_tags` e `strip_links` são apoiados por uma nova implementação.
 
-This new sanitizer uses [Loofah](https://github.com/flavorjones/loofah) internally. Loofah in turn uses Nokogiri, which
-wraps XML parsers written in both C and Java, so sanitization should be faster
-no matter which Ruby version you run.
+Este novo *sanitizer* usa internamente [Loofah](https://github.com/flavorjones/loofah). Loofah, por sua vez, usa Nokogiri, que
+envolve analisadores XML escritos em C e Java, portanto, a sanitização deve ser mais rápida não importa qual versão do Ruby você execute.
 
-The new version updates `sanitize`, so it can take a `Loofah::Scrubber` for
-powerful scrubbing.
-[See some examples of scrubbers here](https://github.com/flavorjones/loofah#loofahscrubber).
+A nova versão atualiza `sanitize`, então pode usar um `Loofah::Scrubber` para uma depuração poderosa.
+[Veja alguns exemplos de depuradores aqui](https://github.com/flavorjones/loofah#loofahscrubber).
 
-Two new scrubbers have also been added: `PermitScrubber` and `TargetScrubber`.
-Read the [gem's readme](https://github.com/rails/rails-html-sanitizer) for more information.
+Dois novos depuradores também foram adicionados: `PermitScrubber` e `TargetScrubber`.
+Leia o [*gem's readme*](https://github.com/rails/rails-html-sanitizer) para mais informações.
 
-The documentation for `PermitScrubber` and `TargetScrubber` explains how you
-can gain complete control over when and how elements should be stripped.
+A documentação para `PermitScrubber` e `TargetScrubber` explica como você pode obter controle total sobre quando e como os elementos devem ser removidos.
 
-If your application needs to use the old sanitizer implementation, include `rails-deprecated_sanitizer` in your `Gemfile`:
+Se sua aplicação precisa usar a implementação antiga do *sanitizer*, inclua `rails-deprecated_sanitizer` em seu `Gemfile`:
 
 ```ruby
 gem 'rails-deprecated_sanitizer'
 ```
 
-### Rails DOM Testing
+### Testando *Rails DOM*
 
-The [`TagAssertions` module](https://api.rubyonrails.org/v4.1/classes/ActionDispatch/Assertions/TagAssertions.html) (containing methods such as `assert_tag`), [has been deprecated](https://github.com/rails/rails/blob/6061472b8c310158a2a2e8e9a6b81a1aef6b60fe/actionpack/lib/action_dispatch/testing/assertions/dom.rb) in favor of the `assert_select` methods from the `SelectorAssertions` module, which has been extracted into the [rails-dom-testing gem](https://github.com/rails/rails-dom-testing).
+O [módulo `TagAssertions`](https://api.rubyonrails.org/v4.1/classes/ActionDispatch/Assertions/TagAssertions.html) (contendo métodos como `assert_tag`), [foi descontinuado](https://github.com/rails/rails/blob/6061472b8c310158a2a2e8e9a6b81a1aef6b60fe/actionpack/lib/action_dispatch/testing/assertions/dom.rb) em favor dos métodos `assert_select` do módulo `SelectorAssertions`, que foi extraído para a [*gem rails-dom-testing*](https://github.com/rails/rails-dom-testing).
 
-### Masked Authenticity Tokens
+### Tokens de autenticidade mascarados
 
-In order to mitigate SSL attacks, `form_authenticity_token` is now masked so that it varies with each request.  Thus, tokens are validated by unmasking and then decrypting.  As a result, any strategies for verifying requests from non-rails forms that relied on a static session CSRF token have to take this into account.
+A fim de mitigar ataques SSL, `form_authenticity_token` agora é mascarado para que varie com cada solicitação (*request*). Assim, os *tokens* são validados desmascarando e depois descriptografando. Como resultado, quaisquer estratégias para verificar solicitações de formulários não-rails que dependiam de um *token* CSRF de sessão estática devem levar isso em consideração.
 
-### Action Mailer
+### *Action Mailer*
 
-Previously, calling a mailer method on a mailer class will result in the
-corresponding instance method being executed directly. With the introduction of
-Active Job and `#deliver_later`, this is no longer true. In Rails 4.2, the
-invocation of the instance methods are deferred until either `deliver_now` or
-`deliver_later` is called. For example:
+Anteriormente, chamar um método *mailer* em uma classe *mailer* resultaria no método de instância correspondente sendo executado diretamente. Com a introdução de
+*Active Job* e `#deliver_later`, isso não é mais verdade. No Rails 4.2, a invocação dos métodos de instância é adiada até `deliver_now` ou
+`deliver_later` sejam chamados. Por exemplo:
 
 ```ruby
 class Notifier < ActionMailer::Base
@@ -1189,14 +1167,14 @@ end
 ```
 
 ```ruby
-mail = Notifier.notify(user, ...) # Notifier#notify is not yet called at this point
-mail = mail.deliver_now           # Prints "Called"
+mail = Notifier.notify(user, ...) # Notifier#notify ainda não é chamado neste momento
+mail = mail.deliver_now           # Imprime "Called"
 ```
 
-This should not result in any noticeable differences for most applications.
-However, if you need some non-mailer methods to be executed synchronously, and
-you were previously relying on the synchronous proxying behavior, you should
-define them as class methods on the mailer class directly:
+Isso não deve resultar em diferenças perceptíveis para a maioria das aplicações.
+No entanto, se você precisar que alguns métodos não-*mailer* sejam executados de forma síncrona, e
+você estava contando anteriormente com o comportamento de *proxy* síncrono, você deve
+definí-los como métodos de classe na classe *mailer* diretamente:
 
 ```ruby
 class Notifier < ActionMailer::Base
@@ -1206,21 +1184,21 @@ class Notifier < ActionMailer::Base
 end
 ```
 
-### Foreign Key Support
+### Suporte para chave estrangeira
 
-The migration DSL has been expanded to support foreign key definitions. If
-you've been using the Foreigner gem, you might want to consider removing it.
-Note that the foreign key support of Rails is a subset of Foreigner. This means
-that not every Foreigner definition can be fully replaced by its Rails
-migration DSL counterpart.
+A migração DSL foi expandida para suportar definições de chave estrangeira. Se
+você tem usado a *gem Foreigner*, você pode querer considerar removê-la.
+Observe que o suporte de chave estrangeira do Rails é um subconjunto de *Foreigner*. Isso significa
+que nem todas as definições *Foreigner* podem ser totalmente substituídas pela contraparte
+DSL de migração Rails.
 
-The migration procedure is as follows:
+O procedimento de migração é o seguinte:
 
-1. remove `gem "foreigner"` from the `Gemfile`.
-2. run `bundle install`.
-3. run `bin/rake db:schema:dump`.
-4. make sure that `db/schema.rb` contains every foreign key definition with
-the necessary options.
+1. remova `gem "foreigner"` do `Gemfile`.
+2. execute `bundle install`.
+3. execute `bin/rake db:schema:dump`.
+4. certifique-se de que `db/schema.rb` contém todas as definições de chave estrangeira com
+as opções necessárias.
 
 Upgrading from Rails 4.0 to Rails 4.1
 -------------------------------------
