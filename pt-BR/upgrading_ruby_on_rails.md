@@ -695,7 +695,7 @@ end
 
 Em seguida, certifique-se de que todos os seus *models* herdem dele.
 
-### Interrompendo Sequências de *Callback* via `throw (:abort)`
+### Interrompendo Sequências de *Callback* via `throw(:abort)`
 
 No Rails 4.2, quando um *'before' callback* retorna 'falso' no *Active Record*
 e *Active Model*, então toda a sequência de *callback* é interrompida. Em outras palavras,
