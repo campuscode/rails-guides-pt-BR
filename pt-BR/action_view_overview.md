@@ -4,11 +4,11 @@
 Action View Overview
 ====================
 
-After reading this guide, you will know:
+Depois de ler este guia, você vai saber:
 
-* What Action View is and how to use it with Rails.
-* How best to use templates, partials, and layouts.
-* How to use localized views.
+* O que é uma Action View e como é utilizada no Rails.
+* A melhor forma de usar _templates_, _partials_ e _layouts_.
+* Como utilizar _views_ localizadas.
 
 --------------------------------------------------------------------------------
 
