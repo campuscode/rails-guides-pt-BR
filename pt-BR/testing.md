@@ -1577,6 +1577,7 @@ end
 
 Testando Helpers
 ---------------
+
 Um `helper` é apenas um simples módulo onde você pode definir métodos com os
 quais estarão disponíveis nas suas *views*.
 
