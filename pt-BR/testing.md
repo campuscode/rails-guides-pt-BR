@@ -26,11 +26,11 @@ Os testes no Rails podem simular requisições no browser e com isso, você pode
 Introdução a testes
 -----------------------
 
-Suporte a testes foi implantado no Rails desde os primórdios. Não foi uma epifania do tipo: "Vamos adicionar suporte para testes porque eles são novos e legais!"
+O suporte a testes foi implantado no Rails desde os primórdios. Não foi uma epifania do tipo: "Vamos adicionar suporte para testes porque eles são novos e legais!"
 
 ### Configurações para testes em aplicações Rails
 
-Rails cria um diretório `test` para você logo que você cria um projeto Rails usando o comando `rails new` _nome_da_aplicacao_. Se você deseja listar o conteúdo deste diretório, então você vai ver:
+O Rails cria um diretório `test` para você logo que você cria um projeto Rails usando o comando `rails new` _nome_da_aplicacao_. Se você listar o conteúdo deste diretório, você verá:
 
 ```bash
 $ ls -F test
@@ -38,10 +38,10 @@ application_system_test_case.rb  controllers/                     helpers/      
 channels/                        fixtures/                        integration/                     models/                          test_helper.rb
 ```
 
-Os diretórios `helpers`, `mailers` e `models` são destinados a realizar os testes para *view helpers*, *mailers* e *models*, respectivamente. O diretório `channel` é destinado a realizar os testes para a conexão e canais do *ActionCable*. O diretório `controllers` se destina a realizar testes para os *controllers*, rotas e *views*. O diretório `integration` se destina a realizar testes entre a interação entre *controllers*.
+Os diretórios `helpers`, `mailers` e `models` são destinados a realizar os testes para *view helpers*, *mailers* e *models*, respectivamente. O diretório `channel` é destinado a realizar os testes para a conexão e canais do *ActionCable*. O diretório `controllers` se destina a realizar testes para os *controllers*, rotas e *views*. O diretório `integration` se destina a realizar testes de interação entre *controllers*.
 
-O diretório `system` é destinado a realizar os testes do sistema, que são usados para testes completos da aplicação no browser. Testes de Sistema permitem você testar a aplicação do jeito que seu usuário experiência e ajuda você a testar seu JavaScript também.
-Testes de sistemas herdam de Capybara e performam os testes de *browser* para a sua aplicação
+O diretório `system` é destinado a realizar os testes do sistema, que são usados para testes completos da aplicação no browser. Os Testes de Sistema permitem você testar a aplicação do jeito que seu usuário experiência e ajuda você a testar seu JavaScript também.
+Os Testes de sistemas herdam de Capybara e são executados em testes de *browser* para a sua aplicação
 
 *Fixtures* são um jeito de organizar dados de testes; ficam no diretório `fixtures`
 
@@ -55,13 +55,13 @@ O arquivo `application_system_test_case.rb` é responsável por realizar as conf
 
 Por padrão, toda aplicação Rails tem três ambientes: desenvolvimento, teste e produção.
 
-Cada configuração de ambiente pode ser modificada similarmente. Neste caso, nós podemos modificar nosso ambiente de teste por alterar as opções encontradas em `config/environments/test.rb`.
+A configuração de cada ambiente pode ser modificada de forma semelhante. Neste caso, podemos modificar nosso ambiente de teste alterando as opções encontradas em `config/environments/test.rb`.
 
 NOTE: Seus testes são executados sob o comando `RAILS_ENV=test`.
 
 ### Rails conhece Minitest
 
-Se você se lembra, nós usamos o comando `bin/rails generate model` no guia [Começando com Rails](getting_started.html). Nós criamos nosso primeiro model, e entre outras coisas foi criado rascunho de testes no diretório `test`:
+Se você se lembra, nós usamos o comando `bin/rails generate model` no guia [Começando com Rails](getting_started.html). Nós criamos nosso primeiro model e, entre outras coisas, foi criado [_stub_](https://pt.wikipedia.org/wiki/Stub) de testes no diretório `test`:
 
 ```bash
 $ bin/rails generate model article title:string body:text
@@ -72,7 +72,7 @@ create  test/fixtures/articles.yml
 ...
 ```
 
-O teste padrão esboçado em `test/models/article_test.rb` parece assim:
+O _stub_ teste padrão em `test/models/article_test.rb` parece assim:
 
 ```ruby
 require "test_helper"
@@ -90,7 +90,7 @@ Uma inspeção linha a linha desse arquivo ajudará você a se orientar a termin
 require "test_helper"
 ```
 
-Por fazer *require* desse arquivo, `test_helper.rb` as configurações padrão para executar nossos testes são carregadas. Nós vamos incluir isso em todos os testes que escrevermos, então qualquer método adicionado a este arquivo vão estar disponíveis em todos os nossos testes.
+Por fazer *require* desse arquivo, `test_helper.rb` as configurações padrões para executar nossos testes são carregadas. Nós vamos incluir isso em todos os testes que escrevermos, então qualquer método adicionado a este arquivo vai estar disponível em todos os nossos testes.
 
 ```ruby
 class ArticleTest < ActiveSupport::TestCase
@@ -100,7 +100,7 @@ A classe `ArticleTest` define um _test case_ porque ela herda de `ActiveSupport:
 
 Qualquer método definido com uma classe herdada de `Minitest::Test` (que é uma superclasse de `ActiveSupport::TestCase`) que começa com `test_` é simplesmente chamada em um teste. Então, métodos definidos como `test_password` e `test_valid_password` são nomes de testes legais e serão executados automaticamente quando o caso de teste (_test_case_) é executado.
 
-Rails também adiciona um método `test` que leva um nome _test_ e um bloco. Isso gera um teste normal `Minitest::Unit` com nomes de métodos prefixados com `test_`. Então você não precisa se preocupar com nomear os métodos, e você pode escrever algo assim:
+O Rails também adiciona um método `test` que leva um nome _test_ e um bloco. Isso gera um teste normal `Minitest::Unit` com nomes de métodos prefixados com `test_`. Então você não precisa se preocupar com nomear os métodos, e você pode escrever algo assim:
 
 ```ruby
 test "the truth" do
@@ -118,9 +118,9 @@ end
 
 Apesar de você ainda poder usar definições comuns de métodos, usando o prefixo `test` permite você ter um teste mais legível.
 
-NOTE: O nome do método é gerado por alterar espaços com undescores(*_*). O resultado não precisa ser um identificador Ruby valido embora o nome possa conter caracteres de pontuação, etc. Isso é porque em Ruby tecnicamente qualquer string pode ser o nome de um método. Isso pode requerer a chamada dos métodos `define_method` e `send` para funcionar corretamente, mas formalmente há uma pequena restrição no nome.
+NOTE: O nome do método é gerado por alterar espaços com undescores(*_*). O resultado não precisa ser um identificador Ruby válido, embora o nome possa conter caracteres de pontuação, etc. Isso é porque em Ruby tecnicamente qualquer string pode ser o nome de um método. Isso pode requerer a chamada dos métodos `define_method` e `send` para funcionar corretamente, mas formalmente há uma pequena restrição no nome.
 
-Próximo, vamos olhar para nossa primeira asserção:
+A seguir, vamos olhar para nossa primeira asserção:
 
 ```ruby
 assert true
@@ -146,7 +146,7 @@ test "should not save article without title" do
 end
 ```
 
-Vamos executar o teste com esse caso de teste adicionado (one 6 é o número da linha onde o teste é definido).
+Vamos executar o teste com esse caso de teste adicionado (onde 6 é o número da linha onde o teste é definido).
 
 ```bash
 $ bin/rails test test/models/article_test.rb:6
@@ -179,7 +179,7 @@ test "should not save article without title" do
 end
 ```
 
-Executando esse teste mostra uma mensagem de asserção mais amigável:
+A execução desse teste exibe uma mensagem de asserção mais amigável:
 
 ```
 Failure:
