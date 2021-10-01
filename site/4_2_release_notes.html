@@ -383,13 +383,13 @@ just fine with no serialization involved:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-175b00a6d402a1c45cf9faeac925e0ce">class TrashableCleanupJob &lt; ActiveJob::Base
+<textarea class="clipboard-content" id="clipboard-6abdefb8000740116d603f1aa44f5e25">class TrashableCleanupJob &lt; ActiveJob::Base
   def perform(trashable, depth)
     trashable.cleanup(depth)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-175b00a6d402a1c45cf9faeac925e0ce">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6abdefb8000740116d603f1aa44f5e25">Copiar</button>
 </div>
 <p>See the <a href="active_job_basics.html">Active Job Basics</a> guide for more
 information.</p><h4 id="asynchronous-mails"><a class="anchorlink" href="#asynchronous-mails">2.2 Asynchronous Mails</a></h4><p>Building on top of Active Job, Action Mailer now comes with a <code>deliver_later</code>
@@ -413,7 +413,7 @@ some examples of supported operations:</p><div class="code_container">
 <span class="n">post</span><span class="p">.</span><span class="nf">comments</span>
 <span class="n">post</span><span class="p">.</span><span class="nf">comments</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3d3f5909b1c519ba54575208848d509b">Post.find(1)  # First call generates and cache the prepared statement
+<textarea class="clipboard-content" id="clipboard-505b8961e941a71b4fa6af616d044599">Post.find(1)  # First call generates and cache the prepared statement
 Post.find(2)  # Subsequent calls reuse the cached prepared statement
 
 Post.find_by_title('first post')
@@ -425,7 +425,7 @@ Post.find_by(title: 'second post')
 post.comments
 post.comments(true)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3d3f5909b1c519ba54575208848d509b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-505b8961e941a71b4fa6af616d044599">Copiar</button>
 </div>
 <p>It's important to highlight that, as the examples above suggest, the prepared
 statements do not cache the values passed in the method calls; rather, they
@@ -440,11 +440,11 @@ have placeholders for them.</p><p>Caching is not used in the following scenarios
 <span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-993e6603edc8b60361ee27a7ee8f1c08"># not cached
+<textarea class="clipboard-content" id="clipboard-b38910b9c868755da72cb946a677291a"># not cached
 Post.find(1, 2, 3)
 Post.find([1,2])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-993e6603edc8b60361ee27a7ee8f1c08">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b38910b9c868755da72cb946a677291a">Copiar</button>
 </div>
 </li>
 <li>
@@ -452,9 +452,9 @@ Post.find([1,2])
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Post</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="s1">'published_at &lt; ?'</span><span class="p">,</span> <span class="mi">2</span><span class="p">.</span><span class="nf">weeks</span><span class="p">.</span><span class="nf">ago</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a20d1fe701ec520bdaaccba7d5b623af">Post.find_by('published_at &lt; ?', 2.weeks.ago)
+<textarea class="clipboard-content" id="clipboard-e07fca92fae1a0bd23b978822971714a">Post.find_by('published_at &lt; ?', 2.weeks.ago)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a20d1fe701ec520bdaaccba7d5b623af">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e07fca92fae1a0bd23b978822971714a">Copiar</button>
 </div>
 </li>
 </ul>
@@ -479,7 +479,7 @@ adapters support foreign keys.</p><div class="code_container">
 <span class="c1"># remove the foreign key on `accounts.owner_id`</span>
 <span class="n">remove_foreign_key</span> <span class="ss">:accounts</span><span class="p">,</span> <span class="ss">column: :owner_id</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-baa275ed112664df5084faeced38b45b"># add a foreign key to `articles.author_id` referencing `authors.id`
+<textarea class="clipboard-content" id="clipboard-68ad9e79ef0ad8aa591dfd7baafde82f"># add a foreign key to `articles.author_id` referencing `authors.id`
 add_foreign_key :articles, :authors
 
 # add a foreign key to `articles.author_id` referencing `users.lng_id`
@@ -491,7 +491,7 @@ remove_foreign_key :accounts, :branches
 # remove the foreign key on `accounts.owner_id`
 remove_foreign_key :accounts, column: :owner_id
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-baa275ed112664df5084faeced38b45b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-68ad9e79ef0ad8aa591dfd7baafde82f">Copiar</button>
 </div>
 <p>See the API documentation on
 <a href="https://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key">add_foreign_key</a>
@@ -515,7 +515,7 @@ to the <a href="https://github.com/plataformatec/responders">responders</a> gem.
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a9059ad386d4b0090ca3d310d51f16e1"># app/controllers/users_controller.rb
+<textarea class="clipboard-content" id="clipboard-d8d3d339a211c506f933aefe028a5d3c"># app/controllers/users_controller.rb
 
 class UsersController &lt; ApplicationController
   respond_to :html, :json
@@ -526,7 +526,7 @@ class UsersController &lt; ApplicationController
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a9059ad386d4b0090ca3d310d51f16e1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d8d3d339a211c506f933aefe028a5d3c">Copiar</button>
 </div>
 <p>Instance-level <code>respond_to</code> is unaffected:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/controllers/users_controller.rb</span>
@@ -541,7 +541,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-022a059b324eeb8b72ead18963867dfd"># app/controllers/users_controller.rb
+<textarea class="clipboard-content" id="clipboard-d06391d2ccbd7b7e853d89c46015873d"># app/controllers/users_controller.rb
 
 class UsersController &lt; ApplicationController
   def show
@@ -553,7 +553,7 @@ class UsersController &lt; ApplicationController
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-022a059b324eeb8b72ead18963867dfd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d06391d2ccbd7b7e853d89c46015873d">Copiar</button>
 </div>
 <h4 id="default-host-for-rails-server"><a class="anchorlink" href="#default-host-for-rails-server">3.3 Default Host for <code>rails server</code></a></h4><p>Due to a <a href="https://github.com/rack/rack/commit/28b014484a8ac0bbb388e7eaeeef159598ec64fc">change in Rack</a>,
 <code>rails server</code> now listens on <code>localhost</code> instead of <code>0.0.0.0</code> by default. This
@@ -596,7 +596,7 @@ a[href$=/</span><span class="p">]</span>
 <span class="n">a</span><span class="p">[</span><span class="n">href</span><span class="o">=</span><span class="s2">"/"</span><span class="p">]</span>
 <span class="n">a</span><span class="p">[</span><span class="n">href</span><span class="vg">$=</span><span class="s2">"/"</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c27907fdb45eb3850f8e0b3bde8367ac"># before
+<textarea class="clipboard-content" id="clipboard-0a591319a03da7487678b5861376d74a"># before
 a[href=/]
 a[href$=/]
 
@@ -604,7 +604,7 @@ a[href$=/]
 a[href="/"]
 a[href$="/"]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c27907fdb45eb3850f8e0b3bde8367ac">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0a591319a03da7487678b5861376d74a">Copiar</button>
 </div>
 </li>
 <li>
@@ -624,7 +624,7 @@ nested elements may differ.</p>
 <span class="n">assert_select</span><span class="p">(</span><span class="s1">'div &gt; p'</span><span class="p">)</span>  <span class="c1"># =&gt; true</span>
 <span class="n">assert_select</span><span class="p">(</span><span class="s1">'i &gt; p'</span><span class="p">)</span>    <span class="c1"># =&gt; false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2d628bebf4e868533cc2ef14c5742984"># content: &lt;div&gt;&lt;i&gt;&lt;p&gt;&lt;/i&gt;&lt;/div&gt;
+<textarea class="clipboard-content" id="clipboard-73a6ba86bc95880c8d38bbd9c31a2517"># content: &lt;div&gt;&lt;i&gt;&lt;p&gt;&lt;/i&gt;&lt;/div&gt;
 
 # before:
 assert_select('div &gt; i')  # =&gt; true
@@ -636,7 +636,7 @@ assert_select('div &gt; i')  # =&gt; true
 assert_select('div &gt; p')  # =&gt; true
 assert_select('i &gt; p')    # =&gt; false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2d628bebf4e868533cc2ef14c5742984">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-73a6ba86bc95880c8d38bbd9c31a2517">Copiar</button>
 </div>
 </li>
 <li>
@@ -654,7 +654,7 @@ used to be raw (e.g. <code>AT&amp;amp;T</code>), and now is evaluated
 <span class="n">assert_select</span><span class="p">(</span><span class="s1">'p'</span><span class="p">,</span> <span class="s1">'AT&amp;T'</span><span class="p">)</span>      <span class="c1"># =&gt; true</span>
 <span class="n">assert_select</span><span class="p">(</span><span class="s1">'p'</span><span class="p">,</span> <span class="s1">'AT&amp;amp;T'</span><span class="p">)</span>  <span class="c1"># =&gt; false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-548b49a3fb384213fb8331bba422b6ae"># content: &lt;p&gt;AT&amp;amp;T&lt;/p&gt;
+<textarea class="clipboard-content" id="clipboard-5ea668124890f401ebfd8c8abff45e16"># content: &lt;p&gt;AT&amp;amp;T&lt;/p&gt;
 
 # before:
 assert_select('p', 'AT&amp;amp;T')  # =&gt; true
@@ -664,33 +664,33 @@ assert_select('p', 'AT&amp;T')      # =&gt; false
 assert_select('p', 'AT&amp;T')      # =&gt; true
 assert_select('p', 'AT&amp;amp;T')  # =&gt; false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-548b49a3fb384213fb8331bba422b6ae">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5ea668124890f401ebfd8c8abff45e16">Copiar</button>
 </div>
 </li>
 </ul>
 <p>Furthermore substitutions have changed syntax.</p><p>Now you have to use a <code>:match</code> CSS-like selector:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">assert_select</span> <span class="s2">":match('id', ?)"</span><span class="p">,</span> <span class="s1">'comment_1'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-09461f7d0c638041ff124c5df062f69c">assert_select ":match('id', ?)", 'comment_1'
+<textarea class="clipboard-content" id="clipboard-33616a785b32f4d828dbcaf0eb414da3">assert_select ":match('id', ?)", 'comment_1'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-09461f7d0c638041ff124c5df062f69c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-33616a785b32f4d828dbcaf0eb414da3">Copiar</button>
 </div>
 <p>Additionally Regexp substitutions look different when the assertion fails.
 Notice how <code>/hello/</code> here:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">assert_select</span><span class="p">(</span><span class="s2">":match('id', ?)"</span><span class="p">,</span> <span class="sr">/hello/</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3e74c437ea4e76c2d5f7ae519ee9f347">assert_select(":match('id', ?)", /hello/)
+<textarea class="clipboard-content" id="clipboard-08a17d90d08ca11b25483fceac197a79">assert_select(":match('id', ?)", /hello/)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3e74c437ea4e76c2d5f7ae519ee9f347">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-08a17d90d08ca11b25483fceac197a79">Copiar</button>
 </div>
 <p>becomes <code>"(?-mix:hello)"</code>:</p><div class="code_container">
 <pre><code class="highlight plaintext">Expected at least 1 element matching "div:match('id', "(?-mix:hello)")", found 0..
 Expected 0 to be &gt;= 1.
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f65fc0600d2f6245a1a2802fd2da2bfa">Expected at least 1 element matching "div:match('id', "(?-mix:hello)")", found 0..
+<textarea class="clipboard-content" id="clipboard-5d0b4206cac026060ab77b9c9fd52978">Expected at least 1 element matching "div:match('id', "(?-mix:hello)")", found 0..
 Expected 0 to be &gt;= 1.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f65fc0600d2f6245a1a2802fd2da2bfa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5d0b4206cac026060ab77b9c9fd52978">Copiar</button>
 </div>
 <p>See the <a href="https://github.com/rails/rails-dom-testing/tree/8798b9349fb9540ad8cb9a0ce6cb88d1384a210b">Rails Dom Testing</a> documentation for more on <code>assert_select</code>.</p><h3 id="railties"><a class="anchorlink" href="#railties">4 Railties</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/4-2-stable/railties/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="railties-removals"><a class="anchorlink" href="#railties-removals">4.1 Removals</a></h4>
 <ul>
@@ -725,12 +725,12 @@ in the <code>test</code> folder.
 <span class="n">config</span><span class="p">.</span><span class="nf">x</span><span class="p">.</span><span class="nf">payment_processing</span><span class="p">.</span><span class="nf">retries</span>  <span class="o">=</span> <span class="mi">3</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">x</span><span class="p">.</span><span class="nf">super_debugger</span>              <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8ec90a48873d4605aff0be39d2b93fe3"># config/environments/production.rb
+<textarea class="clipboard-content" id="clipboard-14ed06ab30b78413f699af0b2717f6eb"># config/environments/production.rb
 config.x.payment_processing.schedule = :daily
 config.x.payment_processing.retries  = 3
 config.x.super_debugger              = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8ec90a48873d4605aff0be39d2b93fe3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-14ed06ab30b78413f699af0b2717f6eb">Copiar</button>
 </div>
 <p>These options are then available through the configuration object:</p>
 <div class="code_container">
@@ -738,11 +738,11 @@ config.x.super_debugger              = true
 <span class="no">Rails</span><span class="p">.</span><span class="nf">configuration</span><span class="p">.</span><span class="nf">x</span><span class="p">.</span><span class="nf">payment_processing</span><span class="p">.</span><span class="nf">retries</span>  <span class="c1"># =&gt; 3</span>
 <span class="no">Rails</span><span class="p">.</span><span class="nf">configuration</span><span class="p">.</span><span class="nf">x</span><span class="p">.</span><span class="nf">super_debugger</span>              <span class="c1"># =&gt; true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c37763039ded8f99d220f9287b842e33">Rails.configuration.x.payment_processing.schedule # =&gt; :daily
+<textarea class="clipboard-content" id="clipboard-11daa669f9987d1624099fd6307033be">Rails.configuration.x.payment_processing.schedule # =&gt; :daily
 Rails.configuration.x.payment_processing.retries  # =&gt; 3
 Rails.configuration.x.super_debugger              # =&gt; true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c37763039ded8f99d220f9287b842e33">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-11daa669f9987d1624099fd6307033be">Copiar</button>
 </div>
 <p>(<a href="https://github.com/rails/rails/commit/611849772dd66c2e4d005dcfe153f7ce79a8a7db">Commit</a>)</p>
 </li>
@@ -758,7 +758,7 @@ current environment.</p>
   <span class="na">url</span><span class="pi">:</span> <span class="s">http://localhost:3001</span>
   <span class="na">namespace</span><span class="pi">:</span> <span class="s">my_app_development</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4f6062252f3173973bf0f75488e73025"># config/exception_notification.yml
+<textarea class="clipboard-content" id="clipboard-94eb357769fba6dab1e2dec69e72451b"># config/exception_notification.yml
 production:
   url: http://127.0.0.1:8080
   namespace: my_app_production
@@ -766,7 +766,7 @@ development:
   url: http://localhost:3001
   namespace: my_app_development
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4f6062252f3173973bf0f75488e73025">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-94eb357769fba6dab1e2dec69e72451b">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/environments/production.rb</span>
@@ -774,12 +774,12 @@ development:
   <span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">use</span> <span class="no">ExceptionNotifier</span><span class="p">,</span> <span class="n">config_for</span><span class="p">(</span><span class="ss">:exception_notification</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-89261755b150a6698a44ca078c474339"># config/environments/production.rb
+<textarea class="clipboard-content" id="clipboard-d0c938002c357cecd84e809db6d3c875"># config/environments/production.rb
 Rails.application.configure do
   config.middleware.use ExceptionNotifier, config_for(:exception_notification)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-89261755b150a6698a44ca078c474339">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d0c938002c357cecd84e809db6d3c875">Copiar</button>
 </div>
 <p>(<a href="https://github.com/rails/rails/pull/16129">Pull Request</a>)</p>
 </li>
@@ -826,12 +826,12 @@ string that does not contain a "#" character:</p>
 <span class="n">get</span> <span class="s1">'/posts'</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'posts'</span>      <span class="o">=&gt;</span> <span class="n">get</span> <span class="s1">'/posts'</span><span class="p">,</span> <span class="ss">controller: :posts</span>
 <span class="n">get</span> <span class="s1">'/posts'</span><span class="p">,</span> <span class="ss">to: :index</span>       <span class="o">=&gt;</span> <span class="n">get</span> <span class="s1">'/posts'</span><span class="p">,</span> <span class="ss">action: :index</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4e3fa64e3792130188eea7c75514b94d">get '/posts', to: MyRackApp    =&gt; (No change necessary)
+<textarea class="clipboard-content" id="clipboard-87f3c982cc2e297c8dc26845ed7df360">get '/posts', to: MyRackApp    =&gt; (No change necessary)
 get '/posts', to: 'post#index' =&gt; (No change necessary)
 get '/posts', to: 'posts'      =&gt; get '/posts', controller: :posts
 get '/posts', to: :index       =&gt; get '/posts', action: :index
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4e3fa64e3792130188eea7c75514b94d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-87f3c982cc2e297c8dc26845ed7df360">Copiar</button>
 </div>
 <p>(<a href="https://github.com/rails/rails/commit/cc26b6b7bccf0eea2e2c1a9ebdcc9d30ca7390d9">Commit</a>)</p>
 </li>
@@ -844,13 +844,13 @@ get '/posts', to: :index       =&gt; get '/posts', action: :index
 <span class="c1"># good</span>
 <span class="n">root_path</span><span class="p">(</span><span class="ss">controller: </span><span class="s1">'posts'</span><span class="p">,</span> <span class="ss">action: </span><span class="s1">'index'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e15390b340ee5ab891dde9125c817552"># bad
+<textarea class="clipboard-content" id="clipboard-c68d798add6a4d9ad0b8d845769f219a"># bad
 root_path('controller' =&gt; 'posts', 'action' =&gt; 'index')
 
 # good
 root_path(controller: 'posts', action: 'index')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e15390b340ee5ab891dde9125c817552">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c68d798add6a4d9ad0b8d845769f219a">Copiar</button>
 </div>
 <p>(<a href="https://github.com/rails/rails/pull/17743">Pull Request</a>)</p>
 </li>
@@ -875,7 +875,7 @@ skip_around_filter    =&gt; skip_around_action
 skip_before_filter    =&gt; skip_before_action
 skip_filter           =&gt; skip_action_callback
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-404cfede6e05c745fcab40ffd1d088aa">after_filter          =&gt; after_action
+<textarea class="clipboard-content" id="clipboard-0bbeab4558cd8fcfcbf3db48edfd25c9">after_filter          =&gt; after_action
 append_after_filter   =&gt; append_after_action
 append_around_filter  =&gt; append_around_action
 append_before_filter  =&gt; append_before_action
@@ -889,7 +889,7 @@ skip_around_filter    =&gt; skip_around_action
 skip_before_filter    =&gt; skip_before_action
 skip_filter           =&gt; skip_action_callback
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-404cfede6e05c745fcab40ffd1d088aa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0bbeab4558cd8fcfcbf3db48edfd25c9">Copiar</button>
 </div>
 <p>If your application currently depends on these methods, you should use the
 replacement <code>*_action</code> methods instead. These methods will be deprecated in
@@ -934,12 +934,12 @@ implementation and not an intentional feature, e.g.:</p>
   <span class="n">assert_response</span> <span class="ss">:success</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f6b2e0da7dad33c9f3f4ae3120591d2d">test "list all posts" do
+<textarea class="clipboard-content" id="clipboard-97c66248d97f6001b3ed2ecff5ca957f">test "list all posts" do
   get "/posts"
   assert_response :success
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f6b2e0da7dad33c9f3f4ae3120591d2d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-97c66248d97f6001b3ed2ecff5ca957f">Copiar</button>
 </div>
 </li>
 </ul>
