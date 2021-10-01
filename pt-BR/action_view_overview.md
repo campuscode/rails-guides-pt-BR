@@ -148,27 +148,26 @@ end
 ```
 
 #### Jbuilder
-[Jbuilder](https://github.com/rails/jbuilder) is a gem that's
-maintained by the Rails team and included in the default Rails `Gemfile`.
-It's similar to Builder, but is used to generate JSON, instead of XML.
+[Jbuilder](https://github.com/rails/jbuilder) é uma gem que é
+mantida pelo time do Rails e incluída por padrão no `Gemfile` do Rails.
+É similar ao *Builder*, mas é usada para gerar *JSON*, ao invés de *XML*.
 
-If you don't have it, you can add the following to your `Gemfile`:
+Se você não tiver, você pode adicionar o seguinte ao seu `Gemfile`:
 
 ```ruby
 gem 'jbuilder'
 ```
 
-A Jbuilder object named `json` is automatically made available to templates with
-a `.jbuilder` extension.
+Um objeto *Jbuilder* denominado `json` é automaticamente disponibilizado para *templates* com extensão `.jbuilder`.
 
-Here is a basic example:
+Aqui está um exemplo básico:
 
 ```ruby
 json.name("Alex")
 json.email("alex@example.com")
 ```
 
-would produce:
+produziria:
 
 ```json
 {
@@ -177,12 +176,11 @@ would produce:
 }
 ```
 
-See the [Jbuilder documentation](https://github.com/rails/jbuilder#jbuilder) for
-more examples and information.
+Veja a [documentação do Jbuilder](https://github.com/rails/jbuilder#jbuilder) para mais exemplos e informação.
 
 #### Template Caching
 
-By default, Rails will compile each template to a method in order to render it. In the development environment, when you alter a template, Rails will check the file's modification time and recompile it.
+Por padrão, o Rails compila cada *template* em um método para renderizá-la. Em ambiente de desenvolvimento, quando você altera um *template*, o Rails verifica a hora de modificação do arquivo e o recompila.
 
 ### Partials
 
