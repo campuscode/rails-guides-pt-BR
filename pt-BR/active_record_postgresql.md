@@ -504,7 +504,7 @@ irb> device.id
 NOTE: `gen_random_uuid()` (from `pgcrypto`) is assumed if no `:default` option was
 passed to `create_table`.
 
-Full Text Search
+Pesquisa de Texto Completo
 ----------------
 
 ```ruby
