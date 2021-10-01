@@ -524,10 +524,10 @@ end
 ```
 
 ```ruby
-# Usage
+# Utilização
 Document.create(title: "Cats and Dogs", body: "are nice!")
 
-## all documents matching 'cat & dog'
+## todos os documentos que correspondem a 'cat & dog'
 Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
                  "cat & dog")
 ```
