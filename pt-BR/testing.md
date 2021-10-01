@@ -1578,8 +1578,8 @@ end
 Testando os *Helpers*
 ---------------
 
-Um *helper* é apenas um simples módulo onde você pode definir métodos com os
-quais estarão disponíveis nas suas *views*.
+Um *helper* é apenas um simples módulo onde você pode definir métodos
+que estarão disponíveis nas suas *views*.
 
 Para testar os *helpers*, tudo que você precisa fazer é verificar se a saída do
 método *helper* é de fato a saída esperada. Testes relacionados aos *helpers* estão
