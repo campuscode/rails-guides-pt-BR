@@ -84,9 +84,9 @@ Para suprimir espaços em branco à esquerda e à direita, você pode usar `<%-`
 
 #### Builder
 
-Builder templates are a more programmatic alternative to ERB. They are especially useful for generating XML content. An XmlMarkup object named `xml` is automatically made available to templates with a `.builder` extension.
+Os *templates* *Builder* são uma alternativa mais programática ao ERB. Eles são especialmente úteis para gerar conteúdo *XML*. Um objeto *XmlMarkup* denominado `xml` é automaticamente disponibilizado para *templates* com extensão` .builder`.
 
-Here are some basic examples:
+Aqui estão alguns exemplos básicos:
 
 ```ruby
 xml.em("emphasized")
@@ -95,7 +95,7 @@ xml.a("A Link", "href" => "https://rubyonrails.org")
 xml.target("name" => "compile", "option" => "fast")
 ```
 
-which would produce:
+que produziria:
 
 ```html
 <em>emphasized</em>
@@ -104,7 +104,7 @@ which would produce:
 <target option="fast" name="compile" />
 ```
 
-Any method with a block will be treated as an XML markup tag with nested markup in the block. For example, the following:
+Qualquer método com um bloco será tratado como uma tag de marcação *XML* com marcação aninhada no bloco. Por exemplo, o seguinte:
 
 ```ruby
 xml.div {
@@ -113,7 +113,7 @@ xml.div {
 }
 ```
 
-would produce something like:
+produziria algo como:
 
 ```html
 <div>
@@ -122,7 +122,7 @@ would produce something like:
 </div>
 ```
 
-Below is a full-length RSS example actually used on Basecamp:
+Abaixo está um exemplo completo de *RSS* que foi usado de verdade no Basecamp:
 
 ```ruby
 xml.rss("version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/") do
