@@ -1928,7 +1928,7 @@ Recursos Adicionais para Testes
 
 ### Testando Código Dependente de Data/Horário
 
-O Rails fornece métodos *helpers* integrados que permitem que você asserte que seu código dependente de data ou hora funcione conforme o esperado.
+O Rails fornece métodos *helpers* integrados que permitem que você verifique que seu código dependente de data ou hora funcione conforme o esperado.
 
 Aqui está um exemplo utilizando o *helper* [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to):
 
