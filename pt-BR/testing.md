@@ -1759,13 +1759,15 @@ end
 Esse teste é bem simples e somente faz a asserção que *job* fez o trabalho como esperado.
 
 Por padrão, `ActiveJob::TestCase` irá definir o adaptador de fila para `:test` dessa maneira
-seus *jobs* irão ser executados de forma linear. Isso também irá garantir que todos os *jobs* realizados anteriormente
-e os que estiverem enfileirados serão limpos antes de qualquer execução de teste para que você possa assumir com segurança que
-nenhum outro tenha sido executado no âmbito de cada teste.
+seus *jobs* irão ser executados de forma linear. Isso também irá garantir que todos os *jobs* realizados
+anteriormente e os que estiverem enfileirados serão limpos antes de qualquer execução de teste para que
+você possa assumir com segurança que nenhum outro tenha sido executado no âmbito de cada teste.
 
 ### Asserções Personalizadas e Testando Jobs dentro de Outros Componentes
 
-O Active Job vem com um monte de asserções customizadas que podem ser usadas para diminuir a verbosidade dos testes. Para uma lsita completa de asserções disponíveis, visite a documenta da API em [`ActiveJob::TestHelper`](https://api.rubyonrails.org/classes/ActiveJob/TestHelper.html).
+O Active Job vem com um monte de asserções customizadas que podem ser usadas para diminuir a verbosidade
+dos testes. Para uma lsita completa de asserções disponíveis, visite a documenta da API em
+[`ActiveJob::TestHelper`](https://api.rubyonrails.org/classes/ActiveJob/TestHelper.html).
 
 É uma boa prática se assegurar que seus *jobs* serão enfileirados ou executados
 onde quer que você os invoque (exemplo: desntro dos seus *controllers*). Este é um bom local onde
