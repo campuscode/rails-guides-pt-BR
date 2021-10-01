@@ -1734,17 +1734,16 @@ end
 
 NOTE: The `assert_emails` method is not tied to a particular deliver method and will work with emails delivered with either the `deliver_now` or `deliver_later` method. If we explicitly want to assert that the email has been enqueued we can use the `assert_enqueued_emails` method. More information can be found in the  [documentation here](https://api.rubyonrails.org/classes/ActionMailer/TestHelper.html).
 
-Testing Jobs
+Testando os *Jobs*
 ------------
+Uma vez que seus *jobs* podem ser enfileirados em diferentes camadas dentro da sua aplicação,
+será necessário testar tanto os *jobs* propriamente ditos (seu comportamento uma fez que estiverem enfileirados),
+quanto as entidades que fazem o enfileiramento destes.
 
-Since your custom jobs can be queued at different levels inside your application,
-you'll need to test both the jobs themselves (their behavior when they get enqueued)
-and that other entities correctly enqueue them.
+### Uma caso de teste básico
 
-### A Basic Test Case
-
-By default, when you generate a job, an associated test will be generated as well
-under the `test/jobs` directory. Here's an example test with a billing job:
+Por padrão, quando você gera um *job*, também será gerado um teste
+dentro do diretório `test/jobs`. Aqui está um exemplo de teste do *job* billing:
 
 ```ruby
 require "test_helper"
@@ -1757,8 +1756,7 @@ class BillingJobTest < ActiveJob::TestCase
 end
 ```
 
-This test is pretty simple and only asserts that the job got the work done
-as expected.
+Esse teste é bem simples e somente faz a asserção que *job* fez o trabalho como esperado.
 
 By default, `ActiveJob::TestCase` will set the queue adapter to `:test` so that
 your jobs are performed inline. It will also ensure that all previously performed
