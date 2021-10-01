@@ -1926,22 +1926,21 @@ end
 Recursos Adicionais para Testes
 ----------------------------
 
-### Testing Time-Dependent Code
+### Testando Código Dependente de Data/Horário
 
-Rails provides built-in helper methods that enable you to assert that your time-sensitive code works as expected.
+O Rails fornece métodos *helpers* integrados que permitem que você asserte que seu código dependente de data ou hora funcione conforme o esperado.
 
-Here is an example using the [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to) helper:
+Aqui está um exemplo utilizando o *helper* [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to):
 
 ```ruby
-# Lets say that a user is eligible for gifting a month after they register.
+# Digamos que um usuário só poderá enviar presentes após um mês do seu registro.
 user = User.create(name: "Gaurish", activation_date: Date.new(2004, 10, 24))
 assert_not user.applicable_for_gifting?
 travel_to Date.new(2004, 11, 24) do
-  assert_equal Date.new(2004, 10, 24), user.activation_date # inside the `travel_to` block `Date.current` is mocked
+  assert_equal Date.new(2004, 10, 24), user.activation_date # dentro do bloco `travel_to` é feito o mock de `Date.current` 
   assert user.applicable_for_gifting?
 end
-assert_equal Date.new(2004, 10, 24), user.activation_date # The change was visible only inside the `travel_to` block.
+assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança é visível somente dentro do bloco `travel_to`.
 ```
 
-Please see [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
-for in-depth information about the available time helpers.
+Por favor consulte a Documentação da API [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html) para obter informações detalhadas sobre os *helpers* de tempo disponíveis.
