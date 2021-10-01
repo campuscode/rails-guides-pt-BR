@@ -6,20 +6,20 @@ Action View Overview
 
 Depois de ler este guia, você vai saber:
 
-* O que é uma Action View e como é utilizada no Rails.
-* A melhor forma de usar _templates_, _partials_ e _layouts_.
-* Como utilizar _views_ localizadas.
+* O que é *Action View* e como é utilizada no Rails.
+* A melhor forma de usar *templates*, *partials* e *layouts*.
+* Como utilizar *views* localizadas.
 
 --------------------------------------------------------------------------------
 
-What is Action View?
---------------------
+O que é *Action View*?
+----------------------
 
-In Rails, web requests are handled by [Action Controller](action_controller_overview.html) and Action View. Typically, Action Controller is concerned with communicating with the database and performing CRUD actions where necessary. Action View is then responsible for compiling the response.
+No *Rails*, as requisições web são tratadas por [*Action Controller*](action_controller_overview.html) e *Action View*. Normalmente, o *Action Controller* é responsável por se comunicar com o banco de dados e realizar ações de *CRUD* quando necessário. A *Action View* é responsável por compilar a resposta.
 
-Action View templates are written using embedded Ruby in tags mingled with HTML. To avoid cluttering the templates with boilerplate code, a number of helper classes provide common behavior for forms, dates, and strings. It's also easy to add new helpers to your application as it evolves.
+Os templates *Action View* são escritos usando Ruby embutido em tags mescladas com HTML. Para evitar poluir os templates com código clichê (*boilerplate code*), uma variedade de classes utilitárias (*helpers*) disponibilizam comportamentos comuns para lidar com forms, datas e strings. Também é fácil adicionar novas classes utilitárias (*helpers*) em sua aplicação conforme ela evolui.
 
-NOTE: Some features of Action View are tied to Active Record, but that doesn't mean Action View depends on Active Record. Action View is an independent package that can be used with any sort of Ruby libraries.
+NOTE: Alguns recursos da *Action View* estão vinculados ao *Active Record*, mas isso não significa que a *Action View* depende do *Active Record*. *Action View* é um pacote independente que pode ser usado com qualquer tipo de biblioteca Ruby.
 
 Using Action View with Rails
 ----------------------------
