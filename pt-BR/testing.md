@@ -1502,7 +1502,7 @@ Dir[Rails.root.join("test", "test_helpers", "**", "*.rb")].each { |file| require
 
 This has the downside of increasing the boot-up time, as opposed to manually requiring only the necessary files in your individual tests.
 
-Testing Routes
+Testando Rotas
 --------------
 
 Like everything else in your Rails application, you can test your routes. Route tests reside in `test/controllers/` or are part of controller tests.
