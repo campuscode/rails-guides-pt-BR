@@ -62,9 +62,9 @@ Rails suporta múltiplos sistemas de *template* e utiliza a extensão do arquivo
 
 #### ERB
 
-Within an ERB template, Ruby code can be included using both `<% %>` and `<%= %>` tags. The `<% %>` tags are used to execute Ruby code that does not return anything, such as conditions, loops, or blocks, and the `<%= %>` tags are used when you want output.
+Dentro de um *template* ERB, o código Ruby pode ser incluido usando ambas as tags `<% %>` e `<%= %>`. As tags `<% %>` são utilizadas para executar código Ruby que não possui retorno, como condições, *loops*, ou blocos, e as tags `<%= %>` são utilizadas quando você deseja uma saída.
 
-Consider the following loop for names:
+Considere o seguinte *loop* de nomes:
 
 ```html+erb
 <h1>Names of all the people</h1>
@@ -73,14 +73,14 @@ Consider the following loop for names:
 <% end %>
 ```
 
-The loop is set up using regular embedding tags (`<% %>`) and the name is inserted using the output embedding tags (`<%= %>`). Note that this is not just a usage suggestion: regular output functions such as `print` and `puts` won't be rendered to the view with ERB templates. So this would be wrong:
+O *loop* é configurado usando tags de incorporação regulares (`<% %>`) e o nome é inserido usando as tags de incorporação de saída (`<%= %>`). Note que isso não é somente uma sugestão de uso: funções de saída regulares como `print` e `puts` não serão renderizadas na *view* usando *template* ERB. Então, isso estaria errado:
 
 ```html+erb
 <%# WRONG %>
 Hi, Mr. <% puts "Frodo" %>
 ```
 
-To suppress leading and trailing whitespaces, you can use `<%-` `-%>` interchangeably with `<%` and `%>`.
+Para suprimir espaços em branco à esquerda e à direita, você pode usar `<%-` `-%>` alternadamente com `<%` e `%>`.
 
 #### Builder
 
