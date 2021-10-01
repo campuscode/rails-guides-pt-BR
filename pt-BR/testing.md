@@ -731,8 +731,8 @@ create  test/fixtures/articles.yml
 
 Model tests don't have their own superclass like `ActionMailer::TestCase`. Instead, they inherit from [`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html).
 
-System Testing
---------------
+Fazendo Testes de Sistema
+-------------------------
 
 System tests allow you to test user interactions with your application, running tests
 in either a real or a headless browser. System tests use Capybara under the hood.
