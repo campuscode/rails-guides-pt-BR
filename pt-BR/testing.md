@@ -1923,7 +1923,7 @@ class ChatRelayJobTest < ActiveJob::TestCase
 end
 ```
 
-Additional Testing Resources
+Recursos Adicionais para Testes
 ----------------------------
 
 ### Testing Time-Dependent Code
