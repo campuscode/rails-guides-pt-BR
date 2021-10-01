@@ -1606,6 +1606,7 @@ class UsersHelperTest < ActionView::TestCase
   end
 end
 ```
+
 Além disso, uma vez que a classe de teste se estende de `ActionView::TestCase`, você tem
 acesso aos métodos auxiliares do Rails como `link_to` ou` pluralize`.
 
