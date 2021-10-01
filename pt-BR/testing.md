@@ -215,7 +215,7 @@ Agora, se você notou, nós escrevemos um teste que falha para uma funcionalidad
 
 #### Como um erro se parece
 
-Para ver como um é reportado, aqui está um teste contendo um erro:
+Para ver como um erro é reportado, aqui está um teste contendo um erro:
 
 ```ruby
 test "should report error" do
