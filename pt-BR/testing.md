@@ -1943,4 +1943,4 @@ end
 assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança é visível somente dentro do bloco `travel_to`.
 ```
 
-Por favor consulte a Documentação da API [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html) para obter informações detalhadas sobre os *helpers* de tempo disponíveis.
+Por favor consulte a [Documentação da API `ActiveSupport::Testing::TimeHelpers`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html) para obter informações detalhadas sobre os *helpers* de tempo disponíveis.
