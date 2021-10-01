@@ -184,29 +184,29 @@ more examples and information.
 
 By default, Rails will compile each template to a method in order to render it. In the development environment, when you alter a template, Rails will check the file's modification time and recompile it.
 
-### Partials
+### *Partials*
 
-Partial templates - usually just called "partials" - are another device for breaking the rendering process into more manageable chunks. With partials, you can extract pieces of code from your templates to separate files and also reuse them throughout your templates.
+*Templates* parciais (*partials*) - normalmente chamados apenas de *partials* - são outro instrumento para quebrar o processo de renderização em partes mais gerenciáveis. Com *partials*, você consegue extrair pedaços de código de seus *templates* para separar em arquivos e também reusá-los em seus *templates*.
 
-#### Naming Partials
+#### Nomeando *Partials*
 
-To render a partial as part of a view, you use the `render` method within the view:
+Para renderizar um *partial* como parte de uma *view*, utiliza-se o método `render` dentro da *view*:
 
 ```erb
 <%= render "menu" %>
 ```
 
-This will render a file named `_menu.html.erb` at that point within the view that is being rendered. Note the leading underscore character: partials are named with a leading underscore to distinguish them from regular views, even though they are referred to without the underscore. This holds true even when you're pulling in a partial from another folder:
+Isso renderizará o arquivo `_menu.html.erb` naquele ponto dentro da view sendo renderizada. Note o caractere de sublinhado no início: *partials* são nomeados com um sublinhado no início para distingui-los das *views* regulares, embora sejam referidos sem o sublinhado. Isso é valido mesmo quando usando um *partial* de uma pasta diferente:
 
 ```erb
 <%= render "shared/menu" %>
 ```
 
-That code will pull in the partial from `app/views/shared/_menu.html.erb`.
+Esse código pegará o *partial* de `app/views/shared/_menu.html.erb`.
 
-#### Using Partials to simplify Views
+#### Usando *Partials* para simplificar *Views*
 
-One way to use partials is to treat them as the equivalent of subroutines; a way to move details out of a view so that you can grasp what's going on more easily. For example, you might have a view that looks like this:
+Uma maneira de usar *partials* é tratando-as como se fossem sub-rotinas; uma maneira de mover detalhes para fora da *view* para que você consiga entender o que está acontencendo com mais facilidade. Por exemplo, você pode ter uma *view* parecida com essa:
 
 ```html+erb
 <%= render "shared/ad_banner" %>
@@ -221,70 +221,69 @@ One way to use partials is to treat them as the equivalent of subroutines; a way
 <%= render "shared/footer" %>
 ```
 
-Here, the `_ad_banner.html.erb` and `_footer.html.erb` partials could contain content that is shared among many pages in your application. You don't need to see the details of these sections when you're concentrating on a particular page.
+Aqui, os *partials* `_ad_banner.html.erb` e `_footer.html.erb` podem ter conteúdos que são compartilhados entre muitas páginas em sua aplicação. Você não precisa ver os detalhes dessa seções quando estiver se concentrando em uma página específica.
 
-#### `render` without `partial` and `locals` options
+#### `render` sem os parâmetros `partial` e `locals`
 
-In the above example, `render` takes 2 options: `partial` and `locals`. But if
-these are the only options you want to pass, you can skip using these options.
-For example, instead of:
+No exemplo acima, o método `render` recebe 2 parâmetros: `partial` e `locals`.
+Mas se esses forem os únicos parâmetros que você deseja passar, você pode ignorá-los.
+Por exemplo, ao invés de:
 
 ```erb
 <%= render partial: "product", locals: { product: @product } %>
 ```
 
-You can also do:
+Você também pode usar:
 
 ```erb
 <%= render "product", product: @product %>
 ```
 
-#### The `as` and `object` options
+#### Os parâmetros `as` e `object`
 
-By default `ActionView::Partials::PartialRenderer` has its object in a local variable with the same name as the template. So, given:
+Por padrão o `ActionView::Partials::PartialRenderer` tem seu objeto em uma variável local com o mesmo nome do *template*. Então, dado que:
 
 ```erb
 <%= render partial: "product" %>
 ```
 
-within `_product` partial we'll get `@product` in the local variable `product`,
-as if we had written:
+dentro do *partial* `_product` nós teremos o `@product` dentro da variável local `product`, como se tivéssemos escrito:
 
 ```erb
 <%= render partial: "product", locals: { product: @product } %>
 ```
 
-The `object` option can be used to directly specify which object is rendered into the partial; useful when the template's object is elsewhere (e.g. in a different instance variable or in a local variable).
+O parâmetro `object` pode ser usado para especificar diretamente qual objeto é renderizado no *partial*; útil quando o objeto do *template* está em outro lugar (por exemplo, em uma variável de instância diferente ou em uma variável local).
 
-For example, instead of:
+Por exemplo, ao invés de:
 
 ```erb
 <%= render partial: "product", locals: { product: @item } %>
 ```
 
-we would do:
+Faríamos:
 
 ```erb
 <%= render partial: "product", object: @item %>
 ```
 
-With the `as` option we can specify a different name for the said local variable. For example, if we wanted it to be `item` instead of `product` we would do:
+Com o parâmetro `as` nós podemos especificar um nome diferente para a variável local. Por exemplo, se quisermos que seja `item` em vez de `product`, faríamos:
 
 ```erb
 <%= render partial: "product", object: @item, as: "item" %>
 ```
 
-This is equivalent to
+Isso é equivalente a:
 
 ```erb
 <%= render partial: "product", locals: { item: @item } %>
 ```
 
-#### Rendering Collections
+#### Renderizando Coleções
 
-It is very common that a template will need to iterate over a collection and render a sub-template for each of the elements. This pattern has been implemented as a single method that accepts an array and renders a partial for each one of the elements in the array.
+É muito comum que um *template* precise iterar sobre uma coleção e renderizar um *sub-template* para cada um dos elementos. Esse padrão foi implementado como um método único que recebe uma *array* e renderiza um *partial* para cada um dos elementos da *array*.
 
-So this example for rendering all the products:
+Logo, este exemplo para renderizar todos os produtos:
 
 ```erb
 <% @products.each do |product| %>
@@ -292,31 +291,31 @@ So this example for rendering all the products:
 <% end %>
 ```
 
-can be rewritten in a single line:
+pode ser reescrito em uma linha:
 
 ```erb
 <%= render partial: "product", collection: @products %>
 ```
 
-When a partial is called with a collection, the individual instances of the partial have access to the member of the collection being rendered via a variable named after the partial. In this case, the partial is `_product`, and within it you can refer to `product` to get the collection member that is being rendered.
+Quando um *partial* é chamado com uma coleção, as instâncias individuais do *partial* tem acesso ao membro da coleção que está sendo renderizado por meio de uma variável com o mesmo nome do *partial*. Nesse caso, o *partial* é `_product`, e dentro dele você pode se referir a `product` para obter o membro da coleção que está sendo renderizado.
 
-You can use a shorthand syntax for rendering collections. Assuming `@products` is a collection of `Product` instances, you can simply write the following to produce the same result:
+Você pode usar uma sintáxe abreviada para renderizar coleções. Supondo que `@products` é uma coleção de instâncias de `Product`, você pode simplesmente escrever o seguinte para produzir o mesmo resultado:
 
 ```erb
 <%= render @products %>
 ```
 
-Rails determines the name of the partial to use by looking at the model name in the collection, `Product` in this case. In fact, you can even render a collection made up of instances of different models using this shorthand, and Rails will choose the proper partial for each member of the collection.
+O Rails determina o nome do *partial* a ser usado observando o nome do *model* na coleção, `Product` neste caso. Na verdade, você pode até renderizar uma coleção composta de instâncias de diferentes *models* usando essa abreviação, e o Rails escolherá o *partial* adequado para cada membro da coleção.
 
-#### Spacer Templates
+#### *Spacer Templates*
 
-You can also specify a second partial to be rendered between instances of the main partial by using the `:spacer_template` option:
+Você também pode especificar um segundo *partial* a ser renderizado entre as instâncias do *partial* principal usando o parâmetro `:spacer_template`:
 
 ```erb
 <%= render partial: @products, spacer_template: "product_ruler" %>
 ```
 
-Rails will render the `_product_ruler` partial (with no data passed to it) between each pair of `_product` partials.
+O Rails renderizará o *partial* `_product_ruler` (sem passar nenhum dado pra ele) entre cada par do *partial* `_product`.
 
 ### Layouts
 
