@@ -715,7 +715,7 @@ Por exemplo:
 users(:david, :steve)
 ```
 
-Model Testing
+Testes de Model
 -------------
 
 Model tests are used to test the various models of your application.
