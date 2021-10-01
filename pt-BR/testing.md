@@ -1575,7 +1575,7 @@ assert_select_email do
 end
 ```
 
-Testando Helpers
+Testando os *Helpers*
 ---------------
 
 Um `helper` é apenas um simples módulo onde você pode definir métodos com os
