@@ -715,13 +715,13 @@ Por exemplo:
 users(:david, :steve)
 ```
 
-Testes de Model
--------------
+Testando *Models*
+-----------------
 
-Model tests are used to test the various models of your application.
+Testes de *model* são usados para testar os vários *models* de sua aplicação.
 
-Rails model tests are stored under the `test/models` directory. Rails provides
-a generator to create a model test skeleton for you.
+Os testes de *model* do Rails estão localizados em `test/models`.
+O Rails disponibiliza um gerador (*generator*) para criar esqueletos de testes de *model*.
 
 ```bash
 $ bin/rails generate test_unit:model article title:string body:text
@@ -729,7 +729,8 @@ create  test/models/article_test.rb
 create  test/fixtures/articles.yml
 ```
 
-Model tests don't have their own superclass like `ActionMailer::TestCase`. Instead, they inherit from [`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html).
+Testes de *model* não possuem uma superclasse como `ActionMailer::TestCase`.
+Ao invés disso, eles herdam de [`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html).
 
 System Testing
 --------------
