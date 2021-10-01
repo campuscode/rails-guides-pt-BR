@@ -1505,11 +1505,12 @@ This has the downside of increasing the boot-up time, as opposed to manually req
 Testando Rotas
 --------------
 
-Like everything else in your Rails application, you can test your routes. Route tests reside in `test/controllers/` or are part of controller tests.
+Assim como tudo na sua aplicação Rails, você também pode testar suas rotas.
+Testes de rotas vivem na pasta `test/controllers/` ou podem fazer parte de seus testes de *controller*.
 
-NOTE: If your application has complex routes, Rails provides a number of useful helpers to test them.
+NOTE: Se sua aplicação tem rotas muito complexas, o Rails fornece vários *helpers* úteis para testá-las.
 
-For more information on routing assertions available in Rails, see the API documentation for [`ActionDispatch::Assertions::RoutingAssertions`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
+Para mais informações sobre as asserções de rotas disponíveis no Rails, veja a documentação da API de [`ActionDispatch::Assertions::RoutingAssertions`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
 
 Testing Views
 -------------
