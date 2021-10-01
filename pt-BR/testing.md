@@ -1758,19 +1758,19 @@ end
 
 Esse teste é bem simples e somente faz a asserção que *job* fez o trabalho como esperado.
 
-By default, `ActiveJob::TestCase` will set the queue adapter to `:test` so that
-your jobs are performed inline. It will also ensure that all previously performed
-and enqueued jobs are cleared before any test run so you can safely assume that
-no jobs have already been executed in the scope of each test.
+Por padrão, `ActiveJob::TestCase` irá definir o adaptador de fila para `:test` dessa maneira
+seus *jobs* irão ser executados de forma linear. Isso também irá garantir que todos os *jobs* realizados anteriormente
+e os que estiverem enfileirados serão limpos antes de qualquer execução de teste para que você possa assumir com segurança que
+nenhum outro tenha sido executado no âmbito de cada teste.
 
-### Custom Assertions and Testing Jobs inside Other Components
+### Asserções Personalizadas e Testando Jobs dentro de Outros Componentes
 
-Active Job ships with a bunch of custom assertions that can be used to lessen the verbosity of tests. For a full list of available assertions, see the API documentation for [`ActiveJob::TestHelper`](https://api.rubyonrails.org/classes/ActiveJob/TestHelper.html).
+O Active Job vem com um monte de asserções customizadas que podem ser usadas para diminuir a verbosidade dos testes. Para uma lsita completa de asserções disponíveis, visite a documenta da API em [`ActiveJob::TestHelper`](https://api.rubyonrails.org/classes/ActiveJob/TestHelper.html).
 
-It's a good practice to ensure that your jobs correctly get enqueued or performed
-wherever you invoke them (e.g. inside your controllers). This is precisely where
-the custom assertions provided by Active Job are pretty useful. For instance,
-within a model:
+É uma boa prática se assegurar que seus *jobs* serão enfileirados ou executados
+onde quer que você os invoque (exemplo: desntro dos seus *controllers*). Este é um bom local onde
+as asserções personalizadas fornecidas pelo Active Job são muito úteis. Por exemplo,
+dentro de um *model*:
 
 ```ruby
 require "test_helper"
