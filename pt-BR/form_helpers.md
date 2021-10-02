@@ -500,7 +500,7 @@ Observe que, quando o formulário for enviado, não haverá um único valor no _
 
 Além do auxiliar [`date_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-date_select), o Rails provê os auxiliares [`time_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-time_select) e [`datetime_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-datetime_select).
 
-### Caixas de Sseleção (*Select Boxes*) para Componentes Indiduais de Tempo
+### Caixas de Seleção (*Select Boxes*) para Componentes Indiduais de Tempo
 
 O Rails também fornece auxiliares para renderizar caixas de seleção para componentes temporais individuais: [`select_year`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_year), [`select_month`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_month), [`select_day`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_day), [`select_hour`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_hour), [`select_minute`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_minute), and [`select_second`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_second). Esses auxiliares são métodos "básicos", o que significa que não são chamados em uma instância do construtor de formulários. Por exemplo: 
 
