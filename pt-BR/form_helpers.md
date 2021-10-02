@@ -531,7 +531,7 @@ Para cada um desses auxiliares, você pode especificar um objeto de data ou hora
 Escolhas a partir de uma Coleção de Objetos Arbitrários
 ----------------------------------------------
 
-Frequentemente desejamos gerar um conjunto de escolhas em um formulário a partir de uma coleção de objetos. Por exemplo, quando queremos que um usuário escolha cidades a partir do nosso banco de dados, e temos um modelo 'City' conforme:
+Frequentemente desejamos gerar um conjunto de escolhas em um formulário a partir de uma coleção de objetos. Por exemplo, quando queremos que um usuário escolha cidades a partir do nosso banco de dados, e temos um modelo `City` conforme:
 
 ```ruby
 City.order(:name).to_a
