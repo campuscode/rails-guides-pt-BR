@@ -1,17 +1,19 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-# Action View Overview
+Action View Overview
+====================
 
 After reading this guide, you will know:
 
-- What Action View is and how to use it with Rails.
-- How best to use templates, partials, and layouts.
-- How to use localized views.
+* What Action View is and how to use it with Rails.
+* How best to use templates, partials, and layouts.
+* How to use localized views.
 
----
+--------------------------------------------------------------------------------
 
-## What is Action View?
+What is Action View?
+--------------------
 
 In Rails, web requests are handled by [Action Controller](action_controller_overview.html) and Action View. Typically, Action Controller is concerned with communicating with the database and performing CRUD actions where necessary. Action View is then responsible for compiling the response.
 
@@ -19,7 +21,8 @@ Action View templates are written using embedded Ruby in tags mingled with HTML.
 
 NOTE: Some features of Action View are tied to Active Record, but that doesn't mean Action View depends on Active Record. Action View is an independent package that can be used with any sort of Ruby libraries.
 
-## Using Action View with Rails
+Using Action View with Rails
+----------------------------
 
 For each controller there is an associated directory in the `app/views` directory which holds the template files that make up the views associated with that controller. These files are used to display the view that results from each controller action.
 
@@ -44,7 +47,9 @@ There is a naming convention for views in Rails. Typically, the views share thei
 For example, the index controller action of the `articles_controller.rb` will use the `index.html.erb` view file in the `app/views/articles` directory.
 The complete HTML returned to the client is composed of a combination of this ERB file, a layout template that wraps it, and all the partials that the view may reference. Within this guide you will find more detailed documentation about each of these three components.
 
-## Templates, Partials, and Layouts
+
+Templates, Partials, and Layouts
+-------------------------------
 
 As mentioned, the final HTML output is a composition of three Rails elements: `Templates`, `Partials` and `Layouts`.
 Below is a brief overview of each of them.
@@ -143,7 +148,6 @@ end
 ```
 
 #### Jbuilder
-
 [Jbuilder](https://github.com/rails/jbuilder) is a gem that's
 maintained by the Rails team and included in the default Rails `Gemfile`.
 It's similar to Builder, but is used to generate JSON, instead of XML.
@@ -318,7 +322,8 @@ Rails will render the `_product_ruler` partial (with no data passed to it) betwe
 
 Layouts can be used to render a common view template around the results of Rails controller actions. Typically, a Rails application will have a couple of layouts that pages will be rendered within. For example, a site might have one layout for a logged in user and another for the marketing or sales side of the site. The logged in user layout might include top-level navigation that should be present across many controller actions. The sales layout for a SaaS app might include top-level navigation for things like "Pricing" and "Contact Us" pages. You would expect each layout to have a different look and feel. You can read about layouts in more detail in the [Layouts and Rendering in Rails](layouts_and_rendering.html) guide.
 
-## Partial Layouts
+Partial Layouts
+---------------
 
 Partials can have their own layouts applied to them. These layouts are different from those applied to a controller action, but they work in a similar fashion.
 
@@ -338,7 +343,7 @@ In the `show` template, we'll render the `_article` partial wrapped in the `box`
 
 The `box` layout simply wraps the `_article` partial in a `div`:
 
-**articles/\_box.html.erb**
+**articles/_box.html.erb**
 
 ```html+erb
 <div class='box'>
@@ -362,7 +367,8 @@ You can also render a block of code within a partial layout instead of calling `
 
 Supposing we use the same `_box` partial from above, this would produce the same output as the previous example.
 
-## View Paths
+View Paths
+----------
 
 When rendering a response, the controller needs to resolve where the different
 views are located. By default it only looks inside the `app/views` directory.
@@ -394,21 +400,23 @@ append_view_path "app/views/direct"
 
 This will add `app/views/direct` to the end of the lookup paths.
 
-## Helpers
+Helpers
+-------
 
 Rails provides many helper methods to use with Action View. These include methods for:
 
-- Formatting dates, strings and numbers
-- Creating HTML links to images, videos, stylesheets, etc...
-- Sanitizing content
-- Creating forms
-- Localizing content
+* Formatting dates, strings and numbers
+* Creating HTML links to images, videos, stylesheets, etc...
+* Sanitizing content
+* Creating forms
+* Localizing content
 
 You can learn more about helpers in the [Action View Helpers
 Guide](action_view_helpers.html) and the [Action View Form Helpers
 Guide](form_helpers.html).
 
-## Localized Views
+Localized Views
+---------------
 
 Action View has the ability to render different templates depending on the current locale.
 
