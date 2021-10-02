@@ -945,24 +945,24 @@ is prevented (defaults: `true`).
 Since `web-console` evaluates plain Ruby code remotely on the server, don't try
 to use it in production.
 
-Debugging Memory Leaks
+Debugging de Vazamentos de Memórias
 ----------------------
 
-A Ruby application (on Rails or not), can leak memory — either in the Ruby code
-or at the C code level.
+Um aplicativo Ruby (on Rails ou não) pode vazar memória - tanto no código Ruby
+quanto no nível de código C.
 
-In this section, you will learn how to find and fix such leaks by using tools
-such as Valgrind.
+Nesta seção, você aprenderá como encontrar e corrigir esses vazamentos usando ferramentas
+tais como o Valgrind.
 
 ### Valgrind
 
-[Valgrind](http://valgrind.org/) is an application for detecting C-based memory
-leaks and race conditions.
+[Valgrind](http://valgrind.org/) é um aplicativo para detectar vazamentos de memória baseados em C
+e condições de corrida.
 
-There are Valgrind tools that can automatically detect many memory management
-and threading bugs, and profile your programs in detail. For example, if a C
-extension in the interpreter calls `malloc()` but doesn't properly call
-`free()`, this memory won't be available until the app terminates.
+Existem ferramentas Valgrind que podem detectar automaticamente muitos bugs de threading 
+e gerenciamento de memória, e criar perfis de seus programas em detalhes. Por exemplo, se uma extensão 
+C no intérprete chama `malloc()` mas não chama corretamente 
+`free()`, essa memória não estará disponível até que o aplicativo seja encerrado.
 
 For further information on how to install Valgrind and use with Ruby, refer to
 [Valgrind and Ruby](https://blog.evanweaver.com/2008/02/05/valgrind-and-ruby/)
