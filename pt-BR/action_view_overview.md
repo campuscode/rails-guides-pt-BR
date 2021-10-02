@@ -21,12 +21,12 @@ Action View templates are written using embedded Ruby in tags mingled with HTML.
 
 NOTE: Some features of Action View are tied to Active Record, but that doesn't mean Action View depends on Active Record. Action View is an independent package that can be used with any sort of Ruby libraries.
 
-Using Action View with Rails
+Usando *Action View* com Rails
 ----------------------------
 
-For each controller there is an associated directory in the `app/views` directory which holds the template files that make up the views associated with that controller. These files are used to display the view that results from each controller action.
+Para cada *controller* há um diretório associado em `app/views` que contém os arquivos de *template* que compõe as *views* associadas aos seus respectivos *controllers*. Esses arquivos são utilizados para exibir a *view* que resulta de cada ação do *controller*.
 
-Let's take a look at what Rails does by default when creating a new resource using the scaffold generator:
+Vamos dar uma olhada no que o Rails faz por padrão quando um novo recurso é criado utilizando o *generator scaffold*:
 
 ```bash
 $ bin/rails generate scaffold article
@@ -43,9 +43,9 @@ $ bin/rails generate scaffold article
       [...]
 ```
 
-There is a naming convention for views in Rails. Typically, the views share their name with the associated controller action, as you can see above.
-For example, the index controller action of the `articles_controller.rb` will use the `index.html.erb` view file in the `app/views/articles` directory.
-The complete HTML returned to the client is composed of a combination of this ERB file, a layout template that wraps it, and all the partials that the view may reference. Within this guide you will find more detailed documentation about each of these three components.
+Há uma convenção de nomenclatura para as *views* no Rails. Normalmente, as *views* compartilham seu nome com a ação do *controller* à qual ela é associada, conforme pode ser visto no exemplo acima.
+Por exemplo, a ação *index* do *controller* `articles_controller.rb` utilizará o arquivo de *view* `index.html.erb` no diretório `app/views/articles`.
+O HTML completo que é retornado ao *client* é composto de uma combinação desse arquivo ERB, um *template* de *layout* que o envolve, e todas as *partials* que a *view* pode referenciar. Dentro deste guia você encontrará documentações mais detalhadas sobre cada um desses três componentes.
 
 
 Templates, Partials, and Layouts
