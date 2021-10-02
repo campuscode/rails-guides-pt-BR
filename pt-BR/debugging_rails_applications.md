@@ -923,11 +923,9 @@ O *console* executa código Ruby nativo: Você pode definir e instanciar classes
 
 NOTE: Somente um *console* pode ser renderizado por *request*. De outra maneira `web-console` lança um erro na segunda invocação do método `console`.
 
-### Inspecting Variables
+### Inspecionando Variáveis
 
-You can invoke `instance_variables` to list all the instance variables
-available in your context. If you want to list all the local variables, you can
-do that with `local_variables`.
+Você pode chamar `instance_variables` para listar todas as variáveis de instância disponíveis em seu contexto. Se você deseja listar todas as variaveis locais, você pode fazer isso usando `local_variables`.
 
 ### Settings
 
