@@ -992,7 +992,7 @@ Provides insight to db/rendering/total times, parameter list, rendered views and
 more.
 * [Pry](https://github.com/pry/pry) An IRB alternative and runtime developer console.
 
-References
+Referencias
 ----------
 
 * [byebug Homepage](https://github.com/deivid-rodriguez/byebug)
