@@ -927,15 +927,12 @@ NOTE: Somente um *console* pode ser renderizado por *request*. De outra maneira 
 
 Você pode chamar `instance_variables` para listar todas as variáveis de instância disponíveis em seu contexto. Se você deseja listar todas as variaveis locais, você pode fazer isso usando `local_variables`.
 
-### Settings
+### Configurações
 
-* `config.web_console.allowed_ips`: Authorized list of IPv4 or IPv6
-addresses and networks (defaults: `127.0.0.1/8, ::1`).
-* `config.web_console.whiny_requests`: Log a message when a console rendering
-is prevented (defaults: `true`).
+* `config.web_console.allowed_ips`: Lista autorizada de endereços e redes IPv4 ou IPv6 (padrões: `127.0.0.1/8, ::1`).
+* `config.web_console.whiny_requests`: Registra uma mensagem quando a renderização do *console* é impedida(padrões: `true`).
 
-Since `web-console` evaluates plain Ruby code remotely on the server, don't try
-to use it in production.
+Uma vez que `web-console` avalia código  Ruby simples remotamente no servidor, não tente usar em produção.
 
 Debugging Memory Leaks
 ----------------------
