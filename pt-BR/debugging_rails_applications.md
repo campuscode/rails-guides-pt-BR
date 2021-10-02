@@ -888,19 +888,17 @@ set callstyle short
 set listsize 25
 ```
 
-Debugging with the `web-console` gem
+Debug com a gem `web-console`
 ------------------------------------
 
-Web Console is a bit like `byebug`, but it runs in the browser. In any page you
-are developing, you can request a console in the context of a view or a
-controller. The console would be rendered next to your HTML content.
+A *gem* Web Console é um pouco semelhante à *gem* `byebug`, porém é executada no navegador. Em qualquer página que você esteja desenvolvendo, você pode solicitar um `console` no contexto da *view* ou do *controller*. O *console* deve ser renderizado próximo ao conteúdo HTML.
 
 ### Console
 
-Inside any controller action or view, you can invoke the console by
-calling the `console` method.
 
-For example, in a controller:
+Dentro de qualquer *controller action* ou *view*, você pode utilizaar o console através da chamada do método `console`.
+
+Por exemplo, em um *controller*:
 
 ```ruby
 class PostsController < ApplicationController
@@ -911,7 +909,7 @@ class PostsController < ApplicationController
 end
 ```
 
-Or in a view:
+Ou em uma *view*:
 
 ```html+erb
 <% console %>
@@ -919,15 +917,11 @@ Or in a view:
 <h2>New Post</h2>
 ```
 
-This will render a console inside your view. You don't need to care about the
-location of the `console` call; it won't be rendered on the spot of its
-invocation but next to your HTML content.
+Isso vai renderizar um console dentro da view. Você não precisa se preocupar com a localização da chamada do metodo `conosole`; não será renderizado proximo ao elemento em que foi invocado, mas sim próximo ao seu conteudo HTML.
 
-The console executes pure Ruby code: You can define and instantiate
-custom classes, create new models, and inspect variables.
+O *console* executa código Ruby nativo: Você pode definir e instanciar classes personalizadas, criar novos modelos, e inspecionar variáveis.
 
-NOTE: Only one console can be rendered per request. Otherwise `web-console`
-will raise an error on the second `console` invocation.
+NOTE: Somente um *console* pode ser renderizado por *request*. De outra maneira `web-console` lança um erro na segunda invocação do método `console`.
 
 ### Inspecting Variables
 
