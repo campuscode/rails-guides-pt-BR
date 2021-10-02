@@ -964,12 +964,12 @@ e gerenciamento de memória, e criar perfis de seus programas em detalhes. Por e
 C no intérprete chama `malloc()` mas não chama corretamente 
 `free()`, essa memória não estará disponível até que o aplicativo seja encerrado.
 
-For further information on how to install Valgrind and use with Ruby, refer to
+Para obter mais informações sobre como instalar o Valgrind e usar com Ruby, consulte
 [Valgrind and Ruby](https://blog.evanweaver.com/2008/02/05/valgrind-and-ruby/)
-by Evan Weaver.
+por Evan Weaver.
 
-### Find a Memory Leak
-There is an excellent article about detecting and fixing memory leaks at Derailed, [which you can read here](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
+### Encontrando um vazamento de memória
+Há um excelente artigo sobre detecção e correção de vazamentos de memória no Derailed, [que você pode ler aqui](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
 
 Plugins for Debugging
 ---------------------
