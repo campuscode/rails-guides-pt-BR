@@ -391,13 +391,13 @@ Then Action View will look first in this directory when resolving views.
 
 ### Append view path
 
-Similarly, we can append paths:
+Da mesma forma, podemos acrescentar caminhos:
 
 ```ruby
 append_view_path "app/views/direct"
 ```
 
-This will add `app/views/direct` to the end of the lookup paths.
+Isso adicionará `app/views/direct` ao final dos caminhos de pesquisa.
 
 Helpers
 -------
