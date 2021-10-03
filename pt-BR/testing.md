@@ -417,32 +417,32 @@ no fim da execução do teste e assim por diante. Cheque a documentação do Tes
 $ bin/rails test -h
 Usage: rails test [options] [files or directories]
 
-You can run a single test by appending a line number to a filename:
+Você pode executar um único teste adicionando o número da linha para o arquivo:
 
     bin/rails test test/models/user_test.rb:27
 
-You can run multiple files and directories at the same time:
+Você pode executar múltiplos arquivos e pastas ao mesmo tempo:
 
     bin/rails test test/controllers test/integration/login_test.rb
 
-By default test failures and errors are reported inline during a run.
+Por padrão falhas de testes e erros são reportados numa única linha durante uma execução.
 
-minitest options:
-    -h, --help                       Display this help.
-        --no-plugins                 Bypass minitest plugin auto-loading (or set $MT_NO_PLUGINS).
-    -s, --seed SEED                  Sets random seed. Also via env. Eg: SEED=n rake
-    -v, --verbose                    Verbose. Show progress processing files.
-    -n, --name PATTERN               Filter run on /regexp/ or string.
-        --exclude PATTERN            Exclude /regexp/ or string from run.
+opções do minitest:
+    -h, --help                       Mostra esse menu de ajuda.
+        --no-plugins                 Pula o plugin de auto-loading do minitest (ou coloque $MT_NO_PLUGINS).
+    -s, --seed SEED                  Coloca _seed_ aleatório. Pode também ser colocado por variável de ambiente. Ex: SEED=n rake
+    -v, --verbose                    Verboso. Mostra o progresso de arquivos enquanto estão processando.
+    -n, --name PATTERN               Filtra a execução em  /regexp/ (Expressão regular) ou string.
+        --exclude PATTERN            Exclui /regexp/ ou string da execução.
 
-Known extensions: rails, pride
-    -w, --warnings                   Run with Ruby warnings enabled
-    -e, --environment ENV            Run tests in the ENV environment
-    -b, --backtrace                  Show the complete backtrace
-    -d, --defer-output               Output test failures and errors after the test run
-    -f, --fail-fast                  Abort test run on first failure or error
-    -c, --[no-]color                 Enable color in the output
-    -p, --pride                      Pride. Show your testing pride!
+Extensões conhecidas: rails, pride
+    -w, --warnings                   Executa com Warnings habilitados
+    -e, --environment ENV            Executa os testes em um ambiente específico
+    -b, --backtrace                  Mostra o _backtrace_ completo
+    -d, --defer-output               Saída das falhas no teste e erros depois da execução de todos os testes
+    -f, --fail-fast                  Aborta a execução dos testes na primeira falha ou no primeiro erro
+    -c, --[no-]color                 Habilita cor ou não na saída
+    -p, --pride                      Orgulho. Mostre o orgulho do seu teste!
 ```
 
 Testes em Paralelo
