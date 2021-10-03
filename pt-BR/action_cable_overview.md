@@ -36,14 +36,14 @@ Um único servidor *Action Cable* pode lidar com várias instâncias de conexão
 
 O client de uma conexão *WebSocket* é chamado de *consumidor*. No *Action Cable*, o consumidor é criado pelo framework JavaScript do lado do cliente.
 
-### Channels
+### Canais
 
-Each consumer can in turn subscribe to multiple *channels*. Each channel
-encapsulates a logical unit of work, similar to what a controller does in
-a regular MVC setup. For example, you could have a `ChatChannel` and
-an `AppearancesChannel`, and a consumer could be subscribed to either
-or to both of these channels. At the very least, a consumer should be subscribed
-to one channel.
+Cada consumidor pode, por sua vez, se inscrever em vários *canais*.
+Cada canal encapsula uma unidade lógica de trabalho, semelhante ao que um
+*controller* faz em uma configuração MVC regular.
+Por exemplo, você pode ter um *ChatChannel* e um *AppearancesChannel*, e um
+consumidor pode ser inscrito em um ou em ambos os canais.
+Um consumidor deve se inscrever em, pelo menos, um canal.
 
 ### Subscribers
 
