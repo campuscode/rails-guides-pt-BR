@@ -310,13 +310,13 @@ Rails determines the name of the partial to use by looking at the model name in 
 
 #### Spacer Templates
 
-You can also specify a second partial to be rendered between instances of the main partial by using the `:spacer_template` option:
+Você também pode especificar uma segunda parcial para a ser renderizada entre as instâncias da parcial principal usando a opção `:spacer_template`:
 
 ```erb
 <%= render partial: @products, spacer_template: "product_ruler" %>
 ```
 
-Rails will render the `_product_ruler` partial (with no data passed to it) between each pair of `_product` partials.
+O Rails irá renderizar o parcial `_product_ruler` (sem dados passados para ele) entre cada par de parciais do `_product`.
 
 ### Layouts
 
