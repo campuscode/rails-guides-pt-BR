@@ -27,12 +27,10 @@ Terminologia
 O *Action Cable* utiliza *WebSockets* ao invés do protocolo de requisição-resposta HTTP.
 Tanto o *Action Cable* quanto os *WebSockets* apresentam uma terminologia menos familiar:
 
-### Connections
+### Conexões
 
-*Connections* form the foundation of the client-server relationship.
-A single Action Cable server can handle multiple connection instances. It has one
-connection instance per WebSocket connection. A single user may have multiple
-WebSockets open to your application if they use multiple browser tabs or devices.
+Conexões formam a base do relacionamento cliente-servidor.
+Um único servidor *Action Cable* pode lidar com várias instâncias de conexão. Ele possui uma instância de conexão para cada conexão via *WebSocket*. Um único usuário pode ter vários *WebSockets* abertos para sua aplicação se ele utilizar várias abas do navegador ou dispositivos.
 
 ### Consumers
 
