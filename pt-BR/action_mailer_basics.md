@@ -403,7 +403,7 @@ You can also consider using the [append_view_path](https://guides.rubyonrails.or
 
 #### Caching mailer view
 
-You can perform fragment caching in mailer views like in application views using the `cache` method.
+Você pode realizar o fragment caching (cache de fragmentos) em views do mailer como views de aplicações, usando o método `cache`.
 
 ```html+erb
 <% cache do %>
@@ -411,14 +411,14 @@ You can perform fragment caching in mailer views like in application views using
 <% end %>
 ```
 
-And in order to use this feature, you need to configure your application with this:
+E em seguida, para user esse recurso, você precisa configurar sua aplicação com o seguinte:
 
 ```ruby
 config.action_mailer.perform_caching = true
 ```
 
-Fragment caching is also supported in multipart emails.
-Read more about caching in the [Rails caching guide](caching_with_rails.html).
+O Fragment caching (Cache de fragmentos) também é compatível com e-mails multipartes.
+Leia mais sobre caching em [Rails caching guide](caching_with_rails.html).
 
 ### Action Mailer Layouts
 
