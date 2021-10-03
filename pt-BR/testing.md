@@ -735,7 +735,7 @@ Fazendo Testes de Sistema
 -------------------------
 
 Testes de sistema permitem testar interações do usuário com sua aplicação, rodando os testes em um navegador web real ou *headless*.
-Testes de sistema usam *Capybara* por debaixo do capô.
+Testes de sistema usam *Capybara* por debaixo dos panos.
 
 Para criar testes de sistema do Rails, utilize o caminho `test/system` da sua aplicação.
 O Rails também disponibiliza um *generator* para criar esqueletos de testes de sistema para você.
@@ -773,7 +773,7 @@ Quando uma nova aplicação ou *scaffold* são gerados, o arquivo `application_s
 
 Se você quiser mudar as configurações padrão, você pode mudar quem "dirige" (*driver*) os testes de sistema.
 Digamos que você quer mudar de Selenium para Poltergeist.
-Primeiro adicione a gem `poltergeist` em sua `Gemfile`.
+Primeiro adicione a gem `poltergeist` em seu `Gemfile`.
 Depois, em seu `application_system_test_case.rb`, faça o seguinte:
 
 ```ruby
@@ -862,7 +862,7 @@ $ bin/rails test:system
 ```
 
 NOTE: Por padrão, rodar `bin/rails test` não irá rodar seus testes de sistema.
-Certifique-se de rodar `bin/rails test:system` para eles sejam executados.
+Certifique-se de rodar `bin/rails test:system` para que eles sejam executados.
 Você também pode executar `bin/rails test:all` para rodar todos os testes, incluindo os de sistema.
 
 #### Criando um Teste de Sistema de Artigos
@@ -925,7 +925,7 @@ end
 
 #### Indo Além
 
-A beleza dos testes de sistema é que parecido com os testes de integração, eles também testam a interação do usuário com o *controller*, *model* e a *view*.
+A beleza dos testes de sistema é que, parecido com os testes de integração, eles também testam a interação do usuário com o *controller*, *model* e a *view*.
 Porém, o teste de sistema é muito mais robusto e testa a aplicação como se uma pessoa de verdade estivesse usando.
 Indo além, você pode testar qualquer coisa que os próprios usuários fariam em sua aplicação, como comentar, deletar artigos, publicar rascunhos e etc.
 
