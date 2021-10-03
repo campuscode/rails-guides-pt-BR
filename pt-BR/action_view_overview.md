@@ -402,17 +402,15 @@ This will add `app/views/direct` to the end of the lookup paths.
 Helpers
 -------
 
-Rails provides many helper methods to use with Action View. These include methods for:
+O Rails fornece muitos métodos auxiliares para usaro com o *Action View*. isso inclui métodos para:
 
-* Formatting dates, strings and numbers
-* Creating HTML links to images, videos, stylesheets, etc...
-* Sanitizing content
-* Creating forms
-* Localizing content
+* Formatação de datas, *strings* e números
+* Criação de links HTML para imagens, vídeos, *stylesheets*, etc...
+* Higienização de conteúdo
+* Criação de formulários
+* Localização de conteúdo
 
-You can learn more about helpers in the [Action View Helpers
-Guide](action_view_helpers.html) and the [Action View Form Helpers
-Guide](form_helpers.html).
+Você pode aprender mais sobre métodos auxiliares no [Guia de Helpers do Action View](action_view_helpers.html) e no [Guia de Form Helpers do Action View](form_helpers.html).
 
 Localized Views
 ---------------
