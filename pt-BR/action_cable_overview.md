@@ -32,10 +32,9 @@ Tanto o *Action Cable* quanto os *WebSockets* apresentam uma terminologia menos 
 Conexões formam a base do relacionamento cliente-servidor.
 Um único servidor *Action Cable* pode lidar com várias instâncias de conexão. Ele possui uma instância de conexão para cada conexão via *WebSocket*. Um único usuário pode ter vários *WebSockets* abertos para sua aplicação se ele utilizar várias abas do navegador ou dispositivos.
 
-### Consumers
+### Consumidores
 
-The client of a WebSocket connection is called the *consumer*. In Action Cable
-the consumer is created by the client-side JavaScript framework.
+O client de uma conexão *WebSocket* é chamado de *consumidor*. No *Action Cable*, o consumidor é criado pelo framework JavaScript do lado do cliente.
 
 ### Channels
 
