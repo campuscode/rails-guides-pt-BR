@@ -225,15 +225,15 @@ Here, the `_ad_banner.html.erb` and `_footer.html.erb` partials could contain co
 
 #### `render` without `partial` and `locals` options
 
-In the above example, `render` takes 2 options: `partial` and `locals`. But if
-these are the only options you want to pass, you can skip using these options.
-For example, instead of:
+No exemplo acima, `render` tem 2 opções, sendo elas: `partial` e `locals`. Porém,
+se essas são as únicas opções que você deseja passar, você pode pular usando essas
+opções. Por exemplo, em vez de:
 
 ```erb
 <%= render partial: "product", locals: { product: @product } %>
 ```
 
-You can also do:
+Você também pode fazer:
 
 ```erb
 <%= render "product", product: @product %>
