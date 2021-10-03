@@ -1506,7 +1506,7 @@ Testando Rotas
 --------------
 
 Assim como tudo na sua aplicação Rails, você também pode testar suas rotas.
-Testes de rotas vivem na pasta `test/controllers/` ou podem fazer parte de seus testes de *controller*.
+Testes de rotas são encontrados na pasta `test/controllers/` ou podem fazer parte de seus testes de *controller*.
 
 NOTE: Se sua aplicação tem rotas muito complexas, o Rails fornece vários *helpers* úteis para testá-las.
 
