@@ -532,20 +532,20 @@ If you did not configure the `:host` option globally make sure to pass it to
 
 #### Generating URLs with Named Routes
 
-Email clients have no web context and so paths have no base URL to form complete
-web addresses. Thus, you should always use the `*_url` variant of named route
-helpers.
+Os clientes de e-mail não tem contexto web e, portanto, os caminhos não têm URL
+base para formar endereços da web completos. Portanto, você deve sempre usar a 
+variante `*_url` dos auxiliares de rotas nomeadas (route helpers).
 
-If you did not configure the `:host` option globally make sure to pass it to the
-URL helper.
+Se você não configurou a opção `:host` globalmente, certifique-se de passá-la
+para o URL helper.
 
 ```erb
 <%= user_url(@user, host: 'example.com') %>
 ```
 
-NOTE: non-`GET` links require [rails-ujs](https://github.com/rails/rails/blob/main/actionview/app/assets/javascripts) or
-[jQuery UJS](https://github.com/rails/jquery-ujs), and won't work in mailer templates.
-They will result in normal `GET` requests.
+NOTA: links não-`GET` requerem [rails-ujs](https://github.com/rails/rails/blob/main/actionview/app/assets/javascripts) ou
+[jQuery UJS](https://github.com/rails/jquery-ujs), e não funcionarão em templates do mailer.
+Eles resultarão em solicitações `GET` normais.
 
 ### Adding images in Action Mailer Views
 
