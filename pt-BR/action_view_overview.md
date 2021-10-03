@@ -148,27 +148,27 @@ end
 ```
 
 #### Jbuilder
-[Jbuilder](https://github.com/rails/jbuilder) is a gem that's
-maintained by the Rails team and included in the default Rails `Gemfile`.
-It's similar to Builder, but is used to generate JSON, instead of XML.
+[Jbuilder](https://github.com/rails/jbuilder) é uma joia que é
+mantido pela equipe Rails e incluído no padrão do Rails `Gemfile`.
+Isso é semelhante ao Builder, mas é usado para gerar JSON, em vez de XML.
 
-If you don't have it, you can add the following to your `Gemfile`:
+Se você não tiver isso, você pode adicionar o seguinte trecho ao seu `Gemfile`:
 
 ```ruby
 gem 'jbuilder'
 ```
 
-A Jbuilder object named `json` is automatically made available to templates with
-a `.jbuilder` extension.
+Um objeto Jbuilder chamado `json` é automaticamente disponibilizado para os templates 
+com uma extensão `.jbuilder`.
 
-Here is a basic example:
+Aqui está um exemplo básico:
 
 ```ruby
 json.name("Alex")
 json.email("alex@example.com")
 ```
 
-would produce:
+O trecho a cima, iria produzir:
 
 ```json
 {
@@ -177,8 +177,8 @@ would produce:
 }
 ```
 
-See the [Jbuilder documentation](https://github.com/rails/jbuilder#jbuilder) for
-more examples and information.
+Veja a [documentação do Jbuilder](https://github.com/rails/jbuilder#jbuilder) para mais
+exemplos e informações.
 
 #### Template Caching
 
