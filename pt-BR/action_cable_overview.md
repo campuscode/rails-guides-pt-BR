@@ -21,11 +21,11 @@ O que é o *Action Cable*?
 
 O *Action Cable* integra-se perfeitamente [WebSockets](https://pt.wikipedia.org/wiki/WebSocket) com o resto da sua aplicação Rails. Permite que recursos em tempo real sejam escritos em Ruby no mesmo estilo e forma que o resto de sua aplicação Rails, ao mesmo tempo em que possui desempenho e escabilidade. Isso é uma oferta _full-stack_ que fornece um _framework_ Javascript do lado do cliente (_client-side_) e um _framework_ Ruby do lado do servidor (_server-side_). Você tem acesso ao seu _model_ de domínio completo escrito com o *Active Record* ou o ORM de sua escolha.
 
-Terminology
+Terminologia
 -----------
 
-Action Cable uses WebSockets instead of the HTTP request-response protocol.
-Both Action Cable and WebSockets introduce some less familiar terminology:
+O *Action Cable* utiliza *WebSockets* ao invés do protocolo de requisição-resposta HTTP.
+Tanto o *Action Cable* quanto os *WebSockets* apresentam uma terminologia menos familiar:
 
 ### Connections
 
@@ -719,7 +719,7 @@ O adaptador assíncrono destina-se ao desenvolvimento / teste e não deve ser us
 
 O adaptador Redis requer que os usuários forneçam uma URL apontando para o servidor Redis.
 Além disso, um `channel_prefix` pode ser fornecido para evitar colisões de nome de canal
-ao usar o mesmo servidor Redis para vários aplicativos. Veja a 
+ao usar o mesmo servidor Redis para vários aplicativos. Veja a
 [Documentação Redis PubSub](https://redis.io/topics/pubsub#database-amp-scoping) para mais detalhes.
 
 ##### Adaptador PostgreSQL
@@ -812,7 +812,7 @@ class Application < Rails::Application
 end
 ```
 
-Você pode usar `ActionCable.createConsumer()` para conectar ao 
+Você pode usar `ActionCable.createConsumer()` para conectar ao
 _cable server_ se `action_cable_meta_tag` for invocado no layout. Caso contrário, um caminho é
 especificado como primeiro argumento para `createConsumer` (e.g. `ActionCable.createConsumer("/websocket")`).
 
