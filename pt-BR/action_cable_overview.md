@@ -45,14 +45,14 @@ Por exemplo, você pode ter um *ChatChannel* e um *AppearancesChannel*, e um
 consumidor pode ser inscrito em um ou em ambos os canais.
 Um consumidor deve se inscrever em, pelo menos, um canal.
 
-### Subscribers
+### Assinantes
 
-When the consumer is subscribed to a channel, they act as a *subscriber*.
-The connection between the subscriber and the channel is, surprise-surprise,
-called a subscription. A consumer can act as a subscriber to a given channel
-any number of times. For example, a consumer could subscribe to multiple chat rooms
-at the same time. (And remember that a physical user may have multiple consumers,
-one per tab/device open to your connection).
+Quando o consumidor está inscrito em um canal, ele age como um *assinante*.
+A conexão entre o assinante e o canal é, adivinhe, chamada de assinatura.
+Um consumidor pode atuar como um assinante de um determinado canal qualquer
+número de vezes. Por exemplo, um consumidor pode se inscrever em várias salas de
+chat ao mesmo tempo. (E lembre-se que um usuário físico pode ter vários
+consumidores, um por aba/dispositivo aberto para sua conexão).
 
 __Pub/Sub_
 ---------------
