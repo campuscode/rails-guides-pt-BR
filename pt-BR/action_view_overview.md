@@ -370,7 +370,7 @@ Supposing we use the same `_box` partial from above, this would produce the same
 View Paths
 ----------
 
-Ao renderizar uma resposta, o controler precisa resolver onde as diferentes
+Ao renderizar uma resposta, o *controller* precisa resolver onde as diferentes
 views estão localizadas. Por padrão, ele só olha dentro do diretório `app/views`.
 
 Podemos adicionar outros locais e dar-lhes uma certa precedência ao resolver
