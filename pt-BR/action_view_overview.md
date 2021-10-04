@@ -378,8 +378,8 @@ caminhos usando os métodos `prepend_view_path` e `append_view_path`.
 
 ### Prepend view path
 
-Isso pode ser útil, por exemplo, quando nós queremos colocar às views dentro
-de um diretório diferênte para subdomínios.
+Isso pode ser útil, por exemplo, quando nós queremos colocar às *views* dentro
+de um diretório diferente para subdomínios.
 
 Podemos fazer isso usando:
 
