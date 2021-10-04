@@ -25,7 +25,7 @@ namespace :guides do
       ENV["WARNINGS"] = "1" # authors can't disable this
       ENV["RAILS_VERSION"] = "v6.1.4"
       ENV["GUIDES_LANGUAGE"] = "pt-BR"
-      system 'git apply rails.patch'
+      system 'git apply lib/rails.patch'
       system 'cp -r ./pt-BR rails/guides/source'
       ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
       system 'rm -rf output'
@@ -47,7 +47,7 @@ namespace :guides do
       ENV["KINDLE"] = "1"
       ENV["RAILS_VERSION"] = "v6.1.4"
       ENV["GUIDES_LANGUAGE"] = "pt-BR"
-      system 'git apply rails.patch'
+      system 'git apply lib/rails.patch'
       system 'cp -r ./pt-BR rails/guides/source'
       ruby "-Eutf-8:utf-8", "rails/guides/rails_guides.rb"
       system 'mkdir -p output/kindle'
