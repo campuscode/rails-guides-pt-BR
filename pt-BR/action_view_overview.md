@@ -17,7 +17,7 @@ O que é *Action View*?
 
 No *Rails*, as requisições web são tratadas por [*Action Controller*](action_controller_overview.html) e *Action View*. Normalmente, o *Action Controller* é responsável por se comunicar com o banco de dados e realizar ações de *CRUD* quando necessário. A *Action View* é responsável por compilar a resposta.
 
-Os templates *Action View* são escritos usando Ruby embutido em tags mescladas com HTML. Para evitar poluir os templates com código clichê (*boilerplate code*), uma variedade de classes utilitárias (*helpers*) disponibilizam comportamentos comuns para lidar com forms, datas e strings. Também é fácil adicionar novas classes utilitárias (*helpers*) em sua aplicação conforme ela evolui.
+Os templates *Action View* são escritos usando Ruby embutido em tags mescladas com HTML. Para evitar poluir os templates com código clichê (*boilerplate code*), uma variedade de classes utilitárias (*helpers*) disponibilizam comportamentos comuns para lidar com *forms*, datas e *strings*. Também é fácil adicionar novas classes utilitárias (*helpers*) em sua aplicação conforme ela evolui.
 
 NOTE: Alguns recursos da *Action View* estão vinculados ao *Active Record*, mas isso não significa que a *Action View* depende do *Active Record*. *Action View* é um pacote independente que pode ser usado com qualquer tipo de biblioteca Ruby.
 
