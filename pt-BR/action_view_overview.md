@@ -62,7 +62,7 @@ Rails suporta múltiplos sistemas de *template* e utiliza a extensão do arquivo
 
 #### ERB
 
-Dentro de um *template* ERB, o código Ruby pode ser incluido usando ambas as tags `<% %>` e `<%= %>`. As tags `<% %>` são utilizadas para executar código Ruby que não possui retorno, como condições, *loops*, ou blocos, e as tags `<%= %>` são utilizadas quando você deseja uma saída.
+Dentro de um *template* ERB, o código Ruby pode ser incluído usando ambas as tags `<% %>` e `<%= %>`. As tags `<% %>` são utilizadas para executar código Ruby que não possui retorno, como condições, *loops*, ou blocos, e as tags `<%= %>` são utilizadas quando você deseja uma saída.
 
 Considere o seguinte *loop* de nomes:
 
