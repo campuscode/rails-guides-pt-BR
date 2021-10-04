@@ -999,7 +999,7 @@ Rather than rendering multiple sets of fields ahead of time you may wish to add 
 Utilizando Tags Auxiliares (*Tag Helpers*) Sem Um Construtor de Formulário
 ----------------------------------------
 
-Caso você precise renderizar campos de formulário fora do contexto de um construtor de formulário, o Rails oferece tags auxiliares para elementos comúns de formulário. Por exemplo, [`check_box_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-check_box_tag):
+Caso você precise renderizar campos de formulário fora do contexto de um construtor de formulário, o Rails oferece tags auxiliares para elementos comuns de formulário. Por exemplo, [`check_box_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-check_box_tag):
 
 ```erb
 <%= check_box_tag "accept" %>
