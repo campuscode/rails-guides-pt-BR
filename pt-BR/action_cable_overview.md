@@ -621,17 +621,17 @@ conexão identificada por `current_user` (`appearance_channel.rb`). **Servidor**
 recupera os dados com a chave `:appearing_on` do hash de dados e define como o 
 valor da chave `:on` sendo passada para `current_user.appear`.
 
-### Example 2: Receiving New Web Notifications
+### Exemplo 2: Recebendo novas notificações da web
 
-The appearance example was all about exposing server functionality to
-client-side invocation over the WebSocket connection. But the great thing
-about WebSockets is that it's a two-way street. So now let's show an example
-where the server invokes an action on the client.
+O exemplo de aspectos era todo sobre expor a funcionalidade do servidor ao 
+front-end pela conexão WebSocket. Mas o melhor do WebSockets é que ele é uma via 
+de mão dupla. Portanto, agora vamos mostrar um exemplo em que o servidor invoca 
+uma ação no front-end.
 
-This is a web notification channel that allows you to trigger client-side
-web notifications when you broadcast to the right streams:
+Este é um canal de notificação da web que permite acionar notificações da web 
+no front-end quando você transmite para os streams certos:
 
-Create the server-side web notifications channel:
+Criando o canal de notificações da web do lado do servidor:
 
 ```ruby
 # app/channels/web_notifications_channel.rb
@@ -642,12 +642,12 @@ class WebNotificationsChannel < ApplicationCable::Channel
 end
 ```
 
-Create the client-side web notifications channel subscription:
+Criando a assinatura do canal de notificações da web no front-end:
 
 ```js
 // app/javascript/channels/web_notifications_channel.js
-// Client-side which assumes you've already requested
-// the right to send web notifications.
+// O front-end assume que você já solicitou o direito 
+// de enviar notificações da web.
 import consumer from "./consumer"
 
 consumer.subscriptions.create("WebNotificationsChannel", {
@@ -657,11 +657,11 @@ consumer.subscriptions.create("WebNotificationsChannel", {
 })
 ```
 
-Broadcast content to a web notification channel instance from elsewhere in your
-application:
+Transmite o conteúdo para uma instância do canal de notificação da web de qualquer 
+lugar da aplicação:
 
 ```ruby
-# Somewhere in your app this is called, perhaps from a NewCommentJob
+# Em algum lugar da aplicação, isso é chamado, talvez de um NewCommentJob
 WebNotificationsChannel.broadcast_to(
   current_user,
   title: 'New things!',
@@ -669,21 +669,22 @@ WebNotificationsChannel.broadcast_to(
 )
 ```
 
-The `WebNotificationsChannel.broadcast_to` call places a message in the current
-subscription adapter's pubsub queue under a separate broadcasting name for each
-user. For a user with an ID of 1, the broadcasting name would be
+A chamada `WebNotificationsChannel.broadcast_to` coloca uma mensagem na fila pubsub 
+do adaptador de assinaturas atual sob um nome de transmissão separado para cada 
+usuário. Exemplo, para um usuário com ID 1, o nome da transmissão seria 
 `web_notifications:1`.
 
-The channel has been instructed to stream everything that arrives at
-`web_notifications:1` directly to the client by invoking the `received`
-callback. The data passed as argument is the hash sent as the second parameter
-to the server-side broadcast call, JSON encoded for the trip across the wire
-and unpacked for the data argument arriving as `received`.
+O canal foi instruído a transmitir tudo que chegar a `web_notifications:1` 
+diretamente para o front-end, invocando o callback `received`. Os dados passados 
+como argumento são o hash enviado como o segundo parâmetro para a chamada de 
+transmissão do lado do servidor, JSON codificado, para a transição, e também
+descompactado, para o argumento de dados que chega como `received`.
 
-### More Complete Examples
+### Exemplos Mais Completos
 
-See the [rails/actioncable-examples](https://github.com/rails/actioncable-examples)
-repository for a full example of how to set up Action Cable in a Rails app and adding channels.
+Veja o repositório [rails/actioncable-examples](https://github.com/rails/actioncable-examples)
+para um exemplo completo de como configurar o Action Cable em uma aplicação Rails, e
+adicionar canais.
 
 ## Configuração
 
