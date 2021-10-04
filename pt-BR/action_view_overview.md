@@ -148,7 +148,7 @@ end
 ```
 
 #### Jbuilder
-[Jbuilder](https://github.com/rails/jbuilder) é uma gem que é
+[Jbuilder](https://github.com/rails/jbuilder) é uma *gem* que é
 mantida pelo time do Rails e incluída por padrão no `Gemfile` do Rails.
 É similar ao *Builder*, mas é usada para gerar *JSON*, ao invés de *XML*.
 
