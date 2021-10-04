@@ -1740,7 +1740,7 @@ Uma vez que seus *jobs* podem ser enfileirados em diferentes camadas dentro da s
 será necessário testar tanto os *jobs* propriamente ditos (seu comportamento, uma vez que estiverem enfileirados),
 quanto as entidades que fazem o enfileiramento destes.
 
-### Uma caso de teste básico
+### Um caso de teste básico
 
 Por padrão, quando você gera um *job*, também será gerado um teste
 dentro do diretório `test/jobs`. Aqui está um exemplo de teste do *job* billing:
