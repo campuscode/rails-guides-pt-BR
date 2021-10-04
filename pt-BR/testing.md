@@ -1576,17 +1576,17 @@ assert_select_email do
 end
 ```
 
-Testing Helpers
+Testando os *Helpers*
 ---------------
 
-A helper is just a simple module where you can define methods which are
-available in your views.
+Um *helper* é apenas um simples módulo onde você pode definir métodos
+que estarão disponíveis nas suas *views*.
 
-In order to test helpers, all you need to do is check that the output of the
-helper method matches what you'd expect. Tests related to the helpers are
-located under the `test/helpers` directory.
+Para testar os *helpers*, tudo que você precisa fazer é verificar se a saída do
+método *helper* é de fato a saída esperada. Testes relacionados aos *helpers* estão
+localizados dentro da pasta `test/helpers`.
 
-Given we have the following helper:
+Dado o seguinte *helper*:
 
 ```ruby
 module UsersHelper
@@ -1596,7 +1596,7 @@ module UsersHelper
 end
 ```
 
-We can test the output of this method like this:
+Nós podemos testar a saída desse método da seguinte maneira:
 
 ```ruby
 class UsersHelperTest < ActionView::TestCase
@@ -1608,8 +1608,8 @@ class UsersHelperTest < ActionView::TestCase
 end
 ```
 
-Moreover, since the test class extends from `ActionView::TestCase`, you have
-access to Rails' helper methods such as `link_to` or `pluralize`.
+Além disso, uma vez que a classe de teste se estende de `ActionView::TestCase`, você tem
+acesso aos métodos auxiliares do Rails como `link_to` ou` pluralize`.
 
 Testing Your Mailers
 --------------------
