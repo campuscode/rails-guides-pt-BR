@@ -1737,7 +1737,7 @@ NOTE: The `assert_emails` method is not tied to a particular deliver method and 
 Testando os *Jobs*
 ------------
 Uma vez que seus *jobs* podem ser enfileirados em diferentes camadas dentro da sua aplicação,
-será necessário testar tanto os *jobs* propriamente ditos (seu comportamento uma fez que estiverem enfileirados),
+será necessário testar tanto os *jobs* propriamente ditos (seu comportamento, uma vez que estiverem enfileirados),
 quanto as entidades que fazem o enfileiramento destes.
 
 ### Uma caso de teste básico
