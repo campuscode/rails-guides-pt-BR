@@ -2009,7 +2009,7 @@ config.active_record.mass_assignment_sanitizer = :strict
 
 ### vendor/plugins
 
-Rails 3.2 depreca `vendor/plugins` e o Rails 4.0 irá removê-los completamente. Embora não seja estritamente necessário como parte de uma atualização do Rails 3.2, você pode começar a substituir quaisquer *plugins*, extraindo-os para *gems* e adicionando-os ao seu `Gemfile`. Se você escolher não torná-los *gems*, você pode movê-los para, digamos, `lib/my_plugin/*` e adicionar um inicializador apropriado em `config/initializers/my_plugin.rb`.
+O Rails 3.2 depreca `vendor/plugins` e o Rails 4.0 irá removê-los completamente. Embora não seja estritamente necessário como parte de uma atualização do Rails 3.2, você pode começar a substituir quaisquer *plugins*, extraindo-os para *gems* e adicionando-os ao seu `Gemfile`. Se você escolher não torná-los *gems*, você pode movê-los para, digamos, `lib/my_plugin/*` e adicionar um inicializador apropriado em `config/initializers/my_plugin.rb`.
 
 ### Active Record
 
