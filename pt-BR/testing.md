@@ -1516,7 +1516,7 @@ Testando *Views*
 
 Testar a resposta de sua requisição através da presença de elementos HTML chave e o seu conteúdo é uma forma comum de testar as *views* de sua aplicação. Assim como os testes de rota, testes de *view* ficam em `test/controllers/` ou são parte dos seus testes de *controller*.
 
-O método `assert_select` permite que você faça consultas a elementos HTML da resposta, através de uma sintaxe simplas, mas poderosa.
+O método `assert_select` permite que você faça consultas a elementos HTML da resposta, através de uma sintaxe simples, mas poderosa.
 
 Há duas formas de `assert_select`:
 
@@ -1557,7 +1557,7 @@ assert_select "ol" do
 end
 ```
 
-Essa asserção é bastante poderosa. Para usos mais avançados, veja a sua [documentação](https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb)
+Essa asserção é bastante poderosa. Para usos mais avançados, veja a sua [documentação](https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb).
 
 #### Asserções Adicionais para *Views*
 
