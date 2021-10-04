@@ -370,11 +370,11 @@ Supposing we use the same `_box` partial from above, this would produce the same
 View Paths
 ----------
 
-When rendering a response, the controller needs to resolve where the different
-views are located. By default it only looks inside the `app/views` directory.
+Ao renderizar uma resposta, o controler precisa resolver onde as diferentes
+views estão localizadas. Por padrão, ele só olha dentro do diretório `app/views`.
 
-We can add other locations and give them a certain precedence when resolving
-paths using the `prepend_view_path` and `append_view_path` methods.
+Podemos adicionar outros locais e dar-lhes uma certa precedência ao resolver
+caminhos usando os métodos `prepend_view_path` e `append_view_path`.
 
 ### Prepend view path
 
@@ -392,13 +392,13 @@ views.
 
 ### Append view path
 
-Similarly, we can append paths:
+Da mesma forma, podemos acrescentar caminhos:
 
 ```ruby
 append_view_path "app/views/direct"
 ```
 
-This will add `app/views/direct` to the end of the lookup paths.
+Isso adicionará `app/views/direct` ao final dos caminhos de pesquisa.
 
 Helpers
 -------
