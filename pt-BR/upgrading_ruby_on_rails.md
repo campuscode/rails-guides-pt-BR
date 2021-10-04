@@ -657,28 +657,25 @@ Se suas *views* estiverem usando `render :text`, elas não funcionarão mais. O 
 Similarmente, `render :nothing` também é removido e você deve usar o método `head` para enviar respostas que contenham apenas cabeçalhos (*headers*). Por exemplo, `head :ok` envia uma resposta 200 sem corpo (*body*) para renderizar.
 
 
-Upgrading from Rails 4.2 to Rails 5.0
+Atualizando do Rails 4.2 para o Rails 5.0
 -------------------------------------
 
-For more information on changes made to Rails 5.0 please see the [release notes](5_0_release_notes.html).
+Para mais informações sobre as mudanças feitas no Rails 5.0 consulte as [notas de lançamento](5_0_release_notes.html).
 
-### Ruby 2.2.2+ required
+### Necessário Ruby 2.2.2+
 
-From Ruby on Rails 5.0 onwards, Ruby 2.2.2+ is the only supported Ruby version.
-Make sure you are on Ruby 2.2.2 version or greater, before you proceed.
+Do Ruby on Rails 5.0 em diante, Ruby 2.2.2+ é a única versão do Ruby suportada.
+Certifique-se de ter a versão Ruby 2.2.2 ou superior, antes de prosseguir.
 
-### Active Record Models Now Inherit from ApplicationRecord by Default
+### *Active Record Models* agora herdam de *ApplicationRecord* por padrão
 
-In Rails 4.2, an Active Record model inherits from `ActiveRecord::Base`. In Rails 5.0,
-all models inherit from `ApplicationRecord`.
+No Rails 4.2, um *Active Record model* herda de `ActiveRecord::Base`. No Rails 5.0,
+todos os *models* são herdados de `ApplicationRecord`.
 
-`ApplicationRecord` is a new superclass for all app models, analogous to app
-controllers subclassing `ApplicationController` instead of
-`ActionController::Base`. This gives apps a single spot to configure app-wide
-model behavior.
+`ApplicationRecord` é uma nova superclasse para todos os *models* da aplicação, análogo ao que o
+`ApplicationController` é para os *controllers* em vez de `ActionController::Base`. Isso dá as aplicações um único local para configurar o comportamento dos *models*.
 
-When upgrading from Rails 4.2 to Rails 5.0, you need to create an
-`application_record.rb` file in `app/models/` and add the following content:
+Ao atualizar do Rails 4.2 para o Rails 5.0, você precisa criar um arquivo `application_record.rb` em `app/models/` e adicionar o seguinte conteúdo:
 
 ```ruby
 class ApplicationRecord < ActiveRecord::Base
@@ -686,143 +683,132 @@ class ApplicationRecord < ActiveRecord::Base
 end
 ```
 
-Then make sure that all your models inherit from it.
+Em seguida, certifique-se de que todos os seus *models* herdem dele.
 
-### Halting Callback Chains via `throw(:abort)`
+### Interrompendo Sequências de *Callback* via `throw(:abort)`
 
-In Rails 4.2, when a 'before' callback returns `false` in Active Record
-and Active Model, then the entire callback chain is halted. In other words,
-successive 'before' callbacks are not executed, and neither is the action wrapped
-in callbacks.
+No Rails 4.2, quando um *'before' callback* retorna `false` no *Active Record*
+e *Active Model*, então toda a sequência de *callback* é interrompida. Em outras palavras,
+sucessivos *'before' callback* não são executados, e nem é a ação encapsulada
+em *callbacks*.
 
-In Rails 5.0, returning `false` in an Active Record or Active Model callback
-will not have this side effect of halting the callback chain. Instead, callback
-chains must be explicitly halted by calling `throw(:abort)`.
+No Rails 5.0, ao retornar `false` em um *callback* no *Active Record* ou *Active Model*
+não terá o efeito colateral de interromper a sequência de *callback*. Em vez disso, a sequência de *callback* deve ser interrompida explicitamente chamando `throw(:abort)`.
 
-When you upgrade from Rails 4.2 to Rails 5.0, returning `false` in those kind of
-callbacks will still halt the callback chain, but you will receive a deprecation
-warning about this upcoming change.
+Quando você atualiza do Rails 4.2 para o Rails 5.0, retornando `false` nesse tipo de
+*callback* a sequência de *callback* ainda será interrompida, mas você receberá um aviso de suspensão de uso sobre esta mudança futura.
 
-When you are ready, you can opt into the new behavior and remove the deprecation
-warning by adding the following configuration to your `config/application.rb`:
+Quando estiver pronto, você pode optar pelo novo comportamento e remover o aviso de suspensão de uso adicionando a seguinte configuração ao seu `config/application.rb`:
 
 ```ruby
 ActiveSupport.halt_callback_chains_on_return_false = false
 ```
 
-Note that this option will not affect Active Support callbacks since they never
-halted the chain when any value was returned.
+Observe que esta opção não afetará os *callbacks* do *Active Support*, uma vez que eles nunca
+interrompem a sequência quando algum valor foi retornado.
 
-See [#17227](https://github.com/rails/rails/pull/17227) for more details.
+Consulte [#17227](https://github.com/rails/rails/pull/17227) para obter mais detalhes.
 
-### ActiveJob Now Inherits from ApplicationJob by Default
+### *ActiveJob* agora herda de *ApplicationJob* por padrão
 
-In Rails 4.2, an Active Job inherits from `ActiveJob::Base`. In Rails 5.0, this
-behavior has changed to now inherit from `ApplicationJob`.
+No Rails 4.2, um *Active Job* herda de `ActiveJob::Base`. No Rails 5.0, este
+comportamento mudou para agora herdar de `ApplicationJob`.
 
-When upgrading from Rails 4.2 to Rails 5.0, you need to create an
-`application_job.rb` file in `app/jobs/` and add the following content:
+Ao atualizar do Rails 4.2 para o Rails 5.0, você precisa criar um
+arquivo `application_job.rb` em `app/jobs/` e adicionar o seguinte conteúdo:
 
 ```ruby
 class ApplicationJob < ActiveJob::Base
 end
 ```
 
-Then make sure that all your job classes inherit from it.
+Em seguida, certifique-se de que todas as classes *job* herdam dele.
 
-See [#19034](https://github.com/rails/rails/pull/19034) for more details.
+Veja [#19034](https://github.com/rails/rails/pull/19034) para maiores detalhes.
 
-### Rails Controller Testing
+### Testando Rails *Controller*
 
-#### Extraction of some helper methods to `rails-controller-testing`
+#### Extração de alguns métodos auxiliares (*helper*) para `rails-controller-testing`
 
-`assigns` and `assert_template` have been extracted to the `rails-controller-testing` gem. To
-continue using these methods in your controller tests, add `gem 'rails-controller-testing'` to
-your `Gemfile`.
+`assigns` e `assert_template` foram extraídos para a gem `rails-controller-testing`. Para
+continuar usando esses métodos em seus testes de *controller*, adicione a `gem 'rails-controller-testing'` para seu `Gemfile`.
 
-If you are using RSpec for testing, please see the extra configuration required in the gem's
-documentation.
+Se você estiver usando RSpec para teste, consulte a configuração extra necessária na
+documentação da gem.
 
-#### New behavior when uploading files
+#### Novo comportamento ao enviar arquivos
 
-If you are using `ActionDispatch::Http::UploadedFile` in your tests to
-upload files, you will need to change to use the similar `Rack::Test::UploadedFile`
-class instead.
+Se você estiver usando `ActionDispatch::Http::UploadedFile` em seus testes para
+envio de arquivos, você precisará alterar para usar a classe `Rack::Test::UploadedFile`.
 
-See [#26404](https://github.com/rails/rails/issues/26404) for more details.
+Veja [#26404](https://github.com/rails/rails/issues/26404) para maiores detalhes.
 
-### Autoloading is Disabled After Booting in the Production Environment
+### Carregamento automático é desabilitado após a inicialização no ambiente de produção
 
-Autoloading is now disabled after booting in the production environment by
-default.
+O carregamento automático agora está desativado após a inicialização no ambiente de produção por padrão.
 
-Eager loading the application is part of the boot process, so top-level
-constants are fine and are still autoloaded, no need to require their files.
+O carregamento rápido (*Eager loading*) da aplicação faz parte do processo de inicialização, portanto, constantes de alto nível estão bem e ainda são carregadas automaticamente, não há necessidade de exigir seus arquivos.
 
-Constants in deeper places only executed at runtime, like regular method bodies,
-are also fine because the file defining them will have been eager loaded while booting.
+Constantes em locais mais profundos são executados apenas em tempo de execução, como corpos de métodos regulares, também estão bem porque o arquivo que os define terá sido carregado durante a inicialização.
 
-For the vast majority of applications this change needs no action. But in the
-very rare event that your application needs autoloading while running in
-production, set `Rails.application.config.enable_dependency_loading` to true.
+Para a grande maioria das aplicações, essa alteração não exige nenhuma ação. Mas no
+evento muito raro em que sua aplicação precisa de carregamento automático durante a execução em
+produção, defina `Rails.application.config.enable_dependency_loading` para *true*.
 
-### XML Serialization
+### Serialização XML
 
-`ActiveModel::Serializers::Xml` has been extracted from Rails to the `activemodel-serializers-xml`
-gem. To continue using XML serialization in your application, add `gem 'activemodel-serializers-xml'`
-to your `Gemfile`.
+`ActiveModel::Serializers::Xml` foi extraído do Rails para a *gem* `activemodel-serializers-xml`.
+Para continuar usando a serialização XML em sua aplicação, adicione a `gem 'activemodel-serializers-xml'` para o seu `Gemfile`.
 
-### Removed Support for Legacy `mysql` Database Adapter
+### Removido o suporte para o antigo adaptador de banco de dados `mysql`
 
-Rails 5 removes support for the legacy `mysql` database adapter. Most users should be able to
-use `mysql2` instead. It will be converted to a separate gem when we find someone to maintain
-it.
+O Rails 5 remove o suporte para o antigo adaptador de banco de dados `mysql`. A maioria dos usuários devem usar o `mysql2` em vez disso. Será convertido em uma *gem* separada quando encontrarmos alguém para manter.
 
-### Removed Support for Debugger
+### Removido suporte para o *Debugger*
 
-`debugger` is not supported by Ruby 2.2 which is required by Rails 5. Use `byebug` instead.
+`debugger` não é suportado pelo Ruby 2.2 que é requerido pelo Rails 5. Use `byebug` ao invés.
 
-### Use `bin/rails` for running tasks and tests
+### Use `bin/rails` para executar tarefas e testes
 
-Rails 5 adds the ability to run tasks and tests through `bin/rails` instead of rake. Generally
-these changes are in parallel with rake, but some were ported over altogether.
+Rails 5 adiciona a habilidade de executar tarefas e testes através de `bin/rails` ao invés de *rake*.
+Geralmente essas mudanças ocorrem em paralelo com o *rake*, mas algumas foram portadas completamente.
 
-To use the new test runner simply type `bin/rails test`.
+Para usar o novo executor de teste, simplesmente digite `bin/rails test`.
 
-`rake dev:cache` is now `bin/rails dev:cache`.
+`rake dev:cache` é agora `bin/rails dev:cache`.
 
-Run `bin/rails` inside your application's root directory to see the list of commands available.
+Execute `bin/rails` dentro do diretório raiz da sua aplicação para ver a lista de comandos disponíveis.
 
-### `ActionController::Parameters` No Longer Inherits from `HashWithIndifferentAccess`
+### `ActionController::Parameters` Não herda mais de `HashWithIndifferentAccess`
 
-Calling `params` in your application will now return an object instead of a hash. If your
-parameters are already permitted, then you will not need to make any changes. If you are using `map`
-and other methods that depend on being able to read the hash regardless of `permitted?` you will
-need to upgrade your application to first permit and then convert to a hash.
+Chamar `params` em sua aplicação agora retornará um objeto em vez de um *hash*. Se seus
+parâmetros já são permitidos, então você não precisará fazer nenhuma alteração. Se você estiver usando `map`
+e outros métodos que dependem de ser capaz de ler o *hash* independentemente de `permitted?` você
+precisará atualizar sua aplicação para primeiro permitir e depois converter para um *hash*.
 
 ```ruby
 params.permit([:proceed_to, :return_to]).to_h
 ```
 
-### `protect_from_forgery` Now Defaults to `prepend: false`
+### `protect_from_forgery` Agora assume como padrão `prepend:false`
 
-`protect_from_forgery` defaults to `prepend: false` which means that it will be inserted into
-the callback chain at the point in which you call it in your application. If you want
-`protect_from_forgery` to always run first, then you should change your application to use
+O padrão `protect_from_forgery` é `prepend: false`, o que significa que será inserido no
+*callback* no ponto em que você a chama em sua aplicação. Se você quiser
+`protect_from_forgery` para sempre executar primeiro, então você deve alterar sua aplicação para usar
 `protect_from_forgery prepend: true`.
 
-### Default Template Handler is Now RAW
+### O *Template Handler* padrão agora é *RAW*
 
-Files without a template handler in their extension will be rendered using the raw handler.
-Previously Rails would render files using the ERB template handler.
+Os arquivos sem um *template handler* em sua extensão serão renderizados usando o *raw handler*.
+Anteriormente, o Rails renderizava arquivos usando o *ERB template handler*.
 
-If you do not want your file to be handled via the raw handler, you should add an extension
-to your file that can be parsed by the appropriate template handler.
+Se você não deseja que seu arquivo seja tratado por meio do *raw handler*, você deve adicionar uma extensão
+ao seu arquivo que pode ser analisado pelo *template handler* apropriado.
 
-### Added Wildcard Matching for Template Dependencies
+### Adicionada correspondência de curinga (*Wildcard*) para *Template Dependencies*
 
-You can now use wildcard matching for your template dependencies. For example, if you were
-defining your templates as such:
+Agora você pode usar a correspondência de curinga para suas *template dependencies*. Por exemplo, se você
+definisse seus *templates* como:
 
 ```erb
 <% # Template Dependency: recordings/threads/events/subscribers_changed %>
@@ -830,34 +816,34 @@ defining your templates as such:
 <% # Template Dependency: recordings/threads/events/uncompleted %>
 ```
 
-You can now just call the dependency once with a wildcard.
+Agora você pode chamar a dependência apenas uma vez com um curinga.
 
 ```erb
 <% # Template Dependency: recordings/threads/events/* %>
 ```
 
-### `ActionView::Helpers::RecordTagHelper` moved to external gem (record_tag_helper)
+### `ActionView::Helpers::RecordTagHelper` movido para a *gem* externa (record_tag_helper)
 
-`content_tag_for` and `div_for` have been removed in favor of just using `content_tag`. To continue using the older methods, add the `record_tag_helper` gem to your `Gemfile`:
+`content_tag_for` e `div_for` foram removidos em favor de usar apenas `content_tag`. Para continuar usando os métodos mais antigos, adicione a *gem* `record_tag_helper` ao seu `Gemfile`:
 
 ```ruby
 gem 'record_tag_helper', '~> 1.0'
 ```
 
-See [#18411](https://github.com/rails/rails/pull/18411) for more details.
+Veja [#18411](https://github.com/rails/rails/pull/18411) para mais detalhes.
 
-### Removed Support for `protected_attributes` Gem
+### Removido suporte para a *Gem* `protected_attributes`
 
-The `protected_attributes` gem is no longer supported in Rails 5.
+A *gem* `protected_attributes` não é mais suportada no Rails 5.
 
-### Removed support for `activerecord-deprecated_finders` gem
+### Removido o suporte para a *gem* `activerecord-deprecated_finders`
 
-The `activerecord-deprecated_finders` gem is no longer supported in Rails 5.
+A *gem* `activerecord-deprecated_finders` não é mais suportada no Rails 5.
 
-### `ActiveSupport::TestCase` Default Test Order is Now Random
+### A ordem do teste padrão `ActiveSupport::TestCase` agora é aleatória
 
-When tests are run in your application, the default order is now `:random`
-instead of `:sorted`. Use the following config option to set it back to `:sorted`.
+Quando os testes são executados em sua aplicação, a ordem padrão agora é `:random`
+em vez de `:sorted`. Use a seguinte opção de configuração para defini-lo de volta para `:sorted`.
 
 ```ruby
 # config/environments/test.rb
@@ -866,22 +852,22 @@ Rails.application.configure do
 end
 ```
 
-### `ActionController::Live` became a `Concern`
+### `ActionController::Live` tornou-se uma `Concern`
 
-If you include `ActionController::Live` in another module that is included in your controller, then you
-should also extend the module with `ActiveSupport::Concern`. Alternatively, you can use the `self.included` hook
-to include `ActionController::Live` directly to the controller once the `StreamingSupport` is included.
+Se você incluir `ActionController::Live` em outro módulo que está incluído em seu *controller*, então você
+também deve estender o módulo com `ActiveSupport::Concern`. Alternativamente, você pode usar o gancho (*hook*)
+`self.included` para incluir `ActionController::Live` diretamente no *controller* uma vez que o `StreamingSupport` está incluído.
 
-This means that if your application used to have its own streaming module, the following code
-would break in production:
+Isso significa que se sua aplicação costumava ter seu próprio módulo de *streaming*, o código a seguir
+seria interrompido em produção:
 
 ```ruby
-# This is a work-around for streamed controllers performing authentication with Warden/Devise.
-# See https://github.com/plataformatec/devise/issues/2332
-# Authenticating in the router is another solution as suggested in that issue
+# Esta é uma solução alternativa para *streamed controllers* realizando autenticação com *Warden/Devise*.
+# Veja https://github.com/plataformatec/devise/issues/2332
+# Autenticando no *router* é outra solução, conforme sugerido nessa *issue*
 class StreamingSupport
-  include ActionController::Live # this won't work in production for Rails 5
-  # extend ActiveSupport::Concern # unless you uncomment this line.
+  include ActionController::Live # isso não funcionará em produção para Rails 5
+  # extend ActiveSupport::Concern # a menos que você descomente esta linha.
 
   def process(name)
     super(name)
@@ -895,112 +881,112 @@ class StreamingSupport
 end
 ```
 
-### New Framework Defaults
+### Novos Padrões do Framework
 
-#### Active Record `belongs_to` Required by Default Option
+#### *Active Record* `belongs_to` Exigido por Padrão
 
-`belongs_to` will now trigger a validation error by default if the association is not present.
+`belongs_to` agora irá disparar um erro de validação por padrão se a associação não estiver presente.
 
-This can be turned off per-association with `optional: true`.
+Isso pode ser desativado por associação com `optional: true`.
 
-This default will be automatically configured in new applications. If an existing application
-wants to add this feature it will need to be turned on in an initializer:
+Este padrão será configurado automaticamente em novas aplicações. Se uma aplicação existente
+deseja adicionar este recurso, ele precisará ser ativado em um *initializer*:
 
 ```ruby
 config.active_record.belongs_to_required_by_default = true
 ```
 
-The configuration is by default global for all your models, but you can
-override it on a per model basis. This should help you migrate all your models to have their
-associations required by default.
+A configuração é global por padrão para todos os seus *models*, mas você pode
+sobrepor individualmente por *model*. Isso deve ajudá-lo a migrar todos os seus *models* para ter suas
+associações exigidas por padrão.
 
 ```ruby
 class Book < ApplicationRecord
-  # model is not yet ready to have its association required by default
+  # model ainda não está pronto para ter sua associação exigida por padrão
 
   self.belongs_to_required_by_default = false
   belongs_to(:author)
 end
 
 class Car < ApplicationRecord
-  # model is ready to have its association required by default
+  # model está pronto para ter sua associação exigida por padrão
 
   self.belongs_to_required_by_default = true
   belongs_to(:pilot)
 end
 ```
 
-#### Per-form CSRF Tokens
+#### *Tokens* CSRF por formulário
 
-Rails 5 now supports per-form CSRF tokens to mitigate against code-injection attacks with forms
-created by JavaScript. With this option turned on, forms in your application will each have their
-own CSRF token that is specific to the action and method for that form.
+Rails 5 agora suporta *tokens* CSRF por formulário para mitigar ataques de injeção de código com formulários
+criados por JavaScript. Com esta opção ativada, cada formulário em sua aplicação terá seu
+próprio *token* CSRF que é específico para a ação e o método desse formulário.
 
 ```ruby
 config.action_controller.per_form_csrf_tokens = true
 ```
 
-#### Forgery Protection with Origin Check
+#### Proteção contra Falsificação com Verificação de Origem
 
-You can now configure your application to check if the HTTP `Origin` header should be checked
-against the site's origin as an additional CSRF defense. Set the following in your config to
+Agora você pode configurar sua aplicação para verificar se o cabeçalho (*header*) HTTP `Origin` deve ser
+verificado contra a origem do site como uma defesa adicional de CSRF. Defina o seguinte em sua configuração para
 true:
 
 ```ruby
 config.action_controller.forgery_protection_origin_check = true
 ```
 
-#### Allow Configuration of Action Mailer Queue Name
+#### Permitir Configuração do Nome da Fila do *Action Mailer*
 
-The default mailer queue name is `mailers`. This configuration option allows you to globally change
-the queue name. Set the following in your config:
+O nome da fila do *mailer* padrão é `mailers`. Esta opção de configuração permite que você mude globalmente
+o nome da fila. Defina o seguinte em sua configuração:
 
 ```ruby
 config.action_mailer.deliver_later_queue_name = :new_queue_name
 ```
 
-#### Support Fragment Caching in Action Mailer Views
+#### Suportar *Fragment Caching* na *Action Mailer Views*
 
-Set `config.action_mailer.perform_caching` in your config to determine whether your Action Mailer views
-should support caching.
+Defina `config.action_mailer.perform_caching` em sua configuração para determinar se sua *Action Mailer views*
+deve suportar cache.
 
 ```ruby
 config.action_mailer.perform_caching = true
 ```
 
-#### Configure the Output of `db:structure:dump`
+#### Configure a Saída de `db:structure:dump`
 
-If you're using `schema_search_path` or other PostgreSQL extensions, you can control how the schema is
-dumped. Set to `:all` to generate all dumps, or to `:schema_search_path` to generate from schema search path.
+Se você estiver usando `schema_search_path` ou outras extensões PostgreSQL, você pode controlar como o esquema é
+despejado. Defina como `:all` para gerar todos os *dumps*, ou como `:schema_search_path` para gerar a partir do caminho de pesquisa do esquema.
 
 ```ruby
 config.active_record.dump_schemas = :all
 ```
 
-#### Configure SSL Options to Enable HSTS with Subdomains
+#### Configurar Opções de SSL para Habilitar HSTS com Subdomínios
 
-Set the following in your config to enable HSTS when using subdomains:
+Defina o seguinte em sua configuração para habilitar HSTS ao usar subdomínios:
 
 ```ruby
 config.ssl_options = { hsts: { subdomains: true } }
 ```
 
-#### Preserve Timezone of the Receiver
+#### Preservar Fuso Horário do Receptor
 
-When using Ruby 2.4, you can preserve the timezone of the receiver when calling `to_time`.
+Ao usar Ruby 2.4, você pode preservar o fuso horário do receptor ao chamar `to_time`.
 
 ```ruby
 ActiveSupport.to_time_preserves_timezone = false
 ```
 
-### Changes with JSON/JSONB serialization
+### Mudanças na Serialização JSON/JSONB
 
-In Rails 5.0, how JSON/JSONB attributes are serialized and deserialized changed. Now, if
-you set a column equal to a `String`, Active Record will no longer turn that string
-into a `Hash`, and will instead only return the string. This is not limited to code
-interacting with models, but also affects `:default` column settings in `db/schema.rb`.
-It is recommended that you do not set columns equal to a `String`, but pass a `Hash`
-instead, which will be converted to and from a JSON string automatically.
+No Rails 5.0, como os atributos JSON/JSONB são serializados e desserializados foram alterados. Agora se
+você definir uma coluna igual a uma `String`, *Active Record* não irá mais transformar essa *string*
+em um `Hash` e, em vez disso, apenas retornará a *string*. Isso não se limita ao código que
+interage com os *models*, mas também afeta as configurações da coluna `:default` em `db/schema.rb`.
+É recomendado que você não defina colunas iguais a `String`, mas passe `Hash`
+em vez disso, que será convertido de e para uma *string* JSON automaticamente.
 
 Atualizando do Rails 4.1 para o Rails 4.2
 -------------------------------------
