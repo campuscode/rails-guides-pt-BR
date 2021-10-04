@@ -1743,7 +1743,7 @@ quanto as entidades que fazem o enfileiramento destes.
 ### Um caso de teste básico
 
 Por padrão, quando você gera um *job*, também será gerado um teste
-dentro do diretório `test/jobs`. Aqui está um exemplo de teste do *job* billing:
+dentro do diretório `test/jobs`. Aqui está um exemplo de teste do *job* de cobrança (*billing*):
 
 ```ruby
 require "test_helper"
