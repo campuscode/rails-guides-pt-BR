@@ -206,7 +206,7 @@ Esse código pegará o *partial* de `app/views/shared/_menu.html.erb`.
 
 #### Usando *Partials* para simplificar *Views*
 
-Uma maneira de usar *partials* é tratando-as como se fossem sub-rotinas; uma maneira de mover detalhes para fora da *view* para que você consiga entender o que está acontencendo com mais facilidade. Por exemplo, você pode ter uma *view* parecida com essa:
+Uma maneira de usar *partials* é tratando-as como se fossem sub-rotinas; uma maneira de mover detalhes para fora da *view* para que você consiga entender o que está acontecendo com mais facilidade. Por exemplo, você pode ter uma *view* parecida com essa:
 
 ```html+erb
 <%= render "shared/ad_banner" %>
