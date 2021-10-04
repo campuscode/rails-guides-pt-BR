@@ -299,7 +299,7 @@ pode ser reescrito em uma linha:
 
 Quando um *partial* é chamado com uma coleção, as instâncias individuais do *partial* tem acesso ao membro da coleção que está sendo renderizado por meio de uma variável com o mesmo nome do *partial*. Nesse caso, o *partial* é `_product`, e dentro dele você pode se referir a `product` para obter o membro da coleção que está sendo renderizado.
 
-Você pode usar uma sintáxe abreviada para renderizar coleções. Supondo que `@products` é uma coleção de instâncias de `Product`, você pode simplesmente escrever o seguinte para produzir o mesmo resultado:
+Você pode usar uma sintaxe abreviada para renderizar coleções. Supondo que `@products` é uma coleção de instâncias de `Product`, você pode simplesmente escrever o seguinte para produzir o mesmo resultado:
 
 ```erb
 <%= render @products %>
