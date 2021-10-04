@@ -2001,92 +2001,92 @@ Rails 3.2 deprecates `vendor/plugins` and Rails 4.0 will remove them completely.
 
 Option `:dependent => :restrict` has been removed from `belongs_to`. If you want to prevent deleting the object if there are any associated objects, you can set `:dependent => :destroy` and return `false` after checking for existence of association from any of the associated object's destroy callbacks.
 
-Upgrading from Rails 3.0 to Rails 3.1
+Atualizando do Rails 3.0 para o Rails 3.1
 -------------------------------------
 
-If your application is currently on any version of Rails older than 3.0.x, you should upgrade to Rails 3.0 before attempting an update to Rails 3.1.
+Se sua aplicação estiver em qualquer versão do Rails anterior a 3.0.x, você deve atualizar para o Rails 3.0 antes de tentar uma atualização para o Rails 3.1.
 
-The following changes are meant for upgrading your application to Rails 3.1.12, the last 3.1.x version of Rails.
+As seguintes mudanças são destinadas para atualizar sua aplicação para o Rails 3.1.12, a última versão 3.1.x do Rails.
 
 ### Gemfile
 
-Make the following changes to your `Gemfile`.
+Faça as seguintes mudanças no seu `Gemfile`.
 
 ```ruby
 gem 'rails', '3.1.12'
 gem 'mysql2'
 
-# Needed for the new asset pipeline
+# Necessário para o novo pipeline de assets
 group :assets do
   gem 'sass-rails',   '~> 3.1.7'
   gem 'coffee-rails', '~> 3.1.1'
   gem 'uglifier',     '>= 1.0.3'
 end
 
-# jQuery is the default JavaScript library in Rails 3.1
+# jQuery é a biblioteca JavaScript padrão no Rails 3.1
 gem 'jquery-rails'
 ```
 
 ### config/application.rb
 
-The asset pipeline requires the following additions:
+A pipeline de *assets* requer as seguintes adições:
 
 ```ruby
 config.assets.enabled = true
 config.assets.version = '1.0'
 ```
 
-If your application is using an "/assets" route for a resource you may want to change the prefix used for assets to avoid conflicts:
+Se sua aplicação estiver usando uma rota "/assets" para um `resource`, você pode querer alterar o prefixo usado para *assets* para evitar conflitos:
 
 ```ruby
-# Defaults to '/assets'
+# O padrão é '/assets'
 config.assets.prefix = '/asset-files'
 ```
 
 ### config/environments/development.rb
 
-Remove the RJS setting `config.action_view.debug_rjs = true`.
+Remova a configuração RJS `config.action_view.debug_rjs = true`.
 
-Add these settings if you enable the asset pipeline:
+Adicione essas configurações se você habilitar a pipeline de *assets*:
 
 ```ruby
-# Do not compress assets
+# Não comprimir os assets
 config.assets.compress = false
 
-# Expands the lines which load the assets
+# Expande as linhas que carregam os assets
 config.assets.debug = true
 ```
 
 ### config/environments/production.rb
 
-Again, most of the changes below are for the asset pipeline. You can read more about these in the [Asset Pipeline](asset_pipeline.html) guide.
+Novamente, a maioria das mudanças abaixo são para a pipeline de *assets*. Você pode ler mais sobre isso no guia [Asset Pipeline](asset_pipeline.html).
 
 ```ruby
-# Compress JavaScripts and CSS
+# Comprime JavaScripts e CSS
 config.assets.compress = true
 
-# Don't fallback to assets pipeline if a precompiled asset is missed
+# Não use a compilação da pipeline de assets se um ativo pré-compilado for perdido
 config.assets.compile = false
 
-# Generate digests for assets URLs
+# Gera uma URLs especifica para assets
 config.assets.digest = true
 
-# Defaults to Rails.root.join("public/assets")
+# O padrão é Rails.root.join("public/assets")
 # config.assets.manifest = YOUR_PATH
 
-# Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+# Pré-compilar recursos adicionais (application.js, application.css e todos os não JS/CSS já foram adicionados)
 # config.assets.precompile += %w( admin.js admin.css )
 
-# Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+# Force todo o acesso da aplicação por SSL, use Strict-Transport-Security e use cookies seguros.
 # config.force_ssl = true
 ```
 
 ### config/environments/test.rb
 
-You can help test performance with these additions to your test environment:
+Você pode ajudar a testar o desempenho com estas adições ao seu ambiente de teste:
 
 ```ruby
-# Configure static asset server for tests with Cache-Control for performance
+# Configure o servidor de ativos estáticos para testes com Cache-Control para melhor performance
 config.public_file_server.enabled = true
 config.public_file_server.headers = {
   'Cache-Control' => 'public, max-age=3600'
@@ -2095,19 +2095,19 @@ config.public_file_server.headers = {
 
 ### config/initializers/wrap_parameters.rb
 
-Add this file with the following contents, if you wish to wrap parameters into a nested hash. This is on by default in new applications.
+Adicione este arquivo com o seguinte conteúdo, se desejar agrupar os parâmetros em um *hash* aninhado. Isso está ativado por padrão em novas aplicações.
 
 ```ruby
-# Be sure to restart your server when you modify this file.
-# This file contains settings for ActionController::ParamsWrapper which
-# is enabled by default.
+# Certifique-se de reiniciar o servidor ao modificar este arquivo.
+# Este arquivo contém configurações para ActionController::ParamsWrapper que
+# está habilitado por padrão.
 
-# Enable parameter wrapping for JSON. You can disable this by setting :format to an empty array.
+# Habilite o agrupamento de parâmetros para JSON. Você pode desabilitar isso configurando: format para um array vazio.
 ActiveSupport.on_load(:action_controller) do
   wrap_parameters format: [:json]
 end
 
-# Disable root element in JSON by default.
+# Desative o elemento raiz em JSON por padrão.
 ActiveSupport.on_load(:active_record) do
   self.include_root_in_json = false
 end
@@ -2115,10 +2115,10 @@ end
 
 ### config/initializers/session_store.rb
 
-You need to change your session key to something new, or remove all sessions:
+Você precisa alterar sua chave de sessão para algo novo ou remover todas as sessões:
 
 ```ruby
-# in config/initializers/session_store.rb
+# em config/initializers/session_store.rb
 AppName::Application.config.session_store :cookie_store, key: 'SOMETHINGNEW'
 ```
 
@@ -2128,6 +2128,6 @@ or
 $ bin/rake db:sessions:clear
 ```
 
-### Remove :cache and :concat options in asset helpers references in views
+### Remover opções de :cache e :concat em referências de *helpers* para *assets* em *views*
 
-* With the Asset Pipeline the :cache and :concat options aren't used anymore, delete these options from your views.
+* Com a *Asset Pipeline*, as opções :cache e :concat não são mais usadas, exclua essas opções de suas *views*.
