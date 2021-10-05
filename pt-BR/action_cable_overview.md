@@ -345,15 +345,11 @@ CommentsChannel.broadcast_to(@post, @comment)
 [`stream_for`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_for
 [`stream_from`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_from
 
-### Transmissões
+### Broadcastings
 
-A *broadcasting* is a pub/sub link where anything transmitted by a publisher
-is routed directly to the channel subscribers who are streaming that named
-broadcasting. Each channel can be streaming zero or more broadcastings.
+Um *broadcasting* é um link *pub/sub* em que qualquer coisa transmitida por um *publisher* é encaminhada diretamente para os assinantes do *channel* que está transmitindo essa *broadcasting* de mesmo nome. Cada *channel* pode estar transmitindo zero ou mais *broadcastings*.
 
-Broadcastings are purely an online queue and time-dependent. If a consumer is
-not streaming (subscribed to a given channel), they'll not get the broadcast
-should they connect later.
+*Broadcastings* são meramentes uma fila online e dependentes de tempo. Se um consumidor não estiver transmitindo (assinante de um *channel*), ele não vai receber a transmissão caso se conecte mais tarde.
 
 ### Subscriptions
 
