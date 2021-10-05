@@ -302,7 +302,7 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "1st Room" })
 consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
 ```
 
-## Client-Server Interactions
+## Interações Cliente-Servidor
 
 ### Streams
 
@@ -719,7 +719,7 @@ O adaptador assíncrono destina-se ao desenvolvimento / teste e não deve ser us
 
 O adaptador Redis requer que os usuários forneçam uma URL apontando para o servidor Redis.
 Além disso, um `channel_prefix` pode ser fornecido para evitar colisões de nome de canal
-ao usar o mesmo servidor Redis para vários aplicativos. Veja a 
+ao usar o mesmo servidor Redis para vários aplicativos. Veja a
 [Documentação Redis PubSub](https://redis.io/topics/pubsub#database-amp-scoping) para mais detalhes.
 
 ##### Adaptador PostgreSQL
@@ -812,7 +812,7 @@ class Application < Rails::Application
 end
 ```
 
-Você pode usar `ActionCable.createConsumer()` para conectar ao 
+Você pode usar `ActionCable.createConsumer()` para conectar ao
 _cable server_ se `action_cable_meta_tag` for invocado no layout. Caso contrário, um caminho é
 especificado como primeiro argumento para `createConsumer` (e.g. `ActionCable.createConsumer("/websocket")`).
 
