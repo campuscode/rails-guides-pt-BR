@@ -399,7 +399,7 @@ append_view_path "app/views/direct"
 
 This will add `app/views/direct` to the end of the lookup paths.
 
-Helpers
+*Helpers*
 -------
 
 O Rails fornece muitos métodos auxiliares para usaro com o *Action View*. isso inclui métodos para:
@@ -412,13 +412,12 @@ O Rails fornece muitos métodos auxiliares para usaro com o *Action View*. isso 
 
 Você pode aprender mais sobre métodos auxiliares no [Guia de Helpers do Action View](action_view_helpers.html) e no [Guia de Form Helpers do Action View](form_helpers.html).
 
-Views Localizadas
+*Views* Localizadas
 ---------------
-
 
 O *Action View* tem a capacidade de renderizar diferentes *templates*, dependendo da localidade atual.
 
-Por exemplo, suponha que você tenha um *`ArticlesController`* com uma *action show*. Por padrão, chamar essa *action* irá renderizar `app/views/articles/show.html.erb`.
+Por exemplo, suponha que você tenha um `ArticlesController` com uma *action show*. Por padrão, chamar essa *action* irá renderizar `app/views/articles/show.html.erb`.
 Mas se você definir `I18n.locale = :de`, então `app/views/articles/show.de.html.erb` será renderizada em seu lugar.
 Se o *template* localizado não estiver presente, a versão não traduzida será utilizada.
 Isso significa que você não precisa fornecer *views* localizadas para todos os casos, mas elas serão preferidas e usadas, se disponíveis.
@@ -440,5 +439,4 @@ end
 Em seguida, você pode criar *views* especiais como `app/views/articles/show.expert.html.erb` que somente serão exibidas para usuários *experts*.
 
 Você pode ler mais sobre a API de Internacionalização do Rails (I18n) [aqui](i18n.html).
-
 
