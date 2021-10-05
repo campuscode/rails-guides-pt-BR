@@ -402,7 +402,7 @@ This will add `app/views/direct` to the end of the lookup paths.
 *Helpers*
 -------
 
-O Rails fornece muitos métodos auxiliares para usaro com o *Action View*. isso inclui métodos para:
+O Rails fornece muitos métodos auxiliares para usar com o *Action View*. Isso inclui métodos para:
 
 * Formatação de datas, *strings* e números
 * Criação de links HTML para imagens, vídeos, *stylesheets*, etc...
