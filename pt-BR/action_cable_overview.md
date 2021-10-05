@@ -435,10 +435,9 @@ ActionCable.server.broadcast(
 )
 ```
 
-### Rebroadcasting a Message
+### Retransmitindo uma Mensagem
 
-A common use case is to *rebroadcast* a message sent by one client to any
-other connected clients.
+Um caso de uso comum é ter que retransmitir uma mensagem enviada por um cliente para qualquer outro cliente conectado
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -466,9 +465,7 @@ const chatChannel = consumer.subscriptions.create({ channel: "ChatChannel", room
 chatChannel.send({ sent_by: "Paul", body: "This is a cool chat app." })
 ```
 
-The rebroadcast will be received by all connected clients, _including_ the
-client that sent the message. Note that params are the same as they were when
-you subscribed to the channel.
+A retransmissão vai ser recebida por todos os clientes conectados, _incluindo_ o cliente que enviou a mensagem. Note que `params` são os mesmos de quando você se inscreveu no *channel*
 
 ## Full-Stack Examples
 
