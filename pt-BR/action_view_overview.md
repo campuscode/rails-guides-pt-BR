@@ -43,7 +43,7 @@ $ bin/rails generate scaffold article
       [...]
 ```
 
-Há uma convenção de nomenclatura para as *views* no Rails. Normalmente, as *views* compartilham seu nome com a ação do *controller* à qual ela é associada, conforme pode ser visto no exemplo acima.
+Há uma convenção de nomenclatura para as *views* no Rails. Normalmente, as *views* compartilham seu nome com a *action* do *controller* à qual ela é associada, conforme pode ser visto no exemplo acima.
 Por exemplo, a ação *index* do *controller* `articles_controller.rb` utilizará o arquivo de *view* `index.html.erb` no diretório `app/views/articles`.
 O HTML completo que é retornado ao *client* é composto de uma combinação desse arquivo ERB, um *template* de *layout* que o envolve, e todas as *partials* que a *view* pode referenciar. Dentro deste guia você encontrará documentações mais detalhadas sobre cada um desses três componentes.
 
