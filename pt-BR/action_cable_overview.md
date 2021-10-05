@@ -306,10 +306,7 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
 
 ### Streams
 
-*Streams* provide the mechanism by which channels route published content
-(broadcasts) to their subscribers.  For example, the following code uses
-[`stream_from`][] to subscribe to the broadcasting named `chat_Best Room` when
-the value of the `:room` parameter is `"Best Room"`:
+*Streams* fornecem o mecanismo por onde os canais enviam o conteúdo publicado(transmissões) para seus assinantes. Por exemplo, o código a seguir usa [`stream_from`][] para se inscrever na transmissão chamada `chat_Best Romm` quando o valor do parâmetro `:room` é `Best Room:`:
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -320,18 +317,13 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-Then, elsewhere in your Rails application, you can broadcast to such a room by
-calling [`broadcast`][]:
+Então, de outro lugar em sua aplicação Rails, é possível transmitir para essa `room` chamando [`broadcast`][]:
 
 ```ruby
 ActionCable.server.broadcast("chat_Best Room", { body: "This Room is Best Room." })
 ```
 
-If you have a stream that is related to a model, then the broadcasting name
-can be generated from the channel and model. For example, the following code
-uses [`stream_for`][] to subscribe to a broadcasting like
-`comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE`, where `Z2lkOi8vVGVzdEFwcC9Qb3N0LzE` is
-the GlobalID of the Post model.
+Se possui um stream que está relacionado a uma *model*, então o nome da transmissão pode ser gerada do canal e *model*. Por exemplo, o código a seguir usa [`stream_for`][] para assinar a uma transmissão como `comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE`, onde `Z2lkOi8vVGVzdEFwcC9Qb3N0LzE` corresponde ao ID Global da *model* Post.
 
 ```ruby
 class CommentsChannel < ApplicationCable::Channel
@@ -342,7 +334,7 @@ class CommentsChannel < ApplicationCable::Channel
 end
 ```
 
-You can then broadcast to this channel by calling [`broadcast_to`][]:
+Você pode agora transmitir para esse canal chamando [`broadcast_to`][]:
 
 ```ruby
 CommentsChannel.broadcast_to(@post, @comment)
