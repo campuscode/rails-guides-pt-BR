@@ -1011,7 +1011,7 @@ Resultado:
 <input type="checkbox" name="accept" id="accept" value="1" />
 ```
 
-Geralmente, esses *helpers* tem o mesmo nome de suas contrapartes de construtor de formulários, porém utilizando o sufixo `_tag`.  Para uma lista completa, consulte a [documentação da API `FormTagHelper`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
+Geralmente, esses *helpers* tem o mesmo nome dos *helpers* do Construtor de Formulários, porém adicionando o sufixo `_tag`.  Para uma lista completa, consulte a [documentação da API `FormTagHelper`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
 
 Usando `form_for` e `form_tag`
 ---------------------------
