@@ -382,10 +382,9 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
 })
 ```
 
-### Passing Parameters to Channels
+### Passando Parâmetros para Channel
 
-You can pass parameters from the client side to the server side when creating a
-subscription. For example:
+Você pode passar parâmetros do lado do cliente para o lado do servidor quando cria a *subscription*. Por exemplo:
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -396,8 +395,7 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-An object passed as the first argument to `subscriptions.create` becomes the
-params hash in the cable channel. The keyword `channel` is required:
+Um objeto passado como primeiro argumento em `subscriptions.create` se torna a hash `params` no *cable channel*. A *keyword* `channel` é obrigatória:
 
 ```js
 // app/javascript/channels/chat_channel.js
@@ -426,8 +424,8 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
 ```
 
 ```ruby
-# Somewhere in your app this is called, perhaps
-# from a NewCommentJob.
+# Em algum lugar do seu app isso pode ser chamado, talvez,
+# por um novo NewCommentJob.
 ActionCable.server.broadcast(
   "chat_#{room}",
   {
