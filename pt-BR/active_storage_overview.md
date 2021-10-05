@@ -901,14 +901,15 @@ class Uploader {
 }
 ```
 
-Discarding Files Stored During System Tests
+Descartando Arquivos Armazenados Durante os Testes do Sistema
 -------------------------------------------
 
-System tests clean up test data by rolling back a transaction. Because destroy
-is never called on an object, the attached files are never cleaned up. If you
-want to clear the files, you can do it in an `after_teardown` callback. Doing it
-here ensures that all connections created during the test are complete and
-you won't receive an error from Active Storage saying it can't find a file.
+Os testes do sistema limpam os dados de testes revertendo uma transação. Como o
+*destroy* nunca é chamado em um objeto, os arquivos anexados nunca são limpos. Se
+quiser limpar os arquivos, podemos usar um *callback* `after_teardown`. 
+Fazendo isso garantimos que toda as conexões criadas durante o teste sejam 
+concluídas sem que recebamos um erro do *Active Storage* informando que não 
+foi possível encontrar um arquivo.
 
 ```ruby
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
@@ -925,18 +926,20 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-If your system tests verify the deletion of a model with attachments and you're
-using Active Job, set your test environment to use the inline queue adapter so
-the purge job is executed immediately rather at an unknown time in the future.
+Se os testes do sistema verificarem a exclusão de um modelo com anexos e 
+estivermos usando o *Active Job*, configure seu ambiente de testes para usar
+o adaptador de fila para que o trabalho de limpeza seja executado imediatamente,
+em vez de em um momento desconhecido no futuro.
 
-You may also want to use a separate service definition for the test environment
-so your tests don't delete the files you create during development.
+Podemos também usar uma definição de serviço separado para o ambiente de testes,
+para que os testes não exclusam os arquivos criados durante o desenvolvimento.
 
 ```ruby
-# Use inline job processing to make things happen immediately
+# Usa o processamento de trabalho em linha para fazer as coisas
+# acontecerem imediatamente
 config.active_job.queue_adapter = :inline
 
-# Separate file storage in the test environment
+# Separa o armazenamento de arquivos no ambiente de teste
 config.active_storage.service = :local_test
 ```
 
