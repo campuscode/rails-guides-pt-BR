@@ -20,67 +20,51 @@ Como mencionado em [Rails'README](https://github.com/rails/rails/blob/main/READM
 
 --------------------------------------------------------------------------------
 
-Reporting an Issue
+Relatando uma *Issue*
 ------------------
 
-Ruby on Rails uses [GitHub Issue Tracking](https://github.com/rails/rails/issues) to track issues (primarily bugs and contributions of new code). If you've found a bug in Ruby on Rails, this is the place to start. You'll need to create a (free) GitHub account in order to submit an issue, to comment on them, or to create pull requests.
+O Ruby on Rails utiliza o [GitHub Issue Tracking](https://github.com/rails/rails/issues) para rastrear problemas (principalmente *bugs* e contribuições de novo código). Se você encontrou um *bug* no Ruby on Rails, este é o lugar por onde começar. Você precisará criar uma conta (gratuita) no GitHub para poder enviar uma *issue*, fazer comentários nelas, ou criar *pull requests*.
 
-NOTE: Bugs in the most recent released version of Ruby on Rails are likely to get the most attention. Also, the Rails core team is always interested in feedback from those who can take the time to test _edge Rails_ (the code for the version of Rails that is currently under development). Later in this guide, you'll find out how to get edge Rails for testing.
+NOTE: Os *bugs* na versão mais recente do Ruby on Rails provavelmente receberão mais atenção. Além disso, a equipe principal do Rails está sempre interessada no *feedback* daqueles que podem tirar um tempo para testar o _edge Rails_ (o código para a versão do Rails que está atualmente em desenvolvimento). Posteriormente neste guia, você irá descobrirá como obter o _edge Rails_ para testes.
 
-### Creating a Bug Report
+### Criando um aviso de *Bug*
 
-If you've found a problem in Ruby on Rails which is not a security risk, do a search on GitHub under [Issues](https://github.com/rails/rails/issues) in case it has already been reported. If you are unable to find any open GitHub issues addressing the problem you found, your next step will be to [open a new one](https://github.com/rails/rails/issues/new). (See the next section for reporting security issues.)
+Se você encontrou um problema no Ruby on Rails que não é um risco de segurança, faça um pesquisa no GitHub em [*Issues*](https://github.com/rails/rails/issues), caso já tenha sido relatado. Se você não conseguir encontrar nenhuma *issue* aberta no GitHub que resolva o problema que encontrou, seu próximo passo será [abrir uma nova](https://github.com/rails/rails/issues/new). (Consulte a próxima seção para relatar problemas de segurança.)
 
-Your issue report should contain a title and a clear description of the issue at the bare minimum. You should include as much relevant information as possible and should at least post a code sample that demonstrates the issue. It would be even better if you could include a unit test that shows how the expected behavior is not occurring. Your goal should be to make it easy for yourself - and others - to reproduce the bug and figure out a fix.
+Seu relatório de *issue* deve conter, no mínimo, um título e uma descrição clara do problema. Você deve incluir o máximo possśivel de informações relevantes e, pelo menos, postar um exemplo de código que demonstre o problema. Seria ainda melhor se você pudesse incluir um teste de unidade que mostra como o comportamento esperado não está ocorrendo. Seu objetivo deve ser tornar mais fácil para você - e para outros - reproduzir o *bug* e descobrir um correção.
 
-Then, don't get your hopes up! Unless you have a "Code Red, Mission Critical, the World is Coming to an End" kind of bug, you're creating this issue report in the hope that others with the same problem will be able to collaborate with you on solving it. Do not expect that the issue report will automatically see any activity or that others will jump to fix it. Creating an issue like this is mostly to help yourself start on the path of fixing the problem and for others to confirm it with an "I'm having this problem too" comment.
+Então, não tenha muitas esperanças! A menos que você tenha um tipo de *bug* "Código Vermelho, Estado Crítico, o Mundo está Chegando ao Fim", você está criando este relatório de *issue* na esperança de que outras pessoas com o mesmo problema possam colaborar com você para resolvê-lo. Não espere que o relatório de *issue* veja automaticamente qualquer atividade ou que outras pessoas corram para corrigí-lo. A criação de uma *issue* como essa é principalmente para ajuduar a si mesmo a começar a corrigir o problema e para que outras pessoas confirmem com um comentário "Também estou tendo este problema".
 
-### Create an Executable Test Case
+### Crie um Caso de Teste Executável
 
-Having a way to reproduce your issue will be very helpful for others to help confirm, investigate, and ultimately fix your issue. You can do this by providing an executable test case. To make this process easier, we have prepared several bug report templates for you to use as a starting point:
+Ter uma maneira de reproduzir seu problema será muito útil para que outras pessoas ajudem a confirmar, investigar e, por fim, corrigir seu problema. Você pode fazer isso fornecendo um caso de teste executável. Para facilitar esse processo, preparamos vários modelos de relatório de *bug* para você utilizar como ponto de partida:
 
-* Template for Active Record (models, database) issues: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_main.rb)
-* Template for testing Active Record (migration) issues: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_migrations_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_migrations_main.rb)
-* Template for Action Pack (controllers, routing) issues: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_controller_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_controller_main.rb)
-* Template for Active Job issues: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_job_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_job_main.rb)
-* Template for Active Storage issues: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_storage_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_storage_main.rb)
-* Template for Action Mailbox issues: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_mailbox_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_mailbox_main.rb)
-* Generic template for other issues: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/generic_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/generic_main.rb)
+* Template para problemas de Active Record (models, database): [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_main.rb)
+* Template para testar problemas de Active Record (migration): [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_migrations_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_record_migrations_main.rb)
+* Template para problemas de Action Pack (controllers, routing): [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_controller_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_controller_main.rb)
+* Template para problemas de Active Job: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_job_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_job_main.rb)
+* Template para problemas de Active Storage: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_storage_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/active_storage_main.rb)
+* Template para problemas de Action Mailbox: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_mailbox_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/action_mailbox_main.rb)
+* Template genérico para outros problemas: [gem](https://github.com/rails/rails/blob/main/guides/bug_report_templates/generic_gem.rb) / [main](https://github.com/rails/rails/blob/main/guides/bug_report_templates/generic_main.rb)
 
-These templates include the boilerplate code to set up a test case against either a released version of Rails (`*_gem.rb`) or edge Rails (`*_main.rb`).
+Esses *templates* incluem um código padrão (*boilerplate*) para configurar um caso de teste tanto para uma versão estável do Rails (`*_gem.rb`) quanto para o *edge Rails* (`*_main.rb`).
 
-Copy the content of the appropriate template into a `.rb` file and make the necessary changes to demonstrate the issue. You can execute it by running `ruby the_file.rb` in your terminal. If all goes well, you should see your test case failing.
+Copie o conteúdo do *template* apropriado para um arquivo `.rb` e faça as alterações necessárias para demonstrar o problema. Você pode executá-lo rodando `ruby nome_do_arquivo.rb` no seu terminal. Se tudo correr bem, você verá que seu caso de teste falhou.
 
-You can then share your executable test case as a [gist](https://gist.github.com), or paste the content into the issue description.
+Você pode então compartilhar seu caso de teste executável como um [*gist*](https://gist.github.com), ou colar o conteúdo na descrição da *issue*.
 
-### Special Treatment for Security Issues
+### Tratamento Especial para Questões de Segurança
 
-WARNING: Please do not report security vulnerabilities with public GitHub issue reports. The [Rails security policy page](https://rubyonrails.org/security) details the procedure to follow for security issues.
+WARNING: Não relate vulnerabilidades de segurança com relatórios públicos de *issue* do GitHub. A [página de política de segurança do Rails](https://rubyonrails.org/security) detalha o procedimento a seguir para questões de segurança.
 
-### What about Feature Requests?
+### E quanto às Solicitações de Funcionalidade (Feature Requests)?
 
-Please don't put "feature request" items into GitHub Issues. If there's a new
-feature that you want to see added to Ruby on Rails, you'll need to write the
-code yourself - or convince someone else to partner with you to write the code.
-Later in this guide, you'll find detailed instructions for proposing a patch to
-Ruby on Rails. If you enter a wish list item in GitHub Issues with no code, you
-can expect it to be marked "invalid" as soon as it's reviewed.
+Por favor, não coloque itens de *feature request* nas *issues* do GitHub. Se houver uma nova *feature* que você deseja ver adicionada ao Ruby on Rails, você precisará escrever o código por conta própria - ou convencer alguém a fazer uma parceria com você para escrever o código.
+Posteriormente neste guia, você encontrará instruções detalhadas para propor um *patch* para o Ruby on Rails. Se você inserir um item que você deseja nas *Issues* do GitHub sem código, pode esperar que ele será marcado como "inválido" assim que for revisado.
 
-Sometimes, the line between 'bug' and 'feature' is a hard one to draw.
-Generally, a feature is anything that adds new behavior, while a bug is
-anything that causes incorrect behavior. Sometimes,
-the core team will have to make a judgment call. That said, the distinction
-generally just affects which release your patch will get in to; we love feature
-submissions! They just won't get backported to maintenance branches.
+Às vezes, é difícil de traçar a linha entre '*bug*' e '*feature*'. Normalmente, a *feature* é qualquer coisa que adiciona um novo comportamento, enquanto um *bug* é qualquer coisa que causa um comportamento incorreto. Às vezes, a equipe principal terá que fazer um julgamento. Dito isso, a distinção geralmente afeta apenas em qual versão seu *patch* entrará; nós amamos submissões de *features*! Elas simplesmente não serão transportadas para as *branches* de manutenção.
 
-If you'd like feedback on an idea for a feature before doing the work to make
-a patch, please send an email to the [rails-core mailing
-list](https://discuss.rubyonrails.org/c/rubyonrails-core). You
-might get no response, which means that everyone is indifferent. You might find
-someone who's also interested in building that feature. You might get a "This
-won't be accepted". But it's the proper place to discuss new ideas. GitHub
-Issues are not a particularly good venue for the sometimes long and involved
-discussions new features require.
+Se você deseja obter *feedback* sobre uma ideia de *feature* antes de começá-la e fazer um *patch*, envie um email para a [lista de discussão do rails-core](https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core). Você pode não receber resposta, o que significa que todos são indiferentes. Você pode encontrar alguém que também esteja interessado em criar essa *feature*. Você pode receber um "Isso não será aceito". Mas é o lugar certo para discutir novas ideias. As *issues* do GitHub não são um local particularmente bom para as discussões às vezes longas e complicadas que as novas *features* exigem.
 
 
 Helping to Resolve Existing Issues
@@ -133,7 +117,7 @@ Contribuindo com a documentação do Rails
 
 O Ruby on Rails possui dois conjuntos principais de documentação: os guias, que te ajudam a aprender sobre Ruby on Rails, e a API, que serve como referência.
 
-Você pode ajudar a melhorar os guias do Rails ou a referência da API tornando-os mais coerentes, consistentes ou legíveis, adicionando informações ausentes, corrigindo erros factuais, corrigindo erros de digitação ou atualizando-os com os Rails mais recentes. 
+Você pode ajudar a melhorar os guias do Rails ou a referência da API tornando-os mais coerentes, consistentes ou legíveis, adicionando informações ausentes, corrigindo erros factuais, corrigindo erros de digitação ou atualizando-os com os Rails mais recentes.
 
 Para isso, faça alterações aos arquivos-fonte dos guias do Rails (localizados [aqui](https://github.com/rails/rails/tree/main/guides/source) no GitHub) ou comentários RDoc no código fonte. Então abra um *Pull Request* para aplicar suas mudanças na *branch* principal (*main*).
 
