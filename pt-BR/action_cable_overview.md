@@ -334,7 +334,7 @@ class CommentsChannel < ApplicationCable::Channel
 end
 ```
 
-Você pode agora transmitir para esse canal chamando [`broadcast_to`][]:
+Você pode agora transmitir para esse *channel* chamando [`broadcast_to`][]:
 
 ```ruby
 CommentsChannel.broadcast_to(@post, @comment)
@@ -347,9 +347,9 @@ CommentsChannel.broadcast_to(@post, @comment)
 
 ### Broadcastings
 
-Um *broadcasting* é um link *pub/sub* em que qualquer coisa transmitida por um *publisher* é encaminhada diretamente para os assinantes do *channel* que está transmitindo essa *broadcasting* de mesmo nome. Cada *channel* pode estar transmitindo zero ou mais *broadcastings*.
+Um *broadcasting* é um link *pub/sub* em que qualquer coisa transmitida por um *publisher* é encaminhada diretamente para os assinantes do *channel*, este, que está transmitindo o *broadcasting* de mesmo nome. Cada *channel* pode estar transmitindo zero ou mais *broadcastings*.
 
-*Broadcastings* são meramentes uma fila online e dependentes de tempo. Se um consumidor não estiver transmitindo (assinante de um *channel*), ele não vai receber a transmissão caso se conecte mais tarde.
+*Broadcastings* são puramente filas de espera online e dependentes de tempo. Se um consumidor não estiver transmitindo (assinante de um determinado *channel*), ele não vai receber o *broadcast* caso se conecte mais tarde.
 
 ### Subscriptions
 
@@ -395,7 +395,7 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-Um objeto passado como primeiro argumento em `subscriptions.create` se torna a hash `params` no *cable channel*. A *keyword* `channel` é obrigatória:
+Um objeto passado como primeiro argumento em `subscriptions.create` torna-se a hash `params` em *cable channel*. A *keyword* `channel` é obrigatória:
 
 ```js
 // app/javascript/channels/chat_channel.js
