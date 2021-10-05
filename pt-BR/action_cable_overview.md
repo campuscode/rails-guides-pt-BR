@@ -353,13 +353,11 @@ Um *broadcasting* é um link *pub/sub* em que qualquer coisa transmitida por um 
 
 ### Subscriptions
 
-When a consumer is subscribed to a channel, they act as a subscriber. This
-connection is called a subscription. Incoming messages are then routed to
-these channel subscriptions based on an identifier sent by the cable consumer.
+Quando um consumidor está inscrito em um *channel*, ele age como assinante (*subscriber*). Essa conexão é chamada de assinatura (*subscription*). Mensagens recebidas são então direcionadas para esses inscritos do *channel* baseadas em um identificador enviado pelo *cable consumer*
 
 ```js
 // app/javascript/channels/chat_channel.js
-// Assumes you've already requested the right to send web notifications
+// Assumindo que você já requeriu os direitos para enviar notificações web
 import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
