@@ -306,7 +306,7 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
 
 ### Streams
 
-*Streams* fornecem o mecanismo por onde os canais enviam o conteúdo publicado (transmissões) para seus assinantes. Por exemplo, o código a seguir usa [`stream_from`][] para se inscrever na transmissão chamada `chat_Best Romm` quando o valor do parâmetro `:room` é `Best Room:`:
+*Streams* fornecem o mecanismo por onde os *channels* direcionam o conteúdo publicado (*broadcasts*) para seus assinantes. Por exemplo, o código a seguir usa [`stream_from`][] para se inscrever na transmissão (*broadcasting*) chamada `chat_Best Room` quando o valor do parâmetro `:room` é `"Best Room"`:
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -323,7 +323,7 @@ Então, de outro lugar em sua aplicação Rails, é possível transmitir para es
 ActionCable.server.broadcast("chat_Best Room", { body: "This Room is Best Room." })
 ```
 
-Se você possui um *stream* que está relacionada à uma *model*, então o nome da transmissão pode ser gerada do canal e *model*. Por exemplo, o código a seguir usa [`stream_for`][] para assinar uma transmissão como `comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE`, onde `Z2lkOi8vVGVzdEFwcC9Qb3N0LzE` corresponde ao ID Global da *model* Post.
+Se você possui um *stream* que está relacionada a uma *model*, então o nome da transmissão pode ser gerada a partir do *channel* e *model*. Por exemplo, o código a seguir usa [`stream_for`][] para se inscrever em uma transmissão como `comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE`, onde `Z2lkOi8vVGVzdEFwcC9Qb3N0LzE` corresponde ao ID Global da *model* Post.
 
 ```ruby
 class CommentsChannel < ApplicationCable::Channel
@@ -345,7 +345,7 @@ CommentsChannel.broadcast_to(@post, @comment)
 [`stream_for`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_for
 [`stream_from`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_from
 
-### Broadcastings
+### Transmissões
 
 A *broadcasting* is a pub/sub link where anything transmitted by a publisher
 is routed directly to the channel subscribers who are streaming that named
