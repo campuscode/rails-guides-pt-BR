@@ -974,5 +974,4 @@ Implementando Suporte a Outros Serviços *Cloud*
 ---------------------------------------------
 
 
-Se for necessário dar suporte a algum outro serviço *cloud* além desses, você precisa implementá-lo. Cada serviço extende [`ActiveStorage::Service`](https://github.com/rails/rails/blob/main/activestorage/lib/active_storage/service.rb)
-implementando os métodos necessários para fazer o *upload* e *download* de arquivos para a nuvem.
+Se for necessário dar suporte a algum outro serviço *cloud* além desses, você precisa implementá-lo. Cada serviço estende [`ActiveStorage::Service`] (https://github.com/rails/rails/blob/main/activestorage/lib/active_storage/service.rb) implementando os métodos necessários para fazer o *upload* e *download* de arquivos para a nuvem.
