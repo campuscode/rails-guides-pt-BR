@@ -304,7 +304,7 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
 
 ## Interações Cliente-Servidor
 
-### Streams
+### *Streams*
 
 *Streams* fornecem o mecanismo por onde os *channels* direcionam o conteúdo publicado (*broadcasts*) para seus assinantes. Por exemplo, o código a seguir usa [`stream_from`][] para se inscrever na transmissão (*broadcasting*) chamada `chat_Best Room` quando o valor do parâmetro `:room` é `"Best Room"`:
 
@@ -345,13 +345,13 @@ CommentsChannel.broadcast_to(@post, @comment)
 [`stream_for`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_for
 [`stream_from`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_from
 
-### Broadcastings
+### *Broadcastings*
 
 Um *broadcasting* é um link *pub/sub* em que qualquer coisa transmitida por um *publisher* é encaminhada diretamente para os assinantes do *channel*, este, que está transmitindo o *broadcasting* de mesmo nome. Cada *channel* pode estar transmitindo zero ou mais *broadcastings*.
 
 *Broadcastings* são puramente filas de espera online e dependentes de tempo. Se um consumidor não estiver transmitindo (assinante de um determinado *channel*), ele não vai receber o *broadcast* caso se conecte mais tarde.
 
-### Subscriptions
+### *Subscriptions*
 
 Quando um consumidor está inscrito em um *channel*, ele age como assinante (*subscriber*). Essa conexão é chamada de assinatura (*subscription*). Mensagens recebidas são então direcionadas para esses inscritos do *channel* baseadas em um identificador enviado pelo *cable consumer*
 
@@ -382,7 +382,7 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
 })
 ```
 
-### Passando Parâmetros para Channel
+### Passando Parâmetros para *Channel*
 
 Você pode passar parâmetros do lado do cliente para o lado do servidor quando cria a *subscription*. Por exemplo:
 
@@ -395,7 +395,7 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-Um objeto passado como primeiro argumento em `subscriptions.create` torna-se a hash `params` em *cable channel*. A *keyword* `channel` é obrigatória:
+Um objeto passado como primeiro argumento em `subscriptions.create` torna-se a *hash* `params` em *cable channel*. A *keyword* `channel` é obrigatória:
 
 ```js
 // app/javascript/channels/chat_channel.js
