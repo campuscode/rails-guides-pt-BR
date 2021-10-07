@@ -231,7 +231,7 @@ Quando um arquivo é carregado ou deletado, isso é feito em todos serviços esp
 
 Serviços espelhados podem ser usados para facilitar a migração entre serviços em produção.
 Você pode começar a espelhar para o novo serviço, copiar os arquivos existentes do antigo
-serviço para o novo, e então muda para o novo serviço. 
+serviço para o novo, e então muda para o novo serviço.
 
 NOTE: O espelhamento não é atômico. É possível que um upload seja bem-sucedido no
 serviço principal e falha em qualquer um dos serviços subordinados. Antes de ir
@@ -489,7 +489,7 @@ disposição (`disposition`) de como deseja apresentar:
 rails_blob_path(user.avatar, disposition: "attachment")
 ```
 
-WARNING: Para evitar ataques XSS, *ActiveStorage* força o cabeçalho Content-Disposition para "anexos" 
+WARNING: Para evitar ataques XSS, *ActiveStorage* força o cabeçalho Content-Disposition para "anexos"
 para alguns tipos de arquivo. Para alterar este comportamento, consulte as
 opções de configuração disponíveis em [Configurando aplicações Rails](configuring.html#configuring-active-storage).
 
@@ -832,7 +832,7 @@ const input = document.querySelector('input[type=file]')
 //  biblioteca com o Dropzone
 const onDrop = (event) => {
   event.preventDefault()
-  const files = event.dataTransfer.files;
+  const files = event.dataTransferim.files;
   Array.from(files).forEach(file => uploadFile(file))
 }
 
@@ -970,10 +970,9 @@ module ActionDispatch
 end
 ```
 
-Implementing Support for Other Cloud Services
+Implementando Suporte a Outros Serviços *Cloud*
 ---------------------------------------------
 
-If you need to support a cloud service other than these, you will need to
-implement the Service. Each service extends
-[`ActiveStorage::Service`](https://github.com/rails/rails/blob/main/activestorage/lib/active_storage/service.rb)
-by implementing the methods necessary to upload and download files to the cloud.
+
+Se for necessário dar suporte a algum outro serviço *cloud* além desses, você precisa implementá-lo. Cada serviço extende [`ActiveStorage::Service`](https://github.com/rails/rails/blob/main/activestorage/lib/active_storage/service.rb)
+implementando os métodos necessários para fazer o *upload* e *download* de arquivos para a nuvem.
