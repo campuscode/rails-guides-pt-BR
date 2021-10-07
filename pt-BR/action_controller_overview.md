@@ -443,7 +443,7 @@ Para redefinir a sessão inteira, utilize [`reset_session`][].
 
 ### O *Flash*
 
-O *flash* é uma parte especial da sessão, que é limpo a cada requisição. Isso significa que os valores armazenados nele estarão disponíveis somente para a próxima requisição, sendo utéis para enviar mensagens de erro, etc.
+O *flash* é uma parte especial da sessão, que é limpo a cada requisição. Isso significa que os valores armazenados nele estarão disponíveis somente para a próxima requisição, sendo uteis para enviar mensagens de erro, etc.
 
 O *flash* é acessado através do método [`flash`][]. Assim como a sessão, o *flash* é representado por um objeto *hash*.
 
@@ -467,7 +467,7 @@ redirect_to root_url, alert: "Você está preso aqui!"
 redirect_to root_url, flash: { referral_code: 1234 }
 ```
 
-A ação `destroy` redireciona para a `root_url` da aplicação, onde a mensagem será exibida. Note que é responsabilidade da próxima ação decidir o que (e até mesmo se algo) será feito com o valor anterior contido no *flash*. É comum exibir quaisquer erros, alertas ou avisos vindos do *flash* no *layout* da aplicação:
+A *action* `destroy` redireciona para a `root_url` da aplicação, onde a mensagem será exibida. Note que é responsabilidade da próxima *action* decidir o que (e até mesmo se algo) será feito com o valor anterior contido no *flash*. É comum exibir quaisquer erros, alertas ou avisos vindos do *flash* no *layout* da aplicação:
 
 ```erb
 <html>
@@ -496,12 +496,11 @@ Se quiser que um *flash* seja acessado em uma outra requisição, use [`flash.ke
 
 ```ruby
 class MainController < ApplicationController
-  # Digamos que essa ação corresponde à root_url, mas você quer que
+  # Digamos que essa action corresponde à root_url, mas você quer que
   # todas as requisições sejam redirecionadas para UsersController#index.
-  # Se uma ação definir o flash e for redirecionada para cá, os valores
+  # Se uma action definir o flash e for redirecionada para cá, os valores
   # seriam perdidos quando um ocorrer um outro redirecionamento.
   # Para persistir os valores e evitar que isso ocorra, utilize 'keep'.
-
   def index
     # Persistirá os valores.
     flash.keep
@@ -518,7 +517,7 @@ end
 
 #### `flash.now`
 
-Por padrão, adicionar valores ao *flash* os tornará disponíveis somente na próxima requisição, mas em alguns casos, você pode querer acessar estes valores em uma mesma requisição. Por exemplo, se a ação `create` falhar ao salvar um recurso e você renderizar o template `new` diretamente, isso não resultará em uma nova requisição, mas você ainda pode querer exibir a mensagem usando o *flash*. Para isso, é possível usar o [`flash.now`][], de maneira similar ao `flash` simples:
+Por padrão, adicionar valores ao *flash* os tornará disponíveis somente na próxima requisição, mas em alguns casos, você pode querer acessar estes valores em uma mesma requisição. Por exemplo, se a *action* `create` falhar ao salvar um recurso e você renderizar o *template* `new` diretamente, isso não resultará em uma nova requisição, mas você ainda pode querer exibir a mensagem usando o *flash*. Para isso, é possível usar o [`flash.now`][], de maneira similar ao `flash` simples:
 
 ```ruby
 class ClientsController < ApplicationController
