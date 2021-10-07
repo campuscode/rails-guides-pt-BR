@@ -1521,7 +1521,7 @@ O método `assert_select` permite que você faça consultas a elementos HTML da 
 Há duas formas de `assert_select`:
 
 A assinatura `assert_select(selector, [equality], [message])` garante que a condição de igualdade (`equality`) é atendida nos elementos selecionados através do seletor (*selector*).
-O argumento *selector* pode ser um seletor CSS (String) ou uma expressão com valores de substituição.
+O argumento *selector* pode ser um seletor CSS (String) ou uma expressão com valores de substituição (como [nesses testes](https://github.com/rails/rails-dom-testing/blob/8f5acdfcb83a888c06592bad05475b7463998d1b/test/selector_assertions_test.rb#L124-L146)).
 
 Já `assert_select(element, selector, [equality], [message])` garante que a condição de igualdade (`equality`) é atendida nos elementos selecionados através do seletor, começando no elemento `element` (instância de `Nokogiri::XML::Node` ou `Nokogiri::XML::NodeSet`) e seus descendentes.
 
