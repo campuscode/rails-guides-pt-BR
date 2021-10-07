@@ -1619,7 +1619,7 @@ As seguintes mudanças são necessárias a atualizar seu aplicativo para Rails 4
 
 ### HTTP PATCH
 
-Rails 4 agora usa `PATCH` como o verbo HTTP primário para atualizações quando um RESTful
+O Rails 4 agora usa `PATCH` como o verbo HTTP primário para atualizações quando um RESTful
 `resource` é declarado em `config/routes.rb`. A *action* `update` ainda é usada,
 e as solicitações `PUT` continuarão a ser roteadas para a *action* `update` também.
 Portanto, se você estiver usando apenas as rotas RESTful padrão, nenhuma alteração precisa ser feita:
@@ -1735,7 +1735,7 @@ O Rails 4.0 não suporta mais o carregamento de *plugins* de `vendor/plugins`. V
 
 ### *Active Record*
 
-* Rails 4.0 removeu o mapa de identidade do Active Record, devido a [algumas inconsistências com associações](https://github.com/rails/rails/commit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6). Se você o habilitou manualmente em sua aplicação, você terá que remover a seguinte configuração que não tem mais efeito: `config.active_record.identity_map`.
+* O Rails 4.0 removeu o mapa de identidade do Active Record, devido a [algumas inconsistências com associações](https://github.com/rails/rails/commit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6). Se você o habilitou manualmente em sua aplicação, você terá que remover a seguinte configuração que não tem mais efeito: `config.active_record.identity_map`.
 
 * O método `delete` em associações de coleção agora pode receber argumentos` Integer` ou `String` como ids de registro, além de registros, muito parecido com o método `destroy`. Anteriormente, ele gerava `ActiveRecord::AssociationTypeMismatch` para tais argumentos. Do Rails 4.0 em `delete` automaticamente tenta encontrar os registros que combinam com os ids fornecidos antes de excluí-los.
 
@@ -1827,11 +1827,11 @@ O Rails 4.0 extraiu o *Active Resource* para sua própria *gem*. Se você ainda 
 
     Se você está contando com a capacidade de aplicações externas ou JavaScript de ler os *cookies* de sessão assinada da sua aplicação Rails (ou *cookies* assinados em geral), você não deve definir `secret_key_base` até que tenha não tenha mais essas preocupações.
 
-*   Rails 4.0 criptografa o conteúdo de sessões baseadas em *cookies* se `secret_key_base` tiver sido definido. O Rails 3.x assinou, mas não criptografou, o conteúdo da sessão baseada em cookie. Os cookies assinados são "seguros" no sentido de que são verificados se foram gerados pela sua aplicação e são à prova de adulteração. No entanto, o conteúdo pode ser visualizado pelos usuários finais e criptografar o conteúdo elimina essa advertência/preocupação sem uma penalidade de desempenho significativa.
+*   O Rails 4.0 criptografa o conteúdo de sessões baseadas em *cookies* se `secret_key_base` tiver sido definido. O Rails 3.x assinou, mas não criptografou, o conteúdo da sessão baseada em cookie. Os cookies assinados são "seguros" no sentido de que são verificados se foram gerados pela sua aplicação e são à prova de adulteração. No entanto, o conteúdo pode ser visualizado pelos usuários finais e criptografar o conteúdo elimina essa advertência/preocupação sem uma penalidade de desempenho significativa.
 
     Leia [Pull Request #9978](https://github.com/rails/rails/pull/9978) para obter detalhes sobre a mudança para *cookies* de sessão criptografada.
 
-* Rails 4.0 removeu a opção `ActionController::Base.asset_path`. Use o recurso da nova *asset pipeline*.
+* O Rails 4.0 removeu a opção `ActionController::Base.asset_path`. Use o recurso da nova *asset pipeline*.
 
 * O Rails 4.0 tornou a opção `ActionController::Base.page_cache_extension` obsoleta. Use `ActionController::Base.default_static_extension` ao invés.
 
@@ -1839,20 +1839,20 @@ O Rails 4.0 extraiu o *Active Resource* para sua própria *gem*. Se você ainda 
 
 * O Rails 4.0 removeu o analisador de parâmetros XML. Você precisará adicionar a gem `actionpack-xml_parser` se precisar deste recurso.
 
-* Rails 4.0 muda o conjunto de pesquisa do `layout` padrão usando símbolos ou procs que retornam `nil`. Para obter o comportamento "sem layout", retorne false em vez de `nil`.
+* O Rails 4.0 muda o conjunto de pesquisa do `layout` padrão usando símbolos ou procs que retornam `nil`. Para obter o comportamento "sem layout", retorne false em vez de `nil`.
 
-* Rails 4.0 muda o cliente memcached padrão de `memcache-client` para `dalli`. Para atualizar, simplesmente adicione `gem 'dalli'` ao seu` Gemfile`.
+* O Rails 4.0 muda o cliente memcached padrão de `memcache-client` para `dalli`. Para atualizar, simplesmente adicione `gem 'dalli'` ao seu` Gemfile`.
 
-* Rails 4.0 não manterá em breve os métodos `dom_id` e `dom_class` em *controllers* (eles podem ser usados em *views*). Você precisará incluir o módulo `ActionView::RecordIdentifier` nos *controllers* que requerem este recurso.
+* O Rails 4.0 não manterá em breve os métodos `dom_id` e `dom_class` em *controllers* (eles podem ser usados em *views*). Você precisará incluir o módulo `ActionView::RecordIdentifier` nos *controllers* que requerem este recurso.
 
-* Rails 4.0 não manterá em breve a opção `:confirm` para o helper `link_to`. Você deve
+* O Rails 4.0 não manterá em breve a opção `:confirm` para o helper `link_to`. Você deve
 em vez disso, usar um atributo de dados (por exemplo, `data: {confirm: 'Are you sure?'}`).
 Esta depreciação também diz respeito aos *helpers* baseados neste (como `link_to_if`
 ou `link_to_unless`).
 
 * O Rails 4.0 mudou como `assert_generates`, `assert_recognizes` e `assert_routing` funcionam. Agora todas essas asserções geram `Assertion` ao invés de` ActionController::RoutingError`.
 
-*   Rails 4.0 levanta um `ArgumentError` se rotas nomeadas conflitantes são definidas. Isso pode ser acionado por rotas nomeadas explicitamente definidas ou pelo método `resources`. Aqui estão dois exemplos que conflitam usando o nome `example_path`:
+*  O Rails 4.0 levanta um `ArgumentError` se rotas nomeadas conflitantes são definidas. Isso pode ser acionado por rotas nomeadas explicitamente definidas ou pelo método `resources`. Aqui estão dois exemplos que conflitam usando o nome `example_path`:
 
     ```ruby
     get 'one' => 'test#example', as: :example
@@ -1894,7 +1894,7 @@ ou `link_to_unless`).
       get '/' => 'root#index'
     ```
 
-*   Rails 4.0 removeu o *middleware* `ActionDispatch::BestStandardsSupport`, `<!DOCTYPE html> `já aciona o modo de padrões de https://msdn.microsoft.com/en-us/library/jj676915(v=vs.85). Os cabeçalhos aspx e ChromeFrame foram movidos para `config.action_dispatch.default_headers`.
+*   O Rails 4.0 removeu o *middleware* `ActionDispatch::BestStandardsSupport`, `<!DOCTYPE html> `já aciona o modo de padrões de https://msdn.microsoft.com/en-us/library/jj676915(v=vs.85). Os cabeçalhos aspx e ChromeFrame foram movidos para `config.action_dispatch.default_headers`.
 
     Lembre-se de que você também deve remover todas as referências ao *middleware* do código da sua aplicação, por exemplo:
 
