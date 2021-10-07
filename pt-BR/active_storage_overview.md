@@ -932,7 +932,7 @@ o adaptador de fila para que o trabalho de limpeza seja executado imediatamente,
 em vez de em um momento desconhecido no futuro.
 
 Podemos também usar uma definição de serviço separado para o ambiente de testes,
-para que os testes não exclusam os arquivos criados durante o desenvolvimento.
+para que os testes não excluam os arquivos criados durante o desenvolvimento.
 
 ```ruby
 # Usa o processamento de trabalho em linha para fazer as coisas
