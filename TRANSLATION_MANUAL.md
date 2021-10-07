@@ -54,6 +54,8 @@ de aplicações Rails, não devem ser traduzidos. Não traduza, coloque apenas
 * a *partial*.
 * a *string*.
 * o *symbol*.
+* a *fixture*.
+* o *driver*.
 
 ### Algumas sugestões de tradução para termos específicos
 

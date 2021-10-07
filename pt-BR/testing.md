@@ -732,14 +732,14 @@ create  test/fixtures/articles.yml
 Testes de *model* não possuem uma superclasse como `ActionMailer::TestCase`.
 Ao invés disso, eles herdam de [`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html).
 
-System Testing
---------------
+Fazendo Testes de Sistema
+-------------------------
 
-System tests allow you to test user interactions with your application, running tests
-in either a real or a headless browser. System tests use Capybara under the hood.
+Testes de sistema permitem testar interações do usuário com sua aplicação, rodando os testes em um navegador web real ou *headless*.
+Testes de sistema usam *Capybara* por debaixo dos panos.
 
-For creating Rails system tests, you use the `test/system` directory in your
-application. Rails provides a generator to create a system test skeleton for you.
+Para criar testes de sistema do Rails, utilize o caminho `test/system` da sua aplicação.
+O Rails também disponibiliza um *generator* para criar esqueletos de testes de sistema para você.
 
 ```bash
 $ bin/rails generate system_test users
@@ -747,7 +747,7 @@ $ bin/rails generate system_test users
       create test/system/users_test.rb
 ```
 
-Here's what a freshly generated system test looks like:
+Aqui está como um teste de sistema recém gerado se parece:
 
 ```ruby
 require "application_system_test_case"
@@ -761,23 +761,21 @@ class UsersTest < ApplicationSystemTestCase
 end
 ```
 
-By default, system tests are run with the Selenium driver, using the Chrome
-browser, and a screen size of 1400x1400. The next section explains how to
-change the default settings.
+Por padrão, testes de sistema utilizam o *driver* Selenium, executando o navegador Chrome, em uma tela de tamanho 1400x1400.
+A próxima seção explica como mudar as configurações padrão.
 
-### Changing the default settings
+### Mudando as Configurações Padrão
 
-Rails makes changing the default settings for system tests very simple. All
-the setup is abstracted away so you can focus on writing your tests.
+O Rails faz com que mudar as configurações padrão de testes de sistema seja muito simples.
+Toda a preparação (*setup*) é abstraída, logo você pode focar mais em escrever testes.
 
-When you generate a new application or scaffold, an `application_system_test_case.rb` file
-is created in the test directory. This is where all the configuration for your
-system tests should live.
+Quando uma nova aplicação ou *scaffold* são gerados, o arquivo `application_system_test_case.rb` é criado na pasta de testes.
+É nele em que todas as configurações de seus testes de sistema devem estão.
 
-If you want to change the default settings you can change what the system
-tests are "driven by". Say you want to change the driver from Selenium to
-Poltergeist. First add the `poltergeist` gem to your `Gemfile`. Then in your
-`application_system_test_case.rb` file do the following:
+Se você quiser mudar as configurações padrão, você pode mudar quem "dirige" (*driver*) os testes de sistema.
+Digamos que você quer mudar de Selenium para Poltergeist.
+Primeiro adicione a gem `poltergeist` em seu `Gemfile`.
+Depois, em seu `application_system_test_case.rb`, faça o seguinte:
 
 ```ruby
 require "test_helper"
@@ -788,11 +786,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-The driver name is a required argument for `driven_by`. The optional arguments
-that can be passed to `driven_by` are `:using` for the browser (this will only
-be used by Selenium), `:screen_size` to change the size of the screen for
-screenshots, and `:options` which can be used to set options supported by the
-driver.
+O nome do *driver* é um argumento obrigatório de `driven_by`.
+Os argumentos opcionais que podem ser passados para `driven_by` são `:using` para o navegador web (opção usada somente pelo *driver* Selenium), `:screen_size` para mudar o tamanho da tela e das capturas de tela e `:options` que serve para configurações específicas de cada *driver*.
 
 ```ruby
 require "test_helper"
@@ -802,8 +797,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-If you want to use a headless browser, you could use Headless Chrome or Headless Firefox by adding
-`headless_chrome` or `headless_firefox` in the `:using` argument.
+Se você quiser usar um navegador *headless*, você pode usar o Chrome *headless* ou Firefox *headless* passando `headless_chrome` ou `headless_firefox` para o argumento `:using`.
 
 ```ruby
 require "test_helper"
@@ -813,48 +807,41 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-If your Capybara configuration requires more setup than provided by Rails, this
-additional configuration could be added into the `application_system_test_case.rb`
-file.
+Se a sua configuração do Capybara requer mais customização do que as fornecidas pelo Rails, opções adicionais podem ser adicionadas no arquivo `application_system_test_case.rb`.
 
-Please see [Capybara's documentation](https://github.com/teamcapybara/capybara#setup)
-for additional settings.
+Consulte a [documentação do Capybara](https://github.com/teamcapybara/capybara#setup) para configurações adicionais.
 
-### Screenshot Helper
+### *Helper* de capturas de tela
 
-The `ScreenshotHelper` is a helper designed to capture screenshots of your tests.
-This can be helpful for viewing the browser at the point a test failed, or
-to view screenshots later for debugging.
+O módulo `ScreenshotHelper` é um *helper* feito para fazer capturas de tela ("prints") dos seus testes.
+Isso pode ser útil para ver o navegador web no momento em que um teste falha ou para debug.
 
-Two methods are provided: `take_screenshot` and `take_failed_screenshot`.
-`take_failed_screenshot` is automatically included in `before_teardown` inside
-Rails.
+Dois métodos são disponibilizados: `take_screenshot` e `take_failed_screenshot`.
+No Rails, o método `take_failed_screenshot` é automaticamente incluído em `before_teardown`.
 
-The `take_screenshot` helper method can be included anywhere in your tests to
-take a screenshot of the browser.
+O *helper* `take_screenshot` pode ser chamado em qualquer lugar nos seus testes para fazer uma captura de tela do navegador.
 
-### Implementing a System Test
+### Implementando um Teste de Sistema
 
-Now we're going to add a system test to our blog application. We'll demonstrate
-writing a system test by visiting the index page and creating a new blog article.
+Agora vamos adicionar um teste de sistema em nossa aplicação de blog.
+Vamos demonstrar como escrever testes de sistema, através da visita a página inicial da aplicação e da escrita de um novo artigo de blog.
 
-If you used the scaffold generator, a system test skeleton was automatically
-created for you. If you didn't use the scaffold generator, start by creating a
-system test skeleton.
+Se você tive usado o *generator* de *scaffold*, então o esqueleto de um teste de sistema foi automaticamente criado para você.
+Se você não utilizou o *generator* de *scaffold*, comece criando o esqueleto de um teste de sistema.
 
 ```bash
 $ bin/rails generate system_test articles
 ```
 
-It should have created a test file placeholder for us. With the output of the
-previous command you should see:
+Isso deveria criar um arquivo de teste.
+Se você utilizou o comando anterior, você deveria ver a seguinte saída:
 
 ```
       invoke  test_unit
       create    test/system/articles_test.rb
 ```
 
-Now let's open that file and write our first assertion:
+Agora vamos abrir o arquivo e escrever nossa primeira asserção:
 
 ```ruby
 require "application_system_test_case"
@@ -867,21 +854,21 @@ class ArticlesTest < ApplicationSystemTestCase
 end
 ```
 
-The test should see that there is an `h1` on the articles index page and pass.
+O teste deveria localizar que há um elemento `h1` na página inicial (*index*) de *articles* e passar.
 
-Run the system tests.
+Rode os testes de sistema.
 
 ```bash
 $ bin/rails test:system
 ```
 
-NOTE: By default, running `bin/rails test` won't run your system tests.
-Make sure to run `bin/rails test:system` to actually run them.
-You can also run `bin/rails test:all` to run all tests, including system tests.
+NOTE: Por padrão, rodar `bin/rails test` não irá rodar seus testes de sistema.
+Certifique-se de rodar `bin/rails test:system` para que eles sejam executados.
+Você também pode executar `bin/rails test:all` para rodar todos os testes, incluindo os de sistema.
 
-#### Creating Articles System Test
+#### Criando um Teste de Sistema de Artigos
 
-Now let's test the flow for creating a new article in our blog.
+Agora vamos testar o fluxo de criação de um novo artigo para o nosso blog.
 
 ```ruby
 test "creating an article" do
@@ -898,24 +885,21 @@ test "creating an article" do
 end
 ```
 
-The first step is to call `visit articles_path`. This will take the test to the
-articles index page.
+O primeiro passo é chamar `visit articles_path`.
+Isso faz com que o teste acesse a página inicial (*index*) de *articles*.
 
-Then the `click_on "New Article"` will find the "New Article" button on the
-index page. This will redirect the browser to `/articles/new`.
+Depois a instrução `click_on "New Article"` vai achar o botão "New Article" na página inicial (*index*).
+Isso vai redirecionar o navegador para `/articles/new`.
 
-Then the test will fill in the title and body of the article with the specified
-text. Once the fields are filled in, "Create Article" is clicked on which will
-send a POST request to create the new article in the database.
+Após isso, o teste vai preencher o título (*title*) e o corpo (*body*) do artigo com o texto especificado.
+Uma vez que os campos estão preenchidos, clica-se em "Create Article", que irá mandar uma requisição POST para criar o artigo no banco de dados.
 
-We will be redirected back to the articles index page and there we assert
-that the text from the new article's title is on the articles index page.
+Finalmente, nós vamos ser redirecionados de volta para a página inicial (*index*) e lá vamos assertar que o texto do título de nosso novo artigo está presente na página inicial.
 
-#### Testing for multiple screen sizes
-If you want to test for mobile sizes on top of testing for desktop,
-you can create another class that inherits from SystemTestCase and use in your
-test suite. In this example a file called `mobile_system_test_case.rb` is created
-in the `/test` directory with the following configuration.
+#### Testando em diferentes tamanhos de tela
+
+Se você quiser testar em telas de tamanho mobile além do tamanho desktop, você pode criar outra classe que herda de `SystemTestCase` para usar em sua suite de testes.
+Nesse exemplo, um arquivo chamado `mobile_system_test_case.rb` foi criado no caminho `/test` com a seguinte configuração:
 
 ```ruby
 require "test_helper"
@@ -925,8 +909,8 @@ class MobileSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-To use this configuration, create a test inside `test/system` that inherits from `MobileSystemTestCase`.
-Now you can test your app using multiple different configurations.
+Para usar essa configuração, crie um teste dentro de `test/system` que herda de `MobileSystemTestCase`.
+Agora você pode testar seu app com diferentes configurações de tela.
 
 ```ruby
 require "mobile_system_test_case"
@@ -940,14 +924,11 @@ class PostsTest < MobileSystemTestCase
 end
 ```
 
-#### Taking it further
+#### Indo Além
 
-The beauty of system testing is that it is similar to integration testing in
-that it tests the user's interaction with your controller, model, and view, but
-system testing is much more robust and actually tests your application as if
-a real user were using it. Going forward, you can test anything that the user
-themselves would do in your application such as commenting, deleting articles,
-publishing draft articles, etc.
+A beleza dos testes de sistema é que, parecido com os testes de integração, eles também testam a interação do usuário com o *controller*, *model* e a *view*.
+Porém, o teste de sistema é muito mais robusto e testa a aplicação como se uma pessoa de verdade estivesse usando.
+Indo além, você pode testar qualquer coisa que os próprios usuários fariam em sua aplicação, como comentar, deletar artigos, publicar rascunhos e etc.
 
 Integration Testing
 -------------------
