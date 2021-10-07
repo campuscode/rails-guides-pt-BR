@@ -83,22 +83,22 @@ Issues are not a particularly good venue for the sometimes long and involved
 discussions new features require.
 
 
-Helping to Resolve Existing Issues
+Ajudando a Resolver *Issues* Existentes
 ----------------------------------
 
-As a next step beyond reporting issues, you can help the core team resolve existing ones by providing feedback about them. If you are new to Rails core development, that might be a great way to walk your first steps, you'll get familiar with the code base and the processes.
+Como uma próxima etapa além de relatar *issues*, você pode ajudar a equipe principal a resolver as existentes fornecendo *feedback* sobre elas. Se você é novo no desenvolvimento do núcleo do Rails, essa pode ser uma ótima maneira de dar os primeiros passos, você irá se familiarizar com a base de código e os processos.
 
-If you check the [issues list](https://github.com/rails/rails/issues) in GitHub Issues, you'll find lots of issues already requiring attention. What can you do for these? Quite a bit, actually:
+Se você verificar a [lista de *issues*](https://github.com/rails/rails/issues) em *Issues* do GitHub, você encontrará muitas *issues* que já requerem atenção. O que você pode fazer para ajudar? Bastante coisa, na verdade:
 
-### Verifying Bug Reports
+### Verificar *Bug Reports*
 
-For starters, it helps just to verify bug reports. Can you reproduce the reported issue on your own computer? If so, you can add a comment to the issue saying that you're seeing the same thing.
+Para começar, ajuda apenas verificar os relatórios de *bugs*. Você pode reproduzir a *issue* relatada em seu próprio computador? Nesse caso, você pode adicionar um comentário à *issue* dizendo que está vendo a mesma coisa.
 
-If an issue is very vague, can you help narrow it down to something more specific? Maybe you can provide additional information to help reproduce a bug, or help by eliminating needless steps that aren't required to demonstrate the problem.
+Se uma *issue* for muito vaga, você pode ajudar a restringí-la a algo mais específico? Talvez você possa fornecer informações adicionais para ajudar a reproduzir um *bug* ou ajudar eliminando etapas desnecessárias para demonstrar o problema.
 
-If you find a bug report without a test, it's very useful to contribute a failing test. This is also a great way to get started exploring the source code: looking at the existing test files will teach you how to write more tests. New tests are best contributed in the form of a patch, as explained later on in the "[Contributing to the Rails Code](#contributing-to-the-rails-code)" section.
+Se você encontrar um relatório de *bug* sem um teste, é muito útil contribuir com um teste de falha. Essa também é uma ótima forma de começar a explorar o código-fonte: examinar os arquivos de testes irá te ensinar a escrever mais testes. Novos testes são melhor contribuídos na forma de um *patch*, como explicado mais tarde na seção "[Contribuindo com o Código Rails](#contributing-to-the-rails-code)"
 
-Anything you can do to make bug reports more succinct or easier to reproduce helps folks trying to write code to fix those bugs - whether you end up writing the code yourself or not.
+Qualquer coisa que você possa fazer para tornar os relatórios de *bugs* mais sucintos ou mais fáceis de reproduzir ajuda as pessoas a tentarem escrever código para corrigir esses *bugs* - independentemente de você mesmo acabar escrevendo o código ou não.
 
 ### Testing Patches
 
@@ -133,7 +133,7 @@ Contribuindo com a documentação do Rails
 
 O Ruby on Rails possui dois conjuntos principais de documentação: os guias, que te ajudam a aprender sobre Ruby on Rails, e a API, que serve como referência.
 
-Você pode ajudar a melhorar os guias do Rails ou a referência da API tornando-os mais coerentes, consistentes ou legíveis, adicionando informações ausentes, corrigindo erros factuais, corrigindo erros de digitação ou atualizando-os com os Rails mais recentes. 
+Você pode ajudar a melhorar os guias do Rails ou a referência da API tornando-os mais coerentes, consistentes ou legíveis, adicionando informações ausentes, corrigindo erros factuais, corrigindo erros de digitação ou atualizando-os com os Rails mais recentes.
 
 Para isso, faça alterações aos arquivos-fonte dos guias do Rails (localizados [aqui](https://github.com/rails/rails/tree/main/guides/source) no GitHub) ou comentários RDoc no código fonte. Então abra um *Pull Request* para aplicar suas mudanças na *branch* principal (*main*).
 
