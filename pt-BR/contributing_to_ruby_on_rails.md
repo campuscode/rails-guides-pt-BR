@@ -100,33 +100,33 @@ Se você encontrar um relatório de *bug* sem um teste, é muito útil contribui
 
 Qualquer coisa que você possa fazer para tornar os relatórios de *bugs* mais sucintos ou mais fáceis de reproduzir ajuda as pessoas a tentarem escrever código para corrigir esses *bugs* - independentemente de você mesmo acabar escrevendo o código ou não.
 
-### Testing Patches
+### Testar Patches
 
-You can also help out by examining pull requests that have been submitted to Ruby on Rails via GitHub. In order to apply someone's changes, you need to first create a dedicated branch:
+Você também pode ajudar examinando *pull requests* que foram enviados ao Ruby on Rails via GitHub. Para aplicar as alterações de alguém, você precisa primeiro criar uma *branch* dedicada:
 
 ```bash
 $ git checkout -b testing_branch
 ```
 
-Then, you can use their remote branch to update your codebase. For example, let's say the GitHub user JohnSmith has forked and pushed to a topic branch "orange" located at https://github.com/JohnSmith/rails.
+Então, você pode usar a *branch* remota da pessoa que fez o *pull request* para atualizar sua base código. Por exemplo, digamos que o usuário JohnSmith tenha feito um *fork* e enviado para a branch "*orange*" localizada em https://github.com/JohnSmith/rails.
 
 ```bash
 $ git remote add JohnSmith https://github.com/JohnSmith/rails.git
 $ git pull JohnSmith orange
 ```
 
-After applying their branch, test it out! Here are some things to think about:
+Depois de aplicar a *branch*, teste-a! Aqui estão algumas coisa a se atentar:
 
-* Does the change actually work?
-* Are you happy with the tests? Can you follow what they're testing? Are there any tests missing?
-* Does it have the proper documentation coverage? Should documentation elsewhere be updated?
-* Do you like the implementation? Can you think of a nicer or faster way to implement a part of their change?
+* A alteração realmente funciona?
+* Você está satisfeito com os testes? Você pode acompanhar o que estão testando? Há algum teste faltando?
+* Possui a cobertura de documentação adequada? A documentação deve ser atualizada em algum outro lugar?
+* Você está satisfeito com a implementação? Você pode pensar em uma maneira mais agradável ou rápida de implementar parte da alteração?
 
-Once you're happy that the pull request contains a good change, comment on the GitHub issue indicating your approval. Your comment should indicate that you like the change and what you like about it. Something like:
+Uma vez que você estiver satisfeito com o fato de que o *pull request* possui uma boa alteração, comente na *issue* do GitHub indicando sua aprovação. Seu comentário deve indicar que você gostou da mudança e o que você gostou nela. Algo como:
 
->I like the way you've restructured that code in generate_finder_sql - much nicer. The tests look good too.
+>Eu gostei da forma como você reestruturou o código em `generate_finder_sql` - muito melhor. Os testes também parecem bons.
 
-If your comment simply reads "+1", then odds are that other reviewers aren't going to take it too seriously. Show that you took the time to review the pull request.
+Se o seu comentário for apenas "+1", é provável que outros revisores não o levem muito a sério. Mostre que você dedicou um tempo para revisar o *pull request*.
 
 Contribuindo com a documentação do Rails
 ---------------------------------------
