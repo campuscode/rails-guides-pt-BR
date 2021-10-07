@@ -4,27 +4,27 @@
 Action View Helpers
 ====================
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
-* How to format dates, strings and numbers
-* How to link to images, videos, stylesheets, etc...
-* How to sanitize content
-* How to localize content
+* Como formatar datas, strings e números
+* Como vincular imagens, vídeos, folhas de estilo, etc ...
+* Como deixar o conteudo limpo
+* Com posicionar o conteudo
 
 --------------------------------------------------------------------------------
 
-Overview of helpers provided by Action View
+Visão geral dos helpers fornecidos pelo Action View
 -------------------------------------------
 
-WIP: Not all the helpers are listed here. For a full list see the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers.html)
+WIP: Nem todos os helpers estão listados aqui. Para uma lista completa, consulte o [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers.html)
 
-The following is only a brief overview summary of the helpers available in Action View. It's recommended that you review the [API Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers.html), which covers all of the helpers in more detail, but this should serve as a good starting point.
+O que se segue é apenas um breve resumo geral dos helpers disponíveis no Action View. É recomendável que você revise o [API Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers.html), que cobre todos os helpers em mais detalhes, mas esse conteúdo deve servir como um bom ponto de partida.
 
 ### AssetTagHelper
 
-This module provides methods for generating HTML that links views to assets such as images, JavaScript files, stylesheets, and feeds.
+Este módulo fornece métodos para gerar HTML que vincula visualizações a ativos, como imagens, arquivos JavaScript, folhas de estilo e feeds.
 
-By default, Rails links to these assets on the current host in the public folder, but you can direct Rails to link to assets from a dedicated assets server by setting `config.asset_host` in the application configuration, typically in `config/environments/production.rb`. For example, let's say your asset host is `assets.example.com`:
+Por padrão, o Rails se vincula a esses ativos no host atual na pasta pública, mas você pode direcionar o Rails para se vincular a ativos de um servidor de ativos dedicado definindo `config.asset_host` na configuração da aplicação, normalmente em` config / environment / production.rb`. Por exemplo, digamos que seu host de ativo seja `assets.example.com`:
 
 ```ruby
 config.asset_host = "assets.example.com"
@@ -34,7 +34,7 @@ image_tag("rails.png")
 
 #### auto_discovery_link_tag
 
-Returns a link tag that browsers and feed readers can use to auto-detect an RSS, Atom, or JSON feed.
+Retorna uma tag de link que navegadores e leitores de feed podem usar para detectar automaticamente um feed RSS, Atom ou JSON.
 
 ```ruby
 auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", { title: "RSS Feed" })
@@ -43,13 +43,13 @@ auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", { title: "RSS F
 
 #### image_path
 
-Computes the path to an image asset in the `app/assets/images` directory. Full paths from the document root will be passed through. Used internally by `image_tag` to build the image path.
+Gera o caminho para um ativo de imagem no diretório `app / assets / images`. Caminhos completos da raiz do documento também podem ser passados. Usado internamente por `image_tag` para construir o caminho da imagem.
 
 ```ruby
 image_path("edit.png") # => /assets/edit.png
 ```
 
-Fingerprint will be added to the filename if config.assets.digest is set to true.
+A impressão digital será adicionada ao nome do arquivo se config.assets.digest for definido como verdadeiro.
 
 ```ruby
 image_path("edit.png")
@@ -58,7 +58,7 @@ image_path("edit.png")
 
 #### image_url
 
-Computes the URL to an image asset in the `app/assets/images` directory. This will call `image_path` internally and merge with your current host or your asset host.
+Gera a URL para um ativo de imagem no diretório `app / assets / images`. Isso irá chamar `image_path` internamente e mesclar com seu host atual ou seu host de ativo.
 
 ```ruby
 image_url("edit.png") # => http://www.example.com/assets/edit.png
@@ -66,7 +66,7 @@ image_url("edit.png") # => http://www.example.com/assets/edit.png
 
 #### image_tag
 
-Returns an HTML image tag for the source. The source can be a full path or a file that exists in your `app/assets/images` directory.
+Retorna uma tag de imagem HTML para a fonte. A fonte pode ser um caminho completo ou um arquivo que existe em seu diretório `app / assets / images`.
 
 ```ruby
 image_tag("icon.png") # => <img src="/assets/icon.png" />
@@ -74,7 +74,7 @@ image_tag("icon.png") # => <img src="/assets/icon.png" />
 
 #### javascript_include_tag
 
-Returns an HTML script tag for each of the sources provided. You can pass in the filename (`.js` extension is optional) of JavaScript files that exist in your `app/assets/javascripts` directory for inclusion into the current page or you can pass the full path relative to your document root.
+Retorna uma tag de script HTML para cada uma das fontes fornecidas. Você pode passar o nome do arquivo (a extensão `.js` é opcional) dos arquivos JavaScript que existem no seu diretório` app / assets / javascripts` para inclusão na página atual ou você pode passar o caminho completo relativo à raiz do seu documento.
 
 ```ruby
 javascript_include_tag "common"
@@ -83,7 +83,7 @@ javascript_include_tag "common"
 
 #### javascript_path
 
-Computes the path to a JavaScript asset in the `app/assets/javascripts` directory. If the source filename has no extension, `.js` will be appended. Full paths from the document root will be passed through. Used internally by `javascript_include_tag` to build the script path.
+Gera o caminho para um ativo JavaScript no diretório `app / assets / javascripts`. Se o nome do arquivo fonte não tiver extensão, `.js` será anexado. Caminhos completos da raiz do documento podem ser passados. Usado internamente por `javascript_include_tag` para construir o caminho do script.
 
 ```ruby
 javascript_path "common" # => /assets/common.js
@@ -91,7 +91,7 @@ javascript_path "common" # => /assets/common.js
 
 #### javascript_url
 
-Computes the URL to a JavaScript asset in the `app/assets/javascripts` directory. This will call `javascript_path` internally and merge with your current host or your asset host.
+Gera a URL para um ativo JavaScript no diretório `app / assets / javascripts`. Isso irá chamar `javascript_path` internamente e mesclar com seu host atual ou seu host de ativo.
 
 ```ruby
 javascript_url "common"
@@ -100,7 +100,7 @@ javascript_url "common"
 
 #### stylesheet_link_tag
 
-Returns a stylesheet link tag for the sources specified as arguments. If you don't specify an extension, `.css` will be appended automatically.
+Retorna uma tag com link de folha de estilo para as fontes especificadas como argumentos. Se você não especificar uma extensão, `.css` será anexado automaticamente.
 
 ```ruby
 stylesheet_link_tag "application"
@@ -109,7 +109,7 @@ stylesheet_link_tag "application"
 
 #### stylesheet_path
 
-Computes the path to a stylesheet asset in the `app/assets/stylesheets` directory. If the source filename has no extension, `.css` will be appended. Full paths from the document root will be passed through. Used internally by `stylesheet_link_tag` to build the stylesheet path.
+Gera o caminho para um recurso de folha de estilo no diretório `app / assets / stylesheets`. Se o nome do arquivo fonte não tiver extensão, `.css` será anexado automaticamente. Caminhos completos da raiz do documento podem ser passados. Usado internamente por `stylesheet_link_tag` para construir o caminho da folha de estilo.
 
 ```ruby
 stylesheet_path "application" # => /assets/application.css
@@ -117,7 +117,7 @@ stylesheet_path "application" # => /assets/application.css
 
 #### stylesheet_url
 
-Computes the URL to a stylesheet asset in the `app/assets/stylesheets` directory. This will call `stylesheet_path` internally and merge with your current host or your asset host.
+Gera a URL para um recurso de folha de estilo no diretório `app / assets / stylesheets`. Isso irá chamar `stylesheet_path` internamente e mesclar com seu host atual ou seu host de ativo.
 
 ```ruby
 stylesheet_url "application"
