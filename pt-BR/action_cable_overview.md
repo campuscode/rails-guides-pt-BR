@@ -610,7 +610,7 @@ em `current_user`. (`appearance_channel.rb`)
 
 4. **Cliente** reconhece que uma assinatura foi estabelecida e chama 
 `connected` (`appearance_channel.js`) que por sua vez chama `install` e `appear`. 
-`appear` chama `AppearanceChannel#appear(data)` no servidor e fornece um hash de 
+`appear` chama `AppearanceChannel#appear(data)` no servidor e fornece um *hash* de 
 dados de `{ appearing_on: this.appearingOn }`. Isso é possível porque a instância 
 do canal do lado do servidor expõe automaticamente todos os métodos públicos 
 declarados na classe (menos os retornos de chamada), para que possam ser alcançados 
