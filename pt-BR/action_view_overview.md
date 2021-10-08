@@ -58,7 +58,7 @@ Abaixo está uma breve visão geral de cada um deles.
 
 *Templates* *Action View* podem ser escritos de várias maneiras. Se o arquivo de *template* tiver a extensão `.erb` ele usará uma mistura de ERB (*Embedded Ruby*) com HTML. Se o arquivo de template tiver a extensão `.builder`, a biblioteca (*library*) `Builder::XmlMarkup` é utilizada.
 
-Rails suporta múltiplos sistemas de *template* e utiliza a extensão do arquivo para distingui-los. Por exemplo, um arquivo HTML usando o sistema de *template* ERB terá a extensão do arquivo como `.html.erb`.
+O Rails suporta múltiplos sistemas de *template* e utiliza a extensão do arquivo para distingui-los. Por exemplo, um arquivo HTML usando o sistema de *template* ERB terá a extensão do arquivo como `.html.erb`.
 
 #### ERB
 
