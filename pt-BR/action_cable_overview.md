@@ -646,7 +646,7 @@ Criando a assinatura do canal de notificações da web no lado do cliente
 
 ```js
 // app/javascript/channels/web_notifications_channel.js
-// O front-end assume que você já solicitou o direito 
+// O lado do cliente assume que você já solicitou o direito 
 // de enviar notificações da web.
 import consumer from "./consumer"
 
