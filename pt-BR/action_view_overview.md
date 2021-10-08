@@ -48,23 +48,23 @@ Por exemplo, a ação *index* do *controller* `articles_controller.rb` utilizar�
 O HTML completo que é retornado ao *client* é composto de uma combinação desse arquivo ERB, um *template* de *layout* que o envolve, e todas as *partials* que a *view* pode referenciar. Dentro deste guia você encontrará documentações mais detalhadas sobre cada um desses três componentes.
 
 
-Templates, Partials, and Layouts
--------------------------------
+*Templates*, *Partials*, e *Layouts*
+------------------------------------
 
-As mentioned, the final HTML output is a composition of three Rails elements: `Templates`, `Partials` and `Layouts`.
-Below is a brief overview of each of them.
+Como já mencionado, a saída HTML final é uma composição de três elementos: `Templates`, `Partials` e `Layouts`.
+Abaixo está uma breve visão geral de cada um deles.
 
 ### Templates
 
-Action View templates can be written in several ways. If the template file has a `.erb` extension then it uses a mixture of ERB (Embedded Ruby) and HTML. If the template file has a `.builder` extension then the `Builder::XmlMarkup` library is used.
+*Templates* *Action View* podem ser escritos de várias maneiras. Se o arquivo de *template* tiver a extensão `.erb` ele usará uma mistura de ERB (*Embedded Ruby*) com HTML. Se o arquivo de template tiver a extensão `.builder`, a biblioteca (*library*) `Builder::XmlMarkup` é utilizada.
 
-Rails supports multiple template systems and uses a file extension to distinguish amongst them. For example, an HTML file using the ERB template system will have `.html.erb` as a file extension.
+O Rails suporta múltiplos sistemas de *template* e utiliza a extensão do arquivo para distingui-los. Por exemplo, um arquivo HTML usando o sistema de *template* ERB terá a extensão do arquivo como `.html.erb`.
 
 #### ERB
 
-Within an ERB template, Ruby code can be included using both `<% %>` and `<%= %>` tags. The `<% %>` tags are used to execute Ruby code that does not return anything, such as conditions, loops, or blocks, and the `<%= %>` tags are used when you want output.
+Dentro de um *template* ERB, o código Ruby pode ser incluído usando ambas as tags `<% %>` e `<%= %>`. As tags `<% %>` são utilizadas para executar código Ruby que não possui retorno, como condições, *loops*, ou blocos, e as tags `<%= %>` são utilizadas quando você deseja uma saída.
 
-Consider the following loop for names:
+Considere o seguinte *loop* de nomes:
 
 ```html+erb
 <h1>Names of all the people</h1>
@@ -73,20 +73,20 @@ Consider the following loop for names:
 <% end %>
 ```
 
-The loop is set up using regular embedding tags (`<% %>`) and the name is inserted using the output embedding tags (`<%= %>`). Note that this is not just a usage suggestion: regular output functions such as `print` and `puts` won't be rendered to the view with ERB templates. So this would be wrong:
+O *loop* é configurado usando tags de incorporação regulares (`<% %>`) e o nome é inserido usando as tags de incorporação de saída (`<%= %>`). Note que isso não é somente uma sugestão de uso: funções de saída regulares como `print` e `puts` não serão renderizadas na *view* usando *template* ERB. Então, isso estaria errado:
 
 ```html+erb
 <%# WRONG %>
 Hi, Mr. <% puts "Frodo" %>
 ```
 
-To suppress leading and trailing whitespaces, you can use `<%-` `-%>` interchangeably with `<%` and `%>`.
+Para suprimir espaços em branco à esquerda e à direita, você pode usar `<%-` `-%>` alternadamente com `<%` e `%>`.
 
 #### Builder
 
-Builder templates are a more programmatic alternative to ERB. They are especially useful for generating XML content. An XmlMarkup object named `xml` is automatically made available to templates with a `.builder` extension.
+Os *templates* *Builder* são uma alternativa mais programática ao ERB. Eles são especialmente úteis para gerar conteúdo *XML*. Um objeto *XmlMarkup* denominado `xml` é automaticamente disponibilizado para *templates* com extensão` .builder`.
 
-Here are some basic examples:
+Aqui estão alguns exemplos básicos:
 
 ```ruby
 xml.em("emphasized")
@@ -95,7 +95,7 @@ xml.a("A Link", "href" => "https://rubyonrails.org")
 xml.target("name" => "compile", "option" => "fast")
 ```
 
-which would produce:
+que produziria:
 
 ```html
 <em>emphasized</em>
@@ -104,7 +104,7 @@ which would produce:
 <target option="fast" name="compile" />
 ```
 
-Any method with a block will be treated as an XML markup tag with nested markup in the block. For example, the following:
+Qualquer método com um bloco será tratado como uma tag de marcação *XML* com marcação aninhada no bloco. Por exemplo, o seguinte:
 
 ```ruby
 xml.div {
@@ -113,7 +113,7 @@ xml.div {
 }
 ```
 
-would produce something like:
+produziria algo como:
 
 ```html
 <div>
@@ -122,7 +122,7 @@ would produce something like:
 </div>
 ```
 
-Below is a full-length RSS example actually used on Basecamp:
+Abaixo está um exemplo completo de *RSS* que foi usado de verdade no Basecamp:
 
 ```ruby
 xml.rss("version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/") do
@@ -148,27 +148,26 @@ end
 ```
 
 #### Jbuilder
-[Jbuilder](https://github.com/rails/jbuilder) is a gem that's
-maintained by the Rails team and included in the default Rails `Gemfile`.
-It's similar to Builder, but is used to generate JSON, instead of XML.
+[Jbuilder](https://github.com/rails/jbuilder) é uma *gem* que é
+mantida pelo time do Rails e incluída por padrão no `Gemfile` do Rails.
+É similar ao *Builder*, mas é usada para gerar *JSON*, ao invés de *XML*.
 
-If you don't have it, you can add the following to your `Gemfile`:
+Se você não tiver, você pode adicionar o seguinte ao seu `Gemfile`:
 
 ```ruby
 gem 'jbuilder'
 ```
 
-A Jbuilder object named `json` is automatically made available to templates with
-a `.jbuilder` extension.
+Um objeto *Jbuilder* denominado `json` é automaticamente disponibilizado para *templates* com extensão `.jbuilder`.
 
-Here is a basic example:
+Aqui está um exemplo básico:
 
 ```ruby
 json.name("Alex")
 json.email("alex@example.com")
 ```
 
-would produce:
+produziria:
 
 ```json
 {
@@ -177,12 +176,11 @@ would produce:
 }
 ```
 
-See the [Jbuilder documentation](https://github.com/rails/jbuilder#jbuilder) for
-more examples and information.
+Veja a [documentação do Jbuilder](https://github.com/rails/jbuilder#jbuilder) para mais exemplos e informação.
 
 #### Template Caching
 
-By default, Rails will compile each template to a method in order to render it. In the development environment, when you alter a template, Rails will check the file's modification time and recompile it.
+Por padrão, o Rails compila cada *template* em um método para renderizá-la. Em ambiente de desenvolvimento, quando você altera um *template*, o Rails verifica a hora de modificação do arquivo e o recompila.
 
 ### Partials
 
