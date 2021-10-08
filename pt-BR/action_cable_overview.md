@@ -500,7 +500,7 @@ Aqui está um exemplo simples de um canal que rastreia se um usuário está onli
 não e em que página ele está (isso é útil para criar recursos de presença, como
 mostrar um ponto verde ao lado do nome do usuário se ele estiver online).
 
-Criando o canal de aspectos no back-end:
+Criando o canal de aspectos no *back-end*:
 
 ```ruby
 # app/channels/appearance_channel.rb
