@@ -49,7 +49,7 @@ Gera o caminho para um ativo de imagem no diretório `app / assets / images`. Ca
 image_path("edit.png") # => /assets/edit.png
 ```
 
-A impressão digital será adicionada ao nome do arquivo se config.assets.digest for definido como verdadeiro.
+Uma *fingerprint* será adicionada ao nome do arquivo se config.assets.digest for definido como verdadeiro.
 
 ```ruby
 image_path("edit.png")
