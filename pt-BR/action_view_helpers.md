@@ -22,7 +22,7 @@ O que se segue é apenas um breve resumo geral dos *helpers* disponíveis no Act
 
 ### AssetTagHelper
 
-Este módulo fornece métodos para gerar HTML que vincula visualizações a ativos, como imagens, arquivos JavaScript, folhas de estilo e feeds.
+Este módulo fornece métodos para gerar HTML que vincula *views* aos *assets*, como imagens, arquivos JavaScript, folhas de estilo e feeds.
 
 Por padrão, o Rails se vincula a esses ativos no host atual na pasta pública, mas você pode direcionar o Rails para se vincular a ativos de um servidor de ativos dedicado definindo `config.asset_host` na configuração da aplicação, normalmente em` config / environment / production.rb`. Por exemplo, digamos que seu host de ativo seja `assets.example.com`:
 
