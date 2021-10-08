@@ -629,7 +629,7 @@ de mão dupla. Portanto, agora vamos mostrar um exemplo em que o servidor invoca
 uma ação no front-end.
 
 Este é um canal de notificação da web que permite acionar notificações da web 
-no front-end quando você transmite para os streams certos:
+no lado do cliente quando você transmite para os *streams* certos:
 
 Criando o canal de notificações da web do lado do servidor:
 
