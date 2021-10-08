@@ -18,7 +18,7 @@ Visão geral dos helpers fornecidos pelo Action View
 
 WIP: Nem todos os *helpers* estão listados aqui. Para uma lista completa, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers.html)
 
-O que se segue é apenas um breve resumo geral dos helpers disponíveis no Action View. É recomendável que você revise o [API Documentation](https://api.rubyonrails.org/classes/ActionView/Helpers.html), que cobre todos os helpers em mais detalhes, mas esse conteúdo deve servir como um bom ponto de partida.
+O que se segue é apenas um breve resumo geral dos *helpers* disponíveis no Action View. É recomendável que você revise a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers.html), que cobre todos os *helpers* em mais detalhes, mas esse conteúdo deve servir como um bom ponto de partida.
 
 ### AssetTagHelper
 
