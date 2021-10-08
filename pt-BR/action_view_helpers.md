@@ -117,7 +117,7 @@ stylesheet_path "application" # => /assets/application.css
 
 #### stylesheet_url
 
-Gera a URL para um recurso de folha de estilo no diretório `app / assets / stylesheets`. Isso irá chamar `stylesheet_path` internamente e mesclar com seu host atual ou seu host de ativo.
+Gera a URL para um *asset* de folha de estilo no diretório `app/assets/stylesheets`. Isso irá chamar `stylesheet_path` internamente e mesclar com seu host atual ou seu host de *asset*.
 
 ```ruby
 stylesheet_url "application"
