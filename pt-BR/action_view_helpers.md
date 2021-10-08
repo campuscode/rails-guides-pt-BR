@@ -74,7 +74,7 @@ image_tag("icon.png") # => <img src="/assets/icon.png" />
 
 #### javascript_include_tag
 
-Retorna uma tag de script HTML para cada uma das fontes fornecidas. Você pode passar o nome do arquivo (a extensão `.js` é opcional) dos arquivos JavaScript que existem no seu diretório` app / assets / javascripts` para inclusão na página atual ou você pode passar o caminho completo relativo à raiz do seu documento.
+Retorna uma tag de script HTML para cada uma das fontes fornecidas. Você pode passar o nome de arquivos JavaScript (a extensão `.js` é opcional) que existem no seu diretório `app/assets/javascripts` para inclusão na página atual ou você pode passar o caminho completo relativo à raiz do seu documento.
 
 ```ruby
 javascript_include_tag "common"
