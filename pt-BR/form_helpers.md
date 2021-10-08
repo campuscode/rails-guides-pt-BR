@@ -996,22 +996,22 @@ As a convenience you can instead pass the symbol `:all_blank` which will create 
 
 Rather than rendering multiple sets of fields ahead of time you may wish to add them only when a user clicks on an "Add new address" button. Rails does not provide any built-in support for this. When generating new sets of fields you must ensure the key of the associated array is unique - the current JavaScript date (milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time)) is a common choice.
 
-Using Tag Helpers Without a Form Builder
+Utilizando Tags Auxiliares (*Tag Helpers*) Sem Um Construtor de Formulário
 ----------------------------------------
 
-In case you need to render form fields outside of the context of a form builder, Rails provides tag helpers for common form elements. For example, [`check_box_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-check_box_tag):
+Caso você precise renderizar campos de formulário fora do contexto de um construtor de formulário, o Rails oferece tags auxiliares para elementos comuns de formulário. Por exemplo, [`check_box_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-check_box_tag):
 
 ```erb
 <%= check_box_tag "accept" %>
 ```
 
-Output:
+Resultado:
 
 ```html
 <input type="checkbox" name="accept" id="accept" value="1" />
 ```
 
-Generally, these helpers have the same name as their form builder counterparts plus a `_tag` suffix.  For a complete list, see the [`FormTagHelper` API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
+Geralmente, esses *helpers* tem o mesmo nome dos *helpers* do Construtor de Formulários, porém adicionando o sufixo `_tag`.  Para uma lista completa, consulte a [documentação da API `FormTagHelper`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
 
 Usando `form_for` e `form_tag`
 ---------------------------
