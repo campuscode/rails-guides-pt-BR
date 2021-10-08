@@ -43,7 +43,7 @@ auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", { title: "RSS F
 
 #### image_path
 
-Gera o caminho para um ativo de imagem no diretório `app / assets / images`. Caminhos completos da raiz do documento também podem ser passados. Usado internamente por `image_tag` para construir o caminho da imagem.
+Gera o caminho para uma imagem no diretório `app/assets/images`. Caminhos completos da raiz do documento são interpretados como caminhos absolutos, ignorando as configuraçãos da *asset pipeline*.  Usado internamente por `image_tag` para construir o caminho da imagem.
 
 ```ruby
 image_path("edit.png") # => /assets/edit.png
