@@ -618,7 +618,7 @@ como chamadas de procedimento remoto por meio do método `perform` de uma assina
 
 5. **Servidor** recebe a solicitação da ação `appear` no canal de aspectos para a 
 conexão identificada por `current_user` (`appearance_channel.rb`). **Servidor** 
-recupera os dados com a chave `:appearing_on` do hash de dados e define como o 
+recupera os dados com a chave `:appearing_on` do *hash* de dados e define como o 
 valor da chave `:on` sendo passada para `current_user.appear`.
 
 ### Exemplo 2: Recebendo novas notificações da web
