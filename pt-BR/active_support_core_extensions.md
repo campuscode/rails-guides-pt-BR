@@ -1044,7 +1044,7 @@ NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 
 #### `descendants`
 
-The [`descendants`][Class#descendants] method returns all classes that are `<` than its receiver:
+O método [`descendants`][Class#descendants] retorna todas as classes que são `<` pelo recebedor:
 
 ```ruby
 class C; end
@@ -1060,9 +1060,9 @@ class D < C; end
 C.descendants # => [B, A, D]
 ```
 
-The order in which these classes are returned is unspecified.
+A ordem em que essas clásses são retornadas não é especificada.
 
-NOTE: Defined in `active_support/core_ext/class/subclasses.rb`.
+NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 
 [Class#descendants]: https://api.rubyonrails.org/classes/Class.html#method-i-descendants
 
