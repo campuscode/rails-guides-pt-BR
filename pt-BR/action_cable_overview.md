@@ -528,7 +528,7 @@ aproveitamos a oportunidade para dizer "o usuário atual realmente apareceu".
 Essa API de aparecer/desaparecer pode ser apoiada via Redis, um banco de dados,
 ou qualquer outro.
 
-Criando a inscrição do canal de aspectos no front-end:
+Criando a inscrição do canal de aspectos no lado do cliente:
 
 ```js
 // app/javascript/channels/appearance_channel.js
