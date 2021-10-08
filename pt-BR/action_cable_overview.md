@@ -486,7 +486,7 @@ The rebroadcast will be received by all connected clients, _including_ the
 client that sent the message. Note that params are the same as they were when
 you subscribed to the channel.
 
-## Full-Stack Exemplos
+## *Full-Stack* Exemplos
 
 As seguintes etapas de configuração são comuns em ambos os exemplos:
 
