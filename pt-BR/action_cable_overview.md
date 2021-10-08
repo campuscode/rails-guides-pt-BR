@@ -642,7 +642,7 @@ class WebNotificationsChannel < ApplicationCable::Channel
 end
 ```
 
-Criando a assinatura do canal de notificações da web no front-end:
+Criando a assinatura do canal de notificações da web no lado do cliente
 
 ```js
 // app/javascript/channels/web_notifications_channel.js
