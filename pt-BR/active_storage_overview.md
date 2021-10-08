@@ -901,7 +901,7 @@ class Uploader {
 }
 ```
 
-Descartando Arquivos Armazenados Durante os Testes do Sistema
+Descartando Arquivos Armazenados Durante os Testes do tipo Sistema (*System*)
 -------------------------------------------
 
 Os testes de sistema limpam os dados de testes revertendo uma transação. Como o
