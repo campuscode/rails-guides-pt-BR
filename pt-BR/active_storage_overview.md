@@ -926,7 +926,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-Se os testes do sistema verificarem a exclusão de um modelo com anexos e 
+Se os testes de sistema verificarem a exclusão de um *model* com anexos e 
 estivermos usando o *Active Job*, configure seu ambiente de testes para usar
 o adaptador de fila para que o trabalho de limpeza seja executado imediatamente,
 em vez de em um momento desconhecido no futuro.
