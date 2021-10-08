@@ -299,14 +299,11 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "1st Room" })
 consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
 ```
 
-## Client-Server Interactions
+## Interações Cliente-Servidor
 
-### Streams
+### *Streams*
 
-*Streams* provide the mechanism by which channels route published content
-(broadcasts) to their subscribers.  For example, the following code uses
-[`stream_from`][] to subscribe to the broadcasting named `chat_Best Room` when
-the value of the `:room` parameter is `"Best Room"`:
+*Streams* fornecem o mecanismo por onde os *channels* direcionam o conteúdo publicado (*broadcasts*) para seus assinantes. Por exemplo, o código a seguir usa [`stream_from`][] para se inscrever na transmissão (*broadcasting*) chamada `chat_Best Room` quando o valor do parâmetro `:room` é `"Best Room"`:
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -317,18 +314,13 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-Then, elsewhere in your Rails application, you can broadcast to such a room by
-calling [`broadcast`][]:
+Então, de outro lugar em sua aplicação Rails, é possível transmitir para essa `room` chamando [`broadcast`][]:
 
 ```ruby
 ActionCable.server.broadcast("chat_Best Room", { body: "This Room is Best Room." })
 ```
 
-If you have a stream that is related to a model, then the broadcasting name
-can be generated from the channel and model. For example, the following code
-uses [`stream_for`][] to subscribe to a broadcasting like
-`comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE`, where `Z2lkOi8vVGVzdEFwcC9Qb3N0LzE` is
-the GlobalID of the Post model.
+Se você possui um *stream* que está relacionada a uma *model*, então o nome da transmissão pode ser gerada a partir do *channel* e *model*. Por exemplo, o código a seguir usa [`stream_for`][] para se inscrever em uma transmissão como `comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE`, onde `Z2lkOi8vVGVzdEFwcC9Qb3N0LzE` corresponde ao ID Global da *model* Post.
 
 ```ruby
 class CommentsChannel < ApplicationCable::Channel
@@ -339,7 +331,7 @@ class CommentsChannel < ApplicationCable::Channel
 end
 ```
 
-You can then broadcast to this channel by calling [`broadcast_to`][]:
+Você pode agora transmitir para esse *channel* chamando [`broadcast_to`][]:
 
 ```ruby
 CommentsChannel.broadcast_to(@post, @comment)
@@ -350,25 +342,19 @@ CommentsChannel.broadcast_to(@post, @comment)
 [`stream_for`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_for
 [`stream_from`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_from
 
-### Broadcastings
+### *Broadcastings*
 
-A *broadcasting* is a pub/sub link where anything transmitted by a publisher
-is routed directly to the channel subscribers who are streaming that named
-broadcasting. Each channel can be streaming zero or more broadcastings.
+Um *broadcasting* é um link *pub/sub* em que qualquer coisa transmitida por um *publisher* é encaminhada diretamente para os assinantes do *channel*, este, que está transmitindo o *broadcasting* de mesmo nome. Cada *channel* pode estar transmitindo zero ou mais *broadcastings*.
 
-Broadcastings are purely an online queue and time-dependent. If a consumer is
-not streaming (subscribed to a given channel), they'll not get the broadcast
-should they connect later.
+*Broadcastings* são puramente filas de espera online e dependentes de tempo. Se um consumidor não estiver transmitindo (assinante de um determinado *channel*), ele não vai receber o *broadcast* caso se conecte mais tarde.
 
-### Subscriptions
+### *Subscriptions*
 
-When a consumer is subscribed to a channel, they act as a subscriber. This
-connection is called a subscription. Incoming messages are then routed to
-these channel subscriptions based on an identifier sent by the cable consumer.
+Quando um consumidor está inscrito em um *channel*, ele age como assinante (*subscriber*). Essa conexão é chamada de assinatura (*subscription*). Mensagens recebidas são então direcionadas para esses inscritos do *channel* baseadas em um identificador enviado pelo *cable consumer*
 
 ```js
 // app/javascript/channels/chat_channel.js
-// Assumes you've already requested the right to send web notifications
+// Assumindo que você já requeriu os direitos para enviar notificações web
 import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
@@ -393,10 +379,9 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
 })
 ```
 
-### Passing Parameters to Channels
+### Passando Parâmetros para *Channel*
 
-You can pass parameters from the client side to the server side when creating a
-subscription. For example:
+Você pode passar parâmetros do lado do cliente para o lado do servidor quando cria a *subscription*. Por exemplo:
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -407,8 +392,7 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-An object passed as the first argument to `subscriptions.create` becomes the
-params hash in the cable channel. The keyword `channel` is required:
+Um objeto passado como primeiro argumento em `subscriptions.create` torna-se a *hash* `params` em *cable channel*. A *keyword* `channel` é obrigatória:
 
 ```js
 // app/javascript/channels/chat_channel.js
@@ -437,8 +421,8 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
 ```
 
 ```ruby
-# Somewhere in your app this is called, perhaps
-# from a NewCommentJob.
+# Em algum lugar do seu app isso pode ser chamado, talvez,
+# por um novo NewCommentJob.
 ActionCable.server.broadcast(
   "chat_#{room}",
   {
@@ -448,10 +432,9 @@ ActionCable.server.broadcast(
 )
 ```
 
-### Rebroadcasting a Message
+### Retransmitindo uma Mensagem
 
-A common use case is to *rebroadcast* a message sent by one client to any
-other connected clients.
+Um caso de uso comum é ter que retransmitir uma mensagem enviada por um cliente para qualquer outro cliente conectado
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -479,9 +462,7 @@ const chatChannel = consumer.subscriptions.create({ channel: "ChatChannel", room
 chatChannel.send({ sent_by: "Paul", body: "This is a cool chat app." })
 ```
 
-The rebroadcast will be received by all connected clients, _including_ the
-client that sent the message. Note that params are the same as they were when
-you subscribed to the channel.
+A retransmissão vai ser recebida por todos os clientes conectados, _incluindo_ o cliente que enviou a mensagem. Note que `params` são os mesmos de quando você se inscreveu no *channel*
 
 ## Full-Stack Examples
 
