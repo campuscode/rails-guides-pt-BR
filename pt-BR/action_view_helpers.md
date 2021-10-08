@@ -91,7 +91,7 @@ javascript_path "common" # => /assets/common.js
 
 #### javascript_url
 
-Gera a URL para um ativo JavaScript no diretório `app / assets / javascripts`. Isso irá chamar `javascript_path` internamente e mesclar com seu host atual ou seu host de ativo.
+Gera a URL para um *asset* JavaScript no diretório `app/assets/javascripts`. Isso irá chamar `javascript_path` internamente e mesclar com seu host atual ou seu host de *assets*.
 
 ```ruby
 javascript_url "common"
