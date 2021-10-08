@@ -100,7 +100,7 @@ Se você encontrar um relatório de *bug* sem um teste, é muito útil contribui
 
 Qualquer coisa que você possa fazer para tornar os relatórios de *bugs* mais sucintos ou mais fáceis de reproduzir ajuda as pessoas a tentarem escrever código para corrigir esses *bugs* - independentemente de você mesmo acabar escrevendo o código ou não.
 
-### Testar Patches
+### Testar *Patches*
 
 Você também pode ajudar examinando *pull requests* que foram enviados ao Ruby on Rails via GitHub. Para aplicar as alterações de alguém, você precisa primeiro criar uma *branch* dedicada:
 
