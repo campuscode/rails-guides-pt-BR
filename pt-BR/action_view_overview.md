@@ -371,7 +371,7 @@ View Paths
 ----------
 
 Ao renderizar uma resposta, o *controller* precisa resolver onde as diferentes
-views estão localizadas. Por padrão, ele só olha dentro do diretório `app/views`.
+*views* estão localizadas. Por padrão, ele só olha dentro do diretório `app/views`.
 
 Podemos adicionar outros locais e dar-lhes uma certa precedência ao resolver
 caminhos usando os métodos `prepend_view_path` e `append_view_path`.
