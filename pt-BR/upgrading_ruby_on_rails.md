@@ -1712,7 +1712,7 @@ end
 Mime::Type.register 'application/json-patch+json', :json_patch
 ```
 
-Como o JSON Patch foi transformado recentemente em um RFC, não há muitos
+Como o JSON Patch foi transformado recentemente em um RFC, não há muitas
 Bibliotecas Ruby ainda. A `gem` do Aaron Patterson
 [hana](https://github.com/tenderlove/hana) é uma dessas, mas não tem
 suporte total para as últimas mudanças na especificação.
@@ -1725,7 +1725,7 @@ aplicação (em `config/application.rb`):
 
 ```ruby
 # Requer as gems listadas no Gemfile, incluindo todas as gems que
-# você se limitou a :test, :development ou :production.
+# você limitou a :test, :development ou :production.
 Bundler.require(*Rails.groups)
 ```
 
@@ -1739,7 +1739,7 @@ O Rails 4.0 não suporta mais o carregamento de *plugins* de `vendor/plugins`. V
 
 * O método `delete` em associações de coleção agora pode receber argumentos` Integer` ou `String` como ids de registro, além de registros, muito parecido com o método `destroy`. Anteriormente, ele gerava `ActiveRecord::AssociationTypeMismatch` para tais argumentos. Do Rails 4.0 em `delete` automaticamente tenta encontrar os registros que combinam com os ids fornecidos antes de excluí-los.
 
-* No Rails 4.0, quando uma coluna ou tabela é renomeada, os índices relacionados também são renomeados. Se você tiver *migrations* que renomeiam os índices, eles não serão mais necessários.
+* No Rails 4.0, quando uma coluna ou tabela é renomeada, os índices relacionados também são renomeados. Se você tiver migrações que renomeiam os índices, eles não serão mais necessários.
 
 * Rails 4.0 mudou `serialized_attributes` e `attr_readonly` apenas para métodos de classe. Você não deve usar os métodos de instância, pois agora está obsoleto. Você deve alterá-los para usar métodos de classe, por exemplo, `self.serialized_attributes` para `self.class.serialized_attributes`.
 
@@ -1843,9 +1843,9 @@ O Rails 4.0 extraiu o *Active Resource* para sua própria *gem*. Se você ainda 
 
 * O Rails 4.0 muda o cliente memcached padrão de `memcache-client` para `dalli`. Para atualizar, simplesmente adicione `gem 'dalli'` ao seu` Gemfile`.
 
-* O Rails 4.0 não manterá em breve os métodos `dom_id` e `dom_class` em *controllers* (eles podem ser usados em *views*). Você precisará incluir o módulo `ActionView::RecordIdentifier` nos *controllers* que requerem este recurso.
+* O Rails 4.0 descontinuará em breve os métodos `dom_id` e `dom_class` em *controllers* (eles podem ser usados em *views*). Você precisará incluir o módulo `ActionView::RecordIdentifier` nos *controllers* que requerem este recurso.
 
-* O Rails 4.0 não manterá em breve a opção `:confirm` para o helper `link_to`. Você deve
+* O Rails 4.0 descontinuará em breve a opção `:confirm` para o helper `link_to`. Você deve
 em vez disso, usar um atributo de dados (por exemplo, `data: {confirm: 'Are you sure?'}`).
 Esta depreciação também diz respeito aos *helpers* baseados neste (como `link_to_if`
 ou `link_to_unless`).
