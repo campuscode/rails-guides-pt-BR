@@ -528,10 +528,10 @@ Cria uma caixa de seleção como essa:
 
 Para cada um desses auxiliares, você pode especificar um objeto de data ou hora em vez de um número como o valor padrão e o componente temporal apropriado será extraído e usado.
 
-Choices from a Collection of Arbitrary Objects
+Escolhas a partir de uma Coleção de Objetos Arbitrários
 ----------------------------------------------
 
-Often, we want to generate a set of choices in a form from a collection of objects. For example, when we want the user to choose from cities in our database, and we have a `City` model like:
+Frequentemente desejamos gerar um conjunto de escolhas em um formulário a partir de uma coleção de objetos. Por exemplo, quando queremos que um usuário escolha cidades a partir do nosso banco de dados, e temos um modelo `City` conforme:
 
 ```ruby
 City.order(:name).to_a
@@ -542,17 +542,17 @@ City.order(:name).to_a
 #    ]
 ```
 
-Rails provides helpers that generate choices from a collection without having to explicitly iterate over it. These helpers determine the value and text label of each choice by calling specified methods on each object in the collection.
+O Rails oferece *helpers* que geram escolhas a partir de uma coleção sem ser necessário iterar explicitamente sobre ela. Esses *helpers* determinam o valor e o texto descritivo de cada escolha chamando métodos especificados em cada objeto na coleção.
 
-### The `collection_select` Helper
+### O auxiliar `collection_select`
 
-To generate a select box for our cities, we can use [`collection_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select):
+Para gerar uma caixa de seleção (*select box*) para nossas cidades, podemos utilizar [`collection_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select):
 
 ```erb
 <%= form.collection_select :city_id, City.order(:name), :id, :name %>
 ```
 
-Output:
+Resultado:
 
 ```html
 <select name="city_id" id="city_id">
@@ -562,17 +562,17 @@ Output:
 </select>
 ```
 
-NOTE: With `collection_select` we specify the value method first (`:id` in the example above), and the text label method second (`:name` in the example above).  This is opposite of the order used when specifying choices for the `select` helper, where the text label comes first and the value second.
+NOTE: Utilizando `collection_select` devemos especificar primeiramente o método para o valor (`:id` no exemplo acima), e em seguida o método do texto descritivo (`:name` no exemplo acima).  Essa ordem é inversa a quando especificamos escolhas para o *helper* `select`, onde primeiramente passamos o texto descritivo e em seguida o valor.
 
-### The `collection_radio_buttons` Helper
+### O auxiliar `collection_radio_buttons`
 
-To generate a set of radio buttons for our cities, we can use [`collection_radio_buttons`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons):
+Para gerar um conjunto de botões de rádio (*radio buttons*) para nossas cidades, podemos utilizar [`collection_radio_buttons`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons):
 
 ```erb
 <%= form.collection_radio_buttons :city_id, City.order(:name), :id, :name %>
 ```
 
-Output:
+Resultado:
 
 ```html
 <input type="radio" name="city_id" value="3" id="city_id_3">
@@ -583,15 +583,15 @@ Output:
 <label for="city_id_2">Madrid</label>
 ```
 
-### The `collection_check_boxes` Helper
+### O auxiliar `collection_check_boxes`
 
-To generate a set of check boxes for our cities (which allows users to choose more than one), we can use [`collection_check_boxes`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_check_boxes):
+Para gerar um conjunto de *check boxes* para nossas cidades (que permite que usuários escolham mais de uma opção), podemos utilizar [`collection_check_boxes`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_check_boxes):
 
 ```erb
 <%= form.collection_check_boxes :city_id, City.order(:name), :id, :name %>
 ```
 
-Output:
+Resultado:
 
 ```html
 <input type="checkbox" name="city_id[]" value="3" id="city_id_3">
