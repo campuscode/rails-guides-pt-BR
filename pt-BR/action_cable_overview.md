@@ -626,7 +626,7 @@ valor da chave `:on` sendo passada para `current_user.appear`.
 O exemplo de aspectos era todo sobre expor a funcionalidade do servidor ao 
 front-end pela conexão WebSocket. Mas o melhor do WebSockets é que ele é uma via 
 de mão dupla. Portanto, agora vamos mostrar um exemplo em que o servidor invoca 
-uma ação no front-end.
+uma ação no cliente.
 
 Este é um canal de notificação da web que permite acionar notificações da web 
 no lado do cliente quando você transmite para os *streams* certos:
