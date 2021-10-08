@@ -66,7 +66,7 @@ image_url("edit.png") # => http://www.example.com/assets/edit.png
 
 #### image_tag
 
-Retorna uma tag de imagem HTML para a fonte. A fonte pode ser um caminho completo ou um arquivo que existe em seu diretório `app / assets / images`.
+Retorna uma tag de imagem HTML para a fonte. A fonte pode ser um caminho completo ou um arquivo que existe em seu diretório `app/assets/images`.
 
 ```ruby
 image_tag("icon.png") # => <img src="/assets/icon.png" />
