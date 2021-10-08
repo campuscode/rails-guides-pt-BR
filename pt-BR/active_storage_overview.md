@@ -904,10 +904,10 @@ class Uploader {
 Descartando Arquivos Armazenados Durante os Testes do Sistema
 -------------------------------------------
 
-Os testes do sistema limpam os dados de testes revertendo uma transação. Como o
+Os testes de sistema limpam os dados de testes revertendo uma transação. Como o
 *destroy* nunca é chamado em um objeto, os arquivos anexados nunca são limpos. Se
 quiser limpar os arquivos, podemos usar um *callback* `after_teardown`. 
-Fazendo isso garantimos que toda as conexões criadas durante o teste sejam 
+Fazendo isso garantimos que todas as conexões criadas durante o teste sejam 
 concluídas sem que recebamos um erro do *Active Storage* informando que não 
 foi possível encontrar um arquivo.
 
