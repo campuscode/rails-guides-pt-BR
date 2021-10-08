@@ -605,7 +605,7 @@ ActionCable.createConsumer("ws://cable.example.com")`. (`cable.js`). O
 `consumer.subscriptions.create({ channel: "AppearanceChannel" })`. (`appearance_channel.js`)
 
 3. **Servidor** reconhece que uma nova assinatura foi iniciada para o
-canal de aspectos e executa seu callback `subscribed`, chamando o método `appear` 
+canal de aspectos e executa seu *callback* `subscribed`, chamando o método `appear` 
 em `current_user`. (`appearance_channel.rb`)
 
 4. **Cliente** reconhece que uma assinatura foi estabelecida e chama 
