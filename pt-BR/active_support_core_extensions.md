@@ -875,11 +875,11 @@ NOTE: Definido em `active_support/core_ext/module/redefine_method.rb`.
 Extensions to `Class`
 ---------------------
 
-### Class Attributes
+### Atributos de classe
 
 #### `class_attribute`
 
-The method [`class_attribute`][Class#class_attribute] declares one or more inheritable class attributes that can be overridden at any level down the hierarchy.
+O método [`class_attribute`][Class#class_attribute] declara um ou mais atributos de classe herdáveis que podem ser substituídos em qualquer nível abaixo da hierarquia.
 
 ```ruby
 class A
@@ -903,7 +903,7 @@ A.x # => :a
 B.x # => :b
 ```
 
-For example `ActionMailer::Base` defines:
+Por exemplo `ActionMailer::Base` define:
 
 ```ruby
 class_attribute :default_params
@@ -915,7 +915,7 @@ self.default_params = {
 }.freeze
 ```
 
-They can also be accessed and overridden at the instance level.
+Eles também podem ser acessados e substituídos no nível de instância.
 
 ```ruby
 A.x = 1
@@ -928,7 +928,7 @@ a1.x # => 1, comes from A
 a2.x # => 2, overridden in a2
 ```
 
-The generation of the writer instance method can be prevented by setting the option `:instance_writer` to `false`.
+A criação de um método de instância de escrita pode ser prevenido configurando a opção `:instance_writer` para `false`.
 
 ```ruby
 module ActiveRecord
@@ -938,9 +938,9 @@ module ActiveRecord
 end
 ```
 
-A model may find that option useful as a way to prevent mass-assignment from setting the attribute.
+Essa opção pode ser útil para prevenir atribuições em massa ao definir o atributo.
 
-The generation of the reader instance method can be prevented by setting the option `:instance_reader` to `false`.
+A criação de um método de instância de leitura pode ser prevenido configurando a opção `:instance_reader` para `false`.
 
 ```ruby
 class A
@@ -951,13 +951,13 @@ A.new.x = 1
 A.new.x # NoMethodError
 ```
 
-For convenience `class_attribute` also defines an instance predicate which is the double negation of what the instance reader returns. In the examples above it would be called `x?`.
+Por conveniência `class_attribute` também define um predicado de instância que é uma negação dupla do que o leitor de instancia retorna. No exemplo acima podemos usar `x?`.
 
-When `:instance_reader` is `false`, the instance predicate returns a `NoMethodError` just like the reader method.
+Quando `:instance_reader` é `false`, o predicado de instância retorna `NoMethodError` assim como o método de leitura.
 
-If you do not want the instance predicate, pass `instance_predicate: false` and it will not be defined.
+Se você não quiser o predicado de instancia, passe `instance_predicate: false` e ele não será definido.
 
-NOTE: Defined in `active_support/core_ext/class/attribute.rb`.
+NOTE: Definido em `active_support/core_ext/class/attribute.rb`.
 
 [Class#class_attribute]: https://api.rubyonrails.org/classes/Class.html#method-i-class_attribute
 
