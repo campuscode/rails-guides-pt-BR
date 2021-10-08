@@ -675,7 +675,7 @@ usuário. Exemplo, para um usuário com ID 1, o nome da transmissão seria
 `web_notifications:1`.
 
 O canal foi instruído a transmitir tudo que chegar a `web_notifications:1` 
-diretamente para o front-end, invocando o callback `received`. Os dados passados 
+diretamente para o cliente, invocando o callback `received`. Os dados passados 
 como argumento são o hash enviado como o segundo parâmetro para a chamada de 
 transmissão do lado do servidor, JSON codificado, para a transição, e também
 descompactado, para o argumento de dados que chega como `received`.
