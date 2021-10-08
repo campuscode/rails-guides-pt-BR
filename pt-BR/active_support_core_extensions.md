@@ -963,7 +963,7 @@ NOTE: Definido em `active_support/core_ext/class/attribute.rb`.
 
 #### `cattr_reader`, `cattr_writer`, and `cattr_accessor`
 
-The macros [`cattr_reader`][Module#cattr_reader], [`cattr_writer`][Module#cattr_writer], and [`cattr_accessor`][Module#cattr_accessor] are analogous to their `attr_*` counterparts but for classes. They initialize a class variable to `nil` unless it already exists, and generate the corresponding class methods to access it:
+As macros [`cattr_reader`][Module#cattr_reader], [`cattr_writer`][Module#cattr_writer], e [`cattr_accessor`][Module#cattr_accessor] são análogas às suas `attr_*` homólogas porém para classes. Eles inicializam a variável de classe com `nil` a menos que ela já exista, e gera os métodos de classe correspondentes para acessá-la:
 
 ```ruby
 class MysqlAdapter < AbstractAdapter
@@ -972,7 +972,7 @@ class MysqlAdapter < AbstractAdapter
 end
 ```
 
-Also, you can pass a block to `cattr_*` to set up the attribute with a default value:
+Além disso, você pode passar um bloco para `cattr_*` para configurar o atributo com um valor padrão.
 
 ```ruby
 class MysqlAdapter < AbstractAdapter
@@ -981,7 +981,7 @@ class MysqlAdapter < AbstractAdapter
 end
 ```
 
-Instance methods are created as well for convenience, they are just proxies to the class attribute. So, instances can change the class attribute, but cannot override it as it happens with `class_attribute` (see above). For example given
+Métodos de instáncia são criados também por conveniência, eles são apenas proxies do atributo de classe. Logo, instâncias podem alterar o atributo de classe, porém não podem substituí-lo do mesmo modo que ocorre com `class_attribute` (veja acima). Por exêmplo, dado
 
 ```ruby
 module ActionView
@@ -991,9 +991,9 @@ module ActionView
 end
 ```
 
-we can access `field_error_proc` in views.
+podemos acessar `field_error_proc` nas views.
 
-The generation of the reader instance method can be prevented by setting `:instance_reader` to `false` and the generation of the writer instance method can be prevented by setting `:instance_writer` to `false`. Generation of both methods can be prevented by setting `:instance_accessor` to `false`. In all cases, the value must be exactly `false` and not any false value.
+A geração do método de leitor de instância pode ser previnido configurando `:instance_reader` para `false` e a geração dos métodos de escrita de instância podem ser prevenidos configurando `:instance_writer` para `false`. A geração de ambos os métodos podem ser previnidos configurando `:instance_accessor` para `false`. Em todos os casos, o valor deve ser exatamente `false` e não qualquer outro valor falso.
 
 ```ruby
 module A
@@ -1008,9 +1008,9 @@ module A
 end
 ```
 
-A model may find it useful to set `:instance_accessor` to `false` as a way to prevent mass-assignment from setting the attribute.
+Pode ser útil configurar `:instance_accessor` para `false` no modelo como uma maneira de prevenir atribuições em massa ao definir o atributo.
 
-NOTE: Defined in `active_support/core_ext/module/attribute_accessors.rb`.
+NOTE: Definido em `active_support/core_ext/module/attribute_accessors.rb`.
 
 [Module#cattr_accessor]: https://api.rubyonrails.org/classes/Module.html#method-i-cattr_accessor
 [Module#cattr_reader]: https://api.rubyonrails.org/classes/Module.html#method-i-cattr_reader
