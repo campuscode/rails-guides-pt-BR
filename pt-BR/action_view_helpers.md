@@ -83,7 +83,7 @@ javascript_include_tag "common"
 
 #### javascript_path
 
-Gera o caminho para um ativo JavaScript no diretório `app / assets / javascripts`. Se o nome do arquivo fonte não tiver extensão, `.js` será anexado. Caminhos completos da raiz do documento podem ser passados. Usado internamente por `javascript_include_tag` para construir o caminho do script.
+Gera o caminho para um *asset* JavaScript no diretório `app/assets/javascripts`. Se o nome do arquivo fonte não tiver extensão, `.js` será anexado. Caminhos completos da raiz do documento podem ser passados. Usado internamente por `javascript_include_tag` para construir o caminho do script.
 
 ```ruby
 javascript_path "common" # => /assets/common.js
