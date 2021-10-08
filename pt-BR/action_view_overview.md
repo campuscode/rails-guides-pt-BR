@@ -387,7 +387,7 @@ Podemos fazer isso usando:
 prepend_view_path "app/views/#{request.subdomain}"
 ```
 
-Então, o Action View procurará primeiro dentro deste diretório quando ao resolver as 
+Então, a *Action View* procurará primeiro dentro deste diretório quando ao resolver as 
 *views*.
 
 ### Anexando caminho das views
