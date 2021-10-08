@@ -58,7 +58,7 @@ image_path("edit.png")
 
 #### image_url
 
-Gera a URL para um ativo de imagem no diretório `app / assets / images`. Isso irá chamar `image_path` internamente e mesclar com seu host atual ou seu host de ativo.
+Gera a URL para um *asset* de imagem no diretório `app/assets/images`. Isso irá chamar `image_path` internamente e mesclar com seu host atual ou seu host de *assets*.
 
 ```ruby
 image_url("edit.png") # => http://www.example.com/assets/edit.png
