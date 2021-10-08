@@ -443,7 +443,7 @@ Para redefinir a sessão inteira, utilize [`reset_session`][].
 
 ### O *Flash*
 
-O *flash* é uma parte especial da sessão, que é limpo a cada requisição. Isso significa que os valores armazenados nele estarão disponíveis somente para a próxima requisição, sendo uteis para enviar mensagens de erro, etc.
+O *flash* é uma parte especial da sessão, que é limpo a cada requisição. Isso significa que os valores armazenados nele estarão disponíveis somente para a próxima requisição, sendo úteis para enviar mensagens de erro, etc.
 
 O *flash* é acessado através do método [`flash`][]. Assim como a sessão, o *flash* é representado por um objeto *hash*.
 
@@ -482,7 +482,7 @@ A *action* `destroy` redireciona para a `root_url` da aplicação, onde a mensag
 </html>
 ```
 
-Dessa forma, se uma ação gerar um aviso, alerta ou mensagem, o *layout* o exibirá automaticamente.
+Dessa forma, se uma *action* gerar um aviso, alerta ou mensagem, o *layout* o exibirá automaticamente.
 
 É possível armazenar qualquer valor aceito pela *session* no *flash*, não ficando limitado somente aos avisos, alertas e mensagens:
 
