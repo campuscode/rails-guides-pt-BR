@@ -1494,27 +1494,29 @@ NOTE: Se sua aplicação tem rotas muito complexas, o Rails fornece vários *hel
 
 Para mais informações sobre as asserções de rotas disponíveis no Rails, veja a documentação da API de [`ActionDispatch::Assertions::RoutingAssertions`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
 
-Testing Views
--------------
+Testando *Views*
+----------------
 
-Testing the response to your request by asserting the presence of key HTML elements and their content is a common way to test the views of your application. Like route tests, view tests reside in `test/controllers/` or are part of controller tests. The `assert_select` method allows you to query HTML elements of the response by using a simple yet powerful syntax.
+Testar a resposta de sua requisição através da presença de elementos HTML chave e o seu conteúdo é uma forma comum de testar as *views* de sua aplicação. Assim como os testes de rota, testes de *view* ficam em `test/controllers/` ou são parte dos seus testes de *controller*.
 
-There are two forms of `assert_select`:
+O método `assert_select` permite que você faça consultas a elementos HTML da resposta, através de uma sintaxe simples, mas poderosa.
 
-`assert_select(selector, [equality], [message])` ensures that the equality condition is met on the selected elements through the selector. The selector may be a CSS selector expression (String) or an expression with substitution values.
+Há duas formas de `assert_select`:
 
-`assert_select(element, selector, [equality], [message])` ensures that the equality condition is met on all the selected elements through the selector starting from the _element_ (instance of `Nokogiri::XML::Node` or `Nokogiri::XML::NodeSet`) and its descendants.
+A assinatura `assert_select(selector, [equality], [message])` garante que a condição de igualdade (`equality`) é atendida nos elementos selecionados através do seletor (*selector*).
+O argumento *selector* pode ser um seletor CSS (String) ou uma expressão com valores de substituição (como [nesses testes](https://github.com/rails/rails-dom-testing/blob/8f5acdfcb83a888c06592bad05475b7463998d1b/test/selector_assertions_test.rb#L124-L146)).
 
-For example, you could verify the contents on the title element in your response with:
+Já `assert_select(element, selector, [equality], [message])` garante que a condição de igualdade (`equality`) é atendida nos elementos selecionados através do seletor, começando no elemento `element` (instância de `Nokogiri::XML::Node` ou `Nokogiri::XML::NodeSet`) e seus descendentes.
+
+Por exemplo, você poderia verificar o conteúdo do elemento `title` na sua resposta com:
 
 ```ruby
 assert_select "title", "Welcome to Rails Testing Guide"
 ```
 
-You can also use nested `assert_select` blocks for deeper investigation.
+Você também pode usar blocos aninhados de `assert_select` para uma investigação mais profunda.
 
-In the following example, the inner `assert_select` for `li.menu_item` runs
-within the collection of elements selected by the outer block:
+No exemplo a seguir, o `assert_select` mais interno de `li.menu_item` executa com a coleção de elementos selecionados pelo bloco mais externo:
 
 ```ruby
 assert_select "ul.navigation" do
@@ -1522,9 +1524,9 @@ assert_select "ul.navigation" do
 end
 ```
 
-A collection of selected elements may be iterated through so that `assert_select` may be called separately for each element.
+Uma coleção de elementos pode ser iterada para que `assert_select` possa ser chamado individualmente para cada elemento.
 
-For example if the response contains two ordered lists, each with four nested list elements then the following tests will both pass.
+Por exemplo, se a resposta contiver duas listas ordenadas, cada uma com quatro elementos, então os testes a seguir irão passar.
 
 ```ruby
 assert_select "ol" do |elements|
@@ -1538,19 +1540,19 @@ assert_select "ol" do
 end
 ```
 
-This assertion is quite powerful. For more advanced usage, refer to its [documentation](https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb).
+Essa asserção é bastante poderosa. Para usos mais avançados, veja a sua [documentação](https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb).
 
-#### Additional View-Based Assertions
+#### Asserções Adicionais para *Views*
 
-There are more assertions that are primarily used in testing views:
+Existem mais asserções que são usadas primariamente em testes de *views*:
 
-| Assertion                                                 | Purpose |
-| --------------------------------------------------------- | ------- |
-| `assert_select_email`                                     | Allows you to make assertions on the body of an e-mail. |
-| `assert_select_encoded`                                   | Allows you to make assertions on encoded HTML. It does this by un-encoding the contents of each element and then calling the block with all the un-encoded elements.|
-| `css_select(selector)` or `css_select(element, selector)` | Returns an array of all the elements selected by the _selector_. In the second variant it first matches the base _element_ and tries to match the _selector_ expression on any of its children. If there are no matches both variants return an empty array.|
+| Asserção                                                  | Propósito |
+| --------------------------------------------------------- | --------- |
+| `assert_select_email`                                     | Permite fazer asserções no corpo de um email. |
+| `assert_select_encoded`                                   | Permite fazer asserções em HTML codificado. Isso é feito decodificando os conteúdos de cada elemento e então chamando o bloco com todos os elementos decodificados. |
+| `css_select(selector)` ou `css_select(element, selector)` | Retorna uma *array* de todos os elementos selecionados por *selector*. Na segunda variante, o método primeiro seleciona o elemento base `element` e depois tenta selecionar os descendentes de `element` através de `selector`. Se não houver nenhum match, ambas variantes retornam *array* vazia. |
 
-Here's an example of using `assert_select_email`:
+Aqui está um exemplo do uso de `assert_selected_email`:
 
 ```ruby
 assert_select_email do
