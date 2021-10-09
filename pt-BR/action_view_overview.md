@@ -317,7 +317,7 @@ O Rails renderizará a *partial* `_product_ruler` (sem passar nenhum dado pra el
 
 ### Layouts
 
-Layouts can be used to render a common view template around the results of Rails controller actions. Typically, a Rails application will have a couple of layouts that pages will be rendered within. For example, a site might have one layout for a logged in user and another for the marketing or sales side of the site. The logged in user layout might include top-level navigation that should be present across many controller actions. The sales layout for a SaaS app might include top-level navigation for things like "Pricing" and "Contact Us" pages. You would expect each layout to have a different look and feel. You can read about layouts in more detail in the [Layouts and Rendering in Rails](layouts_and_rendering.html) guide.
+Os *Layouts* podem ser usados para renderizar um *template* em torno dos resultados das *actions* do *controller* do Rails. Normalmente, uma aplicação Rails terá alguns *layouts* nos quais as páginas serão renderizadas. Por exemplo, um site pode ter um *layout* para um usuário conectado e outra página para marketing ou vendas do site. O *layout* do usuário conectado pode incluir navegação de nível superior (*top-level*), que deve estar presente em muitas *actions* do *controller*. O *layout* de vendas de uma aplicação SaaS pode incluir navegação de nível superior para páginas de "Preços" e "Fale conosco", onde esperaria que cada *layout* tivesse uma aparência e sensação diferentes. Você pode ler sobre *layout* com mais detalhes em [Layouts e Renderização no Rails](layouts_and_rendering.html).
 
 Partial Layouts
 ---------------
