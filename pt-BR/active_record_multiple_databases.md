@@ -18,10 +18,10 @@ Conforme uma aplicação cresce em uso e popularidade, você precisará expandir
 
 No presente momento, as seguintes funcionalidades são suportadas:
 
-* Múltiplos bancos de dados escritores com réplicas
+* Múltiplos bancos de dados de escrita, com réplicas
 * Troca automática de conexão para o *model* em questão
-* Troca automática entre o banco escritor e sua réplica, dependendo do verbo HTTP e as escritas mais recentes
-* Tarefas do Rails para criar, deletar e interagir com os múltiplos bancos.
+* Troca automática entre o banco de escrita e sua réplica, dependendo do verbo HTTP e as escritas mais recentes
+* *Tasks* do Rails para criar, deletar e interagir com os múltiplos bancos.
 
 As seguintes funcionalidades (ainda) não têm suporte:
 
@@ -46,9 +46,9 @@ production:
   adapter: mysql
 ```
 
-Vamos adicionar uma réplica para a primeira configuração e um segundo banco chamado "animals", também possuindo uma réplica. Para fazer isso, precisamos mudar o arquivo `database.yml`, com sua atual configuração de 2 níveis para uma nova configuração de 3 níveis.
+Vamos adicionar uma réplica para a primeira configuração e um segundo banco chamado "animals", também possuindo uma réplica. Para fazer isso, precisamos alterar o arquivo `database.yml`, com sua atual configuração de 2 níveis para uma nova configuração, de 3 níveis.
 
-Se uma houver uma configuração primária, esta será usada como padrão. Se não existir uma configuração com o nome "primary", o Rails usará a primeira que encontrar para o ambiente. As configurações padrão usarão os nomes de arquivo padrão do Rails. Por exemplo, configurações primárias usarão o arquivo `schema.rb` para o esquema enquanto todas as outras configurações usarão `[CONFIGURATION_NAMESPACE]_schema.rb`.
+Se uma houver uma configuração primária, esta será usada como padrão. Se não existir uma configuração com o nome "primary", o Rails usará a primeira que encontrar para o ambiente. As configurações padrão usarão os nomes de arquivo padrão do Rails. Por exemplo, configurações primárias usarão o arquivo `schema.rb` para o esquema, enquanto todas as outras configurações usarão `[CONFIGURATION_NAMESPACE]_schema.rb`.
 
 ```yaml
 production:
@@ -79,13 +79,13 @@ production:
 
 Quando usar múltiplos bancos, existem algumas configurações importantes.
 
-Em primeiro lugar, o nome do banco para a configuração `primary` e `primary_replica` precisam ser os mesmos, porque estes contém os mesmos dados. Isso se aplica também para os bancos `animals` e `animals_replica`.
+Em primeiro lugar, o nome do banco para a configuração `primary` e `primary_replica` precisam ser os mesmos, pois estes contém os mesmos dados. Isso também se aplica para os bancos `animals` e `animals_replica`.
 
 Segundo, o nome de usuário para os bancos de escrita e suas réplicas devem ser diferentes, e as permissões do usuário da réplica devem ser somente leitura.
 
-Quando usar um banco réplica, é preciso adicionar `replica: true` à configuração em questão, dentro de `database.yml`. Sem isso o Rails não terá como saber qual é o de escrita e qual é a réplica.
+Quando usar um banco réplica, é preciso adicionar `replica: true` à configuração em questão, dentro de `database.yml`. Sem isso, o Rails não saberá qual é o de escrita e qual é a réplica.
 
-Por último, para os novos bancos de escrita, é preciso adicionar o `migrations_paths` ao diretório onde ficarão as migrações. Veremos em mais detalhes `migration_paths` ao decorrer deste guia.
+Por último, para os novos bancos de escrita, é preciso adicionar o `migrations_paths` ao diretório onde ficarão as migrações. Veremos `migration_paths` em mais detalhes ao decorrer deste guia.
 
 Agora que temos um novo banco, vamos definir o *model* de conexão. Para usar este novo banco, é necessário criar uma classe abstrata e conectar ao banco *animals*.
 
@@ -121,12 +121,12 @@ config.active_record.reading_role = :readonly
 ```
 
 É importante conectar ao seu banco em um único *model* e em seguida, herdar para as tabelas, ao invés de abrir várias conexões individuais.
-Os usuários do banco têm um limite de conexões abertas, e ao fazer isso, estaríamos multiplicando este número sem necessidade.
+Os usuários do banco têm um limite de conexões abertas, e ao fazer isso, estaríamos multiplicando o número de conexões, visto que o Rails usa o nome da classe do *model* para o nome da conexão. 
 
 Agora que configuramos o `database.yml` e novo *model*, é hora de criar os bancos de dados.
 Rails 6.0 inclui todas as *tasks* necessárias para usar múltiplos bancos.
 
-É possível ver todos os comandos disponíveis usando `bin/rails -T`. Você verá algo como a seguir:
+É possível ver todos os comandos disponíveis usando `bin/rails -T`:
 
 ```bash
 $ bin/rails -T
