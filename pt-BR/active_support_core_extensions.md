@@ -981,7 +981,7 @@ class MysqlAdapter < AbstractAdapter
 end
 ```
 
-Métodos de instância são criados também por conveniência, eles são apenas uma forma de acesso do atributo de classe. Logo, instâncias podem alterar o atributo de classe, porém não podem substituí-lo do mesmo modo que ocorre com `class_attribute` (veja acima). Por exemplo, dado
+Métodos de instância são criados também por conveniência, eles são apenas uma forma de acesso ao atributo de classe. Logo, instâncias podem alterar o atributo de classe, porém não podem substituí-lo do mesmo modo que ocorre com `class_attribute` (veja acima). Por exemplo, dado
 
 ```ruby
 module ActionView
