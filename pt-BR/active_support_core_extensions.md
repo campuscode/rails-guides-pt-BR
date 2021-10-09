@@ -961,7 +961,7 @@ NOTE: Definido em `active_support/core_ext/class/attribute.rb`.
 
 [Class#class_attribute]: https://api.rubyonrails.org/classes/Class.html#method-i-class_attribute
 
-#### `cattr_reader`, `cattr_writer`, and `cattr_accessor`
+#### `cattr_reader`, `cattr_writer`, e `cattr_accessor`
 
 As macros [`cattr_reader`][Module#cattr_reader], [`cattr_writer`][Module#cattr_writer], e [`cattr_accessor`][Module#cattr_accessor] são análogas às suas `attr_*` homólogas porém para classes. Eles inicializam a variável de classe com `nil` a menos que ela já exista, e gera os métodos de classe correspondentes para acessá-la:
 
@@ -981,7 +981,7 @@ class MysqlAdapter < AbstractAdapter
 end
 ```
 
-Métodos de instáncia são criados também por conveniência, eles são apenas proxies do atributo de classe. Logo, instâncias podem alterar o atributo de classe, porém não podem substituí-lo do mesmo modo que ocorre com `class_attribute` (veja acima). Por exêmplo, dado
+Métodos de instância são criados também por conveniência, eles são apenas uma forma de acesso do atributo de classe. Logo, instâncias podem alterar o atributo de classe, porém não podem substituí-lo do mesmo modo que ocorre com `class_attribute` (veja acima). Por exemplo, dado
 
 ```ruby
 module ActionView
@@ -993,7 +993,7 @@ end
 
 podemos acessar `field_error_proc` nas views.
 
-A geração do método de leitor de instância pode ser previnido configurando `:instance_reader` para `false` e a geração dos métodos de escrita de instância podem ser prevenidos configurando `:instance_writer` para `false`. A geração de ambos os métodos podem ser previnidos configurando `:instance_accessor` para `false`. Em todos os casos, o valor deve ser exatamente `false` e não qualquer outro valor falso.
+A geração do método de leitor de instância pode ser prevenido configurando `:instance_reader` para `false` e a geração dos métodos de escrita de instância podem ser prevenidos configurando `:instance_writer` para `false`. A geração de ambos os métodos podem ser prevenidos configurando `:instance_accessor` para `false`. Em todos os casos, o valor deve ser exatamente `false` e não qualquer outro valor falso.
 
 ```ruby
 module A
