@@ -924,8 +924,8 @@ a1 = A.new
 a2 = A.new
 a2.x = 2
 
-a1.x # => 1, comes from A
-a2.x # => 2, overridden in a2
+a1.x # => 1, vem de A
+a2.x # => 2, substituído em a2
 ```
 
 A criação de um método de instância de escrita pode ser prevenido configurando a opção `:instance_writer` para `false`.
@@ -967,7 +967,7 @@ As macros [`cattr_reader`][Module#cattr_reader], [`cattr_writer`][Module#cattr_w
 
 ```ruby
 class MysqlAdapter < AbstractAdapter
-  # Generates class methods to access @@emulate_booleans.
+  # Gera métodos de classe para acessar @@emulate_booleans.
   cattr_accessor :emulate_booleans
 end
 ```
@@ -976,7 +976,7 @@ Além disso, você pode passar um bloco para `cattr_*` para configurar o atribut
 
 ```ruby
 class MysqlAdapter < AbstractAdapter
-  # Generates class methods to access @@emulate_booleans with default value of true.
+  # Gera métodos de classe para acessar @@emulate_booleans com true como valor padrão.
   cattr_accessor :emulate_booleans, default: true
 end
 ```
@@ -998,11 +998,11 @@ A geração do método de leitor de instância pode ser prevenido configurando `
 ```ruby
 module A
   class B
-    # No first_name instance reader is generated.
+    # Nenhum leitor de instância first_name é gerado.
     cattr_accessor :first_name, instance_reader: false
-    # No last_name= instance writer is generated.
+    # Nenhum escritor de instância last_name= é gerado.
     cattr_accessor :last_name, instance_writer: false
-    # No surname instance reader or surname= writer is generated.
+    # Nenhum leitor surname ou escritor surname= de instância é gerado.
     cattr_accessor :surname, instance_accessor: false
   end
 end
