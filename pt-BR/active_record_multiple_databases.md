@@ -1,51 +1,42 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Multiple Databases with Active Record
+Múltiplos bancos de dados com *Active Record*
 =====================================
 
-This guide covers using multiple databases with your Rails application.
+Este guia cobre o uso de múltiplos bancos de dados na sua aplicação Rails.
 
-After reading this guide you will know:
+Após ler este guia, você saberá:
 
-* How to set up your application for multiple databases.
-* How automatic connection switching works.
-* How to use horizontal sharding for multiple databases.
-* What features are supported and what's still a work in progress.
+* Como configurar sua aplicação para usar múltiplos bancos de dados.
+* Como a troca automática de conexão funciona.
+* Como usar fragmentação horizontal (*horizontal sharding*).
+* Quais funcionalidades têm suporte e quais ainda estão sendo desenvolvidas.
 
 --------------------------------------------------------------------------------
+Conforme uma aplicação cresce em uso e popularidade, você precisará expandir a aplicação para dar suporte aos novos usuários e seus dados. Uma das dimensões na qual sua aplicação precisará expandir é no âmbito do banco de dados. O Rails agora possui suporte para múltiplos bancos de dados, para que você não precise armazenar tudo em um só lugar.
 
-As an application grows in popularity and usage you'll need to scale the application
-to support your new users and their data. One way in which your application may need
-to scale is on the database level. Rails now has support for multiple databases
-so you don't have to store your data all in one place.
+No presente momento, as seguintes funcionalidades são suportadas:
 
-At this time the following features are supported:
+* Múltiplos bancos de dados escritores com réplicas
+* Troca automática de conexão para o *model* em questão
+* Troca automática entre o banco escritor e sua réplica, dependendo do verbo HTTP e as escritas mais recentes
+* Tarefas do Rails para criar, deletar e interagir com os múltiplos bancos.
 
-* Multiple writer databases and a replica for each
-* Automatic connection switching for the model you're working with
-* Automatic swapping between the writer and replica depending on the HTTP verb
-and recent writes
-* Rails tasks for creating, dropping, migrating, and interacting with the multiple
-databases
+As seguintes funcionalidades (ainda) não têm suporte:
 
-The following features are not (yet) supported:
+* Troca automática para a fragmentação horizontal (*horizontal sharding*)
+* Mesclagem entre *clusters*
+* *Load balancing* de réplicas
+* Exportar cache de esquema para múltiplos bancos.
 
-* Automatic swapping for horizontal sharding
-* Joining across clusters
-* Load balancing replicas
-* Dumping schema caches for multiple databases
+## Configurando sua aplicação
 
-## Setting up your application
+O Rails tenta fazer a maior parte do trabalho para você, porém, mesmo assim, ainda existem alguns passos que você precisa seguir para preparar sua aplicação para múltiplos bancos de dados.
 
-While Rails tries to do most of the work for you there are still some steps you'll
-need to do to get your application ready for multiple databases.
+Digamos que nós temos uma aplicação com um único banco de escrita, e que precisamos adicionar um novo banco para algumas tabelas que estamos criando. O nome deste novo banco será "animals".
 
-Let's say we have an application with a single writer database and we need to add a
-new database for some new tables we're adding. The name of the new database will be
-"animals".
-
-The `database.yml` looks like this:
+O arquivo `database.yml` ficará assim:
 
 ```yaml
 production:
@@ -55,15 +46,9 @@ production:
   adapter: mysql
 ```
 
-Let's add a replica for the first configuration, and a second database called animals and a
-replica for that as well. To do this we need to change our `database.yml` from a 2-tier
-to a 3-tier config.
+Vamos adicionar uma réplica para a primeira configuração e um segundo banco chamado "animals", também possuindo uma réplica. Para fazer isso, precisamos mudar o arquivo `database.yml`, com sua atual configuração de 2 níveis para uma nova configuração de 3 níveis.
 
-If a primary configuration is provided this will be used as the "default" configuration. If
-there is no configuration named "primary" Rails will use the first configuration for an
-environment. The default configurations will use the default Rails filenames. For example
-primary configurations will use `schema.rb` for the schema file whereas all other entries
-will use `[CONFIGURATION_NAMESPACE]_schema.rb` for the filename.
+Se uma houver uma configuração primária, esta será usada como padrão. Se não existir uma configuração com o nome "primary", o Rails usará a primeira que encontrar para o ambiente. As configurações padrão usarão os nomes de arquivo padrão do Rails. Por exemplo, configurações primárias usarão o arquivo `schema.rb` para o esquema enquanto todas as outras configurações usarão `[CONFIGURATION_NAMESPACE]_schema.rb`.
 
 ```yaml
 production:
@@ -92,24 +77,17 @@ production:
     replica: true
 ```
 
-When using multiple databases there are a few important settings.
+Quando usar múltiplos bancos, existem algumas configurações importantes.
 
-First, the database name for the `primary` and `primary_replica` should be the same because they contain
-the same data. This is also the case for `animals` and `animals_replica`.
+Em primeiro lugar, o nome do banco para a configuração `primary` e `primary_replica` precisam ser os mesmos, porque estes contém os mesmos dados. Isso se aplica também para os bancos `animals` e `animals_replica`.
 
-Second, the username for the writers and replicas should be different, and the
-replica user's permissions should be set to only read and not write.
+Segundo, o nome de usuário para os bancos de escrita e suas réplicas devem ser diferentes, e as permissões do usuário da réplica devem ser somente leitura.
 
-When using a replica database you need to add a `replica: true` entry to the replica in the
-`database.yml`. This is because Rails otherwise has no way of knowing which one is a replica
-and which one is the writer.
+Quando usar um banco réplica, é preciso adicionar `replica: true` à configuração em questão, dentro de `database.yml`. Sem isso o Rails não terá como saber qual é o de escrita e qual é a réplica.
 
-Lastly, for new writer databases you need to set the `migrations_paths` to the directory
-where you will store migrations for that database. We'll look more at `migrations_paths`
-later on in this guide.
+Por último, para os novos bancos de escrita, é preciso adicionar o `migrations_paths` ao diretório onde ficarão as migrações. Veremos em mais detalhes `migration_paths` ao decorrer deste guia.
 
-Now that we have a new database, let's set up the connection model. In order to use the
-new database we need to create a new abstract class and connect to the animals databases.
+Agora que temos um novo banco, vamos definir o *model* de conexão. Para usar este novo banco, é necessário criar uma classe abstrata e conectar ao banco *animals*.
 
 ```ruby
 class AnimalsRecord < ApplicationRecord
@@ -119,7 +97,7 @@ class AnimalsRecord < ApplicationRecord
 end
 ```
 
-Then we need to update `ApplicationRecord` to be aware of our new replica.
+Em seguida, atualizaremos `ApplicationRecord` para ela saiba da nossa nova réplica.
 
 ```ruby
 class ApplicationRecord < ActiveRecord::Base
@@ -129,63 +107,54 @@ class ApplicationRecord < ActiveRecord::Base
 end
 ```
 
-Classes that connect to primary/primary_replica can inherit from `ApplicationRecord` like
-standard Rails applications:
+As classes que conectam ao banco primário e/ou sua réplica podem herdar de `ApplicationRecord`, assim como as aplicações padrão Rails.
 
 ```ruby
 class Person < ApplicationRecord
 end
 ```
-
-By default Rails expects the database roles to be `writing` and `reading` for the primary
-and replica respectively. If you have a legacy system you may already have roles set up that
-you don't want to change. In that case you can set a new role name in your application config.
+Por padrão, o Rails espera os *roles* de escrita e leitura, para o banco primário e sua réplica, respectivamente. Se você tiver um sistema legado, é possível que existam *roles* que não deseja mudar. Neste caso, é possível definir um novo nome de *role* nas configurações da aplicacão.
 
 ```ruby
 config.active_record.writing_role = :default
 config.active_record.reading_role = :readonly
 ```
 
-It's important to connect to your database in a single model and then inherit from that model
-for the tables rather than connect multiple individual models to the same database. Database
-clients have a limit to the number of open connections there can be and if you do this it will
-multiply the number of connections you have since Rails uses the model class name for the
-connection specification name.
+É importante conectar ao seu banco em um único *model* e em seguida, herdar para as tabelas, ao invés de abrir várias conexões individuais.
+Os usuários do banco têm um limite de conexões abertas, e ao fazer isso, estaríamos multiplicando este número sem necessidade.
 
-Now that we have the `database.yml` and the new model set up it's time to create the databases.
-Rails 6.0 ships with all the rails tasks you need to use multiple databases in Rails.
+Agora que configuramos o `database.yml` e novo *model*, é hora de criar os bancos de dados.
+Rails 6.0 inclui todas as *tasks* necessárias para usar múltiplos bancos.
 
-You can run `bin/rails -T` to see all the commands you're able to run. You should see the following:
+É possível ver todos os comandos disponíveis usando `bin/rails -T`. Você verá algo como a seguir:
 
 ```bash
 $ bin/rails -T
-rails db:create                          # Creates the database from DATABASE_URL or config/database.yml for the ...
-rails db:create:animals                  # Create animals database for current environment
-rails db:create:primary                  # Create primary database for current environment
-rails db:drop                            # Drops the database from DATABASE_URL or config/database.yml for the cu...
-rails db:drop:animals                    # Drop animals database for current environment
-rails db:drop:primary                    # Drop primary database for current environment
-rails db:migrate                         # Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)
-rails db:migrate:animals                 # Migrate animals database for current environment
-rails db:migrate:primary                 # Migrate primary database for current environment
-rails db:migrate:status                  # Display status of migrations
-rails db:migrate:status:animals          # Display status of migrations for animals database
-rails db:migrate:status:primary          # Display status of migrations for primary database
-rails db:rollback                        # Rolls the schema back to the previous version (specify steps w/ STEP=n)
-rails db:rollback:animals                # Rollback animals database for current environment (specify steps w/ STEP=n)
-rails db:rollback:primary                # Rollback primary database for current environment (specify steps w/ STEP=n)
-rails db:schema:dump                     # Creates a database schema file (either db/schema.rb or db/structure.sql  ...
-rails db:schema:dump:animals             # Creates a database schema file (either db/schema.rb or db/structure.sql  ...
-rails db:schema:dump:primary             # Creates a db/schema.rb file that is portable against any DB supported  ...
-rails db:schema:load                     # Loads a database schema file (either db/schema.rb or db/structure.sql  ...
-rails db:schema:load:animals             # Loads a database schema file (either db/schema.rb or db/structure.sql  ...
-rails db:schema:load:primary             # Loads a database schema file (either db/schema.rb or db/structure.sql  ...
+rails db:create                          # Cria o banco a partir da DATABASE_URL ou config/database.yml para o ambiente atual
+rails db:create:animals                  # Cria o banco animals para o ambiente atual
+rails db:create:primary                  # Cria o banco primário para o ambiente atual
+rails db:drop                            # Destrói o banco a partir da DATABASE_URL ou config/database.yml para o ambiente atual
+rails db:drop:animals                    # Destrói o banco animals para o ambiente atual
+rails db:drop:primary                    # Destrói o banco primário para o ambiente atual
+rails db:migrate                         # Migra o banco (as opções são: VERSION=x, VERBOSE=false, SCOPE=blog)
+rails db:migrate:animals                 # Migra o banco animals para o ambiente atual
+rails db:migrate:primary                 # Migra o banco primário para o ambiente atual
+rails db:migrate:status                  # Exibe o status das migrações
+rails db:migrate:status:animals          # Exibe o status das migrações para o banco animals
+rails db:migrate:status:primary          # Exibe o status das migrações para o banco primário
+rails db:rollback                        # Reverte o esquema para uma versão anterior, no ambiente atual (especifique o número de versões com STEP=n)
+rails db:rollback:animals                # Reverte o esquema do banco animals para uma versão anterior, no ambiente atual (especifique o número de versões com STEP=n)
+rails db:rollback:primary                # Reverte o esquema do banco primário para uma versão anterior, no ambiente atual (especifique o número de versões com STEP=n)
+rails db:schema:dump                     # Cria um arquivo de esquema (db/schema.rb ou db/structure.sql)
+rails db:schema:dump:animals             # Cria um arquivo de esquema para o banco animals (db/schema.rb ou db/structure.sql)
+rails db:schema:dump:primary             # Cria o arquivo db/schema.rb que será poderá ser carregado para qualquer banco suportado
+rails db:schema:load                     # Importa um arquivo de esquema (db/schema.rb ou db/structure.sql)
+rails db:schema:load:animals             # Importa um arquivo de esquema (db/schema.rb ou db/structure.sql)
+rails db:schema:load:primary             # Importa um arquivo de esquema (db/schema.rb ou db/structure.sql)
 ```
 
-Running a command like `bin/rails db:create` will create both the primary and animals databases.
-Note that there is no command for creating the users and you'll need to do that manually
-to support the readonly users for your replicas. If you want to create just the animals
-database you can run `bin/rails db:create:animals`.
+Executar um comando como `bin/rails db:create` criará tanto o banco primário quanto o banco *animals*.
+Observe que não existe um comando para criar os usuários. Estes precisam ser criados manualmente, para dar suporte aos usuários somente leitura das réplicas. Se deseja criar somente o banco *animals*, basta executar `bin/rails db:create:animals`.
 
 ## Generators and Migrations
 
