@@ -156,31 +156,25 @@ rails db:schema:load:primary             # Importa um arquivo de esquema (db/sch
 Executar um comando como `bin/rails db:create` criará tanto o banco primário quanto o banco *animals*.
 Observe que não existe um comando para criar os usuários. Estes precisam ser criados manualmente, para dar suporte aos usuários somente leitura das réplicas. Se deseja criar somente o banco *animals*, basta executar `bin/rails db:create:animals`.
 
-## Generators and Migrations
+## Generators e *Migrações*
 
-Migrations for multiple databases should live in their own folders prefixed with the
-name of the database key in the configuration.
+Migrações para múltiplos bancos devem ficar nos seus próprios diretórios, prefixados pelo nome da chave do banco especificado nas configurações.
 
-You also need to set the `migrations_paths` in the database configurations to tell Rails
-where to find the migrations.
+Também é preciso definir `migrations_paths` nas configurações do banco, para que o Rails saiba onde as encontrar.
 
-For example the `animals` database would look for migrations in the `db/animals_migrate` directory and
-`primary` would look in `db/migrate`. Rails generators now take a `--database` option
-so that the file is generated in the correct directory. The command can be run like so:
+Por exemplo, o banco *animals* buscaria suas migrações no diretório `db/animals_migrate`, da mesma forma que o banco *primary* buscaria em `db/migrate`. Os *generators* do Rails agora permitem especificar a opção `--database`, de modo que o arquivo seja gerado no diretório correto. O comando pode ser executado da seguinte forma:
 
 ```bash
 $ bin/rails generate migration CreateDogs name:string --database animals
 ```
 
-If you are using Rails generators, the scaffold and model generators will create the abstract
-class for you. Simply pass the database key to the command line
+Se estiver usando os *generators* do Rails, os *generators* de *scaffold* e de *model* criarão a classe abstrata para você. Basta especificar a chave do banco no comando:
 
 ```bash
 $ bin/rails generate scaffold Dog name:string --database animals
 ```
 
-A class with the database name and `Record` will be created. In this example
-the database is `Animals` so we end up with `AnimalsRecord`:
+Uma classe com mesmo nome do banco e a palavra `Record` será criada. Neste exemplo, o banco é `Animals`, então teremos `AnimalsRecord`:
 
 ```ruby
 class AnimalsRecord < ApplicationRecord
@@ -190,28 +184,23 @@ class AnimalsRecord < ApplicationRecord
 end
 ```
 
-The generated model will automatically inherit from `AnimalsRecord`.
+O *model* gerado herdará automaticamente de `AnimalsRecord`.
 
 ```ruby
 class Dog < AnimalsRecord
 end
 ```
 
-Note: Since Rails doesn't know which database is the replica for your writer you will need to
-add this to the abstract class after you're done.
+Observação: Visto que o Rails não sabe qual banco de dados é a réplica para o escritor, você precisará adicionar isso à classe abstrata quando tiver terminado.
 
-Rails will only generate the new class once. It will not be overwritten by new scaffolds
-or deleted if the scaffold is deleted.
+Rails criará a nova classe somente uma vez. Esta não será sobrescrita por futuros *scaffolds* e nem mesmo deletada, caso o *scaffold* seja excluído.
 
-If you already have an abstract class and its name differs from `AnimalsRecord` you can pass
-the `--parent` option to indicate you want a different abstract class:
+Se você já possui uma classe abstrata e seu nome difere da em `AnimalsRecord`, você pode especificar a opção `--parent` se desejar uma classe abstrata diferente:
 
 ```bash
 $ bin/rails generate scaffold Dog name:string --database animals --parent Animals::Record
 ```
-
-This will skip generating `AnimalsRecord` since you've indicated to Rails that you want to
-use a different parent class.
+Isto fará com que a geração de `AnimalsRecord` seja ignorada, visto que você indicou para o Rails que irá usar uma outra classe pai.
 
 ## Activating automatic connection switching
 
