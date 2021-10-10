@@ -924,7 +924,7 @@ NOTE: Somente um *console* pode ser renderizado por *request*. De outra maneira 
 
 ### Inspecionando Variáveis
 
-Você pode chamar `instance_variables` para listar todas as variáveis de instância disponíveis em seu contexto. Se você deseja listar todas as variaveis locais, você pode fazer isso usando `local_variables`.
+Você pode chamar `instance_variables` para listar todas as variáveis de instância disponíveis em seu contexto. Se você deseja listar todas as variáveis locais, você pode fazer isso usando `local_variables`.
 
 ### Configurações
 
