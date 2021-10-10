@@ -918,7 +918,7 @@ Ou em uma *view*:
 
 Isso vai renderizar um console dentro da view. Você não precisa se preocupar com a localização da chamada do metodo `conosole`; não será renderizado proximo ao elemento em que foi invocado, mas sim próximo ao seu conteudo HTML.
 
-O *console* executa código Ruby nativo: Você pode definir e instanciar classes personalizadas, criar novos modelos, e inspecionar variáveis.
+O *console* executa código Ruby nativo: Você pode definir e instanciar classes personalizadas, criar novos *models*, e inspecionar variáveis.
 
 NOTE: Somente um *console* pode ser renderizado por *request*. De outra maneira `web-console` lança um erro na segunda invocação do método `console`.
 
