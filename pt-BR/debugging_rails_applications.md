@@ -945,7 +945,7 @@ is prevented (defaults: `true`).
 Since `web-console` evaluates plain Ruby code remotely on the server, don't try
 to use it in production.
 
-Debugging de Vazamentos de Memórias
+Debug de Vazamentos de Memórias
 ----------------------
 
 Um aplicativo Ruby (on Rails ou não) pode vazar memória - tanto no código Ruby
