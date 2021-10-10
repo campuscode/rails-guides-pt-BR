@@ -202,21 +202,15 @@ $ bin/rails generate scaffold Dog name:string --database animals --parent Animal
 ```
 Isto fará com que a geração de `AnimalsRecord` seja ignorada, visto que você indicou para o Rails que irá usar uma outra classe pai.
 
-## Activating automatic connection switching
+## Habilitando a troca automática de conexão
 
-Finally, in order to use the read-only replica in your application you'll need to activate
-the middleware for automatic switching.
+Por último, para conseguir usar a réplica de leitura na sua aplicação, será necessário habilitar o *middleware* de troca automática.
 
-Automatic switching allows the application to switch from the writer to replica or replica
-to writer based on the HTTP verb and whether there was a recent write.
+A troca automática permite que a aplicação alterne entre os bancos de escrita e a réplica, baseado no método HTTP e também se houve uma escrita recente.
 
-If the application is receiving a POST, PUT, DELETE, or PATCH request the application will
-automatically write to the writer database. For the specified time after the write, the
-application will read from the primary. For a GET or HEAD request the application will read
-from the replica unless there was a recent write.
+Se a aplicação receber uma requisição POST, PUT, DELETE, ou PATCH, a conexão será feita automaticamente para o banco de escrita. Por um determinado tempo após a escrita, a leitura será feita no banco primário. Para os métodos GET ou HEAD, a aplicação usará a réplica, a menos que tenha ocorrido uma escrita recente.
 
-To activate the automatic connection switching middleware, add or uncomment the following
-lines in your application config.
+Para habilitar o *middleware* responsável pela troca automática, basta adicionar (ou "descomentar") as seguintes linhas no arquivo de configuração:
 
 ```ruby
 config.active_record.database_selector = { delay: 2.seconds }
@@ -224,27 +218,19 @@ config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelec
 config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 ```
 
-Rails guarantees "read your own write" and will send your GET or HEAD request to the
-writer if it's within the `delay` window. By default the delay is set to 2 seconds. You
-should change this based on your database infrastructure. Rails doesn't guarantee "read
-a recent write" for other users within the delay window and will send GET and HEAD requests
-to the replicas unless they wrote recently.
+Rails garante o chamado "leia sua própria escrita" e encaminhará as requisições de método GET ou HEAD para o banco de escrita, se estes ocorrerem dentro do intervalo especificado pelo `delay`. Você deve alterar esta configuração para melhor atender a infraestrutura do seu banco de dados. O Rails não garante "leia sua escrita recente" para outros usuários dentro do intervalo de *delay*, e encaminhará as requisições GET e HEAD para a réplica, a menos que eles tenham escrito algo recentemente.
 
-The automatic connection switching in Rails is relatively primitive and deliberately doesn't
-do a whole lot. The goal is a system that demonstrates how to do automatic connection
-switching that was flexible enough to be customizable by app developers.
+A troca automática de conexão do Rails é relativamente simples e deliberadamente não faz muita coisa. O objetivo é ter um sistema que demonstre como fazer a troca automática de conexão, e que seja suficientemente flexível para que os desenvolvedores possam customizar.
 
-The setup in Rails allows you to easily change how the switching is done and what
-parameters it's based on. Let's say you want to use a cookie instead of a session to
-decide when to swap connections. You can write your own class:
+O *setup* do Rails permite que você altere com facilidade como é feita a troca automática, e em quais parâmetros ela se baseia. Digamos que você queira usar *cookies* ao invés da *session* para decidir quando trocar as conexões. Você poderia escrever sua própria classe:
 
 ```ruby
 class MyCookieResolver
-  # code for your cookie class
+  # código da sua classe
 end
 ```
 
-And then pass it to the middleware:
+Em seguida, especifique sua nova classe no *middleware*:
 
 ```ruby
 config.active_record.database_selector = { delay: 2.seconds }
