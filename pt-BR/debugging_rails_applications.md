@@ -916,7 +916,7 @@ Ou em uma *view*:
 <h2>New Post</h2>
 ```
 
-Isso vai renderizar um console dentro da view. Você não precisa se preocupar com a localização da chamada do metodo `conosole`; não será renderizado proximo ao elemento em que foi invocado, mas sim próximo ao seu conteudo HTML.
+Isso vai renderizar um *console* dentro da view. Você não precisa se preocupar com a localização da chamada do método `console`; não será renderizado próximo ao elemento em que foi invocado, mas sim próximo ao seu conteúdo HTML.
 
 O *console* executa código Ruby nativo: Você pode definir e instanciar classes personalizadas, criar novos *models*, e inspecionar variáveis.
 
