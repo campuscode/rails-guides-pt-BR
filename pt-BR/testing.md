@@ -732,14 +732,14 @@ create  test/fixtures/articles.yml
 Testes de *model* não possuem uma superclasse como `ActionMailer::TestCase`.
 Ao invés disso, eles herdam de [`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html).
 
-System Testing
---------------
+Fazendo Testes de Sistema
+-------------------------
 
-System tests allow you to test user interactions with your application, running tests
-in either a real or a headless browser. System tests use Capybara under the hood.
+Testes de sistema permitem testar interações do usuário com sua aplicação, rodando os testes em um navegador web real ou *headless*.
+Testes de sistema usam *Capybara* por debaixo dos panos.
 
-For creating Rails system tests, you use the `test/system` directory in your
-application. Rails provides a generator to create a system test skeleton for you.
+Para criar testes de sistema do Rails, utilize o caminho `test/system` da sua aplicação.
+O Rails também disponibiliza um *generator* para criar esqueletos de testes de sistema para você.
 
 ```bash
 $ bin/rails generate system_test users
@@ -747,7 +747,7 @@ $ bin/rails generate system_test users
       create test/system/users_test.rb
 ```
 
-Here's what a freshly generated system test looks like:
+Aqui está como um teste de sistema recém gerado se parece:
 
 ```ruby
 require "application_system_test_case"
@@ -761,23 +761,21 @@ class UsersTest < ApplicationSystemTestCase
 end
 ```
 
-By default, system tests are run with the Selenium driver, using the Chrome
-browser, and a screen size of 1400x1400. The next section explains how to
-change the default settings.
+Por padrão, testes de sistema utilizam o *driver* Selenium, executando o navegador Chrome, em uma tela de tamanho 1400x1400.
+A próxima seção explica como mudar as configurações padrão.
 
-### Changing the default settings
+### Mudando as Configurações Padrão
 
-Rails makes changing the default settings for system tests very simple. All
-the setup is abstracted away so you can focus on writing your tests.
+O Rails faz com que mudar as configurações padrão de testes de sistema seja muito simples.
+Toda a preparação (*setup*) é abstraída, logo você pode focar mais em escrever testes.
 
-When you generate a new application or scaffold, an `application_system_test_case.rb` file
-is created in the test directory. This is where all the configuration for your
-system tests should live.
+Quando uma nova aplicação ou *scaffold* são gerados, o arquivo `application_system_test_case.rb` é criado na pasta de testes.
+É nele em que todas as configurações de seus testes de sistema devem estão.
 
-If you want to change the default settings you can change what the system
-tests are "driven by". Say you want to change the driver from Selenium to
-Poltergeist. First add the `poltergeist` gem to your `Gemfile`. Then in your
-`application_system_test_case.rb` file do the following:
+Se você quiser mudar as configurações padrão, você pode mudar quem "dirige" (*driver*) os testes de sistema.
+Digamos que você quer mudar de Selenium para Poltergeist.
+Primeiro adicione a gem `poltergeist` em seu `Gemfile`.
+Depois, em seu `application_system_test_case.rb`, faça o seguinte:
 
 ```ruby
 require "test_helper"
@@ -788,11 +786,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-The driver name is a required argument for `driven_by`. The optional arguments
-that can be passed to `driven_by` are `:using` for the browser (this will only
-be used by Selenium), `:screen_size` to change the size of the screen for
-screenshots, and `:options` which can be used to set options supported by the
-driver.
+O nome do *driver* é um argumento obrigatório de `driven_by`.
+Os argumentos opcionais que podem ser passados para `driven_by` são `:using` para o navegador web (opção usada somente pelo *driver* Selenium), `:screen_size` para mudar o tamanho da tela e das capturas de tela e `:options` que serve para configurações específicas de cada *driver*.
 
 ```ruby
 require "test_helper"
@@ -802,8 +797,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-If you want to use a headless browser, you could use Headless Chrome or Headless Firefox by adding
-`headless_chrome` or `headless_firefox` in the `:using` argument.
+Se você quiser usar um navegador *headless*, você pode usar o Chrome *headless* ou Firefox *headless* passando `headless_chrome` ou `headless_firefox` para o argumento `:using`.
 
 ```ruby
 require "test_helper"
@@ -813,48 +807,41 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-If your Capybara configuration requires more setup than provided by Rails, this
-additional configuration could be added into the `application_system_test_case.rb`
-file.
+Se a sua configuração do Capybara requer mais customização do que as fornecidas pelo Rails, opções adicionais podem ser adicionadas no arquivo `application_system_test_case.rb`.
 
-Please see [Capybara's documentation](https://github.com/teamcapybara/capybara#setup)
-for additional settings.
+Consulte a [documentação do Capybara](https://github.com/teamcapybara/capybara#setup) para configurações adicionais.
 
-### Screenshot Helper
+### *Helper* de capturas de tela
 
-The `ScreenshotHelper` is a helper designed to capture screenshots of your tests.
-This can be helpful for viewing the browser at the point a test failed, or
-to view screenshots later for debugging.
+O módulo `ScreenshotHelper` é um *helper* feito para fazer capturas de tela ("prints") dos seus testes.
+Isso pode ser útil para ver o navegador web no momento em que um teste falha ou para debug.
 
-Two methods are provided: `take_screenshot` and `take_failed_screenshot`.
-`take_failed_screenshot` is automatically included in `before_teardown` inside
-Rails.
+Dois métodos são disponibilizados: `take_screenshot` e `take_failed_screenshot`.
+No Rails, o método `take_failed_screenshot` é automaticamente incluído em `before_teardown`.
 
-The `take_screenshot` helper method can be included anywhere in your tests to
-take a screenshot of the browser.
+O *helper* `take_screenshot` pode ser chamado em qualquer lugar nos seus testes para fazer uma captura de tela do navegador.
 
-### Implementing a System Test
+### Implementando um Teste de Sistema
 
-Now we're going to add a system test to our blog application. We'll demonstrate
-writing a system test by visiting the index page and creating a new blog article.
+Agora vamos adicionar um teste de sistema em nossa aplicação de blog.
+Vamos demonstrar como escrever testes de sistema, através da visita a página inicial da aplicação e da escrita de um novo artigo de blog.
 
-If you used the scaffold generator, a system test skeleton was automatically
-created for you. If you didn't use the scaffold generator, start by creating a
-system test skeleton.
+Se você tive usado o *generator* de *scaffold*, então o esqueleto de um teste de sistema foi automaticamente criado para você.
+Se você não utilizou o *generator* de *scaffold*, comece criando o esqueleto de um teste de sistema.
 
 ```bash
 $ bin/rails generate system_test articles
 ```
 
-It should have created a test file placeholder for us. With the output of the
-previous command you should see:
+Isso deveria criar um arquivo de teste.
+Se você utilizou o comando anterior, você deveria ver a seguinte saída:
 
 ```
       invoke  test_unit
       create    test/system/articles_test.rb
 ```
 
-Now let's open that file and write our first assertion:
+Agora vamos abrir o arquivo e escrever nossa primeira asserção:
 
 ```ruby
 require "application_system_test_case"
@@ -867,21 +854,21 @@ class ArticlesTest < ApplicationSystemTestCase
 end
 ```
 
-The test should see that there is an `h1` on the articles index page and pass.
+O teste deveria localizar que há um elemento `h1` na página inicial (*index*) de *articles* e passar.
 
-Run the system tests.
+Rode os testes de sistema.
 
 ```bash
 $ bin/rails test:system
 ```
 
-NOTE: By default, running `bin/rails test` won't run your system tests.
-Make sure to run `bin/rails test:system` to actually run them.
-You can also run `bin/rails test:all` to run all tests, including system tests.
+NOTE: Por padrão, rodar `bin/rails test` não irá rodar seus testes de sistema.
+Certifique-se de rodar `bin/rails test:system` para que eles sejam executados.
+Você também pode executar `bin/rails test:all` para rodar todos os testes, incluindo os de sistema.
 
-#### Creating Articles System Test
+#### Criando um Teste de Sistema de Artigos
 
-Now let's test the flow for creating a new article in our blog.
+Agora vamos testar o fluxo de criação de um novo artigo para o nosso blog.
 
 ```ruby
 test "creating an article" do
@@ -898,24 +885,21 @@ test "creating an article" do
 end
 ```
 
-The first step is to call `visit articles_path`. This will take the test to the
-articles index page.
+O primeiro passo é chamar `visit articles_path`.
+Isso faz com que o teste acesse a página inicial (*index*) de *articles*.
 
-Then the `click_on "New Article"` will find the "New Article" button on the
-index page. This will redirect the browser to `/articles/new`.
+Depois a instrução `click_on "New Article"` vai achar o botão "New Article" na página inicial (*index*).
+Isso vai redirecionar o navegador para `/articles/new`.
 
-Then the test will fill in the title and body of the article with the specified
-text. Once the fields are filled in, "Create Article" is clicked on which will
-send a POST request to create the new article in the database.
+Após isso, o teste vai preencher o título (*title*) e o corpo (*body*) do artigo com o texto especificado.
+Uma vez que os campos estão preenchidos, clica-se em "Create Article", que irá mandar uma requisição POST para criar o artigo no banco de dados.
 
-We will be redirected back to the articles index page and there we assert
-that the text from the new article's title is on the articles index page.
+Finalmente, nós vamos ser redirecionados de volta para a página inicial (*index*) e lá vamos assertar que o texto do título de nosso novo artigo está presente na página inicial.
 
-#### Testing for multiple screen sizes
-If you want to test for mobile sizes on top of testing for desktop,
-you can create another class that inherits from SystemTestCase and use in your
-test suite. In this example a file called `mobile_system_test_case.rb` is created
-in the `/test` directory with the following configuration.
+#### Testando em diferentes tamanhos de tela
+
+Se você quiser testar em telas de tamanho mobile além do tamanho desktop, você pode criar outra classe que herda de `SystemTestCase` para usar em sua suite de testes.
+Nesse exemplo, um arquivo chamado `mobile_system_test_case.rb` foi criado no caminho `/test` com a seguinte configuração:
 
 ```ruby
 require "test_helper"
@@ -925,8 +909,8 @@ class MobileSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-To use this configuration, create a test inside `test/system` that inherits from `MobileSystemTestCase`.
-Now you can test your app using multiple different configurations.
+Para usar essa configuração, crie um teste dentro de `test/system` que herda de `MobileSystemTestCase`.
+Agora você pode testar seu app com diferentes configurações de tela.
 
 ```ruby
 require "mobile_system_test_case"
@@ -940,14 +924,11 @@ class PostsTest < MobileSystemTestCase
 end
 ```
 
-#### Taking it further
+#### Indo Além
 
-The beauty of system testing is that it is similar to integration testing in
-that it tests the user's interaction with your controller, model, and view, but
-system testing is much more robust and actually tests your application as if
-a real user were using it. Going forward, you can test anything that the user
-themselves would do in your application such as commenting, deleting articles,
-publishing draft articles, etc.
+A beleza dos testes de sistema é que, parecido com os testes de integração, eles também testam a interação do usuário com o *controller*, *model* e a *view*.
+Porém, o teste de sistema é muito mais robusto e testa a aplicação como se uma pessoa de verdade estivesse usando.
+Indo além, você pode testar qualquer coisa que os próprios usuários fariam em sua aplicação, como comentar, deletar artigos, publicar rascunhos e etc.
 
 Integration Testing
 -------------------
@@ -1503,36 +1484,39 @@ Dir[Rails.root.join("test", "test_helpers", "**", "*.rb")].each { |file| require
 
 This has the downside of increasing the boot-up time, as opposed to manually requiring only the necessary files in your individual tests.
 
-Testing Routes
+Testando Rotas
 --------------
 
-Like everything else in your Rails application, you can test your routes. Route tests reside in `test/controllers/` or are part of controller tests.
+Assim como tudo na sua aplicação Rails, você também pode testar suas rotas.
+Testes de rotas são encontrados na pasta `test/controllers/` ou podem fazer parte de seus testes de *controller*.
 
-NOTE: If your application has complex routes, Rails provides a number of useful helpers to test them.
+NOTE: Se sua aplicação tem rotas muito complexas, o Rails fornece vários *helpers* úteis para testá-las.
 
-For more information on routing assertions available in Rails, see the API documentation for [`ActionDispatch::Assertions::RoutingAssertions`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
+Para mais informações sobre as asserções de rotas disponíveis no Rails, veja a documentação da API de [`ActionDispatch::Assertions::RoutingAssertions`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html).
 
-Testing Views
--------------
+Testando *Views*
+----------------
 
-Testing the response to your request by asserting the presence of key HTML elements and their content is a common way to test the views of your application. Like route tests, view tests reside in `test/controllers/` or are part of controller tests. The `assert_select` method allows you to query HTML elements of the response by using a simple yet powerful syntax.
+Testar a resposta de sua requisição através da presença de elementos HTML chave e o seu conteúdo é uma forma comum de testar as *views* de sua aplicação. Assim como os testes de rota, testes de *view* ficam em `test/controllers/` ou são parte dos seus testes de *controller*.
 
-There are two forms of `assert_select`:
+O método `assert_select` permite que você faça consultas a elementos HTML da resposta, através de uma sintaxe simples, mas poderosa.
 
-`assert_select(selector, [equality], [message])` ensures that the equality condition is met on the selected elements through the selector. The selector may be a CSS selector expression (String) or an expression with substitution values.
+Há duas formas de `assert_select`:
 
-`assert_select(element, selector, [equality], [message])` ensures that the equality condition is met on all the selected elements through the selector starting from the _element_ (instance of `Nokogiri::XML::Node` or `Nokogiri::XML::NodeSet`) and its descendants.
+A assinatura `assert_select(selector, [equality], [message])` garante que a condição de igualdade (`equality`) é atendida nos elementos selecionados através do seletor (*selector*).
+O argumento *selector* pode ser um seletor CSS (String) ou uma expressão com valores de substituição (como [nesses testes](https://github.com/rails/rails-dom-testing/blob/8f5acdfcb83a888c06592bad05475b7463998d1b/test/selector_assertions_test.rb#L124-L146)).
 
-For example, you could verify the contents on the title element in your response with:
+Já `assert_select(element, selector, [equality], [message])` garante que a condição de igualdade (`equality`) é atendida nos elementos selecionados através do seletor, começando no elemento `element` (instância de `Nokogiri::XML::Node` ou `Nokogiri::XML::NodeSet`) e seus descendentes.
+
+Por exemplo, você poderia verificar o conteúdo do elemento `title` na sua resposta com:
 
 ```ruby
 assert_select "title", "Welcome to Rails Testing Guide"
 ```
 
-You can also use nested `assert_select` blocks for deeper investigation.
+Você também pode usar blocos aninhados de `assert_select` para uma investigação mais profunda.
 
-In the following example, the inner `assert_select` for `li.menu_item` runs
-within the collection of elements selected by the outer block:
+No exemplo a seguir, o `assert_select` mais interno de `li.menu_item` executa com a coleção de elementos selecionados pelo bloco mais externo:
 
 ```ruby
 assert_select "ul.navigation" do
@@ -1540,9 +1524,9 @@ assert_select "ul.navigation" do
 end
 ```
 
-A collection of selected elements may be iterated through so that `assert_select` may be called separately for each element.
+Uma coleção de elementos pode ser iterada para que `assert_select` possa ser chamado individualmente para cada elemento.
 
-For example if the response contains two ordered lists, each with four nested list elements then the following tests will both pass.
+Por exemplo, se a resposta contiver duas listas ordenadas, cada uma com quatro elementos, então os testes a seguir irão passar.
 
 ```ruby
 assert_select "ol" do |elements|
@@ -1556,19 +1540,19 @@ assert_select "ol" do
 end
 ```
 
-This assertion is quite powerful. For more advanced usage, refer to its [documentation](https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb).
+Essa asserção é bastante poderosa. Para usos mais avançados, veja a sua [documentação](https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb).
 
-#### Additional View-Based Assertions
+#### Asserções Adicionais para *Views*
 
-There are more assertions that are primarily used in testing views:
+Existem mais asserções que são usadas primariamente em testes de *views*:
 
-| Assertion                                                 | Purpose |
-| --------------------------------------------------------- | ------- |
-| `assert_select_email`                                     | Allows you to make assertions on the body of an e-mail. |
-| `assert_select_encoded`                                   | Allows you to make assertions on encoded HTML. It does this by un-encoding the contents of each element and then calling the block with all the un-encoded elements.|
-| `css_select(selector)` or `css_select(element, selector)` | Returns an array of all the elements selected by the _selector_. In the second variant it first matches the base _element_ and tries to match the _selector_ expression on any of its children. If there are no matches both variants return an empty array.|
+| Asserção                                                  | Propósito |
+| --------------------------------------------------------- | --------- |
+| `assert_select_email`                                     | Permite fazer asserções no corpo de um email. |
+| `assert_select_encoded`                                   | Permite fazer asserções em HTML codificado. Isso é feito decodificando os conteúdos de cada elemento e então chamando o bloco com todos os elementos decodificados. |
+| `css_select(selector)` ou `css_select(element, selector)` | Retorna uma *array* de todos os elementos selecionados por *selector*. Na segunda variante, o método primeiro seleciona o elemento base `element` e depois tenta selecionar os descendentes de `element` através de `selector`. Se não houver nenhum match, ambas variantes retornam *array* vazia. |
 
-Here's an example of using `assert_select_email`:
+Aqui está um exemplo do uso de `assert_selected_email`:
 
 ```ruby
 assert_select_email do
@@ -1576,17 +1560,17 @@ assert_select_email do
 end
 ```
 
-Testing Helpers
+Testando os *Helpers*
 ---------------
 
-A helper is just a simple module where you can define methods which are
-available in your views.
+Um *helper* é apenas um simples módulo onde você pode definir métodos
+que estarão disponíveis nas suas *views*.
 
-In order to test helpers, all you need to do is check that the output of the
-helper method matches what you'd expect. Tests related to the helpers are
-located under the `test/helpers` directory.
+Para testar os *helpers*, tudo que você precisa fazer é verificar se a saída do
+método *helper* é de fato a saída esperada. Testes relacionados aos *helpers* estão
+localizados dentro da pasta `test/helpers`.
 
-Given we have the following helper:
+Dado o seguinte *helper*:
 
 ```ruby
 module UsersHelper
@@ -1596,7 +1580,7 @@ module UsersHelper
 end
 ```
 
-We can test the output of this method like this:
+Nós podemos testar a saída desse método da seguinte maneira:
 
 ```ruby
 class UsersHelperTest < ActionView::TestCase
@@ -1608,8 +1592,8 @@ class UsersHelperTest < ActionView::TestCase
 end
 ```
 
-Moreover, since the test class extends from `ActionView::TestCase`, you have
-access to Rails' helper methods such as `link_to` or `pluralize`.
+Além disso, uma vez que a classe de teste se estende de `ActionView::TestCase`, você tem
+acesso aos métodos auxiliares do Rails como `link_to` ou` pluralize`.
 
 Testing Your Mailers
 --------------------

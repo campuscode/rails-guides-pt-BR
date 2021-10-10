@@ -21,41 +21,38 @@ O que é o *Action Cable*?
 
 O *Action Cable* integra-se perfeitamente [WebSockets](https://pt.wikipedia.org/wiki/WebSocket) com o resto da sua aplicação Rails. Permite que recursos em tempo real sejam escritos em Ruby no mesmo estilo e forma que o resto de sua aplicação Rails, ao mesmo tempo em que possui desempenho e escabilidade. Isso é uma oferta _full-stack_ que fornece um _framework_ Javascript do lado do cliente (_client-side_) e um _framework_ Ruby do lado do servidor (_server-side_). Você tem acesso ao seu _model_ de domínio completo escrito com o *Active Record* ou o ORM de sua escolha.
 
-Terminology
+Terminologia
 -----------
 
-Action Cable uses WebSockets instead of the HTTP request-response protocol.
-Both Action Cable and WebSockets introduce some less familiar terminology:
+O *Action Cable* utiliza *WebSockets* ao invés do protocolo de requisição-resposta HTTP.
+Tanto o *Action Cable* quanto os *WebSockets* apresentam uma terminologia menos familiar:
 
-### Connections
+### Conexões
 
-*Connections* form the foundation of the client-server relationship.
-A single Action Cable server can handle multiple connection instances. It has one
-connection instance per WebSocket connection. A single user may have multiple
-WebSockets open to your application if they use multiple browser tabs or devices.
+Conexões formam a base do relacionamento cliente-servidor.
+Um único servidor *Action Cable* pode lidar com várias instâncias de conexão. Ele possui uma instância de conexão para cada conexão via *WebSocket*. Um único usuário pode ter vários *WebSockets* abertos para sua aplicação se ele utilizar várias abas do navegador ou dispositivos.
 
-### Consumers
+### Consumidores
 
-The client of a WebSocket connection is called the *consumer*. In Action Cable
-the consumer is created by the client-side JavaScript framework.
+O client de uma conexão *WebSocket* é chamado de *consumidor*. No *Action Cable*, o consumidor é criado pelo framework JavaScript do lado do cliente.
 
-### Channels
+### Canais
 
-Each consumer can in turn subscribe to multiple *channels*. Each channel
-encapsulates a logical unit of work, similar to what a controller does in
-a regular MVC setup. For example, you could have a `ChatChannel` and
-an `AppearancesChannel`, and a consumer could be subscribed to either
-or to both of these channels. At the very least, a consumer should be subscribed
-to one channel.
+Cada consumidor pode, por sua vez, se inscrever em vários *canais*.
+Cada canal encapsula uma unidade lógica de trabalho, semelhante ao que um
+*controller* faz em uma configuração MVC regular.
+Por exemplo, você pode ter um *ChatChannel* e um *AppearancesChannel*, e um
+consumidor pode ser inscrito em um ou em ambos os canais.
+Um consumidor deve se inscrever em, pelo menos, um canal.
 
-### Subscribers
+### Assinantes
 
-When the consumer is subscribed to a channel, they act as a *subscriber*.
-The connection between the subscriber and the channel is, surprise-surprise,
-called a subscription. A consumer can act as a subscriber to a given channel
-any number of times. For example, a consumer could subscribe to multiple chat rooms
-at the same time. (And remember that a physical user may have multiple consumers,
-one per tab/device open to your connection).
+Quando o consumidor está inscrito em um canal, ele age como um *assinante*.
+A conexão entre o assinante e o canal é, adivinhe, chamada de assinatura.
+Um consumidor pode atuar como um assinante de um determinado canal qualquer
+número de vezes. Por exemplo, um consumidor pode se inscrever em várias salas de
+chat ao mesmo tempo. (E lembre-se que um usuário físico pode ter vários
+consumidores, um por aba/dispositivo aberto para sua conexão).
 
 __Pub/Sub_
 ---------------
@@ -302,14 +299,11 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "1st Room" })
 consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
 ```
 
-## Client-Server Interactions
+## Interações Cliente-Servidor
 
-### Streams
+### *Streams*
 
-*Streams* provide the mechanism by which channels route published content
-(broadcasts) to their subscribers.  For example, the following code uses
-[`stream_from`][] to subscribe to the broadcasting named `chat_Best Room` when
-the value of the `:room` parameter is `"Best Room"`:
+*Streams* fornecem o mecanismo por onde os *channels* direcionam o conteúdo publicado (*broadcasts*) para seus assinantes. Por exemplo, o código a seguir usa [`stream_from`][] para se inscrever na transmissão (*broadcasting*) chamada `chat_Best Room` quando o valor do parâmetro `:room` é `"Best Room"`:
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -320,18 +314,13 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-Then, elsewhere in your Rails application, you can broadcast to such a room by
-calling [`broadcast`][]:
+Então, de outro lugar em sua aplicação Rails, é possível transmitir para essa `room` chamando [`broadcast`][]:
 
 ```ruby
 ActionCable.server.broadcast("chat_Best Room", { body: "This Room is Best Room." })
 ```
 
-If you have a stream that is related to a model, then the broadcasting name
-can be generated from the channel and model. For example, the following code
-uses [`stream_for`][] to subscribe to a broadcasting like
-`comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE`, where `Z2lkOi8vVGVzdEFwcC9Qb3N0LzE` is
-the GlobalID of the Post model.
+Se você possui um *stream* que está relacionada a uma *model*, então o nome da transmissão pode ser gerada a partir do *channel* e *model*. Por exemplo, o código a seguir usa [`stream_for`][] para se inscrever em uma transmissão como `comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE`, onde `Z2lkOi8vVGVzdEFwcC9Qb3N0LzE` corresponde ao ID Global da *model* Post.
 
 ```ruby
 class CommentsChannel < ApplicationCable::Channel
@@ -342,7 +331,7 @@ class CommentsChannel < ApplicationCable::Channel
 end
 ```
 
-You can then broadcast to this channel by calling [`broadcast_to`][]:
+Você pode agora transmitir para esse *channel* chamando [`broadcast_to`][]:
 
 ```ruby
 CommentsChannel.broadcast_to(@post, @comment)
@@ -353,25 +342,19 @@ CommentsChannel.broadcast_to(@post, @comment)
 [`stream_for`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_for
 [`stream_from`]: https://api.rubyonrails.org/classes/ActionCable/Channel/Streams.html#method-i-stream_from
 
-### Broadcastings
+### *Broadcastings*
 
-A *broadcasting* is a pub/sub link where anything transmitted by a publisher
-is routed directly to the channel subscribers who are streaming that named
-broadcasting. Each channel can be streaming zero or more broadcastings.
+Um *broadcasting* é um link *pub/sub* em que qualquer coisa transmitida por um *publisher* é encaminhada diretamente para os assinantes do *channel*, este, que está transmitindo o *broadcasting* de mesmo nome. Cada *channel* pode estar transmitindo zero ou mais *broadcastings*.
 
-Broadcastings are purely an online queue and time-dependent. If a consumer is
-not streaming (subscribed to a given channel), they'll not get the broadcast
-should they connect later.
+*Broadcastings* são puramente filas de espera online e dependentes de tempo. Se um consumidor não estiver transmitindo (assinante de um determinado *channel*), ele não vai receber o *broadcast* caso se conecte mais tarde.
 
-### Subscriptions
+### *Subscriptions*
 
-When a consumer is subscribed to a channel, they act as a subscriber. This
-connection is called a subscription. Incoming messages are then routed to
-these channel subscriptions based on an identifier sent by the cable consumer.
+Quando um consumidor está inscrito em um *channel*, ele age como assinante (*subscriber*). Essa conexão é chamada de assinatura (*subscription*). Mensagens recebidas são então direcionadas para esses inscritos do *channel* baseadas em um identificador enviado pelo *cable consumer*
 
 ```js
 // app/javascript/channels/chat_channel.js
-// Assumes you've already requested the right to send web notifications
+// Assumindo que você já requeriu os direitos para enviar notificações web
 import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
@@ -396,10 +379,9 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
 })
 ```
 
-### Passing Parameters to Channels
+### Passando Parâmetros para *Channel*
 
-You can pass parameters from the client side to the server side when creating a
-subscription. For example:
+Você pode passar parâmetros do lado do cliente para o lado do servidor quando cria a *subscription*. Por exemplo:
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -410,8 +392,7 @@ class ChatChannel < ApplicationCable::Channel
 end
 ```
 
-An object passed as the first argument to `subscriptions.create` becomes the
-params hash in the cable channel. The keyword `channel` is required:
+Um objeto passado como primeiro argumento em `subscriptions.create` torna-se a *hash* `params` em *cable channel*. A *keyword* `channel` é obrigatória:
 
 ```js
 // app/javascript/channels/chat_channel.js
@@ -440,8 +421,8 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
 ```
 
 ```ruby
-# Somewhere in your app this is called, perhaps
-# from a NewCommentJob.
+# Em algum lugar do seu app isso pode ser chamado, talvez,
+# por um novo NewCommentJob.
 ActionCable.server.broadcast(
   "chat_#{room}",
   {
@@ -451,10 +432,9 @@ ActionCable.server.broadcast(
 )
 ```
 
-### Rebroadcasting a Message
+### Retransmitindo uma Mensagem
 
-A common use case is to *rebroadcast* a message sent by one client to any
-other connected clients.
+Um caso de uso comum é ter que retransmitir uma mensagem enviada por um cliente para qualquer outro cliente conectado
 
 ```ruby
 # app/channels/chat_channel.rb
@@ -482,9 +462,7 @@ const chatChannel = consumer.subscriptions.create({ channel: "ChatChannel", room
 chatChannel.send({ sent_by: "Paul", body: "This is a cool chat app." })
 ```
 
-The rebroadcast will be received by all connected clients, _including_ the
-client that sent the message. Note that params are the same as they were when
-you subscribed to the channel.
+A retransmissão vai ser recebida por todos os clientes conectados, _incluindo_ o cliente que enviou a mensagem. Note que `params` são os mesmos de quando você se inscreveu no *channel*
 
 ## Full-Stack Examples
 
@@ -719,7 +697,7 @@ O adaptador assíncrono destina-se ao desenvolvimento / teste e não deve ser us
 
 O adaptador Redis requer que os usuários forneçam uma URL apontando para o servidor Redis.
 Além disso, um `channel_prefix` pode ser fornecido para evitar colisões de nome de canal
-ao usar o mesmo servidor Redis para vários aplicativos. Veja a 
+ao usar o mesmo servidor Redis para vários aplicativos. Veja a
 [Documentação Redis PubSub](https://redis.io/topics/pubsub#database-amp-scoping) para mais detalhes.
 
 ##### Adaptador PostgreSQL
@@ -812,7 +790,7 @@ class Application < Rails::Application
 end
 ```
 
-Você pode usar `ActionCable.createConsumer()` para conectar ao 
+Você pode usar `ActionCable.createConsumer()` para conectar ao
 _cable server_ se `action_cable_meta_tag` for invocado no layout. Caso contrário, um caminho é
 especificado como primeiro argumento para `createConsumer` (e.g. `ActionCable.createConsumer("/websocket")`).
 
