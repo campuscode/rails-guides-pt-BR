@@ -1924,10 +1924,13 @@ irb> nina.save
 
 [`find_or_initialize_by`]: https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-find_or_initialize_by
 
-Finding by SQL
+Encontrando por SQL
 --------------
 
-If you'd like to use your own SQL to find records in a table you can use [`find_by_sql`][]. The `find_by_sql` method will return an array of objects even if the underlying query returns just a single record. For example you could run this query:
+Se você quiser usar seu próprio SQL para encontrar registros em uma tabela você
+pode usar [`find_by_sql`][]. O método `find_by_sql` vai retornar um array de
+objetos mesmo que a consulta subjacente retorne apenas um único registro. Por
+exemplo, você poderia rodar a consulta:
 
 ```irb
 irb> Customer.find_by_sql("SELECT * FROM customers INNER JOIN orders ON customers.id = orders.customer_id ORDER BY customers.created_at desc")
