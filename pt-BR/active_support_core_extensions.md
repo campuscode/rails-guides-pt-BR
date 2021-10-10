@@ -625,8 +625,6 @@ NOTE: Definido em `active_support/core_ext/module/attribute_accessors.rb`.
 [Module#mattr_reader]: https://api.rubyonrails.org/classes/Module.html#method-i-mattr_reader
 [Module#mattr_writer]: https://api.rubyonrails.org/classes/Module.html#method-i-mattr_writer
 
-### Parents
-
 ### _Parents_
 
 #### `module_parent`

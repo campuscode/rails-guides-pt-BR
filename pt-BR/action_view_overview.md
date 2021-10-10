@@ -4,29 +4,29 @@
 Action View Overview
 ====================
 
-After reading this guide, you will know:
+Depois de ler este guia, você vai saber:
 
-* What Action View is and how to use it with Rails.
-* How best to use templates, partials, and layouts.
-* How to use localized views.
+* O que é *Action View* e como é utilizada no Rails.
+* A melhor forma de usar *templates*, *partials* e *layouts*.
+* Como utilizar *views* localizadas.
 
 --------------------------------------------------------------------------------
 
-What is Action View?
---------------------
+O que é *Action View*?
+----------------------
 
-In Rails, web requests are handled by [Action Controller](action_controller_overview.html) and Action View. Typically, Action Controller is concerned with communicating with the database and performing CRUD actions where necessary. Action View is then responsible for compiling the response.
+No *Rails*, as requisições web são tratadas por [*Action Controller*](action_controller_overview.html) e *Action View*. Normalmente, o *Action Controller* é responsável por se comunicar com o banco de dados e realizar ações de *CRUD* quando necessário. A *Action View* é responsável por compilar a resposta.
 
-Action View templates are written using embedded Ruby in tags mingled with HTML. To avoid cluttering the templates with boilerplate code, a number of helper classes provide common behavior for forms, dates, and strings. It's also easy to add new helpers to your application as it evolves.
+Os templates *Action View* são escritos usando Ruby embutido em tags mescladas com HTML. Para evitar poluir os templates com código clichê (*boilerplate code*), uma variedade de classes utilitárias (*helpers*) disponibilizam comportamentos comuns para lidar com *forms*, datas e *strings*. Também é fácil adicionar novas classes utilitárias (*helpers*) em sua aplicação conforme ela evolui.
 
-NOTE: Some features of Action View are tied to Active Record, but that doesn't mean Action View depends on Active Record. Action View is an independent package that can be used with any sort of Ruby libraries.
+NOTE: Alguns recursos da *Action View* estão vinculados ao *Active Record*, mas isso não significa que a *Action View* depende do *Active Record*. *Action View* é um pacote independente que pode ser usado com qualquer tipo de biblioteca Ruby.
 
-Using Action View with Rails
+Usando *Action View* com Rails
 ----------------------------
 
-For each controller there is an associated directory in the `app/views` directory which holds the template files that make up the views associated with that controller. These files are used to display the view that results from each controller action.
+Para cada *controller* há um diretório associado em `app/views` que contém os arquivos de *template* que compõe as *views* associadas aos seus respectivos *controllers*. Esses arquivos são utilizados para exibir a *view* que resulta de cada ação do *controller*.
 
-Let's take a look at what Rails does by default when creating a new resource using the scaffold generator:
+Vamos dar uma olhada no que o Rails faz por padrão quando um novo recurso é criado utilizando o *generator scaffold*:
 
 ```bash
 $ bin/rails generate scaffold article
@@ -43,28 +43,28 @@ $ bin/rails generate scaffold article
       [...]
 ```
 
-There is a naming convention for views in Rails. Typically, the views share their name with the associated controller action, as you can see above.
-For example, the index controller action of the `articles_controller.rb` will use the `index.html.erb` view file in the `app/views/articles` directory.
-The complete HTML returned to the client is composed of a combination of this ERB file, a layout template that wraps it, and all the partials that the view may reference. Within this guide you will find more detailed documentation about each of these three components.
+Há uma convenção de nomenclatura para as *views* no Rails. Normalmente, as *views* compartilham seu nome com a *action* do *controller* à qual ela é associada, conforme pode ser visto no exemplo acima.
+Por exemplo, a ação *index* do *controller* `articles_controller.rb` utilizará o arquivo de *view* `index.html.erb` no diretório `app/views/articles`.
+O HTML completo que é retornado ao *client* é composto de uma combinação desse arquivo ERB, um *template* de *layout* que o envolve, e todas as *partials* que a *view* pode referenciar. Dentro deste guia você encontrará documentações mais detalhadas sobre cada um desses três componentes.
 
 
-Templates, Partials, and Layouts
--------------------------------
+*Templates*, *Partials*, e *Layouts*
+------------------------------------
 
-As mentioned, the final HTML output is a composition of three Rails elements: `Templates`, `Partials` and `Layouts`.
-Below is a brief overview of each of them.
+Como já mencionado, a saída HTML final é uma composição de três elementos: `Templates`, `Partials` e `Layouts`.
+Abaixo está uma breve visão geral de cada um deles.
 
 ### Templates
 
-Action View templates can be written in several ways. If the template file has a `.erb` extension then it uses a mixture of ERB (Embedded Ruby) and HTML. If the template file has a `.builder` extension then the `Builder::XmlMarkup` library is used.
+*Templates* *Action View* podem ser escritos de várias maneiras. Se o arquivo de *template* tiver a extensão `.erb` ele usará uma mistura de ERB (*Embedded Ruby*) com HTML. Se o arquivo de template tiver a extensão `.builder`, a biblioteca (*library*) `Builder::XmlMarkup` é utilizada.
 
-Rails supports multiple template systems and uses a file extension to distinguish amongst them. For example, an HTML file using the ERB template system will have `.html.erb` as a file extension.
+O Rails suporta múltiplos sistemas de *template* e utiliza a extensão do arquivo para distingui-los. Por exemplo, um arquivo HTML usando o sistema de *template* ERB terá a extensão do arquivo como `.html.erb`.
 
 #### ERB
 
-Within an ERB template, Ruby code can be included using both `<% %>` and `<%= %>` tags. The `<% %>` tags are used to execute Ruby code that does not return anything, such as conditions, loops, or blocks, and the `<%= %>` tags are used when you want output.
+Dentro de um *template* ERB, o código Ruby pode ser incluído usando ambas as tags `<% %>` e `<%= %>`. As tags `<% %>` são utilizadas para executar código Ruby que não possui retorno, como condições, *loops*, ou blocos, e as tags `<%= %>` são utilizadas quando você deseja uma saída.
 
-Consider the following loop for names:
+Considere o seguinte *loop* de nomes:
 
 ```html+erb
 <h1>Names of all the people</h1>
@@ -73,20 +73,20 @@ Consider the following loop for names:
 <% end %>
 ```
 
-The loop is set up using regular embedding tags (`<% %>`) and the name is inserted using the output embedding tags (`<%= %>`). Note that this is not just a usage suggestion: regular output functions such as `print` and `puts` won't be rendered to the view with ERB templates. So this would be wrong:
+O *loop* é configurado usando tags de incorporação regulares (`<% %>`) e o nome é inserido usando as tags de incorporação de saída (`<%= %>`). Note que isso não é somente uma sugestão de uso: funções de saída regulares como `print` e `puts` não serão renderizadas na *view* usando *template* ERB. Então, isso estaria errado:
 
 ```html+erb
 <%# WRONG %>
 Hi, Mr. <% puts "Frodo" %>
 ```
 
-To suppress leading and trailing whitespaces, you can use `<%-` `-%>` interchangeably with `<%` and `%>`.
+Para suprimir espaços em branco à esquerda e à direita, você pode usar `<%-` `-%>` alternadamente com `<%` e `%>`.
 
 #### Builder
 
-Builder templates are a more programmatic alternative to ERB. They are especially useful for generating XML content. An XmlMarkup object named `xml` is automatically made available to templates with a `.builder` extension.
+Os *templates* *Builder* são uma alternativa mais programática ao ERB. Eles são especialmente úteis para gerar conteúdo *XML*. Um objeto *XmlMarkup* denominado `xml` é automaticamente disponibilizado para *templates* com extensão` .builder`.
 
-Here are some basic examples:
+Aqui estão alguns exemplos básicos:
 
 ```ruby
 xml.em("emphasized")
@@ -95,7 +95,7 @@ xml.a("A Link", "href" => "https://rubyonrails.org")
 xml.target("name" => "compile", "option" => "fast")
 ```
 
-which would produce:
+que produziria:
 
 ```html
 <em>emphasized</em>
@@ -104,7 +104,7 @@ which would produce:
 <target option="fast" name="compile" />
 ```
 
-Any method with a block will be treated as an XML markup tag with nested markup in the block. For example, the following:
+Qualquer método com um bloco será tratado como uma tag de marcação *XML* com marcação aninhada no bloco. Por exemplo, o seguinte:
 
 ```ruby
 xml.div {
@@ -113,7 +113,7 @@ xml.div {
 }
 ```
 
-would produce something like:
+produziria algo como:
 
 ```html
 <div>
@@ -122,7 +122,7 @@ would produce something like:
 </div>
 ```
 
-Below is a full-length RSS example actually used on Basecamp:
+Abaixo está um exemplo completo de *RSS* que foi usado de verdade no Basecamp:
 
 ```ruby
 xml.rss("version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/") do
@@ -148,27 +148,26 @@ end
 ```
 
 #### Jbuilder
-[Jbuilder](https://github.com/rails/jbuilder) is a gem that's
-maintained by the Rails team and included in the default Rails `Gemfile`.
-It's similar to Builder, but is used to generate JSON, instead of XML.
+[Jbuilder](https://github.com/rails/jbuilder) é uma *gem* que é
+mantida pelo time do Rails e incluída por padrão no `Gemfile` do Rails.
+É similar ao *Builder*, mas é usada para gerar *JSON*, ao invés de *XML*.
 
-If you don't have it, you can add the following to your `Gemfile`:
+Se você não tiver, você pode adicionar o seguinte ao seu `Gemfile`:
 
 ```ruby
 gem 'jbuilder'
 ```
 
-A Jbuilder object named `json` is automatically made available to templates with
-a `.jbuilder` extension.
+Um objeto *Jbuilder* denominado `json` é automaticamente disponibilizado para *templates* com extensão `.jbuilder`.
 
-Here is a basic example:
+Aqui está um exemplo básico:
 
 ```ruby
 json.name("Alex")
 json.email("alex@example.com")
 ```
 
-would produce:
+produziria:
 
 ```json
 {
@@ -177,36 +176,35 @@ would produce:
 }
 ```
 
-See the [Jbuilder documentation](https://github.com/rails/jbuilder#jbuilder) for
-more examples and information.
+Veja a [documentação do Jbuilder](https://github.com/rails/jbuilder#jbuilder) para mais exemplos e informação.
 
 #### Template Caching
 
-By default, Rails will compile each template to a method in order to render it. In the development environment, when you alter a template, Rails will check the file's modification time and recompile it.
+Por padrão, o Rails compila cada *template* em um método para renderizá-la. Em ambiente de desenvolvimento, quando você altera um *template*, o Rails verifica a hora de modificação do arquivo e o recompila.
 
-### Partials
+### *Partials*
 
-Partial templates - usually just called "partials" - are another device for breaking the rendering process into more manageable chunks. With partials, you can extract pieces of code from your templates to separate files and also reuse them throughout your templates.
+*Templates* parciais (*partials*) - normalmente chamados apenas de *partials* - são outro instrumento para quebrar o processo de renderização em partes mais gerenciáveis. Com *partials*, você consegue extrair pedaços de código de seus *templates* para separar em arquivos e também reusá-los em seus *templates*.
 
-#### Naming Partials
+#### Nomeando *Partials*
 
-To render a partial as part of a view, you use the `render` method within the view:
+Para renderizar uma *partial* como parte de uma *view*, utiliza-se o método `render` dentro da *view*:
 
 ```erb
 <%= render "menu" %>
 ```
 
-This will render a file named `_menu.html.erb` at that point within the view that is being rendered. Note the leading underscore character: partials are named with a leading underscore to distinguish them from regular views, even though they are referred to without the underscore. This holds true even when you're pulling in a partial from another folder:
+Isso renderizará o arquivo `_menu.html.erb` naquele ponto dentro da *view* sendo renderizada. Note o caractere de sublinhado no início: as *partials* são nomeadass com um sublinhado no início para distingui-las das *views* regulares, embora sejam referidas sem o sublinhado. Isso é valido mesmo quando utilizamos uma *partial* de uma pasta diferente:
 
 ```erb
 <%= render "shared/menu" %>
 ```
 
-That code will pull in the partial from `app/views/shared/_menu.html.erb`.
+Esse código pegará a *partial* de `app/views/shared/_menu.html.erb`.
 
-#### Using Partials to simplify Views
+#### Usando *Partials* para simplificar *Views*
 
-One way to use partials is to treat them as the equivalent of subroutines; a way to move details out of a view so that you can grasp what's going on more easily. For example, you might have a view that looks like this:
+Uma maneira de usar *partials* é tratando-as como se fossem sub-rotinas; uma maneira de mover detalhes para fora da *view* para que você consiga entender o que está acontecendo com mais facilidade. Por exemplo, você pode ter uma *view* parecida com essa:
 
 ```html+erb
 <%= render "shared/ad_banner" %>
@@ -221,70 +219,69 @@ One way to use partials is to treat them as the equivalent of subroutines; a way
 <%= render "shared/footer" %>
 ```
 
-Here, the `_ad_banner.html.erb` and `_footer.html.erb` partials could contain content that is shared among many pages in your application. You don't need to see the details of these sections when you're concentrating on a particular page.
+Aqui, as *partials* `_ad_banner.html.erb` e `_footer.html.erb` podem ter conteúdos que são compartilhados entre muitas páginas em sua aplicação. Você não precisa ver os detalhes dessas seções quando estiver se concentrando em uma página específica.
 
-#### `render` without `partial` and `locals` options
+#### `render` sem os parâmetros `partial` e `locals`
 
-In the above example, `render` takes 2 options: `partial` and `locals`. But if
-these are the only options you want to pass, you can skip using these options.
-For example, instead of:
+No exemplo acima, o método `render` recebe 2 parâmetros: `partial` e `locals`.
+Mas se esses forem os únicos parâmetros que você deseja passar, você pode ignorá-los.
+Por exemplo, ao invés de:
 
 ```erb
 <%= render partial: "product", locals: { product: @product } %>
 ```
 
-You can also do:
+Você também pode usar:
 
 ```erb
 <%= render "product", product: @product %>
 ```
 
-#### The `as` and `object` options
+#### Os parâmetros `as` e `object`
 
-By default `ActionView::Partials::PartialRenderer` has its object in a local variable with the same name as the template. So, given:
+Por padrão o `ActionView::Partials::PartialRenderer` tem seu objeto em uma variável local com o mesmo nome do *template*. Então, dado que:
 
 ```erb
 <%= render partial: "product" %>
 ```
 
-within `_product` partial we'll get `@product` in the local variable `product`,
-as if we had written:
+dentro da *partial* `_product` nós teremos o `@product` dentro da variável local `product`, como se tivéssemos escrito:
 
 ```erb
 <%= render partial: "product", locals: { product: @product } %>
 ```
 
-The `object` option can be used to directly specify which object is rendered into the partial; useful when the template's object is elsewhere (e.g. in a different instance variable or in a local variable).
+O parâmetro `object` pode ser usado para especificar diretamente qual objeto é renderizado na *partial*; útil quando o objeto do *template* está em outro lugar (por exemplo, em uma variável de instância diferente ou em uma variável local).
 
-For example, instead of:
+Por exemplo, ao invés de:
 
 ```erb
 <%= render partial: "product", locals: { product: @item } %>
 ```
 
-we would do:
+Faríamos:
 
 ```erb
 <%= render partial: "product", object: @item %>
 ```
 
-With the `as` option we can specify a different name for the said local variable. For example, if we wanted it to be `item` instead of `product` we would do:
+Com o parâmetro `as` nós podemos especificar um nome diferente para a variável local. Por exemplo, se quisermos que seja `item` em vez de `product`, faríamos:
 
 ```erb
 <%= render partial: "product", object: @item, as: "item" %>
 ```
 
-This is equivalent to
+Isso é equivalente a:
 
 ```erb
 <%= render partial: "product", locals: { item: @item } %>
 ```
 
-#### Rendering Collections
+#### Renderizando Coleções
 
-It is very common that a template will need to iterate over a collection and render a sub-template for each of the elements. This pattern has been implemented as a single method that accepts an array and renders a partial for each one of the elements in the array.
+É muito comum que um *template* precise iterar sobre uma coleção e renderizar um *sub-template* para cada um dos elementos. Esse padrão foi implementado como um método único que recebe um *array* e renderiza uma *partial* para cada um dos elementos do *array*.
 
-So this example for rendering all the products:
+Logo, este exemplo para renderizar todos os produtos:
 
 ```erb
 <% @products.each do |product| %>
@@ -292,35 +289,35 @@ So this example for rendering all the products:
 <% end %>
 ```
 
-can be rewritten in a single line:
+pode ser reescrito em uma linha:
 
 ```erb
 <%= render partial: "product", collection: @products %>
 ```
 
-When a partial is called with a collection, the individual instances of the partial have access to the member of the collection being rendered via a variable named after the partial. In this case, the partial is `_product`, and within it you can refer to `product` to get the collection member that is being rendered.
+Quando uma *partial* é chamada com uma coleção, as instâncias individuais da *partial* tem acesso ao membro da coleção que está sendo renderizado por meio de uma variável com o mesmo nome da *partial*. Nesse caso, a *partial* é `_product`, e dentro dele você pode se referir a `product` para obter o membro da coleção que está sendo renderizado.
 
-You can use a shorthand syntax for rendering collections. Assuming `@products` is a collection of `Product` instances, you can simply write the following to produce the same result:
+Você pode usar uma sintaxe abreviada para renderizar coleções. Supondo que `@products` é uma coleção de instâncias de `Product`, você pode simplesmente escrever o seguinte para produzir o mesmo resultado:
 
 ```erb
 <%= render @products %>
 ```
 
-Rails determines the name of the partial to use by looking at the model name in the collection, `Product` in this case. In fact, you can even render a collection made up of instances of different models using this shorthand, and Rails will choose the proper partial for each member of the collection.
+O Rails determina o nome da *partial* a ser usada observando o nome do *model* na coleção, `Product` neste caso. Na verdade, você pode até renderizar uma coleção composta de instâncias de diferentes *models* usando essa abreviação, e o Rails escolherá a *partial* adequada para cada membro da coleção.
 
-#### Spacer Templates
+#### *Spacer Templates*
 
-You can also specify a second partial to be rendered between instances of the main partial by using the `:spacer_template` option:
+Você também pode especificar uma segunda *partial* a ser renderizada entre as instâncias da *partial* principal usando o parâmetro `:spacer_template`:
 
 ```erb
 <%= render partial: @products, spacer_template: "product_ruler" %>
 ```
 
-Rails will render the `_product_ruler` partial (with no data passed to it) between each pair of `_product` partials.
+O Rails renderizará a *partial* `_product_ruler` (sem passar nenhum dado pra ela) entre cada par da *partial* `_product`.
 
 ### Layouts
 
-Layouts can be used to render a common view template around the results of Rails controller actions. Typically, a Rails application will have a couple of layouts that pages will be rendered within. For example, a site might have one layout for a logged in user and another for the marketing or sales side of the site. The logged in user layout might include top-level navigation that should be present across many controller actions. The sales layout for a SaaS app might include top-level navigation for things like "Pricing" and "Contact Us" pages. You would expect each layout to have a different look and feel. You can read about layouts in more detail in the [Layouts and Rendering in Rails](layouts_and_rendering.html) guide.
+Os *Layouts* podem ser usados para renderizar um *template* em torno dos resultados das *actions* do *controller* do Rails. Normalmente, uma aplicação Rails terá alguns *layouts* nos quais as páginas serão renderizadas. Por exemplo, um site pode ter um *layout* para um usuário conectado e outra página para marketing ou vendas do site. O *layout* do usuário conectado pode incluir navegação de nível superior (*top-level*), que deve estar presente em muitas *actions* do *controller*. O *layout* de vendas de uma aplicação SaaS pode incluir navegação de nível superior para páginas de "Preços" e "Fale conosco", onde esperaria que cada *layout* tivesse uma aparência e sensação diferentes. Você pode ler sobre *layout* com mais detalhes em [Layouts e Renderização no Rails](layouts_and_rendering.html).
 
 Partial Layouts
 ---------------
