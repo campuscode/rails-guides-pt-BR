@@ -896,7 +896,7 @@ A *gem* Web Console é um pouco semelhante à *gem* `byebug`, porém é executad
 ### Console
 
 
-Dentro de qualquer *controller action* ou *view*, você pode utilizaar o console através da chamada do método `console`.
+Dentro de qualquer *controller action* ou *view*, você pode utilizar o console através da chamada do método `console`.
 
 Por exemplo, em um *controller*:
 
