@@ -880,7 +880,7 @@ O `byebug` possui algumas opções disponíveis para ajustar seu comportamento:
   savefile       -- File where settings are saved to. Default: ~/.byebug_save
 ```
 
-TIP: Você pode salvar essas configuraçoes em um arquivo `.byebugrc` em seu diretório home.
+TIP: Você pode salvar essas configurações em um arquivo `.byebugrc` em seu diretório home.
 O *debugger* lê essas configurações globais quando inicializa. Por exemplo:
 
 ```
