@@ -1,34 +1,34 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Autoloading and Reloading Constants (Zeitwerk Mode)
+Auto Carregamento e Recarregamento de Constantes (Modo Zeitwerk)
 ======================================================
 
-This guide documents how autoloading and reloading works in `zeitwerk` mode.
+Esse guia documenta como funciona o auto carregamento e o recarregamento no modo `zeitwerk`.
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
-* Autoloading modes
-* Related Rails configuration
-* Project structure
-* Autoloading, reloading, and eager loading
-* Single Table Inheritance
-* And more
+* Modos de Auto carregamento
+* Configurações Relacionadas ao Rails
+* Estrutura do projeto
+* Auto carregamento, recarregamento e _eager loading_.
+* Herança de Tabela Única
+* E mais
 
 --------------------------------------------------------------------------------
 
-Introduction
+Introdução
 ------------
 
-INFO. This guide documents autoloading in `zeitwerk` mode, which is new in Rails 6. If you'd like to read about `classic` mode instead, please check [Autoloading and Reloading Constants (Classic Mode)](autoloading_and_reloading_constants_classic_mode.html).
+INFO. Esse guia documenta auto carregamento no modo `zeitwerk`, que é algo novo no Rails 6. Se o que você quer ler é sobre o modo `classic`, leia [Auto Carregamento e Recarregamento de Constantes (Modo Classic)](autoloading_and_reloading_constants_classic_mode.html).
 
-In a normal Ruby program, dependencies need to be loaded by hand. For example, the following controller uses classes `ApplicationController` and `Post`, and normally you'd need to put `require` calls for them:
+Em um programa Ruby normal, dependências precisam ser carregadas de forma manual. Por exemplo, o *controller* a seguir utiliza as classes `ApplicationController` e `Post`, e normalmente você precisaria colocar alguns `require` para utilizá-los:
 
 ```ruby
-# DO NOT DO THIS.
+# NÃO FAÇA ISSO.
 require "application_controller"
 require "post"
-# DO NOT DO THIS.
+# NÃO FAÇA ISSO.
 
 class PostsController < ApplicationController
   def index
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
 end
 ```
 
-This is not the case in Rails applications, where application classes and modules are just available everywhere:
+Isso não é necessário em aplicações Rails, onde as classes e o modulos da aplicação estão disponíveis em todo canto.
 
 ```ruby
 class PostsController < ApplicationController
@@ -47,7 +47,7 @@ class PostsController < ApplicationController
 end
 ```
 
-Idiomatic Rails applications only issue `require` calls to load stuff from their `lib` directory, the Ruby standard library, Ruby gems, etc. That is, anything that does not belong to their autoload paths, explained below.
+Comumente, aplicações Rails só utilizam `require` para carregar coisas da sua pasta `lib`, da biblioteca padrão do ruby, do Ruby gems, etc. Ou seja, qualquer coisa que não esteja presente nos caminhos de auto carregamento, explicado a seguir.
 
 
 Enabling Zeitwerk Mode
