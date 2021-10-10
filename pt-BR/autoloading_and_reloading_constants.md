@@ -50,19 +50,18 @@ end
 Idiomatic Rails applications only issue `require` calls to load stuff from their `lib` directory, the Ruby standard library, Ruby gems, etc. That is, anything that does not belong to their autoload paths, explained below.
 
 
-Enabling Zeitwerk Mode
+Habilitando o modo Zeitwerk
 ----------------------
-
-The autoloading `zeitwerk` mode is enabled by default in Rails 6 applications running on CRuby:
+O modo `zeitwerk` de auto carregamento é habilitado por padrão no Rails 6 que utilizam CRuby:
 
 ```ruby
 # config/application.rb
-config.load_defaults 6.0 # enables zeitwerk mode in CRuby
+config.load_defaults 6.0 # habilita o modo zeitwerk usando CRuby
 ```
 
-In `zeitwerk` mode, Rails uses [Zeitwerk](https://github.com/fxn/zeitwerk) internally to autoload, reload, and eager load. Rails instantiates and configures a dedicated Zeitwerk instance that manages the project.
+No modo `zeitwerk`, o Rails utiliza [Zeitwerk](https://github.com/fxn/zeitwerk) de forma interna para fazer carregamento automatico, recarregamento e *eager load*. O Rails cria e configura uma instancia Zeitwerk dedicada que gerencia o projeto.
 
-INFO. You do not configure Zeitwerk manually in a Rails application. Rather, you configure the application using the portable configuration points explained in this guide, and Rails translates that to Zeitwerk on your behalf.
+INFO. Você não configura o Zeitwerk manualmente em uma aplicação Rails. Ao invés disso, você configura a aplicação usando uma configuração portável, que é descrita neste guia. Assim, o Rails traduz essas configurações para o Zeitwerk por você.
 
 Project Structure
 -----------------
