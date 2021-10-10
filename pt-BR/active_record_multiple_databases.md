@@ -238,30 +238,21 @@ config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelec
 config.active_record.database_resolver_context = MyCookieResolver
 ```
 
-## Using manual connection switching
+## Usando a troca de conexão manual
 
-There are some cases where you may want your application to connect to a writer or a replica
-and the automatic connection switching isn't adequate. For example, you may know that for a
-particular request you always want to send the request to a replica, even when you are in a
-POST request path.
+Existem casos nos quais você pode querer que sua aplicação se conecte ao banco de escrita ou à réplica, e onde a troca automática de conexão não será adequada. Por exemplo, suponhamos que exista uma requisição em particular que sempre deverá ser encaminhada para a réplica, mesmo que tenha método POST.
 
-To do this Rails provides a `connected_to` method that will switch to the connection you
-need.
+Para isso, o Rails possui um método chamado `connected_to`, que trocará para a conexão desejada.
 
 ```ruby
 ActiveRecord::Base.connected_to(role: :reading) do
-  # all code in this block will be connected to the reading role
+  # o código deste bloco estará conectado ao role 'reading'
 end
 ```
 
-The "role" in the `connected_to` call looks up the connections that are connected on that
-connection handler (or role). The `reading` connection handler will hold all the connections
-that were connected via `connects_to` with the role name of `reading`.
+O *role* definido em `connected_to` buscará as conexões ligadas naquele determinado *handler* (ou *role*). O *handler* da conexão `reading` receberá todas as conexões feitas através do `connects_to`, que tenham o *role* `reading`.
 
-Note that `connected_to` with a role will look up an existing connection and switch
-using the connection specification name. This means that if you pass an unknown role
-like `connected_to(role: :nonexistent)` you will get an error that says
-`ActiveRecord::ConnectionNotEstablished (No connection pool for 'ActiveRecord::Base' found for the 'nonexistent' role.)`
+Observe que o `connected_to` com um *role* definido buscará e trocará para uma conexão existente, usando o nome da conexão. Isso quer dizer que ao passar um *role* desconhecido ou inválido, como por exemplo, `connected_to(role: :nonexistent)`, causará um erro com a seguinte mensagem: `ActiveRecord::ConnectionNotEstablished (No connection pool for 'ActiveRecord::Base' found for the 'nonexistent' role.)`
 
 ## Horizontal sharding
 
