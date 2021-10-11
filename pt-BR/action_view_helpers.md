@@ -13,7 +13,7 @@ Depois de ler este guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-Visão geral dos helpers fornecidos pelo Action View
+Visão geral dos *helpers* fornecidos pelo Action View
 -------------------------------------------
 
 WIP: Nem todos os *helpers* estão listados aqui. Para uma lista completa, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers.html)
