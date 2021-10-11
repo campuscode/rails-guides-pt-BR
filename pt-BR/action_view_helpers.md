@@ -109,7 +109,7 @@ stylesheet_link_tag "application"
 
 #### stylesheet_path
 
-Gera o caminho para um recurso de folha de estilo no diretório `app/assets/stylesheets`. Se o nome do arquivo fonte não tiver extensão, `.css` será anexado automaticamente. Caminhos completos da raiz do documento podem ser passados. Usado internamente por `stylesheet_link_tag` para construir o caminho da folha de estilo.
+Gera o caminho para um recurso de *stylesheet* no diretório `app/assets/stylesheets`. Se o nome do arquivo fonte não tiver extensão, `.css` será anexado automaticamente. Caminhos completos da raiz do documento podem ser passados. Usado internamente por `stylesheet_link_tag` para construir o caminho da folha de estilo.
 
 ```ruby
 stylesheet_path "application" # => /assets/application.css
