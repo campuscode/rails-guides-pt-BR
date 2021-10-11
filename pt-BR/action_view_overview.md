@@ -367,34 +367,35 @@ Supposing we use the same `_box` partial from above, this would produce the same
 View Paths
 ----------
 
-When rendering a response, the controller needs to resolve where the different
-views are located. By default it only looks inside the `app/views` directory.
+Ao renderizar uma resposta, o *controller* precisa resolver onde as diferentes
+*views* estão localizadas. Por padrão, ele só olha dentro do diretório `app/views`.
 
-We can add other locations and give them a certain precedence when resolving
-paths using the `prepend_view_path` and `append_view_path` methods.
+Podemos adicionar outros locais e dar-lhes uma certa precedência ao resolver
+caminhos usando os métodos `prepend_view_path` e `append_view_path`.
 
-### Prepend view path
+### Pré-anexando caminho das views
 
-This can be helpful for example, when we want to put views inside a different
-directory for subdomains.
+Isso pode ser útil, por exemplo, quando nós queremos colocar às *views* dentro
+de um diretório diferente para subdomínios.
 
-We can do this by using:
+Podemos fazer isso usando:
 
 ```ruby
 prepend_view_path "app/views/#{request.subdomain}"
 ```
 
-Then Action View will look first in this directory when resolving views.
+Então, a *Action View* procurará primeiro dentro deste diretório quando ao resolver as 
+*views*.
 
-### Append view path
+### Anexando caminho das views
 
-Similarly, we can append paths:
+Da mesma forma, podemos acrescentar caminhos:
 
 ```ruby
 append_view_path "app/views/direct"
 ```
 
-This will add `app/views/direct` to the end of the lookup paths.
+Isso adicionará `app/views/direct` ao final dos caminhos de pesquisa.
 
 *Helpers*
 -------
