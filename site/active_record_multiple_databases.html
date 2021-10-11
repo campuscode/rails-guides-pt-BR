@@ -316,13 +316,13 @@ new database for some new tables we're adding. The name of the new database will
   <span class="na">password</span><span class="pi">:</span> <span class="s">&lt;%= ENV['ROOT_PASSWORD'] %&gt;</span>
   <span class="na">adapter</span><span class="pi">:</span> <span class="s">mysql</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e835685db4c55a1485305b97beb45bc3">production:
+<textarea class="clipboard-content" id="clipboard-c8ec3e64fff94180ef7a3f5bb90623e8">production:
   database: my_primary_database
   username: root
   password: &lt;%= ENV['ROOT_PASSWORD'] %&gt;
   adapter: mysql
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e835685db4c55a1485305b97beb45bc3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c8ec3e64fff94180ef7a3f5bb90623e8">Copiar</button>
 </div>
 <p>Let's add a replica for the first configuration, and a second database called animals and a
 replica for that as well. To do this we need to change our <code>database.yml</code> from a 2-tier
@@ -356,7 +356,7 @@ will use <code>[CONFIGURATION_NAMESPACE]_schema.rb</code> for the filename.</p><
     <span class="na">adapter</span><span class="pi">:</span> <span class="s">mysql2</span>
     <span class="na">replica</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-19f2e351b59552b9fbdd527aada2e824">production:
+<textarea class="clipboard-content" id="clipboard-8fb13adb797d361489c85d3b03c6755c">production:
   primary:
     database: my_primary_database
     username: root
@@ -381,7 +381,7 @@ will use <code>[CONFIGURATION_NAMESPACE]_schema.rb</code> for the filename.</p><
     adapter: mysql2
     replica: true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-19f2e351b59552b9fbdd527aada2e824">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8fb13adb797d361489c85d3b03c6755c">Copiar</button>
 </div>
 <p>When using multiple databases there are a few important settings.</p><p>First, the database name for the <code>primary</code> and <code>primary_replica</code> should be the same because they contain
 the same data. This is also the case for <code>animals</code> and <code>animals_replica</code>.</p><p>Second, the username for the writers and replicas should be different, and the
@@ -397,13 +397,13 @@ new database we need to create a new abstract class and connect to the animals d
   <span class="n">connects_to</span> <span class="ss">database: </span><span class="p">{</span> <span class="ss">writing: :animals</span><span class="p">,</span> <span class="ss">reading: :animals_replica</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-609a46cd716480074751282bd1910784">class AnimalsRecord &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-757f5a47bcf9b84ce835b6c1f96675cb">class AnimalsRecord &lt; ApplicationRecord
   self.abstract_class = true
 
   connects_to database: { writing: :animals, reading: :animals_replica }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-609a46cd716480074751282bd1910784">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-757f5a47bcf9b84ce835b6c1f96675cb">Copiar</button>
 </div>
 <p>Then we need to update <code>ApplicationRecord</code> to be aware of our new replica.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationRecord</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
@@ -412,23 +412,23 @@ end
   <span class="n">connects_to</span> <span class="ss">database: </span><span class="p">{</span> <span class="ss">writing: :primary</span><span class="p">,</span> <span class="ss">reading: :primary_replica</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-91f08240afc5181ee069ee62db678c50">class ApplicationRecord &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-7ac1a2a9008b9dcb8ecc526d582af096">class ApplicationRecord &lt; ActiveRecord::Base
   self.abstract_class = true
 
   connects_to database: { writing: :primary, reading: :primary_replica }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-91f08240afc5181ee069ee62db678c50">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7ac1a2a9008b9dcb8ecc526d582af096">Copiar</button>
 </div>
 <p>Classes that connect to primary/primary_replica can inherit from <code>ApplicationRecord</code> like
 standard Rails applications:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9f5c332c314b43dfc5023bd60efb0fce">class Person &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-9beefedf25e4bd3649d4780cb65f5fb3">class Person &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9f5c332c314b43dfc5023bd60efb0fce">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9beefedf25e4bd3649d4780cb65f5fb3">Copiar</button>
 </div>
 <p>By default Rails expects the database roles to be <code>writing</code> and <code>reading</code> for the primary
 and replica respectively. If you have a legacy system you may already have roles set up that
@@ -436,10 +436,10 @@ you don't want to change. In that case you can set a new role name in your appli
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">writing_role</span> <span class="o">=</span> <span class="ss">:default</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">reading_role</span> <span class="o">=</span> <span class="ss">:readonly</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bade4c57422603b6d50549eda59c14e7">config.active_record.writing_role = :default
+<textarea class="clipboard-content" id="clipboard-0856c6d3cdd0c63305bdb07ac8487b50">config.active_record.writing_role = :default
 config.active_record.reading_role = :readonly
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bade4c57422603b6d50549eda59c14e7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0856c6d3cdd0c63305bdb07ac8487b50">Copiar</button>
 </div>
 <p>It's important to connect to your database in a single model and then inherit from that model
 for the tables rather than connect multiple individual models to the same database. Database
@@ -470,9 +470,9 @@ Rails 6.0 ships with all the rails tasks you need to use multiple databases in R
 <span class="gp">rails db:schema:load:animals             #</span><span class="w"> </span>Loads a database schema file <span class="o">(</span>either db/schema.rb or db/structure.sql  ...
 <span class="gp">rails db:schema:load:primary             #</span><span class="w"> </span>Loads a database schema file <span class="o">(</span>either db/schema.rb or db/structure.sql  ...
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6002c1d39383ae29f6dff0473bca9ef2">bin/rails -T
+<textarea class="clipboard-content" id="clipboard-365397c774748287d857c135cbcc1f4f">bin/rails -T
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6002c1d39383ae29f6dff0473bca9ef2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-365397c774748287d857c135cbcc1f4f">Copiar</button>
 </div>
 <p>Running a command like <code>bin/rails db:create</code> will create both the primary and animals databases.
 Note that there is no command for creating the users and you'll need to do that manually
@@ -484,17 +484,17 @@ where to find the migrations.</p><p>For example the <code>animals</code> databas
 so that the file is generated in the correct directory. The command can be run like so:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration CreateDogs name:string <span class="nt">--database</span> animals
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0dcaf78ec49ca33b2340f64673097943">bin/rails generate migration CreateDogs name:string --database animals
+<textarea class="clipboard-content" id="clipboard-9448f3565edcd97c6e9a41ad7de35d13">bin/rails generate migration CreateDogs name:string --database animals
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0dcaf78ec49ca33b2340f64673097943">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9448f3565edcd97c6e9a41ad7de35d13">Copiar</button>
 </div>
 <p>If you are using Rails generators, the scaffold and model generators will create the abstract
 class for you. Simply pass the database key to the command line</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate scaffold Dog name:string <span class="nt">--database</span> animals
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9d2fcb9bd868d5f91ea2cef467064b4c">bin/rails generate scaffold Dog name:string --database animals
+<textarea class="clipboard-content" id="clipboard-8569eb9e55a8b0becf8133c87a981352">bin/rails generate scaffold Dog name:string --database animals
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9d2fcb9bd868d5f91ea2cef467064b4c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8569eb9e55a8b0becf8133c87a981352">Copiar</button>
 </div>
 <p>A class with the database name and <code>Record</code> will be created. In this example
 the database is <code>Animals</code> so we end up with <code>AnimalsRecord</code>:</p><div class="code_container">
@@ -504,22 +504,22 @@ the database is <code>Animals</code> so we end up with <code>AnimalsRecord</code
   <span class="n">connects_to</span> <span class="ss">database: </span><span class="p">{</span> <span class="ss">writing: :animals</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bec66e16997fbde05bc1f1a5c20846bc">class AnimalsRecord &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-d63c5af0ca8eeebc1e4e97336c20b056">class AnimalsRecord &lt; ApplicationRecord
   self.abstract_class = true
 
   connects_to database: { writing: :animals }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bec66e16997fbde05bc1f1a5c20846bc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d63c5af0ca8eeebc1e4e97336c20b056">Copiar</button>
 </div>
 <p>The generated model will automatically inherit from <code>AnimalsRecord</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Dog</span> <span class="o">&lt;</span> <span class="no">AnimalsRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-34c6e9435153d0fc229d9e8fcbce270e">class Dog &lt; AnimalsRecord
+<textarea class="clipboard-content" id="clipboard-93df2b534e89bc0a87b8a5bd89a25f53">class Dog &lt; AnimalsRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-34c6e9435153d0fc229d9e8fcbce270e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-93df2b534e89bc0a87b8a5bd89a25f53">Copiar</button>
 </div>
 <p>Note: Since Rails doesn't know which database is the replica for your writer you will need to
 add this to the abstract class after you're done.</p><p>Rails will only generate the new class once. It will not be overwritten by new scaffolds
@@ -527,9 +527,9 @@ or deleted if the scaffold is deleted.</p><p>If you already have an abstract cla
 the <code>--parent</code> option to indicate you want a different abstract class:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate scaffold Dog name:string <span class="nt">--database</span> animals <span class="nt">--parent</span> Animals::Record
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d508bca138b0562525af2cc7a910c01b">bin/rails generate scaffold Dog name:string --database animals --parent Animals::Record
+<textarea class="clipboard-content" id="clipboard-33e0ad371ba1d2ada982f0e21c8a324b">bin/rails generate scaffold Dog name:string --database animals --parent Animals::Record
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d508bca138b0562525af2cc7a910c01b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-33e0ad371ba1d2ada982f0e21c8a324b">Copiar</button>
 </div>
 <p>This will skip generating <code>AnimalsRecord</code> since you've indicated to Rails that you want to
 use a different parent class.</p><h3 id="activating-automatic-connection-switching"><a class="anchorlink" href="#activating-automatic-connection-switching">3 Activating automatic connection switching</a></h3><p>Finally, in order to use the read-only replica in your application you'll need to activate
@@ -543,11 +543,11 @@ lines in your application config.</p><div class="code_container">
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">DatabaseSelector</span><span class="o">::</span><span class="no">Resolver</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver_context</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">DatabaseSelector</span><span class="o">::</span><span class="no">Resolver</span><span class="o">::</span><span class="no">Session</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4937c813c96104e64c5a489ebea7d6c1">config.active_record.database_selector = { delay: 2.seconds }
+<textarea class="clipboard-content" id="clipboard-345254f774dcc08ba323c67f774a66bc">config.active_record.database_selector = { delay: 2.seconds }
 config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
 config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4937c813c96104e64c5a489ebea7d6c1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-345254f774dcc08ba323c67f774a66bc">Copiar</button>
 </div>
 <p>Rails guarantees "read your own write" and will send your GET or HEAD request to the
 writer if it's within the <code>delay</code> window. By default the delay is set to 2 seconds. You
@@ -562,22 +562,22 @@ decide when to swap connections. You can write your own class:</p><div class="co
   <span class="c1"># code for your cookie class</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-01da5f6535a81ab2e82bcc2d73bc1ef1">class MyCookieResolver
+<textarea class="clipboard-content" id="clipboard-6be29a7c96709855bd9e2ae147b260bd">class MyCookieResolver
   # code for your cookie class
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-01da5f6535a81ab2e82bcc2d73bc1ef1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6be29a7c96709855bd9e2ae147b260bd">Copiar</button>
 </div>
 <p>And then pass it to the middleware:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_selector</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">delay: </span><span class="mi">2</span><span class="p">.</span><span class="nf">seconds</span> <span class="p">}</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">DatabaseSelector</span><span class="o">::</span><span class="no">Resolver</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver_context</span> <span class="o">=</span> <span class="no">MyCookieResolver</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0ce61d193d6867cc97ffd6eef392a0a8">config.active_record.database_selector = { delay: 2.seconds }
+<textarea class="clipboard-content" id="clipboard-0de64c0255fc7a7240bae8a8f4dab9aa">config.active_record.database_selector = { delay: 2.seconds }
 config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
 config.active_record.database_resolver_context = MyCookieResolver
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0ce61d193d6867cc97ffd6eef392a0a8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0de64c0255fc7a7240bae8a8f4dab9aa">Copiar</button>
 </div>
 <h3 id="using-manual-connection-switching"><a class="anchorlink" href="#using-manual-connection-switching">4 Using manual connection switching</a></h3><p>There are some cases where you may want your application to connect to a writer or a replica
 and the automatic connection switching isn't adequate. For example, you may know that for a
@@ -588,11 +588,11 @@ need.</p><div class="code_container">
   <span class="c1"># all code in this block will be connected to the reading role</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5e7914435d5f72f52dfdbf759f42f9c3">ActiveRecord::Base.connected_to(role: :reading) do
+<textarea class="clipboard-content" id="clipboard-0d50939c490736d7e3720266daf959d3">ActiveRecord::Base.connected_to(role: :reading) do
   # all code in this block will be connected to the reading role
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5e7914435d5f72f52dfdbf759f42f9c3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0d50939c490736d7e3720266daf959d3">Copiar</button>
 </div>
 <p>The "role" in the <code>connected_to</code> call looks up the connections that are connected on that
 connection handler (or role). The <code>reading</code> connection handler will hold all the connections
@@ -619,7 +619,7 @@ sharding API that's existed since Rails 6.0.</p><p>Shards are declared in the th
     <span class="na">adapter</span><span class="pi">:</span> <span class="s">mysql2</span>
     <span class="na">replica</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a52a9c306df0d6a18a1d126db153e686">production:
+<textarea class="clipboard-content" id="clipboard-8eb710edf8c4b8ecd2eef1daf7dee5f4">production:
   primary:
     database: my_primary_database
     adapter: mysql2
@@ -635,7 +635,7 @@ sharding API that's existed since Rails 6.0.</p><p>Shards are declared in the th
     adapter: mysql2
     replica: true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a52a9c306df0d6a18a1d126db153e686">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8eb710edf8c4b8ecd2eef1daf7dee5f4">Copiar</button>
 </div>
 <p>Models are then connected with the <code>connects_to</code> API via the <code>shards</code> key:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationRecord</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
@@ -647,7 +647,7 @@ sharding API that's existed since Rails 6.0.</p><p>Shards are declared in the th
   <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e5d11fc98c51b5b40bfc48b89e155548">class ApplicationRecord &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-42147e71ce1cd708eaef2826410e58ac">class ApplicationRecord &lt; ActiveRecord::Base
   self.abstract_class = true
 
   connects_to shards: {
@@ -656,7 +656,7 @@ sharding API that's existed since Rails 6.0.</p><p>Shards are declared in the th
   }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e5d11fc98c51b5b40bfc48b89e155548">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-42147e71ce1cd708eaef2826410e58ac">Copiar</button>
 </div>
 <p>Then models can swap connections manually via the <code>connected_to</code> API. If
 using sharding both a <code>role</code> and <code>shard</code> must be passed:</p><div class="code_container">
@@ -669,7 +669,7 @@ using sharding both a <code>role</code> and <code>shard</code> must be passed:</
                    <span class="c1"># in the default shard</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-63d60b199a923751c143106b0a5ddc84">ActiveRecord::Base.connected_to(role: :writing, shard: :default) do
+<textarea class="clipboard-content" id="clipboard-4fe94f08ba4e62546d49ee82d7e9fe36">ActiveRecord::Base.connected_to(role: :writing, shard: :default) do
   @id = Person.create! # Creates a record in shard default
 end
 
@@ -678,7 +678,7 @@ ActiveRecord::Base.connected_to(role: :writing, shard: :shard_one) do
                    # in the default shard
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-63d60b199a923751c143106b0a5ddc84">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4fe94f08ba4e62546d49ee82d7e9fe36">Copiar</button>
 </div>
 <p>The horizontal sharding API also supports read replicas. You can swap the
 role and the shard with the <code>connected_to</code> API.</p><div class="code_container">
@@ -686,11 +686,11 @@ role and the shard with the <code>connected_to</code> API.</p><div class="code_c
   <span class="no">Person</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Lookup record from read replica of shard one</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4aaed76ea1cd434e1a946a6b2f59d7d5">ActiveRecord::Base.connected_to(role: :reading, shard: :shard_one) do
+<textarea class="clipboard-content" id="clipboard-fd5861c8582fd6e0860cbedb9c1ec37a">ActiveRecord::Base.connected_to(role: :reading, shard: :shard_one) do
   Person.first # Lookup record from read replica of shard one
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4aaed76ea1cd434e1a946a6b2f59d7d5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fd5861c8582fd6e0860cbedb9c1ec37a">Copiar</button>
 </div>
 <h3 id="granular-database-connection-switching"><a class="anchorlink" href="#granular-database-connection-switching">6 Granular Database Connection Switching</a></h3><p>In Rails 6.1 it's possible to switch connections for one database instead of
 all databases globally. To use this feature you must first set
@@ -705,12 +705,12 @@ while ensuring your <code>ApplicationRecord</code> queries go to the primary.</p
   <span class="no">Person</span><span class="p">.</span><span class="nf">first</span>  <span class="c1"># Reads from primary</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-28f0ec73c93745205d2773611719ed10">AnimalsRecord.connected_to(role: :reading) do
+<textarea class="clipboard-content" id="clipboard-256f31db8fef3f8bd177da64c7ed0f5d">AnimalsRecord.connected_to(role: :reading) do
   Dog.first # Reads from animals_replica
   Person.first  # Reads from primary
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-28f0ec73c93745205d2773611719ed10">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-256f31db8fef3f8bd177da64c7ed0f5d">Copiar</button>
 </div>
 <p>It's also possible to swap connections granularly for shards.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">AnimalsRecord</span><span class="p">.</span><span class="nf">connected_to</span><span class="p">(</span><span class="ss">role: :reading</span><span class="p">,</span> <span class="ss">shard: :shard_one</span><span class="p">)</span> <span class="k">do</span>
@@ -719,13 +719,13 @@ end
   <span class="no">Person</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Will read from primary writer</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-956abffb8ba394b7f50b0de734447cb5">AnimalsRecord.connected_to(role: :reading, shard: :shard_one) do
+<textarea class="clipboard-content" id="clipboard-93fae24d64d5cd22f589c77d3fddc19a">AnimalsRecord.connected_to(role: :reading, shard: :shard_one) do
   Dog.first # Will read from shard_one_replica. If no connection exists for shard_one_replica,
   # a ConnectionNotEstablished error will be raised
   Person.first # Will read from primary writer
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-956abffb8ba394b7f50b0de734447cb5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-93fae24d64d5cd22f589c77d3fddc19a">Copiar</button>
 </div>
 <p>To switch only the primary database cluster use <code>ApplicationRecord</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ApplicationRecord</span><span class="p">.</span><span class="nf">connected_to</span><span class="p">(</span><span class="ss">role: :reading</span><span class="p">,</span> <span class="ss">shard: :shard_one</span><span class="p">)</span> <span class="k">do</span>
@@ -733,12 +733,12 @@ end
   <span class="no">Dog</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Reads from animals_primary</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6827c51bb05f9226781d94528a01b54c">ApplicationRecord.connected_to(role: :reading, shard: :shard_one) do
+<textarea class="clipboard-content" id="clipboard-af58e952e62fb444791aa0793ddb3c56">ApplicationRecord.connected_to(role: :reading, shard: :shard_one) do
   Person.first # Reads from primary_shard_one_replica
   Dog.first # Reads from animals_primary
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6827c51bb05f9226781d94528a01b54c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-af58e952e62fb444791aa0793ddb3c56">Copiar</button>
 </div>
 <p><code>ActiveRecord::Base.connected_to</code> maintains the ability to switch
 connections globally.</p><h3 id="caveats"><a class="anchorlink" href="#caveats">7 Caveats</a></h3><h4 id="automatic-swapping-for-horizontal-sharding"><a class="anchorlink" href="#automatic-swapping-for-horizontal-sharding">7.1 Automatic swapping for horizontal sharding</a></h4><p>While Rails now supports an API for connecting to and swapping connections of shards, it does

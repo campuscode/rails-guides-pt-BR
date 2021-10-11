@@ -401,23 +401,23 @@
   <span class="n">accepts_nested_attributes_for</span> <span class="ss">:author</span><span class="p">,</span> <span class="ss">:pages</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d93e9a6ff222c4e00a992f4b5cb4f8c8">class Book &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-85aa97ca8f047be93d624a387cbe90bf">class Book &lt; ActiveRecord::Base
   has_one :author
   has_many :pages
 
   accepts_nested_attributes_for :author, :pages
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d93e9a6ff222c4e00a992f4b5cb4f8c8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-85aa97ca8f047be93d624a387cbe90bf">Copiar</button>
 </div>
 <p>Turning on nested attributes enables a number of things: automatic (and atomic) saving of a record together with its associated children, child-aware validations, and support for nested forms (discussed later).</p><p>You can also specify requirements for any new records that are added via nested attributes using the <code>:reject_if</code> option:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">accepts_nested_attributes_for</span> <span class="ss">:author</span><span class="p">,</span>
   <span class="ss">:reject_if</span> <span class="o">=&gt;</span> <span class="nb">proc</span> <span class="p">{</span> <span class="o">|</span><span class="n">attributes</span><span class="o">|</span> <span class="n">attributes</span><span class="p">[</span><span class="s1">'name'</span><span class="p">].</span><span class="nf">blank?</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-75ced43878ab5c64f926de2c570502c0">accepts_nested_attributes_for :author,
+<textarea class="clipboard-content" id="clipboard-0fa729055342a221286ec714e578f8a2">accepts_nested_attributes_for :author,
   :reject_if =&gt; proc { |attributes| attributes['name'].blank? }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-75ced43878ab5c64f926de2c570502c0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0fa729055342a221286ec714e578f8a2">Copiar</button>
 </div>
 
 <ul>
@@ -437,7 +437,7 @@ end
 
 <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="ss">:all</span><span class="p">)</span>  <span class="c1"># =&gt; Returns only Admin</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-716ea9fedafb8965ec252980c5f10511">User.transaction do
+<textarea class="clipboard-content" id="clipboard-a87ee3434bbf5cb28708c5aa62a67b2e">User.transaction do
   User.create(:username =&gt; 'Admin')
   User.transaction(:requires_new =&gt; true) do
     User.create(:username =&gt; 'Regular')
@@ -447,7 +447,7 @@ end
 
 User.find(:all)  # =&gt; Returns only Admin
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-716ea9fedafb8965ec252980c5f10511">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a87ee3434bbf5cb28708c5aa62a67b2e">Copiar</button>
 </div>
 <p>Nested transactions let you roll back an inner transaction without affecting the state of the outer transaction. If you want a transaction to be nested, you must explicitly add the <code>:requires_new</code> option; otherwise, a nested transaction simply becomes part of the parent transaction (as it does currently on Rails 2.2). Under the covers, nested transactions are <a href="http://rails.lighthouseapp.com/projects/8994/tickets/383,">using savepoints</a> so they're supported even on databases that don't have true nested transactions. There is also a bit of magic going on to make these transactions play well with transactional fixtures during testing.</p>
 <ul>
@@ -460,12 +460,12 @@ User.find(:all)  # =&gt; Returns only Admin
   <span class="ss">:conditions</span> <span class="o">=&gt;</span> <span class="s2">"status = 'open'"</span><span class="p">)</span>
 <span class="no">Order</span><span class="p">.</span><span class="nf">scoped_by_customer_id</span><span class="p">(</span><span class="mi">12</span><span class="p">).</span><span class="nf">scoped_by_status</span><span class="p">(</span><span class="s2">"open"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d2823e3752529b8b820cacc608d9f9bd">Order.scoped_by_customer_id(12)
+<textarea class="clipboard-content" id="clipboard-033fa4e5db68e4d46c25f8227f5ba02c">Order.scoped_by_customer_id(12)
 Order.scoped_by_customer_id(12).find(:all,
   :conditions =&gt; "status = 'open'")
 Order.scoped_by_customer_id(12).scoped_by_status("open")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d2823e3752529b8b820cacc608d9f9bd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-033fa4e5db68e4d46c25f8227f5ba02c">Copiar</button>
 </div>
 <p>There's nothing to define to use dynamic scopes: they just work.</p>
 <ul>
@@ -485,22 +485,22 @@ Order.scoped_by_customer_id(12).scoped_by_status("open")
   <span class="n">customer_group</span><span class="p">.</span><span class="nf">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">customer</span><span class="o">|</span> <span class="n">customer</span><span class="p">.</span><span class="nf">update_account_balance!</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d6ea585d9e9177f13b508f91c77a66b4">Customer.find_in_batches(:conditions =&gt; {:active =&gt; true}) do |customer_group|
+<textarea class="clipboard-content" id="clipboard-e1786a7d835593329228503cfa504183">Customer.find_in_batches(:conditions =&gt; {:active =&gt; true}) do |customer_group|
   customer_group.each { |customer| customer.update_account_balance! }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d6ea585d9e9177f13b508f91c77a66b4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e1786a7d835593329228503cfa504183">Copiar</button>
 </div>
 <p>You can pass most of the <code>find</code> options into <code>find_in_batches</code>. However, you cannot specify the order that records will be returned in (they will always be returned in ascending order of primary key, which must be an integer), or use the <code>:limit</code> option. Instead, use the <code>:batch_size</code> option, which defaults to 1000, to set the number of records that will be returned in each batch.</p><p>The new <code>find_each</code> method provides a wrapper around <code>find_in_batches</code> that returns individual records, with the find itself being done in batches (of 1000 by default):</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Customer</span><span class="p">.</span><span class="nf">find_each</span> <span class="k">do</span> <span class="o">|</span><span class="n">customer</span><span class="o">|</span>
   <span class="n">customer</span><span class="p">.</span><span class="nf">update_account_balance!</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-92518ec9d505c26decce4136cfaefb0b">Customer.find_each do |customer|
+<textarea class="clipboard-content" id="clipboard-054a88d580b556f1b03fe03dfc20dc52">Customer.find_each do |customer|
   customer.update_account_balance!
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-92518ec9d505c26decce4136cfaefb0b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-054a88d580b556f1b03fe03dfc20dc52">Copiar</button>
 </div>
 <p>Note that you should only use this method for batch processing: for small numbers of records (less than 1000), you should just use the regular find methods with your own loop.</p>
 <ul>
@@ -516,10 +516,10 @@ end
 <pre><code class="highlight ruby"><span class="n">before_save</span> <span class="ss">:update_credit_rating</span><span class="p">,</span> <span class="ss">:if</span> <span class="o">=&gt;</span> <span class="ss">:active</span><span class="p">,</span>
   <span class="ss">:unless</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:admin</span><span class="p">,</span> <span class="ss">:cash_only</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8e5df1301eb25f7322366374e51dc664">before_save :update_credit_rating, :if =&gt; :active,
+<textarea class="clipboard-content" id="clipboard-2809da699ed8a8c4917bf822cb0c0404">before_save :update_credit_rating, :if =&gt; :active,
   :unless =&gt; [:admin, :cash_only]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8e5df1301eb25f7322366374e51dc664">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2809da699ed8a8c4917bf822cb0c0404">Copiar</button>
 </div>
 
 <ul>
@@ -529,10 +529,10 @@ end
 <pre><code class="highlight ruby"><span class="n">developers</span> <span class="o">=</span> <span class="no">Developer</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="ss">:all</span><span class="p">,</span> <span class="ss">:group</span> <span class="o">=&gt;</span> <span class="s2">"salary"</span><span class="p">,</span>
   <span class="ss">:having</span> <span class="o">=&gt;</span> <span class="s2">"sum(salary) &gt; 10000"</span><span class="p">,</span> <span class="ss">:select</span> <span class="o">=&gt;</span> <span class="s2">"salary"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b6ace65077bd1d1dcc72b9e3555fe8e9">developers = Developer.find(:all, :group =&gt; "salary",
+<textarea class="clipboard-content" id="clipboard-654e7c01420f58d12046bc76750c4ee1">developers = Developer.find(:all, :group =&gt; "salary",
   :having =&gt; "sum(salary) &gt; 10000", :select =&gt; "salary")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b6ace65077bd1d1dcc72b9e3555fe8e9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-654e7c01420f58d12046bc76750c4ee1">Copiar</button>
 </div>
 
 <ul>
@@ -574,11 +574,11 @@ end
 <span class="n">render</span> <span class="ss">:template</span> <span class="o">=&gt;</span> <span class="s1">'other_controller/action'</span>
 <span class="n">render</span> <span class="ss">:action</span> <span class="o">=&gt;</span> <span class="s1">'show'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f91c76913f271cd11a6ad6e94e0f6c30">render :file =&gt; '/tmp/random_file.erb'
+<textarea class="clipboard-content" id="clipboard-a3740a10c345a2d9223f33193d96abfd">render :file =&gt; '/tmp/random_file.erb'
 render :template =&gt; 'other_controller/action'
 render :action =&gt; 'show'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f91c76913f271cd11a6ad6e94e0f6c30">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a3740a10c345a2d9223f33193d96abfd">Copiar</button>
 </div>
 <p>Now in Rails 2.3, you can just supply what you want to render:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">render</span> <span class="s1">'/tmp/random_file.erb'</span>
@@ -586,12 +586,12 @@ render :action =&gt; 'show'
 <span class="n">render</span> <span class="s1">'show'</span>
 <span class="n">render</span> <span class="ss">:show</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-faf88845dcd358ff3d9768c7e7129303">render '/tmp/random_file.erb'
+<textarea class="clipboard-content" id="clipboard-ab34f09287297c364c7781946d879bda">render '/tmp/random_file.erb'
 render 'other_controller/action'
 render 'show'
 render :show
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-faf88845dcd358ff3d9768c7e7129303">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ab34f09287297c364c7781946d879bda">Copiar</button>
 </div>
 <p>Rails chooses between file, template, and action depending on whether there is a leading slash, an embedded slash, or no slash at all in what's to be rendered. Note that you can also use a symbol instead of a string when rendering an action. Other rendering styles (<code>:inline</code>, <code>:text</code>, <code>:update</code>, <code>:nothing</code>, <code>:json</code>, <code>:xml</code>, <code>:js</code>) still require an explicit option.</p><h4 id="application-controller-renamed"><a class="anchorlink" href="#application-controller-renamed">5.2 Application Controller Renamed</a></h4><p>If you're one of the people who has always been bothered by the special-case naming of <code>application.rb</code>, rejoice! It's been reworked to be <code>application_controller.rb</code> in Rails 2.3. In addition, there's a new rake task, <code>rake rails:update:application_controller</code> to do this automatically for you - and it will be run as part of the normal <code>rake rails:update</code> process.</p>
 <ul>
@@ -621,7 +621,7 @@ render :show
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-28a56a34cd350bd2cbad5ba5fada4f0f">class PostsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-43ebc957214714183c8b1ca1f5f9b8f8">class PostsController &lt; ApplicationController
   Users = {"dhh" =&gt; "secret"}
   before_filter :authenticate
 
@@ -638,7 +638,7 @@ render :show
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-28a56a34cd350bd2cbad5ba5fada4f0f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-43ebc957214714183c8b1ca1f5f9b8f8">Copiar</button>
 </div>
 
 <ul>
@@ -660,14 +660,14 @@ end
 <span class="no">Mime</span><span class="o">::</span><span class="no">JS</span> <span class="o">=~</span> <span class="s2">"text/javascript"</span>        <span class="o">=&gt;</span> <span class="kp">true</span>
 <span class="no">Mime</span><span class="o">::</span><span class="no">JS</span> <span class="o">=~</span> <span class="s2">"application/javascript"</span> <span class="o">=&gt;</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-56dc88170ce887bc9eed76c24c608026">if content_type &amp;&amp; Mime::JS =~ content_type
+<textarea class="clipboard-content" id="clipboard-7d0432ba68139ce78178467dc89e58c8">if content_type &amp;&amp; Mime::JS =~ content_type
   # do something cool
 end
 
 Mime::JS =~ "text/javascript"        =&gt; true
 Mime::JS =~ "application/javascript" =&gt; true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-56dc88170ce887bc9eed76c24c608026">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7d0432ba68139ce78178467dc89e58c8">Copiar</button>
 </div>
 <p>The other change is that the framework now uses the <code>Mime::JS</code> when checking for JavaScript in various spots, making it handle those alternatives cleanly.</p>
 <ul>
@@ -702,13 +702,13 @@ Mime::JS =~ "application/javascript" =&gt; true
   <span class="n">accepts_nested_attributes_for</span> <span class="ss">:orders</span><span class="p">,</span> <span class="ss">:allow_destroy</span> <span class="o">=&gt;</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2979ea77df26191b546fdf016fd38a29">class Customer &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-2108b705b236279a9888255b88f2f56d">class Customer &lt; ActiveRecord::Base
   has_many :orders
 
   accepts_nested_attributes_for :orders, :allow_destroy =&gt; true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2979ea77df26191b546fdf016fd38a29">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2108b705b236279a9888255b88f2f56d">Copiar</button>
 </div>
 <p>You can write this view in Rails 2.3:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">form_for</span> <span class="vi">@customer</span> <span class="k">do</span> <span class="o">|</span><span class="n">customer_form</span><span class="o">|</span> <span class="cp">%&gt;</span>
@@ -740,7 +740,7 @@ end
   <span class="cp">&lt;%=</span> <span class="n">customer_form</span><span class="p">.</span><span class="nf">submit</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9141113fa8e9d4f91b917e0189711218">&lt;% form_for @customer do |customer_form| %&gt;
+<textarea class="clipboard-content" id="clipboard-47991d68f41d89b407918b6b8ced3e22">&lt;% form_for @customer do |customer_form| %&gt;
   &lt;div&gt;
     &lt;%= customer_form.label :name, 'Customer Name:' %&gt;
     &lt;%= customer_form.text_field :name %&gt;
@@ -769,7 +769,7 @@ end
   &lt;%= customer_form.submit %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9141113fa8e9d4f91b917e0189711218">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-47991d68f41d89b407918b6b8ced3e22">Copiar</button>
 </div>
 
 <ul>
@@ -793,7 +793,7 @@ end
 <span class="c1"># :collection =&gt; @articles</span>
 <span class="n">render</span> <span class="vi">@articles</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ee8104caac35626caa8726ac948fba5b"># Equivalent of render :partial =&gt; 'articles/_article',
+<textarea class="clipboard-content" id="clipboard-6d19cb5a2a97c10a585fea5cc5066ee0"># Equivalent of render :partial =&gt; 'articles/_article',
 # :object =&gt; @article
 render @article
 
@@ -801,7 +801,7 @@ render @article
 # :collection =&gt; @articles
 render @articles
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ee8104caac35626caa8726ac948fba5b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6d19cb5a2a97c10a585fea5cc5066ee0">Copiar</button>
 </div>
 
 <ul>
@@ -818,7 +818,7 @@ render @articles
    <span class="ss">:year</span> <span class="o">=&gt;</span> <span class="s1">'Choose year'</span><span class="p">,</span> <span class="ss">:hour</span> <span class="o">=&gt;</span> <span class="s1">'Choose hour'</span><span class="p">,</span>
    <span class="ss">:minute</span> <span class="o">=&gt;</span> <span class="s1">'Choose minute'</span><span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a62a73947fd150f0abe02545781f3873">select_datetime(DateTime.now, :prompt =&gt; true)
+<textarea class="clipboard-content" id="clipboard-6f5fc8dc02cf66d8f3a0b8bb3036cf43">select_datetime(DateTime.now, :prompt =&gt; true)
 
 select_datetime(DateTime.now, :prompt =&gt; "Choose date and time")
 
@@ -827,7 +827,7 @@ select_datetime(DateTime.now, :prompt =&gt;
    :year =&gt; 'Choose year', :hour =&gt; 'Choose hour',
    :minute =&gt; 'Choose minute'})
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a62a73947fd150f0abe02545781f3873">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6f5fc8dc02cf66d8f3a0b8bb3036cf43">Copiar</button>
 </div>
 
 <ul>
@@ -843,10 +843,10 @@ select_datetime(DateTime.now, :prompt =&gt;
 <pre><code class="highlight ruby"><span class="n">grouped_options_for_select</span><span class="p">([[</span><span class="s2">"Hats"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"Baseball Cap"</span><span class="p">,</span><span class="s2">"Cowboy Hat"</span><span class="p">]]],</span>
   <span class="s2">"Cowboy Hat"</span><span class="p">,</span> <span class="s2">"Choose a product..."</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2f5b1da783ce59dda5c4dbdac19ff2a8">grouped_options_for_select([["Hats", ["Baseball Cap","Cowboy Hat"]]],
+<textarea class="clipboard-content" id="clipboard-b718025c6c83f2772e79690da26abe7b">grouped_options_for_select([["Hats", ["Baseball Cap","Cowboy Hat"]]],
   "Cowboy Hat", "Choose a product...")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2f5b1da783ce59dda5c4dbdac19ff2a8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b718025c6c83f2772e79690da26abe7b">Copiar</button>
 </div>
 <p>returns</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>Choose a product...<span class="nt">&lt;/option&gt;</span>
@@ -855,20 +855,20 @@ select_datetime(DateTime.now, :prompt =&gt;
   <span class="nt">&lt;option</span> <span class="na">selected=</span><span class="s">"selected"</span> <span class="na">value=</span><span class="s">"Cowboy Hat"</span><span class="nt">&gt;</span>Cowboy Hat<span class="nt">&lt;/option&gt;</span>
 <span class="nt">&lt;/optgroup&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fd0d8de61b2b344f442d8713f861a3f9">&lt;option value=""&gt;Choose a product...&lt;/option&gt;
+<textarea class="clipboard-content" id="clipboard-56b403986954015ddddd345938b56230">&lt;option value=""&gt;Choose a product...&lt;/option&gt;
 &lt;optgroup label="Hats"&gt;
   &lt;option value="Baseball Cap"&gt;Baseball Cap&lt;/option&gt;
   &lt;option selected="selected" value="Cowboy Hat"&gt;Cowboy Hat&lt;/option&gt;
 &lt;/optgroup&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fd0d8de61b2b344f442d8713f861a3f9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-56b403986954015ddddd345938b56230">Copiar</button>
 </div>
 <h4 id="disabled-option-tags-for-form-select-helpers"><a class="anchorlink" href="#disabled-option-tags-for-form-select-helpers">6.7 Disabled Option Tags for Form Select Helpers</a></h4><p>The form select helpers (such as <code>select</code> and <code>options_for_select</code>) now support a <code>:disabled</code> option, which can take a single value or an array of values to be disabled in the resulting tags:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">select</span><span class="p">(</span><span class="ss">:post</span><span class="p">,</span> <span class="ss">:category</span><span class="p">,</span> <span class="no">Post</span><span class="o">::</span><span class="no">CATEGORIES</span><span class="p">,</span> <span class="ss">:disabled</span> <span class="o">=&gt;</span> <span class="s1">'private'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3f38b02768aa8a69d46226c2b9a5ea04">select(:post, :category, Post::CATEGORIES, :disabled =&gt; 'private')
+<textarea class="clipboard-content" id="clipboard-a5cf64ef07c1cefeb64df562c7758d89">select(:post, :category, Post::CATEGORIES, :disabled =&gt; 'private')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3f38b02768aa8a69d46226c2b9a5ea04">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a5cf64ef07c1cefeb64df562c7758d89">Copiar</button>
 </div>
 <p>returns</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"post[category]"</span><span class="nt">&gt;</span>
@@ -878,21 +878,21 @@ select_datetime(DateTime.now, :prompt =&gt;
 <span class="nt">&lt;option</span> <span class="na">disabled=</span><span class="s">"disabled"</span><span class="nt">&gt;</span>private<span class="nt">&lt;/option&gt;</span>
 <span class="nt">&lt;/select&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-802cb9cf97130f5ec840d74eb19954d3">&lt;select name="post[category]"&gt;
+<textarea class="clipboard-content" id="clipboard-0fe6c3d9d6f11804dcdb25a69d60ae5c">&lt;select name="post[category]"&gt;
 &lt;option&gt;story&lt;/option&gt;
 &lt;option&gt;joke&lt;/option&gt;
 &lt;option&gt;poem&lt;/option&gt;
 &lt;option disabled="disabled"&gt;private&lt;/option&gt;
 &lt;/select&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-802cb9cf97130f5ec840d74eb19954d3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0fe6c3d9d6f11804dcdb25a69d60ae5c">Copiar</button>
 </div>
 <p>You can also use an anonymous function to determine at runtime which options from collections will be selected and/or disabled:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">options_from_collection_for_select</span><span class="p">(</span><span class="vi">@product</span><span class="p">.</span><span class="nf">sizes</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:disabled</span> <span class="o">=&gt;</span> <span class="nb">lambda</span><span class="p">{</span><span class="o">|</span><span class="n">size</span><span class="o">|</span> <span class="n">size</span><span class="p">.</span><span class="nf">out_of_stock?</span><span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9063648c24d0fb7623169a81a029b230">options_from_collection_for_select(@product.sizes, :name, :id, :disabled =&gt; lambda{|size| size.out_of_stock?})
+<textarea class="clipboard-content" id="clipboard-1a60496c0b1e469cfdb293d83da4de81">options_from_collection_for_select(@product.sizes, :name, :id, :disabled =&gt; lambda{|size| size.out_of_stock?})
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9063648c24d0fb7623169a81a029b230">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1a60496c0b1e469cfdb293d83da4de81">Copiar</button>
 </div>
 
 <ul>
@@ -904,9 +904,9 @@ select_datetime(DateTime.now, :prompt =&gt;
 <h4 id="a-note-about-template-loading"><a class="anchorlink" href="#a-note-about-template-loading">6.8 A Note About Template Loading</a></h4><p>Rails 2.3 includes the ability to enable or disable cached templates for any particular environment. Cached templates give you a speed boost because they don't check for a new template file when they're rendered - but they also mean that you can't replace a template "on the fly" without restarting the server.</p><p>In most cases, you'll want template caching to be turned on in production, which you can do by making a setting in your <code>production.rb</code> file:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_view</span><span class="p">.</span><span class="nf">cache_template_loading</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-421b5fd6af212239d2572dc4b5e78787">config.action_view.cache_template_loading = true
+<textarea class="clipboard-content" id="clipboard-ff60ee6c6c2895004002601968a517f6">config.action_view.cache_template_loading = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-421b5fd6af212239d2572dc4b5e78787">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ff60ee6c6c2895004002601968a517f6">Copiar</button>
 </div>
 <p>This line will be generated for you by default in a new Rails 2.3 application. If you've upgraded from an older version of Rails, Rails will default to caching templates in production and test but not in development.</p><h4 id="other-action-view-changes"><a class="anchorlink" href="#other-action-view-changes">6.9 Other Action View Changes</a></h4>
 <ul>
@@ -925,9 +925,9 @@ select_datetime(DateTime.now, :prompt =&gt;
 <h4 id="object-tap-backport"><a class="anchorlink" href="#object-tap-backport">7.2 Object#tap Backport</a></h4><p><code>Object#tap</code> is an addition to <a href="http://www.ruby-doc.org/core-1.9/classes/Object.html#M000309">Ruby 1.9</a> and 1.8.7 that is similar to the <code>returning</code> method that Rails has had for a while: it yields to a block, and then returns the object that was yielded. Rails now includes code to make this available under older versions of Ruby as well.</p><h4 id="swappable-parsers-for-xmlmini"><a class="anchorlink" href="#swappable-parsers-for-xmlmini">7.3 Swappable Parsers for XMLmini</a></h4><p>The support for XML parsing in Active Support has been made more flexible by allowing you to swap in different parsers. By default, it uses the standard REXML implementation, but you can easily specify the faster LibXML or Nokogiri implementations for your own applications, provided you have the appropriate gems installed:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">XmlMini</span><span class="p">.</span><span class="nf">backend</span> <span class="o">=</span> <span class="s1">'LibXML'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4b2322f862c7d86ba1f8462c60c659c9">XmlMini.backend = 'LibXML'
+<textarea class="clipboard-content" id="clipboard-6c00d69637f65aafd3bac2453235e020">XmlMini.backend = 'LibXML'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4b2322f862c7d86ba1f8462c60c659c9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6c00d69637f65aafd3bac2453235e020">Copiar</button>
 </div>
 
 <ul>
@@ -939,9 +939,9 @@ select_datetime(DateTime.now, :prompt =&gt;
 <h4 id="fractional-seconds-for-timewithzone"><a class="anchorlink" href="#fractional-seconds-for-timewithzone">7.4 Fractional seconds for TimeWithZone</a></h4><p>The <code>Time</code> and <code>TimeWithZone</code> classes include an <code>xmlschema</code> method to return the time in an XML-friendly string. As of Rails 2.3, <code>TimeWithZone</code> supports the same argument for specifying the number of digits in the fractional second part of the returned string that <code>Time</code> does:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Time</span><span class="p">.</span><span class="nf">zone</span><span class="p">.</span><span class="nf">now</span><span class="p">.</span><span class="nf">xmlschema</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="c1"># =&gt; "2009-01-16T13:00:06.13653Z"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c927b85d77e0362e525ff49cb4a46593">Time.zone.now.xmlschema(6) # =&gt; "2009-01-16T13:00:06.13653Z"
+<textarea class="clipboard-content" id="clipboard-369258f95966854fdc0e6821fe3086c8">Time.zone.now.xmlschema(6) # =&gt; "2009-01-16T13:00:06.13653Z"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c927b85d77e0362e525ff49cb4a46593">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-369258f95966854fdc0e6821fe3086c8">Copiar</button>
 </div>
 
 <ul>
@@ -980,9 +980,9 @@ select_datetime(DateTime.now, :prompt =&gt;
 <h4 id="application-templates"><a class="anchorlink" href="#application-templates">8.2 Application Templates</a></h4><p>Rails 2.3 incorporates Jeremy McAnally's <a href="https://github.com/jm/rg">rg</a> application generator. What this means is that we now have template-based application generation built right into Rails; if you have a set of plugins you include in every application (among many other use cases), you can just set up a template once and use it over and over again when you run the <code>rails</code> command. There's also a rake task to apply a template to an existing application:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rake rails</span>:template <span class="nv">LOCATION</span><span class="o">=</span>~/template.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c55c63ab7526842334f344afad604ded">rake rails:template LOCATION=~/template.rb
+<textarea class="clipboard-content" id="clipboard-f08b5cb138eafa20b226ff5dfac01d01">rake rails:template LOCATION=~/template.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c55c63ab7526842334f344afad604ded">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f08b5cb138eafa20b226ff5dfac01d01">Copiar</button>
 </div>
 <p>This will layer the changes from the template on top of whatever code the project already contains.</p>
 <ul>

@@ -354,19 +354,19 @@
 <pre><code class="highlight ruby"><span class="n">translate</span> <span class="c1"># Lookup text translations</span>
 <span class="n">localize</span>  <span class="c1"># Localize Date and Time objects to local formats</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7ca71072a51666de5902defbc490687a">translate # Lookup text translations
+<textarea class="clipboard-content" id="clipboard-10104e9e28a9ee4fdad6a56546b43372">translate # Lookup text translations
 localize  # Localize Date and Time objects to local formats
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7ca71072a51666de5902defbc490687a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-10104e9e28a9ee4fdad6a56546b43372">Copiar</button>
 </div>
 <p>These have the aliases #t and #l so you can use them like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'store.title'</span>
 <span class="no">I18n</span><span class="p">.</span><span class="nf">l</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d36db26b026fa641961cc5d3017b7d78">I18n.t 'store.title'
+<textarea class="clipboard-content" id="clipboard-1a7a6e35f4af1d4d1fe13afcb8a3a36c">I18n.t 'store.title'
 I18n.l Time.now
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d36db26b026fa641961cc5d3017b7d78">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1a7a6e35f4af1d4d1fe13afcb8a3a36c">Copiar</button>
 </div>
 <p>There are also attribute readers and writers for the following attributes:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">load_path</span>                 <span class="c1"># Announce your custom translation files</span>
@@ -377,7 +377,7 @@ I18n.l Time.now
 <span class="n">exception_handler</span>         <span class="c1"># Use a different exception_handler</span>
 <span class="n">backend</span>                   <span class="c1"># Use a different backend</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8a4b534e7ab291a804e2c96bda2580c4">load_path                 # Announce your custom translation files
+<textarea class="clipboard-content" id="clipboard-be8f6a33858dd9041fa92c20f5338efe">load_path                 # Announce your custom translation files
 locale                    # Get and set the current locale
 default_locale            # Get and set the default locale
 available_locales         # Permitted locales available for the application
@@ -385,25 +385,25 @@ enforce_available_locales # Enforce locale permission (true or false)
 exception_handler         # Use a different exception_handler
 backend                   # Use a different backend
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8a4b534e7ab291a804e2c96bda2580c4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-be8f6a33858dd9041fa92c20f5338efe">Copiar</button>
 </div>
 <p>So, let's internationalize a simple Rails application from the ground up in the next chapters!</p><h3 id="setup-the-rails-application-for-internationalization"><a class="anchorlink" href="#setup-the-rails-application-for-internationalization">2 Setup the Rails Application for Internationalization</a></h3><p>There are a few steps to get up and running with I18n support for a Rails application.</p><h4 id="configure-the-i18n-module"><a class="anchorlink" href="#configure-the-i18n-module">2.1 Configure the I18n Module</a></h4><p>Following the <em>convention over configuration</em> philosophy, Rails I18n provides reasonable default translation strings. When different translation strings are needed, they can be overridden.</p><p>Rails adds all <code>.rb</code> and <code>.yml</code> files from the <code>config/locales</code> directory to the <strong>translations load path</strong>, automatically.</p><p>The default <code>en.yml</code> locale in this directory contains a sample pair of translation strings:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
   <span class="na">hello</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Hello</span><span class="nv"> </span><span class="s">world"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7c4a99f6335a9155e0e4c49eb81d3af0">en:
+<textarea class="clipboard-content" id="clipboard-170777f8a759174242b904f91f5f6c29">en:
   hello: "Hello world"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7c4a99f6335a9155e0e4c49eb81d3af0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-170777f8a759174242b904f91f5f6c29">Copiar</button>
 </div>
 <p>This means, that in the <code>:en</code> locale, the key <em>hello</em> will map to the <em>Hello world</em> string. Every string inside Rails is internationalized in this way, see for instance Active Model validation messages in the <a href="https://github.com/rails/rails/blob/main/activemodel/lib/active_model/locale/en.yml"><code>activemodel/lib/active_model/locale/en.yml</code></a> file or time and date formats in the <a href="https://github.com/rails/rails/blob/main/activesupport/lib/active_support/locale/en.yml"><code>activesupport/lib/active_support/locale/en.yml</code></a> file. You can use YAML or standard Ruby Hashes to store translations in the default (Simple) backend.</p><p>The I18n library will use <strong>English</strong> as a <strong>default locale</strong>, i.e. if a different locale is not set, <code>:en</code> will be used for looking up translations.</p><div class="note"><p>The i18n library takes a <strong>pragmatic approach</strong> to locale keys (after <a href="https://groups.google.com/forum/#!topic/rails-i18n/FN7eLH2-lHA">some discussion</a>), including only the <em>locale</em> ("language") part, like <code>:en</code>, <code>:pl</code>, not the <em>region</em> part, like <code>:"en-US"</code> or <code>:"en-GB"</code>, which are traditionally used for separating "languages" and "regional setting" or "dialects". Many international applications use only the "language" element of a locale such as <code>:cs</code>, <code>:th</code>, or <code>:es</code> (for Czech, Thai, and Spanish). However, there are also regional differences within different language groups that may be important. For instance, in the <code>:"en-US"</code> locale you would have $ as a currency symbol, while in <code>:"en-GB"</code>, you would have £. Nothing stops you from separating regional and other settings in this way: you just have to provide full "English - United Kingdom" locale in a <code>:"en-GB"</code> dictionary.</p></div><p>The <strong>translations load path</strong> (<code>I18n.load_path</code>) is an array of paths to files that will be loaded automatically. Configuring this path allows for customization of translations directory structure and file naming scheme.</p><div class="note"><p>The backend lazy-loads these translations when a translation is looked up for the first time. This backend can be swapped with something else even after translations have already been announced.</p></div><p>You can change the default locale as well as configure the translations load paths in <code>config/application.rb</code> as follows:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">i18n</span><span class="p">.</span><span class="nf">load_path</span> <span class="o">+=</span> <span class="no">Dir</span><span class="p">[</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s1">'my'</span><span class="p">,</span> <span class="s1">'locales'</span><span class="p">,</span> <span class="s1">'*.{rb,yml}'</span><span class="p">)]</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">i18n</span><span class="p">.</span><span class="nf">default_locale</span> <span class="o">=</span> <span class="ss">:de</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1a2ad4e3e5677e466c8f5e10241d09e4">config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
+<textarea class="clipboard-content" id="clipboard-11f56dfe743e6047299c01c303ba1d36">config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
 config.i18n.default_locale = :de
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1a2ad4e3e5677e466c8f5e10241d09e4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-11f56dfe743e6047299c01c303ba1d36">Copiar</button>
 </div>
 <p>The load path must be specified before any translations are looked up. To change the default locale from an initializer instead of <code>config/application.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/initializers/locale.rb</span>
@@ -417,7 +417,7 @@ config.i18n.default_locale = :de
 <span class="c1"># Set default locale to something other than :en</span>
 <span class="no">I18n</span><span class="p">.</span><span class="nf">default_locale</span> <span class="o">=</span> <span class="ss">:pt</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bba26c51bfdb4567fb99b8ce2e43d69a"># config/initializers/locale.rb
+<textarea class="clipboard-content" id="clipboard-80e5646268356d7b8ddcbcf7c6a2365a"># config/initializers/locale.rb
 
 # Where the I18n library should search for translation files
 I18n.load_path += Dir[Rails.root.join('lib', 'locale', '*.{rb,yml}')]
@@ -428,7 +428,7 @@ I18n.available_locales = [:en, :pt]
 # Set default locale to something other than :en
 I18n.default_locale = :pt
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bba26c51bfdb4567fb99b8ce2e43d69a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80e5646268356d7b8ddcbcf7c6a2365a">Copiar</button>
 </div>
 <p>Note that appending directly to <code>I18n.load_path</code> instead of to the application's configured i18n will <em>not</em> override translations from external gems.</p><h4 id="managing-the-locale-across-requests"><a class="anchorlink" href="#managing-the-locale-across-requests">2.2 Managing the Locale across Requests</a></h4><p>A localized application will likely need to provide support for multiple locales. To accomplish this, the locale should be set at the beginning of each request so that all strings are translated using the desired locale during the lifetime of that request.</p><p>The default locale is used for all translations unless <code>I18n.locale=</code> or <code>I18n.with_locale</code> is used.</p><p><code>I18n.locale</code> can leak into subsequent requests served by the same thread/process if it is not consistently set in every controller. For example executing <code>I18n.locale = :es</code> in one POST requests will have effects for all later requests to controllers that don't set the locale, but only in that particular thread/process. For that reason, instead of <code>I18n.locale =</code> you can use <code>I18n.with_locale</code> which does not have this leak issue.</p><p>The locale can be set in an <code>around_action</code> in the <code>ApplicationController</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">around_action</span> <span class="ss">:switch_locale</span>
@@ -438,14 +438,14 @@ I18n.default_locale = :pt
   <span class="no">I18n</span><span class="p">.</span><span class="nf">with_locale</span><span class="p">(</span><span class="n">locale</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">action</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cebae4b3c9bc532a60235e65d1bd70f3">around_action :switch_locale
+<textarea class="clipboard-content" id="clipboard-0f8ae22a81476ee8764bb4836b156c5e">around_action :switch_locale
 
 def switch_locale(&amp;action)
   locale = params[:locale] || I18n.default_locale
   I18n.with_locale(locale, &amp;action)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cebae4b3c9bc532a60235e65d1bd70f3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f8ae22a81476ee8764bb4836b156c5e">Copiar</button>
 </div>
 <p>This example illustrates this using a URL query parameter to set the locale (e.g. <code>http://example.com/books?locale=pt</code>). With this approach, <code>http://localhost:3000?locale=pt</code> renders the Portuguese localization, while <code>http://localhost:3000?locale=de</code> loads a German localization.</p><p>The locale can be set using one of many different approaches.</p><h5 id="setting-the-locale-from-the-domain-name"><a class="anchorlink" href="#setting-the-locale-from-the-domain-name">2.2.1 Setting the Locale from the Domain Name</a></h5><p>One option you have is to set the locale from the domain name where your application runs. For example, we want <code>www.example.com</code> to load the English (or default) locale, and <code>www.example.es</code> to load the Spanish locale. Thus the <em>top-level domain name</em> is used for locale setting. This has several advantages:</p>
 <ul>
@@ -473,7 +473,7 @@ end
   <span class="no">I18n</span><span class="p">.</span><span class="nf">available_locales</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:to_s</span><span class="p">).</span><span class="nf">include?</span><span class="p">(</span><span class="n">parsed_locale</span><span class="p">)</span> <span class="p">?</span> <span class="n">parsed_locale</span> <span class="p">:</span> <span class="kp">nil</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3a581eef588f6c7814a5d299623495a9">around_action :switch_locale
+<textarea class="clipboard-content" id="clipboard-4dc8e70b203e013134176309ba26a8e5">around_action :switch_locale
 
 def switch_locale(&amp;action)
   locale = extract_locale_from_tld || I18n.default_locale
@@ -491,7 +491,7 @@ def extract_locale_from_tld
   I18n.available_locales.map(&amp;:to_s).include?(parsed_locale) ? parsed_locale : nil
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3a581eef588f6c7814a5d299623495a9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4dc8e70b203e013134176309ba26a8e5">Copiar</button>
 </div>
 <p>We can also set the locale from the <em>subdomain</em> in a very similar way:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Get locale code from request subdomain (like http://it.application.local:3000)</span>
@@ -503,7 +503,7 @@ end
   <span class="no">I18n</span><span class="p">.</span><span class="nf">available_locales</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:to_s</span><span class="p">).</span><span class="nf">include?</span><span class="p">(</span><span class="n">parsed_locale</span><span class="p">)</span> <span class="p">?</span> <span class="n">parsed_locale</span> <span class="p">:</span> <span class="kp">nil</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-107414c3e0e1d5f5111d2ed4cc97cf48"># Get locale code from request subdomain (like http://it.application.local:3000)
+<textarea class="clipboard-content" id="clipboard-e57d052d2b54cc8aca80bc9371bae6d2"># Get locale code from request subdomain (like http://it.application.local:3000)
 # You have to put something like:
 #   127.0.0.1 gr.application.local
 # in your /etc/hosts file to try this out locally
@@ -512,14 +512,14 @@ def extract_locale_from_subdomain
   I18n.available_locales.map(&amp;:to_s).include?(parsed_locale) ? parsed_locale : nil
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-107414c3e0e1d5f5111d2ed4cc97cf48">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e57d052d2b54cc8aca80bc9371bae6d2">Copiar</button>
 </div>
 <p>If your application includes a locale switching menu, you would then have something like this in it:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">link_to</span><span class="p">(</span><span class="s2">"Deutsch"</span><span class="p">,</span> <span class="s2">"</span><span class="si">#{</span><span class="no">APP_CONFIG</span><span class="p">[</span><span class="ss">:deutsch_website_url</span><span class="p">]</span><span class="si">}#{</span><span class="n">request</span><span class="p">.</span><span class="nf">env</span><span class="p">[</span><span class="s1">'PATH_INFO'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6819d8ceec09d7977fd4bba107f2379d">link_to("Deutsch", "#{APP_CONFIG[:deutsch_website_url]}#{request.env['PATH_INFO']}")
+<textarea class="clipboard-content" id="clipboard-f1640fecc5f3bfc72571f639f1dadeba">link_to("Deutsch", "#{APP_CONFIG[:deutsch_website_url]}#{request.env['PATH_INFO']}")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6819d8ceec09d7977fd4bba107f2379d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f1640fecc5f3bfc72571f639f1dadeba">Copiar</button>
 </div>
 <p>assuming you would set <code>APP_CONFIG[:deutsch_website_url]</code> to some value like <code>http://www.application.de</code>.</p><p>This solution has aforementioned advantages, however, you may not be able or may not want to provide different localizations ("language versions") on different domains. The most obvious solution would be to include locale code in the URL params (or request path).</p><h5 id="setting-the-locale-from-url-params"><a class="anchorlink" href="#setting-the-locale-from-url-params">2.2.2 Setting the Locale from URL Params</a></h5><p>The most usual way of setting (and passing) the locale would be to include it in URL params, as we did in the <code>I18n.with_locale(params[:locale], &amp;action)</code> <em>around_action</em> in the first example. We would like to have URLs like <code>www.example.com/books?locale=ja</code> or <code>www.example.com/ja/books</code> in this case.</p><p>This approach has almost the same set of advantages as setting the locale from the domain name: namely that it's RESTful and in accord with the rest of the World Wide Web. It does require a little bit more work to implement, though.</p><p>Getting the locale from <code>params</code> and setting it accordingly is not hard; including it in every URL and thus <strong>passing it through the requests</strong> is. To include an explicit option in every URL, e.g. <code>link_to(books_url(locale: I18n.locale))</code>, would be tedious and probably impossible, of course.</p><p>Rails contains infrastructure for "centralizing dynamic decisions about the URLs" in its <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Routing/Mapper/Base.html#method-i-default_url_options"><code>ApplicationController#default_url_options</code></a>, which is useful precisely in this scenario: it enables us to set "defaults" for <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Routing/UrlFor.html#method-i-url_for"><code>url_for</code></a> and helper methods dependent on it (by implementing/overriding <code>default_url_options</code>).</p><p>We can include something like this in our <code>ApplicationController</code> then:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/controllers/application_controller.rb</span>
@@ -527,12 +527,12 @@ end
   <span class="p">{</span> <span class="ss">locale: </span><span class="no">I18n</span><span class="p">.</span><span class="nf">locale</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-842fef302f3578650b737704b355e9af"># app/controllers/application_controller.rb
+<textarea class="clipboard-content" id="clipboard-640fa66329e167504a28f2a6b4a3f226"># app/controllers/application_controller.rb
 def default_url_options
   { locale: I18n.locale }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-842fef302f3578650b737704b355e9af">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-640fa66329e167504a28f2a6b4a3f226">Copiar</button>
 </div>
 <p>Every helper method dependent on <code>url_for</code> (e.g. helpers for named routes like <code>root_path</code> or <code>root_url</code>, resource routes like <code>books_path</code> or <code>books_url</code>, etc.) will now <strong>automatically include the locale in the query string</strong>, like this: <code>http://localhost:3001/?locale=ja</code>.</p><p>You may be satisfied with this. It does impact the readability of URLs, though, when the locale "hangs" at the end of every URL in your application. Moreover, from the architectural standpoint, locale is usually hierarchically above the other parts of the application domain: and URLs should reflect this.</p><p>You probably want URLs to look like this: <code>http://www.example.com/en/books</code> (which loads the English locale) and <code>http://www.example.com/nl/books</code> (which loads the Dutch locale). This is achievable with the "over-riding <code>default_url_options</code>" strategy from above: you just have to set up your routes with <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Routing/Mapper/Scoping.html"><code>scope</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/routes.rb</span>
@@ -540,12 +540,12 @@ end
   <span class="n">resources</span> <span class="ss">:books</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9c7e205037ae23c91b71ff4e3ab2dfd8"># config/routes.rb
+<textarea class="clipboard-content" id="clipboard-4efd4a381a643b91d42265265db81962"># config/routes.rb
 scope "/:locale" do
   resources :books
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9c7e205037ae23c91b71ff4e3ab2dfd8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4efd4a381a643b91d42265265db81962">Copiar</button>
 </div>
 <p>Now, when you call the <code>books_path</code> method you should get <code>"/en/books"</code> (for the default locale). A URL like <code>http://localhost:3001/nl/books</code> should load the Dutch locale, then, and following calls to <code>books_path</code> should return <code>"/nl/books"</code> (because the locale changed).</p><div class="warning"><p>Since the return value of <code>default_url_options</code> is cached per request, the URLs in a locale selector cannot be generated invoking helpers in a loop that sets the corresponding <code>I18n.locale</code> in each iteration. Instead, leave <code>I18n.locale</code> untouched, and pass an explicit <code>:locale</code> option to the helper, or edit <code>request.original_fullpath</code>.</p></div><p>If you don't want to force the use of a locale in your routes you can use an optional path scope (denoted by the parentheses) like so:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/routes.rb</span>
@@ -553,21 +553,21 @@ end
   <span class="n">resources</span> <span class="ss">:books</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d7c60ab2e515163461dec9c394e6d9b2"># config/routes.rb
+<textarea class="clipboard-content" id="clipboard-7ea1db926da32f87cb9d21e1c366e927"># config/routes.rb
 scope "(:locale)", locale: /en|nl/ do
   resources :books
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d7c60ab2e515163461dec9c394e6d9b2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7ea1db926da32f87cb9d21e1c366e927">Copiar</button>
 </div>
 <p>With this approach you will not get a <code>Routing Error</code> when accessing your resources such as <code>http://localhost:3001/books</code> without a locale. This is useful for when you want to use the default locale when one is not specified.</p><p>Of course, you need to take special care of the root URL (usually "homepage" or "dashboard") of your application. A URL like <code>http://localhost:3001/nl</code> will not work automatically, because the <code>root to: "dashboard#index"</code> declaration in your <code>routes.rb</code> doesn't take locale into account. (And rightly so: there's only one "root" URL.)</p><p>You would probably need to map URLs like these:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/routes.rb</span>
 <span class="n">get</span> <span class="s1">'/:locale'</span> <span class="o">=&gt;</span> <span class="s1">'dashboard#index'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-303389627d4d88b659c236c43c100d7c"># config/routes.rb
+<textarea class="clipboard-content" id="clipboard-9701dcc0d0dad291bff51c574d5f6034"># config/routes.rb
 get '/:locale' =&gt; 'dashboard#index'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-303389627d4d88b659c236c43c100d7c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9701dcc0d0dad291bff51c574d5f6034">Copiar</button>
 </div>
 <p>Do take special care about the <strong>order of your routes</strong>, so this route declaration does not "eat" other ones. (You may want to add it directly before the <code>root :to</code> declaration.)</p><div class="note"><p>Have a look at various gems which simplify working with routes: <a href="https://github.com/svenfuchs/routing-filter/tree/master">routing_filter</a>, <a href="https://github.com/francesc/rails-translate-routes">rails-translate-routes</a>, <a href="https://github.com/enriclluelles/route_translator">route_translator</a>.</p></div><h5 id="setting-the-locale-from-user-preferences"><a class="anchorlink" href="#setting-the-locale-from-user-preferences">2.2.3 Setting the Locale from User Preferences</a></h5><p>An application with authenticated users may allow users to set a locale preference through the application's interface. With this approach, a user's selected locale preference is persisted in the database and used to set the locale for authenticated requests by that user.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">around_action</span> <span class="ss">:switch_locale</span>
@@ -577,14 +577,14 @@ get '/:locale' =&gt; 'dashboard#index'
   <span class="no">I18n</span><span class="p">.</span><span class="nf">with_locale</span><span class="p">(</span><span class="n">locale</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">action</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-26f9c82f6e3b5bef3f86be5137d7b15a">around_action :switch_locale
+<textarea class="clipboard-content" id="clipboard-38bf91e3d70ce728a5eae625a5c4f938">around_action :switch_locale
 
 def switch_locale(&amp;action)
   locale = current_user.try(:locale) || I18n.default_locale
   I18n.with_locale(locale, &amp;action)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26f9c82f6e3b5bef3f86be5137d7b15a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-38bf91e3d70ce728a5eae625a5c4f938">Copiar</button>
 </div>
 <h5 id="choosing-an-implied-locale"><a class="anchorlink" href="#choosing-an-implied-locale">2.2.4 Choosing an Implied Locale</a></h5><p>When an explicit locale has not been set for a request (e.g. via one of the above methods), an application should attempt to infer the desired locale.</p><h6 id="inferring-locale-from-the-language-header"><a class="anchorlink" href="#inferring-locale-from-the-language-header">2.2.4.1 Inferring Locale from the Language Header</a></h6><p>The <code>Accept-Language</code> HTTP header indicates the preferred language for request's response. Browsers <a href="http://www.w3.org/International/questions/qa-lang-priorities">set this header value based on the user's language preference settings</a>, making it a good first choice when inferring a locale.</p><p>A trivial implementation of using an <code>Accept-Language</code> header would be:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">switch_locale</span><span class="p">(</span><span class="o">&amp;</span><span class="n">action</span><span class="p">)</span>
@@ -599,7 +599,7 @@ end
     <span class="n">request</span><span class="p">.</span><span class="nf">env</span><span class="p">[</span><span class="s1">'HTTP_ACCEPT_LANGUAGE'</span><span class="p">].</span><span class="nf">scan</span><span class="p">(</span><span class="sr">/^[a-z]{2}/</span><span class="p">).</span><span class="nf">first</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9699a989bc8335272150d3122a128aa5">def switch_locale(&amp;action)
+<textarea class="clipboard-content" id="clipboard-3012ffd0fd3e653a8812c4e890315119">def switch_locale(&amp;action)
   logger.debug "* Accept-Language: #{request.env['HTTP_ACCEPT_LANGUAGE']}"
   locale = extract_locale_from_accept_language_header
   logger.debug "* Locale set to '#{locale}'"
@@ -611,7 +611,7 @@ private
     request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9699a989bc8335272150d3122a128aa5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3012ffd0fd3e653a8812c4e890315119">Copiar</button>
 </div>
 <p>In practice, more robust code is necessary to do this reliably. Iain Hecker's <a href="https://github.com/iain/http_accept_language/tree/master">http_accept_language</a> library or Ryan Tomayko's <a href="https://github.com/rack/rack-contrib/blob/master/lib/rack/contrib/locale.rb">locale</a> Rack middleware provide solutions to this problem.</p><h6 id="inferring-the-locale-from-ip-geolocation"><a class="anchorlink" href="#inferring-the-locale-from-ip-geolocation">2.2.4.2 Inferring the Locale from IP Geolocation</a></h6><p>The IP address of the client making the request can be used to infer the client's region and thus their locale. Services such as <a href="http://www.maxmind.com/app/geolitecountry">GeoIP Lite Country</a> or gems like <a href="https://github.com/alexreisner/geocoder">geocoder</a> can be used to implement this approach.</p><p>In general, this approach is far less reliable than using the language header and is not recommended for most web applications.</p><h5 id="storing-the-locale-from-the-session-or-cookies"><a class="anchorlink" href="#storing-the-locale-from-the-session-or-cookies">2.2.5 Storing the Locale from the Session or Cookies</a></h5><div class="warning"><p>You may be tempted to store the chosen locale in a <em>session</em> or a <em>cookie</em>. However, <strong>do not do this</strong>. The locale should be transparent and a part of the URL. This way you won't break people's basic assumptions about the web itself: if you send a URL to a friend, they should see the same page and content as you. A fancy word for this would be that you're being <a href="https://en.wikipedia.org/wiki/Representational_State_Transfer"><em>RESTful</em></a>. Read more about the RESTful approach in <a href="https://www.infoq.com/articles/rest-introduction">Stefan Tilkov's articles</a>. Sometimes there are exceptions to this rule and those are discussed below.</p></div><h3 id="internationalization-and-localization"><a class="anchorlink" href="#internationalization-and-localization">3 Internationalization and Localization</a></h3><p>OK! Now you've initialized I18n support for your Ruby on Rails application and told it which locale to use and how to preserve it between requests.</p><p>Next we need to <em>internationalize</em> our application by abstracting every locale-specific element. Finally, we need to <em>localize</em> it by providing necessary translations for these abstracts.</p><p>Given the following example:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/routes.rb</span>
@@ -619,12 +619,12 @@ private
   <span class="n">root</span> <span class="ss">to: </span><span class="s2">"home#index"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3d702c846fca5dd3be3bc083f29a92a2"># config/routes.rb
+<textarea class="clipboard-content" id="clipboard-021c8ffe9e82a1e9bd9720796f0c1719"># config/routes.rb
 Rails.application.routes.draw do
   root to: "home#index"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3d702c846fca5dd3be3bc083f29a92a2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-021c8ffe9e82a1e9bd9720796f0c1719">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/controllers/application_controller.rb</span>
@@ -638,7 +638,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-15369566b5bc3ce6a0d4177d8681a863"># app/controllers/application_controller.rb
+<textarea class="clipboard-content" id="clipboard-93e0595e91316df3a962089a067d7b8d"># app/controllers/application_controller.rb
 class ApplicationController &lt; ActionController::Base
 
   around_action :switch_locale
@@ -649,7 +649,7 @@ class ApplicationController &lt; ActionController::Base
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-15369566b5bc3ce6a0d4177d8681a863">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-93e0595e91316df3a962089a067d7b8d">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/controllers/home_controller.rb</span>
@@ -659,25 +659,25 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d05d3277f0c6d373eded9a94d94c40a4"># app/controllers/home_controller.rb
+<textarea class="clipboard-content" id="clipboard-5e3db17598c444ecbb388608dc9cd042"># app/controllers/home_controller.rb
 class HomeController &lt; ApplicationController
   def index
     flash[:notice] = "Hello Flash"
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d05d3277f0c6d373eded9a94d94c40a4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5e3db17598c444ecbb388608dc9cd042">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight erb"><span class="c">&lt;!-- app/views/home/index.html.erb --&gt;</span>
 <span class="nt">&lt;h1&gt;</span>Hello World<span class="nt">&lt;/h1&gt;</span>
 <span class="nt">&lt;p&gt;</span><span class="cp">&lt;%=</span> <span class="n">flash</span><span class="p">[</span><span class="ss">:notice</span><span class="p">]</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3d5a27807d09b342d41582cd953d680e">&lt;!-- app/views/home/index.html.erb --&gt;
+<textarea class="clipboard-content" id="clipboard-50e9b0d527a7a3ebe0d5d7272cc3ae91">&lt;!-- app/views/home/index.html.erb --&gt;
 &lt;h1&gt;Hello World&lt;/h1&gt;
 &lt;p&gt;&lt;%= flash[:notice] %&gt;&lt;/p&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3d5a27807d09b342d41582cd953d680e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-50e9b0d527a7a3ebe0d5d7272cc3ae91">Copiar</button>
 </div>
 <p><img src="images/i18n/demo_untranslated.png" alt="rails i18n demo untranslated"></p><h4 id="abstracting-localized-code"><a class="anchorlink" href="#abstracting-localized-code">3.1 Abstracting Localized Code</a></h4><p>There are two strings in our code that are in English and that users will be rendered in our response ("Hello Flash" and "Hello World"). In order to internationalize this code, these strings need to be replaced by calls to Rails' <code>#t</code> helper with an appropriate key for each string:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/controllers/home_controller.rb</span>
@@ -687,25 +687,25 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-08a5c775158aeb53cecee9c1646613dc"># app/controllers/home_controller.rb
+<textarea class="clipboard-content" id="clipboard-664e07896fdf86a70be7a11b67e147f8"># app/controllers/home_controller.rb
 class HomeController &lt; ApplicationController
   def index
     flash[:notice] = t(:hello_flash)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-08a5c775158aeb53cecee9c1646613dc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-664e07896fdf86a70be7a11b67e147f8">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight erb"><span class="c">&lt;!-- app/views/home/index.html.erb --&gt;</span>
 <span class="nt">&lt;h1&gt;</span><span class="cp">&lt;%=</span> <span class="n">t</span> <span class="ss">:hello_world</span> <span class="cp">%&gt;</span><span class="nt">&lt;/h1&gt;</span>
 <span class="nt">&lt;p&gt;</span><span class="cp">&lt;%=</span> <span class="n">flash</span><span class="p">[</span><span class="ss">:notice</span><span class="p">]</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6414bfdbdf3112a46608ed76da85da64">&lt;!-- app/views/home/index.html.erb --&gt;
+<textarea class="clipboard-content" id="clipboard-02a70093d6e847e043f1dd717e6918ef">&lt;!-- app/views/home/index.html.erb --&gt;
 &lt;h1&gt;&lt;%= t :hello_world %&gt;&lt;/h1&gt;
 &lt;p&gt;&lt;%= flash[:notice] %&gt;&lt;/p&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6414bfdbdf3112a46608ed76da85da64">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-02a70093d6e847e043f1dd717e6918ef">Copiar</button>
 </div>
 <p>Now, when this view is rendered, it will show an error message which tells you that the translations for the keys <code>:hello_world</code> and <code>:hello_flash</code> are missing.</p><p><img src="images/i18n/demo_translation_missing.png" alt="rails i18n demo translation missing"></p><div class="note"><p>Rails adds a <code>t</code> (<code>translate</code>) helper method to your views so that you do not need to spell out <code>I18n.t</code> all the time. Additionally this helper will catch missing translations and wrap the resulting error message into a <code>&lt;span class="translation_missing"&gt;</code>.</p></div><h4 id="providing-translations-for-internationalized-strings"><a class="anchorlink" href="#providing-translations-for-internationalized-strings">3.2 Providing Translations for Internationalized Strings</a></h4><p>Add the missing translations into the translation dictionary files:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># config/locales/en.yml</span>
@@ -713,12 +713,12 @@ end
   <span class="na">hello_world</span><span class="pi">:</span> <span class="s">Hello world!</span>
   <span class="na">hello_flash</span><span class="pi">:</span> <span class="s">Hello flash!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dc696f62996f920c2882c9a63deb16fe"># config/locales/en.yml
+<textarea class="clipboard-content" id="clipboard-5647db25c14b048c00246f4def967cfe"># config/locales/en.yml
 en:
   hello_world: Hello world!
   hello_flash: Hello flash!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dc696f62996f920c2882c9a63deb16fe">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5647db25c14b048c00246f4def967cfe">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># config/locales/pirate.yml</span>
@@ -726,12 +726,12 @@ en:
   <span class="na">hello_world</span><span class="pi">:</span> <span class="s">Ahoy World</span>
   <span class="na">hello_flash</span><span class="pi">:</span> <span class="s">Ahoy Flash</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1461c401729f4e3070ea3078aa98e990"># config/locales/pirate.yml
+<textarea class="clipboard-content" id="clipboard-22f371eacfd08d6e9909e005c737163f"># config/locales/pirate.yml
 pirate:
   hello_world: Ahoy World
   hello_flash: Ahoy Flash
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1461c401729f4e3070ea3078aa98e990">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-22f371eacfd08d6e9909e005c737163f">Copiar</button>
 </div>
 <p>Because the <code>default_locale</code> hasn't changed, translations use the <code>:en</code> locale and the response renders the english strings:</p><p><img src="images/i18n/demo_translated_en.png" alt="rails i18n demo translated to English"></p><p>If the locale is set via the URL to the pirate locale (<code>http://localhost:3000?locale=pirate</code>), the response renders the pirate strings:</p><p><img src="images/i18n/demo_translated_pirate.png" alt="rails i18n demo translated to pirate"></p><div class="note"><p>You need to restart the server when you add new locale files.</p></div><p>You may use YAML (<code>.yml</code>) or plain Ruby (<code>.rb</code>) files for storing your translations in SimpleStore. YAML is the preferred option among Rails developers. However, it has one big disadvantage. YAML is very sensitive to whitespace and special characters, so the application may not load your dictionary properly. Ruby files will crash your application on first request, so you may easily find what's wrong. (If you encounter any "weird issues" with YAML dictionaries, try putting the relevant portion of your dictionary into a Ruby file.)</p><p>If your translations are stored in YAML files, certain keys must be escaped. They are:</p>
 <ul>
@@ -750,7 +750,7 @@ pirate:
     <span class="na">off</span><span class="pi">:</span>     <span class="s1">'</span><span class="s">Off!'</span>
     <span class="na">false</span><span class="pi">:</span>   <span class="s1">'</span><span class="s">False!'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6da9dbff143065133ba684618be355f1"># config/locales/en.yml
+<textarea class="clipboard-content" id="clipboard-5fb1cc4d58cbdb8b36435da7b80dc59d"># config/locales/en.yml
 en:
   success:
     'true':  'True!'
@@ -761,7 +761,7 @@ en:
     off:     'Off!'
     false:   'False!'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6da9dbff143065133ba684618be355f1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5fb1cc4d58cbdb8b36435da7b80dc59d">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'success.true'</span>  <span class="c1"># =&gt; 'True!'</span>
@@ -771,14 +771,14 @@ en:
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'failure.off'</span>   <span class="c1"># =&gt; Translation Missing</span>
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'failure.true'</span>  <span class="c1"># =&gt; Translation Missing</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-98a66dd0f3a659251db9b10bc7bebf1c">I18n.t 'success.true'  # =&gt; 'True!'
+<textarea class="clipboard-content" id="clipboard-1cbb99166f2c6812077789ed59623dd3">I18n.t 'success.true'  # =&gt; 'True!'
 I18n.t 'success.on'    # =&gt; 'On!'
 I18n.t 'success.false' # =&gt; 'False!'
 I18n.t 'failure.false' # =&gt; Translation Missing
 I18n.t 'failure.off'   # =&gt; Translation Missing
 I18n.t 'failure.true'  # =&gt; Translation Missing
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-98a66dd0f3a659251db9b10bc7bebf1c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1cbb99166f2c6812077789ed59623dd3">Copiar</button>
 </div>
 <h4 id="passing-variables-to-translations"><a class="anchorlink" href="#passing-variables-to-translations">3.3 Passing Variables to Translations</a></h4><p>One key consideration for successfully internationalizing an application is to
 avoid making incorrect assumptions about grammar rules when abstracting localized
@@ -789,32 +789,32 @@ provides a <code>number_to_currency</code> helper to handle the following case.<
 <pre><code class="highlight erb"><span class="c">&lt;!-- app/views/products/show.html.erb --&gt;</span>
 <span class="cp">&lt;%=</span> <span class="s2">"</span><span class="si">#{</span><span class="n">t</span><span class="p">(</span><span class="s1">'currency'</span><span class="p">)</span><span class="si">}#{</span><span class="vi">@product</span><span class="p">.</span><span class="nf">price</span><span class="si">}</span><span class="s2">"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5a2c7ecaabedeb0c84a8c846d0b3f00c">&lt;!-- app/views/products/show.html.erb --&gt;
+<textarea class="clipboard-content" id="clipboard-2bdf98c330101bec5b1796a4f46cf061">&lt;!-- app/views/products/show.html.erb --&gt;
 &lt;%= "#{t('currency')}#{@product.price}" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5a2c7ecaabedeb0c84a8c846d0b3f00c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2bdf98c330101bec5b1796a4f46cf061">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># config/locales/en.yml</span>
 <span class="na">en</span><span class="pi">:</span>
   <span class="na">currency</span><span class="pi">:</span> <span class="s2">"</span><span class="s">$"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-483560b736c222ba6a33b63962fd44c1"># config/locales/en.yml
+<textarea class="clipboard-content" id="clipboard-08734415b0331486f61b43435cfe9522"># config/locales/en.yml
 en:
   currency: "$"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-483560b736c222ba6a33b63962fd44c1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-08734415b0331486f61b43435cfe9522">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># config/locales/es.yml</span>
 <span class="na">es</span><span class="pi">:</span>
   <span class="na">currency</span><span class="pi">:</span> <span class="s2">"</span><span class="s">€"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f4c0a498cd8709d05121c994427219df"># config/locales/es.yml
+<textarea class="clipboard-content" id="clipboard-248486b9e7818fa58ab0a6b002c0b1a3"># config/locales/es.yml
 es:
   currency: "€"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f4c0a498cd8709d05121c994427219df">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-248486b9e7818fa58ab0a6b002c0b1a3">Copiar</button>
 </div>
 <p>If the product's price is 10 then the proper translation for Spanish is "10 €"
 instead of "€10" but the abstraction cannot give it.</p><p>To create proper abstraction, the I18n gem ships with a feature called variable
@@ -823,32 +823,32 @@ pass the values for these variables to the translation method.</p><p>Proper abst
 <pre><code class="highlight erb"><span class="c">&lt;!-- app/views/products/show.html.erb --&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">t</span><span class="p">(</span><span class="s1">'product_price'</span><span class="p">,</span> <span class="ss">price: </span><span class="vi">@product</span><span class="p">.</span><span class="nf">price</span><span class="p">)</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d13f8c03d146852c33536780cf97935c">&lt;!-- app/views/products/show.html.erb --&gt;
+<textarea class="clipboard-content" id="clipboard-d1ffb4408b7a6fee9ac3d96c53c3388d">&lt;!-- app/views/products/show.html.erb --&gt;
 &lt;%= t('product_price', price: @product.price) %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d13f8c03d146852c33536780cf97935c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d1ffb4408b7a6fee9ac3d96c53c3388d">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># config/locales/en.yml</span>
 <span class="na">en</span><span class="pi">:</span>
   <span class="na">product_price</span><span class="pi">:</span> <span class="s2">"</span><span class="s">$%{price}"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3adce505eeaa614bb3641aac2edd3ba9"># config/locales/en.yml
+<textarea class="clipboard-content" id="clipboard-4088eeacf5479ebb063599c3926cb6e4"># config/locales/en.yml
 en:
   product_price: "$%{price}"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3adce505eeaa614bb3641aac2edd3ba9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4088eeacf5479ebb063599c3926cb6e4">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># config/locales/es.yml</span>
 <span class="na">es</span><span class="pi">:</span>
   <span class="na">product_price</span><span class="pi">:</span> <span class="s2">"</span><span class="s">%{price}</span><span class="nv"> </span><span class="s">€"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a65b25a3a14a5afadff9c6c13f96a842"># config/locales/es.yml
+<textarea class="clipboard-content" id="clipboard-520b90111374a7ce7fa62e9a77b6ea41"># config/locales/es.yml
 es:
   product_price: "%{price} €"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a65b25a3a14a5afadff9c6c13f96a842">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-520b90111374a7ce7fa62e9a77b6ea41">Copiar</button>
 </div>
 <p>All grammatical and punctuation decisions are made in the definition itself, so
 the abstraction can give a proper translation.</p><div class="note"><p>The <code>default</code> and <code>scope</code> keywords are reserved and can't be used as
@@ -860,12 +860,12 @@ to <code>#translate</code>, an <code>I18n::MissingInterpolationArgument</code> e
 <span class="nt">&lt;p&gt;</span><span class="cp">&lt;%=</span> <span class="n">flash</span><span class="p">[</span><span class="ss">:notice</span><span class="p">]</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
 <span class="nt">&lt;p&gt;</span><span class="cp">&lt;%=</span> <span class="n">l</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">,</span> <span class="ss">format: :short</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e8743f09b060e79c11ba8f990503c01b">&lt;!-- app/views/home/index.html.erb --&gt;
+<textarea class="clipboard-content" id="clipboard-e18b75b4a3c7f5fd16511fa3dedd054d">&lt;!-- app/views/home/index.html.erb --&gt;
 &lt;h1&gt;&lt;%= t :hello_world %&gt;&lt;/h1&gt;
 &lt;p&gt;&lt;%= flash[:notice] %&gt;&lt;/p&gt;
 &lt;p&gt;&lt;%= l Time.now, format: :short %&gt;&lt;/p&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e8743f09b060e79c11ba8f990503c01b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e18b75b4a3c7f5fd16511fa3dedd054d">Copiar</button>
 </div>
 <p>And in our pirate translations file let's add a time format (it's already there in Rails' defaults for English):</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># config/locales/pirate.yml</span>
@@ -874,13 +874,13 @@ to <code>#translate</code>, an <code>I18n::MissingInterpolationArgument</code> e
     <span class="na">formats</span><span class="pi">:</span>
       <span class="na">short</span><span class="pi">:</span> <span class="s2">"</span><span class="s">arrrround</span><span class="nv"> </span><span class="s">%H'ish"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-452b8dd337ab375c9929ea69250edfec"># config/locales/pirate.yml
+<textarea class="clipboard-content" id="clipboard-40c50191030acf122b439005b9a17106"># config/locales/pirate.yml
 pirate:
   time:
     formats:
       short: "arrrround %H'ish"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-452b8dd337ab375c9929ea69250edfec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-40c50191030acf122b439005b9a17106">Copiar</button>
 </div>
 <p>So that would give you:</p><p><img src="images/i18n/demo_localized_pirate.png" alt="rails i18n demo localized time to pirate"></p><div class="info"><p>Right now you might need to add some more date/time formats in order to make the I18n backend work as expected (at least for the 'pirate' locale). Of course, there's a great chance that somebody already did all the work by <strong>translating Rails' defaults for your locale</strong>. See the <a href="https://github.com/svenfuchs/rails-i18n/tree/master/rails/locale">rails-i18n repository at GitHub</a> for an archive of various locale files. When you put such file(s) in <code>config/locales/</code> directory, they will automatically be ready for use.</p></div><h4 id="inflection-rules-for-other-locales"><a class="anchorlink" href="#inflection-rules-for-other-locales">3.5 Inflection Rules for Other Locales</a></h4><p>Rails allows you to define inflection rules (such as rules for singularization and pluralization) for locales other than English. In <code>config/initializers/inflections.rb</code>, you can define these rules for multiple locales. The initializer contains a default example for specifying additional rules for English; follow that format for other locales as you see fit.</p><h4 id="localized-views"><a class="anchorlink" href="#localized-views">3.6 Localized Views</a></h4><p>Let's say you have a <em>BooksController</em> in your application. Your <em>index</em> action renders content in <code>app/views/books/index.html.erb</code> template. When you put a <em>localized variant</em> of this template: <code>index.es.html.erb</code> in the same directory, Rails will render content in this template, when the locale is set to <code>:es</code>. When the locale is set to the default locale, the generic <code>index.html.erb</code> view will be used. (Future Rails versions may well bring this <em>automagic</em> localization to assets in <code>public</code>, etc.)</p><p>You can make use of this feature, e.g. when working with a large amount of static content, which would be clumsy to put inside YAML or Ruby dictionaries. Bear in mind, though, that any change you would like to do later to the template must be propagated to all of them.</p><h4 id="organization-of-locale-files"><a class="anchorlink" href="#organization-of-locale-files">3.7 Organization of Locale Files</a></h4><p>When you are using the default SimpleStore shipped with the i18n library,
 dictionaries are stored in plain-text files on the disk. Putting translations
@@ -907,7 +907,7 @@ manage. You can store these files in a hierarchy which makes sense to you.</p><p
 |-----es.yml
 |-----en.yml
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-55be7c73dad851c41af44e5a3d1a17ac">|-defaults
+<textarea class="clipboard-content" id="clipboard-1e7c2edeed23cfd6a63d3349f55cdc34">|-defaults
 |---es.yml
 |---en.yml
 |-models
@@ -928,16 +928,16 @@ manage. You can store these files in a hierarchy which makes sense to you.</p><p
 |-----es.yml
 |-----en.yml
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-55be7c73dad851c41af44e5a3d1a17ac">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1e7c2edeed23cfd6a63d3349f55cdc34">Copiar</button>
 </div>
 <p>This way, you can separate model and model attribute names from text inside views, and all of this from the "defaults" (e.g. date and time formats). Other stores for the i18n library could provide different means of such separation.</p><div class="note"><p>The default locale loading mechanism in Rails does not load locale files in nested dictionaries, like we have here. So, for this to work, we must explicitly tell Rails to look further:</p></div><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">i18n</span><span class="p">.</span><span class="nf">load_path</span> <span class="o">+=</span> <span class="no">Dir</span><span class="p">[</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s1">'config'</span><span class="p">,</span> <span class="s1">'locales'</span><span class="p">,</span> <span class="s1">'**'</span><span class="p">,</span> <span class="s1">'*.{rb,yml}'</span><span class="p">)]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-200b7edadf6af61ad76dda97f0b1d848"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-79192a90c3e9b99893bc88969fdb8124"># config/application.rb
 config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-200b7edadf6af61ad76dda97f0b1d848">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-79192a90c3e9b99893bc88969fdb8124">Copiar</button>
 </div>
 <h3 id="overview-of-the-i18n-api-features"><a class="anchorlink" href="#overview-of-the-i18n-api-features">4 Overview of the I18n API Features</a></h3><p>You should have a good understanding of using the i18n library now and know how
 to internationalize a basic Rails application. In the following chapters, we'll
@@ -953,24 +953,24 @@ cover its features in more depth.</p><p>These chapters will show examples using 
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:message</span>
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'message'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2ed7702698099f8277f0c9630cf47832">I18n.t :message
+<textarea class="clipboard-content" id="clipboard-2295ad9869384a8d0b8f70a40cfe29a2">I18n.t :message
 I18n.t 'message'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2ed7702698099f8277f0c9630cf47832">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2295ad9869384a8d0b8f70a40cfe29a2">Copiar</button>
 </div>
 <p>The <code>translate</code> method also takes a <code>:scope</code> option which can contain one or more additional keys that will be used to specify a "namespace" or scope for a translation key:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:record_invalid</span><span class="p">,</span> <span class="ss">scope: </span><span class="p">[</span><span class="ss">:activerecord</span><span class="p">,</span> <span class="ss">:errors</span><span class="p">,</span> <span class="ss">:messages</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b863b0ab03a3a80017819fe0520da489">I18n.t :record_invalid, scope: [:activerecord, :errors, :messages]
+<textarea class="clipboard-content" id="clipboard-1f3bc96d5459061bbc4d4852a2c274f2">I18n.t :record_invalid, scope: [:activerecord, :errors, :messages]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b863b0ab03a3a80017819fe0520da489">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1f3bc96d5459061bbc4d4852a2c274f2">Copiar</button>
 </div>
 <p>This looks up the <code>:record_invalid</code> message in the Active Record error messages.</p><p>Additionally, both the key and scopes can be specified as dot-separated keys as in:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">translate</span> <span class="s2">"activerecord.errors.messages.record_invalid"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-997ada192324f6cec0e5345908fd70d6">I18n.translate "activerecord.errors.messages.record_invalid"
+<textarea class="clipboard-content" id="clipboard-c519937300268e702bcc3ba2d9f9ec50">I18n.translate "activerecord.errors.messages.record_invalid"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-997ada192324f6cec0e5345908fd70d6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c519937300268e702bcc3ba2d9f9ec50">Copiar</button>
 </div>
 <p>Thus the following calls are equivalent:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'activerecord.errors.messages.record_invalid'</span>
@@ -978,48 +978,48 @@ I18n.t 'message'
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:record_invalid</span><span class="p">,</span> <span class="ss">scope: </span><span class="s1">'activerecord.errors.messages'</span>
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:record_invalid</span><span class="p">,</span> <span class="ss">scope: </span><span class="p">[</span><span class="ss">:activerecord</span><span class="p">,</span> <span class="ss">:errors</span><span class="p">,</span> <span class="ss">:messages</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-613aed88a15a1154741b16f901fafb1a">I18n.t 'activerecord.errors.messages.record_invalid'
+<textarea class="clipboard-content" id="clipboard-345ff7b3e7473d938919e99b739f1c43">I18n.t 'activerecord.errors.messages.record_invalid'
 I18n.t 'errors.messages.record_invalid', scope: :activerecord
 I18n.t :record_invalid, scope: 'activerecord.errors.messages'
 I18n.t :record_invalid, scope: [:activerecord, :errors, :messages]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-613aed88a15a1154741b16f901fafb1a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-345ff7b3e7473d938919e99b739f1c43">Copiar</button>
 </div>
 <h5 id="defaults"><a class="anchorlink" href="#defaults">4.1.2 Defaults</a></h5><p>When a <code>:default</code> option is given, its value will be returned if the translation is missing:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:missing</span><span class="p">,</span> <span class="ss">default: </span><span class="s1">'Not here'</span>
 <span class="c1"># =&gt; 'Not here'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-991ab0ca913855fe6f4f321c00b36748">I18n.t :missing, default: 'Not here'
+<textarea class="clipboard-content" id="clipboard-75864b976f486661b8e1d0cee0adebc9">I18n.t :missing, default: 'Not here'
 # =&gt; 'Not here'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-991ab0ca913855fe6f4f321c00b36748">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-75864b976f486661b8e1d0cee0adebc9">Copiar</button>
 </div>
 <p>If the <code>:default</code> value is a Symbol, it will be used as a key and translated. One can provide multiple values as default. The first one that results in a value will be returned.</p><p>E.g., the following first tries to translate the key <code>:missing</code> and then the key <code>:also_missing.</code> As both do not yield a result, the string "Not here" will be returned:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:missing</span><span class="p">,</span> <span class="ss">default: </span><span class="p">[</span><span class="ss">:also_missing</span><span class="p">,</span> <span class="s1">'Not here'</span><span class="p">]</span>
 <span class="c1"># =&gt; 'Not here'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cc3014faf1a6936526e5f74553a65526">I18n.t :missing, default: [:also_missing, 'Not here']
+<textarea class="clipboard-content" id="clipboard-c701d6b81d14e4d551391919d3e6dd93">I18n.t :missing, default: [:also_missing, 'Not here']
 # =&gt; 'Not here'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cc3014faf1a6936526e5f74553a65526">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c701d6b81d14e4d551391919d3e6dd93">Copiar</button>
 </div>
 <h5 id="bulk-and-namespace-lookup"><a class="anchorlink" href="#bulk-and-namespace-lookup">4.1.3 Bulk and Namespace Lookup</a></h5><p>To look up multiple translations at once, an array of keys can be passed:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="p">[</span><span class="ss">:odd</span><span class="p">,</span> <span class="ss">:even</span><span class="p">],</span> <span class="ss">scope: </span><span class="s1">'errors.messages'</span>
 <span class="c1"># =&gt; ["must be odd", "must be even"]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2eb6ba1ff7f1aa2aadca18baa50d814f">I18n.t [:odd, :even], scope: 'errors.messages'
+<textarea class="clipboard-content" id="clipboard-a6dba26d1af9c5c2360dea4e5594ab6d">I18n.t [:odd, :even], scope: 'errors.messages'
 # =&gt; ["must be odd", "must be even"]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2eb6ba1ff7f1aa2aadca18baa50d814f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a6dba26d1af9c5c2360dea4e5594ab6d">Copiar</button>
 </div>
 <p>Also, a key can translate to a (potentially nested) hash of grouped translations. E.g., one can receive <em>all</em> Active Record error messages as a Hash with:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'activerecord.errors.messages'</span>
 <span class="c1"># =&gt; {:inclusion=&gt;"is not included in the list", :exclusion=&gt; ... }</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-600c895b9e9124c0ed9aa0950fc6bf87">I18n.t 'activerecord.errors.messages'
+<textarea class="clipboard-content" id="clipboard-0cbbc7b014a1eec07320c074aec8a192">I18n.t 'activerecord.errors.messages'
 # =&gt; {:inclusion=&gt;"is not included in the list", :exclusion=&gt; ... }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-600c895b9e9124c0ed9aa0950fc6bf87">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0cbbc7b014a1eec07320c074aec8a192">Copiar</button>
 </div>
 <p>If you want to perform interpolation on a bulk hash of translations, you need to pass <code>deep_interpolation: true</code> as a parameter. When you have the following dictionary:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
@@ -1027,12 +1027,12 @@ I18n.t :record_invalid, scope: [:activerecord, :errors, :messages]
     <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Welcome!"</span>
     <span class="na">content</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Welcome</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">%{app_name}"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-28213a1565c65ac7397fdfb4a527766a">en:
+<textarea class="clipboard-content" id="clipboard-47a55cf01793bb1bf926c922d7bda12d">en:
   welcome:
     title: "Welcome!"
     content: "Welcome to the %{app_name}"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-28213a1565c65ac7397fdfb4a527766a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-47a55cf01793bb1bf926c922d7bda12d">Copiar</button>
 </div>
 <p>then the nested interpolation will be ignored without the setting:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'welcome'</span><span class="p">,</span> <span class="ss">app_name: </span><span class="s1">'book store'</span>
@@ -1041,13 +1041,13 @@ I18n.t :record_invalid, scope: [:activerecord, :errors, :messages]
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'welcome'</span><span class="p">,</span> <span class="ss">deep_interpolation: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">app_name: </span><span class="s1">'book store'</span>
 <span class="c1"># =&gt; {:title=&gt;"Welcome!", :content=&gt;"Welcome to the book store"}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e78ac75931dc0644bfb97b4c724db051">I18n.t 'welcome', app_name: 'book store'
+<textarea class="clipboard-content" id="clipboard-d813c75c406e7e1d8ccf284a5d5e3916">I18n.t 'welcome', app_name: 'book store'
 # =&gt; {:title=&gt;"Welcome!", :content=&gt;"Welcome to the %{app_name}"}
 
 I18n.t 'welcome', deep_interpolation: true, app_name: 'book store'
 # =&gt; {:title=&gt;"Welcome!", :content=&gt;"Welcome to the book store"}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e78ac75931dc0644bfb97b4c724db051">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d813c75c406e7e1d8ccf284a5d5e3916">Copiar</button>
 </div>
 <h5 id="lazy-lookup"><a class="anchorlink" href="#lazy-lookup">4.1.4 "Lazy" Lookup</a></h5><p>Rails implements a convenient way to look up the locale inside <em>views</em>. When you have the following dictionary:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">es</span><span class="pi">:</span>
@@ -1055,19 +1055,19 @@ I18n.t 'welcome', deep_interpolation: true, app_name: 'book store'
     <span class="na">index</span><span class="pi">:</span>
       <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Título"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-273f23f4f0570bffc5c303c7c031be97">es:
+<textarea class="clipboard-content" id="clipboard-057a2ee47cc85c9bf8d713f5c7a7bb88">es:
   books:
     index:
       title: "Título"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-273f23f4f0570bffc5c303c7c031be97">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-057a2ee47cc85c9bf8d713f5c7a7bb88">Copiar</button>
 </div>
 <p>you can look up the <code>books.index.title</code> value <strong>inside</strong> <code>app/views/books/index.html.erb</code> template like this (note the dot):</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">t</span> <span class="s1">'.title'</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0406e466a292c46570ca9d93999da01c">&lt;%= t '.title' %&gt;
+<textarea class="clipboard-content" id="clipboard-0951d7c08664498ec97dca849626999e">&lt;%= t '.title' %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0406e466a292c46570ca9d93999da01c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0951d7c08664498ec97dca849626999e">Copiar</button>
 </div>
 <div class="note"><p>Automatic translation scoping by partial is only available from the <code>translate</code> view helper method.</p></div><p>"Lazy" lookup can also be used in controllers:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
@@ -1075,12 +1075,12 @@ I18n.t 'welcome', deep_interpolation: true, app_name: 'book store'
     <span class="na">create</span><span class="pi">:</span>
       <span class="na">success</span><span class="pi">:</span> <span class="s">Book created!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-20782980c123ef1c96206f448fca3107">en:
+<textarea class="clipboard-content" id="clipboard-5030caac67e344854721b162d9218a3a">en:
   books:
     create:
       success: Book created!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-20782980c123ef1c96206f448fca3107">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5030caac67e344854721b162d9218a3a">Copiar</button>
 </div>
 <p>This is useful for setting flash messages for instance:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">BooksController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -1090,14 +1090,14 @@ I18n.t 'welcome', deep_interpolation: true, app_name: 'book store'
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6a8bd55bb321fca2df0d3ae2ee2ef73f">class BooksController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-fd2715fd5a83063a2d601bfd8a6a4f0e">class BooksController &lt; ApplicationController
   def create
     # ...
     redirect_to books_url, notice: t('.success')
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6a8bd55bb321fca2df0d3ae2ee2ef73f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fd2715fd5a83063a2d601bfd8a6a4f0e">Copiar</button>
 </div>
 <h4 id="pluralization"><a class="anchorlink" href="#pluralization">4.2 Pluralization</a></h4><p>In many languages — including English — there are only two forms, a singular and a plural, for
 a given string, e.g. "1 message" and "2 messages". Other languages (<a href="http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html#ar">Arabic</a>, <a href="http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html#ja">Japanese</a>, <a href="http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html#ru">Russian</a> and many more) have different grammars that have additional or fewer <a href="http://cldr.unicode.org/index/cldr-spec/plural-rules">plural forms</a>. Thus, the I18n API provides a flexible pluralization feature.</p><p>The <code>:count</code> interpolation variable has a special role in that it both is interpolated to the translation and used to pick a pluralization from the translations according to the pluralization rules defined in the
@@ -1116,7 +1116,7 @@ pluralization backend. By default, only the English pluralization rules are appl
 <span class="no">I18n</span><span class="p">.</span><span class="nf">translate</span> <span class="ss">:inbox</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span>
 <span class="c1"># =&gt; 'no messages'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-14b1643ec59784772017977b3255122a">I18n.backend.store_translations :en, inbox: {
+<textarea class="clipboard-content" id="clipboard-1f5e036debde78e4413926d8197dd306">I18n.backend.store_translations :en, inbox: {
   zero: 'no messages', # optional
   one: 'one message',
   other: '%{count} messages'
@@ -1130,18 +1130,18 @@ I18n.translate :inbox, count: 1
 I18n.translate :inbox, count: 0
 # =&gt; 'no messages'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-14b1643ec59784772017977b3255122a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1f5e036debde78e4413926d8197dd306">Copiar</button>
 </div>
 <p>The algorithm for pluralizations in <code>:en</code> is as simple as:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">lookup_key</span> <span class="o">=</span> <span class="ss">:zero</span> <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">entry</span><span class="p">.</span><span class="nf">has_key?</span><span class="p">(</span><span class="ss">:zero</span><span class="p">)</span>
 <span class="n">lookup_key</span> <span class="o">||=</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">?</span> <span class="ss">:one</span> <span class="p">:</span> <span class="ss">:other</span>
 <span class="n">entry</span><span class="p">[</span><span class="n">lookup_key</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-48953e8e686c6cf89eb6a619b9b66f0e">lookup_key = :zero if count == 0 &amp;&amp; entry.has_key?(:zero)
+<textarea class="clipboard-content" id="clipboard-591525c608a6a29aa499dacad0fbafab">lookup_key = :zero if count == 0 &amp;&amp; entry.has_key?(:zero)
 lookup_key ||= count == 1 ? :one : :other
 entry[lookup_key]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-48953e8e686c6cf89eb6a619b9b66f0e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-591525c608a6a29aa499dacad0fbafab">Copiar</button>
 </div>
 <p>The translation denoted as <code>:one</code> is regarded as singular, and the <code>:other</code> is used as plural. If the count is zero, and a <code>:zero</code> entry is present, then it will be used instead of <code>:other</code>.</p><p>If the lookup for the key does not return a Hash suitable for pluralization, an <code>I18n::InvalidPluralizationData</code> exception is raised.</p><h5 id="locale-specific-rules"><a class="anchorlink" href="#locale-specific-rules">4.2.1 Locale-specific rules</a></h5><p>The I18n gem provides a Pluralization backend that can be used to enable locale-specific rules. Include it
 to the Simple backend, then add the localized pluralization algorithms to translation store, as <code>i18n.plural.rule</code>.</p><div class="code_container">
@@ -1152,41 +1152,41 @@ to the Simple backend, then add the localized pluralization algorithms to transl
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:apples</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">,</span> <span class="ss">locale: :pt</span>
 <span class="c1"># =&gt; 'one or none'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5117c65b9ccf28faa28a881cf586c5ca">I18n::Backend::Simple.include(I18n::Backend::Pluralization)
+<textarea class="clipboard-content" id="clipboard-402b67cb3a8f392403b6d124b6553b8b">I18n::Backend::Simple.include(I18n::Backend::Pluralization)
 I18n.backend.store_translations :pt, i18n: { plural: { rule: lambda { |n| [0, 1].include?(n) ? :one : :other } } }
 I18n.backend.store_translations :pt, apples: { one: 'one or none', other: 'more than one' }
 
 I18n.t :apples, count: 0, locale: :pt
 # =&gt; 'one or none'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5117c65b9ccf28faa28a881cf586c5ca">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-402b67cb3a8f392403b6d124b6553b8b">Copiar</button>
 </div>
 <p>Alternatively, the separate gem <a href="https://github.com/svenfuchs/rails-i18n">rails-i18n</a> can be used to provide a fuller set of locale-specific pluralization rules.</p><h4 id="setting-and-passing-a-locale"><a class="anchorlink" href="#setting-and-passing-a-locale">4.3 Setting and Passing a Locale</a></h4><p>The locale can be either set pseudo-globally to <code>I18n.locale</code> (which uses <code>Thread.current</code> like, e.g., <code>Time.zone</code>) or can be passed as an option to <code>#translate</code> and <code>#localize</code>.</p><p>If no locale is passed, <code>I18n.locale</code> is used:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">locale</span> <span class="o">=</span> <span class="ss">:de</span>
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:foo</span>
 <span class="no">I18n</span><span class="p">.</span><span class="nf">l</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5d31c714f748ea08f02c0cd32225fc08">I18n.locale = :de
+<textarea class="clipboard-content" id="clipboard-2cfe7cf6e4692026e50adcc33d0242d8">I18n.locale = :de
 I18n.t :foo
 I18n.l Time.now
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5d31c714f748ea08f02c0cd32225fc08">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2cfe7cf6e4692026e50adcc33d0242d8">Copiar</button>
 </div>
 <p>Explicitly passing a locale:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:foo</span><span class="p">,</span> <span class="ss">locale: :de</span>
 <span class="no">I18n</span><span class="p">.</span><span class="nf">l</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">,</span> <span class="ss">locale: :de</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-234bc65cfa08a351cc96161a7d7c678e">I18n.t :foo, locale: :de
+<textarea class="clipboard-content" id="clipboard-a84f7386f1ae6a2561f46dc1c6a41610">I18n.t :foo, locale: :de
 I18n.l Time.now, locale: :de
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-234bc65cfa08a351cc96161a7d7c678e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a84f7386f1ae6a2561f46dc1c6a41610">Copiar</button>
 </div>
 <p>The <code>I18n.locale</code> defaults to <code>I18n.default_locale</code> which defaults to :<code>en</code>. The default locale can be set like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">default_locale</span> <span class="o">=</span> <span class="ss">:de</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bd787a30e805b453bc7b5437ff71210d">I18n.default_locale = :de
+<textarea class="clipboard-content" id="clipboard-056219933ce579b0947d43e0ec62fc18">I18n.default_locale = :de
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bd787a30e805b453bc7b5437ff71210d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-056219933ce579b0947d43e0ec62fc18">Copiar</button>
 </div>
 <h4 id="using-safe-html-translations"><a class="anchorlink" href="#using-safe-html-translations">4.4 Using Safe HTML Translations</a></h4><p>Keys with a '_html' suffix and keys named 'html' are marked as HTML safe. When you use them in views the HTML will not be escaped.</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># config/locales/en.yml</span>
@@ -1196,14 +1196,14 @@ I18n.l Time.now, locale: :de
   <span class="na">title</span><span class="pi">:</span>
     <span class="na">html</span><span class="pi">:</span> <span class="s">&lt;b&gt;title!&lt;/b&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3d74f34530dc1a871af8a312043656f4"># config/locales/en.yml
+<textarea class="clipboard-content" id="clipboard-16dbb20529e00a2c9d69bf68e114a442"># config/locales/en.yml
 en:
   welcome: &lt;b&gt;welcome!&lt;/b&gt;
   hello_html: &lt;b&gt;hello!&lt;/b&gt;
   title:
     html: &lt;b&gt;title!&lt;/b&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3d74f34530dc1a871af8a312043656f4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-16dbb20529e00a2c9d69bf68e114a442">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight erb"><span class="c">&lt;!-- app/views/home/index.html.erb --&gt;</span>
@@ -1212,31 +1212,31 @@ en:
 <span class="nt">&lt;div&gt;</span><span class="cp">&lt;%=</span> <span class="n">t</span><span class="p">(</span><span class="s1">'hello_html'</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;div&gt;</span><span class="cp">&lt;%=</span> <span class="n">t</span><span class="p">(</span><span class="s1">'title.html'</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="nt">&lt;/div&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-094aee865830b072270745dd30b23382">&lt;!-- app/views/home/index.html.erb --&gt;
+<textarea class="clipboard-content" id="clipboard-6267928a46e142c531cd0debd5d116d3">&lt;!-- app/views/home/index.html.erb --&gt;
 &lt;div&gt;&lt;%= t('welcome') %&gt;&lt;/div&gt;
 &lt;div&gt;&lt;%= raw t('welcome') %&gt;&lt;/div&gt;
 &lt;div&gt;&lt;%= t('hello_html') %&gt;&lt;/div&gt;
 &lt;div&gt;&lt;%= t('title.html') %&gt;&lt;/div&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-094aee865830b072270745dd30b23382">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6267928a46e142c531cd0debd5d116d3">Copiar</button>
 </div>
 <p>Interpolation escapes as needed though. For example, given:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
   <span class="na">welcome_html</span><span class="pi">:</span> <span class="s2">"</span><span class="s">&lt;b&gt;Welcome</span><span class="nv"> </span><span class="s">%{username}!&lt;/b&gt;"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-791de72e8d1c55ef1ff84f0ed4ea6b41">en:
+<textarea class="clipboard-content" id="clipboard-72b223b862a99d20293dd8f655cdcc24">en:
   welcome_html: "&lt;b&gt;Welcome %{username}!&lt;/b&gt;"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-791de72e8d1c55ef1ff84f0ed4ea6b41">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-72b223b862a99d20293dd8f655cdcc24">Copiar</button>
 </div>
 <p>you can safely pass the username as set by the user:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="c">&lt;%# This is safe, it is going to be escaped if needed. %&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">t</span><span class="p">(</span><span class="s1">'welcome_html'</span><span class="p">,</span> <span class="ss">username: </span><span class="vi">@current_user</span><span class="p">.</span><span class="nf">username</span><span class="p">)</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-815bacb9ab3bf0357ade566cbf2d235d">&lt;%# This is safe, it is going to be escaped if needed. %&gt;
+<textarea class="clipboard-content" id="clipboard-337634469faa8b6660368095a4ae7d54">&lt;%# This is safe, it is going to be escaped if needed. %&gt;
 &lt;%= t('welcome_html', username: @current_user.username) %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-815bacb9ab3bf0357ade566cbf2d235d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-337634469faa8b6660368095a4ae7d54">Copiar</button>
 </div>
 <p>Safe strings on the other hand are interpolated verbatim.</p><div class="note"><p>Automatic conversion to HTML safe translate text is only available from the <code>translate</code> view helper method.</p></div><p><img src="images/i18n/demo_html_safe.png" alt="i18n demo html safe"></p><h4 id="translations-for-active-record-models"><a class="anchorlink" href="#translations-for-active-record-models">4.5 Translations for Active Record Models</a></h4><p>You can use the methods <code>Model.model_name.human</code> and <code>Model.human_attribute_name(attribute)</code> to transparently look up translations for your model and attribute names.</p><p>For example when you add the following translations:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
@@ -1248,7 +1248,7 @@ en:
         <span class="na">login</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Handle"</span>
       <span class="c1"># will translate User attribute "login" as "Handle"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-79bf6980b2ad635d80d7e15756d36c55">en:
+<textarea class="clipboard-content" id="clipboard-2951bc7a60ecb8049abba28b7fe8d91c">en:
   activerecord:
     models:
       user: Customer
@@ -1257,7 +1257,7 @@ en:
         login: "Handle"
       # will translate User attribute "login" as "Handle"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-79bf6980b2ad635d80d7e15756d36c55">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2951bc7a60ecb8049abba28b7fe8d91c">Copiar</button>
 </div>
 <p>Then <code>User.model_name.human</code> will return "Customer" and <code>User.human_attribute_name("login")</code> will return "Handle".</p><p>You can also set a plural form for model names, adding as following:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
@@ -1267,14 +1267,14 @@ en:
         <span class="na">one</span><span class="pi">:</span> <span class="s">Customer</span>
         <span class="na">other</span><span class="pi">:</span> <span class="s">Customers</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-22ade1be9ef80f700890baa403c21dc4">en:
+<textarea class="clipboard-content" id="clipboard-73a3f85dab79552fa93fa0888c95032a">en:
   activerecord:
     models:
       user:
         one: Customer
         other: Customers
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-22ade1be9ef80f700890baa403c21dc4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-73a3f85dab79552fa93fa0888c95032a">Copiar</button>
 </div>
 <p>Then <code>User.model_name.human(count: 2)</code> will return "Customers". With <code>count: 1</code> or without params will return "Customer".</p><p>In the event you need to access nested attributes within a given model, you should nest these under <code>model/attribute</code> at the model level of your translation file:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
@@ -1284,25 +1284,25 @@ en:
         <span class="na">admin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Admin"</span>
         <span class="na">contributor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Contributor"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-034e156dfca3eb9cf65bf76c462a0b69">en:
+<textarea class="clipboard-content" id="clipboard-453fb993185a7f9468e72752623b8d0f">en:
   activerecord:
     attributes:
       user/role:
         admin: "Admin"
         contributor: "Contributor"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-034e156dfca3eb9cf65bf76c462a0b69">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-453fb993185a7f9468e72752623b8d0f">Copiar</button>
 </div>
 <p>Then <code>User.human_attribute_name("role.admin")</code> will return "Admin".</p><div class="note"><p>If you are using a class which includes <code>ActiveModel</code> and does not inherit from <code>ActiveRecord::Base</code>, replace <code>activerecord</code> with <code>activemodel</code> in the above key paths.</p></div><h5 id="error-message-scopes"><a class="anchorlink" href="#error-message-scopes">4.5.1 Error Message Scopes</a></h5><p>Active Record validation error messages can also be translated easily. Active Record gives you a couple of namespaces where you can place your message translations in order to provide different messages and translation for certain models, attributes, and/or validations. It also transparently takes single table inheritance into account.</p><p>This gives you quite powerful means to flexibly adjust your messages to your application's needs.</p><p>Consider a User model with a validation for the name attribute like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-324d0d03825bdba907f93a51d5e35e48">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-eef6f8887d24992e6d682a0d75686ab2">class User &lt; ApplicationRecord
   validates :name, presence: true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-324d0d03825bdba907f93a51d5e35e48">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eef6f8887d24992e6d682a0d75686ab2">Copiar</button>
 </div>
 <p>The key for the error message in this case is <code>:blank</code>. Active Record will look up this key in the namespaces:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">activerecord</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">models</span><span class="p">.</span><span class="nf">[</span><span class="n">model_name</span><span class="p">].</span><span class="nf">attributes</span><span class="p">.</span><span class="nf">[</span><span class="n">attribute_name</span><span class="p">]</span>
@@ -1311,13 +1311,13 @@ end
 <span class="n">errors</span><span class="p">.</span><span class="nf">attributes</span><span class="p">.</span><span class="nf">[</span><span class="n">attribute_name</span><span class="p">]</span>
 <span class="n">errors</span><span class="p">.</span><span class="nf">messages</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d7f55179e0fc9f980f82d434772f386">activerecord.errors.models.[model_name].attributes.[attribute_name]
+<textarea class="clipboard-content" id="clipboard-4e9094bd4c13969d72a69dedec52f338">activerecord.errors.models.[model_name].attributes.[attribute_name]
 activerecord.errors.models.[model_name]
 activerecord.errors.messages
 errors.attributes.[attribute_name]
 errors.messages
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d7f55179e0fc9f980f82d434772f386">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4e9094bd4c13969d72a69dedec52f338">Copiar</button>
 </div>
 <p>Thus, in our example it will try the following keys in this order and return the first result:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">activerecord</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">models</span><span class="p">.</span><span class="nf">user</span><span class="p">.</span><span class="nf">attributes</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">blank</span>
@@ -1326,24 +1326,24 @@ errors.messages
 <span class="n">errors</span><span class="p">.</span><span class="nf">attributes</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">blank</span>
 <span class="n">errors</span><span class="p">.</span><span class="nf">messages</span><span class="p">.</span><span class="nf">blank</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-437509563f56cad75e1b58cb9e9f9cd3">activerecord.errors.models.user.attributes.name.blank
+<textarea class="clipboard-content" id="clipboard-0898a7da709e5a47479d7f360f0be96f">activerecord.errors.models.user.attributes.name.blank
 activerecord.errors.models.user.blank
 activerecord.errors.messages.blank
 errors.attributes.name.blank
 errors.messages.blank
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-437509563f56cad75e1b58cb9e9f9cd3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0898a7da709e5a47479d7f360f0be96f">Copiar</button>
 </div>
 <p>When your models are additionally using inheritance then the messages are looked up in the inheritance chain.</p><p>For example, you might have an Admin model inheriting from User:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Admin</span> <span class="o">&lt;</span> <span class="no">User</span>
   <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-543ab669e18355f68ef2caf54007ac7c">class Admin &lt; User
+<textarea class="clipboard-content" id="clipboard-ead1dbc17289535d55b3f870da5a12e5">class Admin &lt; User
   validates :name, presence: true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-543ab669e18355f68ef2caf54007ac7c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ead1dbc17289535d55b3f870da5a12e5">Copiar</button>
 </div>
 <p>Then Active Record will look for messages in this order:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">activerecord</span><span class="p">.</span><span class="nf">errors</span><span class="p">.</span><span class="nf">models</span><span class="p">.</span><span class="nf">admin</span><span class="p">.</span><span class="nf">attributes</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">blank</span>
@@ -1354,7 +1354,7 @@ end
 <span class="n">errors</span><span class="p">.</span><span class="nf">attributes</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">blank</span>
 <span class="n">errors</span><span class="p">.</span><span class="nf">messages</span><span class="p">.</span><span class="nf">blank</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-38d6e7a251b8c0025fa5abd6665b190b">activerecord.errors.models.admin.attributes.name.blank
+<textarea class="clipboard-content" id="clipboard-f53008e630a3fb2727fcdf24160757c1">activerecord.errors.models.admin.attributes.name.blank
 activerecord.errors.models.admin.blank
 activerecord.errors.models.user.attributes.name.blank
 activerecord.errors.models.user.blank
@@ -1362,7 +1362,7 @@ activerecord.errors.messages.blank
 errors.attributes.name.blank
 errors.messages.blank
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-38d6e7a251b8c0025fa5abd6665b190b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f53008e630a3fb2727fcdf24160757c1">Copiar</button>
 </div>
 <p>This way you can provide special translations for various error messages at different points in your model's inheritance chain and in the attributes, models, or default scopes.</p><h5 id="error-message-interpolation"><a class="anchorlink" href="#error-message-interpolation">4.5.2 Error Message Interpolation</a></h5><p>The translated model name, translated attribute name, and value are always available for interpolation as <code>model</code>, <code>attribute</code> and <code>value</code> respectively.</p><p>So, for example, instead of the default error message <code>"cannot be blank"</code> you could use the attribute name like this : <code>"Please fill in your %{attribute}"</code>.</p>
 <ul>
@@ -1542,14 +1542,14 @@ it in your translations. The performed lookup will use the pattern
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-549191a24c10af9f86d945f38331e812"># user_mailer.rb
+<textarea class="clipboard-content" id="clipboard-db381c4d8188a2d557f7bc06b081a8d3"># user_mailer.rb
 class UserMailer &lt; ActionMailer::Base
   def welcome(user)
     #...
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-549191a24c10af9f86d945f38331e812">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-db381c4d8188a2d557f7bc06b081a8d3">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
@@ -1557,12 +1557,12 @@ end
     <span class="na">welcome</span><span class="pi">:</span>
       <span class="na">subject</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Welcome</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">Rails</span><span class="nv"> </span><span class="s">Guides!"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-24ef5d0f85fb22cf6ad3ad19427bd306">en:
+<textarea class="clipboard-content" id="clipboard-42e2a7819e4b6c44bd19d09ddf171d2f">en:
   user_mailer:
     welcome:
       subject: "Welcome to Rails Guides!"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-24ef5d0f85fb22cf6ad3ad19427bd306">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-42e2a7819e4b6c44bd19d09ddf171d2f">Copiar</button>
 </div>
 <p>To send parameters to interpolation use the <code>default_i18n_subject</code> method on the mailer.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># user_mailer.rb</span>
@@ -1572,14 +1572,14 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-94e477add1824790c6a6455b05be16c2"># user_mailer.rb
+<textarea class="clipboard-content" id="clipboard-b15511290a91b9cbeab2f347c3b9f84a"># user_mailer.rb
 class UserMailer &lt; ActionMailer::Base
   def welcome(user)
     mail(to: user.email, subject: default_i18n_subject(user: user.name))
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-94e477add1824790c6a6455b05be16c2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b15511290a91b9cbeab2f347c3b9f84a">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
@@ -1587,12 +1587,12 @@ end
     <span class="na">welcome</span><span class="pi">:</span>
       <span class="na">subject</span><span class="pi">:</span> <span class="s2">"</span><span class="s">%{user},</span><span class="nv"> </span><span class="s">welcome</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">Rails</span><span class="nv"> </span><span class="s">Guides!"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d4ecacbcc1c6ae1119465353b8aaecfe">en:
+<textarea class="clipboard-content" id="clipboard-b737e2a4d182b6d9e079f963c173e811">en:
   user_mailer:
     welcome:
       subject: "%{user}, welcome to Rails Guides!"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d4ecacbcc1c6ae1119465353b8aaecfe">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b737e2a4d182b6d9e079f963c173e811">Copiar</button>
 </div>
 <h4 id="overview-of-other-built-in-methods-that-provide-i18n-support"><a class="anchorlink" href="#overview-of-other-built-in-methods-that-provide-i18n-support">4.7 Overview of Other Built-In Methods that Provide I18n Support</a></h4><p>Rails uses fixed strings and other localizations, such as format strings and other format information in a couple of helpers. Here's a brief overview.</p><h5 id="action-view-helper-methods"><a class="anchorlink" href="#action-view-helper-methods">4.7.1 Action View Helper Methods</a></h5>
 <ul>
@@ -1620,7 +1620,7 @@ end
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bce9de2cd95a98e48e3026a555773892">{
+<textarea class="clipboard-content" id="clipboard-07aef4110353fa25079ee395f92dd096">{
   pt: {
     foo: {
       bar: "baz"
@@ -1628,18 +1628,18 @@ end
   }
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bce9de2cd95a98e48e3026a555773892">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-07aef4110353fa25079ee395f92dd096">Copiar</button>
 </div>
 <p>The equivalent YAML file would look like this:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">pt</span><span class="pi">:</span>
   <span class="na">foo</span><span class="pi">:</span>
     <span class="na">bar</span><span class="pi">:</span> <span class="s">baz</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f6d9a5fddde942fe22e3a917a564988f">pt:
+<textarea class="clipboard-content" id="clipboard-90ac3ce6a83d257bc841da7bacc24553">pt:
   foo:
     bar: baz
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f6d9a5fddde942fe22e3a917a564988f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-90ac3ce6a83d257bc841da7bacc24553">Copiar</button>
 </div>
 <p>As you see, in both cases the top level key is the locale. <code>:foo</code> is a namespace key and <code>:bar</code> is the key for the translation "baz".</p><p>Here is a "real" example from the Active Support <code>en.yml</code> translations YAML file:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">en</span><span class="pi">:</span>
@@ -1649,14 +1649,14 @@ end
       <span class="na">short</span><span class="pi">:</span> <span class="s2">"</span><span class="s">%b</span><span class="nv"> </span><span class="s">%d"</span>
       <span class="na">long</span><span class="pi">:</span> <span class="s2">"</span><span class="s">%B</span><span class="nv"> </span><span class="s">%d,</span><span class="nv"> </span><span class="s">%Y"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-836abfa7dabcd90142deeddd1fb69525">en:
+<textarea class="clipboard-content" id="clipboard-04160bd8f616b8836ed32595b452336f">en:
   date:
     formats:
       default: "%Y-%m-%d"
       short: "%b %d"
       long: "%B %d, %Y"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-836abfa7dabcd90142deeddd1fb69525">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-04160bd8f616b8836ed32595b452336f">Copiar</button>
 </div>
 <p>So, all of the following equivalent lookups will return the <code>:short</code> date format <code>"%b %d"</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="s1">'date.formats.short'</span>
@@ -1664,19 +1664,19 @@ end
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:short</span><span class="p">,</span> <span class="ss">scope: </span><span class="s1">'date.formats'</span>
 <span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:short</span><span class="p">,</span> <span class="ss">scope: </span><span class="p">[</span><span class="ss">:date</span><span class="p">,</span> <span class="ss">:formats</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b4e4b74f31fe6bcaa7f51deda5f85b09">I18n.t 'date.formats.short'
+<textarea class="clipboard-content" id="clipboard-c9ac43c6f68268e8ad3db4724d7b95ed">I18n.t 'date.formats.short'
 I18n.t 'formats.short', scope: :date
 I18n.t :short, scope: 'date.formats'
 I18n.t :short, scope: [:date, :formats]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b4e4b74f31fe6bcaa7f51deda5f85b09">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c9ac43c6f68268e8ad3db4724d7b95ed">Copiar</button>
 </div>
 <p>Generally we recommend using YAML as a format for storing translations. There are cases, though, where you want to store Ruby lambdas as part of your locale data, e.g. for special date formats.</p><h3 id="customize-your-i18n-setup"><a class="anchorlink" href="#customize-your-i18n-setup">6 Customize your I18n Setup</a></h3><h4 id="using-different-backends"><a class="anchorlink" href="#using-different-backends">6.1 Using Different Backends</a></h4><p>For several reasons the Simple backend shipped with Active Support only does the "simplest thing that could possibly work" <em>for Ruby on Rails</em><sup class="footnote" id="footnote-3-ref"><a href="#footnote-3">3</a></sup> ... which means that it is only guaranteed to work for English and, as a side effect, languages that are very similar to English. Also, the simple backend is only capable of reading translations but cannot dynamically store them to any format.</p><p>That does not mean you're stuck with these limitations, though. The Ruby I18n gem makes it very easy to exchange the Simple backend implementation with something else that fits better for your needs, by passing a backend instance to the <code>I18n.backend=</code> setter.</p><p>For example, you can replace the Simple backend with the Chain backend to chain multiple backends together. This is useful when you want to use standard translations with a Simple backend but store custom application translations in a database or other backends.</p><p>With the Chain backend, you could use the Active Record backend and fall back to the (default) Simple backend:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">backend</span> <span class="o">=</span> <span class="no">I18n</span><span class="o">::</span><span class="no">Backend</span><span class="o">::</span><span class="no">Chain</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">I18n</span><span class="o">::</span><span class="no">Backend</span><span class="o">::</span><span class="no">ActiveRecord</span><span class="p">.</span><span class="nf">new</span><span class="p">,</span> <span class="no">I18n</span><span class="p">.</span><span class="nf">backend</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bd7a0e07a7ca29d0f4c35f07e1d237ba">I18n.backend = I18n::Backend::Chain.new(I18n::Backend::ActiveRecord.new, I18n.backend)
+<textarea class="clipboard-content" id="clipboard-1f0113860d64a55d062bccce3fd21a4e">I18n.backend = I18n::Backend::Chain.new(I18n::Backend::ActiveRecord.new, I18n.backend)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bd7a0e07a7ca29d0f4c35f07e1d237ba">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1f0113860d64a55d062bccce3fd21a4e">Copiar</button>
 </div>
 <h4 id="using-different-exception-handlers"><a class="anchorlink" href="#using-different-exception-handlers">6.2 Using Different Exception Handlers</a></h4><p>The I18n API defines the following exceptions that will be raised by backends when the corresponding unexpected conditions occur:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">MissingTranslationData</span>       <span class="c1"># no translation was found for the requested key</span>
@@ -1686,14 +1686,14 @@ I18n.t :short, scope: [:date, :formats]
 <span class="no">ReservedInterpolationKey</span>     <span class="c1"># the translation contains a reserved interpolation variable name (i.e. one of: scope, default)</span>
 <span class="no">UnknownFileType</span>              <span class="c1"># the backend does not know how to handle a file type that was added to I18n.load_path</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c755b413910776346b12d5308f86625c">MissingTranslationData       # no translation was found for the requested key
+<textarea class="clipboard-content" id="clipboard-846cfee13631ba3e3d114505836c99e0">MissingTranslationData       # no translation was found for the requested key
 InvalidLocale                # the locale set to I18n.locale is invalid (e.g. nil)
 InvalidPluralizationData     # a count option was passed but the translation data is not suitable for pluralization
 MissingInterpolationArgument # the translation expects an interpolation argument that has not been passed
 ReservedInterpolationKey     # the translation contains a reserved interpolation variable name (i.e. one of: scope, default)
 UnknownFileType              # the backend does not know how to handle a file type that was added to I18n.load_path
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c755b413910776346b12d5308f86625c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-846cfee13631ba3e3d114505836c99e0">Copiar</button>
 </div>
 <p>The I18n API will catch all of these exceptions when they are thrown in the backend and pass them to the default_exception_handler method. This method will re-raise all exceptions except for <code>MissingTranslationData</code> exceptions. When a <code>MissingTranslationData</code> exception has been caught, it will return the exception's error message string containing the missing key/scope.</p><p>The reason for this is that during development you'd usually want your views to still render even though a translation is missing.</p><p>In other contexts you might want to change this behavior, though. E.g. the default exception handling does not allow to catch missing translations during automated tests easily. For this purpose a different exception handler can be specified. The specified exception handler must be a method on the I18n module or a class with a <code>call</code> method:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">I18n</span>
@@ -1710,7 +1710,7 @@ UnknownFileType              # the backend does not know how to handle a file ty
 
 <span class="no">I18n</span><span class="p">.</span><span class="nf">exception_handler</span> <span class="o">=</span> <span class="no">I18n</span><span class="o">::</span><span class="no">JustRaiseExceptionHandler</span><span class="p">.</span><span class="nf">new</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16046a3a5c5d8ed3cef7ae4db16e4bd0">module I18n
+<textarea class="clipboard-content" id="clipboard-253f7e36d9a2a2b6e3469b23d1aa2c97">module I18n
   class JustRaiseExceptionHandler &lt; ExceptionHandler
     def call(exception, locale, key, options)
       if exception.is_a?(MissingTranslation)
@@ -1724,7 +1724,7 @@ end
 
 I18n.exception_handler = I18n::JustRaiseExceptionHandler.new
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16046a3a5c5d8ed3cef7ae4db16e4bd0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-253f7e36d9a2a2b6e3469b23d1aa2c97">Copiar</button>
 </div>
 <p>This would re-raise only the <code>MissingTranslationData</code> exception, passing all other input to the default exception handler.</p><p>However, if you are using <code>I18n::Backend::Pluralization</code> this handler will also raise <code>I18n::MissingTranslationData: translation missing: en.i18n.plural.rule</code> exception that should normally be ignored to fall back to the default pluralization rule for English locale. To avoid this you may use an additional check for the translation key:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">if</span> <span class="n">exception</span><span class="p">.</span><span class="nf">is_a?</span><span class="p">(</span><span class="no">MissingTranslation</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">key</span><span class="p">.</span><span class="nf">to_s</span> <span class="o">!=</span> <span class="s1">'i18n.plural.rule'</span>
@@ -1733,20 +1733,20 @@ I18n.exception_handler = I18n::JustRaiseExceptionHandler.new
   <span class="k">super</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ecc0d586f011cdd9038ea0ec10cba750">if exception.is_a?(MissingTranslation) &amp;&amp; key.to_s != 'i18n.plural.rule'
+<textarea class="clipboard-content" id="clipboard-d3cbae725691d9d9c59d3d2367fa64e4">if exception.is_a?(MissingTranslation) &amp;&amp; key.to_s != 'i18n.plural.rule'
   raise exception.to_exception
 else
   super
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ecc0d586f011cdd9038ea0ec10cba750">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d3cbae725691d9d9c59d3d2367fa64e4">Copiar</button>
 </div>
 <p>Another example where the default behavior is less desirable is the Rails TranslationHelper which provides the method <code>#t</code> (as well as <code>#translate</code>). When a <code>MissingTranslationData</code> exception occurs in this context, the helper wraps the message into a span with the CSS class <code>translation_missing</code>.</p><p>To do so, the helper forces <code>I18n#translate</code> to raise exceptions no matter what exception handler is defined by setting the <code>:raise</code> option:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">I18n</span><span class="p">.</span><span class="nf">t</span> <span class="ss">:foo</span><span class="p">,</span> <span class="ss">raise: </span><span class="kp">true</span> <span class="c1"># always re-raises exceptions from the backend</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-29580df5cff8edb9618d4af93c3da525">I18n.t :foo, raise: true # always re-raises exceptions from the backend
+<textarea class="clipboard-content" id="clipboard-5a8cf5270f32ca2b32b2f59a4bb73453">I18n.t :foo, raise: true # always re-raises exceptions from the backend
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-29580df5cff8edb9618d4af93c3da525">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5a8cf5270f32ca2b32b2f59a4bb73453">Copiar</button>
 </div>
 <h3 id="translating-model-content"><a class="anchorlink" href="#translating-model-content">7 Translating Model Content</a></h3><p>The I18n API described in this guide is primarily intended for translating interface strings. If you are looking to translate model content (e.g. blog posts), you will need a different solution to help with this.</p><p>Several gems can help with this:</p>
 <ul>
