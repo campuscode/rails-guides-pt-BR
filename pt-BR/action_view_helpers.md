@@ -24,7 +24,7 @@ O que se segue é apenas um breve resumo geral dos *helpers* disponíveis no Act
 
 Este módulo fornece métodos para gerar HTML que vincula *views* aos *assets*, como imagens, arquivos JavaScript, folhas de estilo e feeds.
 
-Por padrão, o Rails disponibiliza esses *assets* no host atual na pasta `public`, mas você pode direcionar o Rails para disponibilizar os *assets* de um servidor de *assets* dedicado definindo `config.asset_host` na configuração da aplicação, normalmente em `config/environment/production.rb`. Por exemplo, digamos que seu host de *assets* seja `assets.example.com`:
+Por padrão, o Rails disponibiliza esses *assets* no *host* atual na pasta `public`, mas você pode direcionar o Rails para disponibilizar os *assets* de um servidor de *assets* dedicado definindo `config.asset_host` na configuração da aplicação, normalmente em `config/environment/production.rb`. Por exemplo, digamos que seu *host* de *assets* seja `assets.example.com`:
 
 ```ruby
 config.asset_host = "assets.example.com"
