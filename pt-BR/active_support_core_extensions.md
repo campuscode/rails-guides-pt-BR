@@ -872,7 +872,7 @@ NOTE: Definido em `active_support/core_ext/module/redefine_method.rb`.
 [Module#redefine_method]: https://api.rubyonrails.org/classes/Module.html#method-i-redefine_method
 [Module#silence_redefinition_of_method]: https://api.rubyonrails.org/classes/Module.html#method-i-silence_redefinition_of_method
 
-Extensions to `Class`
+Extensões para `Class`
 ---------------------
 
 ### Atributos de classe
