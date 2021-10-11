@@ -37,7 +37,7 @@ class PostsController < ApplicationController
 end
 ```
 
-Isso não é necessário em aplicações Rails, onde as classes e o modulos da aplicação estão disponíveis em todo canto.
+Isso não é necessário em aplicações Rails, onde as classes e o módulos da aplicação estão disponíveis em todo canto.
 
 ```ruby
 class PostsController < ApplicationController
