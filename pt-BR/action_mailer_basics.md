@@ -420,10 +420,9 @@ config.action_mailer.perform_caching = true
 Fragment caching is also supported in multipart emails.
 Read more about caching in the [Rails caching guide](caching_with_rails.html).
 
-### *Action Mailer Layouts*
+### *Layouts de Action Mailer*
 
-Similarmente como nas *views* dos *controllers*, é possível também ter *layouts*
-para os *mailers*. O nome do *layout* deve ser o mesmo do *mailer*, como `user_mailer.html.erb` e `user_mailer.text.erb` para ser reconhecido automaticamente pelo seu *mailer* como um *layout*.
+Similarmente como nas *views* dos *controllers*, é possível também ter *layouts* para os *mailers*. O nome do *layout* deve ser o mesmo do *mailer*, como `user_mailer.html.erb` e `user_mailer.text.erb` para ser reconhecido automaticamente pelo seu *mailer* como um *layout*.
 
 Se quiser usar um arquivo diferente, chame `layout` em seu *mailer*:
 
@@ -448,8 +447,7 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-Vai renderiar a parte *HTML* usando o arquivo `my_layout.html.erb` e a parte de texto
-com o arquivo usual `user_mailer.text.erb` se ele existir.
+Vai renderizar a parte *HTML* usando o arquivo `my_layout.html.erb` e a parte de texto com o arquivo usual `user_mailer.text.erb` se ele existir.
 
 ### Previewing Emails
 
