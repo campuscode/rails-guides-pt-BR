@@ -59,7 +59,7 @@ O modo `zeitwerk` de auto carregamento é habilitado por padrão no Rails 6 que 
 config.load_defaults 6.0 # habilita o modo zeitwerk usando CRuby
 ```
 
-No modo `zeitwerk`, o Rails utiliza [Zeitwerk](https://github.com/fxn/zeitwerk) de forma interna para fazer carregamento automatico, recarregamento e *eager load*. O Rails cria e configura uma instancia Zeitwerk dedicada que gerencia o projeto.
+No modo `zeitwerk`, o Rails utiliza [Zeitwerk](https://github.com/fxn/zeitwerk) de forma interna para fazer carregamento automático, recarregamento e *eager load*. O Rails cria e configura uma instancia Zeitwerk dedicada que gerencia o projeto.
 
 INFO. Você não configura o Zeitwerk manualmente em uma aplicação Rails. Ao invés disso, você configura a aplicação usando uma configuração portável, que é descrita neste guia. Assim, o Rails traduz essas configurações para o Zeitwerk por você.
 
