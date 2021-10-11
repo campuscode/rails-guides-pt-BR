@@ -948,7 +948,7 @@ to use it in production.
 Debug de Vazamentos de Memórias
 ----------------------
 
-Um aplicativo Ruby (on Rails ou não) pode vazar memória - tanto no código Ruby
+Um aplicativo Ruby (on Rails ou não) pode vazar memória (*memory leak*) - tanto no código Ruby
 quanto no nível de código C.
 
 Nesta seção, você aprenderá como encontrar e corrigir esses vazamentos usando ferramentas
