@@ -59,15 +59,15 @@ git remote set-head origin -a
 
 ### Escolhendo um capítulo para traduzir
 
-O primeiro passo para iniciar uma tradução é decidir que arquivo você vai traduzir. Na pasta `pt-BR/`, que está na raiz do projeto, verifique nos arquivos `.md` (criados usando Markdown) se a página que você gostaria de traduzir possui textos em inglês. Vamos usar como exemplo a página `active_record_basics.md`.
+O primeiro passo para iniciar uma tradução é decidir que arquivo você vai traduzir. Na pasta `pt-BR/`, que está na raiz do projeto, verifique nos arquivos `.md` (criados usando [Markdown](https://docs.github.com/pt/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/about-writing-and-formatting-on-github)) se a página que você gostaria de traduzir possui textos em inglês. Vamos usar como exemplo a página `active_record_basics.md`.
 
 A página Active Record Basics apresenta os capítulos: What is Active Record, Convention over Configuration in Active Record, Creating Active Record Models, etc.
 
 > Fazemos a tradução capitulo a capitulo para simplificar o processo de revisão.
 
-Depois de escolhido o capitulo em que você vai trabalhar, verifique [nesse endereço](https://github.com/campuscode/rails-guides-pt-BR/issues) se já existe uma `issue` criada para aquele capitulo. Isso nos ajuda a gerenciar quem está traduzindo cada trecho. 
+Depois de escolhido o capítulo em que você vai trabalhar, verifique [nesse endereço](https://github.com/campuscode/rails-guides-pt-BR/issues) se já existe uma `issue` criada para aquele capítulo. Isso nos ajuda a gerenciar quem está traduzindo cada trecho. 
 
-Se a issue não existir, abra uma para o capítulo que deseja traduzir e faça um comentário avisando que irá iniciar a tradução.
+Se a issue não existir, abra uma para o capítulo que deseja traduzir e faça um comentário avisando que iniciará a tradução.
 
 Se ela existir, verifique se já não há alguém trabalhando nessa tradução. Normalmente deixamos todas abertas para simplificar, então clique nela e dê uma olhada nos comentários. Se for começar, faça um comentário avisando que irá iniciar a tradução.
 
