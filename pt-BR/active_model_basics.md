@@ -187,7 +187,7 @@ irb> person.first_name_changed?
 => true
 ```
 
-Track the previous value of the attribute.
+Rastreie o valor anterior do atributo.
 
 ```irb
 # attr_name_was accessor
@@ -195,8 +195,8 @@ irb> person.first_name_was
 => nil
 ```
 
-Track both previous and current value of the changed attribute. Returns an array
-if changed, otherwise returns nil.
+Rastreie o valor anterior e atual do atributo alterado. Retorna um *array* se
+alterado; caso contrário, retorna `nil`.
 
 ```irb
 # attr_name_change
