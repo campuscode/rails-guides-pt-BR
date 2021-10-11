@@ -420,14 +420,12 @@ config.action_mailer.perform_caching = true
 Fragment caching is also supported in multipart emails.
 Read more about caching in the [Rails caching guide](caching_with_rails.html).
 
-### Action Mailer Layouts
+### *Action Mailer Layouts*
 
-Just like controller views, you can also have mailer layouts. The layout name
-needs to be the same as your mailer, such as `user_mailer.html.erb` and
-`user_mailer.text.erb` to be automatically recognized by your mailer as a
-layout.
+Similarmente como nas *views* dos *controllers*, é possível também ter *layouts*
+para os *mailers*. O nome do *layout* deve ser o mesmo do *mailer*, como `user_mailer.html.erb` e `user_mailer.text.erb` para ser reconhecido automaticamente pelo seu *mailer* como um *layout*.
 
-In order to use a different file, call `layout` in your mailer:
+Se quiser usar um arquivo diferente, chame `layout` em seu *mailer*:
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -435,11 +433,9 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-Just like with controller views, use `yield` to render the view inside the
-layout.
+Assim como nas *views* de *controller*, use `yield` para renderizar a *view* dentro do layout.
 
-You can also pass in a `layout: 'layout_name'` option to the render call inside
-the format block to specify different layouts for different formats:
+Você também pode passar `layout: 'layout_name'` dentro do bloco de formatação como opção na chamada do *render* para especificar quais formatos usar em *layouts* diferentes:
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -452,8 +448,8 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-Will render the HTML part using the `my_layout.html.erb` file and the text part
-with the usual `user_mailer.text.erb` file if it exists.
+Vai renderiar a parte *HTML* usando o arquivo `my_layout.html.erb` e a parte de texto
+com o arquivo usual `user_mailer.text.erb` se ele existir.
 
 ### Previewing Emails
 
@@ -778,7 +774,7 @@ use outro ESP para enviar e-mail substituindo 'smtp.gmail.com' acima pelo endere
 Testes de *Mailer*
 --------------
 
-Você encontrará instruções detalhadas de como testar seus *mailers* no 
+Você encontrará instruções detalhadas de como testar seus *mailers* no
 [guia de teste](testing.html#testing-your-mailers).
 
 Interceptando e Observando Emails
