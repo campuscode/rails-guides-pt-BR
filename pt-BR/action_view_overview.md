@@ -396,31 +396,34 @@ append_view_path "app/views/direct"
 
 This will add `app/views/direct` to the end of the lookup paths.
 
-Helpers
+*Helpers*
 -------
 
-Rails provides many helper methods to use with Action View. These include methods for:
+O Rails fornece muitos métodos auxiliares para usar com o *Action View*. Isso inclui métodos para:
 
-* Formatting dates, strings and numbers
-* Creating HTML links to images, videos, stylesheets, etc...
-* Sanitizing content
-* Creating forms
-* Localizing content
+* Formatação de datas, *strings* e números
+* Criação de links HTML para imagens, vídeos, *stylesheets*, etc...
+* Higienização de conteúdo
+* Criação de formulários
+* Localização de conteúdo
 
-You can learn more about helpers in the [Action View Helpers
-Guide](action_view_helpers.html) and the [Action View Form Helpers
-Guide](form_helpers.html).
+Você pode aprender mais sobre métodos auxiliares no [Guia de Helpers do Action View](action_view_helpers.html) e no [Guia de Form Helpers do Action View](form_helpers.html).
 
-Localized Views
+*Views* Localizadas
 ---------------
 
-Action View has the ability to render different templates depending on the current locale.
+O *Action View* tem a capacidade de renderizar diferentes *templates*, dependendo da localidade atual.
 
-For example, suppose you have an `ArticlesController` with a show action. By default, calling this action will render `app/views/articles/show.html.erb`. But if you set `I18n.locale = :de`, then `app/views/articles/show.de.html.erb` will be rendered instead. If the localized template isn't present, the undecorated version will be used. This means you're not required to provide localized views for all cases, but they will be preferred and used if available.
+Por exemplo, suponha que você tenha um `ArticlesController` com uma *action show*. Por padrão, chamar essa *action* irá renderizar `app/views/articles/show.html.erb`.
+Mas se você definir `I18n.locale = :de`, então `app/views/articles/show.de.html.erb` será renderizada em seu lugar.
+Se o *template* localizado não estiver presente, a versão não traduzida será utilizada.
+Isso significa que você não precisa fornecer *views* localizadas para todos os casos, mas elas serão preferidas e usadas, se disponíveis.
 
-You can use the same technique to localize the rescue files in your public directory. For example, setting `I18n.locale = :de` and creating `public/500.de.html` and `public/404.de.html` would allow you to have localized rescue pages.
+Você pode utilizar a mesma técnica para localizar os arquivos de *rescue* em seu diretório público. Por exemplo, definir `I18n.locale = :de` e criar `public/500.de.html` e `public/404.de.html` permitirá que você tenha páginas de *rescue* localizadas.
 
-Since Rails doesn't restrict the symbols that you use to set I18n.locale, you can leverage this system to display different content depending on anything you like. For example, suppose you have some "expert" users that should see different pages from "normal" users. You could add the following to `app/controllers/application.rb`:
+Visto que o Rails não restringe os *symbols* que você usa para definir o `I18n.locale`, você pode aproveitar este sistema para exibir conteúdos diferentes dependendo do que você quiser.
+Por exemplo, suponha que você tenha alguns usuários *"experts"* que devem ver páginas diferentes dos usuários "normais".
+Você pode adicionar o seguinte a `app/controllers/application.rb`:
 
 ```ruby
 before_action :set_expert_locale
@@ -430,6 +433,7 @@ def set_expert_locale
 end
 ```
 
-Then you could create special views like `app/views/articles/show.expert.html.erb` that would only be displayed to expert users.
+Em seguida, você pode criar *views* especiais como `app/views/articles/show.expert.html.erb` que somente serão exibidas para usuários *experts*.
 
-You can read more about the Rails Internationalization (I18n) API [here](i18n.html).
+Você pode ler mais sobre a API de Internacionalização do Rails (I18n) [aqui](i18n.html).
+
