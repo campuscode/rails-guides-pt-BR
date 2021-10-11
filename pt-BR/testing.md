@@ -219,7 +219,7 @@ Para ver como um erro é reportado, aqui está um teste contendo um erro:
 
 ```ruby
 test "should report error" do
-  # some_undefined_variable is not defined elsewhere in the test case
+  # some_undefined_variable não está definida no caso de teste
   some_undefined_variable
   assert true
 end
@@ -268,7 +268,7 @@ Se nós queremos que este teste passe nós devemos modificar isto para usar `ass
 
 ```ruby
 test "should report error" do
-  # some_undefined_variable is not defined elsewhere in the test case
+  # some_undefined_variable não está definida no caso de teste
   assert_raises(NameError) do
     some_undefined_variable
   end
