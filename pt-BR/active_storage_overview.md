@@ -832,7 +832,7 @@ const input = document.querySelector('input[type=file]')
 //  biblioteca com o Dropzone
 const onDrop = (event) => {
   event.preventDefault()
-  const files = event.dataTransferim.files;
+  const files = event.dataTransfer.files;
   Array.from(files).forEach(file => uploadFile(file))
 }
 
