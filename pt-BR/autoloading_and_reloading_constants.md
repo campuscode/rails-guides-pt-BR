@@ -11,7 +11,7 @@ Depois de ler este guia, você saberá:
 * Modos de Auto carregamento
 * Configurações Relacionadas ao Rails
 * Estrutura do projeto
-* Auto carregamento, recarregamento e _eager loading_.
+* Auto carregamento, recarregamento e _eager loading_
 * Herança de Tabela Única
 * E mais
 
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
 end
 ```
 
-Isso não é necessário em aplicações Rails, onde as classes e o módulos da aplicação estão disponíveis em todo canto.
+Isso não é necessário em aplicações Rails, onde as classes e os módulos da aplicação estão disponíveis em todo canto.
 
 ```ruby
 class PostsController < ApplicationController
