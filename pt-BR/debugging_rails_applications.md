@@ -880,27 +880,24 @@ O `byebug` possui algumas opções disponíveis para ajustar seu comportamento:
   savefile       -- File where settings are saved to. Default: ~/.byebug_save
 ```
 
-TIP: You can save these settings in an `.byebugrc` file in your home directory.
-The debugger reads these global settings when it starts. For example:
+TIP: Você pode salvar essas configurações em um arquivo `.byebugrc` em seu diretório home.
+O *debugger* lê essas configurações globais quando inicializa. Por exemplo:
 
 ```
 set callstyle short
 set listsize 25
 ```
 
-Debugging with the `web-console` gem
+Debug com a gem `web-console`
 ------------------------------------
 
-Web Console is a bit like `byebug`, but it runs in the browser. In any page you
-are developing, you can request a console in the context of a view or a
-controller. The console would be rendered next to your HTML content.
+A *gem* Web Console é um pouco semelhante à *gem* `byebug`, porém é executada no navegador. Em qualquer página que você esteja desenvolvendo, você pode solicitar um `console` no contexto da *view* ou do *controller*. O *console* deve ser renderizado próximo ao conteúdo HTML.
 
 ### Console
 
-Inside any controller action or view, you can invoke the console by
-calling the `console` method.
+Dentro de qualquer *controller action* ou *view*, você pode utilizar o console através da chamada do método `console`.
 
-For example, in a controller:
+Por exemplo, em um *controller*:
 
 ```ruby
 class PostsController < ApplicationController
@@ -911,7 +908,7 @@ class PostsController < ApplicationController
 end
 ```
 
-Or in a view:
+Ou em uma *view*:
 
 ```html+erb
 <% console %>
@@ -919,31 +916,22 @@ Or in a view:
 <h2>New Post</h2>
 ```
 
-This will render a console inside your view. You don't need to care about the
-location of the `console` call; it won't be rendered on the spot of its
-invocation but next to your HTML content.
+Isso vai renderizar um *console* dentro da view. Você não precisa se preocupar com a localização da chamada do método `console`; não será renderizado próximo ao elemento em que foi invocado, mas sim próximo ao seu conteúdo HTML.
 
-The console executes pure Ruby code: You can define and instantiate
-custom classes, create new models, and inspect variables.
+O *console* executa código Ruby nativo: Você pode definir e instanciar classes personalizadas, criar novos *models*, e inspecionar variáveis.
 
-NOTE: Only one console can be rendered per request. Otherwise `web-console`
-will raise an error on the second `console` invocation.
+NOTE: Somente um *console* pode ser renderizado por *request*. De outra maneira `web-console` lança um erro na segunda invocação do método `console`.
 
-### Inspecting Variables
+### Inspecionando Variáveis
 
-You can invoke `instance_variables` to list all the instance variables
-available in your context. If you want to list all the local variables, you can
-do that with `local_variables`.
+Você pode chamar `instance_variables` para listar todas as variáveis de instância disponíveis em seu contexto. Se você deseja listar todas as variáveis locais, você pode fazer isso usando `local_variables`.
 
-### Settings
+### Configurações
 
-* `config.web_console.allowed_ips`: Authorized list of IPv4 or IPv6
-addresses and networks (defaults: `127.0.0.1/8, ::1`).
-* `config.web_console.whiny_requests`: Log a message when a console rendering
-is prevented (defaults: `true`).
+* `config.web_console.allowed_ips`: Lista autorizada de endereços e redes IPv4 ou IPv6 (padrões: `127.0.0.1/8, ::1`).
+* `config.web_console.whiny_requests`: Registra uma mensagem quando a renderização do *console* é impedida (padrões: `true`).
 
-Since `web-console` evaluates plain Ruby code remotely on the server, don't try
-to use it in production.
+Uma vez que `web-console` avalia código Ruby simples remotamente no servidor, não tente usar em produção.
 
 Debug de Vazamentos de Memórias
 ----------------------
