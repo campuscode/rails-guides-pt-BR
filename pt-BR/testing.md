@@ -1770,7 +1770,7 @@ dos testes. Para uma lsita completa de asserções disponíveis, visite a docume
 [`ActiveJob::TestHelper`](https://api.rubyonrails.org/classes/ActiveJob/TestHelper.html).
 
 É uma boa prática se assegurar que seus *jobs* serão enfileirados ou executados
-onde quer que você os invoque (exemplo: desntro dos seus *controllers*). Este é um bom local onde
+onde quer que você os invoque (exemplo: dentro dos seus *controllers*). Este é um bom local onde
 as asserções personalizadas fornecidas pelo Active Job são muito úteis. Por exemplo,
 dentro de um *model*:
 
