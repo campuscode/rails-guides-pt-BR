@@ -1949,18 +1949,18 @@ A ordem na qual *helpers* de mais de um diretório são carregados mudou no Rail
 
 * `asset-url` com dois argumentos está deprecado. Por exemplo: `asset-url("rails.png", image)` torna-se `asset-url("rails.png")`.
 
-Upgrading from Rails 3.1 to Rails 3.2
+Atualizando do Rails 3.1 para o Rails 3.2
 -------------------------------------
 
-If your application is currently on any version of Rails older than 3.1.x, you
-should upgrade to Rails 3.1 before attempting an update to Rails 3.2.
+Se sua aplicação está atualmente em qualquer versão do Rails anterior a 3.1.x, você
+deve atualizar para o Rails 3.1 antes de tentar uma atualização para o Rails 3.2.
 
-The following changes are meant for upgrading your application to the latest
-3.2.x version of Rails.
+As seguintes mudanças são destinadas a atualizar sua aplicação para a mais recente
+versão 3.2.x do Rails.
 
 ### Gemfile
 
-Make the following changes to your `Gemfile`.
+Faça as seguintes alterações em seu `Gemfile`.
 
 ```ruby
 gem 'rails', '3.2.21'
@@ -1974,33 +1974,33 @@ end
 
 ### config/environments/development.rb
 
-There are a couple of new configuration settings that you should add to your development environment:
+Existem algumas novas definições de configuração que você deve adicionar ao seu ambiente de desenvolvimento:
 
 ```ruby
-# Raise exception on mass assignment protection for Active Record models
+# Levantar exceção na proteção de atribuição em massa para models Active Record
 config.active_record.mass_assignment_sanitizer = :strict
 
-# Log the query plan for queries taking more than this (works
-# with SQLite, MySQL, and PostgreSQL)
+# Registrar o log da query para consultas que ocupem mais do que isso (funciona
+# com SQLite, MySQL e PostgreSQL)
 config.active_record.auto_explain_threshold_in_seconds = 0.5
 ```
 
 ### config/environments/test.rb
 
-The `mass_assignment_sanitizer` configuration setting should also be added to `config/environments/test.rb`:
+A definição de configuração `mass_assignment_sanitizer` também deve ser adicionada a`config/environment/test.rb`:
 
 ```ruby
-# Raise exception on mass assignment protection for Active Record models
+# Levantar exceção na proteção de atribuição em massa para models Active Record
 config.active_record.mass_assignment_sanitizer = :strict
 ```
 
 ### vendor/plugins
 
-Rails 3.2 deprecates `vendor/plugins` and Rails 4.0 will remove them completely. While it's not strictly necessary as part of a Rails 3.2 upgrade, you can start replacing any plugins by extracting them to gems and adding them to your `Gemfile`. If you choose not to make them gems, you can move them into, say, `lib/my_plugin/*` and add an appropriate initializer in `config/initializers/my_plugin.rb`.
+O Rails 3.2 depreca `vendor/plugins` e o Rails 4.0 irá removê-los completamente. Embora não seja estritamente necessário como parte de uma atualização do Rails 3.2, você pode começar a substituir quaisquer *plugins*, extraindo-os para *gems* e adicionando-os ao seu `Gemfile`. Se você escolher não torná-los *gems*, você pode movê-los para, digamos, `lib/my_plugin/*` e adicionar um inicializador apropriado em `config/initializers/my_plugin.rb`.
 
 ### Active Record
 
-Option `:dependent => :restrict` has been removed from `belongs_to`. If you want to prevent deleting the object if there are any associated objects, you can set `:dependent => :destroy` and return `false` after checking for existence of association from any of the associated object's destroy callbacks.
+A opção `:dependent =>: restrict` foi removida de `belongs_to`. Se você quiser evitar a exclusão do objeto se houver algum objeto associado, você pode definir `:dependent => :destroy` e retornar `false` após verificar a existência de associação de qualquer retorno de chamada de destruição do objeto associado.
 
 Atualizando do Rails 3.0 para o Rails 3.1
 -------------------------------------
