@@ -962,7 +962,7 @@ There is an excellent article about detecting and fixing memory leaks at Deraile
 Plugins para *Debug*
 ---------------------
 
-Existem alguns plugins Rails  para te ajudar a procurar erros e *debugar* a aplicação. Aqui está uma lista de plugins uteis para *debugging*:
+Existem alguns plugins Rails para te ajudar a procurar erros e *debugar* a aplicação. Aqui está uma lista de plugins úteis para *debug*:
 
 * [Query Trace](https://github.com/ruckus/active-record-query-trace/tree/master) Adiciona rastreamento de origem de consulta aos seus logs.
 * [Exception Notifier](https://github.com/smartinez87/exception_notification/tree/master)
