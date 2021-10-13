@@ -964,7 +964,7 @@ Plugins para *Debugging*
 
 Existem alguns plugins Rails  para te ajudar a procurar erros e *debugar* a aplicação. Aqui está uma lista de plugins uteis para *debugging*:
 
-* [Query Trace](https://github.com/ruckus/active-record-query-trace/tree/master) AAdiciona rastreamento de origem de consulta aos seus logs.
+* [Query Trace](https://github.com/ruckus/active-record-query-trace/tree/master) Adiciona rastreamento de origem de consulta aos seus logs.
 * [Exception Notifier](https://github.com/smartinez87/exception_notification/tree/master)
 Fornece um objeto mailer e um conjunto padrão de templates para enviar notificações por email quando ocorrerem erros em um aplicativo Rails.
 * [Better Errors](https://github.com/charliesome/better_errors) Substitui a página de erro padrão do Rails por uma nova contendo mais informações contextuais, como código-fonte e inspeção de variáveis.
