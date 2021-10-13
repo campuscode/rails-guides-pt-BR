@@ -24,7 +24,7 @@ NOTE: Alguns recursos da *Action View* estão vinculados ao *Active Record*, mas
 Usando *Action View* com Rails
 ----------------------------
 
-Para cada *controller* há um diretório associado em `app/views` que contém os arquivos de *template* que compõe as *views* associadas aos seus respectivos *controllers*. Esses arquivos são utilizados para exibir a *view* que resulta de cada ação do *controller*.
+Para cada *controller* há um diretório associado em `app/views` que contém os arquivos de *template* que compõe as *views* associadas aos seus respectivos *controllers*. Esses arquivos são utilizados para exibir a *view* que resulta de cada *action* do *controller*.
 
 Vamos dar uma olhada no que o Rails faz por padrão quando um novo recurso é criado utilizando o *generator scaffold*:
 
@@ -44,7 +44,7 @@ $ bin/rails generate scaffold article
 ```
 
 Há uma convenção de nomenclatura para as *views* no Rails. Normalmente, as *views* compartilham seu nome com a *action* do *controller* à qual ela é associada, conforme pode ser visto no exemplo acima.
-Por exemplo, a ação *index* do *controller* `articles_controller.rb` utilizará o arquivo de *view* `index.html.erb` no diretório `app/views/articles`.
+Por exemplo, a *action index* do *controller* `articles_controller.rb` utilizará o arquivo de *view* `index.html.erb` no diretório `app/views/articles`.
 O HTML completo que é retornado ao *client* é composto de uma combinação desse arquivo ERB, um *template* de *layout* que o envolve, e todas as *partials* que a *view* pode referenciar. Dentro deste guia você encontrará documentações mais detalhadas sobre cada um desses três componentes.
 
 
@@ -384,7 +384,7 @@ Podemos fazer isso usando:
 prepend_view_path "app/views/#{request.subdomain}"
 ```
 
-Então, a *Action View* procurará primeiro dentro deste diretório quando ao resolver as 
+Então, a *Action View* procurará primeiro dentro deste diretório quando ao resolver as
 *views*.
 
 ### Anexando caminho das views
