@@ -959,7 +959,7 @@ by Evan Weaver.
 ### Find a Memory Leak
 There is an excellent article about detecting and fixing memory leaks at Derailed, [which you can read here](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
 
-Plugins para *Debugging*
+Plugins para *Debug*
 ---------------------
 
 Existem alguns plugins Rails  para te ajudar a procurar erros e *debugar* a aplicação. Aqui está uma lista de plugins uteis para *debugging*:
