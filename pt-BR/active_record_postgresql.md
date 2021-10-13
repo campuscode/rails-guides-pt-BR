@@ -554,7 +554,7 @@ Indexes:
 ```
 
 Está tabela certamente não segue a as convenções do Rails.
-Como as visões no PostgreSQL são atualizáveis por padrão,
+Como as [visões](https://pt.wikipedia.org/wiki/Vis%C3%A3o_(banco_de_dados)) no PostgreSQL são atualizáveis por padrão,
 nos podemos envolver isso da seguinte maneira:
 
 ```ruby
