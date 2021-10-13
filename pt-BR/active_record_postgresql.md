@@ -593,4 +593,4 @@ irb> Article.count
 ```
 
 NOTE: Esta aplicação só se importa com `Articles` não arquivados. Uma visão também
-permite condições para que possamos excluir os `Artigos` arquivados diretamente.
+permite condições para que possamos excluir os `Articles` arquivados diretamente.
