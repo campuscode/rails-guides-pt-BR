@@ -259,31 +259,31 @@ particularmente ao fazer login no disco. Além disso, existem algumas sutilezas:
 Ao utilizar o nível `:debug`  terá uma penalidade de desempenho maior do que `:fatal`,
 já que um número muito maior de strings está sendo avaliado e gravado na saída do log (e.g. disco).
 
-Another potential pitfall is too many calls to `Logger` in your code:
+Outra armadilha potencial são muitas chamadas para `Logger` em seu código:
 
 ```ruby
 logger.debug "Person attributes hash: #{@person.attributes.inspect}"
 ```
 
-In the above example, there will be a performance impact even if the allowed
-output level doesn't include debug. The reason is that Ruby has to evaluate
-these strings, which includes instantiating the somewhat heavy `String` object
-and interpolating the variables.
+No exemplo acima, haverá um impacto no desempenho, mesmo se o permitido
+o nível de saída não inclui debug. A razão é que Ruby tem que avaliar
+essas strings, que inclui instanciar o objeto `String` um tanto pesado
+e interpolar as variáveis.
 
-Therefore, it's recommended to pass blocks to the logger methods, as these are
-only evaluated if the output level is the same as — or included in — the allowed level
-(i.e. lazy loading). The same code rewritten would be:
+Portanto, é recomendado passar blocos para os métodos logger, pois estes são
+apenas avaliado se o nível de saída for o mesmo - ou incluído - o nível permitido
+(i.e. carregamento lento). O mesmo código reescrito seria:
 
 ```ruby
 logger.debug {"Person attributes hash: #{@person.attributes.inspect}"}
 ```
 
-The contents of the block, and therefore the string interpolation, are only
-evaluated if debug is enabled. This performance savings are only really
-noticeable with large amounts of logging, but it's a good practice to employ.
+O conteúdo do bloco e, portanto, a interpolação de string, são apenas
+avaliada se a depuração está habilitada. Essa economia de desempenho é apenas realmente
+perceptível com grandes quantidades de registro, mas é uma boa prática empregar.
 
-INFO: This section was written by [Jon Cairns at a StackOverflow answer](https://stackoverflow.com/questions/16546730/logging-in-rails-is-there-any-performance-hit/16546935#16546935)
-and it is licensed under [cc by-sa 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+INFO: Esta seção foi escrita por [Jon Cairns em uma resposta no StackOverflow](https://stackoverflow.com/questions/16546730/logging-in-rails-is-there-any-performance-hit/16546935#16546935)
+e está licenciada sob [cc by-sa 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 *Debug* com a gem `byebug`
 ---------------------------------
@@ -879,24 +879,27 @@ O `byebug` possui algumas opções disponíveis para ajustar seu comportamento:
   savefile       -- File where settings are saved to. Default: ~/.byebug_save
 ```
 
-TIP: Você pode salvar essas configurações em um arquivo `.byebugrc` em seu diretório home.
-O *debugger* lê essas configurações globais quando inicializa. Por exemplo:
+TIP: You can save these settings in an `.byebugrc` file in your home directory.
+The debugger reads these global settings when it starts. For example:
 
 ```
 set callstyle short
 set listsize 25
 ```
 
-Debug com a gem `web-console`
+Debugging with the `web-console` gem
 ------------------------------------
 
-A *gem* Web Console é um pouco semelhante à *gem* `byebug`, porém é executada no navegador. Em qualquer página que você esteja desenvolvendo, você pode solicitar um `console` no contexto da *view* ou do *controller*. O *console* deve ser renderizado próximo ao conteúdo HTML.
+Web Console is a bit like `byebug`, but it runs in the browser. In any page you
+are developing, you can request a console in the context of a view or a
+controller. The console would be rendered next to your HTML content.
 
 ### Console
 
-Dentro de qualquer *controller action* ou *view*, você pode utilizar o console através da chamada do método `console`.
+Inside any controller action or view, you can invoke the console by
+calling the `console` method.
 
-Por exemplo, em um *controller*:
+For example, in a controller:
 
 ```ruby
 class PostsController < ApplicationController
@@ -907,7 +910,7 @@ class PostsController < ApplicationController
 end
 ```
 
-Ou em uma *view*:
+Or in a view:
 
 ```html+erb
 <% console %>
@@ -915,22 +918,31 @@ Ou em uma *view*:
 <h2>New Post</h2>
 ```
 
-Isso vai renderizar um *console* dentro da view. Você não precisa se preocupar com a localização da chamada do método `console`; não será renderizado próximo ao elemento em que foi invocado, mas sim próximo ao seu conteúdo HTML.
+This will render a console inside your view. You don't need to care about the
+location of the `console` call; it won't be rendered on the spot of its
+invocation but next to your HTML content.
 
-O *console* executa código Ruby nativo: Você pode definir e instanciar classes personalizadas, criar novos *models*, e inspecionar variáveis.
+The console executes pure Ruby code: You can define and instantiate
+custom classes, create new models, and inspect variables.
 
-NOTE: Somente um *console* pode ser renderizado por *request*. De outra maneira `web-console` lança um erro na segunda invocação do método `console`.
+NOTE: Only one console can be rendered per request. Otherwise `web-console`
+will raise an error on the second `console` invocation.
 
-### Inspecionando Variáveis
+### Inspecting Variables
 
-Você pode chamar `instance_variables` para listar todas as variáveis de instância disponíveis em seu contexto. Se você deseja listar todas as variáveis locais, você pode fazer isso usando `local_variables`.
+You can invoke `instance_variables` to list all the instance variables
+available in your context. If you want to list all the local variables, you can
+do that with `local_variables`.
 
-### Configurações
+### Settings
 
-* `config.web_console.allowed_ips`: Lista autorizada de endereços e redes IPv4 ou IPv6 (padrões: `127.0.0.1/8, ::1`).
-* `config.web_console.whiny_requests`: Registra uma mensagem quando a renderização do *console* é impedida (padrões: `true`).
+* `config.web_console.allowed_ips`: Authorized list of IPv4 or IPv6
+addresses and networks (defaults: `127.0.0.1/8, ::1`).
+* `config.web_console.whiny_requests`: Log a message when a console rendering
+is prevented (defaults: `true`).
 
-Uma vez que `web-console` avalia código Ruby simples remotamente no servidor, não tente usar em produção.
+Since `web-console` evaluates plain Ruby code remotely on the server, don't try
+to use it in production.
 
 Debugging Memory Leaks
 ----------------------
