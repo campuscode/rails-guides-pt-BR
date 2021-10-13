@@ -333,15 +333,11 @@ def welcome_email
 end
 ```
 
-### Mailer Views
+### *Views* de *Mailer*
 
-Mailer views are located in the `app/views/name_of_mailer_class` directory. The
-specific mailer view is known to the class because its name is the same as the
-mailer method. In our example from above, our mailer view for the
-`welcome_email` method will be in `app/views/user_mailer/welcome_email.html.erb`
-for the HTML version and `welcome_email.text.erb` for the plain text version.
+As *views* de um *Mailer* ficam no diretório `app/views/nome_da_classe_do_mailer`. A *view* específica do *mailer* é reconhecida pela classe pois seu nome é o mesmo do método. No exemplo anterior, nossa *view* para o método `welcome_email` estará em `app/views/user_mailer/welcome_email.html.erb`, para a versão em HTML e em `welcome_email.text.erb` para a versão em texto simples.
 
-To change the default mailer view for your action you do something like:
+Para mudar a *mailer view* padrão da sua *action*, é preciso fazer algo como por exemplo:
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -351,19 +347,16 @@ class UserMailer < ApplicationMailer
     @user = params[:user]
     @url  = 'http://example.com/login'
     mail(to: @user.email,
-         subject: 'Welcome to My Awesome Site',
+         subject: 'Bem vindo ao meu site!',
          template_path: 'notifications',
          template_name: 'another')
   end
 end
 ```
 
-In this case it will look for templates at `app/views/notifications` with name
-`another`.  You can also specify an array of paths for `template_path`, and they
-will be searched in order.
+Nesse caso, os *templates* serão buscados em `app/views/notifications`, com o nome `another`. Também é possível especificar um *array* de caminhos, que serão verificados em ordem.
 
-If you want more flexibility you can also pass a block and render specific
-templates or even render inline or text without using a template file:
+Se quiser mais flexibilidade, você pode fornecer um bloco e renderizar *templates* específicos, ou até mesmo renderizar texto ou conteúdo *inline* sem usar um arquivo de *template*:
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -373,37 +366,34 @@ class UserMailer < ApplicationMailer
     @user = params[:user]
     @url  = 'http://example.com/login'
     mail(to: @user.email,
-         subject: 'Welcome to My Awesome Site') do |format|
+         subject: 'Bem vindo ao meu site!') do |format|
       format.html { render 'another_template' }
-      format.text { render plain: 'Render text' }
+      format.text { render plain: 'Renderizar texto simples' }
     end
   end
 end
 ```
 
-This will render the template 'another_template.html.erb' for the HTML part and
-use the rendered text for the text part. The render command is the same one used
-inside of Action Controller, so you can use all the same options, such as
-`:text`, `:inline`, etc.
+Isso fará com que o *template* 'another_template.html.erb' seja renderizado para a parte HTML, e usará o texto especificado para a parte textual. O comando *render* é o mesmo usado em *Action Controller*, então é possível usar as mesmas opções, como por exemplo, `:text`, `:inline`, etc.
 
-If you would like to render a template located outside of the default `app/views/mailer_name/` directory, you can apply the `prepend_view_path`, like so:
+Se deseja renderizar um *template* que está fora do diretório padrão `app/views/mailer_name/`, você pode usar a opção `prepend_view_path`, da seguinte forma:
 
 ```ruby
 class UserMailer < ApplicationMailer
   prepend_view_path "custom/path/to/mailer/view"
 
-  # This will try to load "custom/path/to/mailer/view/welcome_email" template
+  # Isso tentará carregar o template "custom/path/to/mailer/view/welcome_email"
   def welcome_email
     # ...
   end
 end
 ```
 
-You can also consider using the [append_view_path](https://guides.rubyonrails.org/action_view_overview.html#view-paths) method.
+Considere também usar o método [append_view_path](https://guides.rubyonrails.org/action_view_overview.html#view-paths).
 
-#### Caching mailer view
+#### Criando *cache* de uma *view* de *mailer*
 
-You can perform fragment caching in mailer views like in application views using the `cache` method.
+É possível criar cache de um fragmento das *views* de um *mailer* da mesma forma como fazemos para as *views* da aplicação, usando o método `cache`.
 
 ```html+erb
 <% cache do %>
@@ -411,14 +401,13 @@ You can perform fragment caching in mailer views like in application views using
 <% end %>
 ```
 
-And in order to use this feature, you need to configure your application with this:
+Para usar essa funcionalidade, é necessário configurar sua aplicação da seguinte forma:
 
 ```ruby
 config.action_mailer.perform_caching = true
 ```
 
-Fragment caching is also supported in multipart emails.
-Read more about caching in the [Rails caching guide](caching_with_rails.html).
+Também é possível criar *cache* de fragmentos para os emails *multipart*. Leia mais sobre cache em [Guia de cache do Rails](caching_with_rails.html).
 
 ### Action Mailer Layouts
 

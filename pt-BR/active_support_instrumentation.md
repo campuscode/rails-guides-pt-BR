@@ -1,30 +1,31 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Support Instrumentation
+Instrumentação do *Active Support*
 ==============================
 
-Active Support is a part of core Rails that provides Ruby language extensions, utilities, and other things. One of the things it includes is an instrumentation API that can be used inside an application to measure certain actions that occur within Ruby code, such as that inside a Rails application or the framework itself. It is not limited to Rails, however. It can be used independently in other Ruby scripts if it is so desired.
+O *Active Support* é parte do núcleo do Rails, e provê extensões, utilidades e outros itens à linguagem Ruby. Uma das coisas fornecidas é uma API para instrumentação, que pode ser usada em uma aplicação para medir certas ações internas do código Ruby, como por exemplo, ações da sua aplicação Rails ou do *framework* em si. A instrumentação não é limitada somente ao Rails, podendo também ser usada de forma independente em outros *scripts* Ruby.
 
-In this guide, you will learn how to use the instrumentation API inside of Active Support to measure events inside of Rails and other Ruby code.
+Neste guia, você aprenderá como usar a API de instrumentação do *Active Support*, para medir eventos internos da sua aplicação Rails e de outros códigos Ruby.
 
-After reading this guide, you will know:
+Ao terminar de ler este guia, você saberá:
 
-* What instrumentation can provide.
-* How to add a subscriber to a hook.
-* The hooks inside the Rails framework for instrumentation.
-* How to build a custom instrumentation implementation.
+* O que a instrumentação fornece.
+* Como adicionar um *subscriber* (ou observador) à um *hook*.
+* Os *hooks* internos do Rails, próprios para instrumentação.
+* Como criar sua própria implementação de instrumentação.
 
 --------------------------------------------------------------------------------
 
-Introduction to instrumentation
+Introdução à instrumentação
 -------------------------------
 
-The instrumentation API provided by Active Support allows developers to provide hooks which other developers may hook into. There are several of these within the [Rails framework](#rails-framework-hooks). With this API, developers can choose to be notified when certain events occur inside their application or another piece of Ruby code.
+A API de instrumentação fornecida pelo *Active Support* permite que desenvolvedores exponham *hooks* para outros desenvolvedores utilizarem. Existem diversos destes *hooks* embutidos no [framework Rails](#rails-framework-hooks). Com essa API, os desenvolvedores podem escolher serem notificados quando certos eventos ocorrerem nas suas aplicações Rails ou em outros códigos em Ruby.
 
-For example, there is a hook provided within Active Record that is called every time Active Record uses an SQL query on a database. This hook could be **subscribed** to, and used to track the number of queries during a certain action. There's another hook around the processing of an action of a controller. This could be used, for instance, to track how long a specific action has taken.
+Por exemplo, existe um *hook* do *Active Record* que é chamado todas as vezes que uma *query* SQL é executada no banco.
+Um **subscriber** (ou observador) pode se inscrever à este *hook*, e assim, observar o número de *queries* feitas durante uma certa ação. Durante a execução de uma das *actions* de um *controller*, existe também um *hook* que permite, por exemplo, monitorar a duração desta ação.
 
-You are even able to [create your own events](#creating-custom-events) inside your application which you can later subscribe to.
+Também é possível [criar seus próprios eventos](#creating-custom-events) dentro da sua aplicação, os quais você poderá se inscrever.
 
 Subscribing to an event
 -----------------------
