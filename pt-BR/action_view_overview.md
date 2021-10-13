@@ -24,7 +24,7 @@ NOTE: Alguns recursos da *Action View* estão vinculados ao *Active Record*, mas
 Usando *Action View* com Rails
 ----------------------------
 
-Para cada *controller* há um diretório associado em `app/views` que contém os arquivos de *template* que compõe as *views* associadas aos seus respectivos *controllers*. Esses arquivos são utilizados para exibir a *view* que resulta de cada ação do *controller*.
+Para cada *controller* há um diretório associado em `app/views` que contém os arquivos de *template* que compõe as *views* associadas aos seus respectivos *controllers*. Esses arquivos são utilizados para exibir a *view* que resulta de cada *action* do *controller*.
 
 Vamos dar uma olhada no que o Rails faz por padrão quando um novo recurso é criado utilizando o *generator scaffold*:
 
@@ -44,7 +44,7 @@ $ bin/rails generate scaffold article
 ```
 
 Há uma convenção de nomenclatura para as *views* no Rails. Normalmente, as *views* compartilham seu nome com a *action* do *controller* à qual ela é associada, conforme pode ser visto no exemplo acima.
-Por exemplo, a ação *index* do *controller* `articles_controller.rb` utilizará o arquivo de *view* `index.html.erb` no diretório `app/views/articles`.
+Por exemplo, a *action index* do *controller* `articles_controller.rb` utilizará o arquivo de *view* `index.html.erb` no diretório `app/views/articles`.
 O HTML completo que é retornado ao *client* é composto de uma combinação desse arquivo ERB, um *template* de *layout* que o envolve, e todas as *partials* que a *view* pode referenciar. Dentro deste guia você encontrará documentações mais detalhadas sobre cada um desses três componentes.
 
 
@@ -367,60 +367,64 @@ Supposing we use the same `_box` partial from above, this would produce the same
 View Paths
 ----------
 
-When rendering a response, the controller needs to resolve where the different
-views are located. By default it only looks inside the `app/views` directory.
+Ao renderizar uma resposta, o *controller* precisa resolver onde as diferentes
+*views* estão localizadas. Por padrão, ele só olha dentro do diretório `app/views`.
 
-We can add other locations and give them a certain precedence when resolving
-paths using the `prepend_view_path` and `append_view_path` methods.
+Podemos adicionar outros locais e dar-lhes uma certa precedência ao resolver
+caminhos usando os métodos `prepend_view_path` e `append_view_path`.
 
-### Prepend view path
+### Pré-anexando caminho das views
 
-This can be helpful for example, when we want to put views inside a different
-directory for subdomains.
+Isso pode ser útil, por exemplo, quando nós queremos colocar às *views* dentro
+de um diretório diferente para subdomínios.
 
-We can do this by using:
+Podemos fazer isso usando:
 
 ```ruby
 prepend_view_path "app/views/#{request.subdomain}"
 ```
 
-Then Action View will look first in this directory when resolving views.
+Então, a *Action View* procurará primeiro dentro deste diretório quando ao resolver as
+*views*.
 
-### Append view path
+### Anexando caminho das views
 
-Similarly, we can append paths:
+Da mesma forma, podemos acrescentar caminhos:
 
 ```ruby
 append_view_path "app/views/direct"
 ```
 
-This will add `app/views/direct` to the end of the lookup paths.
+Isso adicionará `app/views/direct` ao final dos caminhos de pesquisa.
 
-Helpers
+*Helpers*
 -------
 
-Rails provides many helper methods to use with Action View. These include methods for:
+O Rails fornece muitos métodos auxiliares para usar com o *Action View*. Isso inclui métodos para:
 
-* Formatting dates, strings and numbers
-* Creating HTML links to images, videos, stylesheets, etc...
-* Sanitizing content
-* Creating forms
-* Localizing content
+* Formatação de datas, *strings* e números
+* Criação de links HTML para imagens, vídeos, *stylesheets*, etc...
+* Higienização de conteúdo
+* Criação de formulários
+* Localização de conteúdo
 
-You can learn more about helpers in the [Action View Helpers
-Guide](action_view_helpers.html) and the [Action View Form Helpers
-Guide](form_helpers.html).
+Você pode aprender mais sobre métodos auxiliares no [Guia de Helpers do Action View](action_view_helpers.html) e no [Guia de Form Helpers do Action View](form_helpers.html).
 
-Localized Views
+*Views* Localizadas
 ---------------
 
-Action View has the ability to render different templates depending on the current locale.
+O *Action View* tem a capacidade de renderizar diferentes *templates*, dependendo da localidade atual.
 
-For example, suppose you have an `ArticlesController` with a show action. By default, calling this action will render `app/views/articles/show.html.erb`. But if you set `I18n.locale = :de`, then `app/views/articles/show.de.html.erb` will be rendered instead. If the localized template isn't present, the undecorated version will be used. This means you're not required to provide localized views for all cases, but they will be preferred and used if available.
+Por exemplo, suponha que você tenha um `ArticlesController` com uma *action show*. Por padrão, chamar essa *action* irá renderizar `app/views/articles/show.html.erb`.
+Mas se você definir `I18n.locale = :de`, então `app/views/articles/show.de.html.erb` será renderizada em seu lugar.
+Se o *template* localizado não estiver presente, a versão não traduzida será utilizada.
+Isso significa que você não precisa fornecer *views* localizadas para todos os casos, mas elas serão preferidas e usadas, se disponíveis.
 
-You can use the same technique to localize the rescue files in your public directory. For example, setting `I18n.locale = :de` and creating `public/500.de.html` and `public/404.de.html` would allow you to have localized rescue pages.
+Você pode utilizar a mesma técnica para localizar os arquivos de *rescue* em seu diretório público. Por exemplo, definir `I18n.locale = :de` e criar `public/500.de.html` e `public/404.de.html` permitirá que você tenha páginas de *rescue* localizadas.
 
-Since Rails doesn't restrict the symbols that you use to set I18n.locale, you can leverage this system to display different content depending on anything you like. For example, suppose you have some "expert" users that should see different pages from "normal" users. You could add the following to `app/controllers/application.rb`:
+Visto que o Rails não restringe os *symbols* que você usa para definir o `I18n.locale`, você pode aproveitar este sistema para exibir conteúdos diferentes dependendo do que você quiser.
+Por exemplo, suponha que você tenha alguns usuários *"experts"* que devem ver páginas diferentes dos usuários "normais".
+Você pode adicionar o seguinte a `app/controllers/application.rb`:
 
 ```ruby
 before_action :set_expert_locale
@@ -430,6 +434,7 @@ def set_expert_locale
 end
 ```
 
-Then you could create special views like `app/views/articles/show.expert.html.erb` that would only be displayed to expert users.
+Em seguida, você pode criar *views* especiais como `app/views/articles/show.expert.html.erb` que somente serão exibidas para usuários *experts*.
 
-You can read more about the Rails Internationalization (I18n) API [here](i18n.html).
+Você pode ler mais sobre a API de Internacionalização do Rails (I18n) [aqui](i18n.html).
+

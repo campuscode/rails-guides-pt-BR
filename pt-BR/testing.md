@@ -23,14 +23,14 @@ Ao rodar seus testes no Rails você pode garantir que seu código continua com a
 
 Os testes no Rails podem simular requisições no browser e com isso, você pode testar a resposta da sua aplicação sem ter que testar utilizando de fato seu o browser.
 
-Introduction to Testing
+Introdução a testes
 -----------------------
 
-Testing support was woven into the Rails fabric from the beginning. It wasn't an "oh! let's bolt on support for running tests because they're new and cool" epiphany.
+O suporte a testes foi implantado no Rails desde os primórdios. Não foi uma epifania do tipo: "Vamos adicionar suporte para testes porque eles são novos e legais!"
 
-### Rails Sets up for Testing from the Word Go
+### Configurações para testes em aplicações Rails
 
-Rails creates a `test` directory for you as soon as you create a Rails project using `rails new` _application_name_. If you list the contents of this directory then you shall see:
+O Rails cria um diretório `test` para você logo que você cria um projeto Rails usando o comando `rails new` _nome_da_aplicacao_. Se você listar o conteúdo deste diretório, você verá:
 
 ```bash
 $ ls -F test
@@ -38,36 +38,30 @@ application_system_test_case.rb  controllers/                     helpers/      
 channels/                        fixtures/                        integration/                     models/                          test_helper.rb
 ```
 
-The `helpers`, `mailers`, and `models` directories are meant to hold tests for view helpers, mailers, and models, respectively. The `channels` directory is meant to hold tests for Action Cable connection and channels. The `controllers` directory is meant to hold tests for controllers, routes, and views. The `integration` directory is meant to hold tests for interactions between controllers.
+Os diretórios `helpers`, `mailers` e `models` são destinados a realizar os testes para *view helpers*, *mailers* e *models*, respectivamente. O diretório `channel` é destinado a realizar os testes para a conexão e canais do *ActionCable*. O diretório `controllers` se destina a realizar testes para os *controllers*, rotas e *views*. O diretório `integration` se destina a realizar testes de interação entre *controllers*.
 
-The system test directory holds system tests, which are used for full browser
-testing of your application. System tests allow you to test your application
-the way your users experience it and help you test your JavaScript as well.
-System tests inherit from Capybara and perform in browser tests for your
-application.
+O diretório `system` é destinado a realizar os testes do sistema, que são usados para testes completos da aplicação no browser. Os Testes de Sistema permitem você testar a aplicação do jeito que seu usuário experiência e ajuda você a testar seu JavaScript também.
+Os Testes de sistemas herdam de Capybara e são executados em testes de *browser* para a sua aplicação
 
-Fixtures are a way of organizing test data; they reside in the `fixtures` directory.
+*Fixtures* são um jeito de organizar dados de testes; ficam no diretório `fixtures`
 
-A `jobs` directory will also be created when an associated test is first generated.
+Um diretório `jobs` também será criado quando um teste associado é gerado.
 
-The `test_helper.rb` file holds the default configuration for your tests.
+O arquivo `test_helper.rb` é responsável por realizar as configurações padrão para seus testes.
 
-The `application_system_test_case.rb` holds the default configuration for your system
-tests.
+O arquivo `application_system_test_case.rb` é responsável por realizar as configurações padrão para seus testes de sistema.
 
-### The Test Environment
+### O Ambiente de Teste
 
-By default, every Rails application has three environments: development, test, and production.
+Por padrão, toda aplicação Rails tem três ambientes: desenvolvimento, teste e produção.
 
-Each environment's configuration can be modified similarly. In this case, we can modify our test environment by changing the options found in `config/environments/test.rb`.
+A configuração de cada ambiente pode ser modificada de forma semelhante. Neste caso, podemos modificar nosso ambiente de teste alterando as opções encontradas em `config/environments/test.rb`.
 
-NOTE: Your tests are run under `RAILS_ENV=test`.
+NOTE: Seus testes são executados sob o comando `RAILS_ENV=test`.
 
-### Rails meets Minitest
+### Rails conhece Minitest
 
-If you remember, we used the `bin/rails generate model` command in the
-[Getting Started with Rails](getting_started.html) guide. We created our first
-model, and among other things it created test stubs in the `test` directory:
+Se você se lembra, nós usamos o comando `bin/rails generate model` no guia [Começando com Rails](getting_started.html). Nós criamos nosso primeiro model e, entre outras coisas, foi criado [_stub_](https://pt.wikipedia.org/wiki/Stub) de testes no diretório `test`:
 
 ```bash
 $ bin/rails generate model article title:string body:text
@@ -78,7 +72,7 @@ create  test/fixtures/articles.yml
 ...
 ```
 
-The default test stub in `test/models/article_test.rb` looks like this:
+O _stub_ teste padrão em `test/models/article_test.rb` parece assim:
 
 ```ruby
 require "test_helper"
@@ -90,24 +84,23 @@ class ArticleTest < ActiveSupport::TestCase
 end
 ```
 
-A line by line examination of this file will help get you oriented to Rails testing code and terminology.
+Uma inspeção linha a linha desse arquivo ajudará você a se orientar a terminologia e código de testes no Rails.
 
 ```ruby
 require "test_helper"
 ```
 
-By requiring this file, `test_helper.rb` the default configuration to run our tests is loaded. We will include this with all the tests we write, so any methods added to this file are available to all our tests.
+Por fazer *require* desse arquivo, `test_helper.rb` as configurações padrões para executar nossos testes são carregadas. Nós vamos incluir isso em todos os testes que escrevermos, então qualquer método adicionado a este arquivo vai estar disponível em todos os nossos testes.
 
 ```ruby
 class ArticleTest < ActiveSupport::TestCase
 ```
 
-The `ArticleTest` class defines a _test case_ because it inherits from `ActiveSupport::TestCase`. `ArticleTest` thus has all the methods available from `ActiveSupport::TestCase`. Later in this guide, we'll see some of the methods it gives us.
+A classe `ArticleTest` define um _test case_ porque ela herda de `ActiveSupport::TestCase`. `ArticleTest` portanto tem todos os métodos disponíveis de `ActiveSupport::TestCase`. Mais pra frente nesse guia, nós vamos adicionar alguns dos métodos dados.
 
-Any method defined within a class inherited from `Minitest::Test`
-(which is the superclass of `ActiveSupport::TestCase`) that begins with `test_` is simply called a test. So, methods defined as `test_password` and `test_valid_password` are legal test names and are run automatically when the test case is run.
+Qualquer método definido com uma classe herdada de `Minitest::Test` (que é uma superclasse de `ActiveSupport::TestCase`) que começa com `test_` é simplesmente chamada em um teste. Então, métodos definidos como `test_password` e `test_valid_password` são nomes de testes legais e serão executados automaticamente quando o caso de teste (_test_case_) é executado.
 
-Rails also adds a `test` method that takes a test name and a block. It generates a normal `Minitest::Unit` test with method names prefixed with `test_`. So you don't have to worry about naming the methods, and you can write something like:
+O Rails também adiciona um método `test` que leva um nome _test_ e um bloco. Isso gera um teste normal `Minitest::Unit` com nomes de métodos prefixados com `test_`. Então você não precisa se preocupar com nomear os métodos, e você pode escrever algo assim:
 
 ```ruby
 test "the truth" do
@@ -115,7 +108,7 @@ test "the truth" do
 end
 ```
 
-Which is approximately the same as writing this:
+Que é aproximadamente o mesmo que escrever isto:
 
 ```ruby
 def test_the_truth
@@ -123,28 +116,28 @@ def test_the_truth
 end
 ```
 
-Although you can still use regular method definitions, using the `test` macro allows for a more readable test name.
+Apesar de você ainda poder usar definições comuns de métodos, usando o prefixo `test` permite você ter um teste mais legível.
 
-NOTE: The method name is generated by replacing spaces with underscores. The result does not need to be a valid Ruby identifier though — the name may contain punctuation characters, etc. That's because in Ruby technically any string may be a method name. This may require use of `define_method` and `send` calls to function properly, but formally there's little restriction on the name.
+NOTE: O nome do método é gerado por alterar espaços com undescores(*_*). O resultado não precisa ser um identificador Ruby válido, embora o nome possa conter caracteres de pontuação, etc. Isso é porque em Ruby tecnicamente qualquer string pode ser o nome de um método. Isso pode requerer a chamada dos métodos `define_method` e `send` para funcionar corretamente, mas formalmente há uma pequena restrição no nome.
 
-Next, let's look at our first assertion:
+A seguir, vamos olhar para nossa primeira asserção:
 
 ```ruby
 assert true
 ```
 
-An assertion is a line of code that evaluates an object (or expression) for expected results. For example, an assertion can check:
+Uma asserção é uma linha de código que pode se tornar um objeto (ou expressão) para resultados esperados. Por exemplo, uma asserção pode checar se:
 
-* does this value = that value?
-* is this object nil?
-* does this line of code throw an exception?
-* is the user's password greater than 5 characters?
+* Esse valor é igual a aquele valor?
+* Esse objeto é nulo?
+* Essa linha de código dispara uma exceção?
+* A senha do usuário é maior que 5 caracteres?
 
-Every test may contain one or more assertions, with no restriction as to how many assertions are allowed. Only when all the assertions are successful will the test pass.
+Todo teste pode conter uma ou mais asserções, sem restrições em quantas asserções são permitidas. Apenas quando todas as asserções serem bem-sucedidas o teste vai passar.
 
-#### Your first failing test
+#### Seu primeiro teste que falha
 
-To see how a test failure is reported, you can add a failing test to the `article_test.rb` test case.
+Para ver como uma falha no teste é reportada, você pode adicionar um teste que falha no caso de teste do arquivo `article_test.rb`.
 
 ```ruby
 test "should not save article without title" do
@@ -153,7 +146,7 @@ test "should not save article without title" do
 end
 ```
 
-Let us run this newly added test (where `6` is the number of line where the test is defined).
+Vamos executar o teste com esse caso de teste adicionado (onde 6 é o número da linha onde o teste é definido).
 
 ```bash
 $ bin/rails test test/models/article_test.rb:6
@@ -177,7 +170,7 @@ Finished in 0.023918s, 41.8090 runs/s, 41.8090 assertions/s.
 1 runs, 1 assertions, 1 failures, 0 errors, 0 skips
 ```
 
-In the output, `F` denotes a failure. You can see the corresponding trace shown under `Failure` along with the name of the failing test. The next few lines contain the stack trace followed by a message that mentions the actual value and the expected value by the assertion. The default assertion messages provide just enough information to help pinpoint the error. To make the assertion failure message more readable, every assertion provides an optional message parameter, as shown here:
+Na saída do teste, `F` significa uma falha. Você pode ver o _trace_ correspondente mostrado abaixo de `Failure` junto com o nome do teste que está falhando. As próximas linhas contém as origens do erro seguido por uma mensagem que menciona o valor atual e o valor esperado pela asserção. A mensagem de asserção padrão provê informação o suficiente para ajudar a localizar o erro. Para fazer a asserção mais legível, toda asserção tem um parâmetro de mensagem opcional, como foi mostrado aqui:
 
 ```ruby
 test "should not save article without title" do
@@ -186,7 +179,7 @@ test "should not save article without title" do
 end
 ```
 
-Running this test shows the friendlier assertion message:
+A execução desse teste exibe uma mensagem de asserção mais amigável:
 
 ```
 Failure:
@@ -194,7 +187,7 @@ ArticleTest#test_should_not_save_article_without_title [/path/to/blog/test/model
 Saved the article without a title
 ```
 
-Now to get this test to pass we can add a model level validation for the _title_ field.
+Agora para fazer esse teste passar nós podemos adicionar uma validação no nível do model para o campo _title_.
 
 ```ruby
 class Article < ApplicationRecord
@@ -202,7 +195,7 @@ class Article < ApplicationRecord
 end
 ```
 
-Now the test should pass. Let us verify by running the test again:
+Agora o teste deveria passar. Vamos verificar executando o teste novamente:
 
 ```bash
 $ bin/rails test test/models/article_test.rb:6
@@ -217,25 +210,22 @@ Finished in 0.027476s, 36.3952 runs/s, 36.3952 assertions/s.
 1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-Now, if you noticed, we first wrote a test which fails for a desired
-functionality, then we wrote some code which adds the functionality and finally
-we ensured that our test passes. This approach to software development is
-referred to as
+Agora, se você notou, nós escrevemos um teste que falha para uma funcionalidade desejada, então nós escrevemos um código básico que adiciona a funcionalidade e finalmente nós tivemos certeza que nosso testes passam. Essa abordagem em desenvolvimento de software é referida como
 [_Test-Driven Development_ (TDD)](http://c2.com/cgi/wiki?TestDrivenDevelopment).
 
-#### What an Error Looks Like
+#### Como um erro se parece
 
-To see how an error gets reported, here's a test containing an error:
+Para ver como um erro é reportado, aqui está um teste contendo um erro:
 
 ```ruby
 test "should report error" do
-  # some_undefined_variable is not defined elsewhere in the test case
+  # some_undefined_variable não está definida no caso de teste
   some_undefined_variable
   assert true
 end
 ```
 
-Now you can see even more output in the console from running the tests:
+Agora você pode ver mais saída no console ao rodar os testes:
 
 ```bash
 $ bin/rails test test/models/article_test.rb
@@ -260,110 +250,105 @@ Finished in 0.040609s, 49.2500 runs/s, 24.6250 assertions/s.
 2 runs, 1 assertions, 0 failures, 1 errors, 0 skips
 ```
 
-Notice the 'E' in the output. It denotes a test with error.
+Observe o 'E' na saída. Isso significa um teste com erro.
 
-NOTE: The execution of each test method stops as soon as any error or an
-assertion failure is encountered, and the test suite continues with the next
-method. All test methods are executed in random order. The
-[`config.active_support.test_order` option](configuring.html#configuring-active-support)
-can be used to configure test order.
+NOTE: A execução de cada método de teste para assim que qualquer erro ou uma falha de teste é encontrada, e a suíte de teste continua com o próximo método. Todos os métodos de testes são executados numa ordem aleatória. A [opção `config.active_support.test_order`](configuring.html#configuring-active-support) pode ser usada para configurar a ordem do teste.
 
-When a test fails you are presented with the corresponding backtrace. By default
-Rails filters that backtrace and will only print lines relevant to your
-application. This eliminates the framework noise and helps to focus on your
-code. However there are situations when you want to see the full
-backtrace. Set the `-b` (or `--backtrace`) argument to enable this behavior:
+Quando um teste falha você é apresentado ao _backtrace_ correspondente. Por padrão
+Rails filtra o _backtrace_ e mostrará apenas linhas relevantes para sua
+aplicação. Isso elimina qualquer reclamação do _framework_ e isso  ajuda a focar no seu
+código. No entanto existem situações que você quer ver o _backtrace_
+completo. Coloque o argumento `-b` (ou `--backtrace`) para habilitar esse comportamento:
 
 ```bash
 $ bin/rails test -b test/models/article_test.rb
 ```
 
-If we want this test to pass we can modify it to use `assert_raises` like so:
+Se nós queremos que este teste passe nós devemos modificar isto para usar `assert_raises` assim:
 
 ```ruby
 test "should report error" do
-  # some_undefined_variable is not defined elsewhere in the test case
+  # some_undefined_variable não está definida no caso de teste
   assert_raises(NameError) do
     some_undefined_variable
   end
 end
 ```
 
-This test should now pass.
+Este teste agora deveria passar.
 
-### Available Assertions
+### Asserções disponíveis
 
-By now you've caught a glimpse of some of the assertions that are available. Assertions are the worker bees of testing. They are the ones that actually perform the checks to ensure that things are going as planned.
+Por agora você viu pouco de algumas asserções que estão disponíveis. Asserções são as obreiras dos testes. Elas são as únicas que na verdade performam para checar se as coisas estão indo conforme o planejado.
 
-Here's an extract of the assertions you can use with
-[`Minitest`](https://github.com/seattlerb/minitest), the default testing library
-used by Rails. The `[msg]` parameter is an optional string message you can
-specify to make your test failure messages clearer.
+Aqui está um resumo das asserções que você pode usar com
+[`Minitest`](https://github.com/seattlerb/minitest), a biblioteca padrão
+usada pelo Rails. O parâmetro `[msg]` é uma mensagem opcional do tipo string que você pode
+especificar para fazer as falhas do teste mais claras.
 
-| Assertion                                                        | Purpose |
+| Asserção                                                         | Propósito |
 | ---------------------------------------------------------------- | ------- |
-| `assert( test, [msg] )`                                          | Ensures that `test` is true.|
-| `assert_not( test, [msg] )`                                      | Ensures that `test` is false.|
-| `assert_equal( expected, actual, [msg] )`                        | Ensures that `expected == actual` is true.|
-| `assert_not_equal( expected, actual, [msg] )`                    | Ensures that `expected != actual` is true.|
-| `assert_same( expected, actual, [msg] )`                         | Ensures that `expected.equal?(actual)` is true.|
-| `assert_not_same( expected, actual, [msg] )`                     | Ensures that `expected.equal?(actual)` is false.|
-| `assert_nil( obj, [msg] )`                                       | Ensures that `obj.nil?` is true.|
-| `assert_not_nil( obj, [msg] )`                                   | Ensures that `obj.nil?` is false.|
-| `assert_empty( obj, [msg] )`                                     | Ensures that `obj` is `empty?`.|
-| `assert_not_empty( obj, [msg] )`                                 | Ensures that `obj` is not `empty?`.|
-| `assert_match( regexp, string, [msg] )`                          | Ensures that a string matches the regular expression.|
-| `assert_no_match( regexp, string, [msg] )`                       | Ensures that a string doesn't match the regular expression.|
-| `assert_includes( collection, obj, [msg] )`                      | Ensures that `obj` is in `collection`.|
-| `assert_not_includes( collection, obj, [msg] )`                  | Ensures that `obj` is not in `collection`.|
-| `assert_in_delta( expected, actual, [delta], [msg] )`            | Ensures that the numbers `expected` and `actual` are within `delta` of each other.|
-| `assert_not_in_delta( expected, actual, [delta], [msg] )`        | Ensures that the numbers `expected` and `actual` are not within `delta` of each other.|
-| `assert_in_epsilon ( expected, actual, [epsilon], [msg] )`       | Ensures that the numbers `expected` and `actual` have a relative error less than `epsilon`.|
-| `assert_not_in_epsilon ( expected, actual, [epsilon], [msg] )`   | Ensures that the numbers `expected` and `actual` have a relative error not less than `epsilon`.|
-| `assert_throws( symbol, [msg] ) { block }`                       | Ensures that the given block throws the symbol.|
-| `assert_raises( exception1, exception2, ... ) { block }`         | Ensures that the given block raises one of the given exceptions.|
-| `assert_instance_of( class, obj, [msg] )`                        | Ensures that `obj` is an instance of `class`.|
-| `assert_not_instance_of( class, obj, [msg] )`                    | Ensures that `obj` is not an instance of `class`.|
-| `assert_kind_of( class, obj, [msg] )`                            | Ensures that `obj` is an instance of `class` or is descending from it.|
-| `assert_not_kind_of( class, obj, [msg] )`                        | Ensures that `obj` is not an instance of `class` and is not descending from it.|
-| `assert_respond_to( obj, symbol, [msg] )`                        | Ensures that `obj` responds to `symbol`.|
-| `assert_not_respond_to( obj, symbol, [msg] )`                    | Ensures that `obj` does not respond to `symbol`.|
-| `assert_operator( obj1, operator, [obj2], [msg] )`               | Ensures that `obj1.operator(obj2)` is true.|
-| `assert_not_operator( obj1, operator, [obj2], [msg] )`           | Ensures that `obj1.operator(obj2)` is false.|
-| `assert_predicate ( obj, predicate, [msg] )`                     | Ensures that `obj.predicate` is true, e.g. `assert_predicate str, :empty?`|
-| `assert_not_predicate ( obj, predicate, [msg] )`                 | Ensures that `obj.predicate` is false, e.g. `assert_not_predicate str, :empty?`|
-| `flunk( [msg] )`                                                 | Ensures failure. This is useful to explicitly mark a test that isn't finished yet.|
+| `assert( test, [msg] )`                                          | Checa se `test` é verdadeiro.|
+| `assert_not( test, [msg] )`                                      | Checa se `test` é falso.|
+| `assert_equal( expected, actual, [msg] )`                        | Checa se `expected == actual` é verdadeiro.|
+| `assert_not_equal( expected, actual, [msg] )`                    | Checa se `expected != actual` é verdadeiro.|
+| `assert_same( expected, actual, [msg] )`                         | Checa se `expected.equal?(actual)` é verdadeiro.|
+| `assert_not_same( expected, actual, [msg] )`                     | Checa se `expected.equal?(actual)` é falso.|
+| `assert_nil( obj, [msg] )`                                       | Checa se `obj.nil?` é verdadeiro.|
+| `assert_not_nil( obj, [msg] )`                                   | Checa se `obj.nil?` é falso.|
+| `assert_empty( obj, [msg] )`                                     | Checa se `obj` is `empty?` (`obj` é vazio).|
+| `assert_not_empty( obj, [msg] )`                                 | Checa se `obj` is not `empty?` (`obj` não é vazio).|
+| `assert_match( regexp, string, [msg] )`                          | Checa se uma string bate com a expressão regular dada.|
+| `assert_no_match( regexp, string, [msg] )`                       | Checa se uma string não bate com a expressão regular dada.|
+| `assert_includes( collection, obj, [msg] )`                      | Checa se `obj` está incluído na `collection`.|
+| `assert_not_includes( collection, obj, [msg] )`                  | Checa se `obj` não está incluído na `collection`.|
+| `assert_in_delta( expected, actual, [delta], [msg] )`            | Checa se os números `expected` e atual estão aproximados com o `delta` de cada.|
+| `assert_not_in_delta( expected, actual, [delta], [msg] )`        | Checa se os números `expected` e atual não estão aproximados com o `delta` de cada.|
+| `assert_in_epsilon ( expected, actual, [epsilon], [msg] )`       | Checa se os números `expected` e `actual` tem um erro relativo menor que `epsilon`.|
+| `assert_not_in_epsilon ( expected, actual, [epsilon], [msg] )`   | Checa se os números `expected` e `actual` não tem um erro relativo menor que `epsilon`.|
+| `assert_throws( symbol, [msg] ) { block }`                       | Checa se um dado _bloco_ dispara um erro com o `symbol`|
+| `assert_raises( exception1, exception2, ... ) { block }`         | Checa se um dado bloco dispara uma das exceções dadas.|
+| `assert_instance_of( class, obj, [msg] )`                        | Checa se `obj` é uma instância de `class`.|
+| `assert_not_instance_of( class, obj, [msg] )`                    | Checa se `obj` não é uma instância de `class`.|
+| `assert_kind_of( class, obj, [msg] )`                            | Checa se `obj` é uma instância de `class` or uma descendente dela.|
+| `assert_not_kind_of( class, obj, [msg] )`                        | Checa se `obj` não é uma instância de `class` e não é uma descendente dela.|
+| `assert_respond_to( obj, symbol, [msg] )`                        | Checa se `obj` responde a `symbol`.|
+| `assert_not_respond_to( obj, symbol, [msg] )`                    | Checa se `obj` não responde a `symbol`.|
+| `assert_operator( obj1, operator, [obj2], [msg] )`               | Checa se `obj1.operator(obj2)` é verdadeiro.|
+| `assert_not_operator( obj1, operator, [obj2], [msg] )`           | Checa se `obj1.operator(obj2)` é falso.|
+| `assert_predicate ( obj, predicate, [msg] )`                     | Checa se `obj.predicate` é verdadeiro, ex: `assert_predicate str, :empty?`|
+| `assert_not_predicate ( obj, predicate, [msg] )`                 | Checa se `obj.predicate` é falso, ex: `assert_not_predicate str, :empty?`|
+| `flunk( [msg] )`                                                 | Checa que o teste falha. Isso é útil para marcar explicitamente que o teste não está finalizado ainda.|
 
-The above are a subset of assertions that minitest supports. For an exhaustive &
-more up-to-date list, please check
-[Minitest API documentation](http://docs.seattlerb.org/minitest/), specifically
+As asserções acima são um subconjunto de asserções que `minitest` suporta. Para uma lista mais atualizada, por favor cheque
+[Minitest API documentation](http://docs.seattlerb.org/minitest/), especificamente
 [`Minitest::Assertions`](http://docs.seattlerb.org/minitest/Minitest/Assertions.html).
 
-Because of the modular nature of the testing framework, it is possible to create your own assertions. In fact, that's exactly what Rails does. It includes some specialized assertions to make your life easier.
+Por conta da natureza modular do `framework` de testes, é possível criar suas próprias asserções. De fato, isso é exatamente o que Rails faz. Isso inclui algumas asserções especializadas para deixar sua vida mais fácil.
 
-NOTE: Creating your own assertions is an advanced topic that we won't cover in this tutorial.
+NOTE: Criar suas próprias asserções é um tópico avançado que não cobriremos nesse tutorial.
 
-### Rails Specific Assertions
+### Asserções Específicas do Rails
 
-Rails adds some custom assertions of its own to the `minitest` framework:
+Rails adiciona algumas asserções customizadas o framework `minitest`:
 
-| Assertion                                                                         | Purpose |
+| Asserção                                                                          | Propósito |
 | --------------------------------------------------------------------------------- | ------- |
-| [`assert_difference(expressions, difference = 1, message = nil) {...}`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_difference) | Test numeric difference between the return value of an expression as a result of what is evaluated in the yielded block.|
-| [`assert_no_difference(expressions, message = nil, &block)`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_difference) | Asserts that the numeric result of evaluating an expression is not changed before and after invoking the passed in block.|
-| [`assert_changes(expressions, message = nil, from:, to:, &block)`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_changes) | Test that the result of evaluating an expression is changed after invoking the passed in block.|
-| [`assert_no_changes(expressions, message = nil, &block)`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_changes) | Test the result of evaluating an expression is not changed after invoking the passed in block.|
-| [`assert_nothing_raised { block }`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised) | Ensures that the given block doesn't raise any exceptions.|
-| [`assert_recognizes(expected_options, path, extras={}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes) | Asserts that the routing of the given path was handled correctly and that the parsed options (given in the expected_options hash) match path. Basically, it asserts that Rails recognizes the route given by expected_options.|
-| [`assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates) | Asserts that the provided options can be used to generate the provided path. This is the inverse of assert_recognizes. The extras parameter is used to tell the request the names and values of additional request parameters that would be in a query string. The message parameter allows you to specify a custom error message for assertion failures.|
-| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Asserts that the response comes with a specific status code. You can specify `:success` to indicate 200-299, `:redirect` to indicate 300-399, `:missing` to indicate 404, or `:error` to match the 500-599 range. You can also pass an explicit status number or its symbolic equivalent. For more information, see [full list of status codes](http://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) and how their [mapping](https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) works.|
-| [`assert_redirected_to(options = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to) | Asserts that the response is a redirect to a URL matching the given options. You can also pass named routes such as `assert_redirected_to root_path` and Active Record objects such as `assert_redirected_to @article`.|
+| [`assert_difference(expressions, difference = 1, message = nil) {...}`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_difference) | Testa a diferença numérica entre o valor retornada da expressão como um resultado que contabilizado no bloco _yielded_.|
+| [`assert_no_difference(expressions, message = nil, &block)`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_difference) | Checa se i resultado numérico da expressão calculada não é mudado antes e depois de invocar o bloco passado.|
+| [`assert_changes(expressions, message = nil, from:, to:, &block)`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_changes) | Testa o resultado de uma expressão calculado é alterado depois de passar pelo _bloco_.|
+| [`assert_no_changes(expressions, message = nil, &block)`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_changes) | Testa o resultado de uma expressão não é alterada depois de passar pelo _bloco_.|
+| [`assert_nothing_raised { block }`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised) | Checa se o bloco dado não dispara nenhuma exceção.|
+| [`assert_recognizes(expected_options, path, extras={}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes) | Checa se o Rails reconhece a rota fornecida pelas `expected_options`.|
+| [`assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates) | O inverso de `assert_recognizes`. Checa se o Rails não reconhece a rota fornecida pelas `expected_options`.|
+| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Checa se a resposta de uma requisição vem com um código de status específico. Você pode especificar `:success` para indicar 200-299, `:redirect` para indicar 300-399, `:missing` para indicar 404, ou `:error` para indicar o intervalo de 500-599. Você pode também passar o número explícito do status ou símbolo equivalente. Para mais informação, veja [lista completa de códigos de status](http://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) e como seus [mapeamentos](https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) funcionam.|
+| [`assert_redirected_to(options = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to) | Checa se a resposta de uma requisição é redirecionada para uma URL que "bate" com as opções dadas. Você pode passar rotas nomeadas tais como `asset_redirected_to root_path` e objetos do Active Record como `assert_redirected_to @article`.|
 
-You'll see the usage of some of these assertions in the next chapter.
+Agora você verá alguns usos de algumas dessas asserções no próximo capítulo.
 
-### A Brief Note About Test Cases
+### Uma breve nota sobre os Casos de Testes
 
-All the basic assertions such as `assert_equal` defined in `Minitest::Assertions` are also available in the classes we use in our own test cases. In fact, Rails provides the following classes for you to inherit from:
+Todas as asserções tais como `assert_equal` são definidas em `Minitest::Assertions` são também disponíveis nas classes que nós usamos em nossos próprios casos de teste. De fato, Rails provê as seguintes classes que você pode herdar de:
 
 * [`ActiveSupport::TestCase`](https://api.rubyonrails.org/classes/ActiveSupport/TestCase.html)
 * [`ActionMailer::TestCase`](https://api.rubyonrails.org/classes/ActionMailer/TestCase.html)
@@ -373,16 +358,15 @@ All the basic assertions such as `assert_equal` defined in `Minitest::Assertions
 * [`ActionDispatch::SystemTestCase`](https://api.rubyonrails.org/classes/ActionDispatch/SystemTestCase.html)
 * [`Rails::Generators::TestCase`](https://api.rubyonrails.org/classes/Rails/Generators/TestCase.html)
 
-Each of these classes include `Minitest::Assertions`, allowing us to use all of the basic assertions in our tests.
+Cada uma dessas asserções inclui `Minitest::Assertions`, nos permitindo usar todas as asserções básicas de nossos testes.
 
-NOTE: For more information on `Minitest`, refer to [its
-documentation](http://docs.seattlerb.org/minitest).
+NOTE: Para mais informações em `Minitest`, procure na sua [própria documentação](http://docs.seattlerb.org/minitest).
 
-### The Rails Test Runner
+### O `Teste Runner` do Rails
 
-We can run all of our tests at once by using the `bin/rails test` command.
+Nós podemos executar todos os nossos testes de uma vez usando o comando `bin/rails test`.
 
-Or we can run a single test file by passing the `bin/rails test` command the filename containing the test cases.
+Ou podemos executar um único arquivo de teste passando no comando `bin/rails test` o arquivo contendo os casos de testes.
 
 ```bash
 $ bin/rails test test/models/article_test.rb
@@ -397,10 +381,9 @@ Finished in 0.027034s, 73.9810 runs/s, 110.9715 assertions/s.
 2 runs, 3 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-This will run all test methods from the test case.
+Isso vai executar todos os métodos do caso de teste.
 
-You can also run a particular test method from the test case by providing the
-`-n` or `--name` flag and the test's method name.
+Você também pode executar um método particular do caso de teste provendo a opção `-n` ou `--name` e o nome do método de teste.
 
 ```bash
 $ bin/rails test test/models/article_test.rb -n test_the_truth
@@ -415,51 +398,51 @@ Finished tests in 0.009064s, 110.3266 tests/s, 110.3266 assertions/s.
 1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-You can also run a test at a specific line by providing the line number.
+Você pode também executar uma linha específica de um teste colocando o número da linha.
 
 ```bash
 $ bin/rails test test/models/article_test.rb:6 # run specific test and line
 ```
 
-You can also run an entire directory of tests by providing the path to the directory.
+Você também pode executar um diretório inteiro de testes colocando o caminho do diretório.
 
 ```bash
 $ bin/rails test test/controllers # run all tests from specific directory
 ```
 
-The test runner also provides a lot of other features like failing fast, deferring test output
-at the end of the test run and so on. Check the documentation of the test runner as follows:
+O Teste Runner provê muitas feature como _failing fast_, adiando a saída do teste
+no fim da execução do teste e assim por diante. Cheque a documentação do Test Runner da seguinte forma:
 
 ```bash
 $ bin/rails test -h
 Usage: rails test [options] [files or directories]
 
-You can run a single test by appending a line number to a filename:
+Você pode executar um único teste adicionando o número da linha para o arquivo:
 
     bin/rails test test/models/user_test.rb:27
 
-You can run multiple files and directories at the same time:
+Você pode executar múltiplos arquivos e pastas ao mesmo tempo:
 
     bin/rails test test/controllers test/integration/login_test.rb
 
-By default test failures and errors are reported inline during a run.
+Por padrão falhas de testes e erros são reportados numa única linha durante uma execução.
 
-minitest options:
-    -h, --help                       Display this help.
-        --no-plugins                 Bypass minitest plugin auto-loading (or set $MT_NO_PLUGINS).
-    -s, --seed SEED                  Sets random seed. Also via env. Eg: SEED=n rake
-    -v, --verbose                    Verbose. Show progress processing files.
-    -n, --name PATTERN               Filter run on /regexp/ or string.
-        --exclude PATTERN            Exclude /regexp/ or string from run.
+opções do minitest:
+    -h, --help                       Mostra esse menu de ajuda.
+        --no-plugins                 Pula o plugin de auto-loading do minitest (ou coloque $MT_NO_PLUGINS).
+    -s, --seed SEED                  Coloca _seed_ aleatório. Pode também ser colocado por variável de ambiente. Ex: SEED=n rake
+    -v, --verbose                    Verboso. Mostra o progresso de arquivos enquanto estão processando.
+    -n, --name PATTERN               Filtra a execução em  /regexp/ (Expressão regular) ou string.
+        --exclude PATTERN            Exclui /regexp/ ou string da execução.
 
-Known extensions: rails, pride
-    -w, --warnings                   Run with Ruby warnings enabled
-    -e, --environment ENV            Run tests in the ENV environment
-    -b, --backtrace                  Show the complete backtrace
-    -d, --defer-output               Output test failures and errors after the test run
-    -f, --fail-fast                  Abort test run on first failure or error
-    -c, --[no-]color                 Enable color in the output
-    -p, --pride                      Pride. Show your testing pride!
+Extensões conhecidas: rails, pride
+    -w, --warnings                   Executa com Warnings habilitados
+    -e, --environment ENV            Executa os testes em um ambiente específico
+    -b, --backtrace                  Mostra o _backtrace_ completo
+    -d, --defer-output               Saída das falhas no teste e erros depois da execução de todos os testes
+    -f, --fail-fast                  Aborta a execução dos testes na primeira falha ou no primeiro erro
+    -c, --[no-]color                 Habilita cor ou não na saída
+    -p, --pride                      Orgulho. Mostre o orgulho do seu teste!
 ```
 
 Testes em Paralelo
@@ -1908,25 +1891,24 @@ class ChatRelayJobTest < ActiveJob::TestCase
 end
 ```
 
-Additional Testing Resources
+Recursos Adicionais para Testes
 ----------------------------
 
-### Testing Time-Dependent Code
+### Testando Código Dependente de Data/Horário
 
-Rails provides built-in helper methods that enable you to assert that your time-sensitive code works as expected.
+O Rails fornece métodos *helpers* integrados que permitem que você verifique que seu código dependente de data ou hora funcione conforme o esperado.
 
-Here is an example using the [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to) helper:
+Aqui está um exemplo utilizando o *helper* [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to):
 
 ```ruby
-# Lets say that a user is eligible for gifting a month after they register.
+# Digamos que um usuário só poderá enviar presentes após um mês do seu registro.
 user = User.create(name: "Gaurish", activation_date: Date.new(2004, 10, 24))
 assert_not user.applicable_for_gifting?
 travel_to Date.new(2004, 11, 24) do
-  assert_equal Date.new(2004, 10, 24), user.activation_date # inside the `travel_to` block `Date.current` is mocked
+  assert_equal Date.new(2004, 10, 24), user.activation_date # dentro do bloco `travel_to` é feito o mock de `Date.current` 
   assert user.applicable_for_gifting?
 end
-assert_equal Date.new(2004, 10, 24), user.activation_date # The change was visible only inside the `travel_to` block.
+assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança é visível somente dentro do bloco `travel_to`.
 ```
 
-Please see [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
-for in-depth information about the available time helpers.
+Por favor consulte a [Documentação da API `ActiveSupport::Testing::TimeHelpers`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html) para obter informações detalhadas sobre os *helpers* de tempo disponíveis.

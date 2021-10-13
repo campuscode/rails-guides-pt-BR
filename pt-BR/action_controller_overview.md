@@ -441,33 +441,33 @@ Para redefinir a sessão inteira, utilize [`reset_session`][].
 
 [`reset_session`]: https://api.rubyonrails.org/classes/ActionController/Metal.html#method-i-reset_session
 
-### The Flash
+### O *Flash*
 
-The flash is a special part of the session which is cleared with each request. This means that values stored there will only be available in the next request, which is useful for passing error messages, etc.
+O *flash* é uma parte especial da sessão, que é limpo a cada requisição. Isso significa que os valores armazenados nele estarão disponíveis somente para a próxima requisição, sendo úteis para enviar mensagens de erro, etc.
 
-The flash is accessed via the [`flash`][] method. Like the session, the flash is represented as a hash.
+O *flash* é acessado através do método [`flash`][]. Assim como a sessão, o *flash* é representado por um objeto *hash*.
 
-Let's use the act of logging out as an example. The controller can send a message which will be displayed to the user on the next request:
+Usaremos o evento de *logout* do usuário como exemplo. O *controller* pode enviar uma mensagem que será exibida na próxima requisição:
 
 ```ruby
 class LoginsController < ApplicationController
   def destroy
     session.delete(:current_user_id)
-    flash[:notice] = "You have successfully logged out."
+    flash[:notice] = "Você foi deslogado com sucesso."
     redirect_to root_url
   end
 end
 ```
 
-Note that it is also possible to assign a flash message as part of the redirection. You can assign `:notice`, `:alert` or the general purpose `:flash`:
+Observe que também é possível definir uma mensagem *flash* como parte do redirecionamento. Você pode usar `:notice`, `:alert` ou o mais genérico, `:flash`:
 
 ```ruby
-redirect_to root_url, notice: "You have successfully logged out."
-redirect_to root_url, alert: "You're stuck here!"
+redirect_to root_url, notice: "Você foi deslogado com sucesso."
+redirect_to root_url, alert: "Você está preso aqui!"
 redirect_to root_url, flash: { referral_code: 1234 }
 ```
 
-The `destroy` action redirects to the application's `root_url`, where the message will be displayed. Note that it's entirely up to the next action to decide what, if anything, it will do with what the previous action put in the flash. It's conventional to display any error alerts or notices from the flash in the application's layout:
+A *action* `destroy` redireciona para a `root_url` da aplicação, onde a mensagem será exibida. Note que é responsabilidade da próxima *action* decidir o que (e até mesmo se algo) será feito com o valor anterior contido no *flash*. É comum exibir quaisquer erros, alertas ou avisos vindos do *flash* no *layout* da aplicação:
 
 ```erb
 <html>
@@ -477,14 +477,14 @@ The `destroy` action redirects to the application's `root_url`, where the messag
       <%= content_tag :div, msg, class: name %>
     <% end -%>
 
-    <!-- more content -->
+    <!-- resto do conteúdo -->
   </body>
 </html>
 ```
 
-This way, if an action sets a notice or an alert message, the layout will display it automatically.
+Dessa forma, se uma *action* gerar um aviso, alerta ou mensagem, o *layout* o exibirá automaticamente.
 
-You can pass anything that the session can store; you're not limited to notices and alerts:
+É possível armazenar qualquer valor aceito pela *session* no *flash*, não ficando limitado somente aos avisos, alertas e mensagens:
 
 ```erb
 <% if flash[:just_signed_up] %>
@@ -492,20 +492,20 @@ You can pass anything that the session can store; you're not limited to notices 
 <% end %>
 ```
 
-If you want a flash value to be carried over to another request, use [`flash.keep`][]:
+Se quiser que um *flash* seja acessado em uma outra requisição, use [`flash.keep`][]:
 
 ```ruby
 class MainController < ApplicationController
-  # Let's say this action corresponds to root_url, but you want
-  # all requests here to be redirected to UsersController#index.
-  # If an action sets the flash and redirects here, the values
-  # would normally be lost when another redirect happens, but you
-  # can use 'keep' to make it persist for another request.
+  # Digamos que essa action corresponde à root_url, mas você quer que
+  # todas as requisições sejam redirecionadas para UsersController#index.
+  # Se uma action definir o flash e for redirecionada para cá, os valores
+  # seriam perdidos quando um ocorrer um outro redirecionamento.
+  # Para persistir os valores e evitar que isso ocorra, utilize 'keep'.
   def index
-    # Will persist all flash values.
+    # Persistirá os valores.
     flash.keep
 
-    # You can also use a key to keep only some kind of value.
+    # Usando uma chave é possível persistir somente um tipo de valor:
     # flash.keep(:notice)
     redirect_to users_url
   end
@@ -517,7 +517,7 @@ end
 
 #### `flash.now`
 
-By default, adding values to the flash will make them available to the next request, but sometimes you may want to access those values in the same request. For example, if the `create` action fails to save a resource and you render the `new` template directly, that's not going to result in a new request, but you may still want to display a message using the flash. To do this, you can use [`flash.now`][] in the same way you use the normal `flash`:
+Por padrão, adicionar valores ao *flash* os tornará disponíveis somente na próxima requisição, mas em alguns casos, você pode querer acessar estes valores em uma mesma requisição. Por exemplo, se a *action* `create` falhar ao salvar um recurso e você renderizar o *template* `new` diretamente, isso não resultará em uma nova requisição, mas você ainda pode querer exibir a mensagem usando o *flash*. Para isso, é possível usar o [`flash.now`][], de maneira similar ao `flash` simples:
 
 ```ruby
 class ClientsController < ApplicationController
@@ -526,7 +526,7 @@ class ClientsController < ApplicationController
     if @client.save
       # ...
     else
-      flash.now[:error] = "Could not save client"
+      flash.now[:error] = "Não foi possível salvar o cliente."
       render action: "new"
     end
   end
