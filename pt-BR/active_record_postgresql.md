@@ -537,7 +537,7 @@ Visão de Banco de Dados
 
 * [criação da visão](https://www.postgresql.org/docs/current/static/sql-createview.html)
 
-Imagine que você precisa trabalhar com banco de dados legado contendo as seguintes tabelas:
+Imagine que você precisa trabalhar com um banco de dados legado contendo as seguintes tabelas:
 
 ```
 rails_pg_guide=# \d "TBL_ART"
