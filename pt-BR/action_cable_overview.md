@@ -595,7 +595,7 @@ consumer.subscriptions.create("AppearanceChannel", {
 })
 ```
 
-##### Interação com Front-end
+##### Interação Cliente-Servidor
 
 1. **Cliente** conecta-se ao **Servidor** via `App.cable =
 ActionCable.createConsumer("ws://cable.example.com")`. (`cable.js`). O
@@ -624,7 +624,7 @@ valor da chave `:on` sendo passada para `current_user.appear`.
 ### Exemplo 2: Recebendo novas notificações da web
 
 O exemplo de aspectos era todo sobre expor a funcionalidade do servidor ao 
-front-end pela conexão WebSocket. Mas o melhor do WebSockets é que ele é uma via 
+cliente pela conexão WebSocket. Mas o melhor do WebSockets é que ele é uma via 
 de mão dupla. Portanto, agora vamos mostrar um exemplo em que o servidor invoca 
 uma ação no cliente.
 
