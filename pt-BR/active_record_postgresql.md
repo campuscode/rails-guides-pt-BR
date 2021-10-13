@@ -553,7 +553,7 @@ Indexes:
     "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
 ```
 
-Está tabela certamente não segue a as convenções do Rails.
+Esta tabela certamente não segue as convenções do Rails.
 Como as [visões](https://pt.wikipedia.org/wiki/Vis%C3%A3o_(banco_de_dados)) no PostgreSQL são atualizáveis por padrão,
 nos podemos envolver isso da seguinte maneira:
 
