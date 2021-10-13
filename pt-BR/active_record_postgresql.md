@@ -555,7 +555,7 @@ Indexes:
 
 Esta tabela certamente não segue as convenções do Rails.
 Como as [visões](https://pt.wikipedia.org/wiki/Vis%C3%A3o_(banco_de_dados)) no PostgreSQL são atualizáveis por padrão,
-nos podemos envolver isso da seguinte maneira:
+nós podemos envolver isso da seguinte maneira:
 
 ```ruby
 # db/migrate/20131220144913_create_articles_view.rb
