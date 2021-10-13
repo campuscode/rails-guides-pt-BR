@@ -532,7 +532,7 @@ Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
                  "cat & dog")
 ```
 
-Visão Banco de Dados
+Visão de Banco de Dados
 --------------
 
 * [criação da visão](https://www.postgresql.org/docs/current/static/sql-createview.html)
