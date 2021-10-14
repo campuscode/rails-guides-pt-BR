@@ -1945,10 +1945,10 @@ banco de dados e recuperar objetos instanciados.
 ### `select_all`
 
 `find_by_sql` tem um parente próximo chamado [`connection.select_all`][].
-`select_all` vai recuperar objetos de um banco de dados usando SQL personaliado
+`select_all` vai recuperar objetos de um banco de dados usando SQL personalizado
 como `find_by_sql`, mas não vai instanciá-los. Esse método vai retornar uma
 instância da classe `ActiveRecord::Result` e chamar `to_a` neste objeto te
-retornaria um array de hashes, inde cada hash indica um registro.
+retornaria um array de hashes, onde cada *hash* indica um registro.
 
 ```irb
 irb> Customer.connection.select_all("SELECT first_name, created_at FROM customers WHERE id = '1'").to_hash
