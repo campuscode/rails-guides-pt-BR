@@ -1929,7 +1929,7 @@ Encontrando por SQL
 
 Se você quiser usar seu próprio SQL para encontrar registros em uma tabela você
 pode usar [`find_by_sql`][].
-O método `find_by_sql` vai retornar um array de objetos mesmo que a consulta
+O método `find_by_sql` vai retornar um *array* de objetos mesmo que a consulta
 subjacente retorne apenas um único registro. Por exemplo, você poderia rodar a consulta:
 
 ```irb
