@@ -1961,8 +1961,7 @@ irb> Customer.connection.select_all("SELECT first_name, created_at FROM customer
 
 [`pluck`][] pode ser usado para consultar uma ou múltiplas colunas da tabela de um
 *model*. Ele aceita uma lista de nomes de colunas como argumento e retorna um
-array dos valores das colunas especificadas com o tipo de dado correspondente.
-
+*array* dos valores das colunas especificadas com o tipo de dado correspondente.
 
 ```irb
 irb> Book.where(out_of_print: true).pluck(:id)
@@ -1999,7 +1998,7 @@ Customer.pluck(:id, :first_name)
 Diferentemente do `select`, `pluck` converte diretamente os resultados do banco
 de dados em um `Array` Ruby, sem construir objetos `ActiveRecord`. Isso pode
 significar melhor performance para consultas grandes ou frequentemente rodadas.
-No entando, qualquer método de *model* sobrescrito não estará disponível. Por
+No entanto, qualquer método de *model* sobrescrito não estará disponível. Por
 exemplo:
 
 ```ruby
