@@ -1924,26 +1924,31 @@ irb> nina.save
 
 [`find_or_initialize_by`]: https://api.rubyonrails.org/classes/ActiveRecord/Relation.html#method-i-find_or_initialize_by
 
-Finding by SQL
---------------
+Encontrando por SQL
+-------------------
 
-If you'd like to use your own SQL to find records in a table you can use [`find_by_sql`][]. The `find_by_sql` method will return an array of objects even if the underlying query returns just a single record. For example you could run this query:
+Se você quiser usar seu próprio SQL para encontrar registros em uma tabela você
+pode usar [`find_by_sql`][].
+O método `find_by_sql` vai retornar um *array* de objetos mesmo que a consulta
+subjacente retorne apenas um único registro. Por exemplo, você poderia rodar a consulta:
 
 ```irb
 irb> Customer.find_by_sql("SELECT * FROM customers INNER JOIN orders ON customers.id = orders.customer_id ORDER BY customers.created_at desc")
 => [#<Customer id: 1, first_name: "Lucas" ...>, #<Customer id: 2, first_name: "Jan" ...>, ...]
 ```
 
-`find_by_sql` provides you with a simple way of making custom calls to the database and retrieving instantiated objects.
+`find_by_sql` fornece uma forma simples de fazer chamadas personalizadas no
+banco de dados e recuperar objetos instanciados.
 
 [`find_by_sql`]: https://api.rubyonrails.org/classes/ActiveRecord/Querying.html#method-i-find_by_sql
 
 ### `select_all`
 
-`find_by_sql` has a close relative called [`connection.select_all`][]. `select_all` will retrieve
-objects from the database using custom SQL just like `find_by_sql` but will not instantiate them.
-This method will return an instance of `ActiveRecord::Result` class and calling `to_a` on this
-object would return you an array of hashes where each hash indicates a record.
+`find_by_sql` tem um parente próximo chamado [`connection.select_all`][].
+`select_all` vai recuperar objetos de um banco de dados usando SQL personalizado
+como `find_by_sql`, mas não vai instanciá-los. Esse método vai retornar uma
+instância da classe `ActiveRecord::Result` e chamar `to_a` neste objeto te
+retornaria um array de hashes, onde cada *hash* indica um registro.
 
 ```irb
 irb> Customer.connection.select_all("SELECT first_name, created_at FROM customers WHERE id = '1'").to_hash
@@ -1954,7 +1959,9 @@ irb> Customer.connection.select_all("SELECT first_name, created_at FROM customer
 
 ### `pluck`
 
-[`pluck`][] can be used to query single or multiple columns from the underlying table of a model. It accepts a list of column names as an argument and returns an array of values of the specified columns with the corresponding data type.
+[`pluck`][] pode ser usado para consultar uma ou múltiplas colunas da tabela de um
+*model*. Ele aceita uma lista de nomes de colunas como argumento e retorna um
+*array* dos valores das colunas especificadas com o tipo de dado correspondente.
 
 ```irb
 irb> Book.where(out_of_print: true).pluck(:id)
@@ -1970,28 +1977,29 @@ SELECT customers.id, customers.name FROM customers
 => [[1, "David"], [2, "Fran"], [3, "Jose"]]
 ```
 
-`pluck` makes it possible to replace code like:
+`pluck` possibilita substituir código como:
 
 ```ruby
 Customer.select(:id).map { |c| c.id }
-# or
+# ou
 Customer.select(:id).map(&:id)
-# or
+# ou
 Customer.select(:id, :name).map { |c| [c.id, c.first_name] }
 ```
 
-with:
+com:
 
 ```ruby
 Customer.pluck(:id)
-# or
+# ou
 Customer.pluck(:id, :first_name)
 ```
 
-Unlike `select`, `pluck` directly converts a database result into a Ruby `Array`,
-without constructing `ActiveRecord` objects. This can mean better performance for
-a large or frequently-run query. However, any model method overrides will
-not be available. For example:
+Diferentemente do `select`, `pluck` converte diretamente os resultados do banco
+de dados em um `Array` Ruby, sem construir objetos `ActiveRecord`. Isso pode
+significar melhor performance para consultas grandes ou frequentemente rodadas.
+No entanto, qualquer método de *model* sobrescrito não estará disponível. Por
+exemplo:
 
 ```ruby
 class Customer < ApplicationRecord
@@ -2009,15 +2017,16 @@ irb> Customer.pluck(:first_name)
 => ["David", "Jeremy", "Jose"]
 ```
 
-You are not limited to querying fields from a single table, you can query multiple tables as well.
+Suas buscas não ficam limitadas a campos de uma única tabela, você também pode
+consultar múltiplas tabelas.
 
 ```irb
 irb> Order.joins(:customer, :books).pluck("orders.created_at, customers.email, books.title")
 ```
 
-Furthermore, unlike `select` and other `Relation` scopes, `pluck` triggers an immediate
-query, and thus cannot be chained with any further scopes, although it can work with
-scopes already constructed earlier:
+Além disso, diferente do `select` e outros escopos `Relation`, `pluck`
+desencadeia uma consulta imediata, e portanto não pode ser encadeado com
+outros escopos, apesar de poder funcionar com escopos construídos anteriormente.
 
 ```irb
 irb> Customer.pluck(:first_name).limit(1)
@@ -2027,7 +2036,9 @@ irb> Customer.limit(1).pluck(:first_name)
 => ["David"]
 ```
 
-NOTE: You should also know that using `pluck` will trigger eager loading if the relation object contains include values, even if the eager loading is not necessary for the query. For example:
+NOTE: Você deve saber que usar o `pluck` vai desencadear *eager loading* se o
+objeto relacional contiver valores `include`, mesmo que *eager loading* não
+seja necessário para consulta. Por exemplo:
 
 ```irb
 irb> assoc = Customer.includes(:reviews)
@@ -2035,7 +2046,7 @@ irb> assoc.pluck(:id)
 SELECT "customers"."id" FROM "customers" LEFT OUTER JOIN "reviews" ON "reviews"."id" = "customers"."review_id"
 ```
 
-One way to avoid this is to `unscope` the includes:
+Uma maneira de evitar isso é usar `unscope` com `includes`:
 
 ```irb
 irb> assoc.unscope(:includes).pluck(:id)
@@ -2045,7 +2056,8 @@ irb> assoc.unscope(:includes).pluck(:id)
 
 ### `ids`
 
-[`ids`][] can be used to pluck all the IDs for the relation using the table's primary key.
+[`ids`][] pode ser usado para obter todos os IDs da relação usando a chave
+primária da tabela.
 
 ```irb
 irb> Customer.ids
