@@ -872,14 +872,14 @@ NOTE: Definido em `active_support/core_ext/module/redefine_method.rb`.
 [Module#redefine_method]: https://api.rubyonrails.org/classes/Module.html#method-i-redefine_method
 [Module#silence_redefinition_of_method]: https://api.rubyonrails.org/classes/Module.html#method-i-silence_redefinition_of_method
 
-Extensions to `Class`
+Extensões para `Class`
 ---------------------
 
-### Class Attributes
+### Atributos de classe
 
 #### `class_attribute`
 
-The method [`class_attribute`][Class#class_attribute] declares one or more inheritable class attributes that can be overridden at any level down the hierarchy.
+O método [`class_attribute`][Class#class_attribute] declara um ou mais atributos de classe herdáveis que podem ser substituídos em qualquer nível abaixo da hierarquia.
 
 ```ruby
 class A
@@ -903,7 +903,7 @@ A.x # => :a
 B.x # => :b
 ```
 
-For example `ActionMailer::Base` defines:
+Por exemplo `ActionMailer::Base` define:
 
 ```ruby
 class_attribute :default_params
@@ -915,7 +915,7 @@ self.default_params = {
 }.freeze
 ```
 
-They can also be accessed and overridden at the instance level.
+Eles também podem ser acessados e substituídos no nível de instância.
 
 ```ruby
 A.x = 1
@@ -924,11 +924,11 @@ a1 = A.new
 a2 = A.new
 a2.x = 2
 
-a1.x # => 1, comes from A
-a2.x # => 2, overridden in a2
+a1.x # => 1, vem de A
+a2.x # => 2, substituído em a2
 ```
 
-The generation of the writer instance method can be prevented by setting the option `:instance_writer` to `false`.
+A criação de um método de instância de escrita pode ser prevenido configurando a opção `:instance_writer` para `false`.
 
 ```ruby
 module ActiveRecord
@@ -938,9 +938,9 @@ module ActiveRecord
 end
 ```
 
-A model may find that option useful as a way to prevent mass-assignment from setting the attribute.
+Essa opção pode ser útil para prevenir atribuições em massa ao definir o atributo.
 
-The generation of the reader instance method can be prevented by setting the option `:instance_reader` to `false`.
+A criação de um método de instância de leitura pode ser prevenido configurando a opção `:instance_reader` para `false`.
 
 ```ruby
 class A
@@ -951,37 +951,37 @@ A.new.x = 1
 A.new.x # NoMethodError
 ```
 
-For convenience `class_attribute` also defines an instance predicate which is the double negation of what the instance reader returns. In the examples above it would be called `x?`.
+Por conveniência `class_attribute` também define um predicado de instância que é uma negação dupla do que o leitor de instância retorna. No exemplo acima podemos usar `x?`.
 
-When `:instance_reader` is `false`, the instance predicate returns a `NoMethodError` just like the reader method.
+Quando `:instance_reader` é `false`, o predicado de instância retorna `NoMethodError` assim como o método de leitura.
 
-If you do not want the instance predicate, pass `instance_predicate: false` and it will not be defined.
+Se você não quiser o predicado de instância, passe `instance_predicate: false` e ele não será definido.
 
-NOTE: Defined in `active_support/core_ext/class/attribute.rb`.
+NOTE: Definido em `active_support/core_ext/class/attribute.rb`.
 
 [Class#class_attribute]: https://api.rubyonrails.org/classes/Class.html#method-i-class_attribute
 
-#### `cattr_reader`, `cattr_writer`, and `cattr_accessor`
+#### `cattr_reader`, `cattr_writer`, e `cattr_accessor`
 
-The macros [`cattr_reader`][Module#cattr_reader], [`cattr_writer`][Module#cattr_writer], and [`cattr_accessor`][Module#cattr_accessor] are analogous to their `attr_*` counterparts but for classes. They initialize a class variable to `nil` unless it already exists, and generate the corresponding class methods to access it:
+As macros [`cattr_reader`][Module#cattr_reader], [`cattr_writer`][Module#cattr_writer], e [`cattr_accessor`][Module#cattr_accessor] são análogas às suas `attr_*` homólogas porém para classes. Eles inicializam a variável de classe com `nil` a menos que ela já exista, e gera os métodos de classe correspondentes para acessá-la:
 
 ```ruby
 class MysqlAdapter < AbstractAdapter
-  # Generates class methods to access @@emulate_booleans.
+  # Gera métodos de classe para acessar @@emulate_booleans.
   cattr_accessor :emulate_booleans
 end
 ```
 
-Also, you can pass a block to `cattr_*` to set up the attribute with a default value:
+Além disso, você pode passar um bloco para `cattr_*` para configurar o atributo com um valor padrão.
 
 ```ruby
 class MysqlAdapter < AbstractAdapter
-  # Generates class methods to access @@emulate_booleans with default value of true.
+  # Gera métodos de classe para acessar @@emulate_booleans com true como valor padrão.
   cattr_accessor :emulate_booleans, default: true
 end
 ```
 
-Instance methods are created as well for convenience, they are just proxies to the class attribute. So, instances can change the class attribute, but cannot override it as it happens with `class_attribute` (see above). For example given
+Métodos de instância são criados também por conveniência, eles são apenas uma forma de acesso ao atributo de classe. Logo, instâncias podem alterar o atributo de classe, porém não podem substituí-lo do mesmo modo que ocorre com `class_attribute` (veja acima). Por exemplo, dado
 
 ```ruby
 module ActionView
@@ -991,36 +991,36 @@ module ActionView
 end
 ```
 
-we can access `field_error_proc` in views.
+podemos acessar `field_error_proc` nas *views*.
 
-The generation of the reader instance method can be prevented by setting `:instance_reader` to `false` and the generation of the writer instance method can be prevented by setting `:instance_writer` to `false`. Generation of both methods can be prevented by setting `:instance_accessor` to `false`. In all cases, the value must be exactly `false` and not any false value.
+A geração do método de leitura de instância pode ser prevenido configurando `:instance_reader` para `false` e a geração dos métodos de escrita de instância podem ser prevenidos configurando `:instance_writer` para `false`. A geração de ambos os métodos podem ser prevenidos configurando `:instance_accessor` para `false`. Em todos os casos, o valor deve ser exatamente `false` e não qualquer outro valor falso.
 
 ```ruby
 module A
   class B
-    # No first_name instance reader is generated.
+    # Nenhuma leitura de instância first_name é gerada.
     cattr_accessor :first_name, instance_reader: false
-    # No last_name= instance writer is generated.
+    # Nenhuma escrita de instância last_name= é gerada.
     cattr_accessor :last_name, instance_writer: false
-    # No surname instance reader or surname= writer is generated.
+    # Nenhuma leitura surname ou escritor surname= de instância é gerada.
     cattr_accessor :surname, instance_accessor: false
   end
 end
 ```
 
-A model may find it useful to set `:instance_accessor` to `false` as a way to prevent mass-assignment from setting the attribute.
+Pode ser útil configurar `:instance_accessor` para `false` no *model* como uma maneira de prevenir atribuições em massa ao definir o atributo.
 
-NOTE: Defined in `active_support/core_ext/module/attribute_accessors.rb`.
+NOTE: Definido em `active_support/core_ext/module/attribute_accessors.rb`.
 
 [Module#cattr_accessor]: https://api.rubyonrails.org/classes/Module.html#method-i-cattr_accessor
 [Module#cattr_reader]: https://api.rubyonrails.org/classes/Module.html#method-i-cattr_reader
 [Module#cattr_writer]: https://api.rubyonrails.org/classes/Module.html#method-i-cattr_writer
 
-### Subclasses and Descendants
+### Subclasses e Descendentes
 
 #### `subclasses`
 
-The [`subclasses`][Class#subclasses] method returns the subclasses of the receiver:
+O método [`subclasses`][Class#subclasses] retorna as subclasses do recebedor:
 
 ```ruby
 class C; end
@@ -1036,15 +1036,15 @@ class D < C; end
 C.subclasses # => [B, D]
 ```
 
-The order in which these classes are returned is unspecified.
+A ordem em que essas classes são retornadas não é especificada.
 
-NOTE: Defined in `active_support/core_ext/class/subclasses.rb`.
+NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 
 [Class#subclasses]: https://api.rubyonrails.org/classes/Class.html#method-i-subclasses
 
 #### `descendants`
 
-The [`descendants`][Class#descendants] method returns all classes that are `<` than its receiver:
+O método [`descendants`][Class#descendants] retorna todas as classes que são `<` pelo recebedor:
 
 ```ruby
 class C; end
@@ -1060,9 +1060,9 @@ class D < C; end
 C.descendants # => [B, A, D]
 ```
 
-The order in which these classes are returned is unspecified.
+A ordem em que essas classes são retornadas não é especificada.
 
-NOTE: Defined in `active_support/core_ext/class/subclasses.rb`.
+NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 
 [Class#descendants]: https://api.rubyonrails.org/classes/Class.html#method-i-descendants
 
