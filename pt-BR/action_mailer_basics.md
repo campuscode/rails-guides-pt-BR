@@ -457,7 +457,7 @@ with the usual `user_mailer.text.erb` file if it exists.
 
 ### Pré-visualizando Emails
 
-A pré-visualização do *Action Mailer* possibilita uma maneira de visualizar como o email vai ficar, acessando uma *URL* especial que o renderiza. No exemplo acima, a classe para pré-visualizar `UserMailer` deve se chamar `UserMailerPreview`
+O *Action Mailer Preview* possibilita uma maneira de pré-visualizar como o email vai ficar, acessando uma _URL_ especial que o renderiza. No exemplo acima, a classe para pré-visualizar `UserMailer` deve se chamar `UserMailerPreview`
 e deve estar localizada em `test/mailers/previews/user_mailer_preview.rb`. Para ver o modelo de `welcome_email`, implemente um método que tem o mesmo nome e chame por `UserMailer.welcome_email`:
 
 ```ruby
@@ -468,10 +468,10 @@ class UserMailerPreview < ActionMailer::Preview
 end
 ```
 
-Assim, o modelo vai estar disponível em <http://localhost:3000/rails/mailers/user_mailer/welcome_email>.
+Dessa maneira, o modelo vai ficar disponível em <http://localhost:3000/rails/mailers/user_mailer/welcome_email>.
 
 Se você mudar algo em `app/views/user_mailer/welcome_email.html.erb` ou no próprio *mailer*,
-ele vai automaticamente recarregar e renderizar, para que você veja as mudanças instantaneamente.
+ele vai automaticamente recarregar e renderizá-lo, para que você veja as mudanças instantaneamente.
 Uma lista das pré-visualizações também ficam disponíveis em <http://localhost:3000/rails/mailers>.
 
 Por padrão, essas classes de pré-visualizações ficam em `test/mailers/previews`. Isso pode ser configurado usando a opção `preview_path`. Por exemplo, se você quiser alterar para `lib/mailer_previews`, você pode configurar isso em `config/application.rb`:
