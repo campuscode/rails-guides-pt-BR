@@ -951,11 +951,11 @@ A.new.x = 1
 A.new.x # NoMethodError
 ```
 
-Por conveniência `class_attribute` também define um predicado de instância que é uma negação dupla do que o leitor de instancia retorna. No exemplo acima podemos usar `x?`.
+Por conveniência `class_attribute` também define um predicado de instância que é uma negação dupla do que o leitor de instância retorna. No exemplo acima podemos usar `x?`.
 
 Quando `:instance_reader` é `false`, o predicado de instância retorna `NoMethodError` assim como o método de leitura.
 
-Se você não quiser o predicado de instancia, passe `instance_predicate: false` e ele não será definido.
+Se você não quiser o predicado de instância, passe `instance_predicate: false` e ele não será definido.
 
 NOTE: Definido em `active_support/core_ext/class/attribute.rb`.
 
@@ -991,24 +991,24 @@ module ActionView
 end
 ```
 
-podemos acessar `field_error_proc` nas views.
+podemos acessar `field_error_proc` nas *views*.
 
-A geração do método de leitor de instância pode ser prevenido configurando `:instance_reader` para `false` e a geração dos métodos de escrita de instância podem ser prevenidos configurando `:instance_writer` para `false`. A geração de ambos os métodos podem ser prevenidos configurando `:instance_accessor` para `false`. Em todos os casos, o valor deve ser exatamente `false` e não qualquer outro valor falso.
+A geração do método de leitura de instância pode ser prevenido configurando `:instance_reader` para `false` e a geração dos métodos de escrita de instância podem ser prevenidos configurando `:instance_writer` para `false`. A geração de ambos os métodos podem ser prevenidos configurando `:instance_accessor` para `false`. Em todos os casos, o valor deve ser exatamente `false` e não qualquer outro valor falso.
 
 ```ruby
 module A
   class B
-    # Nenhum leitor de instância first_name é gerado.
+    # Nenhuma leitura de instância first_name é gerada.
     cattr_accessor :first_name, instance_reader: false
-    # Nenhum escritor de instância last_name= é gerado.
+    # Nenhuma escrita de instância last_name= é gerada.
     cattr_accessor :last_name, instance_writer: false
-    # Nenhum leitor surname ou escritor surname= de instância é gerado.
+    # Nenhuma leitura surname ou escritor surname= de instância é gerada.
     cattr_accessor :surname, instance_accessor: false
   end
 end
 ```
 
-Pode ser útil configurar `:instance_accessor` para `false` no modelo como uma maneira de prevenir atribuições em massa ao definir o atributo.
+Pode ser útil configurar `:instance_accessor` para `false` no *model* como uma maneira de prevenir atribuições em massa ao definir o atributo.
 
 NOTE: Definido em `active_support/core_ext/module/attribute_accessors.rb`.
 
@@ -1036,7 +1036,7 @@ class D < C; end
 C.subclasses # => [B, D]
 ```
 
-A ordem em que essas clásses são retornadas não é especificada.
+A ordem em que essas classes são retornadas não é especificada.
 
 NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 
