@@ -30,20 +30,20 @@ The threats against web applications include user account hijacking, bypass of a
 
 In order to develop secure web applications you have to keep up to date on all layers and know your enemies. To keep up to date subscribe to security mailing lists, read security blogs, and make updating and security checks a habit (check the [Additional Resources](#additional-resources) chapter). It is done manually because that's how you find the nasty logical security problems.
 
-Sessions
+Sessões
 --------
 
-This chapter describes some particular attacks related to sessions, and security measures to protect your session data.
+Este capítulo descreve alguns ataques específicos relacionados à sessões e medidas de segurança para proteger seus dados de sessão.
 
-### What are Sessions?
+### O que são Sessões?
 
-INFO: Sessions enable the application to maintain user-specific state, while users interact with the application. For example, sessions allow users to authenticate once and remain signed in for future requests.
+INFO: As sessões permitem que a aplicação mantenha um estado específico do usuário, enquanto os usuários interagem com a aplicação. Por exemplo, as sessões permitem que os usuários se autentiquem uma vez e permaneçam conectados para requisições futuras.
 
-Most applications need to keep track of state for users that interact with the application. This could be the contents of a shopping basket, or the user id of the currently logged in user. This kind of user-specific state can be stored in the session.
+A maioria das aplicações precisa rastrear o estado dos usuários que interagem com a aplicação. Pode ser, por exemplo, o conteúdo de um carrinho de compras ou a identificação do usuário conectado no momento. Esse tipo de estado específico pode ser armazenado na sessão.
 
-Rails provides a session object for each user that accesses the application. If the user already has an active session, Rails uses the existing session. Otherwise a new session is created.
+O Rails fornece um objeto de sessão para cada usuário que acessa a aplicação. Se o usuário já tem uma sessão ativa, o Rails utiliza a sessão existente. Caso contrário, uma nova sessão será criada.
 
-NOTE: Read more about sessions and how to use them in [Action Controller Overview Guide](action_controller_overview.html#session).
+NOTE: Leia mais sobre as sessões e como utilizá-las no [Guia Action Controller Overview](action_controller_overview.html#sessao).
 
 ### Session Hijacking
 
