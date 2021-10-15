@@ -63,7 +63,7 @@ No modo `zeitwerk`, o Rails utiliza [Zeitwerk](https://github.com/fxn/zeitwerk) 
 
 INFO. Você não configura o Zeitwerk manualmente em uma aplicação Rails. Ao invés disso, você configura a aplicação usando uma configuração portável, que é descrita neste guia. Assim, o Rails traduz essas configurações para o Zeitwerk por você.
 
-Project Structure
+Estrutura do Projeto
 -----------------
 
 In a Rails application file names have to match the constants they define, with directories acting as namespaces.
