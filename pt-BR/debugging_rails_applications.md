@@ -959,26 +959,17 @@ by Evan Weaver.
 ### Find a Memory Leak
 There is an excellent article about detecting and fixing memory leaks at Derailed, [which you can read here](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
 
-Plugins for Debugging
+Plugins para *Debug*
 ---------------------
 
-There are some Rails plugins to help you to find errors and debug your
-application. Here is a list of useful plugins for debugging:
+Existem alguns plugins Rails para te ajudar a procurar erros e *debugar* a aplicação. Aqui está uma lista de plugins úteis para *debug*:
 
-* [Query Trace](https://github.com/ruckus/active-record-query-trace/tree/master) Adds query
-origin tracing to your logs.
+* [Query Trace](https://github.com/ruckus/active-record-query-trace/tree/master) Adiciona rastreamento de origem de consulta aos seus logs.
 * [Exception Notifier](https://github.com/smartinez87/exception_notification/tree/master)
-Provides a mailer object and a default set of templates for sending email
-notifications when errors occur in a Rails application.
-* [Better Errors](https://github.com/charliesome/better_errors) Replaces the
-standard Rails error page with a new one containing more contextual information,
-like source code and variable inspection.
-* [RailsPanel](https://github.com/dejan/rails_panel) Chrome extension for Rails
-development that will end your tailing of development.log. Have all information
-about your Rails app requests in the browser — in the Developer Tools panel.
-Provides insight to db/rendering/total times, parameter list, rendered views and
-more.
-* [Pry](https://github.com/pry/pry) An IRB alternative and runtime developer console.
+Fornece um objeto *mailer* e um conjunto padrão de *templates* para enviar notificações por email quando ocorrerem erros em um aplicativo Rails.
+* [Better Errors](https://github.com/charliesome/better_errors) Substitui a página de erro padrão do Rails por uma nova contendo mais informações contextuais, como código-fonte e inspeção de variáveis.
+* [RailsPanel](https://github.com/dejan/rails_panel) extensão do Chrome para desenvolvimento Rails que encerrerá seu acompanhamento de development.log. Tenha todas as informações sobre as solicitações do seu aplicativo Rails no navegador - no painel Ferramentas do desenvolvedor. Fornece informações sobre db / renderização / tempos totais, lista de parâmetros, visualizações renderizadas e muito mais.
+* [Pry](https://github.com/pry/pry) Uma alternativa IRB e console de desenvolvedor em tempo de execução.
 
 References
 ----------
