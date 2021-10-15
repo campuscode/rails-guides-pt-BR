@@ -45,27 +45,27 @@ O Rails fornece um objeto de sessão para cada usuário que acessa a aplicação
 
 NOTE: Leia mais sobre as sessões e como utilizá-las no [Guia Action Controller Overview](action_controller_overview.html#sessao).
 
-### Session Hijacking
+### Sequestro de Sessão
 
-WARNING: _Stealing a user's session ID lets an attacker use the web application in the victim's name._
+WARNING: _O roubo do ID de sessão de um usuário permite que um invasor utilize a aplicação web em nome da vítima._
 
-Many web applications have an authentication system: a user provides a user name and password, the web application checks them and stores the corresponding user id in the session hash. From now on, the session is valid. On every request the application will load the user, identified by the user id in the session, without the need for new authentication. The session ID in the cookie identifies the session.
+Muitas aplicações web tem um sistema de autenticação: um usuário fornece um nome de usuário e senha, a aplicação confere e armazena o ID de usuário correspondente no _hash_ da sessão. A partir de agora, a sessão é válida. A cada requisição a aplicação carregará o usuário, identificado pelo ID do usuário na sessão, sem a necessidade de uma nova autenticação. O ID da sessão no _cookie_ identifica a sessão.
 
-Hence, the cookie serves as temporary authentication for the web application. Anyone who seizes a cookie from someone else, may use the web application as this user - with possibly severe consequences. Here are some ways to hijack a session, and their countermeasures:
+Portanto, o _cookie_ serve como autenticação temporária para a aplicação web. Qualquer pessoa que obter um _cookie_ de outra pessoa pode utilizar a aplicação web como se fosse esse usuário - com consequências possivelmente graves. Aqui estão algumas maneiras de sequestrar uma sessão e suas medidas preventivas:
 
-* Sniff the cookie in an insecure network. A wireless LAN can be an example of such a network. In an unencrypted wireless LAN, it is especially easy to listen to the traffic of all connected clients. For the web application builder this means to _provide a secure connection over SSL_. In Rails 3.1 and later, this could be accomplished by always forcing SSL connection in your application config file:
+* Monitore o _cookie_ em uma rede insegura. Uma rede LAN (_Local Area Network_ - Rede Local, em tradução livre) _wireless_ (sem fio) pode ser um exemplo de tal rede. Em uma rede local _wireless_ não criptograda, é especialmente fácil "escutar" o tráfego de todos os clientes conectados. Para a construção de aplicações web, isso significa _fornecer uma conexão segura por SSL (Secure Sockets Layer - Camada de Soquete Seguro, em tradução livre)_. No Rails 3.1 e posterior, isso poder ser feito sempre forçando a conexão SSL no arquivo de configuração da sua aplicação:
 
     ```ruby
     config.force_ssl = true
     ```
 
-* Most people don't clear out the cookies after working at a public terminal. So if the last user didn't log out of a web application, you would be able to use it as this user. Provide the user with a _log-out button_ in the web application, and _make it prominent_.
+* A maioria das pessoas não limpa os _cookies_ depois de trabalhar em um computador público. Portanto, se o último usuário não se desconectou de uma aplicação web, você poderá utilizar a aplicação como se fosse esse usuário.  Forneça ao usuário um **botão para encerrar a sessão** (_logout_) e **destaque-o**.
 
-* Many cross-site scripting (XSS) exploits aim at obtaining the user's cookie. You'll read [more about XSS](#cross-site-scripting-xss) later.
+* Muitas das explorações de [_cross-site scripting (XSS)_](https://pt.wikipedia.org/wiki/Cross-site_scripting) visam obter o _cookie_ do usuário. Você lerá [mais sobre XSS](#cross-site-scripting-xss) mais adiante.
 
-* Instead of stealing a cookie unknown to the attacker, they fix a user's session identifier (in the cookie) known to them. Read more about this so-called session fixation later.
+* Em vez de roubar um _cookie_ que é desconhecido para o invasor, eles corrigem um identificador de sessão de usuário (no _cookie_) conhecido por eles. Leia mais sobre esse assunto no capítulo chamado Fixação de Sessão mais adiante.
 
-The main objective of most attackers is to make money. The underground prices for stolen bank login accounts range from 0.5%-10% of account balance, $0.5-$30 for credit card numbers ($20-$60 with full details), $0.1-$1.5 for identities (Name, SSN, and DOB), $20-$50 for retailer accounts, and $6-$10 for cloud service provider accounts, according to the [Symantec Internet Security Threat Report (2017)](https://www.symantec.com/content/dam/symantec/docs/reports/istr-22-2017-en.pdf).
+O principal objetivo da maioria dos invasores é ganhar dinheiro. Os preços clandestinos para login de contas bancárias roubadas variam de 0.5%-10% do saldo da conta, $0.5-$30 para números de cartão de crédito ($20-$60 com detalhes completos), $0.1-$1.5 para identidades (nome, SSN - semelhante ao CPF no Brasil - e data de nascimento), $20-$50 para contas de verejistas e $6-$10 para contas de provedor de serviço em nuvem, de acordo com o [Relatório de Ameaças à Segurança na Internet da Symantec (2017, em inglês)](https://www.symantec.com/content/dam/symantec/docs/reports/istr-22-2017-en.pdf)
 
 ### Session Storage
 
