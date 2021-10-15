@@ -532,12 +532,12 @@ Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
                  "cat & dog")
 ```
 
-Database Views
+Visão de Banco de Dados
 --------------
 
-* [view creation](https://www.postgresql.org/docs/current/static/sql-createview.html)
+* [criação da visão](https://www.postgresql.org/docs/current/static/sql-createview.html)
 
-Imagine you need to work with a legacy database containing the following table:
+Imagine que você precisa trabalhar com um banco de dados legado contendo as seguintes tabelas:
 
 ```
 rails_pg_guide=# \d "TBL_ART"
@@ -553,9 +553,9 @@ Indexes:
     "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
 ```
 
-This table does not follow the Rails conventions at all.
-Because simple PostgreSQL views are updateable by default,
-we can wrap it as follows:
+Esta tabela certamente não segue as convenções do Rails.
+Como as [visões](https://pt.wikipedia.org/wiki/Vis%C3%A3o_(banco_de_dados)) no PostgreSQL são atualizáveis por padrão,
+nós podemos envolver isso da seguinte maneira:
 
 ```ruby
 # db/migrate/20131220144913_create_articles_view.rb
@@ -592,5 +592,5 @@ irb> Article.count
 => 1
 ```
 
-NOTE: This application only cares about non-archived `Articles`. A view also
-allows for conditions so we can exclude the archived `Articles` directly.
+NOTE: Esta aplicação só se importa com `Articles` não arquivados. Uma visão também
+permite condições para que possamos excluir os `Articles` arquivados diretamente.
