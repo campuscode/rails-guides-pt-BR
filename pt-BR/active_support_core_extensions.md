@@ -1060,7 +1060,7 @@ class D < C; end
 C.descendants # => [B, A, D]
 ```
 
-A ordem em que essas clásses são retornadas não é especificada.
+A ordem em que essas classes são retornadas não é especificada.
 
 NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 
