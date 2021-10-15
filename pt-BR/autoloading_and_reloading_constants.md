@@ -66,19 +66,19 @@ INFO. Você não configura o Zeitwerk manualmente em uma aplicação Rails. Ao i
 Estrutura do Projeto
 -----------------
 
-In a Rails application file names have to match the constants they define, with directories acting as namespaces.
+Em uma aplicação Rails, nomes de arquivos precisam corresponder às constantes que definem, com diretórios agindo como *namespaces*.
 
-For example, the file `app/helpers/users_helper.rb` should define `UsersHelper` and the file `app/controllers/admin/payments_controller.rb` should define `Admin::PaymentsController`.
+Por exemplo, o arquivo `app/helpers/users_helper.rb` deve definir `UsersHelper` e o arquivo `app/controllers/admin/payments_controller.rb` deve definir `Admin::PaymentsController`.
 
-By default, Rails configures Zeitwerk to inflect file names with `String#camelize`. For example, it expects that `app/controllers/users_controller.rb` defines the constant `UsersController` because
+Por padrão o Rails configura o *Zeitwerk* para inflexionar nomes de arquivos com `String#camelize`. Por exemplo, é esperado que `app/controllers/users_controller.rb` defina a constante `UsersController` pois
 
 ```ruby
 "users_controller".camelize # => UsersController
 ```
 
-The section _Customizing Inflections_ below documents ways to override this default.
+A seção _Customizando Inflexões_ abaixo documenta maneiras de sobrescrever esse comportamento padrão.
 
-Please, check the [Zeitwerk documentation](https://github.com/fxn/zeitwerk#file-structure) for further details.
+Por favor, verifique a [documentação do Zeitwerk](https://github.com/fxn/zeitwerk#file-structure) para mais detalhes.
 
 Autoload Paths
 --------------
