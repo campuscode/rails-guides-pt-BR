@@ -279,7 +279,7 @@ logger.debug {"Person attributes hash: #{@person.attributes.inspect}"}
 ```
 
 O conteúdo do bloco e, portanto, a interpolação de string, são apenas
-avaliada se a depuração está habilitada. Essa economia de desempenho é apenas realmente
+avaliada se o _debug_ está habilitado. Essa economia de desempenho é apenas realmente
 perceptível com grandes quantidades de registro, mas é uma boa prática empregar.
 
 INFO: Esta seção foi escrita por [Jon Cairns em uma resposta no StackOverflow](https://stackoverflow.com/questions/16546730/logging-in-rails-is-there-any-performance-hit/16546935#16546935)
