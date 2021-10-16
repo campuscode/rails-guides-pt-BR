@@ -234,7 +234,7 @@ irb(main):003:0> Article.pamplemousse
 
 Abaixo de cada instrução do banco de dados, você pode ver setas apontando para o nome do arquivo de origem específico (e o número da linha) do método que resultou em uma chamada de banco de dados. Isso pode ajudá-lo a identificar e resolver problemas de desempenho causados por consultas N + 1: consultas únicas de banco de dados que geram várias consultas adicionais.
 
-Logs de consulta detalhada são habilitados por padrão nos logs do ambiente de desenvolvimento após Rails 5.2.
+Logs de consulta detalhada são habilitados por padrão nos logs do ambiente de desenvolvimento após o Rails 5.2.
 
 WARNING: Não recomendamos o uso dessa configuração em ambientes de produção. Ele se baseia no método`Kernel#caller` que tende a alocar muita memória para gerar rastreamentos de pilha de chamadas de método.
 
