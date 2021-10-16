@@ -278,7 +278,7 @@ apenas avaliado se o nível de saída for o mesmo - ou incluído - o nível perm
 logger.debug {"Person attributes hash: #{@person.attributes.inspect}"}
 ```
 
-O conteúdo do bloco e, portanto, a interpolação de string, são apenas
+O conteúdo do bloco e, portanto, a interpolação de _string_, são apenas
 avaliada se o _debug_ está habilitado. Essa economia de desempenho é apenas realmente
 perceptível com grandes quantidades de registro, mas é uma boa prática empregar.
 
