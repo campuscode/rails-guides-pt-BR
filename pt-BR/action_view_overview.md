@@ -322,9 +322,9 @@ Os *Layouts* podem ser usados para renderizar um *template* em torno dos resulta
 *Layout* de *Partial*
 ---------------
 
-*Partials* podem ter seus próprios *layouts*. Esses *layouts* são diferentes daqueles utilizados nas *actions* do *controller*, porém eles funcionam de modo semelhante.
+*Partials* podem ter seus próprios *layouts*. Esses *layouts* são diferentes daqueles utilizados nas *actions* do *controller*, porém funcionam de modo semelhante.
 
-Digamos que nós estamos exibindo um artigo em uma página que deveria ser encapsulado em uma `div`. Primeiramente, criaremos um novo `Article`:
+Supomos que estamos exibindo um artigo em uma página que deveria ser encapsulado em uma `div`. Primeiramente, criaremos um novo `Article`:
 
 ```ruby
 Article.create(body: 'Layouts de partial são demais!')
@@ -362,7 +362,7 @@ Você também pode renderizar um bloco de código dentro do *layout* de *partial
 <% end %>
 ```
 
-Digamos que utilizaremos a mesma *partial* `_box` representada acima, isso produziria o mesmo resultado do exemplo anterior.
+Supomos que desejamos utilizar a mesma *partial* `_box` representada acima, isso produziria o mesmo resultado do exemplo anterior.
 
 View Paths
 ----------
