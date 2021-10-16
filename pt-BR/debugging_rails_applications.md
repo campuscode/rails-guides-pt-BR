@@ -242,7 +242,7 @@ WARNING: Não recomendamos o uso dessa configuração em ambientes de produção
 
 Ao executar aplicativos multiusuário e multi-contas, muitas vezes é útil
 ser capaz de filtrar os registros usando algumas regras personalizadas. `TaggedLogging`
-no Active Support ajuda você a fazer exatamente isso, marcando linhas de registro com subdomínios, IDs de solicitação e qualquer outra coisa para auxiliar na depuração de tais aplicativos.
+no Active Support ajuda você a fazer exatamente isso, marcando linhas de registro com subdomínios, IDs de requisição e qualquer outra coisa para auxiliar no _debug_ de tais aplicativos.
 
 ```ruby
 logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
