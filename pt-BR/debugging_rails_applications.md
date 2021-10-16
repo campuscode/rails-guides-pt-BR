@@ -265,8 +265,8 @@ Outra armadilha potencial são muitas chamadas para `Logger` em seu código:
 logger.debug "Person attributes hash: #{@person.attributes.inspect}"
 ```
 
-No exemplo acima, haverá um impacto no desempenho, mesmo se o permitido
-o nível de saída não inclui debug. A razão é que Ruby tem que avaliar
+No exemplo acima, haverá um impacto no desempenho, mesmo se o nível de saída
+permitido não incluir _debug_. A razão é que o Ruby tem que avaliar
 essas strings, que inclui instanciar o objeto `String` um tanto pesado
 e interpolar as variáveis.
 
