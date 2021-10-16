@@ -25,7 +25,7 @@ Depois de ler este guia, você saberá:
 Introdução
 ------------
 
-Os [_frameworks_](https://pt.wikipedia.org/wiki/Framework) de aplicações web são feitos para ajudar as pessoas desenvolvedoras a construir aplicações web. Alguns deles também ajudam a proteger a aplicação. Na verdade, um _framework_ não é mais seguro do que o outro: se você utilizá-lo corretamente, poderá construir aplicações seguras com muitos _framweworks_. O Ruby on Rails tem alguns métodos auxiliares inteligentes, por exemplo, contra _SQL injection_ (injeção de SQL), de modo que isso dificilmente será um problema.
+Os [_frameworks_](https://pt.wikipedia.org/wiki/Framework) de aplicações web são feitos para ajudar as pessoas desenvolvedoras a construir aplicações web. Alguns deles também ajudam a proteger a aplicação. Na verdade, um _framework_ não é mais seguro do que o outro: se você utilizá-lo corretamente, poderá construir aplicações seguras com muitos _frameworks_. O Ruby on Rails tem alguns métodos auxiliares inteligentes, por exemplo, contra _SQL injection_ (injeção de SQL), de modo que isso dificilmente será um problema.
 
 Em geral, não existe segurança [_plug-and-play_ (ligar e usar)](https://pt.wikipedia.org/wiki/Plug_and_Play). A segurança depende das pessoas que utilizam o _framework_ e, às vezes, do método de desenvolvimento. E depende também de todas as camadas de um ambiente de aplicação web: o armazenamento de _back-end_, o servidor web e a própria aplicação web em si (e possivelmente outras camadas ou aplicações).
 
