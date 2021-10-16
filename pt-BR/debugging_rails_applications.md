@@ -254,7 +254,7 @@ logger.tagged("BCX") { logger.tagged("Jason") { logger.info "Stuff" } } # Logs "
 ### Impacto dos logs no desempenho
 
 O log sempre terá um pequeno impacto no desempenho do seu aplicativo Rails,
-particularmente ao fazer login no disco. Além disso, existem algumas sutilezas:
+particularmente ao fazer o registro no disco. Além disso, existem algumas sutilezas:
 
 Ao utilizar o nível `:debug`  terá uma penalidade de desempenho maior do que `:fatal`,
 já que um número muito maior de strings está sendo avaliado e gravado na saída do log (e.g. disco).
