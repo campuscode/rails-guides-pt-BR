@@ -217,7 +217,7 @@ irb(main):001:0> Article.pamplemousse
 => #<Comment id: 2, author: "1", body: "Well, actually...", article_id: 1, created_at: "2018-10-19 00:56:10", updated_at: "2018-10-19 00:56:10">
 ```
 
-Depois de executar `ActiveRecord::Base.verbose_query_logs = true` na sessão `bin/rails console` para habilitar logs de consulta detalhados e executar o método novamente, torna-se óbvio que linha única de código está gerando todas essas chamadas de banco de dados discretas:
+Depois de executar `ActiveRecord::Base.verbose_query_logs = true` na sessão `bin/rails console` para habilitar logs de consulta detalhados e executar o método novamente, torna-se óbvio qual linha única de código está gerando todas essas chamadas discretas de banco de dados:
 
 ```
 irb(main):003:0> Article.pamplemousse
