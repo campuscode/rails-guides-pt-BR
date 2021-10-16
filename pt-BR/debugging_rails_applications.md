@@ -236,7 +236,7 @@ Abaixo de cada instrução do banco de dados, você pode ver setas apontando par
 
 Logs de consulta detalhada são habilitados por padrão nos logs do ambiente de desenvolvimento após o Rails 5.2.
 
-WARNING: Não recomendamos o uso dessa configuração em ambientes de produção. Ele se baseia no método`Kernel#caller` que tende a alocar muita memória para gerar rastreamentos de pilha de chamadas de método.
+WARNING: Não recomendamos o uso dessa configuração em ambientes de produção. Ele se baseia no método`Kernel#caller` que tende a alocar muita memória para gerar o _backtrace_ (rastreamento) de chamadas de método.
 
 ### Tagged Log
 
