@@ -163,43 +163,41 @@ render(partial: 'hotels/hotel.html.erb', collection: @hotels, cached: true)
 
 Será carregado o arquivo `hotels/hotel.html.erb` em qualquer tipo de arquivo *mime*. Você pode incluir este *parcial* em um arquivo JavaScript, por exemplo.
 
-### Managing dependencies
+### Gerenciando dependências
 
-In order to correctly invalidate the cache, you need to properly define the
-caching dependencies. Rails is clever enough to handle common cases so you don't
-have to specify anything. However, sometimes, when you're dealing with custom
-helpers for instance, you need to explicitly define them.
+Para invalidar corretamente o cache, você precisa definir adequadamente suas dependências. Rails é inteligente o suficiente para lidar com casos comuns, então você não precisa especificar nada. No entanto, às vezes, quando você está lidando com "helpers" customizados, por exemplo, você precisa defini-los explicitamente.
 
-#### Implicit dependencies
+#### Dependências implícitas
+
+A maioria das dependências dos *templates* pode ser derivada de chamadas a `render` no próprio *template*. Aqui estão alguns exemplos de chamadas de renderização que o `ActionView::Digestor` sabe como decodificar:
 
 Most template dependencies can be derived from calls to `render` in the template
 itself. Here are some examples of render calls that `ActionView::Digestor` knows
 how to decode:
 
 ```ruby
-render partial: "comments/comment", collection: commentable.comments
-render "comments/comments"
-render 'comments/comments'
-render('comments/comments')
+render partial: "comentarios/comentario", collection: comentavel.comentarios
+render "comentarios/comentarios"
+render 'comentarios/comentarios'
+render('comentarios/comentarios')
 
-render "header" translates to render("comments/header")
+render "cabecalho" translates to render("comentarios/cabecalho")
 
-render(@topic)         translates to render("topics/topic")
-render(topics)         translates to render("topics/topic")
-render(message.topics) translates to render("topics/topic")
+render(@topico)          translates to render("topicos/topico")
+render(topicos)          translates to render("topicos/topico")
+render(mensagem.topicos) translates to render("topicos/topico")
 ```
 
-On the other hand, some calls need to be changed to make caching work properly.
-For instance, if you're passing a custom collection, you'll need to change:
+Por outro lado, algumas chamadas precisam ser alteradas para que o cache funcione corretamente. Por exemplo, se você estiver passando uma *collection* personalizada, precisará alterar:
 
 ```ruby
-render @project.documents.where(published: true)
+render @projeto.documentos.where(published: true)
 ```
 
 to:
 
 ```ruby
-render partial: "documents/document", collection: @project.documents.where(published: true)
+render partial: "documentos/documento", collection: @projeto.documentos.where(published: true)
 ```
 
 #### Explicit dependencies
@@ -208,14 +206,14 @@ Sometimes you'll have template dependencies that can't be derived at all. This
 is typically the case when rendering happens in helpers. Here's an example:
 
 ```html+erb
-<%= render_sortable_todolists @project.todolists %>
+<%= render_sortable_todolists @projeto.todolistos %>
 ```
 
 You'll need to use a special comment format to call those out:
 
 ```html+erb
 <%# Template Dependency: todolists/todolist %>
-<%= render_sortable_todolists @project.todolists %>
+<%= render_sortable_todolists @projeto.todolistos %>
 ```
 
 In some cases, like a single table inheritance setup, you might have a bunch of
@@ -395,7 +393,7 @@ store is not appropriate for large application deployments. However, it can
 work well for small, low traffic sites with only a couple of server processes,
 as well as development and test environments.
 
-New Rails projects are configured to use this implementation in development environment by default.
+New Rails projetos are conofigured to use this implementation in development environment by default.
 
 NOTE: Since processes will not share cache data when using `:memory_store`,
 it will not be possible to manually read, write, or expire the cache via the Rails console.
