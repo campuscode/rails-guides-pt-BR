@@ -9,7 +9,7 @@ evitá-los com o Rails.
 
 Depois de ler este guia, você saberá:
 
-* Todas as medidas preventivas _que estão destacadas_.
+* Todas as medidas preventivas **que estão destacadas**.
 * O conceito de sessões no Rails, o que colocar lá e métodos populares de
   ataques.
 * Como apenas visitar um site pode ser um problema de segurança (com
