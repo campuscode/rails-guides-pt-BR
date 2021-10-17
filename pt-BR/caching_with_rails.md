@@ -109,52 +109,41 @@ Todos os templates que já estão em cache serão buscados de uma vez com veloci
 
 ### Russian Doll Caching
 
-You may want to nest cached fragments inside other cached fragments. This is
-called Russian doll caching.
+Talvez você deseje aninhar fragmentos em cache dentro de outros fragmentos em cache. Isso é chamado de *Russian doll caching*.
 
-The advantage of Russian doll caching is that if a single product is updated,
-all the other inner fragments can be reused when regenerating the outer
-fragment.
+A vantagem do *Russian doll caching* é que, se um único `produto` for atualizado, todos os outros fragmentos internos podem ser reutilizados ao regenerar o fragmento externo.
 
-As explained in the previous section, a cached file will expire if the value of
-`updated_at` changes for a record on which the cached file directly depends.
-However, this will not expire any cache the fragment is nested within.
+Conforme explicado na seção anterior, um arquivo em cache expirará se o valor de `updated_at` mudar para um registro do qual o arquivo em cache depende diretamente. No entanto, isso não expirará nenhum cache no qual o fragmento esteja aninhado.
 
-For example, take the following view:
+Por exemplo, considere a seguinte *view*:
 
 ```erb
-<% cache product do %>
-  <%= render product.games %>
+<% cache produto do %>
+  <%= render produto.jogos %>
 <% end %>
 ```
 
-Which in turn renders this view:
+Que por sua vez renderiza esta *view*:
 
 ```erb
-<% cache game do %>
-  <%= render game %>
+<% cache jogo do %>
+  <%= render jogo %>
 <% end %>
 ```
 
-If any attribute of game is changed, the `updated_at` value will be set to the
-current time, thereby expiring the cache. However, because `updated_at`
-will not be changed for the product object, that cache will not be expired and
-your app will serve stale data. To fix this, we tie the models together with
-the `touch` method:
+Se algum atributo do jogo for alterado, o valor `updated_at` será definido para a hora atual, expirando assim o cache. No entanto, como `updated_at` não será alterado para o objeto produto, esse cache não expirará e seu aplicativo servirá dados desatualizados. Para corrigir isso, vinculamos os *models* com o método `touch`:
 
 ```ruby
-class Product < ApplicationRecord
-  has_many :games
+class Produto < ApplicationRecord
+  has_many :jogos
 end
 
-class Game < ApplicationRecord
-  belongs_to :product, touch: true
+class Jogo < ApplicationRecord
+  belongs_to :produto, touch: true
 end
 ```
 
-With `touch` set to `true`, any action which changes `updated_at` for a game
-record will also change it for the associated product, thereby expiring the
-cache.
+Com `touch` definido como `true`, qualquer ação que altere `updated_at` para um registro de jogo irá também alterá-lo para o produto associado, expirando assim o cache.
 
 ### Shared Partial Caching
 
