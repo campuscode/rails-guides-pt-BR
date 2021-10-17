@@ -464,21 +464,21 @@ chatChannel.send({ sent_by: "Paul", body: "This is a cool chat app." })
 
 A retransmissão vai ser recebida por todos os clientes conectados, _incluindo_ o cliente que enviou a mensagem. Note que `params` são os mesmos de quando você se inscreveu no *channel*
 
-## Full-Stack Examples
+## *Full-Stack* Exemplos
 
-The following setup steps are common to both examples:
+As seguintes etapas de configuração são comuns em ambos os exemplos:
 
-  1. [Setup your connection](#componentes-server-side-connections).
-  2. [Setup your parent channel](#configuracao-do-channel-pai).
-  3. [Connect your consumer](#conectar-o-consumidor).
+  1. [Configurando conexão](#componentes-server-side-connections).
+  2. [Configurando o canal pai](#configuracao-do-channel-pai).
+  3. [Conectando-se ao consumidor](#conectar-o-consumidor).
 
-### Example 1: User Appearances
+### Exemplo 1: Aspectos do usuário
 
-Here's a simple example of a channel that tracks whether a user is online or not
-and what page they're on. (This is useful for creating presence features like showing
-a green dot next to a user name if they're online).
+Aqui está um exemplo simples de um canal que rastreia se um usuário está online ou
+não e em que página ele está (isso é útil para criar recursos de presença, como
+mostrar um ponto verde ao lado do nome do usuário se ele estiver online).
 
-Create the server-side appearance channel:
+Criando o canal de aspectos no *back-end*:
 
 ```ruby
 # app/channels/appearance_channel.rb
@@ -501,34 +501,35 @@ class AppearanceChannel < ApplicationCable::Channel
 end
 ```
 
-When a subscription is initiated the `subscribed` callback gets fired and we
-take that opportunity to say "the current user has indeed appeared". That
-appear/disappear API could be backed by Redis, a database, or whatever else.
+Quando uma inscrição é inicializada, o callback `subscribed` é acionado e
+aproveitamos a oportunidade para dizer "o usuário atual realmente apareceu".
+Essa API de aparecer/desaparecer pode ser apoiada via Redis, um banco de dados,
+ou qualquer outro.
 
-Create the client-side appearance channel subscription:
+Criando a inscrição do canal de aspectos no lado do cliente:
 
 ```js
 // app/javascript/channels/appearance_channel.js
 import consumer from "./consumer"
 
 consumer.subscriptions.create("AppearanceChannel", {
-  // Called once when the subscription is created.
+  // Chamado uma vez quando a assinatura é criada.
   initialized() {
     this.update = this.update.bind(this)
   },
 
-  // Called when the subscription is ready for use on the server.
+  // Chamado quando a assinatura está pronta para uso no servidor.
   connected() {
     this.install()
     this.update()
   },
 
-  // Called when the WebSocket connection is closed.
+  // Chamado quando a conexão WebSocket é fechada.
   disconnected() {
     this.uninstall()
   },
 
-  // Called when the subscription is rejected by the server.
+  // Chamado quando a assinatura é rejeitada pelo servidor.
   rejected() {
     this.uninstall()
   },
@@ -538,12 +539,12 @@ consumer.subscriptions.create("AppearanceChannel", {
   },
 
   appear() {
-    // Calls `AppearanceChannel#appear(data)` on the server.
+    // Chama `AppearanceChannel#appear(data)` no servidor.
     this.perform("appear", { appearing_on: this.appearingOn })
   },
 
   away() {
-    // Calls `AppearanceChannel#away` on the server.
+    // Chama `AppearanceChannel#away` no servidor.
     this.perform("away")
   },
 
@@ -572,44 +573,43 @@ consumer.subscriptions.create("AppearanceChannel", {
 })
 ```
 
-##### Client-Server Interaction
+##### Interação Cliente-Servidor
 
-1. **Client** connects to the **Server** via `App.cable =
-ActionCable.createConsumer("ws://cable.example.com")`. (`cable.js`). The
-**Server** identifies this connection by `current_user`.
+1. **Cliente** conecta-se ao **Servidor** via `App.cable =
+ActionCable.createConsumer("ws://cable.example.com")`. (`cable.js`). O
+**Servidor** identifica esta conexão por `current_user`.
 
-2. **Client** subscribes to the appearance channel via
+2. **Cliente** se inscreve no canal de apresentação via 
 `consumer.subscriptions.create({ channel: "AppearanceChannel" })`. (`appearance_channel.js`)
 
-3. **Server** recognizes a new subscription has been initiated for the
-appearance channel and runs its `subscribed` callback, calling the `appear`
-method on `current_user`. (`appearance_channel.rb`)
+3. **Servidor** reconhece que uma nova assinatura foi iniciada para o
+canal de aspectos e executa seu *callback* `subscribed`, chamando o método `appear` 
+em `current_user`. (`appearance_channel.rb`)
 
-4. **Client** recognizes that a subscription has been established and calls
-`connected` (`appearance_channel.js`) which in turn calls `install` and `appear`.
-`appear` calls `AppearanceChannel#appear(data)` on the server, and supplies a
-data hash of `{ appearing_on: this.appearingOn }`. This is
-possible because the server-side channel instance automatically exposes all
-public methods declared on the class (minus the callbacks), so that these can be
-reached as remote procedure calls via a subscription's `perform` method.
+4. **Cliente** reconhece que uma assinatura foi estabelecida e chama 
+`connected` (`appearance_channel.js`) que por sua vez chama `install` e `appear`. 
+`appear` chama `AppearanceChannel#appear(data)` no servidor e fornece um *hash* de 
+dados de `{ appearing_on: this.appearingOn }`. Isso é possível porque a instância 
+do canal do lado do servidor expõe automaticamente todos os métodos públicos 
+declarados na classe (menos os retornos de chamada), para que possam ser alcançados 
+como chamadas de procedimento remoto por meio do método `perform` de uma assinatura.
 
-5. **Server** receives the request for the `appear` action on the appearance
-channel for the connection identified by `current_user`
-(`appearance_channel.rb`). **Server** retrieves the data with the
-`:appearing_on` key from the data hash and sets it as the value for the `:on`
-key being passed to `current_user.appear`.
+5. **Servidor** recebe a solicitação da ação `appear` no canal de aspectos para a 
+conexão identificada por `current_user` (`appearance_channel.rb`). **Servidor** 
+recupera os dados com a chave `:appearing_on` do *hash* de dados e define como o 
+valor da chave `:on` sendo passada para `current_user.appear`.
 
-### Example 2: Receiving New Web Notifications
+### Exemplo 2: Recebendo novas notificações da web
 
-The appearance example was all about exposing server functionality to
-client-side invocation over the WebSocket connection. But the great thing
-about WebSockets is that it's a two-way street. So now let's show an example
-where the server invokes an action on the client.
+O exemplo de aspectos era todo sobre expor a funcionalidade do servidor ao 
+cliente pela conexão WebSocket. Mas o melhor do WebSockets é que ele é uma via 
+de mão dupla. Portanto, agora vamos mostrar um exemplo em que o servidor invoca 
+uma ação no cliente.
 
-This is a web notification channel that allows you to trigger client-side
-web notifications when you broadcast to the right streams:
+Este é um canal de notificação da web que permite acionar notificações da web 
+no lado do cliente quando você transmite para os *streams* certos:
 
-Create the server-side web notifications channel:
+Criando o canal de notificações da web do lado do servidor:
 
 ```ruby
 # app/channels/web_notifications_channel.rb
@@ -620,12 +620,12 @@ class WebNotificationsChannel < ApplicationCable::Channel
 end
 ```
 
-Create the client-side web notifications channel subscription:
+Criando a assinatura do canal de notificações da web no lado do cliente
 
 ```js
 // app/javascript/channels/web_notifications_channel.js
-// Client-side which assumes you've already requested
-// the right to send web notifications.
+// O lado do cliente assume que você já solicitou o direito 
+// de enviar notificações da web.
 import consumer from "./consumer"
 
 consumer.subscriptions.create("WebNotificationsChannel", {
@@ -635,11 +635,11 @@ consumer.subscriptions.create("WebNotificationsChannel", {
 })
 ```
 
-Broadcast content to a web notification channel instance from elsewhere in your
-application:
+Transmite o conteúdo para uma instância do canal de notificação da web de qualquer 
+lugar da aplicação:
 
 ```ruby
-# Somewhere in your app this is called, perhaps from a NewCommentJob
+# Em algum lugar da aplicação, isso é chamado, talvez de um NewCommentJob
 WebNotificationsChannel.broadcast_to(
   current_user,
   title: 'New things!',
@@ -647,21 +647,22 @@ WebNotificationsChannel.broadcast_to(
 )
 ```
 
-The `WebNotificationsChannel.broadcast_to` call places a message in the current
-subscription adapter's pubsub queue under a separate broadcasting name for each
-user. For a user with an ID of 1, the broadcasting name would be
+A chamada `WebNotificationsChannel.broadcast_to` coloca uma mensagem na fila pubsub 
+do adaptador de assinaturas atual sob um nome de transmissão separado para cada 
+usuário. Exemplo, para um usuário com ID 1, o nome da transmissão seria 
 `web_notifications:1`.
 
-The channel has been instructed to stream everything that arrives at
-`web_notifications:1` directly to the client by invoking the `received`
-callback. The data passed as argument is the hash sent as the second parameter
-to the server-side broadcast call, JSON encoded for the trip across the wire
-and unpacked for the data argument arriving as `received`.
+O canal foi instruído a transmitir tudo que chegar a `web_notifications:1` 
+diretamente para o cliente, invocando o callback `received`. Os dados passados 
+como argumento são o hash enviado como o segundo parâmetro para a chamada de 
+transmissão do lado do servidor, JSON codificado, para a transição, e também
+descompactado, para o argumento de dados que chega como `received`.
 
-### More Complete Examples
+### Exemplos Mais Completos
 
-See the [rails/actioncable-examples](https://github.com/rails/actioncable-examples)
-repository for a full example of how to set up Action Cable in a Rails app and adding channels.
+Veja o repositório [rails/actioncable-examples](https://github.com/rails/actioncable-examples)
+para um exemplo completo de como configurar o Action Cable em uma aplicação Rails, e
+adicionar canais.
 
 ## Configuração
 
