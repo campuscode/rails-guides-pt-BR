@@ -63,47 +63,37 @@ INFO: Action Caching has been removed from Rails 4. See the [actionpack-action_c
 
 ### Cache de Fragmento
 
-Os aplicativos da web dinâmicos geralmente criam páginas com uma variedade de componentes, nem
-todos com as mesmas características de armazenamento em cache. Quando diferentes partes da página
-precisam ser armazenadas em cache e expiradas separadamente, você pode usar o cache de fragmento.
+Os aplicativos da web dinâmicos geralmente criam páginas com uma variedade de componentes, nem todos com as mesmas características de armazenamento em cache. Quando diferentes partes da página precisam ser armazenadas em cache e expiradas separadamente, você pode usar o cache de fragmento.
 
-Fragment Caching allows a fragment of view logic to be wrapped in a cache block and served out of the cache store when the next request comes in.
+O cache de fragmento permite que um fragmento de lógica de uma *view* seja envolto em um bloco de cache e servido apartir do cache armazenado quando a próxima requisição chegar.
 
-For example, if you wanted to cache each product on a page, you could use this
-code:
+Por exemplo, se você quisesse armazenar em cache cada produto em uma página, poderia utilizar este código:
 
 ```html+erb
-<% @products.each do |product| %>
-  <% cache product do %>
-    <%= render product %>
+<% @produtos.each do |produto| %>
+  <% cache produto do %>
+    <%= render produto %>
   <% end %>
 <% end %>
 ```
 
-When your application receives its first request to this page, Rails will write
-a new cache entry with a unique key. A key looks something like this:
+Quando sua aplicação receber sua primeira requisição para esta página, Rails criará uma nova entrada de cache com uma chave exclusiva. Uma chave se parece com isto:
 
 ```
-views/products/index:bea67108094918eeba42cd4a6e786901/products/1
+views/produtos/index:bea67108094918eeba42cd4a6e786901/produtos/1
 ```
 
-The string of characters in the middle is a template tree digest. It is a hash
-digest computed based on the contents of the view fragment you are caching. If
-you change the view fragment (e.g., the HTML changes), the digest will change,
-expiring the existing file.
+A *string* no meio é um *checksum*. É o resultado de uma [função hash](https://pt.wikipedia.org/wiki/Fun%C3%A7%C3%A3o_hash) calculado com base no conteúdo do fragmento da *view* que você está armazenando em cache. Se você alterar o fragmento da *view* (ex., alterações de HTML), o resultado será alterado, expirando o arquivo existente.
 
-A cache version, derived from the product record, is stored in the cache entry.
-When the product is touched, the cache version changes, and any cached fragments
-that contain the previous version are ignored.
+Uma versão do produto é armazenada em cache. Quando o produto é tocado, a versão do cache muda e quaisquer fragmentos em cache que contenham a versão anterior são ignorados.
 
-TIP: Cache stores like Memcached will automatically delete old cache files.
+TIP: Sistemas de cache, como *Memcached*, excluirão automaticamente os arquivos de cache antigos.
 
-If you want to cache a fragment under certain conditions, you can use
-`cache_if` or `cache_unless`:
+Se quiser armazenar um fragmento em cache sob certas condições, você pode usar `cache_if` ou `cache_unless`:
 
 ```erb
-<% cache_if admin?, product do %>
-  <%= render product %>
+<% cache_if admin?, produto do %>
+  <%= render produto %>
 <% end %>
 ```
 
