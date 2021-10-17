@@ -54,10 +54,9 @@ número de vezes. Por exemplo, um consumidor pode se inscrever em várias salas 
 chat ao mesmo tempo. (E lembre-se que um usuário físico pode ter vários
 consumidores, um por aba/dispositivo aberto para sua conexão).
 
-__Pub/Sub_
----------------
+### _Pub/Sub_
 
-_[Pub/Sub](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)_, ou
+[_Pub/Sub_](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern), ou
 _Publish-Subscribe_, refere-se a um paradigma de fila de mensageria o qual os
 remetentes de uma informação (_publishers_) enviam dados à uma classe abstrata de
 destinatários (_subscribers_) sem especificar um destinatário individual.
@@ -468,7 +467,7 @@ A retransmissão vai ser recebida por todos os clientes conectados, _incluindo_ 
 
 As seguintes etapas de configuração são comuns em ambos os exemplos:
 
-  1. [Configurando conexão](#componentes-server-side-connections).
+  1. [Configurando conexão](#connections).
   2. [Configurando o canal pai](#configuracao-do-channel-pai).
   3. [Conectando-se ao consumidor](#conectar-o-consumidor).
 
