@@ -99,13 +99,13 @@ Se quiser armazenar um fragmento em cache sob certas condições, você pode usa
 
 #### Cache de Coleção
 
-O auxiliar `render` também pode armazenar em cache templates individuais renderizados para uma coleção. Ele pode até mesmo superar o exemplo anterior com `each` lendo todos os templates de cache de uma vez ao invés de um por um. Isso é feito passando `cached: true` ao renderizar a coleção:
+O *helper* `render` também pode armazenar em cache *templates* individuais renderizados para uma *collection*. Ele pode até mesmo superar o exemplo anterior com `each` lendo todos os *templates* de cache de uma vez ao invés de um por um. Isso é feito passando `cached: true` ao renderizar a coleção:
 
 ```html+erb
 <%= render partial: 'produtos/produto', collection: @produtos, cached: true %>
 ```
 
-Todos os templates que já estão em cache serão buscados de uma vez com velocidade muito maior. Além disso, aqueles que ainda não estão em cache serão adicionados e utilizados na próxima renderização.
+Todos os *templates* que já estão em cache serão buscados de uma vez com velocidade muito maior. Além disso, aqueles que ainda não estão em cache serão adicionados e utilizados na próxima renderização.
 
 ### Russian Doll Caching
 
@@ -145,23 +145,23 @@ end
 
 Com `touch` definido como `true`, qualquer ação que altere `updated_at` para um registro de jogo irá também alterá-lo para o produto associado, expirando assim o cache.
 
-### Shared Partial Caching
+### Cache de *Parcial* Compartilhada
 
-It is possible to share partials and associated caching between files with different mime types. For example shared partial caching allows template writers to share a partial between HTML and JavaScript files. When templates are collected in the template resolver file paths they only include the template language extension and not the mime type. Because of this templates can be used for multiple mime types. Both HTML and JavaScript requests will respond to the following code:
+É possível compartilhar *partials* e cache associado entre arquivos com diferentes tipos de *mime*. O cache de *parcial* compartilhada, por exemplo, permite que os criadores de *templates* compartilhem uma *parcial* entre arquivos HTML e JavaScript. Quando os *templates* são coletados no *template* resolvedor de caminhos de arquivos, eles incluem apenas a extensão de idioma do *template* e não o tipo *mime*. Por isso os modelos podem ser usados para vários tipos *mime*. As requisições HTML e JavaScript responderão ao código seguinte:
 
 ```ruby
 render(partial: 'hotels/hotel', collection: @hotels, cached: true)
 ```
 
-Will load a file named `hotels/hotel.erb`.
+Será carregado o arquivo `hotels/hotel.erb`.
 
-Another option is to include the full filename of the partial to render.
+Outra opção é incluir o caminho completo do arquivo *partial* a ser renderizado.
 
 ```ruby
 render(partial: 'hotels/hotel.html.erb', collection: @hotels, cached: true)
 ```
 
-Will load a file named `hotels/hotel.html.erb` in any file mime type, for example you could include this partial in a JavaScript file.
+Será carregado o arquivo `hotels/hotel.html.erb` em qualquer tipo de arquivo *mime*. Você pode incluir este *parcial* em um arquivo JavaScript, por exemplo.
 
 ### Managing dependencies
 
