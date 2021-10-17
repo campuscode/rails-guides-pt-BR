@@ -200,34 +200,29 @@ to:
 render partial: "documentos/documento", collection: @projeto.documentos.where(published: true)
 ```
 
-#### Explicit dependencies
+#### Dependências explícitas
 
-Sometimes you'll have template dependencies that can't be derived at all. This
-is typically the case when rendering happens in helpers. Here's an example:
+Às vezes você terá dependências de *templates* que não podem ser derivadas de forma alguma. Normalmente, esse é o caso quando a renderização ocorre nos *helpers*. Aqui está um exemplo:
 
 ```html+erb
-<%= render_sortable_todolists @projeto.todolistos %>
+<%= render_sortable_todolists @projeto.todolists %>
 ```
 
-You'll need to use a special comment format to call those out:
+Você precisará usar um formato especial de comentário para executá-los:
 
 ```html+erb
 <%# Template Dependency: todolists/todolist %>
-<%= render_sortable_todolists @projeto.todolistos %>
+<%= render_sortable_todolists @projeto.todolists %>
 ```
 
-In some cases, like a single table inheritance setup, you might have a bunch of
-explicit dependencies. Instead of writing every template out, you can use a
-wildcard to match any template in a directory:
+Em alguns casos, como uma configuração de herança de tabela única, você pode ter muitas dependências explícitas. Em vez de escrever todos os *templates*, você pode usar um caractere curinga para corresponder a qualquer *template* em um diretório:
 
 ```html+erb
 <%# Template Dependency: events/* %>
-<%= render_categorizable_events @person.events %>
+<%= render_categorizable_events @pessoa.events %>
 ```
 
-As for collection caching, if the partial template doesn't start with a clean
-cache call, you can still benefit from collection caching by adding a special
-comment format anywhere in the template, like:
+Quanto ao cache de *collection*, se o *template parcial* não começar com uma execução de cache limpo, você ainda pode se beneficiar do cache de *collection* adicionando um formato especial de comentário em qualquer lugar do *template*, assim:
 
 ```html+erb
 <%# Template Collection: notification %>
