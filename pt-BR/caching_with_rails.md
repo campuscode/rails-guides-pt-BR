@@ -65,7 +65,7 @@ INFO: Action Caching has been removed from Rails 4. See the [actionpack-action_c
 
 Os aplicativos da web dinâmicos geralmente criam páginas com uma variedade de componentes, nem todos com as mesmas características de armazenamento em cache. Quando diferentes partes da página precisam ser armazenadas em cache e expiradas separadamente, você pode usar o cache de fragmento.
 
-O cache de fragmento permite que um fragmento de lógica de uma *view* seja envolto em um bloco de cache e servido apartir do cache armazenado quando a próxima requisição chegar.
+O cache de fragmento permite que um fragmento de lógica de uma *view* seja envolto em um bloco de cache e servido a partir do cache armazenado quando a próxima requisição chegar.
 
 Por exemplo, se você quisesse armazenar em cache cada produto em uma página, poderia utilizar este código:
 
@@ -97,19 +97,15 @@ Se quiser armazenar um fragmento em cache sob certas condições, você pode usa
 <% end %>
 ```
 
-#### Collection caching
+#### Cache de Coleção
 
-The `render` helper can also cache individual templates rendered for a collection.
-It can even one up the previous example with `each` by reading all cache
-templates at once instead of one by one. This is done by passing `cached: true` when rendering the collection:
+O auxiliar `render` também pode armazenar em cache templates individuais renderizados para uma coleção. Ele pode até mesmo superar o exemplo anterior com `each` lendo todos os templates de cache de uma vez ao invés de um por um. Isso é feito passando `cached: true` ao renderizar a coleção:
 
 ```html+erb
-<%= render partial: 'products/product', collection: @products, cached: true %>
+<%= render partial: 'produtos/produto', collection: @produtos, cached: true %>
 ```
 
-All cached templates from previous renders will be fetched at once with much
-greater speed. Additionally, the templates that haven't yet been cached will be
-written to cache and multi fetched on the next render.
+Todos os templates que já estão em cache serão buscados de uma vez com velocidade muito maior. Além disso, aqueles que ainda não estão em cache serão adicionados e utilizados na próxima renderização.
 
 ### Russian Doll Caching
 
