@@ -275,7 +275,7 @@ class EmailContact
 
   def deliver
     if valid?
-      # encaminha email
+      # envia email
     end
   end
 end
