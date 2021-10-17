@@ -1,7 +1,7 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Caching with Rails: An Overview
+Cache com Rails: Uma Visão Geral
 ===============================
 
 This guide is an introduction to speeding up your Rails application with caching.
@@ -61,11 +61,11 @@ Page Caching cannot be used for actions that have before filters - for example, 
 
 INFO: Action Caching has been removed from Rails 4. See the [actionpack-action_caching gem](https://github.com/rails/actionpack-action_caching). See [DHH's key-based cache expiration overview](https://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works) for the newly-preferred method.
 
-### Fragment Caching
+### Cache de Fragmento
 
-Dynamic web applications usually build pages with a variety of components not
-all of which have the same caching characteristics. When different parts of the
-page need to be cached and expired separately you can use Fragment Caching.
+Os aplicativos da web dinâmicos geralmente criam páginas com uma variedade de componentes, nem
+todos com as mesmas características de armazenamento em cache. Quando diferentes partes da página
+precisam ser armazenadas em cache e expiradas separadamente, você pode usar o cache de fragmento.
 
 Fragment Caching allows a fragment of view logic to be wrapped in a cache block and served out of the cache store when the next request comes in.
 
