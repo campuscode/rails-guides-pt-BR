@@ -6,7 +6,7 @@ Action View Helpers
 
 Depois de ler este guia, você saberá:
 
-* Como formatar datas, strings e números
+* Como formatar datas, *strings* e números
 * Como vincular imagens, vídeos, folhas de estilo, etc ...
 * Como deixar o conteúdo limpo
 * Como posicionar o conteúdo
