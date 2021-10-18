@@ -231,7 +231,7 @@ Por exemplo, digamos que temos um *layout* padrão da aplicação, mas também u
 ```html+erb
 <html>
   <head>
-    <title>Bem vindo!</title>
+    <title>Boas vindas!</title>
     <%= yield :special_script %>
   </head>
   <body>
