@@ -471,7 +471,7 @@ end
 Dessa maneira, o modelo vai ficar disponível em <http://localhost:3000/rails/mailers/user_mailer/welcome_email>.
 
 Se você mudar algo em `app/views/user_mailer/welcome_email.html.erb` ou no próprio *mailer*,
-ele vai automaticamente recarregar e renderizá-lo, para que você veja as mudanças instantaneamente.
+ele será automaticamente recarregado e renderizado, para que você veja as mudanças instantaneamente.
 Uma lista das pré-visualizações também ficam disponíveis em <http://localhost:3000/rails/mailers>.
 
 Por padrão, essas classes de pré-visualizações ficam em `test/mailers/previews`. Isso pode ser configurado usando a opção `preview_path`. Por exemplo, se você quiser alterar para `lib/mailer_previews`, você pode configurar isso em `config/application.rb`:
