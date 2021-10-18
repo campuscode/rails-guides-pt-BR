@@ -348,7 +348,7 @@ O *layout* `box` simplesmente encapsula a *partial* `_article` em uma `div`:
 </div>
 ```
 
-Note que o *layout* de *partial* tem acesso a variável local `article` que foi passada no `render`. Todavia, diferentemente de *layouts* de aplicação, *layouts* de *partial* possuem o sublinhado no início.
+Note que o *layout* de *partial* tem acesso a variável local `article` que foi passada no `render`. Todavia, diferentemente de *layouts* de aplicação, *layouts* de *partial* possuem o *underscore* `_` no início.
 
 Você também pode renderizar um bloco de código dentro do *layout* de *partial* ao invés de usar `yield`. Por exemplo, se não tivessemos a *partial* `_article`, poderiamos ter feito:
 
