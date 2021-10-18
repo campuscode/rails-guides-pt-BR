@@ -235,7 +235,7 @@ Por exemplo, digamos que temos um *layout* padrão da aplicação, mas também u
     <%= yield :special_script %>
   </head>
   <body>
-    <p>Bem vindo! A data e hora são <%= Time.now %></p>
+    <p>Boas vindas! A data e hora são <%= Time.now %></p>
   </body>
 </html>
 ```
