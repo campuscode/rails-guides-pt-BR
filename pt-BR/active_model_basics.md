@@ -176,7 +176,7 @@ irb> person.changes
 
 #### Atributos baseados em métodos de acesso
 
-Acompanhe se o atributo específico foi alterado ou não.
+Rastreia se o atributo específico foi alterado ou não.
 
 ```irb
 irb> person.first_name
@@ -187,7 +187,7 @@ irb> person.first_name_changed?
 => true
 ```
 
-Track the previous value of the attribute.
+Rastreia o valor anterior do atributo.
 
 ```irb
 # attr_name_was accessor
@@ -195,8 +195,8 @@ irb> person.first_name_was
 => nil
 ```
 
-Track both previous and current value of the changed attribute. Returns an array
-if changed, otherwise returns nil.
+Rastreia o valor anterior e atual do atributo alterado. Retorna um *array* se
+alterado; caso contrário, retorna `nil`.
 
 ```irb
 # attr_name_change
