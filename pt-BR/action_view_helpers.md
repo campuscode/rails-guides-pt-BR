@@ -100,7 +100,7 @@ javascript_url "common"
 
 #### stylesheet_link_tag
 
-Retorna uma tag com link de folha de estilo para as fontes especificadas como argumentos. Se você não especificar uma extensão, `.css` será anexado automaticamente.
+Retorna uma *tag* com *link* de folha de estilo para as fontes especificadas como argumentos. Se você não especificar uma extensão, `.css` será anexado automaticamente.
 
 ```ruby
 stylesheet_link_tag "application"
