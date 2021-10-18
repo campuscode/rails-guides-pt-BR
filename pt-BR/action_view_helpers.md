@@ -199,7 +199,7 @@ Um método para armazenar em *cache* fragmentos de uma *view*, em vez de uma aç
 
 #### capture
 
-O método `capture` permite que você extraia parte de um *template* em uma *variável*. Você pode então usar essa *variável* em qualquer lugar nos *templates* ou *layout*.
+O método `capture` permite que você extraia parte de um *template* em uma variável. Você pode então usar essa variável em qualquer lugar nos *templates* ou *layout*.
 
 ```html+erb
 <% @greeting = capture do %>
