@@ -114,7 +114,7 @@ As classes que conectam ao banco primário e/ou sua réplica podem herdar de `Ap
 class Person < ApplicationRecord
 end
 ```
-Por padrão, o Rails espera os *roles* de escrita e leitura, para o banco primário e sua réplica, respectivamente. Se você tiver um sistema legado, é possível que existam *roles* que não deseja mudar. Neste caso, é possível definir um novo nome de *role* nas configurações da aplicacão.
+Por padrão, o Rails espera os *roles* de escrita e leitura, para o banco primário e sua réplica, respectivamente. Se você tiver um sistema legado, é possível que existam *roles* que não deseja mudar. Neste caso, é possível definir um novo nome de *role* nas configurações da aplicação.
 
 ```ruby
 config.active_record.writing_role = :default
@@ -157,7 +157,7 @@ rails db:schema:load:primary             # Importa um arquivo de esquema (db/sch
 Executar um comando como `bin/rails db:create` criará tanto o banco primário quanto o banco *animals*.
 Observe que não existe um comando para criar os usuários. Estes precisam ser criados manualmente, para dar suporte aos usuários somente leitura das réplicas. Se deseja criar somente o banco *animals*, basta executar `bin/rails db:create:animals`.
 
-## Generators e *Migrações*
+## *Generators* e *Migrations*
 
 Migrações para múltiplos bancos devem ficar nos seus próprios diretórios, prefixados pelo nome da chave do banco especificado nas configurações.
 
@@ -201,6 +201,7 @@ Se você já possui uma classe abstrata e seu nome difere da em `AnimalsRecord`,
 ```bash
 $ bin/rails generate scaffold Dog name:string --database animals --parent Animals::Record
 ```
+
 Isto fará com que a geração de `AnimalsRecord` seja ignorada, visto que você indicou para o Rails que irá usar uma outra classe pai.
 
 ## Habilitando a troca automática de conexão
