@@ -931,10 +931,10 @@ Você pode chamar `instance_variables` para listar todas as variáveis de instâ
 
 Uma vez que `web-console` avalia código Ruby simples remotamente no servidor, não tente usar em produção.
 
-Debugging de Vazamentos de Memórias
+Debug de Vazamentos de Memórias
 ----------------------
 
-Um aplicativo Ruby (on Rails ou não) pode vazar memória - tanto no código Ruby
+Um aplicativo Ruby (on Rails ou não) pode vazar memória (*memory leak*) - tanto no código Ruby
 quanto no nível de código C.
 
 Nesta seção, você aprenderá como encontrar e corrigir esses vazamentos usando ferramentas
@@ -954,20 +954,9 @@ Para obter mais informações sobre como instalar o Valgrind e usar com Ruby, co
 [Valgrind and Ruby](https://blog.evanweaver.com/2008/02/05/valgrind-and-ruby/)
 por Evan Weaver.
 
+
 ### Encontrando um vazamento de memória
-Há um excelente artigo sobre detecção e correção de vazamentos de memória no Derailed, [que você pode ler aqui](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
-
-Plugins para *Debugging*
----------------------
-
-Existem alguns plugins Rails  para te ajudar a procurar erros e *debugar* a aplicação. Aqui está uma lista de plugins uteis para *debugging*:
-
-* [Query Trace](https://github.com/ruckus/active-record-query-trace/tree/master) AAdiciona rastreamento de origem de consulta aos seus logs.
-* [Exception Notifier](https://github.com/smartinez87/exception_notification/tree/master)
-Fornece um objeto mailer e um conjunto padrão de templates para enviar notificações por email quando ocorrerem erros em um aplicativo Rails.
-* [Better Errors](https://github.com/charliesome/better_errors) Substitui a página de erro padrão do Rails por uma nova contendo mais informações contextuais, como código-fonte e inspeção de variáveis.
-* [RailsPanel](https://github.com/dejan/rails_panel) extensão do Chrome para desenvolvimento Rails que irá encerrar seu acompanhamento de development.log. Tenha todas as informações sobre as solicitações do seu aplicativo Rails no navegador - no painel Ferramentas do desenvolvedor. Fornece informações sobre db / renderização / tempos totais, lista de parâmetros, visualizações renderizadas e muito mais.
-* [Pry](https://github.com/pry/pry) Uma alternativa IRB e console de desenvolvedor em tempo de execução.
+Há um excelente artigo (em inglês) sobre detecção e correção de vazamentos de memória no Derailed, [que você pode ler aqui](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
 
 Plugins para *Debug*
 ---------------------
