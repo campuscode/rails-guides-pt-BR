@@ -879,27 +879,24 @@ O `byebug` possui algumas opções disponíveis para ajustar seu comportamento:
   savefile       -- File where settings are saved to. Default: ~/.byebug_save
 ```
 
-TIP: You can save these settings in an `.byebugrc` file in your home directory.
-The debugger reads these global settings when it starts. For example:
+TIP: Você pode salvar essas configurações em um arquivo `.byebugrc` em seu diretório home.
+O *debugger* lê essas configurações globais quando inicializa. Por exemplo:
 
 ```
 set callstyle short
 set listsize 25
 ```
 
-Debugging with the `web-console` gem
+Debug com a gem `web-console`
 ------------------------------------
 
-Web Console is a bit like `byebug`, but it runs in the browser. In any page you
-are developing, you can request a console in the context of a view or a
-controller. The console would be rendered next to your HTML content.
+A *gem* Web Console é um pouco semelhante à *gem* `byebug`, porém é executada no navegador. Em qualquer página que você esteja desenvolvendo, você pode solicitar um `console` no contexto da *view* ou do *controller*. O *console* deve ser renderizado próximo ao conteúdo HTML.
 
 ### Console
 
-Inside any controller action or view, you can invoke the console by
-calling the `console` method.
+Dentro de qualquer *controller action* ou *view*, você pode utilizar o console através da chamada do método `console`.
 
-For example, in a controller:
+Por exemplo, em um *controller*:
 
 ```ruby
 class PostsController < ApplicationController
@@ -910,65 +907,67 @@ class PostsController < ApplicationController
 end
 ```
 
-Or in a view:
+Ou em uma *view*:
 
 ```html+erb
 <% console %>
-
 <h2>New Post</h2>
 ```
 
-This will render a console inside your view. You don't need to care about the
-location of the `console` call; it won't be rendered on the spot of its
-invocation but next to your HTML content.
+Isso vai renderizar um *console* dentro da view. Você não precisa se preocupar com a localização da chamada do método `console`; não será renderizado próximo ao elemento em que foi invocado, mas sim próximo ao seu conteúdo HTML.
 
-The console executes pure Ruby code: You can define and instantiate
-custom classes, create new models, and inspect variables.
+O *console* executa código Ruby nativo: Você pode definir e instanciar classes personalizadas, criar novos *models*, e inspecionar variáveis.
 
-NOTE: Only one console can be rendered per request. Otherwise `web-console`
-will raise an error on the second `console` invocation.
+NOTE: Somente um *console* pode ser renderizado por *request*. De outra maneira `web-console` lança um erro na segunda invocação do método `console`.
 
-### Inspecting Variables
+### Inspecionando Variáveis
 
-You can invoke `instance_variables` to list all the instance variables
-available in your context. If you want to list all the local variables, you can
-do that with `local_variables`.
+Você pode chamar `instance_variables` para listar todas as variáveis de instância disponíveis em seu contexto. Se você deseja listar todas as variáveis locais, você pode fazer isso usando `local_variables`.
 
-### Settings
+### Configurações
 
-* `config.web_console.allowed_ips`: Authorized list of IPv4 or IPv6
-addresses and networks (defaults: `127.0.0.1/8, ::1`).
-* `config.web_console.whiny_requests`: Log a message when a console rendering
-is prevented (defaults: `true`).
+* `config.web_console.allowed_ips`: Lista autorizada de endereços e redes IPv4 ou IPv6 (padrões: `127.0.0.1/8, ::1`).
+* `config.web_console.whiny_requests`: Registra uma mensagem quando a renderização do *console* é impedida (padrões: `true`).
 
-Since `web-console` evaluates plain Ruby code remotely on the server, don't try
-to use it in production.
+Uma vez que `web-console` avalia código Ruby simples remotamente no servidor, não tente usar em produção.
 
-Debugging Memory Leaks
+Debugging de Vazamentos de Memórias
 ----------------------
 
-A Ruby application (on Rails or not), can leak memory — either in the Ruby code
-or at the C code level.
+Um aplicativo Ruby (on Rails ou não) pode vazar memória - tanto no código Ruby
+quanto no nível de código C.
 
-In this section, you will learn how to find and fix such leaks by using tools
-such as Valgrind.
+Nesta seção, você aprenderá como encontrar e corrigir esses vazamentos usando ferramentas
+tais como o Valgrind.
 
 ### Valgrind
 
-[Valgrind](http://valgrind.org/) is an application for detecting C-based memory
-leaks and race conditions.
+[Valgrind](http://valgrind.org/) é um aplicativo para detectar vazamentos de memória baseados em C
+e condições de corrida.
 
-There are Valgrind tools that can automatically detect many memory management
-and threading bugs, and profile your programs in detail. For example, if a C
-extension in the interpreter calls `malloc()` but doesn't properly call
-`free()`, this memory won't be available until the app terminates.
+Existem ferramentas Valgrind que podem detectar automaticamente muitos bugs de threading 
+e gerenciamento de memória, e criar perfis de seus programas em detalhes. Por exemplo, se uma extensão 
+C no intérprete chama `malloc()` mas não chama corretamente 
+`free()`, essa memória não estará disponível até que o aplicativo seja encerrado.
 
-For further information on how to install Valgrind and use with Ruby, refer to
+Para obter mais informações sobre como instalar o Valgrind e usar com Ruby, consulte
 [Valgrind and Ruby](https://blog.evanweaver.com/2008/02/05/valgrind-and-ruby/)
-by Evan Weaver.
+por Evan Weaver.
 
-### Find a Memory Leak
-There is an excellent article about detecting and fixing memory leaks at Derailed, [which you can read here](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
+### Encontrando um vazamento de memória
+Há um excelente artigo sobre detecção e correção de vazamentos de memória no Derailed, [que você pode ler aqui](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
+
+Plugins para *Debugging*
+---------------------
+
+Existem alguns plugins Rails  para te ajudar a procurar erros e *debugar* a aplicação. Aqui está uma lista de plugins uteis para *debugging*:
+
+* [Query Trace](https://github.com/ruckus/active-record-query-trace/tree/master) AAdiciona rastreamento de origem de consulta aos seus logs.
+* [Exception Notifier](https://github.com/smartinez87/exception_notification/tree/master)
+Fornece um objeto mailer e um conjunto padrão de templates para enviar notificações por email quando ocorrerem erros em um aplicativo Rails.
+* [Better Errors](https://github.com/charliesome/better_errors) Substitui a página de erro padrão do Rails por uma nova contendo mais informações contextuais, como código-fonte e inspeção de variáveis.
+* [RailsPanel](https://github.com/dejan/rails_panel) extensão do Chrome para desenvolvimento Rails que irá encerrar seu acompanhamento de development.log. Tenha todas as informações sobre as solicitações do seu aplicativo Rails no navegador - no painel Ferramentas do desenvolvedor. Fornece informações sobre db / renderização / tempos totais, lista de parâmetros, visualizações renderizadas e muito mais.
+* [Pry](https://github.com/pry/pry) Uma alternativa IRB e console de desenvolvedor em tempo de execução.
 
 Plugins para *Debug*
 ---------------------
