@@ -128,7 +128,7 @@ stylesheet_url "application"
 
 #### atom_feed
 
-This helper makes building an Atom feed easy. Here's a full usage example:
+Este *helper* facilita a construção de um feed *Atom*. Aqui está um exemplo completo de uso:
 
 **config/routes.rb**
 
@@ -173,7 +173,7 @@ end
 
 #### benchmark
 
-Allows you to measure the execution time of a block in a template and records the result to the log. Wrap this block around expensive operations or possible bottlenecks to get a time reading for the operation.
+Permite medir o tempo de execução de um bloco em um *template* e registra o resultado no log. Para tal, envolva este bloco em torno de operações custosas, ou com possíveis gargalos, para obter o tempo de leitura da operação.
 
 ```html+erb
 <% benchmark "Process data files" do %>
@@ -181,13 +181,13 @@ Allows you to measure the execution time of a block in a template and records th
 <% end %>
 ```
 
-This would add something like "Process data files (0.34523)" to the log, which you can then use to compare timings when optimizing your code.
+Isso adicionaria algo como "Process data files (0.34523)" ao log, que você pode usar para comparar tempos ao otimizar seu código.
 
 ### CacheHelper
 
 #### cache
 
-A method for caching fragments of a view rather than an entire action or page. This technique is useful for caching pieces like menus, lists of news topics, static HTML fragments, and so on. This method takes a block that contains the content you wish to cache. See `AbstractController::Caching::Fragments` for more information.
+Um método para armazenar em *cache* fragmentos de uma *view*, em vez de uma ação ou página inteira. Essa técnica é útil para armazenar componentes como: menus, listas de tópicos de notícias, fragmentos de *HTML* estáticos e assim por diante. Este método pega um bloco que contém o conteúdo que você deseja armazenar em *cache*. Veja `AbstractController::Caching::Fragments` para mais informações.
 
 ```erb
 <% cache do %>
@@ -199,7 +199,7 @@ A method for caching fragments of a view rather than an entire action or page. T
 
 #### capture
 
-The `capture` method allows you to extract part of a template into a variable. You can then use this variable anywhere in your templates or layout.
+O método `capture` permite que você extraia parte de um *template* em uma variável. Você pode então usar essa variável em qualquer lugar nos *templates* ou *layout*.
 
 ```html+erb
 <% @greeting = capture do %>
@@ -207,7 +207,7 @@ The `capture` method allows you to extract part of a template into a variable. Y
 <% end %>
 ```
 
-The captured variable can then be used anywhere else.
+A variável capturada pode então ser usada em qualquer outro lugar.
 
 ```html+erb
 <html>
@@ -222,20 +222,20 @@ The captured variable can then be used anywhere else.
 
 #### content_for
 
-Calling `content_for` stores a block of markup in an identifier for later use. You can make subsequent calls to the stored content in other templates or the layout by passing the identifier as an argument to `yield`.
+Chamar `content_for` permite armazena um bloco de marcação em um *identificador* para uso posterior. Você pode fazer chamadas subsequentes para o conteúdo armazenado em outros *templates* ou no *layout*, passando o identificador como um argumento para `yield`.
 
-For example, let's say we have a standard application layout, but also a special page that requires certain JavaScript that the rest of the site doesn't need. We can use `content_for` to include this JavaScript on our special page without fattening up the rest of the site.
+Por exemplo, digamos que temos um *layout* padrão da aplicação, mas também uma página especial que requer determinado código *JavaScript* que o resto do site não precisa. Podemos usar `content_for` para incluir este código *JavaScript* em nossa página especial sem inflar o resto do site.
 
 **app/views/layouts/application.html.erb**
 
 ```html+erb
 <html>
   <head>
-    <title>Welcome!</title>
+    <title>Boas vindas!</title>
     <%= yield :special_script %>
   </head>
   <body>
-    <p>Welcome! The date and time is <%= Time.now %></p>
+    <p>Boas vindas! A data e hora são <%= Time.now %></p>
   </body>
 </html>
 ```
@@ -243,10 +243,10 @@ For example, let's say we have a standard application layout, but also a special
 **app/views/articles/special.html.erb**
 
 ```html+erb
-<p>This is a special page.</p>
+<p>Esta é a página especial.</p>
 
 <% content_for :special_script do %>
-  <script>alert('Hello!')</script>
+  <script>alert('Ola!')</script>
 <% end %>
 ```
 
@@ -254,21 +254,21 @@ For example, let's say we have a standard application layout, but also a special
 
 #### distance_of_time_in_words
 
-Reports the approximate distance in time between two Time or Date objects or integers as seconds. Set `include_seconds` to true if you want more detailed approximations.
+Informa a distância aproximada de tempo entre dois objetos *Time*, *Date* ou *integers* como segundos. Defina `include_seconds` como *true* se você quiser aproximações mais detalhadas.
 
 ```ruby
 distance_of_time_in_words(Time.now, Time.now + 15.seconds)
-# => less than a minute
+# => menos de um minuto
 distance_of_time_in_words(Time.now, Time.now + 15.seconds, include_seconds: true)
-# => less than 20 seconds
+# => menos de 20 segundos
 ```
 
 #### time_ago_in_words
 
-Like `distance_of_time_in_words`, but where `to_time` is fixed to `Time.now`.
+Como `distance_of_time_in_words`, mas onde `to_time` é fixado em `Time.now`.
 
 ```ruby
-time_ago_in_words(3.minutes.from_now) # => 3 minutes
+time_ago_in_words(3.minutes.from_now) # => 3 minutos
 ```
 
 ### DebugHelper
