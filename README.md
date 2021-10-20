@@ -17,40 +17,11 @@ Você pode ver o conteúdo já traduzido em [guiarails.com.br](https://guiarails
 Se você tem conhecimento em Rails ou ainda está aprendendo,
 nossas boas-vindas!
 
-Abaixo deixamos alguns passos sobre como fazer contribuições:
+Temos um Guia sobre como contribuir com o projeto que você pode acessar
+[aqui](https://github.com/campuscode/rails-guides-pt-BR/blob/main/CONTRIBUTING.md)
 
-1. Na pasta pt-BR/, que está na raiz do projeto, verifique nos arquivos `.md`
-(criados usando Markdown) se a página que você gostaria de traduzir tem textos
-em inglês. Vamos usar de exemplo a página `active_record_basics.md`.
-
-1. Verifique no repositório principal se já existe uma issue para aquela página.
-1. Se a issue não existir abra uma para o capítulo ou capítulos que deseja traduzir, por exemplo:
-
-    - A página Active Record Basics apresenta os capítulos: *What is Active
-      Record*, *Convention over Configuration in Active Record*,
-      *Creating Active Record Models*, etc.
-
-    - Recomendamos abrir uma issue por capítulo e não focar na tradução da
-      página toda.
-    - Temos um template de issue que pode ser utilizado, para criar a issue.
-
-1. Faça um Fork do projeto e clone para a sua máquina.
-
-1. Ao iniciar a tradução, crie um Branch referente à sua tradução e abra um Pull
-Request ([link da documentação](https://help.github.com/en/articles/creating-a-pull-request))
-com a palavra WIP (Work in Progress) antes do título ou em Draft. Assim todos
-podem saber que você iniciou uma tradução. Lembre-se de marcar no texto do
-Pull Request as issues que planeja traduzir
-(campuscode/rails-guides-pt-BR#numero-da-issue).
-
-1. Consulte o [Manual de Tradução](https://github.com/campuscode/rails-guides-pt-BR/blob/master/TRANSLATION_MANUAL.md)
-no qual apresentamos os padrões adotados para esse projeto.
-
-1. Faça a tradução do capítulo fazendo commits durante o processo. Ao final,
-retire o WIP do Pull Request (ou o Draft) para que todos saibam que você
-terminou a tradução.
-
-1. Pronto! Agora é só esperar a comunidade avaliar a tradução.
+Caso tenha dúvidas estamos [aqui para
+ajudar](https://github.com/campuscode/rails-guides-pt-BR/discussions)!
 
 ## Visualizando o conteúdo traduzido
 
