@@ -1,34 +1,39 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Securing Rails Applications
+Segurança em Aplicações Rails
 ===========================
 
-This manual describes common security problems in web applications and how to avoid them with Rails.
+Este manual descreve os problemas comuns de segurança em aplicações web e como
+evitá-los com o Rails.
 
-After reading this guide, you will know:
+Depois de ler este guia, você saberá:
 
-* All countermeasures _that are highlighted_.
-* The concept of sessions in Rails, what to put in there and popular attack methods.
-* How just visiting a site can be a security problem (with CSRF).
-* What you have to pay attention to when working with files or providing an administration interface.
-* How to manage users: Logging in and out and attack methods on all layers.
-* And the most popular injection attack methods.
+* Todas as medidas preventivas **que estão destacadas**.
+* O conceito de sessões no Rails, o que colocar lá e métodos populares de
+  ataques.
+* Como apenas visitar um site pode ser um problema de segurança (com
+  [CSRF](https://pt.wikipedia.org/wiki/Cross-site_request_forgery))
+* O que você deve prestar atenção ao trabalhar com arquivos ou fornecer uma
+  interface de administração.
+* Como gerenciar usuários: login e logout e métodos de ataques em todas as
+  camadas.
+* E os métodos de ataque de injeção (_injection attack_) mais populares.
 
 --------------------------------------------------------------------------------
 
-Introduction
+Introdução
 ------------
 
-Web application frameworks are made to help developers build web applications. Some of them also help you with securing the web application. In fact one framework is not more secure than another: If you use it correctly, you will be able to build secure apps with many frameworks. Ruby on Rails has some clever helper methods, for example against SQL injection, so that this is hardly a problem.
+Os [_frameworks_](https://pt.wikipedia.org/wiki/Framework) de aplicações web são feitos para ajudar as pessoas desenvolvedoras a construir aplicações web. Alguns deles também ajudam a proteger a aplicação. Na verdade, um _framework_ não é mais seguro do que o outro: se você utilizá-lo corretamente, poderá construir aplicações seguras com muitos _frameworks_. O Ruby on Rails tem alguns métodos auxiliares inteligentes, por exemplo, contra _SQL injection_ (injeção de SQL), de modo que isso dificilmente será um problema.
 
-In general there is no such thing as plug-n-play security. Security depends on the people using the framework, and sometimes on the development method. And it depends on all layers of a web application environment: The back-end storage, the web server, and the web application itself (and possibly other layers or applications).
+Em geral, não existe segurança [_plug-and-play_ (ligar e usar)](https://pt.wikipedia.org/wiki/Plug_and_Play). A segurança depende das pessoas que utilizam o _framework_ e, às vezes, do método de desenvolvimento. E depende também de todas as camadas de um ambiente de aplicação web: o armazenamento de _back-end_, o servidor web e a própria aplicação web em si (e possivelmente outras camadas ou aplicações).
 
-The Gartner Group, however, estimates that 75% of attacks are at the web application layer, and found out "that out of 300 audited sites, 97% are vulnerable to attack". This is because web applications are relatively easy to attack, as they are simple to understand and manipulate, even by the lay person.
+A Gartner Group, no entanto, estima que 75% dos ataques ocorrem na camada de aplicação web e descobriu que "dentre 300 sites auditados, 97% estão vulneráveis a ataques". Isso ocorre porque as aplicações web são relativamente fáceis de atacar, pois são simples de entender e manipular, mesmo por pessoas leigas.
 
-The threats against web applications include user account hijacking, bypass of access control, reading or modifying sensitive data, or presenting fraudulent content. Or an attacker might be able to install a Trojan horse program or unsolicited e-mail sending software, aim at financial enrichment, or cause brand name damage by modifying company resources. In order to prevent attacks, minimize their impact and remove points of attack, first of all, you have to fully understand the attack methods in order to find the correct countermeasures. That is what this guide aims at.
+As ameaças contra aplicações web incluem sequestro de contas de usuário, desvio de controle de acesso, leitura ou modificação de dados confidenciais ou apresentação de conteúdo fraudulento. Uma pessoa invasora pode ser capaz de instalar um programa malicioso como [cavalo de tróia](https://pt.wikipedia.org/wiki/Cavalo_de_troia_(computa%C3%A7%C3%A3o)) ou algum software de envio de e-mail não solicitado, visando o enriquecimento financeiro ou causar danos à marca modificando os recursos da empresa. Para prevenir ataques, minimizar seu impacto e remover os pontos de ataque, em primeiro lugar, você deve entender completamente os métodos de ataque para encontrar as medidas de combate corretas. É esse o objetivo deste guia.
 
-In order to develop secure web applications you have to keep up to date on all layers and know your enemies. To keep up to date subscribe to security mailing lists, read security blogs, and make updating and security checks a habit (check the [Additional Resources](#additional-resources) chapter). It is done manually because that's how you find the nasty logical security problems.
+Para desenvolver aplicações web seguras, você deve se manter atualizado(a) em todas as camadas e conhecer seus inimigos. Para se manter atualizado(a), inscreva-se em listas de discussão de segurança, leia blogs de segurança e torne as atualizações e verificações de segurança um hábito (consulte o capítulo [Recursos Adicionais](#recursos-adicionais)). Isso é feito manualmente porque é assim que você encontra os problemas desagradáveis de segurança.
 
 Sessions
 --------
