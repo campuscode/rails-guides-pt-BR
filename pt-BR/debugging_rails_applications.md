@@ -911,6 +911,7 @@ Ou em uma *view*:
 
 ```html+erb
 <% console %>
+
 <h2>New Post</h2>
 ```
 
