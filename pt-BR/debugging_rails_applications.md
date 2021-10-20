@@ -957,7 +957,7 @@ Para obter mais informações sobre como instalar o Valgrind e usar com Ruby, co
 por Evan Weaver.
 
 ### Encontrando um vazamento de memória
-Há um excelente artigo sobre detecção e correção de vazamentos de memória no Derailed, [que você pode ler aqui](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
+Há um excelente artigo (em inglês) sobre detecção e correção de vazamentos de memória no Derailed, [que você pode ler aqui](https://github.com/schneems/derailed_benchmarks#is-my-app-leaking-memory).
 
 Plugins for Debugging
 ---------------------
