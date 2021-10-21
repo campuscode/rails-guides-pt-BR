@@ -72,76 +72,81 @@ Hence, the cookie serves as temporary authentication for the web application. An
 
 The main objective of most attackers is to make money. The underground prices for stolen bank login accounts range from 0.5%-10% of account balance, $0.5-$30 for credit card numbers ($20-$60 with full details), $0.1-$1.5 for identities (Name, SSN, and DOB), $20-$50 for retailer accounts, and $6-$10 for cloud service provider accounts, according to the [Symantec Internet Security Threat Report (2017)](https://www.symantec.com/content/dam/symantec/docs/reports/istr-22-2017-en.pdf).
 
-### Session Storage
+### Armazenamento de Sessão
 
-NOTE: Rails uses `ActionDispatch::Session::CookieStore` as the default session storage.
+NOTE: O Rails utiliza o `ActionDispatch::Session::CookieStore` como armazenamento de sessão padrão.
 
-TIP: Learn more about other session storages in [Action Controller Overview Guide](action_controller_overview.html#session).
+TIP: Saiba mais sobre outros armazenamentos de sessões no [Guia do Action Controller Overview](action_controller_overview.html#sessao)
 
-Rails `CookieStore` saves the session hash in a cookie on the client-side.
-The server retrieves the session hash from the cookie and
-eliminates the need for a session ID. That will greatly increase the
-speed of the application, but it is a controversial storage option and
-you have to think about the security implications and storage
-limitations of it:
+O Rails `CookieStore` salva o _hash_ da sessão em um _cookie_ no lado do
+cliente. O servidor recupera o _hash_ da sessão do _cookie_ e elimina a
+necessidade de um ID de sessão. Isso aumentará muito a velocidade da aplicação,
+mas é uma opção de armazenamento controversa e você deve analisar as implicações
+de segurança e limitações de armazenamento dessa opção:
 
-*  Cookies have a size limit of 4kB. Use cookies only for data which is relevant for the session.
+* Os _cookies_ têm um limite de tamanho de 4kB. Utilize _cookies_ apenas para dados que são relevantes para a sessão.
 
-* Cookies are stored on the client-side. The client may preserve cookie contents even for expired cookies. The client may copy cookies to other machines. Avoid storing sensitive data in cookies.
+* Os _cookies_ são armazenados no lado do cliente. O cliente pode preservar o conteúdo do _cookie_ mesmo se expirados. O cliente pode também copiar os _cookies_ para outras máquinas. Evite armazenar dados sensíveis em _cookies_.
 
-* Cookies are temporary by nature. The server can set expiration time for the cookie, but the client may delete the cookie and its contents before that. Persist all data that is of more permanent nature on the server side.
+* Os _cookies_ são temporários por natureza. O servidor pode definir o tempo de expiração do _cookie_, mas o cliente pode excluí-lo antes disso. Persista todos os dados de natureza mais permanente do lado do servidor.
 
-* Session cookies do not invalidate themselves and can be maliciously
-  reused. It may be a good idea to have your application invalidate old
-  session cookies using a stored timestamp.
+* Os _cookies_ de sessão não se invalidam e podem ser reutilizados de forma
+  maliciosa. Pode ser uma boa ideia fazer com que a sua aplicação invalide os
+_cookies_ de sessão antigos utilizando um _timestamp_ (carimbo de data/hora)
+armazenado.
 
-* Rails encrypts cookies by default. The client cannot read or edit the contents of the cookie, without breaking encryption. If you take appropriate care of your secrets, you can consider your cookies to be generally secured.
+* O Rails [encripta](https://pt.wikipedia.org/wiki/Encripta%C3%A7%C3%A3o) os _cookies_ por padrão. O cliente não pode ler ou editar o conteúdo de um _cookie_ sem quebrar a criptografia. Se você cuidar adequadamente de suas _secrets_ (segredos, em tradução livre, referente à credenciais de autenticação), poderá considerar que seus _cookies_ são geralmente protegidos.
 
-The `CookieStore` uses the
-[encrypted](https://api.rubyonrails.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-encrypted)
-cookie jar to provide a secure, encrypted location to store session
-data. Cookie-based sessions thus provide both integrity as well as
-confidentiality to their contents. The encryption key, as well as the
-verification key used for
-[signed](https://api.rubyonrails.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-signed)
-cookies, is derived from the `secret_key_base` configuration value.
+O `CookieStore` utiliza um _cookie jar_ (recipiente de _cookie_)
+[encriptado](https://api.rubyonrails.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-encrypted)
+para fornecer um local criptografado seguro para armazenar os dados da sessão.
+As sessões baseadas em _cookies_ fornecem integridade e confidencialidade aos
+seus conteúdos. A chave de encriptação, bem como a chave de verificação
+utilizada para _cookies_
+[assinados](https://api.rubyonrails.org/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-signed),
+é derivada do valor de configuração do `secret_key_base`.
 
-TIP: Secrets must be long and random. Use `bin/rails secret` to get new unique secrets.
+TIP: As _secrets_ devem ser longas e aleatórias. Utilize o comando `bin/rails secret` para obter novas _secrets_ únicas.
 
-INFO: Learn more about [managing credentials later in this guide](security.html#custom-credentials)
+INFO: Saiba mais sobre como [gerenciar credenciais mais adiante neste guia](security.html#custom-credentials)
 
-It is also important to use different salt values for encrypted and
-signed cookies. Using the same value for different salt configuration
-values may lead to the same derived key being used for different
-security features which in turn may weaken the strength of the key.
+Também é importante utilizar diferentes valores
+[_salt_](https://pt.wikipedia.org/wiki/Sal_(criptografia)) (sal, em tradução
+livre) para _cookies_ encriptados e assinados. Utilizar o mesmo valor para
+diferentes valores de configuração _salt_ pode fazer com que a mesma chave
+derivada seja utilizada para diferentes funcionalidades de segurança que, por
+sua vez, podem enfraquecer a força da chave.
 
-In test and development applications get a `secret_key_base` derived from the app name. Other environments must use a random key present in `config/credentials.yml.enc`, shown here in its decrypted state:
+Em aplicações de teste e desenvolvimento, obtenha uma `secret_key_base` derivada do nome da aplicação. Outros ambientes devem utilizar uma chave aleatória presente em `config/credentials.yml.enc`, exibida aqui em seu estado descriptografado:
 
 ```yaml
 secret_key_base: 492f...
 ```
 
-WARNING: If your application's secrets may have been exposed, strongly consider changing them. Changing `secret_key_base` will expire currently active sessions.
+WARNING: Se houver a possibilidade das _secrets_ da sua aplicação terem sido expostas, considere alterá-las. Alterar a `secret_key_base` irá expirar as sessões atualmente ativas.
 
-### Rotating Encrypted and Signed Cookies Configurations
+### Configurações de Rotação de _Cookies_ Assinados e Encriptados
 
-Rotation is ideal for changing cookie configurations and ensuring old cookies
-aren't immediately invalid. Your users then have a chance to visit your site,
-get their cookie read with an old configuration and have it rewritten with the
-new change. The rotation can then be removed once you're comfortable enough
-users have had their chance to get their cookies upgraded.
+A rotação é ideal para alterar as configurações de _cookies_ e garantir que os
+_cookies_ antigos não sejam imediatamente inválidos. Seus usuários têm então a
+chance de visitar seu site, ler seu _cookie_ com uma configuração antiga e
+reescrevê-lo com a nova alteração. A rotação pode então ser removida assim que
+você se sentir confortável o suficiente para que os usuários tenham a chance de
+atualizar seus _cookies_.
 
-It's possible to rotate the ciphers and digests used for encrypted and signed cookies.
+É possível rotacionar as [cifras](https://pt.wikipedia.org/wiki/Cifra) e _digests_ (é o valor de saída de uma [função hash criptográfica](https://pt.wikipedia.org/wiki/Fun%C3%A7%C3%A3o_hash_criptogr%C3%A1fica)) utilizados para _cookies_ encriptados e assinados.
 
-For instance to change the digest used for signed cookies from SHA1 to SHA256,
-you would first assign the new configuration value:
+Por exemplo, para alterar o _digest_ utilizado para _cookies_ assinados de
+[SHA1](https://pt.wikipedia.org/wiki/SHA-1) para
+[SHA256](https://pt.wikipedia.org/wiki/SHA-2), você deve primeiro atribuir o
+novo valor de configuração:
 
 ```ruby
 Rails.application.config.action_dispatch.signed_cookie_digest = "SHA256"
 ```
 
-Now add a rotation for the old SHA1 digest so existing cookies are
-seamlessly upgraded to the new SHA256 digest.
+Agora, adicione uma rotação para o antigo _digest_ SHA1 para que os _cookies_
+existentes sejam perfeitamente atualizados para o novo _digest_ SHA256.
 
 ```ruby
 Rails.application.config.action_dispatch.cookies_rotations.tap do |cookies|
@@ -149,24 +154,23 @@ Rails.application.config.action_dispatch.cookies_rotations.tap do |cookies|
 end
 ```
 
-Then any written signed cookies will be digested with SHA256. Old cookies
-that were written with SHA1 can still be read, and if accessed will be written
-with the new digest so they're upgraded and won't be invalid when you remove the
-rotation.
+Em seguida, quaisquer _cookies_ assinados escritos serão criptografados com
+SHA256. Os _cookies_ antigos que foram gravados com SHA1 ainda podem ser lidos
+e, se acessados, serão gravados com o novo _digest_, de forma que serão
+atualizados e não serão inválidos quando você remover a rotação.
 
-Once users with SHA1 digested signed cookies should no longer have a chance to
-have their cookies rewritten, remove the rotation.
+Quando os usuários com _cookies_ assinados via SHA1 não tiverem mais a chance de
+reescrever seus _cookies_, remova a rotação.
 
-While you can set up as many rotations as you'd like it's not common to have many
-rotations going at any one time.
+Embora você possa configurar quantas rotações desejar, não é muito comum ter
+muitas rotações ao mesmo tempo.
 
-For more details on key rotation with encrypted and signed messages as
-well as the various options the `rotate` method accepts, please refer to
-the
-[MessageEncryptor API](https://api.rubyonrails.org/classes/ActiveSupport/MessageEncryptor.html)
-and
-[MessageVerifier API](https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifier.html)
-documentation.
+Para obter mais detalhes sobre a rotação de chaves com mensagens criptografadas
+e assinadas, bem como as várias opções que o método `rotate` aceita, consulte a
+documentação da [API
+MessageEncryptor](https://api.rubyonrails.org/classes/ActiveSupport/MessageEncryptor.html)
+e a [API MessageVerifier
+API](https://api.rubyonrails.org/classes/ActiveSupport/MessageVerifier.html)
 
 ### Replay Attacks for CookieStore Sessions
 
