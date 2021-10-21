@@ -53,7 +53,7 @@ Muitas aplicações web tem um sistema de autenticação: um usuário fornece um
 
 Portanto, o _cookie_ serve como autenticação temporária para a aplicação web. Qualquer pessoa que obter um _cookie_ de outra pessoa pode utilizar a aplicação web como se fosse esse usuário - com consequências possivelmente graves. Aqui estão algumas maneiras de sequestrar uma sessão e suas medidas preventivas:
 
-* Monitore o _cookie_ em uma rede insegura. Uma rede LAN (_Local Area Network_ - Rede Local, em tradução livre) _wireless_ (sem fio) pode ser um exemplo de tal rede. Em uma rede local _wireless_ não criptograda, é especialmente fácil "escutar" o tráfego de todos os clientes conectados. Para a construção de aplicações web, isso significa _fornecer uma conexão segura por SSL (Secure Sockets Layer - Camada de Soquete Seguro, em tradução livre)_. No Rails 3.1 e posterior, isso poder ser feito sempre forçando a conexão SSL no arquivo de configuração da sua aplicação:
+* Monitore o _cookie_ em uma rede insegura. Uma rede LAN (_Local Area Network_ - Rede Local, em tradução livre) _wireless_ (sem fio) pode ser um exemplo de tal rede. Em uma rede local _wireless_ não criptografada, é especialmente fácil "escutar" o tráfego de todos os clientes conectados. Para a construção de aplicações web, isso significa _fornecer uma conexão segura por SSL (Secure Sockets Layer - Camada de Soquete Seguro, em tradução livre)_. No Rails 3.1 e posterior, isso poder ser feito sempre forçando a conexão SSL no arquivo de configuração da sua aplicação:
 
     ```ruby
     config.force_ssl = true
@@ -65,7 +65,7 @@ Portanto, o _cookie_ serve como autenticação temporária para a aplicação we
 
 * Em vez de roubar um _cookie_ que é desconhecido para o invasor, eles corrigem um identificador de sessão de usuário (no _cookie_) conhecido por eles. Leia mais sobre esse assunto no capítulo chamado Fixação de Sessão mais adiante.
 
-O principal objetivo da maioria dos invasores é ganhar dinheiro. Os preços clandestinos para login de contas bancárias roubadas variam de 0.5%-10% do saldo da conta, $0.5-$30 para números de cartão de crédito ($20-$60 com detalhes completos), $0.1-$1.5 para identidades (nome, SSN - semelhante ao CPF no Brasil - e data de nascimento), $20-$50 para contas de verejistas e $6-$10 para contas de provedor de serviço em nuvem, de acordo com o [Relatório de Ameaças à Segurança na Internet da Symantec (2017, em inglês)](https://www.symantec.com/content/dam/symantec/docs/reports/istr-22-2017-en.pdf)
+O principal objetivo da maioria dos invasores é ganhar dinheiro. Os preços clandestinos para login de contas bancárias roubadas variam de 0.5%-10% do saldo da conta, $0.5-$30 para números de cartão de crédito ($20-$60 com detalhes completos), $0.1-$1.5 para identidades (nome, SSN - semelhante ao CPF no Brasil - e data de nascimento), $20-$50 para contas de varejistas e $6-$10 para contas de provedor de serviço em nuvem, de acordo com o [Relatório de Ameaças à Segurança na Internet da Symantec (2017, em inglês)](https://www.symantec.com/content/dam/symantec/docs/reports/istr-22-2017-en.pdf)
 
 ### Session Storage
 
