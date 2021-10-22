@@ -440,8 +440,8 @@ O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a AP
     setup do
       @model = Person.new
     end
-  end
-  ```
+    end
+    ```
 
 ```bash
 $ bin/rails test
