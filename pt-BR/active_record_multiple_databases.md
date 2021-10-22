@@ -1,51 +1,43 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Multiple Databases with Active Record
+Múltiplos bancos de dados com *Active Record*
 =====================================
 
-This guide covers using multiple databases with your Rails application.
+Este guia cobre o uso de múltiplos bancos de dados na sua aplicação Rails.
 
-After reading this guide you will know:
+Após ler este guia, você saberá:
 
-* How to set up your application for multiple databases.
-* How automatic connection switching works.
-* How to use horizontal sharding for multiple databases.
-* What features are supported and what's still a work in progress.
+* Como configurar sua aplicação para usar múltiplos bancos de dados.
+* Como a troca automática de conexão funciona.
+* Como usar fragmentação horizontal (*horizontal sharding*).
+* Quais funcionalidades têm suporte e quais ainda estão sendo desenvolvidas.
 
 --------------------------------------------------------------------------------
 
-As an application grows in popularity and usage you'll need to scale the application
-to support your new users and their data. One way in which your application may need
-to scale is on the database level. Rails now has support for multiple databases
-so you don't have to store your data all in one place.
+Conforme uma aplicação cresce em uso e popularidade, você precisará expandir a aplicação para dar suporte aos novos usuários e seus dados. Uma das dimensões na qual sua aplicação precisará expandir é no âmbito do banco de dados. O Rails agora possui suporte para múltiplos bancos de dados, para que você não precise armazenar tudo em um só lugar.
 
-At this time the following features are supported:
+No presente momento, as seguintes funcionalidades são suportadas:
 
-* Multiple writer databases and a replica for each
-* Automatic connection switching for the model you're working with
-* Automatic swapping between the writer and replica depending on the HTTP verb
-and recent writes
-* Rails tasks for creating, dropping, migrating, and interacting with the multiple
-databases
+* Múltiplos bancos de dados de escrita, com réplicas
+* Troca automática de conexão para o *model* em questão
+* Troca automática entre o banco de escrita e sua réplica, dependendo do verbo HTTP e as escritas mais recentes
+* *Tasks* do Rails para criar, deletar e interagir com os múltiplos bancos.
 
-The following features are not (yet) supported:
+As seguintes funcionalidades (ainda) não têm suporte:
 
-* Automatic swapping for horizontal sharding
-* Joining across clusters
-* Load balancing replicas
-* Dumping schema caches for multiple databases
+* Troca automática para a fragmentação horizontal (*horizontal sharding*)
+* Mesclagem entre *clusters*
+* *Load balancing* de réplicas
+* Exportar cache de esquema para múltiplos bancos.
 
-## Setting up your application
+## Configurando sua aplicação
 
-While Rails tries to do most of the work for you there are still some steps you'll
-need to do to get your application ready for multiple databases.
+O Rails tenta fazer a maior parte do trabalho para você, porém, mesmo assim, ainda existem alguns passos que você precisa seguir para preparar sua aplicação para múltiplos bancos de dados.
 
-Let's say we have an application with a single writer database and we need to add a
-new database for some new tables we're adding. The name of the new database will be
-"animals".
+Digamos que nós temos uma aplicação com um único banco de escrita, e que precisamos adicionar um novo banco para algumas tabelas que estamos criando. O nome deste novo banco será "animals".
 
-The `database.yml` looks like this:
+O arquivo `database.yml` ficará assim:
 
 ```yaml
 production:
@@ -55,15 +47,9 @@ production:
   adapter: mysql
 ```
 
-Let's add a replica for the first configuration, and a second database called animals and a
-replica for that as well. To do this we need to change our `database.yml` from a 2-tier
-to a 3-tier config.
+Vamos adicionar uma réplica para a primeira configuração e um segundo banco chamado "animals", também possuindo uma réplica. Para fazer isso, precisamos alterar o arquivo `database.yml`, com sua atual configuração de 2 níveis para uma nova configuração, de 3 níveis.
 
-If a primary configuration is provided this will be used as the "default" configuration. If
-there is no configuration named "primary" Rails will use the first configuration for an
-environment. The default configurations will use the default Rails filenames. For example
-primary configurations will use `schema.rb` for the schema file whereas all other entries
-will use `[CONFIGURATION_NAMESPACE]_schema.rb` for the filename.
+Se uma houver uma configuração primária, esta será usada como padrão. Se não existir uma configuração com o nome "primary", o Rails usará a primeira que encontrar para o ambiente. As configurações padrão usarão os nomes de arquivo padrão do Rails. Por exemplo, configurações primárias usarão o arquivo `schema.rb` para o esquema, enquanto todas as outras configurações usarão `[CONFIGURATION_NAMESPACE]_schema.rb`.
 
 ```yaml
 production:
@@ -92,24 +78,17 @@ production:
     replica: true
 ```
 
-When using multiple databases there are a few important settings.
+Quando usar múltiplos bancos, existem algumas configurações importantes.
 
-First, the database name for the `primary` and `primary_replica` should be the same because they contain
-the same data. This is also the case for `animals` and `animals_replica`.
+Em primeiro lugar, o nome do banco para a configuração `primary` e `primary_replica` precisam ser os mesmos, pois estes contém os mesmos dados. Isso também se aplica para os bancos `animals` e `animals_replica`.
 
-Second, the username for the writers and replicas should be different, and the
-replica user's permissions should be set to only read and not write.
+Segundo, o nome de usuário para os bancos de escrita e suas réplicas devem ser diferentes, e as permissões do usuário da réplica devem ser somente leitura.
 
-When using a replica database you need to add a `replica: true` entry to the replica in the
-`database.yml`. This is because Rails otherwise has no way of knowing which one is a replica
-and which one is the writer.
+Quando usar um banco réplica, é preciso adicionar `replica: true` à configuração em questão, dentro de `database.yml`. Sem isso, o Rails não saberá qual é o de escrita e qual é a réplica.
 
-Lastly, for new writer databases you need to set the `migrations_paths` to the directory
-where you will store migrations for that database. We'll look more at `migrations_paths`
-later on in this guide.
+Por último, para os novos bancos de escrita, é preciso adicionar o `migrations_paths` ao diretório onde ficarão as migrações. Veremos `migration_paths` em mais detalhes ao decorrer deste guia.
 
-Now that we have a new database, let's set up the connection model. In order to use the
-new database we need to create a new abstract class and connect to the animals databases.
+Agora que temos um novo banco, vamos definir o *model* de conexão. Para usar este novo banco, é necessário criar uma classe abstrata e conectar ao banco *animals*.
 
 ```ruby
 class AnimalsRecord < ApplicationRecord
@@ -119,7 +98,7 @@ class AnimalsRecord < ApplicationRecord
 end
 ```
 
-Then we need to update `ApplicationRecord` to be aware of our new replica.
+Em seguida, atualizaremos `ApplicationRecord` para ela saiba da nossa nova réplica.
 
 ```ruby
 class ApplicationRecord < ActiveRecord::Base
@@ -129,89 +108,74 @@ class ApplicationRecord < ActiveRecord::Base
 end
 ```
 
-Classes that connect to primary/primary_replica can inherit from `ApplicationRecord` like
-standard Rails applications:
+As classes que conectam ao banco primário e/ou sua réplica podem herdar de `ApplicationRecord`, assim como as aplicações padrão Rails.
 
 ```ruby
 class Person < ApplicationRecord
 end
 ```
-
-By default Rails expects the database roles to be `writing` and `reading` for the primary
-and replica respectively. If you have a legacy system you may already have roles set up that
-you don't want to change. In that case you can set a new role name in your application config.
+Por padrão, o Rails espera os *roles* de escrita e leitura, para o banco primário e sua réplica, respectivamente. Se você tiver um sistema legado, é possível que existam *roles* que não deseja mudar. Neste caso, é possível definir um novo nome de *role* nas configurações da aplicação.
 
 ```ruby
 config.active_record.writing_role = :default
 config.active_record.reading_role = :readonly
 ```
 
-It's important to connect to your database in a single model and then inherit from that model
-for the tables rather than connect multiple individual models to the same database. Database
-clients have a limit to the number of open connections there can be and if you do this it will
-multiply the number of connections you have since Rails uses the model class name for the
-connection specification name.
+É importante conectar ao seu banco em um único *model* e em seguida, herdar para as tabelas, ao invés de abrir várias conexões individuais.
+Os usuários do banco têm um limite de conexões abertas, e ao fazer isso, estaríamos multiplicando o número de conexões, visto que o Rails usa o nome da classe do *model* para o nome da conexão. 
 
-Now that we have the `database.yml` and the new model set up it's time to create the databases.
-Rails 6.0 ships with all the rails tasks you need to use multiple databases in Rails.
+Agora que configuramos o `database.yml` e novo *model*, é hora de criar os bancos de dados.
+O Rails 6.0 inclui todas as *tasks* necessárias para usar múltiplos bancos.
 
-You can run `bin/rails -T` to see all the commands you're able to run. You should see the following:
+É possível ver todos os comandos disponíveis usando `bin/rails -T`:
 
 ```bash
 $ bin/rails -T
-rails db:create                          # Creates the database from DATABASE_URL or config/database.yml for the ...
-rails db:create:animals                  # Create animals database for current environment
-rails db:create:primary                  # Create primary database for current environment
-rails db:drop                            # Drops the database from DATABASE_URL or config/database.yml for the cu...
-rails db:drop:animals                    # Drop animals database for current environment
-rails db:drop:primary                    # Drop primary database for current environment
-rails db:migrate                         # Migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)
-rails db:migrate:animals                 # Migrate animals database for current environment
-rails db:migrate:primary                 # Migrate primary database for current environment
-rails db:migrate:status                  # Display status of migrations
-rails db:migrate:status:animals          # Display status of migrations for animals database
-rails db:migrate:status:primary          # Display status of migrations for primary database
-rails db:rollback                        # Rolls the schema back to the previous version (specify steps w/ STEP=n)
-rails db:rollback:animals                # Rollback animals database for current environment (specify steps w/ STEP=n)
-rails db:rollback:primary                # Rollback primary database for current environment (specify steps w/ STEP=n)
-rails db:schema:dump                     # Creates a database schema file (either db/schema.rb or db/structure.sql  ...
-rails db:schema:dump:animals             # Creates a database schema file (either db/schema.rb or db/structure.sql  ...
-rails db:schema:dump:primary             # Creates a db/schema.rb file that is portable against any DB supported  ...
-rails db:schema:load                     # Loads a database schema file (either db/schema.rb or db/structure.sql  ...
-rails db:schema:load:animals             # Loads a database schema file (either db/schema.rb or db/structure.sql  ...
-rails db:schema:load:primary             # Loads a database schema file (either db/schema.rb or db/structure.sql  ...
+rails db:create                          # Cria o banco a partir da DATABASE_URL ou config/database.yml para o ambiente atual
+rails db:create:animals                  # Cria o banco animals para o ambiente atual
+rails db:create:primary                  # Cria o banco primário para o ambiente atual
+rails db:drop                            # Destrói o banco a partir da DATABASE_URL ou config/database.yml para o ambiente atual
+rails db:drop:animals                    # Destrói o banco animals para o ambiente atual
+rails db:drop:primary                    # Destrói o banco primário para o ambiente atual
+rails db:migrate                         # Migra o banco (as opções são: VERSION=x, VERBOSE=false, SCOPE=blog)
+rails db:migrate:animals                 # Migra o banco animals para o ambiente atual
+rails db:migrate:primary                 # Migra o banco primário para o ambiente atual
+rails db:migrate:status                  # Exibe o status das migrações
+rails db:migrate:status:animals          # Exibe o status das migrações para o banco animals
+rails db:migrate:status:primary          # Exibe o status das migrações para o banco primário
+rails db:rollback                        # Reverte o esquema para uma versão anterior, no ambiente atual (especifique o número de versões com STEP=n)
+rails db:rollback:animals                # Reverte o esquema do banco animals para uma versão anterior, no ambiente atual (especifique o número de versões com STEP=n)
+rails db:rollback:primary                # Reverte o esquema do banco primário para uma versão anterior, no ambiente atual (especifique o número de versões com STEP=n)
+rails db:schema:dump                     # Cria um arquivo de esquema (db/schema.rb ou db/structure.sql)
+rails db:schema:dump:animals             # Cria um arquivo de esquema para o banco animals (db/schema.rb ou db/structure.sql)
+rails db:schema:dump:primary             # Cria o arquivo db/schema.rb que será poderá ser carregado para qualquer banco suportado
+rails db:schema:load                     # Importa um arquivo de esquema (db/schema.rb ou db/structure.sql)
+rails db:schema:load:animals             # Importa um arquivo de esquema (db/schema.rb ou db/structure.sql)
+rails db:schema:load:primary             # Importa um arquivo de esquema (db/schema.rb ou db/structure.sql)
 ```
 
-Running a command like `bin/rails db:create` will create both the primary and animals databases.
-Note that there is no command for creating the users and you'll need to do that manually
-to support the readonly users for your replicas. If you want to create just the animals
-database you can run `bin/rails db:create:animals`.
+Executar um comando como `bin/rails db:create` criará tanto o banco primário quanto o banco *animals*.
+Observe que não existe um comando para criar os usuários. Estes precisam ser criados manualmente, para dar suporte aos usuários somente leitura das réplicas. Se deseja criar somente o banco *animals*, basta executar `bin/rails db:create:animals`.
 
-## Generators and Migrations
+## *Generators* e *Migrations*
 
-Migrations for multiple databases should live in their own folders prefixed with the
-name of the database key in the configuration.
+Migrações para múltiplos bancos devem ficar nos seus próprios diretórios, prefixados pelo nome da chave do banco especificado nas configurações.
 
-You also need to set the `migrations_paths` in the database configurations to tell Rails
-where to find the migrations.
+Também é preciso definir `migrations_paths` nas configurações do banco, para que o Rails saiba onde as encontrar.
 
-For example the `animals` database would look for migrations in the `db/animals_migrate` directory and
-`primary` would look in `db/migrate`. Rails generators now take a `--database` option
-so that the file is generated in the correct directory. The command can be run like so:
+Por exemplo, o banco *animals* buscaria suas migrações no diretório `db/animals_migrate`, da mesma forma que o banco *primary* buscaria em `db/migrate`. Os *generators* do Rails agora permitem especificar a opção `--database`, de modo que o arquivo seja gerado no diretório correto. O comando pode ser executado da seguinte forma:
 
 ```bash
 $ bin/rails generate migration CreateDogs name:string --database animals
 ```
 
-If you are using Rails generators, the scaffold and model generators will create the abstract
-class for you. Simply pass the database key to the command line
+Se estiver usando os *generators* do Rails, os *generators* de *scaffold* e de *model* criarão a classe abstrata para você. Basta especificar a chave do banco no comando:
 
 ```bash
 $ bin/rails generate scaffold Dog name:string --database animals
 ```
 
-A class with the database name and `Record` will be created. In this example
-the database is `Animals` so we end up with `AnimalsRecord`:
+Uma classe com mesmo nome do banco e a palavra `Record` será criada. Neste exemplo, o banco é `Animals`, então teremos `AnimalsRecord`:
 
 ```ruby
 class AnimalsRecord < ApplicationRecord
@@ -221,44 +185,34 @@ class AnimalsRecord < ApplicationRecord
 end
 ```
 
-The generated model will automatically inherit from `AnimalsRecord`.
+O *model* gerado herdará automaticamente de `AnimalsRecord`.
 
 ```ruby
 class Dog < AnimalsRecord
 end
 ```
 
-Note: Since Rails doesn't know which database is the replica for your writer you will need to
-add this to the abstract class after you're done.
+Observação: Visto que o Rails não sabe qual banco de dados é a réplica para o escritor, você precisará adicionar isso à classe abstrata quando tiver terminado.
 
-Rails will only generate the new class once. It will not be overwritten by new scaffolds
-or deleted if the scaffold is deleted.
+O Rails criará a nova classe somente uma vez. Esta não será sobrescrita por futuros *scaffolds* e nem mesmo deletada, caso o *scaffold* seja excluído.
 
-If you already have an abstract class and its name differs from `AnimalsRecord` you can pass
-the `--parent` option to indicate you want a different abstract class:
+Se você já possui uma classe abstrata e seu nome difere da em `AnimalsRecord`, você pode especificar a opção `--parent` se desejar uma classe abstrata diferente:
 
 ```bash
 $ bin/rails generate scaffold Dog name:string --database animals --parent Animals::Record
 ```
 
-This will skip generating `AnimalsRecord` since you've indicated to Rails that you want to
-use a different parent class.
+Isto fará com que a geração de `AnimalsRecord` seja ignorada, visto que você indicou para o Rails que irá usar uma outra classe pai.
 
-## Activating automatic connection switching
+## Habilitando a troca automática de conexão
 
-Finally, in order to use the read-only replica in your application you'll need to activate
-the middleware for automatic switching.
+Por último, para conseguir usar a réplica de leitura na sua aplicação, será necessário habilitar o *middleware* de troca automática.
 
-Automatic switching allows the application to switch from the writer to replica or replica
-to writer based on the HTTP verb and whether there was a recent write.
+A troca automática permite que a aplicação alterne entre os bancos de escrita e a réplica, baseado no método HTTP e também se houve uma escrita recente.
 
-If the application is receiving a POST, PUT, DELETE, or PATCH request the application will
-automatically write to the writer database. For the specified time after the write, the
-application will read from the primary. For a GET or HEAD request the application will read
-from the replica unless there was a recent write.
+Se a aplicação receber uma requisição POST, PUT, DELETE, ou PATCH, a conexão será feita automaticamente para o banco de escrita. Por um determinado tempo após a escrita, a leitura será feita no banco primário. Para os métodos GET ou HEAD, a aplicação usará a réplica, a menos que tenha ocorrido uma escrita recente.
 
-To activate the automatic connection switching middleware, add or uncomment the following
-lines in your application config.
+Para habilitar o *middleware* responsável pela troca automática, basta adicionar (ou "descomentar") as seguintes linhas no arquivo de configuração:
 
 ```ruby
 config.active_record.database_selector = { delay: 2.seconds }
@@ -266,27 +220,19 @@ config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelec
 config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 ```
 
-Rails guarantees "read your own write" and will send your GET or HEAD request to the
-writer if it's within the `delay` window. By default the delay is set to 2 seconds. You
-should change this based on your database infrastructure. Rails doesn't guarantee "read
-a recent write" for other users within the delay window and will send GET and HEAD requests
-to the replicas unless they wrote recently.
+O Rails garante o chamado "leia sua própria escrita" e encaminhará as requisições de método GET ou HEAD para o banco de escrita, se estes ocorrerem dentro do intervalo especificado pelo `delay`. Você deve alterar esta configuração para melhor atender a infraestrutura do seu banco de dados. O Rails não garante "leia sua escrita recente" para outros usuários dentro do intervalo de *delay*, e encaminhará as requisições GET e HEAD para a réplica, a menos que eles tenham escrito algo recentemente.
 
-The automatic connection switching in Rails is relatively primitive and deliberately doesn't
-do a whole lot. The goal is a system that demonstrates how to do automatic connection
-switching that was flexible enough to be customizable by app developers.
+A troca automática de conexão do Rails é relativamente simples e deliberadamente não faz muita coisa. O objetivo é ter um sistema que demonstre como fazer a troca automática de conexão, e que seja suficientemente flexível para que as pessoas desenvolvedoras possam customizar.
 
-The setup in Rails allows you to easily change how the switching is done and what
-parameters it's based on. Let's say you want to use a cookie instead of a session to
-decide when to swap connections. You can write your own class:
+O *setup* do Rails permite que você altere com facilidade como é feita a troca automática, e em quais parâmetros ela se baseia. Digamos que você queira usar *cookies* ao invés da *session* para decidir quando trocar as conexões. Você poderia escrever sua própria classe:
 
 ```ruby
 class MyCookieResolver
-  # code for your cookie class
+  # código da sua classe
 end
 ```
 
-And then pass it to the middleware:
+Em seguida, especifique sua nova classe no *middleware*:
 
 ```ruby
 config.active_record.database_selector = { delay: 2.seconds }
@@ -294,30 +240,21 @@ config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelec
 config.active_record.database_resolver_context = MyCookieResolver
 ```
 
-## Using manual connection switching
+## Usando a troca de conexão manual
 
-There are some cases where you may want your application to connect to a writer or a replica
-and the automatic connection switching isn't adequate. For example, you may know that for a
-particular request you always want to send the request to a replica, even when you are in a
-POST request path.
+Existem casos nos quais você pode querer que sua aplicação se conecte ao banco de escrita ou à réplica, e onde a troca automática de conexão não será adequada. Por exemplo, suponhamos que exista uma requisição em particular que sempre deverá ser encaminhada para a réplica, mesmo que tenha método POST.
 
-To do this Rails provides a `connected_to` method that will switch to the connection you
-need.
+Para isso, o Rails possui um método chamado `connected_to`, que trocará para a conexão desejada.
 
 ```ruby
 ActiveRecord::Base.connected_to(role: :reading) do
-  # all code in this block will be connected to the reading role
+  # o código deste bloco estará conectado ao role 'reading'
 end
 ```
 
-The "role" in the `connected_to` call looks up the connections that are connected on that
-connection handler (or role). The `reading` connection handler will hold all the connections
-that were connected via `connects_to` with the role name of `reading`.
+O *role* definido em `connected_to` buscará as conexões ligadas naquele determinado *handler* (ou *role*). O *handler* da conexão `reading` receberá todas as conexões feitas através do `connects_to`, que tenham o *role* `reading`.
 
-Note that `connected_to` with a role will look up an existing connection and switch
-using the connection specification name. This means that if you pass an unknown role
-like `connected_to(role: :nonexistent)` you will get an error that says
-`ActiveRecord::ConnectionNotEstablished (No connection pool for 'ActiveRecord::Base' found for the 'nonexistent' role.)`
+Observe que o `connected_to` com um *role* definido buscará e trocará para uma conexão existente, usando o nome da conexão. Isso quer dizer que ao passar um *role* desconhecido ou inválido, como por exemplo, `connected_to(role: :nonexistent)`, causará um erro com a seguinte mensagem: `ActiveRecord::ConnectionNotEstablished (No connection pool for 'ActiveRecord::Base' found for the 'nonexistent' role.)`
 
 ## Horizontal sharding
 

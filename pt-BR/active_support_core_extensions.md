@@ -598,7 +598,8 @@ NOTE: Definido em `active_support/core_ext/module/attr_internal.rb`.
 
 #### Atributos de Módulo
 
-As macros [`mattr_reader`][Module#mattr_reader], [`mattr_writer`][Module#mattr_writer], e [`mattr_accessor`][Module#mattr_accessor] São iguais a `cattr_*` macros definidas na classe. De fato, `cattr_*` macros são apenas _aliases_ para as `mattr_*` macros. Confira a seção [Atributos de Classe](#class-attributes).
+As macros [`mattr_reader`][Module#mattr_reader], [`mattr_writer`][Module#mattr_writer], e [`mattr_accessor`][Module#mattr_accessor] São iguais a `cattr_*` macros definidas na classe. De fato, `cattr_*` macros são apenas _aliases_ para as `mattr_*` macros. Confira a seção [Atributos de Classe](#atributos-de-classe).
+
 
 Por exemplo, os mecanismos de dependências usam:
 

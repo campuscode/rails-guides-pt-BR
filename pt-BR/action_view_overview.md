@@ -319,18 +319,18 @@ O Rails renderizará a *partial* `_product_ruler` (sem passar nenhum dado pra el
 
 Os *Layouts* podem ser usados para renderizar um *template* em torno dos resultados das *actions* do *controller* do Rails. Normalmente, uma aplicação Rails terá alguns *layouts* nos quais as páginas serão renderizadas. Por exemplo, um site pode ter um *layout* para um usuário conectado e outra página para marketing ou vendas do site. O *layout* do usuário conectado pode incluir navegação de nível superior (*top-level*), que deve estar presente em muitas *actions* do *controller*. O *layout* de vendas de uma aplicação SaaS pode incluir navegação de nível superior para páginas de "Preços" e "Fale conosco", onde esperaria que cada *layout* tivesse uma aparência e sensação diferentes. Você pode ler sobre *layout* com mais detalhes em [Layouts e Renderização no Rails](layouts_and_rendering.html).
 
-Partial Layouts
+*Layout* de *Partial*
 ---------------
 
-Partials can have their own layouts applied to them. These layouts are different from those applied to a controller action, but they work in a similar fashion.
+*Partials* podem ter seus próprios *layouts*. Esses *layouts* são diferentes daqueles utilizados nas *actions* do *controller*, porém funcionam de modo semelhante.
 
-Let's say we're displaying an article on a page which should be wrapped in a `div` for display purposes. Firstly, we'll create a new `Article`:
+Supomos que estamos exibindo um artigo em uma página que deveria ser encapsulado em uma `div`. Primeiramente, criaremos um novo `Article`:
 
 ```ruby
-Article.create(body: 'Partial Layouts are cool!')
+Article.create(body: 'Layouts de partial são demais!')
 ```
 
-In the `show` template, we'll render the `_article` partial wrapped in the `box` layout:
+No *template* do `show`, iremos renderizar a *partial* `_article` encapsulado no *layout* `box`:
 
 **articles/show.html.erb**
 
@@ -338,7 +338,7 @@ In the `show` template, we'll render the `_article` partial wrapped in the `box`
 <%= render partial: 'article', layout: 'box', locals: { article: @article } %>
 ```
 
-The `box` layout simply wraps the `_article` partial in a `div`:
+O *layout* `box` simplesmente encapsula a *partial* `_article` em uma `div`:
 
 **articles/_box.html.erb**
 
@@ -348,9 +348,9 @@ The `box` layout simply wraps the `_article` partial in a `div`:
 </div>
 ```
 
-Note that the partial layout has access to the local `article` variable that was passed into the `render` call. However, unlike application-wide layouts, partial layouts still have the underscore prefix.
+Note que o *layout* de *partial* tem acesso a variável local `article` que foi passada no `render`. Todavia, diferentemente de *layouts* de aplicação, *layouts* de *partial* possuem o *underscore* `_` no início.
 
-You can also render a block of code within a partial layout instead of calling `yield`. For example, if we didn't have the `_article` partial, we could do this instead:
+Você também pode renderizar um bloco de código dentro do *layout* de *partial* ao invés de usar `yield`. Por exemplo, se não tivéssemos a *partial* `_article`, poderíamos ter feito:
 
 **articles/show.html.erb**
 
@@ -362,7 +362,7 @@ You can also render a block of code within a partial layout instead of calling `
 <% end %>
 ```
 
-Supposing we use the same `_box` partial from above, this would produce the same output as the previous example.
+Supomos que desejamos utilizar a mesma *partial* `_box` representada acima, isso produziria o mesmo resultado do exemplo anterior.
 
 View Paths
 ----------

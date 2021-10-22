@@ -1,23 +1,21 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Básico do *Active Model*
-===================
+# Básico do _Active Model_
 
 Esse guia deverá prover tudo que você precisa para começar a usar classes de modelo (`models`).
-O *Active Model* permite que o *Action Pack Helpers* interaja com os objetos ruby. O *Active model* também auxilia a criação de *ORMs* (mapeamento de objetos relacionais) para o uso fora do framework Rails.
+O _Active Model_ permite que o _Action Pack Helpers_ interaja com os objetos ruby. O _Active model_ também auxilia a criação de _ORMs_ (mapeamento de objetos relacionais) para o uso fora do framework Rails.
 
 Após a leitura desse guia você saberá:
 
-* Como um *Active Record* se comporta.
-* Como *Callbacks* e *Validações* funcionam.
-* Como *serializers* funcionam.
-* Como *Active Model* integra com o framework de internacionalização (`i18n`) do Rails.
+- Como um _Active Record_ se comporta.
+- Como _Callbacks_ e _Validações_ funcionam.
+- Como _serializers_ funcionam.
+- Como _Active Model_ integra com o framework de internacionalização (`i18n`) do Rails.
 
---------------------------------------------------------------------------------
+---
 
-O que é *Active Model*?
------------------------
+## O que é _Active Model_?
 
 O Active Model é uma biblioteca que contém vários módulos utilizados para desenvolvimento de classes que precisam de algumas funções (`features`) existentes no Active Record.
 
@@ -197,7 +195,8 @@ irb> person.first_name_was
 => nil
 ```
 
-Rastreia o valor anterior e atual do atributo alterado. Retorna um *array* se alterado, caso contrário, retorna *nil*.
+Rastreia o valor anterior e atual do atributo alterado. Retorna um _array_ se
+alterado; caso contrário, retorna `nil`.
 
 ```irb
 # attr_name_change
@@ -209,7 +208,7 @@ irb> person.last_name_change
 
 ### Validações
 
-O módulo `ActiveModel::Validations` adiciona a habilidade de validar objetos como no *Active Record*.
+O módulo `ActiveModel::Validations` adiciona a habilidade de validar objetos como no _Active Record_.
 
 ```ruby
 class Person
@@ -244,7 +243,6 @@ ActiveModel::StrictValidationFailed
 
 `ActiveModel::Naming` adiciona vários métodos de classe que tornam a nomeação e o roteamento mais fácil de administrar. O módulo define o método da classe `model_name` que definirá vários acessadores usando alguns métodos do `ActiveSupport::Inflector`.
 
-
 ```ruby
 class Person
   extend ActiveModel::Naming
@@ -262,9 +260,9 @@ Person.model_name.route_key           # => "people"
 Person.model_name.singular_route_key  # => "person"
 ```
 
-### *Model*
+### _Model_
 
-O `ActiveModel::Model` adiciona a capacidade de uma classe trabalhar com o *Action Pack* e *Action View* imediatamente.
+O `ActiveModel::Model` adiciona a capacidade de uma classe trabalhar com o _Action Pack_ e _Action View_ imediatamente.
 
 ```ruby
 class EmailContact
@@ -283,12 +281,12 @@ end
 
 Ao incluir o `ActiveModel::Model`, você obtém alguns recursos como:
 
-- introspecção do nome de *model*
+- introspecção do nome de _model_
 - conversões
 - traduções
 - validações
 
-Também oferece a capacidade de inicializar um objeto com um hash de atributos, muito parecido com qualquer objeto *Active Record*.
+Também oferece a capacidade de inicializar um objeto com um hash de atributos, muito parecido com qualquer objeto _Active Record_.
 
 ```irb
 irb> email_contact = EmailContact.new(name: 'David', email: 'david@example.com', message: 'Hello World')
@@ -302,7 +300,7 @@ irb> email_contact.persisted?
 => false
 ```
 
-Qualquer classe que inclua `ActiveModel::Model` pode ser usada com `form_with`, `render` e quaisquer outros métodos auxiliares do *Action View*, assim como o *Active Record* objetos.
+Qualquer classe que inclua `ActiveModel::Model` pode ser usada com `form_with`, `render` e quaisquer outros métodos auxiliares do _Action View_, assim como o _Active Record_ objetos.
 
 ### Serialização
 
@@ -405,14 +403,14 @@ end
 
 Com o método `human_attribute_name`, você pode transformar nomes de atributos em um formato mais legível por humanos. O formato legível por humanos é definido nos seus arquivos de localidade.
 
-* config/locales/app.pt-BR.yml
+- config/locales/app.pt-BR.yml
 
 ```yaml
 pt-BR:
   activemodel:
     attributes:
       person:
-        name: 'Nome'
+        name: "Nome"
 ```
 
 ```ruby
@@ -421,29 +419,29 @@ Person.human_attribute_name('name') # => "Nome"
 
 ### Testes de Lint
 
-O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a API do *model* ativo.
+O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a API do _model_ ativo.
 
-* `app/models/person.rb`
+- `app/models/person.rb`
 
-    ```ruby
-    class Person
-      include ActiveModel::Model
+  ```ruby
+  class Person
+    include ActiveModel::Model
+  end
+  ```
+
+- `test/models/person_test.rb`
+
+  ```ruby
+  require "test_helper"
+
+  class PersonTest < ActiveSupport::TestCase
+    include ActiveModel::Lint::Tests
+
+    setup do
+      @model = Person.new
     end
-    ```
-
-* `test/models/person_test.rb`
-
-    ```ruby
-    require "test_helper"
-
-    class PersonTest < ActiveSupport::TestCase
-      include ActiveModel::Lint::Tests
-
-      setup do
-        @model = Person.new
-      end
-    end
-    ```
+  end
+  ```
 
 ```bash
 $ bin/rails test
@@ -459,7 +457,7 @@ Finished in 0.024899s, 240.9735 runs/s, 1204.8677 assertions/s.
 6 runs, 30 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-Não é necessário um objeto para implementar todas as APIs para trabalhar com *Action Pack*. Este módulo pretende apenas fornecer orientação caso você queira que todos recursos prontos para uso.
+Não é necessário um objeto para implementar todas as APIs para trabalhar com _Action Pack_. Este módulo pretende apenas fornecer orientação caso você queira que todos recursos prontos para uso.
 
 ### SecurePassword
 
@@ -467,9 +465,9 @@ O `ActiveModel::SecurePassword` fornece uma maneira de armazenar com segurança 
 
 #### Requerimentos
 
-O `ActiveModel::SecurePassword` depende de [`bcrypt`](https://github.com/codahale/bcrypt-ruby 'BCrypt'),
+O `ActiveModel::SecurePassword` depende de [`bcrypt`](https://github.com/codahale/bcrypt-ruby "BCrypt"),
 portanto, inclua esta `gem` no seu `Gemfile` para usar o` ActiveModel::SecurePassword` corretamente.
-Para fazer isso funcionar, o *model* deve ter um acessador chamado `XXX_digest`.
+Para fazer isso funcionar, o _model_ deve ter um acessador chamado `XXX_digest`.
 Onde `XXX` é o nome do atributo da sua senha desejada.
 As seguintes validações são adicionadas automaticamente:
 
