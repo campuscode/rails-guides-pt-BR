@@ -206,7 +206,7 @@ A adição deste tipo de log facilita a busca por comportamentos não esperados 
 
 ### Verbose Query Logs
 
-When looking at database query output in logs, it may not be immediately clear why multiple database queries are triggered when a single method is called:
+Ao observar a saída de consulta de banco de dados em logs, pode não ser imediatamente claro por que várias consultas de banco de dados são acionadas quando um único método é chamado:
 
 ```
 irb(main):001:0> Article.pamplemousse
@@ -217,7 +217,7 @@ irb(main):001:0> Article.pamplemousse
 => #<Comment id: 2, author: "1", body: "Well, actually...", article_id: 1, created_at: "2018-10-19 00:56:10", updated_at: "2018-10-19 00:56:10">
 ```
 
-After running `ActiveRecord::Base.verbose_query_logs = true` in the `bin/rails console` session to enable verbose query logs and running the method again, it becomes obvious what single line of code is generating all these discrete database calls:
+Depois de executar `ActiveRecord::Base.verbose_query_logs = true` na sessão `bin/rails console` para habilitar logs de consulta detalhados e executar o método novamente, torna-se óbvio qual linha única de código está gerando todas essas chamadas discretas de banco de dados:
 
 ```
 irb(main):003:0> Article.pamplemousse
@@ -232,17 +232,17 @@ irb(main):003:0> Article.pamplemousse
 => #<Comment id: 2, author: "1", body: "Well, actually...", article_id: 1, created_at: "2018-10-19 00:56:10", updated_at: "2018-10-19 00:56:10">
 ```
 
-Below each database statement you can see arrows pointing to the specific source filename (and line number) of the method that resulted in a database call. This can help you identify and address performance problems caused by N+1 queries: single database queries that generates multiple additional queries.
+Abaixo de cada instrução do banco de dados, você pode ver setas apontando para o nome do arquivo de origem específico (e o número da linha) do método que resultou em uma chamada de banco de dados. Isso pode ajudá-lo a identificar e resolver problemas de desempenho causados por consultas N + 1: consultas únicas de banco de dados que geram várias consultas adicionais.
 
-Verbose query logs are enabled by default in the development environment logs after Rails 5.2.
+Logs de consulta detalhada são habilitados por padrão nos logs do ambiente de desenvolvimento após o Rails 5.2.
 
-WARNING: We recommend against using this setting in production environments. It relies on Ruby's `Kernel#caller` method which tends to allocate a lot of memory in order to generate stacktraces of method calls.
+WARNING: Não recomendamos o uso dessa configuração em ambientes de produção. Ele se baseia no método`Kernel#caller` que tende a alocar muita memória para gerar o _backtrace_ (rastreamento) de chamadas de método.
 
-### Tagged Logging
+### Tagged Log
 
-When running multi-user, multi-account applications, it's often useful
-to be able to filter the logs using some custom rules. `TaggedLogging`
-in Active Support helps you do exactly that by stamping log lines with subdomains, request ids, and anything else to aid debugging such applications.
+Ao executar aplicativos multiusuário e multi-contas, muitas vezes é útil
+ser capaz de filtrar os registros usando algumas regras personalizadas. `TaggedLogging`
+no Active Support ajuda você a fazer exatamente isso, marcando linhas de registro com subdomínios, IDs de requisição e qualquer outra coisa para auxiliar no _debug_ de tais aplicativos.
 
 ```ruby
 logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
@@ -251,40 +251,39 @@ logger.tagged("BCX", "Jason") { logger.info "Stuff" }                   # Logs "
 logger.tagged("BCX") { logger.tagged("Jason") { logger.info "Stuff" } } # Logs "[BCX] [Jason] Stuff"
 ```
 
-### Impact of Logs on Performance
+### Impacto dos logs no desempenho
 
-Logging will always have a small impact on the performance of your Rails app,
-particularly when logging to disk. Additionally, there are a few subtleties:
+O log sempre terá um pequeno impacto no desempenho do seu aplicativo Rails,
+particularmente ao fazer o registro no disco. Além disso, existem algumas sutilezas:
 
-Using the `:debug` level will have a greater performance penalty than `:fatal`,
-as a far greater number of strings are being evaluated and written to the
-log output (e.g. disk).
+Ao utilizar o nível `:debug` terá uma penalidade de desempenho maior do que `:fatal`,
+já que um número muito maior de _strings_ está sendo avaliado e gravado na saída do log (e.g. disco).
 
-Another potential pitfall is too many calls to `Logger` in your code:
+Outra armadilha potencial são muitas chamadas para `Logger` em seu código:
 
 ```ruby
 logger.debug "Person attributes hash: #{@person.attributes.inspect}"
 ```
 
-In the above example, there will be a performance impact even if the allowed
-output level doesn't include debug. The reason is that Ruby has to evaluate
-these strings, which includes instantiating the somewhat heavy `String` object
-and interpolating the variables.
+No exemplo acima, haverá um impacto no desempenho, mesmo se o nível de saída
+permitido não incluir _debug_. A razão é que o Ruby tem que avaliar
+essas _strings_, que inclui instanciar o objeto `String` um tanto pesado
+e interpolar as variáveis.
 
-Therefore, it's recommended to pass blocks to the logger methods, as these are
-only evaluated if the output level is the same as — or included in — the allowed level
-(i.e. lazy loading). The same code rewritten would be:
+Portanto, é recomendado passar blocos para os métodos logger, pois estes são
+apenas avaliado se o nível de saída for o mesmo - ou incluído - o nível permitido
+(i.e. carregamento lento). O mesmo código reescrito seria:
 
 ```ruby
 logger.debug {"Person attributes hash: #{@person.attributes.inspect}"}
 ```
 
-The contents of the block, and therefore the string interpolation, are only
-evaluated if debug is enabled. This performance savings are only really
-noticeable with large amounts of logging, but it's a good practice to employ.
+O conteúdo do bloco e, portanto, a interpolação de _string_, são apenas
+avaliada se o _debug_ está habilitado. Essa economia de desempenho é apenas realmente
+perceptível com grandes quantidades de registro, mas é uma boa prática empregar.
 
-INFO: This section was written by [Jon Cairns at a StackOverflow answer](https://stackoverflow.com/questions/16546730/logging-in-rails-is-there-any-performance-hit/16546935#16546935)
-and it is licensed under [cc by-sa 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+INFO: Esta seção foi escrita por [Jon Cairns em uma resposta no StackOverflow](https://stackoverflow.com/questions/16546730/logging-in-rails-is-there-any-performance-hit/16546935#16546935)
+e está licenciada sob [cc by-sa 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 *Debug* com a gem `byebug`
 ---------------------------------
@@ -971,7 +970,7 @@ Fornece um objeto *mailer* e um conjunto padrão de *templates* para enviar noti
 * [RailsPanel](https://github.com/dejan/rails_panel) extensão do Chrome para desenvolvimento Rails que encerrerá seu acompanhamento de development.log. Tenha todas as informações sobre as solicitações do seu aplicativo Rails no navegador - no painel Ferramentas do desenvolvedor. Fornece informações sobre db / renderização / tempos totais, lista de parâmetros, visualizações renderizadas e muito mais.
 * [Pry](https://github.com/pry/pry) Uma alternativa IRB e console de desenvolvedor em tempo de execução.
 
-References
+Referencias
 ----------
 
 * [byebug Homepage](https://github.com/deivid-rodriguez/byebug)
