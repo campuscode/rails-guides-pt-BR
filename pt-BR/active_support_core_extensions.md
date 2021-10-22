@@ -1067,7 +1067,7 @@ NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 
 [Class#descendants]: https://api.rubyonrails.org/classes/Class.html#method-i-descendants
 
-Extensions to `String`
+Extensões para `String`
 ----------------------
 
 ### Output Safety
