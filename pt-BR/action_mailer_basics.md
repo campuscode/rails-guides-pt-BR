@@ -438,14 +438,10 @@ end
 
 Vai renderizar a parte *HTML* usando o arquivo `my_layout.html.erb` e a parte de texto com o arquivo usual `user_mailer.text.erb` se ele existir.
 
-### Previewing Emails
+### Pré-visualizando Emails
 
-Action Mailer previews provide a way to see how emails look by visiting a
-special URL that renders them. In the above example, the preview class for
-`UserMailer` should be named `UserMailerPreview` and located in
-`test/mailers/previews/user_mailer_preview.rb`. To see the preview of
-`welcome_email`, implement a method that has the same name and call
-`UserMailer.welcome_email`:
+O *Action Mailer Preview* possibilita uma maneira de pré-visualizar como o email vai ficar, acessando uma _URL_ especial que o renderiza. No exemplo acima, a classe para pré-visualizar `UserMailer` deve se chamar `UserMailerPreview`
+e deve estar localizada em `test/mailers/previews/user_mailer_preview.rb`. Para ver o modelo de `welcome_email`, implemente um método que tem o mesmo nome e chame por `UserMailer.welcome_email`:
 
 ```ruby
 class UserMailerPreview < ActionMailer::Preview
@@ -455,17 +451,13 @@ class UserMailerPreview < ActionMailer::Preview
 end
 ```
 
-Then the preview will be available in <http://localhost:3000/rails/mailers/user_mailer/welcome_email>.
+Dessa maneira, o modelo vai ficar disponível em <http://localhost:3000/rails/mailers/user_mailer/welcome_email>.
 
-If you change something in `app/views/user_mailer/welcome_email.html.erb`
-or the mailer itself, it'll automatically reload and render it so you can
-visually see the new style instantly. A list of previews are also available
-in <http://localhost:3000/rails/mailers>.
+Se você mudar algo em `app/views/user_mailer/welcome_email.html.erb` ou no próprio *mailer*,
+ele será automaticamente recarregado e renderizado, para que você veja as mudanças instantaneamente.
+Uma lista das pré-visualizações também ficam disponíveis em <http://localhost:3000/rails/mailers>.
 
-By default, these preview classes live in `test/mailers/previews`.
-This can be configured using the `preview_path` option. For example, if you
-want to change it to `lib/mailer_previews`, you can configure it in
-`config/application.rb`:
+Por padrão, essas classes de pré-visualizações ficam em `test/mailers/previews`. Isso pode ser configurado usando a opção `preview_path`. Por exemplo, se você quiser alterar para `lib/mailer_previews`, você pode configurar isso em `config/application.rb`:
 
 ```ruby
 config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
