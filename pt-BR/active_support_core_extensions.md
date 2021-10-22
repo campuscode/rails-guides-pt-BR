@@ -1254,7 +1254,7 @@ NOTE: Defined in `active_support/core_ext/string/filters.rb`.
 
 ### `truncate_words`
 
-The method [`truncate_words`][String#truncate_words] returns a copy of its receiver truncated after a given number of words:
+O método [`truncate_words`][String#truncate_words] retorna uma cópia da frase original truncada depois de receber um determinado número de palavras:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate_words(4)
