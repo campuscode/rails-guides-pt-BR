@@ -431,8 +431,8 @@ O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a AP
 
 * `test/models/person_test.rb`
 
-  ```ruby
-  require "test_helper"
+    ```ruby
+    require "test_helper"
 
   class PersonTest < ActiveSupport::TestCase
     include ActiveModel::Lint::Tests
