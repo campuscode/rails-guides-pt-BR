@@ -411,7 +411,7 @@ pt-BR:
   activemodel:
     attributes:
       person:
-        name: "Nome"
+        name: 'Nome'
 ```
 
 ```ruby
