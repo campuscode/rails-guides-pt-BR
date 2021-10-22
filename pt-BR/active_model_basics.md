@@ -404,7 +404,7 @@ end
 
 Com o método `human_attribute_name`, você pode transformar nomes de atributos em um formato mais legível por humanos. O formato legível por humanos é definido nos seus arquivos de localidade.
 
-- config/locales/app.pt-BR.yml
+* config/locales/app.pt-BR.yml
 
 ```yaml
 pt-BR:
