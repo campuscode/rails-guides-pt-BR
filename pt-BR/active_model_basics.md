@@ -9,10 +9,10 @@ O _Active Model_ permite que o _Action Pack Helpers_ interaja com os objetos rub
 
 Após a leitura desse guia você saberá:
 
-- Como um _Active Record_ se comporta.
-- Como _Callbacks_ e _Validações_ funcionam.
-- Como _serializers_ funcionam.
-- Como _Active Model_ integra com o framework de internacionalização (`i18n`) do Rails.
+* Como um _Active Record_ se comporta.
+* Como _Callbacks_ e _Validações_ funcionam.
+* Como _serializers_ funcionam.
+* Como _Active Model_ integra com o framework de internacionalização (`i18n`) do Rails.
 
 ---
 
