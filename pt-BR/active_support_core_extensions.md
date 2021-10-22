@@ -1448,7 +1448,7 @@ NOTE: Defined in `active_support/core_ext/string/access.rb`.
 
 #### `pluralize`
 
-The method [`pluralize`][String#pluralize] returns the plural of its receiver:
+O método [`pluralize`][String#pluralize] retorna o plural do receptor:
 
 ```ruby
 "table".pluralize     # => "tables"
