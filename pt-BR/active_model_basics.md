@@ -1,7 +1,8 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-# Básico do _Active Model_
+Básico do _Active Model_
+===================
 
 Esse guia deverá prover tudo que você precisa para começar a usar classes de modelo (`models`).
 O _Active Model_ permite que o _Action Pack Helpers_ interaja com os objetos ruby. O _Active model_ também auxilia a criação de _ORMs_ (mapeamento de objetos relacionais) para o uso fora do framework Rails.
