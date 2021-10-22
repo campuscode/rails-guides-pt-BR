@@ -16,7 +16,7 @@ Após a leitura desse guia você saberá:
 
 ---
 
-## O que é _Active Model_?
+O que é _Active Model_?
 
 O Active Model é uma biblioteca que contém vários módulos utilizados para desenvolvimento de classes que precisam de algumas funções (`features`) existentes no Active Record.
 
