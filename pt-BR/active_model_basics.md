@@ -13,7 +13,7 @@ Após a leitura desse guia você saberá:
 * Como _serializers_ funcionam.
 * Como _Active Model_ integra com o framework de internacionalização (`i18n`) do Rails.
 
----
+--------------------------------------------------------------------------------
 
 O que é _Active Model_?
 
