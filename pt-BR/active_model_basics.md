@@ -423,11 +423,11 @@ O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a AP
 
 * `app/models/person.rb`
 
-  ```ruby
-  class Person
-    include ActiveModel::Model
-  end
-  ```
+    ```ruby
+    class Person
+      include ActiveModel::Model
+    end
+    ```
 
 * `test/models/person_test.rb`
 
