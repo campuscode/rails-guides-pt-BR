@@ -8,7 +8,6 @@ Esse guia deverá prover tudo que você precisa para começar a usar classes de 
 O _Active Model_ permite que o _Action Pack Helpers_ interaja com os objetos ruby. O _Active model_ também auxilia a criação de _ORMs_ (mapeamento de objetos relacionais) para o uso fora do framework Rails.
 
 Após a leitura desse guia você saberá:
-
 * Como um _Active Record_ se comporta.
 * Como _Callbacks_ e _Validações_ funcionam.
 * Como _serializers_ funcionam.
