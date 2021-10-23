@@ -273,7 +273,7 @@ time_ago_in_words(3.minutes.from_now) # => 3 minutes
 
 ### DebugHelper
 
-Returns a `pre` tag that has object dumped by YAML. This creates a very readable way to inspect an object.
+Retorna uma tag `pre` com um objeto YAML. Isso cria uma maneira muito legível de inspecionar um objeto.
 
 ```ruby
 my_hash = { 'first' => 1, 'second' => 'two', 'third' => [1,2,3] }
@@ -293,42 +293,41 @@ third:
 
 ### FormHelper
 
-Form helpers are designed to make working with models much easier compared to using just standard HTML elements by providing a set of methods for creating forms based on your models. This helper generates the HTML for forms, providing a method for each sort of input (e.g., text, password, select, and so on). When the form is submitted (i.e., when the user hits the submit button or form.submit is called via JavaScript), the form inputs will be bundled into the params object and passed back to the controller.
+*FormHelper* são projetados para tornar o trabalho com modelos muito mais fácil em comparação com o uso apenas de elementos HTML padrão, fornecendo um conjunto de métodos para a criação de formulários com base em seus *models*. Este auxiliar gera o HTML para os formulários, fornecendo um método para cada tipo de entrada (por exemplo, texto (*text*), senha (*password*), seleção (*select*), e assim por diante). Quando o formulário é enviado (ou seja, quando o usuário clica no botão de envio, ou através de *form.submit* chamado via JavaScript), as entradas do formulário são agrupadas dentro de parâmetros de um objeto e devolvidas ao controlador.
 
-You can learn more about form helpers in the [Action View Form Helpers
-Guide](form_helpers.html).
+Você pode aprender mais sobre os *helpers* de formulário em [Action View Form Helpers Guide](form_helpers.html).
 
 ### JavaScriptHelper
 
-Provides functionality for working with JavaScript in your views.
+Fornece funcionalidades para trabalhar com JavaScript em suas *views*.
 
 #### escape_javascript
 
-Escape carrier returns and single and double quotes for JavaScript segments.
+*Escapa* retornos, aspas simples e aspas duplas para segmentos JavaScript.
 
 #### javascript_tag
 
-Returns a JavaScript tag wrapping the provided code.
+Retorna uma tag JavaScript envolvendo o código fornecido.
 
 ```ruby
-javascript_tag "alert('All is good')"
+javascript_tag "alert('Tudo está bem')"
 ```
 
 ```html
 <script>
 //<![CDATA[
-alert('All is good')
+alert('Tudo está bem')
 //]]>
 </script>
 ```
 
 ### NumberHelper
 
-Provides methods for converting numbers into formatted strings. Methods are provided for phone numbers, currency, percentage, precision, positional notation, and file size.
+Fornece métodos para converter números em strings formatadas. Métodos são fornecidos para números de telefone, moeda, porcentagem, precisão, notação posicional e tamanho do arquivo.
 
 #### number_to_currency
 
-Formats a number into a currency string (e.g., $13.65).
+Formata um número em uma string de moeda (por exemplo, $13.65).
 
 ```ruby
 number_to_currency(1234567890.50) # => $1,234,567,890.50
@@ -336,7 +335,7 @@ number_to_currency(1234567890.50) # => $1,234,567,890.50
 
 #### number_to_human_size
 
-Formats the bytes in size into a more understandable representation; useful for reporting file sizes to users.
+Formata os *bytes* em tamanho em uma representação mais compreensível; útil para relatar tamanhos de arquivo aos usuários.
 
 ```ruby
 number_to_human_size(1234)    # => 1.2 KB
@@ -345,7 +344,7 @@ number_to_human_size(1234567) # => 1.2 MB
 
 #### number_to_percentage
 
-Formats a number as a percentage string.
+Formata um número como string de porcentagem.
 
 ```ruby
 number_to_percentage(100, precision: 0) # => 100%
@@ -353,7 +352,7 @@ number_to_percentage(100, precision: 0) # => 100%
 
 #### number_to_phone
 
-Formats a number into a phone number (US by default).
+Formata um número em um número de telefone (formato do EUA por padrão).
 
 ```ruby
 number_to_phone(1235551234) # => 123-555-1234
@@ -361,7 +360,7 @@ number_to_phone(1235551234) # => 123-555-1234
 
 #### number_with_delimiter
 
-Formats a number with grouped thousands using a delimiter.
+Formata um número com casas de milhar usando um delimitador.
 
 ```ruby
 number_with_delimiter(12345678) # => 12,345,678
@@ -369,7 +368,7 @@ number_with_delimiter(12345678) # => 12,345,678
 
 #### number_with_precision
 
-Formats a number with the specified level of `precision`, which defaults to 3.
+Formata um número com o nível especificado de `precision` (precisão), cujo o padrão é 3.
 
 ```ruby
 number_with_precision(111.2345)               # => 111.235
@@ -378,23 +377,23 @@ number_with_precision(111.2345, precision: 2) # => 111.23
 
 ### SanitizeHelper
 
-The SanitizeHelper module provides a set of methods for scrubbing text of undesired HTML elements.
+O módulo *SanitizeHelper* fornece um conjunto de métodos para limpar o texto de elementos HTML indesejados.
 
 #### sanitize
 
-This sanitize helper will HTML encode all tags and strip all attributes that aren't specifically allowed.
+Este *helper* de limpeza codificará em HTML todas as tags e removerá todos os atributos que não são especificamente permitidos.
 
 ```ruby
 sanitize @article.body
 ```
 
-If either the `:attributes` or `:tags` options are passed, only the mentioned attributes and tags are allowed and nothing else.
+Se as opções `:attributes` (atributos) ou `:tags` são passadas, apenas os atributos e tags mencionados são permitidos e nada mais.
 
 ```ruby
 sanitize @article.body, tags: %w(table tr td), attributes: %w(id class style)
 ```
 
-To change defaults for multiple uses, for example adding table tags to the default:
+Para alterar os padrões para múltiplos usos, por exemplo, adicionando tags de tabela ao padrão:
 
 ```ruby
 class Application < Rails::Application
@@ -404,10 +403,11 @@ end
 
 #### sanitize_css(style)
 
-Sanitizes a block of CSS code.
+Limpa um bloco de código CSS.
 
 #### strip_links(html)
-Strips all link tags from text leaving just the link text.
+
+Remove todas as tags de link do texto, deixando apenas o texto do link.
 
 ```ruby
 strip_links('<a href="https://rubyonrails.org">Ruby on Rails</a>')
@@ -415,31 +415,31 @@ strip_links('<a href="https://rubyonrails.org">Ruby on Rails</a>')
 ```
 
 ```ruby
-strip_links('emails to <a href="mailto:me@email.com">me@email.com</a>.')
-# => emails to me@email.com.
+strip_links('e-mails para <a href="mailto:me@email.com">me@email.com</a>.')
+# => e-mails para me@email.com.
 ```
 
 ```ruby
-strip_links('Blog: <a href="http://myblog.com/">Visit</a>.')
-# => Blog: Visit.
+strip_links('Blog: <a href="http://myblog.com/">Visite</a>.')
+# => Blog: Visite.
 ```
 
 #### strip_tags(html)
 
-Strips all HTML tags from the html, including comments.
-This functionality is powered by the rails-html-sanitizer gem.
+Retira todas as tags HTML do html, incluindo comentários.
+Essa funcionalidade é alimentada pela *gem rails-html-sanitizer*.
 
 ```ruby
-strip_tags("Strip <i>these</i> tags!")
-# => Strip these tags!
+strip_tags("Remova <i>essas</i> tags!")
+# => Remova essas tags!
 ```
 
 ```ruby
-strip_tags("<b>Bold</b> no more!  <a href='more.html'>See more</a>")
-# => Bold no more!  See more
+strip_tags("Sem <b>Bold</b> mais!  <a href='more.html'>Olhar mais</a>")
+# => Sem bold mais!  Olhar mais
 ```
 
-NB: The output may still contain unescaped '<', '>', '&' characters and confuse browsers.
+Nota: A saída ainda pode conter caracteres '<', '>', '&' sem ser escapadas e confundir os navegadores.
 
 ### UrlHelper
 
