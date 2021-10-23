@@ -443,13 +443,13 @@ NB: The output may still contain unescaped '<', '>', '&' characters and confuse 
 
 ### UrlHelper
 
-Provides methods to make links and get URLs that depend on the routing subsystem.
+Fornece métodos para criar links e obter URLs que dependem do *subsistema de roteamento*.
 
 #### url_for
 
-Returns the URL for the set of `options` provided.
+Retorna a URL para o conjunto de `options` fornecido.
 
-##### Examples
+##### Exemplos
 
 ```ruby
 url_for @profile
@@ -461,64 +461,64 @@ url_for [ @hotel, @booking, page: 2, line: 3 ]
 
 #### link_to
 
-Links to a URL derived from `url_for` under the hood. Primarily used to
-create RESTful resource links, which for this example, boils down to
-when passing models to `link_to`.
+Links para uma URL derivada de `url_for` nos bastidores. Usado principalmente 
+para criar links de recursos RESTful, que, para este exemplo, se resumem a
+ao passar *models* para `link_to`.
 
-**Examples**
+**Exemplos**
 
 ```ruby
 link_to "Profile", @profile
 # => <a href="/profiles/1">Profile</a>
 ```
 
-You can use a block as well if your link target can't fit in the name parameter. ERB example:
+Você também pode usar um bloco se o destino do link não couber no parâmetro de nome. Exemplo de ERB:
 
 ```html+erb
 <%= link_to @profile do %>
-  <strong><%= @profile.name %></strong> -- <span>Check it out!</span>
+  <strong><%= @profile.name %></strong> -- <span>Confira!</span>
 <% end %>
 ```
 
-would output:
+produziria:
 
 ```html
 <a href="/profiles/1">
-  <strong>David</strong> -- <span>Check it out!</span>
+  <strong>David</strong> -- <span>Confira!</span>
 </a>
 ```
 
-See [the API Documentation for more information](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
+Consulte [a documentação da API para obter mais informações](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
 
 #### button_to
 
-Generates a form that submits to the passed URL. The form has a submit button
-with the value of the `name`.
+Gera um formulário que submete para a URL passada. O formulário tem um botão de envio
+com o valor do `name` (*nome*).
 
 ##### Examples
 
 ```html+erb
-<%= button_to "Sign in", sign_in_path %>
+<%= button_to "Entrar", sign_in_path %>
 ```
 
-would roughly output something like:
+produziria aproximadamente algo como:
 
 ```html
 <form method="post" action="/sessions" class="button_to">
-  <input type="submit" value="Sign in" />
+  <input type="submit" value="Entrar" />
 </form>
 ```
 
-See [the API Documentation for more information](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to)
+Consulte [a documentação da API para obter mais informações](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to)
 
 ### CsrfHelper
 
-Returns meta tags "csrf-param" and "csrf-token" with the name of the cross-site
-request forgery protection parameter and token, respectively.
+Retorna *meta-tags* "*csrf-param*" e "*csrf-token*" com o nome do *cross-site*.
+Solicita parâmetros de proteção contra falsificação e token, respectivamente.
 
 ```html
 <%= csrf_meta_tags %>
 ```
 
-NOTE: Regular forms generate hidden fields so they do not use these tags. More
-details can be found in the [Rails Security Guide](security.html#cross-site-request-forgery-csrf).
+NOTE: Os formulários regulares geram campos ocultos, portanto, não usam essas tags. Mais
+detalhes podem ser encontrados no [Rails Security Guide](security.html#cross-site-request-forgery-csrf).
