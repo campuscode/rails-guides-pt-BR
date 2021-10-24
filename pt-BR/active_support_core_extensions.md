@@ -1070,30 +1070,30 @@ NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 Extensões para `String`
 ----------------------
 
-### Output Safety
+### Segurança de saída 
 
-#### Motivation
+#### Motivação
 
-Inserting data into HTML templates needs extra care. For example, you can't just interpolate `@review.title` verbatim into an HTML page. For one thing, if the review title is "Flanagan & Matz rules!" the output won't be well-formed because an ampersand has to be escaped as "&amp;amp;". What's more, depending on the application, that may be a big security hole because users can inject malicious HTML setting a hand-crafted review title. Check out the section about cross-site scripting in the [Security guide](security.html#cross-site-scripting-xss) for further information about the risks.
+Inserir dados em templates HTML, necessita de cuidados extras. Por exemplo, você não pode apenas literalmente juntar `@review.title` em uma página HTML. Por outro lado, se o título do comentário é "Flanagan & Matz rules!" o retorno não será bem formada porque um 'e comercial' precisa ser usado como "&amp;amp;". Além do mais, dependendo da aplicação, isso pode ser uma grande falha de segurança porque os usuários podem injetar uma configuração HTML maliciosa em um título de revisão feito à mão. Confira a seção sobre _cross-site scripting_ em [Guia de Segurança](security.html#cross-site-scripting-xss) para maiores informações sobre os riscos.
 
-#### Safe Strings
+#### _Strings_ Seguras
 
-Active Support has the concept of _(html) safe_ strings. A safe string is one that is marked as being insertable into HTML as is. It is trusted, no matter whether it has been escaped or not.
+_Active Support_ possui o conceito de _(html)_ _strings_ seguras. Uma _string_ segura é aquela que é marcada como sendo inserível no HTML como é definida. Ela é confiável, não importando sua origem.
 
-Strings are considered to be _unsafe_ by default:
+_Strings_ são consideradas como inseguras por padrão:
 
 ```ruby
 "".html_safe? # => false
 ```
 
-You can obtain a safe string from a given one with the [`html_safe`][String#html_safe] method:
+Pode-se obter uma _string_ segura de um dado com o método [`html_safe`][String#html_safe]:
 
 ```ruby
 s = "".html_safe
 s.html_safe? # => true
 ```
 
-It is important to understand that `html_safe` performs no escaping whatsoever, it is just an assertion:
+É importante entender que `html_safe` não executa nenhuma operação, é apenas uma afirmação:
 
 ```ruby
 s = "<script>...</script>".html_safe
@@ -1101,39 +1101,39 @@ s.html_safe? # => true
 s            # => "<script>...</script>"
 ```
 
-It is your responsibility to ensure calling `html_safe` on a particular string is fine.
+É sua responsabilidade garantir a chamada `html_safe` em cada _string_ particular.
 
-If you append onto a safe string, either in-place with `concat`/`<<`, or with `+`, the result is a safe string. Unsafe arguments are escaped:
+Se você anexar em uma _string_ segura, com `concat`/`<<`, ou com `+`, o resultado é uma _string_ segura. Inserguros argumentos são ignorados:
 
 ```ruby
 "".html_safe + "<" # => "&lt;"
 ```
 
-Safe arguments are directly appended:
+Argumentos seguros são anexados diretamente:
 
 ```ruby
 "".html_safe + "<".html_safe # => "<"
 ```
 
-These methods should not be used in ordinary views. Unsafe values are automatically escaped:
+Esses métodos não devem ser usados em _views_ comuns. Valores inseguros são ignorados automaticamente:
 
 ```erb
-<%= @review.title %> <%# fine, escaped if needed %>
+<%= @review.title %> <%# correto, ignora se necessário %>
 ```
 
-To insert something verbatim use the [`raw`][] helper rather than calling `html_safe`:
+Para inserir algo literal, use o _helper_ [`raw`][] ao invés de chamar `html_safe`:
 
 ```erb
-<%= raw @cms.current_template %> <%# inserts @cms.current_template as is %>
+<%= raw @cms.current_template %> <%# insere @cms.current_template como é %>
 ```
 
-or, equivalently, use `<%==`:
+ou, equivalentemente, use `<%==`:
 
 ```erb
-<%== @cms.current_template %> <%# inserts @cms.current_template as is %>
+<%== @cms.current_template %> <%# insere @cms.current_template como é %>
 ```
 
-The `raw` helper calls `html_safe` for you:
+O _helper_ `raw` chama `html_safe` pra você:
 
 ```ruby
 def raw(stringish)
@@ -1141,76 +1141,76 @@ def raw(stringish)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/output_safety.rb`.
+NOTE: Definido em `active_support/core_ext/string/output_safety.rb`.
 
 [`raw`]: https://api.rubyonrails.org/classes/ActionView/Helpers/OutputSafetyHelper.html#method-i-raw
 [String#html_safe]: https://api.rubyonrails.org/classes/String.html#method-i-html_safe
 
-#### Transformation
+#### Transformação
 
-As a rule of thumb, except perhaps for concatenation as explained above, any method that may change a string gives you an unsafe string. These are `downcase`, `gsub`, `strip`, `chomp`, `underscore`, etc.
+De modo geral, exceto talvez para concatenação conforme explicado acima, qualquer método que possa alterar uma _string_ fornece uma _string_ insegura. Estes são `downcase`, `gsub`, `strip`, `chomp`, `underscore`, etc.
 
-In the case of in-place transformations like `gsub!` the receiver itself becomes unsafe.
+No caso de transformações locais, como com `gsub!` o próprio receptor se torna inseguro.
 
-INFO: The safety bit is lost always, no matter whether the transformation actually changed something.
+INFO: O bit de segurança é perdido sempre, não importa se a transformação realmente mudou algo.
 
-#### Conversion and Coercion
+#### Conversão e Coerção
 
-Calling `to_s` on a safe string returns a safe string, but coercion with `to_str` returns an unsafe string.
+Chamando `to_s` em uma _string_ segura retorna uma _string_ segura, mas a coerção com `to_str` retora uma _string_ insegura.
 
-#### Copying
+#### Copiando
 
-Calling `dup` or `clone` on safe strings yields safe strings.
+Chamando `dup` ou `clone` em _strings_ seguras produz outras _strings_ seguras.
 
 ### `remove`
 
-The method [`remove`][String#remove] will remove all occurrences of the pattern:
+O método [`remove`][String#remove] vai remover todas ocorrências com o padrão:
 
 ```ruby
 "Hello World".remove(/Hello /) # => "World"
 ```
 
-There's also the destructive version `String#remove!`.
+Há também a versão destrutiva `String#remove!`.
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#remove]: https://api.rubyonrails.org/classes/String.html#method-i-remove
 
 ### `squish`
 
-The method [`squish`][String#squish] strips leading and trailing whitespace, and substitutes runs of whitespace with a single space each:
+O método [`squish`][String#squish] remove os espaços em branco à esquerda e à direita e substitui os espaços em branco por um único espaço cada:
 
 ```ruby
 " \n  foo\n\r \t bar \n".squish # => "foo bar"
 ```
 
-There's also the destructive version `String#squish!`.
+Há também a versão destrutiva `String#squish!`.
 
-Note that it handles both ASCII and Unicode whitespace.
+Observe que se lida com espaços em branco ASCII e Unicode.
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#squish]: https://api.rubyonrails.org/classes/String.html#method-i-squish
 
 ### `truncate`
 
-The method [`truncate`][String#truncate] returns a copy of its receiver truncated after a given `length`:
+O método [`truncate`][String#truncate] retorna uma cópia de seu receptor truncado após um determinado `length`:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate(20)
 # => "Oh dear! Oh dear!..."
 ```
 
-Ellipsis can be customized with the `:omission` option:
+As reticências podem ser personalizadas com a opção `:omission`:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate(20, omission: '&hellip;')
 # => "Oh dear! Oh &hellip;"
 ```
 
-Note in particular that truncation takes into account the length of the omission string.
+Observe em particular que o truncamento leva em consideração o comprimento da _string_ de omissão.
 
-Pass a `:separator` to truncate the string at a natural break:
+Passe o método `:separator` para truncar a _string_ em uma pausa natural:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate(18)
@@ -1219,36 +1219,36 @@ Pass a `:separator` to truncate the string at a natural break:
 # => "Oh dear! Oh..."
 ```
 
-The option `:separator` can be a regexp:
+A opção `:separator` pode ser uma regexp:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate(18, separator: /\s/)
 # => "Oh dear! Oh..."
 ```
 
-In above examples "dear" gets cut first, but then `:separator` prevents it.
+Nos exemplos acima "dear" é cortado primeiro, mas depois `:separator` impede isso.
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#truncate]: https://api.rubyonrails.org/classes/String.html#method-i-truncate
 
 ### `truncate_bytes`
 
-The method [`truncate_bytes`][String#truncate_bytes] returns a copy of its receiver truncated to at most `bytesize` bytes:
+O método [`truncate_bytes`][String#truncate_bytes] retorna uma cópia de seu receptor truncado para no máximo `bytesize` _bytes_:
 
 ```ruby
 "👍👍👍👍".truncate_bytes(15)
 # => "👍👍👍…"
 ```
 
-Ellipsis can be customized with the `:omission` option:
+As reticências podem ser personalizadas com a opção `:omission`:
 
 ```ruby
 "👍👍👍👍".truncate_bytes(15, omission: "🖖")
 # => "👍👍🖖"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#truncate_bytes]: https://api.rubyonrails.org/classes/String.html#method-i-truncate_bytes
 
