@@ -1248,7 +1248,7 @@ Ellipsis can be customized with the `:omission` option:
 # => "👍👍🖖"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#truncate_bytes]: https://api.rubyonrails.org/classes/String.html#method-i-truncate_bytes
 
@@ -1261,60 +1261,60 @@ O método [`truncate_words`][String#truncate_words] retorna uma cópia da frase 
 # => "Oh dear! Oh dear!..."
 ```
 
-Ellipsis can be customized with the `:omission` option:
+Reticências podem ser customizadas com a opção `:omission`:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate_words(4, omission: '&hellip;')
 # => "Oh dear! Oh dear!&hellip;"
 ```
 
-Pass a `:separator` to truncate the string at a natural break:
+Chame `:separator` para truncar a _string_ na pausa natural:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate_words(3, separator: '!')
 # => "Oh dear! Oh dear! I shall be late..."
 ```
 
-The option `:separator` can be a regexp:
+A opção `:separator` pode ser uma regexp:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate_words(4, separator: /\s/)
 # => "Oh dear! Oh dear!..."
 ```
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#truncate_words]: https://api.rubyonrails.org/classes/String.html#method-i-truncate_words
 
 ### `inquiry`
 
-The [`inquiry`][String#inquiry] method converts a string into a `StringInquirer` object making equality checks prettier.
+O método [`inquiry`][String#inquiry] converte uma _string_ em um objeto `StringInquirer` fazendo verificações de igualdade mais elegantes.
 
 ```ruby
 "production".inquiry.production? # => true
 "active".inquiry.inactive?       # => false
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inquiry.rb`.
+NOTE: Definido em `active_support/core_ext/string/inquiry.rb`.
 
 [String#inquiry]: https://api.rubyonrails.org/classes/String.html#method-i-inquiry
 
-### `starts_with?` and `ends_with?`
+### `starts_with?` e `ends_with?`
 
-Active Support defines 3rd person aliases of `String#start_with?` and `String#end_with?`:
+_Active Support_ define conjugação verbal para 3ª pessoa em `String#start_with?` e `String#end_with?`:
 
 ```ruby
 "foo".starts_with?("f") # => true
 "foo".ends_with?("o")   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/string/starts_ends_with.rb`.
+NOTE: Definido em `active_support/core_ext/string/starts_ends_with.rb`.
 
 ### `strip_heredoc`
 
-The method [`strip_heredoc`][String#strip_heredoc] strips indentation in heredocs.
+O método [`strip_heredoc`][String#strip_heredoc] tira o recuo em _heredocs_.
 
-For example in
+Por exemplo em
 
 ```ruby
 if options[:usage]
@@ -1328,10 +1328,10 @@ if options[:usage]
 end
 ```
 
-the user would see the usage message aligned against the left margin.
+o usuário veria a mensagem de uso alinhada à margem esquerda.
 
-Technically, it looks for the least indented line in the whole string, and removes
-that amount of leading whitespace.
+Tecnicamente, se procura a linha menos indentada em toda a _string_ e remove
+essa quantidade de espaço em branco à esquerda.
 
 NOTE: Defined in `active_support/core_ext/string/strip.rb`.
 
@@ -1339,7 +1339,7 @@ NOTE: Defined in `active_support/core_ext/string/strip.rb`.
 
 ### `indent`
 
-The [`indent`][String#indent] method indents the lines in the receiver:
+O método [`indent`][String#indent] indenta as linhas no receptor:
 
 ```ruby
 <<EOS.indent(2)
@@ -1353,7 +1353,7 @@ EOS
   end
 ```
 
-The second argument, `indent_string`, specifies which indent string to use. The default is `nil`, which tells the method to make an educated guess peeking at the first indented line, and fallback to a space if there is none.
+O segundo argumento, `indent_string`, especifica qual _string_ de indentação usar. O padrão é `nil`, que diz ao método para fazer uma suposição conferindo a primeira linha indentada, e recuando para um espaço se não houver nenhuma.
 
 ```ruby
 "  foo".indent(2)        # => "    foo"
@@ -1361,18 +1361,18 @@ The second argument, `indent_string`, specifies which indent string to use. The 
 "foo".indent(2, "\t")    # => "\t\tfoo"
 ```
 
-While `indent_string` is typically one space or tab, it may be any string.
+Enquanto `indent_string` é normalmente um espaço ou tabulação, essa pode ser qualquer _string_.
 
-The third argument, `indent_empty_lines`, is a flag that says whether empty lines should be indented. Default is false.
+O terceiro argumento, `indent_empty_lines`, é uma sinalização que diz se as linhas vazias devem ser indentadas. O padrão é _false_.
 
 ```ruby
 "foo\n\nbar".indent(2)            # => "  foo\n\n  bar"
 "foo\n\nbar".indent(2, nil, true) # => "  foo\n  \n  bar"
 ```
 
-The [`indent!`][String#indent!] method performs indentation in-place.
+O método [`indent!`][String#indent!] realiza recuo no local.
 
-NOTE: Defined in `active_support/core_ext/string/indent.rb`.
+NOTE: Definido em `active_support/core_ext/string/indent.rb`.
 
 [String#indent!]: https://api.rubyonrails.org/classes/String.html#method-i-indent-21
 [String#indent]: https://api.rubyonrails.org/classes/String.html#method-i-indent
