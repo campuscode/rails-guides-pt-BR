@@ -271,7 +271,7 @@
 <li><a href="#layouts">Layouts</a></li>
 </ul>
 </li>
-<li><a href="#partial-layouts">Partial Layouts</a></li>
+<li><a href="#layout-de-partial"><em>Layout</em> de <em>Partial</em></a></li>
 <li>
 <a href="#view-paths">View Paths</a>
 
@@ -292,7 +292,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="o-que-e-action-view-questionmark"><a class="anchorlink" href="#o-que-e-action-view-questionmark">1 O que é <em>Action View</em>?</a></h3><p>No <em>Rails</em>, as requisições web são tratadas por <a href="action_controller_overview.html"><em>Action Controller</em></a> e <em>Action View</em>. Normalmente, o <em>Action Controller</em> é responsável por se comunicar com o banco de dados e realizar ações de <em>CRUD</em> quando necessário. A <em>Action View</em> é responsável por compilar a resposta.</p><p>Os templates <em>Action View</em> são escritos usando Ruby embutido em tags mescladas com HTML. Para evitar poluir os templates com código clichê (<em>boilerplate code</em>), uma variedade de classes utilitárias (<em>helpers</em>) disponibilizam comportamentos comuns para lidar com <em>forms</em>, datas e <em>strings</em>. Também é fácil adicionar novas classes utilitárias (<em>helpers</em>) em sua aplicação conforme ela evolui.</p><div class="note"><p>Alguns recursos da <em>Action View</em> estão vinculados ao <em>Active Record</em>, mas isso não significa que a <em>Action View</em> depende do <em>Active Record</em>. <em>Action View</em> é um pacote independente que pode ser usado com qualquer tipo de biblioteca Ruby.</p></div><h3 id="usando-action-view-com-rails"><a class="anchorlink" href="#usando-action-view-com-rails">2 Usando <em>Action View</em> com Rails</a></h3><p>Para cada <em>controller</em> há um diretório associado em <code>app/views</code> que contém os arquivos de <em>template</em> que compõe as <em>views</em> associadas aos seus respectivos <em>controllers</em>. Esses arquivos são utilizados para exibir a <em>view</em> que resulta de cada ação do <em>controller</em>.</p><p>Vamos dar uma olhada no que o Rails faz por padrão quando um novo recurso é criado utilizando o <em>generator scaffold</em>:</p><div class="code_container">
+        <h3 id="o-que-e-action-view-questionmark"><a class="anchorlink" href="#o-que-e-action-view-questionmark">1 O que é <em>Action View</em>?</a></h3><p>No <em>Rails</em>, as requisições web são tratadas por <a href="action_controller_overview.html"><em>Action Controller</em></a> e <em>Action View</em>. Normalmente, o <em>Action Controller</em> é responsável por se comunicar com o banco de dados e realizar ações de <em>CRUD</em> quando necessário. A <em>Action View</em> é responsável por compilar a resposta.</p><p>Os templates <em>Action View</em> são escritos usando Ruby embutido em tags mescladas com HTML. Para evitar poluir os templates com código clichê (<em>boilerplate code</em>), uma variedade de classes utilitárias (<em>helpers</em>) disponibilizam comportamentos comuns para lidar com <em>forms</em>, datas e <em>strings</em>. Também é fácil adicionar novas classes utilitárias (<em>helpers</em>) em sua aplicação conforme ela evolui.</p><div class="note"><p>Alguns recursos da <em>Action View</em> estão vinculados ao <em>Active Record</em>, mas isso não significa que a <em>Action View</em> depende do <em>Active Record</em>. <em>Action View</em> é um pacote independente que pode ser usado com qualquer tipo de biblioteca Ruby.</p></div><h3 id="usando-action-view-com-rails"><a class="anchorlink" href="#usando-action-view-com-rails">2 Usando <em>Action View</em> com Rails</a></h3><p>Para cada <em>controller</em> há um diretório associado em <code>app/views</code> que contém os arquivos de <em>template</em> que compõe as <em>views</em> associadas aos seus respectivos <em>controllers</em>. Esses arquivos são utilizados para exibir a <em>view</em> que resulta de cada <em>action</em> do <em>controller</em>.</p><p>Vamos dar uma olhada no que o Rails faz por padrão quando um novo recurso é criado utilizando o <em>generator scaffold</em>:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate scaffold article
 <span class="go">      [...]
       invoke  scaffold_controller
@@ -306,12 +306,12 @@
       create      app/views/articles/_form.html.erb
       [...]
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-e2e5da9ccccba9e39ed55babb9f5871a">bin/rails generate scaffold article
+<textarea class="clipboard-content" id="clipboard-6cd18e54617fc967a1ebb7bd77fd7d66">bin/rails generate scaffold article
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e2e5da9ccccba9e39ed55babb9f5871a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6cd18e54617fc967a1ebb7bd77fd7d66">Copiar</button>
 </div>
 <p>Há uma convenção de nomenclatura para as <em>views</em> no Rails. Normalmente, as <em>views</em> compartilham seu nome com a <em>action</em> do <em>controller</em> à qual ela é associada, conforme pode ser visto no exemplo acima.
-Por exemplo, a ação <em>index</em> do <em>controller</em> <code>articles_controller.rb</code> utilizará o arquivo de <em>view</em> <code>index.html.erb</code> no diretório <code>app/views/articles</code>.
+Por exemplo, a <em>action index</em> do <em>controller</em> <code>articles_controller.rb</code> utilizará o arquivo de <em>view</em> <code>index.html.erb</code> no diretório <code>app/views/articles</code>.
 O HTML completo que é retornado ao <em>client</em> é composto de uma combinação desse arquivo ERB, um <em>template</em> de <em>layout</em> que o envolve, e todas as <em>partials</em> que a <em>view</em> pode referenciar. Dentro deste guia você encontrará documentações mais detalhadas sobre cada um desses três componentes.</p><h3 id="templates-partials-e-layouts"><a class="anchorlink" href="#templates-partials-e-layouts">3 <em>Templates</em>, <em>Partials</em>, e <em>Layouts</em></a></h3><p>Como já mencionado, a saída HTML final é uma composição de três elementos: <code>Templates</code>, <code>Partials</code> e <code>Layouts</code>.
 Abaixo está uma breve visão geral de cada um deles.</p><h4 id="templates"><a class="anchorlink" href="#templates">3.1 Templates</a></h4><p><em>Templates</em> <em>Action View</em> podem ser escritos de várias maneiras. Se o arquivo de <em>template</em> tiver a extensão <code>.erb</code> ele usará uma mistura de ERB (<em>Embedded Ruby</em>) com HTML. Se o arquivo de template tiver a extensão <code>.builder</code>, a biblioteca (<em>library</em>) <code>Builder::XmlMarkup</code> é utilizada.</p><p>O Rails suporta múltiplos sistemas de <em>template</em> e utiliza a extensão do arquivo para distingui-los. Por exemplo, um arquivo HTML usando o sistema de <em>template</em> ERB terá a extensão do arquivo como <code>.html.erb</code>.</p><h5 id="erb"><a class="anchorlink" href="#erb">3.1.1 ERB</a></h5><p>Dentro de um <em>template</em> ERB, o código Ruby pode ser incluído usando ambas as tags <code>&lt;% %&gt;</code> e <code>&lt;%= %&gt;</code>. As tags <code>&lt;% %&gt;</code> são utilizadas para executar código Ruby que não possui retorno, como condições, <em>loops</em>, ou blocos, e as tags <code>&lt;%= %&gt;</code> são utilizadas quando você deseja uma saída.</p><p>Considere o seguinte <em>loop</em> de nomes:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Names of all the people<span class="nt">&lt;/h1&gt;</span>
@@ -319,21 +319,21 @@ Abaixo está uma breve visão geral de cada um deles.</p><h4 id="templates"><a c
   Name: <span class="cp">&lt;%=</span> <span class="n">person</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;br&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-60069abbb256313edc5f8dde7bf71bb2">&lt;h1&gt;Names of all the people&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-cc9fe48c54aa8560dda66d85a566a750">&lt;h1&gt;Names of all the people&lt;/h1&gt;
 &lt;% @people.each do |person| %&gt;
   Name: &lt;%= person.name %&gt;&lt;br&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-60069abbb256313edc5f8dde7bf71bb2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cc9fe48c54aa8560dda66d85a566a750">Copiar</button>
 </div>
 <p>O <em>loop</em> é configurado usando tags de incorporação regulares (<code>&lt;% %&gt;</code>) e o nome é inserido usando as tags de incorporação de saída (<code>&lt;%= %&gt;</code>). Note que isso não é somente uma sugestão de uso: funções de saída regulares como <code>print</code> e <code>puts</code> não serão renderizadas na <em>view</em> usando <em>template</em> ERB. Então, isso estaria errado:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="c">&lt;%# WRONG %&gt;</span>
 Hi, Mr. <span class="cp">&lt;%</span> <span class="nb">puts</span> <span class="s2">"Frodo"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c99cde45062c3932829902e1e957df45">&lt;%# WRONG %&gt;
+<textarea class="clipboard-content" id="clipboard-4a71b4daea853af67fcae0c7c429af1e">&lt;%# WRONG %&gt;
 Hi, Mr. &lt;% puts "Frodo" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c99cde45062c3932829902e1e957df45">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4a71b4daea853af67fcae0c7c429af1e">Copiar</button>
 </div>
 <p>Para suprimir espaços em branco à esquerda e à direita, você pode usar <code>&lt;%-</code> <code>-%&gt;</code> alternadamente com <code>&lt;%</code> e <code>%&gt;</code>.</p><h5 id="builder"><a class="anchorlink" href="#builder">3.1.2 Builder</a></h5><p>Os <em>templates</em> <em>Builder</em> são uma alternativa mais programática ao ERB. Eles são especialmente úteis para gerar conteúdo <em>XML</em>. Um objeto <em>XmlMarkup</em> denominado <code>xml</code> é automaticamente disponibilizado para <em>templates</em> com extensão<code>.builder</code>.</p><p>Aqui estão alguns exemplos básicos:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">xml</span><span class="p">.</span><span class="nf">em</span><span class="p">(</span><span class="s2">"emphasized"</span><span class="p">)</span>
@@ -341,12 +341,12 @@ Hi, Mr. &lt;% puts "Frodo" %&gt;
 <span class="n">xml</span><span class="p">.</span><span class="nf">a</span><span class="p">(</span><span class="s2">"A Link"</span><span class="p">,</span> <span class="s2">"href"</span> <span class="o">=&gt;</span> <span class="s2">"https://rubyonrails.org"</span><span class="p">)</span>
 <span class="n">xml</span><span class="p">.</span><span class="nf">target</span><span class="p">(</span><span class="s2">"name"</span> <span class="o">=&gt;</span> <span class="s2">"compile"</span><span class="p">,</span> <span class="s2">"option"</span> <span class="o">=&gt;</span> <span class="s2">"fast"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5516999dcf164fd03b1d3702356daf3c">xml.em("emphasized")
+<textarea class="clipboard-content" id="clipboard-1c1bc0621d8dbbc54f85a2c03d54c0f6">xml.em("emphasized")
 xml.em { xml.b("emph &amp; bold") }
 xml.a("A Link", "href" =&gt; "https://rubyonrails.org")
 xml.target("name" =&gt; "compile", "option" =&gt; "fast")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5516999dcf164fd03b1d3702356daf3c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1c1bc0621d8dbbc54f85a2c03d54c0f6">Copiar</button>
 </div>
 <p>que produziria:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;em&gt;</span>emphasized<span class="nt">&lt;/em&gt;</span>
@@ -354,12 +354,12 @@ xml.target("name" =&gt; "compile", "option" =&gt; "fast")
 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://rubyonrails.org"</span><span class="nt">&gt;</span>A link<span class="nt">&lt;/a&gt;</span>
 <span class="nt">&lt;target</span> <span class="na">option=</span><span class="s">"fast"</span> <span class="na">name=</span><span class="s">"compile"</span> <span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d7bd735c7bf73182acc56c1cfcae108a">&lt;em&gt;emphasized&lt;/em&gt;
+<textarea class="clipboard-content" id="clipboard-c2347e28c8ffcc7a87c9927b3ac8ec99">&lt;em&gt;emphasized&lt;/em&gt;
 &lt;em&gt;&lt;b&gt;emph &amp;amp; bold&lt;/b&gt;&lt;/em&gt;
 &lt;a href="https://rubyonrails.org"&gt;A link&lt;/a&gt;
 &lt;target option="fast" name="compile" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d7bd735c7bf73182acc56c1cfcae108a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c2347e28c8ffcc7a87c9927b3ac8ec99">Copiar</button>
 </div>
 <p>Qualquer método com um bloco será tratado como uma tag de marcação <em>XML</em> com marcação aninhada no bloco. Por exemplo, o seguinte:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">xml</span><span class="p">.</span><span class="nf">div</span> <span class="p">{</span>
@@ -367,12 +367,12 @@ xml.target("name" =&gt; "compile", "option" =&gt; "fast")
   <span class="n">xml</span><span class="p">.</span><span class="nf">p</span><span class="p">(</span><span class="vi">@person</span><span class="p">.</span><span class="nf">bio</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b1221c6678c05e7cd537ee730dd0fd87">xml.div {
+<textarea class="clipboard-content" id="clipboard-a83a4426f8b7c9c143f9697e742cf2f1">xml.div {
   xml.h1(@person.name)
   xml.p(@person.bio)
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b1221c6678c05e7cd537ee730dd0fd87">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a83a4426f8b7c9c143f9697e742cf2f1">Copiar</button>
 </div>
 <p>produziria algo como:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;div&gt;</span>
@@ -380,12 +380,12 @@ xml.target("name" =&gt; "compile", "option" =&gt; "fast")
   <span class="nt">&lt;p&gt;</span>A product of Danish Design during the Winter of '79...<span class="nt">&lt;/p&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-262cf23b39e88992d424a1f8d7c06ee9">&lt;div&gt;
+<textarea class="clipboard-content" id="clipboard-80d5a5c1204a711a80e70aef00cc83c6">&lt;div&gt;
   &lt;h1&gt;David Heinemeier Hansson&lt;/h1&gt;
   &lt;p&gt;A product of Danish Design during the Winter of '79...&lt;/p&gt;
 &lt;/div&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-262cf23b39e88992d424a1f8d7c06ee9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80d5a5c1204a711a80e70aef00cc83c6">Copiar</button>
 </div>
 <p>Abaixo está um exemplo completo de <em>RSS</em> que foi usado de verdade no Basecamp:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">xml</span><span class="p">.</span><span class="nf">rss</span><span class="p">(</span><span class="s2">"version"</span> <span class="o">=&gt;</span> <span class="s2">"2.0"</span><span class="p">,</span> <span class="s2">"xmlns:dc"</span> <span class="o">=&gt;</span> <span class="s2">"http://purl.org/dc/elements/1.1/"</span><span class="p">)</span> <span class="k">do</span>
@@ -409,7 +409,7 @@ xml.target("name" =&gt; "compile", "option" =&gt; "fast")
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-74cb5591b5d6680cfa2c42d4b64b5cf6">xml.rss("version" =&gt; "2.0", "xmlns:dc" =&gt; "http://purl.org/dc/elements/1.1/") do
+<textarea class="clipboard-content" id="clipboard-c993a18aa602944e0efdc10d59a1c2a0">xml.rss("version" =&gt; "2.0", "xmlns:dc" =&gt; "http://purl.org/dc/elements/1.1/") do
   xml.channel do
     xml.title(@feed_title)
     xml.link(@url)
@@ -430,25 +430,25 @@ xml.target("name" =&gt; "compile", "option" =&gt; "fast")
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-74cb5591b5d6680cfa2c42d4b64b5cf6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c993a18aa602944e0efdc10d59a1c2a0">Copiar</button>
 </div>
 <h5 id="jbuilder"><a class="anchorlink" href="#jbuilder">3.1.3 Jbuilder</a></h5><p><a href="https://github.com/rails/jbuilder">Jbuilder</a> é uma <em>gem</em> que é
 mantida pelo time do Rails e incluída por padrão no <code>Gemfile</code> do Rails.
 É similar ao <em>Builder</em>, mas é usada para gerar <em>JSON</em>, ao invés de <em>XML</em>.</p><p>Se você não tiver, você pode adicionar o seguinte ao seu <code>Gemfile</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'jbuilder'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4c8f8119e0a4c50a7e1075ff7608d3ee">gem 'jbuilder'
+<textarea class="clipboard-content" id="clipboard-5b1e8185c46294600fd555fcc4b57b52">gem 'jbuilder'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4c8f8119e0a4c50a7e1075ff7608d3ee">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5b1e8185c46294600fd555fcc4b57b52">Copiar</button>
 </div>
 <p>Um objeto <em>Jbuilder</em> denominado <code>json</code> é automaticamente disponibilizado para <em>templates</em> com extensão <code>.jbuilder</code>.</p><p>Aqui está um exemplo básico:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">json</span><span class="p">.</span><span class="nf">name</span><span class="p">(</span><span class="s2">"Alex"</span><span class="p">)</span>
 <span class="n">json</span><span class="p">.</span><span class="nf">email</span><span class="p">(</span><span class="s2">"alex@example.com"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-59c492bf663180e8d8a49069e91fc745">json.name("Alex")
+<textarea class="clipboard-content" id="clipboard-75e0cd15cc2782f685c0b6d44f80a1d5">json.name("Alex")
 json.email("alex@example.com")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-59c492bf663180e8d8a49069e91fc745">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-75e0cd15cc2782f685c0b6d44f80a1d5">Copiar</button>
 </div>
 <p>produziria:</p><div class="code_container">
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
@@ -456,26 +456,26 @@ json.email("alex@example.com")
   </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alex@example.com"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-b6cabc9439a8d7f0f39f497c2074b437">{
+<textarea class="clipboard-content" id="clipboard-ee86067bd59ddd21651c7124939a0bec">{
   "name": "Alex",
   "email": "alex@example.com"
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b6cabc9439a8d7f0f39f497c2074b437">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ee86067bd59ddd21651c7124939a0bec">Copiar</button>
 </div>
 <p>Veja a <a href="https://github.com/rails/jbuilder#jbuilder">documentação do Jbuilder</a> para mais exemplos e informação.</p><h5 id="template-caching"><a class="anchorlink" href="#template-caching">3.1.4 Template Caching</a></h5><p>Por padrão, o Rails compila cada <em>template</em> em um método para renderizá-la. Em ambiente de desenvolvimento, quando você altera um <em>template</em>, o Rails verifica a hora de modificação do arquivo e o recompila.</p><h4 id="partials"><a class="anchorlink" href="#partials">3.2 <em>Partials</em></a></h4><p><em>Templates</em> parciais (<em>partials</em>) - normalmente chamados apenas de <em>partials</em> - são outro instrumento para quebrar o processo de renderização em partes mais gerenciáveis. Com <em>partials</em>, você consegue extrair pedaços de código de seus <em>templates</em> para separar em arquivos e também reusá-los em seus <em>templates</em>.</p><h5 id="nomeando-partials"><a class="anchorlink" href="#nomeando-partials">3.2.1 Nomeando <em>Partials</em></a></h5><p>Para renderizar uma <em>partial</em> como parte de uma <em>view</em>, utiliza-se o método <code>render</code> dentro da <em>view</em>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"menu"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9ffd927aaab34170aa22bf0600d404f6">&lt;%= render "menu" %&gt;
+<textarea class="clipboard-content" id="clipboard-5f41eddcf0c64fbe51d455bef1d4803d">&lt;%= render "menu" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9ffd927aaab34170aa22bf0600d404f6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5f41eddcf0c64fbe51d455bef1d4803d">Copiar</button>
 </div>
 <p>Isso renderizará o arquivo <code>_menu.html.erb</code> naquele ponto dentro da <em>view</em> sendo renderizada. Note o caractere de sublinhado no início: as <em>partials</em> são nomeadass com um sublinhado no início para distingui-las das <em>views</em> regulares, embora sejam referidas sem o sublinhado. Isso é valido mesmo quando utilizamos uma <em>partial</em> de uma pasta diferente:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/menu"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7a3e6ccbe1009c9c9e83397aa3609afc">&lt;%= render "shared/menu" %&gt;
+<textarea class="clipboard-content" id="clipboard-d8121d95ef46da76d388d8706abf6eab">&lt;%= render "shared/menu" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7a3e6ccbe1009c9c9e83397aa3609afc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d8121d95ef46da76d388d8706abf6eab">Copiar</button>
 </div>
 <p>Esse código pegará a <em>partial</em> de <code>app/views/shared/_menu.html.erb</code>.</p><h5 id="usando-partials-para-simplificar-views"><a class="anchorlink" href="#usando-partials-para-simplificar-views">3.2.2 Usando <em>Partials</em> para simplificar <em>Views</em></a></h5><p>Uma maneira de usar <em>partials</em> é tratando-as como se fossem sub-rotinas; uma maneira de mover detalhes para fora da <em>view</em> para que você consiga entender o que está acontecendo com mais facilidade. Por exemplo, você pode ter uma <em>view</em> parecida com essa:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/ad_banner"</span> <span class="cp">%&gt;</span>
@@ -489,7 +489,7 @@ json.email("alex@example.com")
 
 <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/footer"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f5c961e0ce4dad1b78244515ddd340ce">&lt;%= render "shared/ad_banner" %&gt;
+<textarea class="clipboard-content" id="clipboard-47e1e884c9b33d60eb317a1ef15265cc">&lt;%= render "shared/ad_banner" %&gt;
 
 &lt;h1&gt;Products&lt;/h1&gt;
 
@@ -500,155 +500,155 @@ json.email("alex@example.com")
 
 &lt;%= render "shared/footer" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f5c961e0ce4dad1b78244515ddd340ce">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-47e1e884c9b33d60eb317a1ef15265cc">Copiar</button>
 </div>
 <p>Aqui, as <em>partials</em> <code>_ad_banner.html.erb</code> e <code>_footer.html.erb</code> podem ter conteúdos que são compartilhados entre muitas páginas em sua aplicação. Você não precisa ver os detalhes dessas seções quando estiver se concentrando em uma página específica.</p><h5 id="render-sem-os-parametros-partial-e-locals"><a class="anchorlink" href="#render-sem-os-parametros-partial-e-locals">3.2.3 <code>render</code> sem os parâmetros <code>partial</code> e <code>locals</code></a></h5><p>No exemplo acima, o método <code>render</code> recebe 2 parâmetros: <code>partial</code> e <code>locals</code>.
 Mas se esses forem os únicos parâmetros que você deseja passar, você pode ignorá-los.
 Por exemplo, ao invés de:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">product: </span><span class="vi">@product</span> <span class="p">}</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-845781b36fbfe6940b5acb5a59936256">&lt;%= render partial: "product", locals: { product: @product } %&gt;
+<textarea class="clipboard-content" id="clipboard-78c03d67d05b1d24c18af7c301717a18">&lt;%= render partial: "product", locals: { product: @product } %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-845781b36fbfe6940b5acb5a59936256">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-78c03d67d05b1d24c18af7c301717a18">Copiar</button>
 </div>
 <p>Você também pode usar:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"product"</span><span class="p">,</span> <span class="ss">product: </span><span class="vi">@product</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-92e39da63078b25ef8999c1fdb4be10b">&lt;%= render "product", product: @product %&gt;
+<textarea class="clipboard-content" id="clipboard-1f014a52047145c93f28c7a47d44fa25">&lt;%= render "product", product: @product %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-92e39da63078b25ef8999c1fdb4be10b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1f014a52047145c93f28c7a47d44fa25">Copiar</button>
 </div>
 <h5 id="os-parametros-as-e-object"><a class="anchorlink" href="#os-parametros-as-e-object">3.2.4 Os parâmetros <code>as</code> e <code>object</code></a></h5><p>Por padrão o <code>ActionView::Partials::PartialRenderer</code> tem seu objeto em uma variável local com o mesmo nome do <em>template</em>. Então, dado que:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8f3abee48f87139c57c9c19d8b02751d">&lt;%= render partial: "product" %&gt;
+<textarea class="clipboard-content" id="clipboard-35150845c38f1d7ce9221d4880fec466">&lt;%= render partial: "product" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8f3abee48f87139c57c9c19d8b02751d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-35150845c38f1d7ce9221d4880fec466">Copiar</button>
 </div>
 <p>dentro da <em>partial</em> <code>_product</code> nós teremos o <code>@product</code> dentro da variável local <code>product</code>, como se tivéssemos escrito:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">product: </span><span class="vi">@product</span> <span class="p">}</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6e2bdd73543ac733e6c464d4f56e9d30">&lt;%= render partial: "product", locals: { product: @product } %&gt;
+<textarea class="clipboard-content" id="clipboard-1fcecc6f92f5bd6c852e6194376c34f1">&lt;%= render partial: "product", locals: { product: @product } %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6e2bdd73543ac733e6c464d4f56e9d30">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1fcecc6f92f5bd6c852e6194376c34f1">Copiar</button>
 </div>
 <p>O parâmetro <code>object</code> pode ser usado para especificar diretamente qual objeto é renderizado na <em>partial</em>; útil quando o objeto do <em>template</em> está em outro lugar (por exemplo, em uma variável de instância diferente ou em uma variável local).</p><p>Por exemplo, ao invés de:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">product: </span><span class="vi">@item</span> <span class="p">}</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bd3f3692c2a0a2d7142c6f8fb035ce46">&lt;%= render partial: "product", locals: { product: @item } %&gt;
+<textarea class="clipboard-content" id="clipboard-91840bfa820d1611059244cea0d8c23b">&lt;%= render partial: "product", locals: { product: @item } %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bd3f3692c2a0a2d7142c6f8fb035ce46">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-91840bfa820d1611059244cea0d8c23b">Copiar</button>
 </div>
 <p>Faríamos:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">object: </span><span class="vi">@item</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d679e770edb73c10df9b1925648441e7">&lt;%= render partial: "product", object: @item %&gt;
+<textarea class="clipboard-content" id="clipboard-a8dc40c07a2a06f725d40b3b9b948130">&lt;%= render partial: "product", object: @item %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d679e770edb73c10df9b1925648441e7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a8dc40c07a2a06f725d40b3b9b948130">Copiar</button>
 </div>
 <p>Com o parâmetro <code>as</code> nós podemos especificar um nome diferente para a variável local. Por exemplo, se quisermos que seja <code>item</code> em vez de <code>product</code>, faríamos:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">object: </span><span class="vi">@item</span><span class="p">,</span> <span class="ss">as: </span><span class="s2">"item"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-30b68a2f46b149e3c61d30ec6cb60237">&lt;%= render partial: "product", object: @item, as: "item" %&gt;
+<textarea class="clipboard-content" id="clipboard-1276b5966155d80b81fc567facf1b621">&lt;%= render partial: "product", object: @item, as: "item" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-30b68a2f46b149e3c61d30ec6cb60237">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1276b5966155d80b81fc567facf1b621">Copiar</button>
 </div>
 <p>Isso é equivalente a:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">item: </span><span class="vi">@item</span> <span class="p">}</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3d47316109ce444bbcb549b7c77b7925">&lt;%= render partial: "product", locals: { item: @item } %&gt;
+<textarea class="clipboard-content" id="clipboard-aa3bd4c7a3e0c37d8d0f1168f17adf3b">&lt;%= render partial: "product", locals: { item: @item } %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3d47316109ce444bbcb549b7c77b7925">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aa3bd4c7a3e0c37d8d0f1168f17adf3b">Copiar</button>
 </div>
 <h5 id="renderizando-colecoes"><a class="anchorlink" href="#renderizando-colecoes">3.2.5 Renderizando Coleções</a></h5><p>É muito comum que um <em>template</em> precise iterar sobre uma coleção e renderizar um <em>sub-template</em> para cada um dos elementos. Esse padrão foi implementado como um método único que recebe um <em>array</em> e renderiza uma <em>partial</em> para cada um dos elementos do <em>array</em>.</p><p>Logo, este exemplo para renderizar todos os produtos:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="vi">@products</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">product</span><span class="o">|</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">product: </span><span class="n">product</span> <span class="p">}</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aa25592243aaf88e36feede76218fedd">&lt;% @products.each do |product| %&gt;
+<textarea class="clipboard-content" id="clipboard-969c0fdb042dd9caac7513e914194003">&lt;% @products.each do |product| %&gt;
   &lt;%= render partial: "product", locals: { product: product } %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aa25592243aaf88e36feede76218fedd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-969c0fdb042dd9caac7513e914194003">Copiar</button>
 </div>
 <p>pode ser reescrito em uma linha:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s2">"product"</span><span class="p">,</span> <span class="ss">collection: </span><span class="vi">@products</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6002dac7961697a02780a211692bc2a9">&lt;%= render partial: "product", collection: @products %&gt;
+<textarea class="clipboard-content" id="clipboard-5ce0071324bc4bac7b39aada63856987">&lt;%= render partial: "product", collection: @products %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6002dac7961697a02780a211692bc2a9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5ce0071324bc4bac7b39aada63856987">Copiar</button>
 </div>
 <p>Quando uma <em>partial</em> é chamada com uma coleção, as instâncias individuais da <em>partial</em> tem acesso ao membro da coleção que está sendo renderizado por meio de uma variável com o mesmo nome da <em>partial</em>. Nesse caso, a <em>partial</em> é <code>_product</code>, e dentro dele você pode se referir a <code>product</code> para obter o membro da coleção que está sendo renderizado.</p><p>Você pode usar uma sintaxe abreviada para renderizar coleções. Supondo que <code>@products</code> é uma coleção de instâncias de <code>Product</code>, você pode simplesmente escrever o seguinte para produzir o mesmo resultado:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="vi">@products</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-33df3b44e36dd14af5208c87825fdafc">&lt;%= render @products %&gt;
+<textarea class="clipboard-content" id="clipboard-fa7455da7e8f6f89303044ae845b85b0">&lt;%= render @products %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-33df3b44e36dd14af5208c87825fdafc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fa7455da7e8f6f89303044ae845b85b0">Copiar</button>
 </div>
 <p>O Rails determina o nome da <em>partial</em> a ser usada observando o nome do <em>model</em> na coleção, <code>Product</code> neste caso. Na verdade, você pode até renderizar uma coleção composta de instâncias de diferentes <em>models</em> usando essa abreviação, e o Rails escolherá a <em>partial</em> adequada para cada membro da coleção.</p><h5 id="spacer-templates"><a class="anchorlink" href="#spacer-templates">3.2.6 <em>Spacer Templates</em></a></h5><p>Você também pode especificar uma segunda <em>partial</em> a ser renderizada entre as instâncias da <em>partial</em> principal usando o parâmetro <code>:spacer_template</code>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="vi">@products</span><span class="p">,</span> <span class="ss">spacer_template: </span><span class="s2">"product_ruler"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-17e3b9cfc7eb75752b9d25eac2b4500c">&lt;%= render partial: @products, spacer_template: "product_ruler" %&gt;
+<textarea class="clipboard-content" id="clipboard-ff3b54fffaef74db541cd7abb3505041">&lt;%= render partial: @products, spacer_template: "product_ruler" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-17e3b9cfc7eb75752b9d25eac2b4500c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ff3b54fffaef74db541cd7abb3505041">Copiar</button>
 </div>
-<p>O Rails renderizará a <em>partial</em> <code>_product_ruler</code> (sem passar nenhum dado pra ela) entre cada par da <em>partial</em> <code>_product</code>.</p><h4 id="layouts"><a class="anchorlink" href="#layouts">3.3 Layouts</a></h4><p>Os <em>Layouts</em> podem ser usados para renderizar um <em>template</em> em torno dos resultados das <em>actions</em> do <em>controller</em> do Rails. Normalmente, uma aplicação Rails terá alguns <em>layouts</em> nos quais as páginas serão renderizadas. Por exemplo, um site pode ter um <em>layout</em> para um usuário conectado e outra página para marketing ou vendas do site. O <em>layout</em> do usuário conectado pode incluir navegação de nível superior (<em>top-level</em>), que deve estar presente em muitas <em>actions</em> do <em>controller</em>. O <em>layout</em> de vendas de uma aplicação SaaS pode incluir navegação de nível superior para páginas de "Preços" e "Fale conosco", onde esperaria que cada <em>layout</em> tivesse uma aparência e sensação diferentes. Você pode ler sobre <em>layout</em> com mais detalhes em <a href="layouts_and_rendering.html">Layouts e Renderização no Rails</a>.</p><h3 id="partial-layouts"><a class="anchorlink" href="#partial-layouts">4 Partial Layouts</a></h3><p>Partials can have their own layouts applied to them. These layouts are different from those applied to a controller action, but they work in a similar fashion.</p><p>Let's say we're displaying an article on a page which should be wrapped in a <code>div</code> for display purposes. Firstly, we'll create a new <code>Article</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="no">Article</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">body: </span><span class="s1">'Partial Layouts are cool!'</span><span class="p">)</span>
+<p>O Rails renderizará a <em>partial</em> <code>_product_ruler</code> (sem passar nenhum dado pra ela) entre cada par da <em>partial</em> <code>_product</code>.</p><h4 id="layouts"><a class="anchorlink" href="#layouts">3.3 Layouts</a></h4><p>Os <em>Layouts</em> podem ser usados para renderizar um <em>template</em> em torno dos resultados das <em>actions</em> do <em>controller</em> do Rails. Normalmente, uma aplicação Rails terá alguns <em>layouts</em> nos quais as páginas serão renderizadas. Por exemplo, um site pode ter um <em>layout</em> para um usuário conectado e outra página para marketing ou vendas do site. O <em>layout</em> do usuário conectado pode incluir navegação de nível superior (<em>top-level</em>), que deve estar presente em muitas <em>actions</em> do <em>controller</em>. O <em>layout</em> de vendas de uma aplicação SaaS pode incluir navegação de nível superior para páginas de "Preços" e "Fale conosco", onde esperaria que cada <em>layout</em> tivesse uma aparência e sensação diferentes. Você pode ler sobre <em>layout</em> com mais detalhes em <a href="layouts_and_rendering.html">Layouts e Renderização no Rails</a>.</p><h3 id="layout-de-partial"><a class="anchorlink" href="#layout-de-partial">4 <em>Layout</em> de <em>Partial</em></a></h3><p><em>Partials</em> podem ter seus próprios <em>layouts</em>. Esses <em>layouts</em> são diferentes daqueles utilizados nas <em>actions</em> do <em>controller</em>, porém funcionam de modo semelhante.</p><p>Supomos que estamos exibindo um artigo em uma página que deveria ser encapsulado em uma <code>div</code>. Primeiramente, criaremos um novo <code>Article</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Article</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">body: </span><span class="s1">'Layouts de partial são demais!'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ed21c215a84581ac1f022213abc50ede">Article.create(body: 'Partial Layouts are cool!')
+<textarea class="clipboard-content" id="clipboard-69dae3b8bfb490cc8f5c0b45ada9927d">Article.create(body: 'Layouts de partial são demais!')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ed21c215a84581ac1f022213abc50ede">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-69dae3b8bfb490cc8f5c0b45ada9927d">Copiar</button>
 </div>
-<p>In the <code>show</code> template, we'll render the <code>_article</code> partial wrapped in the <code>box</code> layout:</p><p><strong>articles/show.html.erb</strong></p><div class="code_container">
+<p>No <em>template</em> do <code>show</code>, iremos renderizar a <em>partial</em> <code>_article</code> encapsulado no <em>layout</em> <code>box</code>:</p><p><strong>articles/show.html.erb</strong></p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="s1">'article'</span><span class="p">,</span> <span class="ss">layout: </span><span class="s1">'box'</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">article: </span><span class="vi">@article</span> <span class="p">}</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5ba802a012761a5adddec0273f999da5">&lt;%= render partial: 'article', layout: 'box', locals: { article: @article } %&gt;
+<textarea class="clipboard-content" id="clipboard-1db8f9e016534bfa7a53f48683f903d1">&lt;%= render partial: 'article', layout: 'box', locals: { article: @article } %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5ba802a012761a5adddec0273f999da5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1db8f9e016534bfa7a53f48683f903d1">Copiar</button>
 </div>
-<p>The <code>box</code> layout simply wraps the <code>_article</code> partial in a <code>div</code>:</p><p><strong>articles/_box.html.erb</strong></p><div class="code_container">
+<p>O <em>layout</em> <code>box</code> simplesmente encapsula a <em>partial</em> <code>_article</code> em uma <code>div</code>:</p><p><strong>articles/_box.html.erb</strong></p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">'box'</span><span class="nt">&gt;</span>
   <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-18a94751b12f1e5f412aed7c972504f2">&lt;div class='box'&gt;
+<textarea class="clipboard-content" id="clipboard-9e84567f6cb3fbb939708c4319229c0d">&lt;div class='box'&gt;
   &lt;%= yield %&gt;
 &lt;/div&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-18a94751b12f1e5f412aed7c972504f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9e84567f6cb3fbb939708c4319229c0d">Copiar</button>
 </div>
-<p>Note that the partial layout has access to the local <code>article</code> variable that was passed into the <code>render</code> call. However, unlike application-wide layouts, partial layouts still have the underscore prefix.</p><p>You can also render a block of code within a partial layout instead of calling <code>yield</code>. For example, if we didn't have the <code>_article</code> partial, we could do this instead:</p><p><strong>articles/show.html.erb</strong></p><div class="code_container">
+<p>Note que o <em>layout</em> de <em>partial</em> tem acesso a variável local <code>article</code> que foi passada no <code>render</code>. Todavia, diferentemente de <em>layouts</em> de aplicação, <em>layouts</em> de <em>partial</em> possuem o <em>underscore</em> <code>_</code> no início.</p><p>Você também pode renderizar um bloco de código dentro do <em>layout</em> de <em>partial</em> ao invés de usar <code>yield</code>. Por exemplo, se não tivéssemos a <em>partial</em> <code>_article</code>, poderíamos ter feito:</p><p><strong>articles/show.html.erb</strong></p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">render</span><span class="p">(</span><span class="ss">layout: </span><span class="s1">'box'</span><span class="p">,</span> <span class="ss">locals: </span><span class="p">{</span> <span class="ss">article: </span><span class="vi">@article</span> <span class="p">})</span> <span class="k">do</span> <span class="cp">%&gt;</span>
   <span class="nt">&lt;div&gt;</span>
     <span class="nt">&lt;p&gt;</span><span class="cp">&lt;%=</span> <span class="n">article</span><span class="p">.</span><span class="nf">body</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
   <span class="nt">&lt;/div&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3989292583cb4ee3e29d1e0c73dcc39a">&lt;% render(layout: 'box', locals: { article: @article }) do %&gt;
+<textarea class="clipboard-content" id="clipboard-9608ec2bc67a7311ee4fa8c71ecd04c5">&lt;% render(layout: 'box', locals: { article: @article }) do %&gt;
   &lt;div&gt;
     &lt;p&gt;&lt;%= article.body %&gt;&lt;/p&gt;
   &lt;/div&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3989292583cb4ee3e29d1e0c73dcc39a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9608ec2bc67a7311ee4fa8c71ecd04c5">Copiar</button>
 </div>
-<p>Supposing we use the same <code>_box</code> partial from above, this would produce the same output as the previous example.</p><h3 id="view-paths"><a class="anchorlink" href="#view-paths">5 View Paths</a></h3><p>Ao renderizar uma resposta, o <em>controller</em> precisa resolver onde as diferentes
+<p>Supomos que desejamos utilizar a mesma <em>partial</em> <code>_box</code> representada acima, isso produziria o mesmo resultado do exemplo anterior.</p><h3 id="view-paths"><a class="anchorlink" href="#view-paths">5 View Paths</a></h3><p>Ao renderizar uma resposta, o <em>controller</em> precisa resolver onde as diferentes
 <em>views</em> estão localizadas. Por padrão, ele só olha dentro do diretório <code>app/views</code>.</p><p>Podemos adicionar outros locais e dar-lhes uma certa precedência ao resolver
 caminhos usando os métodos <code>prepend_view_path</code> e <code>append_view_path</code>.</p><h4 id="pre-anexando-caminho-das-views"><a class="anchorlink" href="#pre-anexando-caminho-das-views">5.1 Pré-anexando caminho das views</a></h4><p>Isso pode ser útil, por exemplo, quando nós queremos colocar às <em>views</em> dentro
 de um diretório diferente para subdomínios.</p><p>Podemos fazer isso usando:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">prepend_view_path</span> <span class="s2">"app/views/</span><span class="si">#{</span><span class="n">request</span><span class="p">.</span><span class="nf">subdomain</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7180acb3f563b5c79618efcef1ee7450">prepend_view_path "app/views/#{request.subdomain}"
+<textarea class="clipboard-content" id="clipboard-6d3107f708086499937abe657da69cdd">prepend_view_path "app/views/#{request.subdomain}"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7180acb3f563b5c79618efcef1ee7450">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6d3107f708086499937abe657da69cdd">Copiar</button>
 </div>
-<p>Então, a <em>Action View</em> procurará primeiro dentro deste diretório quando ao resolver as 
+<p>Então, a <em>Action View</em> procurará primeiro dentro deste diretório quando ao resolver as
 <em>views</em>.</p><h4 id="anexando-caminho-das-views"><a class="anchorlink" href="#anexando-caminho-das-views">5.2 Anexando caminho das views</a></h4><p>Da mesma forma, podemos acrescentar caminhos:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">append_view_path</span> <span class="s2">"app/views/direct"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d414775af3f885c0b2aedf5006ca6c93">append_view_path "app/views/direct"
+<textarea class="clipboard-content" id="clipboard-24118c1a32562b592b429f20758bba1c">append_view_path "app/views/direct"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d414775af3f885c0b2aedf5006ca6c93">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-24118c1a32562b592b429f20758bba1c">Copiar</button>
 </div>
 <p>Isso adicionará <code>app/views/direct</code> ao final dos caminhos de pesquisa.</p><h3 id="helpers"><a class="anchorlink" href="#helpers">6 <em>Helpers</em></a></h3><p>O Rails fornece muitos métodos auxiliares para usar com o <em>Action View</em>. Isso inclui métodos para:</p>
 <ul>
@@ -670,13 +670,13 @@ Você pode adicionar o seguinte a <code>app/controllers/application.rb</code>:</
   <span class="no">I18n</span><span class="p">.</span><span class="nf">locale</span> <span class="o">=</span> <span class="ss">:expert</span> <span class="k">if</span> <span class="n">current_user</span><span class="p">.</span><span class="nf">expert?</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1c98ceb88065aba378b5bc6a7ca71045">before_action :set_expert_locale
+<textarea class="clipboard-content" id="clipboard-bbd591c4d6cf0b52a20c5a453658c53d">before_action :set_expert_locale
 
 def set_expert_locale
   I18n.locale = :expert if current_user.expert?
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1c98ceb88065aba378b5bc6a7ca71045">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bbd591c4d6cf0b52a20c5a453658c53d">Copiar</button>
 </div>
 <p>Em seguida, você pode criar <em>views</em> especiais como <code>app/views/articles/show.expert.html.erb</code> que somente serão exibidas para usuários <em>experts</em>.</p><p>Você pode ler mais sobre a API de Internacionalização do Rails (I18n) <a href="i18n.html">aqui</a>.</p>
 

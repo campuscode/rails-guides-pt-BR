@@ -262,16 +262,16 @@
             <ol class="chapters">
 <li><a href="#por-que-escrever-testes-para-a-sua-aplicacao-rails-questionmark">Por que escrever testes para a sua aplicação Rails?</a></li>
 <li>
-<a href="#introduction-to-testing">Introduction to Testing</a>
+<a href="#introducao-a-testes">Introdução a testes</a>
 
 <ul>
-<li><a href="#rails-sets-up-for-testing-from-the-word-go">Rails Sets up for Testing from the Word Go</a></li>
-<li><a href="#the-test-environment">The Test Environment</a></li>
-<li><a href="#rails-meets-minitest">Rails meets Minitest</a></li>
-<li><a href="#available-assertions">Available Assertions</a></li>
-<li><a href="#rails-specific-assertions">Rails Specific Assertions</a></li>
-<li><a href="#a-brief-note-about-test-cases">A Brief Note About Test Cases</a></li>
-<li><a href="#the-rails-test-runner">The Rails Test Runner</a></li>
+<li><a href="#configuracoes-para-testes-em-aplicacoes-rails">Configurações para testes em aplicações Rails</a></li>
+<li><a href="#o-ambiente-de-teste">O Ambiente de Teste</a></li>
+<li><a href="#rails-conhece-minitest">Rails conhece Minitest</a></li>
+<li><a href="#assercoes-disponiveis">Asserções disponíveis</a></li>
+<li><a href="#assercoes-especificas-do-rails">Asserções Específicas do Rails</a></li>
+<li><a href="#uma-breve-nota-sobre-os-casos-de-testes">Uma breve nota sobre os Casos de Testes</a></li>
+<li><a href="#o-teste-runner-do-rails">O <code>Teste Runner</code> do Rails</a></li>
 </ul>
 </li>
 <li>
@@ -337,11 +337,11 @@
 </ul>
 </li>
 <li>
-<a href="#testing-jobs">Testing Jobs</a>
+<a href="#testando-os-jobs">Testando os <em>Jobs</em></a>
 
 <ul>
-<li><a href="#a-basic-test-case">A Basic Test Case</a></li>
-<li><a href="#custom-assertions-and-testing-jobs-inside-other-components">Custom Assertions and Testing Jobs inside Other Components</a></li>
+<li><a href="#um-caso-de-teste-basico">Um Caso de Teste Básico</a></li>
+<li><a href="#assercoes-personalizadas-e-testando-jobs-dentro-de-outros-componentes">Asserções Personalizadas e Testando Jobs dentro de Outros Componentes</a></li>
 </ul>
 </li>
 <li>
@@ -370,23 +370,17 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="por-que-escrever-testes-para-a-sua-aplicacao-rails-questionmark"><a class="anchorlink" href="#por-que-escrever-testes-para-a-sua-aplicacao-rails-questionmark">1 Por que escrever testes para a sua aplicação Rails?</a></h3><p>O Rails torna super fácil escrever seus testes. Ele começa produzindo um esqueleto de código de teste enquanto você cria seus <em>models</em> e <em>controllers</em>.</p><p>Ao rodar seus testes no Rails você pode garantir que seu código continua com a funcionalidade desejada mesmo após algumas grandes refatorações no código.</p><p>Os testes no Rails podem simular requisições no browser e com isso, você pode testar a resposta da sua aplicação sem ter que testar utilizando de fato seu o browser.</p><h3 id="introduction-to-testing"><a class="anchorlink" href="#introduction-to-testing">2 Introduction to Testing</a></h3><p>Testing support was woven into the Rails fabric from the beginning. It wasn't an "oh! let's bolt on support for running tests because they're new and cool" epiphany.</p><h4 id="rails-sets-up-for-testing-from-the-word-go"><a class="anchorlink" href="#rails-sets-up-for-testing-from-the-word-go">2.1 Rails Sets up for Testing from the Word Go</a></h4><p>Rails creates a <code>test</code> directory for you as soon as you create a Rails project using <code>rails new</code> <em>application_name</em>. If you list the contents of this directory then you shall see:</p><div class="code_container">
+        <h3 id="por-que-escrever-testes-para-a-sua-aplicacao-rails-questionmark"><a class="anchorlink" href="#por-que-escrever-testes-para-a-sua-aplicacao-rails-questionmark">1 Por que escrever testes para a sua aplicação Rails?</a></h3><p>O Rails torna super fácil escrever seus testes. Ele começa produzindo um esqueleto de código de teste enquanto você cria seus <em>models</em> e <em>controllers</em>.</p><p>Ao rodar seus testes no Rails você pode garantir que seu código continua com a funcionalidade desejada mesmo após algumas grandes refatorações no código.</p><p>Os testes no Rails podem simular requisições no browser e com isso, você pode testar a resposta da sua aplicação sem ter que testar utilizando de fato seu o browser.</p><h3 id="introducao-a-testes"><a class="anchorlink" href="#introducao-a-testes">2 Introdução a testes</a></h3><p>O suporte a testes foi implantado no Rails desde os primórdios. Não foi uma epifania do tipo: "Vamos adicionar suporte para testes porque eles são novos e legais!"</p><h4 id="configuracoes-para-testes-em-aplicacoes-rails"><a class="anchorlink" href="#configuracoes-para-testes-em-aplicacoes-rails">2.1 Configurações para testes em aplicações Rails</a></h4><p>O Rails cria um diretório <code>test</code> para você logo que você cria um projeto Rails usando o comando <code>rails new</code> <em>nome_da_aplicacao</em>. Se você listar o conteúdo deste diretório, você verá:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-F</span> <span class="nb">test</span>
 <span class="go">application_system_test_case.rb  controllers/                     helpers/                         mailers/                         system/
 channels/                        fixtures/                        integration/                     models/                          test_helper.rb
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-dfc64d080695bbe493672185b7f9ed7a">ls -F test
+<textarea class="clipboard-content" id="clipboard-73fd991e0f0f62bcdbc1490d1c3446ed">ls -F test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dfc64d080695bbe493672185b7f9ed7a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-73fd991e0f0f62bcdbc1490d1c3446ed">Copiar</button>
 </div>
-<p>The <code>helpers</code>, <code>mailers</code>, and <code>models</code> directories are meant to hold tests for view helpers, mailers, and models, respectively. The <code>channels</code> directory is meant to hold tests for Action Cable connection and channels. The <code>controllers</code> directory is meant to hold tests for controllers, routes, and views. The <code>integration</code> directory is meant to hold tests for interactions between controllers.</p><p>The system test directory holds system tests, which are used for full browser
-testing of your application. System tests allow you to test your application
-the way your users experience it and help you test your JavaScript as well.
-System tests inherit from Capybara and perform in browser tests for your
-application.</p><p>Fixtures are a way of organizing test data; they reside in the <code>fixtures</code> directory.</p><p>A <code>jobs</code> directory will also be created when an associated test is first generated.</p><p>The <code>test_helper.rb</code> file holds the default configuration for your tests.</p><p>The <code>application_system_test_case.rb</code> holds the default configuration for your system
-tests.</p><h4 id="the-test-environment"><a class="anchorlink" href="#the-test-environment">2.2 The Test Environment</a></h4><p>By default, every Rails application has three environments: development, test, and production.</p><p>Each environment's configuration can be modified similarly. In this case, we can modify our test environment by changing the options found in <code>config/environments/test.rb</code>.</p><div class="note"><p>Your tests are run under <code>RAILS_ENV=test</code>.</p></div><h4 id="rails-meets-minitest"><a class="anchorlink" href="#rails-meets-minitest">2.3 Rails meets Minitest</a></h4><p>If you remember, we used the <code>bin/rails generate model</code> command in the
-<a href="getting_started.html">Getting Started with Rails</a> guide. We created our first
-model, and among other things it created test stubs in the <code>test</code> directory:</p><div class="code_container">
+<p>Os diretórios <code>helpers</code>, <code>mailers</code> e <code>models</code> são destinados a realizar os testes para <em>view helpers</em>, <em>mailers</em> e <em>models</em>, respectivamente. O diretório <code>channel</code> é destinado a realizar os testes para a conexão e canais do <em>ActionCable</em>. O diretório <code>controllers</code> se destina a realizar testes para os <em>controllers</em>, rotas e <em>views</em>. O diretório <code>integration</code> se destina a realizar testes de interação entre <em>controllers</em>.</p><p>O diretório <code>system</code> é destinado a realizar os testes do sistema, que são usados para testes completos da aplicação no browser. Os Testes de Sistema permitem você testar a aplicação do jeito que seu usuário experiência e ajuda você a testar seu JavaScript também.
+Os Testes de sistemas herdam de Capybara e são executados em testes de <em>browser</em> para a sua aplicação</p><p><em>Fixtures</em> são um jeito de organizar dados de testes; ficam no diretório <code>fixtures</code></p><p>Um diretório <code>jobs</code> também será criado quando um teste associado é gerado.</p><p>O arquivo <code>test_helper.rb</code> é responsável por realizar as configurações padrão para seus testes.</p><p>O arquivo <code>application_system_test_case.rb</code> é responsável por realizar as configurações padrão para seus testes de sistema.</p><h4 id="o-ambiente-de-teste"><a class="anchorlink" href="#o-ambiente-de-teste">2.2 O Ambiente de Teste</a></h4><p>Por padrão, toda aplicação Rails tem três ambientes: desenvolvimento, teste e produção.</p><p>A configuração de cada ambiente pode ser modificada de forma semelhante. Neste caso, podemos modificar nosso ambiente de teste alterando as opções encontradas em <code>config/environments/test.rb</code>.</p><div class="note"><p>Seus testes são executados sob o comando <code>RAILS_ENV=test</code>.</p></div><h4 id="rails-conhece-minitest"><a class="anchorlink" href="#rails-conhece-minitest">2.3 Rails conhece Minitest</a></h4><p>Se você se lembra, nós usamos o comando <code>bin/rails generate model</code> no guia <a href="getting_started.html">Começando com Rails</a>. Nós criamos nosso primeiro model e, entre outras coisas, foi criado <a href="https://pt.wikipedia.org/wiki/Stub"><em>stub</em></a> de testes no diretório <code>test</code>:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate model article title:string body:text
 <span class="c">...
 </span><span class="go">create  app/models/article.rb
@@ -394,11 +388,11 @@ create  test/models/article_test.rb
 create  test/fixtures/articles.yml
 </span><span class="c">...
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-b94c55c12892aae9bcc4920629bc598f">bin/rails generate model article title:string body:text
+<textarea class="clipboard-content" id="clipboard-200587a123057521b15554be7264718f">bin/rails generate model article title:string body:text
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b94c55c12892aae9bcc4920629bc598f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-200587a123057521b15554be7264718f">Copiar</button>
 </div>
-<p>The default test stub in <code>test/models/article_test.rb</code> looks like this:</p><div class="code_container">
+<p>O <em>stub</em> teste padrão em <code>test/models/article_test.rb</code> parece assim:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
 
 <span class="k">class</span> <span class="nc">ArticleTest</span> <span class="o">&lt;</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">TestCase</span>
@@ -407,7 +401,7 @@ create  test/fixtures/articles.yml
   <span class="c1"># end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cd68861481706281e83618dad0a67b29">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-2c449186bd7d36ee2fe6ebebce57d1c7">require "test_helper"
 
 class ArticleTest &lt; ActiveSupport::TestCase
   # test "the truth" do
@@ -415,73 +409,72 @@ class ArticleTest &lt; ActiveSupport::TestCase
   # end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cd68861481706281e83618dad0a67b29">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2c449186bd7d36ee2fe6ebebce57d1c7">Copiar</button>
 </div>
-<p>A line by line examination of this file will help get you oriented to Rails testing code and terminology.</p><div class="code_container">
+<p>Uma inspeção linha a linha desse arquivo ajudará você a se orientar a terminologia e código de testes no Rails.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d6b5f25dded2f2074d53fded0b02cc30">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-ffde8386a7b798bdd17fbfc4056e788f">require "test_helper"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d6b5f25dded2f2074d53fded0b02cc30">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ffde8386a7b798bdd17fbfc4056e788f">Copiar</button>
 </div>
-<p>By requiring this file, <code>test_helper.rb</code> the default configuration to run our tests is loaded. We will include this with all the tests we write, so any methods added to this file are available to all our tests.</p><div class="code_container">
+<p>Por fazer <em>require</em> desse arquivo, <code>test_helper.rb</code> as configurações padrões para executar nossos testes são carregadas. Nós vamos incluir isso em todos os testes que escrevermos, então qualquer método adicionado a este arquivo vai estar disponível em todos os nossos testes.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ArticleTest</span> <span class="o">&lt;</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">TestCase</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f869b53a78092fa225b4fbe53e5a266a">class ArticleTest &lt; ActiveSupport::TestCase
+<textarea class="clipboard-content" id="clipboard-1e4292f675ed6b2ac52b1feaca31b0c8">class ArticleTest &lt; ActiveSupport::TestCase
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f869b53a78092fa225b4fbe53e5a266a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1e4292f675ed6b2ac52b1feaca31b0c8">Copiar</button>
 </div>
-<p>The <code>ArticleTest</code> class defines a <em>test case</em> because it inherits from <code>ActiveSupport::TestCase</code>. <code>ArticleTest</code> thus has all the methods available from <code>ActiveSupport::TestCase</code>. Later in this guide, we'll see some of the methods it gives us.</p><p>Any method defined within a class inherited from <code>Minitest::Test</code>
-(which is the superclass of <code>ActiveSupport::TestCase</code>) that begins with <code>test_</code> is simply called a test. So, methods defined as <code>test_password</code> and <code>test_valid_password</code> are legal test names and are run automatically when the test case is run.</p><p>Rails also adds a <code>test</code> method that takes a test name and a block. It generates a normal <code>Minitest::Unit</code> test with method names prefixed with <code>test_</code>. So you don't have to worry about naming the methods, and you can write something like:</p><div class="code_container">
+<p>A classe <code>ArticleTest</code> define um <em>test case</em> porque ela herda de <code>ActiveSupport::TestCase</code>. <code>ArticleTest</code> portanto tem todos os métodos disponíveis de <code>ActiveSupport::TestCase</code>. Mais pra frente nesse guia, nós vamos adicionar alguns dos métodos dados.</p><p>Qualquer método definido com uma classe herdada de <code>Minitest::Test</code> (que é uma superclasse de <code>ActiveSupport::TestCase</code>) que começa com <code>test_</code> é simplesmente chamada em um teste. Então, métodos definidos como <code>test_password</code> e <code>test_valid_password</code> são nomes de testes legais e serão executados automaticamente quando o caso de teste (<em>test_case</em>) é executado.</p><p>O Rails também adiciona um método <code>test</code> que leva um nome <em>test</em> e um bloco. Isso gera um teste normal <code>Minitest::Unit</code> com nomes de métodos prefixados com <code>test_</code>. Então você não precisa se preocupar com nomear os métodos, e você pode escrever algo assim:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"the truth"</span> <span class="k">do</span>
   <span class="n">assert</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f652cb1990ce5d4b05a7a0a1b10fb405">test "the truth" do
+<textarea class="clipboard-content" id="clipboard-909c4f91373c944895b0990dc59b3448">test "the truth" do
   assert true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f652cb1990ce5d4b05a7a0a1b10fb405">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-909c4f91373c944895b0990dc59b3448">Copiar</button>
 </div>
-<p>Which is approximately the same as writing this:</p><div class="code_container">
+<p>Que é aproximadamente o mesmo que escrever isto:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">test_the_truth</span>
   <span class="n">assert</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cc28cdd839cb3f53ced6d45057ab52f2">def test_the_truth
+<textarea class="clipboard-content" id="clipboard-0953069547e64baef01128aa017acd7e">def test_the_truth
   assert true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cc28cdd839cb3f53ced6d45057ab52f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0953069547e64baef01128aa017acd7e">Copiar</button>
 </div>
-<p>Although you can still use regular method definitions, using the <code>test</code> macro allows for a more readable test name.</p><div class="note"><p>The method name is generated by replacing spaces with underscores. The result does not need to be a valid Ruby identifier though — the name may contain punctuation characters, etc. That's because in Ruby technically any string may be a method name. This may require use of <code>define_method</code> and <code>send</code> calls to function properly, but formally there's little restriction on the name.</p></div><p>Next, let's look at our first assertion:</p><div class="code_container">
+<p>Apesar de você ainda poder usar definições comuns de métodos, usando o prefixo <code>test</code> permite você ter um teste mais legível.</p><div class="note"><p>O nome do método é gerado por alterar espaços com undescores(<em>_</em>). O resultado não precisa ser um identificador Ruby válido, embora o nome possa conter caracteres de pontuação, etc. Isso é porque em Ruby tecnicamente qualquer string pode ser o nome de um método. Isso pode requerer a chamada dos métodos <code>define_method</code> e <code>send</code> para funcionar corretamente, mas formalmente há uma pequena restrição no nome.</p></div><p>A seguir, vamos olhar para nossa primeira asserção:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">assert</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-85f768321ecf1f0da6bfedc8006fdf08">assert true
+<textarea class="clipboard-content" id="clipboard-77f9479f6bee671280cbc87a61f0278f">assert true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-85f768321ecf1f0da6bfedc8006fdf08">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-77f9479f6bee671280cbc87a61f0278f">Copiar</button>
 </div>
-<p>An assertion is a line of code that evaluates an object (or expression) for expected results. For example, an assertion can check:</p>
+<p>Uma asserção é uma linha de código que pode se tornar um objeto (ou expressão) para resultados esperados. Por exemplo, uma asserção pode checar se:</p>
 <ul>
-<li>does this value = that value?</li>
-<li>is this object nil?</li>
-<li>does this line of code throw an exception?</li>
-<li>is the user's password greater than 5 characters?</li>
+<li>Esse valor é igual a aquele valor?</li>
+<li>Esse objeto é nulo?</li>
+<li>Essa linha de código dispara uma exceção?</li>
+<li>A senha do usuário é maior que 5 caracteres?</li>
 </ul>
-<p>Every test may contain one or more assertions, with no restriction as to how many assertions are allowed. Only when all the assertions are successful will the test pass.</p><h5 id="your-first-failing-test"><a class="anchorlink" href="#your-first-failing-test">2.3.1 Your first failing test</a></h5><p>To see how a test failure is reported, you can add a failing test to the <code>article_test.rb</code> test case.</p><div class="code_container">
+<p>Todo teste pode conter uma ou mais asserções, sem restrições em quantas asserções são permitidas. Apenas quando todas as asserções serem bem-sucedidas o teste vai passar.</p><h5 id="seu-primeiro-teste-que-falha"><a class="anchorlink" href="#seu-primeiro-teste-que-falha">2.3.1 Seu primeiro teste que falha</a></h5><p>Para ver como uma falha no teste é reportada, você pode adicionar um teste que falha no caso de teste do arquivo <code>article_test.rb</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"should not save article without title"</span> <span class="k">do</span>
   <span class="n">article</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">new</span>
   <span class="n">assert_not</span> <span class="n">article</span><span class="p">.</span><span class="nf">save</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-35ffac3fc1f0eb77d52c0d649019508c">test "should not save article without title" do
+<textarea class="clipboard-content" id="clipboard-f6505cff8e452687e2dafd5db5eb2c1b">test "should not save article without title" do
   article = Article.new
   assert_not article.save
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-35ffac3fc1f0eb77d52c0d649019508c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f6505cff8e452687e2dafd5db5eb2c1b">Copiar</button>
 </div>
-<p>Let us run this newly added test (where <code>6</code> is the number of line where the test is defined).</p><div class="code_container">
+<p>Vamos executar o teste com esse caso de teste adicionado (onde 6 é o número da linha onde o teste é definido).</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test test</span>/models/article_test.rb:6
 <span class="go">Run options: --seed 44656
 
@@ -502,46 +495,46 @@ Finished in 0.023918s, 41.8090 runs/s, 41.8090 assertions/s.
 
 1 runs, 1 assertions, 1 failures, 0 errors, 0 skips
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-6cf31231bc5ce84967526598e25c00b5">bin/rails test test/models/article_test.rb:6
+<textarea class="clipboard-content" id="clipboard-8b5404efd8debabe2b002b829b235242">bin/rails test test/models/article_test.rb:6
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6cf31231bc5ce84967526598e25c00b5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8b5404efd8debabe2b002b829b235242">Copiar</button>
 </div>
-<p>In the output, <code>F</code> denotes a failure. You can see the corresponding trace shown under <code>Failure</code> along with the name of the failing test. The next few lines contain the stack trace followed by a message that mentions the actual value and the expected value by the assertion. The default assertion messages provide just enough information to help pinpoint the error. To make the assertion failure message more readable, every assertion provides an optional message parameter, as shown here:</p><div class="code_container">
+<p>Na saída do teste, <code>F</code> significa uma falha. Você pode ver o <em>trace</em> correspondente mostrado abaixo de <code>Failure</code> junto com o nome do teste que está falhando. As próximas linhas contém as origens do erro seguido por uma mensagem que menciona o valor atual e o valor esperado pela asserção. A mensagem de asserção padrão provê informação o suficiente para ajudar a localizar o erro. Para fazer a asserção mais legível, toda asserção tem um parâmetro de mensagem opcional, como foi mostrado aqui:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"should not save article without title"</span> <span class="k">do</span>
   <span class="n">article</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">new</span>
   <span class="n">assert_not</span> <span class="n">article</span><span class="p">.</span><span class="nf">save</span><span class="p">,</span> <span class="s2">"Saved the article without a title"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e0f48a008962df3f0d8877f8993474c7">test "should not save article without title" do
+<textarea class="clipboard-content" id="clipboard-d4cb1742eae89783d55580e6124ff488">test "should not save article without title" do
   article = Article.new
   assert_not article.save, "Saved the article without a title"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e0f48a008962df3f0d8877f8993474c7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d4cb1742eae89783d55580e6124ff488">Copiar</button>
 </div>
-<p>Running this test shows the friendlier assertion message:</p><div class="code_container">
+<p>A execução desse teste exibe uma mensagem de asserção mais amigável:</p><div class="code_container">
 <pre><code class="highlight plaintext">Failure:
 ArticleTest#test_should_not_save_article_without_title [/path/to/blog/test/models/article_test.rb:6]:
 Saved the article without a title
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1bc4c814fc0b1bef89a839ad9d2945d4">Failure:
+<textarea class="clipboard-content" id="clipboard-f85b9dc1ab53767f7e4d2378120458bd">Failure:
 ArticleTest#test_should_not_save_article_without_title [/path/to/blog/test/models/article_test.rb:6]:
 Saved the article without a title
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1bc4c814fc0b1bef89a839ad9d2945d4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f85b9dc1ab53767f7e4d2378120458bd">Copiar</button>
 </div>
-<p>Now to get this test to pass we can add a model level validation for the <em>title</em> field.</p><div class="code_container">
+<p>Agora para fazer esse teste passar nós podemos adicionar uma validação no nível do model para o campo <em>title</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">validates</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8dbd6c547d40568a6eedd0118e85b5e9">class Article &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-e7ffa6d6b62f4fc903376e9ed16a7cc1">class Article &lt; ApplicationRecord
   validates :title, presence: true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8dbd6c547d40568a6eedd0118e85b5e9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e7ffa6d6b62f4fc903376e9ed16a7cc1">Copiar</button>
 </div>
-<p>Now the test should pass. Let us verify by running the test again:</p><div class="code_container">
+<p>Agora o teste deveria passar. Vamos verificar executando o teste novamente:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test test</span>/models/article_test.rb:6
 <span class="go">Run options: --seed 31252
 
@@ -553,30 +546,27 @@ Finished in 0.027476s, 36.3952 runs/s, 36.3952 assertions/s.
 
 1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-b79f66c2e9e0c11ee613f61c2db9e50a">bin/rails test test/models/article_test.rb:6
+<textarea class="clipboard-content" id="clipboard-b2f7a4406997776bd8be6b9e9914c1d0">bin/rails test test/models/article_test.rb:6
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b79f66c2e9e0c11ee613f61c2db9e50a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b2f7a4406997776bd8be6b9e9914c1d0">Copiar</button>
 </div>
-<p>Now, if you noticed, we first wrote a test which fails for a desired
-functionality, then we wrote some code which adds the functionality and finally
-we ensured that our test passes. This approach to software development is
-referred to as
-<a href="http://c2.com/cgi/wiki?TestDrivenDevelopment"><em>Test-Driven Development</em> (TDD)</a>.</p><h5 id="what-an-error-looks-like"><a class="anchorlink" href="#what-an-error-looks-like">2.3.2 What an Error Looks Like</a></h5><p>To see how an error gets reported, here's a test containing an error:</p><div class="code_container">
+<p>Agora, se você notou, nós escrevemos um teste que falha para uma funcionalidade desejada, então nós escrevemos um código básico que adiciona a funcionalidade e finalmente nós tivemos certeza que nosso testes passam. Essa abordagem em desenvolvimento de software é referida como
+<a href="http://c2.com/cgi/wiki?TestDrivenDevelopment"><em>Test-Driven Development</em> (TDD)</a>.</p><h5 id="como-um-erro-se-parece"><a class="anchorlink" href="#como-um-erro-se-parece">2.3.2 Como um erro se parece</a></h5><p>Para ver como um erro é reportado, aqui está um teste contendo um erro:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"should report error"</span> <span class="k">do</span>
-  <span class="c1"># some_undefined_variable is not defined elsewhere in the test case</span>
+  <span class="c1"># some_undefined_variable não está definida no caso de teste</span>
   <span class="n">some_undefined_variable</span>
   <span class="n">assert</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bfd2e13cb90a423ec2f5b8a070cf880e">test "should report error" do
-  # some_undefined_variable is not defined elsewhere in the test case
+<textarea class="clipboard-content" id="clipboard-c742fadf4e53c153233d1f839cd4fde1">test "should report error" do
+  # some_undefined_variable não está definida no caso de teste
   some_undefined_variable
   assert true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bfd2e13cb90a423ec2f5b8a070cf880e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c742fadf4e53c153233d1f839cd4fde1">Copiar</button>
 </div>
-<p>Now you can see even more output in the console from running the tests:</p><div class="code_container">
+<p>Agora você pode ver mais saída no console ao rodar os testes:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test test</span>/models/article_test.rb
 <span class="go">Run options: --seed 1808
 
@@ -598,233 +588,229 @@ Finished in 0.040609s, 49.2500 runs/s, 24.6250 assertions/s.
 
 2 runs, 1 assertions, 0 failures, 1 errors, 0 skips
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-d4e75da8a455b08241a0d851064d58bb">bin/rails test test/models/article_test.rb
+<textarea class="clipboard-content" id="clipboard-27d8754560171ac23a1ad8502b6b79ce">bin/rails test test/models/article_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d4e75da8a455b08241a0d851064d58bb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-27d8754560171ac23a1ad8502b6b79ce">Copiar</button>
 </div>
-<p>Notice the 'E' in the output. It denotes a test with error.</p><div class="note"><p>The execution of each test method stops as soon as any error or an
-assertion failure is encountered, and the test suite continues with the next
-method. All test methods are executed in random order. The
-<a href="configuring.html#configuring-active-support"><code>config.active_support.test_order</code> option</a>
-can be used to configure test order.</p></div><p>When a test fails you are presented with the corresponding backtrace. By default
-Rails filters that backtrace and will only print lines relevant to your
-application. This eliminates the framework noise and helps to focus on your
-code. However there are situations when you want to see the full
-backtrace. Set the <code>-b</code> (or <code>--backtrace</code>) argument to enable this behavior:</p><div class="code_container">
+<p>Observe o 'E' na saída. Isso significa um teste com erro.</p><div class="note"><p>A execução de cada método de teste para assim que qualquer erro ou uma falha de teste é encontrada, e a suíte de teste continua com o próximo método. Todos os métodos de testes são executados numa ordem aleatória. A <a href="configuring.html#configuring-active-support">opção <code>config.active_support.test_order</code></a> pode ser usada para configurar a ordem do teste.</p></div><p>Quando um teste falha você é apresentado ao <em>backtrace</em> correspondente. Por padrão
+Rails filtra o <em>backtrace</em> e mostrará apenas linhas relevantes para sua
+aplicação. Isso elimina qualquer reclamação do <em>framework</em> e isso  ajuda a focar no seu
+código. No entanto existem situações que você quer ver o <em>backtrace</em>
+completo. Coloque o argumento <code>-b</code> (ou <code>--backtrace</code>) para habilitar esse comportamento:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test</span> <span class="nt">-b</span> <span class="nb">test</span>/models/article_test.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-596f93ba48288bd366993c951cc6f5e3">bin/rails test -b test/models/article_test.rb
+<textarea class="clipboard-content" id="clipboard-0cdbc12379fa94f94aa172aeacc63483">bin/rails test -b test/models/article_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-596f93ba48288bd366993c951cc6f5e3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0cdbc12379fa94f94aa172aeacc63483">Copiar</button>
 </div>
-<p>If we want this test to pass we can modify it to use <code>assert_raises</code> like so:</p><div class="code_container">
+<p>Se nós queremos que este teste passe nós devemos modificar isto para usar <code>assert_raises</code> assim:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"should report error"</span> <span class="k">do</span>
-  <span class="c1"># some_undefined_variable is not defined elsewhere in the test case</span>
+  <span class="c1"># some_undefined_variable não está definida no caso de teste</span>
   <span class="n">assert_raises</span><span class="p">(</span><span class="no">NameError</span><span class="p">)</span> <span class="k">do</span>
     <span class="n">some_undefined_variable</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-22fb140a39e55712b77e34de341d0f6a">test "should report error" do
-  # some_undefined_variable is not defined elsewhere in the test case
+<textarea class="clipboard-content" id="clipboard-c634e936aef9ba54e2aa966f663bed0f">test "should report error" do
+  # some_undefined_variable não está definida no caso de teste
   assert_raises(NameError) do
     some_undefined_variable
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-22fb140a39e55712b77e34de341d0f6a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c634e936aef9ba54e2aa966f663bed0f">Copiar</button>
 </div>
-<p>This test should now pass.</p><h4 id="available-assertions"><a class="anchorlink" href="#available-assertions">2.4 Available Assertions</a></h4><p>By now you've caught a glimpse of some of the assertions that are available. Assertions are the worker bees of testing. They are the ones that actually perform the checks to ensure that things are going as planned.</p><p>Here's an extract of the assertions you can use with
-<a href="https://github.com/seattlerb/minitest"><code>Minitest</code></a>, the default testing library
-used by Rails. The <code>[msg]</code> parameter is an optional string message you can
-specify to make your test failure messages clearer.</p>
+<p>Este teste agora deveria passar.</p><h4 id="assercoes-disponiveis"><a class="anchorlink" href="#assercoes-disponiveis">2.4 Asserções disponíveis</a></h4><p>Por agora você viu pouco de algumas asserções que estão disponíveis. Asserções são as obreiras dos testes. Elas são as únicas que na verdade performam para checar se as coisas estão indo conforme o planejado.</p><p>Aqui está um resumo das asserções que você pode usar com
+<a href="https://github.com/seattlerb/minitest"><code>Minitest</code></a>, a biblioteca padrão
+usada pelo Rails. O parâmetro <code>[msg]</code> é uma mensagem opcional do tipo string que você pode
+especificar para fazer as falhas do teste mais claras.</p>
 <table>
 <thead>
 <tr>
-<th>Assertion</th>
-<th>Purpose</th>
+<th>Asserção</th>
+<th>Propósito</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>assert( test, [msg] )</code></td>
-<td>Ensures that <code>test</code> is true.</td>
+<td>Checa se <code>test</code> é verdadeiro.</td>
 </tr>
 <tr>
 <td><code>assert_not( test, [msg] )</code></td>
-<td>Ensures that <code>test</code> is false.</td>
+<td>Checa se <code>test</code> é falso.</td>
 </tr>
 <tr>
 <td><code>assert_equal( expected, actual, [msg] )</code></td>
-<td>Ensures that <code>expected == actual</code> is true.</td>
+<td>Checa se <code>expected == actual</code> é verdadeiro.</td>
 </tr>
 <tr>
 <td><code>assert_not_equal( expected, actual, [msg] )</code></td>
-<td>Ensures that <code>expected != actual</code> is true.</td>
+<td>Checa se <code>expected != actual</code> é verdadeiro.</td>
 </tr>
 <tr>
 <td><code>assert_same( expected, actual, [msg] )</code></td>
-<td>Ensures that <code>expected.equal?(actual)</code> is true.</td>
+<td>Checa se <code>expected.equal?(actual)</code> é verdadeiro.</td>
 </tr>
 <tr>
 <td><code>assert_not_same( expected, actual, [msg] )</code></td>
-<td>Ensures that <code>expected.equal?(actual)</code> is false.</td>
+<td>Checa se <code>expected.equal?(actual)</code> é falso.</td>
 </tr>
 <tr>
 <td><code>assert_nil( obj, [msg] )</code></td>
-<td>Ensures that <code>obj.nil?</code> is true.</td>
+<td>Checa se <code>obj.nil?</code> é verdadeiro.</td>
 </tr>
 <tr>
 <td><code>assert_not_nil( obj, [msg] )</code></td>
-<td>Ensures that <code>obj.nil?</code> is false.</td>
+<td>Checa se <code>obj.nil?</code> é falso.</td>
 </tr>
 <tr>
 <td><code>assert_empty( obj, [msg] )</code></td>
-<td>Ensures that <code>obj</code> is <code>empty?</code>.</td>
+<td>Checa se <code>obj</code> is <code>empty?</code> (<code>obj</code> é vazio).</td>
 </tr>
 <tr>
 <td><code>assert_not_empty( obj, [msg] )</code></td>
-<td>Ensures that <code>obj</code> is not <code>empty?</code>.</td>
+<td>Checa se <code>obj</code> is not <code>empty?</code> (<code>obj</code> não é vazio).</td>
 </tr>
 <tr>
 <td><code>assert_match( regexp, string, [msg] )</code></td>
-<td>Ensures that a string matches the regular expression.</td>
+<td>Checa se uma string bate com a expressão regular dada.</td>
 </tr>
 <tr>
 <td><code>assert_no_match( regexp, string, [msg] )</code></td>
-<td>Ensures that a string doesn't match the regular expression.</td>
+<td>Checa se uma string não bate com a expressão regular dada.</td>
 </tr>
 <tr>
 <td><code>assert_includes( collection, obj, [msg] )</code></td>
-<td>Ensures that <code>obj</code> is in <code>collection</code>.</td>
+<td>Checa se <code>obj</code> está incluído na <code>collection</code>.</td>
 </tr>
 <tr>
 <td><code>assert_not_includes( collection, obj, [msg] )</code></td>
-<td>Ensures that <code>obj</code> is not in <code>collection</code>.</td>
+<td>Checa se <code>obj</code> não está incluído na <code>collection</code>.</td>
 </tr>
 <tr>
 <td><code>assert_in_delta( expected, actual, [delta], [msg] )</code></td>
-<td>Ensures that the numbers <code>expected</code> and <code>actual</code> are within <code>delta</code> of each other.</td>
+<td>Checa se os números <code>expected</code> e atual estão aproximados com o <code>delta</code> de cada.</td>
 </tr>
 <tr>
 <td><code>assert_not_in_delta( expected, actual, [delta], [msg] )</code></td>
-<td>Ensures that the numbers <code>expected</code> and <code>actual</code> are not within <code>delta</code> of each other.</td>
+<td>Checa se os números <code>expected</code> e atual não estão aproximados com o <code>delta</code> de cada.</td>
 </tr>
 <tr>
 <td><code>assert_in_epsilon ( expected, actual, [epsilon], [msg] )</code></td>
-<td>Ensures that the numbers <code>expected</code> and <code>actual</code> have a relative error less than <code>epsilon</code>.</td>
+<td>Checa se os números <code>expected</code> e <code>actual</code> tem um erro relativo menor que <code>epsilon</code>.</td>
 </tr>
 <tr>
 <td><code>assert_not_in_epsilon ( expected, actual, [epsilon], [msg] )</code></td>
-<td>Ensures that the numbers <code>expected</code> and <code>actual</code> have a relative error not less than <code>epsilon</code>.</td>
+<td>Checa se os números <code>expected</code> e <code>actual</code> não tem um erro relativo menor que <code>epsilon</code>.</td>
 </tr>
 <tr>
 <td><code>assert_throws( symbol, [msg] ) { block }</code></td>
-<td>Ensures that the given block throws the symbol.</td>
+<td>Checa se um dado <em>bloco</em> dispara um erro com o <code>symbol</code>
+</td>
 </tr>
 <tr>
 <td><code>assert_raises( exception1, exception2, ... ) { block }</code></td>
-<td>Ensures that the given block raises one of the given exceptions.</td>
+<td>Checa se um dado bloco dispara uma das exceções dadas.</td>
 </tr>
 <tr>
 <td><code>assert_instance_of( class, obj, [msg] )</code></td>
-<td>Ensures that <code>obj</code> is an instance of <code>class</code>.</td>
+<td>Checa se <code>obj</code> é uma instância de <code>class</code>.</td>
 </tr>
 <tr>
 <td><code>assert_not_instance_of( class, obj, [msg] )</code></td>
-<td>Ensures that <code>obj</code> is not an instance of <code>class</code>.</td>
+<td>Checa se <code>obj</code> não é uma instância de <code>class</code>.</td>
 </tr>
 <tr>
 <td><code>assert_kind_of( class, obj, [msg] )</code></td>
-<td>Ensures that <code>obj</code> is an instance of <code>class</code> or is descending from it.</td>
+<td>Checa se <code>obj</code> é uma instância de <code>class</code> or uma descendente dela.</td>
 </tr>
 <tr>
 <td><code>assert_not_kind_of( class, obj, [msg] )</code></td>
-<td>Ensures that <code>obj</code> is not an instance of <code>class</code> and is not descending from it.</td>
+<td>Checa se <code>obj</code> não é uma instância de <code>class</code> e não é uma descendente dela.</td>
 </tr>
 <tr>
 <td><code>assert_respond_to( obj, symbol, [msg] )</code></td>
-<td>Ensures that <code>obj</code> responds to <code>symbol</code>.</td>
+<td>Checa se <code>obj</code> responde a <code>symbol</code>.</td>
 </tr>
 <tr>
 <td><code>assert_not_respond_to( obj, symbol, [msg] )</code></td>
-<td>Ensures that <code>obj</code> does not respond to <code>symbol</code>.</td>
+<td>Checa se <code>obj</code> não responde a <code>symbol</code>.</td>
 </tr>
 <tr>
 <td><code>assert_operator( obj1, operator, [obj2], [msg] )</code></td>
-<td>Ensures that <code>obj1.operator(obj2)</code> is true.</td>
+<td>Checa se <code>obj1.operator(obj2)</code> é verdadeiro.</td>
 </tr>
 <tr>
 <td><code>assert_not_operator( obj1, operator, [obj2], [msg] )</code></td>
-<td>Ensures that <code>obj1.operator(obj2)</code> is false.</td>
+<td>Checa se <code>obj1.operator(obj2)</code> é falso.</td>
 </tr>
 <tr>
 <td><code>assert_predicate ( obj, predicate, [msg] )</code></td>
-<td>Ensures that <code>obj.predicate</code> is true, e.g. <code>assert_predicate str, :empty?</code>
+<td>Checa se <code>obj.predicate</code> é verdadeiro, ex: <code>assert_predicate str, :empty?</code>
 </td>
 </tr>
 <tr>
 <td><code>assert_not_predicate ( obj, predicate, [msg] )</code></td>
-<td>Ensures that <code>obj.predicate</code> is false, e.g. <code>assert_not_predicate str, :empty?</code>
+<td>Checa se <code>obj.predicate</code> é falso, ex: <code>assert_not_predicate str, :empty?</code>
 </td>
 </tr>
 <tr>
 <td><code>flunk( [msg] )</code></td>
-<td>Ensures failure. This is useful to explicitly mark a test that isn't finished yet.</td>
+<td>Checa que o teste falha. Isso é útil para marcar explicitamente que o teste não está finalizado ainda.</td>
 </tr>
 </tbody>
 </table>
-<p>The above are a subset of assertions that minitest supports. For an exhaustive &amp;
-more up-to-date list, please check
-<a href="http://docs.seattlerb.org/minitest/">Minitest API documentation</a>, specifically
-<a href="http://docs.seattlerb.org/minitest/Minitest/Assertions.html"><code>Minitest::Assertions</code></a>.</p><p>Because of the modular nature of the testing framework, it is possible to create your own assertions. In fact, that's exactly what Rails does. It includes some specialized assertions to make your life easier.</p><div class="note"><p>Creating your own assertions is an advanced topic that we won't cover in this tutorial.</p></div><h4 id="rails-specific-assertions"><a class="anchorlink" href="#rails-specific-assertions">2.5 Rails Specific Assertions</a></h4><p>Rails adds some custom assertions of its own to the <code>minitest</code> framework:</p>
+<p>As asserções acima são um subconjunto de asserções que <code>minitest</code> suporta. Para uma lista mais atualizada, por favor cheque
+<a href="http://docs.seattlerb.org/minitest/">Minitest API documentation</a>, especificamente
+<a href="http://docs.seattlerb.org/minitest/Minitest/Assertions.html"><code>Minitest::Assertions</code></a>.</p><p>Por conta da natureza modular do <code>framework</code> de testes, é possível criar suas próprias asserções. De fato, isso é exatamente o que Rails faz. Isso inclui algumas asserções especializadas para deixar sua vida mais fácil.</p><div class="note"><p>Criar suas próprias asserções é um tópico avançado que não cobriremos nesse tutorial.</p></div><h4 id="assercoes-especificas-do-rails"><a class="anchorlink" href="#assercoes-especificas-do-rails">2.5 Asserções Específicas do Rails</a></h4><p>Rails adiciona algumas asserções customizadas o framework <code>minitest</code>:</p>
 <table>
 <thead>
 <tr>
-<th>Assertion</th>
-<th>Purpose</th>
+<th>Asserção</th>
+<th>Propósito</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_difference"><code>assert_difference(expressions, difference = 1, message = nil) {...}</code></a></td>
-<td>Test numeric difference between the return value of an expression as a result of what is evaluated in the yielded block.</td>
+<td>Testa a diferença numérica entre o valor retornada da expressão como um resultado que contabilizado no bloco <em>yielded</em>.</td>
 </tr>
 <tr>
 <td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_difference"><code>assert_no_difference(expressions, message = nil, &amp;block)</code></a></td>
-<td>Asserts that the numeric result of evaluating an expression is not changed before and after invoking the passed in block.</td>
+<td>Checa se i resultado numérico da expressão calculada não é mudado antes e depois de invocar o bloco passado.</td>
 </tr>
 <tr>
 <td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_changes"><code>assert_changes(expressions, message = nil, from:, to:, &amp;block)</code></a></td>
-<td>Test that the result of evaluating an expression is changed after invoking the passed in block.</td>
+<td>Testa o resultado de uma expressão calculado é alterado depois de passar pelo <em>bloco</em>.</td>
 </tr>
 <tr>
 <td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_no_changes"><code>assert_no_changes(expressions, message = nil, &amp;block)</code></a></td>
-<td>Test the result of evaluating an expression is not changed after invoking the passed in block.</td>
+<td>Testa o resultado de uma expressão não é alterada depois de passar pelo <em>bloco</em>.</td>
 </tr>
 <tr>
 <td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised"><code>assert_nothing_raised { block }</code></a></td>
-<td>Ensures that the given block doesn't raise any exceptions.</td>
+<td>Checa se o bloco dado não dispara nenhuma exceção.</td>
 </tr>
 <tr>
 <td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes"><code>assert_recognizes(expected_options, path, extras={}, message=nil)</code></a></td>
-<td>Asserts that the routing of the given path was handled correctly and that the parsed options (given in the expected_options hash) match path. Basically, it asserts that Rails recognizes the route given by expected_options.</td>
+<td>Checa se o Rails reconhece a rota fornecida pelas <code>expected_options</code>.</td>
 </tr>
 <tr>
 <td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates"><code>assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)</code></a></td>
-<td>Asserts that the provided options can be used to generate the provided path. This is the inverse of assert_recognizes. The extras parameter is used to tell the request the names and values of additional request parameters that would be in a query string. The message parameter allows you to specify a custom error message for assertion failures.</td>
+<td>O inverso de <code>assert_recognizes</code>. Checa se o Rails não reconhece a rota fornecida pelas <code>expected_options</code>.</td>
 </tr>
 <tr>
 <td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response"><code>assert_response(type, message = nil)</code></a></td>
-<td>Asserts that the response comes with a specific status code. You can specify <code>:success</code> to indicate 200-299, <code>:redirect</code> to indicate 300-399, <code>:missing</code> to indicate 404, or <code>:error</code> to match the 500-599 range. You can also pass an explicit status number or its symbolic equivalent. For more information, see <a href="http://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant">full list of status codes</a> and how their <a href="https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant">mapping</a> works.</td>
+<td>Checa se a resposta de uma requisição vem com um código de status específico. Você pode especificar <code>:success</code> para indicar 200-299, <code>:redirect</code> para indicar 300-399, <code>:missing</code> para indicar 404, ou <code>:error</code> para indicar o intervalo de 500-599. Você pode também passar o número explícito do status ou símbolo equivalente. Para mais informação, veja <a href="http://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant">lista completa de códigos de status</a> e como seus <a href="https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant">mapeamentos</a> funcionam.</td>
 </tr>
 <tr>
 <td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to"><code>assert_redirected_to(options = {}, message=nil)</code></a></td>
-<td>Asserts that the response is a redirect to a URL matching the given options. You can also pass named routes such as <code>assert_redirected_to root_path</code> and Active Record objects such as <code>assert_redirected_to @article</code>.</td>
+<td>Checa se a resposta de uma requisição é redirecionada para uma URL que "bate" com as opções dadas. Você pode passar rotas nomeadas tais como <code>asset_redirected_to root_path</code> e objetos do Active Record como <code>assert_redirected_to @article</code>.</td>
 </tr>
 </tbody>
 </table>
-<p>You'll see the usage of some of these assertions in the next chapter.</p><h4 id="a-brief-note-about-test-cases"><a class="anchorlink" href="#a-brief-note-about-test-cases">2.6 A Brief Note About Test Cases</a></h4><p>All the basic assertions such as <code>assert_equal</code> defined in <code>Minitest::Assertions</code> are also available in the classes we use in our own test cases. In fact, Rails provides the following classes for you to inherit from:</p>
+<p>Agora você verá alguns usos de algumas dessas asserções no próximo capítulo.</p><h4 id="uma-breve-nota-sobre-os-casos-de-testes"><a class="anchorlink" href="#uma-breve-nota-sobre-os-casos-de-testes">2.6 Uma breve nota sobre os Casos de Testes</a></h4><p>Todas as asserções tais como <code>assert_equal</code> são definidas em <code>Minitest::Assertions</code> são também disponíveis nas classes que nós usamos em nossos próprios casos de teste. De fato, Rails provê as seguintes classes que você pode herdar de:</p>
 <ul>
 <li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/TestCase.html"><code>ActiveSupport::TestCase</code></a></li>
 <li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionMailer/TestCase.html"><code>ActionMailer::TestCase</code></a></li>
@@ -834,8 +820,7 @@ more up-to-date list, please check
 <li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/SystemTestCase.html"><code>ActionDispatch::SystemTestCase</code></a></li>
 <li><a href="https://api.rubyonrails.org/v6.1.4/classes/Rails/Generators/TestCase.html"><code>Rails::Generators::TestCase</code></a></li>
 </ul>
-<p>Each of these classes include <code>Minitest::Assertions</code>, allowing us to use all of the basic assertions in our tests.</p><div class="note"><p>For more information on <code>Minitest</code>, refer to <a href="http://docs.seattlerb.org/minitest">its
-documentation</a>.</p></div><h4 id="the-rails-test-runner"><a class="anchorlink" href="#the-rails-test-runner">2.7 The Rails Test Runner</a></h4><p>We can run all of our tests at once by using the <code>bin/rails test</code> command.</p><p>Or we can run a single test file by passing the <code>bin/rails test</code> command the filename containing the test cases.</p><div class="code_container">
+<p>Cada uma dessas asserções inclui <code>Minitest::Assertions</code>, nos permitindo usar todas as asserções básicas de nossos testes.</p><div class="note"><p>Para mais informações em <code>Minitest</code>, procure na sua <a href="http://docs.seattlerb.org/minitest">própria documentação</a>.</p></div><h4 id="o-teste-runner-do-rails"><a class="anchorlink" href="#o-teste-runner-do-rails">2.7 O <code>Teste Runner</code> do Rails</a></h4><p>Nós podemos executar todos os nossos testes de uma vez usando o comando <code>bin/rails test</code>.</p><p>Ou podemos executar um único arquivo de teste passando no comando <code>bin/rails test</code> o arquivo contendo os casos de testes.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test test</span>/models/article_test.rb
 <span class="go">Run options: --seed 1559
 
@@ -847,12 +832,11 @@ Finished in 0.027034s, 73.9810 runs/s, 110.9715 assertions/s.
 
 2 runs, 3 assertions, 0 failures, 0 errors, 0 skips
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-2093e617ed801bbaf70b1552d5669696">bin/rails test test/models/article_test.rb
+<textarea class="clipboard-content" id="clipboard-311b34dff0ff10cac660af94fb596476">bin/rails test test/models/article_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2093e617ed801bbaf70b1552d5669696">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-311b34dff0ff10cac660af94fb596476">Copiar</button>
 </div>
-<p>This will run all test methods from the test case.</p><p>You can also run a particular test method from the test case by providing the
-<code>-n</code> or <code>--name</code> flag and the test's method name.</p><div class="code_container">
+<p>Isso vai executar todos os métodos do caso de teste.</p><p>Você também pode executar um método particular do caso de teste provendo a opção <code>-n</code> ou <code>--name</code> e o nome do método de teste.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test test</span>/models/article_test.rb <span class="nt">-n</span> test_the_truth
 <span class="go">Run options: -n test_the_truth --seed 43583
 
@@ -864,59 +848,59 @@ Finished tests in 0.009064s, 110.3266 tests/s, 110.3266 assertions/s.
 
 1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-12e8ec6b8c2d22fbc6fd765bfbb6d684">bin/rails test test/models/article_test.rb -n test_the_truth
+<textarea class="clipboard-content" id="clipboard-7ed0b93b1e302fc105365fceeb45dcd6">bin/rails test test/models/article_test.rb -n test_the_truth
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-12e8ec6b8c2d22fbc6fd765bfbb6d684">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7ed0b93b1e302fc105365fceeb45dcd6">Copiar</button>
 </div>
-<p>You can also run a test at a specific line by providing the line number.</p><div class="code_container">
+<p>Você pode também executar uma linha específica de um teste colocando o número da linha.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test test</span>/models/article_test.rb:6 <span class="c"># run specific test and line</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2cf4fb86231f8b13996668fa9ecb1ed5">bin/rails test test/models/article_test.rb:6 # run specific test and line
+<textarea class="clipboard-content" id="clipboard-3870ad161c62a16a897ddad3f744db07">bin/rails test test/models/article_test.rb:6 # run specific test and line
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2cf4fb86231f8b13996668fa9ecb1ed5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3870ad161c62a16a897ddad3f744db07">Copiar</button>
 </div>
-<p>You can also run an entire directory of tests by providing the path to the directory.</p><div class="code_container">
+<p>Você também pode executar um diretório inteiro de testes colocando o caminho do diretório.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test test</span>/controllers <span class="c"># run all tests from specific directory</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c1a0182368ab16e40c21df0e97503f5e">bin/rails test test/controllers # run all tests from specific directory
+<textarea class="clipboard-content" id="clipboard-d3d3a88988d9b5e2116f16a3ceb3a097">bin/rails test test/controllers # run all tests from specific directory
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c1a0182368ab16e40c21df0e97503f5e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d3d3a88988d9b5e2116f16a3ceb3a097">Copiar</button>
 </div>
-<p>The test runner also provides a lot of other features like failing fast, deferring test output
-at the end of the test run and so on. Check the documentation of the test runner as follows:</p><div class="code_container">
+<p>O Teste Runner provê muitas feature como <em>failing fast</em>, adiando a saída do teste
+no fim da execução do teste e assim por diante. Cheque a documentação do Test Runner da seguinte forma:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test</span> <span class="nt">-h</span>
 <span class="go">Usage: rails test [options] [files or directories]
 
-You can run a single test by appending a line number to a filename:
+Você pode executar um único teste adicionando o número da linha para o arquivo:
 
     bin/rails test test/models/user_test.rb:27
 
-You can run multiple files and directories at the same time:
+Você pode executar múltiplos arquivos e pastas ao mesmo tempo:
 
     bin/rails test test/controllers test/integration/login_test.rb
 
-By default test failures and errors are reported inline during a run.
+Por padrão falhas de testes e erros são reportados numa única linha durante uma execução.
 
-minitest options:
-    -h, --help                       Display this help.
-</span><span class="gp">        --no-plugins                 Bypass minitest plugin auto-loading (or set $</span>MT_NO_PLUGINS<span class="o">)</span><span class="nb">.</span>
-<span class="go">    -s, --seed SEED                  Sets random seed. Also via env. Eg: SEED=n rake
-    -v, --verbose                    Verbose. Show progress processing files.
-    -n, --name PATTERN               Filter run on /regexp/ or string.
-        --exclude PATTERN            Exclude /regexp/ or string from run.
+opções do minitest:
+    -h, --help                       Mostra esse menu de ajuda.
+</span><span class="gp">        --no-plugins                 Pula o plugin de auto-loading do minitest (ou coloque $</span>MT_NO_PLUGINS<span class="o">)</span><span class="nb">.</span>
+<span class="go">    -s, --seed SEED                  Coloca _seed_ aleatório. Pode também ser colocado por variável de ambiente. Ex: SEED=n rake
+    -v, --verbose                    Verboso. Mostra o progresso de arquivos enquanto estão processando.
+    -n, --name PATTERN               Filtra a execução em  /regexp/ (Expressão regular) ou string.
+        --exclude PATTERN            Exclui /regexp/ ou string da execução.
 
-Known extensions: rails, pride
-    -w, --warnings                   Run with Ruby warnings enabled
-    -e, --environment ENV            Run tests in the ENV environment
-    -b, --backtrace                  Show the complete backtrace
-    -d, --defer-output               Output test failures and errors after the test run
-    -f, --fail-fast                  Abort test run on first failure or error
-    -c, --[no-]color                 Enable color in the output
-    -p, --pride                      Pride. Show your testing pride!
+Extensões conhecidas: rails, pride
+    -w, --warnings                   Executa com Warnings habilitados
+    -e, --environment ENV            Executa os testes em um ambiente específico
+    -b, --backtrace                  Mostra o _backtrace_ completo
+    -d, --defer-output               Saída das falhas no teste e erros depois da execução de todos os testes
+    -f, --fail-fast                  Aborta a execução dos testes na primeira falha ou no primeiro erro
+    -c, --[no-]color                 Habilita cor ou não na saída
+    -p, --pride                      Orgulho. Mostre o orgulho do seu teste!
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-16427baed58b6bedaa4801af0f59c90d">bin/rails test -h
+<textarea class="clipboard-content" id="clipboard-b330a53097f8975067e4935ce23448e1">bin/rails test -h
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16427baed58b6bedaa4801af0f59c90d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b330a53097f8975067e4935ce23448e1">Copiar</button>
 </div>
 <h3 id="testes-em-paralelo"><a class="anchorlink" href="#testes-em-paralelo">3 Testes em Paralelo</a></h3><p>Testes em paralelo permitem a paralelização da sua suíte de testes.
 Ao passo que fazer <em>fork</em> de processos é o método padrão, também é suportado o uso de <em>threads</em>.
@@ -928,11 +912,11 @@ passada para o método <code>parallelize</code>.</p><p>Para habilitar a paraleli
   <span class="n">parallelize</span><span class="p">(</span><span class="ss">workers: </span><span class="mi">2</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c1e6c13e8d9e9df1873ef7e034ea22d8">class ActiveSupport::TestCase
+<textarea class="clipboard-content" id="clipboard-bb097d6c895fbcb31d0649613068913a">class ActiveSupport::TestCase
   parallelize(workers: 2)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c1e6c13e8d9e9df1873ef7e034ea22d8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bb097d6c895fbcb31d0649613068913a">Copiar</button>
 </div>
 <p>O número de <em>workers</em> informado é o número de vezes que o processo sofrerá <em>fork</em>.
 Voce pode querer paralelizar sua suíte de testes local de maneira diferente de seu <em>CI</em>,
@@ -940,9 +924,9 @@ por isso uma variável de ambiente está disponível para que seja possível mud
 o número de <em>workers</em> que uma execução dos testes deve usar:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nv">PARALLEL_WORKERS</span><span class="o">=</span>15 <span class="nb">bin/rails test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7dfdf51776b047b787dde725ecd7114f">PARALLEL_WORKERS=15 bin/rails test
+<textarea class="clipboard-content" id="clipboard-667646b441670c98d0844203c55013fa">PARALLEL_WORKERS=15 bin/rails test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7dfdf51776b047b787dde725ecd7114f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-667646b441670c98d0844203c55013fa">Copiar</button>
 </div>
 <p>Quando testes são paralelizados, o <em>Active Record</em> automaticamente lida com a criação dos bancos de dados e do carregamento do esquema (<em>schema</em>) no banco de dados de cada processo.
 Os bancos de dados criados serão sufixados de acordo com a numeração do <em>worker</em>.
@@ -962,7 +946,7 @@ O método <code>parallelize_teardown</code> é chamado no momento antes do proce
   <span class="n">parallelize</span><span class="p">(</span><span class="ss">workers: :number_of_processors</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a040e51a09d0b8def92ecad1ba0f88ac">class ActiveSupport::TestCase
+<textarea class="clipboard-content" id="clipboard-fad464be0924db9ef5a8ea2f0c72cc6d">class ActiveSupport::TestCase
   parallelize_setup do |worker|
     # configuração dos bancos de dados
   end
@@ -974,7 +958,7 @@ O método <code>parallelize_teardown</code> é chamado no momento antes do proce
   parallelize(workers: :number_of_processors)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a040e51a09d0b8def92ecad1ba0f88ac">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fad464be0924db9ef5a8ea2f0c72cc6d">Copiar</button>
 </div>
 <p>Esses métodos não são necessários ou estão indisponíveis quando testes paralelos com <em>threads</em> são utilizados.</p><h4 id="testes-em-paralelo-com-threads"><a class="anchorlink" href="#testes-em-paralelo-com-threads">3.2 Testes em Paralelo com <em>Threads</em></a></h4><p>Se você preferir utilizar <em>threads</em> ou está utilizando JRuby, a opção de paralelizar com <em>threads</em> está disponível.
 O paralelizador com <em>threads</em> utiliza por baixo dos panos a classe <code>Parallel::Executor</code> do <em>Minitest</em>.</p><p>Para mudar o método de paralelização para utilizar <em>threads</em> ao invés de <em>forks</em>, escreva o seguinte em seu <code>test_helper.rb</code>:</p><div class="code_container">
@@ -982,11 +966,11 @@ O paralelizador com <em>threads</em> utiliza por baixo dos panos a classe <code>
   <span class="n">parallelize</span><span class="p">(</span><span class="ss">workers: :number_of_processors</span><span class="p">,</span> <span class="ss">with: :threads</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-58fc9e9a4aa03c2eeabe87928e7ada64">class ActiveSupport::TestCase
+<textarea class="clipboard-content" id="clipboard-fdad48285a0ec3993fefa6338ed26cfd">class ActiveSupport::TestCase
   parallelize(workers: :number_of_processors, with: :threads)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-58fc9e9a4aa03c2eeabe87928e7ada64">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fdad48285a0ec3993fefa6338ed26cfd">Copiar</button>
 </div>
 <p>Aplicações Rails geradas com JRuby ou TruffleRuby irão incluir automaticamente a opção <code>with: :threads</code>.</p><p>o número de <em>workers</em> passado para <code>parallelize</code> determina o número de <em>threads</em> que os testes irão utilizar.
 Voce pode querer paralelizar sua suíte de testes de maneira diferente de seu <em>CI</em>,
@@ -994,9 +978,9 @@ por isso uma variável de ambiente está disponível para que seja possível mud
 o número de <em>workers</em> que uma execução dos testes deve usar:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nv">PARALLEL_WORKERS</span><span class="o">=</span>15 <span class="nb">bin/rails test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3dd08faefde316f6294a0d9beb33b430">PARALLEL_WORKERS=15 bin/rails test
+<textarea class="clipboard-content" id="clipboard-02b8529731352f0754e2751dfbe34dae">PARALLEL_WORKERS=15 bin/rails test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3dd08faefde316f6294a0d9beb33b430">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-02b8529731352f0754e2751dfbe34dae">Copiar</button>
 </div>
 <h4 id="testando-transacoes-em-paralelo"><a class="anchorlink" href="#testando-transacoes-em-paralelo">3.3 Testando Transações em Paralelo</a></h4><p>O Rails automaticamente envolve todo caso de teste em uma transação do banco de dados, que é desfeita depois que o teste é concluído.
 Isso faz com que os casos de teste sejam independentes uns dos outros e faz com que as mudanças no banco de dados sejam visíveis somente dentro daquele teste.</p><p>Quando você testa código que roda transações paralelas em <em>threads</em>,
@@ -1009,7 +993,7 @@ as transações podem bloquear umas às outras, pois eles já estão aninhadas c
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d776d5a4d1ad69b3bbb6660741adc82">class WorkerTest &lt; ActiveSupport::TestCase
+<textarea class="clipboard-content" id="clipboard-23586457907c5019dd89c239e837d19e">class WorkerTest &lt; ActiveSupport::TestCase
   self.use_transactional_tests = false
 
   test "parallel transactions" do
@@ -1017,7 +1001,7 @@ as transações podem bloquear umas às outras, pois eles já estão aninhadas c
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d776d5a4d1ad69b3bbb6660741adc82">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-23586457907c5019dd89c239e837d19e">Copiar</button>
 </div>
 <div class="note"><p>Com os testes transacionais desligados, você terá que que limpar os dados de teste criados,
 já que a as mudanças não são automaticamente desfeitas depois que o teste termina.</p></div><h3 id="o-banco-de-dados-de-teste"><a class="anchorlink" href="#o-banco-de-dados-de-teste">4 O Banco de Dados de Teste</a></h3><p>Quase tudo em uma aplicação Rails interage fortemente com um banco de dados e, como resultado, seus testes também precisarão interagir com um banco de dados.
@@ -1048,7 +1032,7 @@ Esse tipo de <em>fixture</em> vai ter a extensão <strong>.yml</strong> (como em
   <span class="na">birthday</span><span class="pi">:</span> <span class="s">1974-09-27</span>
   <span class="na">profession</span><span class="pi">:</span> <span class="s">guy with keyboard</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b5c9758d09fedd3453c78ec4df19aec6"># Vejam e contemplem! Eu sou um comentário em YAML!
+<textarea class="clipboard-content" id="clipboard-7e20bfe8d2eba6000f939bcaabbcb50f"># Vejam e contemplem! Eu sou um comentário em YAML!
 david:
   name: David Heinemeier Hansson
   birthday: 1979-10-15
@@ -1059,7 +1043,7 @@ steve:
   birthday: 1974-09-27
   profession: guy with keyboard
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b5c9758d09fedd3453c78ec4df19aec6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7e20bfe8d2eba6000f939bcaabbcb50f">Copiar</button>
 </div>
 <p>Cada <em>fixture</em> recebe um nome, seguido de uma lista indentada de chaves/valores separados por dois pontos.
 Registros são separados uns dos outros por uma linha em branco.
@@ -1069,11 +1053,11 @@ Aqui está um exemplo com uma associação <code>belongs_to</code>/<code>has_man
 <span class="na">about</span><span class="pi">:</span>
   <span class="na">name</span><span class="pi">:</span> <span class="s">About</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dc84e1620b1f7e08082c3a4772dfffe2"># fixtures/categories.yml
+<textarea class="clipboard-content" id="clipboard-1af1235e57a34a7b1cf5b3c17960e96e"># fixtures/categories.yml
 about:
   name: About
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dc84e1620b1f7e08082c3a4772dfffe2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1af1235e57a34a7b1cf5b3c17960e96e">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight yaml"><span class="c1"># fixtures/articles.yml</span>
@@ -1082,13 +1066,13 @@ about:
   <span class="na">body</span><span class="pi">:</span> <span class="s">Hello world!</span>
   <span class="na">category</span><span class="pi">:</span> <span class="s">about</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bc19b548915ab00541d1a9b8ccd505e7"># fixtures/articles.yml
+<textarea class="clipboard-content" id="clipboard-22c41064d5bfb8319a1b63d7bbfd2027"># fixtures/articles.yml
 first:
   title: Welcome to Rails!
   body: Hello world!
   category: about
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bc19b548915ab00541d1a9b8ccd505e7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-22c41064d5bfb8319a1b63d7bbfd2027">Copiar</button>
 </div>
 <p>Veja que a chave de <code>category</code> do artigo <code>first</code> encontrado em <code>fixtures/articles.yml</code> tem o valor <code>about</code>.
 Isso diz ao Rails para carregar a categoria <code>about</code> encontrada em <code>fixtures/categories.yml</code>.</p><div class="note"><p>Para que associações façam referência umas as outras pelo nome, você pode usar o nome da <em>fixture</em> ao invés de especificar a chave <code>id:</code> nas <em>fixtures</em> associadas.
@@ -1103,13 +1087,13 @@ user_<span class="cp">&lt;%=</span> <span class="n">n</span> <span class="cp">%&
   email: <span class="cp">&lt;%=</span> <span class="s2">"user</span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">@example.com"</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-af5186a1f111b0ff0259a6cced364acc">&lt;% 1000.times do |n| %&gt;
+<textarea class="clipboard-content" id="clipboard-24354b1f52e1a99bfde4521aceb6d891">&lt;% 1000.times do |n| %&gt;
 user_&lt;%= n %&gt;:
   username: &lt;%= "user#{n}" %&gt;
   email: &lt;%= "user#{n}@example.com" %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-af5186a1f111b0ff0259a6cced364acc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-24354b1f52e1a99bfde4521aceb6d891">Copiar</button>
 </div>
 <h5 id="fixtures-em-acao"><a class="anchorlink" href="#fixtures-em-acao">4.2.4 Fixtures em Ação</a></h5><p>O Rails automaticamente carrega todas as <em>fixtures</em> dentro do diretório <code>test/fixtures</code> por padrão.
 O carregamento envolve três passos:</p>
@@ -1135,7 +1119,7 @@ Por exemplo:</p><div class="code_container">
 <span class="n">david</span> <span class="o">=</span> <span class="n">users</span><span class="p">(</span><span class="ss">:david</span><span class="p">)</span>
 <span class="n">david</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">david</span><span class="p">.</span><span class="nf">partner</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6116c4d161f57927ae0e058816c2a005"># isso retornará um objeto User para a fixture chamada david
+<textarea class="clipboard-content" id="clipboard-2eaf18968c2088f910e1f089f06aadaf"># isso retornará um objeto User para a fixture chamada david
 users(:david)
 
 # isso retornará a propriedade id de david
@@ -1145,17 +1129,17 @@ users(:david).id
 david = users(:david)
 david.call(david.partner)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6116c4d161f57927ae0e058816c2a005">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2eaf18968c2088f910e1f089f06aadaf">Copiar</button>
 </div>
 <p>Para acessar várias <em>fixtures</em> de uma vez, você pode passar uma lista de nomes de <em>fixtures</em>.
 Por exemplo:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># isso retornará uma array contendo as fixtures david e steve</span>
 <span class="n">users</span><span class="p">(</span><span class="ss">:david</span><span class="p">,</span> <span class="ss">:steve</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f6365ed70b5655f5959d9950272e3bde"># isso retornará uma array contendo as fixtures david e steve
+<textarea class="clipboard-content" id="clipboard-7116e8fbaede8151eb5f0b284c2bdf3f"># isso retornará uma array contendo as fixtures david e steve
 users(:david, :steve)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f6365ed70b5655f5959d9950272e3bde">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7116e8fbaede8151eb5f0b284c2bdf3f">Copiar</button>
 </div>
 <h3 id="testando-models"><a class="anchorlink" href="#testando-models">5 Testando <em>Models</em></a></h3><p>Testes de <em>model</em> são usados para testar os vários <em>models</em> de sua aplicação.</p><p>Os testes de <em>model</em> do Rails estão localizados em <code>test/models</code>.
 O Rails disponibiliza um gerador (<em>generator</em>) para criar esqueletos de testes de <em>model</em>.</p><div class="code_container">
@@ -1163,9 +1147,9 @@ O Rails disponibiliza um gerador (<em>generator</em>) para criar esqueletos de t
 <span class="go">create  test/models/article_test.rb
 create  test/fixtures/articles.yml
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-7c1fa3b9191da3780a4d2f6629d8deb8">bin/rails generate test_unit:model article title:string body:text
+<textarea class="clipboard-content" id="clipboard-c0efc741ce187d4ecbbd37c0a5df6aaa">bin/rails generate test_unit:model article title:string body:text
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7c1fa3b9191da3780a4d2f6629d8deb8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c0efc741ce187d4ecbbd37c0a5df6aaa">Copiar</button>
 </div>
 <p>Testes de <em>model</em> não possuem uma superclasse como <code>ActionMailer::TestCase</code>.
 Ao invés disso, eles herdam de <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/TestCase.html"><code>ActiveSupport::TestCase</code></a>.</p><h3 id="fazendo-testes-de-sistema"><a class="anchorlink" href="#fazendo-testes-de-sistema">6 Fazendo Testes de Sistema</a></h3><p>Testes de sistema permitem testar interações do usuário com sua aplicação, rodando os testes em um navegador web real ou <em>headless</em>.
@@ -1175,9 +1159,9 @@ O Rails também disponibiliza um <em>generator</em> para criar esqueletos de tes
 <span class="go">      invoke test_unit
       create test/system/users_test.rb
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-1e301fe4deb0de507fab9e93dac4c126">bin/rails generate system_test users
+<textarea class="clipboard-content" id="clipboard-b3aa8839cd8031bdce5963a4a2fb45ca">bin/rails generate system_test users
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1e301fe4deb0de507fab9e93dac4c126">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b3aa8839cd8031bdce5963a4a2fb45ca">Copiar</button>
 </div>
 <p>Aqui está como um teste de sistema recém gerado se parece:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"application_system_test_case"</span>
@@ -1190,7 +1174,7 @@ O Rails também disponibiliza um <em>generator</em> para criar esqueletos de tes
   <span class="c1"># end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9fd52303ded9f34729b197b7e4f1da6e">require "application_system_test_case"
+<textarea class="clipboard-content" id="clipboard-c6401d774c62d28c1b3ed9a3a8f39c19">require "application_system_test_case"
 
 class UsersTest &lt; ApplicationSystemTestCase
   # test "visiting the index" do
@@ -1200,7 +1184,7 @@ class UsersTest &lt; ApplicationSystemTestCase
   # end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9fd52303ded9f34729b197b7e4f1da6e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c6401d774c62d28c1b3ed9a3a8f39c19">Copiar</button>
 </div>
 <p>Por padrão, testes de sistema utilizam o <em>driver</em> Selenium, executando o navegador Chrome, em uma tela de tamanho 1400x1400.
 A próxima seção explica como mudar as configurações padrão.</p><h4 id="mudando-as-configuracoes-padrao"><a class="anchorlink" href="#mudando-as-configuracoes-padrao">6.1 Mudando as Configurações Padrão</a></h4><p>O Rails faz com que mudar as configurações padrão de testes de sistema seja muito simples.
@@ -1216,14 +1200,14 @@ Depois, em seu <code>application_system_test_case.rb</code>, faça o seguinte:</
   <span class="n">driven_by</span> <span class="ss">:poltergeist</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-96e642ac4ab047509b26df6b8d049e1f">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-bd5a52dfd76e964ba4de042bbbdf5ee6">require "test_helper"
 require "capybara/poltergeist"
 
 class ApplicationSystemTestCase &lt; ActionDispatch::SystemTestCase
   driven_by :poltergeist
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-96e642ac4ab047509b26df6b8d049e1f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bd5a52dfd76e964ba4de042bbbdf5ee6">Copiar</button>
 </div>
 <p>O nome do <em>driver</em> é um argumento obrigatório de <code>driven_by</code>.
 Os argumentos opcionais que podem ser passados para <code>driven_by</code> são <code>:using</code> para o navegador web (opção usada somente pelo <em>driver</em> Selenium), <code>:screen_size</code> para mudar o tamanho da tela e das capturas de tela e <code>:options</code> que serve para configurações específicas de cada <em>driver</em>.</p><div class="code_container">
@@ -1233,13 +1217,13 @@ Os argumentos opcionais que podem ser passados para <code>driven_by</code> são 
   <span class="n">driven_by</span> <span class="ss">:selenium</span><span class="p">,</span> <span class="ss">using: :firefox</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6eb05e7e46a3ac70c7bdc25e2ddf9237">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-e2edefb03f570f61db3f5b4ad996fb2c">require "test_helper"
 
 class ApplicationSystemTestCase &lt; ActionDispatch::SystemTestCase
   driven_by :selenium, using: :firefox
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6eb05e7e46a3ac70c7bdc25e2ddf9237">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e2edefb03f570f61db3f5b4ad996fb2c">Copiar</button>
 </div>
 <p>Se você quiser usar um navegador <em>headless</em>, você pode usar o Chrome <em>headless</em> ou Firefox <em>headless</em> passando <code>headless_chrome</code> ou <code>headless_firefox</code> para o argumento <code>:using</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
@@ -1248,13 +1232,13 @@ end
   <span class="n">driven_by</span> <span class="ss">:selenium</span><span class="p">,</span> <span class="ss">using: :headless_chrome</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f572a3fca84bfac0ced70ae1da052df9">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-ed7180d2c2e8f5e08bae32f50761f13e">require "test_helper"
 
 class ApplicationSystemTestCase &lt; ActionDispatch::SystemTestCase
   driven_by :selenium, using: :headless_chrome
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f572a3fca84bfac0ced70ae1da052df9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ed7180d2c2e8f5e08bae32f50761f13e">Copiar</button>
 </div>
 <p>Se a sua configuração do Capybara requer mais customização do que as fornecidas pelo Rails, opções adicionais podem ser adicionadas no arquivo <code>application_system_test_case.rb</code>.</p><p>Consulte a <a href="https://github.com/teamcapybara/capybara#setup">documentação do Capybara</a> para configurações adicionais.</p><h4 id="helper-de-capturas-de-tela"><a class="anchorlink" href="#helper-de-capturas-de-tela">6.2 <em>Helper</em> de capturas de tela</a></h4><p>O módulo <code>ScreenshotHelper</code> é um <em>helper</em> feito para fazer capturas de tela ("prints") dos seus testes.
 Isso pode ser útil para ver o navegador web no momento em que um teste falha ou para debug.</p><p>Dois métodos são disponibilizados: <code>take_screenshot</code> e <code>take_failed_screenshot</code>.
@@ -1263,19 +1247,19 @@ Vamos demonstrar como escrever testes de sistema, através da visita a página i
 Se você não utilizou o <em>generator</em> de <em>scaffold</em>, comece criando o esqueleto de um teste de sistema.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate system_test articles
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1aefbb98f43ef810af61f64a03e05cdd">bin/rails generate system_test articles
+<textarea class="clipboard-content" id="clipboard-dd1409421bf7ea2c8a7dca6e8d86a39e">bin/rails generate system_test articles
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1aefbb98f43ef810af61f64a03e05cdd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dd1409421bf7ea2c8a7dca6e8d86a39e">Copiar</button>
 </div>
 <p>Isso deveria criar um arquivo de teste.
 Se você utilizou o comando anterior, você deveria ver a seguinte saída:</p><div class="code_container">
 <pre><code class="highlight plaintext">      invoke  test_unit
       create    test/system/articles_test.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b4bcb33e8d1346bd2f8ac3091fc813c9">      invoke  test_unit
+<textarea class="clipboard-content" id="clipboard-20c32277030223d278806cd900893900">      invoke  test_unit
       create    test/system/articles_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b4bcb33e8d1346bd2f8ac3091fc813c9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-20c32277030223d278806cd900893900">Copiar</button>
 </div>
 <p>Agora vamos abrir o arquivo e escrever nossa primeira asserção:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"application_system_test_case"</span>
@@ -1287,7 +1271,7 @@ Se você utilizou o comando anterior, você deveria ver a seguinte saída:</p><d
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-64852eb83415349b3b635f0e78616a64">require "application_system_test_case"
+<textarea class="clipboard-content" id="clipboard-4253810ebae8dd9dad867ba2569de3cd">require "application_system_test_case"
 
 class ArticlesTest &lt; ApplicationSystemTestCase
   test "viewing the index" do
@@ -1296,14 +1280,14 @@ class ArticlesTest &lt; ApplicationSystemTestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-64852eb83415349b3b635f0e78616a64">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4253810ebae8dd9dad867ba2569de3cd">Copiar</button>
 </div>
 <p>O teste deveria localizar que há um elemento <code>h1</code> na página inicial (<em>index</em>) de <em>articles</em> e passar.</p><p>Rode os testes de sistema.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test</span>:system
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6ede4478c4a090ca0ed76d90fd012950">bin/rails test:system
+<textarea class="clipboard-content" id="clipboard-46774238b0a449e7c10ec31b3e68b10d">bin/rails test:system
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6ede4478c4a090ca0ed76d90fd012950">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-46774238b0a449e7c10ec31b3e68b10d">Copiar</button>
 </div>
 <div class="note"><p>Por padrão, rodar <code>bin/rails test</code> não irá rodar seus testes de sistema.
 Certifique-se de rodar <code>bin/rails test:system</code> para que eles sejam executados.
@@ -1321,7 +1305,7 @@ Você também pode executar <code>bin/rails test:all</code> para rodar todos os 
   <span class="n">assert_text</span> <span class="s2">"Creating an Article"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8b3c754ce2f83217722330fd105b87f7">test "creating an article" do
+<textarea class="clipboard-content" id="clipboard-0f0a8a90a5df998defbe3174c3f1b81f">test "creating an article" do
   visit articles_path
 
   click_on "New Article"
@@ -1334,7 +1318,7 @@ Você também pode executar <code>bin/rails test:all</code> para rodar todos os 
   assert_text "Creating an Article"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8b3c754ce2f83217722330fd105b87f7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f0a8a90a5df998defbe3174c3f1b81f">Copiar</button>
 </div>
 <p>O primeiro passo é chamar <code>visit articles_path</code>.
 Isso faz com que o teste acesse a página inicial (<em>index</em>) de <em>articles</em>.</p><p>Depois a instrução <code>click_on "New Article"</code> vai achar o botão "New Article" na página inicial (<em>index</em>).
@@ -1347,13 +1331,13 @@ Nesse exemplo, um arquivo chamado <code>mobile_system_test_case.rb</code> foi cr
   <span class="n">driven_by</span> <span class="ss">:selenium</span><span class="p">,</span> <span class="ss">using: :chrome</span><span class="p">,</span> <span class="ss">screen_size: </span><span class="p">[</span><span class="mi">375</span><span class="p">,</span> <span class="mi">667</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-873447794b669aee7cade2fd90fc22ef">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-a4b9bc0134ad1568e95bce20301d5b54">require "test_helper"
 
 class MobileSystemTestCase &lt; ActionDispatch::SystemTestCase
   driven_by :selenium, using: :chrome, screen_size: [375, 667]
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-873447794b669aee7cade2fd90fc22ef">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a4b9bc0134ad1568e95bce20301d5b54">Copiar</button>
 </div>
 <p>Para usar essa configuração, crie um teste dentro de <code>test/system</code> que herda de <code>MobileSystemTestCase</code>.
 Agora você pode testar seu app com diferentes configurações de tela.</p><div class="code_container">
@@ -1367,7 +1351,7 @@ Agora você pode testar seu app com diferentes configurações de tela.</p><div 
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-84b51d666e1377946911c2ffe5ccd29a">require "mobile_system_test_case"
+<textarea class="clipboard-content" id="clipboard-c71e377b16b8151eb4f35b1dbc5a3a0d">require "mobile_system_test_case"
 
 class PostsTest &lt; MobileSystemTestCase
 
@@ -1377,7 +1361,7 @@ class PostsTest &lt; MobileSystemTestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-84b51d666e1377946911c2ffe5ccd29a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c71e377b16b8151eb4f35b1dbc5a3a0d">Copiar</button>
 </div>
 <h5 id="indo-alem"><a class="anchorlink" href="#indo-alem">6.3.3 Indo Além</a></h5><p>A beleza dos testes de sistema é que, parecido com os testes de integração, eles também testam a interação do usuário com o <em>controller</em>, <em>model</em> e a <em>view</em>.
 Porém, o teste de sistema é muito mais robusto e testa a aplicação como se uma pessoa de verdade estivesse usando.
@@ -1386,9 +1370,9 @@ Indo além, você pode testar qualquer coisa que os próprios usuários fariam e
 <span class="go">      exists  test/integration/
       create  test/integration/user_flows_test.rb
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-11ea9dfdf5dacc5ae6c815df0a22da69">bin/rails generate integration_test user_flows
+<textarea class="clipboard-content" id="clipboard-b3001c712523cb4fe911c322b9b33ce9">bin/rails generate integration_test user_flows
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-11ea9dfdf5dacc5ae6c815df0a22da69">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b3001c712523cb4fe911c322b9b33ce9">Copiar</button>
 </div>
 <p>Here's what a freshly generated integration test looks like:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
@@ -1399,7 +1383,7 @@ Indo além, você pode testar qualquer coisa que os próprios usuários fariam e
   <span class="c1"># end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9da7e666ffe380844988e950ab037c18">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-aff5ce4bd4fe66c0bbc80af743e1588d">require "test_helper"
 
 class UserFlowsTest &lt; ActionDispatch::IntegrationTest
   # test "the truth" do
@@ -1407,24 +1391,24 @@ class UserFlowsTest &lt; ActionDispatch::IntegrationTest
   # end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9da7e666ffe380844988e950ab037c18">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aff5ce4bd4fe66c0bbc80af743e1588d">Copiar</button>
 </div>
 <p>Here the test is inheriting from <code>ActionDispatch::IntegrationTest</code>. This makes some additional helpers available for us to use in our integration tests.</p><h4 id="helpers-available-for-integration-tests"><a class="anchorlink" href="#helpers-available-for-integration-tests">7.1 Helpers Available for Integration Tests</a></h4><p>In addition to the standard testing helpers, inheriting from <code>ActionDispatch::IntegrationTest</code> comes with some additional helpers available when writing integration tests. Let's get briefly introduced to the three categories of helpers we get to choose from.</p><p>For dealing with the integration test runner, see <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Integration/Runner.html"><code>ActionDispatch::Integration::Runner</code></a>.</p><p>When performing requests, we will have <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Integration/RequestHelpers.html"><code>ActionDispatch::Integration::RequestHelpers</code></a> available for our use.</p><p>If we need to modify the session, or state of our integration test, take a look at <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Integration/Session.html"><code>ActionDispatch::Integration::Session</code></a> to help.</p><h4 id="implementing-an-integration-test"><a class="anchorlink" href="#implementing-an-integration-test">7.2 Implementing an integration test</a></h4><p>Let's add an integration test to our blog application. We'll start with a basic workflow of creating a new blog article, to verify that everything is working properly.</p><p>We'll start by generating our integration test skeleton:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate integration_test blog_flow
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7a3dd81e6feea061c2ce6cd2aaefd2d0">bin/rails generate integration_test blog_flow
+<textarea class="clipboard-content" id="clipboard-03c0babac26b245c60cd86eadd81caf8">bin/rails generate integration_test blog_flow
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7a3dd81e6feea061c2ce6cd2aaefd2d0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-03c0babac26b245c60cd86eadd81caf8">Copiar</button>
 </div>
 <p>It should have created a test file placeholder for us. With the output of the
 previous command we should see:</p><div class="code_container">
 <pre><code class="highlight plaintext">      invoke  test_unit
       create    test/integration/blog_flow_test.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-079a146dea6b83deb8efe489e28e45a2">      invoke  test_unit
+<textarea class="clipboard-content" id="clipboard-d52d81c75592651c0fedae78a4e6a3a1">      invoke  test_unit
       create    test/integration/blog_flow_test.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-079a146dea6b83deb8efe489e28e45a2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d52d81c75592651c0fedae78a4e6a3a1">Copiar</button>
 </div>
 <p>Now let's open that file and write our first assertion:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
@@ -1436,7 +1420,7 @@ previous command we should see:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-273d1a88a51f94715db765f7c16da6d4">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-2bebdb112114d0785ac650f705baedce">require "test_helper"
 
 class BlogFlowTest &lt; ActionDispatch::IntegrationTest
   test "can see the welcome page" do
@@ -1445,7 +1429,7 @@ class BlogFlowTest &lt; ActionDispatch::IntegrationTest
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-273d1a88a51f94715db765f7c16da6d4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2bebdb112114d0785ac650f705baedce">Copiar</button>
 </div>
 <p>We will take a look at <code>assert_select</code> to query the resulting HTML of a request in the "Testing Views" section below. It is used for testing the response of our request by asserting the presence of key HTML elements and their content.</p><p>When we visit our root path, we should see <code>welcome/index.html.erb</code> rendered for the view. So this assertion should pass.</p><h5 id="creating-articles-integration"><a class="anchorlink" href="#creating-articles-integration">7.2.1 Creating articles integration</a></h5><p>How about testing our ability to create a new article in our blog and see the resulting article.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"can create an article"</span> <span class="k">do</span>
@@ -1460,7 +1444,7 @@ end
   <span class="n">assert_select</span> <span class="s2">"p"</span><span class="p">,</span> <span class="s2">"Title:</span><span class="se">\n</span><span class="s2">  can create"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-32493fd9e4e17f10b15e75414a703b6d">test "can create an article" do
+<textarea class="clipboard-content" id="clipboard-c68ae41aa3729c47145cb6e8a502eae5">test "can create an article" do
   get "/articles/new"
   assert_response :success
 
@@ -1472,7 +1456,7 @@ end
   assert_select "p", "Title:\n  can create"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-32493fd9e4e17f10b15e75414a703b6d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c68ae41aa3729c47145cb6e8a502eae5">Copiar</button>
 </div>
 <p>Let's break this test down so we can understand it.</p><p>We start by calling the <code>:new</code> action on our Articles controller. This response should be successful.</p><p>After this we make a post request to the <code>:create</code> action of our Articles controller:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">post</span> <span class="s2">"/articles"</span><span class="p">,</span>
@@ -1480,12 +1464,12 @@ end
 <span class="n">assert_response</span> <span class="ss">:redirect</span>
 <span class="n">follow_redirect!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eeb2cfb7ca5e8c2e2bdeb01156fe3304">post "/articles",
+<textarea class="clipboard-content" id="clipboard-e2e8d85db5ac2ea6f556a0bfeab0fe08">post "/articles",
   params: { article: { title: "can create", body: "article successfully." } }
 assert_response :redirect
 follow_redirect!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eeb2cfb7ca5e8c2e2bdeb01156fe3304">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e2e8d85db5ac2ea6f556a0bfeab0fe08">Copiar</button>
 </div>
 <p>The two lines following the request are to handle the redirect we setup when creating a new article.</p><div class="note"><p>Don't forget to call <code>follow_redirect!</code> if you plan to make subsequent requests after a redirect is made.</p></div><p>Finally we can assert that our response was successful and our new article is readable on the page.</p><h5 id="taking-it-further"><a class="anchorlink" href="#taking-it-further">7.2.2 Taking it further</a></h5><p>We were able to successfully test a very small workflow for visiting our blog and creating a new article. If we wanted to take this further we could add tests for commenting, removing articles, or editing comments. Integration tests are a great place to experiment with all kinds of use cases for our applications.</p><h3 id="functional-tests-for-your-controllers"><a class="anchorlink" href="#functional-tests-for-your-controllers">8 Functional Tests for Your Controllers</a></h3><p>In Rails, testing the various actions of a controller is a form of writing functional tests. Remember your controllers handle the incoming web requests to your application and eventually respond with a rendered view. When writing functional tests, you are testing how your actions handle the requests and the expected result or response, in some cases an HTML view.</p><h4 id="what-to-include-in-your-functional-tests"><a class="anchorlink" href="#what-to-include-in-your-functional-tests">8.1 What to include in your Functional Tests</a></h4><p>You should test for things such as:</p>
 <ul>
@@ -1504,9 +1488,9 @@ follow_redirect!
 create    test/controllers/articles_controller_test.rb
 </span><span class="c">...
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-179450b4afce1d792594dd4d5f803d3b">bin/rails generate scaffold_controller article title:string body:text
+<textarea class="clipboard-content" id="clipboard-e958c78c69c0f79efd6a90a10acf3139">bin/rails generate scaffold_controller article title:string body:text
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-179450b4afce1d792594dd4d5f803d3b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e958c78c69c0f79efd6a90a10acf3139">Copiar</button>
 </div>
 <p>This will generate the controller code and tests for an <code>Article</code> resource.
 You can take a look at the file <code>articles_controller_test.rb</code> in the <code>test/controllers</code> directory.</p><p>If you already have a controller and just want to generate the test scaffold code for
@@ -1517,9 +1501,9 @@ each of the seven default actions, you can use the following command:</p><div cl
 create    test/controllers/articles_controller_test.rb
 </span><span class="c">...
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-3cd32ef7344ba04ddb7c34b10bab7110">bin/rails generate test_unit:scaffold article
+<textarea class="clipboard-content" id="clipboard-60908c44aedd657fcc3351dca3440f20">bin/rails generate test_unit:scaffold article
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3cd32ef7344ba04ddb7c34b10bab7110">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-60908c44aedd657fcc3351dca3440f20">Copiar</button>
 </div>
 <p>Let's take a look at one such test, <code>test_should_get_index</code> from the file <code>articles_controller_test.rb</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># articles_controller_test.rb</span>
@@ -1530,7 +1514,7 @@ create    test/controllers/articles_controller_test.rb
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf322e5e80c9a8f441fab3f115857175"># articles_controller_test.rb
+<textarea class="clipboard-content" id="clipboard-dab90f78a88008fec4688be6afd09ed9"># articles_controller_test.rb
 class ArticlesControllerTest &lt; ActionDispatch::IntegrationTest
   test "should get index" do
     get articles_url
@@ -1538,7 +1522,7 @@ class ArticlesControllerTest &lt; ActionDispatch::IntegrationTest
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf322e5e80c9a8f441fab3f115857175">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dab90f78a88008fec4688be6afd09ed9">Copiar</button>
 </div>
 <p>In the <code>test_should_get_index</code> test, Rails simulates a request on the action called <code>index</code>, making sure the request was successful
 and also ensuring that the right response body has been generated.</p><p>The <code>get</code> method kicks off the web request and populates the results into the <code>@response</code>. It can accept up to 6 arguments:</p>
@@ -1560,24 +1544,24 @@ This can be in the form of a string or a route helper (e.g. <code>articles_url</
 <p>All of these keyword arguments are optional.</p><p>Example: Calling the <code>:show</code> action for the first <code>Article</code>, passing in an <code>HTTP_REFERER</code> header:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">get</span> <span class="n">article_url</span><span class="p">(</span><span class="no">Article</span><span class="p">.</span><span class="nf">first</span><span class="p">),</span> <span class="ss">headers: </span><span class="p">{</span> <span class="s2">"HTTP_REFERER"</span> <span class="o">=&gt;</span> <span class="s2">"http://example.com/home"</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8631d83b6977af96f8e6abc88ce18a79">get article_url(Article.first), headers: { "HTTP_REFERER" =&gt; "http://example.com/home" }
+<textarea class="clipboard-content" id="clipboard-7d28a25f38582794e7cb80b748ad5856">get article_url(Article.first), headers: { "HTTP_REFERER" =&gt; "http://example.com/home" }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8631d83b6977af96f8e6abc88ce18a79">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7d28a25f38582794e7cb80b748ad5856">Copiar</button>
 </div>
 <p>Another example: Calling the <code>:update</code> action for the last <code>Article</code>, passing in new text for the <code>title</code> in <code>params</code>, as an Ajax request:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">patch</span> <span class="n">article_url</span><span class="p">(</span><span class="no">Article</span><span class="p">.</span><span class="nf">last</span><span class="p">),</span> <span class="ss">params: </span><span class="p">{</span> <span class="ss">article: </span><span class="p">{</span> <span class="ss">title: </span><span class="s2">"updated"</span> <span class="p">}</span> <span class="p">},</span> <span class="ss">xhr: </span><span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-07bc89f3e95b3ca3072fde6e21d2cff3">patch article_url(Article.last), params: { article: { title: "updated" } }, xhr: true
+<textarea class="clipboard-content" id="clipboard-163dc5bb4ea6c1804dfa8dd000748d61">patch article_url(Article.last), params: { article: { title: "updated" } }, xhr: true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-07bc89f3e95b3ca3072fde6e21d2cff3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-163dc5bb4ea6c1804dfa8dd000748d61">Copiar</button>
 </div>
 <p>One more example: Calling the <code>:create</code> action to create a new article, passing in
 text for the <code>title</code> in <code>params</code>, as JSON request:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">post</span> <span class="n">articles_path</span><span class="p">,</span> <span class="ss">params: </span><span class="p">{</span> <span class="ss">article: </span><span class="p">{</span> <span class="ss">title: </span><span class="s2">"Ahoy!"</span> <span class="p">}</span> <span class="p">},</span> <span class="ss">as: :json</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-75959e79c1d81bdec81b2673ecbe7b37">post articles_path, params: { article: { title: "Ahoy!" } }, as: :json
+<textarea class="clipboard-content" id="clipboard-427db5558aca15b829b0c7a16e466976">post articles_path, params: { article: { title: "Ahoy!" } }, as: :json
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-75959e79c1d81bdec81b2673ecbe7b37">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-427db5558aca15b829b0c7a16e466976">Copiar</button>
 </div>
 <div class="note"><p>If you try running <code>test_should_create_article</code> test from <code>articles_controller_test.rb</code> it will fail on account of the newly added model level validation and rightly so.</p></div><p>Let us modify <code>test_should_create_article</code> test in <code>articles_controller_test.rb</code> so that all our test pass:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"should create article"</span> <span class="k">do</span>
@@ -1588,7 +1572,7 @@ text for the <code>title</code> in <code>params</code>, as JSON request:</p><div
   <span class="n">assert_redirected_to</span> <span class="n">article_path</span><span class="p">(</span><span class="no">Article</span><span class="p">.</span><span class="nf">last</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b96fdf12d8fd4a0c75b5a9a778d5a750">test "should create article" do
+<textarea class="clipboard-content" id="clipboard-afebc6eeb85bc9cbd8294fe96dde9501">test "should create article" do
   assert_difference("Article.count") do
     post articles_url, params: { article: { body: "Rails is awesome!", title: "Hello Rails" } }
   end
@@ -1596,14 +1580,14 @@ text for the <code>title</code> in <code>params</code>, as JSON request:</p><div
   assert_redirected_to article_path(Article.last)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b96fdf12d8fd4a0c75b5a9a778d5a750">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-afebc6eeb85bc9cbd8294fe96dde9501">Copiar</button>
 </div>
 <p>Now you can try running all the tests and they should pass.</p><div class="note"><p>If you followed the steps in the <a href="getting_started.html#basic-authentication">Basic Authentication</a> section, you'll need to add authorization to every request header to get all the tests passing:</p></div><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">post</span> <span class="n">articles_url</span><span class="p">,</span> <span class="ss">params: </span><span class="p">{</span> <span class="ss">article: </span><span class="p">{</span> <span class="ss">body: </span><span class="s2">"Rails is awesome!"</span><span class="p">,</span> <span class="ss">title: </span><span class="s2">"Hello Rails"</span> <span class="p">}</span> <span class="p">},</span> <span class="ss">headers: </span><span class="p">{</span> <span class="no">Authorization</span><span class="p">:</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">HttpAuthentication</span><span class="o">::</span><span class="no">Basic</span><span class="p">.</span><span class="nf">encode_credentials</span><span class="p">(</span><span class="s2">"dhh"</span><span class="p">,</span> <span class="s2">"secret"</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cb32ee1bf4d6e293f856ff999d01ad27">post articles_url, params: { article: { body: "Rails is awesome!", title: "Hello Rails" } }, headers: { Authorization: ActionController::HttpAuthentication::Basic.encode_credentials("dhh", "secret") }
+<textarea class="clipboard-content" id="clipboard-d18d7bf74bd3500d60e1ca81877fd7bb">post articles_url, params: { article: { body: "Rails is awesome!", title: "Hello Rails" } }, headers: { Authorization: ActionController::HttpAuthentication::Basic.encode_credentials("dhh", "secret") }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cb32ee1bf4d6e293f856ff999d01ad27">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d18d7bf74bd3500d60e1ca81877fd7bb">Copiar</button>
 </div>
 <h4 id="available-request-types-for-functional-tests"><a class="anchorlink" href="#available-request-types-for-functional-tests">8.2 Available Request Types for Functional Tests</a></h4><p>If you're familiar with the HTTP protocol, you'll know that <code>get</code> is a type of request. There are 6 request types supported in Rails functional tests:</p>
 <ul>
@@ -1624,7 +1608,7 @@ end
   <span class="n">assert_equal</span> <span class="s2">"text/javascript"</span><span class="p">,</span> <span class="vi">@response</span><span class="p">.</span><span class="nf">media_type</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-94616f86ba3b8f4d7e5c1b6a30ef964a">test "ajax request" do
+<textarea class="clipboard-content" id="clipboard-27447fee55fb110e62f2f1152c8d2bc9">test "ajax request" do
   article = articles(:one)
   get article_url(article), xhr: true
 
@@ -1632,7 +1616,7 @@ end
   assert_equal "text/javascript", @response.media_type
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-94616f86ba3b8f4d7e5c1b6a30ef964a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-27447fee55fb110e62f2f1152c8d2bc9">Copiar</button>
 </div>
 <h4 id="the-three-hashes-of-the-apocalypse"><a class="anchorlink" href="#the-three-hashes-of-the-apocalypse">8.4 The Three Hashes of the Apocalypse</a></h4><p>After a request has been made and processed, you will have 3 Hash objects ready for use:</p>
 <ul>
@@ -1648,11 +1632,11 @@ end
 <span class="n">session</span><span class="p">[</span><span class="s2">"shmession"</span><span class="p">]</span>          <span class="n">session</span><span class="p">[</span><span class="ss">:shmession</span><span class="p">]</span>
 <span class="n">cookies</span><span class="p">[</span><span class="s2">"are_good_for_u"</span><span class="p">]</span>     <span class="n">cookies</span><span class="p">[</span><span class="ss">:are_good_for_u</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f459cd14710d4549c1a0672c3c8dbd55">flash["gordon"]               flash[:gordon]
+<textarea class="clipboard-content" id="clipboard-a029a62432247caa09344957ca697373">flash["gordon"]               flash[:gordon]
 session["shmession"]          session[:shmession]
 cookies["are_good_for_u"]     cookies[:are_good_for_u]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f459cd14710d4549c1a0672c3c8dbd55">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a029a62432247caa09344957ca697373">Copiar</button>
 </div>
 <h4 id="instance-variables-available"><a class="anchorlink" href="#instance-variables-available">8.5 Instance Variables Available</a></h4><p>You also have access to three instance variables in your functional tests, after a request is made:</p>
 <ul>
@@ -1674,7 +1658,7 @@ cookies["are_good_for_u"]     cookies[:are_good_for_u]
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cc306209d23b05ac08c95447a26693aa">class ArticlesControllerTest &lt; ActionDispatch::IntegrationTest
+<textarea class="clipboard-content" id="clipboard-f2bdab8bd4743ddd03304959ab1bd09a">class ArticlesControllerTest &lt; ActionDispatch::IntegrationTest
   test "should get index" do
     get articles_url
 
@@ -1684,7 +1668,7 @@ cookies["are_good_for_u"]     cookies[:are_good_for_u]
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cc306209d23b05ac08c95447a26693aa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f2bdab8bd4743ddd03304959ab1bd09a">Copiar</button>
 </div>
 <h4 id="setting-headers-and-cgi-variables"><a class="anchorlink" href="#setting-headers-and-cgi-variables">8.6 Setting Headers and CGI variables</a></h4><p><a href="https://tools.ietf.org/search/rfc2616#section-5.3">HTTP headers</a>
 and
@@ -1696,13 +1680,13 @@ can be passed as headers:</p><div class="code_container">
 <span class="c1"># setting a CGI variable</span>
 <span class="n">get</span> <span class="n">articles_url</span><span class="p">,</span> <span class="ss">headers: </span><span class="p">{</span> <span class="s2">"HTTP_REFERER"</span><span class="p">:</span> <span class="s2">"http://example.com/home"</span> <span class="p">}</span> <span class="c1"># simulate the request with custom env variable</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-544b16c3daec7afb0c82a7685a8c630a"># setting an HTTP Header
+<textarea class="clipboard-content" id="clipboard-5127be36c67cd03503f495fcb99a5f9b"># setting an HTTP Header
 get articles_url, headers: { "Content-Type": "text/plain" } # simulate the request with custom header
 
 # setting a CGI variable
 get articles_url, headers: { "HTTP_REFERER": "http://example.com/home" } # simulate the request with custom env variable
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-544b16c3daec7afb0c82a7685a8c630a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5127be36c67cd03503f495fcb99a5f9b">Copiar</button>
 </div>
 <h4 id="testing-flash-notices"><a class="anchorlink" href="#testing-flash-notices">8.7 Testing <code>flash</code> notices</a></h4><p>If you remember from earlier, one of the Three Hashes of the Apocalypse was <code>flash</code>.</p><p>We want to add a <code>flash</code> message to our blog application whenever someone
 successfully creates a new Article.</p><p>Let's start by adding this assertion to our <code>test_should_create_article</code> test:</p><div class="code_container">
@@ -1715,7 +1699,7 @@ successfully creates a new Article.</p><p>Let's start by adding this assertion t
   <span class="n">assert_equal</span> <span class="s2">"Article was successfully created."</span><span class="p">,</span> <span class="n">flash</span><span class="p">[</span><span class="ss">:notice</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-47bc976cf668dd353484a0f38f2513a7">test "should create article" do
+<textarea class="clipboard-content" id="clipboard-132a98e4cfc7924a55dad8eb23aa3aeb">test "should create article" do
   assert_difference("Article.count") do
     post articles_url, params: { article: { title: "Some title" } }
   end
@@ -1724,7 +1708,7 @@ successfully creates a new Article.</p><p>Let's start by adding this assertion t
   assert_equal "Article was successfully created.", flash[:notice]
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-47bc976cf668dd353484a0f38f2513a7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-132a98e4cfc7924a55dad8eb23aa3aeb">Copiar</button>
 </div>
 <p>If we run our test now, we should see a failure:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test test</span>/controllers/articles_controller_test.rb <span class="nt">-n</span> test_should_create_article
@@ -1746,9 +1730,9 @@ Finished in 0.114870s, 8.7055 runs/s, 34.8220 assertions/s.
 
 1 runs, 4 assertions, 1 failures, 0 errors, 0 skips
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-73d4672a556f8ed05011ed980d4ce63a">bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
+<textarea class="clipboard-content" id="clipboard-0618652948ae22d44abb84ec4ee2f405">bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-73d4672a556f8ed05011ed980d4ce63a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0618652948ae22d44abb84ec4ee2f405">Copiar</button>
 </div>
 <p>Let's implement the flash message now in our controller. Our <code>:create</code> action should now look like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">create</span>
@@ -1762,7 +1746,7 @@ Finished in 0.114870s, 8.7055 runs/s, 34.8220 assertions/s.
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-297a710b5879b6c316d93f75b5565816">def create
+<textarea class="clipboard-content" id="clipboard-7db316e0de9008ffb0cde1c3eaea83a3">def create
   @article = Article.new(article_params)
 
   if @article.save
@@ -1773,7 +1757,7 @@ Finished in 0.114870s, 8.7055 runs/s, 34.8220 assertions/s.
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-297a710b5879b6c316d93f75b5565816">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7db316e0de9008ffb0cde1c3eaea83a3">Copiar</button>
 </div>
 <p>Now if we run our tests, we should see it pass:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails test test</span>/controllers/articles_controller_test.rb <span class="nt">-n</span> test_should_create_article
@@ -1787,9 +1771,9 @@ Finished in 0.081972s, 12.1993 runs/s, 48.7972 assertions/s.
 
 1 runs, 4 assertions, 0 failures, 0 errors, 0 skips
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-6d3993176494d79c76faf713e5916b2f">bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
+<textarea class="clipboard-content" id="clipboard-2a850d2ddc5033288b1b49e396a516e4">bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6d3993176494d79c76faf713e5916b2f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a850d2ddc5033288b1b49e396a516e4">Copiar</button>
 </div>
 <h4 id="putting-it-together"><a class="anchorlink" href="#putting-it-together">8.8 Putting it together</a></h4><p>At this point our Articles controller tests the <code>:index</code> as well as <code>:new</code> and <code>:create</code> actions. What about dealing with existing data?</p><p>Let's write a test for the <code>:show</code> action:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"should show article"</span> <span class="k">do</span>
@@ -1798,13 +1782,13 @@ Finished in 0.081972s, 12.1993 runs/s, 48.7972 assertions/s.
   <span class="n">assert_response</span> <span class="ss">:success</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-73125e44d650ffa968bb835595da6b46">test "should show article" do
+<textarea class="clipboard-content" id="clipboard-6e9c7972df82d015a427bced461c3107">test "should show article" do
   article = articles(:one)
   get article_url(article)
   assert_response :success
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-73125e44d650ffa968bb835595da6b46">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6e9c7972df82d015a427bced461c3107">Copiar</button>
 </div>
 <p>Remember from our discussion earlier on fixtures, the <code>articles()</code> method will give us access to our Articles fixtures.</p><p>How about deleting an existing Article?</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"should destroy article"</span> <span class="k">do</span>
@@ -1816,7 +1800,7 @@ end
   <span class="n">assert_redirected_to</span> <span class="n">articles_path</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a3c36f4f8b07addef30a9113fde6e03a">test "should destroy article" do
+<textarea class="clipboard-content" id="clipboard-1a4412673ef3e17d17577a7a46eec211">test "should destroy article" do
   article = articles(:one)
   assert_difference("Article.count", -1) do
     delete article_url(article)
@@ -1825,7 +1809,7 @@ end
   assert_redirected_to articles_path
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a3c36f4f8b07addef30a9113fde6e03a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1a4412673ef3e17d17577a7a46eec211">Copiar</button>
 </div>
 <p>We can also add a test for updating an existing Article.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"should update article"</span> <span class="k">do</span>
@@ -1839,7 +1823,7 @@ end
   <span class="n">assert_equal</span> <span class="s2">"updated"</span><span class="p">,</span> <span class="n">article</span><span class="p">.</span><span class="nf">title</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f73ef06174bb7556062b5521426ebf2c">test "should update article" do
+<textarea class="clipboard-content" id="clipboard-cf966813a0f35c0f7f20f86356ce2eee">test "should update article" do
   article = articles(:one)
 
   patch article_url(article), params: { article: { title: "updated" } }
@@ -1850,7 +1834,7 @@ end
   assert_equal "updated", article.title
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f73ef06174bb7556062b5521426ebf2c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cf966813a0f35c0f7f20f86356ce2eee">Copiar</button>
 </div>
 <p>Notice we're starting to see some duplication in these three tests, they both access the same Article fixture data. We can D.R.Y. this up by using the <code>setup</code> and <code>teardown</code> methods provided by <code>ActiveSupport::Callbacks</code>.</p><p>Our test should now look something as what follows. Disregard the other tests for now, we're leaving them out for brevity.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
@@ -1891,7 +1875,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e3f5cf8ae0a482cfdec306ce3a3e8bff">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-ca7c7babcbd9097c04db394bcd4e475e">require "test_helper"
 
 class ArticlesControllerTest &lt; ActionDispatch::IntegrationTest
   # called before every single test
@@ -1929,7 +1913,7 @@ class ArticlesControllerTest &lt; ActionDispatch::IntegrationTest
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e3f5cf8ae0a482cfdec306ce3a3e8bff">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ca7c7babcbd9097c04db394bcd4e475e">Copiar</button>
 </div>
 <p>Similar to other callbacks in Rails, the <code>setup</code> and <code>teardown</code> methods can also be used by passing a block, lambda, or method name as a symbol to call.</p><h4 id="test-helpers"><a class="anchorlink" href="#test-helpers">8.9 Test helpers</a></h4><p>To avoid code duplication, you can add your own test helpers.
 Sign in helper can be a good example:</p><div class="code_container">
@@ -1945,7 +1929,7 @@ Sign in helper can be a good example:</p><div class="code_container">
   <span class="kp">include</span> <span class="no">SignInHelper</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3b0ac7b6e479e1151ccfb4a25e1fc411"># test/test_helper.rb
+<textarea class="clipboard-content" id="clipboard-ab3dc640c55eb8709fabd1913a9bbbf8"># test/test_helper.rb
 
 module SignInHelper
   def sign_in_as(user)
@@ -1957,7 +1941,7 @@ class ActionDispatch::IntegrationTest
   include SignInHelper
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3b0ac7b6e479e1151ccfb4a25e1fc411">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ab3dc640c55eb8709fabd1913a9bbbf8">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
@@ -1973,7 +1957,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5336b8504c0bbcf33675b8de7bbc817e">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-c29ff2e1c673ab4302d8567d6be9cd77">require "test_helper"
 
 class ProfileControllerTest &lt; ActionDispatch::IntegrationTest
 
@@ -1986,7 +1970,7 @@ class ProfileControllerTest &lt; ActionDispatch::IntegrationTest
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5336b8504c0bbcf33675b8de7bbc817e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c29ff2e1c673ab4302d8567d6be9cd77">Copiar</button>
 </div>
 <h5 id="using-separate-files"><a class="anchorlink" href="#using-separate-files">8.9.1 Using Separate Files</a></h5><p>If you find your helpers are cluttering <code>test_helper.rb</code>, you can extract them into separate files.
 One good place to store them is <code>test/lib</code> or <code>test/test_helpers</code>.</p><div class="code_container">
@@ -1997,14 +1981,14 @@ One good place to store them is <code>test/lib</code> or <code>test/test_helpers
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-399dba8dd709963862f869525ce88168"># test/test_helpers/multiple_assertions.rb
+<textarea class="clipboard-content" id="clipboard-6ca58ff4d605cf9a16fceef778dfc706"># test/test_helpers/multiple_assertions.rb
 module MultipleAssertions
   def assert_multiple_of_forty_two(number)
     assert (number % 42 == 0), 'expected #{number} to be a multiple of 42'
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-399dba8dd709963862f869525ce88168">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6ca58ff4d605cf9a16fceef778dfc706">Copiar</button>
 </div>
 <p>These helpers can then be explicitly required as needed and included as needed</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
@@ -2018,7 +2002,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a0f38172fa4361a0d751118e65a6cf0e">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-b6c5f6cee6c286ad8a24ac4ce3e9cbdb">require "test_helper"
 require "test_helpers/multiple_assertions"
 
 class NumberTest &lt; ActiveSupport::TestCase
@@ -2029,7 +2013,7 @@ class NumberTest &lt; ActiveSupport::TestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a0f38172fa4361a0d751118e65a6cf0e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b6c5f6cee6c286ad8a24ac4ce3e9cbdb">Copiar</button>
 </div>
 <p>or they can continue to be included directly into the relevant parent classes</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># test/test_helper.rb</span>
@@ -2039,43 +2023,43 @@ end
   <span class="kp">include</span> <span class="no">SignInHelper</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3cac1a1b4bd3d11759cde466fc798e8a"># test/test_helper.rb
+<textarea class="clipboard-content" id="clipboard-f66661c11ce4eaf09d34ab41de6f3414"># test/test_helper.rb
 require "test_helpers/sign_in_helper"
 
 class ActionDispatch::IntegrationTest
   include SignInHelper
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3cac1a1b4bd3d11759cde466fc798e8a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f66661c11ce4eaf09d34ab41de6f3414">Copiar</button>
 </div>
 <h5 id="eagerly-requiring-helpers"><a class="anchorlink" href="#eagerly-requiring-helpers">8.9.2 Eagerly Requiring Helpers</a></h5><p>You may find it convenient to eagerly require helpers in <code>test_helper.rb</code> so your test files have implicit access to them. This can be accomplished using globbing, as follows</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># test/test_helper.rb</span>
 <span class="no">Dir</span><span class="p">[</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"test"</span><span class="p">,</span> <span class="s2">"test_helpers"</span><span class="p">,</span> <span class="s2">"**"</span><span class="p">,</span> <span class="s2">"*.rb"</span><span class="p">)].</span><span class="nf">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span> <span class="nb">require</span> <span class="n">file</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2a509d5d8dc20fe1aa5a094e7badd45b"># test/test_helper.rb
+<textarea class="clipboard-content" id="clipboard-d40a9a02ab3a05c5357ec052f8a645af"># test/test_helper.rb
 Dir[Rails.root.join("test", "test_helpers", "**", "*.rb")].each { |file| require file }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2a509d5d8dc20fe1aa5a094e7badd45b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d40a9a02ab3a05c5357ec052f8a645af">Copiar</button>
 </div>
 <p>This has the downside of increasing the boot-up time, as opposed to manually requiring only the necessary files in your individual tests.</p><h3 id="testando-rotas"><a class="anchorlink" href="#testando-rotas">9 Testando Rotas</a></h3><p>Assim como tudo na sua aplicação Rails, você também pode testar suas rotas.
 Testes de rotas são encontrados na pasta <code>test/controllers/</code> ou podem fazer parte de seus testes de <em>controller</em>.</p><div class="note"><p>Se sua aplicação tem rotas muito complexas, o Rails fornece vários <em>helpers</em> úteis para testá-las.</p></div><p>Para mais informações sobre as asserções de rotas disponíveis no Rails, veja a documentação da API de <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Assertions/RoutingAssertions.html"><code>ActionDispatch::Assertions::RoutingAssertions</code></a>.</p><h3 id="testando-views"><a class="anchorlink" href="#testando-views">10 Testando <em>Views</em></a></h3><p>Testar a resposta de sua requisição através da presença de elementos HTML chave e o seu conteúdo é uma forma comum de testar as <em>views</em> de sua aplicação. Assim como os testes de rota, testes de <em>view</em> ficam em <code>test/controllers/</code> ou são parte dos seus testes de <em>controller</em>.</p><p>O método <code>assert_select</code> permite que você faça consultas a elementos HTML da resposta, através de uma sintaxe simples, mas poderosa.</p><p>Há duas formas de <code>assert_select</code>:</p><p>A assinatura <code>assert_select(selector, [equality], [message])</code> garante que a condição de igualdade (<code>equality</code>) é atendida nos elementos selecionados através do seletor (<em>selector</em>).
 O argumento <em>selector</em> pode ser um seletor CSS (String) ou uma expressão com valores de substituição (como <a href="https://github.com/rails/rails-dom-testing/blob/8f5acdfcb83a888c06592bad05475b7463998d1b/test/selector_assertions_test.rb#L124-L146">nesses testes</a>).</p><p>Já <code>assert_select(element, selector, [equality], [message])</code> garante que a condição de igualdade (<code>equality</code>) é atendida nos elementos selecionados através do seletor, começando no elemento <code>element</code> (instância de <code>Nokogiri::XML::Node</code> ou <code>Nokogiri::XML::NodeSet</code>) e seus descendentes.</p><p>Por exemplo, você poderia verificar o conteúdo do elemento <code>title</code> na sua resposta com:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">assert_select</span> <span class="s2">"title"</span><span class="p">,</span> <span class="s2">"Welcome to Rails Testing Guide"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aabcd4a219c362ec3fc11fe521601902">assert_select "title", "Welcome to Rails Testing Guide"
+<textarea class="clipboard-content" id="clipboard-3c1ef58d4e8914b544a28950d08bf9b8">assert_select "title", "Welcome to Rails Testing Guide"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aabcd4a219c362ec3fc11fe521601902">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3c1ef58d4e8914b544a28950d08bf9b8">Copiar</button>
 </div>
 <p>Você também pode usar blocos aninhados de <code>assert_select</code> para uma investigação mais profunda.</p><p>No exemplo a seguir, o <code>assert_select</code> mais interno de <code>li.menu_item</code> executa com a coleção de elementos selecionados pelo bloco mais externo:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">assert_select</span> <span class="s2">"ul.navigation"</span> <span class="k">do</span>
   <span class="n">assert_select</span> <span class="s2">"li.menu_item"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-26c4e3ea66f01e14c4ebbac66689fa9e">assert_select "ul.navigation" do
+<textarea class="clipboard-content" id="clipboard-2a6abca53324e8014356707059f1ef7b">assert_select "ul.navigation" do
   assert_select "li.menu_item"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26c4e3ea66f01e14c4ebbac66689fa9e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a6abca53324e8014356707059f1ef7b">Copiar</button>
 </div>
 <p>Uma coleção de elementos pode ser iterada para que <code>assert_select</code> possa ser chamado individualmente para cada elemento.</p><p>Por exemplo, se a resposta contiver duas listas ordenadas, cada uma com quatro elementos, então os testes a seguir irão passar.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">assert_select</span> <span class="s2">"ol"</span> <span class="k">do</span> <span class="o">|</span><span class="n">elements</span><span class="o">|</span>
@@ -2088,7 +2072,7 @@ end
   <span class="n">assert_select</span> <span class="s2">"li"</span><span class="p">,</span> <span class="mi">8</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16c91a3a6f93ba2cf967b7d5ff8625f8">assert_select "ol" do |elements|
+<textarea class="clipboard-content" id="clipboard-f713c48773494b09229eef2a1fac0954">assert_select "ol" do |elements|
   elements.each do |element|
     assert_select element, "li", 4
   end
@@ -2098,7 +2082,7 @@ assert_select "ol" do
   assert_select "li", 8
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16c91a3a6f93ba2cf967b7d5ff8625f8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f713c48773494b09229eef2a1fac0954">Copiar</button>
 </div>
 <p>Essa asserção é bastante poderosa. Para usos mais avançados, veja a sua <a href="https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb">documentação</a>.</p><h5 id="assercoes-adicionais-para-views"><a class="anchorlink" href="#assercoes-adicionais-para-views">10.1 Asserções Adicionais para <em>Views</em></a></h5><p>Existem mais asserções que são usadas primariamente em testes de <em>views</em>:</p>
 <table>
@@ -2130,11 +2114,11 @@ end
   <span class="n">assert_select</span> <span class="s2">"small"</span><span class="p">,</span> <span class="s2">"Please click the 'Unsubscribe' link if you want to opt-out."</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3018f51e301b56e3c5eb9181e715da80">assert_select_email do
+<textarea class="clipboard-content" id="clipboard-1b74fa3ddc6794847da47a22de5fc63e">assert_select_email do
   assert_select "small", "Please click the 'Unsubscribe' link if you want to opt-out."
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3018f51e301b56e3c5eb9181e715da80">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1b74fa3ddc6794847da47a22de5fc63e">Copiar</button>
 </div>
 <h3 id="testando-os-helpers"><a class="anchorlink" href="#testando-os-helpers">11 Testando os <em>Helpers</em></a></h3><p>Um <em>helper</em> é apenas um simples módulo onde você pode definir métodos
 que estarão disponíveis nas suas <em>views</em>.</p><p>Para testar os <em>helpers</em>, tudo que você precisa fazer é verificar se a saída do
@@ -2146,13 +2130,13 @@ localizados dentro da pasta <code>test/helpers</code>.</p><p>Dado o seguinte <em
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e9160edb09cfa3461ad82b0fc99384e6">module UsersHelper
+<textarea class="clipboard-content" id="clipboard-29884c2d42172f5d56db410f6c1f7b38">module UsersHelper
   def link_to_user(user)
     link_to "#{user.first_name} #{user.last_name}", user
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e9160edb09cfa3461ad82b0fc99384e6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-29884c2d42172f5d56db410f6c1f7b38">Copiar</button>
 </div>
 <p>Nós podemos testar a saída desse método da seguinte maneira:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UsersHelperTest</span> <span class="o">&lt;</span> <span class="no">ActionView</span><span class="o">::</span><span class="no">TestCase</span>
@@ -2163,7 +2147,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-54c77b83383381e8a6458af81a91a1ac">class UsersHelperTest &lt; ActionView::TestCase
+<textarea class="clipboard-content" id="clipboard-cfda544a2e00cad7b97d3944d002bc2b">class UsersHelperTest &lt; ActionView::TestCase
   test "should return the user's full name" do
     user = users(:david)
 
@@ -2171,7 +2155,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-54c77b83383381e8a6458af81a91a1ac">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cfda544a2e00cad7b97d3944d002bc2b">Copiar</button>
 </div>
 <p>Além disso, uma vez que a classe de teste se estende de <code>ActionView::TestCase</code>, você tem
 acesso aos métodos auxiliares do Rails como <code>link_to</code> ou<code>pluralize</code>.</p><h3 id="testing-your-mailers"><a class="anchorlink" href="#testing-your-mailers">12 Testing Your Mailers</a></h3><p>Testing mailer classes requires some specific tools to do a thorough job.</p><h4 id="keeping-the-postman-in-check"><a class="anchorlink" href="#keeping-the-postman-in-check">12.1 Keeping the Postman in Check</a></h4><p>Your mailer classes - like every other part of your Rails application - should be tested to ensure that they are working as expected.</p><p>The goals of testing your mailer classes are to ensure that:</p>
@@ -2202,7 +2186,7 @@ acesso aos métodos auxiliares do Rails como <code>link_to</code> ou<code>plural
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ec0451d0a76311e40ea458f75c3b01f5">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-16bcf941a46b12484ccad2364c9c8a30">require "test_helper"
 
 class UserMailerTest &lt; ActionMailer::TestCase
   test "invite" do
@@ -2223,7 +2207,7 @@ class UserMailerTest &lt; ActionMailer::TestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ec0451d0a76311e40ea458f75c3b01f5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-16bcf941a46b12484ccad2364c9c8a30">Copiar</button>
 </div>
 <p>In the test we create the email and store the returned object in the <code>email</code>
 variable. We then ensure that it was sent (the first assert), then, in the
@@ -2237,13 +2221,13 @@ You have been invited.
 
 Cheers!
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6f4d61c6e1307142fcd24ccde3bf7208">Hi friend@example.com,
+<textarea class="clipboard-content" id="clipboard-16ef8609f7f0fb02344de482d0ab9dbd">Hi friend@example.com,
 
 You have been invited.
 
 Cheers!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6f4d61c6e1307142fcd24ccde3bf7208">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-16ef8609f7f0fb02344de482d0ab9dbd">Copiar</button>
 </div>
 <p>This is the right time to understand a little more about writing tests for your
 mailers. The line <code>ActionMailer::Base.delivery_method = :test</code> in
@@ -2266,7 +2250,7 @@ manually with: <code>ActionMailer::Base.deliveries.clear</code></p></div><h4 id=
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-30fc73f0c36cee52883b6b663d2e1b75"># Integration Test
+<textarea class="clipboard-content" id="clipboard-f3f82847feb52bcaf8cb1169ec1b23aa"># Integration Test
 require "test_helper"
 
 class UsersControllerTest &lt; ActionDispatch::IntegrationTest
@@ -2278,7 +2262,7 @@ class UsersControllerTest &lt; ActionDispatch::IntegrationTest
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-30fc73f0c36cee52883b6b663d2e1b75">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f3f82847feb52bcaf8cb1169ec1b23aa">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># System Test</span>
@@ -2296,7 +2280,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6812f579f5e90f4c659ce49f2a94fe68"># System Test
+<textarea class="clipboard-content" id="clipboard-48a292a127e47ca4fdfc1ba27d0f24d0"># System Test
 require "test_helper"
 
 class UsersTest &lt; ActionDispatch::SystemTestCase
@@ -2311,12 +2295,12 @@ class UsersTest &lt; ActionDispatch::SystemTestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6812f579f5e90f4c659ce49f2a94fe68">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-48a292a127e47ca4fdfc1ba27d0f24d0">Copiar</button>
 </div>
-<div class="note"><p>The <code>assert_emails</code> method is not tied to a particular deliver method and will work with emails delivered with either the <code>deliver_now</code> or <code>deliver_later</code> method. If we explicitly want to assert that the email has been enqueued we can use the <code>assert_enqueued_emails</code> method. More information can be found in the  <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionMailer/TestHelper.html">documentation here</a>.</p></div><h3 id="testing-jobs"><a class="anchorlink" href="#testing-jobs">13 Testing Jobs</a></h3><p>Since your custom jobs can be queued at different levels inside your application,
-you'll need to test both the jobs themselves (their behavior when they get enqueued)
-and that other entities correctly enqueue them.</p><h4 id="a-basic-test-case"><a class="anchorlink" href="#a-basic-test-case">13.1 A Basic Test Case</a></h4><p>By default, when you generate a job, an associated test will be generated as well
-under the <code>test/jobs</code> directory. Here's an example test with a billing job:</p><div class="code_container">
+<div class="note"><p>The <code>assert_emails</code> method is not tied to a particular deliver method and will work with emails delivered with either the <code>deliver_now</code> or <code>deliver_later</code> method. If we explicitly want to assert that the email has been enqueued we can use the <code>assert_enqueued_emails</code> method. More information can be found in the  <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionMailer/TestHelper.html">documentation here</a>.</p></div><h3 id="testando-os-jobs"><a class="anchorlink" href="#testando-os-jobs">13 Testando os <em>Jobs</em></a></h3><p>Uma vez que seus <em>jobs</em> podem ser enfileirados em diferentes camadas dentro da sua aplicação,
+será necessário testar tanto os <em>jobs</em> propriamente ditos (seu comportamento, uma vez que estiverem enfileirados),
+quanto as entidades que fazem o enfileiramento destes.</p><h4 id="um-caso-de-teste-basico"><a class="anchorlink" href="#um-caso-de-teste-basico">13.1 Um Caso de Teste Básico</a></h4><p>Por padrão, quando você gera um <em>job</em>, também será gerado um teste
+dentro do diretório <code>test/jobs</code>. Aqui está um exemplo de teste do <em>job</em> de cobrança (<em>billing</em>):</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
 
 <span class="k">class</span> <span class="nc">BillingJobTest</span> <span class="o">&lt;</span> <span class="no">ActiveJob</span><span class="o">::</span><span class="no">TestCase</span>
@@ -2326,7 +2310,7 @@ under the <code>test/jobs</code> directory. Here's an example test with a billin
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-701bdf74b3ce5721e5c53fc363ded187">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-ecd17549039b5a98bb25af0b8ec7f182">require "test_helper"
 
 class BillingJobTest &lt; ActiveJob::TestCase
   test "that account is charged" do
@@ -2335,16 +2319,17 @@ class BillingJobTest &lt; ActiveJob::TestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-701bdf74b3ce5721e5c53fc363ded187">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ecd17549039b5a98bb25af0b8ec7f182">Copiar</button>
 </div>
-<p>This test is pretty simple and only asserts that the job got the work done
-as expected.</p><p>By default, <code>ActiveJob::TestCase</code> will set the queue adapter to <code>:test</code> so that
-your jobs are performed inline. It will also ensure that all previously performed
-and enqueued jobs are cleared before any test run so you can safely assume that
-no jobs have already been executed in the scope of each test.</p><h4 id="custom-assertions-and-testing-jobs-inside-other-components"><a class="anchorlink" href="#custom-assertions-and-testing-jobs-inside-other-components">13.2 Custom Assertions and Testing Jobs inside Other Components</a></h4><p>Active Job ships with a bunch of custom assertions that can be used to lessen the verbosity of tests. For a full list of available assertions, see the API documentation for <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveJob/TestHelper.html"><code>ActiveJob::TestHelper</code></a>.</p><p>It's a good practice to ensure that your jobs correctly get enqueued or performed
-wherever you invoke them (e.g. inside your controllers). This is precisely where
-the custom assertions provided by Active Job are pretty useful. For instance,
-within a model:</p><div class="code_container">
+<p>Esse teste é bem simples e somente faz a asserção que <em>job</em> fez o trabalho como esperado.</p><p>Por padrão, <code>ActiveJob::TestCase</code> irá definir o adaptador de fila para <code>:test</code> dessa maneira
+seus <em>jobs</em> irão ser executados de forma linear. Isso também irá garantir que todos os <em>jobs</em> realizados
+anteriormente e os que estiverem enfileirados serão limpos antes de qualquer execução de teste para que
+você possa assumir com segurança que nenhum outro tenha sido executado no âmbito de cada teste.</p><h4 id="assercoes-personalizadas-e-testando-jobs-dentro-de-outros-componentes"><a class="anchorlink" href="#assercoes-personalizadas-e-testando-jobs-dentro-de-outros-componentes">13.2 Asserções Personalizadas e Testando Jobs dentro de Outros Componentes</a></h4><p>O Active Job vem com um monte de asserções customizadas que podem ser usadas para diminuir a verbosidade
+dos testes. Para uma lsita completa de asserções disponíveis, visite a documenta da API em
+<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveJob/TestHelper.html"><code>ActiveJob::TestHelper</code></a>.</p><p>É uma boa prática se assegurar que seus <em>jobs</em> serão enfileirados ou executados
+onde quer que você os invoque (exemplo: dentro dos seus <em>controllers</em>). Este é um bom local onde
+as asserções personalizadas fornecidas pelo Active Job são muito úteis. Por exemplo,
+dentro de um <em>model</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
 
 <span class="k">class</span> <span class="nc">ProductTest</span> <span class="o">&lt;</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">TestCase</span>
@@ -2357,7 +2342,7 @@ within a model:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3f06439140ced9ec2b9d8bf2ebafeda5">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-9e85d797300de584c3e4367aaf02d684">require "test_helper"
 
 class ProductTest &lt; ActiveSupport::TestCase
   include ActiveJob::TestHelper
@@ -2369,7 +2354,7 @@ class ProductTest &lt; ActiveSupport::TestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3f06439140ced9ec2b9d8bf2ebafeda5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9e85d797300de584c3e4367aaf02d684">Copiar</button>
 </div>
 <h3 id="testing-action-cable"><a class="anchorlink" href="#testing-action-cable">14 Testing Action Cable</a></h3><p>Since Action Cable is used at different levels inside your application,
 you'll need to test both the channels, connection classes themselves, and that other
@@ -2391,7 +2376,7 @@ or that any improper connection requests are rejected. Here is an example:</p><d
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1fceaf82cc3eca79c8cdf3b8185e48b7">class ApplicationCable::ConnectionTest &lt; ActionCable::Connection::TestCase
+<textarea class="clipboard-content" id="clipboard-f5ba58fbb7680f8ed5009d874a1f5bb5">class ApplicationCable::ConnectionTest &lt; ActionCable::Connection::TestCase
   test "connects with params" do
     # Simulate a connection opening by calling the `connect` method
     connect params: { user_id: 42 }
@@ -2407,7 +2392,7 @@ or that any improper connection requests are rejected. Here is an example:</p><d
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1fceaf82cc3eca79c8cdf3b8185e48b7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5ba58fbb7680f8ed5009d874a1f5bb5">Copiar</button>
 </div>
 <p>You can also specify request cookies the same way you do in integration tests:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"connects with cookies"</span> <span class="k">do</span>
@@ -2418,7 +2403,7 @@ end
   <span class="n">assert_equal</span> <span class="n">connection</span><span class="p">.</span><span class="nf">user_id</span><span class="p">,</span> <span class="s2">"42"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-06085683aa987341046c5f8c603c4902">test "connects with cookies" do
+<textarea class="clipboard-content" id="clipboard-c17538e89ad6540fec5494538f91afef">test "connects with cookies" do
   cookies.signed[:user_id] = "42"
 
   connect
@@ -2426,7 +2411,7 @@ end
   assert_equal connection.user_id, "42"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-06085683aa987341046c5f8c603c4902">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c17538e89ad6540fec5494538f91afef">Copiar</button>
 </div>
 <p>See the API documentation for <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Connection/TestCase.html"><code>ActionCable::Connection::TestCase</code></a> for more information.</p><h4 id="channel-test-case"><a class="anchorlink" href="#channel-test-case">14.2 Channel Test Case</a></h4><p>By default, when you generate a channel, an associated test will be generated as well
 under the <code>test/channels</code> directory. Here's an example test with a chat channel:</p><div class="code_container">
@@ -2443,7 +2428,7 @@ under the <code>test/channels</code> directory. Here's an example test with a ch
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c7834e853aca53828451c8cf7a8bd13f">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-e76a0d27c3fd6a423e20ea823e8d2218">require "test_helper"
 
 class ChatChannelTest &lt; ActionCable::Channel::TestCase
   test "subscribes and stream for room" do
@@ -2456,7 +2441,7 @@ class ChatChannelTest &lt; ActionCable::Channel::TestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c7834e853aca53828451c8cf7a8bd13f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e76a0d27c3fd6a423e20ea823e8d2218">Copiar</button>
 </div>
 <p>This test is pretty simple and only asserts that the channel subscribes the connection to a particular stream.</p><p>You can also specify the underlying connection identifiers. Here's an example test with a web notifications channel:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
@@ -2471,7 +2456,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-22efc31816bd3a25650ae41b19501bc5">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-18d66fe605da438696f01cfd0b758e0b">require "test_helper"
 
 class WebNotificationsChannelTest &lt; ActionCable::Channel::TestCase
   test "subscribes and stream for user" do
@@ -2483,7 +2468,7 @@ class WebNotificationsChannelTest &lt; ActionCable::Channel::TestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-22efc31816bd3a25650ae41b19501bc5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-18d66fe605da438696f01cfd0b758e0b">Copiar</button>
 </div>
 <p>See the API documentation for <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Channel/TestCase.html"><code>ActionCable::Channel::TestCase</code></a> for more information.</p><h4 id="custom-assertions-and-testing-broadcasts-inside-other-components"><a class="anchorlink" href="#custom-assertions-and-testing-broadcasts-inside-other-components">14.3 Custom Assertions And Testing Broadcasts Inside Other Components</a></h4><p>Action Cable ships with a bunch of custom assertions that can be used to lessen the verbosity of tests. For a full list of available assertions, see the API documentation for <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/TestHelper.html"><code>ActionCable::TestHelper</code></a>.</p><p>It's a good practice to ensure that the correct message has been broadcasted inside other components (e.g. inside your controllers). This is precisely where
 the custom assertions provided by Action Cable are pretty useful. For instance,
@@ -2498,7 +2483,7 @@ within a model:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0dc76a057fce9b12c7c1c89fee7131c2">require "test_helper"
+<textarea class="clipboard-content" id="clipboard-cc608a3c433218aafdf5d04b3911ab2f">require "test_helper"
 
 class ProductTest &lt; ActionCable::TestCase
   test "broadcast status after charge" do
@@ -2508,7 +2493,7 @@ class ProductTest &lt; ActionCable::TestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0dc76a057fce9b12c7c1c89fee7131c2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cc608a3c433218aafdf5d04b3911ab2f">Copiar</button>
 </div>
 <p>If you want to test the broadcasting made with <code>Channel.broadcast_to</code>, you should use
 <code>Channel.broadcasting_for</code> to generate an underlying stream name:</p><div class="code_container">
@@ -2519,14 +2504,14 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-12268c103f555a77ce31da3a74344336"># app/jobs/chat_relay_job.rb
+<textarea class="clipboard-content" id="clipboard-a3c9419c75b4f29f0d547d41b046ea80"># app/jobs/chat_relay_job.rb
 class ChatRelayJob &lt; ApplicationJob
   def perform_later(room, message)
     ChatChannel.broadcast_to room, text: message
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-12268c103f555a77ce31da3a74344336">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a3c9419c75b4f29f0d547d41b046ea80">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># test/jobs/chat_relay_job_test.rb</span>
@@ -2544,7 +2529,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dbf7dbd040646ce4d75cfa4e55e62f06"># test/jobs/chat_relay_job_test.rb
+<textarea class="clipboard-content" id="clipboard-77db3990e2667468ba2faf2ca93f732a"># test/jobs/chat_relay_job_test.rb
 require "test_helper"
 
 class ChatRelayJobTest &lt; ActiveJob::TestCase
@@ -2559,7 +2544,7 @@ class ChatRelayJobTest &lt; ActiveJob::TestCase
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dbf7dbd040646ce4d75cfa4e55e62f06">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-77db3990e2667468ba2faf2ca93f732a">Copiar</button>
 </div>
 <h3 id="recursos-adicionais-para-testes"><a class="anchorlink" href="#recursos-adicionais-para-testes">15 Recursos Adicionais para Testes</a></h3><h4 id="testando-codigo-dependente-de-data-horario"><a class="anchorlink" href="#testando-codigo-dependente-de-data-horario">15.1 Testando Código Dependente de Data/Horário</a></h4><p>O Rails fornece métodos <em>helpers</em> integrados que permitem que você verifique que seu código dependente de data ou hora funcione conforme o esperado.</p><p>Aqui está um exemplo utilizando o <em>helper</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to"><code>travel_to</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Digamos que um usuário só poderá enviar presentes após um mês do seu registro.</span>
@@ -2571,7 +2556,7 @@ end
 <span class="k">end</span>
 <span class="n">assert_equal</span> <span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2004</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span> <span class="n">user</span><span class="p">.</span><span class="nf">activation_date</span> <span class="c1"># A mudança é visível somente dentro do bloco `travel_to`.</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cee484aea1885d8047016d66b42d9df8"># Digamos que um usuário só poderá enviar presentes após um mês do seu registro.
+<textarea class="clipboard-content" id="clipboard-ef4eea3dd2eeb934af112b712dc45ade"># Digamos que um usuário só poderá enviar presentes após um mês do seu registro.
 user = User.create(name: "Gaurish", activation_date: Date.new(2004, 10, 24))
 assert_not user.applicable_for_gifting?
 travel_to Date.new(2004, 11, 24) do
@@ -2580,7 +2565,7 @@ travel_to Date.new(2004, 11, 24) do
 end
 assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança é visível somente dentro do bloco `travel_to`.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cee484aea1885d8047016d66b42d9df8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ef4eea3dd2eeb934af112b712dc45ade">Copiar</button>
 </div>
 <p>Por favor consulte a <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Testing/TimeHelpers.html">Documentação da API <code>ActiveSupport::Testing::TimeHelpers</code></a> para obter informações detalhadas sobre os <em>helpers</em> de tempo disponíveis.</p>
 

@@ -271,13 +271,8 @@ para incorporar funcionalidades de tempo real em sua aplicação Rails.</p><p>Ao
 <li><a href="#consumidores">Consumidores</a></li>
 <li><a href="#canais">Canais</a></li>
 <li><a href="#assinantes">Assinantes</a></li>
-</ul>
-</li>
-<li>
-<a href="#pub-sub">_<em>Pub/Sub</em></a>
-
-<ul>
-<li><a href="#pub-sub-broadcastings"><strong>Broadcastings</strong></a></li>
+<li><a href="#pub-sub"><em>Pub/Sub</em></a></li>
+<li><a href="#terminologia-broadcastings"><strong>Broadcastings</strong></a></li>
 </ul>
 </li>
 <li>
@@ -307,12 +302,12 @@ para incorporar funcionalidades de tempo real em sua aplicação Rails.</p><p>Ao
 </ul>
 </li>
 <li>
-<a href="#full-stack-examples">Full-Stack Examples</a>
+<a href="#full-stack-exemplos"><em>Full-Stack</em> Exemplos</a>
 
 <ul>
-<li><a href="#example-1-user-appearances">Example 1: User Appearances</a></li>
-<li><a href="#example-2-receiving-new-web-notifications">Example 2: Receiving New Web Notifications</a></li>
-<li><a href="#more-complete-examples">More Complete Examples</a></li>
+<li><a href="#exemplo-1-aspectos-do-usuario">Exemplo 1: Aspectos do usuário</a></li>
+<li><a href="#exemplo-2-recebendo-novas-notificacoes-da-web">Exemplo 2: Recebendo novas notificações da web</a></li>
+<li><a href="#exemplos-mais-completos">Exemplos Mais Completos</a></li>
 </ul>
 </li>
 <li>
@@ -361,14 +356,14 @@ A conexão entre o assinante e o canal é, adivinhe, chamada de assinatura.
 Um consumidor pode atuar como um assinante de um determinado canal qualquer
 número de vezes. Por exemplo, um consumidor pode se inscrever em várias salas de
 chat ao mesmo tempo. (E lembre-se que um usuário físico pode ter vários
-consumidores, um por aba/dispositivo aberto para sua conexão).</p><h3 id="pub-sub"><a class="anchorlink" href="#pub-sub">3 _<em>Pub/Sub</em></a></h3><p><em><a href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">Pub/Sub</a></em>, ou
+consumidores, um por aba/dispositivo aberto para sua conexão).</p><h4 id="pub-sub"><a class="anchorlink" href="#pub-sub">2.5 <em>Pub/Sub</em></a></h4><p><a href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern"><em>Pub/Sub</em></a>, ou
 <em>Publish-Subscribe</em>, refere-se a um paradigma de fila de mensageria o qual os
 remetentes de uma informação (<em>publishers</em>) enviam dados à uma classe abstrata de
 destinatários (<em>subscribers</em>) sem especificar um destinatário individual.
 <em>Action Cable</em> utiliza essa abordagem para manter a comunicação entre o servidor
-e diversos clientes.</p><h4 id="pub-sub-broadcastings"><a class="anchorlink" href="#pub-sub-broadcastings">3.1 <strong>Broadcastings</strong></a></h4><p>Uma transmissão (<em>broadcasting</em>) é um link <em>pub/sub</em> em que qualquer coisa transmitida pela emissora é
+e diversos clientes.</p><h4 id="terminologia-broadcastings"><a class="anchorlink" href="#terminologia-broadcastings">2.6 <strong>Broadcastings</strong></a></h4><p>Uma transmissão (<em>broadcasting</em>) é um link <em>pub/sub</em> em que qualquer coisa transmitida pela emissora é
 enviada diretamente para os assinantes (<em>subscribers</em>) do canal que estão transmitindo essa transmissão.
-Cada canal pode transmitir zero ou mais transmissões.</p><h3 id="componentes-server-side"><a class="anchorlink" href="#componentes-server-side">4 Componentes <em>Server-Side</em></a></h3><h4 id="connections"><a class="anchorlink" href="#connections">4.1 <em>Connections</em></a></h4><p>Para cada <em>WebSocket</em> aceito pelo servidor, um objeto <em>connection</em> é instanciado. Esse objeto
+Cada canal pode transmitir zero ou mais transmissões.</p><h3 id="componentes-server-side"><a class="anchorlink" href="#componentes-server-side">3 Componentes <em>Server-Side</em></a></h3><h4 id="connections"><a class="anchorlink" href="#connections">3.1 <em>Connections</em></a></h4><p>Para cada <em>WebSocket</em> aceito pelo servidor, um objeto <em>connection</em> é instanciado. Esse objeto
 se torna o pai de todos os <em>channel subscriptions</em> que são criados dali pra frente.
 A <em>connection</em> em si não lida com nenhuma lógica específica da aplicação além da
 autenticação e autorização. O cliente de um <em>WebSocket <em>connection</em></em> é chamado de
@@ -376,7 +371,7 @@ autenticação e autorização. O cliente de um <em>WebSocket <em>connection</em
 aba do navegador, janela ou dispositivo que ele tiver aberto.</p><p><em>Connections</em> são instâncias de <code>ApplicationCable::Connection</code>, que estendem de
 <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Connection/Base.html"><code>ActionCable::Connection::Base</code></a>. Em <code>ApplicationCable::Connection</code>, você
 autoriza a <em>connection</em> recebida e procede para estabelecê-la, caso o
-usuário possa ser identificado.</p><h5 id="configuracao-de-uma-connection"><a class="anchorlink" href="#configuracao-de-uma-connection">4.1.1 Configuração de uma <em>Connection</em></a></h5><div class="code_container">
+usuário possa ser identificado.</p><h5 id="configuracao-de-uma-connection"><a class="anchorlink" href="#configuracao-de-uma-connection">3.1.1 Configuração de uma <em>Connection</em></a></h5><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/application_cable/connection.rb</span>
 <span class="k">module</span> <span class="nn">ApplicationCable</span>
   <span class="k">class</span> <span class="nc">Connection</span> <span class="o">&lt;</span> <span class="no">ActionCable</span><span class="o">::</span><span class="no">Connection</span><span class="o">::</span><span class="no">Base</span>
@@ -397,7 +392,7 @@ usuário possa ser identificado.</p><h5 id="configuracao-de-uma-connection"><a c
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e699d4ac98f6ed20007c27bc0eba17e9"># app/channels/application_cable/connection.rb
+<textarea class="clipboard-content" id="clipboard-c6266e018de09c155b196fce3ca163a8"># app/channels/application_cable/connection.rb
 module ApplicationCable
   class Connection &lt; ActionCable::Connection::Base
     identified_by :current_user
@@ -417,7 +412,7 @@ module ApplicationCable
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e699d4ac98f6ed20007c27bc0eba17e9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c6266e018de09c155b196fce3ca163a8">Copiar</button>
 </div>
 <p>Aqui, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Connection/Identification/ClassMethods.html#method-i-identified_by"><code>identified_by</code></a> designa um identificador de <em>connection</em> que pode ser usado para
 encontrar uma <em>connection</em> específica mais tarde. Note que qualquer coisa marcada
@@ -431,11 +426,11 @@ sessão, seu <em>cookie</em> de sessão é denominado <code>_session</code> e a 
 pode usar esta abordagem:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">verified_user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">id: </span><span class="n">cookies</span><span class="p">.</span><span class="nf">encrypted</span><span class="p">[</span><span class="s1">'_session'</span><span class="p">][</span><span class="s1">'user_id'</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d2bf8366c98e86311ce662cd1aa86ee">verified_user = User.find_by(id: cookies.encrypted['_session']['user_id'])
+<textarea class="clipboard-content" id="clipboard-f1b1012f41ec21442dde5907fe02e6fd">verified_user = User.find_by(id: cookies.encrypted['_session']['user_id'])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d2bf8366c98e86311ce662cd1aa86ee">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f1b1012f41ec21442dde5907fe02e6fd">Copiar</button>
 </div>
-<h5 id="lidando-com-excecoes-exceptions"><a class="anchorlink" href="#lidando-com-excecoes-exceptions">4.1.2 Lidando com Exceções (<em>Exceptions</em>)</a></h5><p>Por padrão, exceções não tratadas são capturadas e registradas no <em>logger</em> do Rails. Se você gostaria de
+<h5 id="lidando-com-excecoes-exceptions"><a class="anchorlink" href="#lidando-com-excecoes-exceptions">3.1.2 Lidando com Exceções (<em>Exceptions</em>)</a></h5><p>Por padrão, exceções não tratadas são capturadas e registradas no <em>logger</em> do Rails. Se você gostaria de
 interceptar globalmente essas exceções e relatá-las a um serviço externo de rastreamento de <em>bugs</em>, por
 exemplo, você pode fazer isso com <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from"><code>rescue_from</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/application_cable/connection.rb</span>
@@ -451,7 +446,7 @@ exemplo, você pode fazer isso com <a href="https://api.rubyonrails.org/v6.1.4/c
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4c0b2773f26019fec7ce58c333de304e"># app/channels/application_cable/connection.rb
+<textarea class="clipboard-content" id="clipboard-00378d1d8fbc41010ad17dc6af2f1949"># app/channels/application_cable/connection.rb
 module ApplicationCable
   class Connection &lt; ActionCable::Connection::Base
     rescue_from StandardError, with: :report_error
@@ -464,25 +459,25 @@ module ApplicationCable
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4c0b2773f26019fec7ce58c333de304e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-00378d1d8fbc41010ad17dc6af2f1949">Copiar</button>
 </div>
-<h4 id="channels"><a class="anchorlink" href="#channels">4.2 <em>Channels</em></a></h4><p>O <em>channel</em> encapsula uma unidade lógica de trabalho, parecido com o que um
+<h4 id="channels"><a class="anchorlink" href="#channels">3.2 <em>Channels</em></a></h4><p>O <em>channel</em> encapsula uma unidade lógica de trabalho, parecido com o que um
 <em>controller</em> faz em um <em>MVC</em> comum. Por padrão, o <em>Rails</em> cria uma classe pai
 <code>ApplicationCable::Channel</code> (que estende <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Channel/Base.html"><code>ActionCable::Channel::Base</code></a>) para encapsular a lógica compartilhada entre seus
-<em>channels</em>.</p><h5 id="configuracao-do-channel-pai"><a class="anchorlink" href="#configuracao-do-channel-pai">4.2.1 Configuração do <em>Channel</em> pai</a></h5><div class="code_container">
+<em>channels</em>.</p><h5 id="configuracao-do-channel-pai"><a class="anchorlink" href="#configuracao-do-channel-pai">3.2.1 Configuração do <em>Channel</em> pai</a></h5><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/application_cable/channel.rb</span>
 <span class="k">module</span> <span class="nn">ApplicationCable</span>
   <span class="k">class</span> <span class="nc">Channel</span> <span class="o">&lt;</span> <span class="no">ActionCable</span><span class="o">::</span><span class="no">Channel</span><span class="o">::</span><span class="no">Base</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d09bb9b579cfc8aedfead5c53d9d0b26"># app/channels/application_cable/channel.rb
+<textarea class="clipboard-content" id="clipboard-b98a4dffdafab805dcc6da32c154e273"># app/channels/application_cable/channel.rb
 module ApplicationCable
   class Channel &lt; ActionCable::Channel::Base
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d09bb9b579cfc8aedfead5c53d9d0b26">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b98a4dffdafab805dcc6da32c154e273">Copiar</button>
 </div>
 <p>Então, você criaria suas próprias classes de <em>channel</em>. Por exemplo, você poderia ter um
 <code>ChatChannel</code> e um <code>AppearanceChannel</code>:</p><div class="code_container">
@@ -490,24 +485,24 @@ end
 <span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-972182e7c1cd206e967b7b4e5ae4ae32"># app/channels/chat_channel.rb
+<textarea class="clipboard-content" id="clipboard-93b48f0ff0e5f35f27815ecc2835be45"># app/channels/chat_channel.rb
 class ChatChannel &lt; ApplicationCable::Channel
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-972182e7c1cd206e967b7b4e5ae4ae32">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-93b48f0ff0e5f35f27815ecc2835be45">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/appearance_channel.rb</span>
 <span class="k">class</span> <span class="nc">AppearanceChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5387d0a4a4c7ca6f18660b877f56690d"># app/channels/appearance_channel.rb
+<textarea class="clipboard-content" id="clipboard-ae4779a63581929bf18b086befe405c9"># app/channels/appearance_channel.rb
 class AppearanceChannel &lt; ApplicationCable::Channel
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5387d0a4a4c7ca6f18660b877f56690d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ae4779a63581929bf18b086befe405c9">Copiar</button>
 </div>
-<p>Um <em>consumer</em> poderia então ser inscrito para qualquer ou ambos os <em>channels</em>.</p><h5 id="channels-subscriptions"><a class="anchorlink" href="#channels-subscriptions">4.2.2 <em>Subscriptions</em></a></h5><p><em>Consumers</em> se inscrevem a <em>channels</em>, agindo como <em>subscribers</em>. A <em>connection</em>
+<p>Um <em>consumer</em> poderia então ser inscrito para qualquer ou ambos os <em>channels</em>.</p><h5 id="channels-subscriptions"><a class="anchorlink" href="#channels-subscriptions">3.2.2 <em>Subscriptions</em></a></h5><p><em>Consumers</em> se inscrevem a <em>channels</em>, agindo como <em>subscribers</em>. A <em>connection</em>
 deles é chamada de <em>subscription</em>. Mensagens produzidas são então roteadas para esses
 <em>channel subscriptions</em> baseados em um identificador enviado pelo <em>channel consumer</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
@@ -518,7 +513,7 @@ deles é chamada de <em>subscription</em>. Mensagens produzidas são então rote
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3a7ba78f20afba0da7561155041e80ce"># app/channels/chat_channel.rb
+<textarea class="clipboard-content" id="clipboard-ed10755c701179e9c2fc17001f51637a"># app/channels/chat_channel.rb
 class ChatChannel &lt; ApplicationCable::Channel
   # Chamado quando o *consumer* tornou-se um *subscriber*
   # desse *channel* com sucesso.
@@ -526,9 +521,9 @@ class ChatChannel &lt; ApplicationCable::Channel
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3a7ba78f20afba0da7561155041e80ce">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ed10755c701179e9c2fc17001f51637a">Copiar</button>
 </div>
-<h5 id="lidando-com-excecoes"><a class="anchorlink" href="#lidando-com-excecoes">4.2.3 Lidando com Exceções</a></h5><p>Tal como acontece com <code>ApplicationCable::Connection</code>, você também pode usar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from"><code>rescue_from</code></a> em um
+<h5 id="lidando-com-excecoes"><a class="anchorlink" href="#lidando-com-excecoes">3.2.3 Lidando com Exceções</a></h5><p>Tal como acontece com <code>ApplicationCable::Connection</code>, você também pode usar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from"><code>rescue_from</code></a> em um
 canal específico para lidar com exceções levantadas:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
 <span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
@@ -541,7 +536,7 @@ canal específico para lidar com exceções levantadas:</p><div class="code_cont
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0b5d9a123492a7f072a667e92ec4b689"># app/channels/chat_channel.rb
+<textarea class="clipboard-content" id="clipboard-827e529bb95917e874dc469f5e395b18"># app/channels/chat_channel.rb
 class ChatChannel &lt; ApplicationCable::Channel
   rescue_from 'MyError', with: :deliver_error_message
 
@@ -552,11 +547,11 @@ class ChatChannel &lt; ApplicationCable::Channel
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0b5d9a123492a7f072a667e92ec4b689">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-827e529bb95917e874dc469f5e395b18">Copiar</button>
 </div>
-<h3 id="componentes-client-side"><a class="anchorlink" href="#componentes-client-side">5 Componentes <em>Client-Side</em></a></h3><h4 id="componentes-client-side-conexoes"><a class="anchorlink" href="#componentes-client-side-conexoes">5.1 Conexões</a></h4><p>Consumidores precisam de uma instância da conexão do seu lado. Esta conexão pode
+<h3 id="componentes-client-side"><a class="anchorlink" href="#componentes-client-side">4 Componentes <em>Client-Side</em></a></h3><h4 id="componentes-client-side-conexoes"><a class="anchorlink" href="#componentes-client-side-conexoes">4.1 Conexões</a></h4><p>Consumidores precisam de uma instância da conexão do seu lado. Esta conexão pode
 ser estabelecida usando o seguinte JavaScript, que é gerado por padrão pelo
-Rails:</p><h5 id="conectar-o-consumidor"><a class="anchorlink" href="#conectar-o-consumidor">5.1.1 Conectar o Consumidor</a></h5><div class="code_container">
+Rails:</p><h5 id="conectar-o-consumidor"><a class="anchorlink" href="#conectar-o-consumidor">4.1.1 Conectar o Consumidor</a></h5><div class="code_container">
 <pre><code class="highlight js"><span class="c1">// app/javascript/channels/consumer.js</span>
 <span class="c1">// Action Cable provides the framework to deal with WebSockets in Rails.</span>
 <span class="c1">// You can generate new channels where WebSocket features live using the `bin/rails generate channel` command.</span>
@@ -565,7 +560,7 @@ Rails:</p><h5 id="conectar-o-consumidor"><a class="anchorlink" href="#conectar-o
 
 <span class="k">export</span> <span class="k">default</span> <span class="nx">createConsumer</span><span class="p">()</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9aea44d10ecdb792d64c7014de0dceac">// app/javascript/channels/consumer.js
+<textarea class="clipboard-content" id="clipboard-e2c8d8c183cebeef3560fd3d891c2aed">// app/javascript/channels/consumer.js
 // Action Cable provides the framework to deal with WebSockets in Rails.
 // You can generate new channels where WebSocket features live using the `bin/rails generate channel` command.
 
@@ -573,7 +568,7 @@ import { createConsumer } from "@rails/actioncable"
 
 export default createConsumer()
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9aea44d10ecdb792d64c7014de0dceac">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e2c8d8c183cebeef3560fd3d891c2aed">Copiar</button>
 </div>
 <p>Isto vai preparar um consumidor que conectará em <code>/cable</code> em seu servidor por
 padrão. A conexão não vai ser estabelecida até que você também tenha
@@ -591,7 +586,7 @@ vai ser chamada quando o <em>WebSocket</em> é aberto.</p><div class="code_conta
   <span class="k">return</span> <span class="s2">`https://ws.example.com/cable?token=</span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8b52571c71b65c29fd5f535464d9f5c1">// Especifica uma _URL_ diferente para se conectar
+<textarea class="clipboard-content" id="clipboard-9c23f35fb0dd7eb78203f3f8ba06abd3">// Especifica uma _URL_ diferente para se conectar
 createConsumer('https://ws.example.com/cable')
 
 // Utiliza uma função para gerar a _URL_ dinamicamente
@@ -602,9 +597,9 @@ function getWebSocketURL {
   return `https://ws.example.com/cable?token=${token}`
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8b52571c71b65c29fd5f535464d9f5c1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9c23f35fb0dd7eb78203f3f8ba06abd3">Copiar</button>
 </div>
-<h5 id="assinante"><a class="anchorlink" href="#assinante">5.1.2 Assinante</a></h5><p>Um consumidor se torna um assinante criando uma assinatura para um canal:</p><div class="code_container">
+<h5 id="assinante"><a class="anchorlink" href="#assinante">4.1.2 Assinante</a></h5><p>Um consumidor se torna um assinante criando uma assinatura para um canal:</p><div class="code_container">
 <pre><code class="highlight js"><span class="c1">// app/javascript/channels/chat_channel.js</span>
 <span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
 
@@ -615,7 +610,7 @@ function getWebSocketURL {
 
 <span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">AppearanceChannel</span><span class="dl">"</span> <span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2f525952cd5e6204d41e29290e22ac8c">// app/javascript/channels/chat_channel.js
+<textarea class="clipboard-content" id="clipboard-cfb4bec078e7fe82a2e384efd21a5498">// app/javascript/channels/chat_channel.js
 import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" })
@@ -625,7 +620,7 @@ import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: "AppearanceChannel" })
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2f525952cd5e6204d41e29290e22ac8c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cfb4bec078e7fe82a2e384efd21a5498">Copiar</button>
 </div>
 <p>Enquanto isto cria uma assinatura, a funcionalidade necessária para responder
 aos dados recebidos será descrita mais tarde.</p><p>Um consumidor pode agir como um assinante para um dado canal qualquer número de
@@ -637,15 +632,15 @@ tempo.</p><div class="code_container">
 <span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ChatChannel</span><span class="dl">"</span><span class="p">,</span> <span class="na">room</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1st Room</span><span class="dl">"</span> <span class="p">})</span>
 <span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span> <span class="na">channel</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ChatChannel</span><span class="dl">"</span><span class="p">,</span> <span class="na">room</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2nd Room</span><span class="dl">"</span> <span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1411c98fd82422042e281bc6a75f82dc">// app/javascript/channels/chat_channel.js
+<textarea class="clipboard-content" id="clipboard-534572432cdd98dacf0e65beed28ac13">// app/javascript/channels/chat_channel.js
 import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: "ChatChannel", room: "1st Room" })
 consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1411c98fd82422042e281bc6a75f82dc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-534572432cdd98dacf0e65beed28ac13">Copiar</button>
 </div>
-<h3 id="interacoes-cliente-servidor"><a class="anchorlink" href="#interacoes-cliente-servidor">6 Interações Cliente-Servidor</a></h3><h4 id="streams"><a class="anchorlink" href="#streams">6.1 <em>Streams</em></a></h4><p><em>Streams</em> fornecem o mecanismo por onde os <em>channels</em> direcionam o conteúdo publicado (<em>broadcasts</em>) para seus assinantes. Por exemplo, o código a seguir usa <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Channel/Streams.html#method-i-stream_from"><code>stream_from</code></a> para se inscrever na transmissão (<em>broadcasting</em>) chamada <code>chat_Best Room</code> quando o valor do parâmetro <code>:room</code> é <code>"Best Room"</code>:</p><div class="code_container">
+<h3 id="interacoes-cliente-servidor"><a class="anchorlink" href="#interacoes-cliente-servidor">5 Interações Cliente-Servidor</a></h3><h4 id="streams"><a class="anchorlink" href="#streams">5.1 <em>Streams</em></a></h4><p><em>Streams</em> fornecem o mecanismo por onde os <em>channels</em> direcionam o conteúdo publicado (<em>broadcasts</em>) para seus assinantes. Por exemplo, o código a seguir usa <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Channel/Streams.html#method-i-stream_from"><code>stream_from</code></a> para se inscrever na transmissão (<em>broadcasting</em>) chamada <code>chat_Best Room</code> quando o valor do parâmetro <code>:room</code> é <code>"Best Room"</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
 <span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
   <span class="k">def</span> <span class="nf">subscribed</span>
@@ -653,21 +648,21 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "2nd Room" })
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6e7f87d6a09f1e4041ffca0cd1324614"># app/channels/chat_channel.rb
+<textarea class="clipboard-content" id="clipboard-7b2c2bbe1314c638fff8e85a708c2fe6"># app/channels/chat_channel.rb
 class ChatChannel &lt; ApplicationCable::Channel
   def subscribed
     stream_from "chat_#{params[:room]}"
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6e7f87d6a09f1e4041ffca0cd1324614">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7b2c2bbe1314c638fff8e85a708c2fe6">Copiar</button>
 </div>
 <p>Então, de outro lugar em sua aplicação Rails, é possível transmitir para essa <code>room</code> chamando <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Server/Broadcasting.html#method-i-broadcast"><code>broadcast</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActionCable</span><span class="p">.</span><span class="nf">server</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="s2">"chat_Best Room"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">body: </span><span class="s2">"This Room is Best Room."</span> <span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-58f8870d28d2481c2959f90145ddbb61">ActionCable.server.broadcast("chat_Best Room", { body: "This Room is Best Room." })
+<textarea class="clipboard-content" id="clipboard-fedbb9e4f35e03af0deacbb71791156f">ActionCable.server.broadcast("chat_Best Room", { body: "This Room is Best Room." })
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-58f8870d28d2481c2959f90145ddbb61">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fedbb9e4f35e03af0deacbb71791156f">Copiar</button>
 </div>
 <p>Se você possui um <em>stream</em> que está relacionada a uma <em>model</em>, então o nome da transmissão pode ser gerada a partir do <em>channel</em> e <em>model</em>. Por exemplo, o código a seguir usa <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Channel/Streams.html#method-i-stream_for"><code>stream_for</code></a> para se inscrever em uma transmissão como <code>comments:Z2lkOi8vVGVzdEFwcC9Qb3N0LzE</code>, onde <code>Z2lkOi8vVGVzdEFwcC9Qb3N0LzE</code> corresponde ao ID Global da <em>model</em> Post.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CommentsChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
@@ -677,23 +672,23 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-69ac2df0a2037884ddd58afe5cef342d">class CommentsChannel &lt; ApplicationCable::Channel
+<textarea class="clipboard-content" id="clipboard-3ce4af97c26fcd586d3b67c0a8c9bc9f">class CommentsChannel &lt; ApplicationCable::Channel
   def subscribed
     post = Post.find(params[:id])
     stream_for post
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-69ac2df0a2037884ddd58afe5cef342d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3ce4af97c26fcd586d3b67c0a8c9bc9f">Copiar</button>
 </div>
 <p>Você pode agora transmitir para esse <em>channel</em> chamando <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Channel/Broadcasting/ClassMethods.html#method-i-broadcast_to"><code>broadcast_to</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">CommentsChannel</span><span class="p">.</span><span class="nf">broadcast_to</span><span class="p">(</span><span class="vi">@post</span><span class="p">,</span> <span class="vi">@comment</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-143fcae15f66c8214fdf6a1950649abc">CommentsChannel.broadcast_to(@post, @comment)
+<textarea class="clipboard-content" id="clipboard-3e204b67bd8845eb96760effc670d873">CommentsChannel.broadcast_to(@post, @comment)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-143fcae15f66c8214fdf6a1950649abc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3e204b67bd8845eb96760effc670d873">Copiar</button>
 </div>
-<h4 id="interacoes-cliente-servidor-broadcastings"><a class="anchorlink" href="#interacoes-cliente-servidor-broadcastings">6.2 <em>Broadcastings</em></a></h4><p>Um <em>broadcasting</em> é um link <em>pub/sub</em> em que qualquer coisa transmitida por um <em>publisher</em> é encaminhada diretamente para os assinantes do <em>channel</em>, este, que está transmitindo o <em>broadcasting</em> de mesmo nome. Cada <em>channel</em> pode estar transmitindo zero ou mais <em>broadcastings</em>.</p><p><em>Broadcastings</em> são puramente filas de espera online e dependentes de tempo. Se um consumidor não estiver transmitindo (assinante de um determinado <em>channel</em>), ele não vai receber o <em>broadcast</em> caso se conecte mais tarde.</p><h4 id="interacoes-cliente-servidor-subscriptions"><a class="anchorlink" href="#interacoes-cliente-servidor-subscriptions">6.3 <em>Subscriptions</em></a></h4><p>Quando um consumidor está inscrito em um <em>channel</em>, ele age como assinante (<em>subscriber</em>). Essa conexão é chamada de assinatura (<em>subscription</em>). Mensagens recebidas são então direcionadas para esses inscritos do <em>channel</em> baseadas em um identificador enviado pelo <em>cable consumer</em></p><div class="code_container">
+<h4 id="interacoes-cliente-servidor-broadcastings"><a class="anchorlink" href="#interacoes-cliente-servidor-broadcastings">5.2 <em>Broadcastings</em></a></h4><p>Um <em>broadcasting</em> é um link <em>pub/sub</em> em que qualquer coisa transmitida por um <em>publisher</em> é encaminhada diretamente para os assinantes do <em>channel</em>, este, que está transmitindo o <em>broadcasting</em> de mesmo nome. Cada <em>channel</em> pode estar transmitindo zero ou mais <em>broadcastings</em>.</p><p><em>Broadcastings</em> são puramente filas de espera online e dependentes de tempo. Se um consumidor não estiver transmitindo (assinante de um determinado <em>channel</em>), ele não vai receber o <em>broadcast</em> caso se conecte mais tarde.</p><h4 id="interacoes-cliente-servidor-subscriptions"><a class="anchorlink" href="#interacoes-cliente-servidor-subscriptions">5.3 <em>Subscriptions</em></a></h4><p>Quando um consumidor está inscrito em um <em>channel</em>, ele age como assinante (<em>subscriber</em>). Essa conexão é chamada de assinatura (<em>subscription</em>). Mensagens recebidas são então direcionadas para esses inscritos do <em>channel</em> baseadas em um identificador enviado pelo <em>cable consumer</em></p><div class="code_container">
 <pre><code class="highlight js"><span class="c1">// app/javascript/channels/chat_channel.js</span>
 <span class="c1">// Assumindo que você já requeriu os direitos para enviar notificações web</span>
 <span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
@@ -719,7 +714,7 @@ end
   <span class="p">}</span>
 <span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-576c1f7675e27966f97c1beb1e92e194">// app/javascript/channels/chat_channel.js
+<textarea class="clipboard-content" id="clipboard-3fdd25f025845f8f989a8a0c40b8c8c4">// app/javascript/channels/chat_channel.js
 // Assumindo que você já requeriu os direitos para enviar notificações web
 import consumer from "./consumer"
 
@@ -744,9 +739,9 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
   }
 })
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-576c1f7675e27966f97c1beb1e92e194">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3fdd25f025845f8f989a8a0c40b8c8c4">Copiar</button>
 </div>
-<h4 id="passando-parametros-para-channel"><a class="anchorlink" href="#passando-parametros-para-channel">6.4 Passando Parâmetros para <em>Channel</em></a></h4><p>Você pode passar parâmetros do lado do cliente para o lado do servidor quando cria a <em>subscription</em>. Por exemplo:</p><div class="code_container">
+<h4 id="passando-parametros-para-channel"><a class="anchorlink" href="#passando-parametros-para-channel">5.4 Passando Parâmetros para <em>Channel</em></a></h4><p>Você pode passar parâmetros do lado do cliente para o lado do servidor quando cria a <em>subscription</em>. Por exemplo:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
 <span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
   <span class="k">def</span> <span class="nf">subscribed</span>
@@ -754,14 +749,14 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0d8c75eb79cf88be838e66f3d7ad74a7"># app/channels/chat_channel.rb
+<textarea class="clipboard-content" id="clipboard-53835adb9b5e333645cd4ada31c5c3a3"># app/channels/chat_channel.rb
 class ChatChannel &lt; ApplicationCable::Channel
   def subscribed
     stream_from "chat_#{params[:room]}"
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0d8c75eb79cf88be838e66f3d7ad74a7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-53835adb9b5e333645cd4ada31c5c3a3">Copiar</button>
 </div>
 <p>Um objeto passado como primeiro argumento em <code>subscriptions.create</code> torna-se a <em>hash</em> <code>params</code> em <em>cable channel</em>. A <em>keyword</em> <code>channel</code> é obrigatória:</p><div class="code_container">
 <pre><code class="highlight js"><span class="c1">// app/javascript/channels/chat_channel.js</span>
@@ -788,7 +783,7 @@ end
   <span class="p">}</span>
 <span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7c1f4e157c08dc0a0ffe5bb75a20c3a8">// app/javascript/channels/chat_channel.js
+<textarea class="clipboard-content" id="clipboard-5a391520b9415cbc4600496ea97ef4c3">// app/javascript/channels/chat_channel.js
 import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
@@ -812,7 +807,7 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
   }
 })
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7c1f4e157c08dc0a0ffe5bb75a20c3a8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5a391520b9415cbc4600496ea97ef4c3">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Em algum lugar do seu app isso pode ser chamado, talvez,</span>
@@ -825,7 +820,7 @@ consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
   <span class="p">}</span>
 <span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2f76b48467c5a925af4a0828252381db"># Em algum lugar do seu app isso pode ser chamado, talvez,
+<textarea class="clipboard-content" id="clipboard-f7eca4fb35523ec1745d4c9d743b0557"># Em algum lugar do seu app isso pode ser chamado, talvez,
 # por um novo NewCommentJob.
 ActionCable.server.broadcast(
   "chat_#{room}",
@@ -835,9 +830,9 @@ ActionCable.server.broadcast(
   }
 )
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2f76b48467c5a925af4a0828252381db">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f7eca4fb35523ec1745d4c9d743b0557">Copiar</button>
 </div>
-<h4 id="retransmitindo-uma-mensagem"><a class="anchorlink" href="#retransmitindo-uma-mensagem">6.5 Retransmitindo uma Mensagem</a></h4><p>Um caso de uso comum é ter que retransmitir uma mensagem enviada por um cliente para qualquer outro cliente conectado</p><div class="code_container">
+<h4 id="retransmitindo-uma-mensagem"><a class="anchorlink" href="#retransmitindo-uma-mensagem">5.5 Retransmitindo uma Mensagem</a></h4><p>Um caso de uso comum é ter que retransmitir uma mensagem enviada por um cliente para qualquer outro cliente conectado</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/chat_channel.rb</span>
 <span class="k">class</span> <span class="nc">ChatChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
   <span class="k">def</span> <span class="nf">subscribed</span>
@@ -849,7 +844,7 @@ ActionCable.server.broadcast(
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c1df3648fc5b3eda7e603919420c5e92"># app/channels/chat_channel.rb
+<textarea class="clipboard-content" id="clipboard-deb77743131bfb7ccdba3cc52fc33f8c"># app/channels/chat_channel.rb
 class ChatChannel &lt; ApplicationCable::Channel
   def subscribed
     stream_from "chat_#{params[:room]}"
@@ -860,7 +855,7 @@ class ChatChannel &lt; ApplicationCable::Channel
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c1df3648fc5b3eda7e603919420c5e92">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-deb77743131bfb7ccdba3cc52fc33f8c">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight js"><span class="c1">// app/javascript/channels/chat_channel.js</span>
@@ -874,7 +869,7 @@ end
 
 <span class="nx">chatChannel</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span> <span class="na">sent_by</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Paul</span><span class="dl">"</span><span class="p">,</span> <span class="na">body</span><span class="p">:</span> <span class="dl">"</span><span class="s2">This is a cool chat app.</span><span class="dl">"</span> <span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6d9e733f2759079be240a8337b52e92c">// app/javascript/channels/chat_channel.js
+<textarea class="clipboard-content" id="clipboard-5825321fb06e4daf43df99d7727312ac">// app/javascript/channels/chat_channel.js
 import consumer from "./consumer"
 
 const chatChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
@@ -885,20 +880,20 @@ const chatChannel = consumer.subscriptions.create({ channel: "ChatChannel", room
 
 chatChannel.send({ sent_by: "Paul", body: "This is a cool chat app." })
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6d9e733f2759079be240a8337b52e92c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5825321fb06e4daf43df99d7727312ac">Copiar</button>
 </div>
-<p>A retransmissão vai ser recebida por todos os clientes conectados, <em>incluindo</em> o cliente que enviou a mensagem. Note que <code>params</code> são os mesmos de quando você se inscreveu no <em>channel</em></p><h3 id="full-stack-examples"><a class="anchorlink" href="#full-stack-examples">7 Full-Stack Examples</a></h3><p>The following setup steps are common to both examples:</p>
+<p>A retransmissão vai ser recebida por todos os clientes conectados, <em>incluindo</em> o cliente que enviou a mensagem. Note que <code>params</code> são os mesmos de quando você se inscreveu no <em>channel</em></p><h3 id="full-stack-exemplos"><a class="anchorlink" href="#full-stack-exemplos">6 <em>Full-Stack</em> Exemplos</a></h3><p>As seguintes etapas de configuração são comuns em ambos os exemplos:</p>
 <ol>
 <li>
-<a href="#componentes-server-side-connections">Setup your connection</a>.</li>
+<a href="#connections">Configurando conexão</a>.</li>
 <li>
-<a href="#configuracao-do-channel-pai">Setup your parent channel</a>.</li>
+<a href="#configuracao-do-channel-pai">Configurando o canal pai</a>.</li>
 <li>
-<a href="#conectar-o-consumidor">Connect your consumer</a>.</li>
+<a href="#conectar-o-consumidor">Conectando-se ao consumidor</a>.</li>
 </ol>
-<h4 id="example-1-user-appearances"><a class="anchorlink" href="#example-1-user-appearances">7.1 Example 1: User Appearances</a></h4><p>Here's a simple example of a channel that tracks whether a user is online or not
-and what page they're on. (This is useful for creating presence features like showing
-a green dot next to a user name if they're online).</p><p>Create the server-side appearance channel:</p><div class="code_container">
+<h4 id="exemplo-1-aspectos-do-usuario"><a class="anchorlink" href="#exemplo-1-aspectos-do-usuario">6.1 Exemplo 1: Aspectos do usuário</a></h4><p>Aqui está um exemplo simples de um canal que rastreia se um usuário está online ou
+não e em que página ele está (isso é útil para criar recursos de presença, como
+mostrar um ponto verde ao lado do nome do usuário se ele estiver online).</p><p>Criando o canal de aspectos no <em>back-end</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/appearance_channel.rb</span>
 <span class="k">class</span> <span class="nc">AppearanceChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
   <span class="k">def</span> <span class="nf">subscribed</span>
@@ -918,7 +913,7 @@ a green dot next to a user name if they're online).</p><p>Create the server-side
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-de53d7b7218aef2f0b28f54d14615d59"># app/channels/appearance_channel.rb
+<textarea class="clipboard-content" id="clipboard-edc5a8f66a4a053997efd9733c2463ca"># app/channels/appearance_channel.rb
 class AppearanceChannel &lt; ApplicationCable::Channel
   def subscribed
     current_user.appear
@@ -937,32 +932,33 @@ class AppearanceChannel &lt; ApplicationCable::Channel
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-de53d7b7218aef2f0b28f54d14615d59">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-edc5a8f66a4a053997efd9733c2463ca">Copiar</button>
 </div>
-<p>When a subscription is initiated the <code>subscribed</code> callback gets fired and we
-take that opportunity to say "the current user has indeed appeared". That
-appear/disappear API could be backed by Redis, a database, or whatever else.</p><p>Create the client-side appearance channel subscription:</p><div class="code_container">
+<p>Quando uma inscrição é inicializada, o callback <code>subscribed</code> é acionado e
+aproveitamos a oportunidade para dizer "o usuário atual realmente apareceu".
+Essa API de aparecer/desaparecer pode ser apoiada via Redis, um banco de dados,
+ou qualquer outro.</p><p>Criando a inscrição do canal de aspectos no lado do cliente:</p><div class="code_container">
 <pre><code class="highlight js"><span class="c1">// app/javascript/channels/appearance_channel.js</span>
 <span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
 
 <span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">"</span><span class="s2">AppearanceChannel</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
-  <span class="c1">// Called once when the subscription is created.</span>
+  <span class="c1">// Chamado uma vez quando a assinatura é criada.</span>
   <span class="nx">initialized</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
   <span class="p">},</span>
 
-  <span class="c1">// Called when the subscription is ready for use on the server.</span>
+  <span class="c1">// Chamado quando a assinatura está pronta para uso no servidor.</span>
   <span class="nx">connected</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">install</span><span class="p">()</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">()</span>
   <span class="p">},</span>
 
-  <span class="c1">// Called when the WebSocket connection is closed.</span>
+  <span class="c1">// Chamado quando a conexão WebSocket é fechada.</span>
   <span class="nx">disconnected</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">uninstall</span><span class="p">()</span>
   <span class="p">},</span>
 
-  <span class="c1">// Called when the subscription is rejected by the server.</span>
+  <span class="c1">// Chamado quando a assinatura é rejeitada pelo servidor.</span>
   <span class="nx">rejected</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">uninstall</span><span class="p">()</span>
   <span class="p">},</span>
@@ -972,12 +968,12 @@ appear/disappear API could be backed by Redis, a database, or whatever else.</p>
   <span class="p">},</span>
 
   <span class="nx">appear</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// Calls `AppearanceChannel#appear(data)` on the server.</span>
+    <span class="c1">// Chama `AppearanceChannel#appear(data)` no servidor.</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">perform</span><span class="p">(</span><span class="dl">"</span><span class="s2">appear</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span> <span class="na">appearing_on</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">appearingOn</span> <span class="p">})</span>
   <span class="p">},</span>
 
   <span class="nx">away</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// Calls `AppearanceChannel#away` on the server.</span>
+    <span class="c1">// Chama `AppearanceChannel#away` no servidor.</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">perform</span><span class="p">(</span><span class="dl">"</span><span class="s2">away</span><span class="dl">"</span><span class="p">)</span>
   <span class="p">},</span>
 
@@ -1005,27 +1001,27 @@ appear/disappear API could be backed by Redis, a database, or whatever else.</p>
   <span class="p">}</span>
 <span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-14963274828cfb4c9e633ffbca15f11b">// app/javascript/channels/appearance_channel.js
+<textarea class="clipboard-content" id="clipboard-d82c7f08fea23ca4ebac1698236e03f0">// app/javascript/channels/appearance_channel.js
 import consumer from "./consumer"
 
 consumer.subscriptions.create("AppearanceChannel", {
-  // Called once when the subscription is created.
+  // Chamado uma vez quando a assinatura é criada.
   initialized() {
     this.update = this.update.bind(this)
   },
 
-  // Called when the subscription is ready for use on the server.
+  // Chamado quando a assinatura está pronta para uso no servidor.
   connected() {
     this.install()
     this.update()
   },
 
-  // Called when the WebSocket connection is closed.
+  // Chamado quando a conexão WebSocket é fechada.
   disconnected() {
     this.uninstall()
   },
 
-  // Called when the subscription is rejected by the server.
+  // Chamado quando a assinatura é rejeitada pelo servidor.
   rejected() {
     this.uninstall()
   },
@@ -1035,12 +1031,12 @@ consumer.subscriptions.create("AppearanceChannel", {
   },
 
   appear() {
-    // Calls `AppearanceChannel#appear(data)` on the server.
+    // Chama `AppearanceChannel#appear(data)` no servidor.
     this.perform("appear", { appearing_on: this.appearingOn })
   },
 
   away() {
-    // Calls `AppearanceChannel#away` on the server.
+    // Chama `AppearanceChannel#away` no servidor.
     this.perform("away")
   },
 
@@ -1068,36 +1064,35 @@ consumer.subscriptions.create("AppearanceChannel", {
   }
 })
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-14963274828cfb4c9e633ffbca15f11b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d82c7f08fea23ca4ebac1698236e03f0">Copiar</button>
 </div>
-<h6 id="client-server-interaction"><a class="anchorlink" href="#client-server-interaction">7.1.1 Client-Server Interaction</a></h6>
+<h6 id="interacao-cliente-servidor"><a class="anchorlink" href="#interacao-cliente-servidor">6.1.1 Interação Cliente-Servidor</a></h6>
 <ol>
-<li><p><strong>Client</strong> connects to the <strong>Server</strong> via <code>App.cable =
-ActionCable.createConsumer("ws://cable.example.com")</code>. (<code>cable.js</code>). The
-<strong>Server</strong> identifies this connection by <code>current_user</code>.</p></li>
-<li><p><strong>Client</strong> subscribes to the appearance channel via
+<li><p><strong>Cliente</strong> conecta-se ao <strong>Servidor</strong> via <code>App.cable =
+ActionCable.createConsumer("ws://cable.example.com")</code>. (<code>cable.js</code>). O
+<strong>Servidor</strong> identifica esta conexão por <code>current_user</code>.</p></li>
+<li><p><strong>Cliente</strong> se inscreve no canal de apresentação via 
 <code>consumer.subscriptions.create({ channel: "AppearanceChannel" })</code>. (<code>appearance_channel.js</code>)</p></li>
-<li><p><strong>Server</strong> recognizes a new subscription has been initiated for the
-appearance channel and runs its <code>subscribed</code> callback, calling the <code>appear</code>
-method on <code>current_user</code>. (<code>appearance_channel.rb</code>)</p></li>
-<li><p><strong>Client</strong> recognizes that a subscription has been established and calls
-<code>connected</code> (<code>appearance_channel.js</code>) which in turn calls <code>install</code> and <code>appear</code>.
-<code>appear</code> calls <code>AppearanceChannel#appear(data)</code> on the server, and supplies a
-data hash of <code>{ appearing_on: this.appearingOn }</code>. This is
-possible because the server-side channel instance automatically exposes all
-public methods declared on the class (minus the callbacks), so that these can be
-reached as remote procedure calls via a subscription's <code>perform</code> method.</p></li>
-<li><p><strong>Server</strong> receives the request for the <code>appear</code> action on the appearance
-channel for the connection identified by <code>current_user</code>
-(<code>appearance_channel.rb</code>). <strong>Server</strong> retrieves the data with the
-<code>:appearing_on</code> key from the data hash and sets it as the value for the <code>:on</code>
-key being passed to <code>current_user.appear</code>.</p></li>
+<li><p><strong>Servidor</strong> reconhece que uma nova assinatura foi iniciada para o
+canal de aspectos e executa seu <em>callback</em> <code>subscribed</code>, chamando o método <code>appear</code> 
+em <code>current_user</code>. (<code>appearance_channel.rb</code>)</p></li>
+<li><p><strong>Cliente</strong> reconhece que uma assinatura foi estabelecida e chama 
+<code>connected</code> (<code>appearance_channel.js</code>) que por sua vez chama <code>install</code> e <code>appear</code>. 
+<code>appear</code> chama <code>AppearanceChannel#appear(data)</code> no servidor e fornece um <em>hash</em> de 
+dados de <code>{ appearing_on: this.appearingOn }</code>. Isso é possível porque a instância 
+do canal do lado do servidor expõe automaticamente todos os métodos públicos 
+declarados na classe (menos os retornos de chamada), para que possam ser alcançados 
+como chamadas de procedimento remoto por meio do método <code>perform</code> de uma assinatura.</p></li>
+<li><p><strong>Servidor</strong> recebe a solicitação da ação <code>appear</code> no canal de aspectos para a 
+conexão identificada por <code>current_user</code> (<code>appearance_channel.rb</code>). <strong>Servidor</strong> 
+recupera os dados com a chave <code>:appearing_on</code> do <em>hash</em> de dados e define como o 
+valor da chave <code>:on</code> sendo passada para <code>current_user.appear</code>.</p></li>
 </ol>
-<h4 id="example-2-receiving-new-web-notifications"><a class="anchorlink" href="#example-2-receiving-new-web-notifications">7.2 Example 2: Receiving New Web Notifications</a></h4><p>The appearance example was all about exposing server functionality to
-client-side invocation over the WebSocket connection. But the great thing
-about WebSockets is that it's a two-way street. So now let's show an example
-where the server invokes an action on the client.</p><p>This is a web notification channel that allows you to trigger client-side
-web notifications when you broadcast to the right streams:</p><p>Create the server-side web notifications channel:</p><div class="code_container">
+<h4 id="exemplo-2-recebendo-novas-notificacoes-da-web"><a class="anchorlink" href="#exemplo-2-recebendo-novas-notificacoes-da-web">6.2 Exemplo 2: Recebendo novas notificações da web</a></h4><p>O exemplo de aspectos era todo sobre expor a funcionalidade do servidor ao 
+cliente pela conexão WebSocket. Mas o melhor do WebSockets é que ele é uma via 
+de mão dupla. Portanto, agora vamos mostrar um exemplo em que o servidor invoca 
+uma ação no cliente.</p><p>Este é um canal de notificação da web que permite acionar notificações da web 
+no lado do cliente quando você transmite para os <em>streams</em> certos:</p><p>Criando o canal de notificações da web do lado do servidor:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/channels/web_notifications_channel.rb</span>
 <span class="k">class</span> <span class="nc">WebNotificationsChannel</span> <span class="o">&lt;</span> <span class="no">ApplicationCable</span><span class="o">::</span><span class="no">Channel</span>
   <span class="k">def</span> <span class="nf">subscribed</span>
@@ -1105,19 +1100,19 @@ web notifications when you broadcast to the right streams:</p><p>Create the serv
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f803ebbf1dd7ef5488f4fadadb139db6"># app/channels/web_notifications_channel.rb
+<textarea class="clipboard-content" id="clipboard-926414b3867eee12dc7deda0f77005d0"># app/channels/web_notifications_channel.rb
 class WebNotificationsChannel &lt; ApplicationCable::Channel
   def subscribed
     stream_for current_user
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f803ebbf1dd7ef5488f4fadadb139db6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-926414b3867eee12dc7deda0f77005d0">Copiar</button>
 </div>
-<p>Create the client-side web notifications channel subscription:</p><div class="code_container">
+<p>Criando a assinatura do canal de notificações da web no lado do cliente</p><div class="code_container">
 <pre><code class="highlight js"><span class="c1">// app/javascript/channels/web_notifications_channel.js</span>
-<span class="c1">// Client-side which assumes you've already requested</span>
-<span class="c1">// the right to send web notifications.</span>
+<span class="c1">// O lado do cliente assume que você já solicitou o direito </span>
+<span class="c1">// de enviar notificações da web.</span>
 <span class="k">import</span> <span class="nx">consumer</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./consumer</span><span class="dl">"</span>
 
 <span class="nx">consumer</span><span class="p">.</span><span class="nx">subscriptions</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="dl">"</span><span class="s2">WebNotificationsChannel</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
@@ -1126,9 +1121,9 @@ end
   <span class="p">}</span>
 <span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-73e870942cc3bd843f058baf622019cf">// app/javascript/channels/web_notifications_channel.js
-// Client-side which assumes you've already requested
-// the right to send web notifications.
+<textarea class="clipboard-content" id="clipboard-c9b920dc411ecb04315e4b13b6d5764e">// app/javascript/channels/web_notifications_channel.js
+// O lado do cliente assume que você já solicitou o direito 
+// de enviar notificações da web.
 import consumer from "./consumer"
 
 consumer.subscriptions.create("WebNotificationsChannel", {
@@ -1137,35 +1132,36 @@ consumer.subscriptions.create("WebNotificationsChannel", {
   }
 })
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-73e870942cc3bd843f058baf622019cf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c9b920dc411ecb04315e4b13b6d5764e">Copiar</button>
 </div>
-<p>Broadcast content to a web notification channel instance from elsewhere in your
-application:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="c1"># Somewhere in your app this is called, perhaps from a NewCommentJob</span>
+<p>Transmite o conteúdo para uma instância do canal de notificação da web de qualquer 
+lugar da aplicação:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Em algum lugar da aplicação, isso é chamado, talvez de um NewCommentJob</span>
 <span class="no">WebNotificationsChannel</span><span class="p">.</span><span class="nf">broadcast_to</span><span class="p">(</span>
   <span class="n">current_user</span><span class="p">,</span>
   <span class="ss">title: </span><span class="s1">'New things!'</span><span class="p">,</span>
   <span class="ss">body: </span><span class="s1">'All the news fit to print'</span>
 <span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9a425fbcff011e11b8f01080322b7b68"># Somewhere in your app this is called, perhaps from a NewCommentJob
+<textarea class="clipboard-content" id="clipboard-7542b700037a1abf4c430508dafac4dc"># Em algum lugar da aplicação, isso é chamado, talvez de um NewCommentJob
 WebNotificationsChannel.broadcast_to(
   current_user,
   title: 'New things!',
   body: 'All the news fit to print'
 )
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9a425fbcff011e11b8f01080322b7b68">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7542b700037a1abf4c430508dafac4dc">Copiar</button>
 </div>
-<p>The <code>WebNotificationsChannel.broadcast_to</code> call places a message in the current
-subscription adapter's pubsub queue under a separate broadcasting name for each
-user. For a user with an ID of 1, the broadcasting name would be
-<code>web_notifications:1</code>.</p><p>The channel has been instructed to stream everything that arrives at
-<code>web_notifications:1</code> directly to the client by invoking the <code>received</code>
-callback. The data passed as argument is the hash sent as the second parameter
-to the server-side broadcast call, JSON encoded for the trip across the wire
-and unpacked for the data argument arriving as <code>received</code>.</p><h4 id="more-complete-examples"><a class="anchorlink" href="#more-complete-examples">7.3 More Complete Examples</a></h4><p>See the <a href="https://github.com/rails/actioncable-examples">rails/actioncable-examples</a>
-repository for a full example of how to set up Action Cable in a Rails app and adding channels.</p><h3 id="configuracao"><a class="anchorlink" href="#configuracao">8 Configuração</a></h3><p>O <em>Action Cable</em> tem duas configurações necessárias: um adaptador de assinatura (<em>subscription</em>) e origens de requisição (<em>request</em>) permitidas.</p><h4 id="adaptador-de-assinatura"><a class="anchorlink" href="#adaptador-de-assinatura">8.1 Adaptador de assinatura</a></h4><p>Por padrão, <em>Action Cable</em> procura um arquivo de configuração em <code>config/cable.yml</code>.
+<p>A chamada <code>WebNotificationsChannel.broadcast_to</code> coloca uma mensagem na fila pubsub 
+do adaptador de assinaturas atual sob um nome de transmissão separado para cada 
+usuário. Exemplo, para um usuário com ID 1, o nome da transmissão seria 
+<code>web_notifications:1</code>.</p><p>O canal foi instruído a transmitir tudo que chegar a <code>web_notifications:1</code> 
+diretamente para o cliente, invocando o callback <code>received</code>. Os dados passados 
+como argumento são o hash enviado como o segundo parâmetro para a chamada de 
+transmissão do lado do servidor, JSON codificado, para a transição, e também
+descompactado, para o argumento de dados que chega como <code>received</code>.</p><h4 id="exemplos-mais-completos"><a class="anchorlink" href="#exemplos-mais-completos">6.3 Exemplos Mais Completos</a></h4><p>Veja o repositório <a href="https://github.com/rails/actioncable-examples">rails/actioncable-examples</a>
+para um exemplo completo de como configurar o Action Cable em uma aplicação Rails, e
+adicionar canais.</p><h3 id="configuracao"><a class="anchorlink" href="#configuracao">7 Configuração</a></h3><p>O <em>Action Cable</em> tem duas configurações necessárias: um adaptador de assinatura (<em>subscription</em>) e origens de requisição (<em>request</em>) permitidas.</p><h4 id="adaptador-de-assinatura"><a class="anchorlink" href="#adaptador-de-assinatura">7.1 Adaptador de assinatura</a></h4><p>Por padrão, <em>Action Cable</em> procura um arquivo de configuração em <code>config/cable.yml</code>.
 O arquivo deve especificar um adaptador (<em>adapter</em>) para cada ambiente Rails. Veja o
 <a href="#dependencias">Dependências</a> seção para obter informações adicionais sobre adaptadores.</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">development</span><span class="pi">:</span>
@@ -1179,7 +1175,7 @@ O arquivo deve especificar um adaptador (<em>adapter</em>) para cada ambiente Ra
   <span class="na">url</span><span class="pi">:</span> <span class="s">redis://10.10.3.153:6381</span>
   <span class="na">channel_prefix</span><span class="pi">:</span> <span class="s">appname_production</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d7035d1a6295a214dfdf288af035d29d">development:
+<textarea class="clipboard-content" id="clipboard-0001af141ff92165b1549a766e57c4b1">development:
   adapter: async
 
 test:
@@ -1190,56 +1186,56 @@ production:
   url: redis://10.10.3.153:6381
   channel_prefix: appname_production
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d7035d1a6295a214dfdf288af035d29d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0001af141ff92165b1549a766e57c4b1">Copiar</button>
 </div>
-<h5 id="configuracao-do-adaptador-adapter"><a class="anchorlink" href="#configuracao-do-adaptador-adapter">8.1.1 Configuração do Adaptador (<em>Adapter</em>)</a></h5><p>Abaixo está uma lista dos adaptadores de assinatura disponíveis para usuários finais.</p><h6 id="adaptador-async"><a class="anchorlink" href="#adaptador-async">8.1.1.1 Adaptador Async</a></h6><p>O adaptador assíncrono destina-se ao desenvolvimento / teste e não deve ser usado em produção.</p><h6 id="adaptador-redis"><a class="anchorlink" href="#adaptador-redis">8.1.1.2 Adaptador Redis</a></h6><p>O adaptador Redis requer que os usuários forneçam uma URL apontando para o servidor Redis.
+<h5 id="configuracao-do-adaptador-adapter"><a class="anchorlink" href="#configuracao-do-adaptador-adapter">7.1.1 Configuração do Adaptador (<em>Adapter</em>)</a></h5><p>Abaixo está uma lista dos adaptadores de assinatura disponíveis para usuários finais.</p><h6 id="adaptador-async"><a class="anchorlink" href="#adaptador-async">7.1.1.1 Adaptador Async</a></h6><p>O adaptador assíncrono destina-se ao desenvolvimento / teste e não deve ser usado em produção.</p><h6 id="adaptador-redis"><a class="anchorlink" href="#adaptador-redis">7.1.1.2 Adaptador Redis</a></h6><p>O adaptador Redis requer que os usuários forneçam uma URL apontando para o servidor Redis.
 Além disso, um <code>channel_prefix</code> pode ser fornecido para evitar colisões de nome de canal
 ao usar o mesmo servidor Redis para vários aplicativos. Veja a
-<a href="https://redis.io/topics/pubsub#database-amp-scoping">Documentação Redis PubSub</a> para mais detalhes.</p><h6 id="adaptador-postgresql"><a class="anchorlink" href="#adaptador-postgresql">8.1.1.3 Adaptador PostgreSQL</a></h6><p>O adaptador PostgreSQL usa o <em>pool</em> de conexão do <em>Active Record</em> e, portanto, o
+<a href="https://redis.io/topics/pubsub#database-amp-scoping">Documentação Redis PubSub</a> para mais detalhes.</p><h6 id="adaptador-postgresql"><a class="anchorlink" href="#adaptador-postgresql">7.1.1.3 Adaptador PostgreSQL</a></h6><p>O adaptador PostgreSQL usa o <em>pool</em> de conexão do <em>Active Record</em> e, portanto, o
 configuração do banco de dados <code>config/database.yml</code> do aplicativo, para sua conexão.
-Isso pode mudar no futuro. <a href="https://github.com/rails/rails/issues/27214">#27214</a></p><h4 id="origens-de-requisicao-permitidas"><a class="anchorlink" href="#origens-de-requisicao-permitidas">8.2 Origens de Requisição Permitidas</a></h4><p>Action Cable só aceitará requisições de origens especificadas, que são
+Isso pode mudar no futuro. <a href="https://github.com/rails/rails/issues/27214">#27214</a></p><h4 id="origens-de-requisicao-permitidas"><a class="anchorlink" href="#origens-de-requisicao-permitidas">7.2 Origens de Requisição Permitidas</a></h4><p>Action Cable só aceitará requisições de origens especificadas, que são
 passado para a configuração do servidor como um array. As origens podem ser instâncias de
 <em>strings</em> ou expressões regulares, contra as quais uma verificação de correspondência será realizada.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">allowed_request_origins</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'https://rubyonrails.com'</span><span class="p">,</span> <span class="sr">%r{http://ruby.*}</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ce80e9d3f28ce748ca47df98ca4e9931">config.action_cable.allowed_request_origins = ['https://rubyonrails.com', %r{http://ruby.*}]
+<textarea class="clipboard-content" id="clipboard-8ccc991c19ec3b6b719dc9f4b77ebc6e">config.action_cable.allowed_request_origins = ['https://rubyonrails.com', %r{http://ruby.*}]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ce80e9d3f28ce748ca47df98ca4e9931">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ccc991c19ec3b6b719dc9f4b77ebc6e">Copiar</button>
 </div>
 <p>Para desativar e permitir requisições de qualquer origem:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">disable_request_forgery_protection</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bd3bb174d7c7b0a0a83367591cc40c08">config.action_cable.disable_request_forgery_protection = true
+<textarea class="clipboard-content" id="clipboard-5ed95f83e7a29b316b8b568eec21a9a9">config.action_cable.disable_request_forgery_protection = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bd3bb174d7c7b0a0a83367591cc40c08">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5ed95f83e7a29b316b8b568eec21a9a9">Copiar</button>
 </div>
 <p>Por padrão, o <em>Action Cable</em> permite todas as requisições de localhost:3000 durante a execução
-no ambiente de desenvolvimento.</p><h4 id="configuracao-do-consumidor"><a class="anchorlink" href="#configuracao-do-consumidor">8.3 Configuração do Consumidor</a></h4><p>Para configurar a URL, adicione uma chamada para <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag"><code>action_cable_meta_tag</code></a> em seu <em>layout</em> HTML
+no ambiente de desenvolvimento.</p><h4 id="configuracao-do-consumidor"><a class="anchorlink" href="#configuracao-do-consumidor">7.3 Configuração do Consumidor</a></h4><p>Para configurar a URL, adicione uma chamada para <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag"><code>action_cable_meta_tag</code></a> em seu <em>layout</em> HTML
 HEAD. Isso usa uma URL ou caminho (<em>path</em>) normalmente definido via <code>config.action_cable.url</code> nos
-arquivos de configuração de ambiente.</p><h4 id="configuracao-do-worker-pool"><a class="anchorlink" href="#configuracao-do-worker-pool">8.4 Configuração do <em>Worker Pool</em></a></h4><p>O <em>pool</em> de <em>workers</em> é usado para executar retornos (<em>callbacks</em>) de conexão e ações de <em>channel</em> em
+arquivos de configuração de ambiente.</p><h4 id="configuracao-do-worker-pool"><a class="anchorlink" href="#configuracao-do-worker-pool">7.4 Configuração do <em>Worker Pool</em></a></h4><p>O <em>pool</em> de <em>workers</em> é usado para executar retornos (<em>callbacks</em>) de conexão e ações de <em>channel</em> em
 isolamento da <em>thread</em> principal do servidor. <em>Action Cable</em> permite que a aplicação
 configure o número de <em>threads</em> processados ​​simultaneamente no <em>worker pool</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">worker_pool_size</span> <span class="o">=</span> <span class="mi">4</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b4ff643281070d0fdb7be2d111febd29">config.action_cable.worker_pool_size = 4
+<textarea class="clipboard-content" id="clipboard-4b8ff78fe4a50fe7f8f2fe01e2501b97">config.action_cable.worker_pool_size = 4
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b4ff643281070d0fdb7be2d111febd29">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4b8ff78fe4a50fe7f8f2fe01e2501b97">Copiar</button>
 </div>
 <p>Além disso, observe que seu servidor deve fornecer pelo menos o mesmo número de conexões de banco de dados
 que você tem de <em>workers</em>. O tamanho do <em>worker pool</em> de trabalho padrão é definido como 4, então
 isso significa que você deve disponibilizar pelo menos 4 conexões de banco de dados.
-Você pode mudar isso em <code>config/database.yml</code> através do atributo <code>pool</code>.</p><h4 id="log-no-lado-do-client"><a class="anchorlink" href="#log-no-lado-do-client">8.5 Log no lado do client</a></h4><p>O log <em>client side</em> é desabilitado por padrão. Você pode habilitar essa configuração em <code>ActionCable.logger.enable</code> trocando para <code>true</code>.</p><div class="code_container">
+Você pode mudar isso em <code>config/database.yml</code> através do atributo <code>pool</code>.</p><h4 id="log-no-lado-do-client"><a class="anchorlink" href="#log-no-lado-do-client">7.5 Log no lado do client</a></h4><p>O log <em>client side</em> é desabilitado por padrão. Você pode habilitar essa configuração em <code>ActionCable.logger.enable</code> trocando para <code>true</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">import</span> <span class="o">*</span> <span class="n">as</span> <span class="no">ActionCable</span> <span class="n">from</span> <span class="s1">'@rails/actioncable'</span>
 
 <span class="no">ActionCable</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">enabled</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6eb523d2c16bd9f76a61156f4dd527d3">import * as ActionCable from '@rails/actioncable'
+<textarea class="clipboard-content" id="clipboard-ecec2fea1e13fd2f9719536c4c01ef8d">import * as ActionCable from '@rails/actioncable'
 
 ActionCable.logger.enabled = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6eb523d2c16bd9f76a61156f4dd527d3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ecec2fea1e13fd2f9719536c4c01ef8d">Copiar</button>
 </div>
-<h4 id="outras-configuracoes"><a class="anchorlink" href="#outras-configuracoes">8.6 Outras Configurações</a></h4><p>A outra opção comum de configurar são as <em>tags</em> de <em>log</em> aplicadas ao
+<h4 id="outras-configuracoes"><a class="anchorlink" href="#outras-configuracoes">7.6 Outras Configurações</a></h4><p>A outra opção comum de configurar são as <em>tags</em> de <em>log</em> aplicadas ao
 <em>logger</em> por conexão. Aqui está um exemplo que usa
 o ID da conta do usuário, se disponível, senão "sem conta" durante a marcação:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">log_tags</span> <span class="o">=</span> <span class="p">[</span>
@@ -1248,16 +1244,16 @@ o ID da conta do usuário, se disponível, senão "sem conta" durante a marcaç�
   <span class="o">-&gt;</span> <span class="n">request</span> <span class="p">{</span> <span class="n">request</span><span class="p">.</span><span class="nf">uuid</span> <span class="p">}</span>
 <span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2a20872a59568a1ef142dcc9e24019b5">config.action_cable.log_tags = [
+<textarea class="clipboard-content" id="clipboard-979481502be54dc01632595f0cd321a5">config.action_cable.log_tags = [
   -&gt; request { request.env['user_account_id'] || "no-account" },
   :action_cable,
   -&gt; request { request.uuid }
 ]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2a20872a59568a1ef142dcc9e24019b5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-979481502be54dc01632595f0cd321a5">Copiar</button>
 </div>
 <p>Para obter uma lista completa de todas as opções de configuração, consulte o
-classe <code>ActionCable::Server::Configuration</code>.</p><h3 id="executando-servidores-cable-autonomos"><a class="anchorlink" href="#executando-servidores-cable-autonomos">9 Executando Servidores <em>Cable</em> Autônomos</a></h3><h4 id="na-aplicacao"><a class="anchorlink" href="#na-aplicacao">9.1 Na Aplicação</a></h4><p>O <em>Action Cable</em> pode ser executado junto com sua aplicação Rails. Por exemplo, para
+classe <code>ActionCable::Server::Configuration</code>.</p><h3 id="executando-servidores-cable-autonomos"><a class="anchorlink" href="#executando-servidores-cable-autonomos">8 Executando Servidores <em>Cable</em> Autônomos</a></h3><h4 id="na-aplicacao"><a class="anchorlink" href="#na-aplicacao">8.1 Na Aplicação</a></h4><p>O <em>Action Cable</em> pode ser executado junto com sua aplicação Rails. Por exemplo, para
 escutar as requisições <em>WebSocket</em> em <code>/websocket</code>, especifique esse caminho para
 <code>config.action_cable.mount_path</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
@@ -1265,18 +1261,18 @@ escutar as requisições <em>WebSocket</em> em <code>/websocket</code>, especifi
   <span class="n">config</span><span class="p">.</span><span class="nf">action_cable</span><span class="p">.</span><span class="nf">mount_path</span> <span class="o">=</span> <span class="s1">'/websocket'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6dd1c079672b07014e75226b25e9f2df"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-aeebf99dab6970c9f9fb8de9f23bb9fe"># config/application.rb
 class Application &lt; Rails::Application
   config.action_cable.mount_path = '/websocket'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6dd1c079672b07014e75226b25e9f2df">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aeebf99dab6970c9f9fb8de9f23bb9fe">Copiar</button>
 </div>
 <p>Você pode usar <code>ActionCable.createConsumer()</code> para conectar ao
 <em>cable server</em> se <code>action_cable_meta_tag</code> for invocado no layout. Caso contrário, um caminho é
 especificado como primeiro argumento para <code>createConsumer</code> (e.g. <code>ActionCable.createConsumer("/websocket")</code>).</p><p>Para cada instância de seu servidor que você cria e para cada <em>worker</em> que seu servidor
 instancia, você também terá uma nova instância do <em>Action Cable</em>, mas o uso do Redis
-mantém as mensagens sincronizadas entre as conexões.</p><h4 id="autonomo"><a class="anchorlink" href="#autonomo">9.2 Autônomo</a></h4><p>Os <em>cable servers</em> a cabo podem ser separados do servidor de aplicação normal. Este
+mantém as mensagens sincronizadas entre as conexões.</p><h4 id="autonomo"><a class="anchorlink" href="#autonomo">8.2 Autônomo</a></h4><p>Os <em>cable servers</em> a cabo podem ser separados do servidor de aplicação normal. Este
 ainda é uma aplicação Rack, mas é sua própria aplicação Rack. O recomendado
 para a configuração básica é a seguinte:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># cable/config.ru</span>
@@ -1285,36 +1281,36 @@ para a configuração básica é a seguinte:</p><div class="code_container">
 
 <span class="n">run</span> <span class="no">ActionCable</span><span class="p">.</span><span class="nf">server</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eb3fad7012f13ccba2530a9bfdbd551a"># cable/config.ru
+<textarea class="clipboard-content" id="clipboard-ee8f3665034c6187fac53a74ecdc6178"># cable/config.ru
 require_relative "../config/environment"
 Rails.application.eager_load!
 
 run ActionCable.server
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eb3fad7012f13ccba2530a9bfdbd551a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ee8f3665034c6187fac53a74ecdc6178">Copiar</button>
 </div>
 <p>Então você inicia o servidor usando um <em>binstub</em> em <code>bin/cable</code> ala:</p><div class="code_container">
 <pre><code class="highlight plaintext">#!/bin/bash
 bundle exec puma -p 28080 cable/config.ru
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8e15c9c10557198797d48161bc16afb8">#!/bin/bash
+<textarea class="clipboard-content" id="clipboard-fb220e05cfd506a55e8dd4252d28227d">#!/bin/bash
 bundle exec puma -p 28080 cable/config.ru
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8e15c9c10557198797d48161bc16afb8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fb220e05cfd506a55e8dd4252d28227d">Copiar</button>
 </div>
-<p>O código irá iniciar um <em>cable server</em> na porta 28080.</p><h4 id="notas"><a class="anchorlink" href="#notas">9.3 Notas</a></h4><p>O servidor WebSocket não tem acesso à sessão, mas tem
+<p>O código irá iniciar um <em>cable server</em> na porta 28080.</p><h4 id="notas"><a class="anchorlink" href="#notas">8.3 Notas</a></h4><p>O servidor WebSocket não tem acesso à sessão, mas tem
 acesso aos cookies. Isso pode ser usado quando você precisa lidar com
-autenticação. Você pode ver uma maneira de fazer isso com o Devise neste <a href="https://greg.molnar.io/blog/actioncable-devise-authentication/">artigo</a>.</p><h3 id="dependencias"><a class="anchorlink" href="#dependencias">10 Dependências</a></h3><p>O <em>Action Cable</em> fornece uma interface de adaptador de assinatura para processar seus
+autenticação. Você pode ver uma maneira de fazer isso com o Devise neste <a href="https://greg.molnar.io/blog/actioncable-devise-authentication/">artigo</a>.</p><h3 id="dependencias"><a class="anchorlink" href="#dependencias">9 Dependências</a></h3><p>O <em>Action Cable</em> fornece uma interface de adaptador de assinatura para processar seus
 <em>pubsub</em> internos. Por padrão, adaptadores assíncronos, <em>inline</em>, PostgreSQL e Redis
 estão incluídos. O adaptador padrão
 em novas aplicações Rails é o adaptador assíncrono (<code>async</code>).</p><p>O lado Ruby das coisas é construído em cima de <a href="https://github.com/faye/websocket-driver-ruby">websocket-driver</a>,
-<a href="https://github.com/celluloid/nio4r">nio4r</a> e <a href="https://github.com/ruby-concurrency/concurrent-ruby">concurrent-ruby</a>.</p><h3 id="implantacao"><a class="anchorlink" href="#implantacao">11 Implantação</a></h3><p>O <em>Action Cable</em> é alimentado por uma combinação de <em>WebSockets</em> e <em>threads</em>. Tanto o
+<a href="https://github.com/celluloid/nio4r">nio4r</a> e <a href="https://github.com/ruby-concurrency/concurrent-ruby">concurrent-ruby</a>.</p><h3 id="implantacao"><a class="anchorlink" href="#implantacao">10 Implantação</a></h3><p>O <em>Action Cable</em> é alimentado por uma combinação de <em>WebSockets</em> e <em>threads</em>. Tanto o
 <a href="https://www.techopedia.com/definition/31509/plumbing"><em>plumbing</em></a> do <em>framework</em> e o trabalho do <em>channel</em> especificado pelo usuário são tratados internamente,
 usando suporte de <em>thread</em> nativo do Ruby. Isso significa que você pode usar todos os seus
 <em>models</em> dos Rails sem problemas, contanto que você não tenha cometido nenhum pecado de <em>thread-safety</em>.</p><p>O servidor <em>Action Cable</em> implementa o <em>Rack socket hijacking API</em>,
 permitindo assim o uso de um padrão <em>multithread</em> para o gerenciamento de conexões
 internamente, independentemente de o servidor de aplicativos ser multiencadeado ou não.</p><p>Assim, <em>Action Cable</em> funciona com servidores populares como <em>Unicorn</em>, <em>Puma</em> e
-<em>Passenger</em>.</p><h3 id="teste"><a class="anchorlink" href="#teste">12 Teste</a></h3><p>Você pode encontrar instruções detalhadas de como testar a sua funcionalidade <em>Action Cable</em> no
+<em>Passenger</em>.</p><h3 id="teste"><a class="anchorlink" href="#teste">11 Teste</a></h3><p>Você pode encontrar instruções detalhadas de como testar a sua funcionalidade <em>Action Cable</em> no
 <a href="testing.html#testing-action-cable">guia de teste</a>.</p>
 
         <h3>Feedback</h3>
