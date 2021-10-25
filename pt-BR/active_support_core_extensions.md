@@ -1074,7 +1074,7 @@ Extensões para `String`
 
 #### Motivação
 
-Inserir dados em templates HTML, necessita de cuidados extras. Por exemplo, você não pode apenas literalmente juntar `@review.title` em uma página HTML. Por outro lado, se o título do comentário é "Flanagan & Matz rules!" o retorno não será bem formada porque um 'e comercial' precisa ser usado como "&amp;amp;". Além do mais, dependendo da aplicação, isso pode ser uma grande falha de segurança porque os usuários podem injetar uma configuração HTML maliciosa em um título de revisão feito à mão. Confira a seção sobre _cross-site scripting_ em [Guia de Segurança](security.html#cross-site-scripting-xss) para maiores informações sobre os riscos.
+Inserir dados em _templates_ HTML, necessita de cuidados extras. Por exemplo, você não pode apenas literalmente juntar `@review.title` em uma página HTML. Por outro lado, se o título do comentário é "Flanagan & Matz rules!" o retorno não será bem formada porque um 'e comercial' precisa ser usado como "&amp;amp;". Além do mais, dependendo da aplicação, isso pode ser uma grande falha de segurança porque os usuários podem injetar uma configuração HTML maliciosa em um título de revisão feito à mão. Confira a seção sobre _cross-site scripting_ em [Guia de Segurança](security.html#cross-site-scripting-xss) para maiores informações sobre os riscos.
 
 #### _Strings_ Seguras
 
@@ -1103,7 +1103,7 @@ s            # => "<script>...</script>"
 
 É sua responsabilidade garantir a chamada `html_safe` em cada _string_ particular.
 
-Se você anexar em uma _string_ segura, com `concat`/`<<`, ou com `+`, o resultado é uma _string_ segura. Inserguros argumentos são ignorados:
+Se você anexar em uma _string_ segura, com `concat`/`<<`, ou com `+`, o resultado é uma _string_ segura. Argumentos inseguros são ignorados:
 
 ```ruby
 "".html_safe + "<" # => "&lt;"
@@ -1156,7 +1156,7 @@ INFO: O bit de segurança é perdido sempre, não importa se a transformação r
 
 #### Conversão e Coerção
 
-Chamando `to_s` em uma _string_ segura retorna uma _string_ segura, mas a coerção com `to_str` retora uma _string_ insegura.
+Chamando `to_s` em uma _string_ segura retorna uma _string_ segura, mas a coerção com `to_str` retorna uma _string_ insegura.
 
 #### Copiando
 
