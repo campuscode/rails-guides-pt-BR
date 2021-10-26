@@ -323,7 +323,7 @@ alert('Tudo está bem')
 
 ### NumberHelper
 
-Fornece métodos para converter números em strings formatadas. Métodos são fornecidos para números de telefone, moeda, porcentagem, precisão, notação posicional e tamanho do arquivo.
+Fornece métodos para converter números em *strings* formatadas. Métodos são fornecidos para números de telefone, moeda, porcentagem, precisão, notação posicional e tamanhos de arquivo.
 
 #### number_to_currency
 
