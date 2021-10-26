@@ -387,7 +387,7 @@ Este *helper* de limpeza codificará em HTML todas as tags e removerá todos os 
 sanitize @article.body
 ```
 
-Se as opções `:attributes` (atributos) ou `:tags` são passadas, apenas os atributos e tags mencionados são permitidos e nada mais.
+Se as opções `:attributes` (atributos) ou `:tags` são passadas, apenas os atributos e *tags* mencionados são permitidos e nada mais.
 
 ```ruby
 sanitize @article.body, tags: %w(table tr td), attributes: %w(id class style)
