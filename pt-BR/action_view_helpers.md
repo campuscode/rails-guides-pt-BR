@@ -393,7 +393,7 @@ Se as opções `:attributes` (atributos) ou `:tags` são passadas, apenas os atr
 sanitize @article.body, tags: %w(table tr td), attributes: %w(id class style)
 ```
 
-Para alterar os padrões para múltiplos usos, por exemplo, adicionando tags de tabela ao padrão:
+Para alterar os padrões para múltiplos usos, por exemplo, adicionando *tags* de tabela ao padrão:
 
 ```ruby
 class Application < Rails::Application
