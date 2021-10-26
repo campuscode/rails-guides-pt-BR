@@ -435,8 +435,8 @@ strip_tags("Remova <i>essas</i> tags!")
 ```
 
 ```ruby
-strip_tags("Sem <b>Bold</b> mais!  <a href='more.html'>Olhar mais</a>")
-# => Sem bold mais!  Olhar mais
+strip_tags("Sem <b>Bold</b> mais!  <a href='more.html'>Ver mais</a>")
+# => Sem bold mais!  Ver mais
 ```
 
 Nota: A saída ainda pode conter caracteres '<', '>', '&' sem ser escapadas e confundir os navegadores.
