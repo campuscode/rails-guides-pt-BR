@@ -293,7 +293,7 @@ third:
 
 ### FormHelper
 
-*FormHelper* são projetados para tornar o trabalho com modelos muito mais fácil em comparação com o uso apenas de elementos HTML padrão, fornecendo um conjunto de métodos para a criação de formulários com base em seus *models*. Este auxiliar gera o HTML para os formulários, fornecendo um método para cada tipo de entrada (por exemplo, texto (*text*), senha (*password*), seleção (*select*), e assim por diante). Quando o formulário é enviado (ou seja, quando o usuário clica no botão de envio, ou através de *form.submit* chamado via JavaScript), as entradas do formulário são agrupadas dentro de parâmetros de um objeto e devolvidas ao controlador.
+*FormHelper* são projetados para tornar o trabalho com *models* muito mais fácil em comparação com o uso apenas de elementos HTML padrão, fornecendo um conjunto de métodos para a criação de formulários com base em seus *models*. Este auxiliar gera o HTML para os formulários, fornecendo um método para cada tipo de entrada (por exemplo, texto (*text*), senha (*password*), seleção (*select*), e assim por diante). Quando o formulário é enviado (ou seja, quando o usuário clica no botão de envio, ou através de *form.submit* chamado via JavaScript), as entradas do formulário são agrupadas dentro de parâmetros de um objeto e devolvidas ao controlador.
 
 Você pode aprender mais sobre os *helpers* de formulário em [Action View Form Helpers Guide](form_helpers.html).
 
