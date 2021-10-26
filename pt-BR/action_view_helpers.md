@@ -327,7 +327,7 @@ Fornece métodos para converter números em *strings* formatadas. Métodos são 
 
 #### number_to_currency
 
-Formata um número em uma string de moeda (por exemplo, $13.65).
+Formata um número em uma *string* de moeda (por exemplo, $13.65).
 
 ```ruby
 number_to_currency(1234567890.50) # => $1,234,567,890.50
