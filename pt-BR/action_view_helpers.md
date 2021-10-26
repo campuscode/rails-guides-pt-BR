@@ -344,7 +344,7 @@ number_to_human_size(1234567) # => 1.2 MB
 
 #### number_to_percentage
 
-Formata um número como string de porcentagem.
+Formata um número como *string* de porcentagem.
 
 ```ruby
 number_to_percentage(100, precision: 0) # => 100%
