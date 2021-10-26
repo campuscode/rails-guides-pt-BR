@@ -352,7 +352,7 @@ number_to_percentage(100, precision: 0) # => 100%
 
 #### number_to_phone
 
-Formata um número em um número de telefone (formato do EUA por padrão).
+Formata um número em um número de telefone (formato dos EUA por padrão).
 
 ```ruby
 number_to_phone(1235551234) # => 123-555-1234
