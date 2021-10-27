@@ -922,9 +922,8 @@ Você pode desabilitar isso passando `include_id: false` para o `fields_for`.
 
 ### O Controller
 
-Como de costume, você precisa [declarar os parâmetros permitidos](action_controller_overview.html#strong-parameters)
-dentro do controller antes de enviá-los para o model:
-
+Como de costume, você precisa [declarar os parâmetros permitidos](action_controller_overview.html#parametros-fortes)
+dentro do controller antes de enviá-los para o *model*:
 
 ```ruby
 def create
