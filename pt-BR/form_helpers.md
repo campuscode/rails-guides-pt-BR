@@ -948,7 +948,7 @@ class Pessoa < ApplicationRecord
 end
 ```
 
-Se a hash de atributos de um objeto contém a chave `_destroy` com um valor que
+Se a *hash* de atributos de um objeto contém a chave `_destroy` com um valor que
 representa `true` (ex: 1, '1', true ou 'true'), então o objeto será destruído.
 O formulário a seguir permite o usuário remover endereços:
 
