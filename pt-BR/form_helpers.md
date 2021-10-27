@@ -843,7 +843,7 @@ Os *helpers* de formulários do Rails também podem ser usados para construir fo
 Trabalhando com Formulários Complexos
 ----------------------
 
-Muitas aplicações vão além de uma edição de um único objeto em um formulário simples. Por exemplo, quando estamos criando um *model* `Person` você pode querer que o usuário permita (no mesmo formulário) criar múltiplos registros de endereços(casa, trabalho, etc.). Mais tarde, quando estivesse editando este formulário, seria possível adicionar, remover, ou corrigir os endereços relacionados caso fosse necessário.
+Muitas aplicações vão além de uma edição de um único objeto em um formulário simples. Por exemplo, quando estamos criando um *model* `Person` você pode querer que o usuário permita (no mesmo formulário) criar múltiplos registros de endereços (casa, trabalho, etc.). Mais tarde, quando estivesse editando este formulário, seria possível adicionar, remover, ou corrigir os endereços relacionados caso fosse necessário.
 
 ### Configurando o Model
 
