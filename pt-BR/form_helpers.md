@@ -845,7 +845,7 @@ Trabalhando com Formulários Complexos
 
 Muitas aplicações vão além de uma edição de um único objeto em um formulário simples. Por exemplo, quando estamos criando um *model* `Person` você pode querer que o usuário permita (no mesmo formulário) criar múltiplos registros de endereços (casa, trabalho, etc.). Mais tarde, quando estivesse editando este formulário, seria possível adicionar, remover, ou corrigir os endereços relacionados caso fosse necessário.
 
-### Configurando o Model
+### Configurando o *Model*
 
 O Active Record fornece suporte a níveis de modelo através do método [`accepts_nested_attributes_for`](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for):
 
