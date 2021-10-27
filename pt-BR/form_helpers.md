@@ -920,7 +920,7 @@ As chaves da hash `:addresses_attributes` não são importantes, eles apenas pre
 Se o objeto associado já estiver salvo, o método `fields_for` ir gerá automaticamente uma entrada oculta com o `id` do registro salvo.
 Você pode desabilitar isso passando `include_id: false` para o `fields_for`.
 
-### O Controller
+### O *Controller*
 
 Como de costume, você precisa [declarar os parâmetros permitidos](action_controller_overview.html#parametros-fortes)
 dentro do controller antes de enviá-los para o *model*:
