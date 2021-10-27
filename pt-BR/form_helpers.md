@@ -968,7 +968,7 @@ O formulário a seguir permite o usuário remover endereços:
 <% end %>
 ```
 
-Não esqueça de atualizar a lista de parâmetros permitidos no seu controller para
+Não esqueça de atualizar a lista de parâmetros permitidos no seu *controller* para
 incluir também o campo `_destroy`:
 
 ```ruby
