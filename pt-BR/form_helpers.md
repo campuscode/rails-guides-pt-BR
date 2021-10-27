@@ -981,7 +981,7 @@ end
 ### Prevenindo Registros Vazios
 
 Pode ser útil ignorar um conjunto de campos que o usuário não preencheu. Você pode controlar isso ao passar um proc `:reject_if` para o
-`accepts_nested_attributes_for`. Essa proc será chamada com cada hash de atributos enviados pelo formulário. Se a proc retornar `false` então o Active Record não irá construir o objeto associado para essa hash. O exemplo abaixo tenta construir um endereço apenas se o campo `tipo` for informado.
+`accepts_nested_attributes_for`. Essa *proc* será chamada com cada *hash* de atributos enviados pelo formulário. Se a proc retornar `false` então o Active Record não irá construir o objeto associado para essa *hash*. O exemplo abaixo tenta construir um endereço apenas se o campo `tipo` for informado.
 
 ```ruby
 class Pessoa < ApplicationRecord
