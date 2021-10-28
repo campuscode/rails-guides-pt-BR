@@ -514,7 +514,6 @@ do *helper* da rota nomeada.
 Se você não configurar a opção `:host` globalmente, não esqueça de passá-lo para o
 helper da URL.
 
-
 ```erb
 <%= user_url(@user, host: 'example.com') %>
 ```
