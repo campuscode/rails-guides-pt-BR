@@ -542,7 +542,7 @@ Agora você pode exibir uma imagem dentro do seu email.
 <%= image_tag 'image.jpg' %>
 ```
 
-### Enviando Emails Multipart
+### Enviando Emails *Multipart*
 
 O Action Mailer enviará automaticamente emails *multipart* se você tiver templates
 diferentes para a mesma action. Então, para o nosso exemplo do `UserMailer`, se você tiver
