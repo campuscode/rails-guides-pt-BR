@@ -948,7 +948,7 @@ Descartando Arquivos Armazenados Durante Testes de Integração
 
 Similar aos testes de sistema, arquivos enviados durante testes de integração
 não serão automaticamente descartados. Se você deseja limpar esses arquivos, você
-pode fazer isso usando o callback `after_teardown`. Fazer isso garante que todas as
+pode fazer isso usando o *callback* `after_teardown`. Fazer isso garante que todas as
 conexões criadas durante o teste estão completas e você não receberá um erro do
 *Active Storage* informando que não foi possível encontrar um arquivo.
 
