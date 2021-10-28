@@ -574,7 +574,7 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-### Enviando Emails sem Renderizar um Template
+### Enviando Emails sem Renderizar um *Template*
 
 Podem haver casos onde você quer pular a etapa de renderização de um template e enviar
 o corpo do email como `string`. Você pode fazer isso usando a opção `:body`.
