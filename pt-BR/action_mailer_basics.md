@@ -559,7 +559,6 @@ Se você deseja sobrescrever as opções de entrega padrões (ex: as credenciais
 enquanto o email está sendo enviado, você pode fazer isso usando o `delivery_method_options`
 na *action* do mailer.
 
-
 ```ruby
 class UserMailer < ApplicationMailer
   def welcome_email
