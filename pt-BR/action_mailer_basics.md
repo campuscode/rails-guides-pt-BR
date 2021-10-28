@@ -531,7 +531,6 @@ requisição recebida, então você precisará informar o parâmetro `:asset_hos
 Como o `:asset_host` normalmente é o mesmo em toda a aplicação, você pode configurá-lo
 globalmente no arquivo `config/application.rb`:
 
-
 ```ruby
 config.asset_host = 'http://example.com'
 ```
