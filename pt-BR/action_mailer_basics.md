@@ -475,7 +475,7 @@ globalmente no arquivo `config/application.rb`:
 config.action_mailer.default_url_options = { host: 'exemplo.com' }
 ```
 
-Por causa dessa característica, você não pode usar nenhum dos helpers `*_path` dentro de
+Por causa dessa característica, você não pode usar nenhum dos *helpers* `*_path` dentro de
 um email. Ao invés, você precisará usar o `*_url` helper respectivo. Por exemplo,
 ao invés de usar:
 
