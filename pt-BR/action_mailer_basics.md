@@ -557,7 +557,7 @@ dentro do método the `ActionMailer::Base.default`.
 
 Se você deseja sobrescrever as opções de entrega padrões (ex: as credenciais SMTP)
 enquanto o email está sendo enviado, você pode fazer isso usando o `delivery_method_options`
-na action do mailer.
+na *action* do mailer.
 
 
 ```ruby
