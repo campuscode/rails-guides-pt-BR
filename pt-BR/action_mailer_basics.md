@@ -493,7 +493,7 @@ Usando a URL completa, seus links irão funcionar dentro dos seus emails.
 
 #### Gerando URLs com `url_for`
 
-Por padrão, o `url_for` gera uma URL completa nos templates.
+Por padrão, o `url_for` gera uma URL completa nos *templates*.
 
 Se você não configurar a opção `:host` globalmente, não esqueça de passá-lo para o
 `url_for`.
