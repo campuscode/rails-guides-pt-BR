@@ -511,9 +511,7 @@ Os clientes de email não têm o contexto da web e, portanto, os caminhos não t
 base para completar os endereços da web. Assim, você deve sempre usar a variant  `*_url`
 do *helper* da rota nomeada.
 
-Se você não configurar a opção `:host` globalmente, não esqueça de passá-lo para o
-helper da URL.
-
+Se você não configurar a opção `:host` globalmente, não esqueça de passá-lo para o helper da URL.
 
 ```erb
 <%= user_url(@user, host: 'example.com') %>
@@ -530,7 +528,6 @@ requisição recebida, então você precisará informar o parâmetro `:asset_hos
 
 Como o `:asset_host` normalmente é o mesmo em toda a aplicação, você pode configurá-lo
 globalmente no arquivo `config/application.rb`:
-
 
 ```ruby
 config.asset_host = 'http://example.com'
