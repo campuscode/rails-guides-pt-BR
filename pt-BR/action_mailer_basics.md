@@ -465,7 +465,7 @@ config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
 
 ### Gerando URLs no Action Mailer Views
 
-Ao contrário dos controllers, a instância do `mailer`não tem nenhum contexto sobre a
+Ao contrário dos *controllers*, a instância do `mailer` não tem nenhum contexto sobre a
 requisição recebida, então você precisará informar o parâmetro `:host`.
 
 Como o `:host` normalmente é o mesmo em toda a aplicação, você pode configurá-lo
