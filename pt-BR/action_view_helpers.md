@@ -513,7 +513,7 @@ Consulte [a documentação da API para obter mais informações](https://api.rub
 
 ### CsrfHelper
 
-Retorna *meta-tags* "*csrf-param*" e "*csrf-token*" com o nome do *cross-site*.
+Retorna *meta tags* "*csrf-param*" e "*csrf-token*" com o nome do *cross-site*.
 Solicita parâmetros de proteção contra falsificação e token, respectivamente.
 
 ```html
