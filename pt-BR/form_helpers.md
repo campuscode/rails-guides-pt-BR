@@ -850,33 +850,33 @@ Muitas aplicações vão além de uma edição de um único objeto em um formul�
 O Active Record fornece suporte a níveis de modelo através do método [`accepts_nested_attributes_for`](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for):
 
 ```ruby
-class Pessoa < ApplicationRecord
-  has_many :enderecos, inverse_of: :pessoa
-  accepts_nested_attributes_for :enderecos
+class Person < ApplicationRecord
+  has_many :addresses, inverse_of: :person
+  accepts_nested_attributes_for :addresses
 end
 
-class Endereco < ApplicationRecord
-  belongs_to :pessoa
+class Address < ApplicationRecord
+  belongs_to :person
 end
 ```
 
-Isso criará um método chamado `enderecos_attributes=` no model `Pessoa` para permitir criar, atualizar e (opcionalmente) destruir endereços.
+Isso criará um método chamado `addresses_attributes=` no model `Person` para permitir criar, atualizar e (opcionalmente) destruir endereços.
 
 ### Formulários Aninhados
 
 O formulário a seguir permite ao usuário criar uma `Pessoa` e seus endereços associados.
 
 ```html+erb
-<%= form_with model: @pessoa do |form| %>
+<%= form_with model: @person do |form| %>
   Endereços:
   <ul>
-    <%= form_with model: @pessoa do |f| %>
+    <%= form_with model: @person do |f| %>
       <li>
-        <%= addresses_form.label :tipo %>
-        <%= addresses_form.text_field :tipo %>
+        <%= addresses_form.label :kind %>
+        <%= addresses_form.text_field :kind %>
 
-        <%= addresses_form.label :nome_rua %>
-        <%= addresses_form.text_field :nome_rua %>
+        <%= addresses_form.label :street %>
+        <%= addresses_form.text_field :street %>
         ...
       </li>
     <% end %>
@@ -888,8 +888,8 @@ Quando uma associação aceita atributos aninhados, o método `fields_for` rende
 
 ```ruby
 def new
-  @pessoa = Pessoa.new
-  2.times { @pessoa.enderecos.build }
+  @person = Person.new
+  2.times { @person.addresses.build }
 end
 ```
 
@@ -899,16 +899,16 @@ os parâmetros enviados serão:
 
 ```ruby
 {
-  'pessoa' => {
-    'nome' => 'John Doe',
-    'enderecos_attributes' => {
+  'person' => {
+    'name' => 'John Doe',
+    'addresses_attributes' => {
       '0' => {
-        'tipo' => 'Casa',
-        'nome_rua' => 'Rua da Paz'
+        'kind' => 'Home',
+        'street' => '221b Baker Street'
       },
       '1' => {
-        'tipo' => 'Escritório',
-        'nome_rua' => 'Av. Brasil'
+        'kind' => 'Office',
+        'street' => '31 Spooner Street'
       }
     }
   }
@@ -927,13 +927,13 @@ dentro do controller antes de enviá-los para o *model*:
 
 ```ruby
 def create
-  @pessoa = Pessoa.new(pessoa_params)
+  @person = Person.new(person_params)
   # ...
 end
 
 private
-  def pessoa_params
-    params.require(:pessoa).permit(:nome, enderecos_attributes: [:id, :tipo, :nome_rua])
+  def person_params
+    params.require(:person).permit(:name, addresses_attributes: [:id, :kind, :street])
   end
 ```
 
@@ -942,9 +942,9 @@ private
 Você pode permitir os usuários deletarem os objetos associados ao passar o parâmetro `allow_destroy: true` para o `accepts_nested_attributes_for`
 
 ```ruby
-class Pessoa < ApplicationRecord
-  has_many :enderecos
-  accepts_nested_attributes_for :enderecos, allow_destroy: true
+class Person < ApplicationRecord
+  has_many :addresses
+  accepts_nested_attributes_for :addresses, allow_destroy: true
 end
 ```
 
@@ -953,14 +953,14 @@ representa `true` (ex: 1, '1', true ou 'true'), então o objeto será destruído
 O formulário a seguir permite o usuário remover endereços:
 
 ```erb
-<%= form_with model: @pessoa do |form| %>
+<%= form_with model: @person do |form| %>
   Addresses:
   <ul>
-    <%= form.fields_for :enderecos do |enderecos_form| %>
+    <%= form.fields_for :addresses do |addresses_form| %>
       <li>
-        <%= enderecos_form.check_box :_destroy %>
-        <%= enderecos_form.label :tipo %>
-        <%= enderecos_form.text_field :tipo %>
+        <%= addresses_form.check_box :_destroy %>
+        <%= addresses_form.label :tipo %>
+        <%= addresses_form.text_field :tipo %>
         ...
       </li>
     <% end %>
@@ -972,9 +972,8 @@ Não esqueça de atualizar a lista de parâmetros permitidos no seu *controller*
 incluir também o campo `_destroy`:
 
 ```ruby
-def pessoa_params
-  params.require(:pessoa).
-    permit(:nome, enderecos_attributes: [:id, :tipo, :nome_rua, :_destroy])
+def person_params
+  params.require(:person).permit(:name, addresses_attributes: [:id, :kind, :street, :_destroy])
 end
 ```
 
@@ -984,9 +983,9 @@ Pode ser útil ignorar um conjunto de campos que o usuário não preencheu. Voc�
 `accepts_nested_attributes_for`. Essa *proc* será chamada com cada *hash* de atributos enviados pelo formulário. Se a proc retornar `false` então o Active Record não irá construir o objeto associado para essa *hash*. O exemplo abaixo tenta construir um endereço apenas se o campo `tipo` for informado.
 
 ```ruby
-class Pessoa < ApplicationRecord
+class Person < ApplicationRecord
   has_many :addresses
-  accepts_nested_attributes_for :enderecos, reject_if: lambda {|attributes| attributes['tipo'].blank?}
+  accepts_nested_attributes_for :addresses, reject_if: lambda {|attributes| attributes['kind'].blank?}
 end
 ```
 
@@ -996,7 +995,7 @@ são vazios, excluindo qualquer valor para o `_destroy`.
 ### Adicionando campos dinamicamente
 
 No lugar de renderizar múltiplos blocos de campos antecipadamente, você pode desejar adicioná-los apenas quando o usuário clicar em um botão "Adicionar novo endereço". O Rails não possui nenhum suporte nativo para isso. Quando geramos um novo bloco de campos, devemos
-garantir que a chave do array associado é único - utilizar a data atual via JavaScript em milisegundos [epoch](https://en.wikipedia.org/wiki/Unix_time), é bastante comum.
+garantir que a chave do array associado é único - utilizar a data atual via JavaScript em milissegundos [era unix](https://pt.wikipedia.org/wiki/Era_Unix), é bastante comum.
 
 Utilizando Tags Auxiliares (*Tag Helpers*) Sem Um Construtor de Formulário
 ----------------------------------------
