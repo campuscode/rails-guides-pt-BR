@@ -544,7 +544,7 @@ Agora você pode exibir uma imagem dentro do seu email.
 
 ### Enviando Emails Multipart
 
-O Action Mailer enviará automaticamente emails multipart se você tiver templates
+O Action Mailer enviará automaticamente emails *multipart* se você tiver templates
 diferentes para a mesma action. Então, para o nosso exemplo do `UserMailer`, se você tiver
 os templates `welcome_email.text.erb` e `welcome_email.html.erb` na pasta
 `app/views/user_mailer`, o Action Mailer irá automaticamente enviar um email multipart
