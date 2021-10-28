@@ -990,7 +990,7 @@ class Pessoa < ApplicationRecord
 end
 ```
 
-Para facilitar, você pode passar o symbol `:all_blank` no lugar, que irá criar uma proc para rejeitar os registros onde todos os atributos
+Para facilitar, você pode passar o *symbol* `:all_blank` no lugar, que irá criar uma proc para rejeitar os registros onde todos os atributos
 são vazios, excluindo qualquer valor para o `_destroy`.
 
 ### Adicionando campos dinamicamente
