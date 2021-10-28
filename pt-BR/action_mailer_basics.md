@@ -509,7 +509,7 @@ Se você não configurar a opção `:host` globalmente, não esqueça de passá-
 
 Os clientes de email não têm o contexto da web e, portanto, os caminhos não têm a URL
 base para completar os endereços da web. Assim, você deve sempre usar a variant  `*_url`
-do helper da rota nomeada.
+do *helper* da rota nomeada.
 
 Se você não configurar a opção `:host` globalmente, não esqueça de passá-lo para o
 helper da URL.
