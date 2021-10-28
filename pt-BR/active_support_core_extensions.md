@@ -1866,11 +1866,11 @@ NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
 
 [String#foreign_key]: https://api.rubyonrails.org/classes/String.html#method-i-foreign_key
 
-### Conversions
+### Conversões
 
 #### `to_date`, `to_time`, `to_datetime`
 
-The methods [`to_date`][String#to_date], [`to_time`][String#to_time], and [`to_datetime`][String#to_datetime] are basically convenience wrappers around `Date._parse`:
+Os métodos [`to_date`][String#to_date], [`to_time`][String#to_time], e [`to_datetime`][String#to_datetime] são basicamente  variações convenientes de `Date._parse`:
 
 ```ruby
 "2010-07-27".to_date              # => Tue, 27 Jul 2010
@@ -1878,20 +1878,20 @@ The methods [`to_date`][String#to_date], [`to_time`][String#to_time], and [`to_d
 "2010-07-27 23:37:00".to_datetime # => Tue, 27 Jul 2010 23:37:00 +0000
 ```
 
-`to_time` receives an optional argument `:utc` or `:local`, to indicate which time zone you want the time in:
+`to_time` recebe an um argumento opcional `:utc` ou `:local`, para indicar qual fuso horário you quer se basear:
 
 ```ruby
 "2010-07-27 23:42:00".to_time(:utc)   # => 2010-07-27 23:42:00 UTC
 "2010-07-27 23:42:00".to_time(:local) # => 2010-07-27 23:42:00 +0200
 ```
 
-Default is `:local`.
+O padrão é `:local`.
 
-Please refer to the documentation of `Date._parse` for further details.
+Por favor, consulte a documentação de `Date._parse` para mais detalhes.
 
-INFO: The three of them return `nil` for blank receivers.
+INFO: Os três exemplos retornam `nil` caso não recebam argumentos.
 
-NOTE: Defined in `active_support/core_ext/string/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/string/conversions.rb`.
 
 [String#to_date]: https://api.rubyonrails.org/classes/String.html#method-i-to_date
 [String#to_datetime]: https://api.rubyonrails.org/classes/String.html#method-i-to_datetime
