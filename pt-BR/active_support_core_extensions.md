@@ -1381,7 +1381,7 @@ NOTE: Defined in `active_support/core_ext/string/indent.rb`.
 
 #### `at(position)`
 
-O método [`at`][String#at] retorna o caracter da _string_ na posição `position`:
+O método [`at`][String#at] retorna o caractere da _string_ na posição `position`:
 
 ```ruby
 "hello".at(0)  # => "h"
@@ -1411,7 +1411,7 @@ NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 #### `to(position)`
 
-O método [`to`][String#to] retorna a _substring_ da _string_ up até a posição `position`:
+O método [`to`][String#to] retorna a _substring_ da _string_ até a posição `position`:
 
 ```ruby
 "hello".to(0)  # => "h"
