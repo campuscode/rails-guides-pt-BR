@@ -1458,7 +1458,7 @@ O método [`pluralize`][String#pluralize] retorna o plural do receptor:
 
 Como mostra o exemplo anterior, _Active Support_ conhece alguns plurais irregulares e substantivos incontáveis. As regras integradas podem ser estendidas em `config/initializers/inflections.rb`. Este arquivo é gerado por padrão, pelo comando `rails new` e tem instruções nos comentários.
 
-`pluralize` também pode fazer um parametro `count` opcional. Se `count == 1` a forma singular será retornada. Para qualquer outro valor de `count` a forma plural será retornada:
+`pluralize` também pode fazer um parâmetro `count` opcional. Se `count == 1` a forma singular será retornada. Para qualquer outro valor de `count` a forma plural será retornada:
 
 ```ruby
 "dude".pluralize(0) # => "dudes"
@@ -1549,7 +1549,7 @@ end
 "SSLError".underscore.camelize # => "SSLError"
 ```
 
-`camelize` é o alias de [`camelcase`][String#camelcase].
+`camelize` é o mesmo que usar [`camelcase`][String#camelcase].
 
 NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
@@ -1571,7 +1571,7 @@ Também converte "::" back para "/":
 "Backoffice::Session".underscore # => "backoffice/session"
 ```
 
-e entende _strings_ que começam com start letra minuscula:
+e entende _strings_ que começam com start letra minúscula:
 
 ```ruby
 "visualEffect".underscore # => "visual_effect"
@@ -1579,7 +1579,7 @@ e entende _strings_ que começam com start letra minuscula:
 
 `underscore` não aceita nenhum argumento.
 
-Classes e modulos _Rails_ carregam automaticamente o uso de `underscore` para inferir o endereço relativo sem extensão de um arquivo que definiria uma constante ausente:
+Classes e módulos _Rails_ carregam automaticamente o uso de `underscore` para inferir o endereço relativo sem extensão de um arquivo que definiria uma constante ausente:
 
 ```ruby
 # active_support/dependencies.rb
@@ -1606,7 +1606,7 @@ O método [`titleize`][String#titleize] coloca cada palavra com letra maiúscula
 "fermat's enigma".titleize     # => "Fermat's Enigma"
 ```
 
-`titleize` é uma alias de [`titlecase`][String#titlecase].
+`titleize` é o mesmo que usar [`titlecase`][String#titlecase].
 
 NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
@@ -1688,14 +1688,14 @@ O método [`parameterize`][String#parameterize] normaliza seu receptor de uma fo
 "Kurt Gödel".parameterize # => "kurt-godel"
 ```
 
-Para preservar a caixa da string, defina o argumento `preserve_case` para _true_. Por padrão, `preserve_case` será configurado como _false_.
+Para preservar a caixa da _string_, defina o argumento `preserve_case` para _true_. Por padrão, `preserve_case` será configurado como `false`.
 
 ```ruby
 "John Smith".parameterize(preserve_case: true) # => "John-Smith"
 "Kurt Gödel".parameterize(preserve_case: true) # => "Kurt-Godel"
 ```
 
-Para usar um separador customizado, sobreescreva o argumento `separator`.
+Para usar um separador customizado, sobrescreva o argumento `separator`.
 
 ```ruby
 "John Smith".parameterize(separator: "_") # => "john\_smith"
@@ -1716,7 +1716,7 @@ O método [`tableize`][String#tableize] é `underscore` seguido por `pluralize`.
 "InvoiceLine".tableize # => "invoice_lines"
 ```
 
-Como um princípio básico, `tableize` retorna o nome da tabela que corresponde a um determinado modelo para casos simples. A implementação real de `tableize` no _Active Record_ na verdade não é direta, porque também desmoduliza o nome da classe e verifica algumas opções que podem afetar a string retornada.
+Como um princípio básico, `tableize` retorna o nome da tabela que corresponde a um determinado modelo para casos simples. A implementação real de `tableize` no _Active Record_ na verdade não é direta, porque também desmodulariza o nome da classe e verifica algumas opções que podem afetar a _string_ retornada.
 
 NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
@@ -1803,7 +1803,7 @@ Especificamente, ele realiza estas transformações:
   * Coloca em maiúscula a primeira palavra.
 
 A capitalização da primeira palavra pode ser desativada configurando o
-`:capitalize` opção para _false_ (o padrão é _true_).
+`:capitalize` opção para `false` (o padrão é `true`).
 
 ```ruby
 "name".humanize                         # => "Name"
@@ -1849,7 +1849,7 @@ O método [`foreign_key`][String#foreign_key] fornece um nome de coluna de chave
 "Admin::Session".foreign_key # => "session_id"
 ```
 
-Passe _false_ como argumento se você não quiser o _underline_ em "_id":
+Passe `false` como argumento se você não quiser o _underline_ em "_id":
 
 ```ruby
 "User".foreign_key(false) # => "userid"
