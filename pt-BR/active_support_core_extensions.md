@@ -1549,7 +1549,7 @@ end
 "SSLError".underscore.camelize # => "SSLError"
 ```
 
-`camelize` tem o alias de [`camelcase`][String#camelcase].
+`camelize` é o alias de [`camelcase`][String#camelcase].
 
 NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
@@ -1558,28 +1558,28 @@ NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 #### `underscore`
 
-The method [`underscore`][String#underscore] goes the other way around, from camel case to paths:
+O método [`underscore`][String#underscore] vai ao contrário, de _camel case_ para pastas:
 
 ```ruby
 "Product".underscore   # => "product"
 "AdminUser".underscore # => "admin_user"
 ```
 
-Also converts "::" back to "/":
+Também converte "::" back para "/":
 
 ```ruby
 "Backoffice::Session".underscore # => "backoffice/session"
 ```
 
-and understands strings that start with lowercase:
+e entende _strings_ que começam com start letra minuscula:
 
 ```ruby
 "visualEffect".underscore # => "visual_effect"
 ```
 
-`underscore` accepts no argument though.
+`underscore` não aceita nenhum argumento.
 
-Rails class and module autoloading uses `underscore` to infer the relative path without extension of a file that would define a given missing constant:
+Classes e modulos _Rails_ carregam automaticamente o uso de `underscore` para inferir o endereço relativo sem extensão de um arquivo que definiria uma constante ausente:
 
 ```ruby
 # active_support/dependencies.rb
@@ -1591,38 +1591,38 @@ def load_missing_constant(from_mod, const_name)
 end
 ```
 
-INFO: As a rule of thumb you can think of `underscore` as the inverse of `camelize`, though there are cases where that does not hold. For example, `"SSLError".underscore.camelize` gives back `"SslError"`.
+INFO: Como regra geral, pode-se pensar em `underscore` como o inverso de `camelize`, embora haja casos em que isso não se aplica. Por exemplo, `"SSLError".underscore.camelize` devolve `"SslError"`.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#underscore]: https://api.rubyonrails.org/classes/String.html#method-i-underscore
 
 #### `titleize`
 
-The method [`titleize`][String#titleize] capitalizes the words in the receiver:
+O método [`titleize`][String#titleize] coloca cada palavra com letra maiúscula:
 
 ```ruby
 "alice in wonderland".titleize # => "Alice In Wonderland"
 "fermat's enigma".titleize     # => "Fermat's Enigma"
 ```
 
-`titleize` is aliased to [`titlecase`][String#titlecase].
+`titleize` é uma alias de [`titlecase`][String#titlecase].
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#titlecase]: https://api.rubyonrails.org/classes/String.html#method-i-titlecase
 [String#titleize]: https://api.rubyonrails.org/classes/String.html#method-i-titleize
 
 #### `dasherize`
 
-The method [`dasherize`][String#dasherize] replaces the underscores in the receiver with dashes:
+O método [`dasherize`][String#dasherize] troca _underscores_ no receptor por traços:
 
 ```ruby
 "name".dasherize         # => "name"
 "contact_data".dasherize # => "contact-data"
 ```
 
-The XML serializer of models uses this method to dasherize node names:
+O _serializer_ XML de _models_ usa este método para colocar traços nos nomes de seus nós:
 
 ```ruby
 # active_model/serializers/xml.rb
@@ -1632,13 +1632,13 @@ def reformat_name(name)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#dasherize]: https://api.rubyonrails.org/classes/String.html#method-i-dasherize
 
 #### `demodulize`
 
-Given a string with a qualified constant name, [`demodulize`][String#demodulize] returns the very constant name, that is, the rightmost part of it:
+Dado uma _string_ com um nome de constante em módulo, [`demodulize`][String#demodulize] retorna o real nome da constante, ou seja, a parte mais à direita dela:
 
 ```ruby
 "Product".demodulize                        # => "Product"
@@ -1648,7 +1648,7 @@ Given a string with a qualified constant name, [`demodulize`][String#demodulize]
 "".demodulize                               # => ""
 ```
 
-Active Record for example uses this method to compute the name of a counter cache column:
+_Active Record_ por exemplo, usa este método para calcular o nome de uma coluna de cache do contador:
 
 ```ruby
 # active_record/reflection.rb
@@ -1661,13 +1661,13 @@ def counter_cache_column
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#demodulize]: https://api.rubyonrails.org/classes/String.html#method-i-demodulize
 
 #### `deconstantize`
 
-Given a string with a qualified constant reference expression, [`deconstantize`][String#deconstantize] removes the rightmost segment, generally leaving the name of the constant's container:
+Dada uma _string_ com uma expressão de referência a uma constante, [`deconstantize`][String#deconstantize] remove o segmento mais à direita, geralmente deixando o nome do contêiner da constante:
 
 ```ruby
 "Product".deconstantize                        # => ""
@@ -1675,40 +1675,40 @@ Given a string with a qualified constant reference expression, [`deconstantize`]
 "Admin::Hotel::ReservationUtils".deconstantize # => "Admin::Hotel"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#deconstantize]: https://api.rubyonrails.org/classes/String.html#method-i-deconstantize
 
 #### `parameterize`
 
-The method [`parameterize`][String#parameterize] normalizes its receiver in a way that can be used in pretty URLs.
+O método [`parameterize`][String#parameterize] normaliza seu receptor de uma forma que pode ser usada em URLs de forma mais elegante.
 
 ```ruby
 "John Smith".parameterize # => "john-smith"
 "Kurt Gödel".parameterize # => "kurt-godel"
 ```
 
-To preserve the case of the string, set the `preserve_case` argument to true. By default, `preserve_case` is set to false.
+Para preservar a caixa da string, defina o argumento `preserve_case` para _true_. Por padrão, `preserve_case` será configurado como _false_.
 
 ```ruby
 "John Smith".parameterize(preserve_case: true) # => "John-Smith"
 "Kurt Gödel".parameterize(preserve_case: true) # => "Kurt-Godel"
 ```
 
-To use a custom separator, override the `separator` argument.
+Para usar um separador customizado, sobreescreva o argumento `separator`.
 
 ```ruby
 "John Smith".parameterize(separator: "_") # => "john\_smith"
 "Kurt Gödel".parameterize(separator: "_") # => "kurt\_godel"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#parameterize]: https://api.rubyonrails.org/classes/String.html#method-i-parameterize
 
 #### `tableize`
 
-The method [`tableize`][String#tableize] is `underscore` followed by `pluralize`.
+O método [`tableize`][String#tableize] é `underscore` seguido por `pluralize`.
 
 ```ruby
 "Person".tableize      # => "people"
@@ -1716,9 +1716,9 @@ The method [`tableize`][String#tableize] is `underscore` followed by `pluralize`
 "InvoiceLine".tableize # => "invoice_lines"
 ```
 
-As a rule of thumb, `tableize` returns the table name that corresponds to a given model for simple cases. The actual implementation in Active Record is not straight `tableize` indeed, because it also demodulizes the class name and checks a few options that may affect the returned string.
+Como um princípio básico, `tableize` retorna o nome da tabela que corresponde a um determinado modelo para casos simples. A implementação real de `tableize` no _Active Record_ na verdade não é direta, porque também desmoduliza o nome da classe e verifica algumas opções que podem afetar a string retornada.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#tableize]: https://api.rubyonrails.org/classes/String.html#method-i-tableize
 
