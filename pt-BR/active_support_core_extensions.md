@@ -1377,11 +1377,11 @@ NOTE: Defined in `active_support/core_ext/string/indent.rb`.
 [String#indent!]: https://api.rubyonrails.org/classes/String.html#method-i-indent-21
 [String#indent]: https://api.rubyonrails.org/classes/String.html#method-i-indent
 
-### Access
+### Acesso
 
 #### `at(position)`
 
-The [`at`][String#at] method returns the character of the string at position `position`:
+O método [`at`][String#at] retorna o caracter da _string_ na posição `position`:
 
 ```ruby
 "hello".at(0)  # => "h"
@@ -1390,13 +1390,13 @@ The [`at`][String#at] method returns the character of the string at position `po
 "hello".at(10) # => nil
 ```
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#at]: https://api.rubyonrails.org/classes/String.html#method-i-at
 
 #### `from(position)`
 
-The [`from`][String#from] method returns the substring of the string starting at position `position`:
+O método [`from`][String#from] retorna a _substring_ da _string_ iniciada na posição `position`:
 
 ```ruby
 "hello".from(0)  # => "hello"
@@ -1405,13 +1405,13 @@ The [`from`][String#from] method returns the substring of the string starting at
 "hello".from(10) # => nil
 ```
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#from]: https://api.rubyonrails.org/classes/String.html#method-i-from
 
 #### `to(position)`
 
-The [`to`][String#to] method returns the substring of the string up to position `position`:
+O método [`to`][String#to] retorna a _substring_ da _string_ up até a posição `position`:
 
 ```ruby
 "hello".to(0)  # => "h"
@@ -1420,27 +1420,27 @@ The [`to`][String#to] method returns the substring of the string up to position 
 "hello".to(10) # => "hello"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#to]: https://api.rubyonrails.org/classes/String.html#method-i-to
 
 #### `first(limit = 1)`
 
-The [`first`][String#first] method returns a substring containing the first `limit` characters of the string.
+O método [`first`][String#first] retorna a _substring_ contendo os primeiros `limit` caracteres da _string_.
 
-The call `str.first(n)` is equivalent to `str.to(n-1)` if `n` > 0, and returns an empty string for `n` == 0.
+A chamada `str.first(n)` é equivalente a `str.to(n-1)` se `n` > 0, e retorna uma _string_ vazia para `n` == 0.
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#first]: https://api.rubyonrails.org/classes/String.html#method-i-first
 
 #### `last(limit = 1)`
 
-The [`last`][String#last] method returns a substring containing the last `limit` characters of the string.
+O método [`last`][String#last] retorna a _substring_ contendo os últimos `limit` caracteres da _string_.
 
-The call `str.last(n)` is equivalent to `str.from(-n)` if `n` > 0, and returns an empty string for `n` == 0.
+A chamada `str.last(n)` é equivalente a `str.from(-n)` se `n` > 0, e retorna uma _string_ vazia para `n` == 0.
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#last]: https://api.rubyonrails.org/classes/String.html#method-i-last
 
