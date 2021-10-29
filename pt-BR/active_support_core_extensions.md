@@ -1444,7 +1444,7 @@ NOTE: Defined in `active_support/core_ext/string/access.rb`.
 
 [String#last]: https://api.rubyonrails.org/classes/String.html#method-i-last
 
-### Inflections
+### Inflexões
 
 #### `pluralize`
 
@@ -1724,7 +1724,7 @@ NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 #### `classify`
 
-The method [`classify`][String#classify] is the inverse of `tableize`. It gives you the class name corresponding to a table name:
+O método [`classify`][String#classify] é o inverso de `tableize`. Ele da o nome da classe correspondente ao nome da tabela:
 
 ```ruby
 "people".classify        # => "Person"
@@ -1732,21 +1732,21 @@ The method [`classify`][String#classify] is the inverse of `tableize`. It gives 
 "invoice_lines".classify # => "InvoiceLine"
 ```
 
-The method understands qualified table names:
+O método compreende nomes de tabela associadas:
 
 ```ruby
 "highrise_production.companies".classify # => "Company"
 ```
 
-Note that `classify` returns a class name as a string. You can get the actual class object by invoking `constantize` on it, explained next.
+Note que `classify` retorna um nome de classe como uma _string_. Você pode obter o objeto de classe real invocando `constantize` sobre isso, será explicado a seguir.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#classify]: https://api.rubyonrails.org/classes/String.html#method-i-classify
 
 #### `constantize`
 
-The method [`constantize`][String#constantize] resolves the constant reference expression in its receiver:
+O método [`constantize`][String#constantize] resolve a expressão de referência constante em seu receptor:
 
 ```ruby
 "Integer".constantize # => Integer
@@ -1757,9 +1757,9 @@ end
 "M::X".constantize # => 1
 ```
 
-If the string evaluates to no known constant, or its content is not even a valid constant name, `constantize` raises `NameError`.
+Se a _string_ não for avaliada como uma constante conhecida ou seu conteúdo nem mesmo for um nome de constante válido, `constantize` executa `NameError`.
 
-Constant name resolution by `constantize` starts always at the top-level `Object` even if there is no leading "::".
+Resolução de nome constante por `constantize` inicia sempre no nível superior de `Object` mesmo se não começar com "::".
 
 ```ruby
 X = :in_Object
@@ -1785,25 +1785,25 @@ rescue NameError => e
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#constantize]: https://api.rubyonrails.org/classes/String.html#method-i-constantize
 
 #### `humanize`
 
-The method [`humanize`][String#humanize] tweaks an attribute name for display to end users.
+O método [`humanize`][String#humanize] ajusta um nome de atributo para exibir aos usuários.
 
-Specifically, it performs these transformations:
+Especificamente, ele realiza estas transformações:
 
-  * Applies human inflection rules to the argument.
-  * Deletes leading underscores, if any.
-  * Removes a "_id" suffix if present.
-  * Replaces underscores with spaces, if any.
-  * Downcases all words except acronyms.
-  * Capitalizes the first word.
+  * Aplica regras de inflexão humana ao argumento.
+  * Exclui os _underlines_ iniciais, se houver.
+  * Remove um sufixo "_id", se houver.
+  * Substitui _underlines_ por espaços, se houver.
+  * Reduz todas as palavras, exceto siglas.
+  * Coloca em maiúscula a primeira palavra.
 
-The capitalization of the first word can be turned off by setting the
-`:capitalize` option to false (default is true).
+A capitalização da primeira palavra pode ser desativada configurando o
+`:capitalize` opção para _false_ (o padrão é _true_).
 
 ```ruby
 "name".humanize                         # => "Name"
@@ -1813,14 +1813,14 @@ The capitalization of the first word can be turned off by setting the
 "_id".humanize                          # => "Id"
 ```
 
-If "SSL" was defined to be an acronym:
+Se "SSL" for definido como uma sigla:
 
 ```ruby
 'ssl_error'.humanize # => "SSL error"
 ```
 
-The helper method `full_messages` uses `humanize` as a fallback to include
-attribute names:
+O método _helper_ `full_messages` usa `humanize` como alternativa para incluir
+nomes de atributos:
 
 ```ruby
 def full_messages
@@ -1835,13 +1835,13 @@ def full_message
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#humanize]: https://api.rubyonrails.org/classes/String.html#method-i-humanize
 
 #### `foreign_key`
 
-The method [`foreign_key`][String#foreign_key] gives a foreign key column name from a class name. To do so it demodulizes, underscores, and adds "_id":
+O método [`foreign_key`][String#foreign_key] fornece um nome de coluna de chave estrangeira a partir de um nome de classe. Para fazer isso, ele desmoduliza, separa com _underline_ e adiciona "_id":
 
 ```ruby
 "User".foreign_key           # => "user_id"
@@ -1849,20 +1849,20 @@ The method [`foreign_key`][String#foreign_key] gives a foreign key column name f
 "Admin::Session".foreign_key # => "session_id"
 ```
 
-Pass a false argument if you do not want the underscore in "_id":
+Passe _false_ como argumento se você não quiser o _underline_ em "_id":
 
 ```ruby
 "User".foreign_key(false) # => "userid"
 ```
 
-Associations use this method to infer foreign keys, for example `has_one` and `has_many` do this:
+As associações usam este método para inferir chaves estrangeiras, por exemplo `has_one` e `has_many` fazem isto:
 
 ```ruby
 # active_record/associations.rb
 foreign_key = options[:foreign_key] || reflection.active_record.name.foreign_key
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#foreign_key]: https://api.rubyonrails.org/classes/String.html#method-i-foreign_key
 
