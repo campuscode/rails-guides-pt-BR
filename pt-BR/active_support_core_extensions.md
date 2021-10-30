@@ -2084,20 +2084,20 @@ Extensions to `Integer`
 
 ### `multiple_of?`
 
-The method [`multiple_of?`][Integer#multiple_of?] tests whether an integer is multiple of the argument:
+The method [`multiple_of?`][Integer#multiple_of?] testa se um inteiro é múltiplo do argumento:
 
 ```ruby
 2.multiple_of?(1) # => true
 1.multiple_of?(2) # => false
 ```
 
-NOTE: Defined in `active_support/core_ext/integer/multiple.rb`.
+NOTA: Definido em `active_support/core_ext/integer/multiple.rb`.
 
 [Integer#multiple_of?]: https://api.rubyonrails.org/classes/Integer.html#method-i-multiple_of-3F
 
 ### `ordinal`
 
-The method [`ordinal`][Integer#ordinal] returns the ordinal suffix string corresponding to the receiver integer:
+O método [`ordinal`][Integer#ordinal] retorna a string de sufixo ordinal correspondente ao número inteiro do receptor:
 
 ```ruby
 1.ordinal    # => "st"
@@ -2108,13 +2108,13 @@ The method [`ordinal`][Integer#ordinal] returns the ordinal suffix string corres
 -134.ordinal # => "th"
 ```
 
-NOTE: Defined in `active_support/core_ext/integer/inflections.rb`.
+NOTA: Definido em `active_support/core_ext/integer/inflections.rb`.
 
 [Integer#ordinal]: https://api.rubyonrails.org/classes/Integer.html#method-i-ordinal
 
 ### `ordinalize`
 
-The method [`ordinalize`][Integer#ordinalize] returns the ordinal string corresponding to the receiver integer. In comparison, note that the `ordinal` method returns **only** the suffix string.
+O método [`ordinalize`][Integer#ordinalize] retorna a string ordinal correspondente ao número inteiro do receptor. Em comparação, observe que o método `ordinal` retorna **only** a string de sufixo.
 
 ```ruby
 1.ordinalize    # => "1st"
@@ -2125,35 +2125,35 @@ The method [`ordinalize`][Integer#ordinalize] returns the ordinal string corresp
 -134.ordinalize # => "-134th"
 ```
 
-NOTE: Defined in `active_support/core_ext/integer/inflections.rb`.
+NOTA: Definido em `active_support/core_ext/integer/inflections.rb`.
 
 [Integer#ordinalize]: https://api.rubyonrails.org/classes/Integer.html#method-i-ordinalize
 
 ### Time
 
-The following methods:
+Os seguintes métodos:
 
 * [`months`][Integer#months]
 * [`years`][Integer#years]
 
-enable time declarations and calculations, like `4.months + 5.years`. Their return values can also be added to or subtracted from Time objects.
+habilitar declarações de tempo e cálculos, gostar `4.months + 5.years`. Seus valores de retorno também podem ser adicionados ou subtraídos dos objetos Time.
 
-These methods can be combined with [`from_now`][Duration#from_now], [`ago`][Duration#ago], etc, for precise date calculations. For example:
+Esses métodos podem ser combinados com [`from_now`][Duration#from_now], [`ago`][Duration#ago], etc, para cálculos de datas precisas. Por exemplo:
 
 ```ruby
-# equivalent to Time.current.advance(months: 1)
+# equivalente a Time.current.advance(months: 1)
 1.month.from_now
 
-# equivalent to Time.current.advance(years: 2)
+# equivalente a Time.current.advance(years: 2)
 2.years.from_now
 
-# equivalent to Time.current.advance(months: 4, years: 5)
+# equivalente a Time.current.advance(months: 4, years: 5)
 (4.months + 5.years).from_now
 ```
 
-WARNING. For other durations please refer to the time extensions to `Numeric`.
+AVISO. Para outras durações, consulte as extensões de tempo para `Numeric`.
 
-NOTE: Defined in `active_support/core_ext/integer/time.rb`.
+NOTA: Definido em `active_support/core_ext/integer/time.rb`.
 
 [Integer#months]: https://api.rubyonrails.org/classes/Integer.html#method-i-months
 [Integer#years]: https://api.rubyonrails.org/classes/Integer.html#method-i-years
