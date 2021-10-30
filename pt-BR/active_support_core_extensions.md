@@ -1897,7 +1897,7 @@ NOTE: Defined in `active_support/core_ext/string/conversions.rb`.
 [String#to_datetime]: https://api.rubyonrails.org/classes/String.html#method-i-to_datetime
 [String#to_time]: https://api.rubyonrails.org/classes/String.html#method-i-to_time
 
-Extensions to `Symbol`
+Extensões para `Symbol`
 ----------------------
 
 ### `starts_with?` e `ends_with?`
