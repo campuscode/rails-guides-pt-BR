@@ -1067,33 +1067,34 @@ NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 
 [Class#descendants]: https://api.rubyonrails.org/classes/Class.html#method-i-descendants
 
-Extensions to `String`
+Extensões para `String`
 ----------------------
 
-### Output Safety
+### Segurança de Saída
 
-#### Motivation
+#### Motivação
 
-Inserting data into HTML templates needs extra care. For example, you can't just interpolate `@review.title` verbatim into an HTML page. For one thing, if the review title is "Flanagan & Matz rules!" the output won't be well-formed because an ampersand has to be escaped as "&amp;amp;". What's more, depending on the application, that may be a big security hole because users can inject malicious HTML setting a hand-crafted review title. Check out the section about cross-site scripting in the [Security guide](security.html#cross-site-scripting-xss) for further information about the risks.
+Inserir dados no template HTML exige muito cuidado. Por exemplo, você não pode simplesmente interpolar o literal
+`@review.title` dentro de uma página HTML. Por um lado, se o título da revisão for "Regras de Flanagan e Matz!" a saída não será bem formada porque um **e-comercial** deve ser escapado como "&amp;amp;". Além do mais, dependendo do aplicativo, isso pode ser uma grande falha de segurança porque os usuários podem injetar uma configuração HTML mal-intencionada em um título de revisão feito à mão. Verifique a seção sobre **cross-site scripting** no [Guia de segurança](security.html#cross-site-scripting-xss) para obter mais informações sobre os riscos.
 
 #### Safe Strings
 
-Active Support has the concept of _(html) safe_ strings. A safe string is one that is marked as being insertable into HTML as is. It is trusted, no matter whether it has been escaped or not.
+O Active Support tem o conceito de _(html) safe_. Uma string segura é aquela marcada como inserível no HTML como está. É confiável, não importa se foi escapado ou não.
 
-Strings are considered to be _unsafe_ by default:
+Strings são consideradas _unsafe_ por padrão:
 
 ```ruby
 "".html_safe? # => false
 ```
 
-You can obtain a safe string from a given one with the [`html_safe`][String#html_safe] method:
+Você pode obter uma string segura usando o método [`html_safe`][String#html_safe]:
 
 ```ruby
 s = "".html_safe
 s.html_safe? # => true
 ```
 
-It is important to understand that `html_safe` performs no escaping whatsoever, it is just an assertion:
+É importante entender que `html_safe` não executa nenhum escape, é apenas uma afirmação:
 
 ```ruby
 s = "<script>...</script>".html_safe
@@ -1101,39 +1102,39 @@ s.html_safe? # => true
 s            # => "<script>...</script>"
 ```
 
-It is your responsibility to ensure calling `html_safe` on a particular string is fine.
+É sua responsabilidade garantir que chamar `html_safe` em uma string em particular esteja certo.
 
-If you append onto a safe string, either in-place with `concat`/`<<`, or with `+`, the result is a safe string. Unsafe arguments are escaped:
+Se você anexar em uma string segura, seja no local com `concat` /` << `, ou com` + `, o resultado é uma string segura. Argumentos inseguros são escapados:
 
 ```ruby
 "".html_safe + "<" # => "&lt;"
 ```
 
-Safe arguments are directly appended:
+Argumentos seguros são anexados diretamente:
 
 ```ruby
 "".html_safe + "<".html_safe # => "<"
 ```
 
-These methods should not be used in ordinary views. Unsafe values are automatically escaped:
+Esses métodos não devem ser usados em **views** comuns. Valores inseguros são escapados automaticamente:
 
 ```erb
 <%= @review.title %> <%# fine, escaped if needed %>
 ```
 
-To insert something verbatim use the [`raw`][] helper rather than calling `html_safe`:
+Para inserir algo literalmente, use o auxiliar [`raw`] [] em vez de chamar` html_safe`:
 
 ```erb
 <%= raw @cms.current_template %> <%# inserts @cms.current_template as is %>
 ```
 
-or, equivalently, use `<%==`:
+ou, equivalentemente, use `<%==`:
 
 ```erb
 <%== @cms.current_template %> <%# inserts @cms.current_template as is %>
 ```
 
-The `raw` helper calls `html_safe` for you:
+O auxiliar `raw` chama `html_safe` para você:
 
 ```ruby
 def raw(stringish)
@@ -1141,26 +1142,26 @@ def raw(stringish)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/output_safety.rb`.
+NOTA: Definido em `active_support/core_ext/string/output_safety.rb`.
 
 [`raw`]: https://api.rubyonrails.org/classes/ActionView/Helpers/OutputSafetyHelper.html#method-i-raw
 [String#html_safe]: https://api.rubyonrails.org/classes/String.html#method-i-html_safe
 
-#### Transformation
+#### Transformação
 
-As a rule of thumb, except perhaps for concatenation as explained above, any method that may change a string gives you an unsafe string. These are `downcase`, `gsub`, `strip`, `chomp`, `underscore`, etc.
+Como regra geral, exceto talvez para concatenação conforme explicado acima, qualquer método que possa alterar uma string fornece uma string insegura. Estes são `downcase`,` gsub`, `strip`,` chomp`, `underscore`, etc.
 
-In the case of in-place transformations like `gsub!` the receiver itself becomes unsafe.
+No caso de transformações no local como `gsub!`, O próprio receptor se torna inseguro.
 
-INFO: The safety bit is lost always, no matter whether the transformation actually changed something.
+INFORMAÇÃO: O bit de segurança é perdido sempre, não importa se a transformação realmente mudou algo.
 
-#### Conversion and Coercion
+#### Conversão e Coerção
 
-Calling `to_s` on a safe string returns a safe string, but coercion with `to_str` returns an unsafe string.
+Chamar `to_s` em uma string segura retorna uma string segura, mas a coerção com` to_str` retorna uma string insegura.
 
-#### Copying
+#### Copiando
 
-Calling `dup` or `clone` on safe strings yields safe strings.
+Chamar `dup` ou` clone` em strings seguras produz strings seguras.
 
 ### `remove`
 
