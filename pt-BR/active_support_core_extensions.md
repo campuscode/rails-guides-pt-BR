@@ -1900,16 +1900,16 @@ NOTE: Defined in `active_support/core_ext/string/conversions.rb`.
 Extensions to `Symbol`
 ----------------------
 
-### `starts_with?` and `ends_with?`
+### `starts_with?` e `ends_with?`
 
-Active Support defines 3rd person aliases of `Symbol#start_with?` and `Symbol#end_with?`:
+O Active Support define aliases de terceira pessoa de `Symbol#start_with?` e `Symbol#end_with?`:
 
 ```ruby
 :foo.starts_with?("f") # => true
 :foo.ends_with?("o")   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/symbol/starts_ends_with.rb`.
+NOTE: Definido em `active_support/core_ext/symbol/starts_ends_with.rb`.
 
 Extensions to `Numeric`
 -----------------------
