@@ -443,11 +443,11 @@ NB: The output may still contain unescaped '<', '>', '&' characters and confuse 
 
 ### UrlHelper
 
-Provides methods to make links and get URLs that depend on the routing subsystem.
+Fornece métodos para fazer links e obter URLs que dependem do subsistema de roteamento.
 
 #### url_for
 
-Returns the URL for the set of `options` provided.
+Retorna o URL para o conjunto de `options` forneceu.
 
 ##### Examples
 
@@ -461,9 +461,9 @@ url_for [ @hotel, @booking, page: 2, line: 3 ]
 
 #### link_to
 
-Links to a URL derived from `url_for` under the hood. Primarily used to
-create RESTful resource links, which for this example, boils down to
-when passing models to `link_to`.
+Links para um URL derivado de `url_for` sob o capô. Usado principalmente para
+criar links de recursos RESTful, que para este exemplo, resume-se a
+ao passar modelos para `link_to`.
 
 **Examples**
 
@@ -472,7 +472,7 @@ link_to "Profile", @profile
 # => <a href="/profiles/1">Profile</a>
 ```
 
-You can use a block as well if your link target can't fit in the name parameter. ERB example:
+Você também pode usar um bloco se o destino do link não couber no parâmetro de nome. ERB exemplo:
 
 ```html+erb
 <%= link_to @profile do %>
@@ -480,7 +480,7 @@ You can use a block as well if your link target can't fit in the name parameter.
 <% end %>
 ```
 
-would output:
+iria produzir:
 
 ```html
 <a href="/profiles/1">
@@ -488,20 +488,20 @@ would output:
 </a>
 ```
 
-See [the API Documentation for more information](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
+Ver [the API Documentation for more information](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to)
 
 #### button_to
 
-Generates a form that submits to the passed URL. The form has a submit button
-with the value of the `name`.
+Gera um formulário que submete ao URL passado. O formulário tem um botão de envio
+com o valor do `name`.
 
-##### Examples
+##### Exemplos
 
 ```html+erb
 <%= button_to "Sign in", sign_in_path %>
 ```
 
-would roughly output something like:
+provavelmente produziria algo como:
 
 ```html
 <form method="post" action="/sessions" class="button_to">
@@ -509,7 +509,7 @@ would roughly output something like:
 </form>
 ```
 
-See [the API Documentation for more information](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to)
+Ver [the API Documentation for more information](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to)
 
 ### CsrfHelper
 
