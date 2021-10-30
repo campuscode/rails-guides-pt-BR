@@ -1911,12 +1911,12 @@ Active Support defines 3rd person aliases of `Symbol#start_with?` and `Symbol#en
 
 NOTE: Defined in `active_support/core_ext/symbol/starts_ends_with.rb`.
 
-Extensions to `Numeric`
+Extensões para `Numeric`
 -----------------------
 
 ### Bytes
 
-All numbers respond to these methods:
+Todos os números respondem a estes métodos:
 
 * [`bytes`][Numeric#bytes]
 * [`kilobytes`][Numeric#kilobytes]
@@ -1926,7 +1926,7 @@ All numbers respond to these methods:
 * [`petabytes`][Numeric#petabytes]
 * [`exabytes`][Numeric#exabytes]
 
-They return the corresponding amount of bytes, using a conversion factor of 1024:
+Eles retornam a quantidade correspondente de bytes, usando um fator de conversão de 1024:
 
 ```ruby
 2.kilobytes   # => 2048
@@ -1935,13 +1935,13 @@ They return the corresponding amount of bytes, using a conversion factor of 1024
 -4.exabytes   # => -4611686018427387904
 ```
 
-Singular forms are aliased so you are able to say:
+As formas singulares têm um alias para que você possa dizer:
 
 ```ruby
 1.megabyte # => 1048576
 ```
 
-NOTE: Defined in `active_support/core_ext/numeric/bytes.rb`.
+NOTE: Definido em `active_support/core_ext/numeric/bytes.rb`.
 
 [Numeric#bytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-bytes
 [Numeric#exabytes]: https://api.rubyonrails.org/classes/Numeric.html#method-i-exabytes
@@ -1953,7 +1953,7 @@ NOTE: Defined in `active_support/core_ext/numeric/bytes.rb`.
 
 ### Time
 
-The following methods:
+Os seguintes métodos:
 
 * [`seconds`][Numeric#seconds]
 * [`minutes`][Numeric#minutes]
@@ -1962,9 +1962,9 @@ The following methods:
 * [`weeks`][Numeric#weeks]
 * [`fortnights`][Numeric#fortnights]
 
-enable time declarations and calculations, like `45.minutes + 2.hours + 4.weeks`. Their return values can also be added to or subtracted from Time objects.
+habilitar declarações e cálculos de tempo, como `45.minutos + 2.horas + 4.semanas`. Seus valores de retorno também podem ser adicionados ou subtraídos dos objetos Time.
 
-These methods can be combined with [`from_now`][Duration#from_now], [`ago`][Duration#ago], etc, for precise date calculations. For example:
+Esses métodos podem ser combinados com [`from_now`][Duration#from_now], [`ago`][Duration#ago], etc, para cálculos de datas precisos. Por exemplo:
 
 ```ruby
 # equivalent to Time.current.advance(days: 1)
@@ -1977,9 +1977,9 @@ These methods can be combined with [`from_now`][Duration#from_now], [`ago`][Dura
 (4.days + 5.weeks).from_now
 ```
 
-WARNING. For other durations please refer to the time extensions to `Integer`.
+WARNING. Para outras durações, consulte as extensões de tempo para `Integer`.
 
-NOTE: Defined in `active_support/core_ext/numeric/time.rb`.
+NOTE: Definido em `active_support/core_ext/numeric/time.rb`.
 
 [Duration#ago]: https://api.rubyonrails.org/classes/ActiveSupport/Duration.html#method-i-ago
 [Duration#from_now]: https://api.rubyonrails.org/classes/ActiveSupport/Duration.html#method-i-from_now
@@ -1990,11 +1990,11 @@ NOTE: Defined in `active_support/core_ext/numeric/time.rb`.
 [Numeric#seconds]: https://api.rubyonrails.org/classes/Numeric.html#method-i-seconds
 [Numeric#weeks]: https://api.rubyonrails.org/classes/Numeric.html#method-i-weeks
 
-### Formatting
+### Formatação
 
-Enables the formatting of numbers in a variety of ways.
+Permite a formatação de números de várias maneiras.
 
-Produce a string representation of a number as a telephone number:
+Produza uma representação de string de um número como um número de telefone:
 
 ```ruby
 5551234.to_s(:phone)
@@ -2011,7 +2011,7 @@ Produce a string representation of a number as a telephone number:
 # => +1-123-555-1234
 ```
 
-Produce a string representation of a number as currency:
+Produza uma representação de string de um número como moeda:
 
 ```ruby
 1234567890.50.to_s(:currency)                 # => $1,234,567,890.50
@@ -2019,7 +2019,7 @@ Produce a string representation of a number as currency:
 1234567890.506.to_s(:currency, precision: 3)  # => $1,234,567,890.506
 ```
 
-Produce a string representation of a number as a percentage:
+Produza uma representação de string de um número como uma porcentagem:
 
 ```ruby
 100.to_s(:percentage)
@@ -2032,7 +2032,7 @@ Produce a string representation of a number as a percentage:
 # => 302.24399%
 ```
 
-Produce a string representation of a number in delimited form:
+Produza uma representação de string de um número na forma delimitada:
 
 ```ruby
 12345678.to_s(:delimited)                     # => 12,345,678
@@ -2042,7 +2042,7 @@ Produce a string representation of a number in delimited form:
 12345678.05.to_s(:delimited, separator: " ")  # => 12,345,678 05
 ```
 
-Produce a string representation of a number rounded to a precision:
+Produza uma representação de string de um número arredondado para uma precisão:
 
 ```ruby
 111.2345.to_s(:rounded)                     # => 111.235
@@ -2052,7 +2052,7 @@ Produce a string representation of a number rounded to a precision:
 111.2345.to_s(:rounded, significant: true)  # => 111
 ```
 
-Produce a string representation of a number as a human-readable number of bytes:
+Produza uma representação de string de um número como um número de bytes legível para humanos:
 
 ```ruby
 123.to_s(:human_size)                  # => 123 Bytes
@@ -2065,7 +2065,7 @@ Produce a string representation of a number as a human-readable number of bytes:
 1234567890123456789.to_s(:human_size)  # => 1.07 EB
 ```
 
-Produce a string representation of a number in human-readable words:
+Produza uma representação de string de um número em palavras legíveis para humanos:
 
 ```ruby
 123.to_s(:human)               # => "123"
@@ -2077,7 +2077,7 @@ Produce a string representation of a number in human-readable words:
 1234567890123456.to_s(:human)  # => "1.23 Quadrillion"
 ```
 
-NOTE: Defined in `active_support/core_ext/numeric/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/numeric/conversions.rb`.
 
 Extensions to `Integer`
 -----------------------
