@@ -324,11 +324,11 @@ alert('All is good')
 
 ### NumberHelper
 
-Provides methods for converting numbers into formatted strings. Methods are provided for phone numbers, currency, percentage, precision, positional notation, and file size.
+Fornece métodos para converter números em strings formatadas. Os métodos são fornecidos para números de telefone, moeda, porcentagem, precisão, notação posicional e tamanho do arquivo.
 
 #### number_to_currency
 
-Formats a number into a currency string (e.g., $13.65).
+Formata um número em uma string de moeda (por exemplo, $ 13,65).
 
 ```ruby
 number_to_currency(1234567890.50) # => $1,234,567,890.50
@@ -336,7 +336,7 @@ number_to_currency(1234567890.50) # => $1,234,567,890.50
 
 #### number_to_human_size
 
-Formats the bytes in size into a more understandable representation; useful for reporting file sizes to users.
+Formata os bytes em tamanho em uma representação mais compreensível; útil para relatar tamanhos de arquivo aos usuários.
 
 ```ruby
 number_to_human_size(1234)    # => 1.2 KB
@@ -345,7 +345,7 @@ number_to_human_size(1234567) # => 1.2 MB
 
 #### number_to_percentage
 
-Formats a number as a percentage string.
+Formata um número como uma string de porcentagem.
 
 ```ruby
 number_to_percentage(100, precision: 0) # => 100%
@@ -353,7 +353,7 @@ number_to_percentage(100, precision: 0) # => 100%
 
 #### number_to_phone
 
-Formats a number into a phone number (US by default).
+Formata um número em um número de telefone (EUA por padrão).
 
 ```ruby
 number_to_phone(1235551234) # => 123-555-1234
@@ -361,7 +361,7 @@ number_to_phone(1235551234) # => 123-555-1234
 
 #### number_with_delimiter
 
-Formats a number with grouped thousands using a delimiter.
+Formata um número com milhares agrupados usando um delimitador.
 
 ```ruby
 number_with_delimiter(12345678) # => 12,345,678
@@ -369,7 +369,7 @@ number_with_delimiter(12345678) # => 12,345,678
 
 #### number_with_precision
 
-Formats a number with the specified level of `precision`, which defaults to 3.
+Formata um número com o nível especificado de `precisão`, cujo padrão é 3.
 
 ```ruby
 number_with_precision(111.2345)               # => 111.235
