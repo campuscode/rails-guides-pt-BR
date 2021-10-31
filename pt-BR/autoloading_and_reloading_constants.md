@@ -108,13 +108,13 @@ WARNING. Please, do not mutate `ActiveSupport::Dependencies.autoload_paths`, the
 $LOAD_PATH
 ----------
 
-Autoload paths are added to `$LOAD_PATH` by default. However, Zeitwerk uses absolute file names internally, and your application should not issue `require` calls for autoloadable files, so those directories are actually not needed there. You can opt-out with this flag:
+Caminhos de carregamento automático são adicionados a `$ LOAD_PATH` por padrão. No entanto, o Zeitwerk usa nomes de arquivo absolutos internamente, e seu aplicativo não deve emitir chamadas `require` para arquivos carregáveis ​​automaticamente, então esses diretórios não são realmente necessários lá. Você pode cancelar com este sinalizador:
 
 ```ruby
 config.add_autoload_paths_to_load_path = false
 ```
 
-That may speed legit `require` calls a bit, since there are less lookups. Also, if your application uses [Bootsnap](https://github.com/Shopify/bootsnap), that saves the library from building unnecessary indexes, and saves the RAM they would need.
+Isso pode acelerar um pouco as chamadas `require` legítimas, uma vez que há menos pesquisas. Além disso, se seu aplicativo usa [Bootsnap](https://github.com/Shopify/bootsnap), isso evita que a biblioteca crie índices desnecessários e economiza a RAM necessária.
 
 
 Reloading
