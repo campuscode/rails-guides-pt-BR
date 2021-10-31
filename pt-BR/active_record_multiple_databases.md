@@ -323,16 +323,16 @@ end
 
 ## Granular Database Connection Switching
 
-In Rails 6.1 it's possible to switch connections for one database instead of
-all databases globally. To use this feature you must first set
-`config.active_record.legacy_connection_handling` to `false` in your application
-configuration. The majority of applications should not need to make any other
-changes since the public APIs have the same behavior.
+No Rails 6.1 é possível alternar conexões para um banco de dados ao invés de
+todos os bancos de dados globalmente. Para usar este recurso, você deve primeiro definir
+`config.active_record.legacy_connection_handling` para` false` em seu aplicativo
+configuração. A maioria dos aplicativos não precisa fazer nenhum outro
+mudanças, uma vez que as APIs públicas têm o mesmo comportamento.
 
-With `legacy_connection_handling` set to false, any abstract connection class
-will be able to switch connections without affecting other connections. This
-is useful for switching your `AnimalsRecord` queries to read from the replica
-while ensuring your `ApplicationRecord` queries go to the primary.
+Com `legacy_connection_handling` definido como false, qualquer classe de conexão abstrata
+será capaz de alternar as conexões sem afetar outras conexões. Esse
+é útil para mudar suas consultas `AnimalsRecord` para ler a partir da réplica
+enquanto garante que suas consultas `ApplicationRecord` vão para o primário.
 
 ```ruby
 AnimalsRecord.connected_to(role: :reading) do
@@ -341,7 +341,7 @@ AnimalsRecord.connected_to(role: :reading) do
 end
 ```
 
-It's also possible to swap connections granularly for shards.
+Também é possível trocar conexões granularmente por fragmentos.
 
 ```ruby
 AnimalsRecord.connected_to(role: :reading, shard: :shard_one) do
@@ -351,7 +351,7 @@ AnimalsRecord.connected_to(role: :reading, shard: :shard_one) do
 end
 ```
 
-To switch only the primary database cluster use `ApplicationRecord`:
+Para mudar apenas o cluster de banco de dados primário, use `ApplicationRecord`:
 
 ```ruby
 ApplicationRecord.connected_to(role: :reading, shard: :shard_one) do
@@ -360,8 +360,8 @@ ApplicationRecord.connected_to(role: :reading, shard: :shard_one) do
 end
 ```
 
-`ActiveRecord::Base.connected_to` maintains the ability to switch
-connections globally.
+`ActiveRecord :: Base.connected_to` mantém a capacidade de alternar
+conexões globalmente.
 
 ## Caveats
 
