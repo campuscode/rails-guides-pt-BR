@@ -273,7 +273,7 @@ time_ago_in_words(3.minutes.from_now) # => 3 minutos
 
 ### DebugHelper
 
-Returns a `pre` tag that has object dumped by YAML. This creates a very readable way to inspect an object.
+Retorna uma tag `pre` que tem objeto descarregado por YAML. Isso cria uma maneira muito legível de inspecionar um objeto.
 
 ```ruby
 my_hash = { 'first' => 1, 'second' => 'two', 'third' => [1,2,3] }
