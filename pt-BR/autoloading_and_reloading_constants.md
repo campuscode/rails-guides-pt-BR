@@ -83,26 +83,26 @@ Por favor, verifique a [documentação do Zeitwerk](https://github.com/fxn/zeitw
 Autoload Paths
 --------------
 
-We refer to the list of application directories whose contents are to be autoloaded as _autoload paths_. For example, `app/models`. Such directories represent the root namespace: `Object`.
+Referimo-nos à lista de diretórios de aplicativos cujos conteúdos devem ser carregados automaticamente como _caminhos de carregamento automático_. Por exemplo, `app/models`. Esses diretórios representam o namespace raiz: `Object`.
 
-INFO. Autoload paths are called _root directories_ in Zeitwerk documentation, but we'll stay with "autoload path" in this guide.
+INFO. Os caminhos de carregamento automático são chamados de _diretórios raiz_ na documentação do Zeitwerk, mas continuaremos com "caminho de carregamento automático" neste guia.
 
-Within an autoload path, file names must match the constants they define as documented [here](https://github.com/fxn/zeitwerk#file-structure).
+Dentro de um caminho de carregamento automático, os nomes dos arquivos devem corresponder às constantes que eles definem conforme documentado [here](https://github.com/fxn/zeitwerk#file-structure).
 
-By default, the autoload paths of an application consist of all the subdirectories of `app` that exist when the application boots ---except for `assets`, `javascript`, `views`,--- plus the autoload paths of engines it might depend on.
+Por padrão, os caminhos de carregamento automático de um aplicativo consistem em todos os subdiretórios de `app` que existem quando o aplicativo é inicializado --- exceto para` assets`, `javascript`,` views`, --- mais os caminhos de carregamento automático dos motores pode depender de.
 
-For example, if `UsersHelper` is implemented in `app/helpers/users_helper.rb`, the module is autoloadable, you do not need (and should not write) a `require` call for it:
+Por exemplo, se `UsersHelper` for implementado em` app / helpers / users_helper.rb`, o módulo é autoloadable, você não precisa (e não deve escrever) uma chamada `require` para ele:
 
 ```bash
 $ bin/rails runner 'p UsersHelper'
 UsersHelper
 ```
 
-Autoload paths automatically pick any custom directories under `app`. For example, if your application has `app/presenters`, or `app/services`, etc., they are added to autoload paths.
+Os caminhos de carregamento automático escolhem automaticamente quaisquer diretórios personalizados em `app`. Por exemplo, se seu aplicativo tem `app / presenters`, ou` app / services`, etc., eles são adicionados aos caminhos de carregamento automático.
 
-The array of autoload paths can be extended by mutating `config.autoload_paths`, in `config/application.rb`, but nowadays this is discouraged.
+O array de caminhos de carregamento automático pode ser estendido alterando `config.autoload_paths`, em` config / application.rb`, mas hoje em dia isso é desencorajado.
 
-WARNING. Please, do not mutate `ActiveSupport::Dependencies.autoload_paths`, the public interface to change autoload paths is `config.autoload_paths`.
+WARNING. Por favor, não altere `ActiveSupport :: Dependencies.autoload_paths`, a interface pública para alterar os caminhos de carregamento automático é` config.autoload_paths`.
 
 
 $LOAD_PATH
