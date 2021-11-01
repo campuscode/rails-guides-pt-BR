@@ -1935,7 +1935,7 @@ Eles retornam a quantidade correspondente de bytes, usando um fator de conversã
 -4.exabytes   # => -4611686018427387904
 ```
 
-As formas singulares têm um alias para que você possa dizer:
+As formas singulares têm um _alias_ para que você possa dizer:
 
 ```ruby
 1.megabyte # => 1048576
