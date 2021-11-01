@@ -2042,7 +2042,7 @@ Produz uma representação de _string_ de um número na forma delimitada:
 12345678.05.to_s(:delimited, separator: " ")  # => 12,345,678 05
 ```
 
-Produza uma representação de string de um número arredondado para uma precisão:
+Produz uma representação de _string_ de um número arredondado para uma precisão:
 
 ```ruby
 111.2345.to_s(:rounded)                     # => 111.235
