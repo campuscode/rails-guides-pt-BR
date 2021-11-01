@@ -2163,13 +2163,13 @@ Extensões para `BigDecimal`
 
 ### `to_s`
 
-O método `to_s` fornece um especificador padrão de" F ". Isso significa que uma simples chamada para `to_s` resultará em representação de ponto flutuante em vez de notação de engenharia:
+O método `to_s` fornece um especificador padrão de "F". Isso significa que uma simples chamada para `to_s` resultará em representação de ponto flutuante em vez de notação de engenharia:
 
 ```ruby
 BigDecimal(5.00, 6).to_s       # => "5.0"
 ```
 
-e que especificadores de símbolo também são suportados:
+e que especificadores  usando *symbols* também são suportados:
 
 ```ruby
 BigDecimal(5.00, 6).to_s(:db)  # => "5.0"
