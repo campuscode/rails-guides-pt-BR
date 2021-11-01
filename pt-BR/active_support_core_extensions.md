@@ -1962,7 +1962,7 @@ Os seguintes métodos:
 * [`weeks`][Numeric#weeks]
 * [`fortnights`][Numeric#fortnights]
 
-habilitar declarações e cálculos de tempo, como `45.minutos + 2.horas + 4.semanas`. Seus valores de retorno também podem ser adicionados ou subtraídos dos objetos Time.
+habilitar declarações e cálculos de tempo, como `45.minutes + 2.hours + 4.weeks`. Seus valores de retorno também podem ser adicionados ou subtraídos dos objetos Time.
 
 Esses métodos podem ser combinados com [`from_now`][Duration#from_now], [`ago`][Duration#ago], etc, para cálculos de datas precisos. Por exemplo:
 
