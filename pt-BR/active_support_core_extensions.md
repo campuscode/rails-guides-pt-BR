@@ -2097,7 +2097,7 @@ NOTE: Definido em `active_support/core_ext/integer/multiple.rb`.
 
 ### `ordinal`
 
-O método [`ordinal`][Integer#ordinal] retorna a string de sufixo ordinal correspondente ao inteiro receptor:
+O método [`ordinal`][Integer#ordinal] retorna a *string* de sufixo ordinal correspondente ao inteiro receptor:
 
 ```ruby
 1.ordinal    # => "st"
@@ -2114,7 +2114,7 @@ NOTE: Definido em `active_support/core_ext/integer/inflections.rb`.
 
 ### `ordinalize`
 
-O método [`ordinalize`][Integer#ordinalize] retorna a string ordinal correspondente ao inteiro receptor. Em comparação, observe que o método `ordinal` retorna **apenas** a string de sufixo.
+O método [`ordinalize`][Integer#ordinalize] retorna a *string* ordinal correspondente ao inteiro receptor. Em comparação, observe que o método `ordinal` retorna **apenas** a string de sufixo.
 
 ```ruby
 1.ordinalize    # => "1st"
@@ -2141,13 +2141,13 @@ habilitar declarações de tempo e cálculos, como `4.months + 5.years`. Seus va
 Esses métodos podem ser combinados com [`from_now`][Duration#from_now], [`ago`][Duration#ago], etc, para cálculos de data precisos. Por exemplo:
 
 ```ruby
-# equivalent to Time.current.advance(months: 1)
+# equivalente ao Time.current.advance(months: 1)
 1.month.from_now
 
-# equivalent to Time.current.advance(years: 2)
+# eequivalente ao Time.current.advance(years: 2)
 2.years.from_now
 
-# equivalent to Time.current.advance(months: 4, years: 5)
+# equivalente ao Time.current.advance(months: 4, years: 5)
 (4.months + 5.years).from_now
 ```
 
