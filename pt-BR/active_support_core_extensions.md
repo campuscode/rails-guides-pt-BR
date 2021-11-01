@@ -1994,7 +1994,7 @@ NOTE: Definido em `active_support/core_ext/numeric/time.rb`.
 
 Permite a formatação de números de várias maneiras.
 
-Produza uma representação de string de um número como um número de telefone:
+Produz uma representação de _string_ de um número como um número de telefone:
 
 ```ruby
 5551234.to_s(:phone)
