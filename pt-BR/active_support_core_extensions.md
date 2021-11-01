@@ -2011,7 +2011,7 @@ Produza uma representação de string de um número como um número de telefone:
 # => +1-123-555-1234
 ```
 
-Produza uma representação de string de um número como moeda:
+Produz uma representação de _string_ de um número como moeda:
 
 ```ruby
 1234567890.50.to_s(:currency)                 # => $1,234,567,890.50
