@@ -2032,7 +2032,7 @@ Produza uma representação de string de um número como uma porcentagem:
 # => 302.24399%
 ```
 
-Produza uma representação de string de um número na forma delimitada:
+Produz uma representação de _string_ de um número na forma delimitada:
 
 ```ruby
 12345678.to_s(:delimited)                     # => 12,345,678
