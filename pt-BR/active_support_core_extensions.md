@@ -1902,7 +1902,7 @@ Extensões para `Symbol`
 
 ### `starts_with?` e `ends_with?`
 
-O Active Support define aliases de terceira pessoa de `Symbol#start_with?` e `Symbol#end_with?`:
+O Active Support define _aliases_ (nomes simbólicos) de terceira pessoa de `Symbol#start_with?` e `Symbol#end_with?`:
 
 ```ruby
 :foo.starts_with?("f") # => true
