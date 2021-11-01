@@ -2019,7 +2019,7 @@ Produz uma representação de _string_ de um número como moeda:
 1234567890.506.to_s(:currency, precision: 3)  # => $1,234,567,890.506
 ```
 
-Produza uma representação de string de um número como uma porcentagem:
+Produz uma representação de _string_ de um número como uma porcentagem:
 
 ```ruby
 100.to_s(:percentage)
