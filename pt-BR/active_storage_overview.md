@@ -906,9 +906,9 @@ Descartando Arquivos Armazenados Durante os Testes do tipo Sistema (*System*)
 
 Os testes de sistema limpam os dados de testes revertendo uma transação. Como o
 *destroy* nunca é chamado em um objeto, os arquivos anexados nunca são limpos. Se
-quiser limpar os arquivos, podemos usar um *callback* `after_teardown`. 
-Fazendo isso garantimos que todas as conexões criadas durante o teste sejam 
-concluídas sem que recebamos um erro do *Active Storage* informando que não 
+quiser limpar os arquivos, podemos usar um *callback* `after_teardown`.
+Fazendo isso garantimos que todas as conexões criadas durante o teste sejam
+concluídas sem que recebamos um erro do *Active Storage* informando que não
 foi possível encontrar um arquivo.
 
 ```ruby
@@ -926,7 +926,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-Se os testes de sistema verificarem a exclusão de um *model* com anexos e 
+Se os testes de sistema verificarem a exclusão de um *model* com anexos e
 estivermos usando o *Active Job*, configure seu ambiente de testes para usar
 o adaptador de fila para que o trabalho de limpeza seja executado imediatamente,
 em vez de em um momento desconhecido no futuro.
@@ -943,14 +943,14 @@ config.active_job.queue_adapter = :inline
 config.active_storage.service = :local_test
 ```
 
-Discarding Files Stored During Integration Tests
+Descartando Arquivos Armazenados Durante Testes de Integração
 -------------------------------------------
 
-Similarly to System Tests, files uploaded during Integration Tests will not be
-automatically cleaned up. If you want to clear the files, you can do it in an
-`after_teardown` callback. Doing it here ensures that all connections created
-during the test are complete and you won't receive an error from Active Storage
-saying it can't find a file.
+Similar aos testes de sistema, arquivos enviados durante testes de integração
+não serão automaticamente descartados. Se você deseja limpar esses arquivos, você
+pode fazer isso usando o *callback* `after_teardown`. Fazer isso garante que todas as
+conexões criadas durante o teste estão completas e você não receberá um erro do
+*Active Storage* informando que não foi possível encontrar um arquivo.
 
 ```ruby
 module RemoveUploadedFiles

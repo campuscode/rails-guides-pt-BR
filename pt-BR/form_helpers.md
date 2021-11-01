@@ -347,7 +347,7 @@ Também podemos designar valores para `<option>` que diferem de seus rótulos:
 <%= form.select :city, [["Berlin", "BE"], ["Chicago", "CHI"], ["Madrid", "MD"]] %>
 ```
 
-que gera: 
+que gera:
 
 ```html
 <select name="city" id="city">
@@ -502,7 +502,7 @@ Além do auxiliar [`date_select`](https://api.rubyonrails.org/classes/ActionView
 
 ### Caixas de Seleção (*Select Boxes*) para Componentes Individuais de Tempo
 
-O Rails também fornece auxiliares para renderizar caixas de seleção para componentes temporais individuais: [`select_year`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_year), [`select_month`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_month), [`select_day`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_day), [`select_hour`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_hour), [`select_minute`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_minute), and [`select_second`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_second). Esses auxiliares são métodos "básicos", o que significa que não são chamados em uma instância do construtor de formulários. Por exemplo: 
+O Rails também fornece auxiliares para renderizar caixas de seleção para componentes temporais individuais: [`select_year`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_year), [`select_month`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_month), [`select_day`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_day), [`select_hour`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_hour), [`select_minute`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_minute), and [`select_second`](https://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html#method-i-select_second). Esses auxiliares são métodos "básicos", o que significa que não são chamados em uma instância do construtor de formulários. Por exemplo:
 
 ```erb
 <%= select_year 1999, prefix: "party" %>
@@ -840,14 +840,14 @@ Os *helpers* de formulários do Rails também podem ser usados para construir fo
 <% end %>
 ```
 
-Building Complex Forms
+Trabalhando com Formulários Complexos
 ----------------------
 
-Many apps grow beyond simple forms editing a single object. For example, when creating a `Person` you might want to allow the user to (on the same form) create multiple address records (home, work, etc.). When later editing that person the user should be able to add, remove, or amend addresses as necessary.
+Muitas aplicações vão além de uma edição de um único objeto em um formulário simples. Por exemplo, quando estamos criando um *model* `Person` você pode querer que o usuário permita (no mesmo formulário) criar múltiplos registros de endereços (casa, trabalho, etc.). Mais tarde, quando estivesse editando este formulário, seria possível adicionar, remover, ou corrigir os endereços relacionados caso fosse necessário.
 
-### Configuring the Model
+### Configurando o *Model*
 
-Active Record provides model level support via the [`accepts_nested_attributes_for`](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for) method:
+O Active Record fornece suporte a níveis de modelo através do método [`accepts_nested_attributes_for`](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for):
 
 ```ruby
 class Person < ApplicationRecord
@@ -860,15 +860,15 @@ class Address < ApplicationRecord
 end
 ```
 
-This creates an `addresses_attributes=` method on `Person` that allows you to create, update, and (optionally) destroy addresses.
+Isso criará um método chamado `addresses_attributes=` no model `Person` para permitir criar, atualizar e (opcionalmente) destruir endereços.
 
-### Nested Forms
+### Formulários Aninhados
 
-The following form allows a user to create a `Person` and its associated addresses.
+O formulário a seguir permite ao usuário criar uma `Pessoa` e seus endereços associados.
 
 ```html+erb
 <%= form_with model: @person do |form| %>
-  Addresses:
+  Endereços:
   <ul>
     <%= form_with model: @person do |f| %>
       <li>
@@ -884,8 +884,7 @@ The following form allows a user to create a `Person` and its associated address
 <% end %>
 ```
 
-
-When an association accepts nested attributes `fields_for` renders its block once for every element of the association. In particular, if a person has no addresses it renders nothing. A common pattern is for the controller to build one or more empty children so that at least one set of fields is shown to the user. The example below would result in 2 sets of address fields being rendered on the new person form.
+Quando uma associação aceita atributos aninhados, o método `fields_for` renderiza esse bloco uma vez para cada elemento da associação. Em particular, se a pessoa não tiver endereços nada será renderizado. Um padrão comum é o controller criar um ou mais filhos vazios para que pelo menos um bloco de campos seja exibido ao usuário. O exemplo a seguir irá resultar em dois blocos de campos de endereços no formulário de uma nova pessoa.
 
 ```ruby
 def new
@@ -894,9 +893,9 @@ def new
 end
 ```
 
-The `fields_for` yields a form builder. The parameters' name will be what
-`accepts_nested_attributes_for` expects. For example, when creating a user with
-2 addresses, the submitted parameters would look like:
+O método`fields_for` produz um construtor de formulário. Os nomes dos parâmetros serão o que o
+`accepts_nested_attributes_for` espera. Por exemplo, quando criamos uma pessoa com dois endereços,
+os parâmetros enviados serão:
 
 ```ruby
 {
@@ -916,15 +915,15 @@ The `fields_for` yields a form builder. The parameters' name will be what
 }
 ```
 
-The keys of the `:addresses_attributes` hash are unimportant, they need merely be different for each address.
+As chaves da hash `:addresses_attributes` não são importantes, eles apenas precisam ser diferentes para cada endereço.
 
-If the associated object is already saved, `fields_for` autogenerates a hidden input with the `id` of the saved record. You can disable this by passing `include_id: false` to `fields_for`.
+Se o objeto associado já estiver salvo, o método `fields_for` ir gerá automaticamente uma entrada oculta com o `id` do registro salvo.
+Você pode desabilitar isso passando `include_id: false` para o `fields_for`.
 
-### The Controller
+### O *Controller*
 
-As usual you need to
-[declare the permitted parameters](action_controller_overview.html#strong-parameters) in
-the controller before you pass them to the model:
+Como de costume, você precisa [declarar os parâmetros permitidos](action_controller_overview.html#parametros-fortes)
+dentro do controller antes de enviá-los para o *model*:
 
 ```ruby
 def create
@@ -938,9 +937,9 @@ private
   end
 ```
 
-### Removing Objects
+### Removendo objetos
 
-You can allow users to delete associated objects by passing `allow_destroy: true` to `accepts_nested_attributes_for`
+Você pode permitir os usuários deletarem os objetos associados ao passar o parâmetro `allow_destroy: true` para o `accepts_nested_attributes_for`
 
 ```ruby
 class Person < ApplicationRecord
@@ -949,9 +948,9 @@ class Person < ApplicationRecord
 end
 ```
 
-If the hash of attributes for an object contains the key `_destroy` with a value that
-evaluates to `true` (e.g. 1, '1', true, or 'true') then the object will be destroyed.
-This form allows users to remove addresses:
+Se a *hash* de atributos de um objeto contém a chave `_destroy` com um valor que
+representa `true` (ex: 1, '1', true ou 'true'), então o objeto será destruído.
+O formulário a seguir permite o usuário remover endereços:
 
 ```erb
 <%= form_with model: @person do |form| %>
@@ -960,8 +959,8 @@ This form allows users to remove addresses:
     <%= form.fields_for :addresses do |addresses_form| %>
       <li>
         <%= addresses_form.check_box :_destroy %>
-        <%= addresses_form.label :kind %>
-        <%= addresses_form.text_field :kind %>
+        <%= addresses_form.label :tipo %>
+        <%= addresses_form.text_field :tipo %>
         ...
       </li>
     <% end %>
@@ -969,19 +968,19 @@ This form allows users to remove addresses:
 <% end %>
 ```
 
-Don't forget to update the permitted params in your controller to also include
-the `_destroy` field:
+Não esqueça de atualizar a lista de parâmetros permitidos no seu *controller* para
+incluir também o campo `_destroy`:
 
 ```ruby
 def person_params
-  params.require(:person).
-    permit(:name, addresses_attributes: [:id, :kind, :street, :_destroy])
+  params.require(:person).permit(:name, addresses_attributes: [:id, :kind, :street, :_destroy])
 end
 ```
 
-### Preventing Empty Records
+### Prevenindo Registros Vazios
 
-It is often useful to ignore sets of fields that the user has not filled in. You can control this by passing a `:reject_if` proc to `accepts_nested_attributes_for`. This proc will be called with each hash of attributes submitted by the form. If the proc returns `false` then Active Record will not build an associated object for that hash. The example below only tries to build an address if the `kind` attribute is set.
+Pode ser útil ignorar um conjunto de campos que o usuário não preencheu. Você pode controlar isso ao passar um proc `:reject_if` para o
+`accepts_nested_attributes_for`. Essa *proc* será chamada com cada *hash* de atributos enviados pelo formulário. Se a proc retornar `false` então o Active Record não irá construir o objeto associado para essa *hash*. O exemplo abaixo tenta construir um endereço apenas se o campo `tipo` for informado.
 
 ```ruby
 class Person < ApplicationRecord
@@ -990,11 +989,13 @@ class Person < ApplicationRecord
 end
 ```
 
-As a convenience you can instead pass the symbol `:all_blank` which will create a proc that will reject records where all the attributes are blank excluding any value for `_destroy`.
+Para facilitar, você pode passar o *symbol* `:all_blank` no lugar, que irá criar uma proc para rejeitar os registros onde todos os atributos
+são vazios, excluindo qualquer valor para o `_destroy`.
 
-### Adding Fields on the Fly
+### Adicionando campos dinamicamente
 
-Rather than rendering multiple sets of fields ahead of time you may wish to add them only when a user clicks on an "Add new address" button. Rails does not provide any built-in support for this. When generating new sets of fields you must ensure the key of the associated array is unique - the current JavaScript date (milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time)) is a common choice.
+No lugar de renderizar múltiplos blocos de campos antecipadamente, você pode desejar adicioná-los apenas quando o usuário clicar em um botão "Adicionar novo endereço". O Rails não possui nenhum suporte nativo para isso. Quando geramos um novo bloco de campos, devemos
+garantir que a chave do array associado é único - utilizar a data atual via JavaScript em milissegundos [era unix](https://pt.wikipedia.org/wiki/Era_Unix), é bastante comum.
 
 Utilizando Tags Auxiliares (*Tag Helpers*) Sem Um Construtor de Formulário
 ----------------------------------------

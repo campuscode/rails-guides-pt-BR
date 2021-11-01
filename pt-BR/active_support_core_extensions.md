@@ -1067,33 +1067,33 @@ NOTE: Definido em `active_support/core_ext/class/subclasses.rb`.
 
 [Class#descendants]: https://api.rubyonrails.org/classes/Class.html#method-i-descendants
 
-Extensions to `String`
+Extensões para `String`
 ----------------------
 
-### Output Safety
+### Segurança de saída 
 
-#### Motivation
+#### Motivação
 
-Inserting data into HTML templates needs extra care. For example, you can't just interpolate `@review.title` verbatim into an HTML page. For one thing, if the review title is "Flanagan & Matz rules!" the output won't be well-formed because an ampersand has to be escaped as "&amp;amp;". What's more, depending on the application, that may be a big security hole because users can inject malicious HTML setting a hand-crafted review title. Check out the section about cross-site scripting in the [Security guide](security.html#cross-site-scripting-xss) for further information about the risks.
+Inserir dados em _templates_ HTML, necessita de cuidados extras. Por exemplo, você não pode apenas literalmente juntar `@review.title` em uma página HTML. Por outro lado, se o título do comentário é "Flanagan & Matz rules!" o retorno não será bem formada porque um 'e comercial' precisa ser usado como "&amp;amp;". Além do mais, dependendo da aplicação, isso pode ser uma grande falha de segurança porque os usuários podem injetar uma configuração HTML maliciosa em um título de revisão feito à mão. Confira a seção sobre _cross-site scripting_ em [Guia de Segurança](security.html#cross-site-scripting-xss) para maiores informações sobre os riscos.
 
-#### Safe Strings
+#### _Strings_ Seguras
 
-Active Support has the concept of _(html) safe_ strings. A safe string is one that is marked as being insertable into HTML as is. It is trusted, no matter whether it has been escaped or not.
+_Active Support_ possui o conceito de _(html)_ _strings_ seguras. Uma _string_ segura é aquela que é marcada como sendo inserível no HTML como é definida. Ela é confiável, não importando sua origem.
 
-Strings are considered to be _unsafe_ by default:
+_Strings_ são consideradas como inseguras por padrão:
 
 ```ruby
 "".html_safe? # => false
 ```
 
-You can obtain a safe string from a given one with the [`html_safe`][String#html_safe] method:
+Pode-se obter uma _string_ segura de um dado com o método [`html_safe`][String#html_safe]:
 
 ```ruby
 s = "".html_safe
 s.html_safe? # => true
 ```
 
-It is important to understand that `html_safe` performs no escaping whatsoever, it is just an assertion:
+É importante entender que `html_safe` não executa nenhuma operação, é apenas uma afirmação:
 
 ```ruby
 s = "<script>...</script>".html_safe
@@ -1101,39 +1101,39 @@ s.html_safe? # => true
 s            # => "<script>...</script>"
 ```
 
-It is your responsibility to ensure calling `html_safe` on a particular string is fine.
+É sua responsabilidade garantir a chamada `html_safe` em cada _string_ particular.
 
-If you append onto a safe string, either in-place with `concat`/`<<`, or with `+`, the result is a safe string. Unsafe arguments are escaped:
+Se você anexar em uma _string_ segura, com `concat`/`<<`, ou com `+`, o resultado é uma _string_ segura. Argumentos inseguros são ignorados:
 
 ```ruby
 "".html_safe + "<" # => "&lt;"
 ```
 
-Safe arguments are directly appended:
+Argumentos seguros são anexados diretamente:
 
 ```ruby
 "".html_safe + "<".html_safe # => "<"
 ```
 
-These methods should not be used in ordinary views. Unsafe values are automatically escaped:
+Esses métodos não devem ser usados em _views_ comuns. Valores inseguros são ignorados automaticamente:
 
 ```erb
-<%= @review.title %> <%# fine, escaped if needed %>
+<%= @review.title %> <%# correto, ignora se necessário %>
 ```
 
-To insert something verbatim use the [`raw`][] helper rather than calling `html_safe`:
+Para inserir algo literal, use o _helper_ [`raw`][] ao invés de chamar `html_safe`:
 
 ```erb
-<%= raw @cms.current_template %> <%# inserts @cms.current_template as is %>
+<%= raw @cms.current_template %> <%# insere @cms.current_template como é %>
 ```
 
-or, equivalently, use `<%==`:
+ou, equivalentemente, use `<%==`:
 
 ```erb
-<%== @cms.current_template %> <%# inserts @cms.current_template as is %>
+<%== @cms.current_template %> <%# insere @cms.current_template como é %>
 ```
 
-The `raw` helper calls `html_safe` for you:
+O _helper_ `raw` chama `html_safe` pra você:
 
 ```ruby
 def raw(stringish)
@@ -1141,76 +1141,76 @@ def raw(stringish)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/output_safety.rb`.
+NOTE: Definido em `active_support/core_ext/string/output_safety.rb`.
 
 [`raw`]: https://api.rubyonrails.org/classes/ActionView/Helpers/OutputSafetyHelper.html#method-i-raw
 [String#html_safe]: https://api.rubyonrails.org/classes/String.html#method-i-html_safe
 
-#### Transformation
+#### Transformação
 
-As a rule of thumb, except perhaps for concatenation as explained above, any method that may change a string gives you an unsafe string. These are `downcase`, `gsub`, `strip`, `chomp`, `underscore`, etc.
+De modo geral, exceto talvez para concatenação conforme explicado acima, qualquer método que possa alterar uma _string_ fornece uma _string_ insegura. Estes são `downcase`, `gsub`, `strip`, `chomp`, `underscore`, etc.
 
-In the case of in-place transformations like `gsub!` the receiver itself becomes unsafe.
+No caso de transformações locais, como com `gsub!` o próprio receptor se torna inseguro.
 
-INFO: The safety bit is lost always, no matter whether the transformation actually changed something.
+INFO: O bit de segurança é perdido sempre, não importa se a transformação realmente mudou algo.
 
-#### Conversion and Coercion
+#### Conversão e Coerção
 
-Calling `to_s` on a safe string returns a safe string, but coercion with `to_str` returns an unsafe string.
+Chamando `to_s` em uma _string_ segura retorna uma _string_ segura, mas a coerção com `to_str` retorna uma _string_ insegura.
 
-#### Copying
+#### Copiando
 
-Calling `dup` or `clone` on safe strings yields safe strings.
+Chamando `dup` ou `clone` em _strings_ seguras produz outras _strings_ seguras.
 
 ### `remove`
 
-The method [`remove`][String#remove] will remove all occurrences of the pattern:
+O método [`remove`][String#remove] vai remover todas ocorrências com o padrão:
 
 ```ruby
 "Hello World".remove(/Hello /) # => "World"
 ```
 
-There's also the destructive version `String#remove!`.
+Há também a versão destrutiva `String#remove!`.
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#remove]: https://api.rubyonrails.org/classes/String.html#method-i-remove
 
 ### `squish`
 
-The method [`squish`][String#squish] strips leading and trailing whitespace, and substitutes runs of whitespace with a single space each:
+O método [`squish`][String#squish] remove os espaços em branco à esquerda e à direita e substitui os espaços em branco por um único espaço cada:
 
 ```ruby
 " \n  foo\n\r \t bar \n".squish # => "foo bar"
 ```
 
-There's also the destructive version `String#squish!`.
+Há também a versão destrutiva `String#squish!`.
 
-Note that it handles both ASCII and Unicode whitespace.
+Observe que se lida com espaços em branco ASCII e Unicode.
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#squish]: https://api.rubyonrails.org/classes/String.html#method-i-squish
 
 ### `truncate`
 
-The method [`truncate`][String#truncate] returns a copy of its receiver truncated after a given `length`:
+O método [`truncate`][String#truncate] retorna uma cópia de seu receptor truncado após um determinado `length`:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate(20)
 # => "Oh dear! Oh dear!..."
 ```
 
-Ellipsis can be customized with the `:omission` option:
+As reticências podem ser personalizadas com a opção `:omission`:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate(20, omission: '&hellip;')
 # => "Oh dear! Oh &hellip;"
 ```
 
-Note in particular that truncation takes into account the length of the omission string.
+Observe em particular que o truncamento leva em consideração o comprimento da _string_ de omissão.
 
-Pass a `:separator` to truncate the string at a natural break:
+Passe o método `:separator` para truncar a _string_ em uma pausa natural:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate(18)
@@ -1219,102 +1219,102 @@ Pass a `:separator` to truncate the string at a natural break:
 # => "Oh dear! Oh..."
 ```
 
-The option `:separator` can be a regexp:
+A opção `:separator` pode ser uma regexp:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate(18, separator: /\s/)
 # => "Oh dear! Oh..."
 ```
 
-In above examples "dear" gets cut first, but then `:separator` prevents it.
+Nos exemplos acima "dear" é cortado primeiro, mas depois `:separator` impede isso.
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#truncate]: https://api.rubyonrails.org/classes/String.html#method-i-truncate
 
 ### `truncate_bytes`
 
-The method [`truncate_bytes`][String#truncate_bytes] returns a copy of its receiver truncated to at most `bytesize` bytes:
+O método [`truncate_bytes`][String#truncate_bytes] retorna uma cópia de seu receptor truncado para no máximo `bytesize` _bytes_:
 
 ```ruby
 "👍👍👍👍".truncate_bytes(15)
 # => "👍👍👍…"
 ```
 
-Ellipsis can be customized with the `:omission` option:
+As reticências podem ser personalizadas com a opção `:omission`:
 
 ```ruby
 "👍👍👍👍".truncate_bytes(15, omission: "🖖")
 # => "👍👍🖖"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#truncate_bytes]: https://api.rubyonrails.org/classes/String.html#method-i-truncate_bytes
 
 ### `truncate_words`
 
-The method [`truncate_words`][String#truncate_words] returns a copy of its receiver truncated after a given number of words:
+O método [`truncate_words`][String#truncate_words] retorna uma cópia da frase original truncada depois de receber um determinado número de palavras:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate_words(4)
 # => "Oh dear! Oh dear!..."
 ```
 
-Ellipsis can be customized with the `:omission` option:
+Reticências podem ser customizadas com a opção `:omission`:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate_words(4, omission: '&hellip;')
 # => "Oh dear! Oh dear!&hellip;"
 ```
 
-Pass a `:separator` to truncate the string at a natural break:
+Chame `:separator` para truncar a _string_ na pausa natural:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate_words(3, separator: '!')
 # => "Oh dear! Oh dear! I shall be late..."
 ```
 
-The option `:separator` can be a regexp:
+A opção `:separator` pode ser uma regexp:
 
 ```ruby
 "Oh dear! Oh dear! I shall be late!".truncate_words(4, separator: /\s/)
 # => "Oh dear! Oh dear!..."
 ```
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: Definido em `active_support/core_ext/string/filters.rb`.
 
 [String#truncate_words]: https://api.rubyonrails.org/classes/String.html#method-i-truncate_words
 
 ### `inquiry`
 
-The [`inquiry`][String#inquiry] method converts a string into a `StringInquirer` object making equality checks prettier.
+O método [`inquiry`][String#inquiry] converte uma _string_ em um objeto `StringInquirer` fazendo verificações de igualdade mais elegantes.
 
 ```ruby
 "production".inquiry.production? # => true
 "active".inquiry.inactive?       # => false
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inquiry.rb`.
+NOTE: Definido em `active_support/core_ext/string/inquiry.rb`.
 
 [String#inquiry]: https://api.rubyonrails.org/classes/String.html#method-i-inquiry
 
-### `starts_with?` and `ends_with?`
+### `starts_with?` e `ends_with?`
 
-Active Support defines 3rd person aliases of `String#start_with?` and `String#end_with?`:
+_Active Support_ define conjugação verbal para 3ª pessoa em `String#start_with?` e `String#end_with?`:
 
 ```ruby
 "foo".starts_with?("f") # => true
 "foo".ends_with?("o")   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/string/starts_ends_with.rb`.
+NOTE: Definido em `active_support/core_ext/string/starts_ends_with.rb`.
 
 ### `strip_heredoc`
 
-The method [`strip_heredoc`][String#strip_heredoc] strips indentation in heredocs.
+O método [`strip_heredoc`][String#strip_heredoc] tira o recuo em _heredocs_.
 
-For example in
+Por exemplo em
 
 ```ruby
 if options[:usage]
@@ -1328,10 +1328,10 @@ if options[:usage]
 end
 ```
 
-the user would see the usage message aligned against the left margin.
+o usuário veria a mensagem de uso alinhada à margem esquerda.
 
-Technically, it looks for the least indented line in the whole string, and removes
-that amount of leading whitespace.
+Tecnicamente, se procura a linha menos indentada em toda a _string_ e remove
+essa quantidade de espaço em branco à esquerda.
 
 NOTE: Defined in `active_support/core_ext/string/strip.rb`.
 
@@ -1339,7 +1339,7 @@ NOTE: Defined in `active_support/core_ext/string/strip.rb`.
 
 ### `indent`
 
-The [`indent`][String#indent] method indents the lines in the receiver:
+O método [`indent`][String#indent] indenta as linhas no receptor:
 
 ```ruby
 <<EOS.indent(2)
@@ -1353,7 +1353,7 @@ EOS
   end
 ```
 
-The second argument, `indent_string`, specifies which indent string to use. The default is `nil`, which tells the method to make an educated guess peeking at the first indented line, and fallback to a space if there is none.
+O segundo argumento, `indent_string`, especifica qual _string_ de indentação usar. O padrão é `nil`, que diz ao método para fazer uma suposição conferindo a primeira linha indentada, e recuando para um espaço se não houver nenhuma.
 
 ```ruby
 "  foo".indent(2)        # => "    foo"
@@ -1361,27 +1361,27 @@ The second argument, `indent_string`, specifies which indent string to use. The 
 "foo".indent(2, "\t")    # => "\t\tfoo"
 ```
 
-While `indent_string` is typically one space or tab, it may be any string.
+Enquanto `indent_string` é normalmente um espaço ou tabulação, essa pode ser qualquer _string_.
 
-The third argument, `indent_empty_lines`, is a flag that says whether empty lines should be indented. Default is false.
+O terceiro argumento, `indent_empty_lines`, é uma sinalização que diz se as linhas vazias devem ser indentadas. O padrão é _false_.
 
 ```ruby
 "foo\n\nbar".indent(2)            # => "  foo\n\n  bar"
 "foo\n\nbar".indent(2, nil, true) # => "  foo\n  \n  bar"
 ```
 
-The [`indent!`][String#indent!] method performs indentation in-place.
+O método [`indent!`][String#indent!] realiza recuo no local.
 
-NOTE: Defined in `active_support/core_ext/string/indent.rb`.
+NOTE: Definido em `active_support/core_ext/string/indent.rb`.
 
 [String#indent!]: https://api.rubyonrails.org/classes/String.html#method-i-indent-21
 [String#indent]: https://api.rubyonrails.org/classes/String.html#method-i-indent
 
-### Access
+### Acesso
 
 #### `at(position)`
 
-The [`at`][String#at] method returns the character of the string at position `position`:
+O método [`at`][String#at] retorna o caractere da _string_ na posição `position`:
 
 ```ruby
 "hello".at(0)  # => "h"
@@ -1390,13 +1390,13 @@ The [`at`][String#at] method returns the character of the string at position `po
 "hello".at(10) # => nil
 ```
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#at]: https://api.rubyonrails.org/classes/String.html#method-i-at
 
 #### `from(position)`
 
-The [`from`][String#from] method returns the substring of the string starting at position `position`:
+O método [`from`][String#from] retorna a _substring_ da _string_ iniciada na posição `position`:
 
 ```ruby
 "hello".from(0)  # => "hello"
@@ -1405,13 +1405,13 @@ The [`from`][String#from] method returns the substring of the string starting at
 "hello".from(10) # => nil
 ```
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#from]: https://api.rubyonrails.org/classes/String.html#method-i-from
 
 #### `to(position)`
 
-The [`to`][String#to] method returns the substring of the string up to position `position`:
+O método [`to`][String#to] retorna a _substring_ da _string_ até a posição `position`:
 
 ```ruby
 "hello".to(0)  # => "h"
@@ -1420,35 +1420,35 @@ The [`to`][String#to] method returns the substring of the string up to position 
 "hello".to(10) # => "hello"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#to]: https://api.rubyonrails.org/classes/String.html#method-i-to
 
 #### `first(limit = 1)`
 
-The [`first`][String#first] method returns a substring containing the first `limit` characters of the string.
+O método [`first`][String#first] retorna a _substring_ contendo os primeiros `limit` caracteres da _string_.
 
-The call `str.first(n)` is equivalent to `str.to(n-1)` if `n` > 0, and returns an empty string for `n` == 0.
+A chamada `str.first(n)` é equivalente a `str.to(n-1)` se `n` > 0, e retorna uma _string_ vazia para `n` == 0.
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#first]: https://api.rubyonrails.org/classes/String.html#method-i-first
 
 #### `last(limit = 1)`
 
-The [`last`][String#last] method returns a substring containing the last `limit` characters of the string.
+O método [`last`][String#last] retorna a _substring_ contendo os últimos `limit` caracteres da _string_.
 
-The call `str.last(n)` is equivalent to `str.from(-n)` if `n` > 0, and returns an empty string for `n` == 0.
+A chamada `str.last(n)` é equivalente a `str.from(-n)` se `n` > 0, e retorna uma _string_ vazia para `n` == 0.
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: Definido em `active_support/core_ext/string/access.rb`.
 
 [String#last]: https://api.rubyonrails.org/classes/String.html#method-i-last
 
-### Inflections
+### Inflexões
 
 #### `pluralize`
 
-The method [`pluralize`][String#pluralize] returns the plural of its receiver:
+O método [`pluralize`][String#pluralize] retorna o plural do receptor:
 
 ```ruby
 "table".pluralize     # => "tables"
@@ -1456,9 +1456,9 @@ The method [`pluralize`][String#pluralize] returns the plural of its receiver:
 "equipment".pluralize # => "equipment"
 ```
 
-As the previous example shows, Active Support knows some irregular plurals and uncountable nouns. Built-in rules can be extended in `config/initializers/inflections.rb`. This file is generated by default, by the `rails new` command and has instructions in comments.
+Como mostra o exemplo anterior, _Active Support_ conhece alguns plurais irregulares e substantivos incontáveis. As regras integradas podem ser estendidas em `config/initializers/inflections.rb`. Este arquivo é gerado por padrão, pelo comando `rails new` e tem instruções nos comentários.
 
-`pluralize` can also take an optional `count` parameter. If `count == 1` the singular form will be returned. For any other value of `count` the plural form will be returned:
+`pluralize` também pode fazer um parâmetro `count` opcional. Se `count == 1` a forma singular será retornada. Para qualquer outro valor de `count` a forma plural será retornada:
 
 ```ruby
 "dude".pluralize(0) # => "dudes"
@@ -1466,7 +1466,7 @@ As the previous example shows, Active Support knows some irregular plurals and u
 "dude".pluralize(2) # => "dudes"
 ```
 
-Active Record uses this method to compute the default table name that corresponds to a model:
+_Active Record_ usa esse método pra computar a o nome da tabela padrão correspondente ao _model_:
 
 ```ruby
 # active_record/model_schema.rb
@@ -1476,13 +1476,13 @@ def undecorated_table_name(class_name = base_class.name)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido `active_support/core_ext/string/inflections.rb`.
 
 [String#pluralize]: https://api.rubyonrails.org/classes/String.html#method-i-pluralize
 
 #### `singularize`
 
-The [`singularize`][String#singularize] method is the inverse of `pluralize`:
+O método [`singularize`][String#singularize] é o inverso do `pluralize`:
 
 ```ruby
 "tables".singularize    # => "table"
@@ -1490,7 +1490,7 @@ The [`singularize`][String#singularize] method is the inverse of `pluralize`:
 "equipment".singularize # => "equipment"
 ```
 
-Associations compute the name of the corresponding default associated class using this method:
+As associações calculam o nome padrão da classe associada correspondente usando este método:
 
 ```ruby
 # active_record/reflection.rb
@@ -1501,26 +1501,26 @@ def derive_class_name
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#singularize]: https://api.rubyonrails.org/classes/String.html#method-i-singularize
 
 #### `camelize`
 
-The method [`camelize`][String#camelize] returns its receiver in camel case:
+O método [`camelize`][String#camelize] retorna o receptor em _camel case_:
 
 ```ruby
 "product".camelize    # => "Product"
 "admin_user".camelize # => "AdminUser"
 ```
 
-As a rule of thumb you can think of this method as the one that transforms paths into Ruby class or module names, where slashes separate namespaces:
+Como regra geral, você pode pensar neste método como aquele que transforma pastas em nomes de classes ou módulos _Ruby_, em que barras separam os subarquivos:
 
 ```ruby
 "backoffice/session".camelize # => "Backoffice::Session"
 ```
 
-For example, Action Pack uses this method to load the class that provides a certain session store:
+Por exemplo, o _Action Pack_ usa este método para carregar a classe que fornece um determinado armazenamento de sessão:
 
 ```ruby
 # action_controller/metal/session_management.rb
@@ -1531,15 +1531,15 @@ def session_store=(store)
 end
 ```
 
-`camelize` accepts an optional argument, it can be `:upper` (default), or `:lower`. With the latter the first letter becomes lowercase:
+`camelize` aceita um argumento opcional, que pode ser `:upper` (padrão), ou `:lower`. Com o último, a primeira letra torna-se minúscula:
 
 ```ruby
 "visual_effect".camelize(:lower) # => "visualEffect"
 ```
 
-That may be handy to compute method names in a language that follows that convention, for example JavaScript.
+Isso pode ser útil para calcular nomes de métodos em uma linguagem que segue essa convenção, por exemplo, _JavaScript_.
 
-INFO: As a rule of thumb you can think of `camelize` as the inverse of `underscore`, though there are cases where that does not hold: `"SSLError".underscore.camelize` gives back `"SslError"`. To support cases such as this, Active Support allows you to specify acronyms in `config/initializers/inflections.rb`:
+INFO: Como regra geral, você pode pensar em `camelize` como o inverso do `underscore`, embora haja casos em que isso não se aplica: `"SSLError".underscore.camelize` devolve `"SslError"`. Para apoiar casos como este, o _Active Support_ permite que você especifique acrônimos em `config/initializers/inflections.rb`:
 
 ```ruby
 ActiveSupport::Inflector.inflections do |inflect|
@@ -1549,37 +1549,37 @@ end
 "SSLError".underscore.camelize # => "SSLError"
 ```
 
-`camelize` is aliased to [`camelcase`][String#camelcase].
+`camelize` é o mesmo que usar [`camelcase`][String#camelcase].
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#camelcase]: https://api.rubyonrails.org/classes/String.html#method-i-camelcase
 [String#camelize]: https://api.rubyonrails.org/classes/String.html#method-i-camelize
 
 #### `underscore`
 
-The method [`underscore`][String#underscore] goes the other way around, from camel case to paths:
+O método [`underscore`][String#underscore] vai ao contrário, de _camel case_ para pastas:
 
 ```ruby
 "Product".underscore   # => "product"
 "AdminUser".underscore # => "admin_user"
 ```
 
-Also converts "::" back to "/":
+Também converte "::" back para "/":
 
 ```ruby
 "Backoffice::Session".underscore # => "backoffice/session"
 ```
 
-and understands strings that start with lowercase:
+e entende _strings_ que começam com start letra minúscula:
 
 ```ruby
 "visualEffect".underscore # => "visual_effect"
 ```
 
-`underscore` accepts no argument though.
+`underscore` não aceita nenhum argumento.
 
-Rails class and module autoloading uses `underscore` to infer the relative path without extension of a file that would define a given missing constant:
+Classes e módulos _Rails_ carregam automaticamente o uso de `underscore` para inferir o endereço relativo sem extensão de um arquivo que definiria uma constante ausente:
 
 ```ruby
 # active_support/dependencies.rb
@@ -1591,38 +1591,38 @@ def load_missing_constant(from_mod, const_name)
 end
 ```
 
-INFO: As a rule of thumb you can think of `underscore` as the inverse of `camelize`, though there are cases where that does not hold. For example, `"SSLError".underscore.camelize` gives back `"SslError"`.
+INFO: Como regra geral, pode-se pensar em `underscore` como o inverso de `camelize`, embora haja casos em que isso não se aplica. Por exemplo, `"SSLError".underscore.camelize` devolve `"SslError"`.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#underscore]: https://api.rubyonrails.org/classes/String.html#method-i-underscore
 
 #### `titleize`
 
-The method [`titleize`][String#titleize] capitalizes the words in the receiver:
+O método [`titleize`][String#titleize] coloca cada palavra com letra maiúscula:
 
 ```ruby
 "alice in wonderland".titleize # => "Alice In Wonderland"
 "fermat's enigma".titleize     # => "Fermat's Enigma"
 ```
 
-`titleize` is aliased to [`titlecase`][String#titlecase].
+`titleize` é o mesmo que usar [`titlecase`][String#titlecase].
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#titlecase]: https://api.rubyonrails.org/classes/String.html#method-i-titlecase
 [String#titleize]: https://api.rubyonrails.org/classes/String.html#method-i-titleize
 
 #### `dasherize`
 
-The method [`dasherize`][String#dasherize] replaces the underscores in the receiver with dashes:
+O método [`dasherize`][String#dasherize] troca _underscores_ no receptor por traços:
 
 ```ruby
 "name".dasherize         # => "name"
 "contact_data".dasherize # => "contact-data"
 ```
 
-The XML serializer of models uses this method to dasherize node names:
+O _serializer_ XML de _models_ usa este método para colocar traços nos nomes de seus nós:
 
 ```ruby
 # active_model/serializers/xml.rb
@@ -1632,13 +1632,13 @@ def reformat_name(name)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#dasherize]: https://api.rubyonrails.org/classes/String.html#method-i-dasherize
 
 #### `demodulize`
 
-Given a string with a qualified constant name, [`demodulize`][String#demodulize] returns the very constant name, that is, the rightmost part of it:
+Dado uma _string_ com um nome de constante em módulo, [`demodulize`][String#demodulize] retorna o real nome da constante, ou seja, a parte mais à direita dela:
 
 ```ruby
 "Product".demodulize                        # => "Product"
@@ -1648,7 +1648,7 @@ Given a string with a qualified constant name, [`demodulize`][String#demodulize]
 "".demodulize                               # => ""
 ```
 
-Active Record for example uses this method to compute the name of a counter cache column:
+_Active Record_ por exemplo, usa este método para calcular o nome de uma coluna de cache do contador:
 
 ```ruby
 # active_record/reflection.rb
@@ -1661,13 +1661,13 @@ def counter_cache_column
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#demodulize]: https://api.rubyonrails.org/classes/String.html#method-i-demodulize
 
 #### `deconstantize`
 
-Given a string with a qualified constant reference expression, [`deconstantize`][String#deconstantize] removes the rightmost segment, generally leaving the name of the constant's container:
+Dada uma _string_ com uma expressão de referência a uma constante, [`deconstantize`][String#deconstantize] remove o segmento mais à direita, geralmente deixando o nome do contêiner da constante:
 
 ```ruby
 "Product".deconstantize                        # => ""
@@ -1675,40 +1675,40 @@ Given a string with a qualified constant reference expression, [`deconstantize`]
 "Admin::Hotel::ReservationUtils".deconstantize # => "Admin::Hotel"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#deconstantize]: https://api.rubyonrails.org/classes/String.html#method-i-deconstantize
 
 #### `parameterize`
 
-The method [`parameterize`][String#parameterize] normalizes its receiver in a way that can be used in pretty URLs.
+O método [`parameterize`][String#parameterize] normaliza seu receptor de uma forma que pode ser usada em URLs de forma mais elegante.
 
 ```ruby
 "John Smith".parameterize # => "john-smith"
 "Kurt Gödel".parameterize # => "kurt-godel"
 ```
 
-To preserve the case of the string, set the `preserve_case` argument to true. By default, `preserve_case` is set to false.
+Para preservar a caixa da _string_, defina o argumento `preserve_case` para _true_. Por padrão, `preserve_case` será configurado como `false`.
 
 ```ruby
 "John Smith".parameterize(preserve_case: true) # => "John-Smith"
 "Kurt Gödel".parameterize(preserve_case: true) # => "Kurt-Godel"
 ```
 
-To use a custom separator, override the `separator` argument.
+Para usar um separador customizado, sobrescreva o argumento `separator`.
 
 ```ruby
 "John Smith".parameterize(separator: "_") # => "john\_smith"
 "Kurt Gödel".parameterize(separator: "_") # => "kurt\_godel"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#parameterize]: https://api.rubyonrails.org/classes/String.html#method-i-parameterize
 
 #### `tableize`
 
-The method [`tableize`][String#tableize] is `underscore` followed by `pluralize`.
+O método [`tableize`][String#tableize] é `underscore` seguido por `pluralize`.
 
 ```ruby
 "Person".tableize      # => "people"
@@ -1716,15 +1716,15 @@ The method [`tableize`][String#tableize] is `underscore` followed by `pluralize`
 "InvoiceLine".tableize # => "invoice_lines"
 ```
 
-As a rule of thumb, `tableize` returns the table name that corresponds to a given model for simple cases. The actual implementation in Active Record is not straight `tableize` indeed, because it also demodulizes the class name and checks a few options that may affect the returned string.
+Como um princípio básico, `tableize` retorna o nome da tabela que corresponde a um determinado modelo para casos simples. A implementação real de `tableize` no _Active Record_ na verdade não é direta, porque também desmodulariza o nome da classe e verifica algumas opções que podem afetar a _string_ retornada.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#tableize]: https://api.rubyonrails.org/classes/String.html#method-i-tableize
 
 #### `classify`
 
-The method [`classify`][String#classify] is the inverse of `tableize`. It gives you the class name corresponding to a table name:
+O método [`classify`][String#classify] é o inverso de `tableize`. Ele da o nome da classe correspondente ao nome da tabela:
 
 ```ruby
 "people".classify        # => "Person"
@@ -1732,21 +1732,21 @@ The method [`classify`][String#classify] is the inverse of `tableize`. It gives 
 "invoice_lines".classify # => "InvoiceLine"
 ```
 
-The method understands qualified table names:
+O método compreende nomes de tabela associadas:
 
 ```ruby
 "highrise_production.companies".classify # => "Company"
 ```
 
-Note that `classify` returns a class name as a string. You can get the actual class object by invoking `constantize` on it, explained next.
+Note que `classify` retorna um nome de classe como uma _string_. Você pode obter o objeto de classe real invocando `constantize` sobre isso, será explicado a seguir.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#classify]: https://api.rubyonrails.org/classes/String.html#method-i-classify
 
 #### `constantize`
 
-The method [`constantize`][String#constantize] resolves the constant reference expression in its receiver:
+O método [`constantize`][String#constantize] resolve a expressão de referência constante em seu receptor:
 
 ```ruby
 "Integer".constantize # => Integer
@@ -1757,9 +1757,9 @@ end
 "M::X".constantize # => 1
 ```
 
-If the string evaluates to no known constant, or its content is not even a valid constant name, `constantize` raises `NameError`.
+Se a _string_ não for avaliada como uma constante conhecida ou seu conteúdo nem mesmo for um nome de constante válido, `constantize` executa `NameError`.
 
-Constant name resolution by `constantize` starts always at the top-level `Object` even if there is no leading "::".
+Resolução de nome constante por `constantize` inicia sempre no nível superior de `Object` mesmo se não começar com "::".
 
 ```ruby
 X = :in_Object
@@ -1785,25 +1785,25 @@ rescue NameError => e
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#constantize]: https://api.rubyonrails.org/classes/String.html#method-i-constantize
 
 #### `humanize`
 
-The method [`humanize`][String#humanize] tweaks an attribute name for display to end users.
+O método [`humanize`][String#humanize] ajusta um nome de atributo para exibir aos usuários.
 
-Specifically, it performs these transformations:
+Especificamente, ele realiza estas transformações:
 
-  * Applies human inflection rules to the argument.
-  * Deletes leading underscores, if any.
-  * Removes a "_id" suffix if present.
-  * Replaces underscores with spaces, if any.
-  * Downcases all words except acronyms.
-  * Capitalizes the first word.
+  * Aplica regras de inflexão humana ao argumento.
+  * Exclui os _underlines_ iniciais, se houver.
+  * Remove um sufixo "_id", se houver.
+  * Substitui _underlines_ por espaços, se houver.
+  * Reduz todas as palavras, exceto siglas.
+  * Coloca em maiúscula a primeira palavra.
 
-The capitalization of the first word can be turned off by setting the
-`:capitalize` option to false (default is true).
+A capitalização da primeira palavra pode ser desativada configurando o
+`:capitalize` opção para `false` (o padrão é `true`).
 
 ```ruby
 "name".humanize                         # => "Name"
@@ -1813,14 +1813,14 @@ The capitalization of the first word can be turned off by setting the
 "_id".humanize                          # => "Id"
 ```
 
-If "SSL" was defined to be an acronym:
+Se "SSL" for definido como uma sigla:
 
 ```ruby
 'ssl_error'.humanize # => "SSL error"
 ```
 
-The helper method `full_messages` uses `humanize` as a fallback to include
-attribute names:
+O método _helper_ `full_messages` usa `humanize` como alternativa para incluir
+nomes de atributos:
 
 ```ruby
 def full_messages
@@ -1835,13 +1835,13 @@ def full_message
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#humanize]: https://api.rubyonrails.org/classes/String.html#method-i-humanize
 
 #### `foreign_key`
 
-The method [`foreign_key`][String#foreign_key] gives a foreign key column name from a class name. To do so it demodulizes, underscores, and adds "_id":
+O método [`foreign_key`][String#foreign_key] fornece um nome de coluna de chave estrangeira a partir de um nome de classe. Para fazer isso, ele desmoduliza, separa com _underline_ e adiciona "_id":
 
 ```ruby
 "User".foreign_key           # => "user_id"
@@ -1849,28 +1849,28 @@ The method [`foreign_key`][String#foreign_key] gives a foreign key column name f
 "Admin::Session".foreign_key # => "session_id"
 ```
 
-Pass a false argument if you do not want the underscore in "_id":
+Passe `false` como argumento se você não quiser o _underline_ em "_id":
 
 ```ruby
 "User".foreign_key(false) # => "userid"
 ```
 
-Associations use this method to infer foreign keys, for example `has_one` and `has_many` do this:
+As associações usam este método para inferir chaves estrangeiras, por exemplo `has_one` e `has_many` fazem isto:
 
 ```ruby
 # active_record/associations.rb
 foreign_key = options[:foreign_key] || reflection.active_record.name.foreign_key
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: Definido em `active_support/core_ext/string/inflections.rb`.
 
 [String#foreign_key]: https://api.rubyonrails.org/classes/String.html#method-i-foreign_key
 
-### Conversions
+### Conversões
 
 #### `to_date`, `to_time`, `to_datetime`
 
-The methods [`to_date`][String#to_date], [`to_time`][String#to_time], and [`to_datetime`][String#to_datetime] are basically convenience wrappers around `Date._parse`:
+Os métodos [`to_date`][String#to_date], [`to_time`][String#to_time], e [`to_datetime`][String#to_datetime] são basicamente  variações convenientes de `Date._parse`:
 
 ```ruby
 "2010-07-27".to_date              # => Tue, 27 Jul 2010
@@ -1878,20 +1878,20 @@ The methods [`to_date`][String#to_date], [`to_time`][String#to_time], and [`to_d
 "2010-07-27 23:37:00".to_datetime # => Tue, 27 Jul 2010 23:37:00 +0000
 ```
 
-`to_time` receives an optional argument `:utc` or `:local`, to indicate which time zone you want the time in:
+`to_time` recebe an um argumento opcional `:utc` ou `:local`, para indicar qual fuso horário you quer se basear:
 
 ```ruby
 "2010-07-27 23:42:00".to_time(:utc)   # => 2010-07-27 23:42:00 UTC
 "2010-07-27 23:42:00".to_time(:local) # => 2010-07-27 23:42:00 +0200
 ```
 
-Default is `:local`.
+O padrão é `:local`.
 
-Please refer to the documentation of `Date._parse` for further details.
+Por favor, consulte a documentação de `Date._parse` para mais detalhes.
 
-INFO: The three of them return `nil` for blank receivers.
+INFO: Os três exemplos retornam `nil` caso não recebam argumentos.
 
-NOTE: Defined in `active_support/core_ext/string/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/string/conversions.rb`.
 
 [String#to_date]: https://api.rubyonrails.org/classes/String.html#method-i-to_date
 [String#to_datetime]: https://api.rubyonrails.org/classes/String.html#method-i-to_datetime

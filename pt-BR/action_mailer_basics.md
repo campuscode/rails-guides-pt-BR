@@ -463,39 +463,39 @@ Por padrão, essas classes de pré-visualizações ficam em `test/mailers/previe
 config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
 ```
 
-### Generating URLs in Action Mailer Views
+### Gerando URLs no Action Mailer Views
 
-Unlike controllers, the mailer instance doesn't have any context about the
-incoming request so you'll need to provide the `:host` parameter yourself.
+Ao contrário dos *controllers*, a instância do `mailer` não tem nenhum contexto sobre a
+requisição recebida, então você precisará informar o parâmetro `:host`.
 
-As the `:host` usually is consistent across the application you can configure it
-globally in `config/application.rb`:
+Como o `:host` normalmente é o mesmo em toda a aplicação, você pode configurá-lo
+globalmente no arquivo `config/application.rb`:
 
 ```ruby
-config.action_mailer.default_url_options = { host: 'example.com' }
+config.action_mailer.default_url_options = { host: 'exemplo.com' }
 ```
 
-Because of this behavior you cannot use any of the `*_path` helpers inside of
-an email. Instead you will need to use the associated `*_url` helper. For example
-instead of using
+Por causa dessa característica, você não pode usar nenhum dos *helpers* `*_path` dentro de
+um email. Ao invés, você precisará usar o `*_url` helper respectivo. Por exemplo,
+ao invés de usar:
 
 ```html+erb
 <%= link_to 'welcome', welcome_path %>
 ```
 
-You will need to use:
+Você precisará usar:
 
 ```html+erb
 <%= link_to 'welcome', welcome_url %>
 ```
 
-By using the full URL, your links will now work in your emails.
+Usando a URL completa, seus links irão funcionar dentro dos seus emails.
 
-#### Generating URLs with `url_for`
+#### Gerando URLs com `url_for`
 
-`url_for` generates a full URL by default in templates.
+Por padrão, o `url_for` gera uma URL completa nos *templates*.
 
-If you did not configure the `:host` option globally make sure to pass it to
+Se você não configurar a opção `:host` globalmente, não esqueça de passá-lo para o
 `url_for`.
 
 
@@ -505,57 +505,57 @@ If you did not configure the `:host` option globally make sure to pass it to
             action: 'greeting') %>
 ```
 
-#### Generating URLs with Named Routes
+#### Gerando URLs com Rotas Nomeadas
 
-Email clients have no web context and so paths have no base URL to form complete
-web addresses. Thus, you should always use the `*_url` variant of named route
-helpers.
+Os clientes de email não têm o contexto da web e, portanto, os caminhos não têm a URL
+base para completar os endereços da web. Assim, você deve sempre usar a variant  `*_url`
+do *helper* da rota nomeada.
 
-If you did not configure the `:host` option globally make sure to pass it to the
-URL helper.
+Se você não configurar a opção `:host` globalmente, não esqueça de passá-lo para o
+helper da URL.
 
 ```erb
 <%= user_url(@user, host: 'example.com') %>
 ```
 
-NOTE: non-`GET` links require [rails-ujs](https://github.com/rails/rails/blob/main/actionview/app/assets/javascripts) or
-[jQuery UJS](https://github.com/rails/jquery-ujs), and won't work in mailer templates.
-They will result in normal `GET` requests.
+NOTE: Links que não são `GET` vão exigir o uso de [rails-ujs](https://github.com/rails/rails/blob/main/actionview/app/assets/javascripts) ou
+[jQuery UJS](https://github.com/rails/jquery-ujs), e, portanto, não irão funcionar em templates de email.
+Eles irão resultar em requisições `GET` normais.
 
-### Adding images in Action Mailer Views
+### Adicionando imagens no Action Mailer Views
 
-Unlike controllers, the mailer instance doesn't have any context about the
-incoming request so you'll need to provide the `:asset_host` parameter yourself.
+Ao contrário dos controllers, a instância do `mailer` não tem nenhum contexto sobre a
+requisição recebida, então você precisará informar o parâmetro `:asset_host`.
 
-As the `:asset_host` usually is consistent across the application you can
-configure it globally in `config/application.rb`:
+Como o `:asset_host` normalmente é o mesmo em toda a aplicação, você pode configurá-lo
+globalmente no arquivo `config/application.rb`:
 
 ```ruby
 config.asset_host = 'http://example.com'
 ```
 
-Now you can display an image inside your email.
+Agora você pode exibir uma imagem dentro do seu email.
 
 ```html+erb
 <%= image_tag 'image.jpg' %>
 ```
 
-### Sending Multipart Emails
+### Enviando Emails *Multipart*
 
-Action Mailer will automatically send multipart emails if you have different
-templates for the same action. So, for our `UserMailer` example, if you have
-`welcome_email.text.erb` and `welcome_email.html.erb` in
-`app/views/user_mailer`, Action Mailer will automatically send a multipart email
-with the HTML and text versions setup as different parts.
+O Action Mailer enviará automaticamente emails *multipart* se você tiver templates
+diferentes para a mesma action. Então, para o nosso exemplo do `UserMailer`, se você tiver
+os templates `welcome_email.text.erb` e `welcome_email.html.erb` na pasta
+`app/views/user_mailer`, o Action Mailer irá automaticamente enviar um email multipart
+com as versões de HTML e texto configuradas como partes diferentes.
 
-The order of the parts getting inserted is determined by the `:parts_order`
-inside of the `ActionMailer::Base.default` method.
+A ordem das partes sendo inseridas é determinado pelo argumento `:parts_order`
+dentro do método the `ActionMailer::Base.default`.
 
-### Sending Emails with Dynamic Delivery Options
+### Enviando Emails com Opções de Entrega Dinâmicas
 
-If you wish to override the default delivery options (e.g. SMTP credentials)
-while delivering emails, you can do this using `delivery_method_options` in the
-mailer action.
+Se você deseja sobrescrever as opções de entrega padrões (ex: as credenciais SMTP)
+enquanto o email está sendo enviado, você pode fazer isso usando o `delivery_method_options`
+na *action* do mailer.
 
 ```ruby
 class UserMailer < ApplicationMailer
@@ -572,12 +572,12 @@ class UserMailer < ApplicationMailer
 end
 ```
 
-### Sending Emails without Template Rendering
+### Enviando Emails sem Renderizar um *Template*
 
-There may be cases in which you want to skip the template rendering step and
-supply the email body as a string. You can achieve this using the `:body`
-option. In such cases don't forget to add the `:content_type` option. Rails
-will default to `text/plain` otherwise.
+Podem haver casos onde você quer pular a etapa de renderização de um template e enviar
+o corpo do email como `string`. Você pode fazer isso usando a opção `:body`.
+Nesses casos, não esqueça de adicionar também a opção `:content_type`. Caso contrário,
+o Rails vai usar o `text/plain` como padrão.
 
 ```ruby
 class UserMailer < ApplicationMailer
