@@ -2052,7 +2052,7 @@ Produz uma representação de _string_ de um número arredondado para uma precis
 111.2345.to_s(:rounded, significant: true)  # => 111
 ```
 
-Produza uma representação de string de um número como um número de bytes legível para humanos:
+Produz uma representação de _string_ de um número como um número de bytes legível para humanos:
 
 ```ruby
 123.to_s(:human_size)                  # => 123 Bytes
