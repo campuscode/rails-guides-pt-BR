@@ -2065,7 +2065,7 @@ Produz uma representação de _string_ de um número como um número de bytes le
 1234567890123456789.to_s(:human_size)  # => 1.07 EB
 ```
 
-Produza uma representação de string de um número em palavras legíveis para humanos:
+Produz uma representação de _string_ de um número em palavras legíveis para humanos:
 
 ```ruby
 123.to_s(:human)               # => "123"
