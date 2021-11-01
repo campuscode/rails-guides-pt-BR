@@ -1250,13 +1250,14 @@ video = Video.find_by(identifier: "Roman-Holiday")
 edit_video_path(video) # => "/videos/Roman-Holiday/edit"
 ```
 
-Breaking up *very* large route file into multiple small ones:
+Separando arquivos de rotas *gigantes* em vários arquivos menores:
 -------------------------------------------------------
 
-If you work in a large application with thousands of routes,
-a single `config/routes.rb` file can become cumbersome and hard to read.
+Se você trabalha em uma aplicação grande com milhares de rotas,
+um único arquivo `config/routes.rb` pode se tornar complicado e difícil de ler.
 
-Rails offers a way to break a gigantic single `routes.rb` file into multiple small ones using the [`draw`][] macro.
+O Rails oferece uma forma de quebrar esse único gigante `routes.rb` em vários arquivos pequenos
+usando a macro [`draw`][].
 
 ```ruby
 # config/routes.rb
@@ -1264,7 +1265,7 @@ Rails offers a way to break a gigantic single `routes.rb` file into multiple sma
 Rails.application.routes.draw do
   get 'foo', to: 'foo#bar'
 
-  draw(:admin) # Will load another route file located in `config/routes/admin.rb`
+  draw(:admin) # Carregará outro arquivo de rotas localizado em: `config/routes/admin.rb`
 end
 ```
 
@@ -1276,19 +1277,27 @@ namespace :admin do
 end
 ```
 
-Calling `draw(:admin)` inside the `Rails.application.routes.draw` block itself will try to load a route
-file that has the same name as the argument given (`admin.rb` in this case).
-The file needs to be located inside the `config/routes` directory or any sub-directory (i.e. `config/routes/admin.rb` or `config/routes/external/admin.rb`).
+Chamar o `draw(:admin)` dentro do próprio bloco `Rails.application.routes.draw` tentará
+carregar um arquivo de rotas com o mesmo nome do argumento passado (`admin.rb` neste caso).
+Para isso o arquivo precisa estar localizado dentro da pasta `config/routes` ou algum subdiretório
+(ex: `config/routes/admin.rb` or `config/routes/external/admin.rb`)
 
-You can use the normal routing DSL inside the `admin.rb` routing file, **however** you shouldn't surround it with the `Rails.application.routes.draw` block like you did in the main `config/routes.rb` file.
+Você pode usar a DSL de roteamento normal dentro do arquivo de rotas `admin.rb`, porém,
+você não deve cercá-lo com o bloco `Rails.application.routes.draw` como fez no arquivo
+principal `config/routes.rb`.
 
 [`draw`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-draw
 
-### When to use and not use this feature
+### Quando usar ou não essa funcionalidade
 
-Drawing routes from external files can be very useful to organise a large set of routes into multiple organised ones. You could have a `admin.rb` route that contains all the routes for the admin area, another `api.rb` file to route API related resources, etc...
+Definir rotas através de arquivos externos pode ser muito útil para organizar uma grande quantidade de rotas
+em vários arquivos. Você pode ter um arquivo `admin.rb` que conterá todas as rotas para a área administrativa,
+outro arquivo `api.rb` para as rotas relacionadas aos recursos da sua API, etc...
 
-However, you shouldn't abuse this feature as having too many route files make discoverability and understandability more difficult. Depending on the application, it might be easier for developers to have a single routing file even if you have few hundreds routes. You shouldn't try to create a new routing file for each category (e.g. admin, api, ...) at all cost; the Rails routing DSL already offers a way to break routes in a organised manner with `namespaces` and `scopes`.
+No entanto, você não deve abusar dessa funcionalidade criando muitos arquivos, pois torna a descoberta e compreensibilidade mais difícil.
+Dependendo da aplicação, pode ser mais fácil para os desenvolvedores ter apenas um arquivo de rotas mesmo que contenha centenas de rotas.
+Você não deve tentar criar um novo arquivo de rotas para cada categoria (ex: admin, api) a todo custo; A DSL de rotas do Rails já oferece
+uma forma de separar as rotas de forma organizada através de `namespaces` e `scopes`.
 
 Inspecionando e Testando Rotas
 -----------------------------
