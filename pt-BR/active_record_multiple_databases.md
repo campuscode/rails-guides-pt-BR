@@ -321,15 +321,15 @@ ActiveRecord::Base.connected_to(role: :reading, shard: :shard_one) do
 end
 ```
 
-## Granular Database Connection Switching
+## Alternando Conexão de Banco de Dados Granular
 
 No Rails 6.1 é possível alternar conexões para um banco de dados ao invés de
 todos os bancos de dados globalmente. Para usar este recurso, você deve primeiro definir
-`config.active_record.legacy_connection_handling` para` false` em seu aplicativo
-configuração. A maioria dos aplicativos não precisa fazer nenhum outro
-mudanças, uma vez que as APIs públicas têm o mesmo comportamento.
+`config.active_record.legacy_connection_handling` para` false` nas configurações do seu
+aplicativo. A maioria dos aplicativos não precisam fazer nenhuma outra
+alteração, uma vez que as APIs públicas têm o mesmo comportamento.
 
-Com `legacy_connection_handling` definido como false, qualquer classe de conexão abstrata
+Com `legacy_connection_handling` definido como _false_, qualquer classe de conexão abstrata
 será capaz de alternar as conexões sem afetar outras conexões. Esse
 é útil para mudar suas consultas `AnimalsRecord` para ler a partir da réplica
 enquanto garante que suas consultas `ApplicationRecord` vão para o primário.
@@ -351,7 +351,7 @@ AnimalsRecord.connected_to(role: :reading, shard: :shard_one) do
 end
 ```
 
-Para mudar apenas o cluster de banco de dados primário, use `ApplicationRecord`:
+Para mudar apenas o [_cluster_](https://pt.wikipedia.org/wiki/Cluster) de banco de dados primário, use `ApplicationRecord`:
 
 ```ruby
 ApplicationRecord.connected_to(role: :reading, shard: :shard_one) do
@@ -360,7 +360,7 @@ ApplicationRecord.connected_to(role: :reading, shard: :shard_one) do
 end
 ```
 
-`ActiveRecord :: Base.connected_to` mantém a capacidade de alternar
+`ActiveRecord::Base.connected_to` mantém a capacidade de alternar
 conexões globalmente.
 
 ## Caveats
