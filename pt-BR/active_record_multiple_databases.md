@@ -302,7 +302,7 @@ usando o *sharding*, um `role` e um` shard` devem ser passados:
 
 ```ruby
 ActiveRecord::Base.connected_to(role: :writing, shard: :default) do
-  @id = Person.create! # Cria um registro no padrão de fragmento
+  @id = Person.create! # Cria um registro no fragmento padrão
 end
 
 ActiveRecord::Base.connected_to(role: :writing, shard: :shard_one) do
@@ -316,7 +316,7 @@ papel (*role*) e o fragmento (*shard*) com a API `connected_to`.
 
 ```ruby
 ActiveRecord::Base.connected_to(role: :reading, shard: :shard_one) do
-  Person.first # Registro de pesquisa da réplica de leitura do fragmento um
+  Person.first # Procura um registro de uma réplica de leitura do shard_one
 end
 ```
 
