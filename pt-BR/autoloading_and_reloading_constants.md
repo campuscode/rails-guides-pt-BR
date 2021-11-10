@@ -108,7 +108,7 @@ WARNING. Please, do not mutate `ActiveSupport::Dependencies.autoload_paths`, the
 $LOAD_PATH
 ----------
 
-Caminhos de carregamento automático são adicionados a `$ LOAD_PATH` por padrão. No entanto, o Zeitwerk usa nomes de arquivo absolutos internamente, e seu aplicativo não deve emitir chamadas `require` para arquivos carregáveis ​​automaticamente, então esses diretórios não são realmente necessários lá. Você pode cancelar com este sinalizador:
+Caminhos de carregamento automático são adicionados a `$LOAD_PATH` por padrão. No entanto, o Zeitwerk usa nomes de arquivo absolutos internamente, e sua aplicação não deve emitir chamadas `require` para arquivos carregáveis ​​automaticamente, então esses diretórios não são realmente necessários lá. Você pode cancelar com este sinalizador:
 
 ```ruby
 config.add_autoload_paths_to_load_path = false
