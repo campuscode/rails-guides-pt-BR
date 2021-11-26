@@ -258,14 +258,13 @@ Observe que o `connected_to` com um *role* definido buscará e trocará para uma
 
 ## Horizontal sharding
 
-Horizontal sharding is when you split up your database to reduce the number of rows on each
-database server, but maintain the same schema across "shards". This is commonly called "multi-tenant"
-sharding.
+Fragmentação horizontal é quando você divide seu banco de dados para reduzir o número de linhas em cada
+servidor de banco de dados, mas mantém o mesmo esquema em "fragmentos". Isso é comumente chamado de fragmentação "multilocatário" (*multi-tenant*).
 
-The API for supporting horizontal sharding in Rails is similar to the multiple database / vertical
-sharding API that's existed since Rails 6.0.
+A API para suportar fragmentação horizontal no Rails é semelhante ao banco de dados múltiplo / 
+API de vertical fragmentação que existe desde o Rails 6.0.
 
-Shards are declared in the three-tier config like this:
+Os fragmentos são declarados na configuração de três camadas como este:
 
 ```yaml
 production:
@@ -285,7 +284,7 @@ production:
     replica: true
 ```
 
-Models are then connected with the `connects_to` API via the `shards` key:
+Os *models* são então conectados à API `connects_to` por meio da chave` shards`:
 
 ```ruby
 class ApplicationRecord < ActiveRecord::Base
@@ -298,26 +297,26 @@ class ApplicationRecord < ActiveRecord::Base
 end
 ```
 
-Then models can swap connections manually via the `connected_to` API. If
-using sharding both a `role` and `shard` must be passed:
+Então, os *models* podem trocar conexões manualmente por meio da API `connected_to`. Se
+usando o *sharding*, um `role` e um` shard` devem ser passados:
 
 ```ruby
 ActiveRecord::Base.connected_to(role: :writing, shard: :default) do
-  @id = Person.create! # Creates a record in shard default
+  @id = Person.create! # Cria um registro no fragmento padrão
 end
 
 ActiveRecord::Base.connected_to(role: :writing, shard: :shard_one) do
-  Person.find(@id) # Can't find record, doesn't exist because it was created
-                   # in the default shard
+  Person.find(@id) # Não é possível encontrar o registro, não existe porque foi criado
+                   # no fragmento padrão
 end
 ```
 
-The horizontal sharding API also supports read replicas. You can swap the
-role and the shard with the `connected_to` API.
+A API de fragmentação horizontal também oferece suporte a réplicas de leitura. Você pode trocar o
+papel (*role*) e o fragmento (*shard*) com a API `connected_to`.
 
 ```ruby
 ActiveRecord::Base.connected_to(role: :reading, shard: :shard_one) do
-  Person.first # Lookup record from read replica of shard one
+  Person.first # Procura um registro de uma réplica de leitura do shard_one
 end
 ```
 
