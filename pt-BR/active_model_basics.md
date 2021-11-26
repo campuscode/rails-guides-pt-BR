@@ -1,16 +1,17 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Básico de *Active Model*
+Básico do *Active Model*
 ===================
+
 Esse guia deverá prover tudo que você precisa para começar a usar classes de modelo (`models`).
 O *Active Model* permite que o *Action Pack Helpers* interaja com os objetos ruby. O *Active model* também auxilia a criação de *ORMs* (mapeamento de objetos relacionais) para o uso fora do framework Rails.
 
 Após a leitura desse guia você saberá:
 * Como um *Active Record* se comporta.
-* Como Callbacks e Validações funcionam.
-* Como serializers funcionam.
-* Como *Active Model* integra com o framework de internacionalização(`i18n`) do Rails.
+* Como *Callbacks* e *Validações* funcionam.
+* Como *serializers* funcionam.
+* Como *Active Model* integra com o framework de internacionalização (`i18n`) do Rails.
 
 --------------------------------------------------------------------------------
 
@@ -73,12 +74,12 @@ class Person
 
   def update
     run_callbacks(:update) do
-      # This method is called when update is called on an object.
+      # Este método é chamado quando a atualização é chamada em um objeto.
     end
   end
 
   def reset_me
-    # This method is called when update is called on an object as a before_update callback is defined.
+    # Este método é chamado quando a atualização é chamada em um objeto, quando um retorno de chamada before_update é definida.
   end
 end
 ```
@@ -140,7 +141,7 @@ class Person
   end
 
   def save
-    # do save work...
+    # salva trabalho...
     changes_applied
   end
 end
@@ -243,7 +244,6 @@ ActiveModel::StrictValidationFailed
 
 `ActiveModel::Naming` adiciona vários métodos de classe que tornam a nomeação e o roteamento mais fácil de administrar. O módulo define o método da classe `model_name` que definirá vários acessadores usando alguns métodos do `ActiveSupport::Inflector`.
 
-
 ```ruby
 class Person
   extend ActiveModel::Naming
@@ -260,10 +260,10 @@ Person.model_name.i18n_key            # => :person
 Person.model_name.route_key           # => "people"
 Person.model_name.singular_route_key  # => "person"
 ```
+
 ### *Model*
 
 O `ActiveModel::Model` adiciona a capacidade de uma classe trabalhar com o *Action Pack* e *Action View* imediatamente.
-
 
 ```ruby
 class EmailContact
@@ -274,11 +274,12 @@ class EmailContact
 
   def deliver
     if valid?
-      # deliver email
+      # envia email
     end
   end
 end
 ```
+
 Ao incluir o `ActiveModel::Model`, você obtém alguns recursos como:
 
 - introspecção do nome de *model*
@@ -317,6 +318,7 @@ class Person
   end
 end
 ```
+
 Agora você pode acessar um Hash serializado do seu objeto usando o método `serializable_hash`.
 
 ```irb
@@ -347,6 +349,7 @@ class Person
   end
 end
 ```
+
 O método `as_json`, semelhante ao` serializable_hash`, fornece um Hash representando o modelo.
 
 ```irb
@@ -378,7 +381,7 @@ class Person
 end
 ```
 
-Agora é possível criar uma instância de `Person` e definir atributos usando` from_json`.
+Agora é possível criar uma instância de `Person` e definir atributos usando `from_json`.
 
 ```irb
 irb> json = { name: 'Bob' }.to_json
@@ -415,7 +418,7 @@ pt-BR:
 Person.human_attribute_name('name') # => "Nome"
 ```
 
-### Lint Tests
+### Testes de Lint
 
 O `ActiveModel::Lint::Tests` permite testar se um objeto é compatível com a API do *model* ativo.
 
