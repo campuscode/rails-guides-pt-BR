@@ -2158,24 +2158,24 @@ NOTE: Definido em `active_support/core_ext/integer/time.rb`.
 [Integer#months]: https://api.rubyonrails.org/classes/Integer.html#method-i-months
 [Integer#years]: https://api.rubyonrails.org/classes/Integer.html#method-i-years
 
-Extensions to `BigDecimal`
+Extensões para `BigDecimal`
 --------------------------
 
 ### `to_s`
 
-The method `to_s` provides a default specifier of "F". This means that a simple call to `to_s` will result in floating point representation instead of engineering notation:
+O método `to_s` fornece um especificador padrão de "F". Isso significa que uma simples chamada para `to_s` resultará em representação de ponto flutuante em vez de notação de engenharia:
 
 ```ruby
 BigDecimal(5.00, 6).to_s       # => "5.0"
 ```
 
-and that symbol specifiers are also supported:
+e que especificadores  usando *symbols* também são suportados:
 
 ```ruby
 BigDecimal(5.00, 6).to_s(:db)  # => "5.0"
 ```
 
-Engineering notation is still supported:
+A notação de engenharia ainda é suportada:
 
 ```ruby
 BigDecimal(5.00, 6).to_s("e")  # => "0.5E1"
