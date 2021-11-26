@@ -325,8 +325,8 @@ end
 
 No Rails 6.1 é possível alternar conexões para um banco de dados ao invés de
 todos os bancos de dados globalmente. Para usar este recurso, você deve primeiro definir
-`config.active_record.legacy_connection_handling` para` false` nas configurações do seu
-aplicativo. A maioria dos aplicativos não precisam fazer nenhuma outra
+`config.active_record.legacy_connection_handling` para` false` nas configurações da sua
+aplicação. A maioria das aplicações não precisam fazer nenhuma outra
 alteração, uma vez que as APIs públicas têm o mesmo comportamento.
 
 Com `legacy_connection_handling` definido como _false_, qualquer classe de conexão abstrata
