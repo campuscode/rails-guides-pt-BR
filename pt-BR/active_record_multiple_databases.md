@@ -367,19 +367,19 @@ connections globally.
 
 ### Troca automática para fragmentação horizontal
 
-Embora Rails agora suporte uma API para conectar e trocar conexões de shards, ele faz
-ainda não suporta uma estratégia de troca automática. Qualquer troca de fragmentos precisará ser feita manualmente em sua aplicação por meio de um middleware ou `around_action`.
+Embora o Rails agora suporte uma API para conectar e trocar conexões de _shards_, ele faz
+ainda não suporta uma estratégia de troca automática. Qualquer troca de fragmentos precisará ser feita manualmente em sua aplicação por meio de um _middleware_ ou `around_action`.
 
 ### Réplicas de balanceamento de carga
 
-Rails também não suporta balanceamento de carga automático de réplicas. Isto é muito
+O Rails também não suporta balanceamento de carga automático de réplicas. Isto é muito
 dependente de sua infraestrutura. Podemos implementar balanceamento de carga básico e primitivo
 no futuro, mas para uma aplicação em escala, isso deve ser algo que sua aplicação
 lida fora do Rails.
 
 ### Join entre Bancos de Dados
 
-As aplicação não podem fazer `join` entre bancos de dados. No momento, as aplicações precisarão
+As aplicações não podem fazer `join` entre bancos de dados. No momento, as aplicações precisarão
 escrever manualmente dois *selects* e dividir as próprias *joins*. Em uma versão futura do Rails
 irá dividir as junções para você.
 
