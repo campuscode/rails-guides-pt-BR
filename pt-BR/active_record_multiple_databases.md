@@ -362,29 +362,29 @@ end
 `ActiveRecord::Base.connected_to` mantém a capacidade de alternar
 conexões globalmente.
 
-## Caveats
+## Advertências
 
-### Automatic swapping for horizontal sharding
+### Troca automática para fragmentação horizontal
 
-While Rails now supports an API for connecting to and swapping connections of shards, it does
-not yet support an automatic swapping strategy. Any shard swapping will need to be done manually
-in your app via a middleware or `around_action`.
+Embora o Rails agora tenha suporte para uma API que conecta a fragmentos e troca a conexão deles,
+a estrategia de troca automática ainda não é suportada. Qualquer troca de fragmentos deverá ser feita
+automaticamente no seu aplicativo via *middleware* ou `around_action`.
 
-### Load Balancing Replicas
+### Balanceamento de carga (*Load Balancing*) de Réplicas
 
-Rails also doesn't support automatic load balancing of replicas. This is very
-dependent on your infrastructure. We may implement basic, primitive load balancing
-in the future, but for an application at scale this should be something your application
+O Rails também não suporta o balanceamento de carga automático de réplicas. Isso depende muito da
+sua infraestrutura. Pode ser que implementemos balanceamento de carga básico e primitivo no
+futuro mas, para uma aplicação em escala, isso deveria ser feito fora do Rails.
 handles outside of Rails.
 
-### Joining Across Databases
+### Fazendo *joins* em Bancos de Dados Diferentes
 
-Applications cannot join across databases. At the moment applications will need to
-manually write two selects and split the joins themselves. In a future version Rails
-will split the joins for you.
+Aplicações não podem fazer junções (*joins*) em diferentes brancos de dados. Atualmente, as aplicações
+deverão escrever dois *selects* manualmente e separar os *joins*. Em uma versão futura, o Rails
+fará isso por você.
 
-### Schema Cache
+### Cache de *Schema*
 
-If you use a schema cache and multiple databases you'll need to write an initializer
-that loads the schema cache from your app. This wasn't an issue we could resolve in
-time for Rails 6.0 but hope to have it in a future version soon.
+Se você usa um cache de *schema* e vários bancos de dados, você terá de escrever um *initializer*
+que carregue o cacho de *schema* da sua *app*. Não conseguimos resolver essa *issue* a tempo no
+Rails 6.0, mas esperamos fazê-lo em uma versão futura em breve.
