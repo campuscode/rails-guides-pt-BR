@@ -266,7 +266,7 @@
 <li><a href="#habilitando-a-troca-automatica-de-conexao">Habilitando a troca automática de conexão</a></li>
 <li><a href="#usando-a-troca-de-conexao-manual">Usando a troca de conexão manual</a></li>
 <li><a href="#horizontal-sharding">Horizontal sharding</a></li>
-<li><a href="#granular-database-connection-switching">Granular Database Connection Switching</a></li>
+<li><a href="#alternando-conexao-de-banco-de-dados-granular">Alternando Conexão de Banco de Dados Granular</a></li>
 <li>
 <a href="#caveats">Caveats</a>
 
@@ -311,13 +311,13 @@
   <span class="na">password</span><span class="pi">:</span> <span class="s">&lt;%= ENV['ROOT_PASSWORD'] %&gt;</span>
   <span class="na">adapter</span><span class="pi">:</span> <span class="s">mysql</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-15d39cd2b34b63ff3d425573240e96ec">production:
+<textarea class="clipboard-content" id="clipboard-8fcd7de63d82ada0c625f3f897c9f555">production:
   database: my_primary_database
   username: root
   password: &lt;%= ENV['ROOT_PASSWORD'] %&gt;
   adapter: mysql
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-15d39cd2b34b63ff3d425573240e96ec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8fcd7de63d82ada0c625f3f897c9f555">Copiar</button>
 </div>
 <p>Vamos adicionar uma réplica para a primeira configuração e um segundo banco chamado "animals", também possuindo uma réplica. Para fazer isso, precisamos alterar o arquivo <code>database.yml</code>, com sua atual configuração de 2 níveis para uma nova configuração, de 3 níveis.</p><p>Se uma houver uma configuração primária, esta será usada como padrão. Se não existir uma configuração com o nome "primary", o Rails usará a primeira que encontrar para o ambiente. As configurações padrão usarão os nomes de arquivo padrão do Rails. Por exemplo, configurações primárias usarão o arquivo <code>schema.rb</code> para o esquema, enquanto todas as outras configurações usarão <code>[CONFIGURATION_NAMESPACE]_schema.rb</code>.</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">production</span><span class="pi">:</span>
@@ -345,7 +345,7 @@
     <span class="na">adapter</span><span class="pi">:</span> <span class="s">mysql2</span>
     <span class="na">replica</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-225e1259c317b63fda790b082e66963d">production:
+<textarea class="clipboard-content" id="clipboard-ba63c0eefb5545e959b346a01d0059d1">production:
   primary:
     database: my_primary_database
     username: root
@@ -370,7 +370,7 @@
     adapter: mysql2
     replica: true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-225e1259c317b63fda790b082e66963d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ba63c0eefb5545e959b346a01d0059d1">Copiar</button>
 </div>
 <p>Quando usar múltiplos bancos, existem algumas configurações importantes.</p><p>Em primeiro lugar, o nome do banco para a configuração <code>primary</code> e <code>primary_replica</code> precisam ser os mesmos, pois estes contém os mesmos dados. Isso também se aplica para os bancos <code>animals</code> e <code>animals_replica</code>.</p><p>Segundo, o nome de usuário para os bancos de escrita e suas réplicas devem ser diferentes, e as permissões do usuário da réplica devem ser somente leitura.</p><p>Quando usar um banco réplica, é preciso adicionar <code>replica: true</code> à configuração em questão, dentro de <code>database.yml</code>. Sem isso, o Rails não saberá qual é o de escrita e qual é a réplica.</p><p>Por último, para os novos bancos de escrita, é preciso adicionar o <code>migrations_paths</code> ao diretório onde ficarão as migrações. Veremos <code>migration_paths</code> em mais detalhes ao decorrer deste guia.</p><p>Agora que temos um novo banco, vamos definir o <em>model</em> de conexão. Para usar este novo banco, é necessário criar uma classe abstrata e conectar ao banco <em>animals</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AnimalsRecord</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -379,13 +379,13 @@
   <span class="n">connects_to</span> <span class="ss">database: </span><span class="p">{</span> <span class="ss">writing: :animals</span><span class="p">,</span> <span class="ss">reading: :animals_replica</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-615008219d830f81f9f1784edc857930">class AnimalsRecord &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-525959181d568355bc65e56655095bb4">class AnimalsRecord &lt; ApplicationRecord
   self.abstract_class = true
 
   connects_to database: { writing: :animals, reading: :animals_replica }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-615008219d830f81f9f1784edc857930">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-525959181d568355bc65e56655095bb4">Copiar</button>
 </div>
 <p>Em seguida, atualizaremos <code>ApplicationRecord</code> para ela saiba da nossa nova réplica.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationRecord</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
@@ -394,31 +394,31 @@ end
   <span class="n">connects_to</span> <span class="ss">database: </span><span class="p">{</span> <span class="ss">writing: :primary</span><span class="p">,</span> <span class="ss">reading: :primary_replica</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ef5b9c56f0c7bb909c7b97f138b1fc49">class ApplicationRecord &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-31c52c597109a350fc2842e4c4ee4cd8">class ApplicationRecord &lt; ActiveRecord::Base
   self.abstract_class = true
 
   connects_to database: { writing: :primary, reading: :primary_replica }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ef5b9c56f0c7bb909c7b97f138b1fc49">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-31c52c597109a350fc2842e4c4ee4cd8">Copiar</button>
 </div>
 <p>As classes que conectam ao banco primário e/ou sua réplica podem herdar de <code>ApplicationRecord</code>, assim como as aplicações padrão Rails.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1492ad3eaedb26527bae3d424467ce8a">class Person &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-3e6999ad230bf97a1c70125c55645f34">class Person &lt; ApplicationRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1492ad3eaedb26527bae3d424467ce8a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3e6999ad230bf97a1c70125c55645f34">Copiar</button>
 </div>
 <p>Por padrão, o Rails espera os <em>roles</em> de escrita e leitura, para o banco primário e sua réplica, respectivamente. Se você tiver um sistema legado, é possível que existam <em>roles</em> que não deseja mudar. Neste caso, é possível definir um novo nome de <em>role</em> nas configurações da aplicação.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">writing_role</span> <span class="o">=</span> <span class="ss">:default</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">reading_role</span> <span class="o">=</span> <span class="ss">:readonly</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c37a0912a8b26c2351991dd9d1b7cba0">config.active_record.writing_role = :default
+<textarea class="clipboard-content" id="clipboard-5e2c8f47278bf177af5cb3f615c139bd">config.active_record.writing_role = :default
 config.active_record.reading_role = :readonly
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c37a0912a8b26c2351991dd9d1b7cba0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5e2c8f47278bf177af5cb3f615c139bd">Copiar</button>
 </div>
 <p>É importante conectar ao seu banco em um único <em>model</em> e em seguida, herdar para as tabelas, ao invés de abrir várias conexões individuais.
 Os usuários do banco têm um limite de conexões abertas, e ao fazer isso, estaríamos multiplicando o número de conexões, visto que o Rails usa o nome da classe do <em>model</em> para o nome da conexão. </p><p>Agora que configuramos o <code>database.yml</code> e novo <em>model</em>, é hora de criar os bancos de dados.
@@ -446,24 +446,24 @@ O Rails 6.0 inclui todas as <em>tasks</em> necessárias para usar múltiplos ban
 <span class="gp">rails db:schema:load:animals             #</span><span class="w"> </span>Importa um arquivo de esquema <span class="o">(</span>db/schema.rb ou db/structure.sql<span class="o">)</span>
 <span class="gp">rails db:schema:load:primary             #</span><span class="w"> </span>Importa um arquivo de esquema <span class="o">(</span>db/schema.rb ou db/structure.sql<span class="o">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-25d4b19441244a38c3bd5d80e82ede9a">bin/rails -T
+<textarea class="clipboard-content" id="clipboard-102faf99b94065581771c201b38a547e">bin/rails -T
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-25d4b19441244a38c3bd5d80e82ede9a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-102faf99b94065581771c201b38a547e">Copiar</button>
 </div>
 <p>Executar um comando como <code>bin/rails db:create</code> criará tanto o banco primário quanto o banco <em>animals</em>.
 Observe que não existe um comando para criar os usuários. Estes precisam ser criados manualmente, para dar suporte aos usuários somente leitura das réplicas. Se deseja criar somente o banco <em>animals</em>, basta executar <code>bin/rails db:create:animals</code>.</p><h3 id="generators-e-migrations"><a class="anchorlink" href="#generators-e-migrations">2 <em>Generators</em> e <em>Migrations</em></a></h3><p>Migrações para múltiplos bancos devem ficar nos seus próprios diretórios, prefixados pelo nome da chave do banco especificado nas configurações.</p><p>Também é preciso definir <code>migrations_paths</code> nas configurações do banco, para que o Rails saiba onde as encontrar.</p><p>Por exemplo, o banco <em>animals</em> buscaria suas migrações no diretório <code>db/animals_migrate</code>, da mesma forma que o banco <em>primary</em> buscaria em <code>db/migrate</code>. Os <em>generators</em> do Rails agora permitem especificar a opção <code>--database</code>, de modo que o arquivo seja gerado no diretório correto. O comando pode ser executado da seguinte forma:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration CreateDogs name:string <span class="nt">--database</span> animals
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fea8b2d8049a14fdba2f541267033132">bin/rails generate migration CreateDogs name:string --database animals
+<textarea class="clipboard-content" id="clipboard-96a8c18af1b65a936f67b52ef4360b24">bin/rails generate migration CreateDogs name:string --database animals
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fea8b2d8049a14fdba2f541267033132">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-96a8c18af1b65a936f67b52ef4360b24">Copiar</button>
 </div>
 <p>Se estiver usando os <em>generators</em> do Rails, os <em>generators</em> de <em>scaffold</em> e de <em>model</em> criarão a classe abstrata para você. Basta especificar a chave do banco no comando:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate scaffold Dog name:string <span class="nt">--database</span> animals
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0952a03f7fba1d36359f6e09dad121a2">bin/rails generate scaffold Dog name:string --database animals
+<textarea class="clipboard-content" id="clipboard-ae1b27ed70aae42fa3e07f0f8a3df226">bin/rails generate scaffold Dog name:string --database animals
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0952a03f7fba1d36359f6e09dad121a2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ae1b27ed70aae42fa3e07f0f8a3df226">Copiar</button>
 </div>
 <p>Uma classe com mesmo nome do banco e a palavra <code>Record</code> será criada. Neste exemplo, o banco é <code>Animals</code>, então teremos <code>AnimalsRecord</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AnimalsRecord</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -472,78 +472,77 @@ Observe que não existe um comando para criar os usuários. Estes precisam ser c
   <span class="n">connects_to</span> <span class="ss">database: </span><span class="p">{</span> <span class="ss">writing: :animals</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fbd756d9ac2cc340e5a5eecb60bd66fe">class AnimalsRecord &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-3819b9e4f9b07656cab7621f2fafbf8a">class AnimalsRecord &lt; ApplicationRecord
   self.abstract_class = true
 
   connects_to database: { writing: :animals }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fbd756d9ac2cc340e5a5eecb60bd66fe">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3819b9e4f9b07656cab7621f2fafbf8a">Copiar</button>
 </div>
 <p>O <em>model</em> gerado herdará automaticamente de <code>AnimalsRecord</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Dog</span> <span class="o">&lt;</span> <span class="no">AnimalsRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4b7dbe8c4707c31828ce049cbdb72333">class Dog &lt; AnimalsRecord
+<textarea class="clipboard-content" id="clipboard-9f145390bac3f9d17fafe6fbf95d82cf">class Dog &lt; AnimalsRecord
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4b7dbe8c4707c31828ce049cbdb72333">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f145390bac3f9d17fafe6fbf95d82cf">Copiar</button>
 </div>
 <p>Observação: Visto que o Rails não sabe qual banco de dados é a réplica para o escritor, você precisará adicionar isso à classe abstrata quando tiver terminado.</p><p>O Rails criará a nova classe somente uma vez. Esta não será sobrescrita por futuros <em>scaffolds</em> e nem mesmo deletada, caso o <em>scaffold</em> seja excluído.</p><p>Se você já possui uma classe abstrata e seu nome difere da em <code>AnimalsRecord</code>, você pode especificar a opção <code>--parent</code> se desejar uma classe abstrata diferente:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate scaffold Dog name:string <span class="nt">--database</span> animals <span class="nt">--parent</span> Animals::Record
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b6d4ac8242bdaa65af08206a5f3512a2">bin/rails generate scaffold Dog name:string --database animals --parent Animals::Record
+<textarea class="clipboard-content" id="clipboard-5cb931c51479a5829d41c7cb58d1dfd4">bin/rails generate scaffold Dog name:string --database animals --parent Animals::Record
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b6d4ac8242bdaa65af08206a5f3512a2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5cb931c51479a5829d41c7cb58d1dfd4">Copiar</button>
 </div>
 <p>Isto fará com que a geração de <code>AnimalsRecord</code> seja ignorada, visto que você indicou para o Rails que irá usar uma outra classe pai.</p><h3 id="habilitando-a-troca-automatica-de-conexao"><a class="anchorlink" href="#habilitando-a-troca-automatica-de-conexao">3 Habilitando a troca automática de conexão</a></h3><p>Por último, para conseguir usar a réplica de leitura na sua aplicação, será necessário habilitar o <em>middleware</em> de troca automática.</p><p>A troca automática permite que a aplicação alterne entre os bancos de escrita e a réplica, baseado no método HTTP e também se houve uma escrita recente.</p><p>Se a aplicação receber uma requisição POST, PUT, DELETE, ou PATCH, a conexão será feita automaticamente para o banco de escrita. Por um determinado tempo após a escrita, a leitura será feita no banco primário. Para os métodos GET ou HEAD, a aplicação usará a réplica, a menos que tenha ocorrido uma escrita recente.</p><p>Para habilitar o <em>middleware</em> responsável pela troca automática, basta adicionar (ou "descomentar") as seguintes linhas no arquivo de configuração:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_selector</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">delay: </span><span class="mi">2</span><span class="p">.</span><span class="nf">seconds</span> <span class="p">}</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">DatabaseSelector</span><span class="o">::</span><span class="no">Resolver</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver_context</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">DatabaseSelector</span><span class="o">::</span><span class="no">Resolver</span><span class="o">::</span><span class="no">Session</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0f5af8aa1c9e5934ea8b8e8c14da87c1">config.active_record.database_selector = { delay: 2.seconds }
+<textarea class="clipboard-content" id="clipboard-393dfb1ef73315b39b69ff0ee491444a">config.active_record.database_selector = { delay: 2.seconds }
 config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
 config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0f5af8aa1c9e5934ea8b8e8c14da87c1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-393dfb1ef73315b39b69ff0ee491444a">Copiar</button>
 </div>
 <p>O Rails garante o chamado "leia sua própria escrita" e encaminhará as requisições de método GET ou HEAD para o banco de escrita, se estes ocorrerem dentro do intervalo especificado pelo <code>delay</code>. Você deve alterar esta configuração para melhor atender a infraestrutura do seu banco de dados. O Rails não garante "leia sua escrita recente" para outros usuários dentro do intervalo de <em>delay</em>, e encaminhará as requisições GET e HEAD para a réplica, a menos que eles tenham escrito algo recentemente.</p><p>A troca automática de conexão do Rails é relativamente simples e deliberadamente não faz muita coisa. O objetivo é ter um sistema que demonstre como fazer a troca automática de conexão, e que seja suficientemente flexível para que as pessoas desenvolvedoras possam customizar.</p><p>O <em>setup</em> do Rails permite que você altere com facilidade como é feita a troca automática, e em quais parâmetros ela se baseia. Digamos que você queira usar <em>cookies</em> ao invés da <em>session</em> para decidir quando trocar as conexões. Você poderia escrever sua própria classe:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">MyCookieResolver</span>
   <span class="c1"># código da sua classe</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fa83c9d73dfb0d4af40082154a3e58aa">class MyCookieResolver
+<textarea class="clipboard-content" id="clipboard-9f12d2a1c64f927ba4c45035194e1564">class MyCookieResolver
   # código da sua classe
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fa83c9d73dfb0d4af40082154a3e58aa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f12d2a1c64f927ba4c45035194e1564">Copiar</button>
 </div>
 <p>Em seguida, especifique sua nova classe no <em>middleware</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_selector</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">delay: </span><span class="mi">2</span><span class="p">.</span><span class="nf">seconds</span> <span class="p">}</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Middleware</span><span class="o">::</span><span class="no">DatabaseSelector</span><span class="o">::</span><span class="no">Resolver</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">database_resolver_context</span> <span class="o">=</span> <span class="no">MyCookieResolver</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8b190f8469c82355b6651c023ed2c92d">config.active_record.database_selector = { delay: 2.seconds }
+<textarea class="clipboard-content" id="clipboard-5d43efb600ae4845ce7057c98abf9299">config.active_record.database_selector = { delay: 2.seconds }
 config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
 config.active_record.database_resolver_context = MyCookieResolver
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8b190f8469c82355b6651c023ed2c92d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5d43efb600ae4845ce7057c98abf9299">Copiar</button>
 </div>
 <h3 id="usando-a-troca-de-conexao-manual"><a class="anchorlink" href="#usando-a-troca-de-conexao-manual">4 Usando a troca de conexão manual</a></h3><p>Existem casos nos quais você pode querer que sua aplicação se conecte ao banco de escrita ou à réplica, e onde a troca automática de conexão não será adequada. Por exemplo, suponhamos que exista uma requisição em particular que sempre deverá ser encaminhada para a réplica, mesmo que tenha método POST.</p><p>Para isso, o Rails possui um método chamado <code>connected_to</code>, que trocará para a conexão desejada.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">connected_to</span><span class="p">(</span><span class="ss">role: :reading</span><span class="p">)</span> <span class="k">do</span>
   <span class="c1"># o código deste bloco estará conectado ao role 'reading'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-150e682b3aef089d43c59d81a9b1c601">ActiveRecord::Base.connected_to(role: :reading) do
+<textarea class="clipboard-content" id="clipboard-55a7415cc499be65186d99df533be432">ActiveRecord::Base.connected_to(role: :reading) do
   # o código deste bloco estará conectado ao role 'reading'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-150e682b3aef089d43c59d81a9b1c601">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-55a7415cc499be65186d99df533be432">Copiar</button>
 </div>
-<p>O <em>role</em> definido em <code>connected_to</code> buscará as conexões ligadas naquele determinado <em>handler</em> (ou <em>role</em>). O <em>handler</em> da conexão <code>reading</code> receberá todas as conexões feitas através do <code>connects_to</code>, que tenham o <em>role</em> <code>reading</code>.</p><p>Observe que o <code>connected_to</code> com um <em>role</em> definido buscará e trocará para uma conexão existente, usando o nome da conexão. Isso quer dizer que ao passar um <em>role</em> desconhecido ou inválido, como por exemplo, <code>connected_to(role: :nonexistent)</code>, causará um erro com a seguinte mensagem: <code>ActiveRecord::ConnectionNotEstablished (No connection pool for 'ActiveRecord::Base' found for the 'nonexistent' role.)</code></p><h3 id="horizontal-sharding"><a class="anchorlink" href="#horizontal-sharding">5 Horizontal sharding</a></h3><p>Horizontal sharding is when you split up your database to reduce the number of rows on each
-database server, but maintain the same schema across "shards". This is commonly called "multi-tenant"
-sharding.</p><p>The API for supporting horizontal sharding in Rails is similar to the multiple database / vertical
-sharding API that's existed since Rails 6.0.</p><p>Shards are declared in the three-tier config like this:</p><div class="code_container">
+<p>O <em>role</em> definido em <code>connected_to</code> buscará as conexões ligadas naquele determinado <em>handler</em> (ou <em>role</em>). O <em>handler</em> da conexão <code>reading</code> receberá todas as conexões feitas através do <code>connects_to</code>, que tenham o <em>role</em> <code>reading</code>.</p><p>Observe que o <code>connected_to</code> com um <em>role</em> definido buscará e trocará para uma conexão existente, usando o nome da conexão. Isso quer dizer que ao passar um <em>role</em> desconhecido ou inválido, como por exemplo, <code>connected_to(role: :nonexistent)</code>, causará um erro com a seguinte mensagem: <code>ActiveRecord::ConnectionNotEstablished (No connection pool for 'ActiveRecord::Base' found for the 'nonexistent' role.)</code></p><h3 id="horizontal-sharding"><a class="anchorlink" href="#horizontal-sharding">5 Horizontal sharding</a></h3><p>Fragmentação horizontal é quando você divide seu banco de dados para reduzir o número de linhas em cada
+servidor de banco de dados, mas mantém o mesmo esquema em "fragmentos". Isso é comumente chamado de fragmentação "multilocatário" (<em>multi-tenant</em>).</p><p>A API para suportar fragmentação horizontal no Rails é semelhante ao banco de dados múltiplo / 
+API de vertical fragmentação que existe desde o Rails 6.0.</p><p>Os fragmentos são declarados na configuração de três camadas como este:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">production</span><span class="pi">:</span>
   <span class="na">primary</span><span class="pi">:</span>
     <span class="na">database</span><span class="pi">:</span> <span class="s">my_primary_database</span>
@@ -560,7 +559,7 @@ sharding API that's existed since Rails 6.0.</p><p>Shards are declared in the th
     <span class="na">adapter</span><span class="pi">:</span> <span class="s">mysql2</span>
     <span class="na">replica</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ec18a0f4dab04e399f2db6b105e470f5">production:
+<textarea class="clipboard-content" id="clipboard-3e23b1c50b4498efa7c1d6a3b0c6e8cc">production:
   primary:
     database: my_primary_database
     adapter: mysql2
@@ -576,9 +575,9 @@ sharding API that's existed since Rails 6.0.</p><p>Shards are declared in the th
     adapter: mysql2
     replica: true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ec18a0f4dab04e399f2db6b105e470f5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3e23b1c50b4498efa7c1d6a3b0c6e8cc">Copiar</button>
 </div>
-<p>Models are then connected with the <code>connects_to</code> API via the <code>shards</code> key:</p><div class="code_container">
+<p>Os <em>models</em> são então conectados à API <code>connects_to</code> por meio da chave<code>shards</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationRecord</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
   <span class="nb">self</span><span class="p">.</span><span class="nf">abstract_class</span> <span class="o">=</span> <span class="kp">true</span>
 
@@ -588,7 +587,7 @@ sharding API that's existed since Rails 6.0.</p><p>Shards are declared in the th
   <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0bf0663c1a1123a3f23b06fdd649bc22">class ApplicationRecord &lt; ActiveRecord::Base
+<textarea class="clipboard-content" id="clipboard-57c33d94009a57e3eafb4efa39c79ac8">class ApplicationRecord &lt; ActiveRecord::Base
   self.abstract_class = true
 
   connects_to shards: {
@@ -597,92 +596,92 @@ sharding API that's existed since Rails 6.0.</p><p>Shards are declared in the th
   }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0bf0663c1a1123a3f23b06fdd649bc22">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-57c33d94009a57e3eafb4efa39c79ac8">Copiar</button>
 </div>
-<p>Then models can swap connections manually via the <code>connected_to</code> API. If
-using sharding both a <code>role</code> and <code>shard</code> must be passed:</p><div class="code_container">
+<p>Então, os <em>models</em> podem trocar conexões manualmente por meio da API <code>connected_to</code>. Se
+usando o <em>sharding</em>, um <code>role</code> e um<code>shard</code> devem ser passados:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">connected_to</span><span class="p">(</span><span class="ss">role: :writing</span><span class="p">,</span> <span class="ss">shard: :default</span><span class="p">)</span> <span class="k">do</span>
-  <span class="vi">@id</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">create!</span> <span class="c1"># Creates a record in shard default</span>
+  <span class="vi">@id</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">create!</span> <span class="c1"># Cria um registro no fragmento padrão</span>
 <span class="k">end</span>
 
 <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">connected_to</span><span class="p">(</span><span class="ss">role: :writing</span><span class="p">,</span> <span class="ss">shard: :shard_one</span><span class="p">)</span> <span class="k">do</span>
-  <span class="no">Person</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="vi">@id</span><span class="p">)</span> <span class="c1"># Can't find record, doesn't exist because it was created</span>
-                   <span class="c1"># in the default shard</span>
+  <span class="no">Person</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="vi">@id</span><span class="p">)</span> <span class="c1"># Não é possível encontrar o registro, não existe porque foi criado</span>
+                   <span class="c1"># no fragmento padrão</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b591e8fe7c878a5efc5b032be0b493cf">ActiveRecord::Base.connected_to(role: :writing, shard: :default) do
-  @id = Person.create! # Creates a record in shard default
+<textarea class="clipboard-content" id="clipboard-a3ff75a0660b5f5e48328ace7c22ae3b">ActiveRecord::Base.connected_to(role: :writing, shard: :default) do
+  @id = Person.create! # Cria um registro no fragmento padrão
 end
 
 ActiveRecord::Base.connected_to(role: :writing, shard: :shard_one) do
-  Person.find(@id) # Can't find record, doesn't exist because it was created
-                   # in the default shard
+  Person.find(@id) # Não é possível encontrar o registro, não existe porque foi criado
+                   # no fragmento padrão
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b591e8fe7c878a5efc5b032be0b493cf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a3ff75a0660b5f5e48328ace7c22ae3b">Copiar</button>
 </div>
-<p>The horizontal sharding API also supports read replicas. You can swap the
-role and the shard with the <code>connected_to</code> API.</p><div class="code_container">
+<p>A API de fragmentação horizontal também oferece suporte a réplicas de leitura. Você pode trocar o
+papel (<em>role</em>) e o fragmento (<em>shard</em>) com a API <code>connected_to</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">connected_to</span><span class="p">(</span><span class="ss">role: :reading</span><span class="p">,</span> <span class="ss">shard: :shard_one</span><span class="p">)</span> <span class="k">do</span>
-  <span class="no">Person</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Lookup record from read replica of shard one</span>
+  <span class="no">Person</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Procura um registro de uma réplica de leitura do shard_one</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b439f7ae149f76a24d3356748fca091c">ActiveRecord::Base.connected_to(role: :reading, shard: :shard_one) do
-  Person.first # Lookup record from read replica of shard one
+<textarea class="clipboard-content" id="clipboard-0778debdc1c1fb90660dfd5ef3f18564">ActiveRecord::Base.connected_to(role: :reading, shard: :shard_one) do
+  Person.first # Procura um registro de uma réplica de leitura do shard_one
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b439f7ae149f76a24d3356748fca091c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0778debdc1c1fb90660dfd5ef3f18564">Copiar</button>
 </div>
-<h3 id="granular-database-connection-switching"><a class="anchorlink" href="#granular-database-connection-switching">6 Granular Database Connection Switching</a></h3><p>In Rails 6.1 it's possible to switch connections for one database instead of
-all databases globally. To use this feature you must first set
-<code>config.active_record.legacy_connection_handling</code> to <code>false</code> in your application
-configuration. The majority of applications should not need to make any other
-changes since the public APIs have the same behavior.</p><p>With <code>legacy_connection_handling</code> set to false, any abstract connection class
-will be able to switch connections without affecting other connections. This
-is useful for switching your <code>AnimalsRecord</code> queries to read from the replica
-while ensuring your <code>ApplicationRecord</code> queries go to the primary.</p><div class="code_container">
+<h3 id="alternando-conexao-de-banco-de-dados-granular"><a class="anchorlink" href="#alternando-conexao-de-banco-de-dados-granular">6 Alternando Conexão de Banco de Dados Granular</a></h3><p>No Rails 6.1 é possível alternar conexões para um banco de dados ao invés de
+todos os bancos de dados globalmente. Para usar este recurso, você deve primeiro definir
+<code>config.active_record.legacy_connection_handling</code> para<code>false</code> nas configurações da sua
+aplicação. A maioria das aplicações não precisam fazer nenhuma outra
+alteração, uma vez que as APIs públicas têm o mesmo comportamento.</p><p>Com <code>legacy_connection_handling</code> definido como <em>false</em>, qualquer classe de conexão abstrata
+será capaz de alternar as conexões sem afetar outras conexões. Esse
+é útil para mudar suas consultas <code>AnimalsRecord</code> para ler a partir da réplica
+enquanto garante que suas consultas <code>ApplicationRecord</code> vão para o primário.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">AnimalsRecord</span><span class="p">.</span><span class="nf">connected_to</span><span class="p">(</span><span class="ss">role: :reading</span><span class="p">)</span> <span class="k">do</span>
   <span class="no">Dog</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Reads from animals_replica</span>
   <span class="no">Person</span><span class="p">.</span><span class="nf">first</span>  <span class="c1"># Reads from primary</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bc93a80049d88552c746fd46341d5787">AnimalsRecord.connected_to(role: :reading) do
+<textarea class="clipboard-content" id="clipboard-1e0b8daa7c9e1f118f6abe741c4f6c93">AnimalsRecord.connected_to(role: :reading) do
   Dog.first # Reads from animals_replica
   Person.first  # Reads from primary
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bc93a80049d88552c746fd46341d5787">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1e0b8daa7c9e1f118f6abe741c4f6c93">Copiar</button>
 </div>
-<p>It's also possible to swap connections granularly for shards.</p><div class="code_container">
+<p>Também é possível trocar conexões granularmente por fragmentos.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">AnimalsRecord</span><span class="p">.</span><span class="nf">connected_to</span><span class="p">(</span><span class="ss">role: :reading</span><span class="p">,</span> <span class="ss">shard: :shard_one</span><span class="p">)</span> <span class="k">do</span>
   <span class="no">Dog</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Will read from shard_one_replica. If no connection exists for shard_one_replica,</span>
   <span class="c1"># a ConnectionNotEstablished error will be raised</span>
   <span class="no">Person</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Will read from primary writer</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9152a9d4ac0ca7cd736a7735324319f3">AnimalsRecord.connected_to(role: :reading, shard: :shard_one) do
+<textarea class="clipboard-content" id="clipboard-663948b7a616e4f58cbbf58f9e5248c5">AnimalsRecord.connected_to(role: :reading, shard: :shard_one) do
   Dog.first # Will read from shard_one_replica. If no connection exists for shard_one_replica,
   # a ConnectionNotEstablished error will be raised
   Person.first # Will read from primary writer
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9152a9d4ac0ca7cd736a7735324319f3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-663948b7a616e4f58cbbf58f9e5248c5">Copiar</button>
 </div>
-<p>To switch only the primary database cluster use <code>ApplicationRecord</code>:</p><div class="code_container">
+<p>Para mudar apenas o <a href="https://pt.wikipedia.org/wiki/Cluster"><em>cluster</em></a> de banco de dados primário, use <code>ApplicationRecord</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ApplicationRecord</span><span class="p">.</span><span class="nf">connected_to</span><span class="p">(</span><span class="ss">role: :reading</span><span class="p">,</span> <span class="ss">shard: :shard_one</span><span class="p">)</span> <span class="k">do</span>
   <span class="no">Person</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Reads from primary_shard_one_replica</span>
   <span class="no">Dog</span><span class="p">.</span><span class="nf">first</span> <span class="c1"># Reads from animals_primary</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ecd79ff6847772ef2cd16607ef9f0c07">ApplicationRecord.connected_to(role: :reading, shard: :shard_one) do
+<textarea class="clipboard-content" id="clipboard-dc52ea9c7070a3ab930f52a25699e4f6">ApplicationRecord.connected_to(role: :reading, shard: :shard_one) do
   Person.first # Reads from primary_shard_one_replica
   Dog.first # Reads from animals_primary
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ecd79ff6847772ef2cd16607ef9f0c07">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dc52ea9c7070a3ab930f52a25699e4f6">Copiar</button>
 </div>
-<p><code>ActiveRecord::Base.connected_to</code> maintains the ability to switch
-connections globally.</p><h3 id="caveats"><a class="anchorlink" href="#caveats">7 Caveats</a></h3><h4 id="automatic-swapping-for-horizontal-sharding"><a class="anchorlink" href="#automatic-swapping-for-horizontal-sharding">7.1 Automatic swapping for horizontal sharding</a></h4><p>While Rails now supports an API for connecting to and swapping connections of shards, it does
+<p><code>ActiveRecord::Base.connected_to</code> mantém a capacidade de alternar
+conexões globalmente.</p><h3 id="caveats"><a class="anchorlink" href="#caveats">7 Caveats</a></h3><h4 id="automatic-swapping-for-horizontal-sharding"><a class="anchorlink" href="#automatic-swapping-for-horizontal-sharding">7.1 Automatic swapping for horizontal sharding</a></h4><p>While Rails now supports an API for connecting to and swapping connections of shards, it does
 not yet support an automatic swapping strategy. Any shard swapping will need to be done manually
 in your app via a middleware or <code>around_action</code>.</p><h4 id="load-balancing-replicas"><a class="anchorlink" href="#load-balancing-replicas">7.2 Load Balancing Replicas</a></h4><p>Rails also doesn't support automatic load balancing of replicas. This is very
 dependent on your infrastructure. We may implement basic, primitive load balancing
@@ -698,7 +697,7 @@ time for Rails 6.0 but hope to have it in a future version soon.</p>
           Você é incentivado a ajudar a melhorar a qualidade deste guia.
         </p>
         <p>
-          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Por favor, contribua caso veja quaisquer erros, inclusive erros de digitação.
           Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
         </p>
         <p>

@@ -326,15 +326,15 @@
 </li>
 <li><a href="#formularios-para-recursos-externos">Formulários para Recursos Externos</a></li>
 <li>
-<a href="#building-complex-forms">Building Complex Forms</a>
+<a href="#trabalhando-com-formularios-complexos">Trabalhando com Formulários Complexos</a>
 
 <ul>
-<li><a href="#configuring-the-model">Configuring the Model</a></li>
-<li><a href="#nested-forms">Nested Forms</a></li>
-<li><a href="#the-controller">The Controller</a></li>
-<li><a href="#removing-objects">Removing Objects</a></li>
-<li><a href="#preventing-empty-records">Preventing Empty Records</a></li>
-<li><a href="#adding-fields-on-the-fly">Adding Fields on the Fly</a></li>
+<li><a href="#configurando-o-model">Configurando o <em>Model</em></a></li>
+<li><a href="#formularios-aninhados">Formulários Aninhados</a></li>
+<li><a href="#o-controller">O <em>Controller</em></a></li>
+<li><a href="#removendo-objetos">Removendo objetos</a></li>
+<li><a href="#prevenindo-registros-vazios">Prevenindo Registros Vazios</a></li>
+<li><a href="#adicionando-campos-dinamicamente">Adicionando campos dinamicamente</a></li>
 </ul>
 </li>
 <li><a href="#utilizando-tags-auxiliares-tag-helpers-sem-um-construtor-de-formulario">Utilizando Tags Auxiliares (<em>Tag Helpers</em>) Sem Um Construtor de Formulário</a></li>
@@ -354,11 +354,11 @@
   Conteúdo do formulário
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d60a50a2c4f0ccedbdb5e01fad4d8ca">&lt;%= form_with do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-a1e365c6f64dd7d209b54d87a24daf94">&lt;%= form_with do |form| %&gt;
   Conteúdo do formulário
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d60a50a2c4f0ccedbdb5e01fad4d8ca">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a1e365c6f64dd7d209b54d87a24daf94">Copiar</button>
 </div>
 <p>Quando chamado sem nenhum argumento como este, é criado uma <em>tag</em> de formulário que, quando enviado, fará uma requisição HTTP usando o verbo POST para a página atual. Por exemplo, supondo que a página atual seja a inicial, o HTML gerado terá a seguinte aparência:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">action=</span><span class="s">"/"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
@@ -366,12 +366,12 @@
   Form contents
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-434bb919dd01113a5421ba2db4f18fc5">&lt;form accept-charset="UTF-8" action="/" method="post"&gt;
+<textarea class="clipboard-content" id="clipboard-298c95e218555da6f01224d0fed1212b">&lt;form accept-charset="UTF-8" action="/" method="post"&gt;
   &lt;input name="authenticity_token" type="hidden" value="J7CBxfHalt49OSHp27hblqK20c9PgwJ108nDHX/8Cts=" /&gt;
   Form contents
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-434bb919dd01113a5421ba2db4f18fc5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-298c95e218555da6f01224d0fed1212b">Copiar</button>
 </div>
 <p>Note que o HTML contém um elemento <code>input</code> do tipo <code>hidden</code>. Este <code>input</code> é importante porque os formulários não podem ser enviados com sucesso sem ele, exceto formulários com método GET. Esse elemento oculto com o nome <code>authenticity_token</code> é um recurso de segurança do Rails chamado <strong>proteção contra falsificação de solicitação entre sites</strong> (<a href="https://pt.wikipedia.org/wiki/Cross-site_request_forgery"><strong>cross-site request forgery protection</strong></a>), e os <em>helpers</em> de formulário o geram para todos os formulários não GET (desde que esse recurso de segurança esteja ativado). Você poderá ler mais sobre isso no guia <a href="security.html#cross-site-request-forgery-csrf">Segurança em Aplicações Rails</a>.</p><h4 id="formulario-de-pesquisa-generica"><a class="anchorlink" href="#formulario-de-pesquisa-generica">1.1 Formulário de pesquisa genérica</a></h4><p>Um dos formulários mais básicos que você vê na web é um formulário de pesquisa. Este formulário contém:</p>
 <ul>
@@ -387,13 +387,13 @@
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">submit</span> <span class="s2">"Search"</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2e69d234c17082d5ad4680b16779730d">&lt;%= form_with url: "/search", method: :get do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-46fd56f38c1ebe25aadbae714656a76a">&lt;%= form_with url: "/search", method: :get do |form| %&gt;
   &lt;%= form.label :query, "Search for:" %&gt;
   &lt;%= form.text_field :query %&gt;
   &lt;%= form.submit "Search" %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2e69d234c17082d5ad4680b16779730d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-46fd56f38c1ebe25aadbae714656a76a">Copiar</button>
 </div>
 <p>Isso irá gerar o seguinte HTML:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/search"</span> <span class="na">method=</span><span class="s">"get"</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="nt">&gt;</span>
@@ -402,13 +402,13 @@
   <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"commit"</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Search"</span> <span class="na">data-disable-with=</span><span class="s">"Search"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0048206f001af9acb98ce0e2fefa85f7">&lt;form action="/search" method="get" accept-charset="UTF-8" &gt;
+<textarea class="clipboard-content" id="clipboard-b769ad045a40313ef58f8c8c1cebb50e">&lt;form action="/search" method="get" accept-charset="UTF-8" &gt;
   &lt;label for="query"&gt;Search for:&lt;/label&gt;
   &lt;input id="query" name="query" type="text" /&gt;
   &lt;input name="commit" type="submit" value="Search" data-disable-with="Search" /&gt;
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0048206f001af9acb98ce0e2fefa85f7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b769ad045a40313ef58f8c8c1cebb50e">Copiar</button>
 </div>
 <div class="info"><p>Passando <code>url: my_speccified_path</code> para <code>form_with</code> indica ao formulário onde fazer a requisição. No entanto, conforme explicado abaixo, você também pode passar objetos ActiveRecord para o formulário.</p></div><div class="info"><p>Para cada entrada de formulário, um atributo ID é gerado a partir de seu nome ("query" no exemplo acima). Esses IDs podem ser muito úteis para estilizar CSS ou manipular controles de formulário com JavaScript.</p></div><div class="warning"><p>Use "GET" como o método para buscas em formulários. Isso permitirá aos usuários marcar uma busca específica e depois retornar nessa mesma busca. De forma geral, o Rails recomenda que você utilize o verbo correto para a ação desejada.</p></div><h4 id="helpers-para-gerar-elementos-de-formulario"><a class="anchorlink" href="#helpers-para-gerar-elementos-de-formulario">1.2 Helpers para gerar elementos de formulário</a></h4><p>O objeto construtor de formulário gerado pelo <code>form_with</code> fornece vários métodos auxiliares para gerar elementos de formulário, como campos de texto, caixas de seleção (<em>checkboxes</em>) e botões de rádio (<em>radio buttons</em>). O primeiro parâmetro para esses métodos é sempre o nome do <em>input</em>. Quando o formulário for enviado, o nome será passado junto com os dados do formulário e será direcionado para <code>params</code> o controlador com o valor inserido pelo usuário para esse campo. Por exemplo, se o formulário contiver <code>&lt;%= form.text_field :query %&gt;</code>, podendo obter o valor deste campo no controlador com <code>params[:query]</code> .</p><p>Ao nomear entradas, o Rails usa certas convenções que possibilitam enviar parâmetros com valores não escalares, como matrizes ou hashes, que também estarão acessíveis <code>params</code>. Poderá ser lido mais sobre eles no capítulo <a href="#entendendo-convencoes-de-nomeacao-de-parametros">Noções básicas sobre convenções de nomenclatura de parâmetros</a> deste guia. Para detalhes de como usar com precisão esses auxiliares, consulte a <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormTagHelper.html">documentação da API</a>.</p><h5 id="checkboxes-caixas-de-selecao"><a class="anchorlink" href="#checkboxes-caixas-de-selecao">1.2.1 <em>Checkboxes</em> Caixas de seleção</a></h5><p>As caixas de seleção são controles de formulário que fornecem ao usuário um conjunto de opções que podem ser ativados ou desativados pelo usuário.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">check_box</span> <span class="ss">:pet_dog</span> <span class="cp">%&gt;</span>
@@ -416,12 +416,12 @@
 <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">check_box</span> <span class="ss">:pet_cat</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">label</span> <span class="ss">:pet_cat</span><span class="p">,</span> <span class="s2">"I own a cat"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7e5ea29ce63d979ec5e4070115ab2ddd">&lt;%= form.check_box :pet_dog %&gt;
+<textarea class="clipboard-content" id="clipboard-079f2b896a512cd219f880127f5a96fb">&lt;%= form.check_box :pet_dog %&gt;
 &lt;%= form.label :pet_dog, "I own a dog" %&gt;
 &lt;%= form.check_box :pet_cat %&gt;
 &lt;%= form.label :pet_cat, "I own a cat" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7e5ea29ce63d979ec5e4070115ab2ddd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-079f2b896a512cd219f880127f5a96fb">Copiar</button>
 </div>
 <p>Isso gera o seguinte:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">id=</span><span class="s">"pet_dog"</span> <span class="na">name=</span><span class="s">"pet_dog"</span> <span class="na">value=</span><span class="s">"1"</span> <span class="nt">/&gt;</span>
@@ -429,12 +429,12 @@
 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">id=</span><span class="s">"pet_cat"</span> <span class="na">name=</span><span class="s">"pet_cat"</span> <span class="na">value=</span><span class="s">"1"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"pet_cat"</span><span class="nt">&gt;</span>I own a cat<span class="nt">&lt;/label&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e7f00cff6b692b6868e54966da9f558c">&lt;input type="checkbox" id="pet_dog" name="pet_dog" value="1" /&gt;
+<textarea class="clipboard-content" id="clipboard-5e34d8800a21bcf9e84f4d0cfbe2a92d">&lt;input type="checkbox" id="pet_dog" name="pet_dog" value="1" /&gt;
 &lt;label for="pet_dog"&gt;I own a dog&lt;/label&gt;
 &lt;input type="checkbox" id="pet_cat" name="pet_cat" value="1" /&gt;
 &lt;label for="pet_cat"&gt;I own a cat&lt;/label&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e7f00cff6b692b6868e54966da9f558c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5e34d8800a21bcf9e84f4d0cfbe2a92d">Copiar</button>
 </div>
 <p>O primeiro parâmetro para <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-check_box"><code>check_box</code></a>, é o nome da entrada. O segundo parâmetro, é o valor da entrada. Este valor será incluído nos dados do formulário (e está presente em <code>params</code>) quando a caixa de seleção estiver marcada.</p><h5 id="radio-buttons-botoes-de-opcao"><a class="anchorlink" href="#radio-buttons-botoes-de-opcao">1.2.2 <em>Radio Buttons</em> Botões de opção</a></h5><p>Os botões de opção embora semelhantes às caixas de seleção, são controles que especificam um conjunto de opções mutuamente exclusivos (ou seja, o usuário pode escolher apenas uma).</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">radio_button</span> <span class="ss">:age</span><span class="p">,</span> <span class="s2">"child"</span> <span class="cp">%&gt;</span>
@@ -442,12 +442,12 @@
 <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">radio_button</span> <span class="ss">:age</span><span class="p">,</span> <span class="s2">"adult"</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">label</span> <span class="ss">:age_adult</span><span class="p">,</span> <span class="s2">"I am over 21"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-111795c52deffbc585ab698631ad323d">&lt;%= form.radio_button :age, "child" %&gt;
+<textarea class="clipboard-content" id="clipboard-2b460afae4f4bb9019e413aa9c151ce1">&lt;%= form.radio_button :age, "child" %&gt;
 &lt;%= form.label :age_child, "I am younger than 21" %&gt;
 &lt;%= form.radio_button :age, "adult" %&gt;
 &lt;%= form.label :age_adult, "I am over 21" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-111795c52deffbc585ab698631ad323d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2b460afae4f4bb9019e413aa9c151ce1">Copiar</button>
 </div>
 <p>Resultado:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"age_child"</span> <span class="na">name=</span><span class="s">"age"</span> <span class="na">value=</span><span class="s">"child"</span> <span class="nt">/&gt;</span>
@@ -455,12 +455,12 @@
 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">id=</span><span class="s">"age_adult"</span> <span class="na">name=</span><span class="s">"age"</span> <span class="na">value=</span><span class="s">"adult"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"age_adult"</span><span class="nt">&gt;</span>I am over 21<span class="nt">&lt;/label&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-51d408e20d721a5376af99ead70ef6ec">&lt;input type="radio" id="age_child" name="age" value="child" /&gt;
+<textarea class="clipboard-content" id="clipboard-a13b0493630a0b11741e79bcffc26261">&lt;input type="radio" id="age_child" name="age" value="child" /&gt;
 &lt;label for="age_child"&gt;I am younger than 21&lt;/label&gt;
 &lt;input type="radio" id="age_adult" name="age" value="adult" /&gt;
 &lt;label for="age_adult"&gt;I am over 21&lt;/label&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-51d408e20d721a5376af99ead70ef6ec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a13b0493630a0b11741e79bcffc26261">Copiar</button>
 </div>
 <p>Assim como <code>check_box</code>, o segundo parâmetro para <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-radio_button"><code>radio_button</code></a> é o valor da entrada. Como esses dois botões compartilham o mesmo nome (<code>age</code>), o usuário poderá selecionar apenas um deles, e <code>params[:age]</code> receberá <code>"child"</code> ou <code>"adult"</code>.</p><div class="note"><p>Sempre use <em>labels</em> para a caixa de seleção e botões de opção. Eles associam o texto a uma opção específica e, ao expandir a região clicável, facilita o clique dos usuários nas entradas.</p></div><h4 id="outros-auxiliares-interessantes"><a class="anchorlink" href="#outros-auxiliares-interessantes">1.3 Outros auxiliares interessantes</a></h4><p>Outros controles de formulários que valem a pena falar são áreas de texto, campos ocultos, campos de senha, campos de número, campos de data e hora e muitos outros:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">text_area</span> <span class="ss">:message</span><span class="p">,</span> <span class="ss">size: </span><span class="s2">"70x5"</span> <span class="cp">%&gt;</span>
@@ -479,7 +479,7 @@
 <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">url_field</span> <span class="ss">:homepage</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">color_field</span> <span class="ss">:favorite_color</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ea294ad9d4534b7c8d4cc219e606a4e1">&lt;%= form.text_area :message, size: "70x5" %&gt;
+<textarea class="clipboard-content" id="clipboard-87597a800de8b24982c0850d890b36e8">&lt;%= form.text_area :message, size: "70x5" %&gt;
 &lt;%= form.hidden_field :parent_id, value: "foo" %&gt;
 &lt;%= form.password_field :password %&gt;
 &lt;%= form.number_field :price, in: 1.0..20.0, step: 0.5 %&gt;
@@ -495,7 +495,7 @@
 &lt;%= form.url_field :homepage %&gt;
 &lt;%= form.color_field :favorite_color %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ea294ad9d4534b7c8d4cc219e606a4e1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-87597a800de8b24982c0850d890b36e8">Copiar</button>
 </div>
 <p>Resultado:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;textarea</span> <span class="na">name=</span><span class="s">"message"</span> <span class="na">id=</span><span class="s">"message"</span> <span class="na">cols=</span><span class="s">"70"</span> <span class="na">rows=</span><span class="s">"5"</span><span class="nt">&gt;&lt;/textarea&gt;</span>
@@ -514,7 +514,7 @@
 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"url"</span> <span class="na">name=</span><span class="s">"homepage"</span> <span class="na">id=</span><span class="s">"homepage"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"color"</span> <span class="na">name=</span><span class="s">"favorite_color"</span> <span class="na">id=</span><span class="s">"favorite_color"</span> <span class="na">value=</span><span class="s">"#000000"</span> <span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-21af37264155dc2f94191e10ef9db638">&lt;textarea name="message" id="message" cols="70" rows="5"&gt;&lt;/textarea&gt;
+<textarea class="clipboard-content" id="clipboard-5d54d06bdd63da2c115311225585d2d8">&lt;textarea name="message" id="message" cols="70" rows="5"&gt;&lt;/textarea&gt;
 &lt;input type="hidden" name="parent_id" id="parent_id" value="foo" /&gt;
 &lt;input type="password" name="password" id="password" /&gt;
 &lt;input type="number" name="price" id="price" step="0.5" min="1.0" max="20.0" /&gt;
@@ -530,16 +530,16 @@
 &lt;input type="url" name="homepage" id="homepage" /&gt;
 &lt;input type="color" name="favorite_color" id="favorite_color" value="#000000" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-21af37264155dc2f94191e10ef9db638">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5d54d06bdd63da2c115311225585d2d8">Copiar</button>
 </div>
 <p>Entradas ocultas não são exibidas ao usuário, mas retêm dados como qualquer entrada de texto. Os valores dentro deles podem ser alterados com JavaScript.</p><div class="warning"><p>As entradas de pesquisa, telefone, data, hora, cor, data e hora local e data, mês, semana, URL, email, número e intervalo são controles HTML5. Se você precisar que sua aplicação tenha uma experiência consistente em navegadores antigos, precisará de um polyfill HTML5 (fornecido por css e/ou JavaScript). Definiticamente, <a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills">não faltam soluções disponíveis</a>, embora uma ferramenta popular no momento seja o <a href="https://modernizr.com/">Modernizr</a>, que fornece uma maneira simples de adicionar funcionalidade com base na presença de recursos HTML5 detectados.</p></div><div class="info"><p>Se você estiver usando campos de entradas de senha (para qualquer finalidade), convêm configurar sua aplicação para impedir que esses parâmetros sejam registrados. Você pode aprender sobre este assunto no guia <a href="security.html#logging">Protegendo aplicações Rails</a></p></div><h3 id="trabalhando-com-objetos-model"><a class="anchorlink" href="#trabalhando-com-objetos-model">2 Trabalhando com Objetos <em>Model</em></a></h3><h4 id="vinculando-um-formulario-a-um-objeto"><a class="anchorlink" href="#vinculando-um-formulario-a-um-objeto">2.1 Vinculando um Formulário a um Objeto</a></h4><p>O argumento <code>:model</code> do <code>form_with</code> nos permite ligar o objeto construtor de um formulário a um objeto <em>model</em>. Isso significa que o escopo do formulário será aquele objeto <em>model</em> e os campos do formulário serão preenchidos com valores desse objeto.</p><p>Por exemplo, se temos um objeto <em>model</em> como <code>@article</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="vi">@article</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="c1"># =&gt; #&lt;Article id: 42, title: "My Title", body: "My Body"&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e7d893e72341eeede30c338205a85701">@article = Article.find(42)
+<textarea class="clipboard-content" id="clipboard-6cc7a37db5ede2b1c1cbf98e2b4bd57b">@article = Article.find(42)
 # =&gt; #&lt;Article id: 42, title: "My Title", body: "My Body"&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e7d893e72341eeede30c338205a85701">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6cc7a37db5ede2b1c1cbf98e2b4bd57b">Copiar</button>
 </div>
 <p>O seguinte formulário:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@article</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
@@ -548,13 +548,13 @@
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">submit</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8953c3749fc5892c25c2dc46d1d069a4">&lt;%= form_with model: @article do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-ffc862e6cdccd4fe4fa24a463262f6b4">&lt;%= form_with model: @article do |form| %&gt;
   &lt;%= form.text_field :title %&gt;
   &lt;%= form.text_area :body, size: "60x10" %&gt;
   &lt;%= form.submit %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8953c3749fc5892c25c2dc46d1d069a4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ffc862e6cdccd4fe4fa24a463262f6b4">Copiar</button>
 </div>
 <p>Cria o seguinte código:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/articles/42"</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="nt">&gt;</span>
@@ -566,7 +566,7 @@
   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">name=</span><span class="s">"commit"</span> <span class="na">value=</span><span class="s">"Update Article"</span> <span class="na">data-disable-with=</span><span class="s">"Update Article"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-97bbb49a2efc090e2ae54178e20c3943">&lt;form action="/articles/42" method="post" accept-charset="UTF-8" &gt;
+<textarea class="clipboard-content" id="clipboard-5bd1dbd65114a5463cf56649276ce8b6">&lt;form action="/articles/42" method="post" accept-charset="UTF-8" &gt;
   &lt;input name="authenticity_token" type="hidden" value="..." /&gt;
   &lt;input type="text" name="article[title]" id="article_title" value="My Title" /&gt;
   &lt;textarea name="article[body]" id="article_body" cols="60" rows="10"&gt;
@@ -575,7 +575,7 @@
   &lt;input type="submit" name="commit" value="Update Article" data-disable-with="Update Article"&gt;
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-97bbb49a2efc090e2ae54178e20c3943">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5bd1dbd65114a5463cf56649276ce8b6">Copiar</button>
 </div>
 <p>Existem algumas coisas a serem observadas aqui:</p>
 <ul>
@@ -592,14 +592,14 @@
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8aee474a1d126350ec7c42df0a9b3298">&lt;%= form_with model: @person do |person_form| %&gt;
+<textarea class="clipboard-content" id="clipboard-0f89ef5bff7286d9d2d9c26d5f969bc0">&lt;%= form_with model: @person do |person_form| %&gt;
   &lt;%= person_form.text_field :name %&gt;
   &lt;%= fields_for :contact_detail, @person.contact_detail do |contact_detail_form| %&gt;
     &lt;%= contact_detail_form.text_field :phone_number %&gt;
   &lt;% end %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8aee474a1d126350ec7c42df0a9b3298">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f89ef5bff7286d9d2d9c26d5f969bc0">Copiar</button>
 </div>
 <p>que produz a seguinte saída:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/people"</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
@@ -608,20 +608,20 @@
   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"contact_detail[phone_number]"</span> <span class="na">id=</span><span class="s">"contact_detail_phone_number"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6e0a396d8710d0371ca8b93112e86ada">&lt;form action="/people" accept-charset="UTF-8" method="post"&gt;
+<textarea class="clipboard-content" id="clipboard-c6259cb95dbd101c30f7088220f16ffc">&lt;form action="/people" accept-charset="UTF-8" method="post"&gt;
   &lt;input type="hidden" name="authenticity_token" value="bL13x72pldyDD8bgtkjKQakJCpd4A8JdXGbfksxBDHdf1uC0kCMqe2tvVdUYfidJt0fj3ihC4NxiVHv8GVYxJA==" /&gt;
   &lt;input type="text" name="person[name]" id="person_name" /&gt;
   &lt;input type="text" name="contact_detail[phone_number]" id="contact_detail_phone_number" /&gt;
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6e0a396d8710d0371ca8b93112e86ada">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c6259cb95dbd101c30f7088220f16ffc">Copiar</button>
 </div>
 <p>O objeto produzido por <code>fields_for</code> é um construtor de formulário igual ao produzido por <code>form_with</code>.</p><h4 id="confiando-na-identificacao-de-registro"><a class="anchorlink" href="#confiando-na-identificacao-de-registro">2.2 Confiando na Identificação de Registro</a></h4><p>O <em>model</em> Article está disponível para os usuários da aplicação, portanto - seguindo as melhores praticas para desenvolvimento com Rails - você deve declará-lo <strong>um recurso (<em>resource</em>)</strong>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:articles</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-91ba53c3aa505a55b0f28a82f1ace017">resources :articles
+<textarea class="clipboard-content" id="clipboard-063317465a0261e2af4a7a9944c6023a">resources :articles
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-91ba53c3aa505a55b0f28a82f1ace017">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-063317465a0261e2af4a7a9944c6023a">Copiar</button>
 </div>
 <div class="info"><p>Declarar um recurso tem vários efeitos colaterais. Consulte <a href="routing.html#roteando-resources-recursos-o-padrao-do-rails">o guia Rotas do Rails de Fora pra Dentro</a> para obter mais informações como configurar e usar recursos.</p></div><p>Ao lidar com recursos RESTful, as chamadas de <code>form_with</code> ficam significativamente mais fáceis se você contar com a <strong>identificação de registros</strong>. Resumindo, você pode apenas passar a instância do modelo e fazer com que o Rails descubra o nome do modelo e o resto:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1">## Creating a new article</span>
@@ -636,7 +636,7 @@
 <span class="c1"># short-style:</span>
 <span class="n">form_with</span><span class="p">(</span><span class="ss">model: </span><span class="vi">@article</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-062f22b1930ab2d96045f064d93a8af1">## Creating a new article
+<textarea class="clipboard-content" id="clipboard-2412c90f014c0800e86ee97e459c15a1">## Creating a new article
 # long-style:
 form_with(model: @article, url: articles_path)
 # short-style:
@@ -648,28 +648,28 @@ form_with(model: @article, url: article_path(@article), method: "patch")
 # short-style:
 form_with(model: @article)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-062f22b1930ab2d96045f064d93a8af1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2412c90f014c0800e86ee97e459c15a1">Copiar</button>
 </div>
 <p>Observe como a chamada de estilo abreviado <code>form_with</code> é convenientemente a mesma, independentemente de o registro ser novo ou existente. A identificação de registros é inteligente o suficiente para descobrir se o registro é novo, chamando <code>record.persisted?</code>. Ele também seleciona o caminho correto para enviar e o nome com base na classe do objeto.</p><div class="warning"><p>Quando você está usando herança de tabela única (STI ou <em>single-table inheritance</em>) em seus objetos <em>model</em>, você não pode confiar na identificação de registro em uma subclasse se apenas sua classe pai for declarada um recurso. Você terá que especificar <code>:url</code>, e <code>:scope</code> (o nome do <em>model</em>) explicitamente.</p></div><h5 id="trabalhando-com-namespaces"><a class="anchorlink" href="#trabalhando-com-namespaces">2.2.1 Trabalhando com <em>Namespaces</em></a></h5><p>Se você criou rotas com <em>namespaces</em>, <code>form_with</code> tem uma abreviatura bacana para isso também. Se o seu aplicativo tiver um <em>namespace</em> de administrador,</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">form_with</span> <span class="ss">model: </span><span class="p">[</span><span class="ss">:admin</span><span class="p">,</span> <span class="vi">@article</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-adcf96afa62ba1b1bd8a205c5834bb6a">form_with model: [:admin, @article]
+<textarea class="clipboard-content" id="clipboard-628ef9c9e4bcd3fcb78a926e653077f8">form_with model: [:admin, @article]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-adcf96afa62ba1b1bd8a205c5834bb6a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-628ef9c9e4bcd3fcb78a926e653077f8">Copiar</button>
 </div>
 <p>irá criar um formulário que submete ao <code>ArticlesController</code> dentro do <em>namespace</em> do administrador (submetendo a <code>admin_article_path(@article)</code> no caso de uma atualização). Se você tiver vários níveis de <em>namespacing</em>, a sintaxe será semelhante:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">form_with</span> <span class="ss">model: </span><span class="p">[</span><span class="ss">:admin</span><span class="p">,</span> <span class="ss">:management</span><span class="p">,</span> <span class="vi">@article</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-67be1f96c18fd34fe32d6d9cf3d6c0eb">form_with model: [:admin, :management, @article]
+<textarea class="clipboard-content" id="clipboard-8ceec8b9f23192c94104d0c653de4cb2">form_with model: [:admin, :management, @article]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-67be1f96c18fd34fe32d6d9cf3d6c0eb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ceec8b9f23192c94104d0c653de4cb2">Copiar</button>
 </div>
 <p>Para mais informações sobre o sistema de roteamento Rails e as convenções associadas, consulte o <a href="routing.html">guia Rotas do Rails de Fora pra Dentro</a>.</p><h4 id="como-os-formularios-funcionam-com-os-metodos-patch-put-ou-delete-questionmark"><a class="anchorlink" href="#como-os-formularios-funcionam-com-os-metodos-patch-put-ou-delete-questionmark">2.3 Como os formulários funcionam com os métodos <em>PATCH</em>, <em>PUT</em>, ou <em>DELETE</em>?</a></h4><p>O <em>framework</em> Rails  incentiva o design <em>RESTful</em> de seus aplicativos, o que significa que você fará muitas requisições <em>"PATCH"</em>, <em>"PUT"</em>, e <em>"DELETE"</em> (além de <em>"GET"</em> e <em>"POST"</em>). Entretanto, a maioria dos navegadores <em>não suportam</em> métodos diferentes de <em>"GET"</em> e <em>"POST"</em> quando se trata de envio de formulários.</p><p>O Rails contorna esse problema emulando outros métodos no <em>POST</em> com uma entrada oculta <code>"_method"</code>, que é definida para refletir o método desejado:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">form_with</span><span class="p">(</span><span class="ss">url: </span><span class="n">search_path</span><span class="p">,</span> <span class="ss">method: </span><span class="s2">"patch"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-42e061b1497ed4765f15a0fa31e90e49">form_with(url: search_path, method: "patch")
+<textarea class="clipboard-content" id="clipboard-f66a150ef062adcf726b4ea6e116de8a">form_with(url: search_path, method: "patch")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-42e061b1497ed4765f15a0fa31e90e49">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f66a150ef062adcf726b4ea6e116de8a">Copiar</button>
 </div>
 <p>Resultado:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">action=</span><span class="s">"/search"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
@@ -678,20 +678,20 @@ form_with(model: @article)
   ...
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-df93e6dff33b4f801bd747afe5399aa9">&lt;form accept-charset="UTF-8" action="/search" method="post"&gt;
+<textarea class="clipboard-content" id="clipboard-150c41c7b1a0084d7daddf38cc6ec56e">&lt;form accept-charset="UTF-8" action="/search" method="post"&gt;
   &lt;input name="_method" type="hidden" value="patch" /&gt;
   &lt;input name="authenticity_token" type="hidden" value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" /&gt;
   ...
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-df93e6dff33b4f801bd747afe5399aa9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-150c41c7b1a0084d7daddf38cc6ec56e">Copiar</button>
 </div>
 <p>Ao analisar os dados submetidos pelo <em>POST</em>, o Rails levará em consideração o parâmetro especial <code>_method</code> e agirá como se o método HTTP fosse aquele especificado dentro dele (<em>"PATCH"</em> nesse exemplo).</p><div class="warning"><p>No Rails 6.0 e 5.2, todos os formulários usando <code>form_with</code> implementam <code>remote: true</code> por padrão. Esses formulários enviarão dados usando requisições XHR (<em>Ajax</em>). Para desabilitar isso, inclua <code>local: true</code>. Para se aprofundar, veja o guia <a href="working_with_javascript_in_rails.html#elementos-remotos">Trabalhando com JavaScript no Rails</a>.</p></div><h3 id="criando-caixas-de-selecao-select-boxes-com-facilidade"><a class="anchorlink" href="#criando-caixas-de-selecao-select-boxes-com-facilidade">3 Criando Caixas de Seleção (<em>Select Boxes</em>) com Facilidade</a></h3><p>As caixas de seleção em HTML requerem uma quantidade significativa de marcação, um elemento <code>&lt;option&gt;</code> para cada opção de escolha. Então o Rails provê métodos auxiliares para reduzir esse fardo.</p><p>Por exemplo, digamos que temos uma lista de cidades para o usuário escolher. Podemos usar o auxiliar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-select"><code>select</code></a> assim:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">select</span> <span class="ss">:city</span><span class="p">,</span> <span class="p">[</span><span class="s2">"Berlin"</span><span class="p">,</span> <span class="s2">"Chicago"</span><span class="p">,</span> <span class="s2">"Madrid"</span><span class="p">]</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-30a5562393296ffd837c256eb93ff912">&lt;%= form.select :city, ["Berlin", "Chicago", "Madrid"] %&gt;
+<textarea class="clipboard-content" id="clipboard-1176b208c8bfcdafc88087e46c42866c">&lt;%= form.select :city, ["Berlin", "Chicago", "Madrid"] %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-30a5562393296ffd837c256eb93ff912">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1176b208c8bfcdafc88087e46c42866c">Copiar</button>
 </div>
 <p>que gera:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"city"</span> <span class="na">id=</span><span class="s">"city"</span><span class="nt">&gt;</span>
@@ -700,42 +700,42 @@ form_with(model: @article)
   <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"Madrid"</span><span class="nt">&gt;</span>Madrid<span class="nt">&lt;/option&gt;</span>
 <span class="nt">&lt;/select&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b12c29311000892fd0018803a64f2980">&lt;select name="city" id="city"&gt;
+<textarea class="clipboard-content" id="clipboard-ea0cb6fcce66728ebda9fbf69da29240">&lt;select name="city" id="city"&gt;
   &lt;option value="Berlin"&gt;Berlin&lt;/option&gt;
   &lt;option value="Chicago"&gt;Chicago&lt;/option&gt;
   &lt;option value="Madrid"&gt;Madrid&lt;/option&gt;
 &lt;/select&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b12c29311000892fd0018803a64f2980">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ea0cb6fcce66728ebda9fbf69da29240">Copiar</button>
 </div>
 <p>Também podemos designar valores para <code>&lt;option&gt;</code> que diferem de seus rótulos:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">select</span> <span class="ss">:city</span><span class="p">,</span> <span class="p">[[</span><span class="s2">"Berlin"</span><span class="p">,</span> <span class="s2">"BE"</span><span class="p">],</span> <span class="p">[</span><span class="s2">"Chicago"</span><span class="p">,</span> <span class="s2">"CHI"</span><span class="p">],</span> <span class="p">[</span><span class="s2">"Madrid"</span><span class="p">,</span> <span class="s2">"MD"</span><span class="p">]]</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-77bcba9c7b46a6ba31c12426e70b9e61">&lt;%= form.select :city, [["Berlin", "BE"], ["Chicago", "CHI"], ["Madrid", "MD"]] %&gt;
+<textarea class="clipboard-content" id="clipboard-8682aa626bcdda9d43423449d5aa7941">&lt;%= form.select :city, [["Berlin", "BE"], ["Chicago", "CHI"], ["Madrid", "MD"]] %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-77bcba9c7b46a6ba31c12426e70b9e61">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8682aa626bcdda9d43423449d5aa7941">Copiar</button>
 </div>
-<p>que gera: </p><div class="code_container">
+<p>que gera:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"city"</span> <span class="na">id=</span><span class="s">"city"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"BE"</span><span class="nt">&gt;</span>Berlin<span class="nt">&lt;/option&gt;</span>
   <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"CHI"</span><span class="nt">&gt;</span>Chicago<span class="nt">&lt;/option&gt;</span>
   <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"MD"</span><span class="nt">&gt;</span>Madrid<span class="nt">&lt;/option&gt;</span>
 <span class="nt">&lt;/select&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-37f770aa8e0f2f8d6837f4058ab7d4e8">&lt;select name="city" id="city"&gt;
+<textarea class="clipboard-content" id="clipboard-ff7c78cf0c630efa292dddf23dbe5411">&lt;select name="city" id="city"&gt;
   &lt;option value="BE"&gt;Berlin&lt;/option&gt;
   &lt;option value="CHI"&gt;Chicago&lt;/option&gt;
   &lt;option value="MD"&gt;Madrid&lt;/option&gt;
 &lt;/select&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-37f770aa8e0f2f8d6837f4058ab7d4e8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ff7c78cf0c630efa292dddf23dbe5411">Copiar</button>
 </div>
 <p>Desta forma, o usuário verá o nome completo da cidade, mas <code>params[: city]</code> será um dos tipos <code>"BE"</code>, <code>"CHI"</code> ou <code>"MD"</code>.</p><p>Por último, podemos especificar uma escolha padrão para a caixa de seleção com o argumento <code>:selected</code>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">select</span> <span class="ss">:city</span><span class="p">,</span> <span class="p">[[</span><span class="s2">"Berlin"</span><span class="p">,</span> <span class="s2">"BE"</span><span class="p">],</span> <span class="p">[</span><span class="s2">"Chicago"</span><span class="p">,</span> <span class="s2">"CHI"</span><span class="p">],</span> <span class="p">[</span><span class="s2">"Madrid"</span><span class="p">,</span> <span class="s2">"MD"</span><span class="p">]],</span> <span class="ss">selected: </span><span class="s2">"CHI"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-80223a5fb8108630e2a3447c197ac4e1">&lt;%= form.select :city, [["Berlin", "BE"], ["Chicago", "CHI"], ["Madrid", "MD"]], selected: "CHI" %&gt;
+<textarea class="clipboard-content" id="clipboard-6fa5bd670ebd4ee68a0a63a6cab1e1c5">&lt;%= form.select :city, [["Berlin", "BE"], ["Chicago", "CHI"], ["Madrid", "MD"]], selected: "CHI" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-80223a5fb8108630e2a3447c197ac4e1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6fa5bd670ebd4ee68a0a63a6cab1e1c5">Copiar</button>
 </div>
 <p>que gera:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"city"</span> <span class="na">id=</span><span class="s">"city"</span><span class="nt">&gt;</span>
@@ -744,13 +744,13 @@ form_with(model: @article)
   <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"MD"</span><span class="nt">&gt;</span>Madrid<span class="nt">&lt;/option&gt;</span>
 <span class="nt">&lt;/select&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c447b663d734b7fdde8de9bedbf43af2">&lt;select name="city" id="city"&gt;
+<textarea class="clipboard-content" id="clipboard-3dc9f6d52eb629e166bc9ce06f2c8383">&lt;select name="city" id="city"&gt;
   &lt;option value="BE"&gt;Berlin&lt;/option&gt;
   &lt;option value="CHI" selected="selected"&gt;Chicago&lt;/option&gt;
   &lt;option value="MD"&gt;Madrid&lt;/option&gt;
 &lt;/select&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c447b663d734b7fdde8de9bedbf43af2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3dc9f6d52eb629e166bc9ce06f2c8383">Copiar</button>
 </div>
 <h4 id="grupos-de-opcao"><a class="anchorlink" href="#grupos-de-opcao">3.1 Grupos de Opção</a></h4><p>Em alguns casos, podemos querer melhorar a experiência do usuário agrupando opções relacionadas. Podemos fazer isso passando um <code>Hash</code> (ou <code>Array</code> compatível) para <code>select</code>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">select</span> <span class="ss">:city</span><span class="p">,</span>
@@ -760,14 +760,14 @@ form_with(model: @article)
       <span class="p">},</span>
       <span class="ss">selected: </span><span class="s2">"CHI"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-832847838119fd172f6331835e3601cc">&lt;%= form.select :city,
+<textarea class="clipboard-content" id="clipboard-4a73f6f64a2478715b3137f0c69fe4fc">&lt;%= form.select :city,
       {
         "Europe" =&gt; [ ["Berlin", "BE"], ["Madrid", "MD"] ],
         "North America" =&gt; [ ["Chicago", "CHI"] ],
       },
       selected: "CHI" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-832847838119fd172f6331835e3601cc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4a73f6f64a2478715b3137f0c69fe4fc">Copiar</button>
 </div>
 <p>que gera:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"city"</span> <span class="na">id=</span><span class="s">"city"</span><span class="nt">&gt;</span>
@@ -780,7 +780,7 @@ form_with(model: @article)
   <span class="nt">&lt;/optgroup&gt;</span>
 <span class="nt">&lt;/select&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f87952941cd2f9bdfb21042b2c0260ed">&lt;select name="city" id="city"&gt;
+<textarea class="clipboard-content" id="clipboard-c850a34241e1fbf40d3b1e14c4b1667b">&lt;select name="city" id="city"&gt;
   &lt;optgroup label="Europe"&gt;
     &lt;option value="BE"&gt;Berlin&lt;/option&gt;
     &lt;option value="MD"&gt;Madrid&lt;/option&gt;
@@ -790,25 +790,25 @@ form_with(model: @article)
   &lt;/optgroup&gt;
 &lt;/select&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f87952941cd2f9bdfb21042b2c0260ed">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c850a34241e1fbf40d3b1e14c4b1667b">Copiar</button>
 </div>
 <h4 id="caixas-de-selecao-select-boxes-com-objetos-model"><a class="anchorlink" href="#caixas-de-selecao-select-boxes-com-objetos-model">3.2 Caixas de Seleção (<em>Select Boxes</em>) com Objetos <em>Model</em></a></h4><p>Como outros formulários, uma caixa de seleção pode ser associada a um atributo de <em>model</em>. Por exemplo, se tivermos um objeto <em>model</em> <code>@person</code> como:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="vi">@person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">city: </span><span class="s2">"MD"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-050809c79851c3ac162cea37cf440b39">@person = Person.new(city: "MD")
+<textarea class="clipboard-content" id="clipboard-527e7ec9bc9e61e2b5f3deb5611df15c">@person = Person.new(city: "MD")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-050809c79851c3ac162cea37cf440b39">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-527e7ec9bc9e61e2b5f3deb5611df15c">Copiar</button>
 </div>
 <p>O seguinte formulário:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@person</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">select</span> <span class="ss">:city</span><span class="p">,</span> <span class="p">[[</span><span class="s2">"Berlin"</span><span class="p">,</span> <span class="s2">"BE"</span><span class="p">],</span> <span class="p">[</span><span class="s2">"Chicago"</span><span class="p">,</span> <span class="s2">"CHI"</span><span class="p">],</span> <span class="p">[</span><span class="s2">"Madrid"</span><span class="p">,</span> <span class="s2">"MD"</span><span class="p">]]</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c6f0dbcdcca353a228a1208dd6604399">&lt;%= form_with model: @person do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-80f0233dae7a7b001aaa468c93c0c206">&lt;%= form_with model: @person do |form| %&gt;
   &lt;%= form.select :city, [["Berlin", "BE"], ["Chicago", "CHI"], ["Madrid", "MD"]] %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c6f0dbcdcca353a228a1208dd6604399">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80f0233dae7a7b001aaa468c93c0c206">Copiar</button>
 </div>
 <p>produz um resultado semelhante a:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"person[city]"</span> <span class="na">id=</span><span class="s">"person_city"</span><span class="nt">&gt;</span>
@@ -817,38 +817,38 @@ form_with(model: @article)
   <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"MD"</span> <span class="na">selected=</span><span class="s">"selected"</span><span class="nt">&gt;</span>Madrid<span class="nt">&lt;/option&gt;</span>
 <span class="nt">&lt;/select&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8894f74de273b60abd4c5f3564669ff4">&lt;select name="person[city]" id="person_city"&gt;
+<textarea class="clipboard-content" id="clipboard-b950c1651f3f6d34cd61c0245ec4f1f9">&lt;select name="person[city]" id="person_city"&gt;
   &lt;option value="BE"&gt;Berlin&lt;/option&gt;
   &lt;option value="CHI"&gt;Chicago&lt;/option&gt;
   &lt;option value="MD" selected="selected"&gt;Madrid&lt;/option&gt;
 &lt;/select&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8894f74de273b60abd4c5f3564669ff4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b950c1651f3f6d34cd61c0245ec4f1f9">Copiar</button>
 </div>
 <p>Observe que a opção apropriada foi marcada automaticamente como <code>selected=" selected"</code>. Visto que esta caixa de seleção estava ligada a um <em>model</em>, não precisamos especificar um argumento <code>:selected</code>!</p><h4 id="fuso-horario-e-selecao-de-pais"><a class="anchorlink" href="#fuso-horario-e-selecao-de-pais">3.3 Fuso horário e Seleção de País</a></h4><p>Para usar o suporte de fuso horário no Rails, você tem que perguntar aos seus usuários em que fuso horário eles estão. Fazer isso exigiria a geração de opções selecionadas de uma lista de objetos <em><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/TimeZone.html"><code>ActiveSupport::TimeZone</code></a></em> usando <code>collection_select</code>, mas você pode simplesmente usar o <em>helper</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-time_zone_select"><code>time_zone_select</code></a> que já resolve isto:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">time_zone_select</span> <span class="ss">:time_zone</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-452d5d1e62916d1af4907a230335c2d9">&lt;%= form.time_zone_select :time_zone %&gt;
+<textarea class="clipboard-content" id="clipboard-2a69410a1727bc39e4ad0d76046dce96">&lt;%= form.time_zone_select :time_zone %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-452d5d1e62916d1af4907a230335c2d9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a69410a1727bc39e4ad0d76046dce96">Copiar</button>
 </div>
 <p>O Rails tinha um <em>helper</em> <code>country_select</code> para escolher os países, mas foi extraído para o <a href="https://github.com/stefanpenner/country_select">plugin country_select</a>.</p><h3 id="usando-form-helpers-para-data-e-hora"><a class="anchorlink" href="#usando-form-helpers-para-data-e-hora">4 Usando <em>Form Helpers</em> para Data e Hora</a></h3><p>Se você não deseja usar os <em>helpers</em> de formulário que geram campos de data e hora em HTML5, o Rails fornece <em>helpers</em> de data e hora alternativos que renderizam formulários em texto simples. Esses <em>helpers</em> renderizam uma caixa de seleção para cada componente de tempo (por exemplo, ano, mês, dia, etc.). Por exemplo, se tivermos um objeto de <em>model</em> <code>@person</code> como:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="vi">@person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">birth_date: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1995</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">21</span><span class="p">))</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d6604a4a389179a00e0866042c9608fa">@person = Person.new(birth_date: Date.new(1995, 12, 21))
+<textarea class="clipboard-content" id="clipboard-74c4dee7ab13a7bd57f2517f050d99e4">@person = Person.new(birth_date: Date.new(1995, 12, 21))
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d6604a4a389179a00e0866042c9608fa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-74c4dee7ab13a7bd57f2517f050d99e4">Copiar</button>
 </div>
 <p>O seguinte formulário:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@person</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">date_select</span> <span class="ss">:birth_date</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-11d2ea31e8e132bcd43fd7a30da83923">&lt;%= form_with model: @person do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-2b1862d7b85ff79579a9cf627ad44747">&lt;%= form_with model: @person do |form| %&gt;
   &lt;%= form.date_select :birth_date %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-11d2ea31e8e132bcd43fd7a30da83923">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2b1862d7b85ff79579a9cf627ad44747">Copiar</button>
 </div>
 <p>vai gerar algo como:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"person[birth_date(1i)]"</span> <span class="na">id=</span><span class="s">"person_birth_date_1i"</span><span class="nt">&gt;</span>
@@ -886,7 +886,7 @@ form_with(model: @article)
   <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"31"</span><span class="nt">&gt;</span>31<span class="nt">&lt;/option&gt;</span>
 <span class="nt">&lt;/select&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d48a25f4d985a50ec041068faf3d39a1">&lt;select name="person[birth_date(1i)]" id="person_birth_date_1i"&gt;
+<textarea class="clipboard-content" id="clipboard-6b29764c9640a170ca17f2745fa49cf3">&lt;select name="person[birth_date(1i)]" id="person_birth_date_1i"&gt;
   &lt;option value="1990"&gt;1990&lt;/option&gt;
   &lt;option value="1991"&gt;1991&lt;/option&gt;
   &lt;option value="1992"&gt;1992&lt;/option&gt;
@@ -921,14 +921,14 @@ form_with(model: @article)
   &lt;option value="31"&gt;31&lt;/option&gt;
 &lt;/select&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d48a25f4d985a50ec041068faf3d39a1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6b29764c9640a170ca17f2745fa49cf3">Copiar</button>
 </div>
-<p>Observe que, quando o formulário for enviado, não haverá um único valor no <em>hash</em> <code>params</code> que contenha a data completa. Em vez disso, haverá vários valores com nomes especiais como <code>"birth_date(1i) "</code>. O <em>Active Record</em> sabe como reunir esses valores com nomes especiais em uma data ou hora completa, com base no tipo declarado do atributo do <em>model</em>. Portanto, podemos passar <code>params [:person]</code> para, por exemplo, <code>Person.new</code> ou <code>Person#update</code> exatamente como faríamos se o formulário usasse um único campo para representar a data completa.</p><p>Além do auxiliar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-date_select"><code>date_select</code></a>, o Rails provê os auxiliares <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-time_select"><code>time_select</code></a> e <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-datetime_select"><code>datetime_select</code></a>.</p><h4 id="caixas-de-selecao-select-boxes-para-componentes-individuais-de-tempo"><a class="anchorlink" href="#caixas-de-selecao-select-boxes-para-componentes-individuais-de-tempo">4.1 Caixas de Seleção (<em>Select Boxes</em>) para Componentes Individuais de Tempo</a></h4><p>O Rails também fornece auxiliares para renderizar caixas de seleção para componentes temporais individuais: <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_year"><code>select_year</code></a>, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_month"><code>select_month</code></a>, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_day"><code>select_day</code></a>, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_hour"><code>select_hour</code></a>, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_minute"><code>select_minute</code></a>, and <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_second"><code>select_second</code></a>. Esses auxiliares são métodos "básicos", o que significa que não são chamados em uma instância do construtor de formulários. Por exemplo: </p><div class="code_container">
+<p>Observe que, quando o formulário for enviado, não haverá um único valor no <em>hash</em> <code>params</code> que contenha a data completa. Em vez disso, haverá vários valores com nomes especiais como <code>"birth_date(1i) "</code>. O <em>Active Record</em> sabe como reunir esses valores com nomes especiais em uma data ou hora completa, com base no tipo declarado do atributo do <em>model</em>. Portanto, podemos passar <code>params [:person]</code> para, por exemplo, <code>Person.new</code> ou <code>Person#update</code> exatamente como faríamos se o formulário usasse um único campo para representar a data completa.</p><p>Além do auxiliar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-date_select"><code>date_select</code></a>, o Rails provê os auxiliares <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-time_select"><code>time_select</code></a> e <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-datetime_select"><code>datetime_select</code></a>.</p><h4 id="caixas-de-selecao-select-boxes-para-componentes-individuais-de-tempo"><a class="anchorlink" href="#caixas-de-selecao-select-boxes-para-componentes-individuais-de-tempo">4.1 Caixas de Seleção (<em>Select Boxes</em>) para Componentes Individuais de Tempo</a></h4><p>O Rails também fornece auxiliares para renderizar caixas de seleção para componentes temporais individuais: <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_year"><code>select_year</code></a>, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_month"><code>select_month</code></a>, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_day"><code>select_day</code></a>, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_hour"><code>select_hour</code></a>, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_minute"><code>select_minute</code></a>, and <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/DateHelper.html#method-i-select_second"><code>select_second</code></a>. Esses auxiliares são métodos "básicos", o que significa que não são chamados em uma instância do construtor de formulários. Por exemplo:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">select_year</span> <span class="mi">1999</span><span class="p">,</span> <span class="ss">prefix: </span><span class="s2">"party"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ab9608f4e2729cff11b81b0c15de8308">&lt;%= select_year 1999, prefix: "party" %&gt;
+<textarea class="clipboard-content" id="clipboard-0eb4fdf049d1c4750c95ca77f33f07e1">&lt;%= select_year 1999, prefix: "party" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ab9608f4e2729cff11b81b0c15de8308">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0eb4fdf049d1c4750c95ca77f33f07e1">Copiar</button>
 </div>
 <p>Cria uma caixa de seleção como essa:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"party[year]"</span> <span class="na">id=</span><span class="s">"party_year"</span><span class="nt">&gt;</span>
@@ -945,7 +945,7 @@ form_with(model: @article)
   <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"2004"</span><span class="nt">&gt;</span>2004<span class="nt">&lt;/option&gt;</span>
 <span class="nt">&lt;/select&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f869839863f75117907f1623ec71fef1">&lt;select name="party[year]" id="party_year"&gt;
+<textarea class="clipboard-content" id="clipboard-f166df27d6231320fb598dfeb66a9e7b">&lt;select name="party[year]" id="party_year"&gt;
   &lt;option value="1994"&gt;1994&lt;/option&gt;
   &lt;option value="1995"&gt;1995&lt;/option&gt;
   &lt;option value="1996"&gt;1996&lt;/option&gt;
@@ -959,7 +959,7 @@ form_with(model: @article)
   &lt;option value="2004"&gt;2004&lt;/option&gt;
 &lt;/select&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f869839863f75117907f1623ec71fef1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f166df27d6231320fb598dfeb66a9e7b">Copiar</button>
 </div>
 <p>Para cada um desses auxiliares, você pode especificar um objeto de data ou hora em vez de um número como o valor padrão e o componente temporal apropriado será extraído e usado.</p><h3 id="escolhas-a-partir-de-uma-colecao-de-objetos-arbitrarios"><a class="anchorlink" href="#escolhas-a-partir-de-uma-colecao-de-objetos-arbitrarios">5 Escolhas a partir de uma Coleção de Objetos Arbitrários</a></h3><p>Frequentemente desejamos gerar um conjunto de escolhas em um formulário a partir de uma coleção de objetos. Por exemplo, quando queremos que um usuário escolha cidades a partir do nosso banco de dados, e temos um modelo <code>City</code> conforme:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">City</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">:name</span><span class="p">).</span><span class="nf">to_a</span>
@@ -969,21 +969,21 @@ form_with(model: @article)
 <span class="c1">#      #&lt;City id: 2, name: "Madrid"&gt;</span>
 <span class="c1">#    ]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e64650eb046bdbf6db450b81d6b860c9">City.order(:name).to_a
+<textarea class="clipboard-content" id="clipboard-519394236a7ecd88775b99c080a55724">City.order(:name).to_a
 # =&gt; [
 #      #&lt;City id: 3, name: "Berlin"&gt;,
 #      #&lt;City id: 1, name: "Chicago"&gt;,
 #      #&lt;City id: 2, name: "Madrid"&gt;
 #    ]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e64650eb046bdbf6db450b81d6b860c9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-519394236a7ecd88775b99c080a55724">Copiar</button>
 </div>
 <p>O Rails oferece <em>helpers</em> que geram escolhas a partir de uma coleção sem ser necessário iterar explicitamente sobre ela. Esses <em>helpers</em> determinam o valor e o texto descritivo de cada escolha chamando métodos especificados em cada objeto na coleção.</p><h4 id="o-auxiliar-collection-select"><a class="anchorlink" href="#o-auxiliar-collection-select">5.1 O auxiliar <code>collection_select</code></a></h4><p>Para gerar uma caixa de seleção (<em>select box</em>) para nossas cidades, podemos utilizar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select"><code>collection_select</code></a>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">collection_select</span> <span class="ss">:city_id</span><span class="p">,</span> <span class="no">City</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">:name</span><span class="p">),</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-42988774c5ea0e01da6a734f41ff6a02">&lt;%= form.collection_select :city_id, City.order(:name), :id, :name %&gt;
+<textarea class="clipboard-content" id="clipboard-0cf851b7c5cac37e4585df01117c8b24">&lt;%= form.collection_select :city_id, City.order(:name), :id, :name %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-42988774c5ea0e01da6a734f41ff6a02">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0cf851b7c5cac37e4585df01117c8b24">Copiar</button>
 </div>
 <p>Resultado:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"city_id"</span> <span class="na">id=</span><span class="s">"city_id"</span><span class="nt">&gt;</span>
@@ -992,20 +992,20 @@ form_with(model: @article)
   <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">&gt;</span>Madrid<span class="nt">&lt;/option&gt;</span>
 <span class="nt">&lt;/select&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-20ebf517b011471ba5b3720e77cad20c">&lt;select name="city_id" id="city_id"&gt;
+<textarea class="clipboard-content" id="clipboard-a54591344dfdf2c894e8428cc79934ca">&lt;select name="city_id" id="city_id"&gt;
   &lt;option value="3"&gt;Berlin&lt;/option&gt;
   &lt;option value="1"&gt;Chicago&lt;/option&gt;
   &lt;option value="2"&gt;Madrid&lt;/option&gt;
 &lt;/select&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-20ebf517b011471ba5b3720e77cad20c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a54591344dfdf2c894e8428cc79934ca">Copiar</button>
 </div>
 <div class="note"><p>Utilizando <code>collection_select</code> devemos especificar primeiramente o método para o valor (<code>:id</code> no exemplo acima), e em seguida o método do texto descritivo (<code>:name</code> no exemplo acima).  Essa ordem é inversa a quando especificamos escolhas para o <em>helper</em> <code>select</code>, onde primeiramente passamos o texto descritivo e em seguida o valor.</p></div><h4 id="o-auxiliar-collection-radio-buttons"><a class="anchorlink" href="#o-auxiliar-collection-radio-buttons">5.2 O auxiliar <code>collection_radio_buttons</code></a></h4><p>Para gerar um conjunto de botões de rádio (<em>radio buttons</em>) para nossas cidades, podemos utilizar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons"><code>collection_radio_buttons</code></a>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">collection_radio_buttons</span> <span class="ss">:city_id</span><span class="p">,</span> <span class="no">City</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">:name</span><span class="p">),</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8f9c9339fbda3551e4e5c764d0635f6e">&lt;%= form.collection_radio_buttons :city_id, City.order(:name), :id, :name %&gt;
+<textarea class="clipboard-content" id="clipboard-e3c293c2f43b9df5b4c3fcf5c3805dc7">&lt;%= form.collection_radio_buttons :city_id, City.order(:name), :id, :name %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8f9c9339fbda3551e4e5c764d0635f6e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e3c293c2f43b9df5b4c3fcf5c3805dc7">Copiar</button>
 </div>
 <p>Resultado:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"city_id"</span> <span class="na">value=</span><span class="s">"3"</span> <span class="na">id=</span><span class="s">"city_id_3"</span><span class="nt">&gt;</span>
@@ -1015,21 +1015,21 @@ form_with(model: @article)
 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"city_id"</span> <span class="na">value=</span><span class="s">"2"</span> <span class="na">id=</span><span class="s">"city_id_2"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"city_id_2"</span><span class="nt">&gt;</span>Madrid<span class="nt">&lt;/label&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c86c2a90d532751ea8643c05d524ff28">&lt;input type="radio" name="city_id" value="3" id="city_id_3"&gt;
+<textarea class="clipboard-content" id="clipboard-53dd842cd51cd955b36a9488a9921bee">&lt;input type="radio" name="city_id" value="3" id="city_id_3"&gt;
 &lt;label for="city_id_3"&gt;Berlin&lt;/label&gt;
 &lt;input type="radio" name="city_id" value="1" id="city_id_1"&gt;
 &lt;label for="city_id_1"&gt;Chicago&lt;/label&gt;
 &lt;input type="radio" name="city_id" value="2" id="city_id_2"&gt;
 &lt;label for="city_id_2"&gt;Madrid&lt;/label&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c86c2a90d532751ea8643c05d524ff28">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-53dd842cd51cd955b36a9488a9921bee">Copiar</button>
 </div>
 <h4 id="o-auxiliar-collection-check-boxes"><a class="anchorlink" href="#o-auxiliar-collection-check-boxes">5.3 O auxiliar <code>collection_check_boxes</code></a></h4><p>Para gerar um conjunto de <em>check boxes</em> para nossas cidades (que permite que usuários escolham mais de uma opção), podemos utilizar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_check_boxes"><code>collection_check_boxes</code></a>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">collection_check_boxes</span> <span class="ss">:city_id</span><span class="p">,</span> <span class="no">City</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">:name</span><span class="p">),</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16d2dac5e4a0c8dd282c91655294d9d0">&lt;%= form.collection_check_boxes :city_id, City.order(:name), :id, :name %&gt;
+<textarea class="clipboard-content" id="clipboard-a5e8f87704779fb56ac572d15d9a1be1">&lt;%= form.collection_check_boxes :city_id, City.order(:name), :id, :name %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16d2dac5e4a0c8dd282c91655294d9d0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a5e8f87704779fb56ac572d15d9a1be1">Copiar</button>
 </div>
 <p>Resultado:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"city_id[]"</span> <span class="na">value=</span><span class="s">"3"</span> <span class="na">id=</span><span class="s">"city_id_3"</span><span class="nt">&gt;</span>
@@ -1039,36 +1039,36 @@ form_with(model: @article)
 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"city_id[]"</span> <span class="na">value=</span><span class="s">"2"</span> <span class="na">id=</span><span class="s">"city_id_2"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"city_id_2"</span><span class="nt">&gt;</span>Madrid<span class="nt">&lt;/label&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8774d195103a8fc97c87768657ed3d83">&lt;input type="checkbox" name="city_id[]" value="3" id="city_id_3"&gt;
+<textarea class="clipboard-content" id="clipboard-aee894e5ffd3ef2c2c0397e8f0955fe1">&lt;input type="checkbox" name="city_id[]" value="3" id="city_id_3"&gt;
 &lt;label for="city_id_3"&gt;Berlin&lt;/label&gt;
 &lt;input type="checkbox" name="city_id[]" value="1" id="city_id_1"&gt;
 &lt;label for="city_id_1"&gt;Chicago&lt;/label&gt;
 &lt;input type="checkbox" name="city_id[]" value="2" id="city_id_2"&gt;
 &lt;label for="city_id_2"&gt;Madrid&lt;/label&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8774d195103a8fc97c87768657ed3d83">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aee894e5ffd3ef2c2c0397e8f0955fe1">Copiar</button>
 </div>
 <h3 id="enviando-arquivos"><a class="anchorlink" href="#enviando-arquivos">6 Enviando Arquivos</a></h3><p>Uma tarefa muito comum é fazer o envio de arquivos, seja a imagem de uma pessoa ou um arquivo CSV contendo dados a serem processados. Campos para upload de arquivos podem ser renderizados com o auxiliar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field"><code>file_field</code></a>. O mais importante a se lembrar quando se faz envio de arquivos é que o atributo <code>enctype</code> do formulário renderizado <strong>deve</strong> ser "multipart/form-data". Se você usar <code>form_with</code> com <code>:model</code>, isso é feito automaticamente:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@person</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">file_field</span> <span class="ss">:picture</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-591860f80563d2e241cc9747a1b2fbda">&lt;%= form_with model: @person do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-66f514cd076b755fc3036a592b14ed9b">&lt;%= form_with model: @person do |form| %&gt;
   &lt;%= form.file_field :picture %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-591860f80563d2e241cc9747a1b2fbda">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-66f514cd076b755fc3036a592b14ed9b">Copiar</button>
 </div>
 <p>Se você usar <code>form_with</code> sem o <code>:model</code>, você deve preencher os campos:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">url: </span><span class="s2">"/uploads"</span><span class="p">,</span> <span class="ss">multipart: </span><span class="kp">true</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">file_field</span> <span class="ss">:picture</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e1c9b9eb1f97c866e8a305223ad46eb5">&lt;%= form_with url: "/uploads", multipart: true do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-bd58641c57e78cefcb2a1b6053d47342">&lt;%= form_with url: "/uploads", multipart: true do |form| %&gt;
   &lt;%= form.file_field :picture %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e1c9b9eb1f97c866e8a305223ad46eb5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bd58641c57e78cefcb2a1b6053d47342">Copiar</button>
 </div>
 <p>Observe que, de acordo com as convenções do <code>form_with</code>, os nomes dos campos nas duas formas acima também serão diferentes. Ou seja, o nome do campo no primeiro formulário será <code>person[picture]</code> (acessível via <code>params[:person][:picture]</code>), e o nome do campo no segundo formulário será apenas <code>picture</code> (acessível via <code>params[:picture]</code>).</p><h4 id="o-que-e-enviado"><a class="anchorlink" href="#o-que-e-enviado">6.1 O que é enviado</a></h4><p>O objeto em <code>params</code> é uma instância de <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Http/UploadedFile.html"><code>ActionDispatch::Http::UploadedFile</code></a>. O trecho de código a seguir salva o arquivo enviado em <code>#{Rails.root}/public/uploads</code> contendo o mesmo nome do arquivo original.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">upload</span>
@@ -1078,14 +1078,14 @@ form_with(model: @article)
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-328e1af7e228d325fbb9935861618723">def upload
+<textarea class="clipboard-content" id="clipboard-c3278419ec017acb4c1a654730a899ea">def upload
   uploaded_file = params[:picture]
   File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
     file.write(uploaded_file.read)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-328e1af7e228d325fbb9935861618723">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c3278419ec017acb4c1a654730a899ea">Copiar</button>
 </div>
 <p>Uma vez que o arquivo é enviado, há uma infinidade de tarefas em potencial, variando entre onde armazenar os arquivos (no Disco, Amazon S3, etc), associá-lo com models, redimensionar arquivos de imagem e gerar miniaturas, etc. O <a href="active_storage_overview.html">Active Storage</a> é destinado a ajudar com essas tarefas.</p><h3 id="customizando-os-construtores-de-formularios"><a class="anchorlink" href="#customizando-os-construtores-de-formularios">7 Customizando os Construtores de Formulários</a></h3><p>O objeto que é dado para o <em>yield</em> no <code>form_with</code> e <code>fields_for</code> é uma instância de
 <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html"><code>ActionView::Helpers::FormBuilder</code></a>.
@@ -1096,22 +1096,22 @@ de <code>ActionView::Helpers::FormBuilder</code> e adicionar os <em>helpers</em>
   <span class="cp">&lt;%=</span> <span class="n">text_field_with_label</span> <span class="n">form</span><span class="p">,</span> <span class="ss">:first_name</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4dd288dfe5eddf1ff5cc2945530af26f">&lt;%= form_with model: @person do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-68b520da91a47120ca29575c9e610bd7">&lt;%= form_with model: @person do |form| %&gt;
   &lt;%= text_field_with_label form, :first_name %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4dd288dfe5eddf1ff5cc2945530af26f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-68b520da91a47120ca29575c9e610bd7">Copiar</button>
 </div>
 <p>pode ser substituído por</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@person</span><span class="p">,</span> <span class="ss">builder: </span><span class="no">LabellingFormBuilder</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:first_name</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-74639e78cfef42d456aafde8fb45506b">&lt;%= form_with model: @person, builder: LabellingFormBuilder do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-e602f665848e00ee7d82e2d8fec0fab5">&lt;%= form_with model: @person, builder: LabellingFormBuilder do |form| %&gt;
   &lt;%= form.text_field :first_name %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-74639e78cfef42d456aafde8fb45506b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e602f665848e00ee7d82e2d8fec0fab5">Copiar</button>
 </div>
 <p>Por meio da definição de uma classe <code>LabellingFormBuilder</code> parecida com a que segue:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">LabellingFormBuilder</span> <span class="o">&lt;</span> <span class="no">ActionView</span><span class="o">::</span><span class="no">Helpers</span><span class="o">::</span><span class="no">FormBuilder</span>
@@ -1120,13 +1120,13 @@ de <code>ActionView::Helpers::FormBuilder</code> e adicionar os <em>helpers</em>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-069c398be5f3d886d3ee1e523451c3d2">class LabellingFormBuilder &lt; ActionView::Helpers::FormBuilder
+<textarea class="clipboard-content" id="clipboard-bab55893c637335591f6c4267e289383">class LabellingFormBuilder &lt; ActionView::Helpers::FormBuilder
   def text_field(attribute, options={})
     label(attribute) + super
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-069c398be5f3d886d3ee1e523451c3d2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bab55893c637335591f6c4267e289383">Copiar</button>
 </div>
 <p>Se você reutilizar isso frequentemente, você pode definir um <em>helper</em> <code>labeled_form_with</code> que automaticamente
 aplica a opção <code>builder: LabellingFormBuilder</code>:</p><div class="code_container">
@@ -1135,60 +1135,60 @@ aplica a opção <code>builder: LabellingFormBuilder</code>:</p><div class="code
   <span class="n">form_with</span> <span class="ss">model: </span><span class="n">model</span><span class="p">,</span> <span class="ss">scope: </span><span class="n">scope</span><span class="p">,</span> <span class="ss">url: </span><span class="n">url</span><span class="p">,</span> <span class="ss">format: </span><span class="nb">format</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-af93db4a55afa6d56cce9cc7405f2aff">def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, &amp;block)
+<textarea class="clipboard-content" id="clipboard-f6dfc340c5f6d7ff37784e6c4575ea8b">def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, &amp;block)
   options.merge! builder: LabellingFormBuilder
   form_with model: model, scope: scope, url: url, format: format, **options, &amp;block
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-af93db4a55afa6d56cce9cc7405f2aff">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f6dfc340c5f6d7ff37784e6c4575ea8b">Copiar</button>
 </div>
 <p>O construtor de formulários utilizado também determina o que acontece quando você escreve:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="ss">partial: </span><span class="n">f</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eb2b49c8acd10ad19d312d8fe2afcc15">&lt;%= render partial: f %&gt;
+<textarea class="clipboard-content" id="clipboard-67022af69d817276b3b1771c8b7b406f">&lt;%= render partial: f %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eb2b49c8acd10ad19d312d8fe2afcc15">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-67022af69d817276b3b1771c8b7b406f">Copiar</button>
 </div>
 <p>Se <code>f</code> for uma instância de <code>ActionView::Helpers::FormBuilder</code>, então isso vai renderizar a <em>partial</em> <code>form</code>,
 passando o objeto da <em>partial</em> para o construtor de formulários. Se o construtor de formulário for da classe
 <code>LabellingFormBuilder</code> então a partial <code>labelling_form</code> é que seria renderizada.</p><h3 id="entendendo-convencoes-de-nomeacao-de-parametros"><a class="anchorlink" href="#entendendo-convencoes-de-nomeacao-de-parametros">8 Entendendo Convenções de Nomeação de Parâmetros</a></h3><p>Valores de formulários podem ficar no topo do <em>hash</em> <code>params</code> ou aninhados em outro <em>hash</em>. Por exemplo, numa ação <code>create</code> padrão para um <em>model</em> <code>Person</code>, <code>params[:person]</code> normalmente seria um <em>hash</em> de todos os atributos necessários para criar uma pessoa. O <em>hash</em> <code>params</code> também pode conter <em>arrays</em>, <em>arrays</em> de <em>hashes</em>, e por aí vai.</p><p>Fundamentalmente formulários HTML não tem conhecimento de nenhum tipo de dado estruturado, tudo que eles geram são pares de nomes e valores, onde os pares são <em>strings</em> simples. Os <em>arrays</em> e <em>hashes</em> que você vê na sua aplicação são o resultado de algumas convenções de nomeação que o Rails utiliza.</p><h4 id="estruturas-basicas"><a class="anchorlink" href="#estruturas-basicas">8.1 Estruturas Básicas</a></h4><p>As duas estruturas básicas são <em>arrays</em> e <em>hashes</em>. <em>Hashes</em> copiam a sintaxe utilizada para acessar o valor em <code>params</code>. Por exemplo, se um formulário contém:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"person_name"</span> <span class="na">name=</span><span class="s">"person[name]"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">"Henry"</span><span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-42e1bce0bcaaa3cbc330dd8256d2f971">&lt;input id="person_name" name="person[name]" type="text" value="Henry"/&gt;
+<textarea class="clipboard-content" id="clipboard-d915b95041a8f1ea213a5cfbf8704679">&lt;input id="person_name" name="person[name]" type="text" value="Henry"/&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-42e1bce0bcaaa3cbc330dd8256d2f971">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d915b95041a8f1ea213a5cfbf8704679">Copiar</button>
 </div>
 <p>o <em>hash</em> <code>params</code> conterá</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span><span class="s1">'person'</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Henry'</span><span class="p">}}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ec1909a631dd004be128ff56a6d4c835">{'person' =&gt; {'name' =&gt; 'Henry'}}
+<textarea class="clipboard-content" id="clipboard-ba2c9bd5ac55887d611eecec0593237c">{'person' =&gt; {'name' =&gt; 'Henry'}}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ec1909a631dd004be128ff56a6d4c835">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ba2c9bd5ac55887d611eecec0593237c">Copiar</button>
 </div>
 <p>e <code>params[:person][:name]</code> buscará o valor enviado dentro do <em>controller</em>.</p><p><em>Hashes</em> podem ser aninhados em quantos níveis for necessário, por exemplo:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"person_address_city"</span> <span class="na">name=</span><span class="s">"person[address][city]"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">"New York"</span><span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16c2deb13e8e9bdfca454114a97e7e5c">&lt;input id="person_address_city" name="person[address][city]" type="text" value="New York"/&gt;
+<textarea class="clipboard-content" id="clipboard-4914870749a13d0669540d4b07d4ea1c">&lt;input id="person_address_city" name="person[address][city]" type="text" value="New York"/&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16c2deb13e8e9bdfca454114a97e7e5c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4914870749a13d0669540d4b07d4ea1c">Copiar</button>
 </div>
 <p>resultará no <em>hash</em> <code>params</code> como</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span><span class="s1">'person'</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="s1">'address'</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="s1">'city'</span> <span class="o">=&gt;</span> <span class="s1">'New York'</span><span class="p">}}}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-edc2b66681bda3c8a249d30a18a4a6fe">{'person' =&gt; {'address' =&gt; {'city' =&gt; 'New York'}}}
+<textarea class="clipboard-content" id="clipboard-ffb1988c715c3538bd5d97b33c373f32">{'person' =&gt; {'address' =&gt; {'city' =&gt; 'New York'}}}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-edc2b66681bda3c8a249d30a18a4a6fe">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ffb1988c715c3538bd5d97b33c373f32">Copiar</button>
 </div>
 <p>Normalmente o Rails ignora nomes de parâmetros duplicados. Se o parâmetro <em>name</em> termina em um conjunto vazio de colchetes <code>[]</code> então eles serão acumulados em um <em>array</em>. Se você queria que os usuários pudessem informar vários números de telefone, você poderia colocar isto no formulário:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"person[phone_number][]"</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"person[phone_number][]"</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"person[phone_number][]"</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7d1c152ea3e6811e0c8de110fb5e8ef3">&lt;input name="person[phone_number][]" type="text"/&gt;
+<textarea class="clipboard-content" id="clipboard-f0311047735483e0e8e9e483b9d2821e">&lt;input name="person[phone_number][]" type="text"/&gt;
 &lt;input name="person[phone_number][]" type="text"/&gt;
 &lt;input name="person[phone_number][]" type="text"/&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7d1c152ea3e6811e0c8de110fb5e8ef3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f0311047735483e0e8e9e483b9d2821e">Copiar</button>
 </div>
 <p>Isto resultará em <code>params[:person][:phone_number]</code> como um <em>array</em> contendo os números de telefone informados.</p><h4 id="combinando-os-conceitos"><a class="anchorlink" href="#combinando-os-conceitos">8.2 Combinando os Conceitos</a></h4><p>Podemos combinar estes dois conceitos. Um elemento de um <em>hash</em> pode ser um <em>array</em> como no exemplo anterior, ou você pode ter um <em>array</em> de <em>hashes</em>. Por exemplo, um formulário pode permitir a criação de um número arbitrário de <em>addresses</em> ao repetir o fragmento de formulário seguinte</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"person[addresses][][line1]"</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">/&gt;</span>
@@ -1198,14 +1198,14 @@ passando o objeto da <em>partial</em> para o construtor de formulários. Se o co
 <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"person[addresses][][line2]"</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"person[addresses][][city]"</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-95a19fa10a2c702988b6a8508f133445">&lt;input name="person[addresses][][line1]" type="text"/&gt;
+<textarea class="clipboard-content" id="clipboard-27edcc31dac2a2febdc3378bea16612d">&lt;input name="person[addresses][][line1]" type="text"/&gt;
 &lt;input name="person[addresses][][line2]" type="text"/&gt;
 &lt;input name="person[addresses][][city]" type="text"/&gt;
 &lt;input name="person[addresses][][line1]" type="text"/&gt;
 &lt;input name="person[addresses][][line2]" type="text"/&gt;
 &lt;input name="person[addresses][][city]" type="text"/&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-95a19fa10a2c702988b6a8508f133445">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-27edcc31dac2a2febdc3378bea16612d">Copiar</button>
 </div>
 <p>Isto resultará em <code>params[:person][:addresses]</code> como um <em>array</em> de <em>hashes</em> com as chaves <code>line1</code>, <code>line2</code>, e <code>city</code>.</p><p>Porém, há uma restrição. Enquanto os <em>hashes</em> podem ser aninhados de forma arbitrária, só é permitido um nível de <em>"arrayness"</em>. <em>Arrays</em> normalmente podem ser trocados por <em>hashes</em>; por exemplo, ao invés de usar um <em>array</em> de <em>model objects</em>, é possível usar um <em>hash</em> de <em>model objects</em> distinguidos pelo seu <em>id</em>, um índice do <em>array</em>, ou algum outro parâmetro.</p><div class="warning"><p>Parâmetros de <em>array</em> não funcionam bem com o <em>helper</em> <code>check_box</code>. De acordo com a especificação HTML <em>checkboxes</em> desmarcadas não enviam nenhum valor. Porém pode ser conveniente fazer com que uma <em>checkbox</em> sempre envie um valor. O <em>helper</em> <code>check_box</code> simula isto ao criar um <em>input</em> auxiliar com o mesmo nome. Se a <em>checkbox</em> estiver desmarcada apenas o <em>input</em> escondido será enviado e se estiver marcada então os dois serão enviados mas o valor da <em>checkbox</em> recebe uma prioridade maior.</p></div><h4 id="utilizando-o-auxiliar-fields-for-helper"><a class="anchorlink" href="#utilizando-o-auxiliar-fields-for-helper">8.3 Utilizando o auxiliar <code>fields_for</code> Helper</a></h4><p>Digamos que queremos renderizar um formulário com um conjunto de campos para cada endereço de uma pessoa. O auxiliar <code>fields_for</code> e seu argumento<code>: index</code> podem ajudar com isso:
 Você pode querer renderizar um formulário com um conjunto de campos de edição pra cada <em>address</em> de uma <code>person</code>. Por exemplo:</p><div class="code_container">
@@ -1218,7 +1218,7 @@ Você pode querer renderizar um formulário com um conjunto de campos de ediçã
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fb76e01eb05dc23a00ab0ee611523c2a">&lt;%= form_with model: @person do |person_form| %&gt;
+<textarea class="clipboard-content" id="clipboard-97ec401e17fabf8c14d777d14e0d671c">&lt;%= form_with model: @person do |person_form| %&gt;
   &lt;%= person_form.text_field :name %&gt;
   &lt;% @person.addresses.each do |address| %&gt;
     &lt;%= person_form.fields_for address, index: address.id do |address_form| %&gt;
@@ -1227,7 +1227,7 @@ Você pode querer renderizar um formulário com um conjunto de campos de ediçã
   &lt;% end %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fb76e01eb05dc23a00ab0ee611523c2a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-97ec401e17fabf8c14d777d14e0d671c">Copiar</button>
 </div>
 <p>Presumindo que a pessoa (person) tenha dois endereços (addresses), com <em>ids</em> 23 e 45 isto trará um resultado similar a este:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">action=</span><span class="s">"/people/1"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
@@ -1237,21 +1237,21 @@ Você pode querer renderizar um formulário com um conjunto de campos de ediçã
   <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"person_address_45_city"</span> <span class="na">name=</span><span class="s">"person[address][45][city]"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dbdeb4ad4c14f4ee7a5d7d6db7987a20">&lt;form accept-charset="UTF-8" action="/people/1" method="post"&gt;
+<textarea class="clipboard-content" id="clipboard-6e076e43a53fb352dff467420e1749a0">&lt;form accept-charset="UTF-8" action="/people/1" method="post"&gt;
   &lt;input name="_method" type="hidden" value="patch" /&gt;
   &lt;input id="person_name" name="person[name]" type="text" /&gt;
   &lt;input id="person_address_23_city" name="person[address][23][city]" type="text" /&gt;
   &lt;input id="person_address_45_city" name="person[address][45][city]" type="text" /&gt;
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dbdeb4ad4c14f4ee7a5d7d6db7987a20">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6e076e43a53fb352dff467420e1749a0">Copiar</button>
 </div>
 <p>Isto resultará em um <em>hash</em> <code>params</code> parecido com</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span><span class="s1">'person'</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'address'</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="s1">'23'</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="s1">'city'</span> <span class="o">=&gt;</span> <span class="s1">'Paris'</span><span class="p">},</span> <span class="s1">'45'</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="s1">'city'</span> <span class="o">=&gt;</span> <span class="s1">'London'</span><span class="p">}}}}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-49c735ff40af9694d41dd68119d857d7">{'person' =&gt; {'name' =&gt; 'Bob', 'address' =&gt; {'23' =&gt; {'city' =&gt; 'Paris'}, '45' =&gt; {'city' =&gt; 'London'}}}}
+<textarea class="clipboard-content" id="clipboard-8ccff2365f275831557b6edb8acff326">{'person' =&gt; {'name' =&gt; 'Bob', 'address' =&gt; {'23' =&gt; {'city' =&gt; 'Paris'}, '45' =&gt; {'city' =&gt; 'London'}}}}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-49c735ff40af9694d41dd68119d857d7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ccff2365f275831557b6edb8acff326">Copiar</button>
 </div>
 <p>O Rails sabe que todos estes <em>inputs</em> devem ser parte do <em>hash</em> person porque você chamou <code>fields_for</code> no primeiro <em>builder</em> do formulário. Ao especificar uma opção <code>:index</code>
 você diz ao Rails que ao invés de nomear os <em>inputs</em> <code>person[address][city]</code>
@@ -1262,53 +1262,53 @@ Isso geralmente é útil porque deixa mais fácil para saber qual registro <em>A
   <span class="cp">&lt;%=</span> <span class="n">address_form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:city</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4b37a4044a7809ea7d6b3a12a880ef6b">&lt;%= fields_for 'person[address][primary]', address, index: address.id do |address_form| %&gt;
+<textarea class="clipboard-content" id="clipboard-097c0b27421a6f2e4b57d89147da8834">&lt;%= fields_for 'person[address][primary]', address, index: address.id do |address_form| %&gt;
   &lt;%= address_form.text_field :city %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4b37a4044a7809ea7d6b3a12a880ef6b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-097c0b27421a6f2e4b57d89147da8834">Copiar</button>
 </div>
 <p>criará <em>inputs</em> como</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"person_address_primary_1_city"</span> <span class="na">name=</span><span class="s">"person[address][primary][1][city]"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">"Bologna"</span> <span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cfed1014c8ddcd8e9810ee0b3daef732">&lt;input id="person_address_primary_1_city" name="person[address][primary][1][city]" type="text" value="Bologna" /&gt;
+<textarea class="clipboard-content" id="clipboard-071733b95894f267fa3f6092446aecb7">&lt;input id="person_address_primary_1_city" name="person[address][primary][1][city]" type="text" value="Bologna" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cfed1014c8ddcd8e9810ee0b3daef732">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-071733b95894f267fa3f6092446aecb7">Copiar</button>
 </div>
 <p>Como uma regra geral o nome final do <em>input</em> é uma concatenação do nome passado para <code>fields_for</code>/<code>form_with</code>, o valor do índice, e o nome do atributo. Você também pode passar uma opção <code>:index</code> diretamente para os <em>helpers</em> como <code>text_field</code>, mas normalmente é menos repetitivo especificar isto dentro do <em>builder</em> do formulário ao invés de especificar nos controles individuais de <em>input</em>.</p><p>Como um atalho você pode adicionar <code>[]</code> ao nome e omitir a opção <code>:index</code>. Isto é o mesmo que especificar <code>index: address.id</code> portanto</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">fields_for</span> <span class="s1">'person[address][primary][]'</span><span class="p">,</span> <span class="n">address</span> <span class="k">do</span> <span class="o">|</span><span class="n">address_form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">address_form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:city</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ba834aec4ac3a588ca57af122704aae4">&lt;%= fields_for 'person[address][primary][]', address do |address_form| %&gt;
+<textarea class="clipboard-content" id="clipboard-db2a50d2973fed196421d9f22a2b703b">&lt;%= fields_for 'person[address][primary][]', address do |address_form| %&gt;
   &lt;%= address_form.text_field :city %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ba834aec4ac3a588ca57af122704aae4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-db2a50d2973fed196421d9f22a2b703b">Copiar</button>
 </div>
 <p>produz exatamente o mesmo resultado que o exemplo anterior.</p><h3 id="formularios-para-recursos-externos"><a class="anchorlink" href="#formularios-para-recursos-externos">9 Formulários para Recursos Externos</a></h3><p>Os <em>helpers</em> de formulários do Rails também podem ser usados para construir formulários para enviar dados para recursos externos. Entretanto em alguns momentos pode ser necessário definir um <code>authenticity_token</code> para o recurso; isso pode ser feito passando um parâmetro <code>authenticity_token: 'your_external_token'</code> para as opções do <code>form_with</code></p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">url: </span><span class="s1">'http://farfar.away/form'</span><span class="p">,</span> <span class="ss">authenticity_token: </span><span class="s1">'external_token'</span> <span class="k">do</span> <span class="cp">%&gt;</span>
   Form contents
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7d6287d04a6d9b695963558ea47b3c73">&lt;%= form_with url: 'http://farfar.away/form', authenticity_token: 'external_token' do %&gt;
+<textarea class="clipboard-content" id="clipboard-19673883da3d3534e3f2f905d860dc2e">&lt;%= form_with url: 'http://farfar.away/form', authenticity_token: 'external_token' do %&gt;
   Form contents
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7d6287d04a6d9b695963558ea47b3c73">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-19673883da3d3534e3f2f905d860dc2e">Copiar</button>
 </div>
 <p>Às vezes ao submeter dados para um recurso externo, como um <em>gateway</em> de pagamento, os campos que podem ser usado no formulário são limitados por uma API externa e pode ser indesejável gerar um <code>authenticity_token</code>. Para não enviar um token, simplesmente passe <code>false</code> para o parâmetro <code>:authenticity_token</code>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">url: </span><span class="s1">'http://farfar.away/form'</span><span class="p">,</span> <span class="ss">authenticity_token: </span><span class="kp">false</span> <span class="k">do</span> <span class="cp">%&gt;</span>
   Form contents
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1753f1dbff35c501c8ab29db420c7e81">&lt;%= form_with url: 'http://farfar.away/form', authenticity_token: false do %&gt;
+<textarea class="clipboard-content" id="clipboard-19f3647a2c35847874f0e902afde3b42">&lt;%= form_with url: 'http://farfar.away/form', authenticity_token: false do %&gt;
   Form contents
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1753f1dbff35c501c8ab29db420c7e81">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-19f3647a2c35847874f0e902afde3b42">Copiar</button>
 </div>
-<h3 id="building-complex-forms"><a class="anchorlink" href="#building-complex-forms">10 Building Complex Forms</a></h3><p>Many apps grow beyond simple forms editing a single object. For example, when creating a <code>Person</code> you might want to allow the user to (on the same form) create multiple address records (home, work, etc.). When later editing that person the user should be able to add, remove, or amend addresses as necessary.</p><h4 id="configuring-the-model"><a class="anchorlink" href="#configuring-the-model">10.1 Configuring the Model</a></h4><p>Active Record provides model level support via the <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for"><code>accepts_nested_attributes_for</code></a> method:</p><div class="code_container">
+<h3 id="trabalhando-com-formularios-complexos"><a class="anchorlink" href="#trabalhando-com-formularios-complexos">10 Trabalhando com Formulários Complexos</a></h3><p>Muitas aplicações vão além de uma edição de um único objeto em um formulário simples. Por exemplo, quando estamos criando um <em>model</em> <code>Person</code> você pode querer que o usuário permita (no mesmo formulário) criar múltiplos registros de endereços (casa, trabalho, etc.). Mais tarde, quando estivesse editando este formulário, seria possível adicionar, remover, ou corrigir os endereços relacionados caso fosse necessário.</p><h4 id="configurando-o-model"><a class="anchorlink" href="#configurando-o-model">10.1 Configurando o <em>Model</em></a></h4><p>O Active Record fornece suporte a níveis de modelo através do método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for"><code>accepts_nested_attributes_for</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">has_many</span> <span class="ss">:addresses</span><span class="p">,</span> <span class="ss">inverse_of: :person</span>
   <span class="n">accepts_nested_attributes_for</span> <span class="ss">:addresses</span>
@@ -1318,7 +1318,7 @@ Isso geralmente é útil porque deixa mais fácil para saber qual registro <em>A
   <span class="n">belongs_to</span> <span class="ss">:person</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6f2c2e16dab7dc62b31276590a0b6091">class Person &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-3b3f5d52d2a11b4e4f50e2432de52e7d">class Person &lt; ApplicationRecord
   has_many :addresses, inverse_of: :person
   accepts_nested_attributes_for :addresses
 end
@@ -1327,11 +1327,11 @@ class Address &lt; ApplicationRecord
   belongs_to :person
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6f2c2e16dab7dc62b31276590a0b6091">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3b3f5d52d2a11b4e4f50e2432de52e7d">Copiar</button>
 </div>
-<p>This creates an <code>addresses_attributes=</code> method on <code>Person</code> that allows you to create, update, and (optionally) destroy addresses.</p><h4 id="nested-forms"><a class="anchorlink" href="#nested-forms">10.2 Nested Forms</a></h4><p>The following form allows a user to create a <code>Person</code> and its associated addresses.</p><div class="code_container">
+<p>Isso criará um método chamado <code>addresses_attributes=</code> no model <code>Person</code> para permitir criar, atualizar e (opcionalmente) destruir endereços.</p><h4 id="formularios-aninhados"><a class="anchorlink" href="#formularios-aninhados">10.2 Formulários Aninhados</a></h4><p>O formulário a seguir permite ao usuário criar uma <code>Pessoa</code> e seus endereços associados.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@person</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
-  Addresses:
+  Endereços:
   <span class="nt">&lt;ul&gt;</span>
     <span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@person</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
       <span class="nt">&lt;li&gt;</span>
@@ -1346,8 +1346,8 @@ end
   <span class="nt">&lt;/ul&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f1cc52d46cdb8cd3c134805a66dfa5f6">&lt;%= form_with model: @person do |form| %&gt;
-  Addresses:
+<textarea class="clipboard-content" id="clipboard-1b7f0ae49dea199e9956bb3477b9459d">&lt;%= form_with model: @person do |form| %&gt;
+  Endereços:
   &lt;ul&gt;
     &lt;%= form_with model: @person do |f| %&gt;
       &lt;li&gt;
@@ -1362,24 +1362,24 @@ end
   &lt;/ul&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f1cc52d46cdb8cd3c134805a66dfa5f6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1b7f0ae49dea199e9956bb3477b9459d">Copiar</button>
 </div>
-<p>When an association accepts nested attributes <code>fields_for</code> renders its block once for every element of the association. In particular, if a person has no addresses it renders nothing. A common pattern is for the controller to build one or more empty children so that at least one set of fields is shown to the user. The example below would result in 2 sets of address fields being rendered on the new person form.</p><div class="code_container">
+<p>Quando uma associação aceita atributos aninhados, o método <code>fields_for</code> renderiza esse bloco uma vez para cada elemento da associação. Em particular, se a pessoa não tiver endereços nada será renderizado. Um padrão comum é o controller criar um ou mais filhos vazios para que pelo menos um bloco de campos seja exibido ao usuário. O exemplo a seguir irá resultar em dois blocos de campos de endereços no formulário de uma nova pessoa.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">new</span>
   <span class="vi">@person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
   <span class="mi">2</span><span class="p">.</span><span class="nf">times</span> <span class="p">{</span> <span class="vi">@person</span><span class="p">.</span><span class="nf">addresses</span><span class="p">.</span><span class="nf">build</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c42c6d14d900bd4f392119d7d48091f6">def new
+<textarea class="clipboard-content" id="clipboard-8baca44d1f9bef55f4db0fd36208a290">def new
   @person = Person.new
   2.times { @person.addresses.build }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c42c6d14d900bd4f392119d7d48091f6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8baca44d1f9bef55f4db0fd36208a290">Copiar</button>
 </div>
-<p>The <code>fields_for</code> yields a form builder. The parameters' name will be what
-<code>accepts_nested_attributes_for</code> expects. For example, when creating a user with
-2 addresses, the submitted parameters would look like:</p><div class="code_container">
+<p>O método<code>fields_for</code> produz um construtor de formulário. Os nomes dos parâmetros serão o que o
+<code>accepts_nested_attributes_for</code> espera. Por exemplo, quando criamos uma pessoa com dois endereços,
+os parâmetros enviados serão:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span>
   <span class="s1">'person'</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'John Doe'</span><span class="p">,</span>
@@ -1396,7 +1396,7 @@ end
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6f84e88e92bbc218786251fe8a843c01">{
+<textarea class="clipboard-content" id="clipboard-78c52ddcaace8f501d995c9868193c31">{
   'person' =&gt; {
     'name' =&gt; 'John Doe',
     'addresses_attributes' =&gt; {
@@ -1412,11 +1412,11 @@ end
   }
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6f84e88e92bbc218786251fe8a843c01">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-78c52ddcaace8f501d995c9868193c31">Copiar</button>
 </div>
-<p>The keys of the <code>:addresses_attributes</code> hash are unimportant, they need merely be different for each address.</p><p>If the associated object is already saved, <code>fields_for</code> autogenerates a hidden input with the <code>id</code> of the saved record. You can disable this by passing <code>include_id: false</code> to <code>fields_for</code>.</p><h4 id="the-controller"><a class="anchorlink" href="#the-controller">10.3 The Controller</a></h4><p>As usual you need to
-<a href="action_controller_overview.html#strong-parameters">declare the permitted parameters</a> in
-the controller before you pass them to the model:</p><div class="code_container">
+<p>As chaves da hash <code>:addresses_attributes</code> não são importantes, eles apenas precisam ser diferentes para cada endereço.</p><p>Se o objeto associado já estiver salvo, o método <code>fields_for</code> ir gerá automaticamente uma entrada oculta com o <code>id</code> do registro salvo.
+Você pode desabilitar isso passando <code>include_id: false</code> para o <code>fields_for</code>.</p><h4 id="o-controller"><a class="anchorlink" href="#o-controller">10.3 O <em>Controller</em></a></h4><p>Como de costume, você precisa <a href="action_controller_overview.html#parametros-fortes">declarar os parâmetros permitidos</a>
+dentro do controller antes de enviá-los para o <em>model</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">create</span>
   <span class="vi">@person</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">person_params</span><span class="p">)</span>
   <span class="c1"># ...</span>
@@ -1427,7 +1427,7 @@ the controller before you pass them to the model:</p><div class="code_container"
     <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:person</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:name</span><span class="p">,</span> <span class="ss">addresses_attributes: </span><span class="p">[</span><span class="ss">:id</span><span class="p">,</span> <span class="ss">:kind</span><span class="p">,</span> <span class="ss">:street</span><span class="p">])</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c183c192c68e2cd212f7713710b0ecb1">def create
+<textarea class="clipboard-content" id="clipboard-2f9191df3261394b8bb09f847bad8e19">def create
   @person = Person.new(person_params)
   # ...
 end
@@ -1437,94 +1437,95 @@ private
     params.require(:person).permit(:name, addresses_attributes: [:id, :kind, :street])
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c183c192c68e2cd212f7713710b0ecb1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2f9191df3261394b8bb09f847bad8e19">Copiar</button>
 </div>
-<h4 id="removing-objects"><a class="anchorlink" href="#removing-objects">10.4 Removing Objects</a></h4><p>You can allow users to delete associated objects by passing <code>allow_destroy: true</code> to <code>accepts_nested_attributes_for</code></p><div class="code_container">
+<h4 id="removendo-objetos"><a class="anchorlink" href="#removendo-objetos">10.4 Removendo objetos</a></h4><p>Você pode permitir os usuários deletarem os objetos associados ao passar o parâmetro <code>allow_destroy: true</code> para o <code>accepts_nested_attributes_for</code></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">has_many</span> <span class="ss">:addresses</span>
   <span class="n">accepts_nested_attributes_for</span> <span class="ss">:addresses</span><span class="p">,</span> <span class="ss">allow_destroy: </span><span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0239935b93b847a459fcfcafa634a35a">class Person &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-5553078b57dc8611c1c625479c825472">class Person &lt; ApplicationRecord
   has_many :addresses
   accepts_nested_attributes_for :addresses, allow_destroy: true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0239935b93b847a459fcfcafa634a35a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5553078b57dc8611c1c625479c825472">Copiar</button>
 </div>
-<p>If the hash of attributes for an object contains the key <code>_destroy</code> with a value that
-evaluates to <code>true</code> (e.g. 1, '1', true, or 'true') then the object will be destroyed.
-This form allows users to remove addresses:</p><div class="code_container">
+<p>Se a <em>hash</em> de atributos de um objeto contém a chave <code>_destroy</code> com um valor que
+representa <code>true</code> (ex: 1, '1', true ou 'true'), então o objeto será destruído.
+O formulário a seguir permite o usuário remover endereços:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@person</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   Addresses:
   <span class="nt">&lt;ul&gt;</span>
     <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">fields_for</span> <span class="ss">:addresses</span> <span class="k">do</span> <span class="o">|</span><span class="n">addresses_form</span><span class="o">|</span> <span class="cp">%&gt;</span>
       <span class="nt">&lt;li&gt;</span>
         <span class="cp">&lt;%=</span> <span class="n">addresses_form</span><span class="p">.</span><span class="nf">check_box</span> <span class="ss">:_destroy</span> <span class="cp">%&gt;</span>
-        <span class="cp">&lt;%=</span> <span class="n">addresses_form</span><span class="p">.</span><span class="nf">label</span> <span class="ss">:kind</span> <span class="cp">%&gt;</span>
-        <span class="cp">&lt;%=</span> <span class="n">addresses_form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:kind</span> <span class="cp">%&gt;</span>
+        <span class="cp">&lt;%=</span> <span class="n">addresses_form</span><span class="p">.</span><span class="nf">label</span> <span class="ss">:tipo</span> <span class="cp">%&gt;</span>
+        <span class="cp">&lt;%=</span> <span class="n">addresses_form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:tipo</span> <span class="cp">%&gt;</span>
         ...
       <span class="nt">&lt;/li&gt;</span>
     <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
   <span class="nt">&lt;/ul&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dd141882e1f553df0fb579607bf48095">&lt;%= form_with model: @person do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-59ba246d3f83a242f6f43a043993e3db">&lt;%= form_with model: @person do |form| %&gt;
   Addresses:
   &lt;ul&gt;
     &lt;%= form.fields_for :addresses do |addresses_form| %&gt;
       &lt;li&gt;
         &lt;%= addresses_form.check_box :_destroy %&gt;
-        &lt;%= addresses_form.label :kind %&gt;
-        &lt;%= addresses_form.text_field :kind %&gt;
+        &lt;%= addresses_form.label :tipo %&gt;
+        &lt;%= addresses_form.text_field :tipo %&gt;
         ...
       &lt;/li&gt;
     &lt;% end %&gt;
   &lt;/ul&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dd141882e1f553df0fb579607bf48095">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-59ba246d3f83a242f6f43a043993e3db">Copiar</button>
 </div>
-<p>Don't forget to update the permitted params in your controller to also include
-the <code>_destroy</code> field:</p><div class="code_container">
+<p>Não esqueça de atualizar a lista de parâmetros permitidos no seu <em>controller</em> para
+incluir também o campo <code>_destroy</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">person_params</span>
-  <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:person</span><span class="p">).</span>
-    <span class="nf">permit</span><span class="p">(</span><span class="ss">:name</span><span class="p">,</span> <span class="ss">addresses_attributes: </span><span class="p">[</span><span class="ss">:id</span><span class="p">,</span> <span class="ss">:kind</span><span class="p">,</span> <span class="ss">:street</span><span class="p">,</span> <span class="ss">:_destroy</span><span class="p">])</span>
+  <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:person</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:name</span><span class="p">,</span> <span class="ss">addresses_attributes: </span><span class="p">[</span><span class="ss">:id</span><span class="p">,</span> <span class="ss">:kind</span><span class="p">,</span> <span class="ss">:street</span><span class="p">,</span> <span class="ss">:_destroy</span><span class="p">])</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bb07477f6d817ead008148e131493427">def person_params
-  params.require(:person).
-    permit(:name, addresses_attributes: [:id, :kind, :street, :_destroy])
+<textarea class="clipboard-content" id="clipboard-587cc6e4a7609da53946ce7024b425a5">def person_params
+  params.require(:person).permit(:name, addresses_attributes: [:id, :kind, :street, :_destroy])
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bb07477f6d817ead008148e131493427">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-587cc6e4a7609da53946ce7024b425a5">Copiar</button>
 </div>
-<h4 id="preventing-empty-records"><a class="anchorlink" href="#preventing-empty-records">10.5 Preventing Empty Records</a></h4><p>It is often useful to ignore sets of fields that the user has not filled in. You can control this by passing a <code>:reject_if</code> proc to <code>accepts_nested_attributes_for</code>. This proc will be called with each hash of attributes submitted by the form. If the proc returns <code>false</code> then Active Record will not build an associated object for that hash. The example below only tries to build an address if the <code>kind</code> attribute is set.</p><div class="code_container">
+<h4 id="prevenindo-registros-vazios"><a class="anchorlink" href="#prevenindo-registros-vazios">10.5 Prevenindo Registros Vazios</a></h4><p>Pode ser útil ignorar um conjunto de campos que o usuário não preencheu. Você pode controlar isso ao passar um proc <code>:reject_if</code> para o
+<code>accepts_nested_attributes_for</code>. Essa <em>proc</em> será chamada com cada <em>hash</em> de atributos enviados pelo formulário. Se a proc retornar <code>false</code> então o Active Record não irá construir o objeto associado para essa <em>hash</em>. O exemplo abaixo tenta construir um endereço apenas se o campo <code>tipo</code> for informado.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">has_many</span> <span class="ss">:addresses</span>
   <span class="n">accepts_nested_attributes_for</span> <span class="ss">:addresses</span><span class="p">,</span> <span class="ss">reject_if: </span><span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">attributes</span><span class="o">|</span> <span class="n">attributes</span><span class="p">[</span><span class="s1">'kind'</span><span class="p">].</span><span class="nf">blank?</span><span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-67bd9a31960c5ec3fe0cbe0b8cb8d00f">class Person &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-92473dff17e67901c60299a78ce0770d">class Person &lt; ApplicationRecord
   has_many :addresses
   accepts_nested_attributes_for :addresses, reject_if: lambda {|attributes| attributes['kind'].blank?}
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-67bd9a31960c5ec3fe0cbe0b8cb8d00f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-92473dff17e67901c60299a78ce0770d">Copiar</button>
 </div>
-<p>As a convenience you can instead pass the symbol <code>:all_blank</code> which will create a proc that will reject records where all the attributes are blank excluding any value for <code>_destroy</code>.</p><h4 id="adding-fields-on-the-fly"><a class="anchorlink" href="#adding-fields-on-the-fly">10.6 Adding Fields on the Fly</a></h4><p>Rather than rendering multiple sets of fields ahead of time you may wish to add them only when a user clicks on an "Add new address" button. Rails does not provide any built-in support for this. When generating new sets of fields you must ensure the key of the associated array is unique - the current JavaScript date (milliseconds since the <a href="https://en.wikipedia.org/wiki/Unix_time">epoch</a>) is a common choice.</p><h3 id="utilizando-tags-auxiliares-tag-helpers-sem-um-construtor-de-formulario"><a class="anchorlink" href="#utilizando-tags-auxiliares-tag-helpers-sem-um-construtor-de-formulario">11 Utilizando Tags Auxiliares (<em>Tag Helpers</em>) Sem Um Construtor de Formulário</a></h3><p>Caso você precise renderizar campos de formulário fora do contexto de um construtor de formulário, o Rails oferece tags auxiliares para elementos comuns de formulário. Por exemplo, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormTagHelper.html#method-i-check_box_tag"><code>check_box_tag</code></a>:</p><div class="code_container">
+<p>Para facilitar, você pode passar o <em>symbol</em> <code>:all_blank</code> no lugar, que irá criar uma proc para rejeitar os registros onde todos os atributos
+são vazios, excluindo qualquer valor para o <code>_destroy</code>.</p><h4 id="adicionando-campos-dinamicamente"><a class="anchorlink" href="#adicionando-campos-dinamicamente">10.6 Adicionando campos dinamicamente</a></h4><p>No lugar de renderizar múltiplos blocos de campos antecipadamente, você pode desejar adicioná-los apenas quando o usuário clicar em um botão "Adicionar novo endereço". O Rails não possui nenhum suporte nativo para isso. Quando geramos um novo bloco de campos, devemos
+garantir que a chave do array associado é único - utilizar a data atual via JavaScript em milissegundos <a href="https://pt.wikipedia.org/wiki/Era_Unix">era unix</a>, é bastante comum.</p><h3 id="utilizando-tags-auxiliares-tag-helpers-sem-um-construtor-de-formulario"><a class="anchorlink" href="#utilizando-tags-auxiliares-tag-helpers-sem-um-construtor-de-formulario">11 Utilizando Tags Auxiliares (<em>Tag Helpers</em>) Sem Um Construtor de Formulário</a></h3><p>Caso você precise renderizar campos de formulário fora do contexto de um construtor de formulário, o Rails oferece tags auxiliares para elementos comuns de formulário. Por exemplo, <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormTagHelper.html#method-i-check_box_tag"><code>check_box_tag</code></a>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">check_box_tag</span> <span class="s2">"accept"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-108378fe674e5def9730422c65ccf056">&lt;%= check_box_tag "accept" %&gt;
+<textarea class="clipboard-content" id="clipboard-2b35b5b3dd4ef149cb2f5c89fca8bd35">&lt;%= check_box_tag "accept" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-108378fe674e5def9730422c65ccf056">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2b35b5b3dd4ef149cb2f5c89fca8bd35">Copiar</button>
 </div>
 <p>Resultado:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"accept"</span> <span class="na">id=</span><span class="s">"accept"</span> <span class="na">value=</span><span class="s">"1"</span> <span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-28a3ae398a0496a4018164ee7d905214">&lt;input type="checkbox" name="accept" id="accept" value="1" /&gt;
+<textarea class="clipboard-content" id="clipboard-abc5ec83d0735448a2eff62cdfac9e6e">&lt;input type="checkbox" name="accept" id="accept" value="1" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-28a3ae398a0496a4018164ee7d905214">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-abc5ec83d0735448a2eff62cdfac9e6e">Copiar</button>
 </div>
 <p>Geralmente, esses <em>helpers</em> tem o mesmo nome dos <em>helpers</em> do Construtor de Formulários, porém adicionando o sufixo <code>_tag</code>.  Para uma lista completa, consulte a <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormTagHelper.html">documentação da API <code>FormTagHelper</code></a>.</p><h3 id="usando-form-for-e-form-tag"><a class="anchorlink" href="#usando-form-for-e-form-tag">12 Usando <code>form_for</code> e <code>form_tag</code></a></h3><p>Antes do <code>form_with</code> ser introduzido no Rails 5.1 sua funcionalidade costumava ser divida entre <a href="https://api.rubyonrails.org/v5.2/classes/ActionView/Helpers/FormTagHelper.html#method-i-form_tag"><code>form_tag</code></a> e <a href="https://api.rubyonrails.org/v5.2/classes/ActionView/Helpers/FormHelper.html#method-i-form_for"><code>form_for</code></a>. Ambos estão agora depreciados (<em>soft-deprecated</em>). A documentação sobre seu uso pode ser encontrada na <a href="https://guides.rubyonrails.org/v5.2/form_helpers.html">versão antiga deste guia</a>.</p>
 
@@ -1533,7 +1534,7 @@ end
           Você é incentivado a ajudar a melhorar a qualidade deste guia.
         </p>
         <p>
-          Por favor, contribua se vir qualquer erros, inclusive erros de digitação.
+          Por favor, contribua caso veja quaisquer erros, inclusive erros de digitação.
           Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
         </p>
         <p>
