@@ -70,9 +70,10 @@ Vamos criar uma aplicação Rails simples passando por cada um destes comandos.
 
 ### `rails new`
 
-The first thing we'll want to do is create a new Rails application by running the `rails new` command after installing Rails.
+A primeira coisa que precisamos fazer é criar uma nova aplicação Rails executando o comando
+`rails new` após a instalação do Rails.
 
-INFO: You can install the rails gem by typing `gem install rails`, if you don't have it already.
+INFO: Você pode instalar a *gem* rails digitando `gem install rails`, caso ainda não esteja instalada.
 
 ```bash
 $ rails new commandsapp
@@ -89,29 +90,30 @@ $ rails new commandsapp
         run  bundle install
 ```
 
-Rails will set you up with what seems like a huge amount of stuff for such a tiny command! You've got the entire Rails directory structure now with all the code you need to run our simple application right out of the box.
+O Rails criará o que parece ser um monte de coisas pra um comando tão pequeno! Agora você tem a estrutura de diretorios do Rails inteira, com todo o código que você precisa pra rodar nossa aplicação simples sem ter que configurar mais nada.
 
-If you wish to skip some files or components from being generated, you can append the following arguments to your `rails new` command:
+Se você quiser fazer com que alguns arquivos ou componentes não sejam gerados, você pode 
+acrescentar os seguintes arumentos ao seu comando `rails new`:
 
-| Argument                | Description                                                 |
+| Argumentp               | Descricão                                                   |
 | ----------------------- | ----------------------------------------------------------- |
-| `--skip-gemfile`        | Don't create a Gemfile                                      |
-| `--skip-git`            | Skip .gitignore file                                        |
-| `--skip-keeps`          | Skip source control .keep files                             |
-| `--skip-action-mailer`  | Skip Action Mailer files                                    |
-| `--skip-action-text`    | Skip Action Text gem                                        |
-| `--skip-active-record`  | Skip Active Record files                                    |
-| `--skip-active-storage` | Skip Active Storage files                                   |
-| `--skip-puma`           | Skip Puma related files                                     |
-| `--skip-action-cable`   | Skip Action Cable files                                     |
-| `--skip-sprockets`      | Skip Sprockets files                                        |
-| `--skip-spring`         | Don't install Spring application preloader                  |
-| `--skip-listen`         | Don't generate configuration that depends on the listen gem |
-| `--skip-javascript`     | Skip JavaScript files                                       |
-| `--skip-turbolinks`     | Skip turbolinks gem                                         |
-| `--skip-test`           | Skip test files                                             |
-| `--skip-system-test`    | Skip system test files                                      |
-| `--skip-bootsnap`       | Skip bootsnap gem                                           |
+| `--skip-gemfile`        | Não cria um Gemfile                                         |
+| `--skip-git`            | Pula o arquivo .gitignore                                   |
+| `--skip-keeps`          | Pula os arquivos .keep de controle de origem                |
+| `--skip-action-mailer`  | Pula os arquivos *Action Mailer*                            |
+| `--skip-action-text`    | Pula a *gem* *Action Text*                                    |
+| `--skip-active-record`  | Pula os arquivos *Active Record*                            |
+| `--skip-active-storage` | Pula os arquivos *Active Storage files*                     |
+| `--skip-puma`           | Pula os arquivos do Puma                                    |
+| `--skip-action-cable`   | Pula os arquivos *Action Cable*                             |
+| `--skip-sprockets`      | Pula os arquivos do Sprockets                               |
+| `--skip-spring`         | Não instala a aplicação de pré-carregamento Spring          |
+| `--skip-listen`         | Não gera configuração que depende da *gem* listen             |
+| `--skip-javascript`     | Pula os arquivos JavaScript                                 |
+| `--skip-turbolinks`     | Pula a *gem* turbolinks                                       |
+| `--skip-test`           | Pula os arquivos de teste                                   |
+| `--skip-system-test`    | Pula os arquivos de teste de sistema                        |
+| `--skip-bootsnap`       | Pula a *gem* bootsnap                                         |
 
 ### `bin/rails server`
 
