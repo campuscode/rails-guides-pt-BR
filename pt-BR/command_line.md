@@ -95,25 +95,25 @@ O Rails criará o que parece ser um monte de coisas pra um comando tão pequeno!
 Se você quiser fazer com que alguns arquivos ou componentes não sejam gerados, você pode 
 acrescentar os seguintes arumentos ao seu comando `rails new`:
 
-| Argumentp               | Descricão                                                   |
+| Argumento               | Descricão                                                   |
 | ----------------------- | ----------------------------------------------------------- |
 | `--skip-gemfile`        | Não cria um Gemfile                                         |
 | `--skip-git`            | Pula o arquivo .gitignore                                   |
 | `--skip-keeps`          | Pula os arquivos .keep de controle de origem                |
 | `--skip-action-mailer`  | Pula os arquivos *Action Mailer*                            |
-| `--skip-action-text`    | Pula a *gem* *Action Text*                                    |
+| `--skip-action-text`    | Pula a *gem* *Action Text*                                  |
 | `--skip-active-record`  | Pula os arquivos *Active Record*                            |
 | `--skip-active-storage` | Pula os arquivos *Active Storage files*                     |
 | `--skip-puma`           | Pula os arquivos do Puma                                    |
 | `--skip-action-cable`   | Pula os arquivos *Action Cable*                             |
 | `--skip-sprockets`      | Pula os arquivos do Sprockets                               |
 | `--skip-spring`         | Não instala a aplicação de pré-carregamento Spring          |
-| `--skip-listen`         | Não gera configuração que depende da *gem* listen             |
+| `--skip-listen`         | Não gera configuração que depende da *gem* listen           |
 | `--skip-javascript`     | Pula os arquivos JavaScript                                 |
-| `--skip-turbolinks`     | Pula a *gem* turbolinks                                       |
+| `--skip-turbolinks`     | Pula a *gem* turbolinks                                     |
 | `--skip-test`           | Pula os arquivos de teste                                   |
 | `--skip-system-test`    | Pula os arquivos de teste de sistema                        |
-| `--skip-bootsnap`       | Pula a *gem* bootsnap                                         |
+| `--skip-bootsnap`       | Pula a *gem* bootsnap                                       |
 
 ### `bin/rails server`
 
