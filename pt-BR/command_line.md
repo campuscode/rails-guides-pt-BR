@@ -149,9 +149,9 @@ A opção `-b` vincula o Rails a um IP especificado que, por padrão, é o *loca
 
 ### `bin/rails generate`
 
-The `bin/rails generate` command uses templates to create a whole lot of things. Running `bin/rails generate` by itself gives a list of available generators:
+O comando `bin/rails generate` usa um *template* pra criar um monte de coisas. Executar `bin/rails generate` sozinho retorna uma lista de vários geradores disponíveis:
 
-INFO: You can also use the alias "g" to invoke the generator command: `bin/rails g`.
+INFO: Você pode usar o atalho "g" para chamar o comando *generate*: `bin/rails g`.
 
 ```bash
 $ bin/rails generate
@@ -171,13 +171,13 @@ Rails:
   ...
 ```
 
-NOTE: You can install more generators through generator gems, portions of plugins you'll undoubtedly install, and you can even create your own!
+NOTE: Você pode instalar mais geradores por meio de *gems* de geradores, partes de *plugins* que você sem dúvida vai instalar, e você pode até criar seus próprios!
 
-Using generators will save you a large amount of time by writing **boilerplate code**, code that is necessary for the app to work.
+Usar geradores economiza bastante tempo porque envolve escrever **código *boilerplate*** (ou padrão), código necessário para que a aplicação funcione.
 
-Let's make our own controller with the controller generator. But what command should we use? Let's ask the generator:
+Vamos fazer nosso próprio *controller* com o gerador de *controllers*. Mas qual comando devemos usar? Vamos perguntar ao gerador:
 
-INFO: All Rails console utilities have help text. As with most *nix utilities, you can try adding `--help` or `-h` to the end, for example `bin/rails server --help`.
+INFO: Todos os serviços do console do Rails têm textos de ajuda. Como ocorre com a maioria dos comandos \*nix, você pode tentar adicionar `--help` ou `-h` no final (por exemplo: `bin/rails server --help`).
 
 ```bash
 $ bin/rails generate controller
@@ -203,7 +203,7 @@ Example:
         Helper:     app/helpers/credit_cards_helper.rb
 ```
 
-The controller generator is expecting parameters in the form of `generate controller ControllerName action1 action2`. Let's make a `Greetings` controller with an action of **hello**, which will say something nice to us.
+O gerador de *controller* precisa de parâmtros no seguinte formato: `generate controller NomeDoController ação1 ação2`. Vamos fazer o *controller* `Greetings` com uma ação **hello**, que dirá algo legal pra gente.
 
 ```bash
 $ bin/rails generate controller Greetings hello
@@ -222,37 +222,37 @@ $ bin/rails generate controller Greetings hello
      create      app/assets/stylesheets/greetings.scss
 ```
 
-What all did this generate? It made sure a bunch of directories were in our application, and created a controller file, a view file, a functional test file, a helper for the view, a JavaScript file, and a stylesheet file.
+O que foi tudo isso que o comando gerou? Ele gerou vários diretórios na nossa aplicação e criou um arquivo de *controller*, um arquivo de *view*, um arquivo de teste funcional, um *helper* pra *view*, um arquivo Javascript e um arquivo de folha de estilo em cascata.
 
-Check out the controller and modify it a little (in `app/controllers/greetings_controller.rb`):
+Dê uma olhada no *controller* e faça a seguinte pequena modificação no arquivo `app/controllers/greetings_controller.rb`:
 
 ```ruby
 class GreetingsController < ApplicationController
   def hello
-    @message = "Hello, how are you today?"
+    @message = "Olá. Como vai você?"
   end
 end
 ```
 
-Then the view, to display our message (in `app/views/greetings/hello.html.erb`):
+Agora edite a *view* para que ela exiba a nossa mensagem (em `app/views/greetings/hello.html.erb`):
 
 ```erb
-<h1>A Greeting for You!</h1>
+<h1>Uma mensagem pra você!</h1>
 <p><%= @message %></p>
 ```
 
-Fire up your server using `bin/rails server`.
+Rode o seu servidor usando o comando `bin/rails server`.
 
 ```bash
 $ bin/rails server
 => Booting Puma...
 ```
 
-The URL will be [http://localhost:3000/greetings/hello](http://localhost:3000/greetings/hello).
+O URL será [http://localhost:3000/greetings/hello](http://localhost:3000/greetings/hello).
 
-INFO: With a normal, plain-old Rails application, your URLs will generally follow the pattern of http://(host)/(controller)/(action), and a URL like http://(host)/(controller) will hit the **index** action of that controller.
+INFO: Em uma aplicação comum de Rails, seus URLs vão geralmente seguir o seguinte padrão: http://(host)/(controller)/(action). Um URL como http://(host)/(controller) vai direcionar você pra ação **index** daquele *controller*.
 
-Rails comes with a generator for data models too.
+O Rails também vem com um gerador para os *models* de dados.
 
 ```bash
 $ bin/rails generate model
@@ -274,11 +274,11 @@ Description:
 ...
 ```
 
-NOTE: For a list of available field types for the `type` parameter, refer to the [API documentation](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column) for the add_column method for the `SchemaStatements` module. The `index` parameter generates a corresponding index for the column.
+NOTA: Para obter uma lista dos tipos de campos disponíveis para o parâmetro `type`, consulte a [documentação API](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column) para o métodos *add_column* (adicionar coluna) do módulo `SchemaStatements`. O parâmetro `index` gera um índice correspondente para a coluna.
 
-But instead of generating a model directly (which we'll be doing later), let's set up a scaffold. A **scaffold** in Rails is a full set of model, database migration for that model, controller to manipulate it, views to view and manipulate the data, and a test suite for each of the above.
+Mas em vez de gerar o *model* diretamente (o que faremos depois), vamos configurar um *scaffold*. Um ***scaffold*** em Rails é um conjunto completo de *model*, a *migration* da base de dados para esse *model*, o *controller* para manipulá-lo, *views* para visualizar e manipular os dados e um conjunto de testes para cada um dos itens descritos acima.
 
-We will set up a simple resource called "HighScore" that will keep track of our highest score on video games we play.
+Vamos configurar uma *resource* simples chamado "HighScore" que contabiliza nossas pontuações mais altas no jogos de videogame que jogamos.
 
 ```bash
 $ bin/rails generate scaffold HighScore game:string score:integer
@@ -316,9 +316,9 @@ $ bin/rails generate scaffold HighScore game:string score:integer
     create    app/assets/stylesheets/scaffolds.scss
 ```
 
-The generator checks that there exist the directories for models, controllers, helpers, layouts, functional and unit tests, stylesheets, creates the views, controller, model and database migration for HighScore (creating the `high_scores` table and fields), takes care of the route for the **resource**, and new tests for everything.
+O gerador verifica os diretórios existentes em busca de *models*, *controllers*, *helpers*, layouts, testes funcionais e unitários, folhas de estilo de cascata, e cria as *views*, os *controllers* e a *migration* de banco de dados para *HighScore* (criando a tabela e os campos `high_scores`. Além disso, o gerador se encarrega da rota para a ***resource*** e dos novos testes para tudo.
 
-The migration requires that we **migrate**, that is, run some Ruby code (living in that `20130717151933_create_high_scores.rb`) to modify the schema of our database. Which database? The SQLite3 database that Rails will create for you when we run the `bin/rails db:migrate` command. We'll talk more about that command below.
+A *migration* precise que migremos, ou seja, que executemos um código em Ruby (contido em `20130717151933_create_high_scores.rb`) que modifica o *schema* (esquema) do nosso banco de dados. Mas qual banco de dados? O banco de dados SQLite3 que o Rails vai criar para nós quando executarmos o comando `bin/rails db:migrate`. Falaremos mais sobre esse comando a seguir.
 
 ```bash
 $ bin/rails db:migrate
@@ -328,21 +328,21 @@ $ bin/rails db:migrate
 ==  CreateHighScores: migrated (0.0019s) ======================================
 ```
 
-INFO: Let's talk about unit tests. Unit tests are code that tests and makes assertions
-about code. In unit testing, we take a little part of code, say a method of a model,
-and test its inputs and outputs. Unit tests are your friend. The sooner you make
-peace with the fact that your quality of life will drastically increase when you unit
-test your code, the better. Seriously. Please visit
-[the testing guide](https://guides.rubyonrails.org/testing.html) for an in-depth
-look at unit testing.
+INFO: Vamos falar sobre testes unitários. Testes unitários são códigos que testam e
+fazem afirmações sobre o código. Com testes unitários, pegamos um pequeno trecho de código, 
+digamos, um método ou um *model*, e testamos suas entradas e saídas. Testes unitários são
+seus amigos. Quantos antes vocês aceitar o fato de que a sua qualidade de vida vai aumentar
+drasticamente quando você faz testes unitários no seu código, melhor. Sério. Por favor, vá
+em [the testing guide](https://guides.rubyonrails.org/testing.html) para uma visão mais 
+aprofundada de testes unitários.
 
-Let's see the interface Rails created for us.
+Vejamos a interface que o Rails criou para nós.
 
 ```bash
 $ bin/rails server
 ```
 
-Go to your browser and open [http://localhost:3000/high_scores](http://localhost:3000/high_scores), now we can create new high scores (55,160 on Space Invaders!)
+Abra o seu navegador e digite [http://localhost:3000/high_scores](http://localhost:3000/high_scores). Agora podemos criar novas pontuações máximas (55,160 no *Space Invaders*!)
 
 ### `bin/rails console`
 
