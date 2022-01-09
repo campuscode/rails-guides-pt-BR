@@ -73,7 +73,7 @@ end
 ```
 
 TIP: If you repeatedly invoke application code from a long-running process, you
-may want to wrap using the Reloader instead.
+may want to wrap using the [Reloader](#reloader) instead.
 
 Each thread should be wrapped before it runs application code, so if your
 application manually delegates work to other threads, such as via `Thread.new`
@@ -109,9 +109,10 @@ end
 
 ### Concurrency
 
-The Executor will put the current thread into `running` mode in the Load
-Interlock. This operation will block temporarily if another thread is currently
-either autoloading a constant or unloading/reloading the application.
+The Executor will put the current thread into `running` mode in the [Load
+Interlock](#load-interlock). This operation will block temporarily if another
+thread is currently either autoloading a constant or unloading/reloading
+the application.
 
 Reloader
 --------
@@ -289,7 +290,7 @@ Another example, using Concurrent Ruby:
 ```ruby
 Rails.application.executor.wrap do
   futures = 3.times.collect do |i|
-    Concurrent::Future.execute do
+    Concurrent::Promises.future do
       Rails.application.executor.wrap do
         # do work here
       end
@@ -321,4 +322,3 @@ backtrace.
 Generally a deadlock will be caused by the interlock conflicting with some other
 external lock or blocking I/O call. Once you find it, you can wrap it with
 `permit_concurrent_loads`.
-

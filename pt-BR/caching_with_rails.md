@@ -10,7 +10,7 @@ Caching means to store content generated during the request-response cycle and
 to reuse it when responding to similar requests.
 
 Caching is often the most effective way to boost an application's performance.
-Through caching, web sites running on a single server with a single database
+Through caching, websites running on a single server with a single database
 can sustain a load of thousands of concurrent users.
 
 Rails provides a set of caching features out of the box. This guide will teach
@@ -365,6 +365,8 @@ There are some common options that can be used by all cache implementations. The
 
 * `:race_condition_ttl` - This option is used in conjunction with the `:expires_in` option. It will prevent race conditions when cache entries expire by preventing multiple processes from simultaneously regenerating the same entry (also known as the dog pile effect). This option sets the number of seconds that an expired entry can be reused while a new value is being regenerated. It's a good practice to set this value if you use the `:expires_in` option.
 
+* `:coder` - This option allows to replace the default cache entry serialization mechanism by a custom one. The `coder` must respond to `dump` and `load`, and passing a custom coder disable automatic compression.
+
 #### Connection Pool Options
 
 By default the `MemCacheStore` and `RedisCacheStore` use a single connection
@@ -538,7 +540,7 @@ config.cache_store = :redis_cache_store, { url: cache_servers,
 
 ### ActiveSupport::Cache::NullStore
 
-This cache store implementation is meant to be used only in development or test environments and it never stores anything. This can be very useful in development when you have code that interacts directly with `Rails.cache` but caching may interfere with being able to see the results of code changes. With this cache store, all `fetch` and `read` operations will result in a miss.
+This cache store is scoped to each web request, and clears stored values at the end of a request. It is meant for use in development and test environments. It can be very useful when you have code that interacts directly with `Rails.cache` but caching interferes with seeing the results of code changes.
 
 ```ruby
 config.cache_store = :null_store
@@ -571,7 +573,7 @@ Conditional GET support
 
 Conditional GETs are a feature of the HTTP specification that provide a way for web servers to tell browsers that the response to a GET request hasn't changed since the last request and can be safely pulled from the browser cache.
 
-They work by using the `HTTP_IF_NONE_MATCH` and `HTTP_IF_MODIFIED_SINCE` headers to pass back and forth both a unique content identifier and the timestamp of when the content was last changed. If the browser makes a request where the content identifier (etag) or last modified since timestamp matches the server's version then the server only needs to send back an empty response with a not modified status.
+They work by using the `HTTP_IF_NONE_MATCH` and `HTTP_IF_MODIFIED_SINCE` headers to pass back and forth both a unique content identifier and the timestamp of when the content was last changed. If the browser makes a request where the content identifier (ETag) or last modified since timestamp matches the server's version then the server only needs to send back an empty response with a not modified status.
 
 It is the server's (i.e. our) responsibility to look for a last modified timestamp and the if-none-match header and determine whether or not to send back the full response. With conditional-get support in Rails this is a pretty easy task:
 
@@ -699,6 +701,9 @@ Development mode is now being cached.
 $ bin/rails dev:cache
 Development mode is no longer being cached.
 ```
+
+NOTE: By default, when development mode caching is *off*, Rails uses
+[`ActiveSupport::Cache::NullStore`](#activesupport-cache-nullstore).
 
 References
 ----------
