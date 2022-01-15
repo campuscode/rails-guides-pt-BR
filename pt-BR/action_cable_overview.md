@@ -56,7 +56,7 @@ consumidores, um por aba/dispositivo aberto para sua conexão).
 
 ### _Pub/Sub_
 
-[_Pub/Sub_](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern), ou
+[Pub/Sub](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) ou
 _Publish-Subscribe_, refere-se a um paradigma de fila de mensageria o qual os
 remetentes de uma informação (_publishers_) enviam dados à uma classe abstrata de
 destinatários (_subscribers_) sem especificar um destinatário individual.
@@ -251,7 +251,7 @@ padrão. A conexão não vai ser estabelecida até que você também tenha
 especificado ao menos uma inscrição que você tem interesse em ter.
 
 O consumidor pode optar receber um argumento que especifica a _URL_ para se
-conectar. Ela pode ser uma _string_, ou uma função que retorna uma _string_ que
+conectar. Ela pode ser uma _string_ ou uma função que retorna uma _string_ que
 vai ser chamada quando o _WebSocket_ é aberto.
 
 ```js
@@ -261,7 +261,7 @@ createConsumer('https://ws.example.com/cable')
 // Utiliza uma função para gerar a _URL_ dinamicamente
 createConsumer(getWebSocketURL)
 
-function getWebSocketURL {
+function getWebSocketURL() {
   const token = localStorage.get('auth-token')
   return `https://ws.example.com/cable?token=${token}`
 }
@@ -353,7 +353,6 @@ Quando um consumidor está inscrito em um *channel*, ele age como assinante (*su
 
 ```js
 // app/javascript/channels/chat_channel.js
-// Assumindo que você já requeriu os direitos para enviar notificações web
 import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: "ChatChannel", room: "Best Room" }, {
@@ -562,7 +561,7 @@ consumer.subscriptions.create("AppearanceChannel", {
   },
 
   get documentIsActive() {
-    return document.visibilityState == "visible" && document.hasFocus()
+    return document.visibilityState === "visible" && document.hasFocus()
   },
 
   get appearingOn() {
@@ -572,7 +571,7 @@ consumer.subscriptions.create("AppearanceChannel", {
 })
 ```
 
-##### Interação Cliente-Servidor
+#### Interação Cliente-Servidor
 
 1. **Cliente** conecta-se ao **Servidor** via `App.cable =
 ActionCable.createConsumer("ws://cable.example.com")`. (`cable.js`). O
@@ -629,7 +628,7 @@ import consumer from "./consumer"
 
 consumer.subscriptions.create("WebNotificationsChannel", {
   received(data) {
-    new Notification(data["title"], body: data["body"])
+    new Notification(data["title"], { body: data["body"] })
   }
 })
 ```
@@ -678,13 +677,14 @@ development:
   adapter: async
 
 test:
-  adapter: async
+  adapter: test
 
 production:
   adapter: redis
   url: redis://10.10.3.153:6381
   channel_prefix: appname_production
 ```
+
 #### Configuração do Adaptador (_Adapter_)
 
 Abaixo está uma lista dos adaptadores de assinatura disponíveis para usuários finais.
@@ -699,6 +699,25 @@ O adaptador Redis requer que os usuários forneçam uma URL apontando para o ser
 Além disso, um `channel_prefix` pode ser fornecido para evitar colisões de nome de canal
 ao usar o mesmo servidor Redis para vários aplicativos. Veja a
 [Documentação Redis PubSub](https://redis.io/topics/pubsub#database-amp-scoping) para mais detalhes.
+
+O adaptador Redis também oferece suporte a conexões SSL/TLS. Os parâmetros SSL/TLS necessários podem ser passados na chave `ssl_params` no arquivo yaml de configuração.
+
+```
+production:
+  adapter: redis
+  url: rediss://10.10.3.153:tls_port
+  channel_prefix: appname_production
+  ssl_params: {
+    ca_file: "/path/to/ca.crt"
+  }
+```
+
+As opções passadas para `ssl_params` são enviadas diretamente para o método `OpenSSL::SSL::SSLContext#set_params` e podem ser qualquer atributo válido do contexto SSL.
+Consulte a [documentação do OpenSSL::SSL::SSLContext](https://docs.ruby-lang.org/en/master/OpenSSL/SSL/SSLContext.html) para outros atributos disponíveis.
+
+Se você estiver usando certificados autoassinados para o adaptador redis atrás de um firewall e optar por ignorar a verificação de certificado, o ssl `verify_mode` deve ser definido como `OpenSSL::SSL::VERIFY_NONE`.
+
+WARNING: Não é recomendado usar `VERIFY_NONE` em ambiente de produção a menos que você entenda as implicações de segurança. Para definir esta opção para o adaptador Redis, a configuração deve ser `ssl_params: { verify_mode: <%= OpenSSL::SSL::VERIFY_NONE %> }`.
 
 ##### Adaptador PostgreSQL
 
@@ -795,8 +814,8 @@ _cable server_ se `action_cable_meta_tag` for invocado no layout. Caso contrári
 especificado como primeiro argumento para `createConsumer` (e.g. `ActionCable.createConsumer("/websocket")`).
 
 Para cada instância de seu servidor que você cria e para cada _worker_ que seu servidor
-instancia, você também terá uma nova instância do _Action Cable_, mas o uso do Redis
-mantém as mensagens sincronizadas entre as conexões.
+instancia, você também terá uma nova instância do _Action Cable_, mas o adaptador Redis ou
+PostgreSQL mantém as mensagens sincronizadas entre as conexões.
 
 ### Autônomo
 
