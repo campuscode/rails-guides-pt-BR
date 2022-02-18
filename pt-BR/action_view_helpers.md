@@ -104,7 +104,7 @@ Retorna uma *tag* com *link* de folha de estilo para as fontes especificadas com
 
 ```ruby
 stylesheet_link_tag "application"
-# => <link href="/assets/application.css" media="screen" rel="stylesheet" />
+# => <link href="/assets/application.css" rel="stylesheet" />
 ```
 
 #### stylesheet_path
@@ -333,13 +333,22 @@ Formata um número em uma *string* de moeda (por exemplo, $13.65).
 number_to_currency(1234567890.50) # => $1,234,567,890.50
 ```
 
+#### number_to_human
+
+Imprime (formata e aproxima) um número para que seja mais legível pelos usuários; útil para números que podem ficar muito grandes.
+
+```ruby
+number_to_human(1234)    # => 1.23 Thousand
+number_to_human(1234567) # => 1.23 Million
+```
+
 #### number_to_human_size
 
 Formata os *bytes* em tamanho em uma representação mais compreensível; útil para relatar tamanhos de arquivo aos usuários.
 
 ```ruby
-number_to_human_size(1234)    # => 1.2 KB
-number_to_human_size(1234567) # => 1.2 MB
+number_to_human_size(1234)    # => 1.21 KB
+number_to_human_size(1234567) # => 1.18 MB
 ```
 
 #### number_to_percentage
