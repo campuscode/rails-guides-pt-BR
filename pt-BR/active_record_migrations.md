@@ -26,7 +26,7 @@ Você pode pensar em cada *migration* como sendo uma nova 'versão' do banco de 
 Aqui temos um exemplo de uma *migration*:
 
 ```ruby
-class CreateProducts < ActiveRecord::Migration[6.0]
+class CreateProducts < ActiveRecord::Migration[7.0]
   def change
     create_table :products do |t|
       t.string :name
@@ -51,7 +51,7 @@ NOTE: Há certos tipos de *queries* que não podem ser executadas dentro de uma 
 Se você quiser que uma *migration* faça algo que o *Active Record* não sabe como reverter, pode usar `reversible`:
 
 ```ruby
-class ChangeProductsPrice < ActiveRecord::Migration[6.0]
+class ChangeProductsPrice < ActiveRecord::Migration[7.0]
   def change
     reversible do |dir|
       change_table :products do |t|
@@ -66,7 +66,7 @@ end
 Alternativamente, você pode usar `up` e `down` ao invés de `change`:
 
 ```ruby
-class ChangeProductsPrice < ActiveRecord::Migration[6.0]
+class ChangeProductsPrice < ActiveRecord::Migration[7.0]
   def up
     change_table :products do |t|
       t.change :price, :string
@@ -108,7 +108,7 @@ $ bin/rails generate migration AddPartNumberToProducts
 Isso criará uma *migration* vazia nomeada devidamente:
 
 ```ruby
-class AddPartNumberToProducts < ActiveRecord::Migration[6.0]
+class AddPartNumberToProducts < ActiveRecord::Migration[7.0]
   def change
   end
 end
@@ -130,7 +130,7 @@ $ bin/rails generate migration AddPartNumberToProducts part_number:string
 irá gerar
 
 ```ruby
-class AddPartNumberToProducts < ActiveRecord::Migration[6.0]
+class AddPartNumberToProducts < ActiveRecord::Migration[7.0]
   def change
     add_column :products, :part_number, :string
   end
@@ -146,7 +146,7 @@ $ bin/rails generate migration AddPartNumberToProducts part_number:string:index
 irá gerar o `add_column` apropriado e o [`add_index`][]
 
 ```ruby
-class AddPartNumberToProducts < ActiveRecord::Migration[6.0]
+class AddPartNumberToProducts < ActiveRecord::Migration[7.0]
   def change
     add_column :products, :part_number, :string
     add_index :products, :part_number
@@ -163,7 +163,7 @@ $ bin/rails generate migration RemovePartNumberFromProducts part_number:string
 gera
 
 ```ruby
-class RemovePartNumberFromProducts < ActiveRecord::Migration[6.0]
+class RemovePartNumberFromProducts < ActiveRecord::Migration[7.0]
   def change
     remove_column :products, :part_number, :string
   end
@@ -179,7 +179,7 @@ $ bin/rails generate migration AddDetailsToProducts part_number:string price:dec
 gera
 
 ```ruby
-class AddDetailsToProducts < ActiveRecord::Migration[6.0]
+class AddDetailsToProducts < ActiveRecord::Migration[7.0]
   def change
     add_column :products, :part_number, :string
     add_column :products, :price, :decimal
@@ -198,7 +198,7 @@ $ bin/rails generate migration CreateProducts name:string part_number:string
 gera
 
 ```ruby
-class CreateProducts < ActiveRecord::Migration[6.0]
+class CreateProducts < ActiveRecord::Migration[7.0]
   def change
     create_table :products do |t|
       t.string :name
@@ -224,14 +224,16 @@ $ bin/rails generate migration AddUserRefToProducts user:references
 gera a seguinte chamada a [`add_references`][]:
 
 ```ruby
-class AddUserRefToProducts < ActiveRecord::Migration[6.0]
+class AddUserRefToProducts < ActiveRecord::Migration[7.0]
   def change
     add_reference :products, :user, foreign_key: true
   end
 end
 ```
 
-Essa migração criará uma coluna `user_id` e o índice apropriado.
+Essa migração criará uma coluna `user_id`, [references](#references) é um
+abreviação para criar colunas, índices, chaves estrangeiras ou mesmo colunas polimórficas
+de associação.
 
 Também existe um gerador que produzirá *join tables* se `JoinTable` fizer parte do nome:
 
@@ -242,7 +244,7 @@ $ bin/rails g migration CreateJoinTableCustomerProduct customer product
 produzirá a seguinte migração:
 
 ```ruby
-class CreateJoinTableCustomerProduct < ActiveRecord::Migration[6.0]
+class CreateJoinTableCustomerProduct < ActiveRecord::Migration[7.0]
   def change
     create_join_table :customers, :products do |t|
       # t.index [:customer_id, :product_id]
@@ -259,7 +261,7 @@ end
 
 ### Model Generators
 
-Os geradores de *model* e *scaffold* criarão migrações apropriadas para adicionar
+Os geradores de *model*, *resource* e *scaffold* criarão migrações apropriadas para adicionar
 um novo *model*. Essa migração já irá conter as instruções para criar a
 tabela. Se você disser ao Rails quais colunas você deseja, as instruções para
 adicionar essas colunas também serão criadas. Por exemplo, executando:
@@ -271,7 +273,7 @@ $ bin/rails generate model Product name:string description:text
 criará uma migração que se parece com isso
 
 ```ruby
-class CreateProducts < ActiveRecord::Migration[6.0]
+class CreateProducts < ActiveRecord::Migration[7.0]
   def change
     create_table :products do |t|
       t.string :name
@@ -299,7 +301,7 @@ $ bin/rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplie
 produzirá uma migração que se parece com isso
 
 ```ruby
-class AddDetailsToProducts < ActiveRecord::Migration[6.0]
+class AddDetailsToProducts < ActiveRecord::Migration[7.0]
   def change
     add_column :products, :price, :decimal, precision: 5, scale: 2
     add_reference :products, :supplier, polymorphic: true
@@ -318,7 +320,7 @@ começar os trabalhos!
 ### Criando uma Tabela
 
 O método [`create_table`][] é um dos mais fundamentais, mas na maioria das vezes,
-ele será criado para você usando um gerador de *scaffold* ou *model*. Um uso
+ele será criado para você usando um gerador de *model*, *resource* ou *scaffold*. Um uso
 típico seria:
 
 ```ruby
@@ -327,8 +329,7 @@ create_table :products do |t|
 end
 ```
 
-Que cria uma tabela `products` com uma coluna chamada `name` (e como discutido
-abaixo, uma coluna implícita `id`.
+Que cria uma tabela `products` com uma coluna chamada `name`.
 
 Por padrão, o `create_table` criará uma chave primária chamada `id`. Você pode mudar
 o nome da chave primária com a opção `:primary_key` (não esqueça de
@@ -343,6 +344,16 @@ end
 ```
 
 acrescentará `ENGINE=BLACKHOLE` à instrução SQL usada para criar a tabela.
+
+Um índice pode ser criado nas colunas criadas dentro do bloco `create_table`
+passando `true` ou um `hash` para a opção `:index`:
+
+```ruby
+create_table :users do |t|
+  t.string :name, index: true
+  t.string :email, index: { unique: true, name: 'unique_emails' }
+end
+```
 
 Você também pode passar a opção `:comment` com qualquer descrição para a tabela
 que serão armazenados no próprio bando de dados e poderão ser visualizados com ferramentas de administração
@@ -449,22 +460,63 @@ anterior, isso tornaria sua *migration* irreversível.
 
 Modificadores de coluna podem ser aplicados ao criar ou alterar uma coluna:
 
-* `limit`        Define o tamanho máximo dos campos `string/text/binary/integer`.
-* `precision`    Define a precisão para os campos `decimal`, representando a
-quantidade total de dígitos no número.
-* `scale`        Define a escala para os campos `decimal`, representando o
-número de digitos após o ponto decimal.
-* `polymorphic`  Adiciona uma coluna `type` para a associação `belongs_to`.
-* `null`         Autoriza ou não valores `NULL` na coluna.
+* `comment`      Adiciona um comentário para a coluna.
+* `collation`    Especifica a *collation* para uma coluna `string` ou `text`.
 * `default`      Permite definir um valor padrão na coluna. Note que se você
 estiver usando um valor dinâmico (como uma data), o padrão será calculado
-apenas na primeira vez (ou seja, na data em que a *migration* é aplicada).
-* `comment`      Adiciona um comentário para a coluna.
+apenas na primeira vez (ou seja, na data em que a *migration* é aplicada). Use `nil` para `NULL`.
+* `limit`        Define o número máximo de caracteres para uma coluna `string` e o número máximo de bytes para colunas do tipo `text/binary/integer`.
+* `null`         Permite ou não permite valores `NULL` na coluna.
+* `precision`    Define a precisão para colunas de tipo `decimal/numeric/datetime/time`.
+* `scale`        Define a escala para os campos `decimal` e `numeric`, representando o
+número de digitos após o ponto decimal.
+
+NOTE: Para `add_column` ou `change_column` não há opção para adicionar índices.
+Eles precisam ser adicionados separadamente usando `add_index`.
 
 Alguns adaptadores podem suportar opções adicionais; consulte a documentação da API de um adaptador específico
 para maiores informações.
 
 NOTE: `null` e `default` não podem ser especificados via linha de comando.
+
+### References
+
+O método `add_reference` permite a criação de uma coluna apropriadamente nomeada.
+
+```ruby
+add_reference :users, :role
+```
+
+Essa migração criará uma coluna `role_id` na tabela de usuários. Ela cria um
+index para esta coluna também, a menos que explicitamente informado com o
+opção `index: false`:
+
+```ruby
+add_reference :users, :role, index: false
+```
+
+O método `add_belongs_to` é um *alias* para `add_reference`.
+
+```ruby
+add_belongs_to :taggings, :taggable, polymorphic: true
+```
+
+A opção polimórfica criará duas colunas na tabela de tags que podem
+ser usado para associações polimórficas: `taggable_type` e `taggable_id`.
+
+Uma chave estrangeira pode ser criada com a opção `foreign_key`.
+
+```ruby
+add_reference :users, :role, foreign_key: true
+```
+
+Para obter mais opções de `add_reference`, visite a [documentação da API](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference).
+
+As referências também podem ser removidas:
+
+```ruby
+remove_reference :products, :user, foreign_key: true, index: false
+```
 
 ### Foreign Keys (Chaves Estrangeiras)
 
@@ -584,7 +636,7 @@ reverter. Você pode usar [`reversible`][] para especificar o que fazer ao execu
 *migration* e o que mais fazer ao revertê-la. Por exemplo:
 
 ```ruby
-class ExampleMigration < ActiveRecord::Migration[6.0]
+class ExampleMigration < ActiveRecord::Migration[7.0]
   def change
     create_table :distributors do |t|
       t.string :zipcode
@@ -639,7 +691,7 @@ aconselhável realizar as transformações precisamente na ordem inversa em que 
 feitas no método `up`. O exemplo na seção `reversible` é equivalente a:
 
 ```ruby
-class ExampleMigration < ActiveRecord::Migration[6.0]
+class ExampleMigration < ActiveRecord::Migration[7.0]
   def up
     create_table :distributors do |t|
       t.string :zipcode
@@ -682,7 +734,7 @@ Você pode usar a capacidade do Active Record de reverter *migrations* usando o 
 ```ruby
 require_relative "20121212123456_example_migration"
 
-class FixupExampleMigration < ActiveRecord::Migration[6.0]
+class FixupExampleMigration < ActiveRecord::Migration[7.0]
   def change
     revert ExampleMigration
 
@@ -700,7 +752,7 @@ mais tarde decidimos que seria melhor usar as validações do Active Record,
 no lugar da *constraint* (restrição) `CHECK`, para verificar o CEP.
 
 ```ruby
-class DontUseConstraintForZipcodeValidationMigration < ActiveRecord::Migration[6.0]
+class DontUseConstraintForZipcodeValidationMigration < ActiveRecord::Migration[7.0]
   def change
     revert do
       # copy-pasted code from ExampleMigration
@@ -867,7 +919,7 @@ tudo isso:
 Por exemplo, esta *migration*
 
 ```ruby
-class CreateProducts < ActiveRecord::Migration[6.0]
+class CreateProducts < ActiveRecord::Migration[7.0]
   def change
     suppress_messages do
       create_table :products do |t|
@@ -985,7 +1037,7 @@ Migrações e Dados de *Seed*
 O propósito principal da funcionalidade de migração do Rails é enviar comandos que modificam o *schema* usando um processo consistente. Migrações também podem ser usadas para inserir ou modificar dados. Isto é útil em um banco de dados existente que não pode ser destruído e criado de novo, como por exemplo um banco de dados em produção.
 
 ```ruby
-class AddInitialProducts < ActiveRecord::Migration[6.0]
+class AddInitialProducts < ActiveRecord::Migration[7.0]
   def up
     5.times do |i|
       Product.create(name: "Product ##{i}", description: "A product.")
