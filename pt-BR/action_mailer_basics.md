@@ -173,7 +173,7 @@ $ bin/rails db:migrate
 
 Agora que já temos o _model_ para nossos usuários, podemos começar a criar a funcionalidade. Para isso vamos editar o arquivo `app/controllers/users_controller.rb` para chamar o `UserMailer` para enviar um e-mail ao novo usuário registrado. Vamos editar a _action_ `create` inserindo a seguinte chamada: `UserMailer.with(user: @user).welcome_email` logo após o usuário ter sido salvo com sucesso.
 
-Vamos enfileirar o email a ser enviado usando [`deliver_later`][], que é apoiado por pelo *Active Job*. Dessa forma, a *action* do *controller* pode continuar sem aguardando a conclusão do envio.
+Vamos enfileirar o email a ser enviado usando [`deliver_later`][], que é apoiado pelo *Active Job*. Dessa forma, a *action* do *controller* pode continuar sem aguardando a conclusão do envio.
 
 ```ruby
 class UsersController < ApplicationController
