@@ -66,7 +66,7 @@ class Order < ApplicationRecord
   belongs_to :customer
   has_and_belongs_to_many :books, join_table: 'books_orders'
 
-  enum status: [:shipped, :being_packed, :complete, :cancelled]
+  enum :status, [:shipped, :being_packed, :complete, :cancelled]
 
   scope :created_before, ->(time) { where('created_at < ?', time) }
 end
@@ -77,7 +77,7 @@ class Review < ApplicationRecord
   belongs_to :customer
   belongs_to :book
 
-  enum state: [:not_reviewed, :published, :hidden]
+  enum :state, [:not_reviewed, :published, :hidden]
 end
 ```
 
@@ -369,6 +369,8 @@ O equivalente ao de cima, em SQL, seria
 ```sql
 SELECT * FROM customers WHERE (customers.first_name = 'Lifo') LIMIT 1
 ```
+
+Observe que não há 'ORDER BY' no SQL acima. Se suas condição `find_by` puderem corresponder a vários registros, você deve [aplicar uma ordenação](#ordering) para garantir um resultado determinístico.
 
 O método [`find_by`][] se comporta exatamente como o `find_by`, exceto que irá gerar uma exceção `ActiveRecord::RecordNotFound` se nenhum registro
 correspondente for encontrado. Por exemplo:
@@ -703,6 +705,32 @@ SELECT * FROM customers WHERE (customers.last_name = 'Smith' OR customers.orders
 
 [`or`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-or
 
+### Condições AND
+
+Condições `AND` podem ser construídas encadeando condições `where`.
+
+```ruby
+Customer.where(last_name: 'Smith').where(orders_count: [1,3,5]))
+```
+
+```sql
+SELECT * FROM customers WHERE customers.last_name = 'Smith' AND customers.orders_count IN (1,3,5)
+```
+
+Condições `AND` para a interseção lógica entre as relações podem ser construídas 
+chamando [`and`][] na primeira relação e passando a segunda como um
+argumento.
+
+```ruby
+Customer.where(id: [1, 2]).and(Customer.where(id: [2, 3]))
+```
+
+```sql
+SELECT * FROM customers WHERE (customers.id IN (1, 2) AND customers.id IN (2, 3))
+```
+
+[`and`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-and
+
 Ordenando
 --------
 
@@ -711,40 +739,40 @@ Para recuperar registros do banco de dados em uma ordem específica, você pode 
 Por exemplo, se você deseja obter um conjunto de registros e ordená-los em ordem crescente pelo campo `created_at` na sua tabela:
 
 ```ruby
-Customer.order(:created_at)
+Book.order(:created_at)
 # OU
-Customer.order("created_at")
+Book.order("created_at")
 ```
 
 Você também pode especificar `ASC` ou` DESC`:
 
 ```ruby
-Customer.order(created_at: :desc)
+Book.order(created_at: :desc)
 # OU
-Customer.order(created_at: :asc)
+Book.order(created_at: :asc)
 # OU
-Customer.order("created_at DESC")
+Book.order("created_at DESC")
 # OU
-Customer.order("created_at ASC")
+Book.order("created_at ASC")
 ```
 
 Ou ordenar por campos diversos:
 
 ```ruby
-Customer.order(orders_count: :asc, created_at: :desc)
+Book.order(title: :asc, created_at: :desc)
 # OU
-Customer.order(:orders_count, created_at: :desc)
+Book.order(:title, created_at: :desc)
 # OU
-Customer.order("orders_count ASC, created_at DESC")
+Book.order("title ASC, created_at DESC")
 # OU
-Customer.order("orders_count ASC", "created_at DESC")
+Book.order("title ASC", "created_at DESC")
 ```
 
 Se você quiser chamar `order` várias vezes, as ordens subsequentes serão anexados à primeira:
 
 ```irb
-irb> Customer.order("orders_count ASC").order("created_at DESC")
-SELECT * FROM customers ORDER BY orders_count ASC, created_at DESC
+irb> Book.order("title ASC").order("created_at DESC")
+SELECT * FROM books ORDER BY title ASC, created_at DESC
 ```
 
 WARNING: Na maioria dos sistemas de banco de dados, ao selecionar campos com `distinct` de um conjunto de resultados usando métodos como` select`, `pluck` e `ids`; o método `order` gerará uma exceção `ActiveRecord::StatementInvalid`, a menos que o(s) campo(s) usados ​​na cláusula `order` estejam incluídos na lista de seleção. Consulte a próxima seção para selecionar campos do conjunto de resultados.
@@ -1027,25 +1055,25 @@ SELECT * FROM books WHERE author_id = 10 ORDER BY year_published ASC
 O método [`reverse_order`][] reverte a ordem da cláusula, se especificado.
 
 ```ruby
-Customer.where("orders_count > 10").order(:last_name).reverse_order
+Book.where("author_id > 10").order(:year_published).reverse_order
 ```
 
 O SQL que será executado:
 
 ```sql
-SELECT * FROM customers WHERE orders_count > 10 ORDER BY last_name DESC
+SELECT * FROM books WHERE author_id > 10 ORDER BY year_published DESC
 ```
 
 Se nenhuma cláusula de ordenação é especificada na _query_, o `reverse_order` ordena pela chave primária em ordem reversa.
 
 ```ruby
-Customer.where("orders_count > 10").reverse_order
+Book.where("author_id > 10").reverse_order
 ```
 
 O SQL que será executado:
 
 ```sql
-SELECT * FROM customers WHERE orders_count > 10 ORDER BY customers.id DESC
+SELECT * FROM books WHERE author_id > 10 ORDER BY books.id DESC
 ```
 
 O método `reverse_order` **não aceita** argumentos.
@@ -1084,7 +1112,7 @@ Relações Nulas
 O método [`none`][] retorna uma relação encadeada sem registros. Quaisquer condições subsequentes encadeadas à relação retornada continuarão gerando relações vazias. Isso é útil em cenários onde você precisa de uma resposta encadeada para um método ou um escopo que pode retornar zero resultados.
 
 ```ruby
-Order.none # retorna uma Relation vazia e não dispara nenhuma query.
+Book.none # retorna uma Relation vazia e não dispara nenhuma query.
 ```
 
 ```ruby
@@ -1359,7 +1387,6 @@ LEFT OUTER JOIN reviews ON reviews.customer_id = customers.id GROUP BY customers
 
 Que significa: "retorne todos os clientes com suas contagens de avaliações, tenham eles avaliações ou não"
 
-
 Associations com _Eager Loading_
 --------------------------
 
@@ -1383,7 +1410,17 @@ Este código parece bom à primeira vista. Mas o problema está no número total
 
 o _Active Record_ permite que você especifique com antecedência todas as associações que serão carregadas. Isso é possível especificando o método [`includes`][] da chamada `Model.find`. Com o `includes`, o _Active Record_ garante que todas as associações especificadas sejam carregadas usando o número mínimo possível de consultas.
 
-Revisitando o caso acima, poderíamos reescrever `Book.limit(10)` para carregamento antecipado dos autores:
+Os métodos são:
+
+* [`includes`][]
+* [`preload`][]
+* [`eager_load`][]
+
+### includes
+
+Com `includes`, o Active Record garante que todas as associações especificadas sejam carregadas usando o número mínimo possível de consultas.
+
+Revisitando o caso acima, usando o método `includes`, poderíamos reescrever `Book.limit(10)` para carregamento antecipado dos autores:
 
 ```ruby
 books = Book.includes(:author).limit(10)
@@ -1396,12 +1433,12 @@ end
 O código acima executará apenas **2** consultas, em oposição às **11** consultas do caso anterior:
 
 ```sql
-SELECT * FROM books LIMIT 10
-SELECT authors.* FROM authors
-  WHERE (authors.id IN (1,2,3,4,5,6,7,8,9,10))
+SELECT `books`* FROM `books` LIMIT 10
+SELECT `authors`.* FROM `authors`
+  WHERE `authors`.`book_id` IN (1,2,3,4,5,6,7,8,9,10)
 ```
 
-### Eager Loading Multiple Associations
+#### Eager Loading Multiple Associations
 
 O _Active Record_ permite que você carregue rapidamente qualquer número de associações com uma única chamada `Model.find` usando um _array_, _hash_, ou um _hash_ aninhado de _array_ / _hash_ com o método `includes`.
 
@@ -1413,7 +1450,7 @@ Customer.includes(:orders, :reviews)
 
 Isso carrega todos os clientes e os pedidos e avaliações associados.
 
-#### _Hash_ de Associações Aninhadas
+##### _Hash_ de Associações Aninhadas
 
 ```ruby
 Customer.includes(orders: {books: [:supplier, :author]}).find(1)
@@ -1421,7 +1458,7 @@ Customer.includes(orders: {books: [:supplier, :author]}).find(1)
 
 Isso encontrará a cliente com id 1 e carregará antecipadamente todos os pedidos associados, os livros para aqueles pedidos e autores e fornecedores para cada um dos livros.
 
-### Especificando Condições em Associações _Eager Loaded_
+#### Especificando Condições em Associações _Eager Loaded_
 
 Mesmo que o _Active Record_ permita que você especifique as condições nas associações carregadas antecipadamente como `joins`, a maneira recomendada é usar [joins](#associando-tabelas) ao invés.
 
@@ -1454,6 +1491,55 @@ devolvido.
 
 NOTE: Se uma associação for carregada antecipadamente como parte de uma junção, quaisquer campos de uma cláusula de seleção personalizada não estarão presentes nos *models* carregados.
 Isso ocorre porque é ambíguo se eles devem aparecer no registro do pai ou do filho.
+
+### preload
+
+Com `preload`, o Active Record garante que seja carregado usando uma consulta para cada associação especificada.
+
+Revisitando o caso em que N + 1 ocorreu usando o método `preload`, poderíamos reescrever `Book.limit(10)` para autores:
+
+```ruby
+books = Book.preload(:author).limit(10)
+
+books.each do |book|
+  puts book.author.last_name
+end
+```
+
+O código acima executará apenas **2** consultas, ao contrário de **11** consultas no caso anterior:
+
+```sql
+SELECT `books`* FROM `books` LIMIT 10
+SELECT `authors`.* FROM `authors`
+  WHERE `authors`.`book_id` IN (1,2,3,4,5,6,7,8,9,10)
+```
+
+NOTE: O método `preload` usa um *array*, *hash* ou um *hash* aninhado de *array/hash* da mesma forma que o método `includes` para carregar qualquer número de associações com uma única chamada `Model.find`. No entanto, ao contrário do método `includes`, não é possível especificar condições para associações carregadas antecipadamente.
+
+### eager_load
+
+Com `eager_load`, o Active Record garante que force o carregamento antecipado usando `LEFT OUTER JOIN` para todas as associações especificadas.
+
+Revisitando o caso em que N + 1 ocorreu usando o método `eager_load`, poderíamos reescrever `Book.limit(10)` para autores:
+
+```ruby
+books = Book.eager_load(:author).limit(10)
+
+books.each do |book|
+  puts book.author.last_name
+end
+```
+
+O código acima executará apenas **2** consultas, ao contrário de **11** consultas no caso anterior:
+
+```sql
+SELECT DISTINCT `books`.`id` FROM `books` LEFT OUTER JOIN `authors` ON `authors`.`book_id` = `books`.`id` LIMIT 10
+SELECT `books`.`id` AS t0_r0, `books`.`last_name` AS t0_r1, ...
+  FROM `books` LEFT OUTER JOIN `authors` ON `authors`.`book_id` = `books`.`id`
+  WHERE `books`.`id` IN (1,2,3,4,5,6,7,8,9,10)
+```
+
+NOTE: O método `eager_load` usa um *array*, *hash* ou um *hash* aninhado de *array/hash* da mesma forma que o método `includes` para carregar qualquer número de associações com uma única chamada `Model.find`. Além disso, como o método `includes`, você pode especificar as condições da associação carregada antecipadamente.
 
 _Scopes_
 ------
@@ -1662,7 +1748,7 @@ irb> Book.all
 SELECT books.* FROM books WHERE (year_published >= 1969)
 
 irb> Book.in_print
-SELECT books.* FROM books WHERE (year_published >= 1969) AND books.out_of_print = true
+SELECT books.* FROM books WHERE (year_published >= 1969) AND books.out_of_print = false
 
 irb> Book.where('price > 50')
 SELECT books.* FROM books WHERE (year_published >= 1969) AND (price > 50)
@@ -1728,7 +1814,7 @@ Por exemplo, dada essa declaração [`enum`][]:
 
 ```ruby
 class Order < ApplicationRecord
-  enum status: [:shipped, :being_packaged, :complete, :cancelled]
+  enum :status, [:shipped, :being_packaged, :complete, :cancelled]
 end
 ```
 
@@ -1951,7 +2037,7 @@ instância da classe `ActiveRecord::Result` e chamar `to_a` neste objeto te
 retornaria um array de hashes, onde cada *hash* indica um registro.
 
 ```irb
-irb> Customer.connection.select_all("SELECT first_name, created_at FROM customers WHERE id = '1'").to_hash
+irb> Customer.connection.select_all("SELECT first_name, created_at FROM customers WHERE id = '1'").to_a
 => [{"first_name"=>"Rafael", "created_at"=>"2012-11-10 23:23:45.281189"}, {"first_name"=>"Eileen", "created_at"=>"2013-12-09 11:22:35.221282"}]
 ```
 
@@ -1973,7 +2059,7 @@ SELECT DISTINCT status FROM orders
 => ["shipped", "being_packed", "cancelled"]
 
 irb> Customer.pluck(:id, :first_name)
-SELECT customers.id, customers.name FROM customers
+SELECT customers.id, customers.first_name FROM customers
 => [[1, "David"], [2, "Fran"], [3, "Jose"]]
 ```
 
@@ -1984,7 +2070,7 @@ Customer.select(:id).map { |c| c.id }
 # ou
 Customer.select(:id).map(&:id)
 # ou
-Customer.select(:id, :name).map { |c| [c.id, c.first_name] }
+Customer.select(:id, :first_name).map { |c| [c.id, c.first_name] }
 ```
 
 com:
@@ -2113,12 +2199,16 @@ Você também pode usar `any?` e `many?` para verificar a existência de um *mod
 
 ```ruby
 # via a model
-Order.any?   # => SELECT 1 AS one FROM orders
-Order.many?  # => SELECT COUNT(*) FROM orders
+Order.any?
+# => SELECT 1 FROM orders LIMIT 1
+Order.many?
+# => SELECT COUNT(*) FROM (SELECT 1 FROM orders LIMIT 2)
 
 # via um scope nomeado
-Order.shipped.any?   # => SELECT 1 AS one FROM orders WHERE orders.status = 0
-Order.shipped.many?  # => SELECT COUNT(*) FROM orders WHERE orders.status = 0
+Order.shipped.any?
+# => SELECT 1 FROM orders WHERE orders.status = 0 LIMIT 1
+Order.shipped.many?
+# => SELECT COUNT(*) FROM (SELECT 1 FROM orders WHERE orders.status = 0 LIMIT 2)
 
 # via uma relação
 Book.where(out_of_print: true).any?

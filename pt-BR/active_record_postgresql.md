@@ -167,7 +167,7 @@ irb> Event.where("payload->>'kind' = ?", "user_renamed")
 * [type definition](https://www.postgresql.org/docs/current/static/rangetypes.html)
 * [functions and operators](https://www.postgresql.org/docs/current/static/functions-range.html)
 
-This type is mapped to Ruby [`Range`](https://ruby-doc.org/core-2.5.0/Range.html) objects.
+This type is mapped to Ruby [`Range`](https://ruby-doc.org/core-2.7.0/Range.html) objects.
 
 ```ruby
 # db/migrate/20130923065404_create_events.rb
@@ -409,7 +409,7 @@ irb> user.save!
 * [type definition](https://www.postgresql.org/docs/current/static/datatype-net-types.html)
 
 The types `inet` and `cidr` are mapped to Ruby
-[`IPAddr`](https://ruby-doc.org/stdlib-2.5.0/libdoc/ipaddr/rdoc/IPAddr.html)
+[`IPAddr`](https://ruby-doc.org/stdlib-2.7.0/libdoc/ipaddr/rdoc/IPAddr.html)
 objects. The `macaddr` type is mapped to normal text.
 
 ```ruby
@@ -449,10 +449,10 @@ A point is casted to an array containing `x` and `y` coordinates.
 
 ### Interval
 
-* [type definition](http://www.postgresql.org/docs/current/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT)
-* [functions and operators](http://www.postgresql.org/docs/current/static/functions-datetime.html)
+* [type definition](https://www.postgresql.org/docs/current/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT)
+* [functions and operators](https://www.postgresql.org/docs/current/static/functions-datetime.html)
 
-This type is mapped to [`ActiveSupport::Duration`](http://api.rubyonrails.org/classes/ActiveSupport/Duration.html) objects.
+This type is mapped to [`ActiveSupport::Duration`](https://api.rubyonrails.org/classes/ActiveSupport/Duration.html) objects.
 
 ```ruby
 # db/migrate/20200120000000_create_events.rb
@@ -504,14 +504,35 @@ irb> device.id
 NOTE: `gen_random_uuid()` (from `pgcrypto`) is assumed if no `:default` option was
 passed to `create_table`.
 
+Generated Columns
+-----------------
+
+NOTE: Generated columns are supported since version 12.0 of PostgreSQL.
+
+```ruby
+# db/migrate/20131220144913_create_users.rb
+create_table :users do |t|
+  t.string :name
+  t.virtual :name_upcased, type: :string, as: 'upper(name)', stored: true
+end
+
+# app/models/user.rb
+class User < ApplicationRecord
+end
+
+# Usage
+user = User.create(name: 'John')
+User.last.name_upcased # => "JOHN"
+```
+
 Pesquisa de Texto Completo
 ----------------
 
 ```ruby
 # db/migrate/20131220144913_create_documents.rb
 create_table :documents do |t|
-  t.string 'title'
-  t.string 'body'
+  t.string :title
+  t.string :body
 end
 
 add_index :documents, "to_tsvector('english', title || ' ' || body)", using: :gin, name: 'documents_idx'
@@ -530,6 +551,27 @@ Document.create(title: "Cats and Dogs", body: "are nice!")
 ## todos os documentos que correspondem a 'cat & dog'
 Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
                  "cat & dog")
+```
+
+Opcionalmente, você pode armazenar o vetor como coluna gerada automaticamente (do PostgreSQL 12.0):
+
+```ruby
+# db/migrate/20131220144913_create_documents.rb
+create_table :documents do |t|
+  t.string :title
+  t.string :body
+
+  t.virtual :textsearchable_index_col,
+            type: :tsvector, as: "to_tsvector('english', title || ' ' || body)", stored: true
+end
+
+add_index :documents, :textsearchable_index_col, using: :gin, name: 'documents_idx'
+
+# Uso
+Document.create(title: "Cats and Dogs", body: "are nice!")
+
+## todos os documentos contendo 'cat & dog'
+Document.where("textsearchable_index_col @@ to_tsquery(?)", "cat & dog")
 ```
 
 Visão de Banco de Dados
