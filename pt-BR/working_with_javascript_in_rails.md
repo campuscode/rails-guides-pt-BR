@@ -44,7 +44,7 @@ fetch("/test")
   .then((data) => data.text())
   .then((html) => {
     const results = document.querySelector("#results");
-    results.insertAdjacentHTML("beforeend", data);
+    results.insertAdjacentHTML("beforeend", html);
   });
 ```
 
@@ -330,11 +330,6 @@ O atributo também está disponível no botão *submit* do formulário. Isso per
 você customizar a mensagem de aviso dependendo do botão que foi ativado. Nesse caso,
 você **não** deve ter um `data-confirm` no formulário em si.
 
-A confirmação padrão usa a mensagem de confirmação JavaScript, mas você pode mudar
-isso pegando o evento `confirm`, o qual é disparado antes da janela de confirmação
-aparecer para o usuário. Para cancelar essa confirmação padrão, você tem que fazer o
-gerenciador de confirmação retornar *false*.
-
 ### Desativando Automaticamente
 
 Também é possível desabilitar automaticamente um input enquanto o formulário está sendo
@@ -397,7 +392,7 @@ evento `ajax:beforeSend` é útil para adicionar *headers* personalizados.
 
 Se você parar o evento `ajax:aborted:file`, o comportamento padrão de permitir
 que o navegador envie o formulário por meios normais (i.e. requisição sem *Ajax*)
-será cancelada e o formulário não será enviado de nenhuma forma. Isso é útil para
+será cancelada, e o formulário não será enviado de nenhuma forma. Isso é útil para
 implementar seu próprio ambiente de *upload* de arquivos via *Ajax*.
 
 Observação, você deveria usar o `return false` para prevenir um evento para o `jquery-ujs`

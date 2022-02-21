@@ -355,7 +355,7 @@ Rails adds some custom assertions of its own to the `minitest` framework:
 | [`assert_nothing_raised { block }`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised) | Ensures that the given block doesn't raise any exceptions.|
 | [`assert_recognizes(expected_options, path, extras={}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes) | Asserts that the routing of the given path was handled correctly and that the parsed options (given in the expected_options hash) match path. Basically, it asserts that Rails recognizes the route given by expected_options.|
 | [`assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates) | Asserts that the provided options can be used to generate the provided path. This is the inverse of assert_recognizes. The extras parameter is used to tell the request the names and values of additional request parameters that would be in a query string. The message parameter allows you to specify a custom error message for assertion failures.|
-| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Asserts that the response comes with a specific status code. You can specify `:success` to indicate 200-299, `:redirect` to indicate 300-399, `:missing` to indicate 404, or `:error` to match the 500-599 range. You can also pass an explicit status number or its symbolic equivalent. For more information, see [full list of status codes](http://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) and how their [mapping](https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) works.|
+| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Asserts that the response comes with a specific status code. You can specify `:success` to indicate 200-299, `:redirect` to indicate 300-399, `:missing` to indicate 404, or `:error` to match the 500-599 range. You can also pass an explicit status number or its symbolic equivalent. For more information, see [full list of status codes](https://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) and how their [mapping](https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) works.|
 | [`assert_redirected_to(options = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to) | Asserts that the response is a redirect to a URL matching the given options. You can also pass named routes such as `assert_redirected_to root_path` and Active Record objects such as `assert_redirected_to @article`.|
 
 You'll see the usage of some of these assertions in the next chapter.
@@ -498,7 +498,7 @@ If the number of workers passed is 1 or fewer the processes will not be forked a
 be parallelized and the tests will use the original `test-database` database.
 
 Two hooks are provided, one runs when the process is forked, and one runs before the forked process is closed.
-These can be useful if your app uses multiple databases or perform other tasks that depend on the number of
+These can be useful if your app uses multiple databases or performs other tasks that depend on the number of
 workers.
 
 The `parallelize_setup` method is called right after the processes are forked. The `parallelize_teardown` method
@@ -569,6 +569,26 @@ end
 NOTE: With disabled transactional tests, you have to clean up any data tests
 create as changes are not automatically rolled back after the test completes.
 
+### Threshold to parallelize tests
+
+Running tests in parallel adds an overhead in terms of database setup and
+fixture loading. Because of this, Rails won't parallelize executions that involve
+fewer than 50 tests.
+
+You can configure this threshold in your `test.rb`:
+
+```ruby
+config.active_support.test_parallelization_threshold = 100
+```
+
+And also when setting up parallelization at the test case level:
+
+```ruby
+class ActiveSupport::TestCase
+  parallelize threshold: 100
+end
+```
+
 The Test Database
 -----------------
 
@@ -631,22 +651,70 @@ define a reference node between two different fixtures. Here's an example with
 a `belongs_to`/`has_many` association:
 
 ```yaml
-# fixtures/categories.yml
+# test/fixtures/categories.yml
 about:
   name: About
 ```
 
 ```yaml
-# fixtures/articles.yml
+# test/fixtures/articles.yml
 first:
   title: Welcome to Rails!
-  body: Hello world!
   category: about
 ```
 
-Notice the `category` key of the `first` article found in `fixtures/articles.yml` has a value of `about`. This tells Rails to load the category `about` found in `fixtures/categories.yml`.
+```yaml
+# test/fixtures/action_text/rich_texts.yml
+first_content:
+  record: first (Article)
+  name: content
+  body: <div>Hello, from <strong>a fixture</strong></div>
+```
+
+Notice the `category` key of the `first` Article found in `fixtures/articles.yml` has a value of `about`, and that the `record` key of the `first_content` entry found in `fixtures/action_text/rich_texts.yml` has a value of `first (Article)`. This hints to Active Record to load the Category `about` found in `fixtures/categories.yml` for the former, and Action Text to load the Article `first` found in `fixtures/articles.yml` for the latter.
 
 NOTE: For associations to reference one another by name, you can use the fixture name instead of specifying the `id:` attribute on the associated fixtures. Rails will auto assign a primary key to be consistent between runs. For more information on this association behavior please read the [Fixtures API documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+
+#### File attachment fixtures
+
+Like other Active Record-backed models, Active Storage attachment records
+inherit from ActiveRecord::Base instances and can therefore be populated by
+fixtures.
+
+Consider an `Article` model that has an associated image as a `thumbnail`
+attachment, along with fixture data YAML:
+
+```ruby
+class Article
+  has_one_attached :thumbnail
+end
+```
+
+```yaml
+# test/fixtures/articles.yml
+first:
+  title: An Article
+```
+
+Assuming that there is an [image/png][] encoded file at
+`test/fixtures/files/first.png`, the following YAML fixture entries will
+generate the related `ActiveStorage::Blob` and `ActiveStorage::Attachment`
+records:
+
+```yaml
+# test/fixtures/active_storage/blobs.yml
+first_thumbnail_blob: <%= ActiveStorage::FixtureSet.blob filename: "first.png" %>
+```
+
+```yaml
+# test/fixtures/active_storage/attachments.yml
+first_thumbnail_attachment:
+  name: thumbnail
+  record: first (Article)
+  blob: first_thumbnail_blob
+```
+
+[image/png]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#image_types
 
 #### ERB'in It Up
 
@@ -755,15 +823,15 @@ system tests should live.
 
 If you want to change the default settings you can change what the system
 tests are "driven by". Say you want to change the driver from Selenium to
-Poltergeist. First add the `poltergeist` gem to your `Gemfile`. Then in your
+Cuprite. First add the `cuprite` gem to your `Gemfile`. Then in your
 `application_system_test_case.rb` file do the following:
 
 ```ruby
 require "test_helper"
-require "capybara/poltergeist"
+require "capybara/cuprite"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :poltergeist
+  driven_by :cuprite
 end
 ```
 
@@ -863,7 +931,7 @@ You can also run `bin/rails test:all` to run all tests, including system tests.
 Now let's test the flow for creating a new article in our blog.
 
 ```ruby
-test "creating an article" do
+test "should create Article" do
   visit articles_path
 
   click_on "New Article"
@@ -891,6 +959,7 @@ We will be redirected back to the articles index page and there we assert
 that the text from the new article's title is on the articles index page.
 
 #### Testing for multiple screen sizes
+
 If you want to test for mobile sizes on top of testing for desktop,
 you can create another class that inherits from SystemTestCase and use in your
 test suite. In this example a file called `mobile_system_test_case.rb` is created
@@ -1537,7 +1606,7 @@ end
 
 This assertion is quite powerful. For more advanced usage, refer to its [documentation](https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb).
 
-#### Additional View-Based Assertions
+### Additional View-Based Assertions
 
 There are more assertions that are primarily used in testing views:
 
@@ -1899,6 +1968,54 @@ class ChatRelayJobTest < ActiveJob::TestCase
     assert_broadcast_on(ChatChannel.broadcasting_for(room), text: "Hi!") do
       ChatRelayJob.perform_now(room, "Hi!")
     end
+  end
+end
+```
+
+Testing Eager Loading
+---------------------
+
+Normally, applications do not eager load in the `development` or `test` environments to speed things up. But they do in the `production` environment.
+
+If some file in the project cannot be loaded for whatever reason, you better detect it before deploying to production, right?
+
+### Continuous Integration
+
+If your project has CI in place, eager loading in CI is an easy way to ensure the application eager loads.
+
+CIs typically set some environment variable to indicate the test suite is running there. For example, it could be `CI`:
+
+```ruby
+# config/environments/test.rb
+config.eager_load = ENV["CI"].present?
+```
+
+Starting with Rails 7, newly generated applications are configured that way by default.
+
+### Bare Test Suites
+
+If your project does not have continuous integration, you can still eager load in the test suite by calling `Rails.application.eager_load!`:
+
+#### minitest
+
+```ruby
+require "test_helper"
+
+class ZeitwerkComplianceTest < ActiveSupport::TestCase
+  test "eager loads all files without errors" do
+    assert_nothing_raised { Rails.application.eager_load! }
+  end
+end
+```
+
+#### RSpec
+
+```ruby
+require "rails_helper"
+
+RSpec.describe "Zeitwerk compliance" do
+  it "eager loads all files without errors" do
+    expect { Rails.application.eager_load! }.not_to raise_error
   end
 end
 ```
