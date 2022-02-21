@@ -19,7 +19,7 @@ Depois de ler este guia, você vai saber:
 Premissas do Guia
 -----------------
 
-Este guia é projetado para iniciantes que desejam começar uma aplicação Rails do
+Este guia é projetado para iniciantes que desejam criar uma aplicação Rails do
 zero. Ele não assume que você tenha nenhuma experiência anterior com Rails.
 
 O Rails é um _framework_ para aplicações web que é executado em cima da linguagem
@@ -28,7 +28,7 @@ achar a curva de aprendizado bastante íngrime começando direto com Rails.
 Existem diversas listas organizadas de materiais online para aprender Ruby:
 
 * [Site Oficial da Linguagem de Programação Ruby (Em inglês)](https://www.ruby-lang.org/en/documentation/)
-* [Lista de Livros Grátis de Programação (Em inglês)](https://github.com/EbookFoundation/free-programming-books/blob/master/books/free-programming-books.md#ruby)
+* [Lista de Livros Grátis de Programação (Em inglês)](https://github.com/EbookFoundation/free-programming-books/blob/master/books/free-programming-books-langs.md#ruby)
 
 Fique atento que alguns materiais, apesar de excelentes, envolvem versões antigas
 do Ruby e podem não incluir parte da sintaxe que você
@@ -82,10 +82,10 @@ versão atual do Ruby instalado:
 
 ```bash
 $ ruby --version
-ruby 2.5.0
+ruby 2.7.0
 ```
 
-O Rails necessita da versão Ruby 2.5.0 ou mais atual. Se o número da versão retornada
+O Rails necessita da versão Ruby 2.7.0 ou mais atual. É preferivel usar a última versão do Ruby. Se o número da versão retornada
 for menor que este número (como 2.3.7, e 1.8.7), você precisará instalar uma versão do Ruby mais atual.
 
 Para instalar o Rails no Windows, você primeiro tem que instalar o [Ruby Installer](https://rubyinstaller.org). 
@@ -139,13 +139,13 @@ Para instalar o Rails, use o comando `gem install` fornecido pelo RubyGems:
 $ gem install rails
 ```
 
-Para verificar se você tem tudo instalado corretamente, você deve rodar o comando à seguir:
+Para verificar se você tem tudo instalado corretamente, você deve rodar o comando à seguir num novo terminal:
 
 ```bash
 $ rails --version
 ```
 
-Se esse comando retornar algo como "Rails 6.0.0", você está pronto para continuar.
+Se esse comando retornar algo como "Rails 7.0.0", você está pronto para continuar.
 
 ### Criando a Aplicação Blog
 
@@ -165,11 +165,6 @@ $ rails new blog
 Este comando irá criar uma aplicação em Rails chamada Blog em um diretório `blog`
 e irá instalar as dependências das *gems* que já foram mencionadas no `Gemfile`
 usando `bundle install`.
-
-NOTE: Se você está utilizando um subsistema Windows para Linux então existem
-algumas limitações nas notificações dos arquivos do sistema que significa que você
-deve desabilitar as gems `spring` e `listen`, o que poderá ser feito rodando o comando
-`rails new blog --skip-spring --skip-listen`.
 
 TIP: Você pode ver todas as opções de linha de comando gerador que a aplicação Rails
 aceita rodando o comando `rails new --help`.
@@ -195,7 +190,6 @@ que o Rails gerou por padrão:
 |Gemfile<br>Gemfile.lock|Esses arquivos permitem que você especifique quais dependências de *gem* são necessárias na sua aplicação Rails. Esses arquivos são usados pela *gem* Bundler. Para mais informações sobre o Bundler, acesse [o website do Bundler](https://bundler.io).|
 |lib/|Módulos extendidos da sua aplicação.|
 |log/|Arquivos de *log* da aplicação.|
-|package.json|Este arquivo permite que você especifique quais dependências *npm* são necessárias para sua aplicação Rails. Este arquivo é usado pelo Yarn. Para mais informações do Yarn, acesse [o website do Yarn](https://yarnpkg.com/lang/en/).|
 |public/|Contém arquivos estáticos e *assets* compilados. Quando sua aplicação está rodando esse diretório é exposto como ele está.|
 |Rakefile|Este arquivo localiza e carrega tarefas que podem ser rodadas por linhas de comando. As tarefas são definidas nos componentes do Rails. Ao invés de editar o `Rakefile`, você deve criar suas próprias tarefas adicionando os arquivos no diretório `lib/tasks` da sua aplicação.|
 |README.md|Este é um manual de instruções para sua aplicação. Você deve editar este arquivo para informar o que seu aplicativo faz, como configurá-lo e assim por diante.|
@@ -333,6 +327,23 @@ Agora podemos ver a mensagem "Olá, Rails!", quando visitamos <http://localhost:
 
 TIP: Para mais informações sobre roteamento, consulte [Roteamento do Rails de Fora para Dentro](routing.html).
 
+Auto carregamento
+-----------
+
+Aplicações Rails **não** usam `require` para carregar o código da aplicação.
+
+Você deve ter notado que `ArticlesController` herda de `ApplicationController`, mas `app/controllers/articles_controller.rb` não tem nada como
+
+```ruby
+require "application_controller" # NÃO FAÇA ISSO.
+```
+
+As classes e módulos da aplicação estão disponíveis em todos os lugares, você não precisa e **não deve** carregar nada em `app` com `require`. Esse recurso é chamado de _autoloading_ e você pode aprender mais sobre ele em [_Autoloading and Reloading Constants_](https://guides.rubyonrails.org/autoloading_and_reloading_constants.html).
+
+Você só precisa de chamadas `require` para dois casos de uso:
+
+* Para carregar arquivos no diretório `lib`.
+* Para carregar dependências de gem que tenham `require: false` no `Gemfile`.
 
 MVC e Você
 -----------
@@ -389,7 +400,7 @@ possam ser independentes do banco de dados.
 Vamos dar uma olhada no conteúdo do nosso novo arquivo de _migration_:
 
 ```ruby
-class CreateArticles < ActiveRecord::Migration[6.0]
+class CreateArticles < ActiveRecord::Migration[7.0]
   def change
     create_table :articles do |t|
       t.string :title
@@ -452,7 +463,7 @@ $ bin/rails console
 Você deve visualizar um *prompt* `irb`:
 
 ```irb
-Loading development environment (Rails 6.0.2.1)
+Loading development environment (Rails 7.0.0)
 irb(main):001:0>
 ```
 
@@ -785,7 +796,7 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 end
@@ -801,7 +812,8 @@ corpo e tenta salvá-lo no banco de dados. Se o artigo for salvo com sucesso, a
 _action_ redireciona o navegador para a página do artigo em
 `"http://localhost:3000/articles/#{@article.id}"`. Caso contrário, a _action_
 exibe novamente o formulário renderizando a _view_
-`app/views/articles/new.html.erb`. O título e o corpo aqui são valores
+`app/views/articles/new.html.erb` com um código de status 4XX para que a aplicação funcione bem com a [Turbo](https://github.com/hotwired/turbo-rails).
+O título e o corpo aqui são valores
 fictícios. Depois de criarmos o formulário, vamos voltar no _controller_ e
 alterá-los.
 
@@ -916,7 +928,7 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -1009,7 +1021,7 @@ de `new` e `create` do *controller*:
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 ```
@@ -1023,7 +1035,8 @@ Quando enviamos o formulário, a solicitação `POST /articles` é mapeada para 
 *action* `create`. A *action* `create` **tenta** salvar o `@article`.
 Portanto, as validações **são** verificadas. Se alguma validação falhar,
 o `@article` não será salvo e a *view* `app/views/articles/new.html.erb` será
-renderizada com as mensagens de erro.
+renderizada com as mensagens de erro 
+com um código de status 4XX para que a aplicação funcione bem com a [Turbo](https://github.com/hotwired/turbo-rails).
 
 TIP: Para saber mais sobre validações, consulte [Validações do Active Record](
 active_record_validations.html). Para saber mais sobre as mensagens de erro de
@@ -1082,7 +1095,7 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -1096,7 +1109,7 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       redirect_to @article
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -1119,7 +1132,7 @@ atualizá-lo com os dados filtrados do formulário enviado por `article_params`.
 Se nenhuma validação falhar e a atualização for bem-sucedida, a _action_
 redireciona o navegador para a página do artigo. Caso contrário, a _action_
 exibe novamente o formulário com mensagens de erro, renderizando
-`app/views/articles/edit.html.erb`.
+`app/views/articles/edit.html.erb` com um código de status 4XX para que a aplicação funcione bem com a [Turbo](https://github.com/hotwired/turbo-rails).
 
 #### Utilizando _Partials_ para Compartilhar Código de _View_
 
@@ -1236,7 +1249,7 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -1250,7 +1263,7 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       redirect_to @article
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -1347,7 +1360,7 @@ Isso é muito semelhante ao *model* `Article` que vimos antes. A diferença est�
 linha `belongs_to : article`, o que configura uma associação no *Active Record*.
 Você vai aprender um pouco sobre associações na próxima seção deste guia.
 
-A palavra-chave (`:references`) usada no comando `bash` é um tipo especial de
+A palavra-chave (`:references`) usada no comando shell é um tipo especial de
 dado para *models*. Ela cria uma nova coluna na tabela do banco de dados com o
 nome fornecido ao *model* anexada a um `_id` que contém um valor do tipo
 *integer*. Para compreender melhor, analise o arquivo `db/schema.rb` depois de
@@ -1357,7 +1370,7 @@ Além do *model*, o Rails também gerou a *migration* para criar a tabela
 correspondente no banco de dados:
 
 ```ruby
-class CreateComments < ActiveRecord::Migration[6.0]
+class CreateComments < ActiveRecord::Migration[7.0]
   def change
     create_table :comments do |t|
       t.string :commenter
@@ -1369,6 +1382,7 @@ class CreateComments < ActiveRecord::Migration[6.0]
   end
 end
 ```
+
 A linha `t.references` cria uma coluna com valores do tipo *integer* chamada
 `article_id`, um índice para ela e uma restrição de chave estrangeira (*foreign key*)
 que aponta para a coluna `id` da tabela `articles`. Vá em frente e rode a
@@ -1654,7 +1668,7 @@ fica disponível para ser exibida na *partial*.
 ### Renderizando um Formulário com *Partial*
 
 Agora vamos mover aquela nova seção de comentários para sua própria *partial*.
-Novamente, crie o arquivo `app/viewscomments/_form.html.erb` contendo:
+Novamente, crie o arquivo `app/views/comments/_form.html.erb` contendo:
 
 ```html+erb
 <%= form_with model: [ @article, @article.comments.build ] do |form| %>
@@ -1714,7 +1728,42 @@ app/models/concerns
 
  Um determinado artigo do blog pode ter vários status - por exemplo, pode ser visível para todos (ou seja, `public`), ou visível apenas para o autor (ou seja, `private`). Também pode estar oculto para todos, mas ainda pode ser recuperado (ou seja, `archived`). Os comentários também podem estar ocultos ou visíveis. Isso pode ser representado usando uma coluna `status` em cada um dos _models_.
 
-Dentro do _model_ `article`, após executar uma _migration_ para adicionar uma coluna `status`, você pode adicionar:
+Primeiro, vamos executar as seguintes *migrations* para adicionar `status` a `Articles` e `Comments`:
+
+```bash
+$ bin/rails generate migration AddStatusToArticles status:string
+$ bin/rails generate migration AddStatusToComments status:string
+```
+
+E a seguir, vamos atualizar o banco de dados com as *migrations* geradas:
+
+```bash
+$ bin/rails db:migrate
+```
+
+TIP: para saber mais sobre *migrations*, consulte [*Migrations* do *Active Record*](
+active_record_migrations.html).
+
+
+Também temos que permitir a chave `:status` como parte do *strong parameters*, em `app/controllers/articles_controller.rb`:
+
+```ruby
+  private
+    def article_params
+      params.require(:article).permit(:title, :body, :status)
+    end
+```
+
+e em `app/controllers/comments_controller.rb`:
+
+```ruby
+  private
+    def comment_params
+      params.require(:comment).permit(:commenter, :body, :status)
+    end
+```
+
+Dentro do *model* `article`, após executar uma *migration* para adicionar uma coluna `status` usando o comando `bin/rails db:migrate`, você adicionaria:
 
 ```ruby
 class Article < ApplicationRecord
@@ -1767,6 +1816,22 @@ Então, em nossa _action_ `index` (`app/views/articles/index.html.erb`), usaría
 <%= link_to "New Article", new_article_path %>
 ```
 
+Da mesma forma, em nossa *views* parcial de comentários (`app/views/comments/_comment.html.erb`) usaríamos o método `archived?` para evitar a exibição de qualquer comentário arquivado:
+
+```html+erb
+<% unless comment.archived? %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
+```
+
 No entanto, se você olhar novamente para nossos _models_ agora, pode ver que a lógica está duplicada. Se, no futuro, aumentarmos a funcionalidade do nosso blog - para incluir mensagens privadas, por exemplo - podemos ver a duplicação de lógica mais uma vez. É aqui que as *concerns* são úteis.
 
 Uma *concerns* é responsável apenas por um subconjunto específico da responsabilidade do _model_; os métodos na nossa *concern* estarão todos relacionados à visibilidade de um _model_. Vamos chamar nossa nova *concern* (módulo) de `Visible`. Podemos criar um novo arquivo dentro de `app/models/concerns` chamado` visible.rb`, e armazenar todos os métodos de status que foram duplicados nos _models_.
@@ -1806,6 +1871,7 @@ Em `app/models/article.rb`:
 ```ruby
 class Article < ApplicationRecord
   include Visible
+
   has_many :comments
 
   validates :title, presence: true
@@ -1818,6 +1884,7 @@ e em `app/models/comment.rb`:
 ```ruby
 class Comment < ApplicationRecord
   include Visible
+
   belongs_to :article
 end
 ```
@@ -1855,41 +1922,15 @@ Our blog has <%= Article.public_count %> articles and counting!
 
 <ul>
   <% @articles.each do |article| %>
-    <li>
-      <%= link_to article.title, article %>
-    </li>
+    <% unless article.archived? %>
+      <li>
+        <%= link_to article.title, article %>
+      </li>
+    <% end %>
   <% end %>
 </ul>
 
 <%= link_to "New Article", new_article_path %>
-```
-
-Existem mais algumas etapas a serem realizadas antes que nossa aplicaçãi funcione com a adição da coluna `status`. Primeiro, vamos executar as seguintes *migrations* para adicionar `status` aos `Articles` e `Comments`:
-
-```bash
-$ bin/rails generate migration AddStatusToArticles status:string
-$ bin/rails generate migration AddStatusToComments status:string
-```
-
-TIP: Para aprender mais sobre *migrations*, veja em [Active Record Migrations](
-active_record_migrations.html).
-
-Também temos que permitir a chave `:status` como parte do parâmetro (usando *strong parameters*), em `app/controllers/articles_controller.rb`:
-
-```ruby
-private
-    def article_params
-      params.require(:article).permit(:title, :body, :status)
-    end
-```
-
-e em `app/controllers/comments_controller.rb`:
-
-```ruby
-private
-    def comment_params
-      params.require(:comment).permit(:commenter, :body, :status)
-    end
 ```
 
 Para finalizar, adicionaremos uma caixa de seleção aos formulários e permitiremos que o usuário selecione o status ao criar um novo artigo ou postar um novo comentário. Também podemos especificar o status padrão como `public`. Em `app/views/articles/_form.html.erb`, podemos adicionar:
@@ -1960,7 +2001,7 @@ class CommentsController < ApplicationController
 
   private
     def comment_params
-      params.require(:comment).permit(:commenter, :body)
+      params.require(:comment).permit(:commenter, :body, :status)
     end
 end
 ```
