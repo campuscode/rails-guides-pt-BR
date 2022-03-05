@@ -14,7 +14,7 @@ Depois de ler este guia, você irá saber:
 * Como trabalhar com filtros para executar código durante o processamento de uma requisição.
 * Como utilizar o autenticador HTTP nativo do `ActionController`.
 * Como transmitir dados diretamente ao navegador do usuário.
-* Como filtrar parâmetros sensíveis para que não apareçam no *log* da aplicação.
+* Como filtrar parâmetros sensíveis, para que não apareçam no *log* da aplicação.
 * Como lidar com erros que podem surgir durante o processamento de uma requisição.
 --------------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ O que um *Controller* faz?
 
 Para a maior parte das aplicações [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer),o *controller* receberá a requisição (o que é "invisível" a você que está desenvolvendo), busca e/ou salva dados de um *model*, e usa a *view* para criar a saída HTML. Se seu *controller* precisa tratar requisições um pouco diferente, isso não é um problema, este é apenas o jeito mais comum de um *controller* trabalhar.
 
-Um *controller* pode então ser pensado como um intermediário entre um *model* e uma *view*. Isso faz com que os dados do *model* fiquem disponíveis para a *view* para que possa ser mostrado ao usuário, e ele salva ou atualiza dados do usuário no *model*.
+Um *controller* pode então ser pensado como um intermediário entre um *model* e uma *view*. Isso faz com que os dados do *model* fiquem disponíveis para a *view*, para que possa ser mostrado ao usuário, e ele salva ou atualiza dados do usuário no *model*.
 
 NOTE: Para mais detalhes sobre processo de roteamento, veja [Rails Routing from the Outside In](routing.html)
 
@@ -63,7 +63,12 @@ O `ApplicationController` herda de [`ActionController::Base`][], que define uma 
 
 Apenas métodos públicos são executáveis como *actions*. É uma boa prática diminuir a visibilidade de métodos (utilizando `private` ou `protected`) que não foram designados para serem *actions*, como métodos auxiliares ou filtros.
 
+WARNING: Alguns nomes de métodos são reservados pelo *Action Controller*. Redefini-los acidentalmente como *actions*, ou mesmo como métodos auxiliares (*helpers*), pode resultar no erro `SystemStackError`. Se você limitar seus *controllers* a apenas *actions* RESTful [Resource Routing][] você não precisará se preocupar com isso.
+
+NOTE: Se você precisar usar um método reservado como um nome de *action*, uma solução alternativa é usar uma rota personalizada para mapear o nome do método reservado para o método da *action* não reservado.
+
 [`ActionController::Base`]: https://api.rubyonrails.org/classes/ActionController/Base.html
+[Resource Routing]: https://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default
 
 Parâmetros
 ----------
@@ -74,7 +79,7 @@ Você provavelmente vai querer acessar os dados enviados pelo usuário ou outros
 class ClientsController < ApplicationController
   # Essa action usa parâmetros de query string porque ela é
   # executada através de uma requisição HTTP GET, mas isso
-  # não faz nenhuma diferença para a maneira como os parâmetros
+  # não faz nenhuma diferença como os parâmetros
   # são acessados. A URL para essa action seria desse jeito
   # para mostrar os clientes ativos: /clients?status=activated
   def index
@@ -336,7 +341,7 @@ Todos os armazenamentos de sessão utilizam um *cookie* para armazenar um ID ún
 
 Para a maioria dos armazenamentos, esse ID é utilizado para procurar os dados da sessão no servidor, por exemplo, em uma tabela do banco de dados. Há apenas uma exceção, que é o armazenamento de sessão recomendado por padrão - o *CookieStore* - que armazena todos os dados da sessão no próprio *cookie* (o ID ainda estará disponível para você, se você precisar). A vantagem é a de ser muito leve e requer zero configuração em uma nova aplicação para utilizar a sessão. Os dados do *cookie* são assinados criptograficamente para torná-los invioláveis, e também é criptografado para que qualquer pessoa com acesso não leia o seu conteúdo. (O Rails não aceitará se estiver sido editado).
 
-O *CookieStore* pode armazenar cerca de 4kB de dados - muito menos que os demais - mas geralmente é o suficiente. O armazenamento de grandes quantidades de dados na sessão não é recomendado, independentemente de qual armazenamento de sessão sua aplicação utiliza. Você deve evitar armazenar objetos complexos (como instâncias de `model`) na sessão, pois o servidor pode não ser capaz de remontá-los entre as requisições, o que resultará em um erro.
+O *CookieStore* pode armazenar cerca de 4 kB de dados - muito menos que os demais - mas geralmente é o suficiente. O armazenamento de grandes quantidades de dados na sessão não é recomendado, independentemente de qual armazenamento de sessão sua aplicação utiliza. Você deve evitar armazenar objetos complexos (como instâncias de `model`) na sessão, pois o servidor pode não ser capaz de remontá-los entre as requisições, o que resultará em um erro.
 
 Se as suas sessões de usuário não armazenam dados críticos ou não precisam durar por longos períodos (por exemplo, se você apenas utiliza o *flash* para mensagens), considere o uso do `ActionDispatch::Session::CacheStore`. Isso armazenará as sessões utilizando a implementação de *cache* que você configurou para a sua aplicação. A vantagem é que você pode utilizar sua infraestrutura de *cache* existente para armazenar sessões sem precisar de nenhuma configuração ou administração adicional. A desvantagem é que as sessões serão temporárias e poderão desaparecer a qualquer momento.
 
@@ -670,7 +675,7 @@ end
 ```
 Esse método simplesmente armazena uma mensagem de erro no *flash* e redireciona para o formulário de login se o usuário não estiver logado. Se um filtro "before" renderiza ou redireciona, a ação não será executada. Se filtros adicionais estão programados para executar após esse filtro, eles são cancelados também.
 
-Nesse exemplo o filtro é adicionado ao `ApplicationController` e dessa forma todos os *controllers* na aplicação irão herdar ele. Isso fará com que tudo na aplicação requeira que o usuário esteja logado para que ele possa usar. Por razões óbvias (o usuário não conseguiria fazer o log in para começo de conversa!), nem todos os *controllers* devem requerer isso. Você pode evitar esse filtro de ser executado antes de ações em particular com [`skip_before_action`][]:
+Nesse exemplo, o filtro é adicionado ao `ApplicationController` e dessa forma todos os *controllers* na aplicação irão herdar ele. Isso fará com que tudo na aplicação requeira que o usuário esteja logado para que ele possa usar. Por razões óbvias (o usuário não conseguiria fazer o log in para começo de conversa!), nem todos os *controllers* devem requerer isso. Você pode evitar esse filtro de ser executado antes de ações em particular com [`skip_before_action`][]:
 
 ```ruby
 class LoginsController < ApplicationController
@@ -738,7 +743,7 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-Note nesse caso que o filtro utiliza `send` porque o método `logged_in?` é privado e o filtro não é executado no escopo do *controller*. Essa não é a forma recomendada para implementar esse filtro em particular, mas em casos mais simples ele pode ser útil.
+Note que, nesse caso, o filtro utiliza `send` porque o método `logged_in?` é privado e o filtro não é executado no escopo do *controller*. Essa não é a forma recomendada para implementar esse filtro em particular, mas em casos mais simples, ele pode ser útil.
 
 Especificamente para `around_action`, o bloco também acessa a `action`:
 
@@ -803,7 +808,7 @@ O [Guia de segurança](security.html) possui mais informações sobre isso e mui
 Os Objetos de Requisição e Resposta
 --------------------------------
 
-Em todo *controller* existem dois métodos de acesso apontando para os objetos de requisição e de resposta associados com o ciclo de requisição que estiver em execução no momento. O método [`request`][] contém uma instância de [`ActionDispatch::Request`][] e o método [`response`][] retorna um objeto de resposta representando o que será enviado de volta ao cliente.
+Em todo *controller*, existem dois métodos de acesso apontando para os objetos de requisição e de resposta associados com o ciclo de requisição que estiver em execução no momento. O método [`request`][] contém uma instância de [`ActionDispatch::Request`][] e o método [`response`][] retorna um objeto de resposta representando o que será enviado de volta ao cliente.
 
 [`ActionDispatch::Request`]: https://api.rubyonrails.org/classes/ActionDispatch/Request.html
 [`request`]: https://api.rubyonrails.org/classes/ActionController/Base.html#method-i-request
@@ -980,9 +985,9 @@ class ClientsController < ApplicationController
 end
 ```
 
-Esse método irá ler e transmitir o arquivo 4kb por vez, evitando carregar o arquivo inteiro em memória de uma vez. Você pode desativar a transmissão com a opção `:stream` ou ajustar o tamanho do bloco com a opção `:buffer_size`.
+Esse método irá ler e transmitir o arquivo 4 kb por vez, evitando carregar o arquivo inteiro em memória de uma vez. Você pode desativar a transmissão com a opção `:stream` ou ajustar o tamanho do bloco com a opção `:buffer_size`.
 
-Se a opção `:type` não for especificada, será presumido de acordo com a extensão especificada no `:filename`. Se o tipo do conteúdo (`content_type`) não estiver registrado para a extensão, será usado `application/octet-stream`.
+Se a opção `:type` não for especificada, será presumido de acordo com a extensão especificada no `:filename`. Se o tipo do conteúdo (`content-type`) não estiver registrado para a extensão, será usado `application/octet-stream`.
 
 WARNING:  Tenha cuidado ao utilizar dados vindos do navegador ( _params_, _cookies_, etc.) para localizar um arquivo no disco, pois é um risco de segurança que pode permitir a alguém ter acesso a arquivos não permitidos.
 
@@ -1012,7 +1017,7 @@ Para que este exemplo funcione, você deve adicionar o `MIME type` ao Rails. Iss
 Mime::Type.register "application/pdf", :pdf
 ```
 
-NOTE: Arquivos de configuração não são recarregados a cada requisição, então você precisa reiniciar seu servidor para que as mudanças façam afeito.
+NOTE: Arquivos de configuração não são recarregados a cada requisição, então você precisa reiniciar seu servidor para que as mudanças tenham efeito.
 
 Agora os usuários podem requerer um arquivo em PDF só adicionando ".pdf" ao final da _URL_:
 
@@ -1031,7 +1036,9 @@ de enviar dados arbitrários ao navegador sem depender de uma requisição _HTTP
 
 #### Implementando Transmissão Ao Vivo ( _Live Streaming_ )
 
-Incluindo `ActionController::Live` dentro da sua classe _controller_ irá prover a todas as _actions_ do seu _controller_ a habilidade de transmitir dados. Você pode mesclar o modulo da seguinte forma:
+Incluindo `ActionController::Live` dentro do seu _controller_ irá prover a todas as
+_actions_ do seu _controller_ a habilidade de transmitir dados. Você pode mesclar o modulo
+da seguinte forma:
 
 ```ruby
 class MyController < ActionController::Base
