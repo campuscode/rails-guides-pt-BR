@@ -17,14 +17,14 @@ O que é *Action View*?
 
 No *Rails*, as requisições web são tratadas por [*Action Controller*](action_controller_overview.html) e *Action View*. Normalmente, o *Action Controller* é responsável por se comunicar com o banco de dados e realizar ações de *CRUD* quando necessário. A *Action View* é responsável por compilar a resposta.
 
-Os templates *Action View* são escritos usando Ruby embutido em tags mescladas com HTML. Para evitar poluir os templates com código clichê (*boilerplate code*), uma variedade de classes utilitárias (*helpers*) disponibilizam comportamentos comuns para lidar com *forms*, datas e *strings*. Também é fácil adicionar novas classes utilitárias (*helpers*) em sua aplicação conforme ela evolui.
+Os templates *Action View* são escritos usando Ruby embutido em tags mescladas com HTML. Para evitar poluir os templates com código clichê (*boilerplate code*), muitas classes utilitárias (*helpers*) disponibilizam comportamentos comuns para lidar com *forms*, datas e *strings*. Também é fácil adicionar novas classes utilitárias (*helpers*) em sua aplicação conforme ela evolui.
 
 NOTE: Alguns recursos da *Action View* estão vinculados ao *Active Record*, mas isso não significa que a *Action View* depende do *Active Record*. *Action View* é um pacote independente que pode ser usado com qualquer tipo de biblioteca Ruby.
 
 Usando *Action View* com Rails
 ----------------------------
 
-Para cada *controller* há um diretório associado em `app/views` que contém os arquivos de *template* que compõe as *views* associadas aos seus respectivos *controllers*. Esses arquivos são utilizados para exibir a *view* que resulta de cada *action* do *controller*.
+Para cada *controller*, há um diretório associado em `app/views` que contém os arquivos de *template* que compõe as *views* associadas aos seus respectivos *controllers*. Esses arquivos são utilizados para exibir a *view* que resulta de cada *action* do *controller*.
 
 Vamos dar uma olhada no que o Rails faz por padrão quando um novo recurso é criado utilizando o *generator scaffold*:
 
@@ -150,7 +150,7 @@ end
 #### Jbuilder
 [Jbuilder](https://github.com/rails/jbuilder) é uma *gem* que é
 mantida pelo time do Rails e incluída por padrão no `Gemfile` do Rails.
-É similar ao *Builder*, mas é usada para gerar *JSON*, ao invés de *XML*.
+É similar ao *Builder* mas é usada para gerar *JSON*, ao invés de *XML*.
 
 Se você não tiver, você pode adicionar o seguinte ao seu `Gemfile`:
 
@@ -279,7 +279,7 @@ Isso é equivalente a:
 
 #### Renderizando Coleções
 
-É muito comum que um *template* precise iterar sobre uma coleção e renderizar um *sub-template* para cada um dos elementos. Esse padrão foi implementado como um método único que recebe um *array* e renderiza uma *partial* para cada um dos elementos do *array*.
+Comumente, um *template* precise iterar sobre uma coleção e renderizar um *sub-template* para cada um dos elementos. Esse padrão foi implementado como um método único que recebe um *array* e renderiza uma *partial* para cada um dos elementos do *array*.
 
 Logo, este exemplo para renderizar todos os produtos:
 
