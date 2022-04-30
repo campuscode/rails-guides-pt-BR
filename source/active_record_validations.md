@@ -387,6 +387,36 @@ end
 
 The default error message for this helper is _"doesn't match confirmation"_.
 
+### `comparison`
+
+This check will validate a comparison between any two comparable values.
+The validator requires a compare option be supplied. Each option accepts a
+value, proc, or symbol. Any class that includes Comparable can be compared.
+
+```ruby
+class Promotion < ApplicationRecord
+  validates :start_date, comparison: { greater_than: :end_date }
+end
+```
+
+These options are all supported:
+
+* `:greater_than` - Specifies the value must be greater than the supplied
+  value. The default error message for this option is _"must be greater than
+  %{count}"_.
+* `:greater_than_or_equal_to` - Specifies the value must be greater than or
+  equal to the supplied value. The default error message for this option is
+  _"must be greater than or equal to %{count}"_.
+* `:equal_to` - Specifies the value must be equal to the supplied value. The
+  default error message for this option is _"must be equal to %{count}"_.
+* `:less_than` - Specifies the value must be less than the supplied value. The
+  default error message for this option is _"must be less than %{count}"_.
+* `:less_than_or_equal_to` - Specifies the value must be less than or equal to
+  the supplied value. The default error message for this option is _"must be
+  less than or equal to %{count}"_.
+* `:other_than` - Specifies the value must be other than the supplied value.
+  The default error message for this option is _"must be other than %{count}"_.
+
 ### `exclusion`
 
 This helper validates that the attributes' values are not included in a given
@@ -488,10 +518,10 @@ custom message or call `presence` prior to `length`.
 ### `numericality`
 
 This helper validates that your attributes have only numeric values. By
-default, it will match an optional sign followed by an integral or floating
+default, it will match an optional sign followed by an integer or floating
 point number.
 
-To specify that only integral numbers are allowed,
+To specify that only integer numbers are allowed,
 set `:only_integer` to true. Then it will use the
 
 ```ruby
@@ -528,6 +558,8 @@ constraints to acceptable values:
   less than or equal to %{count}"_.
 * `:other_than` - Specifies the value must be other than the supplied value.
   The default error message for this option is _"must be other than %{count}"_.
+* `:in` - Specifies the value must be in the supplied range.
+  The default error message for this option is _"must be in %{count}"_.
 * `:odd` - Specifies the value must be an odd number if set to true. The
   default error message for this option is _"must be odd"_.
 * `:even` - Specifies the value must be an even number if set to true. The
@@ -657,9 +689,7 @@ end
 
 Should you wish to create a database constraint to prevent possible violations of a uniqueness validation using the `:scope` option, you must create a unique index on both columns in your database. See [the MySQL manual](https://dev.mysql.com/doc/refman/en/multiple-column-indexes.html) for more details about multiple column indexes or [the PostgreSQL manual](https://www.postgresql.org/docs/current/static/ddl-constraints.html) for examples of unique constraints that refer to a group of columns.
 
-There is also a `:case_sensitive` option that you can use to define whether the
-uniqueness constraint will be case sensitive or not. This option defaults to
-true.
+There is also a `:case_sensitive` option that you can use to define whether the uniqueness constraint will be case sensitive, case insensitive, or respects default database collation. This option defaults to respects default database collation.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1055,7 +1085,7 @@ end
 ```
 
 The easiest way to add custom validators for validating individual attributes
-is with the convenient `ActiveModel::EachValidator`. In this case, the custom
+is with the convenient [`ActiveModel::EachValidator`][]. In this case, the custom
 validator class must implement a `validate_each` method which takes three
 arguments: record, attribute, and value. These correspond to the instance, the
 attribute to be validated, and the value of the attribute in the passed
@@ -1078,6 +1108,7 @@ end
 As shown in the example, you can also combine standard validations with your
 own custom validators.
 
+[`ActiveModel::EachValidator`]: https://api.rubyonrails.org/classes/ActiveModel/EachValidator.html
 [`ActiveModel::Validator`]: https://api.rubyonrails.org/classes/ActiveModel/Validator.html
 
 ### Custom Methods
@@ -1346,7 +1377,7 @@ Displaying Validation Errors in Views
 
 Once you've created a model and added validations, if that model is created via
 a web form, you probably want to display an error message when one of the
-validations fail.
+validations fails.
 
 Because every application handles this kind of thing differently, Rails does
 not include any view helpers to help you generate these messages directly.
