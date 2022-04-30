@@ -166,6 +166,8 @@ Criando uma rota de _resource_ vai expor um número de _helpers_ para os _contro
 
 Cada um desses _helpers_ tem um _helper_ `_url`  (assim como `photos_url`) que retorna o mesmo _path_ prefixado com o _host_ atual, porta e o prefixo do _path_.
 
+TIP: Para encontrar os nomes dos auxiliares de rota para suas rotas, consulte [Listar rotas existentes](#listing-existing-routes) abaixo.
+
 ### Definindo Múltiplos _Resources_ ao Mesmo tempo
 
 Se você precisa criar rotas para mais de um _resource_, você pode salvar um pouco de digitação definindo todos eles em uma única chamada para `resources`:
@@ -221,6 +223,8 @@ Uma rota _resourceful_ singular gera estes _helpers_:
 * `new_geocoder_path` returns `/geocoder/new`
 * `edit_geocoder_path` returns `/geocoder/edit`
 * `geocoder_path` returns `/geocoder`
+
+NOTE: A chamada para `resolve` é necessária para converter instâncias do `Geocoder` em rotas por meio de [identificação de registro](form_helpers.html#confiando-na-identificacao-de-registro).
 
 Assim como com _resources_ no plural, os mesmos _helpers_ que terminam com `_url` tambem vão incluir o _host_, porta, e o prefixo do _path_.
 
@@ -376,6 +380,40 @@ resources :articles, shallow: true do
   resources :drafts
 end
 ```
+
+O *resources* de artigos aqui terá as seguintes rotas geradas para ele:
+
+| Verbo HTTP | Caminho                                         | Controller#Action | Nome do Helper de Rota |
+| --------- | -------------------------------------------- | ----------------- | ------------------------ |
+| GET       | /articles/:article_id/comments(.:format)     | comments#index    | article_comments_path    |
+| POST      | /articles/:article_id/comments(.:format)     | comments#create   | article_comments_path    |
+| GET       | /articles/:article_id/comments/new(.:format) | comments#new      | new_article_comment_path |
+| GET       | /comments/:id/edit(.:format)                 | comments#edit     | edit_comment_path        |
+| GET       | /comments/:id(.:format)                      | comments#show     | comment_path             |
+| PATCH/PUT | /comments/:id(.:format)                      | comments#update   | comment_path             |
+| DELETE    | /comments/:id(.:format)                      | comments#destroy  | comment_path             |
+| GET       | /articles/:article_id/quotes(.:format)       | quotes#index      | article_quotes_path      |
+| POST      | /articles/:article_id/quotes(.:format)       | quotes#create     | article_quotes_path      |
+| GET       | /articles/:article_id/quotes/new(.:format)   | quotes#new        | new_article_quote_path   |
+| GET       | /quotes/:id/edit(.:format)                   | quotes#edit       | edit_quote_path          |
+| GET       | /quotes/:id(.:format)                        | quotes#show       | quote_path               |
+| PATCH/PUT | /quotes/:id(.:format)                        | quotes#update     | quote_path               |
+| DELETE    | /quotes/:id(.:format)                        | quotes#destroy    | quote_path               |
+| GET       | /articles/:article_id/drafts(.:format)       | drafts#index      | article_drafts_path      |
+| POST      | /articles/:article_id/drafts(.:format)       | drafts#create     | article_drafts_path      |
+| GET       | /articles/:article_id/drafts/new(.:format)   | drafts#new        | new_article_draft_path   |
+| GET       | /drafts/:id/edit(.:format)                   | drafts#edit       | edit_draft_path          |
+| GET       | /drafts/:id(.:format)                        | drafts#show       | draft_path               |
+| PATCH/PUT | /drafts/:id(.:format)                        | drafts#update     | draft_path               |
+| DELETE    | /drafts/:id(.:format)                        | drafts#destroy    | draft_path               |
+| GET       | /articles(.:format)                          | articles#index    | articles_path            |
+| POST      | /articles(.:format)                          | articles#create   | articles_path            |
+| GET       | /articles/new(.:format)                      | articles#new      | new_article_path         |
+| GET       | /articles/:id/edit(.:format)                 | articles#edit     | edit_article_path        |
+| GET       | /articles/:id(.:format)                      | articles#show     | article_path             |
+| PATCH/PUT | /articles/:id(.:format)                      | articles#update   | article_path             |
+| DELETE    | /articles/:id(.:format)                      | articles#destroy  | article_path             |
+
 O método `shallow` do DSL cria um _scope_ em que todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:
 
 ```ruby
@@ -907,6 +945,8 @@ Desde que o `MyRackApp` responda ao método `call` e retorne um `[status, header
 
 NOTE: Para os curiosos, `'articles#index'` na verdade se expande para `ArticlesController.action(:index)`, que retorna uma aplicação Rack válida.
 
+NOTE: Como *procs/lambdas* são objetos que respondem a `call`, você pode implementar rotas muito simples (por exemplo, para verificações de integridade) inline:<br>`get '/health', to: ->(env) { [204, {}, ['']] }`
+
 Se você especificar uma aplicação Rack como *endpoint*, lembre-se de que
 a rota não será alterada na aplicação de recebimento. Com a seguinte
 rota sua aplicação Rack deve esperar que a rota seja `/admin`:
@@ -963,11 +1003,11 @@ Você pode criar *URL helpers* personalizados diretamente chamando [`direct`][].
 
 ```ruby
 direct :homepage do
-  "http://www.rubyonrails.org"
+  "https://rubyonrails.org"
 end
 
 # >> homepage_url
-# => "http://www.rubyonrails.org"
+# => "https://rubyonrails.org"
 ```
 
 O valor de retorno do bloco deve ser um argumento válido para o método `url_for`. Portanto, você pode transmitir uma URL como *string* válida, Hash, Array, ou uma instância de *Active Model* ou uma classe *Active Model*.
@@ -1253,11 +1293,12 @@ edit_video_path(video) # => "/videos/Roman-Holiday/edit"
 Separando arquivos de rotas *gigantes* em vários arquivos menores:
 -------------------------------------------------------
 
-Se você trabalha em uma aplicação grande com milhares de rotas,
-um único arquivo `config/routes.rb` pode se tornar complicado e difícil de ler.
+Se você trabalha em uma aplicação grande com milhares de rotas, um único arquivo `config/routes.rb` pode se tornar complicado e difícil de ler.
 
 O Rails oferece uma forma de quebrar esse único gigante `routes.rb` em vários arquivos pequenos
 usando a macro [`draw`][].
+
+Você pode ter uma rota `admin.rb` que contém todas as rotas para a área de administração, outro arquivo `api.rb` para recursos relacionados à API, etc.
 
 ```ruby
 # config/routes.rb
@@ -1278,26 +1319,19 @@ end
 ```
 
 Chamar o `draw(:admin)` dentro do próprio bloco `Rails.application.routes.draw` tentará
-carregar um arquivo de rotas com o mesmo nome do argumento passado (`admin.rb` neste caso).
+carregar um arquivo de rotas com o mesmo nome do argumento passado (`admin.rb` neste exemplo).
 Para isso o arquivo precisa estar localizado dentro da pasta `config/routes` ou algum subdiretório
 (ex: `config/routes/admin.rb` or `config/routes/external/admin.rb`)
 
 Você pode usar a DSL de roteamento normal dentro do arquivo de rotas `admin.rb`, porém,
-você não deve cercá-lo com o bloco `Rails.application.routes.draw` como fez no arquivo
+você **não deve** cercá-lo com o bloco `Rails.application.routes.draw` como fez no arquivo
 principal `config/routes.rb`.
 
 [`draw`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-draw
 
-### Quando usar ou não essa funcionalidade
+### Não use este recurso a menos que você realmente precise dele
 
-Definir rotas através de arquivos externos pode ser muito útil para organizar uma grande quantidade de rotas
-em vários arquivos. Você pode ter um arquivo `admin.rb` que conterá todas as rotas para a área administrativa,
-outro arquivo `api.rb` para as rotas relacionadas aos recursos da sua API, etc...
-
-No entanto, você não deve abusar dessa funcionalidade criando muitos arquivos, pois torna a descoberta e compreensibilidade mais difícil.
-Dependendo da aplicação, pode ser mais fácil para os desenvolvedores ter apenas um arquivo de rotas mesmo que contenha centenas de rotas.
-Você não deve tentar criar um novo arquivo de rotas para cada categoria (ex: admin, api) a todo custo; A DSL de rotas do Rails já oferece
-uma forma de separar as rotas de forma organizada através de `namespaces` e `scopes`.
+Ter vários arquivos de roteamento dificulta a descoberta e a compreensão. Para a maioria das aplicações - mesmo aqueles com algumas centenas de rotas - é mais fácil para as pessoas desenvolvedoras terem um único arquivo de roteamento. A DSL de roteamento Rails já oferece uma forma de quebrar rotas de forma organizada com `namespace` e `scope`.
 
 Inspecionando e Testando Rotas
 -----------------------------
