@@ -4,7 +4,7 @@
 Active Support Core Extensions
 ==============================
 
-O _Active Support_ é o componente em Ruby on Rails responsável por fornecer à linguagem Ruby extensões, utilidades e outras funcionalidades paralelas.
+O _Active Support_ é o componente em Ruby on Rails responsável por fornecer à linguagem Ruby extensões e utilidades.
 
 Ele oferece um riquíssimo ponto de partida no nível da linguagem, onde pode-se aproveitar tanto para o desenvolvimento de aplicações Rails, quanto no próprio desenvolvimento da tecnologia Ruby on Rails.
 
@@ -22,7 +22,7 @@ Como Carregar _Core Extensions_
 
 ### _Active Support Stand-Alone_
 
-A fim de ter uma configuração padrão mais básica, o _Active Support_ não carrega nada por padrão. Com isso, ele é granularizado em pequenas unidades para que seja possível carregar apenas o que se é necessário no contexto, além de oferecer pontos de entrada que são interessantes para o carregamento de extensões convenientes de uma só vez, ou até mesmo não carregar nenhuma.
+Para ter o menor espaço padrão possível, o *Active Support* carrega as dependências mínimas por padrão. Ele é quebrado em pequenos pedaços para que apenas as extensões desejadas possam ser carregadas. Ele também possui alguns pontos de entrada convenientes para carregar extensões relacionadas de uma só vez, até mesmo tudo.
 
 Portanto, é possível inicializar após o uso de um simples _require_ como:
 
@@ -30,34 +30,38 @@ Portanto, é possível inicializar após o uso de um simples _require_ como:
 require "active_support"
 ```
 
-objetos não respondem nem mesmo a um [`blank?`][Object#blank?]. Vejamos como carregar essa definição.
+apenas as extensões exigidas pela estrutura do *Active Support* são carregadas.
 
 #### Escolhendo a Definição
 
-A forma mais limitada de conseguir respostas a um `blank?` é selecionando o arquivo que faz essa definição.
+Este exemplo mostra como carregar [`Hash#with_indifferent_access`][Hash#with_indifferent_access]. Esta extensão permite a conversão de um `Hash` em um [`ActiveSupport::HashWithIndifferentAccess`][ActiveSupport::HashWithIndifferentAccess] que permite o acesso às chaves como *strings* ou *symbols*.
 
-Para cada método definido como _core extension_ esse guia possui uma nota que diz onde tal método é definido. No caso de `blank?` a nota diz:
+```ruby
+{a: 1}.with_indifferent_access["a"] # => 1
+```
 
-NOTE: Definido em `active_support/core_ext/object/blank.rb`.
+Para cada método definido como _core extension_ esse guia possui uma nota que diz onde tal método é definido. No caso de `with_indifferent_access` a nota diz:
+
+NOTE: Definido em `active_support/core_ext/hash/indifferent_access.rb`.
 
 Isso significa que você pode fazer _requires_ assim:
 
 ```ruby
 require "active_support"
-require "active_support/core_ext/object/blank"
+require "active_support/core_ext/hash/indifferent_access"
 ```
 
 O _Active Support_ foi cuidadosamente projetado para que as seleções de arquivos carreguem somente as dependências extremamente necessárias, caso existam.
 
 #### Carregando _Core Extensions_ Agrupadas
 
-O próximo passo é simplesmente carregar todas as extensões de `Object`. Como regra geral, extensões para `SomeClass` estão disponíveis em um rápido carregamento de `active_support/core_ext/some_class`.
+O próximo passo é simplesmente carregar todas as extensões de `Hash`. Como regra geral, extensões para `SomeClass` estão disponíveis em um rápido carregamento de `active_support/core_ext/some_class`.
 
-Portanto, para carregar todas as extensões de `Object` (incluindo `blank?`):
+Portanto, para carregar todas as extensões de `Hash` (incluindo `with_indifferent_access`):
 
 ```ruby
 require "active_support"
-require "active_support/core_ext/object"
+require "active_support/core_ext/hash"
 ```
 
 #### Carregando Todas _Core Extensions_
@@ -216,7 +220,7 @@ NOTE: Definido em `active_support/core_ext/object/deep_dup.rb`.
 
 ### `try`
 
-Quando você quer chamar um método em um objeto somente se ele não for `nil`, a forma mais simples de conseguir isso é através de uma estrutura condicional, adicionando uma desnecessária desordem. A alternativa é usar [`try`][Object#try]. `try` é como `Object#send` exceto que o retorno seja `nil` se enviado para `nil`.
+Quando você quer chamar um método em um objeto somente se ele não for `nil`, a forma mais simples de conseguir isso é através de uma estrutura condicional, adicionando uma desnecessária desordem. A alternativa é usar [`try`][Object#try]. `try` é como `Object#public_send` exceto que o retorno seja `nil` se enviado para `nil`.
 
 Eis um exemplo:
 
@@ -447,7 +451,7 @@ NOTE: Definido em `active_support/core_ext/object/with_options.rb`.
 
 ### Suporte ao JSON
 
-_Active Support_ fornece uma melhor implementação para `to_json` do que a _gem_ `json` normalmente fornece para objetos em Ruby. Isso é porque algumas classes, como `Hash`, `OrderedHash` e `Process::Status` precisam de manipulações especiais a fim de fornecer uma representação de JSON adequada.
+_Active Support_ fornece uma melhor implementação para `to_json` do que a _gem_ `json` normalmente fornece para objetos em Ruby. Isso é porque algumas classes, como `Hash`, e `Process::Status` precisam de manipulações especiais a fim de fornecer uma representação de JSON adequada.
 
 NOTE: Definido em `active_support/core_ext/object/json.rb`.
 
@@ -601,22 +605,11 @@ NOTE: Definido em `active_support/core_ext/module/attr_internal.rb`.
 As macros [`mattr_reader`][Module#mattr_reader], [`mattr_writer`][Module#mattr_writer], e [`mattr_accessor`][Module#mattr_accessor] São iguais a `cattr_*` macros definidas na classe. De fato, `cattr_*` macros são apenas _aliases_ para as `mattr_*` macros. Confira a seção [Atributos de Classe](#atributos-de-classe).
 
 
-Por exemplo, os mecanismos de dependências usam:
+Por exemplo, a API para o registrador do *Active Storage* é gerada com `mattr_accessor`:
 
 ```ruby
-module ActiveSupport
-  module Dependencies
-    mattr_accessor :warnings_on_first_load
-    mattr_accessor :history
-    mattr_accessor :loaded
-    mattr_accessor :mechanism
-    mattr_accessor :load_paths
-    mattr_accessor :load_once_paths
-    mattr_accessor :autoloaded_constants
-    mattr_accessor :explicitly_unloadable_constants
-    mattr_accessor :constant_watch_stack
-    mattr_accessor :constant_watch_stack_mutex
-  end
+module ActiveStorage
+  mattr_accessor :logger
 end
 ```
 
@@ -1470,8 +1463,8 @@ _Active Record_ usa esse método pra computar a o nome da tabela padrão corresp
 
 ```ruby
 # active_record/model_schema.rb
-def undecorated_table_name(class_name = base_class.name)
-  table_name = class_name.to_s.demodulize.underscore
+def undecorated_table_name(model_name)
+  table_name = model_name.to_s.demodulize.underscore
   pluralize_table_names ? table_name.pluralize : table_name
 end
 ```
@@ -1579,17 +1572,16 @@ e entende _strings_ que começam com start letra minúscula:
 
 `underscore` não aceita nenhum argumento.
 
-Classes e módulos _Rails_ carregam automaticamente o uso de `underscore` para inferir o endereço relativo sem extensão de um arquivo que definiria uma constante ausente:
+O Rails usa de `underscore` para inferir o nome de um controller ou class:
 
 ```ruby
-# active_support/dependencies.rb
-def load_missing_constant(from_mod, const_name)
-  # ...
-  qualified_name = qualified_name_for from_mod, const_name
-  path_suffix = qualified_name.underscore
-  # ...
+# actionpack/lib/abstract_controller/base.rb
+def controller_path
+  @controller_path ||= name.delete_suffix("Controller").underscore
 end
 ```
+
+Por exemplo, esse valor é aquele que você obtém em `params[:controller]`.
 
 INFO: Como regra geral, pode-se pensar em `underscore` como o inverso de `camelize`, embora haja casos em que isso não se aplica. Por exemplo, `"SSLError".underscore.camelize` devolve `"SslError"`.
 
@@ -1997,84 +1989,84 @@ Permite a formatação de números de várias maneiras.
 Produz uma representação de _string_ de um número como um número de telefone:
 
 ```ruby
-5551234.to_s(:phone)
+5551234.to_formatted_s(:phone)
 # => 555-1234
-1235551234.to_s(:phone)
+1235551234.to_formatted_s(:phone)
 # => 123-555-1234
-1235551234.to_s(:phone, area_code: true)
+1235551234.to_formatted_s(:phone, area_code: true)
 # => (123) 555-1234
-1235551234.to_s(:phone, delimiter: " ")
+1235551234.to_formatted_s(:phone, delimiter: " ")
 # => 123 555 1234
-1235551234.to_s(:phone, area_code: true, extension: 555)
+1235551234.to_formatted_s(:phone, area_code: true, extension: 555)
 # => (123) 555-1234 x 555
-1235551234.to_s(:phone, country_code: 1)
+1235551234.to_formatted_s(:phone, country_code: 1)
 # => +1-123-555-1234
 ```
 
 Produz uma representação de _string_ de um número como moeda:
 
 ```ruby
-1234567890.50.to_s(:currency)                 # => $1,234,567,890.50
-1234567890.506.to_s(:currency)                # => $1,234,567,890.51
-1234567890.506.to_s(:currency, precision: 3)  # => $1,234,567,890.506
+1234567890.50.to_formatted_s(:currency)                 # => $1,234,567,890.50
+1234567890.506.to_formatted_s(:currency)                # => $1,234,567,890.51
+1234567890.506.to_formatted_s(:currency, precision: 3)  # => $1,234,567,890.506
 ```
 
 Produz uma representação de _string_ de um número como uma porcentagem:
 
 ```ruby
-100.to_s(:percentage)
+100.to_formatted_s(:percentage)
 # => 100.000%
-100.to_s(:percentage, precision: 0)
+100.to_formatted_s(:percentage, precision: 0)
 # => 100%
-1000.to_s(:percentage, delimiter: '.', separator: ',')
+1000.to_formatted_s(:percentage, delimiter: '.', separator: ',')
 # => 1.000,000%
-302.24398923423.to_s(:percentage, precision: 5)
+302.24398923423.to_formatted_s(:percentage, precision: 5)
 # => 302.24399%
 ```
 
 Produz uma representação de _string_ de um número na forma delimitada:
 
 ```ruby
-12345678.to_s(:delimited)                     # => 12,345,678
-12345678.05.to_s(:delimited)                  # => 12,345,678.05
-12345678.to_s(:delimited, delimiter: ".")     # => 12.345.678
-12345678.to_s(:delimited, delimiter: ",")     # => 12,345,678
-12345678.05.to_s(:delimited, separator: " ")  # => 12,345,678 05
+12345678.to_formatted_s(:delimited)                     # => 12,345,678
+12345678.05.to_formatted_s(:delimited)                  # => 12,345,678.05
+12345678.to_formatted_s(:delimited, delimiter: ".")     # => 12.345.678
+12345678.to_formatted_s(:delimited, delimiter: ",")     # => 12,345,678
+12345678.05.to_formatted_s(:delimited, separator: " ")  # => 12,345,678 05
 ```
 
 Produz uma representação de _string_ de um número arredondado para uma precisão:
 
 ```ruby
-111.2345.to_s(:rounded)                     # => 111.235
-111.2345.to_s(:rounded, precision: 2)       # => 111.23
-13.to_s(:rounded, precision: 5)             # => 13.00000
-389.32314.to_s(:rounded, precision: 0)      # => 389
-111.2345.to_s(:rounded, significant: true)  # => 111
+111.2345.to_formatted_s(:rounded)                     # => 111.235
+111.2345.to_formatted_s(:rounded, precision: 2)       # => 111.23
+13.to_formatted_s(:rounded, precision: 5)             # => 13.00000
+389.32314.to_formatted_s(:rounded, precision: 0)      # => 389
+111.2345.to_formatted_s(:rounded, significant: true)  # => 111
 ```
 
 Produz uma representação de _string_ de um número como um número de bytes legível para humanos:
 
 ```ruby
-123.to_s(:human_size)                  # => 123 Bytes
-1234.to_s(:human_size)                 # => 1.21 KB
-12345.to_s(:human_size)                # => 12.1 KB
-1234567.to_s(:human_size)              # => 1.18 MB
-1234567890.to_s(:human_size)           # => 1.15 GB
-1234567890123.to_s(:human_size)        # => 1.12 TB
-1234567890123456.to_s(:human_size)     # => 1.1 PB
-1234567890123456789.to_s(:human_size)  # => 1.07 EB
+123.to_formatted_s(:human_size)                  # => 123 Bytes
+1234.to_formatted_s(:human_size)                 # => 1.21 KB
+12345.to_formatted_s(:human_size)                # => 12.1 KB
+1234567.to_formatted_s(:human_size)              # => 1.18 MB
+1234567890.to_formatted_s(:human_size)           # => 1.15 GB
+1234567890123.to_formatted_s(:human_size)        # => 1.12 TB
+1234567890123456.to_formatted_s(:human_size)     # => 1.1 PB
+1234567890123456789.to_formatted_s(:human_size)  # => 1.07 EB
 ```
 
 Produz uma representação de _string_ de um número em palavras legíveis para humanos:
 
 ```ruby
-123.to_s(:human)               # => "123"
-1234.to_s(:human)              # => "1.23 Thousand"
-12345.to_s(:human)             # => "12.3 Thousand"
-1234567.to_s(:human)           # => "1.23 Million"
-1234567890.to_s(:human)        # => "1.23 Billion"
-1234567890123.to_s(:human)     # => "1.23 Trillion"
-1234567890123456.to_s(:human)  # => "1.23 Quadrillion"
+123.to_formatted_s(:human)               # => "123"
+1234.to_formatted_s(:human)              # => "1.23 Thousand"
+12345.to_formatted_s(:human)             # => "12.3 Thousand"
+1234567.to_formatted_s(:human)           # => "1.23 Million"
+1234567890.to_formatted_s(:human)        # => "1.23 Billion"
+1234567890123.to_formatted_s(:human)     # => "1.23 Trillion"
+1234567890123456.to_formatted_s(:human)  # => "1.23 Quadrillion"
 ```
 
 NOTE: Definido em `active_support/core_ext/numeric/conversions.rb`.
@@ -3161,9 +3153,9 @@ As the example depicts, the `:db` format generates a `BETWEEN` SQL clause. That 
 
 NOTE: Defined in `active_support/core_ext/range/conversions.rb`.
 
-### `===`, `include?`, and `cover?`
+### `===` and `include?`
 
-The methods `Range#===`, `Range#include?`, and `Range#cover?` say whether some value falls between the ends of a given instance:
+The methods `Range#===` and `Range#include?` say whether some value falls between the ends of a given instance:
 
 ```ruby
 (2..3).include?(Math::E) # => true
@@ -3181,11 +3173,6 @@ Active Support extends these methods so that the argument may be another range i
 (1..10).include?(0..7)  # => false
 (1..10).include?(3..11) # => false
 (1...9).include?(3..9)  # => false
-
-(1..10).cover?(3..7)  # => true
-(1..10).cover?(0..7)  # => false
-(1..10).cover?(3..11) # => false
-(1...9).cover?(3..9)  # => false
 ```
 
 NOTE: Defined in `active_support/core_ext/range/compare_range.rb`.
@@ -4018,25 +4005,6 @@ NOTE: Defined in `active_support/core_ext/file/atomic.rb`.
 
 [File.atomic_write]: https://api.rubyonrails.org/classes/File.html#method-c-atomic_write
 
-Extensions to `Marshal`
------------------------
-
-### `load`
-
-Active Support adds constant autoloading support to `load`.
-
-For example, the file cache store deserializes this way:
-
-```ruby
-File.open(file_name) { |f| Marshal.load(f) }
-```
-
-If the cached data refers to a constant that is unknown at that point, the autoloading mechanism is triggered and if it succeeds the deserialization is retried transparently.
-
-WARNING. If the argument is an `IO` it needs to respond to `rewind` to be able to retry. Regular files respond to `rewind`.
-
-NOTE: Defined in `active_support/core_ext/marshal.rb`.
-
 Extensions to `NameError`
 -------------------------
 
@@ -4088,3 +4056,18 @@ end
 NOTE: Defined in `active_support/core_ext/load_error.rb`.
 
 [LoadError#is_missing?]: https://api.rubyonrails.org/classes/LoadError.html#method-i-is_missing-3F
+
+Extensions to Pathname
+-------------------------
+
+### `existence`
+
+The [`existence`][Pathname#existence] method returns the receiver if the named file exists otherwise returns +nil+. It is useful for idioms like this:
+
+```ruby
+content = Pathname.new("file").existence&.read
+```
+
+NOTE: Defined in `active_support/core_ext/pathname/existence.rb`.
+
+[Pathname#existence]: https://api.rubyonrails.org/classes/Pathname.html#method-i-existence
