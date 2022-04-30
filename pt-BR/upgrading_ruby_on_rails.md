@@ -18,6 +18,16 @@ Antes de tentar atualizar uma aplicação existente, você deve ter certeza que 
 
 A melhor maneira de garantir que sua aplicação ainda funciona após a atualização é possuir uma boa cobertura de testes antes de começar o processo. Se você não tiver testes automatizados para a maior parte de sua aplicação, será necessário gastar algum tempo realizando testes manuais de todas as partes alteradas. No caso da atualização do Rails, isso significa cada umas das funcionalidades dentro da aplicação. Faça a si mesmo um favor e tenha certeza de ter uma boa cobertura de teste **antes** de iniciar uma atualização.
 
+### Versões Ruby
+
+Rails geralmente se mantém próximo à versão mais recente do Ruby quando é liberado:
+
+* Rails 7 requer Ruby 2.7.0 ou mais recente.
+* Rails 6 requer Ruby 2.5.0 ou mais recente.
+* Rails 5 requer Ruby 2.2.2 ou mais recente.
+
+É uma boa ideia atualizar Ruby e Rails separadamente. Atualize para o Ruby mais recente que puder primeiro e, em seguida, atualize o Rails.
+
 ### O Processo de Atualização
 
 Quando estiver atualizando a versão do Rails, o melhor é ir devagar, uma versão *Minor* por vez, para fazer bom uso dos avisos de depreciação. As versões do Rails são numeradas da maneira *Major*.*Minor*.*Patch*. Versões *Major* e *Minor* têm permissão para alterar API pública, isso pode causar erros em sua aplicação. Versões *Patch* incluem apenas correções de *bug*, e não alteram nenhuma API pública.
@@ -29,37 +39,30 @@ O processo deve correr da seguinte maneira:
 3. Conserte os testes e funcionalidades depreciadas.
 4. Atualize para a última versão *Patch* da versão *Minor* seguinte.
 
-Repita este processo até chegar na versão desejada do Rails. Cada vez que você mudar entre versões, você precisará alterar a versão do Rails no `Gemfile` (possivelmente também as versões de outras *gems*) e executar um `bundle update`. Após, execute a tarefa de atualização mencionada abaixo para atualizar arquivos de configuração, então execute os testes.
+Repita este processo até chegar na versão desejada do Rails.
 
-Você pode encontrar a lista com todas as versões liberadas do Rails [aqui](https://rubygems.org/gems/rails/versions)
+#### Movendo-se entre as versões
 
-### Versões do Ruby
+Para alternar entre as versões:
 
-Rails geralmente se mantém próximo à versão mais recente do Ruby quando é liberado:
+1. Altere o número da versão do Rails no `Gemfile` e execute o `bundle update`.
+2. Altere as versões dos pacotes JavaScript do Rails em `package.json` e execute `yarn install`, se estiver executando no Webpacker.
+3. Execute a [Tarefa de atualização](#the-update-task).
+4. Execute seus testes.
 
-* Rails 6 requer Ruby 2.5.0 ou posterior.
-* Rails 5 requer Ruby 2.2.2 ou posterior.
-* Rails 4 prefere Ruby 2.0 e requer 1.9.3 ou posterior.
-* Rails 3.2.x é a última *branch* a suportar Ruby 1.8.7.
-* Rails 3 e posteriores requerem Ruby 1.8.7 ou posteriores. O suporte para todas as versões anteriores do Ruby foi descontinuado. Você deve atualizar o quanto antes.
-
-Dica: O Ruby 1.8.7 p248 e p249 possuem *bugs* que travam o Rails. Ruby *Enterprise Edition* possui correções para esses erros desde a versão 1.8.7-2010.02. Na Versão 1.9, Ruby 1.9.1 não é utilizável pois ela falha logo de início devido a problemas de memória, então se você quiser utilizar a versão 1.9.x, pule diretamente para 1.9.3 para evitar problemas.
+Você pode encontrar uma lista de todas as gems do Rails lançadas [aqui](https://rubygems.org/gems/rails/versions).
 
 ### A Tarefa de Atualização
 
-Rails fornece o comando `app:update` (`rake rails:update` na versão 4.2 e anteriores). Execute este comando após atualizar a versão do Rails no `Gemfile`. Isto lhe ajudará na criação de novos arquivos e na alteração de arquivos antigos em uma sessão interativa.
+Rails fornece o comando `rails app:update`. Execute este comando após atualizar a versão do Rails no `Gemfile`. Isto lhe ajudará na criação de novos arquivos e na alteração de arquivos antigos em uma sessão interativa.
 
 ```bash
 $ bin/rails app:update
-   identical  config/boot.rb
        exist  config
-    conflict  config/routes.rb
-Overwrite /myapp/config/routes.rb? (enter "h" for help) [Ynaqdh]
-       force  config/routes.rb
     conflict  config/application.rb
 Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
        force  config/application.rb
-    conflict  config/environment.rb
+      create  config/initializers/new_framework_defaults_7_0.rb
 ...
 ```
 
@@ -69,7 +72,309 @@ Não esqueça de revisar a diferença, para verificar se houveram mudanças ines
 
 A nova versão do Rails pode ter configurações padrão diferentes da versão anterior. No entanto, após seguir os passos descritos acima, sua aplicação ainda estaria rodando com configurações padrão da versão **anterior** do Rails. Isso porque o valor para `config.load_defaults` em `config/application.rb` ainda não foi alterado.
 
-Para permitir que você atualize para novos padrões um a um, a tarefa de atualização cria um arquivo `config/initializers/new_framework_defaults.rb`. Uma vez que a aplicação esteja pronta para rodar com as novas configurações padrão, você pode remover este arquivo e trocar o valor de `config.load_defaults`.
+Para permitir que você atualize para novos padrões um por um, a tarefa de atualização criou um arquivo `config/initializers/new_framework_defaults_X.Y.rb` (com a versão desejada do Rails no nome do arquivo). Você deve habilitar os novos padrões de configuração descomentando-os no arquivo; isso pode ser feito gradualmente ao longo de várias implantações. Assim que sua aplicação estiver pronta para rodar com novos padrões, você pode remover este arquivo e inverter o valor `config.load_defaults`.
+
+Upgrading from Rails 6.1 to Rails 7.0
+-------------------------------------
+
+### `ActionView::Helpers::UrlHelper#button_to` changed behavior
+
+Starting from Rails 7.0 `button_to` renders a `form` tag with `patch` HTTP verb if a persisted Active Record object is used to build button URL.
+To keep current behavior consider explicitly passing `method:` option:
+
+```diff
+-button_to("Do a POST", [:my_custom_post_action_on_workshop, Workshop.find(1)])
++button_to("Do a POST", [:my_custom_post_action_on_workshop, Workshop.find(1)], method: :post)
+```
+
+or using helper to build the URL:
+
+```diff
+-button_to("Do a POST", [:my_custom_post_action_on_workshop, Workshop.find(1)])
++button_to("Do a POST", my_custom_post_action_on_workshop_workshop_path(Workshop.find(1)))
+```
+
+### Spring
+
+If your application uses Spring, it needs to be upgraded to at least version 3.0.0. Otherwise you'll get
+
+```
+undefined method `mechanism=' for ActiveSupport::Dependencies:Module
+```
+
+Also, make sure `config.cache_classes` is set to `false` in `config/environments/test.rb`.
+
+### Sprockets is now an optional dependency
+
+The gem `rails` doesn't depend on `sprockets-rails` anymore. If your application still needs to use Sprockets,
+make sure to add `sprockets-rails` to your Gemfile.
+
+```
+gem "sprockets-rails"
+```
+
+### Applications need to run in `zeitwerk` mode
+
+Applications still running in `classic` mode have to switch to `zeitwerk` mode. Please check the [Classic to Zeitwerk HOWTO](https://guides.rubyonrails.org/classic_to_zeitwerk_howto.html) guide for details.
+
+### The setter `config.autoloader=` has been deleted
+
+In Rails 7 there is no configuration point to set the autoloading mode, `config.autoloader=` has been deleted. If you had it set to `:zeitwerk` for whatever reason, just remove it.
+
+### `ActiveSupport::Dependencies` private API has been deleted
+
+The private API of `ActiveSupport::Dependencies` has been deleted. That includes methods like `hook!`, `unhook!`, `depend_on`, `require_or_load`, `mechanism`, and many others.
+
+A few of highlights:
+
+* If you used `ActiveSupport::Dependencies.constantize` or `ActiveSupport::Dependencies.safe_constantize`, just change them to `String#constantize` or `String#safe_constantize`.
+
+  ```ruby
+  ActiveSupport::Dependencies.constantize("User") # NO LONGER POSSIBLE
+  "User".constantize # 👍
+  ```
+
+* Any usage of `ActiveSupport::Dependencies.mechanism`, reader or writer, has to be replaced by accessing `config.cache_classes` accordingly.
+
+* If you want to trace the activity of the autoloader, `ActiveSupport::Dependencies.verbose=` is no longer available, just throw `Rails.autoloaders.log!` in `config/application.rb`.
+
+Auxiliary internal classes or modules are also gone, like like `ActiveSupport::Dependencies::Reference`, `ActiveSupport::Dependencies::Blamable`, and others.
+
+### Autoloading during initialization
+
+Applications that autoloaded reloadable constants during initialization outside of `to_prepare` blocks got those constants unloaded and had this warning issued since Rails 6.0:
+
+```
+DEPRECATION WARNING: Initialization autoloaded the constant ....
+
+Being able to do this is deprecated. Autoloading during initialization is going
+to be an error condition in future versions of Rails.
+
+...
+```
+
+If you still get this warning in the logs, please check the section about autoloading when the application boots in the [autoloading guide](https://guides.rubyonrails.org/v7.0/autoloading_and_reloading_constants.html#autoloading-when-the-application-boots). You'd get a `NameError` in Rails 7 otherwise.
+
+### Ability to configure `config.autoload_once_paths`
+
+`config.autoload_once_paths` can be set in the body of the application class defined in `config/application.rb` or in the configuration for environments in `config/environments/*`.
+
+Similarly, engines can configure that collection in the class body of the engine class or in the configuration for environments.
+
+After that, the collection is frozen, and you can autoload from those paths. In particular, you can autoload from there during initialization. They are managed by the `Rails.autoloaders.once` autoloader, which does not reload, only autoloads/eager loads.
+
+If you configured this setting after the environments configuration has been processed and are getting `FrozenError`, please just move the code.
+
+### `ActionDispatch::Request#content_type` now returned Content-Type header as it is.
+
+Previously, `ActionDispatch::Request#content_type` returned value does NOT contain charset part.
+This behavior changed to returned Content-Type header containing charset part as it is.
+
+If you want just MIME type, please use `ActionDispatch::Request#media_type` instead.
+
+Before:
+
+```ruby
+request = ActionDispatch::Request.new("CONTENT_TYPE" => "text/csv; header=present; charset=utf-16", "REQUEST_METHOD" => "GET")
+request.content_type #=> "text/csv"
+```
+
+After:
+
+```ruby
+request = ActionDispatch::Request.new("Content-Type" => "text/csv; header=present; charset=utf-16", "REQUEST_METHOD" => "GET")
+request.content_type #=> "text/csv; header=present; charset=utf-16"
+request.media_type   #=> "text/csv"
+```
+
+### Key generator digest class changing to use SHA256
+
+The default digest class for the key generator is changing from SHA1 to SHA256.
+This has consequences in any encrypted message generated by Rails, including
+encrypted cookies.
+
+In order to be able to read messages using the old digest class it is necessary
+to register a rotator.
+
+The following is an example for rotator for the encrypted cookies.
+
+```ruby
+Rails.application.config.action_dispatch.cookies_rotations.tap do |cookies|
+  salt = Rails.application.config.action_dispatch.authenticated_encrypted_cookie_salt
+  secret_key_base = Rails.application.secrets.secret_key_base
+
+  key_generator = ActiveSupport::KeyGenerator.new(
+    secret_key_base, iterations: 1000, hash_digest_class: OpenSSL::Digest::SHA1
+  )
+  key_len = ActiveSupport::MessageEncryptor.key_len
+  secret = key_generator.generate_key(salt, key_len)
+
+  cookies.rotate :encrypted, secret
+end
+```
+
+### Digest class for ActiveSupport::Digest changing to SHA256
+
+The default digest class for ActiveSupport::Digest is changing from SHA1 to SHA256.
+This has consequences for things like Etags that will change and cache keys as well.
+Changing these keys can have impact on cache hit rates, so be careful and watch out
+for this when upgrading to the new hash.
+
+### New ActiveSupport::Cache serialization format
+
+A faster and more compact serialization format was introduced.
+
+To enable it you must set `config.active_support.cache_format_version = 7.0`:
+
+```ruby
+# config/application.rb
+
+config.load_defaults 6.1
+config.active_support.cache_format_version = 7.0
+```
+
+Or simply:
+
+```ruby
+# config/application.rb
+
+config.load_defaults 7.0
+```
+
+However Rails 6.1 applications are not able to read this new serialization format,
+so to ensure a seamless upgrade you must first deploy your Rails 7.0 upgrade with
+`config.active_support.cache_format_version = 6.1`, and then only once all Rails
+processes have been updated you can set `config.active_support.cache_format_version = 7.0`.
+
+Rails 7.0 is able to read both formats so the cache won't be invalidated during the
+upgrade.
+
+### Active Storage video preview image generation
+
+Video preview image generation now uses FFmpeg's scene change detection to generate
+more meaningful preview images. Previously the first frame of the video would be used
+and that caused problems if the video faded in from black. This change requires
+FFmpeg v3.4+.
+
+### Active Storage default variant processor changed to `:vips`
+
+For new apps, image transformation will use libvips instead of ImageMagick. This will reduce
+the time taken to generate variants as well as CPU and memory usage, improving response
+times in apps that rely on active storage to serve their images.
+
+The `:mini_magick` option is not being deprecated, so it is fine to keep using it.
+
+To migrate an existing app to libvips, set:
+
+```ruby
+Rails.application.config.active_storage.variant_processor = :vips
+```
+
+You will then need to change existing image transformation code to the
+`image_processing` macros, and replace ImageMagick's options with libvips' options.
+
+#### Replace resize with resize_to_limit
+```diff
+- variant(resize: "100x")
++ variant(resize_to_limit: [100, nil])
+```
+
+If you don't do this, when you switch to vips you will see this error: `no implicit conversion to float from string`.
+
+#### Use an array when cropping
+```diff
+- variant(crop: "1920x1080+0+0")
++ variant(crop: [0, 0, 1920, 1080])
+```
+
+If you don't do this when migrating to vips, you will see the following error: `unable to call crop: you supplied 2 arguments, but operation needs 5`.
+
+#### Clamp your crop values:
+
+Vips is more strict than ImageMagick when it comes to cropping:
+
+1. It will not crop if `x` and/or `y` are negative values. e.g.: `[-10, -10, 100, 100]`
+2. It will not crop if position (`x` or `y`) plus crop dimension (`width`, `height`) is larger than the image. e.g.: a 125x125 image and a crop of `[50, 50, 100, 100]`
+
+If you don't do this when migrating to vips, you will see the following error: `extract_area: bad extract area`
+
+#### Adjust the background color used for `resize_and_pad`
+Vips uses black as the default background color `resize_and_pad`, instead of white like ImageMagick. Fix that by using the `background` option:
+
+```diff
+- variant(resize_and_pad: [300, 300])
++ variant(resize_and_pad: [300, 300, background: [255]])
+```
+
+#### Remove any EXIF based rotation
+Vips will auto rotate images using the EXIF value when processing variants. If you were storing rotation values from user uploaded photos to apply rotation with ImageMagick, you must stop doing that:
+
+```diff
+- variant(format: :jpg, rotate: rotation_value)
++ variant(format: :jpg)
+```
+
+#### Replace monochrome with colourspace
+Vips uses a different option to make monochrome images:
+
+```diff
+- variant(monochrome: true)
++ variant(colourspace: "b-w")
+```
+
+#### Switch to libvips options for compressing images
+JPEG
+
+```diff
+- variant(strip: true, quality: 80, interlace: "JPEG", sampling_factor: "4:2:0", colorspace: "sRGB")
++ variant(saver: { strip: true, quality: 80, interlace: true })
+```
+
+PNG
+
+```diff
+- variant(strip: true, quality: 75)
++ variant(saver: { strip: true, compression: 9 })
+```
+
+WEBP
+
+```diff
+- variant(strip: true, quality: 75, define: { webp: { lossless: false, alpha_quality: 85, thread_level: 1 } })
++ variant(saver: { strip: true, quality: 75, lossless: false, alpha_q: 85, reduction_effort: 6, smart_subsample: true })
+```
+
+GIF
+
+```diff
+- variant(layers: "Optimize")
++ variant(saver: { optimize_gif_frames: true, optimize_gif_transparency: true })
+```
+
+#### Deploy to production
+Active Storage encodes into the url for the image the list of transformations that must be performed.
+If your app is caching these urls, your images will break after you deploy the new code to production.
+Because of this you must manually invalidate your affected cache keys.
+
+For example, if you have something like this in a view:
+
+```erb
+<% @products.each do |product| %>
+  <% cache product do %>
+    <%= image_tag product.cover_photo.variant(resize: "200x") %>
+  <% end %>
+<% end %>
+```
+
+You can invalidate the cache either by touching the product, or changing the cache key:
+
+```erb
+<% @products.each do |product| %>
+  <% cache ["v2", product] do %>
+    <%= image_tag product.cover_photo.variant(resize_to_limit: [200, nil]) %>
+  <% end %>
+<% end %>
+```
 
 Atualizando do Rails 6.0 para o Rails 6.1
 -------------------------------------
@@ -322,6 +627,15 @@ config.load_defaults 6.0
 
 ativa o modo de carregamento automático `zeitwerk` no CRuby. Nesse modo, o carregamento automático, o recarregamento e o carregamento antecipado são gerenciados pelo [Zeitwerk](https://github.com/fxn/zeitwerk).
 
+
+Se você estiver usando os padrões de uma versão anterior do Rails, você pode habilitar o zeitwerk assim:
+
+```ruby
+# config/application.rb
+
+config.autoloader = :zeitwerk
+```
+
 #### API Pública
 
 Em geral, as aplicações não precisam usar a API do *Zeitwerk* diretamente. Rails configura as coisas de acordo com o contrato existente: `config.autoload_paths`,`config.cache_classes`, etc.
@@ -332,7 +646,7 @@ Embora as aplicações devam seguir essa interface, o objeto do carregador *Zeit
 Rails.autoloaders.main
 ```
 
-Isso pode ser útil se você precisar pré-carregar STIs ou configurar um *inflector* customizado, por exemplo.
+Isso pode ser útil se você precisar pré-carregar classes com herança de tabela única (Single Table Inheritance - STIs) ou configurar um *inflector* customizado, por exemplo.
 
 #### Estrutura do Projeto
 
@@ -352,7 +666,7 @@ All is good!
 
 Todos os casos de uso conhecidos de `require_dependency` foram eliminados, você deve executar o *grep* no projeto e excluí-los.
 
-Se sua aplicação tiver STIs, verifique a seção no guia [Carregamento Automático e Recarregando Constantes (Modo Zeitwerk)](autoloading_and_reloading_constants.html#single-table-inheritance).
+Se sua aplicação usa herança de tabela única (STI), consulte a [seção Herança de tabela única](autoloading_and_reloading_constants.html#single-table-inheritance) do guia Autoloading and Reloading Constants (Zeitwerk Mode).
 
 #### Nomes qualificados nas definições de classe e módulo
 
@@ -464,7 +778,7 @@ end
 
 enquanto `Bar` não pôde ser carregado automaticamente, o carregamento automático de `Foo` marcaria `Bar` como carregado automaticamente também. Este não é o caso no modo `zeitwerk`, você precisa mover `Bar` para seu próprio arquivo `bar.rb`. Um arquivo, uma constante.
 
-Isso afeta apenas as constantes no mesmo nível superior do exemplo acima. Classes e módulos internos são adequados. Por exemplo, considere
+Isso se aplica apenas as constantes no mesmo nível superior do exemplo acima. Classes e módulos internos são adequados. Por exemplo, considere
 
 ```ruby
 # app/models/foo.rb
@@ -598,7 +912,7 @@ user.highlights.first.filename # => "funky.jpg"
 user.highlights.second.filename # => "town.jpg"
 ```
 
-As aplicações existentes podem aceitar este novo comportamento definindo `config.active_storage.replace_on_assign_to_many` como `true`. O comportamento antigo será descontinuado no Rails 6.1 e removido em uma versão subsequente.
+As aplicações existentes podem aceitar este novo comportamento definindo `config.active_storage.replace_on_assign_to_many` como `true`. O comportamento antigo será descontinuado no Rails 7.0 e removido no Rails 7.1.
 
 Atualizando do Rails 5.1 para o Rails 5.2
 -------------------------------------
@@ -652,10 +966,20 @@ Rails.application.secrets[:smtp_settings][:address]
 
 ### Removido suporte obsoleto para `:text` e `:nothing` em `render`
 
-Se suas *views* estiverem usando `render :text`, elas não funcionarão mais. O novo método de renderização de texto com o tipo MIME de `text/plain` é usar `render :plain`.
+Se seus *controllers* estiverem usando `render :text`, elas não funcionarão mais. O novo método de renderização de texto com o tipo MIME de `text/plain` é usar `render :plain`.
 
 Similarmente, `render :nothing` também é removido e você deve usar o método `head` para enviar respostas que contenham apenas cabeçalhos (*headers*). Por exemplo, `head :ok` envia uma resposta 200 sem corpo (*body*) para renderizar.
 
+### Removido suporte obsoleto para `redirect_to :back`
+
+No Rails 5.0, `redirect_to :back` foi descontinuado. No Rails 5.1, foi removido completamente.
+
+Como alternativa, use `redirect_back`. É importante notar que `redirect_back` também leva
+uma opção `fallback_location` que será usada caso o `HTTP_REFERER` esteja faltando.
+
+```
+redirect_back(fallback_location: root_path)
+```
 
 Atualizando do Rails 4.2 para o Rails 5.0
 -------------------------------------
@@ -1446,7 +1770,7 @@ included in the newly introduced `ActiveRecord::FixtureSet.context_class`, in
 ```ruby
 module FixtureFileHelpers
   def file_sha(path)
-    Digest::SHA2.hexdigest(File.read(Rails.root.join('test/fixtures', path)))
+    OpenSSL::Digest::SHA256.hexdigest(File.read(Rails.root.join('test/fixtures', path)))
   end
 end
 
