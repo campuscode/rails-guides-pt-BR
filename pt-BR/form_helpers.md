@@ -259,7 +259,7 @@ resources :articles
 
 TIP: Declarar um recurso tem vários efeitos colaterais. Consulte [o guia Rotas do Rails de Fora pra Dentro](routing.html#roteando-resources-recursos-o-padrao-do-rails) para obter mais informações como configurar e usar recursos.
 
-Ao lidar com recursos RESTful, as chamadas de `form_with` ficam significativamente mais fáceis se você contar com a **identificação de registros**. Resumindo, você pode apenas passar a instância do modelo e fazer com que o Rails descubra o nome do modelo e o resto:
+Ao lidar com recursos RESTful, as chamadas de `form_with` ficam significativamente mais fáceis se você contar com a **identificação de registros**. Resumindo, você pode apenas passar a instância do modelo e fazer com que o Rails descubra o nome do modelo e o resto. Em ambos os exemplos, o estilo longo e curto têm o mesmo resultado:
 
 ```ruby
 ## Creating a new article
@@ -276,6 +276,13 @@ form_with(model: @article)
 ```
 
 Observe como a chamada de estilo abreviado `form_with` é convenientemente a mesma, independentemente de o registro ser novo ou existente. A identificação de registros é inteligente o suficiente para descobrir se o registro é novo, chamando `record.persisted?`. Ele também seleciona o caminho correto para enviar e o nome com base na classe do objeto.
+
+Se você tiver um [singular resource](routing.html#singular-resources), precisará chamar `resource` e `resolve` para que funcione com `form_with`:
+
+```ruby
+resource :geocoder
+resolve('Geocoder') { [:geocoder] }
+```
 
 WARNING: Quando você está usando herança de tabela única (STI ou *single-table inheritance*) em seus objetos *model*, você não pode confiar na identificação de registro em uma subclasse se apenas sua classe pai for declarada um recurso. Você terá que especificar `:url`, e `:scope` (o nome do *model*) explicitamente.
 
@@ -311,13 +318,41 @@ Resultado:
 <form accept-charset="UTF-8" action="/search" method="post">
   <input name="_method" type="hidden" value="patch" />
   <input name="authenticity_token" type="hidden" value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" />
-  ...
+  <!-- ... -->
 </form>
 ```
 
 Ao analisar os dados submetidos pelo *POST*, o Rails levará em consideração o parâmetro especial `_method` e agirá como se o método HTTP fosse aquele especificado dentro dele (*"PATCH"* nesse exemplo).
 
+Ao renderizar um formulário, os botões de envio podem substituir o atributo `method` declarado através da palavra-chave `formmethod:`:
+
+```erb
+<%= form_with url: "/posts/1", method: :patch do |form| %>
+  <%= form.button "Delete", formmethod: :delete, data: { confirm: "Are you sure?" } %>
+  <%= form.button "Update" %>
+<% end %>
+```
+
+Semelhante aos elementos `<form>`, a maioria dos navegadores _não suporta_ métodos de substituição de formulário declarados por meio de [formmethod][] diferentes de "GET" e "POST".
+
+O Rails resolve esse problema emulando outros métodos via POST por meio de uma combinação dos atributos [formmethod][], [value][button-value] e [name][button-name]:
+
+```html
+<form accept-charset="UTF-8" action="/posts/1" method="post">
+  <input name="_method" type="hidden" value="patch" />
+  <input name="authenticity_token" type="hidden" value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" />
+  <!-- ... -->
+
+  <button type="submit" formmethod="post" name="_method" value="delete" data-confirm="Are you sure?">Delete</button>
+  <button type="submit" name="button">Update</button>
+</form>
+```
+
 IMPORTANT: No Rails 6.0 e 5.2, todos os formulários usando `form_with` implementam `remote: true` por padrão. Esses formulários enviarão dados usando requisições XHR (*Ajax*). Para desabilitar isso, inclua `local: true`. Para se aprofundar, veja o guia [Trabalhando com JavaScript no Rails](working_with_javascript_in_rails.html#elementos-remotos).
+
+[formmethod]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#attr-formmethod
+[button-name]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#attr-name
+[button-value]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#attr-value
 
 Criando Caixas de Seleção (*Select Boxes*) com Facilidade
 -----------------------------
@@ -605,7 +640,7 @@ Resultado:
 Enviando Arquivos
 ---------------
 
-Uma tarefa muito comum é fazer o envio de arquivos, seja a imagem de uma pessoa ou um arquivo CSV contendo dados a serem processados. Campos para upload de arquivos podem ser renderizados com o auxiliar [`file_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field). O mais importante a se lembrar quando se faz envio de arquivos é que o atributo `enctype` do formulário renderizado **deve** ser "multipart/form-data". Se você usar `form_with` com `:model`, isso é feito automaticamente:
+Uma tarefa muito comum é fazer o envio de arquivos, seja a imagem de uma pessoa ou um arquivo CSV contendo dados a serem processados. Campos para upload de arquivos podem ser renderizados com o auxiliar [`file_field`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-file_field).
 
 ```erb
 <%= form_with model: @person do |form| %>
@@ -613,11 +648,11 @@ Uma tarefa muito comum é fazer o envio de arquivos, seja a imagem de uma pessoa
 <% end %>
 ```
 
-Se você usar `form_with` sem o `:model`, você deve preencher os campos:
+O mais importante a se lembrar quando se faz envio de arquivos é que o atributo `enctype` do formulário renderizado **deve** ser "multipart/form-data". Isso pode ser feito automaticamente se você usar `file_field` dentro de um `form_with`. Você pode definir o atributo manualmente:
 
 ```erb
 <%= form_with url: "/uploads", multipart: true do |form| %>
-  <%= form.file_field :picture %>
+  <%= file_field_tag :picture %>
 <% end %>
 ```
 
@@ -980,7 +1015,7 @@ end
 ### Prevenindo Registros Vazios
 
 Pode ser útil ignorar um conjunto de campos que o usuário não preencheu. Você pode controlar isso ao passar um proc `:reject_if` para o
-`accepts_nested_attributes_for`. Essa *proc* será chamada com cada *hash* de atributos enviados pelo formulário. Se a proc retornar `false` então o Active Record não irá construir o objeto associado para essa *hash*. O exemplo abaixo tenta construir um endereço apenas se o campo `tipo` for informado.
+`accepts_nested_attributes_for`. Essa *proc* será chamada com cada *hash* de atributos enviados pelo formulário. Se a proc retornar `true` então o Active Record não irá construir o objeto associado para essa *hash*. O exemplo abaixo tenta construir um endereço apenas se o campo `kind` for informado.
 
 ```ruby
 class Person < ApplicationRecord
