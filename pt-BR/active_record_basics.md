@@ -83,7 +83,7 @@ para a classe `Book` (livro), você deverá ter uma tabela no banco de dados cha
 Os mecanismos de pluralização do Rails são muito poderosos, sendo capazes de pluralizar (e
 singularizar) palavras regulares e irregulares. Quando usamos nomes de classes compostas por
 duas ou mais palavras, o nome do seu *model* deve seguir a convenção do *Ruby*,
-utilizando *CamelCase*, enquanto a tabela deve separar as palavras utilizando o caracter sublinhado.
+utilizando *CamelCase*, enquanto a tabela deve utilizar a forma *snake_case*, separando as palavras utilizando o caracter sublinhado.
 Exemplos:
 
 * *Model* - Escrito no singular capitalizando a primeira letra de cada palavra
@@ -309,6 +309,12 @@ classe `update_all` útil:
 User.update_all "max_login_attempts = 3, must_change_password = 'true'"
 ```
 
+Isso é o mesmo que se você escrevesse:
+
+```ruby
+User.update(:all, max_login_attempts: 3, must_change_password: true)
+```
+
 ### *Delete*
 
 Da mesma forma, uma vez recuperado um objeto do *Active Record*, o mesmo pode ser
@@ -381,7 +387,7 @@ diante de qualquer banco de dados que o *Active Record* suporta utilizando o `ra
 uma *migration* que cria uma tabela:
 
 ```ruby
-class CreatePublications < ActiveRecord::Migration[6.0]
+class CreatePublications < ActiveRecord::Migration[7.0]
   def change
     create_table :publications do |t|
       t.string :title
