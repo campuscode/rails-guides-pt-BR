@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -320,17 +326,17 @@ Essa é uma técnica poderosa que nós chamamos de Ajax.</p><p>Como exemplo, aqu
   <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">html</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#results</span><span class="dl">"</span><span class="p">);</span>
-    <span class="nx">results</span><span class="p">.</span><span class="nx">insertAdjacentHTML</span><span class="p">(</span><span class="dl">"</span><span class="s2">beforeend</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+    <span class="nx">results</span><span class="p">.</span><span class="nx">insertAdjacentHTML</span><span class="p">(</span><span class="dl">"</span><span class="s2">beforeend</span><span class="dl">"</span><span class="p">,</span> <span class="nx">html</span><span class="p">);</span>
   <span class="p">});</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-847019fb871bbbc87218bdd5278061c8">fetch("/test")
+<textarea class="clipboard-content" id="clipboard-606aaa645cbc95a4ecb3a8e4a14c8a48">fetch("/test")
   .then((data) =&gt; data.text())
   .then((html) =&gt; {
     const results = document.querySelector("#results");
-    results.insertAdjacentHTML("beforeend", data);
+    results.insertAdjacentHTML("beforeend", html);
   });
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-847019fb871bbbc87218bdd5278061c8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-606aaa645cbc95a4ecb3a8e4a14c8a48">Copiar</button>
 </div>
 <p>Este código pega os dados do "/test", e então anexa o resultado no elemento com
 o id <code>results</code>.</p><p>O Rails fornece muito suporte interno para a criação de páginas web
@@ -343,17 +349,17 @@ ler tutoriais que demonstram de outras formas.</p><p>Aqui está o modo mais simp
 referido como <em>'Inline JavaScript'</em>:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"this.style.backgroundColor='#990000';event.preventDefault();"</span><span class="nt">&gt;</span>Paint it red<span class="nt">&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b1cd40d53468a1ef11a7136e0bf9f709">&lt;a href="#" onclick="this.style.backgroundColor='#990000';event.preventDefault();"&gt;Paint it red&lt;/a&gt;
+<textarea class="clipboard-content" id="clipboard-9ab75cfed8869061ef667b1ca9276a68">&lt;a href="#" onclick="this.style.backgroundColor='#990000';event.preventDefault();"&gt;Paint it red&lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b1cd40d53468a1ef11a7136e0bf9f709">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9ab75cfed8869061ef667b1ca9276a68">Copiar</button>
 </div>
 <p>Ao clicar no link, ele ficará vermelho. Aqui está o problema: o que
 acontece quando queremos que mais JavaScript seja executado no clique?</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"this.style.backgroundColor='#009900';this.style.color='#FFFFFF';event.preventDefault();"</span><span class="nt">&gt;</span>Paint it green<span class="nt">&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-23255bbaa0f9feed8bc651438bd8d0c7">&lt;a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';event.preventDefault();"&gt;Paint it green&lt;/a&gt;
+<textarea class="clipboard-content" id="clipboard-23914d7b5d13cc11043d11c2cf3ad74f">&lt;a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';event.preventDefault();"&gt;Paint it green&lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-23255bbaa0f9feed8bc651438bd8d0c7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-23914d7b5d13cc11043d11c2cf3ad74f">Copiar</button>
 </div>
 <p>Estranho, certo? Poderíamos retirar a definição da função do manipulador de cliques,
 e transformar em uma função:</p><div class="code_container">
@@ -365,7 +371,7 @@ e transformar em uma função:</p><div class="code_container">
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d36ce6de5411251cd99b75e24816578c">window.paintIt = function(event, backgroundColor, textColor) {
+<textarea class="clipboard-content" id="clipboard-21395f63ee7d731db39db04c7ade63cc">window.paintIt = function(event, backgroundColor, textColor) {
   event.preventDefault();
   event.target.style.backgroundColor = backgroundColor;
   if (textColor) {
@@ -373,25 +379,25 @@ e transformar em uma função:</p><div class="code_container">
   }
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d36ce6de5411251cd99b75e24816578c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-21395f63ee7d731db39db04c7ade63cc">Copiar</button>
 </div>
 <p>E então na nossa página:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"paintIt(event, '#990000')"</span><span class="nt">&gt;</span>Paint it red<span class="nt">&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8183d8384d0ce0ea837308fb5309b38d">&lt;a href="#" onclick="paintIt(event, '#990000')"&gt;Paint it red&lt;/a&gt;
+<textarea class="clipboard-content" id="clipboard-baace3e393b2088b59412bd220b3d3bb">&lt;a href="#" onclick="paintIt(event, '#990000')"&gt;Paint it red&lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8183d8384d0ce0ea837308fb5309b38d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-baace3e393b2088b59412bd220b3d3bb">Copiar</button>
 </div>
 <p>Esse é um pouco melhor, mas que tal múltiplos links com o mesmo efeito?</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"paintIt(event, '#990000')"</span><span class="nt">&gt;</span>Paint it red<span class="nt">&lt;/a&gt;</span>
 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"paintIt(event, '#009900', '#FFFFFF')"</span><span class="nt">&gt;</span>Paint it green<span class="nt">&lt;/a&gt;</span>
 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"paintIt(event, '#000099', '#FFFFFF')"</span><span class="nt">&gt;</span>Paint it blue<span class="nt">&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3d92f410c2c932a931fb52907d00f795">&lt;a href="#" onclick="paintIt(event, '#990000')"&gt;Paint it red&lt;/a&gt;
+<textarea class="clipboard-content" id="clipboard-fb1b066ed15bf7b451e36cc8bb55039c">&lt;a href="#" onclick="paintIt(event, '#990000')"&gt;Paint it red&lt;/a&gt;
 &lt;a href="#" onclick="paintIt(event, '#009900', '#FFFFFF')"&gt;Paint it green&lt;/a&gt;
 &lt;a href="#" onclick="paintIt(event, '#000099', '#FFFFFF')"&gt;Paint it blue&lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3d92f410c2c932a931fb52907d00f795">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fb1b066ed15bf7b451e36cc8bb55039c">Copiar</button>
 </div>
 <p>Não muito <a href="https://pt.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>, ahn?
 Podemos corrigir usando eventos. Vamos adicionar o atributo <code>data-*</code> nos
@@ -418,7 +424,7 @@ que tenha esse atributo:</p><div class="code_container">
   <span class="p">});</span>
 <span class="p">});</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e2f1e9e7dfc0cf177434fd0843d2e33d">function paintIt(element, backgroundColor, textColor) {
+<textarea class="clipboard-content" id="clipboard-cc74e510f20605448a5c71892496bc6c">function paintIt(element, backgroundColor, textColor) {
   element.style.backgroundColor = backgroundColor;
   if (textColor) {
     element.style.color = textColor;
@@ -439,18 +445,18 @@ window.addEventListener("load", () =&gt; {
   });
 });
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e2f1e9e7dfc0cf177434fd0843d2e33d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cc74e510f20605448a5c71892496bc6c">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-background-color=</span><span class="s">"#990000"</span><span class="nt">&gt;</span>Paint it red<span class="nt">&lt;/a&gt;</span>
 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-background-color=</span><span class="s">"#009900"</span> <span class="na">data-text-color=</span><span class="s">"#FFFFFF"</span><span class="nt">&gt;</span>Paint it green<span class="nt">&lt;/a&gt;</span>
 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">data-background-color=</span><span class="s">"#000099"</span> <span class="na">data-text-color=</span><span class="s">"#FFFFFF"</span><span class="nt">&gt;</span>Paint it blue<span class="nt">&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-173a51673d24eb44dd174be20d88086f">&lt;a href="#" data-background-color="#990000"&gt;Paint it red&lt;/a&gt;
+<textarea class="clipboard-content" id="clipboard-1248e2e4fb13e60c07811c20bfec4570">&lt;a href="#" data-background-color="#990000"&gt;Paint it red&lt;/a&gt;
 &lt;a href="#" data-background-color="#009900" data-text-color="#FFFFFF"&gt;Paint it green&lt;/a&gt;
 &lt;a href="#" data-background-color="#000099" data-text-color="#FFFFFF"&gt;Paint it blue&lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-173a51673d24eb44dd174be20d88086f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1248e2e4fb13e60c07811c20bfec4570">Copiar</button>
 </div>
 <p>Nós chamamos isso de JavaScript 'discreto (<em>unobtrusive</em>)' porque nós não estamos mais
 misturando nosso JavaScript dentro do HTML. Estamos separando propriamente nossos interesses,
@@ -465,28 +471,28 @@ estão atualmente em duas partes: metade JavaScript e metade Rails.</p><p>A não
 <a href="https://github.com/rails/rails/tree/main/actionview/app/assets/javascripts">o <em>rails-ujs</em></a>
 fornece a metade JavaScript, e os <em>view helpers</em> regulares em Ruby adicionam as <em>tags</em> apropriadas
 ao seu DOM.</p><p>Você pode ler abaixo sobre a diferença dos eventos que são disparados lidando com
-elementos remotos dentro da sua aplicação.</p><h5 id="form-with"><a class="anchorlink" href="#form-with">3.1.1 form_with</a></h5><p><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with">o <code>form_with</code></a>
+elementos remotos dentro da sua aplicação.</p><h5 id="form-with"><a class="anchorlink" href="#form-with">3.1.1 form_with</a></h5><p><a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/FormHelper.html#method-i-form_with">o <code>form_with</code></a>
 é um <em>helper</em> que auxilia na escrita de formulários. Para usar Ajax nos formulários você pode passar a opção <code>:local</code> no <code>form_with</code>.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span><span class="p">(</span><span class="ss">model: </span><span class="vi">@article</span><span class="p">,</span> <span class="ss">id: </span><span class="s2">"new-article"</span><span class="p">,</span> <span class="ss">local: </span><span class="kp">false</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   ...
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fdecd1d6383016fbb34ef7eea7344760">&lt;%= form_with(model: @article, id: "new-article", local: false) do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-2b39f001349bfbdb03871fefef594617">&lt;%= form_with(model: @article, id: "new-article", local: false) do |form| %&gt;
   ...
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fdecd1d6383016fbb34ef7eea7344760">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2b39f001349bfbdb03871fefef594617">Copiar</button>
 </div>
 <p>Isso irá gerar o seguinte HTML:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">"new-article"</span> <span class="na">action=</span><span class="s">"/articles"</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">data-remote=</span><span class="s">"true"</span><span class="nt">&gt;</span>
   ...
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-09da24915872b5f99d89b79d117bfea4">&lt;form id="new-article" action="/articles" accept-charset="UTF-8" method="post" data-remote="true"&gt;
+<textarea class="clipboard-content" id="clipboard-13a3f3ce90eb8c67ff153472754d93fe">&lt;form id="new-article" action="/articles" accept-charset="UTF-8" method="post" data-remote="true"&gt;
   ...
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-09da24915872b5f99d89b79d117bfea4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-13a3f3ce90eb8c67ff153472754d93fe">Copiar</button>
 </div>
 <p>Veja o <code>data-remote="true"</code>. Agora, o formulário será enviado por <em>Ajax</em> ao invés
 do mecanismo normal de envio do browser.</p><p>Você provavelmente não quer só ficar sentado com um <code>&lt;form&gt;</code> preenchido, entretanto.
@@ -503,7 +509,7 @@ vincule o evento <code>ajax:success</code>. Em caso de falha, use <code>ajax:err
   <span class="p">});</span>
 <span class="p">});</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1c6696bb69ef85feec97f980c38a61ab">window.addEventListener("load", () =&gt; {
+<textarea class="clipboard-content" id="clipboard-13e8b46663f5a75c844dfff7079b7573">window.addEventListener("load", () =&gt; {
   const element = document.querySelector("#new-article");
   element.addEventListener("ajax:success", (event) =&gt; {
     const [_data, _status, xhr] = event.detail;
@@ -514,33 +520,33 @@ vincule o evento <code>ajax:success</code>. Em caso de falha, use <code>ajax:err
   });
 });
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1c6696bb69ef85feec97f980c38a61ab">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-13e8b46663f5a75c844dfff7079b7573">Copiar</button>
 </div>
 <p>Obviamente, você irá querer ser um pouco mais sofisticado que isso, mas
-é um começo.</p><h5 id="link-to"><a class="anchorlink" href="#link-to">3.1.2 link_to</a></h5><p><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to"><code>link_to</code></a>
+é um começo.</p><h5 id="link-to"><a class="anchorlink" href="#link-to">3.1.2 link_to</a></h5><p><a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to"><code>link_to</code></a>
 é um <em>helper</em> que ajuda na geração de links. Ele tem a opção <code>:remote</code>
 que você pode usar assim:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"an article"</span><span class="p">,</span> <span class="vi">@article</span><span class="p">,</span> <span class="ss">remote: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b3b11cbf7bc80e9a279e7d7c2a5e7dd3">&lt;%= link_to "an article", @article, remote: true %&gt;
+<textarea class="clipboard-content" id="clipboard-6e1e86021c00d7edda37c9b3535d1111">&lt;%= link_to "an article", @article, remote: true %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b3b11cbf7bc80e9a279e7d7c2a5e7dd3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6e1e86021c00d7edda37c9b3535d1111">Copiar</button>
 </div>
 <p>que gera</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/articles/1"</span> <span class="na">data-remote=</span><span class="s">"true"</span><span class="nt">&gt;</span>an article<span class="nt">&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-14351a019202cd6603f32b5447078e4b">&lt;a href="/articles/1" data-remote="true"&gt;an article&lt;/a&gt;
+<textarea class="clipboard-content" id="clipboard-b6ad981c139b6d839b07f17f45a12bf6">&lt;a href="/articles/1" data-remote="true"&gt;an article&lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-14351a019202cd6603f32b5447078e4b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b6ad981c139b6d839b07f17f45a12bf6">Copiar</button>
 </div>
 <p>Você pode vincular os mesmos eventos <em>Ajax</em> do <code>form_with</code>. Aqui está um exemplo.
 Vamos assumir que nós temos uma lista de artigos que podem ser deletadas com apenas
 um clique. Iríamos gerar um HTML como este:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Delete article"</span><span class="p">,</span> <span class="vi">@article</span><span class="p">,</span> <span class="ss">remote: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">method: :delete</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0bd1b285d52a3ad5cbc51e211d27c47b">&lt;%= link_to "Delete article", @article, remote: true, method: :delete %&gt;
+<textarea class="clipboard-content" id="clipboard-58195d9656c195f5677caa85ece58a5a">&lt;%= link_to "Delete article", @article, remote: true, method: :delete %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0bd1b285d52a3ad5cbc51e211d27c47b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-58195d9656c195f5677caa85ece58a5a">Copiar</button>
 </div>
 <p>e escrever um pouco de JavaScript como este:</p><div class="code_container">
 <pre><code class="highlight js"><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">load</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -552,7 +558,7 @@ um clique. Iríamos gerar um HTML como este:</p><div class="code_container">
   <span class="p">});</span>
 <span class="p">});</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ad74852b9e307b59f9a54a1b77854705">window.addEventListener("load", () =&gt; {
+<textarea class="clipboard-content" id="clipboard-f5b537345910f5beff0b3bfeccf62c5f">window.addEventListener("load", () =&gt; {
   const links = document.querySelectorAll("a[data-remote]");
   links.forEach((element) =&gt; {
     element.addEventListener("ajax:success", () =&gt; {
@@ -561,25 +567,25 @@ um clique. Iríamos gerar um HTML como este:</p><div class="code_container">
   });
 });
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ad74852b9e307b59f9a54a1b77854705">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5b537345910f5beff0b3bfeccf62c5f">Copiar</button>
 </div>
-<h5 id="button-to"><a class="anchorlink" href="#button-to">3.1.3 button_to</a></h5><p><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to"><code>button_to</code></a> é um <em>helper</em> que ajuda você a criar botões. Ele tem a opção <code>:remote</code> que você pode chamar assim:</p><div class="code_container">
+<h5 id="button-to"><a class="anchorlink" href="#button-to">3.1.3 button_to</a></h5><p><a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to"><code>button_to</code></a> é um <em>helper</em> que ajuda você a criar botões. Ele tem a opção <code>:remote</code> que você pode chamar assim:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">button_to</span> <span class="s2">"An article"</span><span class="p">,</span> <span class="vi">@article</span><span class="p">,</span> <span class="ss">remote: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b70029d38d1d11b03458bd0b86729ff0">&lt;%= button_to "An article", @article, remote: true %&gt;
+<textarea class="clipboard-content" id="clipboard-76bfe463b7134927eced2035179ffc7d">&lt;%= button_to "An article", @article, remote: true %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b70029d38d1d11b03458bd0b86729ff0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-76bfe463b7134927eced2035179ffc7d">Copiar</button>
 </div>
 <p>Isso gera</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/articles/1"</span> <span class="na">class=</span><span class="s">"button_to"</span> <span class="na">data-remote=</span><span class="s">"true"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"An article"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e8d118dcf1c2cd814a93aa40359a1431">&lt;form action="/articles/1" class="button_to" data-remote="true" method="post"&gt;
+<textarea class="clipboard-content" id="clipboard-874a30aa1c8845b19df7ffc2532af916">&lt;form action="/articles/1" class="button_to" data-remote="true" method="post"&gt;
   &lt;input type="submit" value="An article" /&gt;
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e8d118dcf1c2cd814a93aa40359a1431">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-874a30aa1c8845b19df7ffc2532af916">Copiar</button>
 </div>
 <p>Uma vez que é apenas um <code>&lt;form&gt;</code>, todas as informações do <code>form_with</code> também se aplicam.</p><h4 id="personalize-elementos-remotos"><a class="anchorlink" href="#personalize-elementos-remotos">3.2 Personalize Elementos Remotos</a></h4><p>É possível personalizar o comportamento dos elementos com o atributo <code>data-remote</code>
 sem escrever uma linha de JavaScript. Você pode especificar extras atributos <code>data-</code>
@@ -599,10 +605,10 @@ especificar parâmetros extras através do atributo <code>data-params</code>.</p
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">data-remote=</span><span class="s">"true"</span>
     <span class="na">data-url=</span><span class="s">"/update"</span> <span class="na">data-params=</span><span class="s">"id=10"</span> <span class="na">data-method=</span><span class="s">"put"</span><span class="nt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3440b7732f993692079c6aee65d9969e">&lt;input type="checkbox" data-remote="true"
+<textarea class="clipboard-content" id="clipboard-d894b890afef759a56849c0004ca4e01">&lt;input type="checkbox" data-remote="true"
     data-url="/update" data-params="id=10" data-method="put"&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3440b7732f993692079c6aee65d9969e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d894b890afef759a56849c0004ca4e01">Copiar</button>
 </div>
 <h5 id="data-type"><a class="anchorlink" href="#data-type">3.2.3 <code>data-type</code></a></h5><p>Também é possível definir o Ajax <code>dataType</code> explicitamente enquanto desempenha
 requisições para os elementos <code>data-remote</code>, por meio do atributo <code>data-type</code></p><h4 id="confirmations"><a class="anchorlink" href="#confirmations">3.3 Confirmations</a></h4><p>Você pode pedir uma confirmação extra do usuário adicionando o atributo
@@ -613,24 +619,21 @@ aos formulários, será disparado no <em>submit</em>. Por exemplo:</p><div class
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Dangerous zone"</span><span class="p">,</span> <span class="n">dangerous_zone_path</span><span class="p">,</span>
   <span class="ss">data: </span><span class="p">{</span> <span class="ss">confirm: </span><span class="s1">'Are you sure?'</span> <span class="p">}</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9eaff317931921797f7d9df7275abd61">&lt;%= link_to "Dangerous zone", dangerous_zone_path,
+<textarea class="clipboard-content" id="clipboard-72ef88d8be92f4bab3d205414f544aef">&lt;%= link_to "Dangerous zone", dangerous_zone_path,
   data: { confirm: 'Are you sure?' } %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9eaff317931921797f7d9df7275abd61">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-72ef88d8be92f4bab3d205414f544aef">Copiar</button>
 </div>
 <p>Isso gera:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"..."</span> <span class="na">data-confirm=</span><span class="s">"Are you sure?"</span><span class="nt">&gt;</span>Dangerous zone<span class="nt">&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-db301dffd85eebe26e256e67cd76c0a3">&lt;a href="..." data-confirm="Are you sure?"&gt;Dangerous zone&lt;/a&gt;
+<textarea class="clipboard-content" id="clipboard-bca7f2bd20063e828bd6c170bae9e033">&lt;a href="..." data-confirm="Are you sure?"&gt;Dangerous zone&lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-db301dffd85eebe26e256e67cd76c0a3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bca7f2bd20063e828bd6c170bae9e033">Copiar</button>
 </div>
 <p>O atributo também está disponível no botão <em>submit</em> do formulário. Isso permite
 você customizar a mensagem de aviso dependendo do botão que foi ativado. Nesse caso,
-você <strong>não</strong> deve ter um <code>data-confirm</code> no formulário em si.</p><p>A confirmação padrão usa a mensagem de confirmação JavaScript, mas você pode mudar
-isso pegando o evento <code>confirm</code>, o qual é disparado antes da janela de confirmação
-aparecer para o usuário. Para cancelar essa confirmação padrão, você tem que fazer o
-gerenciador de confirmação retornar <em>false</em>.</p><h4 id="desativando-automaticamente"><a class="anchorlink" href="#desativando-automaticamente">3.4 Desativando Automaticamente</a></h4><p>Também é possível desabilitar automaticamente um input enquanto o formulário está sendo
+você <strong>não</strong> deve ter um <code>data-confirm</code> no formulário em si.</p><h4 id="desativando-automaticamente"><a class="anchorlink" href="#desativando-automaticamente">3.4 Desativando Automaticamente</a></h4><p>Também é possível desabilitar automaticamente um input enquanto o formulário está sendo
 enviado usando o atributo <code>data-disable-with</code>. Isso evita acidentes de duplo cliques do
 usuário, o qual resultaria em uma dupla requisição HTTP que o <code>backend</code> pode não detectar
 como tal. O valor do atributo é o texto que se tornará o novo valor do botão quando está
@@ -639,18 +642,18 @@ no estado desabilitado.</p><p>Isso também funciona para links com o atributo <c
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">submit</span> <span class="ss">data: </span><span class="p">{</span> <span class="ss">disable_with: </span><span class="s2">"Saving..."</span> <span class="p">}</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-01b13a2453e1d40e6001792f4b9d4227">&lt;%= form_with(model: Article.new) do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-6561031417b3977cddf272b61e3174d4">&lt;%= form_with(model: Article.new) do |form| %&gt;
   &lt;%= form.submit data: { disable_with: "Saving..." } %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-01b13a2453e1d40e6001792f4b9d4227">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6561031417b3977cddf272b61e3174d4">Copiar</button>
 </div>
 <p>Isso gera um formulário com:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;input</span> <span class="na">data-disable-with=</span><span class="s">"Saving..."</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2c69a03ec90b117b5807ee444e89fea0">&lt;input data-disable-with="Saving..." type="submit"&gt;
+<textarea class="clipboard-content" id="clipboard-f6b9850a0f8244138c08828bc087ef44">&lt;input data-disable-with="Saving..." type="submit"&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2c69a03ec90b117b5807ee444e89fea0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f6b9850a0f8244138c08828bc087ef44">Copiar</button>
 </div>
 <h4 id="manipuladores-de-eventos-rails-ujs"><a class="anchorlink" href="#manipuladores-de-eventos-rails-ujs">3.5 Manipuladores de eventos <code>Rails-ujs</code></a></h4><p>Rails 5.1 introduziu o <code>rails-ujs</code> e removeram o jQuery como dependência.
 Como resultado o JavaScript discreto (<em>unobtrusive (UJS)</em>) foi reescrito para operar sem <em>jQuery</em>.
@@ -709,18 +712,18 @@ Para mais informação sobre o <code>jquery-ujs</code> usado previamente no Rail
   <span class="kd">const</span> <span class="p">[</span><span class="nx">data</span><span class="p">,</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">xhr</span><span class="p">]</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">;</span>
 <span class="p">});</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a65e9b84ace8ad9bd9d01de79741e3f7">document.body.addEventListener("ajax:success", (event) =&gt; {
+<textarea class="clipboard-content" id="clipboard-e67ea2fd31c8a261bbd5603cc0823db5">document.body.addEventListener("ajax:success", (event) =&gt; {
   const [data, status, xhr] = event.detail;
 });
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a65e9b84ace8ad9bd9d01de79741e3f7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e67ea2fd31c8a261bbd5603cc0823db5">Copiar</button>
 </div>
 <h4 id="eventos-paraveis"><a class="anchorlink" href="#eventos-paraveis">3.6 Eventos Paravéis</a></h4><p>Você pode parar a execução da requisição <em>Ajax</em> executando o <code>event.preventDefault()</code>
 a partir dos métodos <code>ajax:before</code> ou <code>ajax:beforeSend</code>.
 O evento <code>ajax:before</code> pode manipular os dados do formulário antes da serialização e o
 evento <code>ajax:beforeSend</code> é útil para adicionar <em>headers</em> personalizados.</p><p>Se você parar o evento <code>ajax:aborted:file</code>, o comportamento padrão de permitir
 que o navegador envie o formulário por meios normais (i.e. requisição sem <em>Ajax</em>)
-será cancelada e o formulário não será enviado de nenhuma forma. Isso é útil para
+será cancelada, e o formulário não será enviado de nenhuma forma. Isso é útil para
 implementar seu próprio ambiente de <em>upload</em> de arquivos via <em>Ajax</em>.</p><p>Observação, você deveria usar o <code>return false</code> para prevenir um evento para o <code>jquery-ujs</code>
 e <code>event.preventDefault()</code> para o <code>rails-ujs</code>.</p><h3 id="preocupacoes-do-lado-do-servidor"><a class="anchorlink" href="#preocupacoes-do-lado-do-servidor">4 Preocupações Do Lado Do Servidor</a></h3><p>Ajax não é só do lado do cliente, você também precisa trabalhar
 no lado do servidor para oferecer suporte, geralmente, as pessoas gostam
@@ -735,14 +738,14 @@ do seu <em>controller</em> se parece com isso:</p><div class="code_container">
   <span class="k">end</span>
   <span class="c1"># ...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8527ac0e7add35233ce6a115f2649dfd">class UsersController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-b61f0397e08804383421d395240bec3a">class UsersController &lt; ApplicationController
   def index
     @users = User.all
     @user = User.new
   end
   # ...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8527ac0e7add35233ce6a115f2649dfd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b61f0397e08804383421d395240bec3a">Copiar</button>
 </div>
 <p>A <em>view index</em> (<code>app/views/users/index.html.erb</code>) contém:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;b&gt;</span>Users<span class="nt">&lt;/b&gt;</span>
@@ -759,7 +762,7 @@ do seu <em>controller</em> se parece com isso:</p><div class="code_container">
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">submit</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-75f955efb7fc71e82347b8f7438ef901">&lt;b&gt;Users&lt;/b&gt;
+<textarea class="clipboard-content" id="clipboard-0405023cef54e94fafdeff7250322e1e">&lt;b&gt;Users&lt;/b&gt;
 
 &lt;ul id="users"&gt;
 &lt;%= render @users %&gt;
@@ -773,14 +776,14 @@ do seu <em>controller</em> se parece com isso:</p><div class="code_container">
   &lt;%= form.submit %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-75f955efb7fc71e82347b8f7438ef901">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0405023cef54e94fafdeff7250322e1e">Copiar</button>
 </div>
 <p>A <em>partial</em> <code>app/views/users/_user.html.erb</code> contém o seguinte:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">user</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e4bff0ad1b81d31df32d651ce2c513c5">&lt;li&gt;&lt;%= user.name %&gt;&lt;/li&gt;
+<textarea class="clipboard-content" id="clipboard-909ec76529af520923eec52849dd5903">&lt;li&gt;&lt;%= user.name %&gt;&lt;/li&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e4bff0ad1b81d31df32d651ce2c513c5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-909ec76529af520923eec52849dd5903">Copiar</button>
 </div>
 <p>A parte de cima da página <em>index</em> mostra os usuários. A parte de baixo
 fornece o formulário para criar um novo usuário.</p><p>O formulário de baixo chamará a ação <em><code>create</code></em> no <code>UsersController</code>. Por causa
@@ -804,7 +807,7 @@ a ação <em><code>create</code></em> do seu <em>controller</em> ficaria assim:<
     <span class="k">end</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e2985a445f80a1f1f1c01abb22695ce9">  # app/controllers/users_controller.rb
+<textarea class="clipboard-content" id="clipboard-8b96a380ef7ef56d0ef8ac0c0d76c4b4">  # app/controllers/users_controller.rb
   # ......
   def create
     @user = User.new(params[:user])
@@ -821,7 +824,7 @@ a ação <em><code>create</code></em> do seu <em>controller</em> ficaria assim:<
     end
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e2985a445f80a1f1f1c01abb22695ce9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8b96a380ef7ef56d0ef8ac0c0d76c4b4">Copiar</button>
 </div>
 <p>Observe o <code>format.js</code> no bloco <code>respond_to</code>: que permite o seu controller responder
 a sua requisição <em>Ajax</em>. Então você tem um correspondente arquivo <em>view</em>
@@ -830,10 +833,10 @@ e executado no lado do cliente.</p><div class="code_container">
 <pre><code class="highlight js"><span class="kd">var</span> <span class="nx">users</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">#users</span><span class="dl">"</span><span class="p">);</span>
 <span class="nx">users</span><span class="p">.</span><span class="nx">insertAdjacentHTML</span><span class="p">(</span><span class="dl">"</span><span class="s2">beforeend</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">&lt;%= j render(@user) %&gt;</span><span class="dl">"</span><span class="p">);</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9cf30568c40731e5adbb35d015eb04e0">var users = document.querySelector("#users");
+<textarea class="clipboard-content" id="clipboard-b45cc4d030f583d28fb8fc3976c8b223">var users = document.querySelector("#users");
 users.insertAdjacentHTML("beforeend", "&lt;%= j render(@user) %&gt;");
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9cf30568c40731e5adbb35d015eb04e0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b45cc4d030f583d28fb8fc3976c8b223">Copiar</button>
 </div>
 <div class="note"><p>Renderização de <em>views</em> JavaScript não faz nenhum pré-processamento, então você não deve usar a sintaxe ES6 aqui.</p></div><h3 id="turbolinks"><a class="anchorlink" href="#turbolinks">5 Turbolinks</a></h3><p>O Rails vem com a <a href="https://github.com/turbolinks/turbolinks">biblioteca Turbolinks</a>,
 que utiliza Ajax para acelerar a renderização na maioria das aplicações.</p><h4 id="como-o-turbolinks-funciona"><a class="anchorlink" href="#como-o-turbolinks-funciona">5.1 Como o Turbolinks Funciona</a></h4><p>O Turbolinks anexa um manipulador de cliques em todas as <em>tags</em> <code>&lt;a&gt;</code> da página. Se seu
@@ -844,9 +847,9 @@ a URL para a correta, preservando a semântica da atualização e retornando a U
 <code>data-turbolinks="false"</code> para a <em>tag</em>:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"..."</span> <span class="na">data-turbolinks=</span><span class="s">"false"</span><span class="nt">&gt;</span>No turbolinks here<span class="nt">&lt;/a&gt;</span>.
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9793d44108654dcfcd9201027f11c30e">&lt;a href="..." data-turbolinks="false"&gt;No turbolinks here&lt;/a&gt;.
+<textarea class="clipboard-content" id="clipboard-166e281541e803c998fddd3abc733137">&lt;a href="..." data-turbolinks="false"&gt;No turbolinks here&lt;/a&gt;.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9793d44108654dcfcd9201027f11c30e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-166e281541e803c998fddd3abc733137">Copiar</button>
 </div>
 <h4 id="eventos-de-mudanca-de-pagina"><a class="anchorlink" href="#eventos-de-mudanca-de-pagina">5.2 Eventos de Mudança de Página</a></h4><p>Muitas vezes você vai querer fazer algum tipo de
 mudança no carregamento da página. Usando o DOM, você escreveria algo assim:</p><div class="code_container">
@@ -854,11 +857,11 @@ mudança no carregamento da página. Usando o DOM, você escreveria algo assim:<
   <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">page has loaded!</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3f87ba146f45146089f5314f8df253f6">window.addEventListener("load", () =&gt; {
+<textarea class="clipboard-content" id="clipboard-968d61c234efdf0565db14ae6f77f2bf">window.addEventListener("load", () =&gt; {
   alert("page has loaded!");
 });
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3f87ba146f45146089f5314f8df253f6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-968d61c234efdf0565db14ae6f77f2bf">Copiar</button>
 </div>
 <p>Contudo, como o Turbolinks sobreescreve o processo padrão de carregamento da página,
 o evento no qual ele depende não será disparado. Se você tem um código que se parece com isso,
@@ -867,11 +870,11 @@ você deve mudar seu código para fazer isso no lugar:</p><div class="code_conta
   <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">page has loaded!</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5abbf08d4caa54b5a70ba967e329babf">document.addEventListener("turbolinks:load", () =&gt; {
+<textarea class="clipboard-content" id="clipboard-8e26ce36c19b8077096a7892f1301c8a">document.addEventListener("turbolinks:load", () =&gt; {
   alert("page has loaded!");
 });
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5abbf08d4caa54b5a70ba967e329babf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8e26ce36c19b8077096a7892f1301c8a">Copiar</button>
 </div>
 <p>Para mais detalhes, incluindo outros eventos que você pode disparar, veja o <a href="https://github.com/turbolinks/turbolinks/blob/master/README.md">README
 do Turbolinks</a></p><h3 id="token-de-falsa-requisicao-entre-sites-csrf-em-ajax"><a class="anchorlink" href="#token-de-falsa-requisicao-entre-sites-csrf-em-ajax">6 Token de Falsa Requisição Entre Sites (CSRF) em <em>Ajax</em></a></h3><p>Ao usar outra biblioteca para fazer chamadas <em>Ajax</em>, é necessário adicionar
@@ -881,11 +884,11 @@ Para pegar o token:</p><div class="code_container">
   <span class="dl">"</span><span class="s2">csrf-token</span><span class="dl">"</span>
 <span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">content</span><span class="p">;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e184b8db6f6dcd74d7bd6896ba856399">const token = document.getElementsByName(
+<textarea class="clipboard-content" id="clipboard-82e6e1ecd357a0ade37cb82d20db0c33">const token = document.getElementsByName(
   "csrf-token"
 )[0].content;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e184b8db6f6dcd74d7bd6896ba856399">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-82e6e1ecd357a0ade37cb82d20db0c33">Copiar</button>
 </div>
 <p>Você pode então enviar esse token como um <code>X-CSRF-Token</code> no seu <em>header</em>
 para requisições <em>Ajax</em>. Você não precisa adicionar o <em>token</em> CSRF para requisições GET, apenas para requisições "não GET".</p><p>Você pode ler mais sobre Falsa Requisição Entre Sites (CSRF) no <a href="https://guiarails.com.br/#cross-site-request-forgery-csrf-token-in-ajax">guia de segurança</a>.</p><h3 id="outros-recursos"><a class="anchorlink" href="#outros-recursos">7 Outros recursos</a></h3><p>Aqui estão alguns links úteis para te ajudar a aprender mais:</p>

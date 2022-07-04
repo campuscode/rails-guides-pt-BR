@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -280,15 +286,19 @@ reserved for special occasions.</p><h3 id="new-features"><a class="anchorlink" h
 in point releases.</p><h3 id="bug-fixes"><a class="anchorlink" href="#bug-fixes">2 Bug Fixes</a></h3><p>Only the latest release series will receive bug fixes. When enough bugs are
 fixed and its deemed worthy to release a new gem, this is the branch it happens
 from.</p><p>In special situations, where someone from the Core Team agrees to support more series,
-they are included in the list of supported series.</p><p><strong>Currently included series:</strong> <code>6.1.Z</code>.</p><h3 id="security-issues"><a class="anchorlink" href="#security-issues">3 Security Issues</a></h3><p>The current release series and the next most recent one will receive patches
+they are included in the list of supported series.</p><p><strong>Currently included series:</strong> <code>7.0.Z</code>.</p><h3 id="security-issues"><a class="anchorlink" href="#security-issues">3 Security Issues</a></h3><p>The current release series and the next most recent one will receive patches
 and new versions in case of a security issue.</p><p>These releases are created by taking the last released version, applying the
 security patches, and releasing. Those patches are then applied to the end of
 the x-y-stable branch. For example, a theoretical 1.2.2.1 security release would
 be built from 1.2.2, and then added to the end of 1-2-stable. This means that
 security releases are easy to upgrade to if you're running the latest version
-of Rails.</p><p><strong>Currently included series:</strong> <code>6.1.Z</code>, <code>6.0.Z</code>, <code>5.2.Z</code>.</p><h3 id="severe-security-issues"><a class="anchorlink" href="#severe-security-issues">4 Severe Security Issues</a></h3><p>For severe security issues all releases in the current major series, and also the
+of Rails.</p><p>Only direct security patches will be included in security releases. Fixes for
+non-security related bugs resulting from a security patch may be published on a
+release's x-y-stable branch, and will only be released as a new gem in
+accordance with the Bug Fixes policy.</p><p><strong>Currently included series:</strong> <code>7.0.Z</code>, <code>6.1.Z</code>.</p><h3 id="severe-security-issues"><a class="anchorlink" href="#severe-security-issues">4 Severe Security Issues</a></h3><p>For severe security issues all releases in the current major series, and also the
 last release in the previous major series will receive patches and new versions. The
-classification of the security issue is judged by the core team.</p><p><strong>Currently included series:</strong> <code>6.1.Z</code>, <code>6.0.Z</code>, <code>5.2.Z</code>.</p><h3 id="unsupported-release-series"><a class="anchorlink" href="#unsupported-release-series">5 Unsupported Release Series</a></h3><p>When a release series is no longer supported, it's your own responsibility to
+classification of the security issue is judged by the core team.</p><div class="note"><p>Rails 5.2.Z is included in the list of supported series until June 1st 2022.
+NOTE: Rails 6.0.Z is included in the list of supported series until June 1st 2023.</p></div><p><strong>Currently included series:</strong> <code>7.0.Z</code>, <code>6.1.Z</code>, <code>6.0.Z</code>, <code>5.2.Z</code>.</p><h3 id="unsupported-release-series"><a class="anchorlink" href="#unsupported-release-series">5 Unsupported Release Series</a></h3><p>When a release series is no longer supported, it's your own responsibility to
 deal with bugs and security issues. We may provide backports of the fixes and
 publish them to git, however there will be no new versions released. If you are
 not comfortable maintaining your own versions, you should upgrade to a

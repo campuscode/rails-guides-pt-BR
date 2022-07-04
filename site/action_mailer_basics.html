@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -264,7 +270,13 @@ do <em>Action Mailer</em>. Ele também ensina como testar seus <em>mailers</em>.
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#o-que-e-o-action-mailer-questionmark">O que é o <em>Action Mailer</em>?</a></li>
+<li>
+<a href="#o-que-e-o-action-mailer-questionmark">O que é o <em>Action Mailer</em>?</a>
+
+<ul>
+<li><a href="#mailers-sao-semelhantes-a-controllers"><em>Mailers</em> são semelhantes a controllers</a></li>
+</ul>
+</li>
 <li>
 <a href="#enviando-e-mails">Enviando E-mails</a>
 
@@ -312,7 +324,7 @@ do <em>Action Mailer</em>. Ele também ensina como testar seus <em>mailers</em>.
     <div class="wrapper">
       <div id="mainCol">
         <h3 id="o-que-e-o-action-mailer-questionmark"><a class="anchorlink" href="#o-que-e-o-action-mailer-questionmark">1 O que é o <em>Action Mailer</em>?</a></h3><p><em>Action Mailer</em> permite que você envie emails direto da sua aplicação usando as
-classes e <em>Mailer views</em></p><h5 id="mailers-sao-semelhantes-a-controllers"><a class="anchorlink" href="#mailers-sao-semelhantes-a-controllers">1.1 <em>Mailers</em> são semelhantes a controllers</a></h5><p>Eles herdam do <code>ActionMailer::Base</code> e se encontram na <code>app/mailers</code>. Os Mailers também funcionam de maneira muito semelhante aos controllers. Alguns exemplos de semelhanças são mostrados abaixo.
+classes e <em>Mailer views</em></p><h4 id="mailers-sao-semelhantes-a-controllers"><a class="anchorlink" href="#mailers-sao-semelhantes-a-controllers">1.1 <em>Mailers</em> são semelhantes a controllers</a></h4><p>Eles herdam do <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/Base.html"><code>ActionMailer::Base</code></a> e se encontram na <code>app/mailers</code>. Os Mailers também funcionam de maneira muito semelhante aos controllers. Alguns exemplos de semelhanças são mostrados abaixo.
 Mailers tem:</p>
 <ul>
 <li>
@@ -333,9 +345,9 @@ invoke  test_unit
 create    test/mailers/user_mailer_test.rb
 create    test/mailers/previews/user_mailer_preview.rb
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-b6cb07b208280c5fcc830c56d18a68d9">bin/rails generate mailer User
+<textarea class="clipboard-content" id="clipboard-2495f1108b3b85a22e1a37215bc6f6ac">bin/rails generate mailer User
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b6cb07b208280c5fcc830c56d18a68d9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2495f1108b3b85a22e1a37215bc6f6ac">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/mailers/application_mailer.rb</span>
@@ -344,43 +356,43 @@ create    test/mailers/previews/user_mailer_preview.rb
   <span class="n">layout</span> <span class="s1">'mailer'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b6a4cbe7495aefa3c02d45f2084af39c"># app/mailers/application_mailer.rb
+<textarea class="clipboard-content" id="clipboard-2ff7e5fd62384e85df2daaeef8cb021a"># app/mailers/application_mailer.rb
 class ApplicationMailer &lt; ActionMailer::Base
   default from: "para@exemplo.com"
   layout 'mailer'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b6a4cbe7495aefa3c02d45f2084af39c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2ff7e5fd62384e85df2daaeef8cb021a">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/mailers/user_mailer.rb</span>
 <span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9c59a85efef54ed629dda94293b08ef0"># app/mailers/user_mailer.rb
+<textarea class="clipboard-content" id="clipboard-ae3e1eb0322c612f3782392577a9dce7"># app/mailers/user_mailer.rb
 class UserMailer &lt; ApplicationMailer
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9c59a85efef54ed629dda94293b08ef0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ae3e1eb0322c612f3782392577a9dce7">Copiar</button>
 </div>
 <p>Como pôde ver no exemplo acima, você pode gerar <em>mailers</em> como faz com outros tipos de arquivos no Rails.</p><p>Se você prefere não usar um <em>generator</em>, você pode criar esses arquivos por si só dentro de <code>app/mailers/</code>, só não se esqueça de adicionar a herança com <code>ActionMailer::Base</code> aos <em>mailers</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">MyMailer</span> <span class="o">&lt;</span> <span class="no">ActionMailer</span><span class="o">::</span><span class="no">Base</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-adac5bc232af6958baf6b6191430bce0">class MyMailer &lt; ActionMailer::Base
+<textarea class="clipboard-content" id="clipboard-5c92bdca5388ae5ae48ff417504379b1">class MyMailer &lt; ActionMailer::Base
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-adac5bc232af6958baf6b6191430bce0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5c92bdca5388ae5ae48ff417504379b1">Copiar</button>
 </div>
 <h5 id="editando-o-mailer"><a class="anchorlink" href="#editando-o-mailer">2.1.2 Editando o <em>Mailer</em></a></h5><p><em>Mailers</em> têm métodos chamados <em>actions</em> e usam <em>views</em> para estruturar seu conteúdo.
 Onde um <em>controller</em> gera conteúdo como HTML para enviar de volta à um cliente, o <em>Mailer</em> cria uma mensagem para ser entregue por e-mail.</p><p><code>app/mailers/user_mailer.rb</code> contém um <em>mailer</em> vazio:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4400f67acd4f1d898faa899b45eea442">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-1738a784f8cfe665c84d37a501177b80">class UserMailer &lt; ApplicationMailer
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4400f67acd4f1d898faa899b45eea442">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1738a784f8cfe665c84d37a501177b80">Copiar</button>
 </div>
 <p>Vamos adicionar um método chamado <code>welcome_email</code>, que enviará um e-mail para o endereço de e-mail registrado pelo usuário.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
@@ -393,7 +405,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4b93b1941a02d5003319fff85788c604">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-6ee0c54c5f0acf9b8c1568f6746db553">class UserMailer &lt; ApplicationMailer
   default from: 'notificacoes@exemplo.com'
 
   def welcome_email
@@ -403,14 +415,13 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4b93b1941a02d5003319fff85788c604">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6ee0c54c5f0acf9b8c1568f6746db553">Copiar</button>
 </div>
 <p>Uma breve explicação sobre os itens apresentados no método acima. Para uma lista completa de todas as opções disponíveis, por favor, dê uma olhada mais abaixo na seção: Lista completa de atributos de configuração do <em>Action Mailer</em>.</p>
 <ul>
+<li>[<code>default Hash</code>][] — Está é a <em>Hash</em> padrão com valores que serão usados em todos os e-mail enviados por este <em>mailer</em>. Neste exemplo nós configuramos o <code>:from</code> (Remetente, quem envia) para um valor padrão que será usado em todas as mensagens enviadas por está classe. Está configuração pode ser sobrescrita.</li>
 <li>
-<code>default Hash</code> — Está é a <em>Hash</em> padrão com valores que serão usados em todos os e-mail enviados por este <em>mailer</em>. Neste exemplo nós configuramos o <code>:from</code> (Remetente, quem envia) para um valor padrão que será usado em todas as mensagens enviadas por está classe. Está configuração pode ser sobrescrita.</li>
-<li>
-<code>mail</code> — O próprio e-mail, aqui nós estamos passando os parâmetros <code>:to</code> (Destinatário, quem recebe) e <code>:subject</code> (Assunto do e-mail) ao cabeçalho.</li>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/Base.html#method-i-mail"><code>mail</code></a> — O próprio e-mail, aqui nós estamos passando os parâmetros <code>:to</code> (Destinatário, quem recebe) e <code>:subject</code> (Assunto do e-mail) ao cabeçalho.</li>
 </ul>
 <h5 id="criando-uma-view-para-nosso-mailer"><a class="anchorlink" href="#criando-uma-view-para-nosso-mailer">2.1.3 Criando uma <em>View</em> para nosso <em>Mailer</em></a></h5><p>Crie um arquivo com o nome <code>welcome_email.html.erb</code> em <code>app/views/user_mailer/</code>. Este será o modelo que usaremos para nosso e-mail, formatado usando HTML:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;!DOCTYPE html&gt;</span>
@@ -431,7 +442,7 @@ end
   <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-df554a084d97bbe2ccdb9dbcbba0cc99">&lt;!DOCTYPE html&gt;
+<textarea class="clipboard-content" id="clipboard-0235ad056514957ff24fc5729457f46b">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;meta content='text/html; charset=UTF-8' http-equiv='Content-Type' /&gt;
@@ -449,7 +460,7 @@ end
   &lt;/body&gt;
 &lt;/html&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-df554a084d97bbe2ccdb9dbcbba0cc99">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0235ad056514957ff24fc5729457f46b">Copiar</button>
 </div>
 <p>Vamos criar também um modelo usando somente texto para este e-mail. Nem todos os programas de e-mail leem HTML, então enviar os dois formatos é uma boa prática. Para isto criaremos um arquivo com o nome <code>welcome_email.text.erb</code> em <code>app/views/user_mailer/</code>:</p><div class="code_container">
 <pre><code class="highlight erb">Boas vindas ao site exemplo.com, <span class="cp">&lt;%=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span>
@@ -462,7 +473,7 @@ Para iniciar sua seção no site clique no link a seguir: <span class="cp">&lt;%
 
 Agradecemos por se juntar à nós! Tenha um ótimo dia!
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-41a75c7813e79a662c0acbcba7c5cb00">Boas vindas ao site exemplo.com, &lt;%= @user.name %&gt;
+<textarea class="clipboard-content" id="clipboard-07e3db1fd42df80147ae35d58d007e76">Boas vindas ao site exemplo.com, &lt;%= @user.name %&gt;
 ===============================================
 
 Você concluiu seu cadastro com sucesso,
@@ -472,7 +483,7 @@ Para iniciar sua seção no site clique no link a seguir: &lt;%= @url %&gt;.
 
 Agradecemos por se juntar à nós! Tenha um ótimo dia!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-41a75c7813e79a662c0acbcba7c5cb00">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-07e3db1fd42df80147ae35d58d007e76">Copiar</button>
 </div>
 <p>Quando você chamar o método <code>mail</code>, <code>ActionMailer</code> detectará que existem dois modelos para esse e-mail (Um em HTML e outro somente texto) e automaticamente irá gerar um <code>multipart/alternative</code> (Opção que indica ao programa de e-mail que essa mensagem tem uma versão em HTML e outra em somente texto) e-mail.</p><h5 id="chamando-o-mailer"><a class="anchorlink" href="#chamando-o-mailer">2.1.4 Chamando o <em>Mailer</em></a></h5><p><em>Mailers</em> são somente outra maneira de renderizar uma <em>view</em>. Ao invés de renderizar uma
 <em>view</em> e envia-la usando o protocolo HTTP, um <em>Mailer</em> envia através
@@ -481,17 +492,18 @@ dos protocolos de e-mail. Por esse motivo, faz sentido, para o exemplo anterior,
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate scaffold user name e-mail login
 <span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7265a19c9e915f5252bbde35e04901e8">bin/rails generate scaffold user name e-mail login
+<textarea class="clipboard-content" id="clipboard-7e202fec3fcf64964525e9505a55e70a">bin/rails generate scaffold user name e-mail login
 bin/rails db:migrate
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7265a19c9e915f5252bbde35e04901e8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7e202fec3fcf64964525e9505a55e70a">Copiar</button>
 </div>
-<p>Agora que já temos o <em>model</em> para nossos usuários, podemos começar a criar a funcionalidade. Para isso vamos editar o arquivo <code>app/controllers/users_controller.rb</code> para chamar o <code>UserMailer</code> para enviar um e-mail ao novo usuário registrado. Vamos editar a <em>action</em> <code>create</code> inserindo a seguinte chamada: <code>UserMailer.with(user: @user).welcome_email</code> logo após o usuário ter sido salvo com sucesso.</p><p><em>Action Mailer</em> já é nativamente integrado com o <em>Active Job</em>, logo você pode enviar os e-mails fora do ciclo requisição-resposta, então o usuário não precisa aguardar esse processo terminar para continuar usando a aplicação.</p><div class="code_container">
+<p>Agora que já temos o <em>model</em> para nossos usuários, podemos começar a criar a funcionalidade. Para isso vamos editar o arquivo <code>app/controllers/users_controller.rb</code> para chamar o <code>UserMailer</code> para enviar um e-mail ao novo usuário registrado. Vamos editar a <em>action</em> <code>create</code> inserindo a seguinte chamada: <code>UserMailer.with(user: @user).welcome_email</code> logo após o usuário ter sido salvo com sucesso.</p><p>Vamos enfileirar o email a ser enviado usando <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/MessageDelivery.html#method-i-deliver_later"><code>deliver_later</code></a>, que é apoiado pelo <em>Active Job</em>. Dessa forma, a <em>action</em> do <em>controller</em> pode continuar sem aguardando a conclusão do envio.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-  <span class="c1"># POST /users</span>
-  <span class="c1"># POST /users.json</span>
+  <span class="c1"># ...</span>
+
+  <span class="c1"># POST /users or /users.json</span>
   <span class="k">def</span> <span class="nf">create</span>
-    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:user</span><span class="p">])</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">user_params</span><span class="p">)</span>
 
     <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
       <span class="k">if</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">save</span>
@@ -506,13 +518,16 @@ bin/rails db:migrate
       <span class="k">end</span>
     <span class="k">end</span>
   <span class="k">end</span>
+
+  <span class="c1"># ...</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-84aed8e11d2a2e0fed1b02ab35093731">class UsersController &lt; ApplicationController
-  # POST /users
-  # POST /users.json
+<textarea class="clipboard-content" id="clipboard-c56612ee29802772e631805c30d15f48">class UsersController &lt; ApplicationController
+  # ...
+
+  # POST /users or /users.json
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
@@ -527,13 +542,15 @@ bin/rails db:migrate
       end
     end
   end
+
+  # ...
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-84aed8e11d2a2e0fed1b02ab35093731">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c56612ee29802772e631805c30d15f48">Copiar</button>
 </div>
 <div class="note"><p>O comportamento padrão do <em>Active Job</em> é executar os serviços de maneira assíncrona, usando o adaptador <code>:async</code>. Então você pode usar o método <code>deliver_later</code> para enviar os e-mail de maneira assíncrona.
 O adaptador padrão do <em>Active Job</em> executa os serviços em um processo <em>Thread Pool</em>. Está abordagem é boa para os ambientes de desenvolvimento e teste, pois não requerem nenhuma infraestrutura externa/complexa, porém é uma abordagem ruim para o ambiente de produção, pois caso o sistema seja reiniciado você pode perder os registros desses serviços.
-Se você precisar de uma solução para que esses serviços sejam persistidos, de modo a evitar possíveis perdas, você precisará de um serviço a parte que tenha essa funcionalidade, exemplos: Sidekiq, Resque etc.</p></div><p>Se você deseja que os e-mail sejam enviados no mesmo tempo que chamar o <em>Mailer</em>, simplesmente chame <code>deliver_now</code>:</p><div class="code_container">
+Se você precisar de uma solução para que esses serviços sejam persistidos, de modo a evitar possíveis perdas, você precisará de um serviço a parte que tenha essa funcionalidade, exemplos: Sidekiq, Resque etc.</p></div><p>Se você deseja que os e-mail sejam enviados no mesmo tempo que chamar o <em>Mailer</em>, simplesmente chame <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/MessageDelivery.html#method-i-deliver_now"><code>deliver_now</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">SendWeeklySummary</span>
   <span class="k">def</span> <span class="nf">run</span>
     <span class="no">User</span><span class="p">.</span><span class="nf">find_each</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
@@ -542,7 +559,7 @@ Se você precisar de uma solução para que esses serviços sejam persistidos, d
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0c6315b06488390f7fe69f1f164fe41a">class SendWeeklySummary
+<textarea class="clipboard-content" id="clipboard-ca74bd9ca3dc2e9f5ff85dd5568c0c04">class SendWeeklySummary
   def run
     User.find_each do |user|
       UserMailer.with(user: user).weekly_summary.deliver_now
@@ -550,17 +567,17 @@ Se você precisar de uma solução para que esses serviços sejam persistidos, d
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0c6315b06488390f7fe69f1f164fe41a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ca74bd9ca3dc2e9f5ff85dd5568c0c04">Copiar</button>
 </div>
-<p>Qualquer chave-valor passado para o <code>with</code> se torna parte da <em>Hash</em> <code>params</code> que será usado na <em>action</em> do <em>Mailer</em>. Então <code>with(user: @user, account: @user.account)</code> cria <code>params[:user]</code> e <code>params[:account]</code> disponíveis na <em>action</em> do <em>Mailer</em>. Como acontece nos <em>controllers</em> que também tem <code>params</code>.</p><p>O método <code>welcome_email</code> tem como retorno um objeto do tipo <code>ActionMailer::MessageDelivery</code> que você pode encadear os métodos <code>deliver_now</code> ou <code>deliver_later</code> para assim ele se enviar como um e-mail.
-O objeto <code>ActionMailer::MessageDelivery</code> é um <em>wrapper</em> (Embrulho) para a classe <code>Mail::Message</code>. Se você quiser inspecionar, alterar, ou fazer qualquer coisa com o objeto <code>Mail::Message</code> você pode acessa-lo através do método <code>message</code> do objeto <code>ActionMailer::MessageDelivery</code>.</p><h4 id="codificacao-automatica"><a class="anchorlink" href="#codificacao-automatica">2.2 Codificação automática</a></h4><p><em>Action Mailer</em> gerencia automaticamente a codificação de caracteres <em>multibytes</em> (Caracteres asiáticos, emojis etc) dentro do cabeçalho e corpo.</p><p>Para exemplos mais complexos como definir uma lista alternativa de caracteres ou codificar o texto de maneira diferente, use essa biblioteca como referência: <a href="https://github.com/mikel/mail">Mail</a>.</p><h4 id="lista-completa-de-metodos-do-action-mailer"><a class="anchorlink" href="#lista-completa-de-metodos-do-action-mailer">2.3 Lista Completa de Métodos do <em>Action Mailer</em></a></h4><p>Existem apenas três métodos que você precisa para enviar qualquer mensagem de e-mail:</p>
+<p>Qualquer chave-valor passado para o <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/Parameterized/ClassMethods.html#method-i-with"><code>with</code></a> se torna parte da <em>Hash</em> <code>params</code> que será usado na <em>action</em> do <em>Mailer</em>. Então <code>with(user: @user, account: @user.account)</code> cria <code>params[:user]</code> e <code>params[:account]</code> disponíveis na <em>action</em> do <em>Mailer</em>. Como acontece nos <em>controllers</em> que também tem <code>params</code>.</p><p>O método <code>welcome_email</code> tem como retorno um objeto do tipo <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/MessageDelivery.html"><code>ActionMailer::MessageDelivery</code></a> que você pode encadear os métodos <code>deliver_now</code> ou <code>deliver_later</code> para assim ele se enviar como um e-mail.
+O objeto <code>ActionMailer::MessageDelivery</code> é um <em>wrapper</em> (Embrulho) para a classe <a href="https://api.rubyonrails.org/v7.0.0/classes/Mail/Message.html"><code>Mail::Message</code></a>. Se você quiser inspecionar, alterar, ou fazer qualquer coisa com o objeto <code>Mail::Message</code> você pode acessa-lo através do método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/MessageDelivery.html#method-i-message"><code>message</code></a> do objeto <code>ActionMailer::MessageDelivery</code>.</p><h4 id="codificacao-automatica"><a class="anchorlink" href="#codificacao-automatica">2.2 Codificação automática</a></h4><p><em>Action Mailer</em> gerencia automaticamente a codificação de caracteres <em>multibytes</em> (Caracteres asiáticos, emojis etc) dentro do cabeçalho e corpo.</p><p>Para exemplos mais complexos como definir uma lista alternativa de caracteres ou codificar o texto de maneira diferente, use essa biblioteca como referência: <a href="https://github.com/mikel/mail">Mail</a>.</p><h4 id="lista-completa-de-metodos-do-action-mailer"><a class="anchorlink" href="#lista-completa-de-metodos-do-action-mailer">2.3 Lista Completa de Métodos do <em>Action Mailer</em></a></h4><p>Existem apenas três métodos que você precisa para enviar qualquer mensagem de e-mail:</p>
 <ul>
 <li>
-<code>headers</code> — Especifica qualquer cabeçalho no e-mail como você desejar. Você pode passar uma <em>hash</em> contendo os campos do cabeçalho seguindo o padrão <code>chave: valor</code>, ou você pode chamar a variável <code>headers[:field_name] = value</code>.</li>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/Base.html#method-i-headers"><code>headers</code></a> — Especifica qualquer cabeçalho no e-mail como você desejar. Você pode passar uma <em>hash</em> contendo os campos do cabeçalho seguindo o padrão <code>chave: valor</code>, ou você pode chamar a variável <code>headers[:field_name] = value</code>.</li>
 <li>
-<code>attachments</code> — Permite adicionar anexos ao e-mail. Exemplo: <code>attachments['file-name.jpg'] = File.read('file-name.jpg')</code> que irá adicionar o arquivo <code>file-name.jpg</code> como anexo no e-mail.</li>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/Base.html#method-i-attachments"><code>attachments</code></a> — Permite adicionar anexos ao e-mail. Exemplo: <code>attachments['file-name.jpg'] = File.read('file-name.jpg')</code> que irá adicionar o arquivo <code>file-name.jpg</code> como anexo no e-mail.</li>
 <li>
-<code>mail</code> — Cria o e-mail de fato. Você pode usar a <em>hash</em> <code>headers</code> como um dos parâmetros.
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/Base.html#method-i-mail"><code>mail</code></a> — Cria o e-mail de fato. Você pode usar a <em>hash</em> <code>headers</code> como um dos parâmetros.
 <code>mail</code> vai criar o e-mail, tanto em texto puro ou <em>multipart</em>, dependendo dos modelos disponíveis que você definiu.</li>
 </ul>
 <h5 id="adicionando-anexos"><a class="anchorlink" href="#adicionando-anexos">2.3.1 Adicionando Anexos</a></h5><p>Com o <em>Action Mailer</em> é muito fácil trabalhar com anexos.</p>
@@ -570,9 +587,9 @@ O objeto <code>ActionMailer::MessageDelivery</code> é um <em>wrapper</em> (Embr
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">attachments</span><span class="p">[</span><span class="s1">'filename.jpg'</span><span class="p">]</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="s1">'/caminho/para/o/arquivo.jpg'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d8645376659a3f207e13183876e69113">attachments['filename.jpg'] = File.read('/caminho/para/o/arquivo.jpg')
+<textarea class="clipboard-content" id="clipboard-55bb601380d64f5a7fbb5cf5faf144b9">attachments['filename.jpg'] = File.read('/caminho/para/o/arquivo.jpg')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d8645376659a3f207e13183876e69113">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-55bb601380d64f5a7fbb5cf5faf144b9">Copiar</button>
 </div>
 </li>
 </ul>
@@ -591,14 +608,14 @@ O objeto <code>ActionMailer::MessageDelivery</code> é um <em>wrapper</em> (Embr
   <span class="ss">content: </span><span class="n">encoded_content</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0f50b93ac3ffa9b9c219bddcfca3e746">encoded_content = SpecialEncode(File.read('/caminho/para/o/arquivo.jpg'))
+<textarea class="clipboard-content" id="clipboard-163f48c24c31245bc3cc4ca5a185bb46">encoded_content = SpecialEncode(File.read('/caminho/para/o/arquivo.jpg'))
 attachments['arquivo.jpg'] = {
   mime_type: 'application/gzip',
   encoding: 'SpecialEncoding',
   content: encoded_content
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0f50b93ac3ffa9b9c219bddcfca3e746">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-163f48c24c31245bc3cc4ca5a185bb46">Copiar</button>
 </div>
 </li>
 </ul>
@@ -611,11 +628,11 @@ attachments['arquivo.jpg'] = {
   <span class="n">attachments</span><span class="p">.</span><span class="nf">inline</span><span class="p">[</span><span class="s1">'image.jpg'</span><span class="p">]</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="s1">'/caminho/para/a/imagem.jpg'</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e5284052d017a07ce0ea5ebc5e60334c">def welcome
+<textarea class="clipboard-content" id="clipboard-913d8b6c3a69ae7c5fdb0b0ffaffe4f7">def welcome
   attachments.inline['image.jpg'] = File.read('/caminho/para/a/imagem.jpg')
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e5284052d017a07ce0ea5ebc5e60334c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-913d8b6c3a69ae7c5fdb0b0ffaffe4f7">Copiar</button>
 </div>
 </li>
 <li>
@@ -625,11 +642,11 @@ end
 
 <span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">attachments</span><span class="p">[</span><span class="s1">'imagem.jpg'</span><span class="p">].</span><span class="nf">url</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fd90ba903be4028a14f7fc36ae6f189f">&lt;p&gt;Olá! Aqui está nossa imagem&lt;/p&gt;
+<textarea class="clipboard-content" id="clipboard-39f6a593fd84fd150a495cf755f8f772">&lt;p&gt;Olá! Aqui está nossa imagem&lt;/p&gt;
 
 &lt;%= image_tag attachments['imagem.jpg'].url %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fd90ba903be4028a14f7fc36ae6f189f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-39f6a593fd84fd150a495cf755f8f772">Copiar</button>
 </div>
 </li>
 <li>
@@ -639,11 +656,11 @@ end
 
 <span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">attachments</span><span class="p">[</span><span class="s1">'imagem.jpg'</span><span class="p">].</span><span class="nf">url</span><span class="p">,</span> <span class="ss">alt: </span><span class="s1">'Minha Foto'</span><span class="p">,</span> <span class="ss">class: </span><span class="s1">'fotos'</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5cc9077931ad669bc3e45cc0d96f3b3c">&lt;p&gt;Olá! Aqui está nossa imagem&lt;/p&gt;
+<textarea class="clipboard-content" id="clipboard-0d9c0f20d1a1f233a46c895369c165c3">&lt;p&gt;Olá! Aqui está nossa imagem&lt;/p&gt;
 
 &lt;%= image_tag attachments['imagem.jpg'].url, alt: 'Minha Foto', class: 'fotos' %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5cc9077931ad669bc3e45cc0d96f3b3c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0d9c0f20d1a1f233a46c895369c165c3">Copiar</button>
 </div>
 </li>
 </ul>
@@ -658,7 +675,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-651ed5b0877f1594be7fae85fe390247">class AdminMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-0b94b6eb3beedac2977efb8616d3d3c4">class AdminMailer &lt; ApplicationMailer
   default to: -&gt; { Admin.pluck(:email) },
           from: 'notificacao@exemplo.com'
 
@@ -668,7 +685,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-651ed5b0877f1594be7fae85fe390247">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0b94b6eb3beedac2977efb8616d3d3c4">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AdminMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
@@ -681,7 +698,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-34fbf28007fad18bdfb10783b7787aaf">class AdminMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-b0c39e9b68eb45979d9fe67e828072f1">class AdminMailer &lt; ApplicationMailer
   default to: 'email_um@exemplo.com,email_dois@exemplo.com,email_tres@exemplo.com',
           from: 'notificacao@exemplo.com'
 
@@ -691,10 +708,10 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-34fbf28007fad18bdfb10783b7787aaf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b0c39e9b68eb45979d9fe67e828072f1">Copiar</button>
 </div>
 <p>O mesmo formato pode ser usado para enviar e-mails com cópia (Cc:) ou com cópia oculta (Cco: ou Bcc: em inglês), adicione <code>:cc</code> ou <code>:bcc</code> para enviar seguindo os padrões descritos acima.</p><h5 id="enviando-e-mail-com-nome"><a class="anchorlink" href="#enviando-e-mail-com-nome">2.3.4 Enviando E-mail com Nome</a></h5><p>Em alguns momentos você deseja exibir o nome da pessoa que enviou a mensagem ao invés de mostrar somente o e-mail.
-Você pode usar <code>email_address_with_name</code> para isso:</p><div class="code_container">
+Você pode usar <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/Base.html#method-i-email_address_with_name"><code>email_address_with_name</code></a> para isso:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">welcome_email</span>
   <span class="vi">@user</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="ss">:user</span><span class="p">]</span>
   <span class="n">mail</span><span class="p">(</span>
@@ -703,7 +720,7 @@ Você pode usar <code>email_address_with_name</code> para isso:</p><div class="c
   <span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cca81304c96470dc1dfa8b3e08092367">def welcome_email
+<textarea class="clipboard-content" id="clipboard-5ba8769e41ba3578c1508445cf7f637c">def welcome_email
   @user = params[:user]
   mail(
     to: email_address_with_name(((((nc(@user.email, @user.name),
@@ -711,9 +728,20 @@ Você pode usar <code>email_address_with_name</code> para isso:</p><div class="c
   )
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cca81304c96470dc1dfa8b3e08092367">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5ba8769e41ba3578c1508445cf7f637c">Copiar</button>
 </div>
-<h4 id="views-de-mailer"><a class="anchorlink" href="#views-de-mailer">2.4 <em>Views</em> de <em>Mailer</em></a></h4><p>As <em>views</em> de um <em>Mailer</em> ficam no diretório <code>app/views/nome_da_classe_do_mailer</code>. A <em>view</em> específica do <em>mailer</em> é reconhecida pela classe pois seu nome é o mesmo do método. No exemplo anterior, nossa <em>view</em> para o método <code>welcome_email</code> estará em <code>app/views/user_mailer/welcome_email.html.erb</code>, para a versão em HTML e em <code>welcome_email.text.erb</code> para a versão em texto simples.</p><p>Para mudar a <em>mailer view</em> padrão da sua <em>action</em>, é preciso fazer algo como por exemplo:</p><div class="code_container">
+<p>A mesma técnica funciona para especificar um nome de remetente:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
+  <span class="n">default</span> <span class="ss">from: </span><span class="n">email_address_with_name</span><span class="p">(</span><span class="s1">'notification@example.com'</span><span class="p">,</span> <span class="s1">'Example Company Notifications'</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-fbdedae0c73efae8201fc145c4e0bef3">class UserMailer &lt; ApplicationMailer
+  default from: email_address_with_name('notification@example.com', 'Example Company Notifications')
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fbdedae0c73efae8201fc145c4e0bef3">Copiar</button>
+</div>
+<p>Se o nome for uma <em>string</em> em branco, ele retornará apenas o endereço.</p><h4 id="views-de-mailer"><a class="anchorlink" href="#views-de-mailer">2.4 <em>Views</em> de <em>Mailer</em></a></h4><p>As <em>views</em> de um <em>Mailer</em> ficam no diretório <code>app/views/nome_da_classe_do_mailer</code>. A <em>view</em> específica do <em>mailer</em> é reconhecida pela classe pois seu nome é o mesmo do método. No exemplo anterior, nossa <em>view</em> para o método <code>welcome_email</code> estará em <code>app/views/user_mailer/welcome_email.html.erb</code>, para a versão em HTML e em <code>welcome_email.text.erb</code> para a versão em texto simples.</p><p>Para mudar a <em>mailer view</em> padrão da sua <em>action</em>, é preciso fazer algo como por exemplo:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
   <span class="n">default</span> <span class="ss">from: </span><span class="s1">'notifications@example.com'</span>
 
@@ -727,7 +755,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4e2555f20b6d4f216c5beafbfe17d773">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-faa78f5014275db72db77565373d930b">class UserMailer &lt; ApplicationMailer
   default from: 'notifications@example.com'
 
   def welcome_email
@@ -740,7 +768,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4e2555f20b6d4f216c5beafbfe17d773">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-faa78f5014275db72db77565373d930b">Copiar</button>
 </div>
 <p>Nesse caso, os <em>templates</em> serão buscados em <code>app/views/notifications</code>, com o nome <code>another</code>. Também é possível especificar um <em>array</em> de caminhos, que serão verificados em ordem.</p><p>Se quiser mais flexibilidade, você pode fornecer um bloco e renderizar <em>templates</em> específicos, ou até mesmo renderizar texto ou conteúdo <em>inline</em> sem usar um arquivo de <em>template</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
@@ -757,7 +785,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-86bce2619bf2769d89bd5983e51d24f2">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-763ae2aff16c1b130ed89ae18ab6978f">class UserMailer &lt; ApplicationMailer
   default from: 'notifications@example.com'
 
   def welcome_email
@@ -771,9 +799,9 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-86bce2619bf2769d89bd5983e51d24f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-763ae2aff16c1b130ed89ae18ab6978f">Copiar</button>
 </div>
-<p>Isso fará com que o <em>template</em> 'another_template.html.erb' seja renderizado para a parte HTML, e usará o texto especificado para a parte textual. O comando <em>render</em> é o mesmo usado em <em>Action Controller</em>, então é possível usar as mesmas opções, como por exemplo, <code>:text</code>, <code>:inline</code>, etc.</p><p>Se deseja renderizar um <em>template</em> que está fora do diretório padrão <code>app/views/mailer_name/</code>, você pode usar a opção <code>prepend_view_path</code>, da seguinte forma:</p><div class="code_container">
+<p>Isso fará com que o <em>template</em> 'another_template.html.erb' seja renderizado para a parte HTML, e usará o texto especificado para a parte textual. O comando <em>render</em> é o mesmo usado em <em>Action Controller</em>, então é possível usar as mesmas opções, como por exemplo, <code>:text</code>, <code>:inline</code>, etc.</p><p>Se deseja renderizar um <em>template</em> que está fora do diretório padrão <code>app/views/mailer_name/</code>, você pode usar a opção <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/ViewPaths/ClassMethods.html#method-i-prepend_view_path"><code>prepend_view_path</code></a>, da seguinte forma:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
   <span class="n">prepend_view_path</span> <span class="s2">"custom/path/to/mailer/view"</span>
 
@@ -783,7 +811,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-86555732af08dcf6257552361f5acd0e">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-75d2bd34ffa6a28bc08b9c47d2d29848">class UserMailer &lt; ApplicationMailer
   prepend_view_path "custom/path/to/mailer/view"
 
   # Isso tentará carregar o template "custom/path/to/mailer/view/welcome_email"
@@ -792,36 +820,36 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-86555732af08dcf6257552361f5acd0e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-75d2bd34ffa6a28bc08b9c47d2d29848">Copiar</button>
 </div>
-<p>Considere também usar o método <a href="https://guides.rubyonrails.org/action_view_overview.html#view-paths">append_view_path</a>.</p><h5 id="criando-cache-de-uma-view-de-mailer"><a class="anchorlink" href="#criando-cache-de-uma-view-de-mailer">2.4.1 Criando <em>cache</em> de uma <em>view</em> de <em>mailer</em></a></h5><p>É possível criar cache de um fragmento das <em>views</em> de um <em>mailer</em> da mesma forma como fazemos para as <em>views</em> da aplicação, usando o método <code>cache</code>.</p><div class="code_container">
+<p>Considere também usar o método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/ViewPaths/ClassMethods.html#method-i-append_view_path"><code>append_view_path</code></a>.</p><h5 id="criando-cache-de-uma-view-de-mailer"><a class="anchorlink" href="#criando-cache-de-uma-view-de-mailer">2.4.1 Criando <em>cache</em> de uma <em>view</em> de <em>mailer</em></a></h5><p>É possível criar cache de um fragmento das <em>views</em> de um <em>mailer</em> da mesma forma como fazemos para as <em>views</em> da aplicação, usando o método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/CacheHelper.html#method-i-cache"><code>cache</code></a>.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">cache</span> <span class="k">do</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="vi">@company</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b27459b7c67c8e598c3f64660125a7e1">&lt;% cache do %&gt;
+<textarea class="clipboard-content" id="clipboard-17c6201e224e7bdf1f144c3a9c7320c8">&lt;% cache do %&gt;
   &lt;%= @company.name %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b27459b7c67c8e598c3f64660125a7e1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-17c6201e224e7bdf1f144c3a9c7320c8">Copiar</button>
 </div>
 <p>Para usar essa funcionalidade, é necessário configurar sua aplicação da seguinte forma:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">perform_caching</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8b927fc67473d1381cb5c96da6f07052">config.action_mailer.perform_caching = true
+<textarea class="clipboard-content" id="clipboard-7db246a3cd6d45397c79d751f87993f1">config.action_mailer.perform_caching = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8b927fc67473d1381cb5c96da6f07052">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7db246a3cd6d45397c79d751f87993f1">Copiar</button>
 </div>
-<p>Também é possível criar <em>cache</em> de fragmentos para os emails <em>multipart</em>. Leia mais sobre cache em <a href="caching_with_rails.html">Guia de cache do Rails</a>.</p><h4 id="layouts-de-action-mailer"><a class="anchorlink" href="#layouts-de-action-mailer">2.5 <em>Layouts de Action Mailer</em></a></h4><p>Similarmente como nas <em>views</em> dos <em>controllers</em>, é possível também ter <em>layouts</em> para os <em>mailers</em>. O nome do <em>layout</em> deve ser o mesmo do <em>mailer</em>, como <code>user_mailer.html.erb</code> e <code>user_mailer.text.erb</code> para ser reconhecido automaticamente pelo seu <em>mailer</em> como um <em>layout</em>.</p><p>Se quiser usar um arquivo diferente, chame <code>layout</code> em seu <em>mailer</em>:</p><div class="code_container">
+<p>Também é possível criar <em>cache</em> de fragmentos para os emails <em>multipart</em>. Leia mais sobre cache em <a href="caching_with_rails.html">Guia de cache do Rails</a>.</p><h4 id="layouts-de-action-mailer"><a class="anchorlink" href="#layouts-de-action-mailer">2.5 <em>Layouts de Action Mailer</em></a></h4><p>Similarmente como nas <em>views</em> dos <em>controllers</em>, é possível também ter <em>layouts</em> para os <em>mailers</em>. O nome do <em>layout</em> deve ser o mesmo do <em>mailer</em>, como <code>user_mailer.html.erb</code> e <code>user_mailer.text.erb</code> para ser reconhecido automaticamente pelo seu <em>mailer</em> como um <em>layout</em>.</p><p>Se quiser usar um arquivo diferente, chame <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Layouts/ClassMethods.html#method-i-layout"><code>layout</code></a> em seu <em>mailer</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
   <span class="n">layout</span> <span class="s1">'awesome'</span> <span class="c1"># use awesome.(html|text).erb as the layout</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2763784d02c4d052e389af9fbf4d7c54">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-549534321ef035a4932b410beb95beb1">class UserMailer &lt; ApplicationMailer
   layout 'awesome' # use awesome.(html|text).erb as the layout
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2763784d02c4d052e389af9fbf4d7c54">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-549534321ef035a4932b410beb95beb1">Copiar</button>
 </div>
 <p>Assim como nas <em>views</em> de <em>controller</em>, use <code>yield</code> para renderizar a <em>view</em> dentro do layout.</p><p>Você também pode passar <code>layout: 'layout_name'</code> dentro do bloco de formatação como opção na chamada do <em>render</em> para especificar quais formatos usar em <em>layouts</em> diferentes:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="no">ApplicationMailer</span>
@@ -833,7 +861,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6e9acb726ca21551936dc381f221fcc2">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-a5b078274f8a0d2bc3bd4a3c3017e64f">class UserMailer &lt; ApplicationMailer
   def welcome_email
     mail(to: params[:user].email) do |format|
       format.html { render layout: 'my_layout' }
@@ -842,7 +870,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6e9acb726ca21551936dc381f221fcc2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a5b078274f8a0d2bc3bd4a3c3017e64f">Copiar</button>
 </div>
 <p>Vai renderizar a parte <em>HTML</em> usando o arquivo <code>my_layout.html.erb</code> e a parte de texto com o arquivo usual <code>user_mailer.text.erb</code> se ele existir.</p><h4 id="pre-visualizando-emails"><a class="anchorlink" href="#pre-visualizando-emails">2.6 Pré-visualizando Emails</a></h4><p>O <em>Action Mailer Preview</em> possibilita uma maneira de pré-visualizar como o email vai ficar, acessando uma <em>URL</em> especial que o renderiza. No exemplo acima, a classe para pré-visualizar <code>UserMailer</code> deve se chamar <code>UserMailerPreview</code>
 e deve estar localizada em <code>test/mailers/previews/user_mailer_preview.rb</code>. Para ver o modelo de <code>welcome_email</code>, implemente um método que tem o mesmo nome e chame por <code>UserMailer.welcome_email</code>:</p><div class="code_container">
@@ -852,59 +880,59 @@ e deve estar localizada em <code>test/mailers/previews/user_mailer_preview.rb</c
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ade970e88483a8cdc0fac34cde5b9bc2">class UserMailerPreview &lt; ActionMailer::Preview
+<textarea class="clipboard-content" id="clipboard-c5363d3ae3391a2eb7530013431ce48b">class UserMailerPreview &lt; ActionMailer::Preview
   def welcome_email
     UserMailer.with(user: User.first).welcome_email
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ade970e88483a8cdc0fac34cde5b9bc2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c5363d3ae3391a2eb7530013431ce48b">Copiar</button>
 </div>
 <p>Dessa maneira, o modelo vai ficar disponível em <a href="http://localhost:3000/rails/mailers/user_mailer/welcome_email">http://localhost:3000/rails/mailers/user_mailer/welcome_email</a>.</p><p>Se você mudar algo em <code>app/views/user_mailer/welcome_email.html.erb</code> ou no próprio <em>mailer</em>,
 ele será automaticamente recarregado e renderizado, para que você veja as mudanças instantaneamente.
 Uma lista das pré-visualizações também ficam disponíveis em <a href="http://localhost:3000/rails/mailers">http://localhost:3000/rails/mailers</a>.</p><p>Por padrão, essas classes de pré-visualizações ficam em <code>test/mailers/previews</code>. Isso pode ser configurado usando a opção <code>preview_path</code>. Por exemplo, se você quiser alterar para <code>lib/mailer_previews</code>, você pode configurar isso em <code>config/application.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">preview_path</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/lib/mailer_previews"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-88b471520aa641805e3811770770b1ff">config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+<textarea class="clipboard-content" id="clipboard-36ecd87809f9b75fea1814b816a35d9f">config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-88b471520aa641805e3811770770b1ff">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-36ecd87809f9b75fea1814b816a35d9f">Copiar</button>
 </div>
 <h4 id="gerando-urls-no-action-mailer-views"><a class="anchorlink" href="#gerando-urls-no-action-mailer-views">2.7 Gerando URLs no Action Mailer Views</a></h4><p>Ao contrário dos <em>controllers</em>, a instância do <code>mailer</code> não tem nenhum contexto sobre a
 requisição recebida, então você precisará informar o parâmetro <code>:host</code>.</p><p>Como o <code>:host</code> normalmente é o mesmo em toda a aplicação, você pode configurá-lo
 globalmente no arquivo <code>config/application.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">default_url_options</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">host: </span><span class="s1">'exemplo.com'</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-80d428a29c82107253ca252e0584f7b3">config.action_mailer.default_url_options = { host: 'exemplo.com' }
+<textarea class="clipboard-content" id="clipboard-c03dab4b471842ce50e2e8a20d182428">config.action_mailer.default_url_options = { host: 'exemplo.com' }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-80d428a29c82107253ca252e0584f7b3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c03dab4b471842ce50e2e8a20d182428">Copiar</button>
 </div>
 <p>Por causa dessa característica, você não pode usar nenhum dos <em>helpers</em> <code>*_path</code> dentro de
 um email. Ao invés, você precisará usar o <code>*_url</code> helper respectivo. Por exemplo,
 ao invés de usar:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'welcome'</span><span class="p">,</span> <span class="n">welcome_path</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8f2d29b089507c37fb53e6e0cd93cae0">&lt;%= link_to 'welcome', welcome_path %&gt;
+<textarea class="clipboard-content" id="clipboard-4f079e357c4fd79cb6f2a47a8c74d7eb">&lt;%= link_to 'welcome', welcome_path %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8f2d29b089507c37fb53e6e0cd93cae0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4f079e357c4fd79cb6f2a47a8c74d7eb">Copiar</button>
 </div>
 <p>Você precisará usar:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'welcome'</span><span class="p">,</span> <span class="n">welcome_url</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-042859ebb1ae0b431109fa2e05645c03">&lt;%= link_to 'welcome', welcome_url %&gt;
+<textarea class="clipboard-content" id="clipboard-e4527f2a001b584b56836f183814dc78">&lt;%= link_to 'welcome', welcome_url %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-042859ebb1ae0b431109fa2e05645c03">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e4527f2a001b584b56836f183814dc78">Copiar</button>
 </div>
-<p>Usando a URL completa, seus links irão funcionar dentro dos seus emails.</p><h5 id="gerando-urls-com-url-for"><a class="anchorlink" href="#gerando-urls-com-url-for">2.7.1 Gerando URLs com <code>url_for</code></a></h5><p>Por padrão, o <code>url_for</code> gera uma URL completa nos <em>templates</em>.</p><p>Se você não configurar a opção <code>:host</code> globalmente, não esqueça de passá-lo para o
+<p>Usando a URL completa, seus links irão funcionar dentro dos seus emails.</p><h5 id="gerando-urls-com-url-for"><a class="anchorlink" href="#gerando-urls-com-url-for">2.7.1 Gerando URLs com <code>url_for</code></a></h5><p>Por padrão, o <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/RoutingUrlFor.html#method-i-url_for"><code>url_for</code></a> gera uma URL completa nos <em>templates</em>.</p><p>Se você não configurar a opção <code>:host</code> globalmente, não esqueça de passá-lo para o
 <code>url_for</code>.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">url_for</span><span class="p">(</span><span class="ss">host: </span><span class="s1">'example.com'</span><span class="p">,</span>
             <span class="ss">controller: </span><span class="s1">'welcome'</span><span class="p">,</span>
             <span class="ss">action: </span><span class="s1">'greeting'</span><span class="p">)</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fa6ac907e1c2c48355a89a4497a4ef0e">&lt;%= url_for(host: 'example.com',
+<textarea class="clipboard-content" id="clipboard-03dc0bc62329bfb7b41dd2794f900f10">&lt;%= url_for(host: 'example.com',
             controller: 'welcome',
             action: 'greeting') %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fa6ac907e1c2c48355a89a4497a4ef0e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-03dc0bc62329bfb7b41dd2794f900f10">Copiar</button>
 </div>
 <h5 id="gerando-urls-com-rotas-nomeadas"><a class="anchorlink" href="#gerando-urls-com-rotas-nomeadas">2.7.2 Gerando URLs com Rotas Nomeadas</a></h5><p>Os clientes de email não têm o contexto da web e, portanto, os caminhos não têm a URL
 base para completar os endereços da web. Assim, você deve sempre usar a variant  <code>*_url</code>
@@ -912,9 +940,9 @@ do <em>helper</em> da rota nomeada.</p><p>Se você não configurar a opção <co
 helper da URL.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">user_url</span><span class="p">(</span><span class="vi">@user</span><span class="p">,</span> <span class="ss">host: </span><span class="s1">'example.com'</span><span class="p">)</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9137a806575adc0764fdabc0487fba6a">&lt;%= user_url(@user, host: 'example.com') %&gt;
+<textarea class="clipboard-content" id="clipboard-d54e29e958d051b520040f17a1607cf8">&lt;%= user_url(@user, host: 'example.com') %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9137a806575adc0764fdabc0487fba6a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d54e29e958d051b520040f17a1607cf8">Copiar</button>
 </div>
 <div class="note"><p>Links que não são <code>GET</code> vão exigir o uso de <a href="https://github.com/rails/rails/blob/main/actionview/app/assets/javascripts">rails-ujs</a> ou
 <a href="https://github.com/rails/jquery-ujs">jQuery UJS</a>, e, portanto, não irão funcionar em templates de email.
@@ -923,16 +951,16 @@ requisição recebida, então você precisará informar o parâmetro <code>:asse
 globalmente no arquivo <code>config/application.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">asset_host</span> <span class="o">=</span> <span class="s1">'http://example.com'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cb43f63b12779362fc202ee93fea811f">config.asset_host = 'http://example.com'
+<textarea class="clipboard-content" id="clipboard-9f54f8bb5411d49732bc861d4255eb2f">config.asset_host = 'http://example.com'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cb43f63b12779362fc202ee93fea811f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f54f8bb5411d49732bc861d4255eb2f">Copiar</button>
 </div>
 <p>Agora você pode exibir uma imagem dentro do seu email.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s1">'image.jpg'</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16f582d7643974f51c59b9c707c2db54">&lt;%= image_tag 'image.jpg' %&gt;
+<textarea class="clipboard-content" id="clipboard-45cce8912f8f9c5e80eb02fbe926d382">&lt;%= image_tag 'image.jpg' %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16f582d7643974f51c59b9c707c2db54">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-45cce8912f8f9c5e80eb02fbe926d382">Copiar</button>
 </div>
 <h4 id="enviando-emails-multipart"><a class="anchorlink" href="#enviando-emails-multipart">2.9 Enviando Emails <em>Multipart</em></a></h4><p>O Action Mailer enviará automaticamente emails <em>multipart</em> se você tiver templates
 diferentes para a mesma action. Então, para o nosso exemplo do <code>UserMailer</code>, se você tiver
@@ -955,7 +983,7 @@ na <em>action</em> do mailer.</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5bd1d93c037485f80c6bbe34185f1041">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-bba0da6f01a5f5be3ecbe06b481f7db1">class UserMailer &lt; ApplicationMailer
   def welcome_email
     @user = params[:user]
     @url  = user_url(@user)
@@ -968,7 +996,7 @@ na <em>action</em> do mailer.</p><div class="code_container">
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5bd1d93c037485f80c6bbe34185f1041">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bba0da6f01a5f5be3ecbe06b481f7db1">Copiar</button>
 </div>
 <h4 id="enviando-emails-sem-renderizar-um-template"><a class="anchorlink" href="#enviando-emails-sem-renderizar-um-template">2.11 Enviando Emails sem Renderizar um <em>Template</em></a></h4><p>Podem haver casos onde você quer pular a etapa de renderização de um template e enviar
 o corpo do email como <code>string</code>. Você pode fazer isso usando a opção <code>:body</code>.
@@ -983,7 +1011,7 @@ o Rails vai usar o <code>text/plain</code> como padrão.</p><div class="code_con
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eea3f1067b5517d9a96c4cb4a8335b3a">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-3b3c5249baabf19af0e34f27be72975b">class UserMailer &lt; ApplicationMailer
   def welcome_email
     mail(to: params[:user].email,
          body: params[:email_body],
@@ -992,10 +1020,10 @@ o Rails vai usar o <code>text/plain</code> como padrão.</p><div class="code_con
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eea3f1067b5517d9a96c4cb4a8335b3a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3b3c5249baabf19af0e34f27be72975b">Copiar</button>
 </div>
-<h3 id="callbacks-do-action-mailer"><a class="anchorlink" href="#callbacks-do-action-mailer">3 Callbacks do <em>Action Mailer</em></a></h3><p><em>Action Mailer</em> permite que você especifique o <code>before_action</code>, <code>after_action</code> e
-<code>around_action</code>.</p>
+<h3 id="callbacks-do-action-mailer"><a class="anchorlink" href="#callbacks-do-action-mailer">3 Callbacks do <em>Action Mailer</em></a></h3><p><em>Action Mailer</em> permite que você especifique o <a href="https://api.rubyonrails.org/v7.0.0/classes/AbstractController/Callbacks/ClassMethods.html#method-i-before_action"><code>before_action</code></a>, <a href="https://api.rubyonrails.org/v7.0.0/classes/AbstractController/Callbacks/ClassMethods.html#method-i-after_action"><code>after_action</code></a> e
+<a href="https://api.rubyonrails.org/v7.0.0/classes/AbstractController/Callbacks/ClassMethods.html#method-i-around_action"><code>around_action</code></a>.</p>
 <ul>
 <li><p>Filtros podem ser especificados com um bloco ou um <em>symbol</em> para um  método no <em>Mailer</em>, similar a um <em>controller</em></p></li>
 <li><p>Você pode usar um <code>before_action</code> para definir variáveis de instância,
@@ -1029,7 +1057,7 @@ popule o objeto de email com valores padrões, ou insira <em>headers</em> e anex
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-702a9a63dd111a88dad8cc04f5569db3">class InvitationsMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-cf8466c0b5eead662e018846a1562e32">class InvitationsMailer &lt; ApplicationMailer
   before_action :set_inviter_and_invitee
   before_action { @account = params[:inviter].account }
 
@@ -1056,7 +1084,7 @@ popule o objeto de email com valores padrões, ou insira <em>headers</em> e anex
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-702a9a63dd111a88dad8cc04f5569db3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cf8466c0b5eead662e018846a1562e32">Copiar</button>
 </div>
 
 <ul>
@@ -1101,7 +1129,7 @@ entrega definido por atualizar <code>mail.delivery_method.settings</code>.</p></
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a84104b956c1b014c7386228c4df99f7">class UserMailer &lt; ApplicationMailer
+<textarea class="clipboard-content" id="clipboard-bfb37fa61a6b17caf29411dcb0ee7053">class UserMailer &lt; ApplicationMailer
   before_action { @business, @user = params[:business], params[:user] }
 
   after_action :set_delivery_options,
@@ -1137,7 +1165,7 @@ entrega definido por atualizar <code>mail.delivery_method.settings</code>.</p></
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a84104b956c1b014c7386228c4df99f7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bfb37fa61a6b17caf29411dcb0ee7053">Copiar</button>
 </div>
 
 <ul>
@@ -1145,15 +1173,15 @@ end
 </ul>
 <h3 id="usando-os-helpers-do-action-mailer"><a class="anchorlink" href="#usando-os-helpers-do-action-mailer">4 Usando os <em>helpers</em> do <em>Action Mailer</em></a></h3><p>O <em>Action Mailer</em> agora herda de <code>AbstractController</code>, para que você tenha acesso aos mesmos
 <em>helpers</em> genéricos que um <em>Action Controller</em>.</p><p>Existem também alguns métodos auxiliares específicos do Action Mailer disponíveis em
-<code>ActionMailer::MailHelper</code>. Por exemplo, estes permitem acessar a instância de mailer
-a partir da <em>view</em> com <code>mailer</code>, e acessando a mensagem usando <code>message</code>:</p><div class="code_container">
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/MailHelper.html"><code>ActionMailer::MailHelper</code></a>. Por exemplo, estes permitem acessar a instância de mailer
+a partir da <em>view</em> com <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/MailHelper.html#method-i-mailer"><code>mailer</code></a>, e acessando a mensagem usando <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/MailHelper.html#method-i-message"><code>message</code></a>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="n">mailer</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">underscore</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;h1&gt;</span><span class="cp">&lt;%=</span> <span class="n">message</span><span class="p">.</span><span class="nf">subject</span> <span class="cp">%&gt;</span><span class="nt">&lt;/h1&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-523a9fea1135bf47f310b5d476551283">&lt;%= stylesheet_link_tag mailer.name.underscore %&gt;
+<textarea class="clipboard-content" id="clipboard-f6d6986cfbb4bf995112ca62195dbd7f">&lt;%= stylesheet_link_tag mailer.name.underscore %&gt;
 &lt;h1&gt;&lt;%= message.subject %&gt;&lt;/h1&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-523a9fea1135bf47f310b5d476551283">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f6d6986cfbb4bf995112ca62195dbd7f">Copiar</button>
 </div>
 <h3 id="configuracao-do-action-mailer"><a class="anchorlink" href="#configuracao-do-action-mailer">5 Configuração do <em>Action Mailer</em></a></h3><p>As seguintes opções de configuração são feitas melhor em um dos ambientes
 arquivos (environment.rb, production.rb, etc...)</p>
@@ -1190,6 +1218,10 @@ arquivos (environment.rb, production.rb, etc...)</p>
 <code>:openssl_verify_mode</code> - Ao usar TLS, você pode definir como o OpenSSL verifica o certificado. Isso é realmente útil se você precisar validar um certificado auto assinado e / ou curinga. Você pode usar o nome de uma constante de verificação OpenSSL ('none' ou 'peer') ou diretamente a constante (<code>OpenSSL::SSL::VERIFY_NONE</code> ou <code>OpenSSL::SSL::VERIFY_PEER</code>).</li>
 <li>
 <code>:ssl/:tls</code> - Permite que a conexão SMTP use SMTP / TLS (SMTPS: SMTP sobre conexão TLS direta)</li>
+<li>
+<code>:open_timeout</code> - Número de segundos para esperar ao tentar abrir uma conexão.</li>
+<li>
+<code>:read_timeout</code> - Número de segundos para esperar até o tempo limite de uma leitura(2) da chamada.</li>
 </ul>
 </td>
 </tr>
@@ -1218,7 +1250,7 @@ arquivos (environment.rb, production.rb, etc...)</p>
 <code>:file</code>: salva e-mails em arquivos; pode ser configurado usando <code>config.action_mailer.file_settings</code>.</li>
 <li>
 <code>:test</code>: salvar e-mails para <code>ActionMailer::Base.deliveries</code> array.</li>
-</ul>Veja<a href="https://api.rubyonrails.org/v6.1.4/classes/ActionMailer/Base.html">API docs</a> para mais informações.</td>
+</ul>Veja<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionMailer/Base.html">API docs</a> para mais informações.</td>
 </tr>
 <tr>
 <td><code>perform_deliveries</code></td>
@@ -1227,6 +1259,14 @@ arquivos (environment.rb, production.rb, etc...)</p>
 <tr>
 <td><code>deliveries</code></td>
 <td>Mantém um <em>array</em> de todos os emails enviados através do <em>Action Mailer</em> com delivery_method: test. Muito útil para testes de unidade e funcional.</td>
+</tr>
+<tr>
+<td><code>delivery_job</code></td>
+<td>A classe usada com <code>deliver_later</code>. O padrão é <code>ActionMailer::MailDeliveryJob</code>.</td>
+</tr>
+<tr>
+<td><code>deliver_later_queue_name</code></td>
+<td>O nome da fila usada com <code>deliver_later</code>.</td>
 </tr>
 <tr>
 <td><code>default_options</code></td>
@@ -1248,7 +1288,7 @@ arquivo <code>config/environments/$RAILS_ENV.rb</code>:</p><div class="code_cont
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">raise_delivery_errors</span> <span class="o">=</span> <span class="kp">true</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">default_options</span> <span class="o">=</span> <span class="p">{</span><span class="ss">from: </span><span class="s1">'no-reply@example.com'</span><span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ea83c074e4ad2c4deb451d5b7341244d">config.action_mailer.delivery_method = :sendmail
+<textarea class="clipboard-content" id="clipboard-54d30fe438698ca1ef68c450bc1cfcd8">config.action_mailer.delivery_method = :sendmail
 # Defaults to:
 # config.action_mailer.sendmail_settings = {
 #   location: '/usr/sbin/sendmail',
@@ -1258,10 +1298,10 @@ config.action_mailer.perform_deliveries = true
 config.action_mailer.raise_delivery_errors = true
 config.action_mailer.default_options = {from: 'no-reply@example.com'}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ea83c074e4ad2c4deb451d5b7341244d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-54d30fe438698ca1ef68c450bc1cfcd8">Copiar</button>
 </div>
-<h4 id="configuracao-do-action-mailer-para-gmail"><a class="anchorlink" href="#configuracao-do-action-mailer-para-gmail">5.2 Configuração do <em>Action Mailer</em> para Gmail</a></h4><p>Como o Action Mailer agora usa a <a href="https://github.com/mikel/mail">gem Mail</a>,
-torna-se tão simples quanto adicionar ao arquivo <code>config/environment/$ RAILS_ENV.rb</code>:</p><div class="code_container">
+<h4 id="configuracao-do-action-mailer-para-gmail"><a class="anchorlink" href="#configuracao-do-action-mailer-para-gmail">5.2 Configuração do <em>Action Mailer</em> para Gmail</a></h4><p>O Action Mailer agora usa a <a href="https://github.com/mikel/mail">gem Mail</a>, e aceita configuração semelhante.
+Adicione isso ao seu arquivo <code>config/environments/$RAILS_ENV.rb</code> para enviar via Gmail:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">delivery_method</span> <span class="o">=</span> <span class="ss">:smtp</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">address:              </span><span class="s1">'smtp.gmail.com'</span><span class="p">,</span>
@@ -1270,9 +1310,11 @@ torna-se tão simples quanto adicionar ao arquivo <code>config/environment/$ RAI
   <span class="ss">user_name:            </span><span class="s1">'&lt;username&gt;'</span><span class="p">,</span>
   <span class="ss">password:             </span><span class="s1">'&lt;password&gt;'</span><span class="p">,</span>
   <span class="ss">authentication:       </span><span class="s1">'plain'</span><span class="p">,</span>
-  <span class="ss">enable_starttls_auto: </span><span class="kp">true</span> <span class="p">}</span>
+  <span class="ss">enable_starttls_auto: </span><span class="kp">true</span><span class="p">,</span>
+  <span class="ss">open_timeout:         </span><span class="mi">5</span><span class="p">,</span>
+  <span class="ss">read_timeout:         </span><span class="mi">5</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-acf1dadba9bccf922804a2583cf08491">config.action_mailer.delivery_method = :smtp
+<textarea class="clipboard-content" id="clipboard-0ed56d3879a29e3d9f5af1d4349af40b">config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
   port:                 587,
@@ -1280,14 +1322,15 @@ config.action_mailer.smtp_settings = {
   user_name:            '&lt;username&gt;',
   password:             '&lt;password&gt;',
   authentication:       'plain',
-  enable_starttls_auto: true }
+  enable_starttls_auto: true,
+  open_timeout:         5,
+  read_timeout:         5 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-acf1dadba9bccf922804a2583cf08491">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0ed56d3879a29e3d9f5af1d4349af40b">Copiar</button>
 </div>
-<div class="note"><p>Em 15 de julho de 2014, o Google aumentou <a href="https://support.google.com/accounts/answer/6010255">suas medidas de segurança</a> e agora bloqueia as tentativas de aplicativos que considera menos seguros.
+<div class="note"><p>Em 15 de julho de 2014, o Google aumentou <a href="https://support.google.com/accounts/answer/6010255">suas medidas de segurança</a> para bloquer as tentativas de aplicativos que considera menos seguros.
 Você pode alterar suas configurações do Gmail <a href="https://www.google.com/settings/security/lesssecureapps">aqui</a> para permitir as tentativas. Se sua conta do Gmail tiver a autenticação de dois fatores ativada
-em seguida, você precisará definir uma <a href="https://myaccount.google.com/apppasswords">senha de aplicativo</a> e usá-la em vez de sua senha normal. Alternativamente, você pode
-use outro ESP para enviar e-mail substituindo 'smtp.gmail.com' acima pelo endereço do seu provedor.</p></div><h3 id="testes-de-mailer"><a class="anchorlink" href="#testes-de-mailer">6 Testes de <em>Mailer</em></a></h3><p>Você encontrará instruções detalhadas de como testar seus <em>mailers</em> no
+em seguida, você precisará definir uma <a href="https://myaccount.google.com/apppasswords">senha de aplicativo</a> e usá-la em vez de sua senha normal.</p></div><h3 id="testes-de-mailer"><a class="anchorlink" href="#testes-de-mailer">6 Testes de <em>Mailer</em></a></h3><p>Você encontrará instruções detalhadas de como testar seus <em>mailers</em> no
 <a href="testing.html#testing-your-mailers">guia de teste</a>.</p><h3 id="interceptando-e-observando-emails"><a class="anchorlink" href="#interceptando-e-observando-emails">7 Interceptando e Observando Emails</a></h3><p><em>Action Mailer</em> fornece ganchos para os métodos observador e interceptor do Mail. Eles permitem que você registre classes que são chamadas durante o ciclo de vida de entrega de cada e-mail enviado.</p><h4 id="interceptando-emails"><a class="anchorlink" href="#interceptando-emails">7.1 Interceptando Emails</a></h4><p>Os interceptores permitem que você faça modificações em emails antes que eles sejam entregues aos agentes de entrega. Uma classe de interceptor deve implementar o método <code>::delivering_email(message)</code> que será chamado antes do e-mail ser enviado.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">SandboxEmailInterceptor</span>
   <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">delivering_email</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
@@ -1295,26 +1338,30 @@ use outro ESP para enviar e-mail substituindo 'smtp.gmail.com' acima pelo endere
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8552093fb1b7bef5e532ac2ee158f368">class SandboxEmailInterceptor
+<textarea class="clipboard-content" id="clipboard-800cb2c0b937535093293ef1942d42ba">class SandboxEmailInterceptor
   def self.delivering_email(message)
     message.to = ['sandbox@example.com']
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8552093fb1b7bef5e532ac2ee158f368">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-800cb2c0b937535093293ef1942d42ba">Copiar</button>
 </div>
 <p>Antes que o interceptor possa fazer seu trabalho, você precisa registrá-lo
-usando <code>register_interceptor</code>. Você pode fazer isso em um arquivo inicializador
-como <code>config/initializers/sandbox_email_interceptor.rb</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">if</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">env</span><span class="p">.</span><span class="nf">staging?</span>
-  <span class="no">ActionMailer</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">register_interceptor</span><span class="p">(</span><span class="no">SandboxEmailInterceptor</span><span class="p">)</span>
+usando a configuração <code>interceptor</code>. Você pode fazer isso em um arquivo inicializador
+como <code>config/initializers/mail_interceptors.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span>
+  <span class="k">if</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">env</span><span class="p">.</span><span class="nf">staging?</span>
+    <span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">interceptors</span> <span class="o">=</span> <span class="sx">%w[SandboxEmailInterceptor]</span>
+  <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a28aaf80fc788679310f7bb50c7e46e8">if Rails.env.staging?
-  ActionMailer::Base.register_interceptor(SandboxEmailInterceptor)
+<textarea class="clipboard-content" id="clipboard-c4e331c8590a687ed27987683a127118">Rails.application.configure do
+  if Rails.env.staging?
+    config.action_mailer.interceptors = %w[SandboxEmailInterceptor]
+  end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a28aaf80fc788679310f7bb50c7e46e8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c4e331c8590a687ed27987683a127118">Copiar</button>
 </div>
 <div class="note"><p>O exemplo acima usa um ambiente personalizado chamado "staging" para um
 servidor como em produção, mas para fins de teste. Você pode ler
@@ -1326,21 +1373,25 @@ para mais informações sobre ambientes Rails personalizados.</p></div><h4 id="o
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-26f4d443f37d7d1f4a1762afe0112314">class EmailDeliveryObserver
+<textarea class="clipboard-content" id="clipboard-67f6f4d29870ea92cd15d0b95402dae3">class EmailDeliveryObserver
   def self.delivered_email(message)
     EmailDelivery.log(message)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26f4d443f37d7d1f4a1762afe0112314">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-67f6f4d29870ea92cd15d0b95402dae3">Copiar</button>
 </div>
-<p>Como os interceptores, você precisa registrar observadores usando <code>register_observer</code>. Você pode fazer isso em um arquivo inicializador
-como <code>config/initializers/email_delivery_observer.rb</code></p><div class="code_container">
-<pre><code class="highlight ruby"><span class="no">ActionMailer</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">register_observer</span><span class="p">(</span><span class="no">EmailDeliveryObserver</span><span class="p">)</span>
+<p>Como os interceptores, você precisa registrar observadores usando <code>observers</code>. Você pode fazer isso em um arquivo inicializador
+como <code>config/initializers/mail_observers.rb</code></p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">observers</span> <span class="o">=</span> <span class="sx">%w[EmailDeliveryObserver]</span>
+<span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dcc8417e085bcb96d282f34945f1a246">ActionMailer::Base.register_observer(EmailDeliveryObserver)
+<textarea class="clipboard-content" id="clipboard-7a3e1eb0931a19b7230884698acf537d">Rails.application.configure do
+  config.action_mailer.observers = %w[EmailDeliveryObserver]
+end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dcc8417e085bcb96d282f34945f1a246">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7a3e1eb0931a19b7230884698acf537d">Copiar</button>
 </div>
 
 

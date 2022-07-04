@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -280,6 +286,7 @@
 <li><a href="#mudando-tabelas">Mudando Tabelas</a></li>
 <li><a href="#mudando-colunas">Mudando Colunas</a></li>
 <li><a href="#modificadores-de-coluna">Modificadores de Coluna</a></li>
+<li><a href="#references">References</a></li>
 <li><a href="#foreign-keys-chaves-estrangeiras">Foreign Keys (Chaves Estrangeiras)</a></li>
 <li><a href="#quando-os-helpers-nao-sao-suficientes">Quando os Helpers não são Suficientes</a></li>
 <li><a href="#usando-o-metodo-change">Usando o Método <code>change</code></a></li>
@@ -325,7 +332,7 @@
       <div id="mainCol">
         <h3 id="visao-geral-de-migration"><a class="anchorlink" href="#visao-geral-de-migration">1 Visão Geral de Migration</a></h3><p><em>Migrations</em> são uma forma conveniente de
 <a href="https://en.wikipedia.org/wiki/Schema_migration">alterar nosso esquema de banco de dados com o tempo</a> de uma forma fácil e consistente. Elas usam uma <em>Ruby DSL</em> para que você não precise escrever SQL puro, permitindo que seu esquema e as alterações sejam independentes do banco de dados utilizado.</p><p>Você pode pensar em cada <em>migration</em> como sendo uma nova 'versão' do banco de dados. Um esquema é vazio no início, e após cada <em>migration</em> ele é modificado para adicionar ou remover tabelas, colunas, ou entradas de dados. O <em>Active Record</em> sabe como atualizar seu esquema nessa linha do tempo, trazendo-o de qualquer ponto em que ele esteja no histórico, para a última versão. O <em>Active Record</em> também atualizará seu arquivo <code>db/schema.rb</code> para igualar a estrutura mais atualizada do seu banco de dados.</p><p>Aqui temos um exemplo de uma <em>migration</em>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">create_table</span> <span class="ss">:products</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:name</span>
@@ -336,7 +343,7 @@
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-98736165b5709f0b9791b383b78272fd">class CreateProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-853fb7472baa5b037a91e9386c24b7e6">class CreateProducts &lt; ActiveRecord::Migration[7.0]
   def change
     create_table :products do |t|
       t.string :name
@@ -347,12 +354,12 @@
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-98736165b5709f0b9791b383b78272fd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-853fb7472baa5b037a91e9386c24b7e6">Copiar</button>
 </div>
 <p>Essa <em>migration</em> adiciona uma tabela chamada <code>products</code> com uma coluna do tipo <em>string</em> chamada <code>name</code> e uma coluna do tipo <em>text</em> chamada <code>description</code>. Uma coluna do tipo chave primária chamada <code>id</code> também será adicionada implicitamente, pois ela é a chave primária padrão para todos os <em>models</em> de <em>Active Record</em>. A macro <code>timestamps</code> adiciona duas colunas, <code>created_at</code> e <code>updated_at</code>. Essas colunas especiais são automaticamente gerenciadas pelo <em>Active Record</em>, se existirem.</p><p>Note que nós definimos as mudanças que queremos que aconteçam no futuro.
 Antes desta <em>migration</em> ser executada, não há sequer a tabela. Depois, a tabela será criada. O <em>Active Record</em> também sabe como reverter essa <em>migration</em>: se a desfizermos, ele removerá a tabela.</p><p>Em bancos de dados que suportem transações com declarações que alterem o esquema,
 <em>migrations</em> são incluídas na transação. Se o banco de dados não suportar esses tipos de declarações, então, quando uma <em>migration</em> falhar, as partes dela que tiveram sucesso não serão desfeitas. Você terá que desfazer as mudanças que fez manualmente.</p><div class="note"><p>Há certos tipos de <em>queries</em> que não podem ser executadas dentro de uma transação. Se o seu adaptador de conexão suporta transações DDL você pode usar <code>disable_ddl_transaction!</code> para desabilitá-las para uma única <em>migration</em>.</p></div><p>Se você quiser que uma <em>migration</em> faça algo que o <em>Active Record</em> não sabe como reverter, pode usar <code>reversible</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ChangeProductsPrice</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ChangeProductsPrice</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">reversible</span> <span class="k">do</span> <span class="o">|</span><span class="n">dir</span><span class="o">|</span>
       <span class="n">change_table</span> <span class="ss">:products</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
@@ -363,7 +370,7 @@ Antes desta <em>migration</em> ser executada, não há sequer a tabela. Depois, 
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fc46673fc587d34856d7acd764d4c952">class ChangeProductsPrice &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-0d1a7360fee086e610db2623bcf2c333">class ChangeProductsPrice &lt; ActiveRecord::Migration[7.0]
   def change
     reversible do |dir|
       change_table :products do |t|
@@ -374,10 +381,10 @@ Antes desta <em>migration</em> ser executada, não há sequer a tabela. Depois, 
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fc46673fc587d34856d7acd764d4c952">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0d1a7360fee086e610db2623bcf2c333">Copiar</button>
 </div>
 <p>Alternativamente, você pode usar <code>up</code> e <code>down</code> ao invés de <code>change</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ChangeProductsPrice</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ChangeProductsPrice</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">up</span>
     <span class="n">change_table</span> <span class="ss">:products</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="n">t</span><span class="p">.</span><span class="nf">change</span> <span class="ss">:price</span><span class="p">,</span> <span class="ss">:string</span>
@@ -391,7 +398,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0fe835b92578985ec5845363db07eca9">class ChangeProductsPrice &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-cfbdb16a34c314c77a3212ef8c5f67dc">class ChangeProductsPrice &lt; ActiveRecord::Migration[7.0]
   def up
     change_table :products do |t|
       t.change :price, :string
@@ -405,7 +412,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0fe835b92578985ec5845363db07eca9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cfbdb16a34c314c77a3212ef8c5f67dc">Copiar</button>
 </div>
 <h3 id="criando-uma-migration"><a class="anchorlink" href="#criando-uma-migration">2 Criando uma <em>Migration</em></a></h3><h4 id="criando-uma-migration-independente"><a class="anchorlink" href="#criando-uma-migration-independente">2.1 Criando uma <em>Migration</em> Independente</a></h4><p><em>Migrations</em> são armazenadas em arquivos no diretório <code>db/migrate</code>, um para cada classe de
 <em>migration</em>. O nome do arquivo tem o seguinte formato
@@ -421,131 +428,131 @@ aplicação ou gerar um arquivo você mesmo, esteja ciente de sua posição na o
 gerador para fazer isso por você:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddPartNumberToProducts
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3d59fd1e42ec9bc002548188b308cf1a">bin/rails generate migration AddPartNumberToProducts
+<textarea class="clipboard-content" id="clipboard-2a37d046373937a8e93e5e98a9b2ec46">bin/rails generate migration AddPartNumberToProducts
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3d59fd1e42ec9bc002548188b308cf1a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a37d046373937a8e93e5e98a9b2ec46">Copiar</button>
 </div>
 <p>Isso criará uma <em>migration</em> vazia nomeada devidamente:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddPartNumberToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddPartNumberToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-05143a0776b9e6350017ed8ab78afb26">class AddPartNumberToProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-431ecc91877594da9801c35f98c8446b">class AddPartNumberToProducts &lt; ActiveRecord::Migration[7.0]
   def change
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-05143a0776b9e6350017ed8ab78afb26">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-431ecc91877594da9801c35f98c8446b">Copiar</button>
 </div>
 <p>Esse gerador pode fazer muito mais do que acrescentar uma <em>timestamp</em> ao nome do arquivo.
 Com base em convenções de nomenclatura e argumentos (opcionais) adicionais, ele pode
 também começar a concretizar a <em>migration</em>.</p><p>Se o nome da migração estiver no formato "AddColumnToTable" ou
 "RemoveColumnFromTable" e é seguido por uma lista de nomes de colunas e
-tipos de dados, então uma <em>migration</em> contendo as intruções <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column"><code>add_column</code></a> e
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_column"><code>remove_column</code></a> serão criadas apropriadamente.</p><div class="code_container">
+tipos de dados, então uma <em>migration</em> contendo as intruções <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column"><code>add_column</code></a> e
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_column"><code>remove_column</code></a> serão criadas apropriadamente.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddPartNumberToProducts part_number:string
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6f6afa08a2441b550401edceb680563a">bin/rails generate migration AddPartNumberToProducts part_number:string
+<textarea class="clipboard-content" id="clipboard-8ff4f489e9ba04e166faf1546831dbb4">bin/rails generate migration AddPartNumberToProducts part_number:string
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6f6afa08a2441b550401edceb680563a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ff4f489e9ba04e166faf1546831dbb4">Copiar</button>
 </div>
 <p>irá gerar</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddPartNumberToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddPartNumberToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">add_column</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:part_number</span><span class="p">,</span> <span class="ss">:string</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c93125f03fc3fca8a4bc6f6421d48169">class AddPartNumberToProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-223c5d5247190b3d5e86718a407c4b7b">class AddPartNumberToProducts &lt; ActiveRecord::Migration[7.0]
   def change
     add_column :products, :part_number, :string
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c93125f03fc3fca8a4bc6f6421d48169">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-223c5d5247190b3d5e86718a407c4b7b">Copiar</button>
 </div>
 <p>Se você deseja adicionar um índice na nova coluna, você também pode fazer isso.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddPartNumberToProducts part_number:string:index
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4a39b8c7152d113f15d575a347675904">bin/rails generate migration AddPartNumberToProducts part_number:string:index
+<textarea class="clipboard-content" id="clipboard-c5eea9371735678bda75f2c0f2f4a060">bin/rails generate migration AddPartNumberToProducts part_number:string:index
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4a39b8c7152d113f15d575a347675904">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c5eea9371735678bda75f2c0f2f4a060">Copiar</button>
 </div>
-<p>irá gerar o <code>add_column</code> apropriado e o <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index"><code>add_index</code></a></p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddPartNumberToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<p>irá gerar o <code>add_column</code> apropriado e o <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index"><code>add_index</code></a></p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddPartNumberToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">add_column</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:part_number</span><span class="p">,</span> <span class="ss">:string</span>
     <span class="n">add_index</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:part_number</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-003f45e18312c5e5c6b1c8b2e0a3121b">class AddPartNumberToProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-8b41e7c582a0823a7d577e8a42bb1d78">class AddPartNumberToProducts &lt; ActiveRecord::Migration[7.0]
   def change
     add_column :products, :part_number, :string
     add_index :products, :part_number
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-003f45e18312c5e5c6b1c8b2e0a3121b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8b41e7c582a0823a7d577e8a42bb1d78">Copiar</button>
 </div>
 <p>Da mesma forma, você pode gerar uma <em>migration</em> para remover uma coluna via linha de comando:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration RemovePartNumberFromProducts part_number:string
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-89a0e58796c06ba0b9e53ceb029248b0">bin/rails generate migration RemovePartNumberFromProducts part_number:string
+<textarea class="clipboard-content" id="clipboard-b89126d2e961f2d616dc1051369306da">bin/rails generate migration RemovePartNumberFromProducts part_number:string
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-89a0e58796c06ba0b9e53ceb029248b0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b89126d2e961f2d616dc1051369306da">Copiar</button>
 </div>
 <p>gera</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">RemovePartNumberFromProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">RemovePartNumberFromProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">remove_column</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:part_number</span><span class="p">,</span> <span class="ss">:string</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c1543978b29971a15b2a2c0a8bd83de8">class RemovePartNumberFromProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-e50f1b3d997479ce845a556ddcf96f94">class RemovePartNumberFromProducts &lt; ActiveRecord::Migration[7.0]
   def change
     remove_column :products, :part_number, :string
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c1543978b29971a15b2a2c0a8bd83de8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e50f1b3d997479ce845a556ddcf96f94">Copiar</button>
 </div>
 <p>Você não tem a limitação de apenas uma coluna ser gerada magicamente. Por exemplo:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddDetailsToProducts part_number:string price:decimal
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9fc0e7bf572554e3ee37538e74d95611">bin/rails generate migration AddDetailsToProducts part_number:string price:decimal
+<textarea class="clipboard-content" id="clipboard-6bb07f0024d20c747a428bc70c883dc7">bin/rails generate migration AddDetailsToProducts part_number:string price:decimal
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9fc0e7bf572554e3ee37538e74d95611">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6bb07f0024d20c747a428bc70c883dc7">Copiar</button>
 </div>
 <p>gera</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddDetailsToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddDetailsToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">add_column</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:part_number</span><span class="p">,</span> <span class="ss">:string</span>
     <span class="n">add_column</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:price</span><span class="p">,</span> <span class="ss">:decimal</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-49313a55e789888d4fe6eb4144b9e5a1">class AddDetailsToProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-8860e05df93d7f9b28746329aa3f8b30">class AddDetailsToProducts &lt; ActiveRecord::Migration[7.0]
   def change
     add_column :products, :part_number, :string
     add_column :products, :price, :decimal
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-49313a55e789888d4fe6eb4144b9e5a1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8860e05df93d7f9b28746329aa3f8b30">Copiar</button>
 </div>
 <p>Se o nome da migração estiver no formato "CreateXXX" e for
 seguido por uma lista de nomes e tipos de colunas, em seguida, uma <em>migration</em> criando a tabela
 XXX com as colunas listadas será gerado. Por exemplo:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration CreateProducts name:string part_number:string
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4af97176caf782aba59050594337332f">bin/rails generate migration CreateProducts name:string part_number:string
+<textarea class="clipboard-content" id="clipboard-20a110c19b37086d5238993f6aca9a90">bin/rails generate migration CreateProducts name:string part_number:string
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4af97176caf782aba59050594337332f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-20a110c19b37086d5238993f6aca9a90">Copiar</button>
 </div>
 <p>gera</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">create_table</span> <span class="ss">:products</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:name</span>
@@ -556,7 +563,7 @@ XXX com as colunas listadas será gerado. Por exemplo:</p><div class="code_conta
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bc6116307fc7047a7a4f269888d10ffb">class CreateProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-c64999beedd28fa618f821e0473d50c4">class CreateProducts &lt; ActiveRecord::Migration[7.0]
   def change
     create_table :products do |t|
       t.string :name
@@ -567,7 +574,7 @@ XXX com as colunas listadas será gerado. Por exemplo:</p><div class="code_conta
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bc6116307fc7047a7a4f269888d10ffb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c64999beedd28fa618f821e0473d50c4">Copiar</button>
 </div>
 <p>Como sempre, o que foi gerado para você é apenas um ponto de partida. Você pode adicionar
 ou remover conteúdo como achar melhor, editando o arquivo
@@ -575,34 +582,36 @@ ou remover conteúdo como achar melhor, editando o arquivo
 <code>belongs_to</code>). Por exemplo:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddUserRefToProducts user:references
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ed9f2bea7dd98553dd2e9b61d740b859">bin/rails generate migration AddUserRefToProducts user:references
+<textarea class="clipboard-content" id="clipboard-b0bb29ee5640d1fd2c09ae5df1fb5283">bin/rails generate migration AddUserRefToProducts user:references
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ed9f2bea7dd98553dd2e9b61d740b859">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b0bb29ee5640d1fd2c09ae5df1fb5283">Copiar</button>
 </div>
 <p>gera a seguinte chamada a [<code>add_references</code>][]:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddUserRefToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddUserRefToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">add_reference</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:user</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="kp">true</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4aa9e1c63c5b57c2baafc90cde140119">class AddUserRefToProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-bc81850c72ffff9cd63e9623d51d6c74">class AddUserRefToProducts &lt; ActiveRecord::Migration[7.0]
   def change
     add_reference :products, :user, foreign_key: true
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4aa9e1c63c5b57c2baafc90cde140119">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bc81850c72ffff9cd63e9623d51d6c74">Copiar</button>
 </div>
-<p>Essa migração criará uma coluna <code>user_id</code> e o índice apropriado.</p><p>Também existe um gerador que produzirá <em>join tables</em> se <code>JoinTable</code> fizer parte do nome:</p><div class="code_container">
+<p>Essa migração criará uma coluna <code>user_id</code>, <a href="#references">references</a> é um
+abreviação para criar colunas, índices, chaves estrangeiras ou mesmo colunas polimórficas
+de associação.</p><p>Também existe um gerador que produzirá <em>join tables</em> se <code>JoinTable</code> fizer parte do nome:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>g migration CreateJoinTableCustomerProduct customer product
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-116762aa6b56c57f6811244d15a7d517">bin/rails g migration CreateJoinTableCustomerProduct customer product
+<textarea class="clipboard-content" id="clipboard-14e610ad9e952a46cf9d99b46ff4b2b0">bin/rails g migration CreateJoinTableCustomerProduct customer product
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-116762aa6b56c57f6811244d15a7d517">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-14e610ad9e952a46cf9d99b46ff4b2b0">Copiar</button>
 </div>
 <p>produzirá a seguinte migração:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateJoinTableCustomerProduct</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateJoinTableCustomerProduct</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">create_join_table</span> <span class="ss">:customers</span><span class="p">,</span> <span class="ss">:products</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="c1"># t.index [:customer_id, :product_id]</span>
@@ -611,7 +620,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-be3eadb997465279f8ad14d709da0af5">class CreateJoinTableCustomerProduct &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-fef2aeb6530d1e2ad88e9ca7de0f05f8">class CreateJoinTableCustomerProduct &lt; ActiveRecord::Migration[7.0]
   def change
     create_join_table :customers, :products do |t|
       # t.index [:customer_id, :product_id]
@@ -620,20 +629,20 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-be3eadb997465279f8ad14d709da0af5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fef2aeb6530d1e2ad88e9ca7de0f05f8">Copiar</button>
 </div>
-<h4 id="model-generators"><a class="anchorlink" href="#model-generators">2.2 Model Generators</a></h4><p>Os geradores de <em>model</em> e <em>scaffold</em> criarão migrações apropriadas para adicionar
+<h4 id="model-generators"><a class="anchorlink" href="#model-generators">2.2 Model Generators</a></h4><p>Os geradores de <em>model</em>, <em>resource</em> e <em>scaffold</em> criarão migrações apropriadas para adicionar
 um novo <em>model</em>. Essa migração já irá conter as instruções para criar a
 tabela. Se você disser ao Rails quais colunas você deseja, as instruções para
 adicionar essas colunas também serão criadas. Por exemplo, executando:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate model Product name:string description:text
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-81f2d210a12f0e5c23360b8d2cf2c059">bin/rails generate model Product name:string description:text
+<textarea class="clipboard-content" id="clipboard-74bdaf3d3273e821f03de5de78359cdf">bin/rails generate model Product name:string description:text
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-81f2d210a12f0e5c23360b8d2cf2c059">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-74bdaf3d3273e821f03de5de78359cdf">Copiar</button>
 </div>
 <p>criará uma migração que se parece com isso</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">create_table</span> <span class="ss">:products</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:name</span>
@@ -644,7 +653,7 @@ adicionar essas colunas também serão criadas. Por exemplo, executando:</p><div
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-948c0dfa595c76d28f4982e132eca852">class CreateProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-d6a9c76d94b9d864ae98436a4aa71e85">class CreateProducts &lt; ActiveRecord::Migration[7.0]
   def change
     create_table :products do |t|
       t.string :name
@@ -655,49 +664,48 @@ adicionar essas colunas também serão criadas. Por exemplo, executando:</p><div
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-948c0dfa595c76d28f4982e132eca852">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d6a9c76d94b9d864ae98436a4aa71e85">Copiar</button>
 </div>
 <p>Você pode utilizar quantos pares de nome/tipo de coluna desejar.</p><h4 id="usando-modificadores"><a class="anchorlink" href="#usando-modificadores">2.3 Usando Modificadores</a></h4><p>Alguns <a href="#modificadores-de-coluna">modificadores de tipo</a> podem utilizados diretamente via
 linha de comando. Eles são delimitados por chaves e vem após o tipo de campo:</p><p>Por exemplo, executando:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddDetailsToProducts <span class="s1">'price:decimal{5,2}'</span> supplier:references<span class="o">{</span>polymorphic<span class="o">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6d48f8938b43bd5fe587c73b6ffaa61b">bin/rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
+<textarea class="clipboard-content" id="clipboard-d7385f86590af69b73aaaebe0ab443a3">bin/rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6d48f8938b43bd5fe587c73b6ffaa61b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d7385f86590af69b73aaaebe0ab443a3">Copiar</button>
 </div>
 <p>produzirá uma migração que se parece com isso</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddDetailsToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddDetailsToProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">add_column</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:price</span><span class="p">,</span> <span class="ss">:decimal</span><span class="p">,</span> <span class="ss">precision: </span><span class="mi">5</span><span class="p">,</span> <span class="ss">scale: </span><span class="mi">2</span>
     <span class="n">add_reference</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:supplier</span><span class="p">,</span> <span class="ss">polymorphic: </span><span class="kp">true</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3ec982e14499f232527188828a484c11">class AddDetailsToProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-b375f2ea474290f0e92736bdcc31a138">class AddDetailsToProducts &lt; ActiveRecord::Migration[7.0]
   def change
     add_column :products, :price, :decimal, precision: 5, scale: 2
     add_reference :products, :supplier, polymorphic: true
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3ec982e14499f232527188828a484c11">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b375f2ea474290f0e92736bdcc31a138">Copiar</button>
 </div>
 <div class="info"><p>Dê uma olhada no <code>--help</code> dos <em>generators</em> (geradores) obter mais detalhes.</p></div><h3 id="escrevendo-uma-migration"><a class="anchorlink" href="#escrevendo-uma-migration">3 Escrevendo uma <em>Migration</em></a></h3><p>Depois de criar sua <em>migration</em> usando um dos geradores, é hora de
-começar os trabalhos!</p><h4 id="criando-uma-tabela"><a class="anchorlink" href="#criando-uma-tabela">3.1 Criando uma Tabela</a></h4><p>O método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_table"><code>create_table</code></a> é um dos mais fundamentais, mas na maioria das vezes,
-ele será criado para você usando um gerador de <em>scaffold</em> ou <em>model</em>. Um uso
+começar os trabalhos!</p><h4 id="criando-uma-tabela"><a class="anchorlink" href="#criando-uma-tabela">3.1 Criando uma Tabela</a></h4><p>O método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_table"><code>create_table</code></a> é um dos mais fundamentais, mas na maioria das vezes,
+ele será criado para você usando um gerador de <em>model</em>, <em>resource</em> ou <em>scaffold</em>. Um uso
 típico seria:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">create_table</span> <span class="ss">:products</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
   <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:name</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ce6f6a8e24d4b79f78892dddbdc6c897">create_table :products do |t|
+<textarea class="clipboard-content" id="clipboard-bda8a08e1863bd46ab375770f276c607">create_table :products do |t|
   t.string :name
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ce6f6a8e24d4b79f78892dddbdc6c897">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bda8a08e1863bd46ab375770f276c607">Copiar</button>
 </div>
-<p>Que cria uma tabela <code>products</code> com uma coluna chamada <code>name</code> (e como discutido
-abaixo, uma coluna implícita <code>id</code>.</p><p>Por padrão, o <code>create_table</code> criará uma chave primária chamada <code>id</code>. Você pode mudar
+<p>Que cria uma tabela <code>products</code> com uma coluna chamada <code>name</code>.</p><p>Por padrão, o <code>create_table</code> criará uma chave primária chamada <code>id</code>. Você pode mudar
 o nome da chave primária com a opção <code>:primary_key</code> (não esqueça de
 atualizar o <em>model</em> correspondente) ou, se você não quer uma chave primária, você
 pode passar a opção <code>id: false</code>. Se você precisa passar opções específicas do banco de dados
@@ -706,24 +714,38 @@ você pode colocar um fragmento SQL na opção <code>:option</code>. Por exemplo
   <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">null: </span><span class="kp">false</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aac2b416d421bc345f8fe4584402f6ff">create_table :products, options: "ENGINE=BLACKHOLE" do |t|
+<textarea class="clipboard-content" id="clipboard-252323e3f43dc790f9b20b860c5b8e62">create_table :products, options: "ENGINE=BLACKHOLE" do |t|
   t.string :name, null: false
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aac2b416d421bc345f8fe4584402f6ff">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-252323e3f43dc790f9b20b860c5b8e62">Copiar</button>
 </div>
-<p>acrescentará <code>ENGINE=BLACKHOLE</code> à instrução SQL usada para criar a tabela.</p><p>Você também pode passar a opção <code>:comment</code> com qualquer descrição para a tabela
+<p>acrescentará <code>ENGINE=BLACKHOLE</code> à instrução SQL usada para criar a tabela.</p><p>Um índice pode ser criado nas colunas criadas dentro do bloco <code>create_table</code>
+passando <code>true</code> ou um <code>hash</code> para a opção <code>:index</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">create_table</span> <span class="ss">:users</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+  <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">index: </span><span class="kp">true</span>
+  <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">index: </span><span class="p">{</span> <span class="ss">unique: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">name: </span><span class="s1">'unique_emails'</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e2f395d5e092b456f5ed00e74d8c5c02">create_table :users do |t|
+  t.string :name, index: true
+  t.string :email, index: { unique: true, name: 'unique_emails' }
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e2f395d5e092b456f5ed00e74d8c5c02">Copiar</button>
+</div>
+<p>Você também pode passar a opção <code>:comment</code> com qualquer descrição para a tabela
 que serão armazenados no próprio bando de dados e poderão ser visualizados com ferramentas de administração
 de banco de dados, como MySQL Workbench ou PgAdmin III. É altamente recomendável especificar
 comentários nas <em>migrations</em> para aplicações com grandes bancos de dados, pois ajudam as pessoas
 a entender o modelo de dados e gerar documentação.
-Atualmente, apenas os adaptadores MySQL e PostgreSQL suportam comentários.</p><h4 id="criando-uma-tabela-de-juncao-join-table"><a class="anchorlink" href="#criando-uma-tabela-de-juncao-join-table">3.2 Criando uma Tabela de Junção (Join Table)</a></h4><p>O método de <em>migration</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_join_table"><code>create_join_table</code></a> cria uma tabela <em>join</em> HABTM (tem e pertence a
+Atualmente, apenas os adaptadores MySQL e PostgreSQL suportam comentários.</p><h4 id="criando-uma-tabela-de-juncao-join-table"><a class="anchorlink" href="#criando-uma-tabela-de-juncao-join-table">3.2 Criando uma Tabela de Junção (Join Table)</a></h4><p>O método de <em>migration</em> <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_join_table"><code>create_join_table</code></a> cria uma tabela <em>join</em> HABTM (tem e pertence a
 muitos). Um uso comum seria:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">create_join_table</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:categories</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-db32595bb8d4ca938ff0e099c7e6e746">create_join_table :products, :categories
+<textarea class="clipboard-content" id="clipboard-e6029b698dc8f7b513bc158d9f8aecd8">create_join_table :products, :categories
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-db32595bb8d4ca938ff0e099c7e6e746">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e6029b698dc8f7b513bc158d9f8aecd8">Copiar</button>
 </div>
 <p>que cria uma tabela <code>categories_products</code> com duas colunas chamadas
 <code>category_id</code> e <code>product_id</code>. Essas colunas têm a opção <code>:null</code> definida como
@@ -731,18 +753,18 @@ muitos). Um uso comum seria:</p><div class="code_container">
 <code>:column_options</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">create_join_table</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:categories</span><span class="p">,</span> <span class="ss">column_options: </span><span class="p">{</span> <span class="ss">null: </span><span class="kp">true</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e08e8cc519717960d0a4e3d40b98b436">create_join_table :products, :categories, column_options: { null: true }
+<textarea class="clipboard-content" id="clipboard-695248c969b5cfc2e0466fb4da1e1b06">create_join_table :products, :categories, column_options: { null: true }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e08e8cc519717960d0a4e3d40b98b436">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-695248c969b5cfc2e0466fb4da1e1b06">Copiar</button>
 </div>
 <p>Por padrão, o nome da tabela de <em>join</em> vem da união dos dois primeiros
 argumentos fornecidos para <code>create_join_table</code> em ordem alfabética.
 Para customizar o nome da tabela, forneça uma opção <code>:table_name</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">create_join_table</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:categories</span><span class="p">,</span> <span class="ss">table_name: :categorization</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7f2c146b565367b088f2b579a96caf1e">create_join_table :products, :categories, table_name: :categorization
+<textarea class="clipboard-content" id="clipboard-1c6a97da73af1baa3de607abd1ab4f9a">create_join_table :products, :categories, table_name: :categorization
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7f2c146b565367b088f2b579a96caf1e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1c6a97da73af1baa3de607abd1ab4f9a">Copiar</button>
 </div>
 <p>cria uma tabela <code>categorization</code>.</p><p><code>create_join_table</code> também aceita um bloco, que você pode usar para adicionar índices
 (que não são criados por padrão) ou colunas adicionais:</p><div class="code_container">
@@ -751,14 +773,14 @@ Para customizar o nome da tabela, forneça uma opção <code>:table_name</code>:
   <span class="n">t</span><span class="p">.</span><span class="nf">index</span> <span class="ss">:category_id</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3a3104b1e245a68484f8e4d3adc5a0e5">create_join_table :products, :categories do |t|
+<textarea class="clipboard-content" id="clipboard-72509345335f021d50d6d48985de1682">create_join_table :products, :categories do |t|
   t.index :product_id
   t.index :category_id
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3a3104b1e245a68484f8e4d3adc5a0e5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-72509345335f021d50d6d48985de1682">Copiar</button>
 </div>
-<h4 id="mudando-tabelas"><a class="anchorlink" href="#mudando-tabelas">3.3 Mudando Tabelas</a></h4><p>Um primo próximo do <code>create_table</code> é <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table"><code>change_table</code></a>, usado para mudar tabelas
+<h4 id="mudando-tabelas"><a class="anchorlink" href="#mudando-tabelas">3.3 Mudando Tabelas</a></h4><p>Um primo próximo do <code>create_table</code> é <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table"><code>change_table</code></a>, usado para mudar tabelas
 existentes. É usado de maneira semelhante ao <code>create_table</code> mas o objeto
 produzido no bloco conhece mais truques. Por exemplo:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">change_table</span> <span class="ss">:products</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
@@ -768,35 +790,35 @@ produzido no bloco conhece mais truques. Por exemplo:</p><div class="code_contai
   <span class="n">t</span><span class="p">.</span><span class="nf">rename</span> <span class="ss">:upccode</span><span class="p">,</span> <span class="ss">:upc_code</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6bf3ce48685d7a90790dfa0661f739ab">change_table :products do |t|
+<textarea class="clipboard-content" id="clipboard-e2ecf75d5d716ed962e30f60f13228ca">change_table :products do |t|
   t.remove :description, :name
   t.string :part_number
   t.index :part_number
   t.rename :upccode, :upc_code
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6bf3ce48685d7a90790dfa0661f739ab">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e2ecf75d5d716ed962e30f60f13228ca">Copiar</button>
 </div>
 <p>remove as colunas <code>description</code> e <code>name</code>, cria uma coluna de string <code>part_number</code>
 e adiciona um índice nela. Finalmente renomeia a coluna <code>upccode</code>.</p><h4 id="mudando-colunas"><a class="anchorlink" href="#mudando-colunas">3.4 Mudando Colunas</a></h4><p>Assim como o <code>remove_column</code> e <code>add_column</code>, o Rails fornece o método de
-<em>migration</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column"><code>change_column</code></a>.</p><div class="code_container">
+<em>migration</em> <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column"><code>change_column</code></a>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">change_column</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:part_number</span><span class="p">,</span> <span class="ss">:text</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8dd4ac3a630c21878421c65e35bda1c4">change_column :products, :part_number, :text
+<textarea class="clipboard-content" id="clipboard-0be19118daebf996701417ed7eae4b94">change_column :products, :part_number, :text
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8dd4ac3a630c21878421c65e35bda1c4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0be19118daebf996701417ed7eae4b94">Copiar</button>
 </div>
 <p>Isso muda a coluna <code>part_number</code> na tabela produtos para ser um campo <code>:text</code>.
-Note que o comando <code>change_column</code> é irreversível.</p><p>Além do <code>change_column</code>, os métodos <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_null"><code>change_column_null</code></a> e <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_default"><code>change_column_default</code></a>
+Note que o comando <code>change_column</code> é irreversível.</p><p>Além do <code>change_column</code>, os métodos <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_null"><code>change_column_null</code></a> e <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_default"><code>change_column_default</code></a>
 são usados especificamente para alterar uma restrição de não ser nulo e valores
 padrão de uma coluna.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">change_column_null</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="kp">false</span>
 <span class="n">change_column_default</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:approved</span><span class="p">,</span> <span class="ss">from: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">to: </span><span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9d264f74aa2e17608ccc6d915c8437df">change_column_null :products, :name, false
+<textarea class="clipboard-content" id="clipboard-c024c76c3d18a0190c194f0d786d97cc">change_column_null :products, :name, false
 change_column_default :products, :approved, from: true, to: false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9d264f74aa2e17608ccc6d915c8437df">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c024c76c3d18a0190c194f0d786d97cc">Copiar</button>
 </div>
 <p>Isso define o campo <code>:name</code> em produtos para uma coluna <code>NOT NULL</code> e o valor
 padrão do campo <code>:approved</code> de <code>true</code> para <code>false</code>.</p><div class="note"><p>Você também pode escrever a <em>migration</em> <code>change_column_default</code> acima como
@@ -804,32 +826,70 @@ padrão do campo <code>:approved</code> de <code>true</code> para <code>false</c
 anterior, isso tornaria sua <em>migration</em> irreversível.</p></div><h4 id="modificadores-de-coluna"><a class="anchorlink" href="#modificadores-de-coluna">3.5 Modificadores de Coluna</a></h4><p>Modificadores de coluna podem ser aplicados ao criar ou alterar uma coluna:</p>
 <ul>
 <li>
-<code>limit</code>        Define o tamanho máximo dos campos <code>string/text/binary/integer</code>.</li>
+<code>comment</code>      Adiciona um comentário para a coluna.</li>
 <li>
-<code>precision</code>    Define a precisão para os campos <code>decimal</code>, representando a
-quantidade total de dígitos no número.</li>
-<li>
-<code>scale</code>        Define a escala para os campos <code>decimal</code>, representando o
-número de digitos após o ponto decimal.</li>
-<li>
-<code>polymorphic</code>  Adiciona uma coluna <code>type</code> para a associação <code>belongs_to</code>.</li>
-<li>
-<code>null</code>         Autoriza ou não valores <code>NULL</code> na coluna.</li>
+<code>collation</code>    Especifica a <em>collation</em> para uma coluna <code>string</code> ou <code>text</code>.</li>
 <li>
 <code>default</code>      Permite definir um valor padrão na coluna. Note que se você
 estiver usando um valor dinâmico (como uma data), o padrão será calculado
-apenas na primeira vez (ou seja, na data em que a <em>migration</em> é aplicada).</li>
+apenas na primeira vez (ou seja, na data em que a <em>migration</em> é aplicada). Use <code>nil</code> para <code>NULL</code>.</li>
 <li>
-<code>comment</code>      Adiciona um comentário para a coluna.</li>
+<code>limit</code>        Define o número máximo de caracteres para uma coluna <code>string</code> e o número máximo de bytes para colunas do tipo <code>text/binary/integer</code>.</li>
+<li>
+<code>null</code>         Permite ou não permite valores <code>NULL</code> na coluna.</li>
+<li>
+<code>precision</code>    Define a precisão para colunas de tipo <code>decimal/numeric/datetime/time</code>.</li>
+<li>
+<code>scale</code>        Define a escala para os campos <code>decimal</code> e <code>numeric</code>, representando o
+número de digitos após o ponto decimal.</li>
 </ul>
-<p>Alguns adaptadores podem suportar opções adicionais; consulte a documentação da API de um adaptador específico
-para maiores informações.</p><div class="note"><p><code>null</code> e <code>default</code> não podem ser especificados via linha de comando.</p></div><h4 id="foreign-keys-chaves-estrangeiras"><a class="anchorlink" href="#foreign-keys-chaves-estrangeiras">3.6 Foreign Keys (Chaves Estrangeiras)</a></h4><p>Embora não seja necessário, você pode adicionar restrições de foreign key (chave estrangeira) para
+<div class="note"><p>Para <code>add_column</code> ou <code>change_column</code> não há opção para adicionar índices.
+Eles precisam ser adicionados separadamente usando <code>add_index</code>.</p></div><p>Alguns adaptadores podem suportar opções adicionais; consulte a documentação da API de um adaptador específico
+para maiores informações.</p><div class="note"><p><code>null</code> e <code>default</code> não podem ser especificados via linha de comando.</p></div><h4 id="references"><a class="anchorlink" href="#references">3.6 References</a></h4><p>O método <code>add_reference</code> permite a criação de uma coluna apropriadamente nomeada.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">add_reference</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:role</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2bc285f0c40d7370932ad9e623c8de12">add_reference :users, :role
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2bc285f0c40d7370932ad9e623c8de12">Copiar</button>
+</div>
+<p>Essa migração criará uma coluna <code>role_id</code> na tabela de usuários. Ela cria um
+index para esta coluna também, a menos que explicitamente informado com o
+opção <code>index: false</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">add_reference</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:role</span><span class="p">,</span> <span class="ss">index: </span><span class="kp">false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b6ba5ee24ed647b0d9dfa45b64b30f8f">add_reference :users, :role, index: false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b6ba5ee24ed647b0d9dfa45b64b30f8f">Copiar</button>
+</div>
+<p>O método <code>add_belongs_to</code> é um <em>alias</em> para <code>add_reference</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">add_belongs_to</span> <span class="ss">:taggings</span><span class="p">,</span> <span class="ss">:taggable</span><span class="p">,</span> <span class="ss">polymorphic: </span><span class="kp">true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-af68f229a88d67279999336aef5b423b">add_belongs_to :taggings, :taggable, polymorphic: true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-af68f229a88d67279999336aef5b423b">Copiar</button>
+</div>
+<p>A opção polimórfica criará duas colunas na tabela de tags que podem
+ser usado para associações polimórficas: <code>taggable_type</code> e <code>taggable_id</code>.</p><p>Uma chave estrangeira pode ser criada com a opção <code>foreign_key</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">add_reference</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:role</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="kp">true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-27c99b97428dd3be0bf7730b5d1f7d00">add_reference :users, :role, foreign_key: true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-27c99b97428dd3be0bf7730b5d1f7d00">Copiar</button>
+</div>
+<p>Para obter mais opções de <code>add_reference</code>, visite a <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference">documentação da API</a>.</p><p>As referências também podem ser removidas:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">remove_reference</span> <span class="ss">:products</span><span class="p">,</span> <span class="ss">:user</span><span class="p">,</span> <span class="ss">foreign_key: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">index: </span><span class="kp">false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-303f9f9649629475636d64aee88704d8">remove_reference :products, :user, foreign_key: true, index: false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-303f9f9649629475636d64aee88704d8">Copiar</button>
+</div>
+<h4 id="foreign-keys-chaves-estrangeiras"><a class="anchorlink" href="#foreign-keys-chaves-estrangeiras">3.7 Foreign Keys (Chaves Estrangeiras)</a></h4><p>Embora não seja necessário, você pode adicionar restrições de foreign key (chave estrangeira) para
 <a href="#active-record-e-integridade-referencial">garantir a integridade referencial</a>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">add_foreign_key</span> <span class="ss">:articles</span><span class="p">,</span> <span class="ss">:authors</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f955ae04629a56522335c25550f776c6">add_foreign_key :articles, :authors
+<textarea class="clipboard-content" id="clipboard-7f654eb5b1bd8e461bbd99b4122ac0b3">add_foreign_key :articles, :authors
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f955ae04629a56522335c25550f776c6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7f654eb5b1bd8e461bbd99b4122ac0b3">Copiar</button>
 </div>
 <p>Isso adiciona uma nova <em>foreign key</em> (chave estrangeira) à coluna <code>author_id</code> da tabela
 <code>articles</code>. A chave referencia a coluna <code>id</code> para a tabela <code>authors</code>. Se os
@@ -850,7 +910,7 @@ Existe uma opção <code>:name</code> para especificar um nome diferente se nece
 <span class="c1"># remove foreign key by name</span>
 <span class="n">remove_foreign_key</span> <span class="ss">:accounts</span><span class="p">,</span> <span class="ss">name: :special_fk_name</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2cd129dcaaaae4e339059bf7e46f1ee2"># let Active Record figure out the column name
+<textarea class="clipboard-content" id="clipboard-d8947b6dc18b852fcb58a281bbefe4ac"># let Active Record figure out the column name
 remove_foreign_key :accounts, :branches
 
 # remove foreign key for a specific column
@@ -859,70 +919,70 @@ remove_foreign_key :accounts, column: :owner_id
 # remove foreign key by name
 remove_foreign_key :accounts, name: :special_fk_name
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2cd129dcaaaae4e339059bf7e46f1ee2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d8947b6dc18b852fcb58a281bbefe4ac">Copiar</button>
 </div>
-<h4 id="quando-os-helpers-nao-sao-suficientes"><a class="anchorlink" href="#quando-os-helpers-nao-sao-suficientes">3.7 Quando os Helpers não são Suficientes</a></h4><p>Se os <em>helpers</em> fornecidos pelo Active Record não forem suficientes, você poderá usar o método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/DatabaseStatements.html#method-i-execute"><code>execute</code></a>
+<h4 id="quando-os-helpers-nao-sao-suficientes"><a class="anchorlink" href="#quando-os-helpers-nao-sao-suficientes">3.8 Quando os Helpers não são Suficientes</a></h4><p>Se os <em>helpers</em> fornecidos pelo Active Record não forem suficientes, você poderá usar o método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/DatabaseStatements.html#method-i-execute"><code>execute</code></a>
 para executar SQL arbitrário:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Product</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"UPDATE products SET price = 'free' WHERE 1=1"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c53b6f071e58eeb3eeca11604ae49e81">Product.connection.execute("UPDATE products SET price = 'free' WHERE 1=1")
+<textarea class="clipboard-content" id="clipboard-1e350f82cd79f6bd102fb67c18c3f65a">Product.connection.execute("UPDATE products SET price = 'free' WHERE 1=1")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c53b6f071e58eeb3eeca11604ae49e81">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1e350f82cd79f6bd102fb67c18c3f65a">Copiar</button>
 </div>
 <p>Para mais detalhes e exemplos de métodos individuais, consulte a documentação da API.
 Em particular, a documentação para
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html"><code>ActiveRecord::ConnectionAdapters::SchemaStatements</code></a>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html"><code>ActiveRecord::ConnectionAdapters::SchemaStatements</code></a>
 (que fornece os métodos disponíveis nos métodos <code>change</code>, <code>up</code> e <code>down</code>),
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html"><code>ActiveRecord::ConnectionAdapters::TableDefinition</code></a>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html"><code>ActiveRecord::ConnectionAdapters::TableDefinition</code></a>
 (que fornece os métodos disponíveis no objeto gerado por <code>create_table</code>)
 e
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/Table.html"><code>ActiveRecord::ConnectionAdapters::Table</code></a>
-(que fornece os métodos disponíveis no objeto gerado por <code>change_table</code>).</p><h4 id="usando-o-metodo-change"><a class="anchorlink" href="#usando-o-metodo-change">3.8 Usando o Método <code>change</code></a></h4><p>O método <code>change</code> é a principal maneira de escrever <em>migrations</em>. Funciona para a
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/Table.html"><code>ActiveRecord::ConnectionAdapters::Table</code></a>
+(que fornece os métodos disponíveis no objeto gerado por <code>change_table</code>).</p><h4 id="usando-o-metodo-change"><a class="anchorlink" href="#usando-o-metodo-change">3.9 Usando o Método <code>change</code></a></h4><p>O método <code>change</code> é a principal maneira de escrever <em>migrations</em>. Funciona para a
 maioria dos casos, onde o <em>Active Record</em> sabe como reverter a <em>migration</em>
 automaticamente. Atualmente, o método <code>change</code> suporta apenas estas definições de
 <em>migrations</em>:</p>
 <ul>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column"><code>add_column</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key"><code>add_foreign_key</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index"><code>add_index</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference"><code>add_reference</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_timestamps"><code>add_timestamps</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_column"><code>add_column</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key"><code>add_foreign_key</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_index"><code>add_index</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference"><code>add_reference</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_timestamps"><code>add_timestamps</code></a></li>
 <li>
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_default"><code>change_column_default</code></a> (must supply a <code>:from</code> and <code>:to</code> option)</li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_null"><code>change_column_null</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_join_table"><code>create_join_table</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_table"><code>create_table</code></a></li>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_default"><code>change_column_default</code></a> (must supply a <code>:from</code> and <code>:to</code> option)</li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_null"><code>change_column_null</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_join_table"><code>create_join_table</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_table"><code>create_table</code></a></li>
 <li><code>disable_extension</code></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_join_table"><code>drop_join_table</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_join_table"><code>drop_join_table</code></a></li>
 <li>
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_table"><code>drop_table</code></a> (must supply a block)</li>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_table"><code>drop_table</code></a> (must supply a block)</li>
 <li><code>enable_extension</code></li>
 <li>
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_column"><code>remove_column</code></a> (must supply a type)</li>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_column"><code>remove_column</code></a> (must supply a type)</li>
 <li>
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key"><code>remove_foreign_key</code></a> (must supply a second table)</li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_index"><code>remove_index</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_reference"><code>remove_reference</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_timestamps"><code>remove_timestamps</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_column"><code>rename_column</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_index"><code>rename_index</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_table"><code>rename_table</code></a></li>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key"><code>remove_foreign_key</code></a> (must supply a second table)</li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_index"><code>remove_index</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_reference"><code>remove_reference</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_timestamps"><code>remove_timestamps</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_column"><code>rename_column</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_index"><code>rename_index</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_table"><code>rename_table</code></a></li>
 </ul>
-<p><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table"><code>change_table</code></a> também é reversível, desde que o bloco não chame <code>change</code>,
+<p><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table"><code>change_table</code></a> também é reversível, desde que o bloco não chame <code>change</code>,
 <code>change_default</code> ou <code>remove</code>.</p><p><code>remove_column</code> é reversível se você fornecer o tipo de coluna como o terceiro
 argumento. Forneça também as opções da coluna original, caso contrário, o Rails não poderá
 recriar a coluna exatamente ao reverter:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">remove_column</span> <span class="ss">:posts</span><span class="p">,</span> <span class="ss">:slug</span><span class="p">,</span> <span class="ss">:string</span><span class="p">,</span> <span class="ss">null: </span><span class="kp">false</span><span class="p">,</span> <span class="ss">default: </span><span class="s1">''</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ed65656ea02fab7da91892596f34f7c3">remove_column :posts, :slug, :string, null: false, default: ''
+<textarea class="clipboard-content" id="clipboard-dec62042cd71be0a8dcb0ccbba963f3d">remove_column :posts, :slug, :string, null: false, default: ''
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ed65656ea02fab7da91892596f34f7c3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dec62042cd71be0a8dcb0ccbba963f3d">Copiar</button>
 </div>
 <p>Se você precisar usar outros métodos, você deve usar <code>reversible</code>
-ou escrever os métodos <code>up</code> e <code>down</code> em vez de usar o médoto <code>change</code>.</p><h4 id="usando-reversible"><a class="anchorlink" href="#usando-reversible">3.9 Usando <code>reversible</code></a></h4><p><em>Migrations</em> complexas podem exigir processamento que o <em>Active Record</em> não sabe como
-reverter. Você pode usar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Migration.html#method-i-reversible"><code>reversible</code></a> para especificar o que fazer ao executar uma
+ou escrever os métodos <code>up</code> e <code>down</code> em vez de usar o médoto <code>change</code>.</p><h4 id="usando-reversible"><a class="anchorlink" href="#usando-reversible">3.10 Usando <code>reversible</code></a></h4><p><em>Migrations</em> complexas podem exigir processamento que o <em>Active Record</em> não sabe como
+reverter. Você pode usar <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Migration.html#method-i-reversible"><code>reversible</code></a> para especificar o que fazer ao executar uma
 <em>migration</em> e o que mais fazer ao revertê-la. Por exemplo:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ExampleMigration</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ExampleMigration</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">create_table</span> <span class="ss">:distributors</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:zipcode</span>
@@ -950,7 +1010,7 @@ reverter. Você pode usar <a href="https://api.rubyonrails.org/v6.1.4/classes/Ac
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c6b86609d058055ac81b69dd5d251bf6">class ExampleMigration &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-6f9c6f9f87c5b5c2de9dfcf57c3a41d0">class ExampleMigration &lt; ActiveRecord::Migration[7.0]
   def change
     create_table :distributors do |t|
       t.string :zipcode
@@ -978,7 +1038,7 @@ reverter. Você pode usar <a href="https://api.rubyonrails.org/v6.1.4/classes/Ac
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c6b86609d058055ac81b69dd5d251bf6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6f9c6f9f87c5b5c2de9dfcf57c3a41d0">Copiar</button>
 </div>
 <p>O uso de <code>reversible</code> garantirá que as instruções também sejam executadas na
 ordem certa. Se o exemplo anterior de <em>migration</em> for revertido,
@@ -987,7 +1047,7 @@ logo antes da tabela <code>distributors</code> for apagada.</p><p>Às vezes sua 
 por exemplo, pode destruir alguns dados. Em alguns casos, você pode levantar o
 <code>ActiveRecord::IrreversibleMigration</code> no seu bloco <code>down</code>. Se alguém tentar
 reverter sua <em>migration</em>, uma mensagem de erro será exibida dizendo que isso
-não pode ser feito.</p><h4 id="usando-os-metodos-up-down"><a class="anchorlink" href="#usando-os-metodos-up-down">3.10 Usando os métodos <code>up</code>/<code>down</code></a></h4><p>Você também pode usar o estilo antigo de <em>migration</em> usando os métodos <code>up</code> e <code>down</code>
+não pode ser feito.</p><h4 id="usando-os-metodos-up-down"><a class="anchorlink" href="#usando-os-metodos-up-down">3.11 Usando os métodos <code>up</code>/<code>down</code></a></h4><p>Você também pode usar o estilo antigo de <em>migration</em> usando os métodos <code>up</code> e <code>down</code>
 em vez do método <code>change</code>.
 O método <code>up</code> deve descrever a transformação que você deseja fazer no seu
 <em>schema</em>, e o método <code>down</code> da sua <em>migration</em> deve reverter as
@@ -996,7 +1056,7 @@ deve permanecer inalterado se você fizer um <code>up</code> seguido por um <cod
 criar uma tabela em um método <code>up</code>, você deve apagá-la no método <code>down</code>. É
 aconselhável realizar as transformações precisamente na ordem inversa em que foram
 feitas no método <code>up</code>. O exemplo na seção <code>reversible</code> é equivalente a:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ExampleMigration</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ExampleMigration</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">up</span>
     <span class="n">create_table</span> <span class="ss">:distributors</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:zipcode</span>
@@ -1026,7 +1086,7 @@ feitas no método <code>up</code>. O exemplo na seção <code>reversible</code> 
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0065171491f48ee6b5bf8718010941b2">class ExampleMigration &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-19b9b250844677d3c07e0c79d9fbdef4">class ExampleMigration &lt; ActiveRecord::Migration[7.0]
   def up
     create_table :distributors do |t|
       t.string :zipcode
@@ -1056,15 +1116,15 @@ feitas no método <code>up</code>. O exemplo na seção <code>reversible</code> 
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0065171491f48ee6b5bf8718010941b2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-19b9b250844677d3c07e0c79d9fbdef4">Copiar</button>
 </div>
 <p>Se sua <em>migration</em> é irreversível, você deve dar <code>raise</code> num
 <code>ActiveRecord::IrreversibleMigration</code> do seu método <code>down</code>. Se alguém tentar
 reveter sua <em>migration</em>, uma mensagem de erro será exibida dizendo que isso
-não pode ser feito.</p><h4 id="revertendo-migrations-anteriores"><a class="anchorlink" href="#revertendo-migrations-anteriores">3.11 Revertendo <em>Migrations</em> Anteriores</a></h4><p>Você pode usar a capacidade do Active Record de reverter <em>migrations</em> usando o método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Migration.html#method-i-revert"><code>revert</code></a>:</p><div class="code_container">
+não pode ser feito.</p><h4 id="revertendo-migrations-anteriores"><a class="anchorlink" href="#revertendo-migrations-anteriores">3.12 Revertendo <em>Migrations</em> Anteriores</a></h4><p>Você pode usar a capacidade do Active Record de reverter <em>migrations</em> usando o método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Migration.html#method-i-revert"><code>revert</code></a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require_relative</span> <span class="s2">"20121212123456_example_migration"</span>
 
-<span class="k">class</span> <span class="nc">FixupExampleMigration</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<span class="k">class</span> <span class="nc">FixupExampleMigration</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">revert</span> <span class="no">ExampleMigration</span>
 
@@ -1074,9 +1134,9 @@ não pode ser feito.</p><h4 id="revertendo-migrations-anteriores"><a class="anch
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-566a06e478935f63af64f78b161f1254">require_relative "20121212123456_example_migration"
+<textarea class="clipboard-content" id="clipboard-517beb19d896f0504eb1ecd8e6bdc4b1">require_relative "20121212123456_example_migration"
 
-class FixupExampleMigration &lt; ActiveRecord::Migration[6.0]
+class FixupExampleMigration &lt; ActiveRecord::Migration[7.0]
   def change
     revert ExampleMigration
 
@@ -1086,14 +1146,14 @@ class FixupExampleMigration &lt; ActiveRecord::Migration[6.0]
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-566a06e478935f63af64f78b161f1254">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-517beb19d896f0504eb1ecd8e6bdc4b1">Copiar</button>
 </div>
 <p>O método <code>revert</code> também aceita um bloco de instruções para reverter.
 Isso pode ser útil para reverter partes selecionadas de <em>migrations</em> anteriores.
 Por exemplo, vamos imaginar que <code>ExampleMigration</code> seja executado e
 mais tarde decidimos que seria melhor usar as validações do Active Record,
 no lugar da <em>constraint</em> (restrição) <code>CHECK</code>, para verificar o CEP.</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">DontUseConstraintForZipcodeValidationMigration</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">DontUseConstraintForZipcodeValidationMigration</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">revert</span> <span class="k">do</span>
       <span class="c1"># copy-pasted code from ExampleMigration</span>
@@ -1119,7 +1179,7 @@ no lugar da <em>constraint</em> (restrição) <code>CHECK</code>, para verificar
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6aed88116cff9bf9ba5644dc8d50f864">class DontUseConstraintForZipcodeValidationMigration &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-43b2004b3045c5deb0734675d70cf3e8">class DontUseConstraintForZipcodeValidationMigration &lt; ActiveRecord::Migration[7.0]
   def change
     revert do
       # copy-pasted code from ExampleMigration
@@ -1145,7 +1205,7 @@ no lugar da <em>constraint</em> (restrição) <code>CHECK</code>, para verificar
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6aed88116cff9bf9ba5644dc8d50f864">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-43b2004b3045c5deb0734675d70cf3e8">Copiar</button>
 </div>
 <p>A mesma <em>migration</em> também poderia ter sido escrita sem o uso do <code>revert</code>
 mas isso envolveria mais algumas etapas: reverter a ordem
@@ -1164,9 +1224,9 @@ necessárias (<code>change</code>, <code>up</code>, <code>down</code>) até atin
 para a versão 20080906120000 execute:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate <span class="nv">VERSION</span><span class="o">=</span>20080906120000
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a74c426c74320f03647637aaeb4b53b5">bin/rails db:migrate VERSION=20080906120000
+<textarea class="clipboard-content" id="clipboard-8c7caadad74ddbb5de5310634c11d588">bin/rails db:migrate VERSION=20080906120000
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a74c426c74320f03647637aaeb4b53b5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8c7caadad74ddbb5de5310634c11d588">Copiar</button>
 </div>
 <p>Se a versão 20080906120000 for maior que a versão atual (ou seja, está migrando
 para cima), será executado o método <code>change</code> (ou <code>up</code>) em todas as <em>migrations</em>
@@ -1177,27 +1237,27 @@ um erro e deseja corrigí-lo. Ao invés de rastrear o número da versão associa
 à <em>migration</em> anterior, você pode executar:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:rollback
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-44a9f6e8d70ca3f3912a1121038ea5ec">bin/rails db:rollback
+<textarea class="clipboard-content" id="clipboard-84aefdb68e8f0da912be94941eb8e0cc">bin/rails db:rollback
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-44a9f6e8d70ca3f3912a1121038ea5ec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-84aefdb68e8f0da912be94941eb8e0cc">Copiar</button>
 </div>
 <p>Isso reverterá a <em>migration</em> mais recente, seja revertendo o método <code>change</code> ou
 executando o método <code>down</code>. Se precisar desfazer várias <em>migrations</em>, você pode
 passar um parâmetro <code>STEP</code>:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:rollback <span class="nv">STEP</span><span class="o">=</span>3
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9b98b6c310ebe274a32f94ce047b5adf">bin/rails db:rollback STEP=3
+<textarea class="clipboard-content" id="clipboard-d3e31025e306f1d88ec9702241012fbc">bin/rails db:rollback STEP=3
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9b98b6c310ebe274a32f94ce047b5adf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d3e31025e306f1d88ec9702241012fbc">Copiar</button>
 </div>
 <p>vai reverter as últimas 3 <em>migrations</em>.</p><p>O comando <code>db:migrate:redo</code> é um atalho para fazer um <em>rollback</em> e então refazer
 uma <em>migration</em> de volta. Assim como o comando <code>db:rollback</code>, você pode utilizar
 o parâmetro <code>STEP</code> se precisar voltar mais de uma versão, por exemplo:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate:redo <span class="nv">STEP</span><span class="o">=</span>3
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-00a0d2465fb65047fd5d63721347af00">bin/rails db:migrate:redo STEP=3
+<textarea class="clipboard-content" id="clipboard-6cb40d0a4d38044e1860f33cb861412f">bin/rails db:migrate:redo STEP=3
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-00a0d2465fb65047fd5d63721347af00">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6cb40d0a4d38044e1860f33cb861412f">Copiar</button>
 </div>
 <p>Nenhum desses comandos do rails fazem nada do que você não pudesse fazer com o
 <code>db:migrate</code>. Eles são apenas mais convenientes, já que você não precisa
@@ -1213,9 +1273,9 @@ versão correta e a <em>migration</em> correspondente terá o método <code>chan
 <code>down</code> chamado, por exemplo:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate:up <span class="nv">VERSION</span><span class="o">=</span>20080906120000
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7f0f34b59d1befa3b35d41ce80ee4b0e">bin/rails db:migrate:up VERSION=20080906120000
+<textarea class="clipboard-content" id="clipboard-625d1c1e8a154d254ae400c6a2d632b6">bin/rails db:migrate:up VERSION=20080906120000
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7f0f34b59d1befa3b35d41ce80ee4b0e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-625d1c1e8a154d254ae400c6a2d632b6">Copiar</button>
 </div>
 <p>vai executar a <em>migration</em> 20080906120000 executando o método <code>change</code> (ou o
 método <code>up</code>). Este comando verificará primeiro se a <em>migration</em> já foi realizada
@@ -1226,9 +1286,9 @@ enquanto executa o comando. Por exemplo, para executar as *migrations*no
 ambiente <code>test</code> (teste), você pode executar:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate <span class="nv">RAILS_ENV</span><span class="o">=</span><span class="nb">test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-50d4aa991dece773d63610fc4f1a502b">bin/rails db:migrate RAILS_ENV=test
+<textarea class="clipboard-content" id="clipboard-0653bf058f887362ace147e016a9f955">bin/rails db:migrate RAILS_ENV=test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-50d4aa991dece773d63610fc4f1a502b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0653bf058f887362ace147e016a9f955">Copiar</button>
 </div>
 <h4 id="alterando-o-output-saida-de-migrations-em-execucao"><a class="anchorlink" href="#alterando-o-output-saida-de-migrations-em-execucao">4.6 Alterando o Output (Saída) de <em>Migrations</em> em Execução</a></h4><p>Por padrão, as <em>migrations</em> informam exatamente o que estão fazendo e o quanto
 tempo levou.
@@ -1239,12 +1299,12 @@ Uma <em>migration</em> criando uma tabela e adicionando um índice pode produzir
    -&gt; 0.0028s
 ==  CreateProducts: migrated (0.0028s) ========================================
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5fb2b43c8c895a37ae98c1808ee5ee01">==  CreateProducts: migrating =================================================
+<textarea class="clipboard-content" id="clipboard-2052c696ca947b0f5f5fb434fce7b864">==  CreateProducts: migrating =================================================
 -- create_table(:products)
    -&gt; 0.0028s
 ==  CreateProducts: migrated (0.0028s) ========================================
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5fb2b43c8c895a37ae98c1808ee5ee01">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2052c696ca947b0f5f5fb434fce7b864">Copiar</button>
 </div>
 <p>Vários métodos são fornecidos nas <em>migrations</em> que permitem que você controle
 tudo isso:</p>
@@ -1257,21 +1317,21 @@ tudo isso:</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Migration.html#method-i-suppress_messages"><code>suppress_messages</code></a></td>
+<td><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Migration.html#method-i-suppress_messages"><code>suppress_messages</code></a></td>
 <td>Pega um bloco como argumento e suprime qualquer <em>output</em> gerado pelo bloco.</td>
 </tr>
 <tr>
-<td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Migration.html#method-i-say"><code>say</code></a></td>
+<td><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Migration.html#method-i-say"><code>say</code></a></td>
 <td>Pega um argumento de mensagem e o exibe como está. Um segundo argumento booleano pode ser passado para especificar se deve ser indentado ou não.</td>
 </tr>
 <tr>
-<td><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Migration.html#method-i-say_with_time"><code>say_with_time</code></a></td>
+<td><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Migration.html#method-i-say_with_time"><code>say_with_time</code></a></td>
 <td>Produz um texto junto com o tempo que levou para executar seu bloco. Se o bloco retornar um inteiro, ele assume que é o número de linhas afetadas.</td>
 </tr>
 </tbody>
 </table>
 <p>Por exemplo, esta <em>migration</em></p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">suppress_messages</span> <span class="k">do</span>
       <span class="n">create_table</span> <span class="ss">:products</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
@@ -1293,7 +1353,7 @@ tudo isso:</p>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6ede653814c26b6bea150d665c484902">class CreateProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-49c2cefb8a93c5c42b527d147c8fb799">class CreateProducts &lt; ActiveRecord::Migration[7.0]
   def change
     suppress_messages do
       create_table :products do |t|
@@ -1315,7 +1375,7 @@ tudo isso:</p>
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6ede653814c26b6bea150d665c484902">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-49c2cefb8a93c5c42b527d147c8fb799">Copiar</button>
 </div>
 <p>gera o seguinte <em>output</em></p><div class="code_container">
 <pre><code class="highlight plaintext">==  CreateProducts: migrating =================================================
@@ -1326,7 +1386,7 @@ end
    -&gt; 250 rows
 ==  CreateProducts: migrated (10.0054s) =======================================
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf565ecf4af8542b7ef60d9aeb78fd94">==  CreateProducts: migrating =================================================
+<textarea class="clipboard-content" id="clipboard-47b2fcef8e374d31a15202bbf8fdccbf">==  CreateProducts: migrating =================================================
 -- Created a table
    -&gt; and an index!
 -- Waiting for a while
@@ -1334,7 +1394,7 @@ end
    -&gt; 250 rows
 ==  CreateProducts: migrated (10.0054s) =======================================
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf565ecf4af8542b7ef60d9aeb78fd94">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-47b2fcef8e374d31a15202bbf8fdccbf">Copiar</button>
 </div>
 <p>Se você deseja que o <em>Active Record</em> não produza nada, execute <code>bin/rails db:migrate
 VERBOSE=false</code> e isso irá suprimir todos os <em>outputs</em></p><h3 id="mudando-migrations-existentes"><a class="anchorlink" href="#mudando-migrations-existentes">5 Mudando <em>Migrations</em> Existentes</a></h3><p>Ocasionalmente, você cometerá um erro ao escrever uma <em>migration</em>. Se você já executou a <em>migration</em>, você não pode editá-la e rodá-la novamente: o Rails assume que você já rodou a <em>migration</em>, então não irá fazer nada quando você executar o comando <code>bin/rails db:migrate</code>. Você deve reverter a <em>migration</em> (por exemplo com <code>bin/rails db:rollback</code>), editar a <em>migration</em>, e então rodar o comando <code>bin/rails db:migrate</code> para que a versão correta seja executada.</p><p>Em geral, a edição de <em>migrations</em> existentes não é uma boa ideia. Você criará trabalho extra para si mesmo e seus colegas de trabalho e causará dores de cabeça maiores se a versão existente da <em>migration</em> já tiver sido executada nas máquinas de produção.</p><p>Como alternativa, você deveria escrever uma nova <em>migration</em> que execute as mudanças necessárias. Editar uma <em>migration</em> recentemente gerada e que ainda não foi feito um <em>commit</em> para o <em>source control</em> (ou, de forma geral, que não foi propagada além de sua máquina de desenvolvimento) é relativamente inofensivo.</p><p>O método <code>revert</code> pode ajudar ao escrever uma nova <em>migration</em> para desfazer <em>migrations</em> anteriores no todo ou em partes (veja <a href="#revertendo-migrations-anteriores">Revertendo <em>Migrations</em> Anteriores</a> acima).</p><h3 id="schema-dumping-e-voce"><a class="anchorlink" href="#schema-dumping-e-voce">6 <em>Schema Dumping</em> e Você</a></h3><h4 id="para-que-servem-arquivos-de-schema-questionmark"><a class="anchorlink" href="#para-que-servem-arquivos-de-schema-questionmark">6.1 Para que servem arquivos de Schema?</a></h4><p><em>Migrations</em>, poderosas como podem ser, não são a fonte oficial para o <em>schema</em> do seu banco de dados. Seu banco de dados permanece sendo a fonte oficial. Por padrão, o Rails gera o arquivo <code>db/schema.rb</code> (um <a href="https://pt.wikipedia.org/wiki/Dump_de_banco_de_dados"><em>schema dump</em></a>), que tenta capturar o estado atual do <em>schema</em> do seu banco de dados.</p><p>Costuma ser mais rápido e menos suscetível a erros criar uma nova instância do banco de dados da sua aplicação caregando o arquivo de <em>schema</em> por meio do comando <code>bin/rails db:schema:load</code> ao invés de reexecutar todo o histórico de <em>migrations</em>.
@@ -1355,7 +1415,7 @@ VERBOSE=false</code> e isso irá suprimir todos os <em>outputs</em></p><h3 id="m
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fa838f15e67ff3562bd248ea6f393e62">ActiveRecord::Schema.define(version: 2008_09_06_171750) do
+<textarea class="clipboard-content" id="clipboard-8f722079e0b5b50880317ce21bbea419">ActiveRecord::Schema.define(version: 2008_09_06_171750) do
   create_table "authors", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -1371,10 +1431,10 @@ VERBOSE=false</code> e isso irá suprimir todos os <em>outputs</em></p><h3 id="m
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fa838f15e67ff3562bd248ea6f393e62">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8f722079e0b5b50880317ce21bbea419">Copiar</button>
 </div>
 <p>De muitas maneiras é exatamente isso. Este arquivo é criado ao inspecionar o banco de dados, expressando sua estrutura através dos comandos <code>create_table</code>, <code>add_index</code>, e por aí vai.</p><p>O arquivo <code>db/schema.rb</code> não consegue expressar tudo o que o seu banco de dados suporta como <em>triggers</em>, <em>sequences</em>, <em>stored procedures</em>, etc. Enquanto outras <em>migrations</em> podem utilizar o comando <code>execute</code> para criar estruturas do banco de dados que não são suportadas pela DSL de <em>migrations</em> do Ruby, estas estruturas podem não ser possíveis de serem reconstituídas ao gerar um novo <em>schema</em> padrão. Se você estiver utilizando estes tipos de funcionalidades, você deve então alterar o formato do <em>schema</em> para <code>:sql</code> para conseguir obter um arquivo de <em>schema</em> mais preciso e que possa ser utilizado para criar novas instâncias do banco de dados.</p><p>Quando o formato do <em>schema</em> é definido como <code>:sql</code>, a estrutura do banco de dados será reproduzida utilizando uma ferramenta específica para o banco de dados sendo usado no arquivo <code>db/structure.sql</code>. Por exemplo, para o PostgreSQL, a ferramenta <code>pg_dump</code> é utilizada. Para MySQL e MariaDB, este arquivo irá conter a saída de <code>SHOW CREATE TABLE</code> para as tabelas do banco.</p><p>Para carregar o <em>schema</em> de <code>db/structure.sql</code>, execute <code>bin/rails db:schema:load</code>. O carregamento deste arquivo é realizado executando os comandos em SQL que ele contém. Por definição, isso irá criar uma cópia perfeita da estrutura do banco de dados.</p><h4 id="schema-dumps-e-o-controle-de-versao"><a class="anchorlink" href="#schema-dumps-e-o-controle-de-versao">6.3 Schema Dumps e o Controle de Versão</a></h4><p>Como os arquivos de <em>schema</em> são comumente utilizados para criar novos bancos de dados, é fortemente recomendado que você adicione seu arquivo de <em>schema</em> ao controle de versão.</p><p>Conflitos de <em>merge</em> podem acontecer no seu arquivo de <em>schema</em> quando duas <em>branches</em> o modificam. Para resolver estes conflitos execute <code>bin/rails db:migrate</code> para gerar novamente o arquivo de <em>schema</em>.</p><h3 id="active-record-e-integridade-referencial"><a class="anchorlink" href="#active-record-e-integridade-referencial">7 <em>Active Record</em> e Integridade Referencial</a></h3><p>A maneira do <em>Active Record</em> trabalhar presume que a inteligência pertence aos seus <em>models</em>, não ao banco de dados. Desta forma, funcionalidades como <em>triggers</em> ou <em>constraints</em>, que enviam um pouco desta inteligência de volta para o banco de dados, não são usadas com frequência.</p><p>Validações como <code>validates :foreign_key, uniqueness: true</code> são uma maneira pela qual os <em>models</em> podem impor integridade dos dados. A opção <code>:dependent</code> nas associações permite aos <em>models</em> destruir automaticamente objetos filhos quando o objeto pai é destruído. Como qualquer coisa que opera no nível da aplicação, estas validações não podem garantir integridade referencial e assim algumas pessoas as aprimoram com <a href="#foreign-keys-chaves-estrangeiras">vínculos de chaves estrangeiras</a> no banco de dados.</p><p>Embora o <em>Active Record</em> não forneça todas as ferramentas para trabalhar diretamente com estas funcionalidades, o método <code>execute</code> pode ser usado para executar SQL arbitrário.</p><h3 id="migracoes-e-dados-de-seed"><a class="anchorlink" href="#migracoes-e-dados-de-seed">8 Migrações e Dados de <em>Seed</em></a></h3><p>O propósito principal da funcionalidade de migração do Rails é enviar comandos que modificam o <em>schema</em> usando um processo consistente. Migrações também podem ser usadas para inserir ou modificar dados. Isto é útil em um banco de dados existente que não pode ser destruído e criado de novo, como por exemplo um banco de dados em produção.</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddInitialProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">AddInitialProducts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">up</span>
     <span class="mi">5</span><span class="p">.</span><span class="nf">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
       <span class="no">Product</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Product #</span><span class="si">#{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="ss">description: </span><span class="s2">"A product."</span><span class="p">)</span>
@@ -1386,7 +1446,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cb4215f2a20be81799eb9e91e6ab0ba7">class AddInitialProducts &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-375c6c2d34b1b192bf40794c9ce8cc6b">class AddInitialProducts &lt; ActiveRecord::Migration[7.0]
   def up
     5.times do |i|
       Product.create(name: "Product ##{i}", description: "A product.")
@@ -1398,18 +1458,18 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cb4215f2a20be81799eb9e91e6ab0ba7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-375c6c2d34b1b192bf40794c9ce8cc6b">Copiar</button>
 </div>
 <p>Para inserir dados depois que um banco de dados for criado, o Rails tem uma funcionalidade padrão de <em>seeds</em> que torna o processo rápido. Isto é especialmente útil ao recarregar o banco de dados com frequência nos ambientes de teste e desenvolvimento. Para começar a usar estafuncionalidade, preencha o arquivo <code>db/seeds.rb</code> com código Ruby, e execute <code>bin/rails db:seed</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="mi">5</span><span class="p">.</span><span class="nf">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
   <span class="no">Product</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Product #</span><span class="si">#{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="ss">description: </span><span class="s2">"A product."</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fc8a7d040cb313bab3aa0b59adce5d05">5.times do |i|
+<textarea class="clipboard-content" id="clipboard-86a0e3c589003bc0e14143d29568144c">5.times do |i|
   Product.create(name: "Product ##{i}", description: "A product.")
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fc8a7d040cb313bab3aa0b59adce5d05">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-86a0e3c589003bc0e14143d29568144c">Copiar</button>
 </div>
 <p>Isto é, geralmente, uma maneira mais limpa para preparar o banco de dados de uma aplicação em branco.</p><h3 id="migrations-antigas"><a class="anchorlink" href="#migrations-antigas">9 <em>Migrations</em> Antigas</a></h3><p>Os arquivos <code>db/schema.rb</code> ou <code>db/structure.sql</code> refletem o estado atual do seu
 banco de dados e são a fonte oficial para reconstruí-lo. Isto torna possível
@@ -1423,9 +1483,9 @@ próximo a cada arquivo de <em>migration</em> excluído que foi anteriormente ex
 em um ambiente específico mas não se encontra mais no diretório <code>db/migrate/</code>.</p><p>Porém, há uma advertência. As tarefas <code>rake</code> para instalar <em>migrations</em> de <em>engines</em> são idempotentes. As <em>migrations</em> presentes na aplicação principal vindas de uma instalação anterior são ignoradas e as que faltam são copiadas com um novo carimbo de data/hora (<em>timestamp</em>). Se você excluiu as <em>migrations</em> de <em>engines</em> antigas e executou a tarefa de instalação novamente, você obteria novos arquivos com novos carimbos de data/hora e o comando <code>db: migrate</code> tentaria executá-las novamente.</p><p>Portanto, geralmente você deseja preservar as <em>migrations</em> provenientes de <em>engines</em>. Elas têm um comentário especial como este:</p><div class="code_container">
 <pre><code class="highlight plaintext"># This migration comes from blorgh (originally 20210621082949)
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-76c466a78783075292385fcb33fd3113"># This migration comes from blorgh (originally 20210621082949)
+<textarea class="clipboard-content" id="clipboard-aeb7f2ec36ab7359a50404cd2fa2730e"># This migration comes from blorgh (originally 20210621082949)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-76c466a78783075292385fcb33fd3113">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aeb7f2ec36ab7359a50404cd2fa2730e">Copiar</button>
 </div>
 
 

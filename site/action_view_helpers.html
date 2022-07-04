@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -290,112 +296,112 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="visao-geral-dos-helpers-fornecidos-pelo-action-view"><a class="anchorlink" href="#visao-geral-dos-helpers-fornecidos-pelo-action-view">1 Visão geral dos <em>helpers</em> fornecidos pelo Action View</a></h3><p>WIP: Nem todos os <em>helpers</em> estão listados aqui. Para uma lista completa, consulte a <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers.html">documentação da API</a></p><p>O que se segue é apenas um breve resumo geral dos <em>helpers</em> disponíveis no Action View. É recomendável que você revise a <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers.html">documentação da API</a>, que cobre todos os <em>helpers</em> de forma mais detalhada, mas esse conteúdo deve servir como um bom ponto de partida.</p><h4 id="assettaghelper"><a class="anchorlink" href="#assettaghelper">1.1 AssetTagHelper</a></h4><p>Este módulo fornece métodos para gerar HTML que vincula <em>views</em> aos <em>assets</em>, como imagens, arquivos JavaScript, folhas de estilo e feeds.</p><p>Por padrão, o Rails disponibiliza esses <em>assets</em> no <em>host</em> atual na pasta <code>public</code>, mas você pode direcionar o Rails para disponibilizar os <em>assets</em> de um servidor de <em>assets</em> dedicado definindo <code>config.asset_host</code> na configuração da aplicação, normalmente em <code>config/environment/production.rb</code>. Por exemplo, digamos que seu <em>host</em> de <em>assets</em> seja <code>assets.example.com</code>:</p><div class="code_container">
+        <h3 id="visao-geral-dos-helpers-fornecidos-pelo-action-view"><a class="anchorlink" href="#visao-geral-dos-helpers-fornecidos-pelo-action-view">1 Visão geral dos <em>helpers</em> fornecidos pelo Action View</a></h3><p>WIP: Nem todos os <em>helpers</em> estão listados aqui. Para uma lista completa, consulte a <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers.html">documentação da API</a></p><p>O que se segue é apenas um breve resumo geral dos <em>helpers</em> disponíveis no Action View. É recomendável que você revise a <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers.html">documentação da API</a>, que cobre todos os <em>helpers</em> de forma mais detalhada, mas esse conteúdo deve servir como um bom ponto de partida.</p><h4 id="assettaghelper"><a class="anchorlink" href="#assettaghelper">1.1 AssetTagHelper</a></h4><p>Este módulo fornece métodos para gerar HTML que vincula <em>views</em> aos <em>assets</em>, como imagens, arquivos JavaScript, folhas de estilo e feeds.</p><p>Por padrão, o Rails disponibiliza esses <em>assets</em> no <em>host</em> atual na pasta <code>public</code>, mas você pode direcionar o Rails para disponibilizar os <em>assets</em> de um servidor de <em>assets</em> dedicado definindo <code>config.asset_host</code> na configuração da aplicação, normalmente em <code>config/environment/production.rb</code>. Por exemplo, digamos que seu <em>host</em> de <em>assets</em> seja <code>assets.example.com</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">asset_host</span> <span class="o">=</span> <span class="s2">"assets.example.com"</span>
 <span class="n">image_tag</span><span class="p">(</span><span class="s2">"rails.png"</span><span class="p">)</span>
 <span class="c1"># =&gt; &lt;img src="http://assets.example.com/images/rails.png" /&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-92917ded0cdf162358a3451fb3908377">config.asset_host = "assets.example.com"
+<textarea class="clipboard-content" id="clipboard-7552e3735f57de4044d475795860ac35">config.asset_host = "assets.example.com"
 image_tag("rails.png")
 # =&gt; &lt;img src="http://assets.example.com/images/rails.png" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-92917ded0cdf162358a3451fb3908377">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7552e3735f57de4044d475795860ac35">Copiar</button>
 </div>
 <h5 id="auto-discovery-link-tag"><a class="anchorlink" href="#auto-discovery-link-tag">1.1.1 auto_discovery_link_tag</a></h5><p>Retorna uma tag de link que navegadores e leitores de feed podem usar para detectar automaticamente um feed RSS, Atom ou JSON.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">auto_discovery_link_tag</span><span class="p">(</span><span class="ss">:rss</span><span class="p">,</span> <span class="s2">"http://www.example.com/feed.rss"</span><span class="p">,</span> <span class="p">{</span> <span class="ss">title: </span><span class="s2">"RSS Feed"</span> <span class="p">})</span>
 <span class="c1"># =&gt; &lt;link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://www.example.com/feed.rss" /&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-110ccef4bd72f7e2d9c84871360b024a">auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", { title: "RSS Feed" })
+<textarea class="clipboard-content" id="clipboard-4965010ed98b3d6d0cd3005134c83577">auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", { title: "RSS Feed" })
 # =&gt; &lt;link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://www.example.com/feed.rss" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-110ccef4bd72f7e2d9c84871360b024a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4965010ed98b3d6d0cd3005134c83577">Copiar</button>
 </div>
 <h5 id="image-path"><a class="anchorlink" href="#image-path">1.1.2 image_path</a></h5><p>Gera o caminho para uma imagem no diretório <code>app/assets/images</code>. Caminhos completos da raiz do documento são interpretados como caminhos absolutos, ignorando as configurações da <em>asset pipeline</em>.  Usado internamente por <code>image_tag</code> para construir o caminho da imagem.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">image_path</span><span class="p">(</span><span class="s2">"edit.png"</span><span class="p">)</span> <span class="c1"># =&gt; /assets/edit.png</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ce56992ee503ebd5d542a22d2fe47b7a">image_path("edit.png") # =&gt; /assets/edit.png
+<textarea class="clipboard-content" id="clipboard-6baeef097a3ca7d3e8666f00fefe9d97">image_path("edit.png") # =&gt; /assets/edit.png
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ce56992ee503ebd5d542a22d2fe47b7a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6baeef097a3ca7d3e8666f00fefe9d97">Copiar</button>
 </div>
 <p>Uma <em>fingerprint</em> será adicionada ao nome do arquivo se config.assets.digest for definido como verdadeiro.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">image_path</span><span class="p">(</span><span class="s2">"edit.png"</span><span class="p">)</span>
 <span class="c1"># =&gt; /assets/edit-2d1a2db63fc738690021fedb5a65b68e.png</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-25134bac26d3fea58542665d5191f413">image_path("edit.png")
+<textarea class="clipboard-content" id="clipboard-9727a82ff81f225d0326e79a22542677">image_path("edit.png")
 # =&gt; /assets/edit-2d1a2db63fc738690021fedb5a65b68e.png
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-25134bac26d3fea58542665d5191f413">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9727a82ff81f225d0326e79a22542677">Copiar</button>
 </div>
 <h5 id="image-url"><a class="anchorlink" href="#image-url">1.1.3 image_url</a></h5><p>Gera a URL para um <em>asset</em> de imagem no diretório <code>app/assets/images</code>. Isso chamará <code>image_path</code> internamente e mesclará com seu <em>host</em> atual ou seu <em>host</em> de <em>assets</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">image_url</span><span class="p">(</span><span class="s2">"edit.png"</span><span class="p">)</span> <span class="c1"># =&gt; http://www.example.com/assets/edit.png</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8dcbc4a481ac740e40c979cb22244027">image_url("edit.png") # =&gt; http://www.example.com/assets/edit.png
+<textarea class="clipboard-content" id="clipboard-05aeb06571f7fd4252071cb0f53bd2db">image_url("edit.png") # =&gt; http://www.example.com/assets/edit.png
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8dcbc4a481ac740e40c979cb22244027">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-05aeb06571f7fd4252071cb0f53bd2db">Copiar</button>
 </div>
 <h5 id="image-tag"><a class="anchorlink" href="#image-tag">1.1.4 image_tag</a></h5><p>Retorna uma tag de imagem HTML para a fonte. A fonte pode ser um caminho completo ou um arquivo que existe em seu diretório <code>app/assets/images</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">image_tag</span><span class="p">(</span><span class="s2">"icon.png"</span><span class="p">)</span> <span class="c1"># =&gt; &lt;img src="/assets/icon.png" /&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-22dcb03fa90a0dc1a93ff3df7ba6326c">image_tag("icon.png") # =&gt; &lt;img src="/assets/icon.png" /&gt;
+<textarea class="clipboard-content" id="clipboard-aa8ae759edb0a89eda8da7bcd2802484">image_tag("icon.png") # =&gt; &lt;img src="/assets/icon.png" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-22dcb03fa90a0dc1a93ff3df7ba6326c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-aa8ae759edb0a89eda8da7bcd2802484">Copiar</button>
 </div>
 <h5 id="javascript-include-tag"><a class="anchorlink" href="#javascript-include-tag">1.1.5 javascript_include_tag</a></h5><p>Retorna uma <em>tag</em> de <em>script</em> HTML para cada uma das fontes fornecidas. Você pode passar o nome de arquivos JavaScript (a extensão <code>.js</code> é opcional) que existem no seu diretório <code>app/assets/javascripts</code> para inclusão na página atual ou você pode passar o caminho completo relativo à raiz do seu documento.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">javascript_include_tag</span> <span class="s2">"common"</span>
 <span class="c1"># =&gt; &lt;script src="/assets/common.js"&gt;&lt;/script&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1d5c9cdce6c6de9e3c8b6d9f742f0b70">javascript_include_tag "common"
+<textarea class="clipboard-content" id="clipboard-544b3351e5f7e709861af41603ef66e0">javascript_include_tag "common"
 # =&gt; &lt;script src="/assets/common.js"&gt;&lt;/script&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1d5c9cdce6c6de9e3c8b6d9f742f0b70">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-544b3351e5f7e709861af41603ef66e0">Copiar</button>
 </div>
 <h5 id="javascript-path"><a class="anchorlink" href="#javascript-path">1.1.6 javascript_path</a></h5><p>Gera o caminho para um <em>asset</em> JavaScript no diretório <code>app/assets/javascripts</code>. Se o nome do arquivo fonte não tiver extensão, <code>.js</code> será anexado. Caminhos completos da raiz do documento podem ser passados. Usado internamente por <code>javascript_include_tag</code> para construir o caminho do <em>script</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">javascript_path</span> <span class="s2">"common"</span> <span class="c1"># =&gt; /assets/common.js</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0cd60175b4a2fae7d6799a8a7fd3293c">javascript_path "common" # =&gt; /assets/common.js
+<textarea class="clipboard-content" id="clipboard-351e4933906b135a6b0ef0a0ee89c961">javascript_path "common" # =&gt; /assets/common.js
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0cd60175b4a2fae7d6799a8a7fd3293c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-351e4933906b135a6b0ef0a0ee89c961">Copiar</button>
 </div>
 <h5 id="javascript-url"><a class="anchorlink" href="#javascript-url">1.1.7 javascript_url</a></h5><p>Gera a URL para um <em>asset</em> JavaScript no diretório <code>app/assets/javascripts</code>. Isso chamará <code>javascript_path</code> internamente e mesclará com seu <em>host</em> atual ou seu <em>host</em> de <em>assets</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">javascript_url</span> <span class="s2">"common"</span>
 <span class="c1"># =&gt; http://www.example.com/assets/common.js</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-34554ff2fbf7f9596655882986e23373">javascript_url "common"
+<textarea class="clipboard-content" id="clipboard-25a9fdaafee0aa5b22584e0fdc5058f4">javascript_url "common"
 # =&gt; http://www.example.com/assets/common.js
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-34554ff2fbf7f9596655882986e23373">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-25a9fdaafee0aa5b22584e0fdc5058f4">Copiar</button>
 </div>
 <h5 id="stylesheet-link-tag"><a class="anchorlink" href="#stylesheet-link-tag">1.1.8 stylesheet_link_tag</a></h5><p>Retorna uma <em>tag</em> com <em>link</em> de folha de estilo para as fontes especificadas como argumentos. Se você não especificar uma extensão, <code>.css</code> será anexado automaticamente.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">stylesheet_link_tag</span> <span class="s2">"application"</span>
-<span class="c1"># =&gt; &lt;link href="/assets/application.css" media="screen" rel="stylesheet" /&gt;</span>
+<span class="c1"># =&gt; &lt;link href="/assets/application.css" rel="stylesheet" /&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b0cc572f84dc6ee91db08af9021c0cfd">stylesheet_link_tag "application"
-# =&gt; &lt;link href="/assets/application.css" media="screen" rel="stylesheet" /&gt;
+<textarea class="clipboard-content" id="clipboard-5b13be1f3c97349917d5eb7c6273477d">stylesheet_link_tag "application"
+# =&gt; &lt;link href="/assets/application.css" rel="stylesheet" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b0cc572f84dc6ee91db08af9021c0cfd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5b13be1f3c97349917d5eb7c6273477d">Copiar</button>
 </div>
 <h5 id="stylesheet-path"><a class="anchorlink" href="#stylesheet-path">1.1.9 stylesheet_path</a></h5><p>Gera o caminho para um recurso de <em>stylesheet</em> no diretório <code>app/assets/stylesheets</code>. Se o nome do arquivo fonte não tiver extensão, <code>.css</code> será anexado automaticamente. Caminhos completos da raiz do documento podem ser passados. Usado internamente por <code>stylesheet_link_tag</code> para construir o caminho da folha de estilo.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">stylesheet_path</span> <span class="s2">"application"</span> <span class="c1"># =&gt; /assets/application.css</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d23a353471bd978076789e229a65ccf1">stylesheet_path "application" # =&gt; /assets/application.css
+<textarea class="clipboard-content" id="clipboard-0aba023865f22f75e28d30dcd92747e2">stylesheet_path "application" # =&gt; /assets/application.css
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d23a353471bd978076789e229a65ccf1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0aba023865f22f75e28d30dcd92747e2">Copiar</button>
 </div>
 <h5 id="stylesheet-url"><a class="anchorlink" href="#stylesheet-url">1.1.10 stylesheet_url</a></h5><p>Gera a URL para um <em>asset</em> de folha de estilo no diretório <code>app/assets/stylesheets</code>. Isso chamará <code>stylesheet_path</code> internamente e mesclará com seu <em>host</em> atual ou seu <em>host</em> de <em>asset</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">stylesheet_url</span> <span class="s2">"application"</span>
 <span class="c1"># =&gt; http://www.example.com/assets/application.css</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b3cdd94e613e539a2ad692cc482125e3">stylesheet_url "application"
+<textarea class="clipboard-content" id="clipboard-833c0114f3f480263da689715e936fc1">stylesheet_url "application"
 # =&gt; http://www.example.com/assets/application.css
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b3cdd94e613e539a2ad692cc482125e3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-833c0114f3f480263da689715e936fc1">Copiar</button>
 </div>
 <h4 id="atomfeedhelper"><a class="anchorlink" href="#atomfeedhelper">1.2 AtomFeedHelper</a></h4><h5 id="atom-feed"><a class="anchorlink" href="#atom-feed">1.2.1 atom_feed</a></h5><p>Este <em>helper</em> facilita a construção de um feed <em>Atom</em>. Aqui está um exemplo completo de uso:</p><p><strong>config/routes.rb</strong></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">resources</span> <span class="ss">:articles</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e4499b3affe1d5d99d8229e7c35c8613">resources :articles
+<textarea class="clipboard-content" id="clipboard-b4333b709faf1c1c6be5d53d11465176">resources :articles
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e4499b3affe1d5d99d8229e7c35c8613">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b4333b709faf1c1c6be5d53d11465176">Copiar</button>
 </div>
 <p><strong>app/controllers/articles_controller.rb</strong></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">index</span>
@@ -407,7 +413,7 @@ image_tag("rails.png")
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0c320d32587d4c05522c1e88b892dc21">def index
+<textarea class="clipboard-content" id="clipboard-0bd876b5bb4b4d8bd229b842be2b0047">def index
   @articles = Article.all
 
   respond_to do |format|
@@ -416,7 +422,7 @@ image_tag("rails.png")
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0c320d32587d4c05522c1e88b892dc21">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0bd876b5bb4b4d8bd229b842be2b0047">Copiar</button>
 </div>
 <p><strong>app/views/articles/index.atom.builder</strong></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">atom_feed</span> <span class="k">do</span> <span class="o">|</span><span class="n">feed</span><span class="o">|</span>
@@ -435,7 +441,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8bc354fdb6b7019ad8c92b19efa154f5">atom_feed do |feed|
+<textarea class="clipboard-content" id="clipboard-f485d50d7ea6bf046743a837faa2bccb">atom_feed do |feed|
   feed.title("Articles Index")
   feed.updated(@articles.first.created_at)
 
@@ -451,40 +457,40 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8bc354fdb6b7019ad8c92b19efa154f5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f485d50d7ea6bf046743a837faa2bccb">Copiar</button>
 </div>
 <h4 id="benchmarkhelper"><a class="anchorlink" href="#benchmarkhelper">1.3 BenchmarkHelper</a></h4><h5 id="benchmark"><a class="anchorlink" href="#benchmark">1.3.1 benchmark</a></h5><p>Permite medir o tempo de execução de um bloco em um <em>template</em> e registra o resultado no log. Para tal, envolva este bloco em torno de operações custosas, ou com possíveis gargalos, para obter o tempo de leitura da operação.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">benchmark</span> <span class="s2">"Process data files"</span> <span class="k">do</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">expensive_files_operation</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d76c0e8fec52a2ef6411622cfdf3760a">&lt;% benchmark "Process data files" do %&gt;
+<textarea class="clipboard-content" id="clipboard-b147820653256d38ac277aa2660f81d2">&lt;% benchmark "Process data files" do %&gt;
   &lt;%= expensive_files_operation %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d76c0e8fec52a2ef6411622cfdf3760a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b147820653256d38ac277aa2660f81d2">Copiar</button>
 </div>
 <p>Isso adicionaria algo como "Process data files (0.34523)" ao log, que você pode usar para comparar tempos ao otimizar seu código.</p><h4 id="cachehelper"><a class="anchorlink" href="#cachehelper">1.4 CacheHelper</a></h4><h5 id="cache"><a class="anchorlink" href="#cache">1.4.1 cache</a></h5><p>Um método para armazenar em <em>cache</em> fragmentos de uma <em>view</em>, em vez de uma ação ou página inteira. Essa técnica é útil para armazenar componentes como: menus, listas de tópicos de notícias, fragmentos de <em>HTML</em> estáticos e assim por diante. Este método pega um bloco que contém o conteúdo que você deseja armazenar em <em>cache</em>. Veja <code>AbstractController::Caching::Fragments</code> para mais informações.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">cache</span> <span class="k">do</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"shared/footer"</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-305134a8d72527f7621bf524ca6c8fdc">&lt;% cache do %&gt;
+<textarea class="clipboard-content" id="clipboard-eee92ecb1c4e4f501a333cf71aa893b8">&lt;% cache do %&gt;
   &lt;%= render "shared/footer" %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-305134a8d72527f7621bf524ca6c8fdc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eee92ecb1c4e4f501a333cf71aa893b8">Copiar</button>
 </div>
 <h4 id="capturehelper"><a class="anchorlink" href="#capturehelper">1.5 CaptureHelper</a></h4><h5 id="capture"><a class="anchorlink" href="#capture">1.5.1 capture</a></h5><p>O método <code>capture</code> permite que você extraia parte de um <em>template</em> em uma variável. Você pode então usar essa variável em qualquer lugar nos <em>templates</em> ou <em>layout</em>.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="vi">@greeting</span> <span class="o">=</span> <span class="n">capture</span> <span class="k">do</span> <span class="cp">%&gt;</span>
   <span class="nt">&lt;p&gt;</span>Welcome! The date and time is <span class="cp">&lt;%=</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-66b966f107ec9c2c972da56b81d1ce9d">&lt;% @greeting = capture do %&gt;
+<textarea class="clipboard-content" id="clipboard-640ff3a039227763790dc64c45434d90">&lt;% @greeting = capture do %&gt;
   &lt;p&gt;Welcome! The date and time is &lt;%= Time.now %&gt;&lt;/p&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-66b966f107ec9c2c972da56b81d1ce9d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-640ff3a039227763790dc64c45434d90">Copiar</button>
 </div>
 <p>A variável capturada pode então ser usada em qualquer outro lugar.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;html&gt;</span>
@@ -496,7 +502,7 @@ end
   <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ee651b228ccf7b6c381a2c30bf2dff94">&lt;html&gt;
+<textarea class="clipboard-content" id="clipboard-4ce54661d9db0d8cb121af2322fc7cb3">&lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Welcome!&lt;/title&gt;
   &lt;/head&gt;
@@ -505,7 +511,7 @@ end
   &lt;/body&gt;
 &lt;/html&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ee651b228ccf7b6c381a2c30bf2dff94">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4ce54661d9db0d8cb121af2322fc7cb3">Copiar</button>
 </div>
 <h5 id="content-for"><a class="anchorlink" href="#content-for">1.5.2 content_for</a></h5><p>Chamar <code>content_for</code> permite armazena um bloco de marcação em um <em>identificador</em> para uso posterior. Você pode fazer chamadas subsequentes para o conteúdo armazenado em outros <em>templates</em> ou no <em>layout</em>, passando o identificador como um argumento para <code>yield</code>.</p><p>Por exemplo, digamos que temos um <em>layout</em> padrão da aplicação, mas também uma página especial que requer determinado código <em>JavaScript</em> que o resto do site não precisa. Podemos usar <code>content_for</code> para incluir este código <em>JavaScript</em> em nossa página especial sem inflar o resto do site.</p><p><strong>app/views/layouts/application.html.erb</strong></p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;html&gt;</span>
@@ -518,7 +524,7 @@ end
   <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bac0e6c93f83d091d7753d74050a9e0b">&lt;html&gt;
+<textarea class="clipboard-content" id="clipboard-84d691f9503b0ca50eebd302001b219d">&lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;Boas vindas!&lt;/title&gt;
     &lt;%= yield :special_script %&gt;
@@ -528,7 +534,7 @@ end
   &lt;/body&gt;
 &lt;/html&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bac0e6c93f83d091d7753d74050a9e0b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-84d691f9503b0ca50eebd302001b219d">Copiar</button>
 </div>
 <p><strong>app/views/articles/special.html.erb</strong></p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;p&gt;</span>Esta é a página especial.<span class="nt">&lt;/p&gt;</span>
@@ -537,13 +543,13 @@ end
   <span class="nt">&lt;script&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Ola!</span><span class="dl">'</span><span class="p">)</span><span class="nt">&lt;/script&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-be313f54c5f51d5595c044a9225952f6">&lt;p&gt;Esta é a página especial.&lt;/p&gt;
+<textarea class="clipboard-content" id="clipboard-e164f5b54b105e39368482e1e33cdce3">&lt;p&gt;Esta é a página especial.&lt;/p&gt;
 
 &lt;% content_for :special_script do %&gt;
   &lt;script&gt;alert('Ola!')&lt;/script&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-be313f54c5f51d5595c044a9225952f6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e164f5b54b105e39368482e1e33cdce3">Copiar</button>
 </div>
 <h4 id="datehelper"><a class="anchorlink" href="#datehelper">1.6 DateHelper</a></h4><h5 id="distance-of-time-in-words"><a class="anchorlink" href="#distance-of-time-in-words">1.6.1 distance_of_time_in_words</a></h5><p>Informa a distância aproximada de tempo entre dois objetos <em>Time</em>, <em>Date</em> ou <em>integers</em> como segundos. Defina <code>include_seconds</code> como <em>true</em> se você quiser aproximações mais detalhadas.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">distance_of_time_in_words</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">,</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="o">+</span> <span class="mi">15</span><span class="p">.</span><span class="nf">seconds</span><span class="p">)</span>
@@ -551,28 +557,28 @@ end
 <span class="n">distance_of_time_in_words</span><span class="p">(</span><span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">,</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span> <span class="o">+</span> <span class="mi">15</span><span class="p">.</span><span class="nf">seconds</span><span class="p">,</span> <span class="ss">include_seconds: </span><span class="kp">true</span><span class="p">)</span>
 <span class="c1"># =&gt; menos de 20 segundos</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-036c33b2a3490bebe9431faae69dc544">distance_of_time_in_words(Time.now, Time.now + 15.seconds)
+<textarea class="clipboard-content" id="clipboard-abb006bc8ceed4ddcfab1a46e30a1890">distance_of_time_in_words(Time.now, Time.now + 15.seconds)
 # =&gt; menos de um minuto
 distance_of_time_in_words(Time.now, Time.now + 15.seconds, include_seconds: true)
 # =&gt; menos de 20 segundos
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-036c33b2a3490bebe9431faae69dc544">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-abb006bc8ceed4ddcfab1a46e30a1890">Copiar</button>
 </div>
 <h5 id="time-ago-in-words"><a class="anchorlink" href="#time-ago-in-words">1.6.2 time_ago_in_words</a></h5><p>Como <code>distance_of_time_in_words</code>, mas onde <code>to_time</code> é fixado em <code>Time.now</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">time_ago_in_words</span><span class="p">(</span><span class="mi">3</span><span class="p">.</span><span class="nf">minutes</span><span class="p">.</span><span class="nf">from_now</span><span class="p">)</span> <span class="c1"># =&gt; 3 minutos</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-79b68a5f3352b36035088bc22b77d16e">time_ago_in_words(3.minutes.from_now) # =&gt; 3 minutos
+<textarea class="clipboard-content" id="clipboard-8645ef416b134d45b66ac2b6f83b14e9">time_ago_in_words(3.minutes.from_now) # =&gt; 3 minutos
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-79b68a5f3352b36035088bc22b77d16e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8645ef416b134d45b66ac2b6f83b14e9">Copiar</button>
 </div>
 <h4 id="debughelper"><a class="anchorlink" href="#debughelper">1.7 DebugHelper</a></h4><p>Retorna uma tag <code>pre</code> com um objeto YAML. Isso cria uma maneira muito legível de inspecionar um objeto.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">my_hash</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">'first'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'second'</span> <span class="o">=&gt;</span> <span class="s1">'two'</span><span class="p">,</span> <span class="s1">'third'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="p">}</span>
 <span class="n">debug</span><span class="p">(</span><span class="n">my_hash</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e905f4b5975350ae8d992e848c16d190">my_hash = { 'first' =&gt; 1, 'second' =&gt; 'two', 'third' =&gt; [1,2,3] }
+<textarea class="clipboard-content" id="clipboard-0a5a25be02dfce2e271bc526d4f2b98a">my_hash = { 'first' =&gt; 1, 'second' =&gt; 'two', 'third' =&gt; [1,2,3] }
 debug(my_hash)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e905f4b5975350ae8d992e848c16d190">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0a5a25be02dfce2e271bc526d4f2b98a">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;pre</span> <span class="na">class=</span><span class="s">'debug_dump'</span><span class="nt">&gt;</span>---
@@ -584,7 +590,7 @@ third:
 - 3
 <span class="nt">&lt;/pre&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-15547ffe7f7fd850dc28954109100d29">&lt;pre class='debug_dump'&gt;---
+<textarea class="clipboard-content" id="clipboard-5697519fa8e172ad91e3ef2b9ffeb171">&lt;pre class='debug_dump'&gt;---
 first: 1
 second: two
 third:
@@ -593,14 +599,14 @@ third:
 - 3
 &lt;/pre&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-15547ffe7f7fd850dc28954109100d29">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5697519fa8e172ad91e3ef2b9ffeb171">Copiar</button>
 </div>
 <h4 id="formhelper"><a class="anchorlink" href="#formhelper">1.8 FormHelper</a></h4><p><em>FormHelper</em> são projetados para tornar o trabalho com <em>models</em> muito mais fácil em comparação com o uso apenas de elementos HTML padrão, fornecendo um conjunto de métodos para a criação de formulários com base em seus <em>models</em>. Este auxiliar gera o HTML para os formulários, fornecendo um método para cada tipo de entrada (por exemplo, texto (<em>text</em>), senha (<em>password</em>), seleção (<em>select</em>), e assim por diante). Quando o formulário é enviado (ou seja, quando o usuário clica no botão de envio, ou através de <em>form.submit</em> chamado via JavaScript), as entradas do formulário são agrupadas dentro de parâmetros de um objeto e devolvidas ao controlador.</p><p>Você pode aprender mais sobre os <em>helpers</em> de formulário em <a href="form_helpers.html">Action View Form Helpers Guide</a>.</p><h4 id="javascripthelper"><a class="anchorlink" href="#javascripthelper">1.9 JavaScriptHelper</a></h4><p>Fornece funcionalidades para trabalhar com JavaScript em suas <em>views</em>.</p><h5 id="escape-javascript"><a class="anchorlink" href="#escape-javascript">1.9.1 escape_javascript</a></h5><p><em>Escapa</em> retornos, aspas simples e aspas duplas para segmentos JavaScript.</p><h5 id="javascript-tag"><a class="anchorlink" href="#javascript-tag">1.9.2 javascript_tag</a></h5><p>Retorna uma tag JavaScript envolvendo o código fornecido.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">javascript_tag</span> <span class="s2">"alert('Tudo está bem')"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-206093791a18241f98fa5f0aaefd97be">javascript_tag "alert('Tudo está bem')"
+<textarea class="clipboard-content" id="clipboard-4fb5f2fe395f25744cec60a6631015ea">javascript_tag "alert('Tudo está bem')"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-206093791a18241f98fa5f0aaefd97be">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4fb5f2fe395f25744cec60a6631015ea">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;script&gt;</span>
@@ -609,130 +615,139 @@ third:
 <span class="c1">//]]&gt;</span>
 <span class="nt">&lt;/script&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f378e4c56b5a6155fa5d10b6cff6c121">&lt;script&gt;
+<textarea class="clipboard-content" id="clipboard-0f9e75c88bb0cc9331db9c808a1f5520">&lt;script&gt;
 //&lt;![CDATA[
 alert('Tudo está bem')
 //]]&gt;
 &lt;/script&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f378e4c56b5a6155fa5d10b6cff6c121">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f9e75c88bb0cc9331db9c808a1f5520">Copiar</button>
 </div>
 <h4 id="numberhelper"><a class="anchorlink" href="#numberhelper">1.10 NumberHelper</a></h4><p>Fornece métodos para converter números em <em>strings</em> formatadas. Métodos são fornecidos para números de telefone, moeda, porcentagem, precisão, notação posicional e tamanhos de arquivo.</p><h5 id="number-to-currency"><a class="anchorlink" href="#number-to-currency">1.10.1 number_to_currency</a></h5><p>Formata um número em uma <em>string</em> de moeda (por exemplo, $13.65).</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">number_to_currency</span><span class="p">(</span><span class="mf">1234567890.50</span><span class="p">)</span> <span class="c1"># =&gt; $1,234,567,890.50</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c6ae1eca7d18423d7413fc369dce48b0">number_to_currency(1234567890.50) # =&gt; $1,234,567,890.50
+<textarea class="clipboard-content" id="clipboard-e2b928c31aa47ee93896216df8b977d1">number_to_currency(1234567890.50) # =&gt; $1,234,567,890.50
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c6ae1eca7d18423d7413fc369dce48b0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e2b928c31aa47ee93896216df8b977d1">Copiar</button>
 </div>
-<h5 id="number-to-human-size"><a class="anchorlink" href="#number-to-human-size">1.10.2 number_to_human_size</a></h5><p>Formata os <em>bytes</em> em tamanho em uma representação mais compreensível; útil para relatar tamanhos de arquivo aos usuários.</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="n">number_to_human_size</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>    <span class="c1"># =&gt; 1.2 KB</span>
-<span class="n">number_to_human_size</span><span class="p">(</span><span class="mi">1234567</span><span class="p">)</span> <span class="c1"># =&gt; 1.2 MB</span>
+<h5 id="number-to-human"><a class="anchorlink" href="#number-to-human">1.10.2 number_to_human</a></h5><p>Imprime (formata e aproxima) um número para que seja mais legível pelos usuários; útil para números que podem ficar muito grandes.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">number_to_human</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>    <span class="c1"># =&gt; 1.23 Thousand</span>
+<span class="n">number_to_human</span><span class="p">(</span><span class="mi">1234567</span><span class="p">)</span> <span class="c1"># =&gt; 1.23 Million</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-783e73ce290c5ff449e9966e9787bf14">number_to_human_size(1234)    # =&gt; 1.2 KB
-number_to_human_size(1234567) # =&gt; 1.2 MB
+<textarea class="clipboard-content" id="clipboard-23eac62577b674eb6905f8f7433852ca">number_to_human(1234)    # =&gt; 1.23 Thousand
+number_to_human(1234567) # =&gt; 1.23 Million
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-783e73ce290c5ff449e9966e9787bf14">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-23eac62577b674eb6905f8f7433852ca">Copiar</button>
 </div>
-<h5 id="number-to-percentage"><a class="anchorlink" href="#number-to-percentage">1.10.3 number_to_percentage</a></h5><p>Formata um número como <em>string</em> de porcentagem.</p><div class="code_container">
+<h5 id="number-to-human-size"><a class="anchorlink" href="#number-to-human-size">1.10.3 number_to_human_size</a></h5><p>Formata os <em>bytes</em> em tamanho em uma representação mais compreensível; útil para relatar tamanhos de arquivo aos usuários.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">number_to_human_size</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>    <span class="c1"># =&gt; 1.21 KB</span>
+<span class="n">number_to_human_size</span><span class="p">(</span><span class="mi">1234567</span><span class="p">)</span> <span class="c1"># =&gt; 1.18 MB</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-35798d3de12f80915a63448a8270c27f">number_to_human_size(1234)    # =&gt; 1.21 KB
+number_to_human_size(1234567) # =&gt; 1.18 MB
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-35798d3de12f80915a63448a8270c27f">Copiar</button>
+</div>
+<h5 id="number-to-percentage"><a class="anchorlink" href="#number-to-percentage">1.10.4 number_to_percentage</a></h5><p>Formata um número como <em>string</em> de porcentagem.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">number_to_percentage</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="ss">precision: </span><span class="mi">0</span><span class="p">)</span> <span class="c1"># =&gt; 100%</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f5902e4def6991b7acc5f536d98dce3f">number_to_percentage(100, precision: 0) # =&gt; 100%
+<textarea class="clipboard-content" id="clipboard-68bc49b8df8cecb4734712e47bc3b2bf">number_to_percentage(100, precision: 0) # =&gt; 100%
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f5902e4def6991b7acc5f536d98dce3f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-68bc49b8df8cecb4734712e47bc3b2bf">Copiar</button>
 </div>
-<h5 id="number-to-phone"><a class="anchorlink" href="#number-to-phone">1.10.4 number_to_phone</a></h5><p>Formata um número em um número de telefone (formato dos EUA por padrão).</p><div class="code_container">
+<h5 id="number-to-phone"><a class="anchorlink" href="#number-to-phone">1.10.5 number_to_phone</a></h5><p>Formata um número em um número de telefone (formato dos EUA por padrão).</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">number_to_phone</span><span class="p">(</span><span class="mi">1235551234</span><span class="p">)</span> <span class="c1"># =&gt; 123-555-1234</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5f72bb070017e0e2cbd673a7a11c72ae">number_to_phone(1235551234) # =&gt; 123-555-1234
+<textarea class="clipboard-content" id="clipboard-cc7d0b6b8c33e9233f28aa124dd68464">number_to_phone(1235551234) # =&gt; 123-555-1234
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5f72bb070017e0e2cbd673a7a11c72ae">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cc7d0b6b8c33e9233f28aa124dd68464">Copiar</button>
 </div>
-<h5 id="number-with-delimiter"><a class="anchorlink" href="#number-with-delimiter">1.10.5 number_with_delimiter</a></h5><p>Formata um número com casas de milhar usando um delimitador.</p><div class="code_container">
+<h5 id="number-with-delimiter"><a class="anchorlink" href="#number-with-delimiter">1.10.6 number_with_delimiter</a></h5><p>Formata um número com casas de milhar usando um delimitador.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">number_with_delimiter</span><span class="p">(</span><span class="mi">12345678</span><span class="p">)</span> <span class="c1"># =&gt; 12,345,678</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6ddd0987dd80171b860aa490aab7c842">number_with_delimiter(12345678) # =&gt; 12,345,678
+<textarea class="clipboard-content" id="clipboard-656afc330bf4e8d34ef485cd5a286162">number_with_delimiter(12345678) # =&gt; 12,345,678
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6ddd0987dd80171b860aa490aab7c842">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-656afc330bf4e8d34ef485cd5a286162">Copiar</button>
 </div>
-<h5 id="number-with-precision"><a class="anchorlink" href="#number-with-precision">1.10.6 number_with_precision</a></h5><p>Formata um número com o nível especificado de <code>precision</code> (precisão), cujo o padrão é 3.</p><div class="code_container">
+<h5 id="number-with-precision"><a class="anchorlink" href="#number-with-precision">1.10.7 number_with_precision</a></h5><p>Formata um número com o nível especificado de <code>precision</code> (precisão), cujo o padrão é 3.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">number_with_precision</span><span class="p">(</span><span class="mf">111.2345</span><span class="p">)</span>               <span class="c1"># =&gt; 111.235</span>
 <span class="n">number_with_precision</span><span class="p">(</span><span class="mf">111.2345</span><span class="p">,</span> <span class="ss">precision: </span><span class="mi">2</span><span class="p">)</span> <span class="c1"># =&gt; 111.23</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ff50cccd06901cbc006730d9bd384f0d">number_with_precision(111.2345)               # =&gt; 111.235
+<textarea class="clipboard-content" id="clipboard-52aa158bd2964901a777ba3cdb761b64">number_with_precision(111.2345)               # =&gt; 111.235
 number_with_precision(111.2345, precision: 2) # =&gt; 111.23
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ff50cccd06901cbc006730d9bd384f0d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-52aa158bd2964901a777ba3cdb761b64">Copiar</button>
 </div>
 <h4 id="sanitizehelper"><a class="anchorlink" href="#sanitizehelper">1.11 SanitizeHelper</a></h4><p>O módulo <em>SanitizeHelper</em> fornece um conjunto de métodos para limpar o texto de elementos HTML indesejados.</p><h5 id="sanitize"><a class="anchorlink" href="#sanitize">1.11.1 sanitize</a></h5><p>Este <em>helper</em> de limpeza codificará em HTML todas as tags e removerá todos os atributos que não são especificamente permitidos.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">sanitize</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">body</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7fe60bd0a5f19221bd0f8545a67ca284">sanitize @article.body
+<textarea class="clipboard-content" id="clipboard-838c1b27b13b13eebe945a60cac9f6fe">sanitize @article.body
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7fe60bd0a5f19221bd0f8545a67ca284">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-838c1b27b13b13eebe945a60cac9f6fe">Copiar</button>
 </div>
 <p>Se as opções <code>:attributes</code> (atributos) ou <code>:tags</code> são passadas, apenas os atributos e <em>tags</em> mencionados são permitidos e nada mais.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">sanitize</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">body</span><span class="p">,</span> <span class="ss">tags: </span><span class="sx">%w(table tr td)</span><span class="p">,</span> <span class="ss">attributes: </span><span class="sx">%w(id class style)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-447ea89994f6db870aa07ace2455dfe4">sanitize @article.body, tags: %w(table tr td), attributes: %w(id class style)
+<textarea class="clipboard-content" id="clipboard-30b7f851ea759bfee53932e497266e94">sanitize @article.body, tags: %w(table tr td), attributes: %w(id class style)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-447ea89994f6db870aa07ace2455dfe4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-30b7f851ea759bfee53932e497266e94">Copiar</button>
 </div>
 <p>Para alterar os padrões para múltiplos usos, por exemplo, adicionando <em>tags</em> de tabela ao padrão:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="no">Rails</span><span class="o">::</span><span class="no">Application</span>
   <span class="n">config</span><span class="p">.</span><span class="nf">action_view</span><span class="p">.</span><span class="nf">sanitized_allowed_tags</span> <span class="o">=</span> <span class="s1">'table'</span><span class="p">,</span> <span class="s1">'tr'</span><span class="p">,</span> <span class="s1">'td'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-58d11c30c2bd6f4e247cf14d85edfcdf">class Application &lt; Rails::Application
+<textarea class="clipboard-content" id="clipboard-c624f6489934864e7afd52078ed7e162">class Application &lt; Rails::Application
   config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td'
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-58d11c30c2bd6f4e247cf14d85edfcdf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c624f6489934864e7afd52078ed7e162">Copiar</button>
 </div>
 <h5 id="sanitize-css-style"><a class="anchorlink" href="#sanitize-css-style">1.11.2 sanitize_css(style)</a></h5><p>Limpa um bloco de código CSS.</p><h5 id="strip-links-html"><a class="anchorlink" href="#strip-links-html">1.11.3 strip_links(html)</a></h5><p>Remove todas as tags de link do texto, deixando apenas o texto do link.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">strip_links</span><span class="p">(</span><span class="s1">'&lt;a href="https://rubyonrails.org"&gt;Ruby on Rails&lt;/a&gt;'</span><span class="p">)</span>
 <span class="c1"># =&gt; Ruby on Rails</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-73e05053a6f235929e012ef111e3ed0d">strip_links('&lt;a href="https://rubyonrails.org"&gt;Ruby on Rails&lt;/a&gt;')
+<textarea class="clipboard-content" id="clipboard-d468b13962121634070c151e4ad0d42f">strip_links('&lt;a href="https://rubyonrails.org"&gt;Ruby on Rails&lt;/a&gt;')
 # =&gt; Ruby on Rails
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-73e05053a6f235929e012ef111e3ed0d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d468b13962121634070c151e4ad0d42f">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">strip_links</span><span class="p">(</span><span class="s1">'e-mails para &lt;a href="mailto:me@email.com"&gt;me@email.com&lt;/a&gt;.'</span><span class="p">)</span>
 <span class="c1"># =&gt; e-mails para me@email.com.</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e3e67e9e4154845feea79f6f8ce60e8a">strip_links('e-mails para &lt;a href="mailto:me@email.com"&gt;me@email.com&lt;/a&gt;.')
+<textarea class="clipboard-content" id="clipboard-7bd1b6506ec25461e7528df334cbb1c7">strip_links('e-mails para &lt;a href="mailto:me@email.com"&gt;me@email.com&lt;/a&gt;.')
 # =&gt; e-mails para me@email.com.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e3e67e9e4154845feea79f6f8ce60e8a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7bd1b6506ec25461e7528df334cbb1c7">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">strip_links</span><span class="p">(</span><span class="s1">'Blog: &lt;a href="http://myblog.com/"&gt;Visite&lt;/a&gt;.'</span><span class="p">)</span>
 <span class="c1"># =&gt; Blog: Visite.</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-76fab5081ddbbad12bd8f0a7046affd2">strip_links('Blog: &lt;a href="http://myblog.com/"&gt;Visite&lt;/a&gt;.')
+<textarea class="clipboard-content" id="clipboard-30d624e1cdf41b4af276ec53df54cc20">strip_links('Blog: &lt;a href="http://myblog.com/"&gt;Visite&lt;/a&gt;.')
 # =&gt; Blog: Visite.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-76fab5081ddbbad12bd8f0a7046affd2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-30d624e1cdf41b4af276ec53df54cc20">Copiar</button>
 </div>
 <h5 id="strip-tags-html"><a class="anchorlink" href="#strip-tags-html">1.11.4 strip_tags(html)</a></h5><p>Retira todas as tags HTML do html, incluindo comentários.
 Essa funcionalidade é alimentada pela <em>gem rails-html-sanitizer</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">strip_tags</span><span class="p">(</span><span class="s2">"Remova &lt;i&gt;essas&lt;/i&gt; tags!"</span><span class="p">)</span>
 <span class="c1"># =&gt; Remova essas tags!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-71c0ec241f43ddcc71d458df25a171e7">strip_tags("Remova &lt;i&gt;essas&lt;/i&gt; tags!")
+<textarea class="clipboard-content" id="clipboard-d8647fc87316e35d47685ca141170b0b">strip_tags("Remova &lt;i&gt;essas&lt;/i&gt; tags!")
 # =&gt; Remova essas tags!
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-71c0ec241f43ddcc71d458df25a171e7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d8647fc87316e35d47685ca141170b0b">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">strip_tags</span><span class="p">(</span><span class="s2">"Sem &lt;b&gt;Bold&lt;/b&gt; mais!  &lt;a href='more.html'&gt;Ver mais&lt;/a&gt;"</span><span class="p">)</span>
 <span class="c1"># =&gt; Sem bold mais!  Ver mais</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f29f343f777fc7e7883f717b0fbc0f20">strip_tags("Sem &lt;b&gt;Bold&lt;/b&gt; mais!  &lt;a href='more.html'&gt;Ver mais&lt;/a&gt;")
+<textarea class="clipboard-content" id="clipboard-2b1b69f7684ba536b013350fa51c6374">strip_tags("Sem &lt;b&gt;Bold&lt;/b&gt; mais!  &lt;a href='more.html'&gt;Ver mais&lt;/a&gt;")
 # =&gt; Sem bold mais!  Ver mais
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f29f343f777fc7e7883f717b0fbc0f20">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2b1b69f7684ba536b013350fa51c6374">Copiar</button>
 </div>
 <p>Nota: A saída ainda pode conter caracteres '&lt;', '&gt;', '&amp;' sem ser escapadas e confundir os navegadores.</p><h4 id="urlhelper"><a class="anchorlink" href="#urlhelper">1.12 UrlHelper</a></h4><p>Fornece métodos para criar links e obter URLs que dependem do <em>subsistema de roteamento</em>.</p><h5 id="url-for"><a class="anchorlink" href="#url-for">1.12.1 url_for</a></h5><p>Retorna a URL para o conjunto de <code>options</code> fornecido.</p><h6 id="exemplos"><a class="anchorlink" href="#exemplos">1.12.1.1 Exemplos</a></h6><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">url_for</span> <span class="vi">@profile</span>
@@ -741,13 +756,13 @@ Essa funcionalidade é alimentada pela <em>gem rails-html-sanitizer</em>.</p><di
 <span class="n">url_for</span> <span class="p">[</span> <span class="vi">@hotel</span><span class="p">,</span> <span class="vi">@booking</span><span class="p">,</span> <span class="ss">page: </span><span class="mi">2</span><span class="p">,</span> <span class="ss">line: </span><span class="mi">3</span> <span class="p">]</span>
 <span class="c1"># =&gt; /hotels/1/bookings/1?line=3&amp;page=2</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8875eda619b256da9bbe18cff0eac21f">url_for @profile
+<textarea class="clipboard-content" id="clipboard-03a46a8f02ffecf5b1fe8e08fee703c2">url_for @profile
 # =&gt; /profiles/1
 
 url_for [ @hotel, @booking, page: 2, line: 3 ]
 # =&gt; /hotels/1/bookings/1?line=3&amp;page=2
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8875eda619b256da9bbe18cff0eac21f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-03a46a8f02ffecf5b1fe8e08fee703c2">Copiar</button>
 </div>
 <h5 id="link-to"><a class="anchorlink" href="#link-to">1.12.2 link_to</a></h5><p>Links para uma URL derivada de <code>url_for</code> nos bastidores. Usado principalmente 
 para criar links de recursos RESTful, que, para este exemplo, se resumem a
@@ -755,59 +770,59 @@ ao passar <em>models</em> para <code>link_to</code>.</p><p><strong>Exemplos</str
 <pre><code class="highlight ruby"><span class="n">link_to</span> <span class="s2">"Profile"</span><span class="p">,</span> <span class="vi">@profile</span>
 <span class="c1"># =&gt; &lt;a href="/profiles/1"&gt;Profile&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b72c5bd7c39fd79cc83c97da8d2fa844">link_to "Profile", @profile
+<textarea class="clipboard-content" id="clipboard-a60fb8f48c31a68e981d3f44293fa4fe">link_to "Profile", @profile
 # =&gt; &lt;a href="/profiles/1"&gt;Profile&lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b72c5bd7c39fd79cc83c97da8d2fa844">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a60fb8f48c31a68e981d3f44293fa4fe">Copiar</button>
 </div>
 <p>Você também pode usar um bloco se o destino do link não couber no parâmetro de nome. Exemplo de ERB:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="vi">@profile</span> <span class="k">do</span> <span class="cp">%&gt;</span>
   <span class="nt">&lt;strong&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@profile</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;/strong&gt;</span> -- <span class="nt">&lt;span&gt;</span>Confira!<span class="nt">&lt;/span&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a0a75fa257d60c1e01d6a6aea4ae2ceb">&lt;%= link_to @profile do %&gt;
+<textarea class="clipboard-content" id="clipboard-e3bd2eb432d9137636f28bab6e4242ff">&lt;%= link_to @profile do %&gt;
   &lt;strong&gt;&lt;%= @profile.name %&gt;&lt;/strong&gt; -- &lt;span&gt;Confira!&lt;/span&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a0a75fa257d60c1e01d6a6aea4ae2ceb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e3bd2eb432d9137636f28bab6e4242ff">Copiar</button>
 </div>
 <p>produziria:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/profiles/1"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;strong&gt;</span>David<span class="nt">&lt;/strong&gt;</span> -- <span class="nt">&lt;span&gt;</span>Confira!<span class="nt">&lt;/span&gt;</span>
 <span class="nt">&lt;/a&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e5174135f1540896c346101961dfa1ed">&lt;a href="/profiles/1"&gt;
+<textarea class="clipboard-content" id="clipboard-03a79cdf90c82a582bb2aa45ef68768b">&lt;a href="/profiles/1"&gt;
   &lt;strong&gt;David&lt;/strong&gt; -- &lt;span&gt;Confira!&lt;/span&gt;
 &lt;/a&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e5174135f1540896c346101961dfa1ed">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-03a79cdf90c82a582bb2aa45ef68768b">Copiar</button>
 </div>
-<p>Consulte <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to">a documentação da API para obter mais informações</a></p><h5 id="button-to"><a class="anchorlink" href="#button-to">1.12.3 button_to</a></h5><p>Gera um formulário que submete para a URL passada. O formulário tem um botão de envio
+<p>Consulte <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to">a documentação da API para obter mais informações</a></p><h5 id="button-to"><a class="anchorlink" href="#button-to">1.12.3 button_to</a></h5><p>Gera um formulário que submete para a URL passada. O formulário tem um botão de envio
 com o valor do <code>name</code> (<em>nome</em>).</p><h6 id="examples"><a class="anchorlink" href="#examples">1.12.3.1 Examples</a></h6><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">button_to</span> <span class="s2">"Entrar"</span><span class="p">,</span> <span class="n">sign_in_path</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-837e3fe0f041e699a79801c11aeaa359">&lt;%= button_to "Entrar", sign_in_path %&gt;
+<textarea class="clipboard-content" id="clipboard-7ef6de16a979667a3c45d6f1bacb5e3c">&lt;%= button_to "Entrar", sign_in_path %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-837e3fe0f041e699a79801c11aeaa359">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7ef6de16a979667a3c45d6f1bacb5e3c">Copiar</button>
 </div>
 <p>produziria aproximadamente algo como:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">action=</span><span class="s">"/sessions"</span> <span class="na">class=</span><span class="s">"button_to"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Entrar"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5ea27a0f0c1c709f73358bd630012298">&lt;form method="post" action="/sessions" class="button_to"&gt;
+<textarea class="clipboard-content" id="clipboard-5d8703976f156e01d7241d0632fc9ea1">&lt;form method="post" action="/sessions" class="button_to"&gt;
   &lt;input type="submit" value="Entrar" /&gt;
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5ea27a0f0c1c709f73358bd630012298">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5d8703976f156e01d7241d0632fc9ea1">Copiar</button>
 </div>
-<p>Consulte <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to">a documentação da API para obter mais informações</a></p><h4 id="csrfhelper"><a class="anchorlink" href="#csrfhelper">1.13 CsrfHelper</a></h4><p>Retorna <em>meta tags</em> "<em>csrf-param</em>" e "<em>csrf-token</em>" com o nome do <em>cross-site</em>.
+<p>Consulte <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to">a documentação da API para obter mais informações</a></p><h4 id="csrfhelper"><a class="anchorlink" href="#csrfhelper">1.13 CsrfHelper</a></h4><p>Retorna <em>meta tags</em> "<em>csrf-param</em>" e "<em>csrf-token</em>" com o nome do <em>cross-site</em>.
 Solicita parâmetros de proteção contra falsificação e token, respectivamente.</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;</span><span class="err">%=</span> <span class="na">csrf_meta_tags</span> <span class="err">%</span><span class="nt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-868d12725211b5ccc906e8f9b67676b5">&lt;%= csrf_meta_tags %&gt;
+<textarea class="clipboard-content" id="clipboard-69cc2ab22048aae6f119d24b5c5b90a7">&lt;%= csrf_meta_tags %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-868d12725211b5ccc906e8f9b67676b5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-69cc2ab22048aae6f119d24b5c5b90a7">Copiar</button>
 </div>
 <div class="note"><p>Os formulários regulares geram campos ocultos, portanto, não usam essas tags. Mais
 detalhes podem ser encontrados no <a href="security.html#cross-site-request-forgery-csrf">Rails Security Guide</a>.</p></div>

@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -266,7 +272,13 @@ bypassing your application servers.</li>
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#o-que-e-active-storage-questionmark">O que é <em>Active Storage</em>?</a></li>
+<li>
+<a href="#o-que-e-active-storage-questionmark">O que é <em>Active Storage</em>?</a>
+
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+</ul>
+</li>
 <li>
 <a href="#configuracao">Configuração</a>
 
@@ -289,11 +301,26 @@ bypassing your application servers.</li>
 </ul>
 </li>
 <li><a href="#removendo-arquivos">Removendo arquivos</a></li>
-<li><a href="#conectando-linking-arquivos">Conectando (<em>Linking</em>) arquivos</a></li>
+<li>
+<a href="#serving-files">Serving Files</a>
+
+<ul>
+<li><a href="#redirect-mode">Redirect mode</a></li>
+<li><a href="#proxy-mode">Proxy mode</a></li>
+<li><a href="#authenticated-controllers">Authenticated Controllers</a></li>
+</ul>
+</li>
 <li><a href="#baixando-arquivos">Baixando arquivos</a></li>
-<li><a href="#analisando-arquivos">Analisando arquivos</a></li>
-<li><a href="#transformando-imagens">Transformando Imagens</a></li>
+<li><a href="#analyzing-files">Analyzing Files</a></li>
+<li>
+<a href="#displaying-images-videos-and-pdfs">Displaying Images, Videos, and PDFs</a>
+
+<ul>
+<li><a href="#lazy-vs-immediate-loading">Lazy vs Immediate Loading</a></li>
+<li><a href="#transforming-images">Transforming Images</a></li>
 <li><a href="#pre-visualizacao-de-arquivos">Pré-visualização de arquivos</a></li>
+</ul>
+</li>
 <li>
 <a href="#uploads-diretos"><em>Uploads</em> Diretos</a>
 
@@ -305,9 +332,16 @@ bypassing your application servers.</li>
 <li><a href="#integrando-com-bibliotecas-ou-frameworks">Integrando com Bibliotecas ou <em>Frameworks</em></a></li>
 </ul>
 </li>
-<li><a href="#descartando-arquivos-armazenados-durante-os-testes-do-tipo-sistema-system">Descartando Arquivos Armazenados Durante os Testes do tipo Sistema (<em>System</em>)</a></li>
-<li><a href="#descartando-arquivos-armazenados-durante-testes-de-integracao">Descartando Arquivos Armazenados Durante Testes de Integração</a></li>
+<li>
+<a href="#testando">Testando</a>
+
+<ul>
+<li><a href="#descartando-arquivos-criados-durante-os-testes">Descartando arquivos criados durante os testes</a></li>
+<li><a href="#adicionando-arquivos-em-fixtures">Adicionando arquivos em fixtures</a></li>
+</ul>
+</li>
 <li><a href="#implementando-suporte-a-outros-servicos-cloud">Implementando Suporte a Outros Serviços <em>Cloud</em></a></li>
+<li><a href="#purging-unattached-uploads">Purging Unattached Uploads</a></li>
 </ol>
 
           </div>
@@ -322,13 +356,29 @@ bypassing your application servers.</li>
 <em>Amazon S3</em>, <em>Google Cloud Storage</em>, ou <em>Microsoft Azure Storage</em> e anexa esses
 arquivos para objetos <em>Active Record</em>. Ele vem com um serviço local baseado em disco para
 desenvolvimento e teste e oferece suporte a espelhamento de arquivos em serviços destinados para
-<em>backups</em> e <em>migrations</em>.</p><p>Usando <em>Active Storage</em>, uma aplicação pode transformar <em>uploads</em> de imagens com
-<a href="https://www.imagemagick.org">ImageMagick</a>, gerar representações de imagens de
-<em>uploads</em> que não são imagens como PDFs e vídeos, e extrai metadados de arquivos arbitrários.</p><h3 id="configuracao"><a class="anchorlink" href="#configuracao">2 Configuração</a></h3><p>O <em>Active Storage</em> usa duas tabelas no banco de dados da sua aplicação chamadas
-<code>active_storage_blobs</code> e <code>active_storage_attachments</code>. Depois de criar uma nova
-aplicação (ou atualizar sua aplicação para Rails 5.2), execute
+<em>backups</em> e <em>migrations</em>.</p><p>Usando o <em>Active Storage</em>, uma aplicação pode transformar <em>uploads</em> de imagens ou gerar 
+representações de <em>uploads</em> que não são imagens, como PDFs e vídeos, e extrair metadados de
+arquivos arbitrários.</p><h4 id="requirements"><a class="anchorlink" href="#requirements">1.1 Requirements</a></h4><p>Vários recursos do <em>Active Storage</em> dependem de softwares de terceiros que o Rails
+não não instala e deve ser instalado separadamente:</p>
+<ul>
+<li>
+<a href="https://github.com/libvips/libvips">libvips</a> v8.6+ ou <a href="https://imagemagick.org/index.php">ImageMagick</a> para análise de imagens e modificações</li>
+<li>
+<a href="http://ffmpeg.org/">ffmpeg</a> v3.4+ para análise de vídeo/áudio e pre-visualização de vídeos</li>
+<li>
+<a href="https://poppler.freedesktop.org/">poppler</a> ou <a href="https://mupdf.com/">muPDF</a> para pre-visualização de PDF</li>
+</ul>
+<p>Análise e transformações de imagem também requerem a <em>gem</em> <code>image_processing</code>. Descomente-a em seu <code>Gemfile</code> ou adicione-a se necessário:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">gem</span> <span class="s2">"image_processing"</span><span class="p">,</span> <span class="s2">"&gt;= 1.2"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0cb86a2a0127e44370eb37c6f89811af">gem "image_processing", "&gt;= 1.2"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0cb86a2a0127e44370eb37c6f89811af">Copiar</button>
+</div>
+<div class="info"><p>Comparado a libvips, a ImageMagick é mais conhecida e mais amplamente disponível. No entanto, libvips pode ser <a href="https://github.com/libvips/libvips/wiki/Speed-and-memory-use">até 10x mais rápido e consumir 1/10 da memória</a>. Para arquivos JPEG, isso pode ser melhorado substituindo <code>libjpeg-dev</code> por <code>libjpeg-turbo-dev</code>, que é <a href="https://libjpeg-turbo.org/About/Performance">2-7x mais rápido</a>.</p></div><div class="warning"><p>Antes de instalar e usar software de terceiros, certifique-se de compreender as implicações de licenciamento de fazê-lo. O MuPDF, em particular, é licenciado sob AGPL e requer uma licença comercial para alguns usos.</p></div><h3 id="configuracao"><a class="anchorlink" href="#configuracao">2 Configuração</a></h3><p>O <em>Active Storage</em> usa três tabelas no banco de dados da sua aplicação chamadas
+<code>active_storage_blobs</code>, <code>active_storage_variant_records</code> e <code>active_storage_attachments</code>. Depois de criar uma nova aplicação (ou atualizar sua aplicação para Rails 5.2), execute
 <code>bin/rails active_storage:install</code> para gerar uma <em>migration</em> que cria essas
-tabelas. Use <code>bin/rails db:migrate</code> para executar a <em>migration</em>.</p><div class="warning"><p><code>active_storage_attachments</code> é uma tabela de junção (<em>join table</em>) polimórfica que armazena o nome da classe do seu <em>model</em>. Se o nome da classe do seu <em>model</em> mudar, você precisará executar uma <em>migration</em> nesta tabela para atualizar o <code>record_type</code> implícito para o novo nome da classe do seu <em>model</em>.</p></div><div class="warning"><p>Se você estiver usando UUIDs em vez de inteiros como a chave primária em seus <em>models</em>, você precisará alterar o tipo de coluna de <code>record_id</code> da tabela<code>active_storage_attachments</code> na migração.</p></div><p>Declare os serviços do <em>Active Storage</em> em <code>config/storage.yml</code>. Para cada serviço que sua
+tabelas. Use <code>bin/rails db:migrate</code> para executar a <em>migration</em>.</p><div class="warning"><p><code>active_storage_attachments</code> é uma tabela de junção (<em>join table</em>) polimórfica que armazena o nome da classe do seu <em>model</em>. Se o nome da classe do seu <em>model</em> mudar, você precisará executar uma <em>migration</em> nesta tabela para atualizar o <code>record_type</code> implícito para o novo nome da classe do seu <em>model</em>.</p></div><div class="warning"><p>Se você estiver usando UUIDs em vez de inteiros como a chave primária em seus <em>models</em>, você precisará alterar o tipo de coluna de <code>active_storage_attachments.record_id</code> e <code>active_storage_variant_records.id</code> na migração.</p></div><p>Declare os serviços do <em>Active Storage</em> em <code>config/storage.yml</code>. Para cada serviço que sua
 aplicação usa, forneça um nome e a configuração necessária. O exemplo
 abaixo declara três serviços chamados <code>local</code>, <code>test</code> e <code>amazon</code>:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">local</span><span class="pi">:</span>
@@ -346,7 +396,7 @@ abaixo declara três serviços chamados <code>local</code>, <code>test</code> e 
   <span class="na">bucket</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
   <span class="na">region</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span> <span class="c1"># e.g. 'us-east-1'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-17529cb7ea2e78cd45b6e118bff68a04">local:
+<textarea class="clipboard-content" id="clipboard-166d5bd931ffabfc2655d299a68c9295">local:
   service: Disk
   root: &lt;%= Rails.root.join("storage") %&gt;
 
@@ -361,7 +411,7 @@ amazon:
   bucket: ""
   region: "" # e.g. 'us-east-1'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-17529cb7ea2e78cd45b6e118bff68a04">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-166d5bd931ffabfc2655d299a68c9295">Copiar</button>
 </div>
 <p>Tell Active Storage which service to use by setting
 <code>Rails.application.config.active_storage.service</code>. Because each environment will
@@ -372,44 +422,77 @@ development environment, you would add the following to
 <pre><code class="highlight ruby"><span class="c1"># Store files locally.</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_storage</span><span class="p">.</span><span class="nf">service</span> <span class="o">=</span> <span class="ss">:local</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dc06179e1f6c70a9d2f4042df95130cd"># Store files locally.
+<textarea class="clipboard-content" id="clipboard-858fbc100765c94727085fe1a42b7d75"># Store files locally.
 config.active_storage.service = :local
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dc06179e1f6c70a9d2f4042df95130cd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-858fbc100765c94727085fe1a42b7d75">Copiar</button>
 </div>
 <p>Para usar o serviço S3 em produção, você adiciona o seguinte ao
 <code>config/environments/production.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Store files on Amazon S3.</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_storage</span><span class="p">.</span><span class="nf">service</span> <span class="o">=</span> <span class="ss">:amazon</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-48d3849bf011434b7a1ca02aedb7f1f5"># Store files on Amazon S3.
+<textarea class="clipboard-content" id="clipboard-c11facb9054ca5effff300a7b2f8e349"># Store files on Amazon S3.
 config.active_storage.service = :amazon
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-48d3849bf011434b7a1ca02aedb7f1f5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c11facb9054ca5effff300a7b2f8e349">Copiar</button>
 </div>
 <p>Para usar o serviço <em>test</em> durante o teste, você adiciona o seguinte ao
 <code>config/environments/test.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Store uploaded files on the local file system in a temporary directory.</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_storage</span><span class="p">.</span><span class="nf">service</span> <span class="o">=</span> <span class="ss">:test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-30821605ca7f0efc143048c0284254f0"># Store uploaded files on the local file system in a temporary directory.
+<textarea class="clipboard-content" id="clipboard-40d0148c5ee4f3ecc1683a0ee79dba56"># Store uploaded files on the local file system in a temporary directory.
 config.active_storage.service = :test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-30821605ca7f0efc143048c0284254f0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-40d0148c5ee4f3ecc1683a0ee79dba56">Copiar</button>
 </div>
 <p>Continue lendo para obter mais informações sobre os adaptadores de serviço integrados (por exemplo,
 <code>Disk</code> e <code>S3</code>) e configurações que ele exigem.</p><div class="note"><p>Os arquivos de configuração específicos do ambiente terão precedência:
 em produção, por exemplo, o arquivo <code>config/storage/production.yml</code> (se existente)
-terá precedência sobre o arquivo <code>config/storage.yml</code>.</p></div><h4 id="servico-disk"><a class="anchorlink" href="#servico-disk">2.1 Serviço Disk</a></h4><p>Declare um serviço Disk em <code>config/storage.yml</code>:</p><div class="code_container">
+terá precedência sobre o arquivo <code>config/storage.yml</code>.</p></div><p>É recomendado usar <code>Rails.env</code> nos nomes dos buckets para reduzir ainda mais o risco de destruição acidental de dados de produção.</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">amazon</span><span class="pi">:</span>
+  <span class="na">service</span><span class="pi">:</span> <span class="s">S3</span>
+  <span class="c1"># ...</span>
+  <span class="na">bucket</span><span class="pi">:</span> <span class="s">your_own_bucket-&lt;%= Rails.env %&gt;</span>
+
+<span class="na">google</span><span class="pi">:</span>
+  <span class="na">service</span><span class="pi">:</span> <span class="s">GCS</span>
+  <span class="c1"># ...</span>
+  <span class="na">bucket</span><span class="pi">:</span> <span class="s">your_own_bucket-&lt;%= Rails.env %&gt;</span>
+
+<span class="na">azure</span><span class="pi">:</span>
+  <span class="na">service</span><span class="pi">:</span> <span class="s">AzureStorage</span>
+  <span class="c1"># ...</span>
+  <span class="na">container</span><span class="pi">:</span> <span class="s">your_container_name-&lt;%= Rails.env %&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-74d3569b322135110bda7f4cb2d0dd30">amazon:
+  service: S3
+  # ...
+  bucket: your_own_bucket-&lt;%= Rails.env %&gt;
+
+google:
+  service: GCS
+  # ...
+  bucket: your_own_bucket-&lt;%= Rails.env %&gt;
+
+azure:
+  service: AzureStorage
+  # ...
+  container: your_container_name-&lt;%= Rails.env %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-74d3569b322135110bda7f4cb2d0dd30">Copiar</button>
+</div>
+<h4 id="servico-disk"><a class="anchorlink" href="#servico-disk">2.1 Serviço Disk</a></h4><p>Declare um serviço Disk em <code>config/storage.yml</code>:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">local</span><span class="pi">:</span>
   <span class="na">service</span><span class="pi">:</span> <span class="s">Disk</span>
   <span class="na">root</span><span class="pi">:</span> <span class="s">&lt;%= Rails.root.join("storage") %&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-da34977e15e46f1b7218f77829d36106">local:
+<textarea class="clipboard-content" id="clipboard-2aa72cbbcdb6c31e2094d5bd7eb6773c">local:
   service: Disk
   root: &lt;%= Rails.root.join("storage") %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-da34977e15e46f1b7218f77829d36106">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2aa72cbbcdb6c31e2094d5bd7eb6773c">Copiar</button>
 </div>
 <h4 id="servico-s3-amazon-s3-e-apis-compativeis-com-s3"><a class="anchorlink" href="#servico-s3-amazon-s3-e-apis-compativeis-com-s3">2.2 Serviço S3 (Amazon S3 e APIs compatíveis com S3)</a></h4><p>Para conectar ao Amazon S3, declare um serviço S3 em <code>config/storage.yml</code>:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">amazon</span><span class="pi">:</span>
@@ -419,14 +502,14 @@ terá precedência sobre o arquivo <code>config/storage.yml</code>.</p></div><h4
   <span class="na">region</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
   <span class="na">bucket</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-792a9b67bc5a9cf2c1d1a88150c40537">amazon:
+<textarea class="clipboard-content" id="clipboard-b350baf290c41525e0fb0e42194f4b94">amazon:
   service: S3
   access_key_id: ""
   secret_access_key: ""
   region: ""
   bucket: ""
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-792a9b67bc5a9cf2c1d1a88150c40537">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b350baf290c41525e0fb0e42194f4b94">Copiar</button>
 </div>
 <p>Opcionalmente, você pode fornecer opções de cliente e upload:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">amazon</span><span class="pi">:</span>
@@ -439,9 +522,9 @@ terá precedência sobre o arquivo <code>config/storage.yml</code>.</p></div><h4
   <span class="na">http_read_timeout</span><span class="pi">:</span> <span class="m">0</span>
   <span class="na">retry_limit</span><span class="pi">:</span> <span class="m">0</span>
   <span class="na">upload</span><span class="pi">:</span>
-    <span class="na">server_side_encryption</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span> <span class="c1"># 'aws:kms' or 'AES256'</span>
+    <span class="na">server_side_encryption</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span> <span class="c1"># 'aws:kms' ou 'AES256'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-26f416271d7b9f499fe005e3f13dc661">amazon:
+<textarea class="clipboard-content" id="clipboard-beae440b4de3105051154e5a43e34772">amazon:
   service: S3
   access_key_id: ""
   secret_access_key: ""
@@ -451,18 +534,18 @@ terá precedência sobre o arquivo <code>config/storage.yml</code>.</p></div><h4
   http_read_timeout: 0
   retry_limit: 0
   upload:
-    server_side_encryption: "" # 'aws:kms' or 'AES256'
+    server_side_encryption: "" # 'aws:kms' ou 'AES256'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26f416271d7b9f499fe005e3f13dc661">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-beae440b4de3105051154e5a43e34772">Copiar</button>
 </div>
 <div class="info"><p>Defina tempos limites de HTTP <em>timeout</em> e limites de nova tentativa para sua aplicação.
 Em certos cenários de falha, a configuração do cliente AWS padrão pode fazer
 com que as conexões sejam retidas por vários minutos e levar à enfileiramento de requisições.</p></div><p>Adicione a gem <a href="https://github.com/aws/aws-sdk-ruby"><code>aws-sdk-s3</code></a> no seu <code>Gemfile</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s2">"aws-sdk-s3"</span><span class="p">,</span> <span class="ss">require: </span><span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-395b1baca8796de2f638e4b40d8219d8">gem "aws-sdk-s3", require: false
+<textarea class="clipboard-content" id="clipboard-337a7f33fb441f8e6f52ed59f09aa23e">gem "aws-sdk-s3", require: false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-395b1baca8796de2f638e4b40d8219d8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-337a7f33fb441f8e6f52ed59f09aa23e">Copiar</button>
 </div>
 <div class="note"><p>Os principais recursos do <em>Active Storage</em> requerem as seguintes permissões: <code>s3:ListBucket</code>, <code>s3:PutObject</code>, <code>s3:GetObject</code>, e <code>s3:DeleteObject</code>. <a href="#acesso-publico">Acesso público</a> requer também <code>s3:PutObjectAcl</code>. Se você tiver opções de <em>upload</em> adicionais configuradas como configurações de ACLs, então permissões adicionais podem ser necessárias.</p></div><div class="note"><p>Se você quiser usar variáveis de ambiente, arquivos de configuração padrão do SDK, perfis,
 perfis de instância do IAM ou funções de tarefa, você pode omitir as chaves <code>access_key_id</code>, <code>secret_access_key</code>,
@@ -473,38 +556,38 @@ autenticação descritas na <a href="https://docs.aws.amazon.com/sdk-for-ruby/v3
   <span class="na">endpoint</span><span class="pi">:</span> <span class="s">https://nyc3.digitaloceanspaces.com</span>
   <span class="na">access_key_id</span><span class="pi">:</span> <span class="s">...</span>
   <span class="na">secret_access_key</span><span class="pi">:</span> <span class="s">...</span>
-  <span class="c1"># ...and other options</span>
+  <span class="c1"># ...e outras opções</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-64c3252805fc61622493dbb7c212af17">digitalocean:
+<textarea class="clipboard-content" id="clipboard-4df7943b8fc03f4c56297d6e3aa45a6b">digitalocean:
   service: S3
   endpoint: https://nyc3.digitaloceanspaces.com
   access_key_id: ...
   secret_access_key: ...
-  # ...and other options
+  # ...e outras opções
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-64c3252805fc61622493dbb7c212af17">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4df7943b8fc03f4c56297d6e3aa45a6b">Copiar</button>
 </div>
-<h4 id="servico-armazenamento-da-microsoft-azure"><a class="anchorlink" href="#servico-armazenamento-da-microsoft-azure">2.3 Serviço Armazenamento da Microsoft Azure</a></h4><p>Declare um serviço Azure Storage em <code>config/storage.yml</code>:</p><div class="code_container">
+<p>Existem muitas outras opções disponíveis. Você pode verificá-los na documentação do <a href="https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html#initialize-instance_method">AWS S3 Client</a>.</p><h4 id="servico-armazenamento-da-microsoft-azure"><a class="anchorlink" href="#servico-armazenamento-da-microsoft-azure">2.3 Serviço Armazenamento da Microsoft Azure</a></h4><p>Declare um serviço Azure Storage em <code>config/storage.yml</code>:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">azure</span><span class="pi">:</span>
   <span class="na">service</span><span class="pi">:</span> <span class="s">AzureStorage</span>
   <span class="na">storage_account_name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
   <span class="na">storage_access_key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
   <span class="na">container</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e5b32cd7fcc62309669bd83c1ab18dc9">azure:
+<textarea class="clipboard-content" id="clipboard-76a479475bd685863e5973c5fbee958f">azure:
   service: AzureStorage
   storage_account_name: ""
   storage_access_key: ""
   container: ""
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e5b32cd7fcc62309669bd83c1ab18dc9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-76a479475bd685863e5973c5fbee958f">Copiar</button>
 </div>
 <p>Adicione a gem <a href="https://github.com/Azure/azure-storage-ruby"><code>azure-storage-blob</code></a> no seu <code>Gemfile</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s2">"azure-storage-blob"</span><span class="p">,</span> <span class="ss">require: </span><span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-358380051d43fcf2f01cb6498de9ae36">gem "azure-storage-blob", require: false
+<textarea class="clipboard-content" id="clipboard-6a90f94ffbedc56738652ab01c170603">gem "azure-storage-blob", require: false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-358380051d43fcf2f01cb6498de9ae36">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6a90f94ffbedc56738652ab01c170603">Copiar</button>
 </div>
 <h4 id="servico-google-cloud-storage"><a class="anchorlink" href="#servico-google-cloud-storage">2.4 Serviço Google Cloud Storage</a></h4><p>Declare um serviço Google Cloud Storage service in <code>config/storage.yml</code>:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">google</span><span class="pi">:</span>
@@ -513,13 +596,13 @@ autenticação descritas na <a href="https://docs.aws.amazon.com/sdk-for-ruby/v3
   <span class="na">project</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
   <span class="na">bucket</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-249d5a46179dfc04858bb26613e0a70b">google:
+<textarea class="clipboard-content" id="clipboard-21c76c76088d986892a1f29efe9872b0">google:
   service: GCS
   credentials: &lt;%= Rails.root.join("path/to/keyfile.json") %&gt;
   project: ""
   bucket: ""
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-249d5a46179dfc04858bb26613e0a70b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-21c76c76088d986892a1f29efe9872b0">Copiar</button>
 </div>
 <p>Opcionalmente forneça uma <em>Hash</em> de credenciais em vez de um caminho para o arquivo de chave:</p><div class="code_container">
 <pre><code class="highlight yaml"><span class="na">google</span><span class="pi">:</span>
@@ -538,7 +621,7 @@ autenticação descritas na <a href="https://docs.aws.amazon.com/sdk-for-ruby/v3
   <span class="na">project</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
   <span class="na">bucket</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b6ad5efc5ec51e98e487e3b5ce1dcb22">google:
+<textarea class="clipboard-content" id="clipboard-195fc8fa1a5709cf18311029ecb30bef">google:
   service: GCS
   credentials:
     type: "service_account"
@@ -554,14 +637,55 @@ autenticação descritas na <a href="https://docs.aws.amazon.com/sdk-for-ruby/v3
   project: ""
   bucket: ""
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b6ad5efc5ec51e98e487e3b5ce1dcb22">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-195fc8fa1a5709cf18311029ecb30bef">Copiar</button>
+</div>
+<p>Opcionalmente, forneça metadados Cache-Control para serem definidos nos recursos enviados:</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">google</span><span class="pi">:</span>
+  <span class="na">service</span><span class="pi">:</span> <span class="s">GCS</span>
+  <span class="s">...</span>
+  <span class="na">cache_control</span><span class="pi">:</span> <span class="s2">"</span><span class="s">public,</span><span class="nv"> </span><span class="s">max-age=3600"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-00e2c35b0d2d2af57f2377509092eb4b">google:
+  service: GCS
+  ...
+  cache_control: "public, max-age=3600"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-00e2c35b0d2d2af57f2377509092eb4b">Copiar</button>
+</div>
+<p>Opcionalmente, use <a href="https://cloud.google.com/storage/docs/access-control/signed-urls#signing-iam">IAM</a> em vez das <code>credentials</code> ao assinar URLs. Isso é útil se você estiver autenticando suas aplicações do GKE com o Workload Identity. Consulte <a href="https://cloud.google.com/blog/products/containers-kubernetes/introducing-workload-identity-better-authentication%20-for-your-gke-applications">esta postagem do blog do Google Cloud</a> para obter mais informações.</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">google</span><span class="pi">:</span>
+  <span class="na">service</span><span class="pi">:</span> <span class="s">GCS</span>
+  <span class="s">...</span>
+  <span class="na">iam</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-56bdff2f4c38cce645ae15b6e462b5ec">google:
+  service: GCS
+  ...
+  iam: true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-56bdff2f4c38cce645ae15b6e462b5ec">Copiar</button>
+</div>
+<p>Opcionalmente, use um GSA específico ao assinar URLs. Ao usar o IAM, o <a href="https://cloud.google.com/compute/docs/storing-retrieving-metadata">servidor de metadados</a> será contatado para obter o e-mail do GSA, mas esse servidor de metadados nem sempre está presente (por exemplo, em ambientes locais ou testes) e você pode querer usar um GSA não padrão.</p><div class="code_container">
+<pre><code class="highlight yaml"><span class="na">google</span><span class="pi">:</span>
+  <span class="na">service</span><span class="pi">:</span> <span class="s">GCS</span>
+  <span class="s">...</span>
+  <span class="na">iam</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">gsa_email</span><span class="pi">:</span> <span class="s2">"</span><span class="s">foobar@baz.iam.gserviceaccount.com"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-407c63f51ef2b5701213fe2bb5142561">google:
+  service: GCS
+  ...
+  iam: true
+  gsa_email: "foobar@baz.iam.gserviceaccount.com"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-407c63f51ef2b5701213fe2bb5142561">Copiar</button>
 </div>
 <p>Adicione a gem <a href="https://github.com/GoogleCloudPlatform/google-cloud-ruby/tree/master/google-cloud-storage"><code>google-cloud-storage</code></a> no seu <code>Gemfile</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s2">"google-cloud-storage"</span><span class="p">,</span> <span class="s2">"~&gt; 1.11"</span><span class="p">,</span> <span class="ss">require: </span><span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-de07333d703664b6d78795478c792cdb">gem "google-cloud-storage", "~&gt; 1.11", require: false
+<textarea class="clipboard-content" id="clipboard-a1528c21488e3f73f36702e9540ccc87">gem "google-cloud-storage", "~&gt; 1.11", require: false
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-de07333d703664b6d78795478c792cdb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a1528c21488e3f73f36702e9540ccc87">Copiar</button>
 </div>
 <h4 id="servico-espelho"><a class="anchorlink" href="#servico-espelho">2.5 Serviço Espelho</a></h4><p>Você pode manter múltiplos serviços sincronizados definindo um serviço espelho.
 Quando um arquivo é carregado ou deletado, isso é feito em todos serviços espelhados.</p><p>Serviços espelhados podem ser usados para facilitar a migração entre serviços em produção.
@@ -590,7 +714,7 @@ espelhado.</p><div class="code_container">
   <span class="na">mirrors</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="s">s3_west_coast</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5392eed9827164816f44ae52d4224d75">s3_west_coast:
+<textarea class="clipboard-content" id="clipboard-0972cac6b1086527ba0e9ffeb916f3e3">s3_west_coast:
   service: S3
   access_key_id: ""
   secret_access_key: ""
@@ -610,7 +734,7 @@ production:
   mirrors:
     - s3_west_coast
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5392eed9827164816f44ae52d4224d75">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0972cac6b1086527ba0e9ffeb916f3e3">Copiar</button>
 </div>
 <p>Embora todos os serviços secundários recebam uploads, os downloads são sempre
 tratados pelo serviço principal.</p><p>Os serviços de espelho são compatíveis com uploads diretos. Novos arquivos são
@@ -622,17 +746,17 @@ serviços secundários.</p><h4 id="acesso-publico"><a class="anchorlink" href="#
   <span class="na">project</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
 
 <span class="na">private_gcs</span><span class="pi">:</span>
-  <span class="s">&lt;&lt;</span><span class="pi">:</span> <span class="nv">*gcs</span>
+  <span class="na">&lt;&lt;</span><span class="pi">:</span> <span class="nv">*gcs</span>
   <span class="na">credentials</span><span class="pi">:</span> <span class="s">&lt;%= Rails.root.join("path/to/private_keyfile.json") %&gt;</span>
   <span class="na">bucket</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
 
 <span class="na">public_gcs</span><span class="pi">:</span>
-  <span class="s">&lt;&lt;</span><span class="pi">:</span> <span class="nv">*gcs</span>
+  <span class="na">&lt;&lt;</span><span class="pi">:</span> <span class="nv">*gcs</span>
   <span class="na">credentials</span><span class="pi">:</span> <span class="s">&lt;%= Rails.root.join("path/to/public_keyfile.json") %&gt;</span>
   <span class="na">bucket</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
   <span class="na">public</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-310da0c49a55f9256281df438d510d6c">gcs: &amp;gcs
+<textarea class="clipboard-content" id="clipboard-53cbeb10ec2700e2375471bf505c49f7">gcs: &amp;gcs
   service: GCS
   project: ""
 
@@ -647,27 +771,34 @@ public_gcs:
   bucket: ""
   public: true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-310da0c49a55f9256281df438d510d6c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-53cbeb10ec2700e2375471bf505c49f7">Copiar</button>
 </div>
-<p>Tenha certeza que seus <em>buckets</em> estão configurados para acesso público. Veja a documentação sobre como ativar permissão de leitura pública para os serviços <a href="https://docs.aws.amazon.com/AmazonS3/latest/user-guide/block-public-access-bucket.html">Amazon S3</a>, <a href="https://cloud.google.com/storage/docs/access-control/making-data-public#buckets">Google Cloud Storage</a>, e <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-manage-access-to-resources#set-container-public-access-level-in-the-azure-portal">Microsoft Azure</a>. A Amazon S3 requer também que você tenha permissão `s3:PutObjectAcl.</p><p>Ao converter uma aplicação existente para usar <code>public: true</code>, certifique-se de atualizar cada arquivo individual no <em>bucket</em> para ser lido publicamente antes de alternar.</p><h3 id="anexar-arquivos-a-registros"><a class="anchorlink" href="#anexar-arquivos-a-registros">3 Anexar Arquivos a Registros</a></h3><h4 id="has-one-attached"><a class="anchorlink" href="#has-one-attached">3.1 <code>has_one_attached</code></a></h4><p>O macro <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached"><code>has_one_attached</code></a> configura um mapeamento um-para-um entre registros e
+<p>Tenha certeza que seus <em>buckets</em> estão configurados para acesso público. Veja a documentação sobre como ativar permissão de leitura pública para os serviços <a href="https://docs.aws.amazon.com/AmazonS3/latest/user-guide/block-public-access-bucket.html">Amazon S3</a>, <a href="https://cloud.google.com/storage/docs/access-control/making-data-public#buckets">Google Cloud Storage</a>, e <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-manage-access-to-resources#set-container-public-access-level-in-the-azure-portal">Microsoft Azure</a>. A Amazon S3 requer também que você tenha permissão `s3:PutObjectAcl.</p><p>Ao converter uma aplicação existente para usar <code>public: true</code>, certifique-se de atualizar cada arquivo individual no <em>bucket</em> para ser lido publicamente antes de alternar.</p><h3 id="anexar-arquivos-a-registros"><a class="anchorlink" href="#anexar-arquivos-a-registros">3 Anexar Arquivos a Registros</a></h3><h4 id="has-one-attached"><a class="anchorlink" href="#has-one-attached">3.1 <code>has_one_attached</code></a></h4><p>O macro <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Attached/Model.html#method-i-has_one_attached"><code>has_one_attached</code></a> configura um mapeamento um-para-um entre registros e
 arquivos. Cada registro pode ter um arquivo anexado a ele.</p><p>Por exemplo, imagine que sua aplicação tenha um <em>model</em> <code>User</code>. Se você quiser que cada usuário
-tenha uma avatar, defina o <em>model</em> <code>User</code> assim:</p><div class="code_container">
+tenha uma avatar, defina o <em>model</em> <code>User</code> da seguinte forma:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">has_one_attached</span> <span class="ss">:avatar</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-56b967238e7066a7ee222b18b7368a56">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-29f237f22704b1591d9da6c43e9d0875">class User &lt; ApplicationRecord
   has_one_attached :avatar
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-56b967238e7066a7ee222b18b7368a56">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-29f237f22704b1591d9da6c43e9d0875">Copiar</button>
+</div>
+<p>ou se você estiver usando Rails 6.0+, você pode executar um comando gerador de <em>model</em> como este:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">bin</span><span class="o">/</span><span class="n">rails</span> <span class="n">generate</span> <span class="n">model</span> <span class="no">User</span> <span class="n">avatar</span><span class="ss">:attachment</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d542e10ce61807937938adcba21822a1">bin/rails generate model User avatar:attachment
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d542e10ce61807937938adcba21822a1">Copiar</button>
 </div>
 <p>Você pode criar um usuário com um avatar:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">file_field</span> <span class="ss">:avatar</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5369b49183b90fdb63f49536c1bc1028">&lt;%= form.file_field :avatar %&gt;
+<textarea class="clipboard-content" id="clipboard-5c84b4c66134827c17e16081948878da">&lt;%= form.file_field :avatar %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5369b49183b90fdb63f49536c1bc1028">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5c84b4c66134827c17e16081948878da">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">SignupController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -683,7 +814,7 @@ end
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e930825a84e27e201c75c2d2e205b8c1">class SignupController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-94ace815613df57a171a8eb406f5f706">class SignupController &lt; ApplicationController
   def create
     user = User.create!(user_params)
     session[:user_id] = user.id
@@ -696,21 +827,21 @@ end
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e930825a84e27e201c75c2d2e205b8c1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-94ace815613df57a171a8eb406f5f706">Copiar</button>
 </div>
-<p>Chamar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Attached/One.html#method-i-attach"><code>avatar.attach</code></a> para anexar um avatar a um usuário existente:</p><div class="code_container">
+<p>Chamar <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Attached/One.html#method-i-attach"><code>avatar.attach</code></a> para anexar um avatar a um usuário existente:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:avatar</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9d82269a3a7501e19002c19294646a22">user.avatar.attach(params[:avatar])
+<textarea class="clipboard-content" id="clipboard-e79c008eb9f91e4cf5fd783b233a585a">user.avatar.attach(params[:avatar])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9d82269a3a7501e19002c19294646a22">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e79c008eb9f91e4cf5fd783b233a585a">Copiar</button>
 </div>
-<p>Chamar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Attached/One.html#method-i-attached-3F"><code>avatar.attached?</code></a> para determinar se um usuário em particular tem um avatar:</p><div class="code_container">
+<p>Chamar <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Attached/One.html#method-i-attached-3F"><code>avatar.attached?</code></a> para determinar se um usuário em particular tem um avatar:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">attached?</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dfa9501704b697e859af2c2f747fad15">user.avatar.attached?
+<textarea class="clipboard-content" id="clipboard-c9c4ce26bc9bfa26e97b990ed551cdfb">user.avatar.attached?
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dfa9501704b697e859af2c2f747fad15">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c9c4ce26bc9bfa26e97b990ed551cdfb">Copiar</button>
 </div>
 <p>Em alguns casos, você pode querer substituir um serviço padrão para um anexo específico.
 Você pode configurar serviços específicos por anexo usando a opção <code>service</code>:</p><div class="code_container">
@@ -718,24 +849,53 @@ Você pode configurar serviços específicos por anexo usando a opção <code>se
   <span class="n">has_one_attached</span> <span class="ss">:avatar</span><span class="p">,</span> <span class="ss">service: :s3</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f4f0408f166e57c1f94eda7ff057f9c9">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-821ee7ba5c0b41ff8f238d04ce230a79">class User &lt; ApplicationRecord
   has_one_attached :avatar, service: :s3
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f4f0408f166e57c1f94eda7ff057f9c9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-821ee7ba5c0b41ff8f238d04ce230a79">Copiar</button>
 </div>
-<h4 id="has-many-attached"><a class="anchorlink" href="#has-many-attached">3.2 <code>has_many_attached</code></a></h4><p>O macro <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached"><code>has_many_attached</code></a> configura um relacionamento um-para-muitos entre os registros
+<p>Você pode configurar variantes específicas por objeto carregado chamando o método <code>variant</code> no objeto gerado:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_one_attached</span> <span class="ss">:avatar</span> <span class="k">do</span> <span class="o">|</span><span class="n">attachable</span><span class="o">|</span>
+    <span class="n">attachable</span><span class="p">.</span><span class="nf">variant</span> <span class="ss">:thumb</span><span class="p">,</span> <span class="ss">resize: </span><span class="s2">"100x100"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ba7e336f65163eaee75aa8c41e63d4d4">class User &lt; ApplicationRecord
+  has_one_attached :avatar do |attachable|
+    attachable.variant :thumb, resize: "100x100"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ba7e336f65163eaee75aa8c41e63d4d4">Copiar</button>
+</div>
+<p>Chame <code>avatar.variant(:thumb)</code> para obter uma variante thumb de um avatar:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="ss">:thumb</span><span class="p">)</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-13cfd0ea5b5dd5b9560d5fafcaf52ff7">&lt;%= image_tag user.avatar.variant(:thumb) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-13cfd0ea5b5dd5b9560d5fafcaf52ff7">Copiar</button>
+</div>
+<h4 id="has-many-attached"><a class="anchorlink" href="#has-many-attached">3.2 <code>has_many_attached</code></a></h4><p>O macro <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Attached/Model.html#method-i-has_many_attached"><code>has_many_attached</code></a> configura um relacionamento um-para-muitos entre os registros
 e arquivos. Cada registro pode ter muitos arquivos anexados a ele.</p><p>Por exemplo, imagine que sua aplicação tem um <em>model</em> <code>Message</code>. Se você quiser que cada
-mensagem tenha muitas imagens, defina o <em>model</em> <code>Message</code> assim:</p><div class="code_container">
+mensagem tenha muitas imagens, defina o <em>model</em> <code>Message</code> da seguinte forma:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Message</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">has_many_attached</span> <span class="ss">:images</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-626a09cd91fe463f1c9216df8328b019">class Message &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-6c5b7ae57840de72ffb4c1c05b034d40">class Message &lt; ApplicationRecord
   has_many_attached :images
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-626a09cd91fe463f1c9216df8328b019">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6c5b7ae57840de72ffb4c1c05b034d40">Copiar</button>
+</div>
+<p>ou se você estiver usando Rails 6.0+, você pode executar um comando gerador de <em>model</em> como este:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">bin</span><span class="o">/</span><span class="n">rails</span> <span class="n">generate</span> <span class="n">model</span> <span class="no">Message</span> <span class="n">images</span><span class="ss">:attachments</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-80d72a8ad974cd471c270d0365d4e406">bin/rails generate model Message images:attachments
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80d72a8ad974cd471c270d0365d4e406">Copiar</button>
 </div>
 <p>Você pode criar uma mensagem com images:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">MessagesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -750,7 +910,7 @@ end
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3a99ee3f6c221c8df4e18929de2f8909">class MessagesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-c4ddf4309dd39f4719d3a6468dd49788">class MessagesController &lt; ApplicationController
   def create
     message = Message.create!(message_params)
     redirect_to message
@@ -762,75 +922,90 @@ end
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3a99ee3f6c221c8df4e18929de2f8909">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c4ddf4309dd39f4719d3a6468dd49788">Copiar</button>
 </div>
-<p>Chamar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Attached/Many.html#method-i-attach"><code>images.attach</code></a> para adicionar novas imagens para uma mensagem existente:</p><div class="code_container">
+<p>Chamar <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Attached/Many.html#method-i-attach"><code>images.attach</code></a> para adicionar novas imagens para uma mensagem existente:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="vi">@message</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:images</span><span class="p">])</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-57a166ceeebed1fb8a6dfa8f57a442b5">@message.images.attach(params[:images])
+<textarea class="clipboard-content" id="clipboard-1eacc31ae962cf6b050537754831f782">@message.images.attach(params[:images])
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-57a166ceeebed1fb8a6dfa8f57a442b5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1eacc31ae962cf6b050537754831f782">Copiar</button>
 </div>
-<p>Chamar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Attached/Many.html#method-i-attached-3F"><code>images.attached?</code></a> para determinar se uma mensagem em particular alguma imagem:</p><div class="code_container">
+<p>Chamar <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Attached/Many.html#method-i-attached-3F"><code>images.attached?</code></a> para determinar se uma mensagem em particular alguma imagem:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="vi">@message</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">attached?</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-128c1e6e1fff438c7b5d999c7a7847ea">@message.images.attached?
+<textarea class="clipboard-content" id="clipboard-3887fb8abc40faacd3e404cdb4bfdea4">@message.images.attached?
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-128c1e6e1fff438c7b5d999c7a7847ea">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3887fb8abc40faacd3e404cdb4bfdea4">Copiar</button>
 </div>
 <p>Substituir o serviço padrão é feito da mesma maneira que <code>has_one_attached</code>, usando a opção <code>service</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Message</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">has_many_attached</span> <span class="ss">:images</span><span class="p">,</span> <span class="ss">service: :s3</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dd95ae0ace87731b43fd04bec7bed528">class Message &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-9c9a31ea72b334cd1e7e450100a9c473">class Message &lt; ApplicationRecord
   has_many_attached :images, service: :s3
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dd95ae0ace87731b43fd04bec7bed528">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9c9a31ea72b334cd1e7e450100a9c473">Copiar</button>
+</div>
+<p>A configuração de variantes específicas é feita da mesma forma que <code>has_one_attached</code>, chamando o método <code>variant</code> no objeto gerado:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Message</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_many_attached</span> <span class="ss">:images</span> <span class="k">do</span> <span class="o">|</span><span class="n">attachable</span><span class="o">|</span>
+    <span class="n">attachable</span><span class="p">.</span><span class="nf">variant</span> <span class="ss">:thumb</span><span class="p">,</span> <span class="ss">resize: </span><span class="s2">"100x100"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9e35b27d2160f17260a00acf9f0a66c6">class Message &lt; ApplicationRecord
+  has_many_attached :images do |attachable|
+    attachable.variant :thumb, resize: "100x100"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9e35b27d2160f17260a00acf9f0a66c6">Copiar</button>
 </div>
 <h4 id="anexando-objetos-file-io"><a class="anchorlink" href="#anexando-objetos-file-io">3.3 Anexando Objetos <em>File/IO</em></a></h4><p>Às vezes você precisa anexar um arquivo que não chega por meio de uma requisição HTTP.
 Por exemplo, você pode querer anexar um arquivo que você gerou no disco ou baixou
 de uma URL enviada pelo usuário. Você também pode querer anexar um arquivo de fixação em um
 <em>model</em> de test. Para fazer isso, forneça uma <em>Hash</em> contendo pelo menos um objeto <em>open IO</em>
 e um <em>filename</em>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="vi">@message</span><span class="p">.</span><span class="nf">image</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="ss">io: </span><span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="s1">'/path/to/file'</span><span class="p">),</span> <span class="ss">filename: </span><span class="s1">'file.pdf'</span><span class="p">)</span>
+<pre><code class="highlight ruby"><span class="vi">@message</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="ss">io: </span><span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="s1">'/path/to/file'</span><span class="p">),</span> <span class="ss">filename: </span><span class="s1">'file.pdf'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c4a24bb07a380b0beb80d4760328c188">@message.image.attach(io: File.open('/path/to/file'), filename: 'file.pdf')
+<textarea class="clipboard-content" id="clipboard-e24f656f3e751ec8cd4f89dcade9f6d4">@message.images.attach(io: File.open('/path/to/file'), filename: 'file.pdf')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c4a24bb07a380b0beb80d4760328c188">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e24f656f3e751ec8cd4f89dcade9f6d4">Copiar</button>
 </div>
 <p>Quando possível, forneça um tipo de conteúdo também. O <em>Active Storage</em> tenta
 determinar o tipo de conteúdo de um arquivo a partir de seus dados. Depende do tipo
 de conteúdo que você fornece se não for possível.</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="vi">@message</span><span class="p">.</span><span class="nf">image</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="ss">io: </span><span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="s1">'/path/to/file'</span><span class="p">),</span> <span class="ss">filename: </span><span class="s1">'file.pdf'</span><span class="p">,</span> <span class="ss">content_type: </span><span class="s1">'application/pdf'</span><span class="p">)</span>
+<pre><code class="highlight ruby"><span class="vi">@message</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="ss">io: </span><span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="s1">'/path/to/file'</span><span class="p">),</span> <span class="ss">filename: </span><span class="s1">'file.pdf'</span><span class="p">,</span> <span class="ss">content_type: </span><span class="s1">'application/pdf'</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7930d6934664c4746614d8c52ae64acc">@message.image.attach(io: File.open('/path/to/file'), filename: 'file.pdf', content_type: 'application/pdf')
+<textarea class="clipboard-content" id="clipboard-d94ffdcde9923795b13206dcfa2def01">@message.images.attach(io: File.open('/path/to/file'), filename: 'file.pdf', content_type: 'application/pdf')
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7930d6934664c4746614d8c52ae64acc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d94ffdcde9923795b13206dcfa2def01">Copiar</button>
 </div>
 <p>Você pode ignorar a inferência do tipo de conteúdo a partir dos dados passando
 <code>identify: false</code> junto com o <code>content_type</code>.</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="vi">@message</span><span class="p">.</span><span class="nf">image</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span>
+<pre><code class="highlight ruby"><span class="vi">@message</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span>
   <span class="ss">io: </span><span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="s1">'/path/to/file'</span><span class="p">),</span>
   <span class="ss">filename: </span><span class="s1">'file.pdf'</span><span class="p">,</span>
   <span class="ss">content_type: </span><span class="s1">'application/pdf'</span><span class="p">,</span>
   <span class="ss">identify: </span><span class="kp">false</span>
 <span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-135d3c026e4f22724f44a0010cad2424">@message.image.attach(
+<textarea class="clipboard-content" id="clipboard-7756c14ae8e70035e9ffdbfebb3d94ec">@message.images.attach(
   io: File.open('/path/to/file'),
   filename: 'file.pdf',
   content_type: 'application/pdf',
   identify: false
 )
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-135d3c026e4f22724f44a0010cad2424">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7756c14ae8e70035e9ffdbfebb3d94ec">Copiar</button>
 </div>
 <p>Se você não fornecer um tipo de conteúdo e o <em>Active Storage</em> não puder determinar o
-tipo de conteúdo do arquivo automaticamente, o padrão é <em>application/octet-stream</em>.</p><h3 id="removendo-arquivos"><a class="anchorlink" href="#removendo-arquivos">4 Removendo arquivos</a></h3><p>Para remover um arquivo anexado de um <em>model</em>, use o método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Attached/One.html#method-i-purge"><code>purge</code></a> no anexo.
+tipo de conteúdo do arquivo automaticamente, o padrão é <em>application/octet-stream</em>.</p><h3 id="removendo-arquivos"><a class="anchorlink" href="#removendo-arquivos">4 Removendo arquivos</a></h3><p>Para remover um arquivo anexado de um <em>model</em>, use o método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Attached/One.html#method-i-purge"><code>purge</code></a> no anexo.
 Se a aplicação está configurada para usar <em>Active Job</em>, a remoção pode ser feita de maneira assíncrona
-chamando <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Attached/One.html#method-i-purge_later"><code>purge_later</code></a>. <code>Purge</code> remove o <em>blob</em> (O arquivo em sua versão binaria salvo no banco de
+chamando <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Attached/One.html#method-i-purge_later"><code>purge_later</code></a>. <code>Purge</code> remove o <em>blob</em> (O arquivo em sua versão binaria salvo no banco de
 dados) e o arquivo do seu serviço de armazenamento.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Maneira usada para remover um avatar e seus arquivos de maneira síncrona.</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">purge</span>
@@ -838,128 +1013,341 @@ dados) e o arquivo do seu serviço de armazenamento.</p><div class="code_contain
 <span class="c1"># Maneira usada para remover um avatar e seus arquivos de maneira assíncrona.</span>
 <span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">purge_later</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-41b555056c5d139b27c07b41736fffa7"># Maneira usada para remover um avatar e seus arquivos de maneira síncrona.
+<textarea class="clipboard-content" id="clipboard-1603f5a77e91f3232aa945443ab4cd9a"># Maneira usada para remover um avatar e seus arquivos de maneira síncrona.
 user.avatar.purge
 
 # Maneira usada para remover um avatar e seus arquivos de maneira assíncrona.
 user.avatar.purge_later
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-41b555056c5d139b27c07b41736fffa7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1603f5a77e91f3232aa945443ab4cd9a">Copiar</button>
 </div>
-<h3 id="conectando-linking-arquivos"><a class="anchorlink" href="#conectando-linking-arquivos">5 Conectando (<em>Linking</em>) arquivos</a></h3><p>Cria uma <em>URL</em> permanente da sua aplicação para o <em>blob</em>. Quando acessado,
-o cliente é redirecionado para a rota (<em>endpoint</em>) correta. Está indireção
-desacopla a URL do serviço da atual, e permite, por exemplo, espelhar anexos em
-diferentes serviços de grande disponibilidade. O redirecionamento tem um tempo
-de expiração de 5 minutos.</p><div class="code_container">
+<h3 id="serving-files"><a class="anchorlink" href="#serving-files">5 Serving Files</a></h3><p>Active Storage supports two ways to serve files: redirecting and proxying.</p><div class="warning"><p>All Active Storage controllers are publicly accessible by default. The
+generated URLs are hard to guess, but permanent by design. If your files
+require a higher level of protection consider implementing
+<a href="#authenticated-controllers">Authenticated Controllers</a>.</p></div><h4 id="redirect-mode"><a class="anchorlink" href="#redirect-mode">5.1 Redirect mode</a></h4><p>To generate a permanent URL for a blob, you can pass the blob to the
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/RoutingUrlFor.html#method-i-url_for"><code>url_for</code></a> view helper. This generates a
+URL with the blob's <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blob.html#method-i-signed_id"><code>signed_id</code></a>
+that is routed to the blob's <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blobs/RedirectController.html"><code>RedirectController</code></a></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">url_for</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">)</span>
+<span class="c1"># =&gt; /rails/active_storage/blobs/:signed_id/my-avatar.png</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dd8dc1837efc4cd4c715bc4c8e763c02">url_for(user.avatar)
+<textarea class="clipboard-content" id="clipboard-3bd7dd9a02c90a689e3e01418417f58b">url_for(user.avatar)
+# =&gt; /rails/active_storage/blobs/:signed_id/my-avatar.png
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dd8dc1837efc4cd4c715bc4c8e763c02">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3bd7dd9a02c90a689e3e01418417f58b">Copiar</button>
 </div>
-<p>Para criar um <em>link</em> para baixar o arquivo use o seguinte <em>helper</em>:
-<code>rails_blob_{path|url}</code>. Usando esse <em>helper</em> permite que você configure a
-disposição (<code>disposition</code>) de como deseja apresentar:</p><div class="code_container">
+<p>The <code>RedirectController</code> redirects to the actual service endpoint. This
+indirection decouples the service URL from the actual one, and allows, for
+example, mirroring attachments in different services for high-availability. The
+redirection has an HTTP expiration of 5 minutes.</p><p>To create a download link, use the <code>rails_blob_{path|url}</code> helper. Using this
+helper allows you to set the disposition.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">rails_blob_path</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">,</span> <span class="ss">disposition: </span><span class="s2">"attachment"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0b43e197fae2dce0b23587415b948d0f">rails_blob_path(user.avatar, disposition: "attachment")
+<textarea class="clipboard-content" id="clipboard-7828fcd1eea20fa93305a09b3de44d0b">rails_blob_path(user.avatar, disposition: "attachment")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0b43e197fae2dce0b23587415b948d0f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7828fcd1eea20fa93305a09b3de44d0b">Copiar</button>
 </div>
-<div class="warning"><p>Para evitar ataques XSS, <em>ActiveStorage</em> força o cabeçalho Content-Disposition para "anexos"
-para alguns tipos de arquivo. Para alterar este comportamento, consulte as
-opções de configuração disponíveis em <a href="configuring.html#configuring-active-storage">Configurando aplicações Rails</a>.</p></div><p>Se você precisar criar um <em>link</em> fora do escopo do <em>controller</em> ou <em>view</em> (Um
-serviço que execute tarefas assíncronas, <em>Cronjob</em> etc), você pode acessar o
-<em>helper</em> <code>rails_blob_path</code> desta maneira:</p><div class="code_container">
+<div class="warning"><p>To prevent XSS attacks, Active Storage forces the Content-Disposition header
+to "attachment" for some kind of files. To change this behaviour see the
+available configuration options in <a href="configuring.html#configuring-active-storage">Configuring Rails Applications</a>.</p></div><p>If you need to create a link from outside of controller/view context (Background
+jobs, Cronjobs, etc.), you can access the <code>rails_blob_path</code> like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">url_helpers</span><span class="p">.</span><span class="nf">rails_blob_path</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">,</span> <span class="ss">only_path: </span><span class="kp">true</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6a5eb8b6ee489fd7c0ed1c08ae91ce0e">Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
+<textarea class="clipboard-content" id="clipboard-33b075b8c32c4ffdba388330b77c50a9">Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: true)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6a5eb8b6ee489fd7c0ed1c08ae91ce0e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-33b075b8c32c4ffdba388330b77c50a9">Copiar</button>
 </div>
-<h3 id="baixando-arquivos"><a class="anchorlink" href="#baixando-arquivos">6 Baixando arquivos</a></h3><p>Algumas vezes você vai precisar processar um <em>blob</em> depois dele ter sido
+<h4 id="proxy-mode"><a class="anchorlink" href="#proxy-mode">5.2 Proxy mode</a></h4><p>Optionally, files can be proxied instead. This means that your application servers will download file data from the storage service in response to requests. This can be useful for serving files from a CDN.</p><p>You can configure Active Storage to use proxying by default:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/initializers/active_storage.rb</span>
+<span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">active_storage</span><span class="p">.</span><span class="nf">resolve_model_to_route</span> <span class="o">=</span> <span class="ss">:rails_storage_proxy</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9b4300ca6633de07e0365d7e9c2bda06"># config/initializers/active_storage.rb
+Rails.application.config.active_storage.resolve_model_to_route = :rails_storage_proxy
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9b4300ca6633de07e0365d7e9c2bda06">Copiar</button>
+</div>
+<p>Or if you want to explicitly proxy specific attachments there are URL helpers you can use in the form of <code>rails_storage_proxy_path</code> and <code>rails_storage_proxy_url</code>.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">rails_storage_proxy_path</span><span class="p">(</span><span class="vi">@user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">)</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-37e4309383365c1376037c20055fd947">&lt;%= image_tag rails_storage_proxy_path(@user.avatar) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-37e4309383365c1376037c20055fd947">Copiar</button>
+</div>
+<h5 id="putting-a-cdn-in-front-of-active-storage"><a class="anchorlink" href="#putting-a-cdn-in-front-of-active-storage">5.2.1 Putting a CDN in front of Active Storage</a></h5><p>Additionally, in order to use a CDN for Active Storage attachments, you will need to generate URLs with proxy mode so that they are served by your app and the CDN will cache the attachment without any extra configuration. This works out of the box because the default Active Storage proxy controller sets an HTTP header indicating to the CDN to cache the response.</p><p>You should also make sure that the generated URLs use the CDN host instead of your app host. There are multiple ways to achieve this, but in general it involves tweaking your <code>config/routes.rb</code> file so that you can generate the proper URLs for the attachments and their variations. As an example, you could add this:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/routes.rb</span>
+<span class="n">direct</span> <span class="ss">:cdn_image</span> <span class="k">do</span> <span class="o">|</span><span class="n">model</span><span class="p">,</span> <span class="n">options</span><span class="o">|</span>
+  <span class="k">if</span> <span class="n">model</span><span class="p">.</span><span class="nf">respond_to?</span><span class="p">(</span><span class="ss">:signed_id</span><span class="p">)</span>
+    <span class="n">route_for</span><span class="p">(</span>
+      <span class="ss">:rails_service_blob_proxy</span><span class="p">,</span>
+      <span class="n">model</span><span class="p">.</span><span class="nf">signed_id</span><span class="p">,</span>
+      <span class="n">model</span><span class="p">.</span><span class="nf">filename</span><span class="p">,</span>
+      <span class="n">options</span><span class="p">.</span><span class="nf">merge</span><span class="p">(</span><span class="ss">host: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'CDN_HOST'</span><span class="p">])</span>
+    <span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">signed_blob_id</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">blob</span><span class="p">.</span><span class="nf">signed_id</span>
+    <span class="n">variation_key</span>  <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">variation</span><span class="p">.</span><span class="nf">key</span>
+    <span class="n">filename</span>       <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">blob</span><span class="p">.</span><span class="nf">filename</span>
+
+    <span class="n">route_for</span><span class="p">(</span>
+      <span class="ss">:rails_blob_representation_proxy</span><span class="p">,</span>
+      <span class="n">signed_blob_id</span><span class="p">,</span>
+      <span class="n">variation_key</span><span class="p">,</span>
+      <span class="n">filename</span><span class="p">,</span>
+      <span class="n">options</span><span class="p">.</span><span class="nf">merge</span><span class="p">(</span><span class="ss">host: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'CDN_HOST'</span><span class="p">])</span>
+    <span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ce8ea0351084ecd2c122356df238f62d"># config/routes.rb
+direct :cdn_image do |model, options|
+  if model.respond_to?(:signed_id)
+    route_for(
+      :rails_service_blob_proxy,
+      model.signed_id,
+      model.filename,
+      options.merge(host: ENV['CDN_HOST'])
+    )
+  else
+    signed_blob_id = model.blob.signed_id
+    variation_key  = model.variation.key
+    filename       = model.blob.filename
+
+    route_for(
+      :rails_blob_representation_proxy,
+      signed_blob_id,
+      variation_key,
+      filename,
+      options.merge(host: ENV['CDN_HOST'])
+    )
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ce8ea0351084ecd2c122356df238f62d">Copiar</button>
+</div>
+<p>and then generate routes like this:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">cdn_image_url</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">]))</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ad4e56cd4e735f9927f311972f721081">&lt;%= cdn_image_url(user.avatar.variant(resize_to_limit: [128, 128])) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ad4e56cd4e735f9927f311972f721081">Copiar</button>
+</div>
+<h4 id="authenticated-controllers"><a class="anchorlink" href="#authenticated-controllers">5.3 Authenticated Controllers</a></h4><p>All Active Storage controllers are publicly accessible by default. The generated
+URLs use a plain <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blob.html#method-i-signed_id"><code>signed_id</code></a>, making them hard to
+guess but permanent. Anyone that knows the blob URL will be able to access it,
+even if a <code>before_action</code> in your <code>ApplicationController</code> would otherwise
+require a login. If your files require a higher level of protection, you can
+implement your own authenticated controllers, based on the
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blobs/RedirectController.html"><code>ActiveStorage::Blobs::RedirectController</code></a>,
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blobs/ProxyController.html"><code>ActiveStorage::Blobs::ProxyController</code></a>,
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Representations/RedirectController.html"><code>ActiveStorage::Representations::RedirectController</code></a> and
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Representations/ProxyController.html"><code>ActiveStorage::Representations::ProxyController</code></a></p><p>To only allow an account to access their own logo you could do the following:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/routes.rb</span>
+<span class="n">resource</span> <span class="ss">:account</span> <span class="k">do</span>
+  <span class="n">resource</span> <span class="ss">:logo</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9fd82e1ff921e5739b7986cb17176605"># config/routes.rb
+resource :account do
+  resource :logo
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9fd82e1ff921e5739b7986cb17176605">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/controllers/logos_controller.rb</span>
+<span class="k">class</span> <span class="nc">LogosController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="c1"># Through ApplicationController:</span>
+  <span class="c1"># include Authenticate, SetCurrentAccount</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="n">redirect_to</span> <span class="no">Current</span><span class="p">.</span><span class="nf">account</span><span class="p">.</span><span class="nf">logo</span><span class="p">.</span><span class="nf">url</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cfd74083091620ed79ce2948db475dde"># app/controllers/logos_controller.rb
+class LogosController &lt; ApplicationController
+  # Through ApplicationController:
+  # include Authenticate, SetCurrentAccount
+
+  def show
+    redirect_to Current.account.logo.url
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cfd74083091620ed79ce2948db475dde">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">account_logo_path</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-773d6e588edac9730150ef488f4c595c">&lt;%= image_tag account_logo_path %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-773d6e588edac9730150ef488f4c595c">Copiar</button>
+</div>
+<p>And then you might want to disable the Active Storage default routes with:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_storage</span><span class="p">.</span><span class="nf">draw_routes</span> <span class="o">=</span> <span class="kp">false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2cb0fcaa884ac19d4485394c1105b939">config.active_storage.draw_routes = false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2cb0fcaa884ac19d4485394c1105b939">Copiar</button>
+</div>
+<p>to prevent files being accessed with the publicly accessible URLs.</p><h3 id="baixando-arquivos"><a class="anchorlink" href="#baixando-arquivos">6 Baixando arquivos</a></h3><p>Algumas vezes você vai precisar processar um <em>blob</em> depois dele ter sido
 <em>uploaded</em> (Transferir um arquivo da maquina do cliente para o servidor da sua
 aplicação) para, por exemplo, converte-lo para um formato diferente. Use o
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Blob.html#method-i-download"><code>download</code></a> para ler o conteúdo binário do <em>blob</em> na
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blob.html#method-i-download"><code>download</code></a> para ler o conteúdo binário do <em>blob</em> na
 memória:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">binary</span> <span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">download</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1253ea9f28aff8289b18e4eba7d2b2ea">binary = user.avatar.download
+<textarea class="clipboard-content" id="clipboard-ee60533704976adfed53b659a8f172c5">binary = user.avatar.download
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1253ea9f28aff8289b18e4eba7d2b2ea">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ee60533704976adfed53b659a8f172c5">Copiar</button>
 </div>
 <p>Caso deseje baixar o <em>blob</em> para um arquivo no disco para um programa externo
-(Um antivírus, por exemplo) possa operar nele. Use o método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Blob.html#method-i-open"><code>open</code></a>
+(Um antivírus, por exemplo) possa operar nele. Use o método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blob.html#method-i-open"><code>open</code></a>
 para baixar o <em>blob</em> para um arquivo temporário no disco:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">message</span><span class="p">.</span><span class="nf">video</span><span class="p">.</span><span class="nf">open</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
   <span class="nb">system</span> <span class="s1">'/caminho/para/o/antivirus'</span><span class="p">,</span> <span class="n">file</span><span class="p">.</span><span class="nf">path</span>
   <span class="c1"># ...</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c5ad22711edce59447116cdcb85e46f7">message.video.open do |file|
+<textarea class="clipboard-content" id="clipboard-770ed871117ab65865a6e7b5961d608e">message.video.open do |file|
   system '/caminho/para/o/antivirus', file.path
   # ...
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c5ad22711edce59447116cdcb85e46f7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-770ed871117ab65865a6e7b5961d608e">Copiar</button>
 </div>
-<p>É importante saber que o arquivo ainda não está disponível no <em>callback</em> <code>after_create</code>, mas apenas no <code>after_create_commit</code>.</p><h3 id="analisando-arquivos"><a class="anchorlink" href="#analisando-arquivos">7 Analisando arquivos</a></h3><p>O <em>Active Storage</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyze">analisa</a>
-arquivos assim que eles são enviados através do enfileiramento de um <em>job</em> no <em>Active Job</em>. Arquivos analisados armazenarão
-informações adicionais no <em>hash</em> de metadados, incluindo <code>analyzed: true</code>. Você pode verificar se um <em>blob</em> foi analisado
-chamando <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyzed-3F"><code>analyzed?</code></a> nele.</p><p>A análise de imagens fornece os atributos <code>width</code> e <code>height</code>. A análise de vídeos fornece ambos citados anteriormente, assim
-como <code>duration</code>, <code>angle</code> e <code>display_aspect_ratio</code>.</p><p>A análise necessita da gem <code>mini_magick</code>. A análise de vídeos também necessita da biblioteca <a href="https://www.ffmpeg.org/">FFmpeg</a>,
-que você deve incluir separadamente.</p><h3 id="transformando-imagens"><a class="anchorlink" href="#transformando-imagens">8 Transformando Imagens</a></h3><p>Para ativar variações, adicione a <em>gem</em>  <code>image_processing</code>  no seu <code>Gemfile</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'image_processing'</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-9af68d78e7e49e5ea4d9a31b6d16473e">gem 'image_processing'
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9af68d78e7e49e5ea4d9a31b6d16473e">Copiar</button>
-</div>
-<p>Para criar uma variação de uma imagem, chame <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Blob/Representable.html#method-i-variant"><code>variant</code></a> no <code>Blob</code>. Você pode passar qualquer transformação para o método suportado pelo processador. O processador padrão para <em>Active Storage</em> é o MiniMagick, mas você também pode usar o <a href="https://www.rubydoc.info/gems/ruby-vips/Vips/Image">Vips</a>.</p><p>Quando o navegador acessa a <em>URL</em> da variação, o <em>Active Storage</em> vai lentamente transformar o _blob+ original para o formato especificado e redirecionar para sua nova localização de serviço.</p><div class="code_container">
-<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span> <span class="cp">%&gt;</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-a6c2fd1457cb307abb89218863542430">&lt;%= image_tag user.avatar.variant(resize_to_limit: [100, 100]) %&gt;
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a6c2fd1457cb307abb89218863542430">Copiar</button>
-</div>
-<p>Para trocar para o processador Vips, você teria que adicionar o seguinte trecho no <code>config/application.rb</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="c1"># Use o Vips para processar variações.</span>
-<span class="n">config</span><span class="p">.</span><span class="nf">active_storage</span><span class="p">.</span><span class="nf">variant_processor</span> <span class="o">=</span> <span class="ss">:vips</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-ba37e43b7828ea28d680a21bf3a10a6f"># Use o Vips para processar variações.
-config.active_storage.variant_processor = :vips
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ba37e43b7828ea28d680a21bf3a10a6f">Copiar</button>
-</div>
-<h3 id="pre-visualizacao-de-arquivos"><a class="anchorlink" href="#pre-visualizacao-de-arquivos">9 Pré-visualização de arquivos</a></h3><p>Alguns arquivos que não são imagens podem ser pré-visualizados: isto é, eles podem
-ser apresentados como imagens. Por exemplo, um arquivo de vídeo pode ser pré-visualizado
-através da extração de seu primeiro <em>frame</em>. O <em>Active Storage</em> por padrão já oferece
-suporte para a pré-visualização de vídeos e documentos PDF. Para criar um link e
-gerar um preview use o método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveStorage/Blob/Representable.html#method-i-preview"><code>preview</code></a>:</p><div class="code_container">
+<p>É importante saber que o arquivo ainda não está disponível no <em>callback</em> <code>after_create</code>, mas apenas no <code>after_create_commit</code>.</p><h3 id="analyzing-files"><a class="anchorlink" href="#analyzing-files">7 Analyzing Files</a></h3><p>Active Storage analyzes files once they've been uploaded by queuing a job in Active Job. Analyzed files will store additional information in the metadata hash, including <code>analyzed: true</code>. You can check whether a blob has been analyzed by calling <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blob/Analyzable.html#method-i-analyzed-3F"><code>analyzed?</code></a> on it.</p><p>Image analysis provides <code>width</code> and <code>height</code> attributes. Video analysis provides these, as well as <code>duration</code>, <code>angle</code>, <code>display_aspect_ratio</code>, and <code>video</code> and <code>audio</code> booleans to indicate the presence of those channels. Audio analysis provides <code>duration</code> and <code>bit_rate</code> attributes.</p><h3 id="displaying-images-videos-and-pdfs"><a class="anchorlink" href="#displaying-images-videos-and-pdfs">8 Displaying Images, Videos, and PDFs</a></h3><p>Active Storage supports representing a variety of files. You can call
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blob/Representable.html#method-i-representation"><code>representation</code></a> on an attachment to display an image variant, or a
+preview of a video or PDF. Before calling <code>representation</code>, check if the
+attachment can be represented by calling <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blob/Representable.html#method-i-representable-3F"><code>representable?</code></a>. Some file formats
+can't be previewed by Active Storage out of the box (e.g. Word documents); if
+<code>representable?</code> returns false you may want to <a href="#serving-files">link to</a>
+the file instead.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;ul&gt;</span>
   <span class="cp">&lt;%</span> <span class="vi">@message</span><span class="p">.</span><span class="nf">files</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span> <span class="cp">%&gt;</span>
     <span class="nt">&lt;li&gt;</span>
-      <span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">file</span><span class="p">.</span><span class="nf">preview</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%</span> <span class="k">if</span> <span class="n">file</span><span class="p">.</span><span class="nf">representable?</span> <span class="cp">%&gt;</span>
+        <span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">file</span><span class="p">.</span><span class="nf">representation</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%</span> <span class="k">else</span> <span class="cp">%&gt;</span>
+        <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="n">rails_blob_path</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="ss">disposition: </span><span class="s2">"attachment"</span><span class="p">)</span> <span class="k">do</span> <span class="cp">%&gt;</span>
+          <span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="s2">"placeholder.png"</span><span class="p">,</span> <span class="ss">alt: </span><span class="s2">"Download file"</span> <span class="cp">%&gt;</span>
+        <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
     <span class="nt">&lt;/li&gt;</span>
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-995e25e694fc03b9a8b7fd022ff6b998">&lt;ul&gt;
+<textarea class="clipboard-content" id="clipboard-ea0d283f0f7d62913b9d1a5ed46a5b95">&lt;ul&gt;
   &lt;% @message.files.each do |file| %&gt;
     &lt;li&gt;
-      &lt;%= image_tag file.preview(resize_to_limit: [100, 100]) %&gt;
+      &lt;% if file.representable? %&gt;
+        &lt;%= image_tag file.representation(resize_to_limit: [100, 100]) %&gt;
+      &lt;% else %&gt;
+        &lt;%= link_to rails_blob_path(file, disposition: "attachment") do %&gt;
+          &lt;%= image_tag "placeholder.png", alt: "Download file" %&gt;
+        &lt;% end %&gt;
+      &lt;% end %&gt;
     &lt;/li&gt;
   &lt;% end %&gt;
 &lt;/ul&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-995e25e694fc03b9a8b7fd022ff6b998">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ea0d283f0f7d62913b9d1a5ed46a5b95">Copiar</button>
 </div>
-<div class="warning"><p>Extrair pré-visualizações necessita de aplicações de terceiros, <em>FFmpeg v3.4+</em> para
-vídeo e <em>muPDF</em> para PDFs, e no <em>macOS</em> também são necessários <em>XQuartz</em> e <em>Poppler</em>.
-Estas bibliotecas não são fornecidas pelo Rails. Você deve instalá-las para poder
-utilizar as pré-visualizações embutidas no <em>Active Storage</em>. Antes de instalar e utilizar
-o <em>software</em> de terceiros, certifique-se de entender as implicações da licença para
-essas ações.</p></div><h3 id="uploads-diretos"><a class="anchorlink" href="#uploads-diretos">10 <em>Uploads</em> Diretos</a></h3><p>O <em>Active Storage</em> com a sua biblioteca JavaScript incluída suporta <em>uploads</em> direto do cliente (<em>front-end</em>) para a nuvem.</p><h4 id="uso"><a class="anchorlink" href="#uso">10.1 Uso</a></h4>
+<p>Internally, <code>representation</code> calls <code>variant</code> for images, and <code>preview</code> for
+previewable files. You can also call these methods directly.</p><h4 id="lazy-vs-immediate-loading"><a class="anchorlink" href="#lazy-vs-immediate-loading">8.1 Lazy vs Immediate Loading</a></h4><p>By default, Active Storage will process representations lazily. This code:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">image_tag</span> <span class="n">file</span><span class="p">.</span><span class="nf">representation</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-01b193c2ced54b38b6de4142588cb2f2">image_tag file.representation(resize_to_limit: [100, 100])
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-01b193c2ced54b38b6de4142588cb2f2">Copiar</button>
+</div>
+<p>Will generate an <code>&lt;img&gt;</code> tag with the <code>src</code> pointing to the
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Representations/RedirectController.html"><code>ActiveStorage::Representations::RedirectController</code></a>. The browser will
+make a request to that controller, which will return a <code>302</code> redirect to the
+file on the remote service (or in <a href="#proxy-mode">proxy mode</a>, return the file
+contents). Loading the file lazily allows features like
+<a href="#public-access">single use URLs</a> to work without slowing down your initial page loads.</p><p>This works fine for most cases.</p><p>If you want to generate URLs for images immediately, you can call <code>.processed.url</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">image_tag</span> <span class="n">file</span><span class="p">.</span><span class="nf">representation</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">]).</span><span class="nf">processed</span><span class="p">.</span><span class="nf">url</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3398a93252db43631b664d1c99812416">image_tag file.representation(resize_to_limit: [100, 100]).processed.url
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3398a93252db43631b664d1c99812416">Copiar</button>
+</div>
+<p>The Active Storage variant tracker improves performance of this, by storing a
+record in the database if the requested representation has been processed before.
+Thus, the above code will only make an API call to the remote service (e.g. S3)
+once, and once a variant is stored, will use that. The variant tracker runs
+automatically, but can be disabled through <code>config.active_storage.track_variants</code>.</p><p>If you're rendering lots of images on a page, the above example could result
+in N+1 queries loading all the variant records. To avoid these N+1 queries,
+use the named scopes on <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Attachment.html"><code>ActiveStorage::Attachment</code></a>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">message</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">with_all_variant_records</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+  <span class="n">image_tag</span> <span class="n">file</span><span class="p">.</span><span class="nf">representation</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">]).</span><span class="nf">processed</span><span class="p">.</span><span class="nf">url</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-16c0a980d025ebd99186f3d81750ac34">message.images.with_all_variant_records.each do |file|
+  image_tag file.representation(resize_to_limit: [100, 100]).processed.url
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-16c0a980d025ebd99186f3d81750ac34">Copiar</button>
+</div>
+<h4 id="transforming-images"><a class="anchorlink" href="#transforming-images">8.2 Transforming Images</a></h4><p>Transforming images allows you to display the image at your choice of dimensions. 
+To create a variation of an image, call <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blob/Representable.html#method-i-variant"><code>variant</code></a> on the attachment. You
+can pass any transformation supported by the variant processor to the method.
+When the browser hits the variant URL, Active Storage will lazily transform
+the original blob into the specified format and redirect to its new service
+location.</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-3088857cce40eb0b2ab315ebeb1d2a8f">&lt;%= image_tag user.avatar.variant(resize_to_limit: [100, 100]) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3088857cce40eb0b2ab315ebeb1d2a8f">Copiar</button>
+</div>
+<p>If a variant is requested, Active Storage will automatically apply
+transformations depending on the image's format:</p>
+<ol>
+<li><p>Content types that are variable (as dictated by <code>config.active_storage.variable_content_types</code>)
+and not considered web images (as dictated by <code>config.active_storage.web_image_content_types</code>),
+will be converted to PNG.</p></li>
+<li><p>If <code>quality</code> is not specified, the variant processor's default quality for the format will be used.</p></li>
+</ol>
+<p>The default processor for Active Storage is MiniMagick, but you can also use
+<a href="https://www.rubydoc.info/gems/ruby-vips/Vips/Image">Vips</a>. To switch to Vips, add the following to <code>config/application.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_storage</span><span class="p">.</span><span class="nf">variant_processor</span> <span class="o">=</span> <span class="ss">:vips</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c6cc8105efbee9432d2975451bafbf39">config.active_storage.variant_processor = :vips
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c6cc8105efbee9432d2975451bafbf39">Copiar</button>
+</div>
+<p>The two processors are not fully compatible, so when migrating an existing application 
+using MiniMagick to Vips, some changes have to be made if using options that are format
+specific:</p><div class="code_container">
+<pre><code class="highlight rhtml"><span class="c">&lt;!-- MiniMagick --&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="ss">format: :jpeg</span><span class="p">,</span> <span class="ss">sampling_factor: </span><span class="s2">"4:2:0"</span><span class="p">,</span> <span class="ss">strip: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">interlace: </span><span class="s2">"JPEG"</span><span class="p">,</span> <span class="ss">colorspace: </span><span class="s2">"sRGB"</span><span class="p">,</span> <span class="ss">quality: </span><span class="mi">80</span><span class="p">)</span> <span class="cp">%&gt;</span>
+
+<span class="c">&lt;!-- Vips --&gt;</span>
+<span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">variant</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="ss">format: :jpeg</span><span class="p">,</span> <span class="ss">saver: </span><span class="p">{</span> <span class="ss">subsample_mode: </span><span class="s2">"on"</span><span class="p">,</span> <span class="ss">strip: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">interlace: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">quality: </span><span class="mi">80</span> <span class="p">})</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9ad485dbd3eb3c2c2c6cdc8c241b101c">&lt;!-- MiniMagick --&gt;
+&lt;%= image_tag user.avatar.variant(resize_to_limit: [100, 100], format: :jpeg, sampling_factor: "4:2:0", strip: true, interlace: "JPEG", colorspace: "sRGB", quality: 80) %&gt;
+
+&lt;!-- Vips --&gt;
+&lt;%= image_tag user.avatar.variant(resize_to_limit: [100, 100], format: :jpeg, saver: { subsample_mode: "on", strip: true, interlace: true, quality: 80 }) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9ad485dbd3eb3c2c2c6cdc8c241b101c">Copiar</button>
+</div>
+<h4 id="pre-visualizacao-de-arquivos"><a class="anchorlink" href="#pre-visualizacao-de-arquivos">8.3 Pré-visualização de arquivos</a></h4><p>Alguns arquivos que não são imagens podem ser pré-visualizados: isto é, eles podem
+ser apresentados como imagens. Por exemplo, um arquivo de vídeo pode ser pré-visualizado
+através da extração de seu primeiro <em>frame</em>. O <em>Active Storage</em> por padrão já oferece
+suporte para a pré-visualização de vídeos e documentos PDF. Para criar um link e
+gerar um preview use o método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Blob/Representable.html#method-i-preview"><code>preview</code></a>:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="n">message</span><span class="p">.</span><span class="nf">video</span><span class="p">.</span><span class="nf">preview</span><span class="p">(</span><span class="ss">resize_to_limit: </span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e6c256b94de966780f3fb8877cbd2bc7">&lt;%= image_tag message.video.preview(resize_to_limit: [100, 100]) %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e6c256b94de966780f3fb8877cbd2bc7">Copiar</button>
+</div>
+<p>Para adicionar suporte para outros formatos, adicione seu próprio visualizador. Veja a documentação de
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Preview.html"><code>ActiveStorage::Preview</code></a> para mais informações.</p><h3 id="uploads-diretos"><a class="anchorlink" href="#uploads-diretos">9 <em>Uploads</em> Diretos</a></h3><p>O <em>Active Storage</em> com a sua biblioteca JavaScript incluída suporta <em>uploads</em> direto do cliente (<em>front-end</em>) para a nuvem.</p><h4 id="uso"><a class="anchorlink" href="#uso">9.1 Uso</a></h4>
 <ol>
 <li>
 <p>Inclua o <code>activestorage.js</code> na sua aplicação.</p>
@@ -967,19 +1355,19 @@ essas ações.</p></div><h3 id="uploads-diretos"><a class="anchorlink" href="#up
 <div class="code_container">
 <pre><code class="highlight js"><span class="c1">//= require activestorage</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b544e7e96c0b3ce785d497584f9fcc0a">//= require activestorage
+<textarea class="clipboard-content" id="clipboard-ff7f6a107ba47b3dfb9996630ef08d24">//= require activestorage
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b544e7e96c0b3ce785d497584f9fcc0a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ff7f6a107ba47b3dfb9996630ef08d24">Copiar</button>
 </div>
 <p>Usando o pacote npm:</p>
 <div class="code_container">
 <pre><code class="highlight js"><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">ActiveStorage</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@rails/activestorage</span><span class="dl">"</span>
 <span class="nx">ActiveStorage</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-321bda4966760fd9b4fdbce379ae4037">import * as ActiveStorage from "@rails/activestorage"
+<textarea class="clipboard-content" id="clipboard-bc7e70a687358f93485c04d6448bce03">import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-321bda4966760fd9b4fdbce379ae4037">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bc7e70a687358f93485c04d6448bce03">Copiar</button>
 </div>
 </li>
 <li>
@@ -987,23 +1375,23 @@ ActiveStorage.start()
 <div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">file_field</span> <span class="ss">:attachments</span><span class="p">,</span> <span class="ss">multiple: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">direct_upload: </span><span class="kp">true</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-93d0244bb80d751e5ddacb9debf3f167">&lt;%= form.file_field :attachments, multiple: true, direct_upload: true %&gt;
+<textarea class="clipboard-content" id="clipboard-fb155d3cc5561d1bf823e200a2130ad7">&lt;%= form.file_field :attachments, multiple: true, direct_upload: true %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-93d0244bb80d751e5ddacb9debf3f167">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fb155d3cc5561d1bf823e200a2130ad7">Copiar</button>
 </div>
 <p>Se você não está usando um <a href="form_helpers.html#customizando-os-construtores-de-formularios">FormBuilder</a> adicione o <code>direct_upload: true</code> diretamente:</p>
 <div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">file</span> <span class="na">data-direct-upload-url=</span><span class="s">"</span><span class="cp">&lt;%=</span> <span class="n">rails_direct_uploads_url</span> <span class="cp">%&gt;</span><span class="s">"</span> <span class="nt">/&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-148c827c8e33ddfc4378174920472b58">&lt;input type=file data-direct-upload-url="&lt;%= rails_direct_uploads_url %&gt;" /&gt;
+<textarea class="clipboard-content" id="clipboard-fffdf2fcb935015d519b4468ac1884d8">&lt;input type=file data-direct-upload-url="&lt;%= rails_direct_uploads_url %&gt;" /&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-148c827c8e33ddfc4378174920472b58">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fffdf2fcb935015d519b4468ac1884d8">Copiar</button>
 </div>
 </li>
 <li><p>Configure o serviço de armazenamento de terceiros do CORS para permitir requisições de <em>upload</em> direto.</p></li>
 <li><p>E é isso! Os <em>uploads</em> começam após o envio do formulário.</p></li>
 </ol>
-<h4 id="configuracao-do-cross-origin-resource-sharing-cors"><a class="anchorlink" href="#configuracao-do-cross-origin-resource-sharing-cors">10.2 Configuração do <em>Cross-Origin Resource Sharing</em> (CORS)</a></h4><p>Para que o <em>upload</em> direto a partir de terceiros funcione você vai precisar configurar o seu serviço de nuvem para aceitar requisições de múltiplas origens. Consulte a documentação sobre CORS do seu serviço:</p>
+<h4 id="configuracao-do-cross-origin-resource-sharing-cors"><a class="anchorlink" href="#configuracao-do-cross-origin-resource-sharing-cors">9.2 Configuração do <em>Cross-Origin Resource Sharing</em> (CORS)</a></h4><p>Para que o <em>upload</em> direto a partir de terceiros funcione você vai precisar configurar o seu serviço de nuvem para aceitar requisições de múltiplas origens. Consulte a documentação sobre CORS do seu serviço:</p>
 <ul>
 <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html#how-do-i-enable-cors">S3</a></li>
 <li><a href="https://cloud.google.com/storage/docs/configuring-cors">Google Cloud Storage</a></li>
@@ -1026,10 +1414,12 @@ ActiveStorage.start()
 <code>x-ms-blob-content-disposition</code> (somente para o Azure Storage)</li>
 <li>
 <code>x-ms-blob-type</code> (somente para o Azure Storage)</li>
+<li>
+<code>Cache-Control</code> (para GCS, somente se <code>cache_control</code> estiver definido)</li>
 </ul>
 </li>
 </ul>
-<p>Se você for utilizar seu disco como armazenamento e ele compartilhar a mesma origem da sua aplicação não é necessário configurar o CORS.</p><h5 id="exemplo-configuracao-do-cors-para-o-s3"><a class="anchorlink" href="#exemplo-configuracao-do-cors-para-o-s3">10.2.1 Exemplo: Configuração do CORS para o S3</a></h5><div class="code_container">
+<p>Se você for utilizar seu disco como armazenamento e ele compartilhar a mesma origem da sua aplicação não é necessário configurar o CORS.</p><h5 id="exemplo-configuracao-do-cors-para-o-s3"><a class="anchorlink" href="#exemplo-configuracao-do-cors-para-o-s3">9.2.1 Exemplo: Configuração do CORS para o S3</a></h5><div class="code_container">
 <pre><code class="highlight json"><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"AllowedHeaders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -1051,7 +1441,7 @@ ActiveStorage.start()
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-ac28d7e974af4f076a56e0a3db34c25d">[
+<textarea class="clipboard-content" id="clipboard-b1e2a295131e7bc001e824b7d96bbbc6">[
   {
     "AllowedHeaders": [
       "*"
@@ -1072,9 +1462,9 @@ ActiveStorage.start()
   }
 ]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ac28d7e974af4f076a56e0a3db34c25d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b1e2a295131e7bc001e824b7d96bbbc6">Copiar</button>
 </div>
-<h5 id="exemplo-configuracao-do-cors-para-o-google-cloud-storage"><a class="anchorlink" href="#exemplo-configuracao-do-cors-para-o-google-cloud-storage">10.2.2 Exemplo: Configuração do CORS para o Google Cloud Storage</a></h5><div class="code_container">
+<h5 id="exemplo-configuracao-do-cors-para-o-google-cloud-storage"><a class="anchorlink" href="#exemplo-configuracao-do-cors-para-o-google-cloud-storage">9.2.2 Exemplo: Configuração do CORS para o Google Cloud Storage</a></h5><div class="code_container">
 <pre><code class="highlight json"><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"origin"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"https://www.example.com"</span><span class="p">],</span><span class="w">
@@ -1084,7 +1474,7 @@ ActiveStorage.start()
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-5f255c6697bb21c7694dc3b6f97cd580">[
+<textarea class="clipboard-content" id="clipboard-27d015ab2fc7fc29681d92b25a63bf55">[
   {
     "origin": ["https://www.example.com"],
     "method": ["PUT"],
@@ -1093,9 +1483,9 @@ ActiveStorage.start()
   }
 ]
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5f255c6697bb21c7694dc3b6f97cd580">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-27d015ab2fc7fc29681d92b25a63bf55">Copiar</button>
 </div>
-<h5 id="exemplo-configuracao-do-cors-para-o-azure-storage"><a class="anchorlink" href="#exemplo-configuracao-do-cors-para-o-azure-storage">10.2.3 Exemplo: Configuração do CORS para o Azure Storage</a></h5><div class="code_container">
+<h5 id="exemplo-configuracao-do-cors-para-o-azure-storage"><a class="anchorlink" href="#exemplo-configuracao-do-cors-para-o-azure-storage">9.2.3 Exemplo: Configuração do CORS para o Azure Storage</a></h5><div class="code_container">
 <pre><code class="highlight xml"><span class="nt">&lt;Cors&gt;</span>
   <span class="nt">&lt;CorsRule&gt;</span>
     <span class="nt">&lt;AllowedOrigins&gt;</span>https://www.example.com<span class="nt">&lt;/AllowedOrigins&gt;</span>
@@ -1103,20 +1493,20 @@ ActiveStorage.start()
     <span class="nt">&lt;AllowedHeaders&gt;</span>Origin, Content-Type, Content-MD5, x-ms-blob-content-disposition, x-ms-blob-type<span class="nt">&lt;/AllowedHeaders&gt;</span>
     <span class="nt">&lt;MaxAgeInSeconds&gt;</span>3600<span class="nt">&lt;/MaxAgeInSeconds&gt;</span>
   <span class="nt">&lt;/CorsRule&gt;</span>
-<span class="nt">&lt;Cors&gt;</span>
+<span class="nt">&lt;/Cors&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-52a25127ba233c094ca902eb2089acaf">&lt;Cors&gt;
+<textarea class="clipboard-content" id="clipboard-4d2af8c5fbb446ee056ef48d97283768">&lt;Cors&gt;
   &lt;CorsRule&gt;
     &lt;AllowedOrigins&gt;https://www.example.com&lt;/AllowedOrigins&gt;
     &lt;AllowedMethods&gt;PUT&lt;/AllowedMethods&gt;
     &lt;AllowedHeaders&gt;Origin, Content-Type, Content-MD5, x-ms-blob-content-disposition, x-ms-blob-type&lt;/AllowedHeaders&gt;
     &lt;MaxAgeInSeconds&gt;3600&lt;/MaxAgeInSeconds&gt;
   &lt;/CorsRule&gt;
-&lt;Cors&gt;
+&lt;/Cors&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-52a25127ba233c094ca902eb2089acaf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4d2af8c5fbb446ee056ef48d97283768">Copiar</button>
 </div>
-<h4 id="eventos-de-upload-do-javascript"><a class="anchorlink" href="#eventos-de-upload-do-javascript">10.3 Eventos de <em>upload</em> do JavaScript</a></h4>
+<h4 id="eventos-de-upload-do-javascript"><a class="anchorlink" href="#eventos-de-upload-do-javascript">9.3 Eventos de <em>upload</em> do JavaScript</a></h4>
 <table>
 <thead>
 <tr>
@@ -1183,7 +1573,7 @@ ActiveStorage.start()
 </tr>
 </tbody>
 </table>
-<h4 id="exemplo"><a class="anchorlink" href="#exemplo">10.4 Exemplo</a></h4><p>Você pode usar esses eventos para exibir o progresso de um <em>upload</em>.</p><p><img src="https://user-images.githubusercontent.com/5355/28694528-16e69d0c-72f8-11e7-91a7-c0b8cfc90391.gif" alt="direct-uploads"></p><p>Para mostrar os arquivos enviados em um formulário:</p><div class="code_container">
+<h4 id="exemplo"><a class="anchorlink" href="#exemplo">9.4 Exemplo</a></h4><p>Você pode usar esses eventos para exibir o progresso de um <em>upload</em>.</p><p><img src="https://user-images.githubusercontent.com/5355/28694528-16e69d0c-72f8-11e7-91a7-c0b8cfc90391.gif" alt="direct-uploads"></p><p>Para mostrar os arquivos enviados em um formulário:</p><div class="code_container">
 <pre><code class="highlight js"><span class="c1">// direct_uploads.js</span>
 
 <span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">direct-upload:initialize</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -1224,7 +1614,7 @@ ActiveStorage.start()
   <span class="nx">element</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="dl">"</span><span class="s2">direct-upload--complete</span><span class="dl">"</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ace5f1af738c6bc90e7b9e9f1c0e2a9e">// direct_uploads.js
+<textarea class="clipboard-content" id="clipboard-66690ad95bc27d99f244c4d040df1046">// direct_uploads.js
 
 addEventListener("direct-upload:initialize", event =&gt; {
   const { target, detail } = event
@@ -1264,7 +1654,7 @@ addEventListener("direct-upload:end", event =&gt; {
   element.classList.add("direct-upload--complete")
 })
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ace5f1af738c6bc90e7b9e9f1c0e2a9e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-66690ad95bc27d99f244c4d040df1046">Copiar</button>
 </div>
 <p>Adicionar estilos:</p><div class="code_container">
 <pre><code class="highlight css"><span class="c">/* direct_uploads.css */</span>
@@ -1307,7 +1697,7 @@ addEventListener("direct-upload:end", event =&gt; {
   <span class="nl">display</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6502138359f5f8300634c524e5c8d3f1">/* direct_uploads.css */
+<textarea class="clipboard-content" id="clipboard-1ae52bb333f430c56979e2eebd8c25b6">/* direct_uploads.css */
 
 .direct-upload {
   display: inline-block;
@@ -1347,9 +1737,9 @@ input[type=file][data-direct-upload-url][disabled] {
   display: none;
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6502138359f5f8300634c524e5c8d3f1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1ae52bb333f430c56979e2eebd8c25b6">Copiar</button>
 </div>
-<h4 id="integrando-com-bibliotecas-ou-frameworks"><a class="anchorlink" href="#integrando-com-bibliotecas-ou-frameworks">10.5 Integrando com Bibliotecas ou <em>Frameworks</em></a></h4><p>Se você quer utilizar a funcionalidade de <em>upload</em> direto a partir de um <em>framework</em> JavaScript, ou se você quiser integrar uma funcionalidade de <em>drag and drop</em> (arrastar e soltar), você poderá utilizar a classe <code>DirectUpload</code> para fazer a integração. Ao receber um arquivo da sua biblioteca de escolha, instancie um <code>DirectUpload</code> e chame o seu método de criação. O método de criação recebe uma <em>callback</em> para ser executada quando o <em>upload</em> é concluído.</p><div class="code_container">
+<h4 id="integrando-com-bibliotecas-ou-frameworks"><a class="anchorlink" href="#integrando-com-bibliotecas-ou-frameworks">9.5 Integrando com Bibliotecas ou <em>Frameworks</em></a></h4><p>Se você quer utilizar a funcionalidade de <em>upload</em> direto a partir de um <em>framework</em> JavaScript, ou se você quiser integrar uma funcionalidade de <em>drag and drop</em> (arrastar e soltar), você poderá utilizar a classe <code>DirectUpload</code> para fazer a integração. Ao receber um arquivo da sua biblioteca de escolha, instancie um <code>DirectUpload</code> e chame o seu método de criação. O método de criação recebe uma <em>callback</em> para ser executada quando o <em>upload</em> é concluído.</p><div class="code_container">
 <pre><code class="highlight js"><span class="k">import</span> <span class="p">{</span> <span class="nx">DirectUpload</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@rails/activestorage</span><span class="dl">"</span>
 
 <span class="kd">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">input[type=file]</span><span class="dl">'</span><span class="p">)</span>
@@ -1371,9 +1761,12 @@ input[type=file][data-direct-upload-url][disabled] {
 
 <span class="kd">const</span> <span class="nx">uploadFile</span> <span class="o">=</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="c1">// seu formulário precisa do file_field direct_upload: true, que</span>
-  <span class="c1">//  fornece o data-direct-upload-url</span>
+  <span class="c1">//  fornece o data-direct-upload-url, data-direct-upload-token</span>
+  <span class="c1">// e data-direct-upload-attachment-name</span>
   <span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">directUploadUrl</span>
-  <span class="kd">const</span> <span class="nx">upload</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DirectUpload</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">directUploadToken</span>
+  <span class="kd">const</span> <span class="nx">attachmentName</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">directUploadAttachmentName</span>
+  <span class="kd">const</span> <span class="nx">upload</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DirectUpload</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">token</span><span class="p">,</span> <span class="nx">attachmentName</span><span class="p">)</span>
 
   <span class="nx">upload</span><span class="p">.</span><span class="nx">create</span><span class="p">((</span><span class="nx">error</span><span class="p">,</span> <span class="nx">blob</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
@@ -1391,7 +1784,7 @@ input[type=file][data-direct-upload-url][disabled] {
   <span class="p">})</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-68fcb9cfae597a278ad75ce5cb250425">import { DirectUpload } from "@rails/activestorage"
+<textarea class="clipboard-content" id="clipboard-c10692cb7928652b960982550650afb8">import { DirectUpload } from "@rails/activestorage"
 
 const input = document.querySelector('input[type=file]')
 
@@ -1412,9 +1805,12 @@ input.addEventListener('change', (event) =&gt; {
 
 const uploadFile = (file) =&gt; {
   // seu formulário precisa do file_field direct_upload: true, que
-  //  fornece o data-direct-upload-url
+  //  fornece o data-direct-upload-url, data-direct-upload-token
+  // e data-direct-upload-attachment-name
   const url = input.dataset.directUploadUrl
-  const upload = new DirectUpload(file, url)
+  const token = input.dataset.directUploadToken
+  const attachmentName = input.dataset.directUploadAttachmentName
+  const upload = new DirectUpload(file, url, token, attachmentName)
 
   upload.create((error, blob) =&gt; {
     if (error) {
@@ -1432,17 +1828,17 @@ const uploadFile = (file) =&gt; {
   })
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-68fcb9cfae597a278ad75ce5cb250425">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c10692cb7928652b960982550650afb8">Copiar</button>
 </div>
-<p>Se você precisa acompanhar o progresso de <em>upload</em> do arquivo, você pode passar um terceiro
+<p>Se você precisa acompanhar o progresso de <em>upload</em> do arquivo, você pode passar um quinto
 parâmetro para o construtor do <code>DirectUpload</code>. Durante o <em>upload</em>, o DirectUpload
 irá chamar o método <code>directUploadWillStoreFileWithXHR</code> do objeto. Você poderá então
 vincular o seu manipulador de progresso no XHR.</p><div class="code_container">
 <pre><code class="highlight js"><span class="k">import</span> <span class="p">{</span> <span class="nx">DirectUpload</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@rails/activestorage</span><span class="dl">"</span>
 
 <span class="kd">class</span> <span class="nx">Uploader</span> <span class="p">{</span>
-  <span class="kd">constructor</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">upload</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DirectUpload</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">file</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">token</span><span class="p">,</span> <span class="nx">attachmentName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">upload</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DirectUpload</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="nx">token</span><span class="p">,</span> <span class="nx">attachmentName</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
   <span class="p">}</span>
 
   <span class="nx">upload</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span> <span class="p">{</span>
@@ -1466,11 +1862,11 @@ vincular o seu manipulador de progresso no XHR.</p><div class="code_container">
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b0d8dfaf3925cf7702a63bec3dc30dec">import { DirectUpload } from "@rails/activestorage"
+<textarea class="clipboard-content" id="clipboard-7ee03e04e196d71935546132fed4fcce">import { DirectUpload } from "@rails/activestorage"
 
 class Uploader {
-  constructor(file, url) {
-    this.upload = new DirectUpload(this.file, this.url, this)
+  constructor(file, url, token, attachmentName) {
+    this.upload = new DirectUpload(file, url, token, attachmentName, this)
   }
 
   upload(file) {
@@ -1494,109 +1890,249 @@ class Uploader {
   }
 }
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b0d8dfaf3925cf7702a63bec3dc30dec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7ee03e04e196d71935546132fed4fcce">Copiar</button>
 </div>
-<h3 id="descartando-arquivos-armazenados-durante-os-testes-do-tipo-sistema-system"><a class="anchorlink" href="#descartando-arquivos-armazenados-durante-os-testes-do-tipo-sistema-system">11 Descartando Arquivos Armazenados Durante os Testes do tipo Sistema (<em>System</em>)</a></h3><p>Os testes de sistema limpam os dados de testes revertendo uma transação. Como o
-<em>destroy</em> nunca é chamado em um objeto, os arquivos anexados nunca são limpos. Se
+<p>NOTA: O uso de <a href="#direct-uploads">Uploads Diretos</a> às vezes pode resultar em um arquivo que é carregado, mas nunca anexado a um registro. Considere <a href="#purging-unattached-uploads">limpar uploads não anexados</a>.</p><h3 id="testando"><a class="anchorlink" href="#testando">10 Testando</a></h3><p>Use <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionDispatch/TestProcess/FixtureFile.html"><code>fixture_file_upload</code></a> para testar o <em>upload</em> de um arquivo em um teste de integração ou <em>controller</em>.
+O Rails lida com arquivos como qualquer outro parâmetro.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">SignupController</span> <span class="o">&lt;</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">IntegrationTest</span>
+  <span class="nb">test</span> <span class="s2">"can sign up"</span> <span class="k">do</span>
+    <span class="n">post</span> <span class="n">signup_path</span><span class="p">,</span> <span class="ss">params: </span><span class="p">{</span>
+      <span class="ss">name: </span><span class="s2">"David"</span><span class="p">,</span>
+      <span class="ss">avatar: </span><span class="n">fixture_file_upload</span><span class="p">(</span><span class="s2">"david.png"</span><span class="p">,</span> <span class="s2">"image/png"</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">:created_at</span><span class="p">).</span><span class="nf">last</span>
+    <span class="n">assert</span> <span class="n">user</span><span class="p">.</span><span class="nf">avatar</span><span class="p">.</span><span class="nf">attached?</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e6af9726564f644a2319385e29f24e3f">class SignupController &lt; ActionDispatch::IntegrationTest
+  test "can sign up" do
+    post signup_path, params: {
+      name: "David",
+      avatar: fixture_file_upload("david.png", "image/png")
+    }
+
+    user = User.order(:created_at).last
+    assert user.avatar.attached?
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e6af9726564f644a2319385e29f24e3f">Copiar</button>
+</div>
+<h4 id="descartando-arquivos-criados-durante-os-testes"><a class="anchorlink" href="#descartando-arquivos-criados-durante-os-testes">10.1 Descartando arquivos criados durante os testes</a></h4><p>Os testes de sistema limpam os dados de testes revertendo uma transação. Como o
+<code>destroy</code> nunca é chamado em um objeto, os arquivos anexados nunca são limpos. Se
 quiser limpar os arquivos, podemos usar um <em>callback</em> <code>after_teardown</code>.
 Fazendo isso garantimos que todas as conexões criadas durante o teste sejam
 concluídas sem que recebamos um erro do <em>Active Storage</em> informando que não
 foi possível encontrar um arquivo.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationSystemTestCase</span> <span class="o">&lt;</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">SystemTestCase</span>
-  <span class="n">driven_by</span> <span class="ss">:selenium</span><span class="p">,</span> <span class="ss">using: :chrome</span><span class="p">,</span> <span class="ss">screen_size: </span><span class="p">[</span><span class="mi">1400</span><span class="p">,</span> <span class="mi">1400</span><span class="p">]</span>
-
-  <span class="k">def</span> <span class="nf">remove_uploaded_files</span>
-    <span class="no">FileUtils</span><span class="p">.</span><span class="nf">rm_rf</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/storage_test"</span><span class="p">)</span>
-  <span class="k">end</span>
-
+  <span class="c1"># ...</span>
   <span class="k">def</span> <span class="nf">after_teardown</span>
     <span class="k">super</span>
-    <span class="n">remove_uploaded_files</span>
+    <span class="no">FileUtils</span><span class="p">.</span><span class="nf">rm_rf</span><span class="p">(</span><span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">service</span><span class="p">.</span><span class="nf">root</span><span class="p">)</span>
   <span class="k">end</span>
+  <span class="c1"># ...</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f406078a3d4d76a9961daf8064826f7f">class ApplicationSystemTestCase &lt; ActionDispatch::SystemTestCase
-  driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
-
-  def remove_uploaded_files
-    FileUtils.rm_rf("#{Rails.root}/storage_test")
-  end
-
+<textarea class="clipboard-content" id="clipboard-2a54098c0f4d1b241d04f7bd68eb1954">class ApplicationSystemTestCase &lt; ActionDispatch::SystemTestCase
+  # ...
   def after_teardown
     super
-    remove_uploaded_files
+    FileUtils.rm_rf(ActiveStorage::Blob.service.root)
   end
+  # ...
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f406078a3d4d76a9961daf8064826f7f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2a54098c0f4d1b241d04f7bd68eb1954">Copiar</button>
+</div>
+<p>Se você estiver usando [testes paralelos][] e o <code>DiskService</code>, você deve configurar cada processo para usar sua própria
+pasta para o <em>Active Storage</em>. Dessa forma, o retorno de chamada <code>teardown</code> só excluirá arquivos do processo do teste relevante.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationSystemTestCase</span> <span class="o">&lt;</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">SystemTestCase</span>
+  <span class="c1"># ...</span>
+  <span class="n">parallelize_setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+    <span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">service</span><span class="p">.</span><span class="nf">root</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">service</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">-</span><span class="si">#{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9ca38017d079a7b16d8a8e03441a10b7">class ApplicationSystemTestCase &lt; ActionDispatch::SystemTestCase
+  # ...
+  parallelize_setup do |i|
+    ActiveStorage::Blob.service.root = "#{ActiveStorage::Blob.service.root}-#{i}"
+  end
+  # ...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9ca38017d079a7b16d8a8e03441a10b7">Copiar</button>
 </div>
 <p>Se os testes de sistema verificarem a exclusão de um <em>model</em> com anexos e
 estivermos usando o <em>Active Job</em>, configure seu ambiente de testes para usar
 o adaptador de fila para que o trabalho de limpeza seja executado imediatamente,
-em vez de em um momento desconhecido no futuro.</p><p>Podemos também usar uma definição de serviço separado para o ambiente de testes,
-para que os testes não excluam os arquivos criados durante o desenvolvimento.</p><div class="code_container">
+em vez de em um momento desconhecido no futuro.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Usa o processamento de trabalho em linha para fazer as coisas</span>
 <span class="c1"># acontecerem imediatamente</span>
 <span class="n">config</span><span class="p">.</span><span class="nf">active_job</span><span class="p">.</span><span class="nf">queue_adapter</span> <span class="o">=</span> <span class="ss">:inline</span>
-
-<span class="c1"># Separa o armazenamento de arquivos no ambiente de teste</span>
-<span class="n">config</span><span class="p">.</span><span class="nf">active_storage</span><span class="p">.</span><span class="nf">service</span> <span class="o">=</span> <span class="ss">:local_test</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fab5ee65869952373acb3b77630e6035"># Usa o processamento de trabalho em linha para fazer as coisas
+<textarea class="clipboard-content" id="clipboard-b6f10601950bf657b24f826846b550b6"># Usa o processamento de trabalho em linha para fazer as coisas
 # acontecerem imediatamente
 config.active_job.queue_adapter = :inline
-
-# Separa o armazenamento de arquivos no ambiente de teste
-config.active_storage.service = :local_test
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fab5ee65869952373acb3b77630e6035">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b6f10601950bf657b24f826846b550b6">Copiar</button>
 </div>
-<h3 id="descartando-arquivos-armazenados-durante-testes-de-integracao"><a class="anchorlink" href="#descartando-arquivos-armazenados-durante-testes-de-integracao">12 Descartando Arquivos Armazenados Durante Testes de Integração</a></h3><p>Similar aos testes de sistema, arquivos enviados durante testes de integração
+<h5 id="testes-de-integracao"><a class="anchorlink" href="#testes-de-integracao">10.1.1 Testes de Integração</a></h5><p>Similar aos testes de sistema, arquivos enviados durante testes de integração
 não serão automaticamente descartados. Se você deseja limpar esses arquivos, você
-pode fazer isso usando o <em>callback</em> <code>after_teardown</code>. Fazer isso garante que todas as
-conexões criadas durante o teste estão completas e você não receberá um erro do
-<em>Active Storage</em> informando que não foi possível encontrar um arquivo.</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">RemoveUploadedFiles</span>
+pode fazer isso usando o <em>callback</em> <code>teardown</code>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ActionDispatch::IntegrationTest</span>
   <span class="k">def</span> <span class="nf">after_teardown</span>
     <span class="k">super</span>
-    <span class="n">remove_uploaded_files</span>
-  <span class="k">end</span>
-
-  <span class="kp">private</span>
-
-  <span class="k">def</span> <span class="nf">remove_uploaded_files</span>
-    <span class="no">FileUtils</span><span class="p">.</span><span class="nf">rm_rf</span><span class="p">(</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s1">'tmp'</span><span class="p">,</span> <span class="s1">'storage'</span><span class="p">))</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="k">module</span> <span class="nn">ActionDispatch</span>
-  <span class="k">class</span> <span class="nc">IntegrationTest</span>
-    <span class="n">prepend</span> <span class="no">RemoveUploadedFiles</span>
+    <span class="no">FileUtils</span><span class="p">.</span><span class="nf">rm_rf</span><span class="p">(</span><span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">service</span><span class="p">.</span><span class="nf">root</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c0aa5b2d692462f4f51092952fbb37be">module RemoveUploadedFiles
+<textarea class="clipboard-content" id="clipboard-67adbbe2da5dd3be79aa10373dbc71b8">class ActionDispatch::IntegrationTest
   def after_teardown
     super
-    remove_uploaded_files
-  end
-
-  private
-
-  def remove_uploaded_files
-    FileUtils.rm_rf(Rails.root.join('tmp', 'storage'))
-  end
-end
-
-module ActionDispatch
-  class IntegrationTest
-    prepend RemoveUploadedFiles
+    FileUtils.rm_rf(ActiveStorage::Blob.service.root)
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c0aa5b2d692462f4f51092952fbb37be">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-67adbbe2da5dd3be79aa10373dbc71b8">Copiar</button>
 </div>
-<h3 id="implementando-suporte-a-outros-servicos-cloud"><a class="anchorlink" href="#implementando-suporte-a-outros-servicos-cloud">13 Implementando Suporte a Outros Serviços <em>Cloud</em></a></h3><p>Se for necessário dar suporte a algum outro serviço <em>cloud</em> além desses, você precisa implementá-lo. Cada serviço estende <a href="https://github.com/rails/rails/blob/main/activestorage/lib/active_storage/service.rb"><code>ActiveStorage::Service</code></a> implementando os métodos necessários para fazer o <em>upload</em> e <em>download</em> de arquivos para a nuvem.</p>
+<p>Se você estiver usando [testes paralelos][] e o serviço em disco, deverá configurar cada processo para usar sua própria
+pasta para o <em>Active Storage</em>. Dessa forma, o retorno de chamada <code>teardown</code> só excluirá arquivos do processo do teste relevante.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ActionDispatch::IntegrationTest</span>
+  <span class="n">parallelize_setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+    <span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">service</span><span class="p">.</span><span class="nf">root</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">service</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">-</span><span class="si">#{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-585f6a30f7921f1f76eb453526bba129">class ActionDispatch::IntegrationTest
+  parallelize_setup do |i|
+    ActiveStorage::Blob.service.root = "#{ActiveStorage::Blob.service.root}-#{i}"
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-585f6a30f7921f1f76eb453526bba129">Copiar</button>
+</div>
+<h4 id="adicionando-arquivos-em-fixtures"><a class="anchorlink" href="#adicionando-arquivos-em-fixtures">10.2 Adicionando arquivos em fixtures</a></h4><p>Você pode adicionar anexos às suas <a href="https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures">fixtures</a>. Primeiro, você desejará criar um serviço de armazenamento separado:</p><div class="code_container">
+<pre><code class="highlight yml"><span class="c1"># config/storage.yml</span>
+
+<span class="na">test_fixtures</span><span class="pi">:</span>
+  <span class="na">service</span><span class="pi">:</span> <span class="s">Disk</span>
+  <span class="na">root</span><span class="pi">:</span> <span class="s">&lt;%= Rails.root.join("tmp/storage_fixtures") %&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ff648ef892085a06da1d1d768d7e4812"># config/storage.yml
+
+test_fixtures:
+  service: Disk
+  root: &lt;%= Rails.root.join("tmp/storage_fixtures") %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ff648ef892085a06da1d1d768d7e4812">Copiar</button>
+</div>
+<p>Isso informa ao <em>Active Storage</em> para onde "carregar" os arquivos de fixture, então deve ser um diretório temporário. Ao fazê-lo
+um diretório diferente do seu serviço <code>test</code> regular, você pode separar os arquivos de fixtures dos arquivos carregados durante um teste.</p><p>Em seguida, crie arquivos de fixture para as classes <em>Active Storage</em>:</p><div class="code_container">
+<pre><code class="highlight yml"><span class="c1"># active_storage/attachments.yml</span>
+<span class="na">david_avatar</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">avatar</span>
+  <span class="na">record</span><span class="pi">:</span> <span class="s">david (User)</span>
+  <span class="na">blob</span><span class="pi">:</span> <span class="s">david_avatar_blob</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ef7c18d26e276a68c6418638249e594c"># active_storage/attachments.yml
+david_avatar:
+  name: avatar
+  record: david (User)
+  blob: david_avatar_blob
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ef7c18d26e276a68c6418638249e594c">Copiar</button>
+</div>
+<div class="code_container">
+<pre><code class="highlight yml"><span class="c1"># active_storage/blobs.yml</span>
+<span class="na">david_avatar_blob</span><span class="pi">:</span> <span class="s">&lt;%= ActiveStorage::FixtureSet.blob filename</span><span class="err">:</span> <span class="s2">"</span><span class="s">david.png"</span><span class="err">,</span> <span class="na">service_name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">test_fixtures"</span> <span class="err">%</span><span class="pi">&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-31164e279bbc85226a9ceb07d486c11e"># active_storage/blobs.yml
+david_avatar_blob: &lt;%= ActiveStorage::FixtureSet.blob filename: "david.png", service_name: "test_fixtures" %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-31164e279bbc85226a9ceb07d486c11e">Copiar</button>
+</div>
+<p>Em seguida, coloque um arquivo em seu diretório de fixtures (o caminho padrão é <code>test/fixtures/files</code>) com o nome de arquivo correspondente.
+Veja a documentação <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/FixtureSet.html"><code>ActiveStorage::FixtureSet</code></a> para mais informações.</p><p>Depois que tudo estiver configurado, você poderá acessar os anexos em seus testes:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">UserTest</span> <span class="o">&lt;</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">TestCase</span>
+  <span class="k">def</span> <span class="nf">test_avatar</span>
+    <span class="n">avatar</span> <span class="o">=</span> <span class="n">users</span><span class="p">(</span><span class="ss">:david</span><span class="p">).</span><span class="nf">avatar</span>
+
+    <span class="n">assert</span> <span class="n">avatar</span><span class="p">.</span><span class="nf">attached?</span>
+    <span class="n">assert_not_nil</span> <span class="n">avatar</span><span class="p">.</span><span class="nf">download</span>
+    <span class="n">assert_equal</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">avatar</span><span class="p">.</span><span class="nf">byte_size</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9cdb3672990288b824789c2834995a2b">class UserTest &lt; ActiveSupport::TestCase
+  def test_avatar
+    avatar = users(:david).avatar
+
+    assert avatar.attached?
+    assert_not_nil avatar.download
+    assert_equal 1000, avatar.byte_size
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9cdb3672990288b824789c2834995a2b">Copiar</button>
+</div>
+<h5 id="limpando-as-fixtures"><a class="anchorlink" href="#limpando-as-fixtures">10.2.1 Limpando as fixtures</a></h5><p>Enquanto os arquivos enviados nos testes são limpos <a href="#discarding-files-created-durante-tests">no final de cada teste</a>,
+você só precisa limpar os arquivos de fixtures uma vez: quando todos os seus testes forem concluídos.</p><p>Se você estiver usando testes paralelos, chame <code>parallelize_teardown</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ActiveSupport::TestCase</span>
+  <span class="c1"># ...</span>
+  <span class="n">parallelize_teardown</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+    <span class="no">FileUtils</span><span class="p">.</span><span class="nf">rm_rf</span><span class="p">(</span><span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">services</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="ss">:test_fixtures</span><span class="p">).</span><span class="nf">root</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-542cbf6600030d3beb5caa7e3548c1c6">class ActiveSupport::TestCase
+  # ...
+  parallelize_teardown do |i|
+    FileUtils.rm_rf(ActiveStorage::Blob.services.fetch(:test_fixtures).root)
+  end
+  # ...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-542cbf6600030d3beb5caa7e3548c1c6">Copiar</button>
+</div>
+<p>Se você não estiver executando testes paralelos, use <code>Minitest.after_run</code> ou equivalente para seu teste
+framework (por exemplo, <code>after(:suite)</code> para RSpec):</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># test_helper.rb</span>
+
+<span class="no">Minitest</span><span class="p">.</span><span class="nf">after_run</span> <span class="k">do</span>
+  <span class="no">FileUtils</span><span class="p">.</span><span class="nf">rm_rf</span><span class="p">(</span><span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">services</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="ss">:test_fixtures</span><span class="p">).</span><span class="nf">root</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-8d6afd373d14e67697c7d91606b5584c"># test_helper.rb
+
+Minitest.after_run do
+  FileUtils.rm_rf(ActiveStorage::Blob.services.fetch(:test_fixtures).root)
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8d6afd373d14e67697c7d91606b5584c">Copiar</button>
+</div>
+<h3 id="implementando-suporte-a-outros-servicos-cloud"><a class="anchorlink" href="#implementando-suporte-a-outros-servicos-cloud">11 Implementando Suporte a Outros Serviços <em>Cloud</em></a></h3><p>Se for necessário dar suporte a algum outro serviço <em>cloud</em> além desses, você precisa implementá-lo. Cada serviço estende <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveStorage/Service.html"><code>ActiveStorage::Service</code></a> implementando os métodos necessários para fazer o <em>upload</em> e <em>download</em> de arquivos para a nuvem.</p><h3 id="purging-unattached-uploads"><a class="anchorlink" href="#purging-unattached-uploads">12 Purging Unattached Uploads</a></h3><p>There are cases where a file is uploaded but never attached to a record. This can happen when using <a href="#direct-uploads">Direct Uploads</a>. You can query for unattached records using the <a href="https://github.com/rails/rails/blob/8ef5bd9ced351162b673904a0b77c7034ca2bc20/activestorage/app/models/active_storage/blob.rb#L49">unattached scope</a>. Below is an example using a <a href="command_line.html#custom-rake-tasks">custom rake task</a>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">namespace</span> <span class="ss">:active_storage</span> <span class="k">do</span>
+  <span class="n">desc</span> <span class="s2">"Purges unattached Active Storage blobs. Run regularly."</span>
+  <span class="n">task</span> <span class="ss">purge_unattached: :environment</span> <span class="k">do</span>
+    <span class="no">ActiveStorage</span><span class="o">::</span><span class="no">Blob</span><span class="p">.</span><span class="nf">unattached</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"active_storage_blobs.created_at &lt;= ?"</span><span class="p">,</span> <span class="mi">2</span><span class="p">.</span><span class="nf">days</span><span class="p">.</span><span class="nf">ago</span><span class="p">).</span><span class="nf">find_each</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:purge_later</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0334044f60df748fe2a48b78b7527938">namespace :active_storage do
+  desc "Purges unattached Active Storage blobs. Run regularly."
+  task purge_unattached: :environment do
+    ActiveStorage::Blob.unattached.where("active_storage_blobs.created_at &lt;= ?", 2.days.ago).find_each(&amp;:purge_later)
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0334044f60df748fe2a48b78b7527938">Copiar</button>
+</div>
+<div class="warning"><p>The query generated by <code>ActiveStorage::Blob.unattached</code> can be slow and potentially disruptive on applications with larger databases.</p></div>
 
         <h3>Feedback</h3>
         <p>

@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -292,8 +298,8 @@ objeto.</li>
 <ul>
 <li><a href="#utilizando-if-e-unless-com-um-symbol">Utilizando <code>:if</code> e <code>:unless</code> com um <code>Symbol</code></a></li>
 <li><a href="#utilizando-if-e-unless-com-uma-proc">Utilizando <code>:if</code> e <code>:unless</code> com uma <code>Proc</code></a></li>
-<li><a href="#multiplas-condicoes-para-callbacks">Múltiplas Condições para <em>Callbacks</em></a></li>
-<li><a href="#combinando-condicoes-de-callback">Combinando Condições de <em>Callback</em></a></li>
+<li><a href="#usando-if-e-unless-juntos">Usando :if e :unless juntos</a></li>
+<li><a href="#multiplas-condicoes-de-callback">Multiplas Condições de <em>Callback</em></a></li>
 </ul>
 </li>
 <li><a href="#classes-callback">Classes <em>Callback</em></a></li>
@@ -323,7 +329,7 @@ objetos podem ser criados, atualizados e destruídos. O <em>Active Record</em> f
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-26a4b1596cc2c5d3c7cc4fc24298bedd">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-f088abcb2164a6b1b6c69da5a3b469c3">class User &lt; ApplicationRecord
   validates :login, :email, presence: true
 
   before_validation :ensure_login_has_a_value
@@ -336,7 +342,7 @@ objetos podem ser criados, atualizados e destruídos. O <em>Active Record</em> f
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26a4b1596cc2c5d3c7cc4fc24298bedd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f088abcb2164a6b1b6c69da5a3b469c3">Copiar</button>
 </div>
 <p>Os métodos <em>macro-style</em> de uma classe podem também receber um bloco. Considere usar esse estilo se o código dentro do seu bloco é tão curto que cabe em uma linha: </p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -347,7 +353,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-819fa7b3e7b4e6a3710f16eac5bc880d">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-4305bea3d4dd8fc53ed1c23fb7bcd4f5">class User &lt; ApplicationRecord
   validates :login, :email, presence: true
 
   before_create do
@@ -355,7 +361,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-819fa7b3e7b4e6a3710f16eac5bc880d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4305bea3d4dd8fc53ed1c23fb7bcd4f5">Copiar</button>
 </div>
 <p><em>Callbacks</em> também podem ser registrados para rodar apenas em certos eventos do ciclo de vida:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -374,7 +380,7 @@ end
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a7ef1e49e12c95e35564ffcf3313a773">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-2d9d64997523eff73db90d685dc8d89b">class User &lt; ApplicationRecord
   before_validation :normalize_name, on: :create
 
   # :on takes an array as well
@@ -390,47 +396,47 @@ end
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a7ef1e49e12c95e35564ffcf3313a773">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2d9d64997523eff73db90d685dc8d89b">Copiar</button>
 </div>
 <p>É considerado uma boa prática declarar métodos de <em>callback</em> como privados. Se deixados como públicos, podem ser chamados de fora do <em>model</em> e violar o princípio de encapsulamento de um objeto.</p><h3 id="callbacks-disponiveis"><a class="anchorlink" href="#callbacks-disponiveis">3 Callbacks Disponíveis</a></h3><p>Aqui está uma lista com todos os <em>Active Record callbacks</em>, listados na mesma ordem na qual eles serão chamados durante as respectivas operações: </p><h4 id="criando-um-objeto"><a class="anchorlink" href="#criando-um-objeto">3.1 Criando um Objeto</a></h4>
 <ul>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-before_validation"><code>before_validation</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-after_validation"><code>after_validation</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_save"><code>before_save</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_save"><code>around_save</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_create"><code>before_create</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_create"><code>around_create</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_create"><code>after_create</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_save"><code>after_save</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-before_validation"><code>before_validation</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-after_validation"><code>after_validation</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_save"><code>before_save</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_save"><code>around_save</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_create"><code>before_create</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_create"><code>around_create</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_create"><code>after_create</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_save"><code>after_save</code></a></li>
 <li>
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit"><code>after_commit</code></a> / <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback"><code>after_rollback</code></a>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit"><code>after_commit</code></a> / <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback"><code>after_rollback</code></a>
 </li>
 </ul>
 <h4 id="atualizando-um-objeto"><a class="anchorlink" href="#atualizando-um-objeto">3.2 Atualizando um Objeto</a></h4>
 <ul>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-before_validation"><code>before_validation</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-after_validation"><code>after_validation</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_save"><code>before_save</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_save"><code>around_save</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_update"><code>before_update</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_update"><code>around_update</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_update"><code>after_update</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_save"><code>after_save</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-before_validation"><code>before_validation</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveModel/Validations/Callbacks/ClassMethods.html#method-i-after_validation"><code>after_validation</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_save"><code>before_save</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_save"><code>around_save</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_update"><code>before_update</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_update"><code>around_update</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_update"><code>after_update</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_save"><code>after_save</code></a></li>
 <li>
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit"><code>after_commit</code></a> / <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback"><code>after_rollback</code></a>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit"><code>after_commit</code></a> / <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback"><code>after_rollback</code></a>
 </li>
 </ul>
 <h4 id="destruindo-um-objeto"><a class="anchorlink" href="#destruindo-um-objeto">3.3 Destruindo um Objeto</a></h4>
 <ul>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_destroy"><code>before_destroy</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_destroy"><code>around_destroy</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_destroy"><code>after_destroy</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-before_destroy"><code>before_destroy</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-around_destroy"><code>around_destroy</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_destroy"><code>after_destroy</code></a></li>
 <li>
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit"><code>after_commit</code></a> / <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback"><code>after_rollback</code></a>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit"><code>after_commit</code></a> / <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback"><code>after_rollback</code></a>
 </li>
 </ul>
-<div class="warning"><p><code>after_save</code> roda tanto na criação quanto na atualização, mas sempre <em>depois</em> de <em>callbacks</em> mais específicos <code>after_create</code> e <code>after_update</code>, não importa a ordem que uma chamada macro foi executada.</p></div><div class="warning"><p>Evite atualizar ou salvar atributos em <em>callbacks</em>. Por exemplo, não chame <code>update(attribute: "value")</code> em um <em>callback</em>. Isso pode alterar o estado do <em>model</em> e resultar em efeitos colaterais inesperados durante a confirmação. Em vez disso, você pode atribuir valores diretamente com segurança (por exemplo, <code>self.attribute = "value"</code>) em <code>before_create</code> / <code>before_update</code> ou <em>callbacks</em> anteriores.</p></div><div class="note"><p>Os <em>callbacks</em> <code>before_destroy</code> devem ser posicionados antes de associações <code>dependent: :destroy</code> (ou use a opção <code>prepend: true</code>), para garantir que executem antes dos registros serem deletados pelo <code>dependent: :destroy</code>.</p></div><h4 id="after-initialize-e-after-find"><a class="anchorlink" href="#after-initialize-e-after-find">3.4 <code>after_initialize</code> e <code>after_find</code></a></h4><p>O <em>callback</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_initialize"><code>after_initialize</code></a> será chamado sempre que um objeto <em>Active Record</em> for instanciado, usando diretamente <code>new</code> ou quando um registro é carregado do banco de dados.
-Isto pode ser útil para evitar a necessidade de substituir diretamente seu método <code>initialize</code> do <em>Active Record</em>.</p><p>O <em>callback</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_find"><code>after_find</code></a> será chamado sempre que o <em>Active Record</em> carregar um registro do banco de dados. <code>after_find</code> é chamado antes de <code>after_initialize</code> se ambos estiverem definidos. </p><p>Os <em>callbacks</em> <code>after_initialize</code> e <code>after_find</code> não possuem complementos <code>before_*</code>, mas podem ser registrados como os outros <em>callbacks</em> de <em>Active Record</em>.</p><div class="code_container">
+<div class="warning"><p><code>after_save</code> roda tanto na criação quanto na atualização, mas sempre <em>depois</em> de <em>callbacks</em> mais específicos <code>after_create</code> e <code>after_update</code>, não importa a ordem que uma chamada macro foi executada.</p></div><div class="warning"><p>Evite atualizar ou salvar atributos em <em>callbacks</em>. Por exemplo, não chame <code>update(attribute: "value")</code> em um <em>callback</em>. Isso pode alterar o estado do <em>model</em> e resultar em efeitos colaterais inesperados durante a confirmação. Em vez disso, você pode atribuir valores diretamente com segurança (por exemplo, <code>self.attribute = "value"</code>) em <code>before_create</code> / <code>before_update</code> ou <em>callbacks</em> anteriores.</p></div><div class="note"><p>Os <em>callbacks</em> <code>before_destroy</code> devem ser posicionados antes de associações <code>dependent: :destroy</code> (ou use a opção <code>prepend: true</code>), para garantir que executem antes dos registros serem deletados pelo <code>dependent: :destroy</code>.</p></div><h4 id="after-initialize-e-after-find"><a class="anchorlink" href="#after-initialize-e-after-find">3.4 <code>after_initialize</code> e <code>after_find</code></a></h4><p>O <em>callback</em> <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_initialize"><code>after_initialize</code></a> será chamado sempre que um objeto <em>Active Record</em> for instanciado, usando diretamente <code>new</code> ou quando um registro é carregado do banco de dados.
+Isto pode ser útil para evitar a necessidade de substituir diretamente seu método <code>initialize</code> do <em>Active Record</em>.</p><p>O <em>callback</em> <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_find"><code>after_find</code></a> será chamado sempre que o <em>Active Record</em> carregar um registro do banco de dados. <code>after_find</code> é chamado antes de <code>after_initialize</code> se ambos estiverem definidos. </p><p>Os <em>callbacks</em> <code>after_initialize</code> e <code>after_find</code> não possuem complementos <code>before_*</code>, mas podem ser registrados como os outros <em>callbacks</em> de <em>Active Record</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">after_initialize</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
     <span class="nb">puts</span> <span class="s2">"You have initialized an object!"</span>
@@ -441,7 +447,7 @@ Isto pode ser útil para evitar a necessidade de substituir diretamente seu mét
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a2d66d90acccb6dbbd0f94de3bb5e254">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-de783c32bb668aabc9715eda1cdae83c">class User &lt; ApplicationRecord
   after_initialize do |user|
     puts "You have initialized an object!"
   end
@@ -451,7 +457,7 @@ Isto pode ser útil para evitar a necessidade de substituir diretamente seu mét
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a2d66d90acccb6dbbd0f94de3bb5e254">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-de783c32bb668aabc9715eda1cdae83c">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">User</span><span class="p">.</span><span class="nf">new</span>
@@ -463,25 +469,25 @@ end
 You have initialized an object!
 </span><span class="p">=&gt;</span> <span class="kt">#&lt;</span><span class="no">User</span> <span class="ss">id: </span><span class="mi">1</span><span class="kt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-32b4b44e331cc3ed3acd22a1978cd579">User.new
+<textarea class="clipboard-content" id="clipboard-0b78457e5b2a4ab12c440ff67eec3bf2">User.new
 User.first
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-32b4b44e331cc3ed3acd22a1978cd579">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0b78457e5b2a4ab12c440ff67eec3bf2">Copiar</button>
 </div>
-<h4 id="after-touch"><a class="anchorlink" href="#after-touch">3.5 <code>after_touch</code></a></h4><p>O <em>callback</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_touch"><code>after_touch</code></a> será chamado sempre que um objeto <em>Active Record</em> for alcançado.</p><div class="code_container">
+<h4 id="after-touch"><a class="anchorlink" href="#after-touch">3.5 <code>after_touch</code></a></h4><p>O <em>callback</em> <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Callbacks/ClassMethods.html#method-i-after_touch"><code>after_touch</code></a> será chamado sempre que um objeto <em>Active Record</em> for alcançado.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">after_touch</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
     <span class="nb">puts</span> <span class="s2">"You have touched an object"</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-422776c32e5b3f9c2c0687b0f74f4bf4">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-064c177e553fa40afbca61935c0f1c9a">class User &lt; ApplicationRecord
   after_touch do |user|
     puts "You have touched an object"
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-422776c32e5b3f9c2c0687b0f74f4bf4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-064c177e553fa40afbca61935c0f1c9a">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">u</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'Kuldeep'</span><span class="p">)</span>
@@ -491,10 +497,10 @@ end
 <span class="go">You have touched an object
 </span><span class="p">=&gt;</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-94751cbcfc1c25bc8227fc159ed837b0">u = User.create(name: 'Kuldeep')
+<textarea class="clipboard-content" id="clipboard-f5a640c49ab690ea7dc5d1aebc634ef5">u = User.create(name: 'Kuldeep')
 u.touch
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-94751cbcfc1c25bc8227fc159ed837b0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5a640c49ab690ea7dc5d1aebc634ef5">Copiar</button>
 </div>
 <p>Pode ser usado junto de <code>belongs_to</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Employee</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -514,7 +520,7 @@ u.touch
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b37a82a1c851df5857d1e06629b682ba">class Employee &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-18bb4ca057f94eafdc76c1dda81a38f6">class Employee &lt; ApplicationRecord
   belongs_to :company, touch: true
   after_touch do
     puts 'An Employee was touched'
@@ -531,7 +537,7 @@ class Company &lt; ApplicationRecord
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b37a82a1c851df5857d1e06629b682ba">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-18bb4ca057f94eafdc76c1dda81a38f6">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="vi">@employee</span> <span class="o">=</span> <span class="no">Employee</span><span class="p">.</span><span class="nf">last</span>
@@ -542,10 +548,10 @@ end
 Employee/Company was touched
 </span><span class="p">=&gt;</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d1979a0eb977f8494f7310cbf3138433">@employee = Employee.last
+<textarea class="clipboard-content" id="clipboard-5623e26976058f2b6ffae28f322ec946">@employee = Employee.last
 @employee.touch # também executa @employee.company.touch
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d1979a0eb977f8494f7310cbf3138433">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5623e26976058f2b6ffae28f322ec946">Copiar</button>
 </div>
 <h3 id="executando-callbacks"><a class="anchorlink" href="#executando-callbacks">4 Executando <em>Callbacks</em></a></h3><p>Os métodos a seguir acionam <em>callbacks</em>:</p>
 <ul>
@@ -600,9 +606,9 @@ Employee/Company was touched
 <p>Contudo, esses métodos devem ser usados com cautela, porque regras de negócio importantes e lógica da aplicação podem ser mantidos nos <em>callbacks</em>. Contorná-los sem entender as potenciais implicações pode levar a dados inválidos.</p><h3 id="interrompendo-uma-execucao"><a class="anchorlink" href="#interrompendo-uma-execucao">6 Interrompendo uma Execução</a></h3><p>Quando você começar a registrar novos <em>callbacks</em> para seus <em>models</em>, eles serão enfileirados para a execução. Esta fila incluirá todas as validações do seu <em>model</em>, os <em>callbacks</em> registrados e a operação do banco de dados a ser executada.</p><p>Toda a cadeia do <em>callback</em> é empacotada em uma transação. Se algum <em>callback</em> lança uma exceção, a cadeia de execução é interrompida e um <em>ROLLBACK</em> é emitido. Para interromper intencionalmente uma cadeia, use:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="kp">throw</span> <span class="ss">:abort</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-84b6c2fe200c523c2834d2e293d8ef85">throw :abort
+<textarea class="clipboard-content" id="clipboard-b23a2746a15bbec3fefedde58098df70">throw :abort
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-84b6c2fe200c523c2834d2e293d8ef85">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b23a2746a15bbec3fefedde58098df70">Copiar</button>
 </div>
 <div class="warning"><p>Qualquer exceção que não seja <code>ActiveRecord::Rollback</code> ou <code>ActiveRecord::RecordInvalid</code> serão lançadas novamente pelo Rails após a cadeia do <em>callback</em> ser interrompida. Lançar uma outra exceção que não <code>ActiveRecord::Rollback</code> ou <code>ActiveRecord::RecordInvalid</code> pode quebrar um código que não espera por métodos como <code>save</code> ou <code>update</code> (os quais normalmente tentam retornar <code>true</code> ou <code>false</code>) para lançar uma exceção.</p></div><h3 id="callbacks-relacionais"><a class="anchorlink" href="#callbacks-relacionais">7 <em>Callbacks</em> Relacionais</a></h3><p><em>Callbacks</em> trabalham através de relacionamentos dos <em>models</em> e podem até ser definidos por eles. Suponha um exemplo onde um usuário tenha muitos artigos. Um artigo de um usuário deve ser apagado se o usuario for apagado. Vamos adicionar um <em>callback</em> <code>after_destroy</code> para o <em>model</em> <code>User</code> por meio de seu relacionamento com o <em>model</em> <code>Article</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -617,7 +623,7 @@ Employee/Company was touched
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-679a361dad64a3ff7af2a38ef688c3f2">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-5f4745d68fc4a8617d09ac26628d094d">class User &lt; ApplicationRecord
   has_many :articles, dependent: :destroy
 end
 
@@ -629,7 +635,7 @@ class Article &lt; ApplicationRecord
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-679a361dad64a3ff7af2a38ef688c3f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5f4745d68fc4a8617d09ac26628d094d">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">first</span>
@@ -640,11 +646,11 @@ end
 <span class="go">Article destroyed
 </span><span class="p">=&gt;</span> <span class="kt">#&lt;</span><span class="no">User</span> <span class="ss">id: </span><span class="mi">1</span><span class="kt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16ac7a66c36abe0fb3cabbcdc7210684">user = User.first
+<textarea class="clipboard-content" id="clipboard-6029dd8001a7d59c70500b13850594c3">user = User.first
 user.articles.create!
 user.destroy
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16ac7a66c36abe0fb3cabbcdc7210684">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6029dd8001a7d59c70500b13850594c3">Copiar</button>
 </div>
 <h3 id="callbacks-condicionais"><a class="anchorlink" href="#callbacks-condicionais">8 <em>Callbacks</em> Condicionais</a></h3><p>Tal como acontece com as validações, também podemos tornar a chamada de um
 método de <em>callback</em> condicional à satisfação de um determinado predicado.
@@ -664,11 +670,11 @@ executado.</p><div class="code_container">
   <span class="n">before_save</span> <span class="ss">:normalize_card_number</span><span class="p">,</span> <span class="ss">if: :paid_with_card?</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3b2810aa91ed2e795901386bb2815767">class Order &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-969c60087778d9155bbb6eea19484678">class Order &lt; ApplicationRecord
   before_save :normalize_card_number, if: :paid_with_card?
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3b2810aa91ed2e795901386bb2815767">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-969c60087778d9155bbb6eea19484678">Copiar</button>
 </div>
 <h4 id="utilizando-if-e-unless-com-uma-proc"><a class="anchorlink" href="#utilizando-if-e-unless-com-uma-proc">8.2 Utilizando <code>:if</code> e <code>:unless</code> com uma <code>Proc</code></a></h4><p>É possível associar <code>:if</code> e <code>:unless</code> com um objeto <code>Proc</code>. Esta opção é mais
 adequada ao escrever métodos curtos de validação, geralmente de uma linha:</p><div class="code_container">
@@ -677,12 +683,12 @@ adequada ao escrever métodos curtos de validação, geralmente de uma linha:</p
     <span class="ss">if: </span><span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">order</span><span class="o">|</span> <span class="n">order</span><span class="p">.</span><span class="nf">paid_with_card?</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6bda6bd22223a000f904cb676838996d">class Order &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-cf50482a19e0ed2e49def7e0e38225ec">class Order &lt; ApplicationRecord
   before_save :normalize_card_number,
     if: Proc.new { |order| order.paid_with_card? }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6bda6bd22223a000f904cb676838996d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cf50482a19e0ed2e49def7e0e38225ec">Copiar</button>
 </div>
 <p>Como a <em>proc</em> é avaliada no contexto do objeto, também é possível escrever isso
 como:</p><div class="code_container">
@@ -690,42 +696,40 @@ como:</p><div class="code_container">
   <span class="n">before_save</span> <span class="ss">:normalize_card_number</span><span class="p">,</span> <span class="ss">if: </span><span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="n">paid_with_card?</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5e8bd9b3569dc9d183f3d5a010a67dee">class Order &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-66a4696bc7b86311132c6328fc5adc72">class Order &lt; ApplicationRecord
   before_save :normalize_card_number, if: Proc.new { paid_with_card? }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5e8bd9b3569dc9d183f3d5a010a67dee">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-66a4696bc7b86311132c6328fc5adc72">Copiar</button>
 </div>
-<h4 id="multiplas-condicoes-para-callbacks"><a class="anchorlink" href="#multiplas-condicoes-para-callbacks">8.3 Múltiplas Condições para <em>Callbacks</em></a></h4><p>Ao escrever <em>callbacks</em> condicionais, é possível misturar <code>:if</code> e <code>:unless</code> na
+<h4 id="usando-if-e-unless-juntos"><a class="anchorlink" href="#usando-if-e-unless-juntos">8.3 Usando :if e :unless juntos</a></h4><p><em>callbacks</em> condicionais, podem misturar <code>:if</code> e <code>:unless</code> na
 mesma declaração do <em>callback</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Comment</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
-  <span class="n">after_create</span> <span class="ss">:send_email_to_author</span><span class="p">,</span> <span class="ss">if: :author_wants_emails?</span><span class="p">,</span>
-    <span class="ss">unless: </span><span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">comment</span><span class="o">|</span> <span class="n">comment</span><span class="p">.</span><span class="nf">article</span><span class="p">.</span><span class="nf">ignore_comments?</span> <span class="p">}</span>
+  <span class="n">before_save</span> <span class="ss">:filter_content</span><span class="p">,</span>
+    <span class="ss">if: </span><span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="n">forum</span><span class="p">.</span><span class="nf">parental_control?</span> <span class="p">},</span>
+    <span class="ss">unless: </span><span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="n">author</span><span class="p">.</span><span class="nf">trusted?</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-81651d6cc3699c6714d9327b6a6fdb5d">class Comment &lt; ApplicationRecord
-  after_create :send_email_to_author, if: :author_wants_emails?,
-    unless: Proc.new { |comment| comment.article.ignore_comments? }
+<textarea class="clipboard-content" id="clipboard-3441d70eeaab3cda71087a6b515c09e1">class Comment &lt; ApplicationRecord
+  before_save :filter_content,
+    if: Proc.new { forum.parental_control? },
+    unless: Proc.new { author.trusted? }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-81651d6cc3699c6714d9327b6a6fdb5d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3441d70eeaab3cda71087a6b515c09e1">Copiar</button>
 </div>
-<h4 id="combinando-condicoes-de-callback"><a class="anchorlink" href="#combinando-condicoes-de-callback">8.4 Combinando Condições de <em>Callback</em></a></h4><p>Quando várias condições definem se um <em>callback</em> deve ou não acontecer, um
-<code>Array</code> pode ser utilizado. Além disso, você pode aplicar <code>:if</code> e <code>:unless</code> para
-o mesmo <em>callback</em>.</p><div class="code_container">
+<h4 id="multiplas-condicoes-de-callback"><a class="anchorlink" href="#multiplas-condicoes-de-callback">8.4 Multiplas Condições de <em>Callback</em></a></h4><p>As opções <code>:if</code> e <code>:unless</code> também aceitam um <em>array de procs</em> ou nomes de métodos como <em>symbols</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Comment</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
-  <span class="n">after_create</span> <span class="ss">:send_email_to_author</span><span class="p">,</span>
-    <span class="ss">if: </span><span class="p">[</span><span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">c</span><span class="p">.</span><span class="nf">user</span><span class="p">.</span><span class="nf">allow_send_email?</span> <span class="p">},</span> <span class="ss">:author_wants_emails?</span><span class="p">],</span>
-    <span class="ss">unless: </span><span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">c</span><span class="p">.</span><span class="nf">article</span><span class="p">.</span><span class="nf">ignore_comments?</span> <span class="p">}</span>
+  <span class="n">before_save</span> <span class="ss">:filter_content</span><span class="p">,</span>
+    <span class="ss">if: </span><span class="p">[</span><span class="ss">:subject_to_parental_control?</span><span class="p">,</span> <span class="ss">:untrusted_author?</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3045c70f783404054b5ebd7e7bb208f2">class Comment &lt; ApplicationRecord
-  after_create :send_email_to_author,
-    if: [Proc.new { |c| c.user.allow_send_email? }, :author_wants_emails?],
-    unless: Proc.new { |c| c.article.ignore_comments? }
+<textarea class="clipboard-content" id="clipboard-6e88fc76e650a55e554ed988c9ce6679">class Comment &lt; ApplicationRecord
+  before_save :filter_content,
+    if: [:subject_to_parental_control?, :untrusted_author?]
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3045c70f783404054b5ebd7e7bb208f2">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6e88fc76e650a55e554ed988c9ce6679">Copiar</button>
 </div>
 <p>O <em>callback</em> só é executado quando todas as condições <code>:if</code> e nenhuma das
 condições <code>:unless</code> retornarem <code>true</code>.</p><h3 id="classes-callback"><a class="anchorlink" href="#classes-callback">9 Classes <em>Callback</em></a></h3><p>Em algumas situações, os métodos de <em>Callback</em> que iremos escrever serão úteis para serem reutilizados por outros <em>models</em>. O <em>Active Record</em> possibilita a criação de classes que encapsulam os métodos <em>callback</em> , para que eles possam ser reutilizados.</p><p>Aqui está um exemplo onde criamos uma classe com um <em>callback</em> <code>after_destroy</code> para o <em>model</em> <code>PictureFile</code>:</p><div class="code_container">
@@ -737,7 +741,7 @@ condições <code>:unless</code> retornarem <code>true</code>.</p><h3 id="classe
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1d9ef9d9a48014ba31f76a77fd21a2d6">class PictureFileCallbacks
+<textarea class="clipboard-content" id="clipboard-9fb614756a097437ad82aea9f3cfeba7">class PictureFileCallbacks
   def after_destroy(picture_file)
     if File.exist?(picture_file.filepath)
       File.delete(picture_file.filepath)
@@ -745,18 +749,18 @@ condições <code>:unless</code> retornarem <code>true</code>.</p><h3 id="classe
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1d9ef9d9a48014ba31f76a77fd21a2d6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9fb614756a097437ad82aea9f3cfeba7">Copiar</button>
 </div>
 <p>Quando declaramos dentro da classe, como foi feito acima, os métodos <em>callback</em> irão receber o <em>model</em> como parâmetro. Agora poderemos usar a classe <em>callback</em> no <em>model</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">PictureFile</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">after_destroy</span> <span class="no">PictureFileCallbacks</span><span class="p">.</span><span class="nf">new</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a20c399580f53324ac7d2cbe3bea1a96">class PictureFile &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-02cbbcd6c26a202315b5a83ae1bd859c">class PictureFile &lt; ApplicationRecord
   after_destroy PictureFileCallbacks.new
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a20c399580f53324ac7d2cbe3bea1a96">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-02cbbcd6c26a202315b5a83ae1bd859c">Copiar</button>
 </div>
 <p>Perceba que precisamos instanciar um novo objeto chamado <code>PictureFileCallbacks</code>, já que declaramos nosso <em>callback</em> como um método de instância. Particularmente, isso é útil se os <em>callbacks</em> fazem uso do estado do objeto instanciado. Porém fará mais sentido declarar os <em>callbacks</em> como métodos de classe com mais frequência:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">PictureFileCallbacks</span>
@@ -767,7 +771,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-58f3820ad732f151c5897b728da5b27b">class PictureFileCallbacks
+<textarea class="clipboard-content" id="clipboard-5b43c9422d8df9dff5dc8b220ab13b11">class PictureFileCallbacks
   def self.after_destroy(picture_file)
     if File.exist?(picture_file.filepath)
       File.delete(picture_file.filepath)
@@ -775,31 +779,31 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-58f3820ad732f151c5897b728da5b27b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5b43c9422d8df9dff5dc8b220ab13b11">Copiar</button>
 </div>
 <p>Se o método <em>callback</em> é declarado dessa forma, não será necessário instanciar o objeto <code>PictureFileCallbacks</code></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">PictureFile</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">after_destroy</span> <span class="no">PictureFileCallbacks</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e6e9599d547edf55c8d4eaee356ebde9">class PictureFile &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-33d8297c37045f08afb4152c87e5450d">class PictureFile &lt; ApplicationRecord
   after_destroy PictureFileCallbacks
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e6e9599d547edf55c8d4eaee356ebde9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-33d8297c37045f08afb4152c87e5450d">Copiar</button>
 </div>
-<p>Você pode declarar dentro de suas classes <em>callback</em> quantos <em>callback</em> achar necessário.</p><h3 id="callbacks-de-transacao"><a class="anchorlink" href="#callbacks-de-transacao">10 <em>Callbacks</em> de Transação</a></h3><p>Existem dois <em>callbacks</em> adicionais que são disparados quando se completa uma transação de banco de dados: <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit"><code>after_commit</code></a> e <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback"><code>after_rollback</code></a>. Estes <em>callbacks</em> são muito parecidos com o <em>callback</em> <code>after_save</code>, exceto que eles não são executados até que as mudanças no banco de dados sejam confirmadas ou desfeitas. Eles são mais úteis quando seus <em>active record models</em> precisam de interagir com sistemas externos que não fazem parte da transação do banco de dados.</p><p>Considere, por exemplo, o exemplo anterior onde o <em>model</em> <code>PictureFile</code> precisa de apagar um arquivo depois que um registro correspondente é destruído. Se algo lançar uma exceção depois que o <em>callback</em> <code>after_destroy</code> for chamado e a transação for desfeita, o arquivo terá sido deletado e o <em>model</em> será deixado em um estado inconsistente. Por exemplo, suponha que <code>picture_file_2</code> no código abaixo não é valido e o método <code>save!</code> lança um erro.</p><div class="code_container">
+<p>Você pode declarar dentro de suas classes <em>callback</em> quantos <em>callback</em> achar necessário.</p><h3 id="callbacks-de-transacao"><a class="anchorlink" href="#callbacks-de-transacao">10 <em>Callbacks</em> de Transação</a></h3><p>Existem dois <em>callbacks</em> adicionais que são disparados quando se completa uma transação de banco de dados: <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_commit"><code>after_commit</code></a> e <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_rollback"><code>after_rollback</code></a>. Estes <em>callbacks</em> são muito parecidos com o <em>callback</em> <code>after_save</code>, exceto que eles não são executados até que as mudanças no banco de dados sejam confirmadas ou desfeitas. Eles são mais úteis quando seus <em>active record models</em> precisam de interagir com sistemas externos que não fazem parte da transação do banco de dados.</p><p>Considere, por exemplo, o exemplo anterior onde o <em>model</em> <code>PictureFile</code> precisa de apagar um arquivo depois que um registro correspondente é destruído. Se algo lançar uma exceção depois que o <em>callback</em> <code>after_destroy</code> for chamado e a transação for desfeita, o arquivo terá sido deletado e o <em>model</em> será deixado em um estado inconsistente. Por exemplo, suponha que <code>picture_file_2</code> no código abaixo não é valido e o método <code>save!</code> lança um erro.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">PictureFile</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
   <span class="n">picture_file_1</span><span class="p">.</span><span class="nf">destroy</span>
   <span class="n">picture_file_2</span><span class="p">.</span><span class="nf">save!</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-94e5a177e570205e6a5a9752a2d59f61">PictureFile.transaction do
+<textarea class="clipboard-content" id="clipboard-1c06d7dcec6c27c0c9ebc1883174946d">PictureFile.transaction do
   picture_file_1.destroy
   picture_file_2.save!
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-94e5a177e570205e6a5a9752a2d59f61">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1c06d7dcec6c27c0c9ebc1883174946d">Copiar</button>
 </div>
 <p>Usando o <em>callback</em> <code>after_commit</code> nós podemos responder por esse caso.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">PictureFile</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -812,7 +816,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bdc645423dc6d0e299ca79abbba4b4f9">class PictureFile &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-ca94f77fd831263f6d59ea9403b85e7d">class PictureFile &lt; ApplicationRecord
   after_commit :delete_picture_file_from_disk, on: :destroy
 
   def delete_picture_file_from_disk
@@ -822,15 +826,15 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bdc645423dc6d0e299ca79abbba4b4f9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ca94f77fd831263f6d59ea9403b85e7d">Copiar</button>
 </div>
 <div class="note"><p>A opção <code>:on</code> especifica quando um <em>callback</em> vai ser disparado. Se você
 não fornecer a opção <code>:on</code> o <em>callback</em> será disparado para cada ação.</p></div><p>Já que usar o <em>callback</em> <code>after_commit</code> para criar, atualizar ou deletar é
 comum, existem <em>aliases</em> para as operações:</p>
 <ul>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_create_commit"><code>after_create_commit</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_update_commit"><code>after_update_commit</code></a></li>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_destroy_commit"><code>after_destroy_commit</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_create_commit"><code>after_create_commit</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_update_commit"><code>after_update_commit</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_destroy_commit"><code>after_destroy_commit</code></a></li>
 </ul>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">PictureFile</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -843,7 +847,7 @@ comum, existem <em>aliases</em> para as operações:</p>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a8ee3582c2a55092e03f81ecf064eec5">class PictureFile &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-e1f3ca4663c97d65b2b10538fbc2ba44">class PictureFile &lt; ApplicationRecord
   after_destroy_commit :delete_picture_file_from_disk
 
   def delete_picture_file_from_disk
@@ -853,9 +857,9 @@ comum, existem <em>aliases</em> para as operações:</p>
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a8ee3582c2a55092e03f81ecf064eec5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e1f3ca4663c97d65b2b10538fbc2ba44">Copiar</button>
 </div>
-<div class="warning"><p>Quando uma transação é completada, os <em>callbacks</em> <code>after_commit</code> ou <code>after_rollback</code> são chamados para todos os <em>models</em> criados, atualizados ou destruidos em uma transação. No entanto, se uma exceção é lançada em um desses <em>callbacks</em>, a exceção vai interromper a execução e quaisquer métodos restantes de <code>after_commit</code> ou <code>after_rollback</code> <em>não</em> serão executados. Assim sendo, se o código do seu <em>callback</em> pode lançar uma exceção, você precisará recuperá-la e tratá-la dentro do <em>callback</em> para que outros callbacks possam ser executados.</p></div><div class="warning"><p>O código executado dentro dos <em>callbacks</em> de <code>after_commit</code> ou <code>after_rollback</code> não está incluido em uma transação.</p></div><div class="warning"><p>Usando ambos <code>after_create_commit</code> e <code>after_update_commit</code> no mesmo <em>model</em> permitirá somente que o último <em>callback</em> definido seja efetuado, sobrepondo todos os outros.</p></div><div class="code_container">
+<div class="warning"><p>Quando uma transação é completada, os <em>callbacks</em> <code>after_commit</code> ou <code>after_rollback</code> são chamados para todos os <em>models</em> criados, atualizados ou destruidos em uma transação. No entanto, se uma exceção é lançada em um desses <em>callbacks</em>, a exceção vai interromper a execução e quaisquer métodos restantes de <code>after_commit</code> ou <code>after_rollback</code> <em>não</em> serão executados. Assim sendo, se o código do seu <em>callback</em> pode lançar uma exceção, você precisará recuperá-la e tratá-la dentro do <em>callback</em> para que outros callbacks possam ser executados.</p></div><div class="warning"><p>O código executado dentro dos <em>callbacks</em> de <code>after_commit</code> ou <code>after_rollback</code> não está incluido em uma transação.</p></div><div class="warning"><p>Usando ambos <code>after_create_commit</code> e <code>after_update_commit</code> com o mesmo nome de método só permitirá que o último retorno de chamada definido tenha efeito, pois ambos são internamente <em>alias</em> para <code>after_commit</code> que substitui os retornos de chamada definidos anteriormente com o mesmo nome de método.</p></div><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">after_create_commit</span> <span class="ss">:log_user_saved_to_db</span>
   <span class="n">after_update_commit</span> <span class="ss">:log_user_saved_to_db</span>
@@ -866,7 +870,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-15f4218e83e40a0adc6bb586f76eda6e">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-a4443a1152e3d8394db5c9513f850d15">class User &lt; ApplicationRecord
   after_create_commit :log_user_saved_to_db
   after_update_commit :log_user_saved_to_db
 
@@ -876,7 +880,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-15f4218e83e40a0adc6bb586f76eda6e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a4443a1152e3d8394db5c9513f850d15">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">create</span> <span class="c1"># não imprime nada</span>
@@ -884,14 +888,14 @@ end
 </span><span class="gp">irb&gt;</span><span class="w"> </span><span class="vi">@user</span><span class="p">.</span><span class="nf">save</span> <span class="c1"># atualizando @user</span>
 <span class="go">User was saved to database
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-ff3353a936db30b5f47777f93d921b0a">@user = User.create # não imprime nada
+<textarea class="clipboard-content" id="clipboard-389cd8e619d31e4419e896097c7cb319">@user = User.create # não imprime nada
 @user.save # atualizando @user
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ff3353a936db30b5f47777f93d921b0a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-389cd8e619d31e4419e896097c7cb319">Copiar</button>
 </div>
 <p>Existe também um <em>alias</em> para o usar o <em>callback</em> <code>after_commit</code>, juntamente, tanto para criar quanto para atualizar:</p>
 <ul>
-<li><a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_save_commit"><code>after_save_commit</code></a></li>
+<li><a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Transactions/ClassMethods.html#method-i-after_save_commit"><code>after_save_commit</code></a></li>
 </ul>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -903,7 +907,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f1818e9aad2a214b442bb1e7f828674d">class User &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-38a31ca84e3ca38a984e3a3b182f2a64">class User &lt; ApplicationRecord
   after_save_commit :log_user_saved_to_db
 
   private
@@ -912,7 +916,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f1818e9aad2a214b442bb1e7f828674d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-38a31ca84e3ca38a984e3a3b182f2a64">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">create</span> <span class="c1"># criando um Usuário</span>
@@ -921,10 +925,10 @@ end
 </span><span class="gp">irb&gt;</span><span class="w"> </span><span class="vi">@user</span><span class="p">.</span><span class="nf">save</span> <span class="c1"># atualizando o Usuário @user</span>
 <span class="go">User was saved to database
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-197bbfca867e68f911817211bf9e601f">@user = User.create # criando um Usuário
+<textarea class="clipboard-content" id="clipboard-3b71e4a4c30e93feb617f417a9c009ed">@user = User.create # criando um Usuário
 @user.save # atualizando o Usuário @user
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-197bbfca867e68f911817211bf9e601f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3b71e4a4c30e93feb617f417a9c009ed">Copiar</button>
 </div>
 
 

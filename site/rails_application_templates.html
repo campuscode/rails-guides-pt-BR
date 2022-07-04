@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -296,19 +302,19 @@
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new blog <span class="nt">-m</span> ~/template.rb
 <span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new blog <span class="nt">-m</span> http://example.com/template.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2ed71a03cc9076aa6e9d6c034dab74df">rails new blog -m ~/template.rb
+<textarea class="clipboard-content" id="clipboard-80b5b8761f72f5e1cfeb25f591968998">rails new blog -m ~/template.rb
 rails new blog -m http://example.com/template.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2ed71a03cc9076aa6e9d6c034dab74df">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80b5b8761f72f5e1cfeb25f591968998">Copiar</button>
 </div>
 <p>You can use the <code>app:template</code> rails command to apply templates to an existing Rails application. The location of the template needs to be passed in via the LOCATION environment variable. Again, this can either be path to a file or a URL.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>app:template <span class="nv">LOCATION</span><span class="o">=</span>~/template.rb
 <span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>app:template <span class="nv">LOCATION</span><span class="o">=</span>http://example.com/template.rb
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8cd99c8cda91bc398b47c1e8102b7b78">bin/rails app:template LOCATION=~/template.rb
+<textarea class="clipboard-content" id="clipboard-9b4168a23ac5722fa6e0cfeee9a93386">bin/rails app:template LOCATION=~/template.rb
 bin/rails app:template LOCATION=http://example.com/template.rb
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8cd99c8cda91bc398b47c1e8102b7b78">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9b4168a23ac5722fa6e0cfeee9a93386">Copiar</button>
 </div>
 <h3 id="template-api"><a class="anchorlink" href="#template-api">2 Template API</a></h3><p>The Rails templates API is easy to understand. Here's an example of a typical Rails template:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># template.rb</span>
@@ -322,7 +328,7 @@ bin/rails app:template LOCATION=http://example.com/template.rb
   <span class="n">git</span> <span class="ss">commit: </span><span class="sx">%Q{ -m 'Initial commit' }</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c3176ee6a24a4441c16d44234ffb5e2f"># template.rb
+<textarea class="clipboard-content" id="clipboard-8dd142bed33e2d7769a4176a862f905e"># template.rb
 generate(:scaffold, "person name:string")
 route "root to: 'people#index'"
 rails_command("db:migrate")
@@ -333,59 +339,59 @@ after_bundle do
   git commit: %Q{ -m 'Initial commit' }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c3176ee6a24a4441c16d44234ffb5e2f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8dd142bed33e2d7769a4176a862f905e">Copiar</button>
 </div>
 <p>The following sections outline the primary methods provided by the API:</p><h4 id="gem-args"><a class="anchorlink" href="#gem-args">2.1 gem(*args)</a></h4><p>Adds a <code>gem</code> entry for the supplied gem to the generated application's <code>Gemfile</code>.</p><p>For example, if your application depends on the gems <code>bj</code> and <code>nokogiri</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s2">"bj"</span>
 <span class="n">gem</span> <span class="s2">"nokogiri"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf00b9d5a466ab0d698c3fa780b27fa4">gem "bj"
+<textarea class="clipboard-content" id="clipboard-0ca22e03439c22e0eb997b8df2c36c67">gem "bj"
 gem "nokogiri"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf00b9d5a466ab0d698c3fa780b27fa4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0ca22e03439c22e0eb997b8df2c36c67">Copiar</button>
 </div>
 <p>Please note that this will NOT install the gems for you and you will have to run <code>bundle install</code> to do that.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bundle install</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5fdf22a0bec7ebae3a5e7726e8325911">bundle install
+<textarea class="clipboard-content" id="clipboard-df71f28416e7c4b4b08e7bc3033d1bf0">bundle install
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5fdf22a0bec7ebae3a5e7726e8325911">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-df71f28416e7c4b4b08e7bc3033d1bf0">Copiar</button>
 </div>
 <h4 id="gem-group-names-block"><a class="anchorlink" href="#gem-group-names-block">2.2 gem_group(*names, &amp;block)</a></h4><p>Wraps gem entries inside a group.</p><p>For example, if you want to load <code>rspec-rails</code> only in the <code>development</code> and <code>test</code> groups:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem_group</span> <span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span> <span class="k">do</span>
   <span class="n">gem</span> <span class="s2">"rspec-rails"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-069338ec8c8916d86bb134c4b8a58684">gem_group :development, :test do
+<textarea class="clipboard-content" id="clipboard-1afa6c5c14237b2d42b3dfcd684effb9">gem_group :development, :test do
   gem "rspec-rails"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-069338ec8c8916d86bb134c4b8a58684">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1afa6c5c14237b2d42b3dfcd684effb9">Copiar</button>
 </div>
 <h4 id="add-source-source-options-block"><a class="anchorlink" href="#add-source-source-options-block">2.3 add_source(source, options={}, &amp;block)</a></h4><p>Adds the given source to the generated application's <code>Gemfile</code>.</p><p>For example, if you need to source a gem from <code>"http://gems.github.com"</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">add_source</span> <span class="s2">"http://gems.github.com"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f4dc99fb0d65874017d2681325c9e9c0">add_source "http://gems.github.com"
+<textarea class="clipboard-content" id="clipboard-9539734b4271ca491d03b45b38628a5d">add_source "http://gems.github.com"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f4dc99fb0d65874017d2681325c9e9c0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9539734b4271ca491d03b45b38628a5d">Copiar</button>
 </div>
 <p>If block is given, gem entries in block are wrapped into the source group.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">add_source</span> <span class="s2">"http://gems.github.com/"</span> <span class="k">do</span>
   <span class="n">gem</span> <span class="s2">"rspec-rails"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f17a51fe408dcc6d440cd00465fc1862">add_source "http://gems.github.com/" do
+<textarea class="clipboard-content" id="clipboard-dad5708048c292c71b50c845cc398cfe">add_source "http://gems.github.com/" do
   gem "rspec-rails"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f17a51fe408dcc6d440cd00465fc1862">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dad5708048c292c71b50c845cc398cfe">Copiar</button>
 </div>
 <h4 id="environment-application-data-nil-options-block"><a class="anchorlink" href="#environment-application-data-nil-options-block">2.4 environment/application(data=nil, options={}, &amp;block)</a></h4><p>Adds a line inside the <code>Application</code> class for <code>config/application.rb</code>.</p><p>If <code>options[:env]</code> is specified, the line is appended to the corresponding file in <code>config/environments</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">environment</span> <span class="s1">'config.action_mailer.default_url_options = {host: "http://yourwebsite.example.com"}'</span><span class="p">,</span> <span class="ss">env: </span><span class="s1">'production'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3eba73dea5339cd40c792d03a41eaa05">environment 'config.action_mailer.default_url_options = {host: "http://yourwebsite.example.com"}', env: 'production'
+<textarea class="clipboard-content" id="clipboard-f5d6cd3e0e7b9507794f95c7c378c2a4">environment 'config.action_mailer.default_url_options = {host: "http://yourwebsite.example.com"}', env: 'production'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3eba73dea5339cd40c792d03a41eaa05">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5d6cd3e0e7b9507794f95c7c378c2a4">Copiar</button>
 </div>
 <p>A block can be used in place of the <code>data</code> argument.</p><h4 id="vendor-lib-file-initializer-filename-data-nil-block"><a class="anchorlink" href="#vendor-lib-file-initializer-filename-data-nil-block">2.5 vendor/lib/file/initializer(filename, data = nil, &amp;block)</a></h4><p>Adds an initializer to the generated application's <code>config/initializers</code> directory.</p><p>Let's say you like using <code>Object#not_nil?</code> and <code>Object#not_blank?</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">initializer</span> <span class="s1">'bloatlol.rb'</span><span class="p">,</span> <span class="o">&lt;&lt;-</span><span class="no">CODE</span><span class="sh">
@@ -400,7 +406,7 @@ end
   end
 </span><span class="no">CODE</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-38db6d81ac561947378ebd0f8ad93ce7">initializer 'bloatlol.rb', &lt;&lt;-CODE
+<textarea class="clipboard-content" id="clipboard-082f95da1933e4f8a3ae6251da0bc6ea">initializer 'bloatlol.rb', &lt;&lt;-CODE
   class Object
     def not_nil?
       !nil?
@@ -412,7 +418,7 @@ end
   end
 CODE
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-38db6d81ac561947378ebd0f8ad93ce7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-082f95da1933e4f8a3ae6251da0bc6ea">Copiar</button>
 </div>
 <p>Similarly, <code>lib()</code> creates a file in the <code>lib/</code> directory and <code>vendor()</code> creates a file in the <code>vendor/</code> directory.</p><p>There is even <code>file()</code>, which accepts a relative path from <code>Rails.root</code> and creates all the directories/files needed:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">file</span> <span class="s1">'app/components/foo.rb'</span><span class="p">,</span> <span class="o">&lt;&lt;-</span><span class="no">CODE</span><span class="sh">
@@ -420,12 +426,12 @@ CODE
   end
 </span><span class="no">CODE</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0ecceab494aa6acd1844cfe6c8ba1439">file 'app/components/foo.rb', &lt;&lt;-CODE
+<textarea class="clipboard-content" id="clipboard-f245d7725b9f8f21855d14e6e141fa57">file 'app/components/foo.rb', &lt;&lt;-CODE
   class Foo
   end
 CODE
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0ecceab494aa6acd1844cfe6c8ba1439">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f245d7725b9f8f21855d14e6e141fa57">Copiar</button>
 </div>
 <p>That'll create the <code>app/components</code> directory and put <code>foo.rb</code> in there.</p><h4 id="rakefile-filename-data-nil-block"><a class="anchorlink" href="#rakefile-filename-data-nil-block">2.6 rakefile(filename, data = nil, &amp;block)</a></h4><p>Creates a new rake file under <code>lib/tasks</code> with the supplied tasks:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">rakefile</span><span class="p">(</span><span class="s2">"bootstrap.rake"</span><span class="p">)</span> <span class="k">do</span>
@@ -438,7 +444,7 @@ CODE
 </span><span class="no">  TASK</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-06f284de7beedb21a16cca2f2f24c259">rakefile("bootstrap.rake") do
+<textarea class="clipboard-content" id="clipboard-0c99248df88e4214aa50ccf8347a9a36">rakefile("bootstrap.rake") do
   &lt;&lt;-TASK
     namespace :boot do
       task :strap do
@@ -448,67 +454,67 @@ CODE
   TASK
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-06f284de7beedb21a16cca2f2f24c259">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0c99248df88e4214aa50ccf8347a9a36">Copiar</button>
 </div>
 <p>The above creates <code>lib/tasks/bootstrap.rake</code> with a <code>boot:strap</code> rake task.</p><h4 id="generate-what-args"><a class="anchorlink" href="#generate-what-args">2.7 generate(what, *args)</a></h4><p>Runs the supplied rails generator with given arguments.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">generate</span><span class="p">(</span><span class="ss">:scaffold</span><span class="p">,</span> <span class="s2">"person"</span><span class="p">,</span> <span class="s2">"name:string"</span><span class="p">,</span> <span class="s2">"address:text"</span><span class="p">,</span> <span class="s2">"age:number"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3886dc76299ccbc1daddf3408a36e314">generate(:scaffold, "person", "name:string", "address:text", "age:number")
+<textarea class="clipboard-content" id="clipboard-06f25a8eed33eaf4a002e470db11b1d7">generate(:scaffold, "person", "name:string", "address:text", "age:number")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3886dc76299ccbc1daddf3408a36e314">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-06f25a8eed33eaf4a002e470db11b1d7">Copiar</button>
 </div>
 <h4 id="run-command"><a class="anchorlink" href="#run-command">2.8 run(command)</a></h4><p>Executes an arbitrary command. Just like the backticks. Let's say you want to remove the <code>README.rdoc</code> file:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">run</span> <span class="s2">"rm README.rdoc"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7ce79221d13bfadba0b28a052035f0ce">run "rm README.rdoc"
+<textarea class="clipboard-content" id="clipboard-b707afd65f63b72d5f72d45779ae5fc3">run "rm README.rdoc"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7ce79221d13bfadba0b28a052035f0ce">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b707afd65f63b72d5f72d45779ae5fc3">Copiar</button>
 </div>
 <h4 id="rails-command-command-options"><a class="anchorlink" href="#rails-command-command-options">2.9 rails_command(command, options = {})</a></h4><p>Runs the supplied command in the Rails application. Let's say you want to migrate the database:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">rails_command</span> <span class="s2">"db:migrate"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5649218af9c0ec40a4a257bc5a5ab259">rails_command "db:migrate"
+<textarea class="clipboard-content" id="clipboard-d329a227f12f8374363d37192040b4e4">rails_command "db:migrate"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5649218af9c0ec40a4a257bc5a5ab259">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d329a227f12f8374363d37192040b4e4">Copiar</button>
 </div>
 <p>You can also run commands with a different Rails environment:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">rails_command</span> <span class="s2">"db:migrate"</span><span class="p">,</span> <span class="ss">env: </span><span class="s1">'production'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c275647801c5e57df8611c7d0919b783">rails_command "db:migrate", env: 'production'
+<textarea class="clipboard-content" id="clipboard-f3afc337b64880408be093b4e21cdc5f">rails_command "db:migrate", env: 'production'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c275647801c5e57df8611c7d0919b783">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f3afc337b64880408be093b4e21cdc5f">Copiar</button>
 </div>
 <p>You can also run commands as a super-user:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">rails_command</span> <span class="s2">"log:clear"</span><span class="p">,</span> <span class="ss">sudo: </span><span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6c21a3b65943562091e95e99d78b5aba">rails_command "log:clear", sudo: true
+<textarea class="clipboard-content" id="clipboard-081563db788be97b0eafee950e0d2f14">rails_command "log:clear", sudo: true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6c21a3b65943562091e95e99d78b5aba">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-081563db788be97b0eafee950e0d2f14">Copiar</button>
 </div>
 <p>You can also run commands that should abort application generation if they fail:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">rails_command</span> <span class="s2">"db:migrate"</span><span class="p">,</span> <span class="ss">abort_on_failure: </span><span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-17fb4a83ae3dbc8eac76d4a65d719d96">rails_command "db:migrate", abort_on_failure: true
+<textarea class="clipboard-content" id="clipboard-77e764062117355fc308955a76d0808c">rails_command "db:migrate", abort_on_failure: true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-17fb4a83ae3dbc8eac76d4a65d719d96">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-77e764062117355fc308955a76d0808c">Copiar</button>
 </div>
 <h4 id="route-routing-code"><a class="anchorlink" href="#route-routing-code">2.10 route(routing_code)</a></h4><p>Adds a routing entry to the <code>config/routes.rb</code> file. In the steps above, we generated a person scaffold and also removed <code>README.rdoc</code>. Now, to make <code>PeopleController#index</code> the default page for the application:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">route</span> <span class="s2">"root to: 'person#index'"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ac6f6dac23bf9bdcf8ed98865c38713d">route "root to: 'person#index'"
+<textarea class="clipboard-content" id="clipboard-0940dc96a54aca4fcb844a1016b2c3a6">route "root to: 'person#index'"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ac6f6dac23bf9bdcf8ed98865c38713d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0940dc96a54aca4fcb844a1016b2c3a6">Copiar</button>
 </div>
 <h4 id="inside-dir"><a class="anchorlink" href="#inside-dir">2.11 inside(dir)</a></h4><p>Enables you to run a command from the given directory. For example, if you have a copy of edge rails that you wish to symlink from your new apps, you can do this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">inside</span><span class="p">(</span><span class="s1">'vendor'</span><span class="p">)</span> <span class="k">do</span>
   <span class="n">run</span> <span class="s2">"ln -s ~/commit-rails/rails rails"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a6619203475780a092d3349819394dcc">inside('vendor') do
+<textarea class="clipboard-content" id="clipboard-9bc2935281fe657b5beda127815cd710">inside('vendor') do
   run "ln -s ~/commit-rails/rails rails"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a6619203475780a092d3349819394dcc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9bc2935281fe657b5beda127815cd710">Copiar</button>
 </div>
 <h4 id="ask-question"><a class="anchorlink" href="#ask-question">2.12 ask(question)</a></h4><p><code>ask()</code> gives you a chance to get some feedback from the user and use it in your templates. Let's say you want your user to name the new shiny library you're adding:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">lib_name</span> <span class="o">=</span> <span class="n">ask</span><span class="p">(</span><span class="s2">"What do you want to call the shiny library ?"</span><span class="p">)</span>
@@ -519,7 +525,7 @@ end
   end
 </span><span class="no">CODE</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-015a238edfb9e67a11d9819dc6b1deb6">lib_name = ask("What do you want to call the shiny library ?")
+<textarea class="clipboard-content" id="clipboard-db0576eefd1625ca1417e58f6c65af33">lib_name = ask("What do you want to call the shiny library ?")
 lib_name &lt;&lt; ".rb" unless lib_name.index(".rb")
 
 lib lib_name, &lt;&lt;-CODE
@@ -527,27 +533,27 @@ lib lib_name, &lt;&lt;-CODE
   end
 CODE
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-015a238edfb9e67a11d9819dc6b1deb6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-db0576eefd1625ca1417e58f6c65af33">Copiar</button>
 </div>
 <h4 id="yes-questionmark-question-or-no-questionmark-question"><a class="anchorlink" href="#yes-questionmark-question-or-no-questionmark-question">2.13 yes?(question) or no?(question)</a></h4><p>These methods let you ask questions from templates and decide the flow based on the user's answer. Let's say you want to prompt the user to run migrations:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">rails_command</span><span class="p">(</span><span class="s2">"db:migrate"</span><span class="p">)</span> <span class="k">if</span> <span class="n">yes?</span><span class="p">(</span><span class="s2">"Run database migrations?"</span><span class="p">)</span>
 <span class="c1"># no?(question) acts just the opposite.</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e5ae2a6dc818276de020270b96406aab">rails_command("db:migrate") if yes?("Run database migrations?")
+<textarea class="clipboard-content" id="clipboard-dda2e1b0144f58754bed3db6fd3cdbfd">rails_command("db:migrate") if yes?("Run database migrations?")
 # no?(question) acts just the opposite.
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e5ae2a6dc818276de020270b96406aab">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dda2e1b0144f58754bed3db6fd3cdbfd">Copiar</button>
 </div>
 <h4 id="git-command"><a class="anchorlink" href="#git-command">2.14 git(:command)</a></h4><p>Rails templates let you run any git command:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">git</span> <span class="ss">:init</span>
 <span class="n">git</span> <span class="ss">add: </span><span class="s2">"."</span>
 <span class="n">git</span> <span class="ss">commit: </span><span class="s2">"-a -m 'Initial commit'"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bab2e6d1a925eb5b491e180c58c60705">git :init
+<textarea class="clipboard-content" id="clipboard-f5ccc77914e2a81052231dcabc8cfc7d">git :init
 git add: "."
 git commit: "-a -m 'Initial commit'"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bab2e6d1a925eb5b491e180c58c60705">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f5ccc77914e2a81052231dcabc8cfc7d">Copiar</button>
 </div>
 <h4 id="after-bundle-block"><a class="anchorlink" href="#after-bundle-block">2.15 after_bundle(&amp;block)</a></h4><p>Registers a callback to be executed after the gems are bundled and binstubs
 are generated. Useful for all generated files to version control:</p><div class="code_container">
@@ -557,31 +563,29 @@ are generated. Useful for all generated files to version control:</p><div class=
   <span class="n">git</span> <span class="ss">commit: </span><span class="s2">"-a -m 'Initial commit'"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1390f345165d60bd96b58598dbfbe3fd">after_bundle do
+<textarea class="clipboard-content" id="clipboard-66d809ebe75c211ab0c14ff6d74c0baa">after_bundle do
   git :init
   git add: '.'
   git commit: "-a -m 'Initial commit'"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1390f345165d60bd96b58598dbfbe3fd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-66d809ebe75c211ab0c14ff6d74c0baa">Copiar</button>
 </div>
-<p>The callbacks gets executed even if <code>--skip-bundle</code> and/or <code>--skip-spring</code> has
-been passed.</p><h3 id="advanced-usage"><a class="anchorlink" href="#advanced-usage">3 Advanced Usage</a></h3><p>The application template is evaluated in the context of a
-<code>Rails::Generators::AppGenerator</code> instance. It uses the <code>apply</code> action
-provided by
-<a href="https://github.com/erikhuda/thor/blob/master/lib/thor/actions.rb#L207">Thor</a>.
-This means you can extend and change the instance to match your needs.</p><p>For example by overwriting the <code>source_paths</code> method to contain the
+<p>The callbacks gets executed even if <code>--skip-bundle</code> has been passed.</p><h3 id="advanced-usage"><a class="anchorlink" href="#advanced-usage">3 Advanced Usage</a></h3><p>The application template is evaluated in the context of a
+<code>Rails::Generators::AppGenerator</code> instance. It uses the
+<a href="https://rdoc.info/github/wycats/thor/Thor/Actions#apply-instance_method"><code>apply</code></a>
+action provided by Thor.</p><p>This means you can extend and change the instance to match your needs.</p><p>For example by overwriting the <code>source_paths</code> method to contain the
 location of your template. Now methods like <code>copy_file</code> will accept
 relative paths to your template's location.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">source_paths</span>
   <span class="p">[</span><span class="n">__dir__</span><span class="p">]</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eedc1b2e3556dca459628ecea9b44a13">def source_paths
+<textarea class="clipboard-content" id="clipboard-61bd700063b19f94f20a4dc77f257d52">def source_paths
   [__dir__]
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eedc1b2e3556dca459628ecea9b44a13">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-61bd700063b19f94f20a4dc77f257d52">Copiar</button>
 </div>
 
 

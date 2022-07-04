@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -301,6 +307,7 @@
 
 <ul>
 <li><a href="#overriding-models-and-controllers">Overriding Models and Controllers</a></li>
+<li><a href="#autoloading-and-engines">Autoloading and Engines</a></li>
 <li><a href="#overriding-views">Overriding Views</a></li>
 <li><a href="#routes">Routes</a></li>
 <li><a href="#assets">Assets</a></li>
@@ -366,16 +373,16 @@ options as appropriate to the need. For the "blorgh" example, you will need to
 create a "mountable" engine, running this command in a terminal:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>plugin new blorgh <span class="nt">--mountable</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-717a7a2bed1633b0c663772bdf35b446">rails plugin new blorgh --mountable
+<textarea class="clipboard-content" id="clipboard-ba937167853a4f1d54bb4d4c270df166">rails plugin new blorgh --mountable
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-717a7a2bed1633b0c663772bdf35b446">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ba937167853a4f1d54bb4d4c270df166">Copiar</button>
 </div>
 <p>The full list of options for the plugin generator may be seen by typing:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>plugin <span class="nt">--help</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a177bf5127e96b4d13204fe6765c572a">rails plugin --help
+<textarea class="clipboard-content" id="clipboard-5eed1795a472f20962bbbe1949419796">rails plugin --help
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a177bf5127e96b4d13204fe6765c572a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5eed1795a472f20962bbbe1949419796">Copiar</button>
 </div>
 <p>The <code>--mountable</code> option tells the generator that you want to create a
 "mountable" and namespace-isolated engine. This generator will provide the same
@@ -390,10 +397,10 @@ that provides the following:</p>
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6514208cad21b96a8952724b3197e17b">Rails.application.routes.draw do
+<textarea class="clipboard-content" id="clipboard-56ba4fceb692ae532b4b5861c0521c28">Rails.application.routes.draw do
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6514208cad21b96a8952724b3197e17b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-56ba4fceb692ae532b4b5861c0521c28">Copiar</button>
 </div>
 </li>
 <li>
@@ -405,12 +412,12 @@ standard Rails application's <code>config/application.rb</code> file:</p>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-29133e32e831e21a77ebbe29d51d9429">module Blorgh
+<textarea class="clipboard-content" id="clipboard-b1261bada8fc404693a616b75b77d49a">module Blorgh
   class Engine &lt; ::Rails::Engine
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-29133e32e831e21a77ebbe29d51d9429">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b1261bada8fc404693a616b75b77d49a">Copiar</button>
 </div>
 </li>
 </ul>
@@ -426,10 +433,10 @@ end
 <pre><code class="highlight ruby"><span class="no">Blorgh</span><span class="o">::</span><span class="no">Engine</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-24c205da55227c7bffa71afb01834449">Blorgh::Engine.routes.draw do
+<textarea class="clipboard-content" id="clipboard-a43353db7c3e2da8a24e3fe64f9147bd">Blorgh::Engine.routes.draw do
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-24c205da55227c7bffa71afb01834449">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a43353db7c3e2da8a24e3fe64f9147bd">Copiar</button>
 </div>
 </li>
 <li>
@@ -441,13 +448,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-53a40115ea8c9d2b462aad83df1ddded">module Blorgh
+<textarea class="clipboard-content" id="clipboard-35cd1938ae8001d48739675d353390f2">module Blorgh
   class Engine &lt; ::Rails::Engine
     isolate_namespace Blorgh
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-53a40115ea8c9d2b462aad83df1ddded">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-35cd1938ae8001d48739675d353390f2">Copiar</button>
 </div>
 </li>
 </ul>
@@ -457,18 +464,18 @@ following to the dummy application's routes file at
 <code>test/dummy/config/routes.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">mount</span> <span class="no">Blorgh</span><span class="o">::</span><span class="no">Engine</span> <span class="o">=&gt;</span> <span class="s2">"/blorgh"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-45b63d2f93faebf3e0c2fe7c2e3a27f4">mount Blorgh::Engine =&gt; "/blorgh"
+<textarea class="clipboard-content" id="clipboard-200376170439a2509aa65fcf598ee0f2">mount Blorgh::Engine =&gt; "/blorgh"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-45b63d2f93faebf3e0c2fe7c2e3a27f4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-200376170439a2509aa65fcf598ee0f2">Copiar</button>
 </div>
 <h4 id="inside-an-engine"><a class="anchorlink" href="#inside-an-engine">2.1 Inside an Engine</a></h4><h5 id="critical-files"><a class="anchorlink" href="#critical-files">2.1.1 Critical Files</a></h5><p>At the root of this brand new engine's directory lives a <code>blorgh.gemspec</code> file.
 When you include the engine into an application later on, you will do so with
 this line in the Rails application's <code>Gemfile</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'blorgh'</span><span class="p">,</span> <span class="ss">path: </span><span class="s1">'engines/blorgh'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-28d0bd1ff54732a157b378994e661863">gem 'blorgh', path: 'engines/blorgh'
+<textarea class="clipboard-content" id="clipboard-b84ba320c364bad5865d4fec77b0ebb8">gem 'blorgh', path: 'engines/blorgh'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-28d0bd1ff54732a157b378994e661863">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b84ba320c364bad5865d4fec77b0ebb8">Copiar</button>
 </div>
 <p>Don't forget to run <code>bundle install</code> as usual. By specifying it as a gem within
 the <code>Gemfile</code>, Bundler will load it as such, parsing this <code>blorgh.gemspec</code> file
@@ -480,12 +487,12 @@ and defines a base module called <code>Blorgh</code>.</p><div class="code_contai
 <span class="k">module</span> <span class="nn">Blorgh</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-59b6448f2cce2d88c9f0bb4fab4c3674">require "blorgh/engine"
+<textarea class="clipboard-content" id="clipboard-c3dca7f28e72e02d7198b56925b796a7">require "blorgh/engine"
 
 module Blorgh
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-59b6448f2cce2d88c9f0bb4fab4c3674">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c3dca7f28e72e02d7198b56925b796a7">Copiar</button>
 </div>
 <div class="info"><p>Some engines choose to use this file to put global configuration options
 for their engine. It's a relatively good idea, so if you want to offer
@@ -497,13 +504,13 @@ perfect for that. Place the methods inside the module and you'll be good to go.<
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ae6ebf3e07e32edc83f11a4d42a87799">module Blorgh
+<textarea class="clipboard-content" id="clipboard-2d9392620b169623f6053a654fbd1156">module Blorgh
   class Engine &lt; ::Rails::Engine
     isolate_namespace Blorgh
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ae6ebf3e07e32edc83f11a4d42a87799">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2d9392620b169623f6053a654fbd1156">Copiar</button>
 </div>
 <p>By inheriting from the <code>Rails::Engine</code> class, this gem notifies Rails that
 there's an engine at the specified path, and will correctly mount the engine
@@ -541,12 +548,13 @@ this namespaced directory, you prevent them from possibly clashing with
 identically-named controllers within other engines or even within the
 application.</p><div class="note"><p>The <code>ApplicationController</code> class inside an engine is named just like a
 Rails application in order to make it easier for you to convert your
-applications into engines.</p></div><div class="note"><p>Because of the way that Ruby does constant lookup you may run into a situation
-where your engine controller is inheriting from the main application controller and
-not your engine's application controller. Ruby is able to resolve the <code>ApplicationController</code> constant, and therefore the autoloading mechanism is not triggered. See the section <a href="autoloading_and_reloading_constants_classic_mode.html#when-constants-aren-t-missed">When Constants Aren't Missed</a>.
-The best way to prevent this from happening is to use <code>require_dependency</code> to ensure that the engine's application
-controller is loaded. For example:</p></div><div class="code_container">
-<pre><code class="highlight ruby"><span class="c1"># app/controllers/blorgh/articles_controller.rb:</span>
+applications into engines.</p></div><div class="note"><p>If the parent application runs in <code>classic</code> mode, you may run into a
+situation where your engine controller is inheriting from the main application
+controller and not your engine's application controller. The best way to prevent
+this is to switch to <code>zeitwerk</code> mode in the parent application. Otherwise, use
+<code>require_dependency</code> to ensure that the engine's application controller is
+loaded. For example:</p></div><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># ONLY NEEDED IN `classic` MODE.</span>
 <span class="n">require_dependency</span> <span class="s2">"blorgh/application_controller"</span>
 
 <span class="k">module</span> <span class="nn">Blorgh</span>
@@ -555,7 +563,7 @@ controller is loaded. For example:</p></div><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-38b0238b1545f042adbd507759373872"># app/controllers/blorgh/articles_controller.rb:
+<textarea class="clipboard-content" id="clipboard-adcb785302244972f64e7201755948b4"># ONLY NEEDED IN `classic` MODE.
 require_dependency "blorgh/application_controller"
 
 module Blorgh
@@ -564,11 +572,11 @@ module Blorgh
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-38b0238b1545f042adbd507759373872">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-adcb785302244972f64e7201755948b4">Copiar</button>
 </div>
-<div class="warning"><p>Don't use <code>require</code> because it will break the automatic reloading of classes
-in the development environment - using <code>require_dependency</code> ensures that classes are
-loaded and unloaded in the correct manner.</p></div><p>Just like for <code>app/controllers</code>, you will find a <code>blorgh</code> subdirectory under
+<div class="warning"><p>Don't use <code>require</code> because it will break the automatic reloading of
+classes in the development environment - using <code>require_dependency</code> ensures that
+classes are loaded and unloaded in the correct manner.</p></div><p>Just like for <code>app/controllers</code>, you will find a <code>blorgh</code> subdirectory under
 the <code>app/helpers</code>, <code>app/jobs</code>, <code>app/mailers</code> and <code>app/models</code> directories
 containing the associated <code>application_*.rb</code> file for gathering common
 functionalities. By placing your files under this subdirectory and namespacing
@@ -585,9 +593,9 @@ This means that you will be able to generate new controllers and models for this
 engine very easily by running commands like this:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate model
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9e6b95eaa67263d7cd926949554762d1">bin/rails generate model
+<textarea class="clipboard-content" id="clipboard-1b23b3a9b0a3efc267a7afdc7b8c2643">bin/rails generate model
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9e6b95eaa67263d7cd926949554762d1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1b23b3a9b0a3efc267a7afdc7b8c2643">Copiar</button>
 </div>
 <p>Keep in mind, of course, that anything generated with these commands inside of
 an engine that has <code>isolate_namespace</code> in the <code>Engine</code> class will be namespaced.</p><h5 id="test-directory"><a class="anchorlink" href="#test-directory">2.1.4 <code>test</code> Directory</a></h5><p>The <code>test</code> directory is where tests for the engine will go. To test the engine,
@@ -598,11 +606,11 @@ there is a cut-down version of a Rails application embedded within it at
   <span class="n">mount</span> <span class="no">Blorgh</span><span class="o">::</span><span class="no">Engine</span> <span class="o">=&gt;</span> <span class="s2">"/blorgh"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d5a7411964fdf3d2606ad5a669cea9b3">Rails.application.routes.draw do
+<textarea class="clipboard-content" id="clipboard-11656db09c8af1f15b2f2143c84c5d1c">Rails.application.routes.draw do
   mount Blorgh::Engine =&gt; "/blorgh"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d5a7411964fdf3d2606ad5a669cea9b3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-11656db09c8af1f15b2f2143c84c5d1c">Copiar</button>
 </div>
 <p>This line mounts the engine at the path <code>/blorgh</code>, which will make it accessible
 through the application only at that path.</p><p>Inside the test directory there is the <code>test/integration</code> directory, where
@@ -615,9 +623,9 @@ Guide</a>, with some new twists.</p><div class="note"><p>For this section, make 
 controller. To quickly generate this, you can use the Rails scaffold generator.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate scaffold article title:string text:text
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-08df8a17e642324d310b47aa357447aa">bin/rails generate scaffold article title:string text:text
+<textarea class="clipboard-content" id="clipboard-a3d6dd77a5adf833bc3edede95990963">bin/rails generate scaffold article title:string text:text
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-08df8a17e642324d310b47aa357447aa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a3d6dd77a5adf833bc3edede95990963">Copiar</button>
 </div>
 <p>This command will output this information:</p><div class="code_container">
 <pre><code class="highlight plaintext">invoke  active_record
@@ -643,13 +651,8 @@ create      test/system/blorgh/articles_test.rb
 invoke    helper
 create      app/helpers/blorgh/articles_helper.rb
 invoke      test_unit
-invoke  assets
-invoke    css
-create      app/assets/stylesheets/blorgh/articles.css
-invoke  css
-create    app/assets/stylesheets/scaffold.css
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-01c0bf20bcb15193faf2ec56ae05cac9">invoke  active_record
+<textarea class="clipboard-content" id="clipboard-9c00f3bba8a75dcb96c286e4c7cd011b">invoke  active_record
 create    db/migrate/[timestamp]_create_blorgh_articles.rb
 create    app/models/blorgh/article.rb
 invoke    test_unit
@@ -672,13 +675,8 @@ create      test/system/blorgh/articles_test.rb
 invoke    helper
 create      app/helpers/blorgh/articles_helper.rb
 invoke      test_unit
-invoke  assets
-invoke    css
-create      app/assets/stylesheets/blorgh/articles.css
-invoke  css
-create    app/assets/stylesheets/scaffold.css
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-01c0bf20bcb15193faf2ec56ae05cac9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9c00f3bba8a75dcb96c286e4c7cd011b">Copiar</button>
 </div>
 <p>The first thing that the scaffold generator does is invoke the <code>active_record</code>
 generator, which generates a migration and a model for the resource. Note here,
@@ -696,11 +694,11 @@ for the engine. This line is simply <code>resources :articles</code>, turning th
   <span class="n">resources</span> <span class="ss">:articles</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-87a166ab2f032265f99a3a22c647d1e6">Blorgh::Engine.routes.draw do
+<textarea class="clipboard-content" id="clipboard-cc399c83489add968f4a8b20417869c2">Blorgh::Engine.routes.draw do
   resources :articles
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-87a166ab2f032265f99a3a22c647d1e6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cc399c83489add968f4a8b20417869c2">Copiar</button>
 </div>
 <p>Note here that the routes are drawn upon the <code>Blorgh::Engine</code> object rather than
 the <code>YourApp::Application</code> class. This is so that the engine routes are confined
@@ -719,13 +717,13 @@ class is defined within the <code>Blorgh</code> module:</p><div class="code_cont
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-21531df7aafc3fb0538640d041438d38">module Blorgh
+<textarea class="clipboard-content" id="clipboard-879b84e3ca1322975a03540a74cf6183">module Blorgh
   class ArticlesController &lt; ApplicationController
     # ...
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-21531df7aafc3fb0538640d041438d38">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-879b84e3ca1322975a03540a74cf6183">Copiar</button>
 </div>
 <div class="note"><p>The <code>ArticlesController</code> class inherits from
 <code>Blorgh::ApplicationController</code>, not the application's <code>ApplicationController</code>.</p></div><p>The helper inside <code>app/helpers/blorgh/articles_helper.rb</code> is also namespaced:</p><div class="code_container">
@@ -735,16 +733,16 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-196fcc8d0a41fc1fa524e15a27e34027">module Blorgh
+<textarea class="clipboard-content" id="clipboard-97f3a5d8f4f86c379d85e9338f04fb77">module Blorgh
   module ArticlesHelper
     # ...
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-196fcc8d0a41fc1fa524e15a27e34027">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-97f3a5d8f4f86c379d85e9338f04fb77">Copiar</button>
 </div>
 <p>This helps prevent conflicts with any other engine or application that may have
-an article resource as well.</p><p>Finally, the assets for this resource are generated in one file: <code>app/assets/stylesheets/blorgh/articles.css</code>. You'll see how to use these a little later.</p><p>You can see what the engine has so far by running <code>bin/rails db:migrate</code> at the root
+an article resource as well.</p><p>You can see what the engine has so far by running <code>bin/rails db:migrate</code> at the root
 of our engine to run the migration generated by the scaffold generator, and then
 running <code>bin/rails server</code> in <code>test/dummy</code>. When you open
 <code>http://localhost:3000/blorgh/articles</code> you will see the default scaffold that has
@@ -755,9 +753,9 @@ reference it you must call it as <code>Blorgh::Article</code>.</p><div class="co
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Blorgh</span><span class="o">::</span><span class="no">Article</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="p">=&gt;</span> <span class="kt">#&lt;</span><span class="no">Blorgh</span><span class="o">::</span><span class="no">Article</span> <span class="ss">id: </span><span class="mi">1</span> <span class="o">...</span><span class="kt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8bf0cda0f6fbc61188cdd997b6647390">Blorgh::Article.find(1)
+<textarea class="clipboard-content" id="clipboard-8f117d7b0f39801584bd070bf95e77d4">Blorgh::Article.find(1)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8bf0cda0f6fbc61188cdd997b6647390">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8f117d7b0f39801584bd070bf95e77d4">Copiar</button>
 </div>
 <p>One final thing is that the <code>articles</code> resource for this engine should be the root
 of the engine. Whenever someone goes to the root path where the engine is
@@ -765,9 +763,9 @@ mounted, they should be shown a list of articles. This can be made to happen if
 this line is inserted into the <code>config/routes.rb</code> file inside the engine:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">root</span> <span class="ss">to: </span><span class="s2">"articles#index"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-84a3bc4fdab341ef12eb00816dfd192b">root to: "articles#index"
+<textarea class="clipboard-content" id="clipboard-86a6fbe723ceb3c4bcc4fbd474609503">root to: "articles#index"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-84a3bc4fdab341ef12eb00816dfd192b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-86a6fbe723ceb3c4bcc4fbd474609503">Copiar</button>
 </div>
 <p>Now people will only need to go to the root of the engine to see all the articles,
 rather than visiting <code>/articles</code>. This means that instead of
@@ -780,9 +778,9 @@ comments and allow people to create new ones.</p><p>From the engine root, run th
 and <code>text</code> text column.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate model Comment article_id:integer text:text
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6abf18a01df1c0c1bff81b8963886885">bin/rails generate model Comment article_id:integer text:text
+<textarea class="clipboard-content" id="clipboard-467371f58038896b4fbb3fc1973d4622">bin/rails generate model Comment article_id:integer text:text
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6abf18a01df1c0c1bff81b8963886885">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-467371f58038896b4fbb3fc1973d4622">Copiar</button>
 </div>
 <p>This will output the following:</p><div class="code_container">
 <pre><code class="highlight plaintext">invoke  active_record
@@ -792,14 +790,14 @@ invoke    test_unit
 create      test/models/blorgh/comment_test.rb
 create      test/fixtures/blorgh/comments.yml
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-21c608adefe82e4ecf7f54c14bcc5ae6">invoke  active_record
+<textarea class="clipboard-content" id="clipboard-7147711dab2a7b1584b5db1e8945da00">invoke  active_record
 create    db/migrate/[timestamp]_create_blorgh_comments.rb
 create    app/models/blorgh/comment.rb
 invoke    test_unit
 create      test/models/blorgh/comment_test.rb
 create      test/fixtures/blorgh/comments.yml
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-21c608adefe82e4ecf7f54c14bcc5ae6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7147711dab2a7b1584b5db1e8945da00">Copiar</button>
 </div>
 <p>This generator call will generate just the necessary model files it needs,
 namespacing the files under a <code>blorgh</code> directory and creating a model class
@@ -807,28 +805,28 @@ called <code>Blorgh::Comment</code>. Now run the migration to create our blorgh_
 table:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2022cf2f8d8149ffa0c2e84558d294c4">bin/rails db:migrate
+<textarea class="clipboard-content" id="clipboard-654fb6aa75a52e008fcdf191537f5a87">bin/rails db:migrate
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2022cf2f8d8149ffa0c2e84558d294c4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-654fb6aa75a52e008fcdf191537f5a87">Copiar</button>
 </div>
 <p>To show the comments on an article, edit <code>app/views/blorgh/articles/show.html.erb</code> and
 add this line before the "Edit" link:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;h3&gt;</span>Comments<span class="nt">&lt;/h3&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">comments</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-77518ebc1c8630f40fa52b123a4a78e9">&lt;h3&gt;Comments&lt;/h3&gt;
+<textarea class="clipboard-content" id="clipboard-70de972ba35b331aaa8ba919701ee746">&lt;h3&gt;Comments&lt;/h3&gt;
 &lt;%= render @article.comments %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-77518ebc1c8630f40fa52b123a4a78e9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-70de972ba35b331aaa8ba919701ee746">Copiar</button>
 </div>
 <p>This line will require there to be a <code>has_many</code> association for comments defined
 on the <code>Blorgh::Article</code> model, which there isn't right now. To define one, open
 <code>app/models/blorgh/article.rb</code> and add this line into the model:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">has_many</span> <span class="ss">:comments</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0ab124a35714eb06d489b97c91a9bf10">has_many :comments
+<textarea class="clipboard-content" id="clipboard-0930cecff2be2423af5866a24e1dd994">has_many :comments
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0ab124a35714eb06d489b97c91a9bf10">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0930cecff2be2423af5866a24e1dd994">Copiar</button>
 </div>
 <p>Turning the model into this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">Blorgh</span>
@@ -837,13 +835,13 @@ on the <code>Blorgh::Article</code> model, which there isn't right now. To defin
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8a29a72b405b9da04821d44d872f5508">module Blorgh
+<textarea class="clipboard-content" id="clipboard-7581ba563b06e699b76d50907b7b594c">module Blorgh
   class Article &lt; ApplicationRecord
     has_many :comments
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8a29a72b405b9da04821d44d872f5508">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7581ba563b06e699b76d50907b7b594c">Copiar</button>
 </div>
 <div class="note"><p>Because the <code>has_many</code> is defined inside a class that is inside the
 <code>Blorgh</code> module, Rails will know that you want to use the <code>Blorgh::Comment</code>
@@ -853,9 +851,9 @@ add this, put this line underneath the call to <code>render @article.comments</c
 <code>app/views/blorgh/articles/show.html.erb</code>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"blorgh/comments/form"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-089d4d4a6c9f7c71628bcd93d216da51">&lt;%= render "blorgh/comments/form" %&gt;
+<textarea class="clipboard-content" id="clipboard-bb7ec9e281e6d598a4bb79fa8b7ff4dc">&lt;%= render "blorgh/comments/form" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-089d4d4a6c9f7c71628bcd93d216da51">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bb7ec9e281e6d598a4bb79fa8b7ff4dc">Copiar</button>
 </div>
 <p>Next, the partial that this line will render needs to exist. Create a new
 directory at <code>app/views/blorgh/comments</code> and in it a new file called
@@ -869,7 +867,7 @@ directory at <code>app/views/blorgh/comments</code> and in it a new file called
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">submit</span> <span class="cp">%&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d8714b327c1782b9131df56232f6cf49">&lt;h3&gt;New comment&lt;/h3&gt;
+<textarea class="clipboard-content" id="clipboard-de9d128e6130c3f22846e2d6c78d59f8">&lt;h3&gt;New comment&lt;/h3&gt;
 &lt;%= form_with model: [@article, @article.comments.build] do |form| %&gt;
   &lt;p&gt;
     &lt;%= form.label :text %&gt;&lt;br&gt;
@@ -878,7 +876,7 @@ directory at <code>app/views/blorgh/comments</code> and in it a new file called
   &lt;%= form.submit %&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d8714b327c1782b9131df56232f6cf49">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-de9d128e6130c3f22846e2d6c78d59f8">Copiar</button>
 </div>
 <p>When this form is submitted, it is going to attempt to perform a <code>POST</code> request
 to a route of <code>/articles/:article_id/comments</code> within the engine. This route doesn't
@@ -888,19 +886,19 @@ inside <code>config/routes.rb</code> into these lines:</p><div class="code_conta
   <span class="n">resources</span> <span class="ss">:comments</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8c33721dffccea3ddc70ba31fda044b6">resources :articles do
+<textarea class="clipboard-content" id="clipboard-4f510fba939700c4b520cfee3fd823a7">resources :articles do
   resources :comments
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8c33721dffccea3ddc70ba31fda044b6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4f510fba939700c4b520cfee3fd823a7">Copiar</button>
 </div>
 <p>This creates a nested route for the comments, which is what the form requires.</p><p>The route now exists, but the controller that this route goes to does not. To
 create it, run this command from the engine root:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate controller comments
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-144b719305925541287fc813b4306245">bin/rails generate controller comments
+<textarea class="clipboard-content" id="clipboard-b4a92b8801f161a460b1c1ad07df03dc">bin/rails generate controller comments
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-144b719305925541287fc813b4306245">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b4a92b8801f161a460b1c1ad07df03dc">Copiar</button>
 </div>
 <p>This will generate the following things:</p><div class="code_container">
 <pre><code class="highlight plaintext">create  app/controllers/blorgh/comments_controller.rb
@@ -911,11 +909,8 @@ create    test/controllers/blorgh/comments_controller_test.rb
 invoke  helper
 create    app/helpers/blorgh/comments_helper.rb
 invoke    test_unit
-invoke  assets
-invoke    css
-create      app/assets/stylesheets/blorgh/comments.css
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5501d910307a2c7e894f02f9a87b931e">create  app/controllers/blorgh/comments_controller.rb
+<textarea class="clipboard-content" id="clipboard-126d61262f311010af2f82eebe58b8eb">create  app/controllers/blorgh/comments_controller.rb
 invoke  erb
  exist    app/views/blorgh/comments
 invoke  test_unit
@@ -923,11 +918,8 @@ create    test/controllers/blorgh/comments_controller_test.rb
 invoke  helper
 create    app/helpers/blorgh/comments_helper.rb
 invoke    test_unit
-invoke  assets
-invoke    css
-create      app/assets/stylesheets/blorgh/comments.css
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5501d910307a2c7e894f02f9a87b931e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-126d61262f311010af2f82eebe58b8eb">Copiar</button>
 </div>
 <p>The form will be making a <code>POST</code> request to <code>/articles/:article_id/comments</code>, which
 will correspond with the <code>create</code> action in <code>Blorgh::CommentsController</code>. This
@@ -945,7 +937,7 @@ inside the class definition in <code>app/controllers/blorgh/comments_controller.
     <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:comment</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:text</span><span class="p">)</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9ac487552aa9ff5db8b875d01f709cda">def create
+<textarea class="clipboard-content" id="clipboard-d23e009e90c4cd86fbdfe7241f33991c">def create
   @article = Article.find(params[:article_id])
   @comment = @article.comments.create(comment_params)
   flash[:notice] = "Comment has been created!"
@@ -957,7 +949,7 @@ private
     params.require(:comment).permit(:text)
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9ac487552aa9ff5db8b875d01f709cda">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d23e009e90c4cd86fbdfe7241f33991c">Copiar</button>
 </div>
 <p>This is the final step required to get the new comment form working. Displaying
 the comments, however, is not quite right yet. If you were to create a comment
@@ -967,12 +959,12 @@ right now, you would see this error:</p><div class="code_container">
 "/Users/ryan/Sites/side_projects/blorgh/test/dummy/app/views"   *
 "/Users/ryan/Sites/side_projects/blorgh/app/views"
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c8ad32137e0119b2e3efdbff66513984">Missing partial blorgh/comments/_comment with {:handlers=&gt;[:erb, :builder],
+<textarea class="clipboard-content" id="clipboard-e65d8ed043faea5af09eb64cb72a8e99">Missing partial blorgh/comments/_comment with {:handlers=&gt;[:erb, :builder],
 :formats=&gt;[:html], :locale=&gt;[:en, :en]}. Searched in:   *
 "/Users/ryan/Sites/side_projects/blorgh/test/dummy/app/views"   *
 "/Users/ryan/Sites/side_projects/blorgh/app/views"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c8ad32137e0119b2e3efdbff66513984">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e65d8ed043faea5af09eb64cb72a8e99">Copiar</button>
 </div>
 <p>The engine is unable to find the partial required for rendering the comments.
 Rails looks first in the application's (<code>test/dummy</code>) <code>app/views</code> directory and
@@ -983,9 +975,9 @@ Create a new file at <code>app/views/blorgh/comments/_comment.html.erb</code> an
 line inside it:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">comment_counter</span> <span class="o">+</span> <span class="mi">1</span> <span class="cp">%&gt;</span>. <span class="cp">&lt;%=</span> <span class="n">comment</span><span class="p">.</span><span class="nf">text</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-01c12866f0b82cb02c0f34a456142f9e">&lt;%= comment_counter + 1 %&gt;. &lt;%= comment.text %&gt;
+<textarea class="clipboard-content" id="clipboard-a7036f7417e3e71f9ba065226f70d0a5">&lt;%= comment_counter + 1 %&gt;. &lt;%= comment.text %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-01c12866f0b82cb02c0f34a456142f9e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a7036f7417e3e71f9ba065226f70d0a5">Copiar</button>
 </div>
 <p>The <code>comment_counter</code> local variable is given to us by the <code>&lt;%= render
 @article.comments %&gt;</code> call, which will define it automatically and increment the
@@ -999,25 +991,25 @@ there isn't an application handy to test this out in, generate one using the
 <code>rails new</code> command outside of the engine directory like this:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new unicorn
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bd436f702b6029d75cc516284a185633">rails new unicorn
+<textarea class="clipboard-content" id="clipboard-2bc6fc7436c77c6fdab4bbe4f0678ee2">rails new unicorn
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bd436f702b6029d75cc516284a185633">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2bc6fc7436c77c6fdab4bbe4f0678ee2">Copiar</button>
 </div>
 <p>Usually, specifying the engine inside the <code>Gemfile</code> would be done by specifying it
 as a normal, everyday gem.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'devise'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a0feb0fccc903c222e29f9f15f8b66d7">gem 'devise'
+<textarea class="clipboard-content" id="clipboard-cdd7d56b4d226ba26eab8c9e635e98a0">gem 'devise'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a0feb0fccc903c222e29f9f15f8b66d7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cdd7d56b4d226ba26eab8c9e635e98a0">Copiar</button>
 </div>
 <p>However, because you are developing the <code>blorgh</code> engine on your local machine,
 you will need to specify the <code>:path</code> option in your <code>Gemfile</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'blorgh'</span><span class="p">,</span> <span class="ss">path: </span><span class="s1">'engines/blorgh'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d1312395b21cb64f3733605d567f67d5">gem 'blorgh', path: 'engines/blorgh'
+<textarea class="clipboard-content" id="clipboard-0a0629648fd7bd1d1f1b4084e2254313">gem 'blorgh', path: 'engines/blorgh'
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d1312395b21cb64f3733605d567f67d5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0a0629648fd7bd1d1f1b4084e2254313">Copiar</button>
 </div>
 <p>Then run <code>bundle</code> to install the gem.</p><p>As described earlier, by placing the gem in the <code>Gemfile</code> it will be loaded when
 Rails is loaded. It will first require <code>lib/blorgh.rb</code> from the engine, then
@@ -1026,9 +1018,9 @@ functionality for the engine.</p><p>To make the engine's functionality accessibl
 needs to be mounted in that application's <code>config/routes.rb</code> file:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">mount</span> <span class="no">Blorgh</span><span class="o">::</span><span class="no">Engine</span><span class="p">,</span> <span class="ss">at: </span><span class="s2">"/blog"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c24d9f3c42ad0082ff02101d9101b817">mount Blorgh::Engine, at: "/blog"
+<textarea class="clipboard-content" id="clipboard-25166858bee7b4049985cd0137e8d5da">mount Blorgh::Engine, at: "/blog"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c24d9f3c42ad0082ff02101d9101b817">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-25166858bee7b4049985cd0137e8d5da">Copiar</button>
 </div>
 <p>This line will mount the engine at <code>/blog</code> in the application. Making it
 accessible at <code>http://localhost:3000/blog</code> when the application runs with <code>bin/rails
@@ -1041,17 +1033,17 @@ engine's models can query them correctly. To copy these migrations into the
 application run the following command from the application's root:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>blorgh:install:migrations
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5a9bcb93dea416e69adbc749c7f6d118">bin/rails blorgh:install:migrations
+<textarea class="clipboard-content" id="clipboard-38b6b8e3300e3980d64b646b0a34eac1">bin/rails blorgh:install:migrations
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5a9bcb93dea416e69adbc749c7f6d118">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-38b6b8e3300e3980d64b646b0a34eac1">Copiar</button>
 </div>
 <p>If you have multiple engines that need migrations copied over, use
 <code>railties:install:migrations</code> instead:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>railties:install:migrations
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a94bcc074ba1e6bb7bf4ae0bedf0f1d5">bin/rails railties:install:migrations
+<textarea class="clipboard-content" id="clipboard-3567aca689862a03e0216a870554a8ba">bin/rails railties:install:migrations
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a94bcc074ba1e6bb7bf4ae0bedf0f1d5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3567aca689862a03e0216a870554a8ba">Copiar</button>
 </div>
 <p>This command, when run for the first time, will copy over all the migrations
 from the engine. When run the next time, it will only copy over migrations that
@@ -1060,10 +1052,10 @@ something such as this:</p><div class="code_container">
 <pre><code class="highlight plaintext">Copied migration [timestamp_1]_create_blorgh_articles.blorgh.rb from blorgh
 Copied migration [timestamp_2]_create_blorgh_comments.blorgh.rb from blorgh
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3624a80241a5a1af19d744e05d4d6bc8">Copied migration [timestamp_1]_create_blorgh_articles.blorgh.rb from blorgh
+<textarea class="clipboard-content" id="clipboard-447e07fc3587b5bdeb5b35e114cd5d03">Copied migration [timestamp_1]_create_blorgh_articles.blorgh.rb from blorgh
 Copied migration [timestamp_2]_create_blorgh_comments.blorgh.rb from blorgh
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3624a80241a5a1af19d744e05d4d6bc8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-447e07fc3587b5bdeb5b35e114cd5d03">Copiar</button>
 </div>
 <p>The first timestamp (<code>[timestamp_1]</code>) will be the current time, and the second
 timestamp (<code>[timestamp_2]</code>) will be the current time plus a second. The reason
@@ -1077,17 +1069,17 @@ engine.</p><p>If you would like to run migrations only from one engine, you can 
 specifying <code>SCOPE</code>:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate <span class="nv">SCOPE</span><span class="o">=</span>blorgh
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-22e90fa2b66d634e82f2e9635bb67f14">bin/rails db:migrate SCOPE=blorgh
+<textarea class="clipboard-content" id="clipboard-f17f45549fcedcde76c668c401da412f">bin/rails db:migrate SCOPE=blorgh
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-22e90fa2b66d634e82f2e9635bb67f14">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f17f45549fcedcde76c668c401da412f">Copiar</button>
 </div>
 <p>This may be useful if you want to revert engine's migrations before removing it.
 To revert all migrations from blorgh engine you can run code such as:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate <span class="nv">SCOPE</span><span class="o">=</span>blorgh <span class="nv">VERSION</span><span class="o">=</span>0
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d25fe53aa1cef5228f6317db148afe79">bin/rails db:migrate SCOPE=blorgh VERSION=0
+<textarea class="clipboard-content" id="clipboard-c35f5923bdf224c0d0e6d47de927cbd5">bin/rails db:migrate SCOPE=blorgh VERSION=0
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d25fe53aa1cef5228f6317db148afe79">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c35f5923bdf224c0d0e6d47de927cbd5">Copiar</button>
 </div>
 <h4 id="using-a-class-provided-by-the-application"><a class="anchorlink" href="#using-a-class-provided-by-the-application">4.3 Using a Class Provided by the Application</a></h4><h5 id="using-a-model-provided-by-the-application"><a class="anchorlink" href="#using-a-model-provided-by-the-application">4.3.1 Using a Model Provided by the Application</a></h5><p>When an engine is created, it may want to use specific classes from an
 application to provide links between the pieces of the engine and the pieces of
@@ -1102,9 +1094,9 @@ configurable further on). It can be generated using this command inside the
 application:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate model user name:string
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4131252611edc4ad5f9c95391af4cbb6">bin/rails generate model user name:string
+<textarea class="clipboard-content" id="clipboard-6b837ea10e79396a18ad651d5ddbf22d">bin/rails generate model user name:string
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4131252611edc4ad5f9c95391af4cbb6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6b837ea10e79396a18ad651d5ddbf22d">Copiar</button>
 </div>
 <p>The <code>bin/rails db:migrate</code> command needs to be run here to ensure that our
 application has the <code>users</code> table for future use.</p><p>Also, to keep it simple, the articles form will have a new text field called
@@ -1119,12 +1111,12 @@ added above the <code>title</code> field with this code:</p><div class="code_con
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:author_name</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bbeaf2738b1895a81bde065cd3990105">&lt;div class="field"&gt;
+<textarea class="clipboard-content" id="clipboard-2939d3506cea3b2f562704592f660bde">&lt;div class="field"&gt;
   &lt;%= form.label :author_name %&gt;&lt;br&gt;
   &lt;%= form.text_field :author_name %&gt;
 &lt;/div&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bbeaf2738b1895a81bde065cd3990105">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2939d3506cea3b2f562704592f660bde">Copiar</button>
 </div>
 <p>Next, we need to update our <code>Blorgh::ArticlesController#article_params</code> method to
 permit the new form parameter:</p><div class="code_container">
@@ -1132,11 +1124,11 @@ permit the new form parameter:</p><div class="code_container">
   <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:article</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:author_name</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7443b0c0b6b2c042a7717363f5ce02e9">def article_params
+<textarea class="clipboard-content" id="clipboard-6d44d9ada42088bcaec4d49ada4c7591">def article_params
   params.require(:article).permit(:title, :text, :author_name)
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7443b0c0b6b2c042a7717363f5ce02e9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6d44d9ada42088bcaec4d49ada4c7591">Copiar</button>
 </div>
 <p>The <code>Blorgh::Article</code> model should then have some code to convert the <code>author_name</code>
 field into an actual <code>User</code> object and associate it as that article's <code>author</code>
@@ -1155,7 +1147,7 @@ association for the author and the <code>before_validation</code> call into
     <span class="nb">self</span><span class="p">.</span><span class="nf">author</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find_or_create_by</span><span class="p">(</span><span class="ss">name: </span><span class="n">author_name</span><span class="p">)</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a64cf502675859c50525c66ffa8a6260">attr_accessor :author_name
+<textarea class="clipboard-content" id="clipboard-dfc3de9de436a424dfb35f8acc724501">attr_accessor :author_name
 belongs_to :author, class_name: "User"
 
 before_validation :set_author
@@ -1165,7 +1157,7 @@ private
     self.author = User.find_or_create_by(name: author_name)
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a64cf502675859c50525c66ffa8a6260">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dfc3de9de436a424dfb35f8acc724501">Copiar</button>
 </div>
 <p>By representing the <code>author</code> association's object with the <code>User</code> class, a link
 is established between the engine and the application. There needs to be a way
@@ -1174,9 +1166,9 @@ of associating the records in the <code>blorgh_articles</code> table with the re
 <code>author_id</code> column added to the <code>blorgh_articles</code> table.</p><p>To generate this new column, run this command within the engine:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration add_author_id_to_blorgh_articles author_id:integer
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-873a92cf137bb1125bce46ca7b6c6931">bin/rails generate migration add_author_id_to_blorgh_articles author_id:integer
+<textarea class="clipboard-content" id="clipboard-c1dd56c02d0b4f2d66407ee918d36cae">bin/rails generate migration add_author_id_to_blorgh_articles author_id:integer
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-873a92cf137bb1125bce46ca7b6c6931">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c1dd56c02d0b4f2d66407ee918d36cae">Copiar</button>
 </div>
 <div class="note"><p>Due to the migration's name and the column specification after it, Rails
 will automatically know that you want to add a column to a specific table and
@@ -1185,9 +1177,9 @@ this.</p></div><p>This migration will need to be run on the application. To do t
 be copied using this command:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>blorgh:install:migrations
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a4daffb6db72b5b793c9fed1fdfc6faf">bin/rails blorgh:install:migrations
+<textarea class="clipboard-content" id="clipboard-196d69ae28787c9e5ac84d2b73d4f1fb">bin/rails blorgh:install:migrations
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a4daffb6db72b5b793c9fed1fdfc6faf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-196d69ae28787c9e5ac84d2b73d4f1fb">Copiar</button>
 </div>
 <p>Notice that only <em>one</em> migration was copied over here. This is because the first
 two migrations were copied over the first time this command was run.</p><div class="code_container">
@@ -1195,18 +1187,18 @@ two migrations were copied over the first time this command was run.</p><div cla
 NOTE Migration [timestamp]_create_blorgh_comments.blorgh.rb from blorgh has been skipped. Migration with the same name already exists.
 Copied migration [timestamp]_add_author_id_to_blorgh_articles.blorgh.rb from blorgh
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-732647edda4a5aa313cd5602b294d04d">NOTE Migration [timestamp]_create_blorgh_articles.blorgh.rb from blorgh has been skipped. Migration with the same name already exists.
+<textarea class="clipboard-content" id="clipboard-dbebd76357826a98acbe500a6e53c66d">NOTE Migration [timestamp]_create_blorgh_articles.blorgh.rb from blorgh has been skipped. Migration with the same name already exists.
 NOTE Migration [timestamp]_create_blorgh_comments.blorgh.rb from blorgh has been skipped. Migration with the same name already exists.
 Copied migration [timestamp]_add_author_id_to_blorgh_articles.blorgh.rb from blorgh
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-732647edda4a5aa313cd5602b294d04d">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dbebd76357826a98acbe500a6e53c66d">Copiar</button>
 </div>
 <p>Run the migration using:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9cc01b18df9758e573f0a0d18fba6354">bin/rails db:migrate
+<textarea class="clipboard-content" id="clipboard-187096e88575affda0279f324d41f96c">bin/rails db:migrate
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9cc01b18df9758e573f0a0d18fba6354">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-187096e88575affda0279f324d41f96c">Copiar</button>
 </div>
 <p>Now with all the pieces in place, an action will take place that will associate
 an author - represented by a record in the <code>users</code> table - with an article,
@@ -1217,12 +1209,12 @@ above the "Title" output inside <code>app/views/blorgh/articles/show.html.erb</c
   <span class="cp">&lt;%=</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">author</span><span class="p">.</span><span class="nf">name</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/p&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7c8d2a19e6430ebfab2f073c50541979">&lt;p&gt;
+<textarea class="clipboard-content" id="clipboard-8ee365a3db6744f0976f17ef6ae8463f">&lt;p&gt;
   &lt;b&gt;Author:&lt;/b&gt;
   &lt;%= @article.author.name %&gt;
 &lt;/p&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7c8d2a19e6430ebfab2f073c50541979">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8ee365a3db6744f0976f17ef6ae8463f">Copiar</button>
 </div>
 <h5 id="using-a-controller-provided-by-the-application"><a class="anchorlink" href="#using-a-controller-provided-by-the-application">4.3.2 Using a Controller Provided by the Application</a></h5><p>Because Rails controllers generally share code for things like authentication
 and accessing session variables, they inherit from <code>ApplicationController</code> by
@@ -1239,12 +1231,12 @@ engine this would be done by changing
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-161225c1fe088385b3a67a5faec5ecfe">module Blorgh
+<textarea class="clipboard-content" id="clipboard-f86356460b4868df597c9f582d515261">module Blorgh
   class ApplicationController &lt; ::ApplicationController
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-161225c1fe088385b3a67a5faec5ecfe">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f86356460b4868df597c9f582d515261">Copiar</button>
 </div>
 <p>By default, the engine's controllers inherit from
 <code>Blorgh::ApplicationController</code>. So, after making this change they will have
@@ -1260,9 +1252,9 @@ the <code>Blorgh</code> module for the engine. Add this line to <code>lib/blorgh
 engine:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">mattr_accessor</span> <span class="ss">:author_class</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8cdee1672b0553f98660ace1743e40c0">mattr_accessor :author_class
+<textarea class="clipboard-content" id="clipboard-97a3de958072733979dfe381cf322a79">mattr_accessor :author_class
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8cdee1672b0553f98660ace1743e40c0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-97a3de958072733979dfe381cf322a79">Copiar</button>
 </div>
 <p>This method works like its siblings, <code>attr_accessor</code> and <code>cattr_accessor</code>, but
 provides a setter and getter method on the module with the specified name. To
@@ -1271,16 +1263,16 @@ Change the <code>belongs_to</code> association inside this model
 (<code>app/models/blorgh/article.rb</code>) to this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">belongs_to</span> <span class="ss">:author</span><span class="p">,</span> <span class="ss">class_name: </span><span class="no">Blorgh</span><span class="p">.</span><span class="nf">author_class</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-55e2bf56d22e65187c247d74e78976ef">belongs_to :author, class_name: Blorgh.author_class
+<textarea class="clipboard-content" id="clipboard-4fea5ed0f15dc2f7488a35fa54fc03f6">belongs_to :author, class_name: Blorgh.author_class
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-55e2bf56d22e65187c247d74e78976ef">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4fea5ed0f15dc2f7488a35fa54fc03f6">Copiar</button>
 </div>
 <p>The <code>set_author</code> method in the <code>Blorgh::Article</code> model should also use this class:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">self</span><span class="p">.</span><span class="nf">author</span> <span class="o">=</span> <span class="no">Blorgh</span><span class="p">.</span><span class="nf">author_class</span><span class="p">.</span><span class="nf">constantize</span><span class="p">.</span><span class="nf">find_or_create_by</span><span class="p">(</span><span class="ss">name: </span><span class="n">author_name</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a64f87d8cdc3ae6769298107d47443d9">self.author = Blorgh.author_class.constantize.find_or_create_by(name: author_name)
+<textarea class="clipboard-content" id="clipboard-9cb65178601a129c5d1a09d29027edfc">self.author = Blorgh.author_class.constantize.find_or_create_by(name: author_name)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a64f87d8cdc3ae6769298107d47443d9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9cb65178601a129c5d1a09d29027edfc">Copiar</button>
 </div>
 <p>To save having to call <code>constantize</code> on the <code>author_class</code> result all the time,
 you could instead just override the <code>author_class</code> getter method inside the
@@ -1290,18 +1282,18 @@ saved value before returning the result:</p><div class="code_container">
   <span class="vc">@@author_class</span><span class="p">.</span><span class="nf">constantize</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-babd6deb170e4aec964ea22ee4f2f2bb">def self.author_class
+<textarea class="clipboard-content" id="clipboard-d5f40dc1e6da02e67e64db0035f7a8ba">def self.author_class
   @@author_class.constantize
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-babd6deb170e4aec964ea22ee4f2f2bb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d5f40dc1e6da02e67e64db0035f7a8ba">Copiar</button>
 </div>
 <p>This would then turn the above code for <code>set_author</code> into this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">self</span><span class="p">.</span><span class="nf">author</span> <span class="o">=</span> <span class="no">Blorgh</span><span class="p">.</span><span class="nf">author_class</span><span class="p">.</span><span class="nf">find_or_create_by</span><span class="p">(</span><span class="ss">name: </span><span class="n">author_name</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-659fb12478f2931474bf2bf236062d09">self.author = Blorgh.author_class.find_or_create_by(name: author_name)
+<textarea class="clipboard-content" id="clipboard-3d55b45d98933e01bd31e3c159d746fe">self.author = Blorgh.author_class.find_or_create_by(name: author_name)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-659fb12478f2931474bf2bf236062d09">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3d55b45d98933e01bd31e3c159d746fe">Copiar</button>
 </div>
 <p>Resulting in something a little shorter, and more implicit in its behavior. The
 <code>author_class</code> method should always return a <code>Class</code> object.</p><p>Since we changed the <code>author_class</code> method to return a <code>Class</code> instead of a
@@ -1309,9 +1301,9 @@ end
 model:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">belongs_to</span> <span class="ss">:author</span><span class="p">,</span> <span class="ss">class_name: </span><span class="no">Blorgh</span><span class="p">.</span><span class="nf">author_class</span><span class="p">.</span><span class="nf">to_s</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3bec2408cc7f7b7d1e64d37258f41358">belongs_to :author, class_name: Blorgh.author_class.to_s
+<textarea class="clipboard-content" id="clipboard-19e9fd5357e7d282ae0d45a176d32a89">belongs_to :author, class_name: Blorgh.author_class.to_s
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3bec2408cc7f7b7d1e64d37258f41358">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-19e9fd5357e7d282ae0d45a176d32a89">Copiar</button>
 </div>
 <p>To set this configuration setting within the application, an initializer should
 be used. By using an initializer, the configuration will be set up before the
@@ -1320,9 +1312,9 @@ configuration setting existing.</p><p>Create a new initializer at <code>config/i
 application where the <code>blorgh</code> engine is installed and put this content in it:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Blorgh</span><span class="p">.</span><span class="nf">author_class</span> <span class="o">=</span> <span class="s2">"User"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-aabc46a3ab379b6a8aec0d6061512111">Blorgh.author_class = "User"
+<textarea class="clipboard-content" id="clipboard-daa7f582143f3450cb0c1b1547c6b8bc">Blorgh.author_class = "User"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-aabc46a3ab379b6a8aec0d6061512111">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-daa7f582143f3450cb0c1b1547c6b8bc">Copiar</button>
 </div>
 <div class="warning"><p>It's very important here to use the <code>String</code> version of the class,
 rather than the class itself. If you were to use the class, Rails would attempt
@@ -1367,7 +1359,7 @@ typical <code>GET</code> to a controller in a controller's functional test like 
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf381df6ee5cda9f91e2b0f9f3d434b7">module Blorgh
+<textarea class="clipboard-content" id="clipboard-bd7742b674987b03d7a42c3bc0fd00cd">module Blorgh
   class FooControllerTest &lt; ActionDispatch::IntegrationTest
     include Engine.routes.url_helpers
 
@@ -1378,7 +1370,7 @@ typical <code>GET</code> to a controller in a controller's functional test like 
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf381df6ee5cda9f91e2b0f9f3d434b7">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bd7742b674987b03d7a42c3bc0fd00cd">Copiar</button>
 </div>
 <p>It may not function correctly. This is because the application doesn't know how
 to route these requests to the engine unless you explicitly tell it <strong>how</strong>. To
@@ -1399,7 +1391,7 @@ in your setup code:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1b22b6f407547f282dfb79c427a13747">module Blorgh
+<textarea class="clipboard-content" id="clipboard-ecf6465a2b8e7654fd59b91f912d85a1">module Blorgh
   class FooControllerTest &lt; ActionDispatch::IntegrationTest
     include Engine.routes.url_helpers
 
@@ -1414,7 +1406,7 @@ in your setup code:</p><div class="code_container">
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1b22b6f407547f282dfb79c427a13747">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ecf6465a2b8e7654fd59b91f912d85a1">Copiar</button>
 </div>
 <p>This tells the application that you still want to perform a <code>GET</code> request to the
 <code>index</code> action of this controller, but you want to use the engine's route to get
@@ -1436,7 +1428,7 @@ main Rails application.</p><h4 id="overriding-models-and-controllers"><a class="
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c836e2831455eacfe0d195e10de6113e"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-42794cc48f22ca1724a85ad56d75325a"># config/application.rb
 module MyApp
   class Application &lt; Rails::Application
     # ...
@@ -1451,7 +1443,7 @@ module MyApp
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c836e2831455eacfe0d195e10de6113e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-42794cc48f22ca1724a85ad56d75325a">Copiar</button>
 </div>
 <p>and in <code>classic</code> mode this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
@@ -1467,7 +1459,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a41620f4af226623438c19b48942f4de"># config/application.rb
+<textarea class="clipboard-content" id="clipboard-cabe3b57f1962998d1a40bcdfb92fc98"># config/application.rb
 module MyApp
   class Application &lt; Rails::Application
     # ...
@@ -1480,7 +1472,7 @@ module MyApp
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a41620f4af226623438c19b48942f4de">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cabe3b57f1962998d1a40bcdfb92fc98">Copiar</button>
 </div>
 <h5 id="reopening-existing-classes-using-class-eval"><a class="anchorlink" href="#reopening-existing-classes-using-class-eval">6.1.1 Reopening existing classes using <code>class_eval</code></a></h5><p>For example, in order to override the engine model</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Blorgh/app/models/blorgh/article.rb</span>
@@ -1494,7 +1486,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a112dca8637c249afd31dfcc103ac939"># Blorgh/app/models/blorgh/article.rb
+<textarea class="clipboard-content" id="clipboard-afef89bec588df8a3dc41eccfbb835ec"># Blorgh/app/models/blorgh/article.rb
 module Blorgh
   class Article &lt; ApplicationRecord
     has_many :comments
@@ -1505,7 +1497,7 @@ module Blorgh
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a112dca8637c249afd31dfcc103ac939">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-afef89bec588df8a3dc41eccfbb835ec">Copiar</button>
 </div>
 <p>you just create a file that <em>reopens</em> that class:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># MyApp/app/overrides/models/blorgh/article_override.rb</span>
@@ -1519,7 +1511,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b6752127cefc338f824a0e862086b264"># MyApp/app/overrides/models/blorgh/article_override.rb
+<textarea class="clipboard-content" id="clipboard-fa0659f518ea7d60f01936a4ce13627e"># MyApp/app/overrides/models/blorgh/article_override.rb
 Blorgh::Article.class_eval do
   def time_since_created
     Time.current - created_at
@@ -1530,10 +1522,10 @@ Blorgh::Article.class_eval do
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b6752127cefc338f824a0e862086b264">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fa0659f518ea7d60f01936a4ce13627e">Copiar</button>
 </div>
 <p>It is very important that the override <em>reopens</em> the class or module. Using the <code>class</code> or <code>module</code> keywords would define them if they were not already in memory, which would be incorrect because the definition lives in the engine. Using <code>class_eval</code> as shown above ensures you are reopening.</p><h5 id="reopening-existing-classes-using-activesupport-concern"><a class="anchorlink" href="#reopening-existing-classes-using-activesupport-concern">6.1.2 Reopening existing classes using ActiveSupport::Concern</a></h5><p>Using <code>Class#class_eval</code> is great for simple adjustments, but for more complex
-class modifications, you might want to consider using <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Concern.html"><code>ActiveSupport::Concern</code></a>.
+class modifications, you might want to consider using <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveSupport/Concern.html"><code>ActiveSupport::Concern</code></a>.
 ActiveSupport::Concern manages load order of interlinked dependent modules and
 classes at run time allowing you to significantly modularize your code.</p><p><strong>Adding</strong> <code>Article#time_since_created</code> and <strong>Overriding</strong> <code>Article#summary</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># MyApp/app/models/blorgh/article.rb</span>
@@ -1550,7 +1542,7 @@ classes at run time allowing you to significantly modularize your code.</p><p><s
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0dd1a21719a072a1ad30ef9ad5621b4c"># MyApp/app/models/blorgh/article.rb
+<textarea class="clipboard-content" id="clipboard-8444dd8a94ef8e96ca4fbb813b39037e"># MyApp/app/models/blorgh/article.rb
 
 class Blorgh::Article &lt; ApplicationRecord
   include Blorgh::Concerns::Models::Article
@@ -1564,7 +1556,7 @@ class Blorgh::Article &lt; ApplicationRecord
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0dd1a21719a072a1ad30ef9ad5621b4c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8444dd8a94ef8e96ca4fbb813b39037e">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Blorgh/app/models/blorgh/article.rb</span>
@@ -1574,14 +1566,14 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-27581db7d963774ae401593b78334eed"># Blorgh/app/models/blorgh/article.rb
+<textarea class="clipboard-content" id="clipboard-bd098ddfb47e2969bec0363ff82df557"># Blorgh/app/models/blorgh/article.rb
 module Blorgh
   class Article &lt; ApplicationRecord
     include Blorgh::Concerns::Models::Article
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-27581db7d963774ae401593b78334eed">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bd098ddfb47e2969bec0363ff82df557">Copiar</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Blorgh/lib/concerns/models/article.rb</span>
@@ -1615,7 +1607,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1ddcffcecf7c9177079ccec9710af72e"># Blorgh/lib/concerns/models/article.rb
+<textarea class="clipboard-content" id="clipboard-e8155df34917ef0bcc76957f9dd49b7a"># Blorgh/lib/concerns/models/article.rb
 
 module Blorgh::Concerns::Models::Article
   extend ActiveSupport::Concern
@@ -1646,9 +1638,10 @@ module Blorgh::Concerns::Models::Article
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1ddcffcecf7c9177079ccec9710af72e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e8155df34917ef0bcc76957f9dd49b7a">Copiar</button>
 </div>
-<h4 id="overriding-views"><a class="anchorlink" href="#overriding-views">6.2 Overriding Views</a></h4><p>When Rails looks for a view to render, it will first look in the <code>app/views</code>
+<h4 id="autoloading-and-engines"><a class="anchorlink" href="#autoloading-and-engines">6.2 Autoloading and Engines</a></h4><p>Please check the <a href="autoloading_and_reloading_constants.html#autoloading-and-engines">Autoloading and Reloading Constants</a>
+guide for more information about autoloading and engines.</p><h4 id="overriding-views"><a class="anchorlink" href="#overriding-views">6.3 Overriding Views</a></h4><p>When Rails looks for a view to render, it will first look in the <code>app/views</code>
 directory of the application. If it cannot find the view there, it will check in
 the <code>app/views</code> directories of all engines that have this directory.</p><p>When the application is asked to render the view for <code>Blorgh::ArticlesController</code>'s
 index action, it will first look for the path
@@ -1666,7 +1659,7 @@ and put this content in it:</p><div class="code_container">
   <span class="nt">&lt;hr&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f54043b2dd785dc8bb0134c491cc80c9">&lt;h1&gt;Articles&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-96715bbec20117a280dfffcff9e29038">&lt;h1&gt;Articles&lt;/h1&gt;
 &lt;%= link_to "New Article", new_article_path %&gt;
 &lt;% @articles.each do |article| %&gt;
   &lt;h2&gt;&lt;%= article.title %&gt;&lt;/h2&gt;
@@ -1675,9 +1668,9 @@ and put this content in it:</p><div class="code_container">
   &lt;hr&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f54043b2dd785dc8bb0134c491cc80c9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-96715bbec20117a280dfffcff9e29038">Copiar</button>
 </div>
-<h4 id="routes"><a class="anchorlink" href="#routes">6.3 Routes</a></h4><p>Routes inside an engine are isolated from the application by default. This is
+<h4 id="routes"><a class="anchorlink" href="#routes">6.4 Routes</a></h4><p>Routes inside an engine are isolated from the application by default. This is
 done by the <code>isolate_namespace</code> call inside the <code>Engine</code> class. This essentially
 means that the application and its engines can have identically named routes and
 they will not clash.</p><p>Routes inside an engine are drawn on the <code>Engine</code> class within
@@ -1686,11 +1679,11 @@ they will not clash.</p><p>Routes inside an engine are drawn on the <code>Engine
   <span class="n">resources</span> <span class="ss">:articles</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-53afd1e5fcf16e215d9331ec4011f026">Blorgh::Engine.routes.draw do
+<textarea class="clipboard-content" id="clipboard-0eb9d7e5a933c102521a5ab203787b79">Blorgh::Engine.routes.draw do
   resources :articles
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-53afd1e5fcf16e215d9331ec4011f026">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0eb9d7e5a933c102521a5ab203787b79">Copiar</button>
 </div>
 <p>By having isolated routes such as this, if you wish to link to an area of an
 engine from within an application, you will need to use the engine's routing
@@ -1701,26 +1694,26 @@ if that template was rendered from the application, or the engine's <code>articl
 if it was rendered from the engine:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Blog articles"</span><span class="p">,</span> <span class="n">articles_path</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-16625e8e0eb19951a71dfddb4b2c942f">&lt;%= link_to "Blog articles", articles_path %&gt;
+<textarea class="clipboard-content" id="clipboard-974f6b54291c551b1c7f178659b72bdf">&lt;%= link_to "Blog articles", articles_path %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-16625e8e0eb19951a71dfddb4b2c942f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-974f6b54291c551b1c7f178659b72bdf">Copiar</button>
 </div>
 <p>To make this route always use the engine's <code>articles_path</code> routing helper method,
 we must call the method on the routing proxy method that shares the same name as
 the engine.</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Blog articles"</span><span class="p">,</span> <span class="n">blorgh</span><span class="p">.</span><span class="nf">articles_path</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ed9968ed3c7d8189617b82bbb50705b6">&lt;%= link_to "Blog articles", blorgh.articles_path %&gt;
+<textarea class="clipboard-content" id="clipboard-8810876d7bd29bedad548f10ac15a9f0">&lt;%= link_to "Blog articles", blorgh.articles_path %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ed9968ed3c7d8189617b82bbb50705b6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8810876d7bd29bedad548f10ac15a9f0">Copiar</button>
 </div>
 <p>If you wish to reference the application inside the engine in a similar way, use
 the <code>main_app</code> helper:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Home"</span><span class="p">,</span> <span class="n">main_app</span><span class="p">.</span><span class="nf">root_path</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2b056c4d0f674fd7dfd178821b2fff65">&lt;%= link_to "Home", main_app.root_path %&gt;
+<textarea class="clipboard-content" id="clipboard-b651240a4718378aa3208170abd082fc">&lt;%= link_to "Home", main_app.root_path %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2b056c4d0f674fd7dfd178821b2fff65">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b651240a4718378aa3208170abd082fc">Copiar</button>
 </div>
 <p>If you were to use this inside an engine, it would <strong>always</strong> go to the
 application's root. If you were to leave off the <code>main_app</code> "routing proxy"
@@ -1729,7 +1722,7 @@ depending on where it was called from.</p><p>If a template rendered from within 
 application's routing helper methods, it may result in an undefined method call.
 If you encounter such an issue, ensure that you're not attempting to call the
 application's routing methods without the <code>main_app</code> prefix from within the
-engine.</p><h4 id="assets"><a class="anchorlink" href="#assets">6.4 Assets</a></h4><p>Assets within an engine work in an identical way to a full application. Because
+engine.</p><h4 id="assets"><a class="anchorlink" href="#assets">6.5 Assets</a></h4><p>Assets within an engine work in an identical way to a full application. Because
 the engine class inherits from <code>Rails::Engine</code>, the application will know to
 look up assets in the engine's <code>app/assets</code> and <code>lib/assets</code> directories.</p><p>Like all of the other components of an engine, the assets should be namespaced.
 This means that if you have an asset called <code>style.css</code>, it should be placed at
@@ -1743,9 +1736,9 @@ application, just use <code>stylesheet_link_tag</code> and reference the asset a
 were inside the engine:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span> <span class="s2">"blorgh/style.css"</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-34eb2832e3d02d9eba1e3d33aae29982">&lt;%= stylesheet_link_tag "blorgh/style.css" %&gt;
+<textarea class="clipboard-content" id="clipboard-c8fc22edc518a5291f89293523c6683d">&lt;%= stylesheet_link_tag "blorgh/style.css" %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-34eb2832e3d02d9eba1e3d33aae29982">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c8fc22edc518a5291f89293523c6683d">Copiar</button>
 </div>
 <p>You can also specify these assets as dependencies of other assets using Asset
 Pipeline require statements in processed files:</p><div class="code_container">
@@ -1753,14 +1746,14 @@ Pipeline require statements in processed files:</p><div class="code_container">
  *= require blorgh/style
  */</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2e79f8fc5d3308dbce4225055f20d3ff">/*
+<textarea class="clipboard-content" id="clipboard-c527c236eb866d273da20a69c1b9e3b0">/*
  *= require blorgh/style
  */
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2e79f8fc5d3308dbce4225055f20d3ff">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c527c236eb866d273da20a69c1b9e3b0">Copiar</button>
 </div>
 <div class="info"><p>Remember that in order to use languages like Sass or CoffeeScript, you
-should add the relevant library to your engine's <code>.gemspec</code>.</p></div><h4 id="separate-assets-and-precompiling"><a class="anchorlink" href="#separate-assets-and-precompiling">6.5 Separate Assets and Precompiling</a></h4><p>There are some situations where your engine's assets are not required by the
+should add the relevant library to your engine's <code>.gemspec</code>.</p></div><h4 id="separate-assets-and-precompiling"><a class="anchorlink" href="#separate-assets-and-precompiling">6.6 Separate Assets and Precompiling</a></h4><p>There are some situations where your engine's assets are not required by the
 host application. For example, say that you've created an admin functionality
 that only exists for your engine. In this case, the host application doesn't
 need to require <code>admin.css</code> or <code>admin.js</code>. Only the gem's admin layout needs
@@ -1772,13 +1765,13 @@ your engine assets when <code>bin/rails assets:precompile</code> is triggered.</
   <span class="n">app</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">precompile</span> <span class="o">+=</span> <span class="sx">%w( admin.js admin.css )</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6dbfbb0a7ee70b3f7dcb1c53f8c4cf13">initializer "blorgh.assets.precompile" do |app|
+<textarea class="clipboard-content" id="clipboard-6d05b36668fcdf6b0b4898ca8f8cbcec">initializer "blorgh.assets.precompile" do |app|
   app.config.assets.precompile += %w( admin.js admin.css )
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6dbfbb0a7ee70b3f7dcb1c53f8c4cf13">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6d05b36668fcdf6b0b4898ca8f8cbcec">Copiar</button>
 </div>
-<p>For more information, read the <a href="asset_pipeline.html">Asset Pipeline guide</a>.</p><h4 id="other-gem-dependencies"><a class="anchorlink" href="#other-gem-dependencies">6.6 Other Gem Dependencies</a></h4><p>Gem dependencies inside an engine should be specified inside the <code>.gemspec</code> file
+<p>For more information, read the <a href="asset_pipeline.html">Asset Pipeline guide</a>.</p><h4 id="other-gem-dependencies"><a class="anchorlink" href="#other-gem-dependencies">6.7 Other Gem Dependencies</a></h4><p>Gem dependencies inside an engine should be specified inside the <code>.gemspec</code> file
 at the root of the engine. The reason is that the engine may be installed as a
 gem. If dependencies were to be specified inside the <code>Gemfile</code>, these would not
 be recognized by a traditional gem install and so they would not be installed,
@@ -1787,17 +1780,17 @@ traditional <code>gem install</code>, specify it inside the <code>Gem::Specifica
 inside the <code>.gemspec</code> file in the engine:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">s</span><span class="p">.</span><span class="nf">add_dependency</span> <span class="s2">"moo"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-75b9f025a6ac77188dfcc332b53f69bc">s.add_dependency "moo"
+<textarea class="clipboard-content" id="clipboard-e411bcd5fa82d78bb62fba59296a8e40">s.add_dependency "moo"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-75b9f025a6ac77188dfcc332b53f69bc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e411bcd5fa82d78bb62fba59296a8e40">Copiar</button>
 </div>
 <p>To specify a dependency that should only be installed as a development
 dependency of the application, specify it like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">s</span><span class="p">.</span><span class="nf">add_development_dependency</span> <span class="s2">"moo"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-28cacad65544984ed734f2798ce169a5">s.add_development_dependency "moo"
+<textarea class="clipboard-content" id="clipboard-59c878f0d3d643ab39bfffb508e0635f">s.add_development_dependency "moo"
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-28cacad65544984ed734f2798ce169a5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-59c878f0d3d643ab39bfffb508e0635f">Copiar</button>
 </div>
 <p>Both kinds of dependencies will be installed when <code>bundle install</code> is run inside
 of the application. The development dependencies for the gem will only be used
@@ -1812,7 +1805,7 @@ example:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3e150cb1460baf9bc85bea00ef41dcb3">require "other_engine/engine"
+<textarea class="clipboard-content" id="clipboard-5d662e0fee3beb88d78d4f9cfcf29ad2">require "other_engine/engine"
 require "yet_another_engine/engine"
 
 module MyEngine
@@ -1820,32 +1813,32 @@ module MyEngine
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3e150cb1460baf9bc85bea00ef41dcb3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5d662e0fee3beb88d78d4f9cfcf29ad2">Copiar</button>
 </div>
 <h3 id="load-and-configuration-hooks"><a class="anchorlink" href="#load-and-configuration-hooks">7 Load and Configuration Hooks</a></h3><p>Rails code can often be referenced on load of an application. Rails is responsible for the load order of these frameworks, so when you load frameworks, such as <code>ActiveRecord::Base</code>, prematurely you are violating an implicit contract your application has with Rails. Moreover, by loading code such as <code>ActiveRecord::Base</code> on boot of your application you are loading entire frameworks which may slow down your boot time and could cause conflicts with load order and boot of your application.</p><p>Load and configuration hooks are the API that allow you to hook into this initialization process without violating the load contract with Rails. This will also mitigate boot performance degradation and avoid conflicts.</p><h4 id="avoid-loading-rails-frameworks"><a class="anchorlink" href="#avoid-loading-rails-frameworks">7.1 Avoid loading Rails Frameworks</a></h4><p>Since Ruby is a dynamic language, some code will cause different Rails frameworks to load. Take this snippet for instance:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">include</span><span class="p">(</span><span class="no">MyActiveRecordHelper</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e8cecebe64268e29bddd4ffaaaa6e0f9">ActiveRecord::Base.include(MyActiveRecordHelper)
+<textarea class="clipboard-content" id="clipboard-c6b1c07ea1b9308ab4eaf96bcac00a3a">ActiveRecord::Base.include(MyActiveRecordHelper)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e8cecebe64268e29bddd4ffaaaa6e0f9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c6b1c07ea1b9308ab4eaf96bcac00a3a">Copiar</button>
 </div>
 <p>This snippet means that when this file is loaded, it will encounter <code>ActiveRecord::Base</code>. This encounter causes Ruby to look for the definition of that constant and will require it. This causes the entire Active Record framework to be loaded on boot.</p><p><code>ActiveSupport.on_load</code> is a mechanism that can be used to defer the loading of code until it is actually needed. The snippet above can be changed to:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="p">.</span><span class="nf">on_load</span><span class="p">(</span><span class="ss">:active_record</span><span class="p">)</span> <span class="k">do</span>
   <span class="kp">include</span> <span class="no">MyActiveRecordHelper</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b3f5e700a9eb63ec3e7f46db0471876b">ActiveSupport.on_load(:active_record) do
+<textarea class="clipboard-content" id="clipboard-391f856026906aa8a0a961c0572f6904">ActiveSupport.on_load(:active_record) do
   include MyActiveRecordHelper
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b3f5e700a9eb63ec3e7f46db0471876b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-391f856026906aa8a0a961c0572f6904">Copiar</button>
 </div>
 <p>This new snippet will only include <code>MyActiveRecordHelper</code> when <code>ActiveRecord::Base</code> is loaded.</p><h4 id="when-are-hooks-called-questionmark"><a class="anchorlink" href="#when-are-hooks-called-questionmark">7.2 When are Hooks called?</a></h4><p>In the Rails framework these hooks are called when a specific library is loaded. For example, when <code>ActionController::Base</code> is loaded, the <code>:action_controller_base</code> hook is called. This means that all <code>ActiveSupport.on_load</code> calls with <code>:action_controller_base</code> hooks will be called in the context of <code>ActionController::Base</code> (that means <code>self</code> will be an <code>ActionController::Base</code>).</p><h4 id="modifying-code-to-use-load-hooks"><a class="anchorlink" href="#modifying-code-to-use-load-hooks">7.3 Modifying Code to use Load Hooks</a></h4><p>Modifying code is generally straightforward. If you have a line of code that refers to a Rails framework such as <code>ActiveRecord::Base</code> you can wrap that code in a load hook.</p><p><strong>Modifying calls to <code>include</code></strong></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">include</span><span class="p">(</span><span class="no">MyActiveRecordHelper</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-58b4b8579e7f8c8bd11b9d9ea15f8571">ActiveRecord::Base.include(MyActiveRecordHelper)
+<textarea class="clipboard-content" id="clipboard-f7036e6ff92cf2120d5bc186a185f639">ActiveRecord::Base.include(MyActiveRecordHelper)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-58b4b8579e7f8c8bd11b9d9ea15f8571">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f7036e6ff92cf2120d5bc186a185f639">Copiar</button>
 </div>
 <p>becomes</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="p">.</span><span class="nf">on_load</span><span class="p">(</span><span class="ss">:active_record</span><span class="p">)</span> <span class="k">do</span>
@@ -1854,20 +1847,20 @@ end
   <span class="kp">include</span> <span class="no">MyActiveRecordHelper</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8807924b1a920a80123407f75f7971c9">ActiveSupport.on_load(:active_record) do
+<textarea class="clipboard-content" id="clipboard-93116e573e3ce639808ac9e8c06109d7">ActiveSupport.on_load(:active_record) do
   # self refers to ActiveRecord::Base here,
   # so we can call .include
   include MyActiveRecordHelper
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8807924b1a920a80123407f75f7971c9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-93116e573e3ce639808ac9e8c06109d7">Copiar</button>
 </div>
 <p><strong>Modifying calls to <code>prepend</code></strong></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">prepend</span><span class="p">(</span><span class="no">MyActionControllerHelper</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ef14c8b9da6ffbf792d477c9e23bc231">ActionController::Base.prepend(MyActionControllerHelper)
+<textarea class="clipboard-content" id="clipboard-d753d611e05e72e08c1534e3476250cc">ActionController::Base.prepend(MyActionControllerHelper)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ef14c8b9da6ffbf792d477c9e23bc231">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d753d611e05e72e08c1534e3476250cc">Copiar</button>
 </div>
 <p>becomes</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="p">.</span><span class="nf">on_load</span><span class="p">(</span><span class="ss">:action_controller_base</span><span class="p">)</span> <span class="k">do</span>
@@ -1876,20 +1869,20 @@ end
   <span class="n">prepend</span> <span class="no">MyActionControllerHelper</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1c1db44268f4477fd8c7c7660eb95643">ActiveSupport.on_load(:action_controller_base) do
+<textarea class="clipboard-content" id="clipboard-a9ef468a4825163f0c5a3bd8300b1d2e">ActiveSupport.on_load(:action_controller_base) do
   # self refers to ActionController::Base here,
   # so we can call .prepend
   prepend MyActionControllerHelper
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1c1db44268f4477fd8c7c7660eb95643">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a9ef468a4825163f0c5a3bd8300b1d2e">Copiar</button>
 </div>
 <p><strong>Modifying calls to class methods</strong></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">include_root_in_json</span> <span class="o">=</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-918b1b361089479e782341ba736cd90c">ActiveRecord::Base.include_root_in_json = true
+<textarea class="clipboard-content" id="clipboard-3b21eba77ba8fcb7be9eadeee111cbec">ActiveRecord::Base.include_root_in_json = true
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-918b1b361089479e782341ba736cd90c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3b21eba77ba8fcb7be9eadeee111cbec">Copiar</button>
 </div>
 <p>becomes</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="p">.</span><span class="nf">on_load</span><span class="p">(</span><span class="ss">:active_record</span><span class="p">)</span> <span class="k">do</span>
@@ -1897,12 +1890,12 @@ end
   <span class="nb">self</span><span class="p">.</span><span class="nf">include_root_in_json</span> <span class="o">=</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-73c9e4dc026c3bb6c85607537ed79f47">ActiveSupport.on_load(:active_record) do
+<textarea class="clipboard-content" id="clipboard-793ad19b721a9d827e46a6025f1524ad">ActiveSupport.on_load(:active_record) do
   # self refers to ActiveRecord::Base here
   self.include_root_in_json = true
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-73c9e4dc026c3bb6c85607537ed79f47">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-793ad19b721a9d827e46a6025f1524ad">Copiar</button>
 </div>
 <h4 id="available-load-hooks"><a class="anchorlink" href="#available-load-hooks">7.4 Available Load Hooks</a></h4><p>These are the load hooks you can use in your own code. To hook into the initialization process of one of the following classes use the available hook.</p>
 <table>
@@ -2026,6 +2019,10 @@ end
 <td><code>active_storage_attachment</code></td>
 </tr>
 <tr>
+<td><code>ActiveStorage::VariantRecord</code></td>
+<td><code>active_storage_variant_record</code></td>
+</tr>
+<tr>
 <td><code>ActiveStorage::Blob</code></td>
 <td><code>active_storage_blob</code></td>
 </tr>
@@ -2079,7 +2076,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-761dc57b3b648c5acaf4f56d971956ec">module Blorgh
+<textarea class="clipboard-content" id="clipboard-3c35cfc32380c28999a24ebcf721624b">module Blorgh
   class Engine &lt; ::Rails::Engine
     config.before_configuration do
       puts 'I am called before any initializers'
@@ -2087,7 +2084,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-761dc57b3b648c5acaf4f56d971956ec">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3c35cfc32380c28999a24ebcf721624b">Copiar</button>
 </div>
 
 

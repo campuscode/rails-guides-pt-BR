@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -335,14 +341,14 @@ should wrap it with a call to the executor:</p><div class="code_container">
   <span class="c1"># call application code here</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a23a72048345a3f927a6ab6ec1a14bfa">Rails.application.executor.wrap do
+<textarea class="clipboard-content" id="clipboard-0af5eac13a1c2febd9d645cbbba56807">Rails.application.executor.wrap do
   # call application code here
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a23a72048345a3f927a6ab6ec1a14bfa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0af5eac13a1c2febd9d645cbbba56807">Copiar</button>
 </div>
 <div class="info"><p>If you repeatedly invoke application code from a long-running process, you
-may want to wrap using the Reloader instead.</p></div><p>Each thread should be wrapped before it runs application code, so if your
+may want to wrap using the <a href="#reloader">Reloader</a> instead.</p></div><p>Each thread should be wrapped before it runs application code, so if your
 application manually delegates work to other threads, such as via <code>Thread.new</code>
 or Concurrent Ruby features that use thread pools, you should immediately wrap
 the block:</p><div class="code_container">
@@ -352,13 +358,13 @@ the block:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a007269274d00f2e8ad51ded0b12be29">Thread.new do
+<textarea class="clipboard-content" id="clipboard-1f68c557ed90a7c2df5661f64465757d">Thread.new do
   Rails.application.executor.wrap do
     # your code here
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a007269274d00f2e8ad51ded0b12be29">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1f68c557ed90a7c2df5661f64465757d">Copiar</button>
 </div>
 <div class="note"><p>Concurrent Ruby uses a <code>ThreadPoolExecutor</code>, which it sometimes configures
 with an <code>executor</code> option. Despite the name, it is unrelated.</p></div><p>The Executor is safely re-entrant; if it is already active on the current
@@ -372,18 +378,19 @@ example, the Rack API makes this problematic), you can also use the <code>run!</
   <span class="n">execution_context</span><span class="p">.</span><span class="nf">complete!</span> <span class="k">if</span> <span class="n">execution_context</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ced5e8f45748dfb6cf191817460a5370">Thread.new do
+<textarea class="clipboard-content" id="clipboard-1b8c5aaa77ccdab11b8c273940a6377e">Thread.new do
   execution_context = Rails.application.executor.run!
   # your code here
 ensure
   execution_context.complete! if execution_context
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ced5e8f45748dfb6cf191817460a5370">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1b8c5aaa77ccdab11b8c273940a6377e">Copiar</button>
 </div>
-<h4 id="executor-concurrency"><a class="anchorlink" href="#executor-concurrency">2.3 Concurrency</a></h4><p>The Executor will put the current thread into <code>running</code> mode in the Load
-Interlock. This operation will block temporarily if another thread is currently
-either autoloading a constant or unloading/reloading the application.</p><h3 id="reloader"><a class="anchorlink" href="#reloader">3 Reloader</a></h3><p>Like the Executor, the Reloader also wraps application code. If the Executor is
+<h4 id="executor-concurrency"><a class="anchorlink" href="#executor-concurrency">2.3 Concurrency</a></h4><p>The Executor will put the current thread into <code>running</code> mode in the <a href="#load-interlock">Load
+Interlock</a>. This operation will block temporarily if another
+thread is currently either autoloading a constant or unloading/reloading
+the application.</p><h3 id="reloader"><a class="anchorlink" href="#reloader">3 Reloader</a></h3><p>Like the Executor, the Reloader also wraps application code. If the Executor is
 not already active on the current thread, the Reloader will invoke it for you,
 so you only need to call one. This also guarantees that everything the Reloader
 does, including all its callback invocations, occurs wrapped inside the
@@ -392,11 +399,11 @@ Executor.</p><div class="code_container">
   <span class="c1"># call application code here</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b32d0d481f5251bb18f0af318c8886dc">Rails.application.reloader.wrap do
+<textarea class="clipboard-content" id="clipboard-ffc3d903d75fe66586ac806438702568">Rails.application.reloader.wrap do
   # call application code here
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b32d0d481f5251bb18f0af318c8886dc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ffc3d903d75fe66586ac806438702568">Copiar</button>
 </div>
 <p>The Reloader is only suitable where a long-running framework-level process
 repeatedly calls into application code, such as for a web server or job queue.
@@ -471,7 +478,7 @@ deadlock.</p><p>For example, assuming <code>User</code> is not yet loaded, the f
   <span class="n">th</span><span class="p">.</span><span class="nf">join</span> <span class="c1"># outer thread waits here, holding 'running' lock</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d434f114f5c2ec783eecc5034cdd0d40">Rails.application.executor.wrap do
+<textarea class="clipboard-content" id="clipboard-e1f4b95858dce912ebec7920add97f07">Rails.application.executor.wrap do
   th = Thread.new do
     Rails.application.executor.wrap do
       User # inner thread waits here; it cannot load
@@ -482,7 +489,7 @@ deadlock.</p><p>For example, assuming <code>User</code> is not yet loaded, the f
   th.join # outer thread waits here, holding 'running' lock
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d434f114f5c2ec783eecc5034cdd0d40">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e1f4b95858dce912ebec7920add97f07">Copiar</button>
 </div>
 <p>To prevent this deadlock, the outer thread can <code>permit_concurrent_loads</code>. By
 calling this method, the thread guarantees it will not dereference any
@@ -501,7 +508,7 @@ that promise is to put it as close as possible to the blocking call:</p><div cla
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-10feb7ae843499eb857f859a510c3798">Rails.application.executor.wrap do
+<textarea class="clipboard-content" id="clipboard-dbb0dcb89e367d17152cfd2a70dd73f9">Rails.application.executor.wrap do
   th = Thread.new do
     Rails.application.executor.wrap do
       User # inner thread can acquire the 'load' lock,
@@ -514,12 +521,12 @@ that promise is to put it as close as possible to the blocking call:</p><div cla
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-10feb7ae843499eb857f859a510c3798">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dbb0dcb89e367d17152cfd2a70dd73f9">Copiar</button>
 </div>
 <p>Another example, using Concurrent Ruby:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
   <span class="n">futures</span> <span class="o">=</span> <span class="mi">3</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">collect</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
-    <span class="no">Concurrent</span><span class="o">::</span><span class="no">Future</span><span class="p">.</span><span class="nf">execute</span> <span class="k">do</span>
+    <span class="no">Concurrent</span><span class="o">::</span><span class="no">Promises</span><span class="p">.</span><span class="nf">future</span> <span class="k">do</span>
       <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
         <span class="c1"># do work here</span>
       <span class="k">end</span>
@@ -531,9 +538,9 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-365e7e379388b97c11a9de4eaf0964da">Rails.application.executor.wrap do
+<textarea class="clipboard-content" id="clipboard-b59393ba26aacbc714715c8904fc775e">Rails.application.executor.wrap do
   futures = 3.times.collect do |i|
-    Concurrent::Future.execute do
+    Concurrent::Promises.future do
       Rails.application.executor.wrap do
         # do work here
       end
@@ -545,7 +552,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-365e7e379388b97c11a9de4eaf0964da">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b59393ba26aacbc714715c8904fc775e">Copiar</button>
 </div>
 <h4 id="actiondispatch-debuglocks"><a class="anchorlink" href="#actiondispatch-debuglocks">5.2 ActionDispatch::DebugLocks</a></h4><p>If your application is deadlocking and you think the Load Interlock may be
 involved, you can temporarily add the ActionDispatch::DebugLocks middleware to
@@ -553,10 +560,10 @@ involved, you can temporarily add the ActionDispatch::DebugLocks middleware to
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">insert_before</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Sendfile</span><span class="p">,</span>
                                   <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">DebugLocks</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2db366d819889bd75b87ce66a228accc">config.middleware.insert_before Rack::Sendfile,
+<textarea class="clipboard-content" id="clipboard-6d2249abfce6c2c2e4f7da1c1ad32d6d">config.middleware.insert_before Rack::Sendfile,
                                   ActionDispatch::DebugLocks
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2db366d819889bd75b87ce66a228accc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6d2249abfce6c2c2e4f7da1c1ad32d6d">Copiar</button>
 </div>
 <p>If you then restart the application and re-trigger the deadlock condition,
 <code>/rails/locks</code> will show a summary of all threads currently known to the

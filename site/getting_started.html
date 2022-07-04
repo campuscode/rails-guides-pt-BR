@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
   <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v6.1.4</div>
+    <div id="version-badge">v7.0.0</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -93,6 +93,7 @@
                   <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
                   <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
                   <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Indo mais fundo</dt>
@@ -105,13 +106,14 @@
                   <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
                   <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
                   <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</a></dd>
-                  <dd><a href="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
                   <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
                   <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
                   <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
                   <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
                   <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
                 </div>
                 <div class="guides-section">
                   <dt>Estendendo o Rails</dt>
@@ -134,6 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -190,6 +193,7 @@
                   <option value="active_job_basics.html">Active Job Basics</option>
                   <option value="active_storage_overview.html">Active Storage Overview</option>
                   <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
               </optgroup>
               <optgroup label="Indo mais fundo">
                   <option value="i18n.html">Rails Internationalization (I18n) API</option>
@@ -201,13 +205,14 @@
                   <option value="asset_pipeline.html">The Asset Pipeline</option>
                   <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
                   <option value="initialization.html">The Rails Initialization Process</option>
-                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants (Zeitwerk Mode)</option>
-                  <option value="autoloading_and_reloading_constants_classic_mode.html">Autoloading and Reloading Constants (Classic Mode)</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
                   <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
                   <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
                   <option value="api_app.html">Using Rails for API-only Applications</option>
                   <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
                   <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
               </optgroup>
               <optgroup label="Estendendo o Rails">
                   <option value="plugins.html">The Basics of Creating Rails Plugins</option>
@@ -226,6 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -281,6 +287,7 @@ aplicação com um banco de dados.</li>
 <li><a href="#configuracao-da-pagina-inicial-da-aplicacao">Configuração da Página Inicial da Aplicação</a></li>
 </ul>
 </li>
+<li><a href="#auto-carregamento">Auto carregamento</a></li>
 <li>
 <a href="#mvc-e-voce">MVC e Você</a>
 
@@ -348,14 +355,14 @@ aplicação com um banco de dados.</li>
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="premissas-do-guia"><a class="anchorlink" href="#premissas-do-guia">1 Premissas do Guia</a></h3><p>Este guia é projetado para iniciantes que desejam começar uma aplicação Rails do
+        <h3 id="premissas-do-guia"><a class="anchorlink" href="#premissas-do-guia">1 Premissas do Guia</a></h3><p>Este guia é projetado para iniciantes que desejam criar uma aplicação Rails do
 zero. Ele não assume que você tenha nenhuma experiência anterior com Rails.</p><p>O Rails é um <em>framework</em> para aplicações web que é executado em cima da linguagem
 de programação Ruby. Se você não tem nenhuma experiência com Ruby, você vai
 achar a curva de aprendizado bastante íngrime começando direto com Rails.
 Existem diversas listas organizadas de materiais online para aprender Ruby:</p>
 <ul>
 <li><a href="https://www.ruby-lang.org/en/documentation/">Site Oficial da Linguagem de Programação Ruby (Em inglês)</a></li>
-<li><a href="https://github.com/EbookFoundation/free-programming-books/blob/master/books/free-programming-books.md#ruby">Lista de Livros Grátis de Programação (Em inglês)</a></li>
+<li><a href="https://github.com/EbookFoundation/free-programming-books/blob/master/books/free-programming-books-langs.md#ruby">Lista de Livros Grátis de Programação (Em inglês)</a></li>
 </ul>
 <p>Fique atento que alguns materiais, apesar de excelentes, envolvem versões antigas
 do Ruby e podem não incluir parte da sintaxe que você
@@ -386,13 +393,13 @@ escolha "Executar" no menu inicial e digite <code>cmd.exe</code>. Qualquer coman
 o sinal de dólar <code>$</code> deverá ser rodado em linha de comando. Verifique se você tem a
 versão atual do Ruby instalado:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">ruby</span> <span class="nt">--version</span>
-<span class="go">ruby 2.5.0
+<span class="go">ruby 2.7.0
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-a7c19e5d704243b2656498e460dfcea6">ruby --version
+<textarea class="clipboard-content" id="clipboard-73f305f3f9707cfebcb4cd7850f8a858">ruby --version
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a7c19e5d704243b2656498e460dfcea6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-73f305f3f9707cfebcb4cd7850f8a858">Copiar</button>
 </div>
-<p>O Rails necessita da versão Ruby 2.5.0 ou mais atual. Se o número da versão retornada
+<p>O Rails necessita da versão Ruby 2.7.0 ou mais atual. É preferivel usar a última versão do Ruby. Se o número da versão retornada
 for menor que este número (como 2.3.7, e 1.8.7), você precisará instalar uma versão do Ruby mais atual.</p><p>Para instalar o Rails no Windows, você primeiro tem que instalar o <a href="https://rubyinstaller.org">Ruby Installer</a>. </p><p>Para mais informações de instalação
 de outros Sistemas Operacionais, dê uma olhada em <a href="https://www.ruby-lang.org/en/documentation/installation/">ruby-lang.org</a>.</p><h5 id="instalando-o-sqlite3"><a class="anchorlink" href="#instalando-o-sqlite3">3.1.2 Instalando o SQLite3</a></h5><p>Você também precisará instalar o banco de dados SQLite3.
 Muitos sistemas operacionais populares semelhantes ao UNIX são fornecidos com uma versão compatível do SQLite3.
@@ -400,42 +407,42 @@ Em outros sistemas você pode achar mais instruções de instalação em <a href
 Verifique se está corretamente instalado e carregado no seu <code>PATH</code>:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">sqlite3</span> <span class="nt">--version</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f4476497979e7e35935f1a319d502315">sqlite3 --version
+<textarea class="clipboard-content" id="clipboard-12fb3c7d4df96215cbf76bc6af31d1ae">sqlite3 --version
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f4476497979e7e35935f1a319d502315">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-12fb3c7d4df96215cbf76bc6af31d1ae">Copiar</button>
 </div>
 <p>O programa deverá reportar sua versão.</p><h5 id="instalando-o-node-js-e-yarn"><a class="anchorlink" href="#instalando-o-node-js-e-yarn">3.1.3 Instalando o Node.js e Yarn</a></h5><p>Por fim, você precisará do Node.js e o Yarn instalados para gerenciar o JavaScript da sua aplicação.</p><p>Encontre as instruções de instalação no <a href="https://nodejs.org/en/download/">site do Node.js</a> e
 verifique se está instalado corretamente com o seguinte comando:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">node</span> <span class="nt">--version</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d4fb1dd7bd92cd88021776118fe54dc">node --version
+<textarea class="clipboard-content" id="clipboard-2df467fe86388c2c3de4aaa716aa6fc3">node --version
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d4fb1dd7bd92cd88021776118fe54dc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2df467fe86388c2c3de4aaa716aa6fc3">Copiar</button>
 </div>
 <p>A versão do Node.js deve ser impressa. Certifique-se de que é maior
 que 8.16.0.</p><p>Para instalar o Yarn, siga as instruções de instalação
 instruções no <a href="https://classic.yarnpkg.com/en/docs/install">site do Yarn</a>.</p><p>A execução deste comando deve imprimir a versão do Yarn:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">yarn</span> <span class="nt">--version</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-940ee07416c6deff4c5a4b828bff3c1a">yarn --version
+<textarea class="clipboard-content" id="clipboard-16818af477478e9e82a1951941d2f790">yarn --version
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-940ee07416c6deff4c5a4b828bff3c1a">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-16818af477478e9e82a1951941d2f790">Copiar</button>
 </div>
 <p>Se aparecer algo como "1.22.0", o Yarn foi instalado corretamente.</p><h5 id="criando-um-novo-projeto-em-rails-instalando-o-rails-instalando-o-rails"><a class="anchorlink" href="#criando-um-novo-projeto-em-rails-instalando-o-rails-instalando-o-rails">3.1.4 Instalando o Rails</a></h5><p>Para instalar o Rails, use o comando <code>gem install</code> fornecido pelo RubyGems:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">gem install rails</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-02a2f1c09945c4895b99e2b191cf0087">gem install rails
+<textarea class="clipboard-content" id="clipboard-40557b08d0ae1d7e2a23922ecba52458">gem install rails
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-02a2f1c09945c4895b99e2b191cf0087">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-40557b08d0ae1d7e2a23922ecba52458">Copiar</button>
 </div>
-<p>Para verificar se você tem tudo instalado corretamente, você deve rodar o comando à seguir:</p><div class="code_container">
+<p>Para verificar se você tem tudo instalado corretamente, você deve rodar o comando à seguir num novo terminal:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails</span> <span class="nt">--version</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cf2a516b798b58580c7a689572c0baa6">rails --version
+<textarea class="clipboard-content" id="clipboard-0ffebc8e3f975a6430553bbaa98df7ec">rails --version
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cf2a516b798b58580c7a689572c0baa6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0ffebc8e3f975a6430553bbaa98df7ec">Copiar</button>
 </div>
-<p>Se esse comando retornar algo como "Rails 6.0.0", você está pronto para continuar.</p><h4 id="criando-a-aplicacao-blog"><a class="anchorlink" href="#criando-a-aplicacao-blog">3.2 Criando a Aplicação Blog</a></h4><p>O Rails vem com vários scripts chamados <em>generators</em> que são projetados para tornar
+<p>Se esse comando retornar algo como "Rails 7.0.0", você está pronto para continuar.</p><h4 id="criando-a-aplicacao-blog"><a class="anchorlink" href="#criando-a-aplicacao-blog">3.2 Criando a Aplicação Blog</a></h4><p>O Rails vem com vários scripts chamados <em>generators</em> que são projetados para tornar
 sua vida de desenvolvedor fácil, criando tudo que é necessário para começar a
 trabalhar em uma tarefa em particular. Um desses é o <em>generator</em> de nova aplicação,
 que irá te fornecer a base de uma nova aplicação em Rails para que você não precise
@@ -443,22 +450,19 @@ escrever tudo sozinho.</p><p>Para utilizar esse <em>generator</em>, abra um term
 você tenha permissão para criar arquivos, e rode:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new blog
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ae9105df802352ec46405773acf029e1">rails new blog
+<textarea class="clipboard-content" id="clipboard-33ed5190e720485c9a0891e8d06367ab">rails new blog
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ae9105df802352ec46405773acf029e1">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-33ed5190e720485c9a0891e8d06367ab">Copiar</button>
 </div>
 <p>Este comando irá criar uma aplicação em Rails chamada Blog em um diretório <code>blog</code>
 e irá instalar as dependências das <em>gems</em> que já foram mencionadas no <code>Gemfile</code>
-usando <code>bundle install</code>.</p><div class="note"><p>Se você está utilizando um subsistema Windows para Linux então existem
-algumas limitações nas notificações dos arquivos do sistema que significa que você
-deve desabilitar as gems <code>spring</code> e <code>listen</code>, o que poderá ser feito rodando o comando
-<code>rails new blog --skip-spring --skip-listen</code>.</p></div><div class="info"><p>Você pode ver todas as opções de linha de comando gerador que a aplicação Rails
+usando <code>bundle install</code>.</p><div class="info"><p>Você pode ver todas as opções de linha de comando gerador que a aplicação Rails
 aceita rodando o comando <code>rails new --help</code>.</p></div><p>Depois de criar a aplicação blog, entre em sua pasta:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>blog
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-595e5d8ea2a3b7126963c1a093b33284">cd blog
+<textarea class="clipboard-content" id="clipboard-6b734385b07ee0ba8333fa0ad829064d">cd blog
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-595e5d8ea2a3b7126963c1a093b33284">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6b734385b07ee0ba8333fa0ad829064d">Copiar</button>
 </div>
 <p>A pasta <code>blog</code> vai ter vários arquivos gerados e pastas que compõem a estrutura
 de uma aplicação Rails. A maior parte da execução deste tutorial será feito na
@@ -505,10 +509,6 @@ que o Rails gerou por padrão:</p>
 <td>Arquivos de <em>log</em> da aplicação.</td>
 </tr>
 <tr>
-<td>package.json</td>
-<td>Este arquivo permite que você especifique quais dependências <em>npm</em> são necessárias para sua aplicação Rails. Este arquivo é usado pelo Yarn. Para mais informações do Yarn, acesse <a href="https://yarnpkg.com/lang/en/">o website do Yarn</a>.</td>
-</tr>
-<tr>
 <td>public/</td>
 <td>Contém arquivos estáticos e <em>assets</em> compilados. Quando sua aplicação está rodando esse diretório é exposto como ele está.</td>
 </tr>
@@ -552,9 +552,9 @@ servidor web em sua máquina de desenvolvimento. Você pode fazer isso executand
 o seguinte comando no diretório <code>blog</code>:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>server
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1c7f59df960fe6981abe1aa81faf816c">bin/rails server
+<textarea class="clipboard-content" id="clipboard-75c8304df82bfe1d9b795e9f3d309fa5">bin/rails server
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1c7f59df960fe6981abe1aa81faf816c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-75c8304df82bfe1d9b795e9f3d309fa5">Copiar</button>
 </div>
 <div class="info"><p>Se você está usando Windows, deve executar os scripts do diretório
 <code>bin</code> para o interpretador do Ruby: <code>ruby bin\rails server</code>.</p></div><div class="info"><p>A compressão de <em>assets</em> JavaScript requer que você tenha um executor
@@ -575,22 +575,22 @@ topo do bloco <code>Rails.application.routes.draw</code>:</p><div class="code_co
   <span class="c1"># Para mais detalhes da DSL disponível para esse arquivo, veja https://guides.rubyonrails.org/routing.html</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-685d01adbd48fe0fb1f9421c309b8da4">Rails.application.routes.draw do
+<textarea class="clipboard-content" id="clipboard-f59a839820d9e33a0b3b822213260d5a">Rails.application.routes.draw do
   get "/articles", to: "articles#index"
 
   # Para mais detalhes da DSL disponível para esse arquivo, veja https://guides.rubyonrails.org/routing.html
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-685d01adbd48fe0fb1f9421c309b8da4">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f59a839820d9e33a0b3b822213260d5a">Copiar</button>
 </div>
 <p>A rota acima declara que as requisições de <code>GET / articles</code> são mapeadas para o <em>action</em> <code>index</code> do <code>ArticlesController</code>.</p><p>Para criar o <code>ArticlesController</code> e sua <em>action</em> <code>index</code>, vamos executar o controlador
 gerador (com a opção <code>--skip-routes</code> porque já temos um
 rota apropriada):</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate controller Articles index <span class="nt">--skip-routes</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-81203110d3cdeb598793aa73f4f544d3">bin/rails generate controller Articles index --skip-routes
+<textarea class="clipboard-content" id="clipboard-29daada234900ea755cca8f0eac8fafe">bin/rails generate controller Articles index --skip-routes
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-81203110d3cdeb598793aa73f4f544d3">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-29daada234900ea755cca8f0eac8fafe">Copiar</button>
 </div>
 <p>O Rails vai gerar vários arquivos para você:</p><div class="code_container">
 <pre><code class="highlight plaintext">create  app/controllers/articles_controller.rb
@@ -606,7 +606,7 @@ invoke  assets
 invoke    scss
 create      app/assets/stylesheets/articles.scss
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1abd3b8c088ea6465431f57ca004ab05">create  app/controllers/articles_controller.rb
+<textarea class="clipboard-content" id="clipboard-c8b4d67520a9507ade1a1c9213dd9b81">create  app/controllers/articles_controller.rb
 invoke  erb
 create    app/views/articles
 create    app/views/articles/index.html.erb
@@ -619,7 +619,7 @@ invoke  assets
 invoke    scss
 create      app/assets/stylesheets/articles.scss
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1abd3b8c088ea6465431f57ca004ab05">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c8b4d67520a9507ade1a1c9213dd9b81">Copiar</button>
 </div>
 <p>O mais importante desses é o arquivo <em>controller</em>, <code>app/controllers/articles_controller.rb</code>. Vamos dar uma olhada nele:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ArticlesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
@@ -627,12 +627,12 @@ create      app/assets/stylesheets/articles.scss
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d31c45b5f0c7844c45974188321ef5f6">class ArticlesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-222d493b9e50d9baf18bfc5cdf0dd8d1">class ArticlesController &lt; ApplicationController
   def index
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d31c45b5f0c7844c45974188321ef5f6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-222d493b9e50d9baf18bfc5cdf0dd8d1">Copiar</button>
 </div>
 <p>A <em>action</em> <code>index</code> está vazia. Quando uma <em>action</em> não renderiza explicitamente uma <em>view</em>
 (ou de outra forma acionar uma resposta HTTP), o Rails irá renderizar automaticamente uma <em>view</em>
@@ -640,9 +640,9 @@ que corresponde ao nome do <em>controller</em> e <em>action</em>. Convenção so
 Configuração! As <em>views</em> estão localizadas no diretório <code>app/views</code>. Portanto, a <em>action</em> <code>index</code> renderizará <code>app/views/articles/index.html.erb</code> por padrão.</p><p>Vamos abrir o arquivo <code>app/views/articles/index.html.erb</code>, e substituir todo código existente por:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;h1&gt;</span>Olá, Rails!<span class="nt">&lt;/h1&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-801bfa158076e69733992f8572908492">&lt;h1&gt;Olá, Rails!&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-60daad8680d4808850f81a6e7e2cfcfc">&lt;h1&gt;Olá, Rails!&lt;/h1&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-801bfa158076e69733992f8572908492">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-60daad8680d4808850f81a6e7e2cfcfc">Copiar</button>
 </div>
 <p>Se você parou anteriormente o servidor web para executar o gerador do <em>controller</em>,
 reinicie-o com <code>bin/rails server</code>. Agora visite <a href="http://localhost:3000/articles">http://localhost:3000/articles</a>
@@ -655,26 +655,38 @@ Para fazer isso, vamos adicionar uma rota que mapeia o caminho raiz (<em>root pa
   <span class="n">get</span> <span class="s2">"/articles"</span><span class="p">,</span> <span class="ss">to: </span><span class="s2">"articles#index"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ad45051568482c58db862ef488c97966">Rails.application.routes.draw do
+<textarea class="clipboard-content" id="clipboard-d3a764a2a457e83de426020f11c7540c">Rails.application.routes.draw do
   root "articles#index"
 
   get "/articles", to: "articles#index"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ad45051568482c58db862ef488c97966">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d3a764a2a457e83de426020f11c7540c">Copiar</button>
 </div>
-<p>Agora podemos ver a mensagem "Olá, Rails!", quando visitamos <a href="http://localhost:3000">http://localhost:3000</a> confirmando que a <em>route</em> <code>root</code> também mapeia para a <em>action</em> <code>index</code> de <code>ArticlesController</code>.</p><div class="info"><p>Para mais informações sobre roteamento, consulte <a href="routing.html">Roteamento do Rails de Fora para Dentro</a>.</p></div><h3 id="mvc-e-voce"><a class="anchorlink" href="#mvc-e-voce">5 MVC e Você</a></h3><p>Até agora, discutimos rotas, <em>controllers</em>, <em>actions</em> e <em>views</em>. Todas essas
+<p>Agora podemos ver a mensagem "Olá, Rails!", quando visitamos <a href="http://localhost:3000">http://localhost:3000</a> confirmando que a <em>route</em> <code>root</code> também mapeia para a <em>action</em> <code>index</code> de <code>ArticlesController</code>.</p><div class="info"><p>Para mais informações sobre roteamento, consulte <a href="routing.html">Roteamento do Rails de Fora para Dentro</a>.</p></div><h3 id="auto-carregamento"><a class="anchorlink" href="#auto-carregamento">5 Auto carregamento</a></h3><p>Aplicações Rails <strong>não</strong> usam <code>require</code> para carregar o código da aplicação.</p><p>Você deve ter notado que <code>ArticlesController</code> herda de <code>ApplicationController</code>, mas <code>app/controllers/articles_controller.rb</code> não tem nada como</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"application_controller"</span> <span class="c1"># NÃO FAÇA ISSO.</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-46a718abb3ea4125ead9c6ed942d51b7">require "application_controller" # NÃO FAÇA ISSO.
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-46a718abb3ea4125ead9c6ed942d51b7">Copiar</button>
+</div>
+<p>As classes e módulos da aplicação estão disponíveis em todos os lugares, você não precisa e <strong>não deve</strong> carregar nada em <code>app</code> com <code>require</code>. Esse recurso é chamado de <em>autoloading</em> e você pode aprender mais sobre ele em <a href="https://guides.rubyonrails.org/autoloading_and_reloading_constants.html"><em>Autoloading and Reloading Constants</em></a>.</p><p>Você só precisa de chamadas <code>require</code> para dois casos de uso:</p>
+<ul>
+<li>Para carregar arquivos no diretório <code>lib</code>.</li>
+<li>Para carregar dependências de gem que tenham <code>require: false</code> no <code>Gemfile</code>.</li>
+</ul>
+<h3 id="mvc-e-voce"><a class="anchorlink" href="#mvc-e-voce">6 MVC e Você</a></h3><p>Até agora, discutimos rotas, <em>controllers</em>, <em>actions</em> e <em>views</em>. Todas essas
 são peças típicas de uma aplicação web que segue o padrão <a href="https://pt.wikipedia.org/wiki/MVC">MVC (Model-View-Controller)</a>.</p><p>MVC é um padrão de projeto que divide as responsabilidades de uma aplicação para
 facilitar nosso entendimento. O Rails segue esse padrão de projeto por
 convenção.</p><p>Já que temos um <em>controller</em> e uma <em>view</em> para trabalhar, agora vamos gerar a próxima
-peça: o <em>model</em>.</p><h4 id="mvc-e-voce-gerando-um-model"><a class="anchorlink" href="#mvc-e-voce-gerando-um-model">5.1 Gerando um <em>Model</em></a></h4><p>Um <em>Model</em> é uma classe Ruby utilizada para representar dados. Além disso, os
+peça: o <em>model</em>.</p><h4 id="mvc-e-voce-gerando-um-model"><a class="anchorlink" href="#mvc-e-voce-gerando-um-model">6.1 Gerando um <em>Model</em></a></h4><p>Um <em>Model</em> é uma classe Ruby utilizada para representar dados. Além disso, os
 <em>models</em> podem interagir com o banco de dados da aplicação através de um recurso
 do Rails chamado <em>Active Record</em>.</p><p>Para definir um <em>model</em>, utilizaremos um gerador de <em>models</em>:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate model Article title:string body:text
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-adac9596360c9b03728254a5c840e575">bin/rails generate model Article title:string body:text
+<textarea class="clipboard-content" id="clipboard-5dec2e3a8504b72bde5ca7a8f3e13892">bin/rails generate model Article title:string body:text
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-adac9596360c9b03728254a5c840e575">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5dec2e3a8504b72bde5ca7a8f3e13892">Copiar</button>
 </div>
 <div class="note"><p>Os nomes dos <em>models</em> são no <strong>singular</strong>, pois um <em>model</em> instanciado
 representa um único registro de dados. Para ajudar a lembrar esta convenção,
@@ -687,21 +699,21 @@ invoke    test_unit
 create      test/models/article_test.rb
 create      test/fixtures/articles.yml
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a3a6529d1a345e8aa8265e9b199861f8">invoke  active_record
+<textarea class="clipboard-content" id="clipboard-7c83e57fa3bd2f6f3f038595b502d7e8">invoke  active_record
 create    db/migrate/&lt;timestamp&gt;_create_articles.rb
 create    app/models/article.rb
 invoke    test_unit
 create      test/models/article_test.rb
 create      test/fixtures/articles.yml
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a3a6529d1a345e8aa8265e9b199861f8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7c83e57fa3bd2f6f3f038595b502d7e8">Copiar</button>
 </div>
 <p>Os dois arquivos em que vamos nos concentrar são o arquivo da <em>migration</em>
 (<code>db/migrate/&lt;timestamp&gt;_create_articles.rb</code>) e o arquivo do <em>model</em>
-(<code>app/models/article.rb</code>).</p><h4 id="migracoes-de-banco-de-dados"><a class="anchorlink" href="#migracoes-de-banco-de-dados">5.2 Migrações de Banco de Dados</a></h4><p>As <em>Migrations</em> são utilizadas para alterar a estrutura do banco de dados de uma
+(<code>app/models/article.rb</code>).</p><h4 id="migracoes-de-banco-de-dados"><a class="anchorlink" href="#migracoes-de-banco-de-dados">6.2 Migrações de Banco de Dados</a></h4><p>As <em>Migrations</em> são utilizadas para alterar a estrutura do banco de dados de uma
 aplicação. Em aplicações Rails, as <em>migrations</em> são escritas em Ruby para que
 possam ser independentes do banco de dados.</p><p>Vamos dar uma olhada no conteúdo do nosso novo arquivo de <em>migration</em>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateArticles</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateArticles</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">create_table</span> <span class="ss">:articles</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:title</span>
@@ -712,7 +724,7 @@ possam ser independentes do banco de dados.</p><p>Vamos dar uma olhada no conte�
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eaf6fb3813b9acedeb4fa69d85a57675">class CreateArticles &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-59a4592670774a5c9443000a00efb729">class CreateArticles &lt; ActiveRecord::Migration[7.0]
   def change
     create_table :articles do |t|
       t.string :title
@@ -723,7 +735,7 @@ possam ser independentes do banco de dados.</p><p>Vamos dar uma olhada no conte�
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eaf6fb3813b9acedeb4fa69d85a57675">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-59a4592670774a5c9443000a00efb729">Copiar</button>
 </div>
 <p>A chamada para <code>create_table</code> especifica como a tabela <code>articles</code> deve ser
 construída. Por padrão, o método <code>create_table</code> adiciona uma coluna <code>id</code> como
@@ -737,9 +749,9 @@ mais pra frente, o Rails gerenciará isso para nós, definindo os valores quando
 criamos ou atualizamos um objeto <em>model</em>.</p><p>Vamos executar a nossa <em>migration</em> com o seguinte comando:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5f6377ff91ae11eaaa72676ccca26ec5">bin/rails db:migrate
+<textarea class="clipboard-content" id="clipboard-11e93b77106d606f59bdb138a5bd7ac7">bin/rails db:migrate
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5f6377ff91ae11eaaa72676ccca26ec5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-11e93b77106d606f59bdb138a5bd7ac7">Copiar</button>
 </div>
 <p>O comando exibirá o resultado do processamento indicando que a tabela foi criada:</p><div class="code_container">
 <pre><code class="highlight plaintext">==  CreateArticles: migrating ===================================
@@ -747,50 +759,50 @@ criamos ou atualizamos um objeto <em>model</em>.</p><p>Vamos executar a nossa <e
    -&gt; 0.0018s
 ==  CreateArticles: migrated (0.0018s) ==========================
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-14b24992c3f74731cfec294d8f36fb22">==  CreateArticles: migrating ===================================
+<textarea class="clipboard-content" id="clipboard-c7ca35b8b881dfb7b15ae978121104b0">==  CreateArticles: migrating ===================================
 -- create_table(:articles)
    -&gt; 0.0018s
 ==  CreateArticles: migrated (0.0018s) ==========================
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-14b24992c3f74731cfec294d8f36fb22">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c7ca35b8b881dfb7b15ae978121104b0">Copiar</button>
 </div>
-<div class="info"><p>Para saber mais sobre <em>migrations</em>, consulte <a href="active_record_migrations.html">Active Record Migrations</a>.</p></div><p>Agora podemos interagir com a tabela utilizando o nosso <em>model</em>.</p><h4 id="utilizando-um-model-para-interagir-com-o-banco-de-dados"><a class="anchorlink" href="#utilizando-um-model-para-interagir-com-o-banco-de-dados">5.3 Utilizando um <em>Model</em> para Interagir com o Banco de Dados</a></h4><p>Para brincar um pouco com o nosso <em>model</em>, vamos utilizar um recurso do Rails
+<div class="info"><p>Para saber mais sobre <em>migrations</em>, consulte <a href="active_record_migrations.html">Active Record Migrations</a>.</p></div><p>Agora podemos interagir com a tabela utilizando o nosso <em>model</em>.</p><h4 id="utilizando-um-model-para-interagir-com-o-banco-de-dados"><a class="anchorlink" href="#utilizando-um-model-para-interagir-com-o-banco-de-dados">6.3 Utilizando um <em>Model</em> para Interagir com o Banco de Dados</a></h4><p>Para brincar um pouco com o nosso <em>model</em>, vamos utilizar um recurso do Rails
 chamado <em>console</em>. O <em>console</em> é um ambiente de codificação interativo como o
 <code>irb</code>, mas que também carrega automaticamente o Rails e o código da nossa
 aplicação.</p><p>Vamos iniciar o console com o comando:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>console
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e18dd6ae5ec1043f542462b0f4c2a098">bin/rails console
+<textarea class="clipboard-content" id="clipboard-c5975f27148e9a3c48a22086a3c85f60">bin/rails console
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e18dd6ae5ec1043f542462b0f4c2a098">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c5975f27148e9a3c48a22086a3c85f60">Copiar</button>
 </div>
 <p>Você deve visualizar um <em>prompt</em> <code>irb</code>:</p><div class="code_container">
-<pre><code class="highlight irb"><span class="go">Loading development environment (Rails 6.0.2.1)
+<pre><code class="highlight irb"><span class="go">Loading development environment (Rails 7.0.0)
 </span><span class="gp">irb(main):001:0&gt;</span><span class="w">
 </span></code></pre>
-<textarea class="clipboard-content" id="clipboard-9108ae69049c9e42fc2011c1af6c503c"></textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9108ae69049c9e42fc2011c1af6c503c">Copiar</button>
+<textarea class="clipboard-content" id="clipboard-b59f28c1658b3448bd3c60a2a8e96a03"></textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b59f28c1658b3448bd3c60a2a8e96a03">Copiar</button>
 </div>
 <p>Neste <em>prompt</em>, podemos inicializar um novo objeto <code>Article</code>:</p><div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">title: </span><span class="s2">"Hello Rails"</span><span class="p">,</span> <span class="ss">body: </span><span class="s2">"I am on Rails!"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-06c97408e49b1b194dbdd5b51745ed65">article = Article.new(title: "Hello Rails", body: "I am on Rails!")
+<textarea class="clipboard-content" id="clipboard-ff7e5372cf6c4a0392f071cc0540138e">article = Article.new(title: "Hello Rails", body: "I am on Rails!")
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-06c97408e49b1b194dbdd5b51745ed65">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ff7e5372cf6c4a0392f071cc0540138e">Copiar</button>
 </div>
 <p>É importante notar que apenas <em>inicializamos</em> este objeto. O objeto não é salvo
 no banco de dados e no momento está disponível apenas no <em>console</em>. Para salvar o
 objeto no banco de dados, devemos chamar
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Persistence.html#method-i-save"><code>save</code></a>:</p><div class="code_container">
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Persistence.html#method-i-save"><code>save</code></a>:</p><div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span><span class="p">.</span><span class="nf">save</span>
 <span class="go">(0.1ms)  begin transaction
 Article Create (0.4ms)  INSERT INTO "articles" ("title", "body", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["title", "Hello Rails"], ["body", "I am on Rails!"], ["created_at", "2020-01-18 23:47:30.734416"], ["updated_at", "2020-01-18 23:47:30.734416"]]
 (0.9ms)  commit transaction
 </span><span class="p">=&gt;</span> <span class="kp">true</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-07c552260d4038a30819a8340292ee76">article.save
+<textarea class="clipboard-content" id="clipboard-d9e3e8cbb6386b30c263fd9654b4f07e">article.save
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-07c552260d4038a30819a8340292ee76">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d9e3e8cbb6386b30c263fd9654b4f07e">Copiar</button>
 </div>
 <p>A saída acima mostra uma <em>query</em> <code>INSERT INTO "articles" ...</code> de banco de dados.
 Isso indica que o artigo foi inserido em nossa tabela. Se dermos uma olhada no
@@ -798,33 +810,33 @@ objeto <code>article</code> novamente, vemos que algo interessante aconteceu:</p
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span>
 <span class="p">=&gt;</span> <span class="kt">#&lt;</span><span class="no">Article</span> <span class="ss">id: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">title: </span><span class="s2">"Hello Rails"</span><span class="p">,</span> <span class="ss">body: </span><span class="s2">"I am on Rails!"</span><span class="p">,</span> <span class="ss">created_at: </span><span class="s2">"2020-01-18 23:47:30"</span><span class="p">,</span> <span class="ss">updated_at: </span><span class="s2">"2020-01-18 23:47:30"</span><span class="kt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-23d62de10893fcb681256669c9e32d67">article
+<textarea class="clipboard-content" id="clipboard-331f54dde6cd3fab4ecb16e585acd66c">article
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-23d62de10893fcb681256669c9e32d67">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-331f54dde6cd3fab4ecb16e585acd66c">Copiar</button>
 </div>
 <p>Os atributos <code>id</code>, <code>created_at</code> e <code>updated_at</code> agora estão definidos.
 O Rails fez isso por nós quando salvamos o objeto.</p><p>Quando quisermos buscar este artigo no banco de dados, podemos chamar
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/FinderMethods.html#method-i-find"><code>find</code></a>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/FinderMethods.html#method-i-find"><code>find</code></a>
 no <em>model</em> e passar o <code>id</code> como argumento:</p><div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Article</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="p">=&gt;</span> <span class="kt">#&lt;</span><span class="no">Article</span> <span class="ss">id: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">title: </span><span class="s2">"Hello Rails"</span><span class="p">,</span> <span class="ss">body: </span><span class="s2">"I am on Rails!"</span><span class="p">,</span> <span class="ss">created_at: </span><span class="s2">"2020-01-18 23:47:30"</span><span class="p">,</span> <span class="ss">updated_at: </span><span class="s2">"2020-01-18 23:47:30"</span><span class="kt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d73388e4383bc2a0db177777c86512fd">Article.find(1)
+<textarea class="clipboard-content" id="clipboard-5319b67a448da7d40a50702bc6c37de9">Article.find(1)
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d73388e4383bc2a0db177777c86512fd">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5319b67a448da7d40a50702bc6c37de9">Copiar</button>
 </div>
-<p>E quando quisermos obter todos os artigos do banco de dados, podemos chamar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Scoping/Named/ClassMethods.html#method-i-all"><code>all</code></a>
+<p>E quando quisermos obter todos os artigos do banco de dados, podemos chamar <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Scoping/Named/ClassMethods.html#method-i-all"><code>all</code></a>
 no <em>model</em>:</p><div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Article</span><span class="p">.</span><span class="nf">all</span>
 <span class="p">=&gt;</span> <span class="kt">#&lt;</span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Relation</span> <span class="p">[</span><span class="kt">#&lt;</span><span class="no">Article</span> <span class="ss">id: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">title: </span><span class="s2">"Hello Rails"</span><span class="p">,</span> <span class="ss">body: </span><span class="s2">"I am on Rails!"</span><span class="p">,</span> <span class="ss">created_at: </span><span class="s2">"2020-01-18 23:47:30"</span><span class="p">,</span> <span class="ss">updated_at: </span><span class="s2">"2020-01-18 23:47:30"</span><span class="kt">&gt;</span><span class="p">]</span><span class="kt">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0343a41a105569eed683cdfcb7268b14">Article.all
+<textarea class="clipboard-content" id="clipboard-607a6a632964df8b574b2257bb2fec51">Article.all
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0343a41a105569eed683cdfcb7268b14">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-607a6a632964df8b574b2257bb2fec51">Copiar</button>
 </div>
-<p>Esté método retorna um objeto <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Relation.html"><code>ActiveRecord::Relation</code></a>, que você pode
+<p>Esté método retorna um objeto <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Relation.html"><code>ActiveRecord::Relation</code></a>, que você pode
 considerar como um <em>array</em> superpotente.</p><div class="info"><p>Para saber mais sobre <em>models</em>, consulte o <a href="active_record_basics.html">Básico do Active Record</a> e <a href="active_record_querying.html">Interface de Consulta do Active Record</a>.</p></div><p>Os <em>models</em> são a peça final do quebra-cabeça MVC. A seguir, conectaremos todas
-as peças.</p><h4 id="exibindo-uma-lista-de-artigos"><a class="anchorlink" href="#exibindo-uma-lista-de-artigos">5.4 Exibindo uma Lista de Artigos</a></h4><p>Vamos voltar ao nosso <em>controller</em> em <code>app/controllers/articles_controller.rb</code> e
+as peças.</p><h4 id="exibindo-uma-lista-de-artigos"><a class="anchorlink" href="#exibindo-uma-lista-de-artigos">6.4 Exibindo uma Lista de Artigos</a></h4><p>Vamos voltar ao nosso <em>controller</em> em <code>app/controllers/articles_controller.rb</code> e
 alterar a <em>action</em> <code>index</code> para buscar todos os artigos do banco de dados:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ArticlesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="k">def</span> <span class="nf">index</span>
@@ -832,13 +844,13 @@ alterar a <em>action</em> <code>index</code> para buscar todos os artigos do ban
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d1c5353dc3039d1bdda42947edbdbfc9">class ArticlesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-c8589824b5d67c1593bb591eb882fb00">class ArticlesController &lt; ApplicationController
   def index
     @articles = Article.all
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d1c5353dc3039d1bdda42947edbdbfc9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c8589824b5d67c1593bb591eb882fb00">Copiar</button>
 </div>
 <p>As variáveis de instância do <em>controller</em> podem ser acessadas pela <em>view</em>. Isso
 significa que podemos referenciar <code>@articles</code> em
@@ -854,7 +866,7 @@ conteúdo por:</p><div class="code_container">
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-64f130ebda9c3c2ea98368e3738910be">&lt;h1&gt;Articles&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-abbe4e33de3196d26345f4bc00a94c83">&lt;h1&gt;Articles&lt;/h1&gt;
 
 &lt;ul&gt;
   &lt;% @articles.each do |article| %&gt;
@@ -864,7 +876,7 @@ conteúdo por:</p><div class="code_container">
   &lt;% end %&gt;
 &lt;/ul&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-64f130ebda9c3c2ea98368e3738910be">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-abbe4e33de3196d26345f4bc00a94c83">Copiar</button>
 </div>
 <p>O código acima é uma mistura de HTML e <em>ERB</em>. ERB é um sistema de <em>template</em> que
 avalia código Ruby embarcado em um documento. Aqui, podemos ver dois tipos de
@@ -891,12 +903,12 @@ banco de dados.</li>
 HTML.</li>
 </ol>
 <p>Conectamos todas as peças do MVC e temos nossa primeira <em>action</em> no
-<em>controller</em>! A seguir, passaremos para a segunda <em>action</em>.</p><h3 id="operacoes-crud"><a class="anchorlink" href="#operacoes-crud">6 Operações CRUD</a></h3><p>Quase todas as aplicações web abrangem operações <a href="https://pt.wikipedia.org/wiki/CRUD">CRUD (Create, Read, Update e
+<em>controller</em>! A seguir, passaremos para a segunda <em>action</em>.</p><h3 id="operacoes-crud"><a class="anchorlink" href="#operacoes-crud">7 Operações CRUD</a></h3><p>Quase todas as aplicações web abrangem operações <a href="https://pt.wikipedia.org/wiki/CRUD">CRUD (Create, Read, Update e
 Delete)</a>, traduzidos como criação, consulta,
 atualização e destruição de dados. Você pode até descobrir que a maior parte do
 trabalho que a sua aplicação faz é o CRUD. O Rails reconhece isso e fornece
 muitos recursos para ajudar a simplificar o código na hora de fazer o CRUD.</p><p>Vamos começar a explorar esses recursos adicionando mais funcionalidades à nossa
-aplicação.</p><h4 id="exibindo-um-unico-artigo"><a class="anchorlink" href="#exibindo-um-unico-artigo">6.1 Exibindo um Único Artigo</a></h4><p>Atualmente, temos uma <em>view</em> que lista todos os artigos em nosso banco de dados.
+aplicação.</p><h4 id="exibindo-um-unico-artigo"><a class="anchorlink" href="#exibindo-um-unico-artigo">7.1 Exibindo um Único Artigo</a></h4><p>Atualmente, temos uma <em>view</em> que lista todos os artigos em nosso banco de dados.
 Vamos adicionar uma nova <em>view</em> que exibe o título (<em>title</em>) e o corpo (<em>body</em>)
 de um único artigo.</p><p>Começamos adicionando uma nova rota que mapeia para uma nova <em>action</em> do
 <em>controller</em> (que adicionaremos a seguir). Abra o arquivo <code>config/routes.rb</code> e
@@ -908,14 +920,14 @@ insira a última rota exibida aqui:</p><div class="code_container">
   <span class="n">get</span> <span class="s2">"/articles/:id"</span><span class="p">,</span> <span class="ss">to: </span><span class="s2">"articles#show"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b613460317e645016af1b35750358c63">Rails.application.routes.draw do
+<textarea class="clipboard-content" id="clipboard-08236427ab4f575b099a1e115b98880d">Rails.application.routes.draw do
   root "articles#index"
 
   get "/articles", to: "articles#index"
   get "/articles/:id", to: "articles#show"
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b613460317e645016af1b35750358c63">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-08236427ab4f575b099a1e115b98880d">Copiar</button>
 </div>
 <p>A nova rota é outra rota do tipo <code>get</code>, mas tem algo extra no seu caminho
 (<em>path</em>): <code>:id</code>. Isso denomina um <strong>parâmetro</strong> de rota. Um parâmetro de rota
@@ -935,7 +947,7 @@ capturado como o valor para <code>id</code>, que seria então acessível em <cod
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4edf68fd4fa8f728c7242b56d9b72a9f">class ArticlesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-65d277ced2b885067334f9e37e9d5747">class ArticlesController &lt; ApplicationController
   def index
     @articles = Article.all
   end
@@ -945,7 +957,7 @@ capturado como o valor para <code>id</code>, que seria então acessível em <cod
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4edf68fd4fa8f728c7242b56d9b72a9f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-65d277ced2b885067334f9e37e9d5747">Copiar</button>
 </div>
 <p>A <em>action</em> <code>show</code> chama <code>Article.find</code> (<a href="#utilizando-um-model-para-interagir-com-o-banco-de-dados">mencionado
 anteriormente</a>) com o
@@ -956,11 +968,11 @@ de instância <code>@article</code>, portanto, pode ser acessado pela <em>view</
 
 <span class="nt">&lt;p&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">body</span> <span class="cp">%&gt;</span><span class="nt">&lt;/p&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-487ac80ea91f3f4cf6216658bb14aa42">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-c074977970775a4376b85021b7d6a377">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
 
 &lt;p&gt;&lt;%= @article.body %&gt;&lt;/p&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-487ac80ea91f3f4cf6216658bb14aa42">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c074977970775a4376b85021b7d6a377">Copiar</button>
 </div>
 <p>Agora podemos ver o artigo quando visitarmos <a href="http://localhost:3000/articles/1">http://localhost:3000/articles/1</a>!</p><p>Para finalizar, vamos adicionar uma maneira mais prática para chegar à página
 de um artigo. Iremos vincular o título de cada artigo em
@@ -977,7 +989,7 @@ de um artigo. Iremos vincular o título de cada artigo em
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ee920aa49a8c440da12bf8395b96b1dc">&lt;h1&gt;Articles&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-d7cde35db743d1d088b9577f77fa4e39">&lt;h1&gt;Articles&lt;/h1&gt;
 
 &lt;ul&gt;
   &lt;% @articles.each do |article| %&gt;
@@ -989,14 +1001,14 @@ de um artigo. Iremos vincular o título de cada artigo em
   &lt;% end %&gt;
 &lt;/ul&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ee920aa49a8c440da12bf8395b96b1dc">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d7cde35db743d1d088b9577f77fa4e39">Copiar</button>
 </div>
-<h4 id="roteamento-de-resources-recursos"><a class="anchorlink" href="#roteamento-de-resources-recursos">6.2 Roteamento de <em>Resources</em> (recursos)</a></h4><p>Até agora, nós vimos o "R" (<em>Read</em>, consulta) do CRUD. Iremos eventualmente
+<h4 id="roteamento-de-resources-recursos"><a class="anchorlink" href="#roteamento-de-resources-recursos">7.2 Roteamento de <em>Resources</em> (recursos)</a></h4><p>Até agora, nós vimos o "R" (<em>Read</em>, consulta) do CRUD. Iremos eventualmente
 cobrir o "C" (<em>Create</em>, criação), "U" (<em>Update</em>, atualização) e o "D" (<em>Delete</em>,
 destruição). Como você deve ter imaginado, faremos isso adicionando novas rotas,
 <em>actions</em> no <em>controller</em> e <em>views</em> que funcionam em conjunto para realizar as
 operações CRUD em uma entidade. Chamamos essa entidade de <em>resource</em> (recurso).
-Por exemplo, em nossa aplicação, diríamos que um artigo é um recurso.</p><p>O Rails fornece um método de rotas chamado <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources"><code>resources</code></a>
+Por exemplo, em nossa aplicação, diríamos que um artigo é um recurso.</p><p>O Rails fornece um método de rotas chamado <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resources"><code>resources</code></a>
 que mapeia todas as rotas convencionais para uma coleção de recursos, como
 artigos. Portanto, antes de prosseguir para as seções "C", "U" e "D", vamos
 substituir as duas rotas <code>get</code> em <code>config/routes.rb</code> por <code>resources</code>:</p><div class="code_container">
@@ -1006,13 +1018,13 @@ substituir as duas rotas <code>get</code> em <code>config/routes.rb</code> por <
   <span class="n">resources</span> <span class="ss">:articles</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-858642f1f8fdc40d85f4d23bea0fb9a8">Rails.application.routes.draw do
+<textarea class="clipboard-content" id="clipboard-b49b4d84be0737d9dda1f656e80e399e">Rails.application.routes.draw do
   root "articles#index"
 
   resources :articles
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-858642f1f8fdc40d85f4d23bea0fb9a8">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b49b4d84be0737d9dda1f656e80e399e">Copiar</button>
 </div>
 <p>Nós podemos inspecionar quais rotas estão mapeadas executando o comando
 <code>bin/rails routes</code>:</p><div class="code_container">
@@ -1027,9 +1039,9 @@ end
 <span class="gp">             PATCH  /articles/:id(.:format)      articles#</span>update
 <span class="gp">             DELETE /articles/:id(.:format)      articles#</span>destroy
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e6fa53df8a2858e108a37390eca3d699">bin/rails routes
+<textarea class="clipboard-content" id="clipboard-25ae7b79a9ccd4fea8bc6d01a1b328ff">bin/rails routes
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e6fa53df8a2858e108a37390eca3d699">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-25ae7b79a9ccd4fea8bc6d01a1b328ff">Copiar</button>
 </div>
 <p>O método <code>resources</code> também configura URL e métodos auxiliares (<em>helper</em>) de
 caminhos que podemos utilizar para evitar que nosso código dependa de uma
@@ -1050,7 +1062,7 @@ artigo. Podemos utilizá-lo para organizar nossos links em
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-095cfaaabff175c363463b6a5cf3f366">&lt;h1&gt;Articles&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-1961b588ea1a7365bfaf91e875c24f79">&lt;h1&gt;Articles&lt;/h1&gt;
 
 &lt;ul&gt;
   &lt;% @articles.each do |article| %&gt;
@@ -1062,9 +1074,9 @@ artigo. Podemos utilizá-lo para organizar nossos links em
   &lt;% end %&gt;
 &lt;/ul&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-095cfaaabff175c363463b6a5cf3f366">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1961b588ea1a7365bfaf91e875c24f79">Copiar</button>
 </div>
-<p>No entanto, daremos um passo adiante utilizando o <em>helper</em> <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to"><code>link_to</code></a>.
+<p>No entanto, daremos um passo adiante utilizando o <em>helper</em> <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to"><code>link_to</code></a>.
 O <em>helper</em> <code>link_to</code> renderiza um link com seu primeiro argumento como o texto
 do link e seu segundo argumento como o destino do link. Se passarmos um objeto
 <em>model</em> como segundo argumento, o <code>link_to</code> chamará o <em>helper</em> de caminho
@@ -1081,7 +1093,7 @@ artigo, o <code>link_to</code> chamará o <code>article_path</code>. Portanto,
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e38db17ca21791056544f89cc68bae01">&lt;h1&gt;Articles&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-40e28613aa5a7e3d3628028c675d5e9b">&lt;h1&gt;Articles&lt;/h1&gt;
 
 &lt;ul&gt;
   &lt;% @articles.each do |article| %&gt;
@@ -1091,9 +1103,9 @@ artigo, o <code>link_to</code> chamará o <code>article_path</code>. Portanto,
   &lt;% end %&gt;
 &lt;/ul&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e38db17ca21791056544f89cc68bae01">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-40e28613aa5a7e3d3628028c675d5e9b">Copiar</button>
 </div>
-<p>Muito bom!</p><div class="info"><p>Para aprender mais sobre roteamento, consulte <a href="routing.html">Rotas do Rails de Fora pra Dentro</a>.</p></div><h4 id="criando-um-novo-artigo"><a class="anchorlink" href="#criando-um-novo-artigo">6.3 Criando um Novo Artigo</a></h4><p>Agora, seguimos para o "C" (<em>Create</em>, criação) do CRUD. Normalmente, em
+<p>Muito bom!</p><div class="info"><p>Para aprender mais sobre roteamento, consulte <a href="routing.html">Rotas do Rails de Fora pra Dentro</a>.</p></div><h4 id="criando-um-novo-artigo"><a class="anchorlink" href="#criando-um-novo-artigo">7.3 Criando um Novo Artigo</a></h4><p>Agora, seguimos para o "C" (<em>Create</em>, criação) do CRUD. Normalmente, em
 aplicações web, a criação de um novo recurso é um processo de várias etapas.
 Primeiro, o usuário solicita um formulário para preencher. Em seguida, o usuário
 envia o formulário. Se não houver erros, o recurso será criado e algum tipo de
@@ -1120,12 +1132,12 @@ mensagens de erros e o processo é repetido.</p><p>Em uma aplicação Rails, ess
     <span class="k">if</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">save</span>
       <span class="n">redirect_to</span> <span class="vi">@article</span>
     <span class="k">else</span>
-      <span class="n">render</span> <span class="ss">:new</span>
+      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">status: :unprocessable_entity</span>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-701a2a3796231dd3c142c476bf6e8b6e">class ArticlesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-7a1a504c77a49d053e31ff8d4c3f7965">class ArticlesController &lt; ApplicationController
   def index
     @articles = Article.all
   end
@@ -1144,12 +1156,12 @@ mensagens de erros e o processo é repetido.</p><p>Em uma aplicação Rails, ess
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-701a2a3796231dd3c142c476bf6e8b6e">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7a1a504c77a49d053e31ff8d4c3f7965">Copiar</button>
 </div>
 <p>A <em>action</em> <code>new</code> instancia um novo artigo, mas não o salva no banco de dados.
 Este artigo será utilizado na <em>view</em> ao construirmos o formulário. Por padrão, a
@@ -1159,15 +1171,16 @@ corpo e tenta salvá-lo no banco de dados. Se o artigo for salvo com sucesso, a
 <em>action</em> redireciona o navegador para a página do artigo em
 <code>"http://localhost:3000/articles/#{@article.id}"</code>. Caso contrário, a <em>action</em>
 exibe novamente o formulário renderizando a <em>view</em>
-<code>app/views/articles/new.html.erb</code>. O título e o corpo aqui são valores
+<code>app/views/articles/new.html.erb</code> com um código de status 4XX para que a aplicação funcione bem com a <a href="https://github.com/hotwired/turbo-rails">Turbo</a>.
+O título e o corpo aqui são valores
 fictícios. Depois de criarmos o formulário, vamos voltar no <em>controller</em> e
-alterá-los.</p><div class="note"><p><a href="https://api.rubyonrails.org/v6.1.4/classes/ActionController/Redirecting.html#method-i-redirect_to"><code>redirect_to</code></a>
+alterá-los.</p><div class="note"><p><a href="https://api.rubyonrails.org/v7.0.0/classes/ActionController/Redirecting.html#method-i-redirect_to"><code>redirect_to</code></a>
 fará com que o navegador faça uma nova requisição, enquanto
-<a href="https://api.rubyonrails.org/v6.1.4/classes/AbstractController/Rendering.html#method-i-render"><code>render</code></a>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/AbstractController/Rendering.html#method-i-render"><code>render</code></a>
 renderiza a <em>view</em> especificada para a requisição atual.  É importante utilizar
 o <code>redirect_to</code> após alterar o banco de dados ou o estado da aplicação. Caso
 contrário, se o usuário atualizar a página, o navegador fará a mesma requisição
-e a mutação será repetida.</p></div><h5 id="utilizando-um-construtor-de-formulario-form-builder"><a class="anchorlink" href="#utilizando-um-construtor-de-formulario-form-builder">6.3.1 Utilizando um Construtor de Formulário (<em>Form Builder</em>)</a></h5><p>Utilizaremos uma funcionalidade do Rails chamada <em>form builder</em> (construtor de
+e a mutação será repetida.</p></div><h5 id="utilizando-um-construtor-de-formulario-form-builder"><a class="anchorlink" href="#utilizando-um-construtor-de-formulario-form-builder">7.3.1 Utilizando um Construtor de Formulário (<em>Form Builder</em>)</a></h5><p>Utilizaremos uma funcionalidade do Rails chamada <em>form builder</em> (construtor de
 formulário) para criar nosso formulário. Utilizando um construtor de formulário,
 podemos escrever uma quantidade mínima de código para gerar um formulário que
 está totalmente configurado e segue as convenções do Rails.</p><p>Vamor criar a <em>view</em> <code>app/views/articles/new.html.erb</code> com o seguinte conteúdo:</p><div class="code_container">
@@ -1189,7 +1202,7 @@ está totalmente configurado e segue as convenções do Rails.</p><p>Vamor criar
   <span class="nt">&lt;/div&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-444ea7b1388c0e174be2bc3f09fb54d9">&lt;h1&gt;New Article&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-9d1973b99124f7a3a71f3e9979b31b30">&lt;h1&gt;New Article&lt;/h1&gt;
 
 &lt;%= form_with model: @article do |form| %&gt;
   &lt;div&gt;
@@ -1207,12 +1220,12 @@ está totalmente configurado e segue as convenções do Rails.</p><p>Vamor criar
   &lt;/div&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-444ea7b1388c0e174be2bc3f09fb54d9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9d1973b99124f7a3a71f3e9979b31b30">Copiar</button>
 </div>
-<p>O método auxiliar <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormHelper.html#method-i-form_with"><code>form_with</code></a>
+<p>O método auxiliar <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/FormHelper.html#method-i-form_with"><code>form_with</code></a>
 instancia um construtor de formulário. No bloco <code>form_with</code> chamamos métodos como
-<a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-label"><code>label</code></a>
-e <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/FormBuilder.html#method-i-text_field"><code>text_field</code></a>
+<a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/FormBuilder.html#method-i-label"><code>label</code></a>
+e <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/FormBuilder.html#method-i-text_field"><code>text_field</code></a>
 no construtor para gerar os elementos apropriados de um formulário.</p><p>O resultado de saída da nossa chamada <code>form_with</code> será parecido com:</p><div class="code_container">
 <pre><code class="highlight html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/articles"</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"authenticity_token"</span> <span class="na">value=</span><span class="s">"..."</span><span class="nt">&gt;</span>
@@ -1232,7 +1245,7 @@ no construtor para gerar os elementos apropriados de um formulário.</p><p>O res
   <span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a304c2a512ab4831533c0f9ea30c7444">&lt;form action="/articles" accept-charset="UTF-8" method="post"&gt;
+<textarea class="clipboard-content" id="clipboard-3992783c3186eee56c74420c47e44606">&lt;form action="/articles" accept-charset="UTF-8" method="post"&gt;
   &lt;input type="hidden" name="authenticity_token" value="..."&gt;
 
   &lt;div&gt;
@@ -1250,9 +1263,9 @@ no construtor para gerar os elementos apropriados de um formulário.</p><p>O res
   &lt;/div&gt;
 &lt;/form&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a304c2a512ab4831533c0f9ea30c7444">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-3992783c3186eee56c74420c47e44606">Copiar</button>
 </div>
-<div class="info"><p>Para saber mais sobre os construtores de formulários, consulte <a href="form_helpers.html">Action View Form Helpers</a>.</p></div><h5 id="utilizando-strong-parameters-parametros-fortes"><a class="anchorlink" href="#utilizando-strong-parameters-parametros-fortes">6.3.2 Utilizando <em>Strong Parameters</em> (Parâmetros Fortes)</a></h5><p>Os dados do formulário enviados são colocados no <em>Hash</em> <code>params</code>, junto com os
+<div class="info"><p>Para saber mais sobre os construtores de formulários, consulte <a href="form_helpers.html">Action View Form Helpers</a>.</p></div><h5 id="utilizando-strong-parameters-parametros-fortes"><a class="anchorlink" href="#utilizando-strong-parameters-parametros-fortes">7.3.2 Utilizando <em>Strong Parameters</em> (Parâmetros Fortes)</a></h5><p>Os dados do formulário enviados são colocados no <em>Hash</em> <code>params</code>, junto com os
 parâmetros de rota capturados. Assim, a <em>action</em> <code>create</code> pode acessar o título
 enviado via <code>params[:article][:title]</code> e o corpo enviado via
 <code>params[:article][:body]</code>. Poderíamos passar esses valores individualmente para
@@ -1287,7 +1300,7 @@ forte</a> para <code>params</code>.</p><p>Vamos adicionar um método privado na 
     <span class="k">if</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">save</span>
       <span class="n">redirect_to</span> <span class="vi">@article</span>
     <span class="k">else</span>
-      <span class="n">render</span> <span class="ss">:new</span>
+      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">status: :unprocessable_entity</span>
     <span class="k">end</span>
   <span class="k">end</span>
 
@@ -1297,7 +1310,7 @@ forte</a> para <code>params</code>.</p><p>Vamos adicionar um método privado na 
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1366cf1f9e15e7cafb8c7724d7906609">class ArticlesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-6c568daac13503de783eed84a94ce94e">class ArticlesController &lt; ApplicationController
   def index
     @articles = Article.all
   end
@@ -1316,7 +1329,7 @@ forte</a> para <code>params</code>.</p><p>Vamos adicionar um método privado na 
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -1326,10 +1339,10 @@ forte</a> para <code>params</code>.</p><p>Vamos adicionar um método privado na 
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1366cf1f9e15e7cafb8c7724d7906609">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6c568daac13503de783eed84a94ce94e">Copiar</button>
 </div>
 <div class="info"><p>Para saber mais sobre <em>Strong Parameters</em>, consulte <a href="action_controller_overview.html#parametros-fortes">Action Controller
-Overview § Parâmetros Fortes</a>.</p></div><h5 id="validacoes-e-exibicao-de-mensagens-de-erros"><a class="anchorlink" href="#validacoes-e-exibicao-de-mensagens-de-erros">6.3.3 Validações e Exibição de Mensagens de Erros</a></h5><p>Como vimos, a criação de um recurso é um processo de várias etapas. Lidar com a
+Overview § Parâmetros Fortes</a>.</p></div><h5 id="validacoes-e-exibicao-de-mensagens-de-erros"><a class="anchorlink" href="#validacoes-e-exibicao-de-mensagens-de-erros">7.3.3 Validações e Exibição de Mensagens de Erros</a></h5><p>Como vimos, a criação de um recurso é um processo de várias etapas. Lidar com a
 entrada inválida do usuário é outra etapa desse processo. O Rails fornece um
 recurso chamado <strong>validações</strong> para nos ajudar a lidar com entradas inválidas do
 usuário. As validações são regras que são verificadas antes de um objeto <em>model</em>
@@ -1341,12 +1354,12 @@ mensagens de erros apropriadas serão adicionadas ao atributo <code>errors</code
   <span class="n">validates</span> <span class="ss">:body</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">length: </span><span class="p">{</span> <span class="ss">minimum: </span><span class="mi">10</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6dc64a12e9fc54294c43903334eb0066">class Article &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-ae5c9002781ddc6d64834f4cf00cbf5e">class Article &lt; ApplicationRecord
   validates :title, presence: true
   validates :body, presence: true, length: { minimum: 10 }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6dc64a12e9fc54294c43903334eb0066">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ae5c9002781ddc6d64834f4cf00cbf5e">Copiar</button>
 </div>
 <p>A primeira validação declara que um valor <code>title</code> deve estar presente. Como
 <code>title</code> é uma <em>string</em>, isso significa que o valor <code>title</code> deve conter pelo
@@ -1381,7 +1394,7 @@ arquivo <em>model</em>.</p></div><p>Com nossas validações no lugar, vamos modi
   <span class="nt">&lt;/div&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5615a18752fcf5b744f667388952a684">&lt;h1&gt;New Article&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-fa131196a900eb3fd61175431043ee09">&lt;h1&gt;New Article&lt;/h1&gt;
 
 &lt;%= form_with model: @article do |form| %&gt;
   &lt;div&gt;
@@ -1405,9 +1418,9 @@ arquivo <em>model</em>.</p></div><p>Com nossas validações no lugar, vamos modi
   &lt;/div&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5615a18752fcf5b744f667388952a684">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fa131196a900eb3fd61175431043ee09">Copiar</button>
 </div>
-<p>O método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveModel/Errors.html#method-i-full_messages_for"><code>full_messages_for</code></a>
+<p>O método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveModel/Errors.html#method-i-full_messages_for"><code>full_messages_for</code></a>
 retorna um <em>array</em> de mensagens de erro amigáveis para um atributo especificado.
 Se não houver erros para esse atributo, o <em>array</em> ficará vazio.</p><p>Para entender como tudo isso funciona junto, vamos dar uma olhada nas <em>actions</em>
 de <code>new</code> e <code>create</code> do <em>controller</em>:</p><div class="code_container">
@@ -1421,11 +1434,11 @@ de <code>new</code> e <code>create</code> do <em>controller</em>:</p><div class=
     <span class="k">if</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">save</span>
       <span class="n">redirect_to</span> <span class="vi">@article</span>
     <span class="k">else</span>
-      <span class="n">render</span> <span class="ss">:new</span>
+      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">status: :unprocessable_entity</span>
     <span class="k">end</span>
   <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-83742b69751221297413ffcb7ea73e68">  def new
+<textarea class="clipboard-content" id="clipboard-15947f5f7bb52044e0b8332181368f41">  def new
     @article = Article.new
   end
 
@@ -1435,11 +1448,11 @@ de <code>new</code> e <code>create</code> do <em>controller</em>:</p><div class=
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-83742b69751221297413ffcb7ea73e68">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-15947f5f7bb52044e0b8332181368f41">Copiar</button>
 </div>
 <p>Quando visitamos <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a>, a solicitação <code>GET
 /articles/new</code> é mapeada para a <em>action</em> <code>new</code>. A <em>action</em> <code>new</code> não tenta
@@ -1448,9 +1461,10 @@ mensagens de erro.</p><p>Quando enviamos o formulário, a solicitação <code>PO
 <em>action</em> <code>create</code>. A <em>action</em> <code>create</code> <strong>tenta</strong> salvar o <code>@article</code>.
 Portanto, as validações <strong>são</strong> verificadas. Se alguma validação falhar,
 o <code>@article</code> não será salvo e a <em>view</em> <code>app/views/articles/new.html.erb</code> será
-renderizada com as mensagens de erro.</p><div class="info"><p>Para saber mais sobre validações, consulte <a href="active_record_validations.html">Validações do Active Record</a>. Para saber mais sobre as mensagens de erro de
+renderizada com as mensagens de erro 
+com um código de status 4XX para que a aplicação funcione bem com a <a href="https://github.com/hotwired/turbo-rails">Turbo</a>.</p><div class="info"><p>Para saber mais sobre validações, consulte <a href="active_record_validations.html">Validações do Active Record</a>. Para saber mais sobre as mensagens de erro de
 validação, consulte <a href="active_record_validations.html#trabalhando-com-erros-de-validacao">Validações do Active Record § Trabalhando com Erros de
-Validação</a>.</p></div><h5 id="criando-um-novo-artigo-finalizando"><a class="anchorlink" href="#criando-um-novo-artigo-finalizando">6.3.4 Finalizando</a></h5><p>Agora podemos criar um artigo visitando <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a>.
+Validação</a>.</p></div><h5 id="criando-um-novo-artigo-finalizando"><a class="anchorlink" href="#criando-um-novo-artigo-finalizando">7.3.4 Finalizando</a></h5><p>Agora podemos criar um artigo visitando <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a>.
 Para finalizar, vamos criar um <em>link</em> para essa página na parte inferior da
 <em>view</em> <code>app/views/articles/index.html.erb</code>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Articles<span class="nt">&lt;/h1&gt;</span>
@@ -1465,7 +1479,7 @@ Para finalizar, vamos criar um <em>link</em> para essa página na parte inferior
 
 <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"New Article"</span><span class="p">,</span> <span class="n">new_article_path</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-25b9ce81ebf67a3d5989ce77f1178b6f">&lt;h1&gt;Articles&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-988b5c872c9de7af2be35f413d5bd204">&lt;h1&gt;Articles&lt;/h1&gt;
 
 &lt;ul&gt;
   &lt;% @articles.each do |article| %&gt;
@@ -1477,9 +1491,9 @@ Para finalizar, vamos criar um <em>link</em> para essa página na parte inferior
 
 &lt;%= link_to "New Article", new_article_path %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-25b9ce81ebf67a3d5989ce77f1178b6f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-988b5c872c9de7af2be35f413d5bd204">Copiar</button>
 </div>
-<h4 id="atualizando-um-artigo"><a class="anchorlink" href="#atualizando-um-artigo">6.4 Atualizando um Artigo</a></h4><p>Nós cobrimos o "CR" do CRUD. Agora, vamos passar para o "U" (<em>Update</em>, 
+<h4 id="atualizando-um-artigo"><a class="anchorlink" href="#atualizando-um-artigo">7.4 Atualizando um Artigo</a></h4><p>Nós cobrimos o "CR" do CRUD. Agora, vamos passar para o "U" (<em>Update</em>, 
 atualização). Atualizar um recurso é muito semelhante a criar um recurso. Ambos
 são processos de várias etapas. Primeiro, o usuário solicita um formulário para
 editar os dados. Se não houver erros, o recurso será atualizado. Caso contrário,
@@ -1505,7 +1519,7 @@ um <em>controller</em>. Vamos adicionar uma implementação típica dessas <em>a
     <span class="k">if</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">save</span>
       <span class="n">redirect_to</span> <span class="vi">@article</span>
     <span class="k">else</span>
-      <span class="n">render</span> <span class="ss">:new</span>
+      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">status: :unprocessable_entity</span>
     <span class="k">end</span>
   <span class="k">end</span>
 
@@ -1519,7 +1533,7 @@ um <em>controller</em>. Vamos adicionar uma implementação típica dessas <em>a
     <span class="k">if</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">article_params</span><span class="p">)</span>
       <span class="n">redirect_to</span> <span class="vi">@article</span>
     <span class="k">else</span>
-      <span class="n">render</span> <span class="ss">:edit</span>
+      <span class="n">render</span> <span class="ss">:edit</span><span class="p">,</span> <span class="ss">status: :unprocessable_entity</span>
     <span class="k">end</span>
   <span class="k">end</span>
 
@@ -1529,7 +1543,7 @@ um <em>controller</em>. Vamos adicionar uma implementação típica dessas <em>a
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-45789ba216a4b3a64ca95ff1f96f1847">class ArticlesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-67722779e1d5be9751de947c813f25d4">class ArticlesController &lt; ApplicationController
   def index
     @articles = Article.all
   end
@@ -1548,7 +1562,7 @@ um <em>controller</em>. Vamos adicionar uma implementação típica dessas <em>a
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -1562,7 +1576,7 @@ um <em>controller</em>. Vamos adicionar uma implementação típica dessas <em>a
     if @article.update(article_params)
       redirect_to @article
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -1572,7 +1586,7 @@ um <em>controller</em>. Vamos adicionar uma implementação típica dessas <em>a
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-45789ba216a4b3a64ca95ff1f96f1847">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-67722779e1d5be9751de947c813f25d4">Copiar</button>
 </div>
 <p>Observe como as <em>actions</em> <code>edit</code> e <code>update</code> se assemelham às <em>actions</em> <code>new</code> e
 <code>create</code>.</p><p>A <em>action</em> <code>edit</code> busca o artigo do banco de dados e o armazena em <code>@article</code>
@@ -1582,7 +1596,7 @@ atualizá-lo com os dados filtrados do formulário enviado por <code>article_par
 Se nenhuma validação falhar e a atualização for bem-sucedida, a <em>action</em>
 redireciona o navegador para a página do artigo. Caso contrário, a <em>action</em>
 exibe novamente o formulário com mensagens de erro, renderizando
-<code>app/views/articles/edit.html.erb</code>.</p><h5 id="utilizando-partials-para-compartilhar-codigo-de-view"><a class="anchorlink" href="#utilizando-partials-para-compartilhar-codigo-de-view">6.4.1 Utilizando <em>Partials</em> para Compartilhar Código de <em>View</em></a></h5><p>Nosso formulário <code>edit</code> terá a mesma aparência que o nosso formulário <code>new</code>. Até
+<code>app/views/articles/edit.html.erb</code> com um código de status 4XX para que a aplicação funcione bem com a <a href="https://github.com/hotwired/turbo-rails">Turbo</a>.</p><h5 id="utilizando-partials-para-compartilhar-codigo-de-view"><a class="anchorlink" href="#utilizando-partials-para-compartilhar-codigo-de-view">7.4.1 Utilizando <em>Partials</em> para Compartilhar Código de <em>View</em></a></h5><p>Nosso formulário <code>edit</code> terá a mesma aparência que o nosso formulário <code>new</code>. Até
 o código será o mesmo, graças ao construtor de formulários do Rails e ao
 roteamento de recursos. O construtor de formulários configura automaticamente o
 formulário para fazer o tipo apropriado de requisição, baseando-se sobre se o
@@ -1611,7 +1625,7 @@ seguinte conteúdo:</p><div class="code_container">
   <span class="nt">&lt;/div&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-224509363fd80af4992ad4d389a7f514">&lt;%= form_with model: article do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-88a8cfa9d8d77f0b65e3ecafb25ed16b">&lt;%= form_with model: article do |form| %&gt;
   &lt;div&gt;
     &lt;%= form.label :title %&gt;&lt;br&gt;
     &lt;%= form.text_field :title %&gt;
@@ -1633,23 +1647,23 @@ seguinte conteúdo:</p><div class="code_container">
   &lt;/div&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-224509363fd80af4992ad4d389a7f514">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-88a8cfa9d8d77f0b65e3ecafb25ed16b">Copiar</button>
 </div>
 <p>O código acima é igual ao nosso formulário em <code>app/views/articles/new.html.erb</code>,
 exceto que todas as ocorrências de <code>@article</code> foram substituídas por <code>article</code>.
 Como <em>partials</em> são códigos compartilhados, a melhor prática é que elas não
 dependam de variáveis de instância específicas definidas por uma <em>action</em> do
 <em>controller</em>. Em vez disso, passaremos o artigo para a <em>partial</em> como uma
-variável local.</p><p>Vamos atualizar <code>app/views/articles/new.html.erb</code> para utilizar a <em>partial</em> via <a href="https://api.rubyonrails.org/v6.1.4/classes/ActionView/Helpers/RenderingHelper.html#method-i-render"><code>render</code></a>:</p><div class="code_container">
+variável local.</p><p>Vamos atualizar <code>app/views/articles/new.html.erb</code> para utilizar a <em>partial</em> via <a href="https://api.rubyonrails.org/v7.0.0/classes/ActionView/Helpers/RenderingHelper.html#method-i-render"><code>render</code></a>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>New Article<span class="nt">&lt;/h1&gt;</span>
 
 <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"form"</span><span class="p">,</span> <span class="ss">article: </span><span class="vi">@article</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-eee48bf8f155ececb7956fd1c6fa2bad">&lt;h1&gt;New Article&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-9c3e1f76579171d19ca22c2a4a56a41e">&lt;h1&gt;New Article&lt;/h1&gt;
 
 &lt;%= render "form", article: @article %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-eee48bf8f155ececb7956fd1c6fa2bad">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9c3e1f76579171d19ca22c2a4a56a41e">Copiar</button>
 </div>
 <div class="note"><p>O nome do arquivo da <em>partial</em> deve ser prefixado <strong>com</strong> um sublinhado,
 por exemplo, <code>_form.html.erb</code>. Mas ao renderizar, ela é referenciada <strong>sem</strong> o
@@ -1659,14 +1673,14 @@ semelhante:</p><div class="code_container">
 
 <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s2">"form"</span><span class="p">,</span> <span class="ss">article: </span><span class="vi">@article</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7fee2a0514556c7817f1324076c5c383">&lt;h1&gt;Edit Article&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-ceba96168e192f1705f7607c124e6239">&lt;h1&gt;Edit Article&lt;/h1&gt;
 
 &lt;%= render "form", article: @article %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7fee2a0514556c7817f1324076c5c383">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ceba96168e192f1705f7607c124e6239">Copiar</button>
 </div>
 <div class="info"><p>Para saber mais sobre <em>partials</em>, consulte <a href="layouts_and_rendering.html#usando-partials">Layouts e Renderização no Rails § Usando
-Partials</a>.</p></div><h5 id="atualizando-um-artigo-finalizando"><a class="anchorlink" href="#atualizando-um-artigo-finalizando">6.4.2 Finalizando</a></h5><p>Agora podemos atualizar um artigo visitando sua página de edição, por exemplo,
+Partials</a>.</p></div><h5 id="atualizando-um-artigo-finalizando"><a class="anchorlink" href="#atualizando-um-artigo-finalizando">7.4.2 Finalizando</a></h5><p>Agora podemos atualizar um artigo visitando sua página de edição, por exemplo,
 <a href="http://localhost:3000/articles/1/edit">http://localhost:3000/articles/1/edit</a>. Para finalizar, vamos criar um <em>link</em>
 para a página de edição na parte inferior de <code>app/views/articles/show.html.erb</code>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">title</span> <span class="cp">%&gt;</span><span class="nt">&lt;/h1&gt;</span>
@@ -1677,7 +1691,7 @@ para a página de edição na parte inferior de <code>app/views/articles/show.ht
   <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Edit"</span><span class="p">,</span> <span class="n">edit_article_path</span><span class="p">(</span><span class="vi">@article</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7bfd10ae4948daa92e1746eb2d144ce9">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-f070020fd473c6f050d6dba000b41478">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
 
 &lt;p&gt;&lt;%= @article.body %&gt;&lt;/p&gt;
 
@@ -1685,9 +1699,9 @@ para a página de edição na parte inferior de <code>app/views/articles/show.ht
   &lt;li&gt;&lt;%= link_to "Edit", edit_article_path(@article) %&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7bfd10ae4948daa92e1746eb2d144ce9">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f070020fd473c6f050d6dba000b41478">Copiar</button>
 </div>
-<h4 id="deletando-um-artigo"><a class="anchorlink" href="#deletando-um-artigo">6.5 Deletando um Artigo</a></h4><p>Finalmente chegamos do "D" (<em>Delete</em> , destruição) do CRUD. Deletar um recurso é
+<h4 id="deletando-um-artigo"><a class="anchorlink" href="#deletando-um-artigo">7.5 Deletando um Artigo</a></h4><p>Finalmente chegamos do "D" (<em>Delete</em> , destruição) do CRUD. Deletar um recurso é
 um processo mais simples do que criar ou atualizar. Requer apenas uma rota e uma
 <em>action</em> do <em>controller</em>. E nosso roteamento de recursos (<code>resources :articles</code>)
 já fornece a rota que mapeia as requisições <code>DELETE /articles/:id</code> para a
@@ -1712,7 +1726,7 @@ já fornece a rota que mapeia as requisições <code>DELETE /articles/:id</code>
     <span class="k">if</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">save</span>
       <span class="n">redirect_to</span> <span class="vi">@article</span>
     <span class="k">else</span>
-      <span class="n">render</span> <span class="ss">:new</span>
+      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">status: :unprocessable_entity</span>
     <span class="k">end</span>
   <span class="k">end</span>
 
@@ -1726,7 +1740,7 @@ já fornece a rota que mapeia as requisições <code>DELETE /articles/:id</code>
     <span class="k">if</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">article_params</span><span class="p">)</span>
       <span class="n">redirect_to</span> <span class="vi">@article</span>
     <span class="k">else</span>
-      <span class="n">render</span> <span class="ss">:edit</span>
+      <span class="n">render</span> <span class="ss">:edit</span><span class="p">,</span> <span class="ss">status: :unprocessable_entity</span>
     <span class="k">end</span>
   <span class="k">end</span>
 
@@ -1743,7 +1757,7 @@ já fornece a rota que mapeia as requisições <code>DELETE /articles/:id</code>
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-89ca05d70e6238135acec9c479d75526">class ArticlesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-30de8370e37414c927faf35f88d7eb67">class ArticlesController &lt; ApplicationController
   def index
     @articles = Article.all
   end
@@ -1762,7 +1776,7 @@ já fornece a rota que mapeia as requisições <code>DELETE /articles/:id</code>
     if @article.save
       redirect_to @article
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -1776,7 +1790,7 @@ já fornece a rota que mapeia as requisições <code>DELETE /articles/:id</code>
     if @article.update(article_params)
       redirect_to @article
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -1793,9 +1807,9 @@ já fornece a rota que mapeia as requisições <code>DELETE /articles/:id</code>
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-89ca05d70e6238135acec9c479d75526">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-30de8370e37414c927faf35f88d7eb67">Copiar</button>
 </div>
-<p>A <em>action</em> <code>destroy</code> busca o artigo do banco de dados e chama o método <a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveRecord/Persistence.html#method-i-destroy"><code>destroy</code></a>
+<p>A <em>action</em> <code>destroy</code> busca o artigo do banco de dados e chama o método <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/Persistence.html#method-i-destroy"><code>destroy</code></a>
 do artigo. Em seguida, redireciona o navegador para o caminho raiz (<em>root
 path</em>).</p><p>Nós optamos por redirecionar para o caminho raiz porque esse é o nosso principal
 ponto de acesso para os artigos. Mas, em outras circunstâncias, você pode optar
@@ -1813,7 +1827,7 @@ própria página:</p><div class="code_container">
                   <span class="ss">data: </span><span class="p">{</span> <span class="ss">confirm: </span><span class="s2">"Are you sure?"</span> <span class="p">}</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2617177066b676d7144d04353781c9fb">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-f1434703b1f4e09f0b8c563429677ede">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
 
 &lt;p&gt;&lt;%= @article.body %&gt;&lt;/p&gt;
 
@@ -1824,7 +1838,7 @@ própria página:</p><div class="code_container">
                   data: { confirm: "Are you sure?" } %&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2617177066b676d7144d04353781c9fb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f1434703b1f4e09f0b8c563429677ede">Copiar</button>
 </div>
 <p>Nó código acima, estamos passando algumas opções adicionais para o <code>link_to</code>. A
 opção <code>method: :delete</code> faz com que o <em>link</em> faça uma requisição <code>DELETE</code> em vez
@@ -1835,15 +1849,15 @@ são alimentadas por um recurso do Rails chamado <em>JavaScript Discreto</em> (U
 arquivo JavaScript que implementa esses comportamentos é incluído por padrão em
 novas aplicações Rails.</p><div class="info"><p>Para saber mais sobre Javascript Discreto (<em>unobtrusive</em>), consulte
 <a href="working_with_javascript_in_rails.html">Trabalhando com JavaScript no Rails</a>.</p></div><p>E é isso! Agora podemos listar, exibir, criar, atualizar e deletar artigos!
-Incrível!</p><h3 id="adicionando-um-segundo-model"><a class="anchorlink" href="#adicionando-um-segundo-model">7 Adicionando um Segundo Model</a></h3><p>É hora de adicionar um segundo <em>model</em> à aplicação. O segundo <em>model</em> vai lidar com
-comentários em artigos.</p><h4 id="adicionando-um-segundo-model-gerando-um-model"><a class="anchorlink" href="#adicionando-um-segundo-model-gerando-um-model">7.1 Gerando um Model</a></h4><p>Nós veremos o mesmo <em>generator</em> que usamos antes quando criamos o <em>model</em>
+Incrível!</p><h3 id="adicionando-um-segundo-model"><a class="anchorlink" href="#adicionando-um-segundo-model">8 Adicionando um Segundo Model</a></h3><p>É hora de adicionar um segundo <em>model</em> à aplicação. O segundo <em>model</em> vai lidar com
+comentários em artigos.</p><h4 id="adicionando-um-segundo-model-gerando-um-model"><a class="anchorlink" href="#adicionando-um-segundo-model-gerando-um-model">8.1 Gerando um Model</a></h4><p>Nós veremos o mesmo <em>generator</em> que usamos antes quando criamos o <em>model</em>
 <code>Article</code> (artigo, inglês). Desta vez vamos criar um <em>model</em> <code>Comment</code> (comentário)
 que contém a referência para um artigo. Rode esse comando no seu terminal:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate model Comment commenter:string body:text article:references
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f855f4fd404cfc5a6a52f3dadd88e09b">bin/rails generate model Comment commenter:string body:text article:references
+<textarea class="clipboard-content" id="clipboard-4692f2f28d653375b3bdde2398641885">bin/rails generate model Comment commenter:string body:text article:references
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f855f4fd404cfc5a6a52f3dadd88e09b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4692f2f28d653375b3bdde2398641885">Copiar</button>
 </div>
 <p>Este comando vai gerar quatro arquivos:</p>
 <table>
@@ -1878,21 +1892,21 @@ que contém a referência para um artigo. Rode esse comando no seu terminal:</p>
   <span class="n">belongs_to</span> <span class="ss">:article</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-58a21401685ebb2394a76990204fb7c6">class Comment &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-9f03c61dc059c09a0e7d3112e1265bbd">class Comment &lt; ApplicationRecord
   belongs_to :article
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-58a21401685ebb2394a76990204fb7c6">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f03c61dc059c09a0e7d3112e1265bbd">Copiar</button>
 </div>
 <p>Isso é muito semelhante ao <em>model</em> <code>Article</code> que vimos antes. A diferença está na
 linha <code>belongs_to : article</code>, o que configura uma associação no <em>Active Record</em>.
-Você vai aprender um pouco sobre associações na próxima seção deste guia.</p><p>A palavra-chave (<code>:references</code>) usada no comando <code>bash</code> é um tipo especial de
+Você vai aprender um pouco sobre associações na próxima seção deste guia.</p><p>A palavra-chave (<code>:references</code>) usada no comando shell é um tipo especial de
 dado para <em>models</em>. Ela cria uma nova coluna na tabela do banco de dados com o
 nome fornecido ao <em>model</em> anexada a um <code>_id</code> que contém um valor do tipo
 <em>integer</em>. Para compreender melhor, analise o arquivo <code>db/schema.rb</code> depois de
 rodar a <em>migration</em>.</p><p>Além do <em>model</em>, o Rails também gerou a <em>migration</em> para criar a tabela
 correspondente no banco de dados:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateComments</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">6.0</span><span class="p">]</span>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">CreateComments</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
     <span class="n">create_table</span> <span class="ss">:comments</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
       <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:commenter</span>
@@ -1904,7 +1918,7 @@ correspondente no banco de dados:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f664ea2d8c3f1f2e5e4314603ed88023">class CreateComments &lt; ActiveRecord::Migration[6.0]
+<textarea class="clipboard-content" id="clipboard-9f29e60bda19ccae7211de4756e321b0">class CreateComments &lt; ActiveRecord::Migration[7.0]
   def change
     create_table :comments do |t|
       t.string :commenter
@@ -1916,7 +1930,7 @@ correspondente no banco de dados:</p><div class="code_container">
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f664ea2d8c3f1f2e5e4314603ed88023">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9f29e60bda19ccae7211de4756e321b0">Copiar</button>
 </div>
 <p>A linha <code>t.references</code> cria uma coluna com valores do tipo <em>integer</em> chamada
 <code>article_id</code>, um índice para ela e uma restrição de chave estrangeira (<em>foreign key</em>)
@@ -1924,9 +1938,9 @@ que aponta para a coluna <code>id</code> da tabela <code>articles</code>. Vá em
 <em>migration</em>:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b090773d2c44a8d64f7ec7e217e07f82">bin/rails db:migrate
+<textarea class="clipboard-content" id="clipboard-902792609198cff85fd2c9320b77bbbc">bin/rails db:migrate
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b090773d2c44a8d64f7ec7e217e07f82">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-902792609198cff85fd2c9320b77bbbc">Copiar</button>
 </div>
 <p>O Rails é inteligente o suficiente para executar somente as migrações que ainda
 não foram rodadas no banco de dados atual, assim neste caso você verá:</p><div class="code_container">
@@ -1935,14 +1949,14 @@ não foram rodadas no banco de dados atual, assim neste caso você verá:</p><di
    -&gt; 0.0115s
 ==  CreateComments: migrated (0.0119s) ========================================
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6d02a27d426dba319fedb14402d359c5">==  CreateComments: migrating =================================================
+<textarea class="clipboard-content" id="clipboard-bf2c20effc0b4d89ef1689df6f28c526">==  CreateComments: migrating =================================================
 -- create_table(:comments)
    -&gt; 0.0115s
 ==  CreateComments: migrated (0.0119s) ========================================
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6d02a27d426dba319fedb14402d359c5">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bf2c20effc0b4d89ef1689df6f28c526">Copiar</button>
 </div>
-<h4 id="associando-models"><a class="anchorlink" href="#associando-models">7.2 Associando Models</a></h4><p>Associações do <em>Active Record</em> permitem declarar facilmente a relação entre dois
+<h4 id="associando-models"><a class="anchorlink" href="#associando-models">8.2 Associando Models</a></h4><p>Associações do <em>Active Record</em> permitem declarar facilmente a relação entre dois
 <em>models</em>. No caso de comentários e artigos, você poderia descrever a relação
 da seguinte maneira:</p>
 <ul>
@@ -1956,11 +1970,11 @@ associação. Você já viu a linha de código dentro do <em>model</em> <code>Co
   <span class="n">belongs_to</span> <span class="ss">:article</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-87835f0b4596107702945d60c17a541f">class Comment &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-15db377a9cc1b80ca8ff8246dfe32431">class Comment &lt; ApplicationRecord
   belongs_to :article
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-87835f0b4596107702945d60c17a541f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-15db377a9cc1b80ca8ff8246dfe32431">Copiar</button>
 </div>
 <p>Você vai precisar editar o arquivo <code>app/models/article.rb</code> para adicionar o outro lado da
 associação:</p><div class="code_container">
@@ -1971,20 +1985,20 @@ associação:</p><div class="code_container">
   <span class="n">validates</span> <span class="ss">:body</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">length: </span><span class="p">{</span> <span class="ss">minimum: </span><span class="mi">10</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0bf27714500462a2c8201f237979b875">class Article &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-9e70d93c2e976380288713536025a215">class Article &lt; ApplicationRecord
   has_many :comments
 
   validates :title, presence: true
   validates :body, presence: true, length: { minimum: 10 }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0bf27714500462a2c8201f237979b875">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9e70d93c2e976380288713536025a215">Copiar</button>
 </div>
 <p>Estas duas declarações habilitam uma boa parte de comportamento automático. Por
 exemplo, se você possui uma instância da variável <code>@article</code> que contém um
 artigo, você pode recuperar todos os comentários pertencentes àquele artigo na
 forma de um <em>array</em> usando <code>@article.comments</code>.</p><div class="info"><p>Para mais informações sobre associações do <em>Active Record</em>, veja o guia
-<a href="association_basics.html">Associações no Active Record</a>.</p></div><h4 id="adicionando-a-rota-para-comentarios"><a class="anchorlink" href="#adicionando-a-rota-para-comentarios">7.3 Adicionando a Rota para Comentários</a></h4><p>Da mesma forma que o <em>controller</em> <code>articles</code>, nós vamos precisar adicionar a
+<a href="association_basics.html">Associações no Active Record</a>.</p></div><h4 id="adicionando-a-rota-para-comentarios"><a class="anchorlink" href="#adicionando-a-rota-para-comentarios">8.3 Adicionando a Rota para Comentários</a></h4><p>Da mesma forma que o <em>controller</em> <code>articles</code>, nós vamos precisar adicionar a
 rota para que o Rails saiba para onde queremos navegar para encontrar
 <code>comments</code>. Abra o arquivo <code>config/routes.rb</code> novamente e o edite da seguinte
 maneira:</p><div class="code_container">
@@ -1996,7 +2010,7 @@ maneira:</p><div class="code_container">
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a9ebc4ee98c3cc7afb3bc0a999f4cc41">Rails.application.routes.draw do
+<textarea class="clipboard-content" id="clipboard-669de2c1f2188a5a1bbb8dcdac2f9be7">Rails.application.routes.draw do
   root "articles#index"
 
   resources :articles do
@@ -2004,18 +2018,18 @@ maneira:</p><div class="code_container">
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a9ebc4ee98c3cc7afb3bc0a999f4cc41">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-669de2c1f2188a5a1bbb8dcdac2f9be7">Copiar</button>
 </div>
 <p>Isso cria <code>comments</code> como um recurso aninhado (<em>nested resource</em>) dentro de <code>article</code>. Essa é
 outra parte do processo para recuperar as relações hierárquicas que existem  entre
-artigos e comentários.</p><div class="info"><p>Para mais informações sobre rotas, veja o guia <a href="routing.html">Roteamento no Rails</a></p></div><h4 id="gerando-um-controller"><a class="anchorlink" href="#gerando-um-controller">7.4 Gerando um Controller</a></h4><p>Com o <em>model</em> em mãos, você pode voltar sua atenção para a criação do
+artigos e comentários.</p><div class="info"><p>Para mais informações sobre rotas, veja o guia <a href="routing.html">Roteamento no Rails</a></p></div><h4 id="gerando-um-controller"><a class="anchorlink" href="#gerando-um-controller">8.4 Gerando um Controller</a></h4><p>Com o <em>model</em> em mãos, você pode voltar sua atenção para a criação do
 <em>controller</em> correspondente. Mais uma vez, você vai usar o <em>generator</em> usado
 anteriormente:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate controller Comments
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b183dadd4396e52658c3f2c7b6acd80c">bin/rails generate controller Comments
+<textarea class="clipboard-content" id="clipboard-104032022702495e99e2372c3882dbcc">bin/rails generate controller Comments
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b183dadd4396e52658c3f2c7b6acd80c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-104032022702495e99e2372c3882dbcc">Copiar</button>
 </div>
 <p>Isso cria quatro arquivos e um diretório vazio:</p>
 <table>
@@ -2085,7 +2099,7 @@ para que possamos criar um novo comentários:</p><div class="code_container">
   <span class="nt">&lt;/p&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-223838b089efe15066f80053f3d9d323">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-feb304ef3be5a3fbabb48b31b9a55f70">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
 
 &lt;p&gt;&lt;%= @article.body %&gt;&lt;/p&gt;
 
@@ -2111,7 +2125,7 @@ para que possamos criar um novo comentários:</p><div class="code_container">
   &lt;/p&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-223838b089efe15066f80053f3d9d323">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-feb304ef3be5a3fbabb48b31b9a55f70">Copiar</button>
 </div>
 <p>Isso adiciona na página <em>show</em> do <code>Article</code> um formulário que cria um novo
 comentário chamando a <em>action</em> <code>create</code> no <code>CommentsController</code>. O <code>form_with</code>
@@ -2129,7 +2143,7 @@ aqui usa um <em>array</em> que vai construir uma rota aninhada, como <code>/arti
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-80148a9289e3ba3a07b70e294c858c02">class CommentsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-ec66fb429e60a408908a1650e5af48e3">class CommentsController &lt; ApplicationController
   def create
     @article = Article.find(params[:article_id])
     @comment = @article.comments.create(comment_params)
@@ -2142,7 +2156,7 @@ aqui usa um <em>array</em> que vai construir uma rota aninhada, como <code>/arti
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-80148a9289e3ba3a07b70e294c858c02">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ec66fb429e60a408908a1650e5af48e3">Copiar</button>
 </div>
 <p>Você verá um pouco mais de complexidade aqui do que no <em>controller</em> para
 artigos. Esse é o efeito colateral do aninhamento que você configurou. Cada
@@ -2195,7 +2209,7 @@ apareça, então vamos adicionar isso ao arquivo <code>app/views/articles/show.h
   <span class="nt">&lt;/p&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9de9d9ced3e33012065b1fc990566a5f">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-6da770c61996099b286ead51b863c20a">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
 
 &lt;p&gt;&lt;%= @article.body %&gt;&lt;/p&gt;
 
@@ -2234,12 +2248,12 @@ apareça, então vamos adicionar isso ao arquivo <code>app/views/articles/show.h
   &lt;/p&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9de9d9ced3e33012065b1fc990566a5f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6da770c61996099b286ead51b863c20a">Copiar</button>
 </div>
 <p>Agora podemos adicionar artigos e comentários ao seu blog e mostrá-los nos
-lugares certos.</p><p><img src="images/getting_started/article_with_comments.png" alt="Article with Comments"></p><h3 id="refatorando"><a class="anchorlink" href="#refatorando">8 Refatorando</a></h3><p>Agora que nossos artigos e comentários funcionam, dê uma olhada no template
+lugares certos.</p><p><img src="images/getting_started/article_with_comments.png" alt="Article with Comments"></p><h3 id="refatorando"><a class="anchorlink" href="#refatorando">9 Refatorando</a></h3><p>Agora que nossos artigos e comentários funcionam, dê uma olhada no template
 <code>app/views/articles/show.html.erb</code>. Ele está ficando longo e esquisito. Nós
-podemos usar <em>partials</em> (<em>views</em> parciais) para melhorá-lo.</p><h4 id="renderizando-colecoes-de-partials"><a class="anchorlink" href="#renderizando-colecoes-de-partials">8.1 Renderizando Coleções de <em>Partials</em></a></h4><p>Primeiramente, nós vamos criar uma <em>partial</em> para extrair a exibição de todos os
+podemos usar <em>partials</em> (<em>views</em> parciais) para melhorá-lo.</p><h4 id="renderizando-colecoes-de-partials"><a class="anchorlink" href="#renderizando-colecoes-de-partials">9.1 Renderizando Coleções de <em>Partials</em></a></h4><p>Primeiramente, nós vamos criar uma <em>partial</em> para extrair a exibição de todos os
 comentários para o artigo. Crie o arquivo <code>app/views/comments/_comment.html.erb</code>
 e insira o código a seguir:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;p&gt;</span>
@@ -2252,7 +2266,7 @@ e insira o código a seguir:</p><div class="code_container">
   <span class="cp">&lt;%=</span> <span class="n">comment</span><span class="p">.</span><span class="nf">body</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/p&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ec120279d498436e0274f62997a9fc62">&lt;p&gt;
+<textarea class="clipboard-content" id="clipboard-9762dcaaf96e4d25696eda9c72cdc52f">&lt;p&gt;
   &lt;strong&gt;Commenter:&lt;/strong&gt;
   &lt;%= comment.commenter %&gt;
 &lt;/p&gt;
@@ -2262,7 +2276,7 @@ e insira o código a seguir:</p><div class="code_container">
   &lt;%= comment.body %&gt;
 &lt;/p&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ec120279d498436e0274f62997a9fc62">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9762dcaaf96e4d25696eda9c72cdc52f">Copiar</button>
 </div>
 <p>Então você pode mudar <code>app/views/articles/show.html.erb</code> para o seguinte código:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">title</span> <span class="cp">%&gt;</span><span class="nt">&lt;/h1&gt;</span>
@@ -2294,7 +2308,7 @@ e insira o código a seguir:</p><div class="code_container">
   <span class="nt">&lt;/p&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e0899e35890dbf3784cdc8724fcc35ce">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-fa266ff0af25966adee04dc9c3de1668">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
 
 &lt;p&gt;&lt;%= @article.body %&gt;&lt;/p&gt;
 
@@ -2323,14 +2337,14 @@ e insira o código a seguir:</p><div class="code_container">
   &lt;/p&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e0899e35890dbf3784cdc8724fcc35ce">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-fa266ff0af25966adee04dc9c3de1668">Copiar</button>
 </div>
 <p>Isso fará com que a <em>partial</em> seja renderizada em <code>app/views/comments/_comment.html.erb</code>
 uma vez para cada comentário na coleção <code>@article.comments</code>. Como o método
 <code>render</code> itera sobre a coleção <code>@article.comments</code>, ele designa cada comentário
 para uma variável local nomeada como a <em>partial</em>, nesse caso <code>comment</code>, que então
-fica disponível para ser exibida na <em>partial</em>.</p><h4 id="renderizando-um-formulario-com-partial"><a class="anchorlink" href="#renderizando-um-formulario-com-partial">8.2 Renderizando um Formulário com <em>Partial</em></a></h4><p>Agora vamos mover aquela nova seção de comentários para sua própria <em>partial</em>.
-Novamente, crie o arquivo <code>app/viewscomments/_form.html.erb</code> contendo:</p><div class="code_container">
+fica disponível para ser exibida na <em>partial</em>.</p><h4 id="renderizando-um-formulario-com-partial"><a class="anchorlink" href="#renderizando-um-formulario-com-partial">9.2 Renderizando um Formulário com <em>Partial</em></a></h4><p>Agora vamos mover aquela nova seção de comentários para sua própria <em>partial</em>.
+Novamente, crie o arquivo <code>app/views/comments/_form.html.erb</code> contendo:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="p">[</span> <span class="vi">@article</span><span class="p">,</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">comments</span><span class="p">.</span><span class="nf">build</span> <span class="p">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   <span class="nt">&lt;p&gt;</span>
     <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">label</span> <span class="ss">:commenter</span> <span class="cp">%&gt;</span><span class="nt">&lt;br&gt;</span>
@@ -2345,7 +2359,7 @@ Novamente, crie o arquivo <code>app/viewscomments/_form.html.erb</code> contendo
   <span class="nt">&lt;/p&gt;</span>
 <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d086e4aae4f512ecb6ce2cda18169177">&lt;%= form_with model: [ @article, @article.comments.build ] do |form| %&gt;
+<textarea class="clipboard-content" id="clipboard-0dc42b008ab7bf8359ecb3d184d27f7e">&lt;%= form_with model: [ @article, @article.comments.build ] do |form| %&gt;
   &lt;p&gt;
     &lt;%= form.label :commenter %&gt;&lt;br&gt;
     &lt;%= form.text_field :commenter %&gt;
@@ -2359,7 +2373,7 @@ Novamente, crie o arquivo <code>app/viewscomments/_form.html.erb</code> contendo
   &lt;/p&gt;
 &lt;% end %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d086e4aae4f512ecb6ce2cda18169177">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0dc42b008ab7bf8359ecb3d184d27f7e">Copiar</button>
 </div>
 <p>Então deixe o arquivo <code>app/views/articles/show.html.erb</code> assim:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">title</span> <span class="cp">%&gt;</span><span class="nt">&lt;/h1&gt;</span>
@@ -2379,7 +2393,7 @@ Novamente, crie o arquivo <code>app/viewscomments/_form.html.erb</code> contendo
 <span class="nt">&lt;h2&gt;</span>Add a comment:<span class="nt">&lt;/h2&gt;</span>
 <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'comments/form'</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9761f247c5c9bc759a7e11ff179dbb95">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-7ccd98d9218b836f1a147bbb7f6a5a79">&lt;h1&gt;&lt;%= @article.title %&gt;&lt;/h1&gt;
 
 &lt;p&gt;&lt;%= @article.body %&gt;&lt;/p&gt;
 
@@ -2396,22 +2410,64 @@ Novamente, crie o arquivo <code>app/viewscomments/_form.html.erb</code> contendo
 &lt;h2&gt;Add a comment:&lt;/h2&gt;
 &lt;%= render 'comments/form' %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9761f247c5c9bc759a7e11ff179dbb95">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7ccd98d9218b836f1a147bbb7f6a5a79">Copiar</button>
 </div>
 <p>O segundo <em>render</em> apenas define o template de <em>partial</em> que queremos renderizar,
 <code>comments/form</code>. O Rails é inteligente o suficiente para entender a barra nessa
 string e perceber que você quer renderizar o arquivo <code>_form.html.erb</code> no
 diretório <code>app/views/comments</code>.</p><p>O objeto <code>@article</code> está disponível para todas as <em>partials</em> renderizadas na view
-porque o definimos como uma variável de instância.</p><h4 id="usando-concerns"><a class="anchorlink" href="#usando-concerns">8.3 Usando <em>Concerns</em></a></h4><p><em>Concerns</em> são uma forma de tornar grandes <em>controllers</em> ou <em>models</em> mais fáceis de entender e gerenciar. Isso também tem a vantagem de ser reutilizável quando vários <em>models</em> (ou <em>controllers</em>) compartilham as mesmas preocupações. As <em>concerns</em> são implementadas usando módulos (<code>module</code>) que contêm métodos que representam uma fatia bem definida da funcionalidade pela qual um <em>model</em> ou <em>controller</em> é responsável. Em outras linguagens, os módulos costumam ser conhecidos como <em>mixins</em>.</p><p>Você pode usar as <em>concerns</em> em seu <em>controller</em> ou <em>model</em> da mesma forma que usaria qualquer módulo. Quando você criou sua aplicação pela primeira vez com <code>rails new blog</code>, duas pastas foram criadas dentro de <code>app/</code> junto com o resto:</p><div class="code_container">
+porque o definimos como uma variável de instância.</p><h4 id="usando-concerns"><a class="anchorlink" href="#usando-concerns">9.3 Usando <em>Concerns</em></a></h4><p><em>Concerns</em> são uma forma de tornar grandes <em>controllers</em> ou <em>models</em> mais fáceis de entender e gerenciar. Isso também tem a vantagem de ser reutilizável quando vários <em>models</em> (ou <em>controllers</em>) compartilham as mesmas preocupações. As <em>concerns</em> são implementadas usando módulos (<code>module</code>) que contêm métodos que representam uma fatia bem definida da funcionalidade pela qual um <em>model</em> ou <em>controller</em> é responsável. Em outras linguagens, os módulos costumam ser conhecidos como <em>mixins</em>.</p><p>Você pode usar as <em>concerns</em> em seu <em>controller</em> ou <em>model</em> da mesma forma que usaria qualquer módulo. Quando você criou sua aplicação pela primeira vez com <code>rails new blog</code>, duas pastas foram criadas dentro de <code>app/</code> junto com o resto:</p><div class="code_container">
 <pre><code class="highlight plaintext">app/controllers/concerns
 app/models/concerns
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-d59ebc932833ece9b921015eec249f8f">app/controllers/concerns
+<textarea class="clipboard-content" id="clipboard-e5391798bfcc503dc1e64b732df7f46c">app/controllers/concerns
 app/models/concerns
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-d59ebc932833ece9b921015eec249f8f">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e5391798bfcc503dc1e64b732df7f46c">Copiar</button>
 </div>
-<p> Um determinado artigo do blog pode ter vários status - por exemplo, pode ser visível para todos (ou seja, <code>public</code>), ou visível apenas para o autor (ou seja, <code>private</code>). Também pode estar oculto para todos, mas ainda pode ser recuperado (ou seja, <code>archived</code>). Os comentários também podem estar ocultos ou visíveis. Isso pode ser representado usando uma coluna <code>status</code> em cada um dos <em>models</em>.</p><p>Dentro do <em>model</em> <code>article</code>, após executar uma <em>migration</em> para adicionar uma coluna <code>status</code>, você pode adicionar:</p><div class="code_container">
+<p> Um determinado artigo do blog pode ter vários status - por exemplo, pode ser visível para todos (ou seja, <code>public</code>), ou visível apenas para o autor (ou seja, <code>private</code>). Também pode estar oculto para todos, mas ainda pode ser recuperado (ou seja, <code>archived</code>). Os comentários também podem estar ocultos ou visíveis. Isso pode ser representado usando uma coluna <code>status</code> em cada um dos <em>models</em>.</p><p>Primeiro, vamos executar as seguintes <em>migrations</em> para adicionar <code>status</code> a <code>Articles</code> e <code>Comments</code>:</p><div class="code_container">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddStatusToArticles status:string
+<span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddStatusToComments status:string
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-32ff3598769de747158234871ca768d5">bin/rails generate migration AddStatusToArticles status:string
+bin/rails generate migration AddStatusToComments status:string
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-32ff3598769de747158234871ca768d5">Copiar</button>
+</div>
+<p>E a seguir, vamos atualizar o banco de dados com as <em>migrations</em> geradas:</p><div class="code_container">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-60219ed6a7659c15c3af8d3c5be9f6d2">bin/rails db:migrate
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-60219ed6a7659c15c3af8d3c5be9f6d2">Copiar</button>
+</div>
+<div class="info"><p>para saber mais sobre <em>migrations</em>, consulte <a href="active_record_migrations.html"><em>Migrations</em> do <em>Active Record</em></a>.</p></div><p>Também temos que permitir a chave <code>:status</code> como parte do <em>strong parameters</em>, em <code>app/controllers/articles_controller.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby">  <span class="kp">private</span>
+    <span class="k">def</span> <span class="nf">article_params</span>
+      <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:article</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:body</span><span class="p">,</span> <span class="ss">:status</span><span class="p">)</span>
+    <span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-597b0c3a52cd5e1bab1344a7614d35f3">  private
+    def article_params
+      params.require(:article).permit(:title, :body, :status)
+    end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-597b0c3a52cd5e1bab1344a7614d35f3">Copiar</button>
+</div>
+<p>e em <code>app/controllers/comments_controller.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby">  <span class="kp">private</span>
+    <span class="k">def</span> <span class="nf">comment_params</span>
+      <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:comment</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:commenter</span><span class="p">,</span> <span class="ss">:body</span><span class="p">,</span> <span class="ss">:status</span><span class="p">)</span>
+    <span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-593bebcc35ef12e18b05975104f7e673">  private
+    def comment_params
+      params.require(:comment).permit(:commenter, :body, :status)
+    end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-593bebcc35ef12e18b05975104f7e673">Copiar</button>
+</div>
+<p>Dentro do <em>model</em> <code>article</code>, após executar uma <em>migration</em> para adicionar uma coluna <code>status</code> usando o comando <code>bin/rails db:migrate</code>, você adicionaria:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">has_many</span> <span class="ss">:comments</span>
 
@@ -2427,7 +2483,7 @@ app/models/concerns
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-de2fc82731bdca41902f7fbe319fcd59">class Article &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-e59be0f8c408f2470c0e0432ce48848e">class Article &lt; ApplicationRecord
   has_many :comments
 
   validates :title, presence: true
@@ -2442,7 +2498,7 @@ app/models/concerns
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-de2fc82731bdca41902f7fbe319fcd59">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e59be0f8c408f2470c0e0432ce48848e">Copiar</button>
 </div>
 <p>e no <em>model</em> <code>Comment</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Comment</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
@@ -2457,7 +2513,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0dac59899e1aa719743c83219c292d2c">class Comment &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-bf0f4c27e7b25e61b7a7691926197982">class Comment &lt; ApplicationRecord
   belongs_to :article
 
   VALID_STATUSES = ['public', 'private', 'archived']
@@ -2469,7 +2525,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0dac59899e1aa719743c83219c292d2c">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-bf0f4c27e7b25e61b7a7691926197982">Copiar</button>
 </div>
 <p>Então, em nossa <em>action</em> <code>index</code> (<code>app/views/articles/index.html.erb</code>), usaríamos o método <code>archived?</code> Para evitar a exibição de qualquer artigo que está arquivado:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Articles<span class="nt">&lt;/h1&gt;</span>
@@ -2486,7 +2542,7 @@ end
 
 <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"New Article"</span><span class="p">,</span> <span class="n">new_article_path</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2da8674e749020d0bc38fda5992a2852">&lt;h1&gt;Articles&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-dc33f14bfba5246a44b00642374941f6">&lt;h1&gt;Articles&lt;/h1&gt;
 
 &lt;ul&gt;
   &lt;% @articles.each do |article| %&gt;
@@ -2500,7 +2556,34 @@ end
 
 &lt;%= link_to "New Article", new_article_path %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2da8674e749020d0bc38fda5992a2852">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-dc33f14bfba5246a44b00642374941f6">Copiar</button>
+</div>
+<p>Da mesma forma, em nossa <em>views</em> parcial de comentários (<code>app/views/comments/_comment.html.erb</code>) usaríamos o método <code>archived?</code> para evitar a exibição de qualquer comentário arquivado:</p><div class="code_container">
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="k">unless</span> <span class="n">comment</span><span class="p">.</span><span class="nf">archived?</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;strong&gt;</span>Commenter:<span class="nt">&lt;/strong&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">comment</span><span class="p">.</span><span class="nf">commenter</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+
+  <span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;strong&gt;</span>Comment:<span class="nt">&lt;/strong&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">comment</span><span class="p">.</span><span class="nf">body</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1f1ac7237d9e573f9a8c04ca20bcd44a">&lt;% unless comment.archived? %&gt;
+  &lt;p&gt;
+    &lt;strong&gt;Commenter:&lt;/strong&gt;
+    &lt;%= comment.commenter %&gt;
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    &lt;strong&gt;Comment:&lt;/strong&gt;
+    &lt;%= comment.body %&gt;
+  &lt;/p&gt;
+&lt;% end %&gt;
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1f1ac7237d9e573f9a8c04ca20bcd44a">Copiar</button>
 </div>
 <p>No entanto, se você olhar novamente para nossos <em>models</em> agora, pode ver que a lógica está duplicada. Se, no futuro, aumentarmos a funcionalidade do nosso blog - para incluir mensagens privadas, por exemplo - podemos ver a duplicação de lógica mais uma vez. É aqui que as <em>concerns</em> são úteis.</p><p>Uma <em>concerns</em> é responsável apenas por um subconjunto específico da responsabilidade do <em>model</em>; os métodos na nossa <em>concern</em> estarão todos relacionados à visibilidade de um <em>model</em>. Vamos chamar nossa nova <em>concern</em> (módulo) de <code>Visible</code>. Podemos criar um novo arquivo dentro de <code>app/models/concerns</code> chamado<code>visible.rb</code>, e armazenar todos os métodos de status que foram duplicados nos <em>models</em>.</p><p><code>app/models/concerns/visible.rb</code></p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">Visible</span>
@@ -2509,15 +2592,15 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e483f7e6fab937ec2bcbfacf973b6959">module Visible
+<textarea class="clipboard-content" id="clipboard-24f558e1512dd912d5e7272929ed972c">module Visible
   def archived?
     status == 'archived'
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e483f7e6fab937ec2bcbfacf973b6959">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-24f558e1512dd912d5e7272929ed972c">Copiar</button>
 </div>
-<p>Podemos adicionar nossa validação de status à <em>concern</em>, mas isso é um pouco mais complexo, pois as validações são métodos chamados no nível da classe. O <code>ActiveSupport::Concern</code> (<a href="https://api.rubyonrails.org/v6.1.4/classes/ActiveSupport/Concern.html">API Guide</a>) nos dá uma maneira mais simples de incluí-los:</p><div class="code_container">
+<p>Podemos adicionar nossa validação de status à <em>concern</em>, mas isso é um pouco mais complexo, pois as validações são métodos chamados no nível da classe. O <code>ActiveSupport::Concern</code> (<a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveSupport/Concern.html">API Guide</a>) nos dá uma maneira mais simples de incluí-los:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">Visible</span>
   <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Concern</span>
 
@@ -2532,7 +2615,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6de40982fa10855433582b0fa4e61513">module Visible
+<textarea class="clipboard-content" id="clipboard-a9b58649e87d6f70de34e87eb62ffca0">module Visible
   extend ActiveSupport::Concern
 
   VALID_STATUSES = ['public', 'private', 'archived']
@@ -2546,39 +2629,43 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6de40982fa10855433582b0fa4e61513">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a9b58649e87d6f70de34e87eb62ffca0">Copiar</button>
 </div>
 <p>Agora, podemos remover a lógica duplicada de cada <em>model</em> e, em vez disso, incluir nosso novo módulo <code>Visible</code>:</p><p>Em <code>app/models/article.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="kp">include</span> <span class="no">Visible</span>
+
   <span class="n">has_many</span> <span class="ss">:comments</span>
 
   <span class="n">validates</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
   <span class="n">validates</span> <span class="ss">:body</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">length: </span><span class="p">{</span> <span class="ss">minimum: </span><span class="mi">10</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-fb9aec532e8fa322f34877982846dfaa">class Article &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-8a6123aad6d44666559bdd3fd2552040">class Article &lt; ApplicationRecord
   include Visible
+
   has_many :comments
 
   validates :title, presence: true
   validates :body, presence: true, length: { minimum: 10 }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-fb9aec532e8fa322f34877982846dfaa">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-8a6123aad6d44666559bdd3fd2552040">Copiar</button>
 </div>
 <p>e em <code>app/models/comment.rb</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Comment</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="kp">include</span> <span class="no">Visible</span>
+
   <span class="n">belongs_to</span> <span class="ss">:article</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2cbbb0875fe1d73ff275305b56f5bfaf">class Comment &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-57d2d01e7c38efeb2170575257ba6be5">class Comment &lt; ApplicationRecord
   include Visible
+
   belongs_to :article
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2cbbb0875fe1d73ff275305b56f5bfaf">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-57d2d01e7c38efeb2170575257ba6be5">Copiar</button>
 </div>
 <p>Os métodos de classe também podem ser adicionados às <em>concerns</em>. Se quisermos que uma contagem de artigos públicos ou comentários sejam exibidos em nossa página principal, podemos adicionar um método de classe a <code>Visible</code> da seguinte maneira:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">Visible</span>
@@ -2601,7 +2688,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-679b4fe69aaf40bdcdba87d531c63eae">module Visible
+<textarea class="clipboard-content" id="clipboard-479a5fce3c3e1a021227d3a7caf47fc5">module Visible
   extend ActiveSupport::Concern
 
   VALID_STATUSES = ['public', 'private', 'archived']
@@ -2621,7 +2708,7 @@ end
   end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-679b4fe69aaf40bdcdba87d531c63eae">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-479a5fce3c3e1a021227d3a7caf47fc5">Copiar</button>
 </div>
 <p>Então, na <em>view</em>, você pode chamá-lo como qualquer método de classe:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;h1&gt;</span>Articles<span class="nt">&lt;/h1&gt;</span>
@@ -2630,64 +2717,33 @@ Our blog has <span class="cp">&lt;%=</span> <span class="no">Article</span><span
 
 <span class="nt">&lt;ul&gt;</span>
   <span class="cp">&lt;%</span> <span class="vi">@articles</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">article</span><span class="o">|</span> <span class="cp">%&gt;</span>
-    <span class="nt">&lt;li&gt;</span>
-      <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="n">article</span><span class="p">.</span><span class="nf">title</span><span class="p">,</span> <span class="n">article</span> <span class="cp">%&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
+    <span class="cp">&lt;%</span> <span class="k">unless</span> <span class="n">article</span><span class="p">.</span><span class="nf">archived?</span> <span class="cp">%&gt;</span>
+      <span class="nt">&lt;li&gt;</span>
+        <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="n">article</span><span class="p">.</span><span class="nf">title</span><span class="p">,</span> <span class="n">article</span> <span class="cp">%&gt;</span>
+      <span class="nt">&lt;/li&gt;</span>
+    <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
 
 <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"New Article"</span><span class="p">,</span> <span class="n">new_article_path</span> <span class="cp">%&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ec79be0724771f66aacdc4d9201e061f">&lt;h1&gt;Articles&lt;/h1&gt;
+<textarea class="clipboard-content" id="clipboard-5037793309da8962eabf2e5c3b40d167">&lt;h1&gt;Articles&lt;/h1&gt;
 
 Our blog has &lt;%= Article.public_count %&gt; articles and counting!
 
 &lt;ul&gt;
   &lt;% @articles.each do |article| %&gt;
-    &lt;li&gt;
-      &lt;%= link_to article.title, article %&gt;
-    &lt;/li&gt;
+    &lt;% unless article.archived? %&gt;
+      &lt;li&gt;
+        &lt;%= link_to article.title, article %&gt;
+      &lt;/li&gt;
+    &lt;% end %&gt;
   &lt;% end %&gt;
 &lt;/ul&gt;
 
 &lt;%= link_to "New Article", new_article_path %&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ec79be0724771f66aacdc4d9201e061f">Copiar</button>
-</div>
-<p>Existem mais algumas etapas a serem realizadas antes que nossa aplicaçãi funcione com a adição da coluna <code>status</code>. Primeiro, vamos executar as seguintes <em>migrations</em> para adicionar <code>status</code> aos <code>Articles</code> e <code>Comments</code>:</p><div class="code_container">
-<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddStatusToArticles status:string
-<span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate migration AddStatusToComments status:string
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-7a4225f5f955db57dacd03a2e5eaf145">bin/rails generate migration AddStatusToArticles status:string
-bin/rails generate migration AddStatusToComments status:string
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7a4225f5f955db57dacd03a2e5eaf145">Copiar</button>
-</div>
-<div class="info"><p>Para aprender mais sobre <em>migrations</em>, veja em <a href="active_record_migrations.html">Active Record Migrations</a>.</p></div><p>Também temos que permitir a chave <code>:status</code> como parte do parâmetro (usando <em>strong parameters</em>), em <code>app/controllers/articles_controller.rb</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="kp">private</span>
-    <span class="k">def</span> <span class="nf">article_params</span>
-      <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:article</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:body</span><span class="p">,</span> <span class="ss">:status</span><span class="p">)</span>
-    <span class="k">end</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-90a3ef7a8e4d15130a1711de4cb65bdb">private
-    def article_params
-      params.require(:article).permit(:title, :body, :status)
-    end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-90a3ef7a8e4d15130a1711de4cb65bdb">Copiar</button>
-</div>
-<p>e em <code>app/controllers/comments_controller.rb</code>:</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="kp">private</span>
-    <span class="k">def</span> <span class="nf">comment_params</span>
-      <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:comment</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:commenter</span><span class="p">,</span> <span class="ss">:body</span><span class="p">,</span> <span class="ss">:status</span><span class="p">)</span>
-    <span class="k">end</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-4c875e19733bcda8309cd27333d9a464">private
-    def comment_params
-      params.require(:comment).permit(:commenter, :body, :status)
-    end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4c875e19733bcda8309cd27333d9a464">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5037793309da8962eabf2e5c3b40d167">Copiar</button>
 </div>
 <p>Para finalizar, adicionaremos uma caixa de seleção aos formulários e permitiremos que o usuário selecione o status ao criar um novo artigo ou postar um novo comentário. Também podemos especificar o status padrão como <code>public</code>. Em <code>app/views/articles/_form.html.erb</code>, podemos adicionar:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;div&gt;</span>
@@ -2695,12 +2751,12 @@ bin/rails generate migration AddStatusToComments status:string
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">select</span> <span class="ss">:status</span><span class="p">,</span> <span class="p">[</span><span class="s1">'public'</span><span class="p">,</span> <span class="s1">'private'</span><span class="p">,</span> <span class="s1">'archived'</span><span class="p">],</span> <span class="ss">selected: </span><span class="s1">'public'</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0a911a7225d4b5aad8983ec3a7fcc621">&lt;div&gt;
+<textarea class="clipboard-content" id="clipboard-ead01c295120b341dc102bbe92f58c94">&lt;div&gt;
   &lt;%= form.label :status %&gt;&lt;br&gt;
   &lt;%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %&gt;
 &lt;/div&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0a911a7225d4b5aad8983ec3a7fcc621">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ead01c295120b341dc102bbe92f58c94">Copiar</button>
 </div>
 <p>e em <code>app/views/comments/_form.html.erb</code>:</p><div class="code_container">
 <pre><code class="highlight erb"><span class="nt">&lt;p&gt;</span>
@@ -2708,14 +2764,14 @@ bin/rails generate migration AddStatusToComments status:string
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">select</span> <span class="ss">:status</span><span class="p">,</span> <span class="p">[</span><span class="s1">'public'</span><span class="p">,</span> <span class="s1">'private'</span><span class="p">,</span> <span class="s1">'archived'</span><span class="p">],</span> <span class="ss">selected: </span><span class="s1">'public'</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/p&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0adcc5692ce8b48a39a0571c811543cb">&lt;p&gt;
+<textarea class="clipboard-content" id="clipboard-1a21f8de44ad6a704ce2d948ac202f71">&lt;p&gt;
   &lt;%= form.label :status %&gt;&lt;br&gt;
   &lt;%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %&gt;
 &lt;/p&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0adcc5692ce8b48a39a0571c811543cb">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1a21f8de44ad6a704ce2d948ac202f71">Copiar</button>
 </div>
-<h3 id="deletando-comentarios"><a class="anchorlink" href="#deletando-comentarios">9 Deletando Comentários</a></h3><p>Outra importante <em>feature</em> de um blog é excluir comentários de spam. Para fazer
+<h3 id="deletando-comentarios"><a class="anchorlink" href="#deletando-comentarios">10 Deletando Comentários</a></h3><p>Outra importante <em>feature</em> de um blog é excluir comentários de spam. Para fazer
 isto, nós precisamos implementar um link de alguma <em>view</em> e uma <em>action</em>
 <code>destroy</code> no <code>CommentsController</code>.</p><p>Primeiro, vamos adicionar o link <em>delete</em> na <em>partial</em>
 <code>app/views/comments/_comment.html.erb</code>:</p><div class="code_container">
@@ -2735,7 +2791,7 @@ isto, nós precisamos implementar um link de alguma <em>view</em> e uma <em>acti
               <span class="ss">data: </span><span class="p">{</span> <span class="ss">confirm: </span><span class="s2">"Are you sure?"</span> <span class="p">}</span> <span class="cp">%&gt;</span>
 <span class="nt">&lt;/p&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-04f8bf74689617d2339af3bac071cd68">&lt;p&gt;
+<textarea class="clipboard-content" id="clipboard-4e8fa38e5bb983c453410c685972ce32">&lt;p&gt;
   &lt;strong&gt;Autor do comentário:&lt;/strong&gt;
   &lt;%= comment.commenter %&gt;
 &lt;/p&gt;
@@ -2751,7 +2807,7 @@ isto, nós precisamos implementar um link de alguma <em>view</em> e uma <em>acti
               data: { confirm: "Are you sure?" } %&gt;
 &lt;/p&gt;
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-04f8bf74689617d2339af3bac071cd68">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4e8fa38e5bb983c453410c685972ce32">Copiar</button>
 </div>
 <p>Clicar neste novo link "Destruir comentário" será disparado um <code>DELETE
 /articles/:article_id/comments/:id</code> ao nosso <code>CommentsController</code>, que
@@ -2773,11 +2829,11 @@ uma ação <code>destroy</code> ao nosso <em>controller</em> (<code>app/controll
 
   <span class="kp">private</span>
     <span class="k">def</span> <span class="nf">comment_params</span>
-      <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:comment</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:commenter</span><span class="p">,</span> <span class="ss">:body</span><span class="p">)</span>
+      <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:comment</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:commenter</span><span class="p">,</span> <span class="ss">:body</span><span class="p">,</span> <span class="ss">:status</span><span class="p">)</span>
     <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6cfdc7422ad454b15fd6aae7358d7626">class CommentsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-b26851232cba4a0916702974efaaf9ec">class CommentsController &lt; ApplicationController
   def create
     @article = Article.find(params[:article_id])
     @comment = @article.comments.create(comment_params)
@@ -2793,15 +2849,15 @@ uma ação <code>destroy</code> ao nosso <em>controller</em> (<code>app/controll
 
   private
     def comment_params
-      params.require(:comment).permit(:commenter, :body)
+      params.require(:comment).permit(:commenter, :body, :status)
     end
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6cfdc7422ad454b15fd6aae7358d7626">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b26851232cba4a0916702974efaaf9ec">Copiar</button>
 </div>
 <p>A <em>action</em> <code>destroy</code> vai encontrar o artigo que estamos vendo, localizar o
 comentário na <em>collection</em> <code>@article.comments</code>, removê-lo do seu banco de
-dados e nos enviar de volta para a <em>action</em> <code>show</code> do artigo.</p><h4 id="excluindo-objetos-associados"><a class="anchorlink" href="#excluindo-objetos-associados">9.1 Excluindo objetos associados</a></h4><p>Se você excluir um artigo, os comentários (comments) associados também precisarão ser
+dados e nos enviar de volta para a <em>action</em> <code>show</code> do artigo.</p><h4 id="excluindo-objetos-associados"><a class="anchorlink" href="#excluindo-objetos-associados">10.1 Excluindo objetos associados</a></h4><p>Se você excluir um artigo, os comentários (comments) associados também precisarão ser
 excluídos, caso contrário, eles simplesmente ocupariam espaço no banco de dados.
 O Rails permite que você use a opção <code>dependent</code> de uma associação para conseguir isso.
 Modifique o Modelo de artigo (article), <code>app/models/article.rb</code>, da seguinte forma:</p><div class="code_container">
@@ -2814,7 +2870,7 @@ Modifique o Modelo de artigo (article), <code>app/models/article.rb</code>, da s
   <span class="n">validates</span> <span class="ss">:body</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">length: </span><span class="p">{</span> <span class="ss">minimum: </span><span class="mi">10</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-acbdac10e59f38c8dad810f183a982c0">class Article &lt; ApplicationRecord
+<textarea class="clipboard-content" id="clipboard-656f6655980f4d49173f403c2858933e">class Article &lt; ApplicationRecord
   include Visible
 
   has_many :comments, dependent: :destroy
@@ -2823,9 +2879,9 @@ Modifique o Modelo de artigo (article), <code>app/models/article.rb</code>, da s
   validates :body, presence: true, length: { minimum: 10 }
 end
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-acbdac10e59f38c8dad810f183a982c0">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-656f6655980f4d49173f403c2858933e">Copiar</button>
 </div>
-<h3 id="seguranca"><a class="anchorlink" href="#seguranca">10 Segurança</a></h3><h4 id="autenticacao-basica"><a class="anchorlink" href="#autenticacao-basica">10.1 Autenticação Básica</a></h4><p>Se fosse fosse publicar o seu blog online, qualquer um poderia adicionar, editar
+<h3 id="seguranca"><a class="anchorlink" href="#seguranca">11 Segurança</a></h3><h4 id="autenticacao-basica"><a class="anchorlink" href="#autenticacao-basica">11.1 Autenticação Básica</a></h4><p>Se fosse fosse publicar o seu blog online, qualquer um poderia adicionar, editar
 e deletar seus artigos ou comentários.</p><p>O Rails disponibiliza um sistema de autenticação HTTP que funcionará
 tranquilamente nesta situação.</p><p>No <code>ArticlesController</code> nós precisamos que tenha um meio de bloquear o acesso à
 várias ações se uma pessoa não estiver autenticada. Aqui podemos usar o método
@@ -2844,7 +2900,7 @@ e <code>show</code>, então nós colocamos isso:</p><div class="code_container">
 
   <span class="c1"># snippet for brevity</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8d1c8f2d17ed4d8d8531f8b2566f695b">class ArticlesController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-81722bd1246c2fce73cb1ac0b6147b54">class ArticlesController &lt; ApplicationController
 
   http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
 
@@ -2854,7 +2910,7 @@ e <code>show</code>, então nós colocamos isso:</p><div class="code_container">
 
   # snippet for brevity
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8d1c8f2d17ed4d8d8531f8b2566f695b">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-81722bd1246c2fce73cb1ac0b6147b54">Copiar</button>
 </div>
 <p>Nós também queremos autorizar somente usuários autenticados a deletar
 comentários, então em <code>CommentsController</code>
@@ -2870,7 +2926,7 @@ comentários, então em <code>CommentsController</code>
 
   <span class="c1"># snippet for brevity</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9c675e41ebeba89929118696989a53ad">class CommentsController &lt; ApplicationController
+<textarea class="clipboard-content" id="clipboard-eee0c3824ecbaf8ffb46ffd88e506a7e">class CommentsController &lt; ApplicationController
 
   http_basic_authenticate_with name: "dhh", password: "secret", only: :destroy
 
@@ -2881,14 +2937,14 @@ comentários, então em <code>CommentsController</code>
 
   # snippet for brevity
 </textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9c675e41ebeba89929118696989a53ad">Copiar</button>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eee0c3824ecbaf8ffb46ffd88e506a7e">Copiar</button>
 </div>
 <p>Agora se você tentar criar um novo artigo, você deverá preencher um formulário de autenticação:</p><p><img src="images/getting_started/challenge.png" alt="Formulário de Autenticação"></p><p>Outros métodos de autenticação estão disponíveis para aplicações Rails. Dois
 <em>add-ons</em> de autenticação populares para Rails são o
 <a href="https://github.com/plataformatec/devise">Devise</a> e o
-<a href="https://github.com/binarylogic/authlogic">Authlogic</a> entre outros.</p><h4 id="outras-consideracoes-de-seguranca"><a class="anchorlink" href="#outras-consideracoes-de-seguranca">10.2 Outras Considerações de Segurança</a></h4><p>Segurança, especialmente em aplicações web, é uma area ampla e detalhada. O
+<a href="https://github.com/binarylogic/authlogic">Authlogic</a> entre outros.</p><h4 id="outras-consideracoes-de-seguranca"><a class="anchorlink" href="#outras-consideracoes-de-seguranca">11.2 Outras Considerações de Segurança</a></h4><p>Segurança, especialmente em aplicações web, é uma area ampla e detalhada. O
 tópico de segurança aplicações Rails é coberto com mais detalhes em
-<a href="security.html">Guia de Segurança Ruby on Rails</a>.</p><h3 id="o-que-vem-depois-questionmark"><a class="anchorlink" href="#o-que-vem-depois-questionmark">11 O que vem depois?</a></h3><p>Agora que você criou sua primeira aplicação Rails, sinta-se à vontade para
+<a href="security.html">Guia de Segurança Ruby on Rails</a>.</p><h3 id="o-que-vem-depois-questionmark"><a class="anchorlink" href="#o-que-vem-depois-questionmark">12 O que vem depois?</a></h3><p>Agora que você criou sua primeira aplicação Rails, sinta-se à vontade para
 atualizar e experimentar por conta própria.</p><p>Lembre-se, você não precisa fazer tudo sem ajuda. Se você precisa de
 assistência para começar a desenvolver com Rails, sinta-se à vontade para
 consultar estes recursos:</p>
@@ -2901,7 +2957,7 @@ consultar estes recursos:</p>
 </li>
 <li>O canal <a href="irc://irc.freenode.net/#rubyonrails">#rubyonrails</a> no irc.freenode.net</li>
 </ul>
-<h3 id="dicas-de-configuracao"><a class="anchorlink" href="#dicas-de-configuracao">12 Dicas de Configuração</a></h3><p>O caminho mais fácil para se trabalhar com o Rails é armazenar todos os dados
+<h3 id="dicas-de-configuracao"><a class="anchorlink" href="#dicas-de-configuracao">13 Dicas de Configuração</a></h3><p>O caminho mais fácil para se trabalhar com o Rails é armazenar todos os dados
 externos como UTF-8. Se não fizer assim, as bibliotecas Ruby e o Rails vão, na
 maioria das vezes, conseguir converter seus dados nativos em UTF-8, porém não
 é sempre que isso funciona corretamente, então é melhor que você assegure que

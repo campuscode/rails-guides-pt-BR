@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Active Record Encryption — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/toggle-theme.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Active Record Encryption — Ruby on Rails Guides" />
+  <meta name="description" content="Active Record EncryptionThis guide covers encrypting your database information using Active Record.After reading this guide, you will know: How to set up database encryption with Active Record. How to migrate unencrypted data How to make different encryption schemes coexist How to use the API How to configure the library and how to extend it" />
+  <meta property="og:description" content="Active Record EncryptionThis guide covers encrypting your database information using Active Record.After reading this guide, you will know: How to set up database encryption with Active Record. How to migrate unencrypted data How to make different encryption schemes coexist How to use the API How to configure the library and how to extend it" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div>
+    <div id="version-badge">v7.0.0</div>
+  </div>
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <dl class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="action_view_helpers.html">Action View Helpers</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
+                  <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
+                  <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </dl>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="action_view_helpers.html">Action View Helpers</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
+                  <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
+                  <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Active Record Encryption</h2><p>This guide covers encrypting your database information using Active Record.</p><p>After reading this guide, you will know:</p>
+<ul>
+<li>How to set up database encryption with Active Record.</li>
+<li>How to migrate unencrypted data</li>
+<li>How to make different encryption schemes coexist</li>
+<li>How to use the API</li>
+<li>How to configure the library and how to extend it</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#why-encrypt-data-at-the-application-level-questionmark">Why Encrypt Data at the Application Level?</a></li>
+<li>
+<a href="#basic-usage">Basic Usage</a>
+
+<ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#declaration-of-encrypted-attributes">Declaration of Encrypted Attributes</a></li>
+<li><a href="#deterministic-and-non-deterministic-encryption">Deterministic and Non-deterministic Encryption</a></li>
+</ul>
+</li>
+<li>
+<a href="#features">Features</a>
+
+<ul>
+<li><a href="#action-text">Action Text</a></li>
+<li><a href="#fixtures">Fixtures</a></li>
+<li><a href="#supported-types">Supported Types</a></li>
+<li><a href="#ignoring-case">Ignoring Case</a></li>
+<li><a href="#support-for-unencrypted-data">Support for Unencrypted Data</a></li>
+<li><a href="#support-for-previous-encryption-schemes">Support for Previous Encryption Schemes</a></li>
+<li><a href="#unique-constraints">Unique Constraints</a></li>
+<li><a href="#filtering-params-named-as-encrypted-columns">Filtering Params Named as Encrypted Columns</a></li>
+<li><a href="#encoding">Encoding</a></li>
+</ul>
+</li>
+<li>
+<a href="#key-management">Key Management</a>
+
+<ul>
+<li><a href="#built-in-key-providers">Built-in Key Providers</a></li>
+<li><a href="#custom-key-providers">Custom Key Providers</a></li>
+<li><a href="#model-specific-key-providers">Model-specific Key Providers</a></li>
+<li><a href="#model-specific-keys">Model-specific Keys</a></li>
+<li><a href="#rotating-keys">Rotating Keys</a></li>
+<li><a href="#storing-key-references">Storing Key References</a></li>
+</ul>
+</li>
+<li>
+<a href="#api">API</a>
+
+<ul>
+<li><a href="#basic-api">Basic API</a></li>
+</ul>
+</li>
+<li>
+<a href="#configuration">Configuration</a>
+
+<ul>
+<li><a href="#configuration-options">Configuration Options</a></li>
+<li><a href="#encryption-contexts">Encryption Contexts</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p>Active Record supports application-level encryption. It works by declaring which attributes should be encrypted and seamlessly encrypting and decrypting them when necessary. The encryption layer sits between the database and the application. The application will access unencrypted data, but the database will store it encrypted.</p><h3 id="why-encrypt-data-at-the-application-level-questionmark"><a class="anchorlink" href="#why-encrypt-data-at-the-application-level-questionmark">1 Why Encrypt Data at the Application Level?</a></h3><p>Active Record Encryption exists to protect sensitive information in your application. A typical example is personally identifiable information from users. But why would you want application-level encryption if you are already encrypting your database at rest?</p><p>As an immediate practical benefit, encrypting sensitive attributes adds an additional security layer. For example, if an attacker gained access to your database, a snapshot of it, or your application logs, they wouldn't be able to make sense of the encrypted information. Additionally, encryption can prevent developers from unintentionally exposing users' sensitive data in application logs.</p><p>But more importantly, by using Active Record Encryption, you define what constitutes sensitive information in your application at the code level. Active Record Encryption enables granular control of data access in your application and services consuming data from your application. For example, consider auditable Rails consoles that protect encrypted data or check the built-in system to <a href="#filtering-params-named-as-encrypted-columns">filter controller params automatically</a>.</p><h3 id="basic-usage"><a class="anchorlink" href="#basic-usage">2 Basic Usage</a></h3><h4 id="setup"><a class="anchorlink" href="#setup">2.1 Setup</a></h4><p>First, you need to add some keys to your <a href="/security.html#custom-credentials">Rails credentials</a>. Run <code>bin/rails db:encryption:init</code> to generate a random key set:</p><div class="code_container">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:encryption:init
+<span class="go">Add this entry to the credentials of the target environment:
+
+active_record_encryption:
+  primary_key: EGY8WhulUOXixybod7ZWwMIL68R9o5kC
+  deterministic_key: aPA5XyALhf75NNnMzaspW7akTfZp0lPY
+  key_derivation_salt: xEY0dt6TZcAMg52K7O84wYzkjvbA62Hz
+</span></code></pre>
+<textarea class="clipboard-content" id="clipboard-96714c8e997643f4bd6cad1f0be37bff">bin/rails db:encryption:init
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-96714c8e997643f4bd6cad1f0be37bff">Copiar</button>
+</div>
+<div class="note"><p>These generated values are 32 bytes in length. If you generate these yourself, the minimum lengths you should use are 12 bytes for the primary key (this will be used to derive the AES 32 bytes key) and 20 bytes for the salt.</p></div><h4 id="declaration-of-encrypted-attributes"><a class="anchorlink" href="#declaration-of-encrypted-attributes">2.2 Declaration of Encrypted Attributes</a></h4><p>Encryptable attributes are defined at the model level. These are regular Active Record attributes backed by a column with the same name.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">encrypts</span> <span class="ss">:title</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-ebe950ff2073599011079ad4f3dd70f5">class Article &lt; ApplicationRecord
+  encrypts :title
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-ebe950ff2073599011079ad4f3dd70f5">Copiar</button>
+</div>
+<p>The library will transparently encrypt these attributes before saving them in the database and will decrypt them upon retrieval:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">article</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">create</span> <span class="ss">title: </span><span class="s2">"Encrypt it all!"</span>
+<span class="n">article</span><span class="p">.</span><span class="nf">title</span> <span class="c1"># =&gt; "Encrypt it all!"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-403aa744ca763fd5e681ade4ca93386c">article = Article.create title: "Encrypt it all!"
+article.title # =&gt; "Encrypt it all!"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-403aa744ca763fd5e681ade4ca93386c">Copiar</button>
+</div>
+<p>But, under the hood, the executed SQL looks like this:</p><div class="code_container">
+<pre><code class="highlight sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">`articles`</span> <span class="p">(</span><span class="nv">`title`</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'{</span><span class="se">\"</span><span class="s1">p</span><span class="se">\"</span><span class="s1">:</span><span class="se">\"</span><span class="s1">n7J0/ol+a7DRMeaE</span><span class="se">\"</span><span class="s1">,</span><span class="se">\"</span><span class="s1">h</span><span class="se">\"</span><span class="s1">:{</span><span class="se">\"</span><span class="s1">iv</span><span class="se">\"</span><span class="s1">:</span><span class="se">\"</span><span class="s1">DXZMDWUKfp3bg/Yu</span><span class="se">\"</span><span class="s1">,</span><span class="se">\"</span><span class="s1">at</span><span class="se">\"</span><span class="s1">:</span><span class="se">\"</span><span class="s1">X1/YjMHbHD4talgF9dt61A==</span><span class="se">\"</span><span class="s1">}}'</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-559b43f2f8cc3f9c85a3215f9cf53058">INSERT INTO `articles` (`title`) VALUES ('{\"p\":\"n7J0/ol+a7DRMeaE\",\"h\":{\"iv\":\"DXZMDWUKfp3bg/Yu\",\"at\":\"X1/YjMHbHD4talgF9dt61A==\"}}')
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-559b43f2f8cc3f9c85a3215f9cf53058">Copiar</button>
+</div>
+<p>Because Base 64 encoding and metadata are stored with the values, encryption requires extra space in the column. You can estimate the worst-case overload at around 250 bytes when the built-in envelope encryption key provider is used. This overload is negligible for medium and large text columns, but for <code>string</code> columns of 255 bytes, you should increase their limit accordingly (510 bytes is recommended).</p><h4 id="deterministic-and-non-deterministic-encryption"><a class="anchorlink" href="#deterministic-and-non-deterministic-encryption">2.3 Deterministic and Non-deterministic Encryption</a></h4><p>By default, Active Record Encryption uses a non-deterministic approach to encryption. Non-deterministic, in this context, means that encrypting the same content with the same password twice will result in different ciphertexts. This approach improves security by making crypto-analysis of ciphertexts harder, and querying the database impossible.</p><p>You can use the <code>deterministic:</code>  option to generate initialization vectors in a deterministic way, effectively enabling querying encrypted data.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Author</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">encrypts</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">deterministic: </span><span class="kp">true</span>
+<span class="k">end</span>
+
+<span class="no">Author</span><span class="p">.</span><span class="nf">find_by_email</span><span class="p">(</span><span class="s2">"some@email.com"</span><span class="p">)</span> <span class="c1"># You can query the model normally</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0f661c29d9c874411ab1ed8208738c87">class Author &lt; ApplicationRecord
+  encrypts :email, deterministic: true
+end
+
+Author.find_by_email("some@email.com") # You can query the model normally
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f661c29d9c874411ab1ed8208738c87">Copiar</button>
+</div>
+<p>The non-deterministic approach is recommended unless you need to query the data.</p><div class="note"><p>In non-deterministic mode, Active Record uses AES-GCM with a 256-bits key and a random initialization vector. In deterministic mode, it also uses AES-GCM, but the initialization vector is generated as an HMAC-SHA-256 digest of the key and contents to encrypt.</p></div><div class="note"><p>You can disable deterministic encryption by omitting a <code>deterministic_key</code>.</p></div><h3 id="features"><a class="anchorlink" href="#features">3 Features</a></h3><h4 id="action-text"><a class="anchorlink" href="#action-text">3.1 Action Text</a></h4><p>You can encrypt action text attributes by passing <code>encrypted: true</code> in their declaration.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Message</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">has_rich_text</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">encrypted: </span><span class="kp">true</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-315362fa5f042bf5723abdb9ab584663">class Message &lt; ApplicationRecord
+  has_rich_text :content, encrypted: true
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-315362fa5f042bf5723abdb9ab584663">Copiar</button>
+</div>
+<div class="note"><p>Passing individual encryption options to action text attributes is not supported yet. It will use non-deterministic encryption with the global encryption options configured.</p></div><h4 id="fixtures"><a class="anchorlink" href="#fixtures">3.2 Fixtures</a></h4><p>You can get Rails fixtures encrypted automatically by adding this option to your <code>test.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">encrypt_fixtures</span> <span class="o">=</span> <span class="kp">true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a8335f14b88eb0a71bc74463498071df">config.active_record.encryption.encrypt_fixtures = true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a8335f14b88eb0a71bc74463498071df">Copiar</button>
+</div>
+<p>When enabled, all the encryptable attributes will be encrypted according to the encryption settings defined in the model.</p><h5 id="action-text-fixtures"><a class="anchorlink" href="#action-text-fixtures">3.2.1 Action Text Fixtures</a></h5><p>To encrypt action text fixtures, you should place them in <code>fixtures/action_text/encrypted_rich_texts.yml</code>.</p><h4 id="supported-types"><a class="anchorlink" href="#supported-types">3.3 Supported Types</a></h4><p><code>active_record.encryption</code> will serialize values using the underlying type before encrypting them, but <em>they must be serializable as strings</em>. Structured types like <code>serialized</code> are supported out of the box.</p><p>If you need to support a custom type, the recommended way is using a <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveRecord/AttributeMethods/Serialization/ClassMethods.html">serialized attribute</a>. The declaration of the serialized attribute should go <strong>before</strong> the encryption declaration:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># CORRECT</span>
+<span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">serialize</span> <span class="ss">:title</span><span class="p">,</span> <span class="no">Title</span>
+  <span class="n">encrypts</span> <span class="ss">:title</span>
+<span class="k">end</span>
+
+<span class="c1"># INCORRECT </span>
+<span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">encrypts</span> <span class="ss">:title</span>
+  <span class="n">serialize</span> <span class="ss">:title</span><span class="p">,</span> <span class="no">Title</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4c9e0cf846e04e29909a9db23f4d9f94"># CORRECT
+class Article &lt; ApplicationRecord
+  serialize :title, Title
+  encrypts :title
+end
+
+# INCORRECT 
+class Article &lt; ApplicationRecord
+  encrypts :title
+  serialize :title, Title
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4c9e0cf846e04e29909a9db23f4d9f94">Copiar</button>
+</div>
+<h4 id="ignoring-case"><a class="anchorlink" href="#ignoring-case">3.4 Ignoring Case</a></h4><p>You might need to ignore casing when querying deterministically encrypted data. Two approaches make accomplishing this easier:</p><p>You can use the <code>:downcase</code> option when declaring the encrypted attribute to downcase the content before encryption occurs.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="n">encrypts</span> <span class="ss">:email_address</span><span class="p">,</span> <span class="ss">deterministic: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">downcase: </span><span class="kp">true</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a29889ec2aa84709885afd2c3a1cd1c8">class Person
+  encrypts :email_address, deterministic: true, downcase: true
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a29889ec2aa84709885afd2c3a1cd1c8">Copiar</button>
+</div>
+<p>When using <code>:downcase</code>, the original case is lost. In some situations, you might want to ignore the case only when querying while also storing the original case. For those situations, you can use the option <code>:ignore_case</code>. This requires you to add a new column named <code>original_&lt;column_name&gt;</code> to store the content with the case unchanged:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Label</span>
+  <span class="n">encrypts</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">deterministic: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">ignore_case: </span><span class="kp">true</span> <span class="c1"># the content with the original case will be stored in the column `original_name`</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-e9e4ec456c0636d6dfdcc71b1c0ef2f3">class Label
+  encrypts :name, deterministic: true, ignore_case: true # the content with the original case will be stored in the column `original_name`
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-e9e4ec456c0636d6dfdcc71b1c0ef2f3">Copiar</button>
+</div>
+<h4 id="support-for-unencrypted-data"><a class="anchorlink" href="#support-for-unencrypted-data">3.5 Support for Unencrypted Data</a></h4><p>To ease migrations of unencrypted data, the library includes the option <code>config.active_record.encryption.support_unencrypted_data</code>. When set to <code>true</code>:</p>
+<ul>
+<li>Trying to read encrypted attributes that are not encrypted will work normally, without raising any error</li>
+<li>Queries with deterministically-encrypted attributes will include the "clear text" version of them to support finding both encrypted and unencrypted content. You need to set <code>config.active_record.encryption.extend_queries = true</code> to enable this.</li>
+</ul>
+<p><strong>This option is meant to be used during transition periods</strong> while clear data and encrypted data must coexist. Both are set to <code>false</code> by default, which is the recommended goal for any application: errors will be raised when working with unencrypted data.</p><h4 id="support-for-previous-encryption-schemes"><a class="anchorlink" href="#support-for-previous-encryption-schemes">3.6 Support for Previous Encryption Schemes</a></h4><p>Changing encryption properties of attributes can break existing data. For example, imagine you want to make a deterministic attribute non-deterministic. If you just change the declaration in the model, reading existing ciphertexts will fail because the encryption method is different now.</p><p>To support these situations, you can declare previous encryption schemes that will be used in two scenarios:</p>
+<ul>
+<li>When reading encrypted data, Active Record Encryption will try previous encryption schemes if the current scheme doesn't work.</li>
+<li>When querying deterministic data, it will add ciphertexts using previous schemes so that queries work seamlessly with data encrypted with different schemes. You must set <code>config.active_record.encryption.extend_queries = true</code> to enable this.</li>
+</ul>
+<p>You can configure previous encryption schemes:</p>
+<ul>
+<li>Globally</li>
+<li>On a per-attribute basis</li>
+</ul>
+<h5 id="global-previous-encryption-schemes"><a class="anchorlink" href="#global-previous-encryption-schemes">3.6.1 Global Previous Encryption Schemes</a></h5><p>You can add previous encryption schemes by adding them as list of properties using the <code>previous</code> config property in your <code>application.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">previous</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span> <span class="ss">key_provider: </span><span class="no">MyOldKeyProvider</span><span class="p">.</span><span class="nf">new</span> <span class="p">}</span> <span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7cfe25a20594837bf833efae38f34b5a">config.active_record.encryption.previous = [ { key_provider: MyOldKeyProvider.new } ]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7cfe25a20594837bf833efae38f34b5a">Copiar</button>
+</div>
+<h5 id="per-attribute-encryption-schemes"><a class="anchorlink" href="#per-attribute-encryption-schemes">3.6.2 Per-attribute Encryption Schemes</a></h5><p>Use <code>:previous</code> when declaring the attribute:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span>
+  <span class="n">encrypts</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">deterministic: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">previous: </span><span class="p">{</span> <span class="ss">deterministic: </span><span class="kp">false</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-907d1060fc2fda7a0563d3eb9b3555b5">class Article
+  encrypts :title, deterministic: true, previous: { deterministic: false }
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-907d1060fc2fda7a0563d3eb9b3555b5">Copiar</button>
+</div>
+<h5 id="encryption-schemes-and-deterministic-attributes"><a class="anchorlink" href="#encryption-schemes-and-deterministic-attributes">3.6.3 Encryption Schemes and Deterministic Attributes</a></h5><p>When adding previous encryption schemes:</p>
+<ul>
+<li>With <strong>non-deterministic encryption</strong>, new information will always be encrypted with the <em>newest</em> (current) encryption scheme.</li>
+<li>With <strong>deterministic encryption</strong>, new information will always be encrypted with the <em>oldest</em> encryption scheme by default.</li>
+</ul>
+<p>Typically, with deterministic encryption, you want ciphertexts to remain constant. You can change this behavior by setting <code>deterministic: { fixed: false }</code>. In that case, it will use the <em>newest</em> encryption scheme for encrypting new data.</p><h4 id="unique-constraints"><a class="anchorlink" href="#unique-constraints">3.7 Unique Constraints</a></h4><div class="note"><p>Unique constraints can only be used with deterministically encrypted data.</p></div><h5 id="unique-validations"><a class="anchorlink" href="#unique-validations">3.7.1 Unique Validations</a></h5><p>Unique validations are supported normally as long as extended queries are enabled (<code>config.active_record.encryption.extend_queries = true</code>).</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="n">validates</span> <span class="ss">:email_address</span><span class="p">,</span> <span class="ss">uniqueness: </span><span class="kp">true</span>
+  <span class="n">encrypts</span> <span class="ss">:email_address</span><span class="p">,</span> <span class="ss">deterministic: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">downcase: </span><span class="kp">true</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-afb9b5955e68b4ce800fb88e074f343e">class Person
+  validates :email_address, uniqueness: true
+  encrypts :email_address, deterministic: true, downcase: true
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-afb9b5955e68b4ce800fb88e074f343e">Copiar</button>
+</div>
+<p>They will also work when combining encrypted and unencrypted data,git and when configuring previous encryption schemes.</p><div class="note"><p>If you want to ignore case, make sure to use <code>downcase:</code> or <code>ignore_case:</code> in the <code>encrypts</code> declaration. Using the <code>case_sensitive:</code> option in the validation won't work.</p></div><h5 id="unique-indexes"><a class="anchorlink" href="#unique-indexes">3.7.2 Unique Indexes</a></h5><p>To support unique indexes on deterministically-encrypted columns, you need to ensure their ciphertext doesn't ever change.</p><p>To encourage this, deterministic attributes will always use the oldest available encryption scheme by default when multiple encryption schemes are configured. Otherwise, it's your job to ensure encryption properties don't change for these attributes, or the unique indexes won't work.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Person</span>
+  <span class="n">encrypts</span> <span class="ss">:email_address</span><span class="p">,</span> <span class="ss">deterministic: </span><span class="kp">true</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b71c3e22ea18a435494bdf973a525a07">class Person
+  encrypts :email_address, deterministic: true
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b71c3e22ea18a435494bdf973a525a07">Copiar</button>
+</div>
+<h4 id="filtering-params-named-as-encrypted-columns"><a class="anchorlink" href="#filtering-params-named-as-encrypted-columns">3.8 Filtering Params Named as Encrypted Columns</a></h4><p>By default, encrypted columns are configured to be <a href="https://guides.rubyonrails.org/action_controller_overview.html#parameters-filtering">automatically filtered in Rails logs</a>. You can disable this behavior by adding the following to your <code>application.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">add_to_filter_parameters</span> <span class="o">=</span> <span class="kp">false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1d6e5d1c1e765b3396295d53dbf11182">config.active_record.encryption.add_to_filter_parameters = false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1d6e5d1c1e765b3396295d53dbf11182">Copiar</button>
+</div>
+<p>In case you want exclude specific columns from this automatic filtering, add them to <code>config.active_record.encryption.excluded_from_filter_parameters</code>.</p><h4 id="encoding"><a class="anchorlink" href="#encoding">3.9 Encoding</a></h4><p>The library will preserve the encoding for string values encrypted non-deterministically. </p><p>Because encoding is stored along with the encrypted payload, values encrypted deterministically will force UTF-8 encoding by default. Therefore the same value with a different encoding will result in a different ciphertext when encrypted. You usually want to avoid this to keep queries and uniqueness constraints working, so the library will perform the conversion automatically on your behalf.</p><p>You can configure the desired default encoding for deterministic encryption with:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">forced_encoding_for_deterministic_encryption</span> <span class="o">=</span> <span class="no">Encoding</span><span class="o">::</span><span class="no">US_ASCII</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a0640df7f9985236a7d2e1ae14d58244">config.active_record.encryption.forced_encoding_for_deterministic_encryption = Encoding::US_ASCII
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a0640df7f9985236a7d2e1ae14d58244">Copiar</button>
+</div>
+<p>And you can disable this behavior and preserve the encoding in all cases with:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">forced_encoding_for_deterministic_encryption</span> <span class="o">=</span> <span class="kp">nil</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-79493227f5d329469020b29681d189ff">config.active_record.encryption.forced_encoding_for_deterministic_encryption = nil
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-79493227f5d329469020b29681d189ff">Copiar</button>
+</div>
+<h3 id="key-management"><a class="anchorlink" href="#key-management">4 Key Management</a></h3><p>Key providers implement key management strategies. You can configure key providers globally, or on a per attribute basis.</p><h4 id="built-in-key-providers"><a class="anchorlink" href="#built-in-key-providers">4.1 Built-in Key Providers</a></h4><h5 id="derivedsecretkeyprovider"><a class="anchorlink" href="#derivedsecretkeyprovider">4.1.1 DerivedSecretKeyProvider</a></h5><p>A key provider that will serve keys derived from the provided passwords using PBKDF2.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">key_provider</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Encryption</span><span class="o">::</span><span class="no">DerivedSecretKeyProvider</span><span class="p">.</span><span class="nf">new</span><span class="p">([</span><span class="s2">"some passwords"</span><span class="p">,</span> <span class="s2">"to derive keys from. "</span><span class="p">,</span> <span class="s2">"These should be in"</span><span class="p">,</span> <span class="s2">"credentials"</span><span class="p">])</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-edb5e1eae1d6e86b9350b829838ee150">config.active_record.encryption.key_provider = ActiveRecord::Encryption::DerivedSecretKeyProvider.new(["some passwords", "to derive keys from. ", "These should be in", "credentials"])
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-edb5e1eae1d6e86b9350b829838ee150">Copiar</button>
+</div>
+<div class="note"><p>By default, <code>active_record.encryption</code> configures a <code>DerivedSecretKeyProvider</code> with the keys defined in <code>active_record.encryption.primary_key</code>.</p></div><h5 id="envelopeencryptionkeyprovider"><a class="anchorlink" href="#envelopeencryptionkeyprovider">4.1.2 EnvelopeEncryptionKeyProvider</a></h5><p>Implements a simple <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#enveloping">envelope encryption</a> strategy:</p>
+<ul>
+<li>It generates a random key for each data-encryption operation</li>
+<li>It stores the data-key with the data itself, encrypted with a primary key defined in the credential <code>active_record.encryption.primary_key</code>.</li>
+</ul>
+<p>You can configure Active Record to use this key provider by adding this to your <code>application.rb</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">key_provider</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Encryption</span><span class="o">::</span><span class="no">EnvelopeEncryptionKeyProvider</span><span class="p">.</span><span class="nf">new</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7deb009611fcce37e76ed364a4a17014">config.active_record.encryption.key_provider = ActiveRecord::Encryption::EnvelopeEncryptionKeyProvider.new
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7deb009611fcce37e76ed364a4a17014">Copiar</button>
+</div>
+<p>As with other built-in key providers, you can provide a list of primary keys in <code>active_record.encryption.primary_key</code> to implement key-rotation schemes.</p><h4 id="custom-key-providers"><a class="anchorlink" href="#custom-key-providers">4.2 Custom Key Providers</a></h4><p>For more advanced key-management schemes, you can configure a custom key provider in an initializer:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Encryption</span><span class="p">.</span><span class="nf">key_provider</span> <span class="o">=</span> <span class="no">MyKeyProvider</span><span class="p">.</span><span class="nf">new</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-784aa2585794e9203027e0ab2b3ff547">ActiveRecord::Encryption.key_provider = MyKeyProvider.new
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-784aa2585794e9203027e0ab2b3ff547">Copiar</button>
+</div>
+<p>A key provider must implement this interface:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">MyKeyProvider</span>
+  <span class="k">def</span> <span class="nf">encryption_key</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">decryption_keys</span><span class="p">(</span><span class="n">encrypted_message</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-396f1132fc6ddc99f60f60f111c165ef">class MyKeyProvider
+  def encryption_key
+  end
+
+  def decryption_keys(encrypted_message)
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-396f1132fc6ddc99f60f60f111c165ef">Copiar</button>
+</div>
+<p>Both methods return <code>ActiveRecord::Encryption::Key</code> objects:</p>
+<ul>
+<li>
+<code>encryption_key</code> returns the key used for encrypting some content</li>
+<li>
+<code>decryption keys</code> returns a list of potential keys for decrypting a given message</li>
+</ul>
+<p>A key can include arbitrary tags that will be stored unencrypted with the message. You can use <code>ActiveRecord::Encryption::Message#headers</code> to examine those values when decrypting.</p><h4 id="model-specific-key-providers"><a class="anchorlink" href="#model-specific-key-providers">4.3 Model-specific Key Providers</a></h4><p>You can configure a key provider on a per-class basis with the <code>:key_provider</code> option:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">encrypts</span> <span class="ss">:summary</span><span class="p">,</span> <span class="ss">key_provider: </span><span class="no">ArticleKeyProvider</span><span class="p">.</span><span class="nf">new</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-43c3f491eb091ba26ad194dad4f7d0df">class Article &lt; ApplicationRecord
+  encrypts :summary, key_provider: ArticleKeyProvider.new
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-43c3f491eb091ba26ad194dad4f7d0df">Copiar</button>
+</div>
+<h4 id="model-specific-keys"><a class="anchorlink" href="#model-specific-keys">4.4 Model-specific Keys</a></h4><p>You can configure a given key on a per-class basis with the <code>:key</code> option:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">encrypts</span> <span class="ss">:summary</span><span class="p">,</span> <span class="ss">key: </span><span class="s2">"some secret key for article summaries"</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-34515745664b45821020e9feee6db88e">class Article &lt; ApplicationRecord
+  encrypts :summary, key: "some secret key for article summaries"
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-34515745664b45821020e9feee6db88e">Copiar</button>
+</div>
+<p>Active Record uses the key to derive the key used to encrypt and decrypt the data.</p><h4 id="rotating-keys"><a class="anchorlink" href="#rotating-keys">4.5 Rotating Keys</a></h4><p><code>active_record.encryption</code> can work with lists of keys to support implementing key-rotation schemes:</p>
+<ul>
+<li>The <strong>last key</strong> will be used for encrypting new content.</li>
+<li>All the keys will be tried when decrypting content until one works.</li>
+</ul>
+<div class="code_container">
+<pre><code class="highlight yml"><span class="s">active_record</span>
+  <span class="s">encryption</span><span class="err">:</span>
+    <span class="na">primary_key</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">a1cc4d7b9f420e40a337b9e68c5ecec6</span> <span class="c1"># Previous keys can still decrypt existing content</span>
+        <span class="pi">-</span> <span class="s">bc17e7b413fd4720716a7633027f8cc4</span> <span class="c1"># Active, encrypts new content</span>
+    <span class="na">key_derivation_salt</span><span class="pi">:</span> <span class="s">a3226b97b3b2f8372d1fc6d497a0c0d3</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6a5b8ec73025b3274e275928b17beb06">active_record
+  encryption:
+    primary_key:
+        - a1cc4d7b9f420e40a337b9e68c5ecec6 # Previous keys can still decrypt existing content
+        - bc17e7b413fd4720716a7633027f8cc4 # Active, encrypts new content
+    key_derivation_salt: a3226b97b3b2f8372d1fc6d497a0c0d3
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6a5b8ec73025b3274e275928b17beb06">Copiar</button>
+</div>
+<p>This enables workflows in which you keep a short list of keys by adding new keys, re-encrypting content, and deleting old keys.</p><div class="note"><p>Rotating keys is not currently supported for deterministic encryption.</p></div><div class="note"><p>Active Record Encryption doesn't provide automatic management of key rotation processes yet. All the pieces are there, but this hasn't been implemented yet.</p></div><h4 id="storing-key-references"><a class="anchorlink" href="#storing-key-references">4.6 Storing Key References</a></h4><p>You can configure <code>active_record.encryption.store_key_references</code> to make <code>active_record.encryption</code> store a reference to the encryption key in the encrypted message itself.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">store_key_references</span> <span class="o">=</span> <span class="kp">true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cecbb4973a34f7e5a308b2255dd37ad8">config.active_record.encryption.store_key_references = true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cecbb4973a34f7e5a308b2255dd37ad8">Copiar</button>
+</div>
+<p>Doing so makes for more performant decryption because the system can now locate keys directly instead of trying lists of keys. The price to pay is storage: encrypted data will be a bit bigger.</p><h3 id="api"><a class="anchorlink" href="#api">5 API</a></h3><h4 id="basic-api"><a class="anchorlink" href="#basic-api">5.1 Basic API</a></h4><p>ActiveRecord encryption is meant to be used declaratively, but it offers an API for advanced usage scenarios.</p><h5 id="encrypt-and-decrypt"><a class="anchorlink" href="#encrypt-and-decrypt">5.1.1 Encrypt and Decrypt</a></h5><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">article</span><span class="p">.</span><span class="nf">encrypt</span> <span class="c1"># encrypt or re-encrypt all the encryptable attributes</span>
+<span class="n">article</span><span class="p">.</span><span class="nf">decrypt</span> <span class="c1"># decrypt all the encryptable attributes</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-938b5a81a1159457c01f06df42538acd">article.encrypt # encrypt or re-encrypt all the encryptable attributes
+article.decrypt # decrypt all the encryptable attributes
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-938b5a81a1159457c01f06df42538acd">Copiar</button>
+</div>
+<h5 id="read-ciphertext"><a class="anchorlink" href="#read-ciphertext">5.1.2 Read Ciphertext</a></h5><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">article</span><span class="p">.</span><span class="nf">ciphertext_for</span><span class="p">(</span><span class="ss">:title</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f6b51dade9d01ce318c541d794b6ac2a">article.ciphertext_for(:title)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f6b51dade9d01ce318c541d794b6ac2a">Copiar</button>
+</div>
+<h5 id="check-if-attribute-is-encrypted-or-not"><a class="anchorlink" href="#check-if-attribute-is-encrypted-or-not">5.1.3 Check if Attribute is Encrypted or Not</a></h5><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">article</span><span class="p">.</span><span class="nf">encrypted_attribute?</span><span class="p">(</span><span class="ss">:title</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4d0dd36f43c92bbf2d1e18f80469c833">article.encrypted_attribute?(:title)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4d0dd36f43c92bbf2d1e18f80469c833">Copiar</button>
+</div>
+<h3 id="configuration"><a class="anchorlink" href="#configuration">6 Configuration</a></h3><h4 id="configuration-options"><a class="anchorlink" href="#configuration-options">6.1 Configuration Options</a></h4><p>You can configure Active Record Encryption options in your <code>application.rb</code> (most common scenario) or in a specific environment config file <code>config/environments/&lt;env name&gt;.rb</code> if you want to set them on a per-environment basis.</p><p>All the config options are namespaced in <code>active_record.encryption.config</code>. For example:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">key_provider</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Encryption</span><span class="o">::</span><span class="no">EnvelopeEncryptionKeyProvider</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">store_key_references</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">extend_queries</span> <span class="o">=</span> <span class="kp">true</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-c4668cef8b89e3c5070dd551a87789e7">config.active_record.encryption.key_provider = ActiveRecord::Encryption::EnvelopeEncryptionKeyProvider.new
+config.active_record.encryption.store_key_references = true
+config.active_record.encryption.extend_queries = true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-c4668cef8b89e3c5070dd551a87789e7">Copiar</button>
+</div>
+<p>The available config options are:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>support_unencrypted_data</code></td>
+<td>When true, unencrypted data can be read normally. When false, it will raise errors. Default: false.</td>
+</tr>
+<tr>
+<td><code>extend_queries</code></td>
+<td>When true, queries referencing deterministically encrypted attributes will be modified to include additional values if needed. Those additional values will be the clean version of the value (when <code>support_unencrypted_data</code> is true) and values encrypted with previous encryption schemes, if any (as provided with the <code>previous:</code> option). Default: false (experimental).</td>
+</tr>
+<tr>
+<td><code>encrypt_fixtures</code></td>
+<td>When true, encryptable attributes in fixtures will be automatically encrypted when loaded. Default: false.</td>
+</tr>
+<tr>
+<td><code>store_key_references</code></td>
+<td>When true, a reference to the encryption key is stored in the headers of the encrypted message. This makes for faster decryption when multiple keys are in use. Default: false.</td>
+</tr>
+<tr>
+<td><code>add_to_filter_parameters</code></td>
+<td>When true, encrypted attribute names are added automatically to the <a href="https://guides.rubyonrails.org/configuring.html#rails-general-configuration">list of filtered params</a> and won't be shown in logs. Default: true.</td>
+</tr>
+<tr>
+<td><code>excluded_from_filter_parameters</code></td>
+<td>You can configure a list of params that won't be filtered out when <code>add_to_filter_parameters</code> is true. Default: [].</td>
+</tr>
+<tr>
+<td><code>validate_column_size</code></td>
+<td>Adds a validation based on the column size. This is recommended to prevent storing huge values using highly compressible payloads. Default: true.</td>
+</tr>
+<tr>
+<td><code>primary_key</code></td>
+<td>The key or lists of keys used to derive root data-encryption keys. The way they are used depends on the key provider configured. It's preferred to configure it via a credential <code>active_record_encryption.primary_key</code>.</td>
+</tr>
+<tr>
+<td><code>deterministic_key</code></td>
+<td>The key or list of keys used for deterministic encryption. It's preferred to configure it via a credential <code>active_record_encryption.deterministic_key</code>.</td>
+</tr>
+<tr>
+<td><code>key_derivation_salt</code></td>
+<td>The salt used when deriving keys. It's preferred to configure it via a credential <code>active_record_encryption.key_derivation_salt</code>.</td>
+</tr>
+<tr>
+<td><code>forced_encoding_for_deterministic_encryption</code></td>
+<td>The default encoding for attributes encrypted deterministically. You can disable forced encoding by setting this option to <code>nil</code>. It's <code>Encoding::UTF_8</code> by default.</td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>It's recommended to use Rails built-in credentials support to store keys. If you prefer to set them manually via config properties, make sure you don't commit them with your code (e.g. use environment variables).</p></div><h4 id="encryption-contexts"><a class="anchorlink" href="#encryption-contexts">6.2 Encryption Contexts</a></h4><p>An encryption context defines the encryption components that are used in a given moment. There is a default encryption context based on your global configuration, but you can configure a custom context for a given attribute or when running a specific block of code.</p><div class="note"><p>Encryption contexts are a flexible but advanced configuration mechanism. Most users should not have to care about them.</p></div><p>The main components of encryption contexts are:</p>
+<ul>
+<li>
+<code>encryptor</code>: exposes the internal API for encrypting and decrypting data.  It interacts with a <code>key_provider</code> to build encrypted messages and deal with their serialization. The encryption/decryption itself is done by the <code>cipher</code> and the serialization by <code>message_serializer</code>.</li>
+<li>
+<code>cipher</code>: the encryption algorithm itself (AES 256 GCM)</li>
+<li>
+<code>key_provider</code>: serves encryption and decryption keys.</li>
+<li>
+<code>message_serializer</code>: serializes and deserializes encrypted payloads (<code>Message</code>).</li>
+</ul>
+<div class="note"><p>If you decide to build your own <code>message_serializer</code>, it's important to use safe mechanisms that can't deserialize arbitrary objects. A common supported scenario is encrypting existing unencrypted data. An attacker can leverage this to enter a tampered payload before encryption takes place and perform RCE attacks. This means custom serializers should avoid <code>Marshal</code>, <code>YAML.load</code> (use <code>YAML.safe_load</code>  instead), or <code>JSON.load</code> (use <code>JSON.parse</code> instead).</p></div><h5 id="global-encryption-context"><a class="anchorlink" href="#global-encryption-context">6.2.1 Global Encryption Context</a></h5><p>The global encryption context is the one used by default and is configured as other configuration properties in your <code>application.rb</code> or environment config files.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">active_record</span><span class="p">.</span><span class="nf">encryption</span><span class="p">.</span><span class="nf">key_provider</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Encryption</span><span class="o">::</span><span class="no">EnvelopeEncryptionKeyProvider</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">active_record_encryption</span><span class="p">.</span><span class="nf">encryptor</span> <span class="o">=</span> <span class="no">MyEncryptor</span><span class="p">.</span><span class="nf">new</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-cd1f50636ab39cc13458009afb4b0c37">config.active_record.encryption.key_provider = ActiveRecord::Encryption::EnvelopeEncryptionKeyProvider.new
+config.active_record_encryption.encryptor = MyEncryptor.new
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-cd1f50636ab39cc13458009afb4b0c37">Copiar</button>
+</div>
+<h5 id="per-attribute-encryption-contexts"><a class="anchorlink" href="#per-attribute-encryption-contexts">6.2.2 Per-attribute Encryption Contexts</a></h5><p>You can override encryption context params by passing them in the attribute declaration:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Attribute</span>
+  <span class="n">encrypts</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">encryptor: </span><span class="no">MyAttributeEncryptor</span><span class="p">.</span><span class="nf">new</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0f80ef0e015fef666b8dae072b02123b">class Attribute
+  encrypts :title, encryptor: MyAttributeEncryptor.new
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0f80ef0e015fef666b8dae072b02123b">Copiar</button>
+</div>
+<h5 id="encryption-context-when-running-a-block-of-code"><a class="anchorlink" href="#encryption-context-when-running-a-block-of-code">6.2.3 Encryption Context When Running a Block of Code</a></h5><p>You can use <code>ActiveRecord::Encryption.with_encryption_context</code> to set an encryption context for a given block of code:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Encryption</span><span class="p">.</span><span class="nf">with_encryption_context</span><span class="p">(</span><span class="ss">encryptor: </span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Encryption</span><span class="o">::</span><span class="no">NullEncryptor</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span> <span class="k">do</span>
+  <span class="o">...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5b3864760e3a1c6f65860400ac74a035">ActiveRecord::Encryption.with_encryption_context(encryptor: ActiveRecord::Encryption::NullEncryptor.new) do
+  ...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5b3864760e3a1c6f65860400ac74a035">Copiar</button>
+</div>
+<h5 id="built-in-encryption-contexts"><a class="anchorlink" href="#built-in-encryption-contexts">6.2.4 Built-in Encryption Contexts</a></h5><h6 id="disable-encryption"><a class="anchorlink" href="#disable-encryption">6.2.4.1 Disable Encryption</a></h6><p>You can run code without encryption:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Encryption</span><span class="p">.</span><span class="nf">without_encryption</span> <span class="k">do</span>
+   <span class="o">...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-1466ddd53bf754316eac302ec3311297">ActiveRecord::Encryption.without_encryption do
+   ...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-1466ddd53bf754316eac302ec3311297">Copiar</button>
+</div>
+<p>This means that reading encrypted text will return the ciphertext, and saved content will be stored unencrypted.</p><h6 id="protect-encrypted-data"><a class="anchorlink" href="#protect-encrypted-data">6.2.4.2 Protect Encrypted Data</a></h6><p>You can run code without encryption but prevent overwriting encrypted content:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Encryption</span><span class="p">.</span><span class="nf">protecting_encrypted_data</span> <span class="k">do</span>
+   <span class="o">...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-92ad878acc23d424c3b445795261a6f1">ActiveRecord::Encryption.protecting_encrypted_data do
+   ...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-92ad878acc23d424c3b445795261a6f1">Copiar</button>
+</div>
+<p>This can be handy if you want to protect encrypted data while still running arbitrary code against it (e.g. in a Rails console).</p>
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua caso veja quaisquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na main do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch main.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+  <div id="toggle">
+    <img alt="dark theme icon" class="icon">
+  </div>
+</body>
+</html>

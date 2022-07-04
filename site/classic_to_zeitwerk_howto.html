@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Classic to Zeitwerk HOWTO — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/search.css" data-turbolinks-track="reload">
+  <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
+  <script src="javascripts/turbolinks.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/clipboard.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/guides.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/search.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
+  <script src="javascripts/toggle-theme.js" data-turbolinks-track="reload"></script>
+  <meta property="og:title" content="Classic to Zeitwerk HOWTO — Ruby on Rails Guides" />
+  <meta name="description" content="Classic to Zeitwerk HOWTOThis guide documents how to migrate Rails applications from classic to zeitwerk mode.After reading this guide, you will know: What are classic and zeitwerk modes Why switch from classic to zeitwerk How to activate zeitwerk mode How to verify your application runs in zeitwerk mode How to verify your project loads OK in the command line How to verify your project loads OK in the test suite How to address possible edge cases New features in Zeitwerk you can leverage" />
+  <meta property="og:description" content="Classic to Zeitwerk HOWTOThis guide documents how to migrate Rails applications from classic to zeitwerk mode.After reading this guide, you will know: What are classic and zeitwerk modes Why switch from classic to zeitwerk How to activate zeitwerk mode How to verify your application runs in zeitwerk mode How to verify your project loads OK in the command line How to verify your project loads OK in the test suite How to address possible edge cases New features in Zeitwerk you can leverage" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Guia Ruby on Rails" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+</head>
+<body class="guide">
+  <div>
+    <div id="version-badge">v7.0.0</div>
+  </div>
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Veja mais em <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        Mais Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribua no GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Voltar para a página principal">Guiarails.com.br</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li class="guides-search guides-search-large">
+          <input class="search-box search-box-large nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guias</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+            <dl class="guides-section-container">
+                <div class="guides-section">
+                  <dt>Comece aqui</dt>
+                  <dd><a href="getting_started.html">Começando com Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Models</dt>
+                  <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                  <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                  <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                  <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                  <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                  <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                  <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Views</dt>
+                  <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                  <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                  <dd><a href="action_view_helpers.html">Action View Helpers</a></dd>
+                  <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Controllers</dt>
+                  <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                  <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Outros componentes</dt>
+                  <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                  <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                  <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                  <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                  <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                  <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                  <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  <dd><a href="webpacker.html">Webpacker</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Indo mais fundo</dt>
+                  <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                  <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                  <dd><a href="security.html">Securing Rails Applications</a></dd>
+                  <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                  <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                  <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                  <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                  <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                  <dd><a href="initialization.html">The Rails Initialization Process</a></dd>
+                  <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</a></dd>
+                  <dd><a href="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</a></dd>
+                  <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                  <dd><a href="active_support_instrumentation.html">Active Support Instrumentation</a></dd>
+                  <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  <dd><a href="active_record_postgresql.html">Active Record and PostgreSQL</a></dd>
+                  <dd><a href="active_record_multiple_databases.html">Multiple Databases with Active Record</a></dd>
+                  <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Estendendo o Rails</dt>
+                  <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                  <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                  <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  <dd><a href="engines.html">Getting Started with Engines</a></dd>
+                  <dd><a href="threading_and_code_execution.html">Threading and Code Execution in Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Contribuições</dt>
+                  <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                  <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                  <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Políticas</dt>
+                  <dd><a href="maintenance_policy.html">Maintenance Policy for Ruby on Rails</a></dd>
+                </div>
+                <div class="guides-section">
+                  <dt>Release Notes</dt>
+                  <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
+                  <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
+                  <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
+                  <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                  <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                  <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                  <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                  <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                  <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                  <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                  <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                  <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                  <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                  <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                </div>
+            </div>
+          </dl>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribua</a></li>
+        <li class="guides-search guides-search-small">
+          <input class="search-box search-box-small nav-item" type="text" placeholder="Digite o termo...">
+          <div class="search-results"></div>
+          <div class="search-spinner">Aguarde...</div>
+        </li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">Guias</option>
+              <optgroup label="Comece aqui">
+                  <option value="getting_started.html">Começando com Rails</option>
+              </optgroup>
+              <optgroup label="Models">
+                  <option value="active_record_basics.html">Active Record Basics</option>
+                  <option value="active_record_migrations.html">Active Record Migrations</option>
+                  <option value="active_record_validations.html">Active Record Validations</option>
+                  <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                  <option value="association_basics.html">Active Record Associations</option>
+                  <option value="active_record_querying.html">Active Record Query Interface</option>
+                  <option value="active_model_basics.html">Active Model Basics</option>
+              </optgroup>
+              <optgroup label="Views">
+                  <option value="action_view_overview.html">Action View Overview</option>
+                  <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                  <option value="action_view_helpers.html">Action View Helpers</option>
+                  <option value="form_helpers.html">Action View Form Helpers</option>
+              </optgroup>
+              <optgroup label="Controllers">
+                  <option value="action_controller_overview.html">Action Controller Overview</option>
+                  <option value="routing.html">Rails Routing from the Outside In</option>
+              </optgroup>
+              <optgroup label="Outros componentes">
+                  <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                  <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                  <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                  <option value="action_text_overview.html">Action Text Overview</option>
+                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_storage_overview.html">Active Storage Overview</option>
+                  <option value="action_cable_overview.html">Action Cable Overview</option>
+                  <option value="webpacker.html">Webpacker</option>
+              </optgroup>
+              <optgroup label="Indo mais fundo">
+                  <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                  <option value="testing.html">Testing Rails Applications</option>
+                  <option value="security.html">Securing Rails Applications</option>
+                  <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                  <option value="configuring.html">Configuring Rails Applications</option>
+                  <option value="command_line.html">The Rails Command Line</option>
+                  <option value="asset_pipeline.html">The Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                  <option value="initialization.html">The Rails Initialization Process</option>
+                  <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading Constants</option>
+                  <option value="classic_to_zeitwerk_howto.html">Classic para Zeitwerk - Como Fazer</option>
+                  <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                  <option value="active_support_instrumentation.html">Active Support Instrumentation</option>
+                  <option value="api_app.html">Using Rails for API-only Applications</option>
+                  <option value="active_record_postgresql.html">Active Record and PostgreSQL</option>
+                  <option value="active_record_multiple_databases.html">Multiple Databases with Active Record</option>
+                  <option value="active_record_encryption.html">Active Record Encryption</option>
+              </optgroup>
+              <optgroup label="Estendendo o Rails">
+                  <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                  <option value="engines.html">Getting Started with Engines</option>
+                  <option value="threading_and_code_execution.html">Threading and Code Execution in Rails</option>
+              </optgroup>
+              <optgroup label="Contribuições">
+                  <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</option>
+              </optgroup>
+              <optgroup label="Políticas">
+                  <option value="maintenance_policy.html">Maintenance Policy for Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Release Notes">
+                  <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
+                  <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
+                  <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
+                  <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                  <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                  <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                  <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                  <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                  <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                  <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                  <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                  <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                  <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                  <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Classic to Zeitwerk HOWTO</h2><p>This guide documents how to migrate Rails applications from <code>classic</code> to <code>zeitwerk</code> mode.</p><p>After reading this guide, you will know:</p>
+<ul>
+<li>What are <code>classic</code> and <code>zeitwerk</code> modes</li>
+<li>Why switch from <code>classic</code> to <code>zeitwerk</code></li>
+<li>How to activate <code>zeitwerk</code> mode</li>
+<li>How to verify your application runs in <code>zeitwerk</code> mode</li>
+<li>How to verify your project loads OK in the command line</li>
+<li>How to verify your project loads OK in the test suite</li>
+<li>How to address possible edge cases</li>
+<li>New features in Zeitwerk you can leverage</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#what-are-classic-and-zeitwerk-modes-questionmark">What are <code>classic</code> and <code>zeitwerk</code> Modes?</a></li>
+<li><a href="#why-switch-from-classic-to-zeitwerk-questionmark">Why Switch from <code>classic</code> to <code>zeitwerk</code>?</a></li>
+<li><a href="#i-am-scared">I am Scared</a></li>
+<li>
+<a href="#how-to-activate-zeitwerk-mode">How to Activate <code>zeitwerk</code> Mode</a>
+
+<ul>
+<li><a href="#applications-running-rails-5-x-or-less">Applications running Rails 5.x or Less</a></li>
+<li><a href="#applications-running-rails-6-x">Applications running Rails 6.x</a></li>
+<li><a href="#applications-running-rails-7">Applications Running Rails 7</a></li>
+</ul>
+</li>
+<li><a href="#how-to-verify-the-application-runs-in-zeitwerk-mode-questionmark">How to Verify The Application Runs in <code>zeitwerk</code> Mode?</a></li>
+<li>
+<a href="#does-my-application-comply-with-zeitwerk-conventions-questionmark">Does my Application Comply with Zeitwerk Conventions?</a>
+
+<ul>
+<li><a href="#config-eager-load-paths">config.eager_load_paths</a></li>
+<li><a href="#zeitwerk-check">zeitwerk:check</a></li>
+<li><a href="#acronyms">Acronyms</a></li>
+<li><a href="#concerns">Concerns</a></li>
+<li><a href="#having-app-in-the-autoload-paths">Having <code>app</code> in the autoload paths</a></li>
+<li><a href="#autoloaded-constants-and-explicit-namespaces">Autoloaded Constants and Explicit Namespaces</a></li>
+<li><a href="#one-file-one-constant-at-the-same-top-level">One file, one constant (at the same top-level)</a></li>
+<li><a href="#globs-in-config-autoload-paths">Globs in <code>config.autoload_paths</code></a></li>
+<li><a href="#spring-and-the-test-environment">Spring and the <code>test</code> Environment</a></li>
+<li><a href="#bootsnap">Bootsnap</a></li>
+</ul>
+</li>
+<li>
+<a href="#check-zeitwerk-compliance-in-the-test-suite">Check Zeitwerk Compliance in the Test Suite</a>
+
+<ul>
+<li><a href="#continuous-integration">Continuous Integration</a></li>
+<li><a href="#bare-test-suites">Bare Test Suites</a></li>
+</ul>
+</li>
+<li><a href="#delete-any-require-calls">Delete any <code>require</code> calls</a></li>
+<li>
+<a href="#new-features-you-can-leverage">New Features You Can Leverage</a>
+
+<ul>
+<li><a href="#delete-require-dependency-calls">Delete <code>require_dependency</code> calls</a></li>
+<li><a href="#qualified-names-in-class-and-module-definitions-are-now-possible">Qualified Names in Class and Module Definitions Are Now Possible</a></li>
+<li><a href="#thread-safety-everywhere">Thread-safety Everywhere</a></li>
+<li><a href="#eager-loading-and-autoloading-are-consistent">Eager Loading and Autoloading are Consistent</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="what-are-classic-and-zeitwerk-modes-questionmark"><a class="anchorlink" href="#what-are-classic-and-zeitwerk-modes-questionmark">1 What are <code>classic</code> and <code>zeitwerk</code> Modes?</a></h3><p>From the very beginning, and up to Rails 5, Rails used an autoloader implemented in Active Support. This autoloader is known as <code>classic</code> and is still available in Rails 6.x. Rails 7 does not include this autoloader anymore.</p><p>Starting with Rails 6, Rails ships with a new and better way to autoload, which delegates to the <a href="https://github.com/fxn/zeitwerk">Zeitwerk</a> gem. This is <code>zeitwerk</code> mode. By default, applications loading the 6.0 and 6.1 framework defaults run in <code>zeitwerk</code> mode, and this is the only mode available in Rails 7.</p><h3 id="why-switch-from-classic-to-zeitwerk-questionmark"><a class="anchorlink" href="#why-switch-from-classic-to-zeitwerk-questionmark">2 Why Switch from <code>classic</code> to <code>zeitwerk</code>?</a></h3><p>The <code>classic</code> autoloader has been extremely useful, but had a number of <a href="https://guides.rubyonrails.org/v6.1/autoloading_and_reloading_constants_classic_mode.html#common-gotchas">issues</a> that made autoloading a bit tricky and confusing at times. Zeitwerk was developed to address this, among other <a href="https://github.com/fxn/zeitwerk#motivation">motivations</a>.</p><p>When upgrading to Rails 6.x, it is highly encouraged to switch to <code>zeitwerk</code> mode because it is a better autoloader, <code>classic</code> mode is deprecated.</p><p>Rails 7 ends the transition period and does not include <code>classic</code> mode.</p><h3 id="i-am-scared"><a class="anchorlink" href="#i-am-scared">3 I am Scared</a></h3><p>Don't :).</p><p>Zeitwerk was designed to be as compatible with the classic autoloader as possible. If you have a working application autoloading correctly today, chances are the switch will be easy. Many projects, big and small, have reported really smooth switches.</p><p>This guide will help you change the autoloader with confidence.</p><p>If for whatever reason you find a situation you don't know how to resolve, don't hesitate to <a href="https://github.com/rails/rails/issues/new">open an issue in <code>rails/rails</code></a> and tag <a href="https://github.com/fxn"><code>@fxn</code></a>.</p><h3 id="how-to-activate-zeitwerk-mode"><a class="anchorlink" href="#how-to-activate-zeitwerk-mode">4 How to Activate <code>zeitwerk</code> Mode</a></h3><h4 id="applications-running-rails-5-x-or-less"><a class="anchorlink" href="#applications-running-rails-5-x-or-less">4.1 Applications running Rails 5.x or Less</a></h4><p>In applications running a Rails version previous to 6.0, <code>zeitwerk</code> mode is not available. You need to be at least in Rails 6.0.</p><h4 id="applications-running-rails-6-x"><a class="anchorlink" href="#applications-running-rails-6-x">4.2 Applications running Rails 6.x</a></h4><p>In applications running Rails 6.x there are two scenarios.</p><p>If the application is loading the framework defaults of Rails 6.0 or 6.1 and it is running in <code>classic</code> mode, it must be opting out by hand. You have to have something similar to this:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">load_defaults</span> <span class="mf">6.0</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">autoloader</span> <span class="o">=</span> <span class="ss">:classic</span> <span class="c1"># DELETE THIS LINE</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-58da6fa78f81cbbe779c9889a2dc1d60"># config/application.rb
+config.load_defaults 6.0
+config.autoloader = :classic # DELETE THIS LINE
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-58da6fa78f81cbbe779c9889a2dc1d60">Copiar</button>
+</div>
+<p>As noted, just delete the override, <code>zeitwerk</code> mode is the default.</p><p>On the other hand, if the application is loading old framework defaults you need to enable <code>zeitwerk</code> mode explicitly:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/application.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">load_defaults</span> <span class="mf">5.2</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">autoloader</span> <span class="o">=</span> <span class="ss">:zeitwerk</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b667e315b8a497d1f8914f56b8716a80"># config/application.rb
+config.load_defaults 5.2
+config.autoloader = :zeitwerk
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b667e315b8a497d1f8914f56b8716a80">Copiar</button>
+</div>
+<h4 id="applications-running-rails-7"><a class="anchorlink" href="#applications-running-rails-7">4.3 Applications Running Rails 7</a></h4><p>In Rails 7 there is only <code>zeitwerk</code> mode, you do not need to do anything to enable it.</p><p>Indeed, in Rails 7 the setter <code>config.autoloader=</code> does not even exist. If <code>config/application.rb</code> uses it, please delete the line.</p><h3 id="how-to-verify-the-application-runs-in-zeitwerk-mode-questionmark"><a class="anchorlink" href="#how-to-verify-the-application-runs-in-zeitwerk-mode-questionmark">5 How to Verify The Application Runs in <code>zeitwerk</code> Mode?</a></h3><p>To verify the application is running in <code>zeitwerk</code> mode, execute</p><div class="code_container">
+<pre><code class="highlight plaintext">bin/rails runner 'p Rails.autoloaders.zeitwerk_enabled?'
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d7ccfaada6267c482ab202d3bd830322">bin/rails runner 'p Rails.autoloaders.zeitwerk_enabled?'
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d7ccfaada6267c482ab202d3bd830322">Copiar</button>
+</div>
+<p>If that prints <code>true</code>, <code>zeitwerk</code> mode is enabled.</p><h3 id="does-my-application-comply-with-zeitwerk-conventions-questionmark"><a class="anchorlink" href="#does-my-application-comply-with-zeitwerk-conventions-questionmark">6 Does my Application Comply with Zeitwerk Conventions?</a></h3><h4 id="config-eager-load-paths"><a class="anchorlink" href="#config-eager-load-paths">6.1 config.eager_load_paths</a></h4><p>Compliance test runs only for eager loaded files. Therefore, in order to verify Zeitwerk compliance, it is recommended to have all autoload paths in the eager load paths.</p><p>This is already the case by default, but if the project has custom autoload paths configured just like this:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">&lt;&lt;</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/extras"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-0494361542595971145c995ea43676e8">config.autoload_paths &lt;&lt; "#{Rails.root}/extras"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-0494361542595971145c995ea43676e8">Copiar</button>
+</div>
+<p>those are not eager loaded and won't be verified. Adding them to the eager load paths is easy:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">&lt;&lt;</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/extras"</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">eager_load_paths</span> <span class="o">&lt;&lt;</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/extras"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6956ab2b3b51fa72853ed1ef27ee6176">config.autoload_paths &lt;&lt; "#{Rails.root}/extras"
+config.eager_load_paths &lt;&lt; "#{Rails.root}/extras"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6956ab2b3b51fa72853ed1ef27ee6176">Copiar</button>
+</div>
+<h4 id="zeitwerk-check"><a class="anchorlink" href="#zeitwerk-check">6.2 zeitwerk:check</a></h4><p>Once <code>zeitwerk</code> mode is enabled and the configuration of eager load paths double-checked, please run:</p><div class="code_container">
+<pre><code class="highlight plaintext">bin/rails zeitwerk:check
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b42416851c50c50fbe87cf3b0294b08c">bin/rails zeitwerk:check
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b42416851c50c50fbe87cf3b0294b08c">Copiar</button>
+</div>
+<p>A successful check looks like this:</p><div class="code_container">
+<pre><code class="highlight plaintext">% bin/rails zeitwerk:check
+Hold on, I am eager loading the application.
+All is good!
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a05fefd66791b0dc0ccea90382813f6a">% bin/rails zeitwerk:check
+Hold on, I am eager loading the application.
+All is good!
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a05fefd66791b0dc0ccea90382813f6a">Copiar</button>
+</div>
+<p>There can be additional output depending on the application configuration, but the last "All is good!" is what you are looking for.</p><p>If the double-check explained in the previous section determined actually there have to be some custom autoload paths outside the eager load paths, the task will detect and warn about them. However, if the test suite loads those files successfully, you're good.</p><p>Now, if there's any file that does not define the expected constant, the task will tell you. It does so one file at a time, because if it moved on, the failure loading one file could cascade into other failures unrelated to the check we want to run and the error report would be confusing.</p><p>If there's one constant reported, fix that particular one and run the task again. Repeat until you get "All is good!".</p><p>Take for example:</p><div class="code_container">
+<pre><code class="highlight plaintext">% bin/rails zeitwerk:check
+Hold on, I am eager loading the application.
+expected file app/models/vat.rb to define constant Vat
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-da09ec2bd0a320c69685ff427e9edc2b">% bin/rails zeitwerk:check
+Hold on, I am eager loading the application.
+expected file app/models/vat.rb to define constant Vat
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-da09ec2bd0a320c69685ff427e9edc2b">Copiar</button>
+</div>
+<p>VAT is an European tax. The file <code>app/models/vat.rb</code> defines <code>VAT</code> but the autoloader expects <code>Vat</code>, why?</p><h4 id="acronyms"><a class="anchorlink" href="#acronyms">6.3 Acronyms</a></h4><p>This is the most common kind of discrepancy you may find, it has to do with acronyms. Let's understand why do we get that error message.</p><p>The classic autoloader is able to autoload <code>VAT</code> because its input is the name of the missing constant, <code>VAT</code>, invokes <code>underscore</code> on it, which yields <code>vat</code>, and looks for a file called <code>vat.rb</code>. It works.</p><p>The input of the new autoloader is the file system. Give the file <code>vat.rb</code>, Zeitwerk invokes <code>camelize</code> on <code>vat</code>, which yields <code>Vat</code>, and expects the file to define the constant <code>Vat</code>. That is what the error message says.</p><p>Fixing this is easy, you only need to tell the inflector about this acronym:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/initializers/inflections.rb</span>
+<span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Inflector</span><span class="p">.</span><span class="nf">inflections</span><span class="p">(</span><span class="ss">:en</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">inflect</span><span class="o">|</span>
+  <span class="n">inflect</span><span class="p">.</span><span class="nf">acronym</span> <span class="s2">"VAT"</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9cbad28eb99710c8c167ce124d50ace0"># config/initializers/inflections.rb
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.acronym "VAT"
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9cbad28eb99710c8c167ce124d50ace0">Copiar</button>
+</div>
+<p>Doing so affects how Active Support inflects globally. That may be fine, but if you prefer you can also pass overrides to the inflectors used by the autoloaders:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/initializers/zeitwerk.rb</span>
+<span class="no">Rails</span><span class="p">.</span><span class="nf">autoloaders</span><span class="p">.</span><span class="nf">main</span><span class="p">.</span><span class="nf">inflector</span><span class="p">.</span><span class="nf">inflect</span><span class="p">(</span><span class="s2">"vat"</span> <span class="o">=&gt;</span> <span class="s2">"VAT"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7c30f3aa3894d48e4df02ba5301131ca"># config/initializers/zeitwerk.rb
+Rails.autoloaders.main.inflector.inflect("vat" =&gt; "VAT")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7c30f3aa3894d48e4df02ba5301131ca">Copiar</button>
+</div>
+<p>With this option you have more control, because only files called exactly <code>vat.rb</code> or directories exactly called <code>vat</code> will be inflected as <code>VAT</code>. A file called <code>vat_rules.rb</code> is not affected by that and can define <code>VatRules</code> just fine. This may be handy if the project has this kind of naming inconsistencies.</p><p>With that in place, the check passes!</p><div class="code_container">
+<pre><code class="highlight plaintext">% bin/rails zeitwerk:check
+Hold on, I am eager loading the application.
+All is good!
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f3f9f53dd0e7065860390cbb6166ef55">% bin/rails zeitwerk:check
+Hold on, I am eager loading the application.
+All is good!
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f3f9f53dd0e7065860390cbb6166ef55">Copiar</button>
+</div>
+<p>Once all is good, it is recommended to keep validating the project in the test suite. The section <a href="#check-zeitwerk-compliance-in-the-test-suite"><em>Check Zeitwerk Compliance in the Test Suite</em></a> explains how to do this.</p><h4 id="concerns"><a class="anchorlink" href="#concerns">6.4 Concerns</a></h4><p>You can autoload and eager load from a standard structure with <code>concerns</code> subdirectories like</p><div class="code_container">
+<pre><code class="highlight plaintext">app/models
+app/models/concerns
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-2527ef5801177c6ef84037a7f7db8dac">app/models
+app/models/concerns
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-2527ef5801177c6ef84037a7f7db8dac">Copiar</button>
+</div>
+<p>By default, <code>app/models/concerns</code> belongs to the autoload paths and therefore it is assumed to be a root directory. So, by default, <code>app/models/concerns/foo.rb</code> should define <code>Foo</code>, not <code>Concerns::Foo</code>.</p><p>If your application uses <code>Concerns</code> as namespace, you have two options:</p>
+<ol>
+<li>Remove the <code>Concerns</code> namespace from those classes and modules and update client code.</li>
+<li>Leave things as they are by removing <code>app/models/concerns</code> from the autoload paths:</li>
+</ol>
+<div class="code_container">
+<pre><code class="highlight ruby">  <span class="c1"># config/initializers/zeitwerk.rb</span>
+  <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Dependencies</span><span class="p">.</span>
+    <span class="nf">autoload_paths</span><span class="p">.</span>
+    <span class="nf">delete</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/app/models/concerns"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-4f5248743c1cad674b4ffcacf7350362">  # config/initializers/zeitwerk.rb
+  ActiveSupport::Dependencies.
+    autoload_paths.
+    delete("#{Rails.root}/app/models/concerns")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-4f5248743c1cad674b4ffcacf7350362">Copiar</button>
+</div>
+<h4 id="having-app-in-the-autoload-paths"><a class="anchorlink" href="#having-app-in-the-autoload-paths">6.5 Having <code>app</code> in the autoload paths</a></h4><p>Some projects want something like <code>app/api/base.rb</code> to define <code>API::Base</code>, and add <code>app</code> to the autoload paths to accomplish that.</p><p>Since Rails adds all subdirectories of <code>app</code> to the autoload paths automatically (with a few exceptions), we have another situation in which there are nested root directories, similar to what happens with <code>app/models/concerns</code>. That setup no longer works as is.</p><p>However, you can keep that structure, just delete <code>app/api</code> from the autoload paths in an initializer:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/initializers/zeitwerk.rb</span>
+<span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Dependencies</span><span class="p">.</span>
+  <span class="nf">autoload_paths</span><span class="p">.</span>
+  <span class="nf">delete</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/app/api"</span><span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-47dcc1b8e46bd462480c9f71dc1bab2f"># config/initializers/zeitwerk.rb
+ActiveSupport::Dependencies.
+  autoload_paths.
+  delete("#{Rails.root}/app/api")
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-47dcc1b8e46bd462480c9f71dc1bab2f">Copiar</button>
+</div>
+<p>Beware of subdirectories that do not have files to be autoloaded/eager loaded. For example, if the application has <code>app/admin</code> with resources for <a href="https://activeadmin.info/">ActiveAdmin</a>, you need to ignore them. Same for <code>assets</code> and friends:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/initializers/zeitwerk.rb</span>
+<span class="no">Rails</span><span class="p">.</span><span class="nf">autoloaders</span><span class="p">.</span><span class="nf">main</span><span class="p">.</span><span class="nf">ignore</span><span class="p">(</span>
+  <span class="s2">"app/admin"</span><span class="p">,</span>
+  <span class="s2">"app/assets"</span><span class="p">,</span>
+  <span class="s2">"app/javascripts"</span><span class="p">,</span>
+  <span class="s2">"app/views"</span>
+<span class="p">)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-7ac7047a29d0b58175507900774850cc"># config/initializers/zeitwerk.rb
+Rails.autoloaders.main.ignore(
+  "app/admin",
+  "app/assets",
+  "app/javascripts",
+  "app/views"
+)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-7ac7047a29d0b58175507900774850cc">Copiar</button>
+</div>
+<p>Without that configuration, the application would eager load those trees. Would err on <code>app/admin</code> because its files do not define constants, and would define a <code>Views</code> module, for example, as an unwanted side-effect.</p><p>As you see, having <code>app</code> in the autoload paths is technically possible, but a bit tricky.</p><h4 id="autoloaded-constants-and-explicit-namespaces"><a class="anchorlink" href="#autoloaded-constants-and-explicit-namespaces">6.6 Autoloaded Constants and Explicit Namespaces</a></h4><p>If a namespace is defined in a file, as <code>Hotel</code> is here:</p><div class="code_container">
+<pre><code class="highlight plaintext">app/models/hotel.rb         # Defines Hotel.
+app/models/hotel/pricing.rb # Defines Hotel::Pricing.
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b0c54b421d72951493c7a01312b4d25a">app/models/hotel.rb         # Defines Hotel.
+app/models/hotel/pricing.rb # Defines Hotel::Pricing.
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b0c54b421d72951493c7a01312b4d25a">Copiar</button>
+</div>
+<p>the <code>Hotel</code> constant has to be set using the <code>class</code> or <code>module</code> keywords. For example:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Hotel</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-a4a92aa3d1ed33cfbd6530907afc8a27">class Hotel
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-a4a92aa3d1ed33cfbd6530907afc8a27">Copiar</button>
+</div>
+<p>is good.</p><p>Alternatives like</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Hotel</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-63db724eb7a61e60a64a253e29e6d134">Hotel = Class.new
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-63db724eb7a61e60a64a253e29e6d134">Copiar</button>
+</div>
+<p>or</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">Hotel</span> <span class="o">=</span> <span class="no">Struct</span><span class="p">.</span><span class="nf">new</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-11935cb56f9c526bee7185fc32cd73d2">Hotel = Struct.new
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-11935cb56f9c526bee7185fc32cd73d2">Copiar</button>
+</div>
+<p>won't work, child objects like <code>Hotel::Pricing</code> won't be found.</p><p>This restriction only applies to explicit namespaces. Classes and modules not defining a namespace can be defined using those idioms.</p><h4 id="one-file-one-constant-at-the-same-top-level"><a class="anchorlink" href="#one-file-one-constant-at-the-same-top-level">6.7 One file, one constant (at the same top-level)</a></h4><p>In <code>classic</code> mode you could technically define several constants at the same top-level and have them all reloaded. For example, given</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/models/foo.rb</span>
+
+<span class="k">class</span> <span class="nc">Foo</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Bar</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-347de342bb7340a2d0d82dc2fea5bb02"># app/models/foo.rb
+
+class Foo
+end
+
+class Bar
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-347de342bb7340a2d0d82dc2fea5bb02">Copiar</button>
+</div>
+<p>while <code>Bar</code> could not be autoloaded, autoloading <code>Foo</code> would mark <code>Bar</code> as autoloaded too.</p><p>This is not the case in <code>zeitwerk</code> mode, you need to move <code>Bar</code> to its own file <code>bar.rb</code>. One file, one top-level constant.</p><p>This affects only to constants at the same top-level as in the example above. Inner classes and modules are fine. For example, consider</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># app/models/foo.rb</span>
+
+<span class="k">class</span> <span class="nc">Foo</span>
+  <span class="k">class</span> <span class="nc">InnerClass</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-eead21658ba32cba8ffe962874810bed"># app/models/foo.rb
+
+class Foo
+  class InnerClass
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-eead21658ba32cba8ffe962874810bed">Copiar</button>
+</div>
+<p>If the application reloads <code>Foo</code>, it will reload <code>Foo::InnerClass</code> too.</p><h4 id="globs-in-config-autoload-paths"><a class="anchorlink" href="#globs-in-config-autoload-paths">6.8 Globs in <code>config.autoload_paths</code></a></h4><p>Beware of configurations that use wildcards like</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">+=</span> <span class="no">Dir</span><span class="p">[</span><span class="s2">"</span><span class="si">#{</span><span class="n">config</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/extras/**/"</span><span class="p">]</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-171b6355d0b89b89314020d3ce630089">config.autoload_paths += Dir["#{config.root}/extras/**/"]
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-171b6355d0b89b89314020d3ce630089">Copiar</button>
+</div>
+<p>Every element of <code>config.autoload_paths</code> should represent the top-level namespace (<code>Object</code>). That won't work.</p><p>To fix this, just remove the wildcards:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">&lt;&lt;</span> <span class="s2">"</span><span class="si">#{</span><span class="n">config</span><span class="p">.</span><span class="nf">root</span><span class="si">}</span><span class="s2">/extras"</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-51800174a67998be387b9fbe275c77f1">config.autoload_paths &lt;&lt; "#{config.root}/extras"
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-51800174a67998be387b9fbe275c77f1">Copiar</button>
+</div>
+<h4 id="spring-and-the-test-environment"><a class="anchorlink" href="#spring-and-the-test-environment">6.9 Spring and the <code>test</code> Environment</a></h4><p>Spring reloads the application code if something changes. In the <code>test</code> environment you need to enable reloading for that to work:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/environments/test.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">cache_classes</span> <span class="o">=</span> <span class="kp">false</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-9e6fd8d5ebd9276b08cc906d99ee83de"># config/environments/test.rb
+config.cache_classes = false
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-9e6fd8d5ebd9276b08cc906d99ee83de">Copiar</button>
+</div>
+<p>Otherwise you'll get this error:</p><div class="code_container">
+<pre><code class="highlight plaintext">reloading is disabled because config.cache_classes is true
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-f92ee23a5c2dd65c8d0aa9c3178eb903">reloading is disabled because config.cache_classes is true
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-f92ee23a5c2dd65c8d0aa9c3178eb903">Copiar</button>
+</div>
+<p>This has no performance penalty.</p><h4 id="bootsnap"><a class="anchorlink" href="#bootsnap">6.10 Bootsnap</a></h4><p>Please make sure to depend on at least Bootsnap 1.4.4.</p><h3 id="check-zeitwerk-compliance-in-the-test-suite"><a class="anchorlink" href="#check-zeitwerk-compliance-in-the-test-suite">7 Check Zeitwerk Compliance in the Test Suite</a></h3><p>The task <code>zeitwerk:check</code> is handy while migrating. Once the project is compliant, it is recommended to automate this check. In order to do so, it is enough to eager load the application, which is all <code>zeitwerk:check</code> does, indeed.</p><h4 id="continuous-integration"><a class="anchorlink" href="#continuous-integration">7.1 Continuous Integration</a></h4><p>If your project has continuous integration in place, it is a good idea to eager load the application when the suite runs there. If the application cannot be eager loaded for whatever reason, you want to know in CI, better than in production, right?</p><p>CIs typically set some environment variable to indicate the test suite is running there. For example, it could be <code>CI</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># config/environments/test.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">eager_load</span> <span class="o">=</span> <span class="no">ENV</span><span class="p">[</span><span class="s2">"CI"</span><span class="p">].</span><span class="nf">present?</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-5a6c66abc3c31a96c787bdf6c623dd52"># config/environments/test.rb
+config.eager_load = ENV["CI"].present?
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-5a6c66abc3c31a96c787bdf6c623dd52">Copiar</button>
+</div>
+<p>Starting with Rails 7, newly generated applications are configured that way by default.</p><h4 id="bare-test-suites"><a class="anchorlink" href="#bare-test-suites">7.2 Bare Test Suites</a></h4><p>If your project does not have continuous integration, you can still eager load in the test suite by calling <code>Rails.application.eager_load!</code>:</p><h5 id="minitest"><a class="anchorlink" href="#minitest">7.2.1 minitest</a></h5><div class="code_container">
+<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
+
+<span class="k">class</span> <span class="nc">ZeitwerkComplianceTest</span> <span class="o">&lt;</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">TestCase</span>
+  <span class="nb">test</span> <span class="s2">"eager loads all files without errors"</span> <span class="k">do</span>
+    <span class="n">assert_nothing_raised</span> <span class="p">{</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">eager_load!</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6c3a04c649b41fad9d4e23cfcb8dcc3a">require "test_helper"
+
+class ZeitwerkComplianceTest &lt; ActiveSupport::TestCase
+  test "eager loads all files without errors" do
+    assert_nothing_raised { Rails.application.eager_load! }
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6c3a04c649b41fad9d4e23cfcb8dcc3a">Copiar</button>
+</div>
+<h5 id="rspec"><a class="anchorlink" href="#rspec">7.2.2 RSpec</a></h5><div class="code_container">
+<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"rails_helper"</span>
+
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="s2">"Zeitwerk compliance"</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="s2">"eager loads all files without errors"</span> <span class="k">do</span>
+    <span class="n">expect</span> <span class="p">{</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">eager_load!</span> <span class="p">}.</span><span class="nf">not_to</span> <span class="n">raise_error</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-449a0d8dd8830e32b65d89bf0dc11ca2">require "rails_helper"
+
+RSpec.describe "Zeitwerk compliance" do
+  it "eager loads all files without errors" do
+    expect { Rails.application.eager_load! }.not_to raise_error
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-449a0d8dd8830e32b65d89bf0dc11ca2">Copiar</button>
+</div>
+<h3 id="delete-any-require-calls"><a class="anchorlink" href="#delete-any-require-calls">8 Delete any <code>require</code> calls</a></h3><p>In my experience, projects generally do not do this. But I've seen a couple, and have heard of a few others.</p><p>In Rails application you use <code>require</code> exclusively to load code from <code>lib</code> or from 3rd party like gem dependencies or the standard library. <strong>Never load autoloadable application code with <code>require</code></strong>. See why this was a bad idea already in <code>classic</code> <a href="https://guides.rubyonrails.org/v6.1/autoloading_and_reloading_constants_classic_mode.html#autoloading-and-require">here</a>.</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"nokogiri"</span> <span class="c1"># GOOD</span>
+<span class="nb">require</span> <span class="s2">"net/http"</span> <span class="c1"># GOOD</span>
+<span class="nb">require</span> <span class="s2">"user"</span>     <span class="c1"># BAD, DELETE THIS (assuming app/models/user.rb)</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-6bd5424a22a1357c152f759243d52a40">require "nokogiri" # GOOD
+require "net/http" # GOOD
+require "user"     # BAD, DELETE THIS (assuming app/models/user.rb)
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-6bd5424a22a1357c152f759243d52a40">Copiar</button>
+</div>
+<p>Please delete any <code>require</code> calls of that type.</p><h3 id="new-features-you-can-leverage"><a class="anchorlink" href="#new-features-you-can-leverage">9 New Features You Can Leverage</a></h3><h4 id="delete-require-dependency-calls"><a class="anchorlink" href="#delete-require-dependency-calls">9.1 Delete <code>require_dependency</code> calls</a></h4><p>All known use cases of <code>require_dependency</code> have been eliminated with Zeitwerk. You should grep the project and delete them.</p><p>If your application uses Single Table Inheritance, please see the <a href="autoloading_and_reloading_constants.html#single-table-inheritance">Single Table Inheritance section</a> of the Autoloading and Reloading Constants (Zeitwerk Mode) guide.</p><h4 id="qualified-names-in-class-and-module-definitions-are-now-possible"><a class="anchorlink" href="#qualified-names-in-class-and-module-definitions-are-now-possible">9.2 Qualified Names in Class and Module Definitions Are Now Possible</a></h4><p>You can now robustly use constant paths in class and module definitions:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="c1"># Autoloading in this class body matches Ruby semantics now.</span>
+<span class="k">class</span> <span class="nc">Admin::UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-d10d163078c42e08213167f51b573587"># Autoloading in this class body matches Ruby semantics now.
+class Admin::UsersController &lt; ApplicationController
+  # ...
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-d10d163078c42e08213167f51b573587">Copiar</button>
+</div>
+<p>A gotcha to be aware of is that, depending on the order of execution, the classic autoloader could sometimes be able to autoload <code>Foo::Wadus</code> in</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Foo::Bar</span>
+  <span class="nc">Wadus</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-80d28d882ce14ad63da7ebf0f898c228">class Foo::Bar
+  Wadus
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-80d28d882ce14ad63da7ebf0f898c228">Copiar</button>
+</div>
+<p>That does not match Ruby semantics because <code>Foo</code> is not in the nesting, and won't work at all in <code>zeitwerk</code> mode. If you find such corner case you can use the qualified name <code>Foo::Wadus</code>:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">Foo::Bar</span>
+  <span class="nc">Foo::Wadus</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-b626b0ba054045d95a587177a4133118">class Foo::Bar
+  Foo::Wadus
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-b626b0ba054045d95a587177a4133118">Copiar</button>
+</div>
+<p>or add <code>Foo</code> to the nesting:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="k">module</span> <span class="nn">Foo</span>
+  <span class="k">class</span> <span class="nc">Bar</span>
+    <span class="no">Wadus</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<textarea class="clipboard-content" id="clipboard-79f72bccce11f351d44138bf633feaa0">module Foo
+  class Bar
+    Wadus
+  end
+end
+</textarea>
+<button class="clipboard-button" data-clipboard-target="#clipboard-79f72bccce11f351d44138bf633feaa0">Copiar</button>
+</div>
+<h4 id="thread-safety-everywhere"><a class="anchorlink" href="#thread-safety-everywhere">9.3 Thread-safety Everywhere</a></h4><p>In <code>classic</code> mode, constant autoloading is not thread-safe, though Rails has locks in place for example to make web requests thread-safe.</p><p>Constant autoloading is thread-safe in <code>zeitwerk</code> mode. For example, you can now autoload in multi-threaded scripts executed by the <code>runner</code> command.</p><h4 id="eager-loading-and-autoloading-are-consistent"><a class="anchorlink" href="#eager-loading-and-autoloading-are-consistent">9.4 Eager Loading and Autoloading are Consistent</a></h4><p>In <code>classic</code> mode, if <code>app/models/foo.rb</code> defines <code>Bar</code>, you won't be able to autoload that file, but eager loading will work because it loads files recursively blindly. This can be a source of errors if you test things first eager loading, execution may fail later autoloading.</p><p>In <code>zeitwerk</code> mode both loading modes are consistent, they fail and err in the same files.</p>
+
+        <h3>Feedback</h3>
+        <p>
+          Você é incentivado a ajudar a melhorar a qualidade deste guia.
+        </p>
+        <p>
+          Por favor, contribua caso veja quaisquer erros, inclusive erros de digitação.
+          Para começar, você pode ler nossa sessão de <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">contribuindo com a documentação</a>.
+        </p>
+        <p>
+          Você também pode encontrar conteúdo incompleto ou coisas que não estão atualizadas.
+          Por favor, adicione qualquer documentação em falta na main do Rails. Certifique-se de checar o
+          <a href="http://edgeguides.rubyonrails.org">Edge Guides (en-US)</a> primeiro para verificar
+          se o problema já foi resolvido ou não no branch main.
+          Verifique as <a href="ruby_on_rails_guides_guidelines.html">Diretrizes do Guia Ruby on Rails</a>
+          para estilo e convenções.
+        </p>
+        <p>
+          Se, por qualquer motivo, você encontrar algo para consertar, mas não conseguir consertá-lo, por favor
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">abra uma issue no nosso Guia</a>.
+        </p>
+        <p>
+          E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p> Este projeto está licenciado sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p>
+<p>"Rails", "Ruby on Rails", e o logotipo Rails são marcas comerciais de David Heinemeier Hansson. Todos os direitos reservados.</p>
+
+    </div>
+  </div>
+  <div id="toggle">
+    <img alt="dark theme icon" class="icon">
+  </div>
+</body>
+</html>
