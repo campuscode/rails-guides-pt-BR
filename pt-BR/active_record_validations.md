@@ -402,6 +402,36 @@ end
 
 A mensagem padrão de erro para esse *helper* é _"doesn't match confirmation"_.
 
+### `comparison`
+
+Esta verificação validará uma comparação entre quaisquer dois valores comparáveis.
+O validador requer que uma opção de comparação seja fornecida. Cada opção aceita um
+valor, *proc* ou *symbol*. Qualquer classe que inclua `Comparable` pode ser comparada.
+
+```ruby
+class Promotion < ApplicationRecord
+  validates :start_date, comparison: { greater_than: :end_date }
+end
+```
+
+Todas essas opções são suportadas:
+
+* `:greater_than` - Especifica que o valor deve ser maior que o valor
+  fornecido. A mensagem de erro padrão para esta opção é _"must be greater than
+  %{count}"_.
+* `:greater_than_or_equal_to` - Especifica que o valor deve ser maior que ou
+  igual ao valor fornecido. A mensagem de erro padrão para esta opção é
+  _"must be greater than or equal to %{count}"_.
+* `:equal_to` - Especifica que o valor deve ser igual ao valor fornecido. A
+  mensagem de erro padrão para esta opção é _"must be equal to %{count}"_.
+* `:less_than` - Especifica que o valor deve ser menor que o valor fornecido. O
+  mensagem de erro padrão para esta opção é _"must be less than %{count}"_.
+* `:less_than_or_equal_to` - Especifica que o valor deve ser menor ou igual ao
+  valor fornecido. A mensagem de erro padrão para esta opção é _"must be
+  less than or equal to %{count}"_.
+* `:other_than` - Especifica que o valor deve ser diferente do valor fornecido.
+  A mensagem de erro padrão para esta opção é _"must be other than %{count}"_.
+
 ### `exclusion`
 
 Esse *helper* valida os atributos que não estão incluídos em uma coleção. Na
@@ -549,6 +579,8 @@ adicionar restrições aos valores aceitáveis:
   equal to %{count}"_.
 * `:other_than` - Especifica que o valor deve ser diferente que o valor
   informado. A mensagem padrão para esse erro é _"must be other than %{count}"_.
+* `:in` - Especifica que o valor deve estar no intervalo fornecido.
+  A mensagem de erro padrão para esta opção é _must be in %{count}"_.
 * `:odd` - Especifica que o valor deve ser ímpar se definido como verdadeiro.
   A mensagem padrão para esse erro é _"must be odd"_.
 * `:even` - Especifica que o valor deve ser par se definido como verdadeiro. A
@@ -687,9 +719,7 @@ para mais detalhes sobre indexação de múltiplas colunas ou
 [o manual do Postgres](https://www.postgresql.org/docs/current/static/ddl-constraints.html)
 para exemplos de restrições únicas que referenciam esse grupo de colunas
 
-Há também uma opção `:case_sensitive` que você pode usar para definir se a
-restrição de exclusividade fará distinção entre maiúsculas e minúsculas.
-O padrão desta opção é _true_.
+Há também uma opção `:case_sensitive` que você pode usar para definir se a restrição de exclusividade fará distinção entre maiúsculas e minúsculas, ou respeitará o agrupamento do banco de dados padrão. A opção padrão respeita o agrupamento (*collation*) do banco de dados.
 
 ```ruby
 class Person < ApplicationRecord
@@ -1081,7 +1111,7 @@ end
 ```
 
 A maneira mais fácil de adicionar validadores customizados para atributos individuais
-é com a conveniente classe `ActiveModel::EachValidator`. Nesse caso, a classe validadora
+é com a conveniente classe [`ActiveModel::EachValidator`][]. Nesse caso, a classe validadora
 customizada deve implementar um método `validate_each`, que recebe três argumentos:
 *record*, *attribute* e *value*. Esses correspondem respectivamente à instância, ao atributo
 a ser validado e ao valor do atributo na instância recebida.
@@ -1103,6 +1133,7 @@ end
 Como mostrado no exemplo acima, você também pode combinar validações padrão com
 seus próprios validadores customizados.
 
+[`ActiveModel::EachValidator`]: https://api.rubyonrails.org/classes/ActiveModel/EachValidator.html
 [`ActiveModel::Validator`]: https://api.rubyonrails.org/classes/ActiveModel/Validator.html
 
 ### Métodos Customizados
@@ -1125,7 +1156,7 @@ class Invoice < ApplicationRecord
     :discount_cannot_be_greater_than_total_value
 
   def expiration_date_cannot_be_in_the_past
-    if expiration_date.present? && expiration_date < Date.today
+    if expiration_date.present? && expiration_date < Date.today269G
       errors.add(:expiration_date, "can't be in the past")
     end
   end
@@ -1371,7 +1402,7 @@ Exibindo Erros de Validação nas *Views*
 
 Uma vez criado o *model* e adicionada as validações, se o *model* é criado via
 formulário web, você provavelmente quer mostrar uma mensagem de erro quando uma
-das validações falhar.
+das validações falharem.
 
 Devido a cada aplicação lidar com esse tipo de cenário de forma diferente, o Rails
 não inclui nenhum *helper* na *view* para ajudar a gerar essas mensagens

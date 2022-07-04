@@ -341,7 +341,7 @@ Rails adiciona algumas asserções customizadas o framework `minitest`:
 | [`assert_nothing_raised { block }`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised) | Checa se o bloco dado não dispara nenhuma exceção.|
 | [`assert_recognizes(expected_options, path, extras={}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes) | Checa se o Rails reconhece a rota fornecida pelas `expected_options`.|
 | [`assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates) | O inverso de `assert_recognizes`. Checa se o Rails não reconhece a rota fornecida pelas `expected_options`.|
-| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Checa se a resposta de uma requisição vem com um código de status específico. Você pode especificar `:success` para indicar 200-299, `:redirect` para indicar 300-399, `:missing` para indicar 404, ou `:error` para indicar o intervalo de 500-599. Você pode também passar o número explícito do status ou símbolo equivalente. Para mais informação, veja [lista completa de códigos de status](http://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) e como seus [mapeamentos](https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) funcionam.|
+| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Checa se a resposta de uma requisição vem com um código de status específico. Você pode especificar `:success` para indicar 200-299, `:redirect` para indicar 300-399, `:missing` para indicar 404, ou `:error` para indicar o intervalo de 500-599. Você pode também passar o número explícito do status ou símbolo equivalente. Para mais informação, veja [lista completa de códigos de status](https://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) e como seus [mapeamentos](https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) funcionam.|
 | [`assert_redirected_to(options = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to) | Checa se a resposta de uma requisição é redirecionada para uma URL que "bate" com as opções dadas. Você pode passar rotas nomeadas tais como `asset_redirected_to root_path` e objetos do Active Record como `assert_redirected_to @article`.|
 
 Agora você verá alguns usos de algumas dessas asserções no próximo capítulo.
@@ -553,6 +553,27 @@ end
 NOTE: Com os testes transacionais desligados, você terá que que limpar os dados de teste criados,
 já que a as mudanças não são automaticamente desfeitas depois que o teste termina.
 
+### Limite para paralelizar testes
+
+A execução de testes em paralelo adiciona uma sobrecarga em termos de configuração do banco de dados e
+carregamento de *fixtures*. Por isso, o Rails não paralelizar execuções que envolvem
+menos de 50 testes.
+
+Você pode configurar este limite em seu `test.rb`:
+
+
+```ruby
+config.active_support.test_parallelization_threshold = 100
+```
+
+E também ao configurar a paralelização no nível do caso de teste:
+
+```ruby
+class ActiveSupport::TestCase
+  parallelize threshold: 100
+end
+```
+
 O Banco de Dados de Teste
 --------------------------
 
@@ -623,25 +644,70 @@ Se você está trabalhando com [associações](/association_basics.html), você 
 Aqui está um exemplo com uma associação `belongs_to`/`has_many`:
 
 ```yaml
-# fixtures/categories.yml
+# test/fixtures/categories.yml
 about:
   name: About
 ```
 
 ```yaml
-# fixtures/articles.yml
+# test/fixtures/articles.yml
 first:
   title: Welcome to Rails!
-  body: Hello world!
   category: about
 ```
 
-Veja que a chave de `category` do artigo `first` encontrado em `fixtures/articles.yml` tem o valor `about`.
-Isso diz ao Rails para carregar a categoria `about` encontrada em `fixtures/categories.yml`.
+```yaml
+# test/fixtures/action_text/rich_texts.yml
+first_content:
+  record: first (Article)
+  name: content
+  body: <div>Hello, from <strong>a fixture</strong></div>
+```
+
+Veja que a chave de `category` do artigo (*Article*) `first` encontrado em `fixtures/articles.yml` tem o valor `about`, e que a chave `record` da entrada `first_content` encontrada em `fixtures/action_text/rich_texts.yml` tem um valor de `first (Article)`. Isso sugere que o *Active Record* carregue a categoria (*Category*) `about` encontrada em `fixtures/categories.yml` para o primeiro, e o *Action Text* para carregar o artigo `first` encontrado em `fixtures/articles.yml` para o último.
 
 NOTE: Para que associações façam referência umas as outras pelo nome, você pode usar o nome da *fixture* ao invés de especificar a chave `id:` nas *fixtures* associadas.
 O Rails vai dar automaticamente uma chave para que haja consistência entre execuções dos testes.
 Para mais informações sobre esse comportamento das associações, leia a página [documentação da API de Fixtures](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+
+#### Arquivos anexos em *fixtures*
+
+Como outros *models* com suporte ao *Active Record*, os registros em anexo do *Active Storage*
+herdam de instâncias de ActiveRecord::Base e podem, portanto, ser preenchidos por
+*fixtures*.
+
+Considere um *model* `Article` que tenha uma imagem associada como `thumbnail`, juntamente com os dados no arquivo de *fixture* YAML:
+
+```ruby
+class Article
+  has_one_attached :thumbnail
+end
+```
+
+```yaml
+# test/fixtures/articles.yml
+first:
+  title: An Article
+```
+
+Supondo que haja um arquivo codificado [image/png][] em
+`test/fixtures/files/first.png`, as seguintes entradas de *fixtures* YAML serão
+gerar os registros de relacionamento `ActiveStorage::Blob` e `ActiveStorage::Attachment`:
+
+```yaml
+# test/fixtures/active_storage/blobs.yml
+first_thumbnail_blob: <%= ActiveStorage::FixtureSet.blob filename: "first.png" %>
+```
+
+```yaml
+# test/fixtures/active_storage/attachments.yml
+first_thumbnail_attachment:
+  name: thumbnail
+  record: first (Article)
+  blob: first_thumbnail_blob
+```
+
+[image/png]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#image_types
 
 #### ERBzando as Fixtures
 
@@ -756,16 +822,16 @@ Quando uma nova aplicação ou *scaffold* são gerados, o arquivo `application_s
 É nele em que todas as configurações de seus testes de sistema devem estão.
 
 Se você quiser mudar as configurações padrão, você pode mudar quem "dirige" (*driver*) os testes de sistema.
-Digamos que você quer mudar de Selenium para Poltergeist.
-Primeiro adicione a gem `poltergeist` em seu `Gemfile`.
+Digamos que você quer mudar de Selenium para Cuprite.
+Primeiro adicione a gem `cuprite` em seu `Gemfile`.
 Depois, em seu `application_system_test_case.rb`, faça o seguinte:
 
 ```ruby
 require "test_helper"
-require "capybara/poltergeist"
+require "capybara/cuprite"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :poltergeist
+  driven_by :cuprite
 end
 ```
 
@@ -854,7 +920,7 @@ Você também pode executar `bin/rails test:all` para rodar todos os testes, inc
 Agora vamos testar o fluxo de criação de um novo artigo para o nosso blog.
 
 ```ruby
-test "creating an article" do
+test "should create Article" do
   visit articles_path
 
   click_on "New Article"
@@ -1525,7 +1591,7 @@ end
 
 Essa asserção é bastante poderosa. Para usos mais avançados, veja a sua [documentação](https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb).
 
-#### Asserções Adicionais para *Views*
+### Asserções Adicionais para *Views*
 
 Existem mais asserções que são usadas primariamente em testes de *views*:
 
@@ -1913,3 +1979,74 @@ assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança é visív
 ```
 
 Por favor consulte a [Documentação da API `ActiveSupport::Testing::TimeHelpers`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html) para obter informações detalhadas sobre os *helpers* de tempo disponíveis.
+
+Testing Eager Loading
+---------------------
+
+Normally, applications do not eager load in the `development` or `test` environments to speed things up. But they do in the `production` environment.
+
+If some file in the project cannot be loaded for whatever reason, you better detect it before deploying to production, right?
+
+### Continuous Integration
+
+If your project has CI in place, eager loading in CI is an easy way to ensure the application eager loads.
+
+CIs typically set some environment variable to indicate the test suite is running there. For example, it could be `CI`:
+
+```ruby
+# config/environments/test.rb
+config.eager_load = ENV["CI"].present?
+```
+
+Starting with Rails 7, newly generated applications are configured that way by default.
+
+### Bare Test Suites
+
+If your project does not have continuous integration, you can still eager load in the test suite by calling `Rails.application.eager_load!`:
+
+#### minitest
+
+```ruby
+require "test_helper"
+
+class ZeitwerkComplianceTest < ActiveSupport::TestCase
+  test "eager loads all files without errors" do
+    assert_nothing_raised { Rails.application.eager_load! }
+  end
+end
+```
+
+#### RSpec
+
+```ruby
+require "rails_helper"
+
+RSpec.describe "Zeitwerk compliance" do
+  it "eager loads all files without errors" do
+    expect { Rails.application.eager_load! }.not_to raise_error
+  end
+end
+```
+
+Additional Testing Resources
+----------------------------
+
+### Testing Time-Dependent Code
+
+Rails provides built-in helper methods that enable you to assert that your time-sensitive code works as expected.
+
+Here is an example using the [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to) helper:
+
+```ruby
+# Lets say that a user is eligible for gifting a month after they register.
+user = User.create(name: "Gaurish", activation_date: Date.new(2004, 10, 24))
+assert_not user.applicable_for_gifting?
+travel_to Date.new(2004, 11, 24) do
+  assert_equal Date.new(2004, 10, 24), user.activation_date # inside the `travel_to` block `Date.current` is mocked
+  assert user.applicable_for_gifting?
+end
+assert_equal Date.new(2004, 10, 24), user.activation_date # The change was visible only inside the `travel_to` block.
+```
+
+Please see [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
+for in-depth information about the available time helpers.

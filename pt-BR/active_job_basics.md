@@ -78,7 +78,7 @@ Observe que você pode definir `perform` com quantos argumentos quiser.
 
 ### Enfileirar o *Job*
 
-Enfileirar um *job* assim:
+Enfileire um *job* usando [`perform_later`][] e, opcionalmente, [`set`][]. Assim:
 
 ```ruby
 # Enfileirar um _job_ para ser executado assim que o sistema de enfileiramento estiver
@@ -104,6 +104,9 @@ GuestsCleanupJob.perform_later(guest1, guest2, filter: 'some_filter')
 
 É isso aí!
 
+[`perform_later`]: https://api.rubyonrails.org/classes/ActiveJob/Enqueuing/ClassMethods.html#method-i-perform_later
+[`set`]: https://api.rubyonrails.org/classes/ActiveJob/Core/ClassMethods.html#method-i-set
+
 Execução de *Job*
 -------------
 
@@ -118,7 +121,9 @@ das aplicações em produção precisará escolher um *backend* de persistência
 
 O *Active Job* tem adaptadores *built-in* para múltiplos *backends* de fila (Sidekiq
 Resque, Delayed Job e outros). Para obter uma lista atualizada dos adaptadores,
-consulte a documentação da API para [ActiveJob::QueueAdapters](https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+consulte a documentação da API para [`ActiveJob::QueueAdapters`][].
+
+[`ActiveJob::QueueAdapters`]: https://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html
 
 ### Configurando o *Backend*
 
@@ -164,12 +169,13 @@ Aqui está uma lista não abrangente de documentação:
 - [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
 - [Delayed Job](https://github.com/collectiveidea/delayed_job#active-job)
 - [Que](https://github.com/que-rb/que#additional-rails-specific-setup)
+- [Good Job](https://github.com/bensheldon/good_job#readme)
 
 Filas
 -----
 
 A maioria dos *adapters* suportam múltiplas filas. Com o *Active Job* você pode agendar
-o *job* para executar em uma fila específica:
+o *job* para executar em uma fila específica usando [`queue_as`][]:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -275,6 +281,7 @@ ProcessVideoJob.perform_later(Video.last)
 NOTE: Tenha certeza de que o seu *backend* de fila "escuta" o nome da fila.
 Para alguns *backends* você precisará especificar as filas a serem "ouvidas".
 
+[`queue_as`]: https://api.rubyonrails.org/classes/ActiveJob/QueueName/ClassMethods.html#method-i-queue_as
 
 *Callbacks*
 ---------
@@ -315,13 +322,19 @@ end
 
 ### *Callbacks* disponíveis
 
-* `before_enqueue`
-* `around_enqueue`
-* `after_enqueue`
-* `before_perform`
-* `around_perform`
-* `after_perform`
+* [`before_enqueue`][]
+* [`around_enqueue`][]
+* [`after_enqueue`][]
+* [`before_perform`][]
+* [`around_perform`][]
+* [`after_perform`][]
 
+[`before_enqueue`]: https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_enqueue
+[`around_enqueue`]: https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_enqueue
+[`after_enqueue`]: https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_enqueue
+[`before_perform`]: https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-before_perform
+[`around_perform`]: https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-around_perform
+[`after_perform`]: https://api.rubyonrails.org/classes/ActiveJob/Callbacks/ClassMethods.html#method-i-after_perform
 
 *Action Mailer*
 ------------
@@ -373,6 +386,7 @@ O *ActiveJob* suporta os seguintes tipos de argumentos por padrão:
   - `Hash` (Keys should be of `String` or `Symbol` type)
   - `ActiveSupport::HashWithIndifferentAccess`
   - `Array`
+  - `Range`
   - `Module`
   - `Class`
 
@@ -408,6 +422,7 @@ Isso funciona com qualquer classe que está mesclada em `GlobalID::Identificatio
 Você pode ampliar a lista de tipos de argumentos suportados. Só é preciso definir seu próprio *serializer*:
 
 ```ruby
+# app/serializers/money_serializer.rb
 class MoneySerializer < ActiveJob::Serializers::ObjectSerializer
   # Checa se um argumento pode ser serializado a partir desse serializer.
   def serialize?(argument)
@@ -434,13 +449,27 @@ end
 e adicionar o serializer na lista:
 
 ```ruby
+# config/initializers/custom_serializers.rb
 Rails.application.config.active_job.custom_serializers << MoneySerializer
+```
+
+Observe que o carregamento automático de código durante a inicialização não é suportado. Assim é recomendado
+configurar os serializadores para serem carregados apenas uma vez, por exemplo alterando `config/application.rb` assim:
+
+
+```ruby
+# config/application.rb
+module YourApp
+  class Application < Rails::Application
+    config.autoload_once_paths << Rails.root.join('app', 'serializers')
+  end
+end
 ```
 
 Exceções
 ----------
 
-Os *Active Jobs* fornecem uma maneira de capturar exceções criadas durante a execução do *job*.
+Exceções criadas durante a execução do *job* podem ser manipuladas com [`rescue_from`][]:
 
 ```ruby
 class GuestsCleanupJob < ApplicationJob
@@ -458,11 +487,13 @@ end
 
 Se a exceção não for tratada dentro do _job_, então o _job_ é reconhecido como "*failed* (falhado)"
 
+[`rescue_from`]: https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
+
 ### Reexecução ou Descarte de *jobs* falhos
 
 Um *job* que falhou não será executado novamente, exceto se configurado para fazer isso.
 
-É possível também reexecutar ou descartar um *job* se uma exceção for gerada durante a execução. Por exemplo:
+É possível reexecutar ou descartar um *job* que falhou usando [`retry_on`] ou [`discard_on`], respectivamente. Por exemplo:
 
 ```ruby
 class RemoteServiceJob < ApplicationJob
@@ -476,13 +507,16 @@ class RemoteServiceJob < ApplicationJob
 end
 ```
 
-Para mais detalhes Veja a Documentação da API para [ActiveJob::Exceções](https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html).
+[`discard_on`]: https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-discard_on
+[`retry_on`]: https://api.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-retry_on
 
 ### Desserialização
 
 *GlobalID* permite serializar todos os objetos do *Active Record* passado para o `#perform`.
 
-Se um registro for deletado após o *job* ser enfileirado mas antes do método `#perform` ser chamado, o *Active Job* vai lançar a exceção `ActiveJob::DeserializationError`.
+Se um registro for deletado após o *job* ser enfileirado mas antes do método `#perform` ser chamado, o *Active Job* vai lançar a exceção [`ActiveJob::DeserializationError`][].
+
+[`ActiveJob::DeserializationError`]: https://api.rubyonrails.org/classes/ActiveJob/DeserializationError.html
 
 Testando os *Jobs*
 --------------

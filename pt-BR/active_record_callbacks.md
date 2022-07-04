@@ -387,29 +387,27 @@ class Order < ApplicationRecord
 end
 ```
 
-### Múltiplas Condições para _Callbacks_
+### Usando :if e :unless juntos
 
-Ao escrever _callbacks_ condicionais, é possível misturar `:if` e `:unless` na
+_callbacks_ condicionais, podem misturar `:if` e `:unless` na
 mesma declaração do _callback_:
 
 ```ruby
 class Comment < ApplicationRecord
-  after_create :send_email_to_author, if: :author_wants_emails?,
-    unless: Proc.new { |comment| comment.article.ignore_comments? }
+  before_save :filter_content,
+    if: Proc.new { forum.parental_control? },
+    unless: Proc.new { author.trusted? }
 end
 ```
 
-### Combinando Condições de _Callback_
+### Multiplas Condições de _Callback_
 
-Quando várias condições definem se um _callback_ deve ou não acontecer, um
-`Array` pode ser utilizado. Além disso, você pode aplicar `:if` e `:unless` para
-o mesmo _callback_.
+As opções `:if` e `:unless` também aceitam um *array de procs* ou nomes de métodos como *symbols*:
 
 ```ruby
 class Comment < ApplicationRecord
-  after_create :send_email_to_author,
-    if: [Proc.new { |c| c.user.allow_send_email? }, :author_wants_emails?],
-    unless: Proc.new { |c| c.article.ignore_comments? }
+  before_save :filter_content,
+    if: [:subject_to_parental_control?, :untrusted_author?]
 end
 ```
 
@@ -517,7 +515,7 @@ WARNING. Quando uma transação é completada, os *callbacks* `after_commit` ou 
 
 WARNING. O código executado dentro dos *callbacks* de `after_commit` ou `after_rollback` não está incluido em uma transação.
 
-WARNING. Usando ambos `after_create_commit` e `after_update_commit` no mesmo *model* permitirá somente que o último *callback* definido seja efetuado, sobrepondo todos os outros.
+WARNING. Usando ambos `after_create_commit` e `after_update_commit` com o mesmo nome de método só permitirá que o último retorno de chamada definido tenha efeito, pois ambos são internamente *alias* para `after_commit` que substitui os retornos de chamada definidos anteriormente com o mesmo nome de método.
 
 ```ruby
 class User < ApplicationRecord

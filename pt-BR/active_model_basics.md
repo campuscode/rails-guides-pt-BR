@@ -22,6 +22,51 @@ O Active Model é uma biblioteca que contém vários módulos utilizados para de
 
 Alguns desses módulos serão explicados abaixo.
 
+### API
+
+`ActiveModel::API` adiciona a capacidade de uma classe trabalhar com o *Action Pack* e
+*Action View*.
+
+```ruby
+class EmailContact
+  include ActiveModel::API
+
+  attr_accessor :name, :email, :message
+  validates :name, :email, :message, presence: true
+
+  def deliver
+    if valid?
+      # deliver email
+    end
+  end
+end
+```
+
+Quando incluir `ActiveModel::API` você obtém recursos como:
+
+- Nome de *models*
+- Conversões
+- Traduções
+- Validações
+
+Também oferece a capacidade de inicializar um objeto com um *hash* de atributos,
+muito parecido com qualquer objeto Active Record.
+
+```irb
+irb> email_contact = EmailContact.new(name: 'David', email: 'david@example.com', message: 'Hello World')
+irb> email_contact.name
+=> "David"
+irb> email_contact.email
+=> "david@example.com"
+irb> email_contact.valid?
+=> true
+irb> email_contact.persisted?
+=> false
+```
+
+Qualquer classe que inclua `ActiveModel::API` pode ser usada com `form_with`,
+`render` e quaisquer outros métodos auxiliares da *Action View*, assim como objetos que usam Active Record.
+
 ### Métodos de Atributo
 
 O `ActiveModel::AttributeMethods`, módulo que pode adicionar prefixos e sufixos customizados nos metodos de uma classe.
@@ -196,7 +241,7 @@ irb> person.first_name_was
 => nil
 ```
 
-Rastreia o valor anterior e atual do atributo alterado. Retorna um *array* se
+Rastreia os valores anterior do atributo alterado. Retorna um *array* se
 alterado; caso contrário, retorna `nil`.
 
 ```irb
@@ -263,7 +308,7 @@ Person.model_name.singular_route_key  # => "person"
 
 ### *Model*
 
-O `ActiveModel::Model` adiciona a capacidade de uma classe trabalhar com o *Action Pack* e *Action View* imediatamente.
+`ActiveModel::Model` permite implementar *models* semelhantes a `ActiveRecord::Base`
 
 ```ruby
 class EmailContact
@@ -280,28 +325,7 @@ class EmailContact
 end
 ```
 
-Ao incluir o `ActiveModel::Model`, você obtém alguns recursos como:
-
-- introspecção do nome de *model*
-- conversões
-- traduções
-- validações
-
-Também oferece a capacidade de inicializar um objeto com um hash de atributos, muito parecido com qualquer objeto *Active Record*.
-
-```irb
-irb> email_contact = EmailContact.new(name: 'David', email: 'david@example.com', message: 'Hello World')
-irb> email_contact.name
-=> "David"
-irb> email_contact.email
-=> "david@example.com"
-irb> email_contact.valid?
-=> true
-irb> email_contact.persisted?
-=> false
-```
-
-Qualquer classe que inclua `ActiveModel::Model` pode ser usada com `form_with`, `render` e quaisquer outros métodos auxiliares do *Action View*, assim como o *Active Record* objetos.
+Ao incluir `ActiveModel::Model` você obtém todos os recursos de `ActiveModel::API`.
 
 ### Serialização
 
@@ -458,7 +482,7 @@ Finished in 0.024899s, 240.9735 runs/s, 1204.8677 assertions/s.
 6 runs, 30 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-Não é necessário um objeto para implementar todas as APIs para trabalhar com *Action Pack*. Este módulo pretende apenas fornecer orientação caso você queira que todos recursos prontos para uso.
+Não é necessário um objeto para implementar todas as APIs para trabalhar com *Action Pack*. Este módulo fornecer orientação caso você queira todos recursos prontos para uso.
 
 ### SecurePassword
 

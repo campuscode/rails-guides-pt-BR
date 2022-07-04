@@ -119,7 +119,7 @@ NOTE: as associações `belongs_to` _devem_ usar o termo no singular. Se você u
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateBooks < ActiveRecord::Migration[6.0]
+class CreateBooks < ActiveRecord::Migration[7.0]
   def change
     create_table :authors do |t|
       t.string :name
@@ -166,7 +166,7 @@ A principal diferença do `belongs_to` é que a coluna do link `supplier_id` est
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateSuppliers < ActiveRecord::Migration[6.0]
+class CreateSuppliers < ActiveRecord::Migration[7.0]
   def change
     create_table :suppliers do |t|
       t.string :name
@@ -213,7 +213,7 @@ NOTE: O nome do outro _model_ é pluralizado ao declarar uma associação `has_m
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateAuthors < ActiveRecord::Migration[6.0]
+class CreateAuthors < ActiveRecord::Migration[7.0]
   def change
     create_table :authors do |t|
       t.string :name
@@ -265,7 +265,7 @@ end
 A _migration_ correspondente parecerá assim:
 
 ```ruby
-class CreateAppointments < ActiveRecord::Migration[6.0]
+class CreateAppointments < ActiveRecord::Migration[7.0]
   def change
     create_table :physicians do |t|
       t.string :name
@@ -351,7 +351,7 @@ end
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateAccountHistories < ActiveRecord::Migration[6.0]
+class CreateAccountHistories < ActiveRecord::Migration[7.0]
   def change
     create_table :suppliers do |t|
       t.string :name
@@ -394,7 +394,7 @@ end
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateAssembliesAndParts < ActiveRecord::Migration[6.0]
+class CreateAssembliesAndParts < ActiveRecord::Migration[7.0]
   def change
     create_table :assemblies do |t|
       t.string :name
@@ -433,7 +433,7 @@ end
 A _migration_ correpondente parecerá assim:
 
 ```ruby
-class CreateSuppliers < ActiveRecord::Migration[6.0]
+class CreateSuppliers < ActiveRecord::Migration[7.0]
   def change
     create_table :suppliers do |t|
       t.string :name
@@ -515,7 +515,7 @@ Da mesma forma, você pode recuperar `@product.pictures`.
 Se você tem uma instância do _model_ `Fotos`, você pode chegar ao seu pai via `@picture.imageable`. Para fazer isso funcionar, você precisa declarar uma coluna de _foreign key_ e uma coluna de tipo no _model_ que declara a interface polimórfica:
 
 ```ruby
-class CreatePictures < ActiveRecord::Migration[6.0]
+class CreatePictures < ActiveRecord::Migration[7.0]
   def change
     create_table :pictures do |t|
       t.string  :name
@@ -532,7 +532,7 @@ end
 Esta _migration_ pode ser simplificada usando a forma de `t.references`:
 
 ```ruby
-class CreatePictures < ActiveRecord::Migration[6.0]
+class CreatePictures < ActiveRecord::Migration[7.0]
   def change
     create_table :pictures do |t|
       t.string :name
@@ -563,7 +563,7 @@ Com esta configuração, você pode recuperar `@employee.subordinates` e `@emplo
 Em suas _migrations_/_schema_, você adicionará uma coluna de referências ao próprio _model_.
 
 ```ruby
-class CreateEmployees < ActiveRecord::Migration[6.0]
+class CreateEmployees < ActiveRecord::Migration[7.0]
   def change
     create_table :employees do |t|
       t.references :manager, foreign_key: { to_table: :employees }
@@ -634,7 +634,7 @@ end
 Esta declaração precisa do apoio de uma coluna de chave estrangeira apropriada na tabela *books*. Pra uma tabela recém criada, a migração pode parecer com isto:
 
 ```ruby
-class CreateBooks < ActiveRecord::Migration[6.0]
+class CreateBooks < ActiveRecord::Migration[7.0]
   def change
     create_table :books do |t|
       t.datetime   :published_at
@@ -648,7 +648,7 @@ end
 Enquanto que para uma tabela existente, pode parecer com isto:
 
 ```ruby
-class AddAuthorToBooks < ActiveRecord::Migration[6.0]
+class AddAuthorToBooks < ActiveRecord::Migration[7.0]
   def change
     add_reference :books, :author
   end
@@ -678,7 +678,7 @@ end
 Elas precisam do apoio de uma migração para criar a tabela `assemblies_parts`. Esta tabela deve ser criada sem a chave primária:
 
 ```ruby
-class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[6.0]
+class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[7.0]
   def change
     create_table :assemblies_parts, id: false do |t|
       t.bigint :assembly_id
@@ -696,7 +696,7 @@ Passamos `id: false` para `create_table` porque esta tabela não representa um *
 Você também pode utilizar o método `create_join_table`
 
 ```ruby
-class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[6.0]
+class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[7.0]
   def change
     create_join_table :assemblies, :parts do |t|
       t.index :assembly_id
@@ -788,10 +788,13 @@ irb> a.first_name == b.author.first_name
 => true
 ```
 
-O *Active Record* tem suporte a identificação automática para a maioria das associações com nomes padrão. Contudo, o *Active Record* não identificará automaticamente associações bidirecionais que contém um escopo ou qualquer uma das opções abaixo:
-
-* `:through`
-* `:foreign_key`
+O *Active Record* suporta a identificação automática para a maioria das associações com
+nomes padrão. No entanto, o *Active Record* não identificará automaticamente
+associações bidirecionais que contêm o `:through` ou `:foreign_key`.
+Escopos personalizados na associação oposta também impedem
+identificação, assim como escopos personalizados na própria associação, a menos que
+`config.active_record.automatic_scope_inversing` estiver definido como verdadeiro (o padrão para
+novas aplicações).
 
 Por exemplo, considere as declarações de *models* abaixo:
 
@@ -854,7 +857,7 @@ Se a tabela da outra classe contém a referência em uma relação um-para-um, e
 
 #### Métodos Adicionados por `belongs_to`
 
-Quando você declara uma associação `belongs_to`, a classe declarada ganha automaticamente 6 métodos relacionados à associação:
+Quando você declara uma associação `belongs_to`, a classe declarada ganha automaticamente 8 métodos relacionados à associação:
 
 * `association`
 * `association=(associate)`
@@ -862,6 +865,8 @@ Quando você declara uma associação `belongs_to`, a classe declarada ganha aut
 * `create_association(attributes = {})`
 * `create_association!(attributes = {})`
 * `reload_association`
+* `association_changed?`
+* `association_previously_changed?`
 
 Em todos esses métodos, `association` é substituída pelo *symbol* passado como primeiro argumento para `belongs_to`. Por exemplo, dada a declaração:
 
@@ -880,6 +885,8 @@ build_author
 create_author
 create_author!
 reload_author
+author_changed?
+author_previously_changed?
 ```
 
 NOTE: Quando inicializar uma associação `has_one` ou `belongs_to` nova você deve usar o prefixo `build_` para montar a associação, ao invés do método `association.build` que seria usado para associações `has_many` ou `has_and_belongs_to_many`. Para criar uma associação nova, use o prefixo `create_`.
@@ -927,6 +934,34 @@ O método `create_association` retorna um objeto novo do tipo associado. Este ob
 ##### `create_association!(attributes = {})`
 
 Faz a mesma coisa que o método `create_association` acima, mas retorna `ActiveRecord::RecordInvalid` se o registro for inválido.
+
+##### `association_changed?`
+
+O método `association_changed?` retorna `true` se um novo objeto associado foi atribuído e a chave estrangeira será atualizada no próximo salvamento.
+
+```ruby
+@book.author # => #<Book author_number: 123, author_name: "John Doe">
+@book.author_changed? # => false
+
+@book.author = Author.second # => #<Book author_number: 456, author_name: "Jane Smith">
+@book.author_changed? # => true
+
+@book.save!
+@book.author_changed? # => false
+```
+
+##### `association_previously_changed?`
+
+O método `association_previously_changed?` retorna `true` se o salvamento anterior atualizou a associação para referenciar um novo objeto associado.
+
+```ruby
+@book.author # => #<Book author_number: 123, author_name: "John Doe">
+@book.author_previously_changed? # => false
+
+@book.author = Author.second # => #<Book author_number: 456, author_name: "Jane Smith">
+@book.save!
+@book.author_previously_changed? # => true
+```
 
 #### Opções para `belongs_to`
 
@@ -1020,6 +1055,7 @@ da associação.
 Colunas de contagem de *cache* são adicionadas à lista de atributos de leitura do *model* contendo a associação através de `attr_readonly`.
 
 ##### `:dependent`
+
 Se você configurar a opção `:dependent` para:
 
 * `:destroy`, quando o objeto for destruído, o método `destroy` será chamado nos
@@ -1108,7 +1144,7 @@ end
 
 ##### `:validate`
 
-Se você configurar a opção `:validate` como `true`, então os objetos associados serão validados quando você salvar este objeto. Por padrão, este valor é `false`: objetos associados não serão validados quando este objeto for salvo.
+Se você configurar a opção `:validate` como `true`, então os novos objetos associados serão validados quando você salvar este objeto. Por padrão, este valor é `false`: novos objetos associados não serão validados quando este objeto for salvo.
 
 ##### `:optional`
 
@@ -1429,7 +1465,7 @@ end
 
 ##### `:validate`
 
-Se você configurar a opção `:validate` como `true`, então os objetos associados serão validados quando você salvar este objeto. Por padrão, este valor é `false`: objetos associados não serão validados quando este objeto for salvo.
+Se você configurar a opção `:validate` como `true`, então os novos objetos associados serão validados quando você salvar este objeto. Por padrão, este valor é `false`: novos objetos associados não serão validados quando este objeto for salvo.
 
 #### Escopos para `has_one`
 
@@ -1868,7 +1904,7 @@ A opção `:through` específica um *model* de junção para realizar uma _query
 
 ##### `:validate`
 
-Se você configurar a opção `:validate` como `false`, então os objetos associados não serão validados quando você salvar este objeto. Por padrão, este valor é `true`: objetos associados serão validados quando este objeto for salvo.
+Se você configurar a opção `:validate` como `false`, então os novos objetos associados não serão validados quando você salvar este objeto. Por padrão, este valor é `true`: novos objetos associados serão validados quando este objeto for salvo.
 
 #### Escopos para `has_many`
 
@@ -2346,7 +2382,7 @@ Se o nome padrão da tabela de junção, baseado no ordenamento léxico, não fo
 
 ##### `:validate`
 
-Se você configurar a opção `:validate` como `false`, então os objetos associados não serão validados quando você salvar este objeto. Por padrão, este valor é `true`: objetos associados serão validados quando este objeto for salvo.
+Se você configurar a opção `:validate` como `false`, então os novos objetos associados não serão validados quando você salvar este objeto. Por padrão, este valor é `true`: novos objetos associados serão validados quando este objeto for salvo.
 
 #### Escopos para `has_and_belongs_to_many`
 

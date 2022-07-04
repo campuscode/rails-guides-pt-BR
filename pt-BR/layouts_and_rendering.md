@@ -135,7 +135,7 @@ def update
   if @book.update(book_params)
     redirect_to(@book)
   else
-    render :edit
+    render :edit, status: :unprocessable_entity
   end
 end
 ```
@@ -916,7 +916,7 @@ Para incluir `http://example.com/main.css`:
 <%= stylesheet_link_tag "http://example.com/main.css" %>
 ```
 
-Por padrão, o método `stylesheet_link_tag` cria links com `media="screen" rel="stylesheet"`. Você pode sobrescrever qualquer um destes padrões especificando uma opção apropriada (`:media`, `:rel`):
+Por padrão, o método `stylesheet_link_tag` cria links com `rel="stylesheet"`. Você pode sobrescrever este padrão especificando uma opção apropriada (`:rel`):
 
 ```erb
 <%= stylesheet_link_tag "main_print", media: "print" %>
@@ -1080,7 +1080,7 @@ O resultado da renderização desta página dentro do *layout* fornecido seria e
 </html>
 ```
 
-O método `content_for` ajuda muito quando o seu *layout* contém regiões distintas como *sidebars* e rodapés que precisam receber blocos de conteúdo próprios. Ele também é útil para inserir tags que carregam JavaScript ou arquivos css dentro do cabeçalho de um *layout* que seria genérico em outro cenário.
+O método `content_for` ajuda muito quando o seu *layout* contém regiões distintas como *sidebars* e rodapés que precisam receber blocos de conteúdo próprios. Ele também é útil para inserir tags que carregam JavaScript ou arquivos CSS dentro do cabeçalho de um *layout* que seria genérico em outro cenário.
 
 ### Usando *Partials*
 
