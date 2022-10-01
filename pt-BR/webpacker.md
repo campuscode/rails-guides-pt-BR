@@ -8,11 +8,11 @@ Esse guia irá mostrar como instalar e usar o Webpacker para enpacotar JavaScrip
 
 Depois de ler esse guia, você saberá:
 
-* O que o Webpacker faz o como ele é diferente do Sprockets.
+* O que o Webpacker faz e o como ele é diferente do Sprockets.
 * Como instalar o Webpacker e integrar com seu framework de escolha.
 * Como usar o Webpacker para *assets* JavaScript.
 * Como usar o Webpacker para *assets* CSS.
-* Como usar o Webpacker para *assets* static.
+* Como usar o Webpacker para *assets* estáticos.
 * Como fazer deploy com uma aplicação que usa Webpacker.
 * Como usar o Webpacker em contextos alternativos de Rails, como *engines* ou *containers* Docker.
 
@@ -35,7 +35,7 @@ O Rails também funciona com o Sprockets, uma ferramenta de enpacotamento de *as
 
 O Sprockets, que foi feito para ser usado com Rails, é mais simples de integrar. Particularmente, o código pode ser adicionado ao Sprockets por meio de uma *gem* Ruby. Todavia, o webpack integra melhor com mais ferramentas atuais de javascript e pacotes NPM e disponibiliza mais variedade de integrações. Aplicações novas Rails são configuradas para usar o webpack para Javascript e Sprockets para CSS, apesar de que você também pode utilizar o webpack para o CSS.
 
-Você deve escolher Webpacker em vez de Sprockets em um projeto novo se quiser utulizar pacotes NPM e/ou quiser acessar features e ferramentas mais atuais de Javascript. Você deve escolher Sprockets em vez de Webpacker para aplicações legado onde migrations podem ser custosas, se você quiser integrar usando Gems, ou se tiver uma quantidade pequena de código a ser enpacotado.
+Você deve escolher Webpacker em vez de Sprockets em um projeto novo se quiser utulizar pacotes NPM e/ou quiser acessar features e ferramentas mais atuais de Javascript. Você deve escolher Sprockets em vez de Webpacker para aplicações legado onde migrations podem ser custosas, se você quiser integrar usando Gems ou se tiver uma quantidade pequena de código a ser enpacotado.
 
 Se você for familiar com o Sprockets, o guia a seguir pode trazer ideias de correspondência entre as duas ferramentas. Por favor, note que cada ferramenta tem uma estrutura diferente, e os conceitos não são exatamentes iguais um ao outro.
 
