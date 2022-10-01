@@ -171,7 +171,7 @@ Executor, it would cause an unavoidable deadlock: the reload must occur before
 the child thread is executed, but it cannot be safely performed while the parent
 thread is mid-execution. Child threads should use the Executor instead.
 
-Comportamendo do *Framework*
+Comportamento do *Framework*
 ----------------------------
 
 Os componentes do *framework* Rails também utilizam essas ferramentas para gerenciar
@@ -196,7 +196,7 @@ reconectar, ele irá se comunicar com a nova versão do código.
 
 Os pontos acima são *entry points* para o *framework*, logo eles são responsáveis
 por garantir a proteção de suas *threads* e por decidir quando um recarregamento
-é necessáio. Outros componentes utilizam apenas o *Executor* quando criam *threads*
+é necessário. Outros componentes utilizam apenas o *Executor* quando criam *threads*
 adicionais.
 
 ### Configuração
