@@ -38,81 +38,79 @@ ignorable", and how extensions and applications with special needs can use them.
 Executor
 --------
 
-The Rails Executor separates application code from framework code: any time the
-framework invokes code you've written in your application, it will be wrapped by
-the Executor.
+O *Rails Executor* separa o código da sua aplicação do código de *framework*:
+toda vez que o *framework* invoca código que você escreveu em sua aplicação, ele
+vai estar envolvido pelo *Executor*.
 
-The Executor consists of two callbacks: `to_run` and `to_complete`. The Run
-callback is called before the application code, and the Complete callback is
-called after.
+O *Executor* consiste em dois *callbacks*: `to_run` e `to_complete`. O *callback*
+*Run* é chamado antes do código da aplicação e o *Complete* é chamado após o código
+da aplicação.
 
-### Default callbacks
+### Callbacks padrão
 
-In a default Rails application, the Executor callbacks are used to:
+Em uma aplicação Rails padrão, os *calbacks* do *Executor* são usados para:
+* acompanhar quais *threads* estão em uma posição segura para carregar e recarregar código automaticamente (*autoloading* e *reloading*).
+* habilitar e desabilitar o cache do Active Record
+* retornar conexões Active Record adquiridas para o *pool* de conexões.
+* controlar a duração dos caches internos
 
-* track which threads are in safe positions for autoloading and reloading
-* enable and disable the Active Record query cache
-* return acquired Active Record connections to the pool
-* constrain internal cache lifetimes
+Antes do Rails 5.0, algumas dessas funções eram gerenciadas por *middlewares* Rack
+(como `ActiveRecord::ConnectionAdapters::ConnectionManagement`) ou envolvendo o código
+diretamente com métodos como `ActiveRecord::Base.connection_pool.with_connection`.
+O *Executor* substitui essas interfaces por uma mais simples e mais abstrata.
 
-Prior to Rails 5.0, some of these were handled by separate Rack middleware
-classes (such as `ActiveRecord::ConnectionAdapters::ConnectionManagement`), or
-directly wrapping code with methods like
-`ActiveRecord::Base.connection_pool.with_connection`. The Executor replaces
-these with a single more abstract interface.
+### Envolvendo código da aplicação
 
-### Wrapping application code
-
-If you're writing a library or component that will invoke application code, you
-should wrap it with a call to the executor:
+Se você está escrevendo uma biblioteca ou componente que vai invocar código da aplicação,
+você deve envolver esse código com uma chamada para o *Executor*:
 
 ```ruby
 Rails.application.executor.wrap do
-  # call application code here
+  # chame o código da aplicação aqui
 end
 ```
 
-TIP: If you repeatedly invoke application code from a long-running process, you
-may want to wrap using the [Reloader](#reloader) instead.
+TIP: Se você quiser repetidamente invocar código da aplicação de um processo de
+longa duração, talvez você queira usar o [*Reloader*](#reloader) ao invés do *Executor*.
 
-Each thread should be wrapped before it runs application code, so if your
-application manually delegates work to other threads, such as via `Thread.new`
-or Concurrent Ruby features that use thread pools, you should immediately wrap
-the block:
+Toda *thread* deve ser envolvida antes de rodar código da aplicação, então se sua
+aplicação manualmente delega trabalho para outras *threads* utilizando, por exemplo
+`Thread.new` ou funcionalidades da biblioteca Concurrent Ruby que usam *pools* de
+*threads*, você deve imediatamente envolver o bloco:
 
 ```ruby
 Thread.new do
   Rails.application.executor.wrap do
-    # your code here
+    # seu código aqui
   end
 end
 ```
 
-NOTE: Concurrent Ruby uses a `ThreadPoolExecutor`, which it sometimes configures
-with an `executor` option. Despite the name, it is unrelated.
+NOTE: A biblioteca Concurrent Ruby usa um objeto `ThreadPoolExecutor`, que as vezes se configura
+com uma opção chamada `executor`. Apesar do nome, isso não se relaciona com o *Executor* do Rails.
 
-The Executor is safely re-entrant; if it is already active on the current
-thread, `wrap` is a no-op.
+O *Executor* admite re-entradas seguramente. Se ele já está ativo na *thread* atual,
+`wrap` não faz nada (é uma *no-op*).
 
-If it's impractical to wrap the application code in a block (for
-example, the Rack API makes this problematic), you can also use the `run!` /
-`complete!` pair:
+Se não for possível envolver o código da aplicação em um bloco (como por exemplo
+a API Rack, que torna isso um difícil), você pode utilizar o par de métodos `run!`
+/ `complete!`:
+
 
 ```ruby
 Thread.new do
   execution_context = Rails.application.executor.run!
-  # your code here
+  # seu código aqui
 ensure
   execution_context.complete! if execution_context
 end
 ```
 
-### Concurrency
+### Concorrência
 
-The Executor will put the current thread into `running` mode in the [Load
-Interlock](#load-interlock). This operation will block temporarily if another
-thread is currently either autoloading a constant or unloading/reloading
-the application.
+O *Executor* vai colocar a *thread* atual no modo `running`, no [Load Interlock](#load-interlock).
+Essa operação irá bloquear temporariamente outras *threads* que estejam carregando automaticamante
+(*autoloading*) uma constante ou que estejam carregando ou recarregando a aplicação.
 
 Reloader
 --------
