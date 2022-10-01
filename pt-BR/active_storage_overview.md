@@ -29,14 +29,14 @@ arquivos para objetos *Active Record*. Ele vem com um serviço local baseado em 
 desenvolvimento e teste e oferece suporte a espelhamento de arquivos em serviços destinados para
 *backups* e *migrations*.
 
-Usando o *Active Storage*, uma aplicação pode transformar *uploads* de imagens ou gerar 
+Usando o *Active Storage*, uma aplicação pode transformar *uploads* de imagens ou gerar
 representações de *uploads* que não são imagens, como PDFs e vídeos, e extrair metadados de
 arquivos arbitrários.
 
 ### Requirements
 
 Vários recursos do *Active Storage* dependem de softwares de terceiros que o Rails
-não não instala e deve ser instalado separadamente:
+não instala e devem ser instalados separadamente:
 
 * [libvips](https://github.com/libvips/libvips) v8.6+ ou [ImageMagick](https://imagemagick.org/index.php) para análise de imagens e modificações
 * [ffmpeg](http://ffmpeg.org/) v3.4+ para análise de vídeo/áudio e pre-visualização de vídeos
@@ -842,7 +842,7 @@ end
 
 ### Transforming Images
 
-Transforming images allows you to display the image at your choice of dimensions. 
+Transforming images allows you to display the image at your choice of dimensions.
 To create a variation of an image, call [`variant`][] on the attachment. You
 can pass any transformation supported by the variant processor to the method.
 When the browser hits the variant URL, Active Storage will lazily transform
@@ -869,7 +869,7 @@ The default processor for Active Storage is MiniMagick, but you can also use
 config.active_storage.variant_processor = :vips
 ```
 
-The two processors are not fully compatible, so when migrating an existing application 
+The two processors are not fully compatible, so when migrating an existing application
 using MiniMagick to Vips, some changes have to be made if using options that are format
 specific:
 
