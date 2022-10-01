@@ -4,48 +4,48 @@
 Webpacker
 =========
 
-This guide will show you how to install and use Webpacker to package JavaScript, CSS, and other assets for the client-side of your Rails application.
+Esse guia irá mostrar como instalar e usar o Webpacker para enpacotar JavaScript, CSS e outros *assets* para a lado cliente da sua aplicação Rails.
 
-After reading this guide, you will know:
+Depois de ler esse guia, você saberá:
 
-* What Webpacker does and why it is different from Sprockets.
-* How to install Webpacker and integrate it with your framework of choice.
-* How to use Webpacker for JavaScript assets.
-* How to use Webpacker for CSS assets.
-* How to use Webpacker for static assets.
-* How to deploy a site that uses Webpacker.
-* How to use Webpacker in alternate Rails contexts, such as engines or Docker containers.
+* O que o Webpacker faz o como ele é diferente do Sprockets.
+* Como instalar o Webpacker e integrar com seu framework de escolha.
+* Como usar o Webpacker para *assets* JavaScript.
+* Como usar o Webpacker para *assets* CSS.
+* Como usar o Webpacker para *assets* static.
+* Como fazer deploy com uma aplicação que usa Webpacker.
+* Como usar o Webpacker em contextos alternativos de Rails, como *engines* ou *containers* Docker.
 
 --------------------------------------------------------------
 
-What Is Webpacker?
+O que é Webpacker?
 ------------------
 
-Webpacker is a Rails wrapper around the [webpack](https://webpack.js.org) build system that provides a standard webpack configuration and reasonable defaults.
+Webpacker é um *wrapper* Rails feito com o sistema de *build* [webpack](https://webpack.js.org) que provê uma configuração padrão webpack e bons padrões.
 
-### What is webpack?
+### O que é webpack?
 
-The goal of webpack, or any front-end build system, is to allow you to write your front-end code in a way that is convenient for developers and then package that code in a way that is convenient for browsers. With webpack, you can manage JavaScript, CSS, and static assets like images or fonts. Webpack will allow you to write your code, reference other code in your application, transform your code, and combine your code into easily downloadable packs.
+O intuito do webpack, ou qualquer sistema de *build* front-end, é permitir que você escreva código front-end de maneira coveniente para desenvolvedores e depois enpacotar o código de maneira coveniente para navegadores. Com o webpack, você pode gerenciar Javascript, CSS e *assets* estáticos, como imagens e fontes. O webpack permite que você escreva seu código, referencie outro código na aplicação, transforme seu código e combine ele em pacotes que podem ser facilmente baixados.
 
-See the [webpack documentation](https://webpack.js.org) for information.
+Veja a [documentação do webpack](https://webpack.js.org) para mais informações.
 
-### How is Webpacker Different from Sprockets?
+### Como o Webpacker é diferente do Sprockets?
 
-Rails also ships with Sprockets, an asset-packaging tool whose features overlap with Webpacker. Both tools will compile your JavaScript into browser-friendly files and also minify and fingerprint them in production. In a development environment, Sprockets and Webpacker allow you to incrementally change files.
+O Rails também funciona com o Sprockets, uma ferramenta de enpacotamento de *assets* que tem algumas features em comum com o Webpacker. Ambas vão compilar seu Javascript em arquivos "amigáveis" para o navegador, além de minificar e adicionar *fingerprints* neles em produção. Em ambiente de desenvolvimento, o Sprockets e o Webpacks permitem que você altere arquivos de maneira incremental.
 
-Sprockets, which was designed to be used with Rails, is somewhat simpler to integrate. In particular, code can be added to Sprockets via a Ruby gem. However, webpack is better at integrating with more current JavaScript tools and NPM packages and allows for a wider range of integration. New Rails apps are configured to use webpack for JavaScript and Sprockets for CSS, although you can do CSS in webpack.
+O Sprockets, que foi feito para ser usado com Rails, é mais simples de integrar. Particularmente, o código pode ser adicionado ao Sprockets por meio de uma *gem* Ruby. Todavia, o webpack integra melhor com mais ferramentas atuais de javascript e pacotes NPM e disponibiliza mais variedade de integrações. Aplicações novas Rails são configuradas para usar o webpack para Javascript e Sprockets para CSS, apesar de que você também pode utilizar o webpack para o CSS.
 
-You should choose Webpacker over Sprockets on a new project if you want to use NPM packages and/or want access to the most current JavaScript features and tools. You should choose Sprockets over Webpacker for legacy applications where migration might be costly, if you want to integrate using Gems, or if you have a very small amount of code to package.
+Você deve escolher Webpacker em vez de Sprockets em um projeto novo se quiser utulizar pacotes NPM e/ou quiser acessar features e ferramentas mais atuais de Javascript. Você deve escolher Sprockets em vez de Webpacker para aplicações legado onde migrations podem ser custosas, se você quiser integrar usando Gems, ou se tiver uma quantidade pequena de código a ser enpacotado.
 
-If you are familiar with Sprockets, the following guide might give you some idea of how to translate. Please note that each tool has a slightly different structure, and the concepts don't directly map onto each other.
+Se você for familiar com o Sprockets, o guia a seguir pode trazer ideias de correspondência entre as duas ferramentas. Por favor, note que cada ferramenta tem uma estrutura diferente, e os conceitos não são exatamentes iguais um ao outro.
 
-|Task              | Sprockets            | Webpacker         |
-|------------------|----------------------|-------------------|
-|Attach JavaScript |javascript_include_tag|javascript_pack_tag|
-|Attach CSS        |stylesheet_link_tag   |stylesheet_pack_tag|
-|Link to an image  |image_url             |image_pack_tag     |
-|Link to an asset  |asset_url             |asset_pack_tag     |
-|Require a script  |//= require           |import or require  |
+|Tarefa               | Sprockets            | Webpacker         |
+|---------------------|----------------------|-------------------|
+|Vincular JavaScript  |javascript_include_tag|javascript_pack_tag|
+|Vincular CSS         |stylesheet_link_tag   |stylesheet_pack_tag|
+|Link de uma imagem   |image_url             |image_pack_tag     |
+|Link de um *asset*   |asset_url             |asset_pack_tag     |
+|Requirir um *script* |//= require           |import or require  |
 
 Installing Webpacker
 --------------------
