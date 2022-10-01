@@ -1,15 +1,15 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Using Rails for API-only Applications
+Usando Rails para aplicações API
 =====================================
 
-In this guide you will learn:
+Depois de ler esse guia, você saberá:
 
-* What Rails provides for API-only applications
-* How to configure Rails to start without any browser features
-* How to decide which middleware you will want to include
-* How to decide which modules to use in your controller
+* O que o Rails disponibiliza para aplicações API
+* Como configurar o Rails para iniciar sem qualquer *feature* de browser
+* Como decidir qual *middleware* você deve incluir
+* Como decidir quais módulos usar no seu *controller*
 
 --------------------------------------------------------------------------------
 O que é uma Aplicação API?
