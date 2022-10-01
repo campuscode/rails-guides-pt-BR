@@ -1,37 +1,35 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Active Record and PostgreSQL
+Active Record e PostgreSQL
 ============================
 
+Esse guia cobre o uso específico de Active Record pelo PostgreSQL
 This guide covers PostgreSQL specific usage of Active Record.
 
-After reading this guide, you will know:
+Após ler este guia, você saberá:
 
-* How to use PostgreSQL's datatypes.
-* How to use UUID primary keys.
-* How to implement full text search with PostgreSQL.
-* How to back your Active Record models with database views.
+* Como usar os *datatypes* do PostgreSQL.
+* Como usar chaves primárias UUID.
+* Como implementar pesquisa com texto no PostregreSQL.
+* Como usar database views em seus *models* Active Record.
 
 --------------------------------------------------------------------------------
 
-In order to use the PostgreSQL adapter you need to have at least version 9.3
-installed. Older versions are not supported.
+Para usar o adaptador PostgreSQL, você precisa ter pelo menos a versão 9.3 instalada. Versões anteriores não são suportadas.
 
-To get started with PostgreSQL have a look at the
-[configuring Rails guide](configuring.html#configuring-a-postgresql-database).
-It describes how to properly set up Active Record for PostgreSQL.
+Para iniciar o PostgreSQL, veja o [guia de configuração Rails](configuring.html#configuring-a-postgresql-database).
+Ele descreve como configurar o Active Record para o PostgreSQL.
 
 Datatypes
 ---------
 
-PostgreSQL offers a number of specific datatypes. Following is a list of types,
-that are supported by the PostgreSQL adapter.
+O PostgreSQL oferece um número de *datatypes* específicos. Seguindo a lista de tipos que são suportados pelo adaptador PostgreSQL.
 
 ### Bytea
 
-* [type definition](https://www.postgresql.org/docs/current/static/datatype-binary.html)
-* [functions and operators](https://www.postgresql.org/docs/current/static/functions-binarystring.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-binary.html)
+* [funções e operações](https://www.postgresql.org/docs/current/static/functions-binarystring.html)
 
 ```ruby
 # db/migrate/20140207133952_create_documents.rb
@@ -54,8 +52,8 @@ Document.create payload: data
 
 ### Array
 
-* [type definition](https://www.postgresql.org/docs/current/static/arrays.html)
-* [functions and operators](https://www.postgresql.org/docs/current/static/functions-array.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/arrays.html)
+* [funções e operações](https://www.postgresql.org/docs/current/static/functions-array.html)
 
 ```ruby
 # db/migrate/20140207133952_create_books.rb
@@ -92,10 +90,10 @@ Book.where("array_length(ratings, 1) >= 3")
 
 ### Hstore
 
-* [type definition](https://www.postgresql.org/docs/current/static/hstore.html)
-* [functions and operators](https://www.postgresql.org/docs/current/static/hstore.html#id-1.11.7.26.5)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/hstore.html)
+* [funções e operações](https://www.postgresql.org/docs/current/static/hstore.html#id-1.11.7.26.5)
 
-NOTE: You need to enable the `hstore` extension to use hstore.
+NOTE: Vovcê precisa habilitar a extensão `hstore` para usar o hstore.
 
 ```ruby
 # db/migrate/20131009135255_create_profiles.rb
@@ -127,10 +125,10 @@ irb> Profile.where("settings->'color' = ?", "yellow")
 => #<ActiveRecord::Relation [#<Profile id: 1, settings: {"color"=>"yellow", "resolution"=>"1280x1024"}>]>
 ```
 
-### JSON and JSONB
+### JSON e JSONB
 
-* [type definition](https://www.postgresql.org/docs/current/static/datatype-json.html)
-* [functions and operators](https://www.postgresql.org/docs/current/static/functions-json.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-json.html)
+* [funções e operações](https://www.postgresql.org/docs/current/static/functions-json.html)
 
 ```ruby
 # db/migrate/20131220144913_create_events.rb
@@ -162,12 +160,12 @@ irb> event.payload
 irb> Event.where("payload->>'kind' = ?", "user_renamed")
 ```
 
-### Range Types
+### Tipos de Intervalo
 
-* [type definition](https://www.postgresql.org/docs/current/static/rangetypes.html)
-* [functions and operators](https://www.postgresql.org/docs/current/static/functions-range.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/rangetypes.html)
+* [funções e operações](https://www.postgresql.org/docs/current/static/functions-range.html)
 
-This type is mapped to Ruby [`Range`](https://ruby-doc.org/core-2.7.0/Range.html) objects.
+Esse tipo é mapeado para objetos [`Range`](https://ruby-doc.org/core-2.7.0/Range.html) no Ruby.
 
 ```ruby
 # db/migrate/20130923065404_create_events.rb
@@ -201,12 +199,11 @@ irb> event.ends_at
 => Thu, 13 Feb 2014
 ```
 
-### Composite Types
+### Tipos Compostos
 
-* [type definition](https://www.postgresql.org/docs/current/static/rowtypes.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/rowtypes.html)
 
-Currently there is no special support for composite types. They are mapped to
-normal text columns:
+Atualmente, não existe suporte específico para tipos compostos. Eles são mapeados para colunas de texto normais:
 
 ```sql
 CREATE TYPE full_address AS
@@ -245,12 +242,11 @@ irb> contact.address = "(Paris,Rue Basse)"
 irb> contact.save!
 ```
 
-### Enumerated Types
+### Tipos Enumerados
 
-* [type definition](https://www.postgresql.org/docs/current/static/datatype-enum.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-enum.html)
 
-Currently there is no special support for enumerated types. They are mapped as
-normal text columns:
+Atualmente, não existe suporte especial para tipos enumerados. Eles são mapeados como colunas de texto normais:
 
 ```ruby
 # db/migrate/20131220144913_create_articles.rb
@@ -289,7 +285,7 @@ irb> article.status = "published"
 irb> article.save!
 ```
 
-To add a new value before/after existing one you should use [ALTER TYPE](https://www.postgresql.org/docs/current/static/sql-altertype.html):
+Para adicionar um novo valor antes ou depois de um já existente, é necessário usar o [ALTER TYPE](https://www.postgresql.org/docs/current/static/sql-altertype.html):
 
 ```ruby
 # db/migrate/20150720144913_add_new_state_to_articles.rb
@@ -303,9 +299,9 @@ def up
 end
 ```
 
-NOTE: ENUM values can't be dropped currently. You can read why [here](https://www.postgresql.org/message-id/29F36C7C98AB09499B1A209D48EAA615B7653DBC8A@mail2a.alliedtesting.com).
+NOTE: Valores ENUM não podem ser removidos atualmente. Você pode ler o motivo [aqui](https://www.postgresql.org/message-id/29F36C7C98AB09499B1A209D48EAA615B7653DBC8A@mail2a.alliedtesting.com).
 
-Hint: to show all the values of the all enums you have, you should call this query in `bin/rails db` or `psql` console:
+Dica: para mostrar todos os valores de todos os enums que você tem, deve chamar essa query no console `bin/rails db` ou `psql`:
 
 ```sql
 SELECT n.nspname AS enum_schema,
@@ -318,12 +314,11 @@ SELECT n.nspname AS enum_schema,
 
 ### UUID
 
-* [type definition](https://www.postgresql.org/docs/current/static/datatype-uuid.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-uuid.html)
 * [pgcrypto generator function](https://www.postgresql.org/docs/current/static/pgcrypto.html)
 * [uuid-ossp generator functions](https://www.postgresql.org/docs/current/static/uuid-ossp.html)
 
-NOTE: You need to enable the `pgcrypto` (only PostgreSQL >= 9.4) or `uuid-ossp`
-extension to use uuid.
+NOTE: Você precisa habilitar a extensão `pgcrypto` (apenas para PostgreSQL >= 9.4) ou a extensão `uuid-ossp` para usar uuid.
 
 ```ruby
 # db/migrate/20131220144913_create_revisions.rb
@@ -346,7 +341,7 @@ irb> revision.identifier
 => "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
 ```
 
-You can use `uuid` type to define references in migrations:
+Você pode usar o tipo `uuid` para definir referências em *migrations*:
 
 ```ruby
 # db/migrate/20150418012400_create_blog.rb
@@ -373,12 +368,12 @@ class Comment < ApplicationRecord
 end
 ```
 
-See [this section](#uuid-primary-keys) for more details on using UUIDs as primary key.
+Veja [essa seção](#uuid-primary-keys) para mais detalhes sobre usar UUIDs como chaves primárias.
 
 ### Bit String Types
 
-* [type definition](https://www.postgresql.org/docs/current/static/datatype-bit.html)
-* [functions and operators](https://www.postgresql.org/docs/current/static/functions-bitstring.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-bit.html)
+* [funções e operações](https://www.postgresql.org/docs/current/static/functions-bitstring.html)
 
 ```ruby
 # db/migrate/20131220144913_create_users.rb
@@ -404,13 +399,11 @@ irb> user.settings
 irb> user.save!
 ```
 
-### Network Address Types
+### Tipo Endereço de Internet
 
-* [type definition](https://www.postgresql.org/docs/current/static/datatype-net-types.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-net-types.html)
 
-The types `inet` and `cidr` are mapped to Ruby
-[`IPAddr`](https://ruby-doc.org/stdlib-2.7.0/libdoc/ipaddr/rdoc/IPAddr.html)
-objects. The `macaddr` type is mapped to normal text.
+Os tipos `inet` e `cidr`são transformados em objetos Ruby [`IPAddr`](https://ruby-doc.org/stdlib-2.7.0/libdoc/ipaddr/rdoc/IPAddr.html). O tipo `macaddr` é transformado em texto normal.
 
 ```ruby
 # db/migrate/20140508144913_create_devices.rb
@@ -440,19 +433,19 @@ irb> macbook.address
 => "32:01:16:6d:05:ef"
 ```
 
-### Geometric Types
+### Tipos Geométricos
 
-* [type definition](https://www.postgresql.org/docs/current/static/datatype-geometric.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-geometric.html)
 
-All geometric types, with the exception of `points` are mapped to normal text.
-A point is casted to an array containing `x` and `y` coordinates.
+Todos os tipos geométricos, com exceção de `points`, são mapeados para texto normal.
+Um ponto é transformado em uma *array* contendo as coordenadas `x` e `y`.
 
-### Interval
+### Intervalo
 
-* [type definition](https://www.postgresql.org/docs/current/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT)
-* [functions and operators](https://www.postgresql.org/docs/current/static/functions-datetime.html)
+* [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT)
+* [funções e operações](https://www.postgresql.org/docs/current/static/functions-datetime.html)
 
-This type is mapped to [`ActiveSupport::Duration`](https://api.rubyonrails.org/classes/ActiveSupport/Duration.html) objects.
+Esse tipo é mapeado em um objeto [`ActiveSupport::Duration`](https://api.rubyonrails.org/classes/ActiveSupport/Duration.html).
 
 ```ruby
 # db/migrate/20200120000000_create_events.rb
