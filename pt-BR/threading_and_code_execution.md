@@ -1,39 +1,42 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Threading and Code Execution in Rails
-=====================================
+*Threading* e Execução de Código no Rails
+=========================================
 
-After reading this guide, you will know:
+Depois de ler esse guia, você vai saber:
 
-* What code Rails will automatically execute concurrently
-* How to integrate manual concurrency with Rails internals
-* How to wrap all application code
-* How to affect application reloading
+* Quais códigos o Rails executa automaticamente de maneira concorrente
+* Como integrar código concorrente feito por você com a parte interna do Rails
+* Como envolver todo o código da aplicação
+* Como modificar o recarregamento da aplicação
 
 --------------------------------------------------------------------------------
 
-Automatic Concurrency
----------------------
+Concorrência Automática
+-----------------------
 
-Rails automatically allows various operations to be performed at the same time.
+O Rails automaticamente permite que várias operações sejam feitas ao mesmo tempo.
 
-When using a threaded web server, such as the default Puma, multiple HTTP
-requests will be served simultaneously, with each request provided its own
-controller instance.
+Quando um servidor web que utiliza *threads* está em uso, como o Puma, que é padrão,
+múltiplas requisições HTTP irão ser servidas simultaneamente, com cada requsição
+utilizando sua própria instância de *controller*.
 
-Threaded Active Job adapters, including the built-in Async, will likewise
-execute several jobs at the same time. Action Cable channels are managed this
-way too.
 
-These mechanisms all involve multiple threads, each managing work for a unique
-instance of some object (controller, job, channel), while sharing the global
-process space (such as classes and their configurations, and global variables).
-As long as your code doesn't modify any of those shared things, it can mostly
-ignore that other threads exist.
 
-The rest of this guide describes the mechanisms Rails uses to make it "mostly
-ignorable", and how extensions and applications with special needs can use them.
+Adaptadores do Active Job que usam *thread*, incluindo o Async, que é padrão, vai
+executar vários *jobs* ao mesmo tempo. Os canais (*channels*) Action Cable também
+são gerenciados dessa forma.
+
+Todos esses mecanismos involvem múltiplas *threads*, cada uma gerenciando trabalho
+para uma única instância de algum objeto (*controller*, *job*, *channel*), enquanto
+compartilham o espaço global do processo (classes e suas configurações e variáveis globais).
+Contanto que seu código não modifique nenhuma dessas coisas compatilhadas, ele pode
+quase esquecer que outras *threads* existem.
+
+O resto desse guia vai mostrar os mecanismos que o Rails usa para fazer com que
+suas *threads* sejam "quase ignoráveis" e como extensões e aplicações com necessidades
+especiais podem usar esse aparato.
 
 Executor
 --------
