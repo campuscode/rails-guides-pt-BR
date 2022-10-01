@@ -117,11 +117,11 @@ the application.
 Reloader
 --------
 
-Like the Executor, the Reloader also wraps application code. If the Executor is
-not already active on the current thread, the Reloader will invoke it for you,
-so you only need to call one. This also guarantees that everything the Reloader
-does, including all its callback invocations, occurs wrapped inside the
-Executor.
+Assim como o *Executor*, o *Reloader* também envolve o código da aplicação.
+Se o *Executor* ainda não estiver ativo na *thread* atual, o *Reloader* vai
+invocá-lo para você, logo você só precisa chamar o *Reloader*. Isso garante que
+tudo que o *Reloader* faça, inclusive suas invocações de *callback*, ocorram envolvidas
+pelo *Executor*.
 
 ```ruby
 Rails.application.reloader.wrap do
@@ -129,47 +129,49 @@ Rails.application.reloader.wrap do
 end
 ```
 
-The Reloader is only suitable where a long-running framework-level process
-repeatedly calls into application code, such as for a web server or job queue.
-Rails automatically wraps web requests and Active Job workers, so you'll rarely
-need to invoke the Reloader for yourself. Always consider whether the Executor
-is a better fit for your use case.
+O *Reloader* é mais indicado para processos de longa duração de nível de *framework*
+que chamam repetidamente o código da aplicação, como servidores web e filas de *jobs*.
+O Rails automaticamente envolve requisições web e *workers* do Active Job, logo
+você raramente precisará invocar o *Reloader* por si mesmo. Sempre se pergunte se
+o *Executor* não seria a melhor opção para o seu caso de uso.
 
-### Callbacks
+### *Callbacks*
 
-Before entering the wrapped block, the Reloader will check whether the running
-application needs to be reloaded -- for example, because a model's source file has
-been modified. If it determines a reload is required, it will wait until it's
-safe, and then do so, before continuing. When the application is configured to
-always reload regardless of whether any changes are detected, the reload is
-instead performed at the end of the block.
+Antes de executar o bloco envolvido, o *Reloader* vai verificar se a aplicação que
+está rodando precisa ser recarregada. Por exemplo, talvez o código fonte de um *model*
+tenha sido alterado. Se é determinado que um recarregamento é necessário, o *Reloader*
+esperará até que seja seguro fazer isso e depois disso irá recarregar a aplicação
+antes de coninuar. Quando a aplicação está configurada para sempre ser recarregada,
+indepentende de modificações, o recarregamento da aplicação é feito no final do bloco,
+ao invés de no começo.
 
-The Reloader also provides `to_run` and `to_complete` callbacks; they are
-invoked at the same points as those of the Executor, but only when the current
-execution has initiated an application reload. When no reload is deemed
-necessary, the Reloader will invoke the wrapped block with no other callbacks.
+O *Reloader* também oferece os *callbacks* `to_run` e `to_complete`. Eles são
+invocados nos mesmos pontos do *Executor*, mas somente quando a execução atual começar
+um recarregamento da aplicação. Quando o recarregamento não é necessário, o *Reloader*
+irá invocar o bloco envolvido por ele sem executar os *callbacks*.
 
-### Class Unload
+### Descarregamento de Classes
 
-The most significant part of the reloading process is the Class Unload, where
-all autoloaded classes are removed, ready to be loaded again. This will occur
-immediately before either the Run or Complete callback, depending on the
-`reload_classes_only_on_change` setting.
+A parte mais trabalhosa do processo de recarregamento, é o Descarregamento de Classes,
+em que todas as classes automaticamente carregadas são removidas e ficam prontas para
+ser carregadas de novo. Isso irá ocorrer imediatamente antes do *callback* Run ou Complete,
+dependendo do valor da configuração `reload_classes_only_on_change`.
 
-Often, additional reloading actions need to be performed either just before or
-just after the Class Unload, so the Reloader also provides `before_class_unload`
-and `after_class_unload` callbacks.
+Na maioria das vezes, algumas ações extras precisam ser feitas exatamente no momento
+antes ou no momento posterior ao Descarregamento de Classes, logo o *Reloader* também
+fornece os *callbacks* `before_class_unload` e `after_class_unload`.
 
-### Concurrency
+### Concorrência
 
-Only long-running "top level" processes should invoke the Reloader, because if
-it determines a reload is needed, it will block until all other threads have
-completed any Executor invocations.
+Somente processos "top level" de longa duração devem invocar o *Reloader*, porque
+se ele determinar que um recarregamento é necessário, ele vai bloquear até que
+todas as outras *threads* tenham terminado qualquer invocação do *Executor*.
 
-If this were to occur in a "child" thread, with a waiting parent inside the
-Executor, it would cause an unavoidable deadlock: the reload must occur before
-the child thread is executed, but it cannot be safely performed while the parent
-thread is mid-execution. Child threads should use the Executor instead.
+Se isso ocorrer numa *sub-thread*, com a *thread* pai esperando dentro do *Executor*,
+isso irá causar um bloqueio permanente (*deadlock*) invevitável: o recarregamento
+deve ocorrer antes da *sub-thread* ser executada, mas ela não pode ser invocada com
+segurança enquanto a *thread* pai está em execução. *Sub-threads* devem usar somente o
+*Executor*.
 
 Framework Behavior
 ------------------
