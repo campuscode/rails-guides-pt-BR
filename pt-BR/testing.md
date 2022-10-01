@@ -252,7 +252,7 @@ Finished in 0.040609s, 49.2500 runs/s, 24.6250 assertions/s.
 
 Observe o 'E' na saída. Isso significa um teste com erro.
 
-NOTE: A execução de cada método de teste para assim que qualquer erro ou uma falha de teste é encontrada, e a suíte de teste continua com o próximo método. Todos os métodos de testes são executados numa ordem aleatória. A [opção `config.active_support.test_order`](configuring.html#configuring-active-support) pode ser usada para configurar a ordem do teste.
+NOTE: A execução de cada método de teste para assim que qualquer erro ou uma falha de teste é encontrada, e a suíte de teste continua com o próximo método. Todos os métodos de testes são executados numa ordem aleatória. A opção [`config.active_support.test_order`][] pode ser usada para configurar a ordem do teste.
 
 Quando um teste falha você é apresentado ao _backtrace_ correspondente. Por padrão
 Rails filtra o _backtrace_ e mostrará apenas linhas relevantes para sua
@@ -276,6 +276,8 @@ end
 ```
 
 Este teste agora deveria passar.
+
+[`config.active_support.test_order`]: configuring.html#config-active-support-test-order
 
 ### Asserções disponíveis
 
@@ -1935,7 +1937,7 @@ If you want to test the broadcasting made with `Channel.broadcast_to`, you shoul
 ```ruby
 # app/jobs/chat_relay_job.rb
 class ChatRelayJob < ApplicationJob
-  def perform_later(room, message)
+  def perform(room, message)
     ChatChannel.broadcast_to room, text: message
   end
 end

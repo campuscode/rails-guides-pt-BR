@@ -102,7 +102,9 @@ If your application uses Spring, it needs to be upgraded to at least version 3.0
 undefined method `mechanism=' for ActiveSupport::Dependencies:Module
 ```
 
-Also, make sure `config.cache_classes` is set to `false` in `config/environments/test.rb`.
+Also, make sure [`config.cache_classes`][] is set to `false` in `config/environments/test.rb`.
+
+[`config.cache_classes`]: configuring.html#config-cache-classes
 
 ### Sprockets is now an optional dependency
 
@@ -157,13 +159,15 @@ If you still get this warning in the logs, please check the section about autolo
 
 ### Ability to configure `config.autoload_once_paths`
 
-`config.autoload_once_paths` can be set in the body of the application class defined in `config/application.rb` or in the configuration for environments in `config/environments/*`.
+[`config.autoload_once_paths`][] can be set in the body of the application class defined in `config/application.rb` or in the configuration for environments in `config/environments/*`.
 
 Similarly, engines can configure that collection in the class body of the engine class or in the configuration for environments.
 
 After that, the collection is frozen, and you can autoload from those paths. In particular, you can autoload from there during initialization. They are managed by the `Rails.autoloaders.once` autoloader, which does not reload, only autoloads/eager loads.
 
 If you configured this setting after the environments configuration has been processed and are getting `FrozenError`, please just move the code.
+
+[`config.autoload_once_paths`]: configuring.html#config-autoload-once-paths
 
 ### `ActionDispatch::Request#content_type` now returned Content-Type header as it is.
 
@@ -199,17 +203,20 @@ to register a rotator.
 The following is an example for rotator for the encrypted cookies.
 
 ```ruby
-Rails.application.config.action_dispatch.cookies_rotations.tap do |cookies|
-  salt = Rails.application.config.action_dispatch.authenticated_encrypted_cookie_salt
-  secret_key_base = Rails.application.secrets.secret_key_base
+# config/initializers/cookie_rotator.rb
+Rails.application.config.after_initialize do
+  Rails.application.config.action_dispatch.cookies_rotations.tap do |cookies|
+    salt = Rails.application.config.action_dispatch.authenticated_encrypted_cookie_salt
+    secret_key_base = Rails.application.secret_key_base
 
-  key_generator = ActiveSupport::KeyGenerator.new(
-    secret_key_base, iterations: 1000, hash_digest_class: OpenSSL::Digest::SHA1
-  )
-  key_len = ActiveSupport::MessageEncryptor.key_len
-  secret = key_generator.generate_key(salt, key_len)
+    key_generator = ActiveSupport::KeyGenerator.new(
+      secret_key_base, iterations: 1000, hash_digest_class: OpenSSL::Digest::SHA1
+    )
+    key_len = ActiveSupport::MessageEncryptor.key_len
+    secret = key_generator.generate_key(salt, key_len)
 
-  cookies.rotate :encrypted, secret
+    cookies.rotate :encrypted, secret
+  end
 end
 ```
 
@@ -260,7 +267,7 @@ FFmpeg v3.4+.
 
 For new apps, image transformation will use libvips instead of ImageMagick. This will reduce
 the time taken to generate variants as well as CPU and memory usage, improving response
-times in apps that rely on active storage to serve their images.
+times in apps that rely on Active Storage to serve their images.
 
 The `:mini_magick` option is not being deprecated, so it is fine to keep using it.
 
@@ -376,6 +383,35 @@ You can invalidate the cache either by touching the product, or changing the cac
 <% end %>
 ```
 
+### Rails version is now included in the Active Record schema dump
+
+Rails 7.0 changed some default values for some column types. To avoid that application upgrading from 6.1 to 7.0
+load the current schema using the new 7.0 defaults, Rails now includes the version of the framework in the schema dump.
+
+Before loading the schema for the first time in Rails 7.0, make sure to run `rails app:update` to ensure that the
+version of the schema is included in the schema dump.
+
+The schema file will look like this:
+
+```ruby
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema[6.1].define(version: 2022_01_28_123512) do
+```
+
+NOTE: The first time you dump the schema with Rails 7.0, you will see many changes to that file, including
+some column information. Make sure to review the new schema file content and commit it to your repository.
+
 Atualizando do Rails 6.0 para o Rails 6.1
 -------------------------------------
 
@@ -487,7 +523,7 @@ O código de status HTTP padrão usado em `ActionDispatch::SSL` ao redirecionar 
 
 ### Active Storage agora requer Processamento de Imagem
 
-Ao processar variantes no Active Storage, agora é necessário ter a *gem* [image_processing](https://github.com/janko-m/image_processing) empacotada em vez de usar diretamente `mini_magick`. O processamento de imagem é configurado por padrão para usar `mini_magick` nos bastidores, então a maneira mais fácil de atualizar é substituindo a gem `mini_magick` pela gem `image_processing` e certificando-se de remover o uso explícito de `combine_options`, uma vez que não é mais necessário.
+Ao processar variantes no Active Storage, agora é necessário ter a *gem* [image_processing](https://github.com/janko/image_processing) empacotada em vez de usar diretamente `mini_magick`. O processamento de imagem é configurado por padrão para usar `mini_magick` nos bastidores, então a maneira mais fácil de atualizar é substituindo a gem `mini_magick` pela gem `image_processing` e certificando-se de remover o uso explícito de `combine_options`, uma vez que não é mais necessário.
 
 Para facilitar a leitura, você pode desejar alterar as chamadas `resize` brutas para macros `image_processing`. Por exemplo, em vez de:
 
@@ -527,9 +563,12 @@ $ bin/rails webpacker:install
 ### Forçar SSL
 
 O método `force_ssl` nos *controllers* foi descontinuado e será removido no
-Rails 6.1. Você é encorajado a habilitar `config.force_ssl` para impor conexões
+Rails 6.1. Você é encorajado a habilitar [`config.force_ssl`][] para impor conexões
 HTTPS ao longo de sua aplicação. Se você precisar isentar certos *endpoints*
-do redirecionamento, você pode usar `config.ssl_options` para configurar esse comportamento.
+do redirecionamento, você pode usar [`config.ssl_options`][] para configurar esse comportamento.
+
+[`config.force_ssl`]: configuring.html#config-force-ssl
+[`config.ssl_options`]: configuring.html#config-ssl-options
 
 ### Propósito (*Purpose*) e metadados de expiração agora estão incorporados em cookies assinados e criptografados para maior segurança
 
@@ -815,17 +854,13 @@ Além disso, o *Bootsnap* precisa desabilitar o cache *iseq* devido a um bug no 
 
 #### `config.add_autoload_paths_to_load_path`
 
-O novo ponto de configuração
-
-```ruby
-config.add_autoload_paths_to_load_path
-```
-
-é `true` por padrão para compatibilidade com versões anteriores, mas permite que você opte por não adicionar os caminhos de carregamento automático a `$LOAD_PATH`.
+O novo ponto de configuração [`config.add_autoload_paths_to_load_path`][] é `true` por padrão para compatibilidade com versões anteriores, mas permite que você opte por não adicionar os caminhos de carregamento automático a `$LOAD_PATH`.
 
 Isso faz sentido na maioria das aplicações, já que você nunca deve requerer um arquivo em `app/models`, por exemplo, e o *Zeitwerk* só usa nomes de arquivo absolutos internamente.
 
 Ao optar pela exclusão, você otimiza as pesquisas ao `$LOAD_PATH` (menos diretórios para verificar) e economiza o trabalho do *Bootsnap* e o consumo de memória, já que não é necessário construir um índice para esses diretórios.
+
+[`config.add_autoload_paths_to_load_path`]: configuring.html#config-add-autoload-paths-to-load-path
 
 #### *Thread-safety*
 
@@ -912,7 +947,9 @@ user.highlights.first.filename # => "funky.jpg"
 user.highlights.second.filename # => "town.jpg"
 ```
 
-As aplicações existentes podem aceitar este novo comportamento definindo `config.active_storage.replace_on_assign_to_many` como `true`. O comportamento antigo será descontinuado no Rails 7.0 e removido no Rails 7.1.
+As aplicações existentes podem aceitar este novo comportamento definindo [`config.active_storage.replace_on_assign_to_many`][] como `true`. O comportamento antigo será descontinuado no Rails 7.0 e removido no Rails 7.1.
+
+[`config.active_storage.replace_on_assign_to_many`]: configuring.html#config-active-storage-replace-on-assign-to-many
 
 Atualizando do Rails 5.1 para o Rails 5.2
 -------------------------------------
@@ -922,8 +959,14 @@ Para mais informações sobre as mudanças feitas no Rails 5.2 consulte as [nota
 ### *Bootsnap*
 
 Rails 5.2 adiciona a *gem bootsnap* no [novo Gemfile](https://github.com/rails/rails/pull/29313).
-O comando `app:update` o configura em `boot.rb`. Se você quiser utilizá-lo, então adicione-o no Gemfile,
-caso contrário, mude o `boot.rb` para não utilizar o *bootsnap*.
+O comando `app:update` o configura em `boot.rb`. Se você quiser utilizá-lo, então adicione-o no Gemfile:
+
+```ruby
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', require: false
+```
+
+Caso contrário, mude o `boot.rb` para não utilizar o *bootsnap*.
 
 ### A expiração em *cookies* assinados ou criptografados está agora incorporada nos valores dos *cookies*
 
@@ -1271,12 +1314,14 @@ config.action_mailer.deliver_later_queue_name = :new_queue_name
 
 #### Suportar *Fragment Caching* na *Action Mailer Views*
 
-Defina `config.action_mailer.perform_caching` em sua configuração para determinar se sua *Action Mailer views*
+Defina [`config.action_mailer.perform_caching`][] em sua configuração para determinar se sua *Action Mailer views*
 deve suportar cache.
 
 ```ruby
 config.action_mailer.perform_caching = true
 ```
+
+[`config.action_mailer.perform_caching`]: configuring.html#config-action-mailer-perform-caching
 
 #### Configure a Saída de `db:structure:dump`
 
@@ -2226,7 +2271,7 @@ ou `link_to_unless`).
 
     Observe que se sua aplicação depende do carregamento de certas páginas em um `<frame>` ou `<iframe>`, então você pode precisar definir explicitamente `X-Frame-Options` para `ALLOW-FROM ... `ou `ALLOWALL`.
 
-* No Rails 4.0, os recursos de pré-compilação não copiam mais recursos não JS/CSS automaticamente de `vendor/assets` e `lib/assets`. As pessoas desenvolvedoras de aplicações e *engine* Rails devem colocar esses *assets* em `app/assets` ou configurar `config.assets.precompile`.
+* No Rails 4.0, os recursos de pré-compilação não copiam mais recursos não JS/CSS automaticamente de `vendor/assets` e `lib/assets`. As pessoas desenvolvedoras de aplicações e *engine* Rails devem colocar esses *assets* em `app/assets` ou configurar [`config.assets.precompile`][].
 
 * No Rails 4.0, o erro `ActionController::UnknownFormat` é gerado quando a *action* não manipula o formato da solicitação. Por padrão, a exceção é tratada respondendo com 406 Não Aceitável, mas você pode substituir isso agora. No Rails 3, 406 Não Aceitável sempre foi retornado. Sem substituições.
 
@@ -2242,6 +2287,8 @@ ou `link_to_unless`).
 * Rails 4.0 torna obsoleto `ActionController::AbstractResponse` em favor de `ActionDispatch::Response`.
 * Rails 4.0 torna obsoleto `ActionController::Response` em favor de `ActionDispatch::Response`.
 * Rails 4.0 torna obsoleto `ActionController::Routing` em favor de `ActionDispatch::Routing`.
+
+[`config.assets.precompile`]: configuring.html#config-assets-precompile
 
 ### *Active Support*
 
@@ -2263,11 +2310,13 @@ A ordem na qual *helpers* de mais de um diretório são carregados mudou no Rail
 ### sprockets-rails
 
 * `assets:precompile:primary` e` assets:precompile:all` foram removidos. Em vez disso, use `assets:precompile`.
-* A opção `config.assets.compress` deve ser alterada para `config.assets.js_compressor` como por exemplo:
+* A opção `config.assets.compress` deve ser alterada para [`config.assets.js_compressor`][] como por exemplo:
 
     ```ruby
     config.assets.js_compressor = :uglifier
     ```
+
+[`config.assets.js_compressor`]: configuring.html#config-assets-js-compressor
 
 ### sass-rails
 
