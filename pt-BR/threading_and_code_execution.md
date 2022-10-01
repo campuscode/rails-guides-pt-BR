@@ -141,7 +141,7 @@ Antes de executar o bloco envolvido, o *Reloader* vai verificar se a aplicação
 está rodando precisa ser recarregada. Por exemplo, talvez o código fonte de um *model*
 tenha sido alterado. Se é determinado que um recarregamento é necessário, o *Reloader*
 esperará até que seja seguro fazer isso e depois disso irá recarregar a aplicação
-antes de coninuar. Quando a aplicação está configurada para sempre ser recarregada,
+antes de continuar. Quando a aplicação está configurada para sempre ser recarregada,
 indepentende de modificações, o recarregamento da aplicação é feito no final do bloco,
 ao invés de no começo.
 
@@ -152,7 +152,7 @@ irá invocar o bloco envolvido por ele sem executar os *callbacks*.
 
 ### Descarregamento de Classes
 
-A parte mais trabalhosa do processo de recarregamento, é o Descarregamento de Classes,
+A parte mais trabalhosa do processo de recarregamento é o Descarregamento de Classes,
 em que todas as classes automaticamente carregadas são removidas e ficam prontas para
 ser carregadas de novo. Isso irá ocorrer imediatamente antes do *callback* Run ou Complete,
 dependendo do valor da configuração `reload_classes_only_on_change`.
@@ -168,7 +168,7 @@ se ele determinar que um recarregamento é necessário, ele vai bloquear até qu
 todas as outras *threads* tenham terminado qualquer invocação do *Executor*.
 
 Se isso ocorrer numa *sub-thread*, com a *thread* pai esperando dentro do *Executor*,
-isso irá causar um bloqueio permanente (*deadlock*) invevitável: o recarregamento
+isso irá causar um bloqueio permanente (*deadlock*) inevitável: o recarregamento
 deve ocorrer antes da *sub-thread* ser executada, mas ela não pode ser invocada com
 segurança enquanto a *thread* pai está em execução. *Sub-threads* devem usar somente o
 *Executor*.
