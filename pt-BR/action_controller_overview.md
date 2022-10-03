@@ -335,7 +335,7 @@ Sua aplicação possui uma sessão para cada usuário, na qual pode-se armazenar
 * [`ActionDispatch::Session::CookieStore`][] - Armazena tudo no cliente.
 * [`ActionDispatch::Session::CacheStore`][] - Armazena os dados no *cache* do Rails.
 * `ActionDispatch::Session::ActiveRecordStore` - Armazena os dados em um banco de dados utilizando o *Active Record*. (a gem `activerecord-session_store` é necessária).
-* [`ActionDispatch::Session::MemCacheStore`][] - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o *CacheStore* como alternativa)
+* [`ActionDispatch::Session::MemCacheStore`][] - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o `CacheStore` como alternativa)
 
 Todos os armazenamentos de sessão utilizam um *cookie* para armazenar um ID único para cada sessão (você deve utilizar um *cookie*, o Rails não permitirá que você passe o ID da sessão na URL, pois isso é menos seguro).
 
@@ -1113,13 +1113,20 @@ Rails mantém um arquivo de log pra cada ambiente na pasta `log`. Eles são bast
 
 ### Filtrando Parâmetros
 
-Você pode evitar que parâmetros sensíveis da requisição sejam salvos no seu arquivo de log adicionando-os a `config.filter_parameters` na configuração da aplicação. Esses parâmetros aparecerão como [FILTERED] no arquivo de log.
+Você pode evitar que parâmetros sensíveis da requisição sejam salvos no seu arquivo de log
+adicionando-os a [`config.filter_parameters`][] na configuração da aplicação.
+Esses parâmetros aparecerão como [FILTERED] no arquivo de log.
 
 ```ruby
 config.filter_parameters << :password
 ```
 
-NOTE: Os Parâmetros fornecidos serão filtrados correspondendo parcialmente a uma expressão regular. Rails por padrão adiciona `:password` no *initializer* apropriado (`initializers/filter_parameter_logging.`) e se preocupa com parâmetros típicos da aplicação `password` e `password_confirmation`.
+NOTE: Os Parâmetros fornecidos serão filtrados correspondendo parcialmente a uma expressão
+regular. Rails por padrão adiciona `:passw`, `:secret`, `:token` no *initializer*
+apropriado (`initializers/filter_parameter_logging.`) e se preocupa com parâmetros típicos da aplicação
+como `password`, `password_confirmation` e `my_token`.
+
+[`config.filter_parameters`]: configuring.html#config-filter-parameters
 
 ### Filtrando Redirecionamentos
 
@@ -1212,6 +1219,7 @@ Forçar protocolo HTTPS
 
 Se você quiser garantir que a comunicação com seu *controller* seja possível apenas
 via HTTPS, você deve fazer isso ativando o middleware [`ActionDispatch::SSL`][] via
-`config.force_ssl` na configuração do seu ambiente.
+[`config.force_ssl`][] na configuração do seu ambiente.
 
+[`config.force_ssl`]: configuring.html#config-force-ssl
 [`ActionDispatch::SSL`]: https://api.rubyonrails.org/classes/ActionDispatch/SSL.html
