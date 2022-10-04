@@ -112,7 +112,7 @@ deve compartilhar uma conexão com.
 
 ```ruby
 class PrimaryApplicationRecord < ActiveRecord::Base
-  self.primary_abstract_class
+  self.primary_abstract_class = true
 end
 ```
 
@@ -420,7 +420,7 @@ config.active_record.shard_resolver = ->(request) {
 In Rails 6.1+, Active Record provides a new internal API for connection management.
 In most cases applications will not need to make any changes except to opt-in to the
 new behavior (if upgrading from 6.0 and below) by setting
-`config.active_record.legacy_connection_handling = false`. If you have a single database
+[`config.active_record.legacy_connection_handling`][] to `false`. If you have a single database
 application, no other changes will be required. If you have a multiple database application
 the following changes are required if your application is using these methods:
 
@@ -438,11 +438,13 @@ you'll want writing or reading pools with `connection_handler.connection_pool_li
 * If you turn off `legacy_connection_handling` in your application, any method that's unsupported
 will raise an error (i.e. `connection_handlers=`).
 
+[`config.active_record.legacy_connection_handling`]: configuring.html#config-active-record-legacy-connection-handling
+
 ## Alternando Conexão de Banco de Dados Granular
 
 No Rails 6.1 é possível alternar conexões para um banco de dados ao invés de
 todos os bancos de dados globalmente. Para usar este recurso, você deve primeiro definir
-`config.active_record.legacy_connection_handling` para` false` nas configurações da sua
+[`config.active_record.legacy_connection_handling`][] para` false` nas configurações da sua
 aplicação. A maioria das aplicações não precisam fazer nenhuma outra
 alteração, uma vez que as APIs públicas têm o mesmo comportamento. Consulte a seção acima para
 como habilitar e migrar do `legacy_connection_handling`.
