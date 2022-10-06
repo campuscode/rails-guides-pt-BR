@@ -327,7 +327,7 @@ an action and destroyed at the end of that action and thus persist only for the
 duration of the action. If you'd like to store query results in a more
 persistent fashion, you can with low level caching.
 
-Armazenamentos de Cache
+Armazenamento de Cache
 ------------
 
 O Rails fornece diferentes armazenamentos para os dados em cache (além de SQL e cache de página).
