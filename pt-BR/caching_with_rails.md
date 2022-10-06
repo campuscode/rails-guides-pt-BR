@@ -327,25 +327,24 @@ an action and destroyed at the end of that action and thus persist only for the
 duration of the action. If you'd like to store query results in a more
 persistent fashion, you can with low level caching.
 
-Cache Stores
+Armazenamentos de Cache
 ------------
 
-Rails provides different stores for the cached data (apart from SQL and page
-caching).
+O Rails fornece diferentes armazenamentos para os dados em cache (além de SQL e cache de página).
 
-### Configuration
+### Configuração
 
-You can set up your application's default cache store by setting the
-`config.cache_store` configuration option. Other parameters can be passed as
-arguments to the cache store's constructor:
+Você pode configurar o armazenamento de cache padrão do seu aplicativo definindo
+a configuração `config.cache_store`. Outros parâmetros podem ser passados como
+argumento para o construtor do armazenamento de cache:
 
 ```ruby
 config.cache_store = :memory_store, { size: 64.megabytes }
 ```
 
-NOTE: Alternatively, you can call `ActionController::Base.cache_store` outside of a configuration block.
+NOTE: Alternativamente, você pode chamar `ActionController::Base.cache_store` fora de um bloco de configuração.
 
-You can access the cache by calling `Rails.cache`.
+Você pode acessar o cache chamando `Rails.cache`.
 
 ### ActiveSupport::Cache::Store
 
