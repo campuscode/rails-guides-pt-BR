@@ -9,7 +9,7 @@ Esse guia irá mostrar como instalar e usar o Webpacker para empacotar JavaScrip
 Depois de ler esse guia, você saberá:
 
 * O que o Webpacker faz e o como ele é diferente do Sprockets.
-* Como instalar o Webpacker e integrar com seu framework de escolha.
+* Como instalar o Webpacker e integrar com seu _framework_ de escolha.
 * Como usar o Webpacker para *assets* JavaScript.
 * Como usar o Webpacker para *assets* CSS.
 * Como usar o Webpacker para *assets* estáticos.
@@ -25,19 +25,19 @@ Webpacker é um *wrapper* Rails feito com o sistema de *build* [webpack](https:/
 
 ### O que é webpack?
 
-O intuito do webpack, ou qualquer sistema de *build* front-end, é permitir que você escreva código front-end de maneira coveniente para desenvolvedores e depois empacotar o código de maneira coveniente para navegadores. Com o webpack, você pode gerenciar Javascript, CSS e *assets* estáticos, como imagens e fontes. O webpack permite que você escreva seu código, referencie outro código na aplicação, transforme seu código e combine ele em pacotes que podem ser facilmente baixados.
+O intuito do webpack, ou qualquer sistema de *build* front-end, é permitir que você escreva código front-end de maneira conveniente para pessoas desenvolvedoras e depois empacotar o código de maneira conveniente para navegadores. Com o webpack, você pode gerenciar Javascript, CSS e *assets* estáticos, como imagens e fontes. O webpack permite que você escreva seu código, referencie outro código na aplicação, transforme seu código e combine ele em pacotes que podem ser facilmente baixados.
 
 Veja a [documentação do webpack](https://webpack.js.org) para mais informações.
 
 ### Como o Webpacker é diferente do Sprockets?
 
-O Rails também funciona com o Sprockets, uma ferramenta de enpacotamento de *assets* que tem algumas features em comum com o Webpacker. Ambas vão compilar seu Javascript em arquivos "amigáveis" para o navegador, além de minificar e adicionar *fingerprints* neles em produção. Em ambiente de desenvolvimento, o Sprockets e o Webpacks permitem que você altere arquivos de maneira incremental.
+O Rails também funciona com o Sprockets, uma ferramenta de empacotamento de *assets* que tem algumas funcionalidade em comum com o Webpacker. Ambas vão compilar seu Javascript em arquivos "amigáveis" para o navegador, além de minificar e adicionar *fingerprints* neles em produção. Em ambiente de desenvolvimento, o Sprockets e o Webpacker permitem que você altere arquivos de maneira incremental.
 
 O Sprockets, que foi feito para ser usado com Rails, é mais simples de integrar. Particularmente, o código pode ser adicionado ao Sprockets por meio de uma *gem* Ruby. Todavia, o webpack integra melhor com mais ferramentas atuais de javascript e pacotes NPM e disponibiliza mais variedade de integrações. Aplicações novas Rails são configuradas para usar o webpack para Javascript e Sprockets para CSS, apesar de que você também pode utilizar o webpack para o CSS.
 
-Você deve escolher Webpacker em vez de Sprockets em um projeto novo se quiser utulizar pacotes NPM e/ou quiser acessar features e ferramentas mais atuais de Javascript. Você deve escolher Sprockets em vez de Webpacker para aplicações legado onde migrações podem ser custosas, se você quiser integrar usando Gems ou se tiver uma quantidade pequena de código a ser enpacotado.
+Você deve escolher o Webpacker em vez de Sprockets em um projeto novo se quiser utilizar pacotes NPM e/ou quiser acessar funcionalidades e ferramentas mais atuais de Javascript. Você deve escolher Sprockets em vez do Webpacker para aplicações legadas onde migrações podem ser custosas, se você quiser integrar usando Gems ou se tiver uma quantidade pequena de código a ser empacotado.
 
-Se você for familiar com o Sprockets, o guia a seguir pode trazer ideias de correspondência entre as duas ferramentas. Por favor, note que cada ferramenta tem uma estrutura diferente, e os conceitos não são exatamentes iguais um ao outro.
+Se você estiver familiarizado com o Sprockets, o guia a seguir pode trazer ideias de correspondência entre as duas ferramentas. Por favor, note que cada ferramenta tem uma estrutura diferente, e os conceitos não são exatamentes iguais um ao outro.
 
 |Tarefa               | Sprockets            | Webpacker         |
 |---------------------|----------------------|-------------------|
