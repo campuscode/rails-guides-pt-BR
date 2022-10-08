@@ -2276,13 +2276,13 @@ NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 ### `exclude?`
 
-The predicate [`exclude?`][Enumerable#exclude?] tests whether a given object does **not** belong to the collection. It is the negation of the built-in `include?`:
+O predicado [`exclude?`][Enumerable#exclude?] testa se um dado objeto **não** pertence à coleção. É a negação do método embutido `include?`:
 
 ```ruby
 to_visit << node if visited.exclude?(node)
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#exclude?]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-exclude-3F
 
