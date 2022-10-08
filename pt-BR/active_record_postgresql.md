@@ -5,14 +5,13 @@ Active Record e PostgreSQL
 ============================
 
 Esse guia cobre o uso específico de Active Record pelo PostgreSQL
-This guide covers PostgreSQL specific usage of Active Record.
 
 Após ler este guia, você saberá:
 
 * Como usar os *datatypes* do PostgreSQL.
 * Como usar chaves primárias UUID.
 * Como implementar pesquisa com texto no PostregreSQL.
-* Como usar database views em seus *models* Active Record.
+* Como usar *database views* em seus *models* Active Record.
 
 --------------------------------------------------------------------------------
 
@@ -93,7 +92,7 @@ Book.where("array_length(ratings, 1) >= 3")
 * [definição de tipo](https://www.postgresql.org/docs/current/static/hstore.html)
 * [funções e operações](https://www.postgresql.org/docs/current/static/hstore.html#id-1.11.7.26.5)
 
-NOTE: Vovcê precisa habilitar a extensão `hstore` para usar o hstore.
+NOTE: Você precisa habilitar a extensão `hstore` para usar o hstore.
 
 ```ruby
 # db/migrate/20131009135255_create_profiles.rb
@@ -438,7 +437,7 @@ irb> macbook.address
 * [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-geometric.html)
 
 Todos os tipos geométricos, com exceção de `points`, são mapeados para texto normal.
-Um ponto é transformado em uma *array* contendo as coordenadas `x` e `y`.
+Um ponto é transformado em um *array* contendo as coordenadas `x` e `y`.
 
 ### Intervalo
 
