@@ -2173,19 +2173,21 @@ A notação de engenharia ainda é suportada:
 BigDecimal(5.00, 6).to_s("e")  # => "0.5E1"
 ```
 
-Extensions to `Enumerable`
+<!-- Extensions to `Enumerable`
+-------------------------- -->
+Extensões para `Enumerable`
 --------------------------
 
 ### `sum`
 
-The method [`sum`][Enumerable#sum] adds the elements of an enumerable:
+O método [`sum`][Enumerable#sum] adiciona os elementos de um *enumerable*:
 
 ```ruby
 [1, 2, 3].sum # => 6
 (1..100).sum  # => 5050
 ```
 
-Addition only assumes the elements respond to `+`:
+A adição apenas assume que os elementos respondem a `+`:
 
 ```ruby
 [[1, 2], [2, 3], [3, 4]].sum    # => [1, 2, 2, 3, 3, 4]
@@ -2193,27 +2195,27 @@ Addition only assumes the elements respond to `+`:
 {a: 1, b: 2, c: 3}.sum          # => [:a, 1, :b, 2, :c, 3]
 ```
 
-The sum of an empty collection is zero by default, but this is customizable:
+A soma de uma coleção vazia é zero por padrão, mas isto é customizável:
 
 ```ruby
 [].sum    # => 0
 [].sum(1) # => 1
 ```
 
-If a block is given, `sum` becomes an iterator that yields the elements of the collection and sums the returned values:
+Se um bloco for fornecido, `sum` se torna um iterador que fornece os elementos da coleção e soma os valores retornados:
 
 ```ruby
 (1..5).sum {|n| n * 2 } # => 30
 [2, 4, 6, 8, 10].sum    # => 30
 ```
 
-The sum of an empty receiver can be customized in this form as well:
+A soma de um recipiente vazio pode ser customizado nessa forma também:
 
 ```ruby
 [].sum(1) {|n| n**3} # => 1
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#sum]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-sum
 
