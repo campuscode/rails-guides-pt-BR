@@ -1,13 +1,13 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Usando Rails para aplicações somente API
+Usando o Rails para aplicações somente API
 =====================================
 
 Depois de ler esse guia, você saberá:
 
 * O que o Rails disponibiliza para aplicações somente API
-* Como configurar o Rails para iniciar sem qualquer *feature* de browser
+* Como configurar o Rails para iniciar sem qualquer recurso do browser
 * Como decidir quais *middleware* você deve incluir
 * Como decidir quais módulos usar no seu *controller*
 
