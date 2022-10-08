@@ -2221,25 +2221,24 @@ NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 ### `index_by`
 
-The method [`index_by`][Enumerable#index_by] generates a hash with the elements of an enumerable indexed by some key.
+O método [`index_by`][Enumerable#index_by] gera um  *hash* com os elementos de um *enumerable* indexados por alguma chave.
 
-It iterates through the collection and passes each element to a block. The element will be keyed by the value returned by the block:
+Ele itera pela coleção e passa cada elemento para um bloco. O elemento será chaveado pelo valor retornado pelo bloco:
 
 ```ruby
 invoices.index_by(&:number)
 # => {'2009-032' => <Invoice ...>, '2009-008' => <Invoice ...>, ...}
 ```
 
-WARNING. Keys should normally be unique. If the block returns the same value for different elements no collection is built for that key. The last item will win.
+WARNING. As chaves normalmente devem ser exclusivas. Se o bloco retornar o mesmo valor para elementos diferentes, nenhuma coleção será construida para essa chave. O último item irá ganhar.
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#index_by]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-index_by
 
 ### `index_with`
 
-The method [`index_with`][Enumerable#index_with] generates a hash with the elements of an enumerable as keys. The value
-is either a passed default or returned in a block.
+ O método [`index_with`][Enumerable#index_with] gera um *hash* com os elementos de um `enumerable` como chaves. O valor será o que foi passado como padrão ou o retornado em um bloco.
 
 ```ruby
 post = Post.new(title: "hey there", body: "what's up?")
@@ -2251,13 +2250,13 @@ WEEKDAYS.index_with(Interval.all_day)
 # => { monday: [ 0, 1440 ], … }
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#index_with]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-index_with
 
 ### `many?`
 
-The method [`many?`][Enumerable#many?] is shorthand for `collection.size > 1`:
+O método [`many?`][Enumerable#many?] é um atalho para `collection.size > 1`:
 
 ```erb
 <% if pages.many? %>
@@ -2265,13 +2264,13 @@ The method [`many?`][Enumerable#many?] is shorthand for `collection.size > 1`:
 <% end %>
 ```
 
-If an optional block is given, `many?` only takes into account those elements that return true:
+Se for fornecido um bloco opcional, `many?` leva em consideração apenas aqueles elementos que retornam *true*:
 
 ```ruby
 @see_more = videos.many? {|video| video.category == params[:category]}
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#many?]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-many-3F
 
