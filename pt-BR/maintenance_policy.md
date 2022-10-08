@@ -4,7 +4,7 @@
 Política de Manutenção para Ruby on Rails
 ====================================
 
-O suporte do framework Rails é dividido em quatro grupos: Novas funcionalidades, correções de bug, problemas de segurança e problemas críticos de segurança. Eles são manuseados como exemplificado a seguir, todas versões, exceto lançamentos de segurança, em formato `X.Y.Z`.
+O suporte do _framework_ Rails é dividido em quatro grupos: novas funcionalidades, correções de bug, problemas de segurança e problemas críticos de segurança. Eles são manuseados como exemplificado a seguir, todas versões, exceto lançamentos de segurança, em formato `X.Y.Z`.
 
 --------------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ A diferença entre as lançamentos *minor* e *major* do Rails é a magnitude das
 Novas Funcionalidades
 ------------
 
-Novas funcionalidades são adicionadas apenas na branch principal e não estarão disponíveis em lançamentos pontuais.
+Novas funcionalidades são adicionadas apenas na _branch_ principal e não estarão disponíveis em lançamentos pontuais.
 
 Correções de **Bugs**
 ---------
@@ -45,9 +45,9 @@ Problemas de Segurança
 
 A versão atual e a anterior mais recente vão receber *patches* e novas versões em casos de um problema de segurança.
 
-Esses lançamentos são criados utilizando a última versão lançada, aplicando as *patches* de segurança e lançando. Esses *patches* são, então, aplicados no fim da branch x-y-stable. Por exemplo, um lançamento de segurança teórico 1.2.2.1 seria construído a partir da 1.2.2 e, depois, adicionado no fim da 1-2-stable. Isso significa que lançamentos de segurança são fáceis de atualizar se você usar a versão mais recente do Rails.
+Esses lançamentos são criados utilizando a última versão lançada, aplicando as *patches* de segurança e lançando. Esses *patches* são, então, aplicados no fim da _branch_ x-y-stable. Por exemplo, um lançamento de segurança teórico 1.2.2.1 seria construído a partir da 1.2.2 e, depois, adicionado no fim da 1-2-stable. Isso significa que lançamentos de segurança são fáceis de atualizar se você usar a versão mais recente do Rails.
 
-Apenas *patches* de seguranças diretos serão incluídos em lançamentos de segurança. Correções para *bugs* que não são relacionados à segurança que resultam de um *patch* de segurança podem ser publicados na branch x-y-stable de um lançamento, e será lançado apenas em uma nova *gem* de acordo com a política de Correção de *Bugs*.
+Apenas *patches* de seguranças diretos serão incluídos em lançamentos de segurança. Correções para *bugs* que não são relacionados à segurança que resultam de um *patch* de segurança podem ser publicados na _branch_ x-y-stable de um lançamento, e será lançado apenas em uma nova *gem* de acordo com a política de Correção de *Bugs*.
 
 
 **Versões incluídas atualmente:** `7.0.Z`, `6.1.Z`.
@@ -55,7 +55,7 @@ Apenas *patches* de seguranças diretos serão incluídos em lançamentos de seg
 Problemas Críticos de Segurança
 ----------------------
 
-Para problemas críticos de segurança, todos os lançamentos que estão na versão *major* atual, e o último release na versão *major* anterior, vão receber patches e novas versões. A classificação do problema de segurança é julgado pelo time *core*.
+Para problemas críticos de segurança, todos os lançamentos que estão na versão *major* atual, e o último _release_ na versão *major* anterior, vão receber patches e novas versões. A classificação do problema de segurança é avaliado pelo time *core*.
 
 NOTE: Rails 5.2.Z está incluído na lista de versões suportadas até dia 1 de Junho de 2022.
 
