@@ -17,56 +17,56 @@ Após ler este guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-What are Engines?
+O que são *Engines*?
 -----------------
 
-Engines can be considered miniature applications that provide functionality to
-their host applications. A Rails application is actually just a "supercharged"
-engine, with the `Rails::Application` class inheriting a lot of its behavior
-from `Rails::Engine`.
+*Engines* podem ser consideradas aplicações em miniatura que fornecem funcionalidades
+para a aplicação hospedeira. Uma aplicação Rails é na verdade apenas uma *engine*
+"sobrecarregada", com a classe `Rails::Application` herdando muitos de seus comportamentos
+a partir da classe `Rails::Engine`.
 
-Therefore, engines and applications can be thought of as almost the same thing,
-just with subtle differences, as you'll see throughout this guide. Engines and
-applications also share a common structure.
+Portanto, *engines* e aplicações podem ser tratadas quase como a mesma coisa,
+apenas com algumas diferenças sutis, como você verá ao longo deste guia. *Engines*
+e aplicações também compartilham uma estrutura em comum.
 
-Engines are also closely related to plugins. The two share a common `lib`
-directory structure, and are both generated using the `rails plugin new`
-generator. The difference is that an engine is considered a "full plugin" by
-Rails (as indicated by the `--full` option that's passed to the generator
-command). We'll actually be using the `--mountable` option here, which includes
-all the features of `--full`, and then some. This guide will refer to these
-"full plugins" simply as "engines" throughout. An engine **can** be a plugin,
-and a plugin **can** be an engine.
+*Engines* também são intimamente relaciodas a *plugins*. Os dois compartilham uma
+estrutura de diretório `lib` e ambos são gerados usando o gerador `rails plugin new`.
+A diferença é que uma *engine* é considerada um "*plugin* completo" pelo Rails
+(como é indicado pela opção `--full` que é passada ao comando gerador). Entretanto,
+nós iremos usar a opção `--mountable` aqui, que inclui todas as funcionalidades
+da `--full`, e mais algumas. Este guia referenciará estes "*plugins* completos"
+apenas como "*engines*" em todo o decorrer. Uma *engine* **pode** ser um *plugin*,
+e um *plugin* **pode** ser uma *engine*.
 
-The engine that will be created in this guide will be called "blorgh". This
-engine will provide blogging functionality to its host applications, allowing
-for new articles and comments to be created. At the beginning of this guide, you
-will be working solely within the engine itself, but in later sections you'll
-see how to hook it into an application.
+A *engine* que será criada neste guia será chamada "blorgh". Essa *engine* proverá
+a funcionalidade de *blogging* para sua aplicação hospedeira, permitindo a criação
+de novos artigos e comentários. No começo deste guia, você irá trabalhar somente
+com a *engine* em si, mas nas seções mais a frente, você verá como conectá-la em
+uma aplicação.
 
-Engines can also be isolated from their host applications. This means that an
-application is able to have a path provided by a routing helper such as
-`articles_path` and use an engine that also provides a path also called
-`articles_path`, and the two would not clash. Along with this, controllers, models
-and table names are also namespaced. You'll see how to do this later in this
-guide.
+*Engines* também podem ser isoladas de sua aplicação hospedeira. Isso significa
+uma aplicação é capaz de ter um caminho provido por um *helper* de roteamento,
+como o `articles_path` e usar uma *engine* que também provê um caminho chamado
+`articles_path`, e os dois não sofreram conflito. Junto com isso, *controllers*,
+*models* e nomes de tabela também são separados por *namespace*. Você verá como
+fazer isso mais tarde neste guia.
 
-It's important to keep in mind at all times that the application should
-**always** take precedence over its engines. An application is the object that
-has final say in what goes on in its environment. The engine should
-only be enhancing it, rather than changing it drastically.
+É importante ter sempre em mente que a aplicação **sempre** terá precedencias
+sobre suas *engines*. Uma aplicação é o objeto que terá a palavra final sobre o
+que estará presente no ambiente. A *engine* estará somente a aprimorando, ao invés
+de mudá-la drasticamente.
 
-To see demonstrations of other engines, check out
-[Devise](https://github.com/plataformatec/devise), an engine that provides
-authentication for its parent applications, or
-[Thredded](https://github.com/thredded/thredded), an engine that provides forum
-functionality. There's also [Spree](https://github.com/spree/spree) which
-provides an e-commerce platform, and
-[Refinery CMS](https://github.com/refinery/refinerycms), a CMS engine.
+Para ver demonstrações de outras *engines*,
+veja [Devise](https://github.com/plataformatec/devise), uma *engine* que provê
+autenticação para suas aplicações hospedeiras, ou
+[Thredded](https://github.com/thredded/thredded), uma *engine* que provê
+funcionalidades de forum, também há
+[Spree](https://github.com/spree/spree), que provê uma plataforma de *e-commerce*,
+e [Refinery CMS](https://github.com/refinery/refinerycms), uma *engine* de CMS.
 
-Finally, engines would not have been possible without the work of James Adam,
-Piotr Sarnacki, the Rails Core Team, and a number of other people. If you ever
-meet them, don't forget to say thanks!
+Por fim, *engines* não seriam possíveis sem o trabalho de James Adam,
+Piotr Sarnacki, a equipe principal do Rails e várias outras pessoas. Se algum dia
+você se encontrar com eles, não se esqueça de dizer "obrigado(a)"!
 
 Generating an Engine
 --------------------
