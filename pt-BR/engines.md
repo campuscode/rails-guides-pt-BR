@@ -1004,26 +1004,26 @@ application. The same thing goes if you want to use a standard initializer.
 For locales, simply place the locale files in the `config/locales` directory,
 just like you would in an application.
 
-Testing an Engine
+Testando uma *Engine*
 -----------------
 
-When an engine is generated, there is a smaller dummy application created inside
-it at `test/dummy`. This application is used as a mounting point for the engine,
-to make testing the engine extremely simple. You may extend this application by
-generating controllers, models, or views from within the directory, and then use
-those to test your engine.
+Quando uma *engine* é gerada, há uma pequena aplicação ficticia (dummy)
+criada dentro dela em `test/dummy`. Essa aplicação é utilizada como ponto de
+montagem para a *engine*, para tornar os testes de uma *engine* extremamente
+simples. Você pode ampliar essa aplicação gerando *controllers*, *models* ou
+*views* dirento do diretório, e então usá-los para testar sua *engine*.
 
-The `test` directory should be treated like a typical Rails testing environment,
-allowing for unit, functional, and integration tests.
+O diretorio de `teste` sempre deverá ser tratado com um ambiente de teste típico
+do Rails, permitindo teste unitários, funcionais e de integração.
 
-### Functional Tests
+### Testes funcionais
 
-A matter worth taking into consideration when writing functional tests is that
-the tests are going to be running on an application - the `test/dummy`
-application - rather than your engine. This is due to the setup of the testing
-environment; an engine needs an application as a host for testing its main
-functionality, especially controllers. This means that if you were to make a
-typical `GET` to a controller in a controller's functional test like this:
+É importante levar em consideração ao escrever testes funcionais, que os testes
+serão executados em uma aplicação - a aplicação `test/dummy` - e não a sua *engine*.
+Isso se deve a preparação do ambiente de testes; uma *engine* precisa de uma
+aplicação hospedeira para que seja possível testar suas funcionalidades principais,
+especialmente os *controllers*. Isso siginifica que se você está a realizar um
+típico `GET` para um *controller* em uma teste funcional de *controller* como este:
 
 ```ruby
 module Blorgh
@@ -1038,10 +1038,11 @@ module Blorgh
 end
 ```
 
-It may not function correctly. This is because the application doesn't know how
-to route these requests to the engine unless you explicitly tell it **how**. To
-do this, you must set the `@routes` instance variable to the engine's route set
-in your setup code:
+Ele pode não funcionar corretamente. Isso acontece porque a aplicação não sabe
+como rotear essas requisições para as *engines* a menos que você diga *como* fazer
+isso, de forma explicita. E para isso, você precisa definir a variável de instância
+`@routes` como sendo o conjunto de rotas da *engine* no seu código de
+preparação (setup):
 
 ```ruby
 module Blorgh
@@ -1060,12 +1061,12 @@ module Blorgh
 end
 ```
 
-This tells the application that you still want to perform a `GET` request to the
-`index` action of this controller, but you want to use the engine's route to get
-there, rather than the application's one.
+Isso indica à aplicação que você ainda quer executar uma requisição do tipo `GET`,
+para ação `index` desse *controller*, mas você quer usar as rotas da *engine* para
+chegar lá, ao invés das rotas da aplicação.
 
-This also ensures that the engine's URL helpers will work as expected in your
-tests.
+Isso também certifica que os *helpers* de URL da *engine* irão funcionar como
+esperado em seus testes.
 
 Improving Engine Functionality
 ------------------------------
