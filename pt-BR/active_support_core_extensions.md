@@ -2173,8 +2173,6 @@ A notação de engenharia ainda é suportada:
 BigDecimal(5.00, 6).to_s("e")  # => "0.5E1"
 ```
 
-<!-- Extensions to `Enumerable`
--------------------------- -->
 Extensões para `Enumerable`
 --------------------------
 
@@ -2238,7 +2236,7 @@ NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 ### `index_with`
 
- O método [`index_with`][Enumerable#index_with] gera um *hash* com os elementos de um `enumerable` como chaves. O valor será o que foi passado como padrão ou o retornado em um bloco.
+O método [`index_with`][Enumerable#index_with] gera um *hash* com os elementos de um `enumerable` como chaves. O valor será o que foi passado como padrão ou o retornado em um bloco.
 
 ```ruby
 post = Post.new(title: "hey there", body: "what's up?")
@@ -2307,7 +2305,7 @@ O método [`excluding`][Enumerable#excluding] retorna uma cópia de um `enumerab
 ["David", "Rafael", "Aaron", "Todd"].excluding("Aaron", "Todd") # => ["David", "Rafael"]
 ```
 
-`excluding` é um is *alias* para [`without`][Enumerable#without].
+`excluding` é um *alias* para [`without`][Enumerable#without].
 
 NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
@@ -2316,27 +2314,27 @@ NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 ### `pluck`
 
-The method [`pluck`][Enumerable#pluck] extracts the given key from each element:
+O método [`pluck`][Enumerable#pluck] extrai a chave fornecida de cada elemento:
 
 ```ruby
 [{ name: "David" }, { name: "Rafael" }, { name: "Aaron" }].pluck(:name) # => ["David", "Rafael", "Aaron"]
 [{ id: 1, name: "David" }, { id: 2, name: "Rafael" }].pluck(:id, :name) # => [[1, "David"], [2, "Rafael"]]
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#pluck]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-pluck
 
 ### `pick`
 
-The method [`pick`][Enumerable#pick] extracts the given key from the first element:
+O método [`pick`][Enumerable#pick] extrai a chave fornecida do primeiro elemento:
 
 ```ruby
 [{ name: "David" }, { name: "Rafael" }, { name: "Aaron" }].pick(:name) # => "David"
 [{ id: 1, name: "David" }, { id: 2, name: "Rafael" }].pick(:id, :name) # => [1, "David"]
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#pick]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-pick
 
