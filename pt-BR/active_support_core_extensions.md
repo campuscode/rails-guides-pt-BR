@@ -2288,29 +2288,28 @@ NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 ### `including`
 
-The method [`including`][Enumerable#including] returns a new enumerable that includes the passed elements:
+O método [`including`][Enumerable#including] retorna um novo `enumerable` que inclui os elementos passados:
 
 ```ruby
 [ 1, 2, 3 ].including(4, 5)                    # => [ 1, 2, 3, 4, 5 ]
 ["David", "Rafael"].including %w[ Aaron Todd ] # => ["David", "Rafael", "Aaron", "Todd"]
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#including]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-including
 
 ### `excluding`
 
-The method [`excluding`][Enumerable#excluding] returns a copy of an enumerable with the specified elements
-removed:
+O método [`excluding`][Enumerable#excluding] retorna uma cópia de um `enumerable` com os elementos especificados removidos:
 
 ```ruby
 ["David", "Rafael", "Aaron", "Todd"].excluding("Aaron", "Todd") # => ["David", "Rafael"]
 ```
 
-`excluding` is aliased to [`without`][Enumerable#without].
+`excluding` é um is *alias* para [`without`][Enumerable#without].
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#excluding]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-excluding
 [Enumerable#without]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-without
