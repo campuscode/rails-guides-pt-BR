@@ -1,89 +1,70 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Maintenance Policy for Ruby on Rails
+Política de Manutenção para Ruby on Rails
 ====================================
 
-Support of the Rails framework is divided into four groups: New features, bug
-fixes, security issues, and severe security issues. They are handled as
-follows, all versions, except for security releases, in `X.Y.Z`, format.
+O suporte do _framework_ Rails é dividido em quatro grupos: novas funcionalidades, correções de bug, problemas de segurança e problemas críticos de segurança. Eles são manuseados como exemplificado a seguir, todas versões, exceto lançamentos de segurança, em formato `X.Y.Z`.
 
 --------------------------------------------------------------------------------
 
-Rails follows a shifted version of [semver](https://semver.org/):
+O Rails segue uma versão alterada do [semver](https://semver.org/):
 
-**Patch `Z`**
+**_Patch_ `Z`**
 
-Only bug fixes, no API changes, no new features.
-Except as necessary for security fixes.
+Apenas correções de bug, sem mudanças de API e sem funcionalidades novas.
+Exceto quando necessário para correções de segurança.
 
-**Minor `Y`**
+**_Minor_ `Y`**
 
-New features, may contain API changes (Serve as major versions of Semver).
-Breaking changes are paired with deprecation notices in the previous minor
-or major release.
+Novas funcionalidades, podem conter mudanças na API (serve como versões *major* do Semver).
+Mudanças significativas são notificadas junto a avisos de depreciação em lançamentos *minor* ou *major* anteriores.
 
-**Major `X`**
+**_Major_ `X`**
 
-New features, will likely contain API changes. The difference between Rails'
-minor and major releases is the magnitude of breaking changes, and usually
-reserved for special occasions.
+Novas funcionalidades, possivelmente contém mudanças de API.
+A diferença entre as lançamentos *minor* e *major* do Rails é a magnitude das mudanças significativas, e geralmente para ocasiões especiais.
 
-New Features
+Novas Funcionalidades
 ------------
 
-New features are only added to the main branch and will not be made available
-in point releases.
+Novas funcionalidades são adicionadas apenas na _branch_ principal e não estarão disponíveis em lançamentos pontuais.
 
-Bug Fixes
+Correções de **Bugs**
 ---------
 
-Only the latest release series will receive bug fixes. When enough bugs are
-fixed and its deemed worthy to release a new gem, this is the branch it happens
-from.
+Apenas o lançamento mais recente vai receber correções de *bugs*.
+Quando *bugs* o suficiente forem corrigidos e é considerado que vale a pena lançar uma nova *gem*, essa é a *branch* de que isso acontece.
 
-In special situations, where someone from the Core Team agrees to support more series,
-they are included in the list of supported series.
+Em ocasiões especiais, em que alguém do *Core Team* concorda em dar suporte a mais versões, elas são todas incluídas na lista de versões suportadas.
 
-**Currently included series:** `7.0.Z`.
+**Versões incluídas atualmente:** `7.0.Z`.
 
-Security Issues
+Problemas de Segurança
 ---------------
 
-The current release series and the next most recent one will receive patches
-and new versions in case of a security issue.
+A versão atual e a anterior mais recente vão receber *patches* e novas versões em casos de um problema de segurança.
 
-These releases are created by taking the last released version, applying the
-security patches, and releasing. Those patches are then applied to the end of
-the x-y-stable branch. For example, a theoretical 1.2.2.1 security release would
-be built from 1.2.2, and then added to the end of 1-2-stable. This means that
-security releases are easy to upgrade to if you're running the latest version
-of Rails.
+Esses lançamentos são criados utilizando a última versão lançada, aplicando as *patches* de segurança e lançando. Esses *patches* são, então, aplicados no fim da _branch_ x-y-stable. Por exemplo, um lançamento de segurança teórico 1.2.2.1 seria construído a partir da 1.2.2 e, depois, adicionado no fim da 1-2-stable. Isso significa que lançamentos de segurança são fáceis de atualizar se você usar a versão mais recente do Rails.
 
-Only direct security patches will be included in security releases. Fixes for
-non-security related bugs resulting from a security patch may be published on a
-release's x-y-stable branch, and will only be released as a new gem in
-accordance with the Bug Fixes policy.
+Apenas *patches* de seguranças diretos serão incluídos em lançamentos de segurança. Correções para *bugs* que não são relacionados à segurança que resultam de um *patch* de segurança podem ser publicados na _branch_ x-y-stable de um lançamento, e será lançado apenas em uma nova *gem* de acordo com a política de Correção de *Bugs*.
 
-**Currently included series:** `7.0.Z`, `6.1.Z`.
 
-Severe Security Issues
+**Versões incluídas atualmente:** `7.0.Z`, `6.1.Z`.
+
+Problemas Críticos de Segurança
 ----------------------
 
-For severe security issues all releases in the current major series, and also the
-last release in the previous major series will receive patches and new versions. The
-classification of the security issue is judged by the core team.
+Para problemas críticos de segurança, todos os lançamentos que estão na versão *major* atual, e o último _release_ na versão *major* anterior, vão receber patches e novas versões. A classificação do problema de segurança é avaliado pelo time *core*.
 
-NOTE: Rails 5.2.Z is included in the list of supported series until June 1st 2022.
-NOTE: Rails 6.0.Z is included in the list of supported series until June 1st 2023.
+NOTE: Rails 5.2.Z está incluído na lista de versões suportadas até dia 1 de Junho de 2022.
 
-**Currently included series:** `7.0.Z`, `6.1.Z`, `6.0.Z`, `5.2.Z`.
+NOTE: Rails 6.0.Z está incluído na lista de versões suportadas até dia 1 de Junho de 2023.
 
-Unsupported Release Series
+**Versões atualmente incluídas:** `7.0.Z`, `6.1.Z`, `6.0.Z`, `5.2.Z`.
+
+Versões não suportadas para lançamentos
 --------------------------
 
-When a release series is no longer supported, it's your own responsibility to
-deal with bugs and security issues. We may provide backports of the fixes and
-publish them to git, however there will be no new versions released. If you are
-not comfortable maintaining your own versions, you should upgrade to a
-supported version.
+Quando uma versão não é mais suportada, é sua responsabilidade lidar com *bugs* e problemas de segurança. Nós podemos prover *backports* das correções e publicar elas no git, porém não haverá lançamento de uma versão nova.
+Se você não estiver confortável em manter sua versão, deve atualizar para uma das versões suportadas.
