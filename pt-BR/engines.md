@@ -44,14 +44,14 @@ de novos artigos e comentários. No começo deste guia, você irá trabalhar som
 com a *engine* em si, mas nas seções mais a frente, você verá como conectá-la em
 uma aplicação.
 
-*Engines* também podem ser isoladas de sua aplicação hospedeira. Isso significa
+*Engines* também podem ser isoladas de sua aplicação hospedeira. Isso significa que
 uma aplicação é capaz de ter um caminho provido por um *helper* de roteamento,
 como o `articles_path` e usar uma *engine* que também provê um caminho chamado
 `articles_path`, e os dois não sofreram conflito. Junto com isso, *controllers*,
 *models* e nomes de tabela também são separados por *namespace*. Você verá como
 fazer isso mais tarde neste guia.
 
-É importante ter sempre em mente que a aplicação **sempre** terá precedencias
+É importante ter em mente que a aplicação **sempre** terá precedência
 sobre suas *engines*. Uma aplicação é o objeto que terá a palavra final sobre o
 que estará presente no ambiente. A *engine* estará somente a aprimorando, ao invés
 de mudá-la drasticamente.
@@ -60,7 +60,7 @@ Para ver demonstrações de outras *engines*,
 veja [Devise](https://github.com/plataformatec/devise), uma *engine* que provê
 autenticação para suas aplicações hospedeiras, ou
 [Thredded](https://github.com/thredded/thredded), uma *engine* que provê
-funcionalidades de forum, também há
+funcionalidades de fórum, também há
 [Spree](https://github.com/spree/spree), que provê uma plataforma de *e-commerce*,
 e [Refinery CMS](https://github.com/refinery/refinerycms), uma *engine* de CMS.
 
