@@ -1007,14 +1007,14 @@ just like you would in an application.
 Testando uma *Engine*
 -----------------
 
-Quando uma *engine* é gerada, há uma pequena aplicação ficticia (dummy)
+Quando uma *engine* é gerada, há uma pequena aplicação fictícia (dummy)
 criada dentro dela em `test/dummy`. Essa aplicação é utilizada como ponto de
 montagem para a *engine*, para tornar os testes de uma *engine* extremamente
 simples. Você pode ampliar essa aplicação gerando *controllers*, *models* ou
-*views* dirento do diretório, e então usá-los para testar sua *engine*.
+*views* de dentro do diretório, e então usá-los para testar sua *engine*.
 
-O diretorio de `teste` sempre deverá ser tratado com um ambiente de teste típico
-do Rails, permitindo teste unitários, funcionais e de integração.
+O diretório `test` sempre deverá ser tratado como um ambiente de teste típico
+do Rails, permitindo testes unitários, funcionais e de integração.
 
 ### Testes funcionais
 
@@ -1022,8 +1022,8 @@ do Rails, permitindo teste unitários, funcionais e de integração.
 serão executados em uma aplicação - a aplicação `test/dummy` - e não a sua *engine*.
 Isso se deve a preparação do ambiente de testes; uma *engine* precisa de uma
 aplicação hospedeira para que seja possível testar suas funcionalidades principais,
-especialmente os *controllers*. Isso siginifica que se você está a realizar um
-típico `GET` para um *controller* em uma teste funcional de *controller* como este:
+especialmente os *controllers*. Isso significa que se você está a realizar um
+típico `GET` para um *controller* em um teste funcional de *controller* como este:
 
 ```ruby
 module Blorgh
@@ -1040,7 +1040,7 @@ end
 
 Ele pode não funcionar corretamente. Isso acontece porque a aplicação não sabe
 como rotear essas requisições para as *engines* a menos que você diga *como* fazer
-isso, de forma explicita. E para isso, você precisa definir a variável de instância
+isso, de forma explícita. E para isso, você precisa definir a variável de instância
 `@routes` como sendo o conjunto de rotas da *engine* no seu código de
 preparação (setup):
 
