@@ -19,7 +19,7 @@ Concorrência Automática
 O Rails automaticamente permite que várias operações sejam feitas ao mesmo tempo.
 
 Quando um servidor web que utiliza *threads* está em uso, como o Puma, que é padrão,
-múltiplas requisições HTTP irão ser servidas simultaneamente, com cada requsição
+múltiplas requisições HTTP serão servidas simultaneamente, com cada requisição
 utilizando sua própria instância de *controller*.
 
 
@@ -28,10 +28,10 @@ Adaptadores do Active Job que usam *thread*, incluindo o Async, que é padrão, 
 executar vários *jobs* ao mesmo tempo. Os canais (*channels*) Action Cable também
 são gerenciados dessa forma.
 
-Todos esses mecanismos involvem múltiplas *threads*, cada uma gerenciando trabalho
+Todos esses mecanismos envolvem múltiplas *threads*, cada uma gerenciando trabalho
 para uma única instância de algum objeto (*controller*, *job*, *channel*), enquanto
 compartilham o espaço global do processo (classes e suas configurações e variáveis globais).
-Contanto que seu código não modifique nenhuma dessas coisas compatilhadas, ele pode
+Contanto que seu código não modifique nenhuma dessas coisas compartilhadas, ele pode
 quase esquecer que outras *threads* existem.
 
 O resto desse guia vai mostrar os mecanismos que o Rails usa para fazer com que
