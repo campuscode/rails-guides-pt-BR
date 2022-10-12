@@ -33,8 +33,11 @@ Novas funcionalidades são adicionadas apenas na _branch_ principal e não estar
 Correções de **Bugs**
 ---------
 
-Apenas o lançamento mais recente vai receber correções de *bugs*.
-Quando *bugs* o suficiente forem corrigidos e é considerado que vale a pena lançar uma nova *gem*, essa é a *branch* de que isso acontece.
+Apenas o lançamento mais recente vai receber correções de bugs. As correções de *bugs* geralmente são
+adicionadas ao *branch* principal e portado para a *branch* x-y-stable para a última
+versão, se houver necessidade suficiente. Quando *bugs* o suficientes foram corrigidos
+para uma *branch* x-y-stable, uma nova versão de *patch* é construída a partir dela. Por exemplo, a
+a versão teórica do *patch* 1.2.2 seria construída a partir da *branch* 1-2-stable.
 
 Em ocasiões especiais, em que alguém do *Core Team* concorda em dar suporte a mais versões, elas são todas incluídas na lista de versões suportadas.
 
