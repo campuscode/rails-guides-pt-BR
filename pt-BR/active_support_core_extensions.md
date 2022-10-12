@@ -2395,10 +2395,10 @@ NOTE: Definido em `active_support/core_ext/array/access.rb`.
 [Array#third_to_last]: https://api.rubyonrails.org/classes/Array.html#method-i-third_to_last
 [Array#to]: https://api.rubyonrails.org/classes/Array.html#method-i-to
 
-### Extracting
+### Extraindo
 
-The method [`extract!`][Array#extract!] removes and returns the elements for which the block returns a true value.
-If no block is given, an Enumerator is returned instead.
+O método [`extract!`][Array#extract!] remove e retorna os elementos para os quais o bloco retorna um valor *true*.
+Se nenhum bloco for fornecido, um *Enumerator* será retornado.
 
 ```ruby
 numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -2406,25 +2406,25 @@ odd_numbers = numbers.extract! { |number| number.odd? } # => [1, 3, 5, 7, 9]
 numbers # => [0, 2, 4, 6, 8]
 ```
 
-NOTE: Defined in `active_support/core_ext/array/extract.rb`.
+NOTE: Definido em `active_support/core_ext/array/extract.rb`.
 
 [Array#extract!]: https://api.rubyonrails.org/classes/Array.html#method-i-extract-21
 
-### Options Extraction
+### Extração de opções
 
-When the last argument in a method call is a hash, except perhaps for a `&block` argument, Ruby allows you to omit the brackets:
+Quando o último argumento em uma chamada de método é um *hash*, exceto talvez por um argumento do tipo `&block`, o Ruby permite que você omita os colchetes:
 
 ```ruby
 User.exists?(email: params[:email])
 ```
 
-That syntactic sugar is used a lot in Rails to avoid positional arguments where there would be too many, offering instead interfaces that emulate named parameters. In particular it is very idiomatic to use a trailing hash for options.
+Esse *syntactic sugar* é muito usado no Rails para evitar argumentos posicionais onde haveria muitos, oferecendo interfaces que emulam os parâmetros nomeados. Em particular, é muito idiomático usar um *hash* no final para opções.
 
-If a method expects a variable number of arguments and uses `*` in its declaration, however, such an options hash ends up being an item of the array of arguments, where it loses its role.
+Se um método espera um número variável de argumentos e usa `*` em sua declaração, entretanto, tal *hash* de opções acaba sendo um item do *array* de argumentos, onde perde seu papel.
 
-In those cases, you may give an options hash a distinguished treatment with [`extract_options!`][Array#extract_options!]. This method checks the type of the last item of an array. If it is a hash it pops it and returns it, otherwise it returns an empty hash.
+Nesses casos, você pode dar um tratamento diferenciado ao *hash* de opções com [`extract_options!`][Array#extract_options!]. Este método verifica o tipo do último item de um *array*. Se for um *hash*, ele o exibe e o retorna, caso contrário, retorna um *hash* vazio.
 
-Let's see for example the definition of the `caches_action` controller macro:
+Vejamos, por exemplo, a definição da macro do controlador `caches_action`:
 
 ```ruby
 def caches_action(*actions)
@@ -2434,9 +2434,9 @@ def caches_action(*actions)
 end
 ```
 
-This method receives an arbitrary number of action names, and an optional hash of options as last argument. With the call to `extract_options!` you obtain the options hash and remove it from `actions` in a simple and explicit way.
+Este método recebe um número arbitrário de nomes de ações e um *hash* opcional de opções como último argumento. Com a chamada a `extract_options!` você obtém o *hash* de opções e o remove de `actions` de forma simples e explícita.
 
-NOTE: Defined in `active_support/core_ext/array/extract_options.rb`.
+NOTE: Definido em `active_support/core_ext/array/extract_options.rb`.
 
 [Array#extract_options!]: https://api.rubyonrails.org/classes/Array.html#method-i-extract_options-21
 
