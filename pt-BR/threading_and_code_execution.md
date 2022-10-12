@@ -46,9 +46,9 @@ O *Executor* consiste em dois *callbacks*: `to_run` e `to_complete`. O *callback
 *Run* é chamado antes do código da aplicação e o *Complete* é chamado após o código
 da aplicação.
 
-### Callbacks padrão
+### Callbacks padrões
 
-Em uma aplicação Rails padrão, os *calbacks* do *Executor* são usados para:
+Em uma aplicação Rails padrão, os *callbacks* do *Executor* são usados para:
 * acompanhar quais *threads* estão em uma posição segura para carregar e recarregar código automaticamente (*autoloading* e *reloading*).
 * habilitar e desabilitar o cache do Active Record
 * retornar conexões Active Record adquiridas para o *pool* de conexões.
@@ -93,7 +93,7 @@ O *Executor* admite re-entradas seguramente. Se ele já está ativo na *thread* 
 `wrap` não faz nada (é uma *no-op*).
 
 Se não for possível envolver o código da aplicação em um bloco (como por exemplo
-a API Rack, que torna isso um difícil), você pode utilizar o par de métodos `run!`
+a API Rack, que torna isso difícil), você pode utilizar o par de métodos `run!`
 / `complete!`:
 
 
