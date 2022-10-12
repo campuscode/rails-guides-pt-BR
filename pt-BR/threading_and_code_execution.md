@@ -49,6 +49,7 @@ da aplicação.
 ### Callbacks padrões
 
 Em uma aplicação Rails padrão, os *callbacks* do *Executor* são usados para:
+
 * acompanhar quais *threads* estão em uma posição segura para carregar e recarregar código automaticamente (*autoloading* e *reloading*).
 * habilitar e desabilitar o cache do Active Record
 * retornar conexões Active Record adquiridas para o *pool* de conexões.
