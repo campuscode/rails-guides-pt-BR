@@ -2648,17 +2648,17 @@ NOTE: Definido em `active_support/core_ext/object/deep_dup.rb`.
 
 [Array#deep_dup]: https://api.rubyonrails.org/classes/Array.html#method-i-deep_dup
 
-### Grouping
+### Agrupamento
 
 #### `in_groups_of(number, fill_with = nil)`
 
-The method [`in_groups_of`][Array#in_groups_of] splits an array into consecutive groups of a certain size. It returns an array with the groups:
+O método [`in_groups_of`][Array#in_groups_of] divide um *array* em grupos consecutivos de um determinado tamanho. Ele retorna um *array* com os grupos:
 
 ```ruby
 [1, 2, 3].in_groups_of(2) # => [[1, 2], [3, nil]]
 ```
 
-or yields them in turn if a block is passed:
+ou os fornece por sua vez se um bloco for passado:
 
 ```html+erb
 <% sample.in_groups_of(3) do |a, b, c| %>
@@ -2670,34 +2670,34 @@ or yields them in turn if a block is passed:
 <% end %>
 ```
 
-The first example shows how `in_groups_of` fills the last group with as many `nil` elements as needed to have the requested size. You can change this padding value using the second optional argument:
+O primeiro elemento mostra como `in_groups_of` preenche o último grupo com quantos elementos `nil` forem necessários para ter o tamanho solicitado. Você pode alterar esse valor de preenchimento usando o segundo argumento opcional:
 
 ```ruby
 [1, 2, 3].in_groups_of(2, 0) # => [[1, 2], [3, 0]]
 ```
 
-And you can tell the method not to fill the last group by passing `false`:
+E você pode dizer ao método para não preencher o último grupo passando `false`:
 
 ```ruby
 [1, 2, 3].in_groups_of(2, false) # => [[1, 2], [3]]
 ```
 
-As a consequence `false` can't be used as a padding value.
+Como consequência, `false` não pode ser usado como valor de preenchimento.
 
-NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
+NOTE: Definido em `active_support/core_ext/array/grouping.rb`.
 
 [Array#in_groups_of]: https://api.rubyonrails.org/classes/Array.html#method-i-in_groups_of
 
 #### `in_groups(number, fill_with = nil)`
 
-The method [`in_groups`][Array#in_groups] splits an array into a certain number of groups. The method returns an array with the groups:
+O método [`in_groups`][Array#in_groups] divide um *array* em um certo número de grupos. O método retorna um *array* com os grupos:
 
 ```ruby
 %w(1 2 3 4 5 6 7).in_groups(3)
 # => [["1", "2", "3"], ["4", "5", nil], ["6", "7", nil]]
 ```
 
-or yields them in turn if a block is passed:
+ou os fornece por sua vez se um bloco for passado:
 
 ```ruby
 %w(1 2 3 4 5 6 7).in_groups(3) {|group| p group}
@@ -2706,49 +2706,49 @@ or yields them in turn if a block is passed:
 ["6", "7", nil]
 ```
 
-The examples above show that `in_groups` fills some groups with a trailing `nil` element as needed. A group can get at most one of these extra elements, the rightmost one if any. And the groups that have them are always the last ones.
+Os exemplos acima mostram que `in_groups` preenche alguns grupos com um elemento `nil` à direita conforme necessário. Um grupo pode obter no máximo um desses elementos extras, o mais à direita, se houver. E os grupos que os possuem são sempre os últimos.
 
-You can change this padding value using the second optional argument:
+Você pode alterar esse valor de preenchimento usando o segundo argumento opcional:
 
 ```ruby
 %w(1 2 3 4 5 6 7).in_groups(3, "0")
 # => [["1", "2", "3"], ["4", "5", "0"], ["6", "7", "0"]]
 ```
 
-And you can tell the method not to fill the smaller groups by passing `false`:
+E você pode dizer ao método para não preencher os grupos menores passando `false`:
 
 ```ruby
 %w(1 2 3 4 5 6 7).in_groups(3, false)
 # => [["1", "2", "3"], ["4", "5"], ["6", "7"]]
 ```
 
-As a consequence `false` can't be used as a padding value.
+Como consequência, `false` não pode ser usado como valor de preenchimento.
 
-NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
+NOTE: Definido em `active_support/core_ext/array/grouping.rb`.
 
 [Array#in_groups]: https://api.rubyonrails.org/classes/Array.html#method-i-in_groups
 
 #### `split(value = nil)`
 
-The method [`split`][Array#split] divides an array by a separator and returns the resulting chunks.
+O método [`split`][Array#split] divide um *array* por um separador e retorna os pedaços resultantes.
 
-If a block is passed the separators are those elements of the array for which the block returns true:
+Se um bloco é passado, os separadores são os elementos do *array* para os quais o bloco retorna *true*:
 
 ```ruby
 (-5..5).to_a.split { |i| i.multiple_of?(4) }
 # => [[-5], [-3, -2, -1], [1, 2, 3], [5]]
 ```
 
-Otherwise, the value received as argument, which defaults to `nil`, is the separator:
+Caso contrário, o valor recebido como argumento, cujo padrão é `nil`, é o separador:
 
 ```ruby
 [0, 1, -5, 1, 1, "foo", "bar"].split(1)
 # => [[0], [-5], [], ["foo", "bar"]]
 ```
 
-TIP: Observe in the previous example that consecutive separators result in empty arrays.
+TIP: Observe no exemplo anterior que separadores consecutivos resultam em *arrays* vazios.
 
-NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
+NOTE: Definido em `active_support/core_ext/array/grouping.rb`.
 
 [Array#split]: https://api.rubyonrails.org/classes/Array.html#method-i-split
 
