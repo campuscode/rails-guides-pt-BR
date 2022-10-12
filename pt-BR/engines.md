@@ -68,39 +68,39 @@ Finally, engines would not have been possible without the work of James Adam,
 Piotr Sarnacki, the Rails Core Team, and a number of other people. If you ever
 meet them, don't forget to say thanks!
 
-Generating an Engine
+Gerando uma *Engine*
 --------------------
 
-To generate an engine, you will need to run the plugin generator and pass it
-options as appropriate to the need. For the "blorgh" example, you will need to
-create a "mountable" engine, running this command in a terminal:
+Para gerar uma *engine*, você precisará rodar o gerador de *plugin* e passar a ele
+opções conforme for necessário. Para o exemplo do "blorgh", você precisará criar
+uma *engine* "montável" (mountable), executando o seguinte comando em um terminal:
 
 ```bash
 $ rails plugin new blorgh --mountable
 ```
 
-The full list of options for the plugin generator may be seen by typing:
+A lista com todas as opções disponíveis no gerador de *plugin* pode ser vista digitando:
 
 ```bash
 $ rails plugin --help
 ```
 
-The `--mountable` option tells the generator that you want to create a
-"mountable" and namespace-isolated engine. This generator will provide the same
-skeleton structure as would the `--full` option. The `--full` option tells the
-generator that you want to create an engine, including a skeleton structure
-that provides the following:
+A opção `--mountable` indica ao gerador que você quer criar uma *engine*
+"montável" e com *namespace* isolado. Esse gerador proverá uma estrutura de
+esqueleto igual a se fosse usado a opção `--full`. A opção `--full` indica ao
+gerador que você quer criar uma *engine*, incluindo uma estrutura de esqueleto
+que fornece o seguinte:
 
-  * An `app` directory tree
-  * A `config/routes.rb` file:
+  * Uma árvore de diretório `app`
+  * Um arquivo `config/routes.rb`:
 
     ```ruby
     Rails.application.routes.draw do
     end
     ```
 
-  * A file at `lib/blorgh/engine.rb`, which is identical in function to a
-    standard Rails application's `config/application.rb` file:
+  * Um arquivo em `lib/blorgh/engine.rb`, que é idêntico em função quando se compara
+    ao arquivo `config/application.rb` presente em aplicações Rails padrões:
 
     ```ruby
     module Blorgh
@@ -109,20 +109,20 @@ that provides the following:
     end
     ```
 
-The `--mountable` option will add to the `--full` option:
+A opção `--mountable` adicionará à opção `--full`:
 
-  * Asset manifest files (`blorgh_manifest.js` and `application.css`)
-  * A namespaced `ApplicationController` stub
-  * A namespaced `ApplicationHelper` stub
-  * A layout view template for the engine
-  * Namespace isolation to `config/routes.rb`:
+  * Arquivos de manifesto de recursos (`blorgh_manifest.js` and `application.css`)
+  * Um *stub* `ApplicationController` com *namespace*
+  * Um *stup* `ApplicationHelper` com *namespace*
+  * Um *template* de *layout* para as *views* da *engine*
+  * Isolação de *namespace* em `config/routes.rb`:
 
     ```ruby
     Blorgh::Engine.routes.draw do
     end
     ```
 
-  * Namespace isolation to `lib/blorgh/engine.rb`:
+  * Isolação de *namespace* em `lib/blorgh/engine.rb`:
 
     ```ruby
     module Blorgh
@@ -132,32 +132,31 @@ The `--mountable` option will add to the `--full` option:
     end
     ```
 
-Additionally, the `--mountable` option tells the generator to mount the engine
-inside the dummy testing application located at `test/dummy` by adding the
-following to the dummy application's routes file at
-`test/dummy/config/routes.rb`:
+De forma adicional, a opção `--mountable` indica ao gerador para montar a
+*engine* dentro da aplicação de teste fictícia localizada em `test/dummy` ao
+adicionar o seguinte as rotas da aplicação fictícia em `test/dummy/config/routes.rb`:
 
 ```ruby
 mount Blorgh::Engine => "/blorgh"
 ```
 
-### Inside an Engine
+### Dentro de uma *engine*
 
-#### Critical Files
+#### Arquivos Críticos
 
-At the root of this brand new engine's directory lives a `blorgh.gemspec` file.
-When you include the engine into an application later on, you will do so with
-this line in the Rails application's `Gemfile`:
+No diretório raiz dessa nova *engine* há um arquivo `blorgh.gemspec`.
+Quando você incluir a *engine* em uma aplicação mais tarde, você fará isso
+colocando esta linha no `Gemfile` de sua aplicação Rails:
 
 ```ruby
 gem 'blorgh', path: 'engines/blorgh'
 ```
 
-Don't forget to run `bundle install` as usual. By specifying it as a gem within
-the `Gemfile`, Bundler will load it as such, parsing this `blorgh.gemspec` file
-and requiring a file within the `lib` directory called `lib/blorgh.rb`. This
-file requires the `blorgh/engine.rb` file (located at `lib/blorgh/engine.rb`)
-and defines a base module called `Blorgh`.
+Não esqueça de executar `bundle install` como de costume. Ao especificá-la como
+uma *gem* dentro do `Gemfile`, o Bundler irá carregá-la de acordo, analisando esse
+arquivo `blorgh.gemspec` e requerindo um arquivo dentro do diretório `lib` chamado
+`lib/blorgh.rb`. Esse arquivo requere o arquivo `blorgh/engine.rb` (localizado em
+`lib/blorgh/engine.rb`) e define um módulo base chamado `Blorgh`.
 
 ```ruby
 require "blorgh/engine"
@@ -171,7 +170,7 @@ for their engine. It's a relatively good idea, so if you want to offer
 configuration options, the file where your engine's `module` is defined is
 perfect for that. Place the methods inside the module and you'll be good to go.
 
-Within `lib/blorgh/engine.rb` is the base class for the engine:
+Dentro de `lib/blorgh/engine.rb` está a classe base da *engine*
 
 ```ruby
 module Blorgh
@@ -181,57 +180,55 @@ module Blorgh
 end
 ```
 
-By inheriting from the `Rails::Engine` class, this gem notifies Rails that
-there's an engine at the specified path, and will correctly mount the engine
-inside the application, performing tasks such as adding the `app` directory of
-the engine to the load path for models, mailers, controllers, and views.
+Ao herdar da classe `Rails::Engine`, essa *gem* notifica ao Rails que existe
+uma *engine* no caminho especificado e montará corretamente a *engine* dentro
+da aplicação, executando tarefas como adicionar o diretório `app` da *engine* ao
+caminho de carregamento (*load path*) para *models*, *mailers*, *controllers* e *views*.
 
-The `isolate_namespace` method here deserves special notice. This call is
-responsible for isolating the controllers, models, routes, and other things into
-their own namespace, away from similar components inside the application.
-Without this, there is a possibility that the engine's components could "leak"
-into the application, causing unwanted disruption, or that important engine
-components could be overridden by similarly named things within the application.
-One of the examples of such conflicts is helpers. Without calling
-`isolate_namespace`, the engine's helpers would be included in an application's
-controllers.
+O método `isolate_namespace` merece uma nota especial. Essa chamada é responsável
+por isolar os *controllers*, *models*, rotas e outras coisas em seu próprio *namespace*,
+separado de componentes similares dentro da aplicação.
+Sem isso, haveria a possibilidade dos componentes da *engine* "vazarem" dentro
+da aplicação, causando uma disrupção indesejada, ou que componentes importantes
+da *engine* fossem sobrescritos por coisas com nomes similires existentes na aplicação.
+Um exemplo de conflitos como esses são os *helpers*. Sem chamar `isolate_namespace`,
+os *helpers* da *engine* seriam incluídos nos *controllers* da aplicação.
 
 NOTE: It is **highly** recommended that the `isolate_namespace` line be left
 within the `Engine` class definition. Without it, classes generated in an engine
 **may** conflict with an application.
 
-What this isolation of the namespace means is that a model generated by a call
-to `bin/rails generate model`, such as `bin/rails generate model article`, won't be called `Article`, but
-instead be namespaced and called `Blorgh::Article`. In addition, the table for the
-model is namespaced, becoming `blorgh_articles`, rather than simply `articles`.
-Similar to the model namespacing, a controller called `ArticlesController` becomes
-`Blorgh::ArticlesController` and the views for that controller will not be at
-`app/views/articles`, but `app/views/blorgh/articles` instead. Mailers, jobs
-and helpers are namespaced as well.
+O que essa isolação de *namespace* significa é que um model gerado por uma chamada
+ao `bin/rails generate model`, como `bin/rails generate model article`, não será
+chamada `Article`, mas sim dentro de um *namespace*, chamado de `Blorgh::Article`.
+Além disso, a tabela para o *model* também usará o *namespace*, tornando-se `blorgh_articles`,
+ao invés de simplesmente `articles`.
+Similar ao *namespacing* do *model*, um *controller* chamado `ArticlesController`
+se torna `Blorgh::ArticlesController` e as *views* desse *controller* não estarão
+em `app/views/articles`, mas sim em `app/views/blorgh/articles`. *Mailers*, *jobs*
+e *helpers* também são incluídos no *namespace*.
 
-Finally, routes will also be isolated within the engine. This is one of the most
-important parts about namespacing, and is discussed later in the
-[Routes](#routes) section of this guide.
+Por fim, as rotas também serão isoladas dentro da *engine*. Essa é uma das
+partes mais importantes sobre *namespacing*, e é discutida mais tarde na seção
+[Rotas](#routes) deste guia.
 
-#### `app` Directory
+#### Diretório `app`
 
-Inside the `app` directory are the standard `assets`, `controllers`, `helpers`,
-`jobs`, `mailers`, `models`, and `views` directories that you should be familiar with
-from an application. We'll look more into models in a future section, when we're writing the engine.
+Dentro do diretório `app` estão os diretórios padrões `assets`, `controllers`, `helpers`,
+`jobs`, `mailers`, `models`, e `views` de uma aplicação que você deve estar familiarizado.
+Nós veremos mais sobre *models* em uma seção futura, quando estivermos escrevendo a *engine*.
 
-Within the `app/assets` directory, there are the `images` and
-`stylesheets` directories which, again, you should be familiar with due to their
-similarity to an application. One difference here, however, is that each
-directory contains a sub-directory with the engine name. Because this engine is
-going to be namespaced, its assets should be too.
+Dentro do diretório `app/assets`, estão os diretórios `images` e `stylesheets` que,
+novamente, já deve ser familiar a você devido sua similaridade com uma aplicação.
+Uma diferença aqui, entretanto, é que cada diretório contem um sub-diretório com o nome
+da *engine*. Como essa *engine* utiliza um *namespace*, seus *assets* também devem usar.
 
-Within the `app/controllers` directory there is a `blorgh` directory that
-contains a file called `application_controller.rb`. This file will provide any
-common functionality for the controllers of the engine. The `blorgh` directory
-is where the other controllers for the engine will go. By placing them within
-this namespaced directory, you prevent them from possibly clashing with
-identically-named controllers within other engines or even within the
-application.
+Dentro do diretório `app/controllers` há um diretório `blorgh` que contem um
+arquivo chamado `application_controller.rb`. Esse arquivo fornecerá funcionalidades
+comuns aos *controllers* da *engine*. O diretório `blorgh` é onde os outros *controllers*
+da *engine* estarão. Ao colocá-los neste diretório com *namespace*, você estará evitando
+que eles possam conlfitar com *controllers* com nomes idênticos  de *controllers* existentes
+em outras *engines* ou da própria aplicação.
 
 NOTE: The `ApplicationController` class inside an engine is named just like a
 Rails application in order to make it easier for you to convert your
@@ -259,43 +256,42 @@ WARNING: Don't use `require` because it will break the automatic reloading of
 classes in the development environment - using `require_dependency` ensures that
 classes are loaded and unloaded in the correct manner.
 
-Just like for `app/controllers`, you will find a `blorgh` subdirectory under
-the `app/helpers`, `app/jobs`, `app/mailers` and `app/models` directories
-containing the associated `application_*.rb` file for gathering common
-functionalities. By placing your files under this subdirectory and namespacing
-your objects, you prevent them from possibly clashing with identically-named
-elements within other engines or even within the application.
+Assim como para `app/controllers`, você encontrará um subdiretório `blorgh` dentro
+dos diretórios `app/helpers`, `app/jobs`, `app/mailers` e `app/models` contendo
+o arquivo associado `application_*.rb` para reunir funcionalidades comuns. Ao
+colocar seus arquivos nesse subdiretório e utilizar o *namespace* nos seus objetos,
+você evita que eles possam conflitar com elementos de nome idênticos  ao de outras
+*engines* ou até mesmo da própria aplicação.
 
-Lastly, the `app/views` directory contains a `layouts` folder, which contains a
-file at `blorgh/application.html.erb`. This file allows you to specify a layout
-for the engine. If this engine is to be used as a stand-alone engine, then you
-would add any customization to its layout in this file, rather than the
-application's `app/views/layouts/application.html.erb` file.
+Por último, o diretório `app/views` contem uma pasta `layouts`, que contem um
+arquivo em `blorgh/application.html.erb`. Esse arquivo permite que você especifique
+um *layout* para a *engine*. Se a *engine* for utilizada sozinha, então você deve
+adicionar as personalizações necessárias para seu arquivo de `layout` ao invés do
+arquivo `app/views/layouts/application.html.erb` da aplicação.
 
-If you don't want to force a layout on to users of the engine, then you can
-delete this file and reference a different layout in the controllers of your
-engine.
+Se você não quer forçar um *layout* para os usuários da *engine*, então você pode
+deletar esse arquivo e referenciar um *layout* diferente nos *controllers* da sua
+*engine*.
 
-#### `bin` Directory
+#### Diretório `bin`
 
-This directory contains one file, `bin/rails`, which enables you to use the
-`rails` sub-commands and generators just like you would within an application.
-This means that you will be able to generate new controllers and models for this
-engine very easily by running commands like this:
+Esse diretório contem um arquivo, `bin/rails`, que possibilita o uso dos sub-comandos
+e geradores do Rails assim como você utilizaria em uma aplicação. Isso significa que
+você terá a habilidade de gerar novos *controllers* e *models* para essa *engine* de
+forma bem simples ao rodar comandos como este:
 
 ```bash
 $ bin/rails generate model
 ```
 
-Keep in mind, of course, that anything generated with these commands inside of
-an engine that has `isolate_namespace` in the `Engine` class will be namespaced.
+Tenha em mente, é claro, que tudo gerado com esse comandos dentro de uma *engine*
+que contem o `isolate_namespace` na classe `Engine` conterá um *namespace*.
 
-#### `test` Directory
+#### Diretório `test`
 
-The `test` directory is where tests for the engine will go. To test the engine,
-there is a cut-down version of a Rails application embedded within it at
-`test/dummy`. This application will mount the engine in the
-`test/dummy/config/routes.rb` file:
+O diretório `test` é onde os testes para a *engine* estarão. Para testa a *engine*,
+há um versão reduzida de uma aplicação Rails embutida nela em `test/dummy`. Essa
+aplicação irá montar a *engine* no arquivo `test/dummy/config/routes.rb`:
 
 ```ruby
 Rails.application.routes.draw do
@@ -303,13 +299,13 @@ Rails.application.routes.draw do
 end
 ```
 
-This line mounts the engine at the path `/blorgh`, which will make it accessible
-through the application only at that path.
+Essa linha monta a *engine* no caminho `/blorgh`, que a tornará acessível através
+da aplicação somente neste caminho.
 
-Inside the test directory there is the `test/integration` directory, where
-integration tests for the engine should be placed. Other directories can be
-created in the `test` directory as well. For example, you may wish to create a
-`test/models` directory for your model tests.
+Dentro do diretório de teste há o diretório `test/integration`, onde os testes
+de integração devem ser colocados. Outros diretórios também podem ser criados
+no diretório `test`. Por exemplo, você pode querer criar um diretório `test/models`
+para os testes de *models*.
 
 Providing Engine Functionality
 ------------------------------
