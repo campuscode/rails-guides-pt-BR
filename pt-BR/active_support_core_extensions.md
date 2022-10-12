@@ -2632,10 +2632,10 @@ NOTE: Definido em `active_support/core_ext/array/wrap.rb`.
 
 [Array.wrap]: https://api.rubyonrails.org/classes/Array.html#method-c-wrap
 
-### Duplicating
+### Duplicando
 
-The method [`Array#deep_dup`][Array#deep_dup] duplicates itself and all objects inside
-recursively with the Active Support method `Object#deep_dup`. It works like `Array#map`, sending `deep_dup` method to each object inside.
+O método [`Array#deep_dup`][Array#deep_dup] duplica a si mesmo e todos os objetos dentro
+recursivamente com o método do Active Support `Object#deep_dup`. Funciona como um `Array#map`, enviando o método `deep_dup` para cada objeto dentro.
 
 ```ruby
 array = [1, [2, 3]]
@@ -2644,7 +2644,7 @@ dup[1][2] = 4
 array[1][2] == nil   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
+NOTE: Definido em `active_support/core_ext/object/deep_dup.rb`.
 
 [Array#deep_dup]: https://api.rubyonrails.org/classes/Array.html#method-i-deep_dup
 
