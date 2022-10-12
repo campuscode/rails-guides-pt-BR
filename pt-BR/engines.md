@@ -29,7 +29,7 @@ Portanto, *engines* e aplicações podem ser tratadas quase como a mesma coisa,
 apenas com algumas diferenças sutis, como você verá ao longo deste guia. *Engines*
 e aplicações também compartilham uma estrutura em comum.
 
-*Engines* também são intimamente relaciodas a *plugins*. Os dois compartilham uma
+*Engines* também são intimamente relacionadas a *plugins*. Os dois compartilham uma
 estrutura de diretório `lib` e ambos são gerados usando o gerador `rails plugin new`.
 A diferença é que uma *engine* é considerada um "*plugin* completo" pelo Rails
 (como é indicado pela opção `--full` que é passada ao comando gerador). Entretanto,
