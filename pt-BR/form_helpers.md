@@ -808,7 +808,7 @@ Digamos que queremos renderizar um formulário com um conjunto de campos para ca
 <% end %>
 ```
 
-Presumindo que a pessoa (person) tenha dois endereços (addresses), com *ids* 23 e 45 o formuário acima trará um resultado similar a este:
+Presumindo que a pessoa (_person_) tenha dois endereços (_addresses_), com *ids* 23 e 45 o formulário acima trará um resultado similar a este:
 
 ```html
 <form accept-charset="UTF-8" action="/people/1" method="post">
