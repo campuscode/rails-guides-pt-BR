@@ -2338,19 +2338,19 @@ NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#pick]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-pick
 
-Extensions to `Array`
+Extensões para `Array`
 ---------------------
 
-### Accessing
+### Acessando
 
-Active Support augments the API of arrays to ease certain ways of accessing them. For example, [`to`][Array#to] returns the subarray of elements up to the one at the passed index:
+O *Active Support* aumenta a API de *arrays* para facilitar certas maneiras de acessá-los. Por exemplo, [`to`][Array#to] retorna o *subarray* de elementos até aquele no índice passado:
 
 ```ruby
 %w(a b c d).to(2) # => ["a", "b", "c"]
 [].to(7)          # => []
 ```
 
-Similarly, [`from`][Array#from] returns the tail from the element at the passed index to the end. If the index is greater than the length of the array, it returns an empty array.
+Da mesma forma, [`from`][Array#from] retorna os elementos a partir do elemento no índice passado até o final. Se o índice for maior que o comprimento do *array*, será retornado um *array* vazio.
 
 ```ruby
 %w(a b c d).from(2)  # => ["c", "d"]
@@ -2358,30 +2358,30 @@ Similarly, [`from`][Array#from] returns the tail from the element at the passed 
 [].from(0)           # => []
 ```
 
-The method [`including`][Array#including] returns a new array that includes the passed elements:
+O método [`including`][Array#including] retorna um novo *array* que inclui os elementos passados:
 
 ```ruby
 [ 1, 2, 3 ].including(4, 5)          # => [ 1, 2, 3, 4, 5 ]
 [ [ 0, 1 ] ].including([ [ 1, 0 ] ]) # => [ [ 0, 1 ], [ 1, 0 ] ]
 ```
 
-The method [`excluding`][Array#excluding] returns a copy of the Array excluding the specified elements.
-This is an optimization of `Enumerable#excluding` that uses `Array#-`
-instead of `Array#reject` for performance reasons.
+O método [`excluding`][Array#excluding] retorna uma cópia do *array* excluindo os elementos especificados.
+Está é uma otimização de `Enumerable#excluding` que usa `Array#-`
+ao invés de `Array#reject` por questão de desempenho.
 
 ```ruby
 ["David", "Rafael", "Aaron", "Todd"].excluding("Aaron", "Todd") # => ["David", "Rafael"]
 [ [ 0, 1 ], [ 1, 0 ] ].excluding([ [ 1, 0 ] ])                  # => [ [ 0, 1 ] ]
 ```
 
-The methods [`second`][Array#second], [`third`][Array#third], [`fourth`][Array#fourth], and [`fifth`][Array#fifth] return the corresponding element, as do [`second_to_last`][Array#second_to_last] and [`third_to_last`][Array#third_to_last] (`first` and `last` are built-in). Thanks to social wisdom and positive constructiveness all around, [`forty_two`][Array#forty_two] is also available.
+Os métodos [`second`][Array#second], [`third`][Array#third], [`fourth`][Array#fourth], e [`fifth`][Array#fifth] retornam o elemento correspondente, assim como [`second_to_last`][Array#second_to_last] e [`third_to_last`][Array#third_to_last] (`first` e `last` são embutidos). Graças à sabedoria social e construtividade positiva ao redor, [`forty_two`][Array#forty_two] também está disponível.
 
 ```ruby
 %w(a b c d).third # => "c"
 %w(a b c d).fifth # => nil
 ```
 
-NOTE: Defined in `active_support/core_ext/array/access.rb`.
+NOTE: Definido em `active_support/core_ext/array/access.rb`.
 
 [Array#excluding]: https://api.rubyonrails.org/classes/Array.html#method-i-excluding
 [Array#fifth]: https://api.rubyonrails.org/classes/Array.html#method-i-fifth
