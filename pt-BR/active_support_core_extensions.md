@@ -2593,15 +2593,15 @@ NOTE: Definido em `active_support/core_ext/array/conversions.rb`.
 
 [Array#to_xml]: https://api.rubyonrails.org/classes/Array.html#method-i-to_xml
 
-### Wrapping
+### Invólucro
 
-The method [`Array.wrap`][Array.wrap] wraps its argument in an array unless it is already an array (or array-like).
+O método [`Array.wrap`][Array.wrap] envolve seu argumento em um *array*, a menos que já seja um *array* (ou semelhante a um *array*).
 
-Specifically:
+Especificamente:
 
-* If the argument is `nil` an empty array is returned.
-* Otherwise, if the argument responds to `to_ary` it is invoked, and if the value of `to_ary` is not `nil`, it is returned.
-* Otherwise, an array with the argument as its single element is returned.
+* Se o argumento for `nil` um *array* vazio é retornado.
+* Caso contrário, se o argumento responde a `to_ary` ele será invocado, e se o valor de `to_ary` não for `nil`, ele será retornado.
+* Caso contrário, um *array* com o argumento como seu único elemento é retornado.
 
 ```ruby
 Array.wrap(nil)       # => []
@@ -2609,26 +2609,26 @@ Array.wrap([1, 2, 3]) # => [1, 2, 3]
 Array.wrap(0)         # => [0]
 ```
 
-This method is similar in purpose to `Kernel#Array`, but there are some differences:
+Este método é semelhante em propósito ao `Kernel#Array`, mas há algumas diferenças:
 
-* If the argument responds to `to_ary` the method is invoked. `Kernel#Array` moves on to try `to_a` if the returned value is `nil`, but `Array.wrap` returns an array with the argument as its single element right away.
-* If the returned value from `to_ary` is neither `nil` nor an `Array` object, `Kernel#Array` raises an exception, while `Array.wrap` does not, it just returns the value.
-* It does not call `to_a` on the argument, if the argument does not respond to `to_ary` it returns an array with the argument as its single element.
+* Se o argumento responde a `to_ary` o método é invocado. `Kernel#Array` segue em frente para tentar chamar `to_a` se o valor retornado for `nil`, mas `Array.wrap` retorna um *array* com o argumento como seu único elemento imediatamente.
+* Se o valor retornado de `to_ary` não for `nil` nem um objeto `Array`, `Kernel#Array` gera uma exceção, enquanto `Array.wrap` não, apenas retorna o valor.
+* Ele não chama `to_a` no argumento, se o argumento não responde a `to_ary` ele retorna um *array* com o argumento como seu único elemento.
 
-The last point is particularly worth comparing for some enumerables:
+O último ponto é particularmente digno de comparação para alguns *enumerables*:
 
 ```ruby
 Array.wrap(foo: :bar) # => [{:foo=>:bar}]
 Array(foo: :bar)      # => [[:foo, :bar]]
 ```
 
-There's also a related idiom that uses the splat operator:
+Há também um idioma relacionado que usa o operador *splat*:
 
 ```ruby
 [*object]
 ```
 
-NOTE: Defined in `active_support/core_ext/array/wrap.rb`.
+NOTE: Definido em `active_support/core_ext/array/wrap.rb`.
 
 [Array.wrap]: https://api.rubyonrails.org/classes/Array.html#method-c-wrap
 
