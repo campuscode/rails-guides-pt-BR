@@ -2440,11 +2440,11 @@ NOTE: Definido em `active_support/core_ext/array/extract_options.rb`.
 
 [Array#extract_options!]: https://api.rubyonrails.org/classes/Array.html#method-i-extract_options-21
 
-### Conversions
+### Conversões
 
 #### `to_sentence`
 
-The method [`to_sentence`][Array#to_sentence] turns an array into a string containing a sentence that enumerates its items:
+O método [`to_sentence`][Array#to_sentence] transforma um *array* em uma *string* contendo uma frase que enumera seus itens:
 
 ```ruby
 %w().to_sentence                # => ""
@@ -2453,31 +2453,30 @@ The method [`to_sentence`][Array#to_sentence] turns an array into a string conta
 %w(Earth Wind Fire).to_sentence # => "Earth, Wind, and Fire"
 ```
 
-This method accepts three options:
+Este método aceita três opções:
 
-* `:two_words_connector`: What is used for arrays of length 2. Default is " and ".
-* `:words_connector`: What is used to join the elements of arrays with 3 or more elements, except for the last two. Default is ", ".
-* `:last_word_connector`: What is used to join the last items of an array with 3 or more elements. Default is ", and ".
+* `:two_words_connector`: O que é usado para *arrays* de comprimento 2. O padrão é " e ".
+* `:words_connector`: O que é usado para unir os elementos de *arrays* com 3 ou mais elementos, exceto os dois últimos. O padrão é ", ".
+* `:last_word_connector`: O que é usado para unir os últimos itens de um *array* com 3 ou mais elementos. O padrão é ", e ".
 
-The defaults for these options can be localized, their keys are:
+Os padrões para essas opções podem ser localizados, suas chaves são:
 
-| Option                 | I18n key                            |
+| Opção                  | Chave I18n                          |
 | ---------------------- | ----------------------------------- |
 | `:two_words_connector` | `support.array.two_words_connector` |
 | `:words_connector`     | `support.array.words_connector`     |
 | `:last_word_connector` | `support.array.last_word_connector` |
 
-NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/array/conversions.rb`.
 
 [Array#to_sentence]: https://api.rubyonrails.org/classes/Array.html#method-i-to_sentence
 
 #### `to_formatted_s`
 
-The method [`to_formatted_s`][Array#to_formatted_s] acts like `to_s` by default.
+O método [`to_formatted_s`][Array#to_formatted_s] age como `to_s` por padrão.
 
-If the array contains items that respond to `id`, however, the symbol
-`:db` may be passed as argument. That's typically used with
-collections of Active Record objects. Returned strings are:
+No entanto, se o *array* contém itens que respondem a `id`, o símbolo 
+`:db` pode ser passado como argumento. Isso é normalmente usado em coleções de objetos do *Active Record*. As *strings* retornadas são:
 
 ```ruby
 [].to_formatted_s(:db)            # => "null"
@@ -2485,15 +2484,15 @@ collections of Active Record objects. Returned strings are:
 invoice.lines.to_formatted_s(:db) # => "23,567,556,12"
 ```
 
-Integers in the example above are supposed to come from the respective calls to `id`.
+Os inteiros no exemplo acima devem vir das respectivas chamadas para `id`.
 
-NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/array/conversions.rb`.
 
 [Array#to_formatted_s]: https://api.rubyonrails.org/classes/Array.html#method-i-to_formatted_s
 
 #### `to_xml`
 
-The method [`to_xml`][Array#to_xml] returns a string containing an XML representation of its receiver:
+O método [`to_xml`][Array#to_xml] retorna uma string contendo uma representação em XML do seu recipiente:
 
 ```ruby
 Contributor.limit(2).order(:rank).to_xml
@@ -2515,11 +2514,11 @@ Contributor.limit(2).order(:rank).to_xml
 # </contributors>
 ```
 
-To do so it sends `to_xml` to every item in turn, and collects the results under a root node. All items must respond to `to_xml`, an exception is raised otherwise.
+Para fazer isso, ele envia `to_xml` para cada item e coleta os resultados em um nó raiz. Todos os itens devem responder a `to_xml`, caso contrário, uma exceção é provocada.
 
-By default, the name of the root element is the underscored and dasherized plural of the name of the class of the first item, provided the rest of elements belong to that type (checked with `is_a?`) and they are not hashes. In the example above that's "contributors".
+Por padrão, o nome do elemento raiz é o plural sublinhado e tracejado do nome da classe do primeiro item, desde que os demais elementos pertençam a esse tipo (verificado com `is_a?`) e não sejam *hashes*. No exemplo acima são "*contributors*".
 
-If there's any element that does not belong to the type of the first one the root node becomes "objects":
+Se houver algum elemento que não pertença ao tipo do primeiro, o nó raiz se torna "*objects*":
 
 ```ruby
 [Contributor.first, Commit.first].to_xml
@@ -2547,7 +2546,7 @@ If there's any element that does not belong to the type of the first one the roo
 # </objects>
 ```
 
-If the receiver is an array of hashes the root element is by default also "objects":
+Se o recipiente é um *array* de *hashes*, o elemento raiz também é, por padrão, "*objects*":
 
 ```ruby
 [{a: 1, b: 2}, {c: 3}].to_xml
@@ -2564,11 +2563,11 @@ If the receiver is an array of hashes the root element is by default also "objec
 # </objects>
 ```
 
-WARNING. If the collection is empty the root element is by default "nil-classes". That's a gotcha, for example the root element of the list of contributors above would not be "contributors" if the collection was empty, but "nil-classes". You may use the `:root` option to ensure a consistent root element.
+WARNING. Se a coleção estiver vazia, o elemento raiz é, por padrão, "*nil-classes*". If the collection is empty the root element is by default "nil-classes". Isso é uma pegadinha, por exemplo, o elemento raiz da lista de *contributors* acima não seria "*contributors*" se a coleção estivesse vazia, e sim "*nil-classes*". Você pode usar a opção `:root` para garantir um elemento raiz consistente.
 
-The name of children nodes is by default the name of the root node singularized. In the examples above we've seen "contributor" and "object". The option `:children` allows you to set these node names.
+O nome dos nós filhos é, por padrão, o nome do nó raiz singularizado. Nos exemplos acima vimos "*contributor*" e "*object*". A opção `:children` permite que você defina esses nomes de nós.
 
-The default XML builder is a fresh instance of `Builder::XmlMarkup`. You can configure your own builder via the `:builder` option. The method also accepts options like `:dasherize` and friends, they are forwarded to the builder:
+O construtor XML padrão é uma nova instância de `Builder::XmlMarkup`. Você pode configurar seu próprio construtor através da opção `:builder`. O método também aceita opções como `:dasherize` e afins, elas são encaminhadas para o construtor:
 
 ```ruby
 Contributor.limit(2).order(:rank).to_xml(skip_types: true)
@@ -2590,7 +2589,7 @@ Contributor.limit(2).order(:rank).to_xml(skip_types: true)
 # </contributors>
 ```
 
-NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/array/conversions.rb`.
 
 [Array#to_xml]: https://api.rubyonrails.org/classes/Array.html#method-i-to_xml
 
