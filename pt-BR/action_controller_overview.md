@@ -1122,7 +1122,7 @@ config.filter_parameters << :password
 ```
 
 NOTE: Os parâmetros fornecidos serão filtrados correspondendo parcialmente a uma expressão
-regular. Rails por padrão adiciona `:passw`, `:secret`, `:token` no *initializer*
+regular. O Rails por padrão adiciona `:passw`, `:secret`, `:token` no *initializer*
 apropriado (`initializers/filter_parameter_logging.`) e se preocupa com parâmetros típicos da aplicação
 como `password`, `password_confirmation` e `my_token`.
 
