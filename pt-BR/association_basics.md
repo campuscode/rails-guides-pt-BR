@@ -793,7 +793,7 @@ nomes padrão. No entanto, o *Active Record* não identificará automaticamente
 associações bidirecionais que contêm o `:through` ou `:foreign_key`.
 Escopos personalizados na associação oposta também impedem
 identificação, assim como escopos personalizados na própria associação, a menos que
-`config.active_record.automatic_scope_inversing` estiver definido como verdadeiro (o padrão para
+[`config.active_record.automatic_scope_inversing`][] estiver definido como verdadeiro (o padrão para
 novas aplicações).
 
 Por exemplo, considere as declarações de *models* abaixo:
@@ -843,6 +843,8 @@ irb> a.first_name = 'David'
 irb> a.first_name == b.writer.first_name
 => true
 ```
+
+[`config.active_record.automatic_scope_inversing`]: configuring.html#config-active-record-automatic-scope-inversing
 
 Referência Detalhada das Associações
 ------------------------------
