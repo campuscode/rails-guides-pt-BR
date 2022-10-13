@@ -348,23 +348,23 @@ Você pode acessar o cache chamando `Rails.cache`.
 
 ### ActiveSupport::Cache::Store
 
-This class provides the foundation for interacting with the cache in Rails. This is an abstract class and you cannot use it on its own. Rather you must use a concrete implementation of the class tied to a storage engine. Rails ships with several implementations documented below.
+Esta classe fornece a basa para interagir com cache no Rails. É uma classe abstrata e você não pode usá-la sozinha. Em vez disso, deve-se usar uma implementação concreta da classe vinculada ao sistema de armazenamento de cache. O Rails vem com várias implementações, documentadas abaixo.
 
-The main methods to call are `read`, `write`, `delete`, `exist?`, and `fetch`. The fetch method takes a block and will either return an existing value from the cache, or evaluate the block and write the result to the cache if no value exists.
+Os principais métodos que podem ser chamados são `read`, `write`, `delete`, `exist?`, e `fetch`. O método _fetch_ recebe um bloco e retorna um valor existente no cache. Ou avalia o bloco e grava o resultado no cache se o valor não existir.
 
-There are some common options that can be used by all cache implementations. These can be passed to the constructor or the various methods to interact with entries.
+Existem algumas opções comuns que podem ser usadas por todas as implementações de cache. Elas podem ser passadas para o construtor ou para os vários métodos que interagem com entradas de cache.
 
-* `:namespace` - This option can be used to create a namespace within the cache store. It is especially useful if your application shares a cache with other applications.
+* `:namespace` - Essa opção pode ser usada para criar um _namespace_ dentro do armazenamento de cache. Isso pode ser especialmente útil se sua aplicação divide o cache com outras aplicações.
 
-* `:compress` - Enabled by default. Compresses cache entries so more data can be stored in the same memory footprint, leading to fewer cache evictions and higher hit rates.
+* `:compress` - Habilitado por padrão. Compacta as entradas no cache para que mais dados possam ser armazenados no mesmo espaço de memória, levando a menos despejos de cache e taxas de acerto mais altas
 
-* `:compress_threshold` - Defaults to 1kB. Cache entries larger than this threshold, specified in bytes, are compressed.
+* `:compress_threshold` - Seu valor padrão é 1kB. As entradas de cache maiores do que esse limite, especificadas em bytes, são compactadas.
 
-* `:expires_in` - This option sets an expiration time in seconds for the cache entry, if the cache store supports it, when it will be automatically removed from the cache.
+* `:expires_in` - Esta opção define um tempo de expiração, em segundos, para as entradas em cache. Se o armazenamento em cache suportar, os dados serão removidos automaticamente do cache ao atingir o tempo estipulado.
 
-* `:race_condition_ttl` - This option is used in conjunction with the `:expires_in` option. It will prevent race conditions when cache entries expire by preventing multiple processes from simultaneously regenerating the same entry (also known as the dog pile effect). This option sets the number of seconds that an expired entry can be reused while a new value is being regenerated. It's a good practice to set this value if you use the `:expires_in` option.
+* `:race_condition_ttl` - Esta opção é usada em conjunto com a opção `:expires_in`. Ela evitará condições de corrida quando as entradas de cache expirarem, impedindo que vários processos regenerem simultaneamente a mesma entrada (também conhecido como efeito _dog pile_). Esta opção define o número de segundos que uma entrada expirada pode ser reutilizada enquanto um novo valor está sendo gerado novamente. É uma boa prática definir este valor se você usar a opção `:expires_in`.
 
-* `:coder` - This option allows to replace the default cache entry serialization mechanism by a custom one. The `coder` must respond to `dump` and `load`, and passing a custom coder disable automatic compression.
+* `:coder` - Esta opção permite substituir o sistema de serialização de entrada de cache padrão por um personalizado. O `coder` deve responder a `dump` e `load`. Passar um codificador personalizado desabilita a compactação automática.
 
 #### Connection Pool Options
 
