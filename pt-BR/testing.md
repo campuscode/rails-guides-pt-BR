@@ -2030,25 +2030,25 @@ RSpec.describe "Zeitwerk compliance" do
 end
 ```
 
-Additional Testing Resources
+Testando Recursos Adicionais
 ----------------------------
 
-### Testing Time-Dependent Code
+### Testando código dependente de tempo
 
-Rails provides built-in helper methods that enable you to assert that your time-sensitive code works as expected.
+Rails fornece métodos `built-in` que permitem você fazer asserções se seu código sensível a tempo funciona como esperado.
 
-Here is an example using the [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to) helper:
+Aqui está um exemplo usando o helper [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to):
 
 ```ruby
-# Lets say that a user is eligible for gifting a month after they register.
+# Vamos dizer que um usuário é elegível para presentear um mês depois que eles se registram.
 user = User.create(name: "Gaurish", activation_date: Date.new(2004, 10, 24))
 assert_not user.applicable_for_gifting?
 travel_to Date.new(2004, 11, 24) do
-  assert_equal Date.new(2004, 10, 24), user.activation_date # inside the `travel_to` block `Date.current` is mocked
+  assert_equal Date.new(2004, 10, 24), user.activation_date # dentro do bloco `travel_to` o método `Date.current` é mockado
   assert user.applicable_for_gifting?
 end
-assert_equal Date.new(2004, 10, 24), user.activation_date # The change was visible only inside the `travel_to` block.
+assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança foi visível apenas dentro do bloco `travel_to`.
 ```
 
-Please see [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
-for in-depth information about the available time helpers.
+Por favor veja [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
+para informações mais profundas sobre os helpers disponíveis de tempo.
