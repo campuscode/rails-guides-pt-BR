@@ -316,7 +316,7 @@ resources :magazines do
 end
 ```
 
-Em adição das rotas para _magazines_, esta declaração também adicionará rotas de _ads_ para um `AdsContriller`. As URLs de _ad_ vão precisar de um _magazine_:
+Em adição das rotas para _magazines_, esta declaração também adicionará rotas de _ads_ para um `AdsController`. As URLs de _ad_ vão precisar de um _magazine_:
 
 | Verbo HTTP | Path                                 | Controller#Action | Usado para                                                                                        |
 | ---------- | ------------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------- |
