@@ -55,7 +55,7 @@ Adicionando pacotes NPM com Bundlers JavaScript
 Importar por mapas é o padrão para novas aplicações Rails, mas se você preferir o pacote JavaScript tradicional, você pode criar novas aplicações Rails com as opções de [esbuild](https://esbuild.github.io/), [webpack](https://webpack.js.org/), ou
 [rollup.js](https://rollupjs.org/guide/en/).
 
-Para usar um _bundler_ ao invés de mapas de importação em uma nova aplicação Rails, passe a opção `—javascript` ou a opção `-j` para `rails new`:
+Para usar um _bundler_ ao invés de mapas de importação em uma nova aplicação Rails, passe a opção `—javascript` ou `-j` para `rails new`:
 
 ```bash
 $ rails new meu_novo_app --javascript=webpack
@@ -95,14 +95,13 @@ Quando você cria uma nova aplicação Rails, você precisará escolher entre im
 
 Mapas de importação são a opção padrão porque o time Rails acredita no potencial desses mapas para reduzir complexidade, melhorando a experiência do desenvolvedor e entregando ganhos de performance.
 
-Para muitas aplicações, especialmente aquelas que dependem principalmente na _stack_ [Hotwire](https://hotwired.dev/) para suas necessidades JavaScript, mapas de importação são a opção certa a longo prazo. Você pode ler mais sobre as razões dos mapas de importação serem o padrão no Rails 7 [aqui](https://world.hey.com/dhh/rails-7-will-have-three-great-answers-to-javascript-in-2021-8d68191b).
+Para muitas aplicações, especialmente aquelas que dependem principalmente da _stack_ [Hotwire](https://hotwired.dev/) para suas necessidades JavaScript, mapas de importação são a opção certa a longo prazo. Você pode ler mais sobre as razões dos mapas de importação serem o padrão no Rails 7 [aqui](https://world.hey.com/dhh/rails-7-will-have-three-great-answers-to-javascript-in-2021-8d68191b).
 
 Outras aplicações ainda podem precisar do tradicional _bundler_ JavaScript. Requisitos que indicam que você deveria escolher o _bundler_ tradicional incluem:
 
 * Se seu código necessita de um passo de transpilação, como JSX ou TypeScript.
-* Se você precisa usar bibliotecas JavaScript que incluem CSS ou
-libraries that include CSS então dependem de [carregadores Webpack](https://webpack.js.org/loaders/).
-* Se você tem certeza absoluta que você precisa de _[tree-shaking](https://webpack.js.org/guides/tree-shaking/)_.
+* Se você precisa usar bibliotecas JavaScript que incluem CSS ou então dependem de [carregadores Webpack](https://webpack.js.org/loaders/).
+* Se você tem certeza absoluta de que você precisa de _[tree-shaking](https://webpack.js.org/guides/tree-shaking/)_.
 * Se você vai instalar Bootstrap, Bulma, PostCSS, ou Dart CSS através da
 [gem cssbundling-rails](https://github.com/rails/cssbundling-rails). Todas as opções disponibilizadas por essa gem, exceto Tailwind, vão automaticamente instalar `esbuild` para você se você não especificar uma opção diferente no `rails new`.
 
