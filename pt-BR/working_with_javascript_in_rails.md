@@ -49,81 +49,62 @@ import React from "react"
 import ReactDOM from "react-dom"
 ```
 
-Adding NPM Packages with JavaScript Bundlers
+Adicionando pacotes NPM Packages com JavaScript Bundlers
 --------
 
-Import maps are the default for new Rails applications, but if you prefer traditional JavaScript
-bundling, you can create new Rails applications with your choice of
-[esbuild](https://esbuild.github.io/), [webpack](https://webpack.js.org/), or
+Importar por mapas é o padrão para novas aplicações Rails, mas se você preferir o pacote JavaScript tradicional, você pode criar novas aplicações Rails com sua escolha de [esbuild](https://esbuild.github.io/), [webpack](https://webpack.js.org/), ou
 [rollup.js](https://rollupjs.org/guide/en/).
 
-To use a bundler instead of import maps in a new Rails application, pass the `—javascript` or `-j`
-option to `rails new`:
+Para usar um _bundler_ ao invés de mapas de importação em uma nova aplicação Rails, passe a opção `—javascript` ou a opção `-j` para `rails new`:
 
 ```bash
-$ rails new my_new_app --javascript=webpack
-OR
-$ rails new my_new_app -j webpack
+$ rails new meu_novo_app --javascript=webpack
+OU
+$ rails new meu_novo_app -j webpack
 ```
 
-These bundling options each come with a simple configuration and integration with the asset
-pipeline via the [jsbundling-rails](https://github.com/rails/jsbundling-rails) gem.
+Cada uma dessas opções de pacotes vem com uma configuração simples e integração com o _pipeline_ por meio da gem [jsbundling-rails](https://github.com/rails/jsbundling-rails).
 
-When using a bundling option, use `bin/dev` to start the Rails server and build JavaScript for
-development.
+Quando optar pelo caminho via _bundle_, use `bin/dev` para iniciar o servidor Rails e construir o JavaScript para desenvolvimento.
 
-### Installing Node.js and Yarn
+### Instalando Node.js e Yarn
 
-If you are using a JavaScript bundler in your Rails application, Node.js and Yarn must be
-installed.
+Se você está usando um _bundler_ JavaScript na sua aplicação Rails, Node.js e Yarn precisam ser instalados.
 
-Find the installation instructions at the [Node.js website](https://nodejs.org/en/download/) and
-verify it’s installed correctly with the following command:
+Encontre as instruções de instalação no [site Node.js](https://nodejs.org/pt-br/download/) e verifique se está instalado corretamente com o seguinte comando:
 
 ```bash
 $ node --version
 ```
 
-The version of your Node.js runtime should be printed out. Make sure it’s greater than `8.16.0`.
+A versão de _runtime_ de seu Node.js deve ser exibida. Tenha certeza de que é maior que `8.16.0`.
 
-To install Yarn, follow the installation instructions at the
-[Yarn website](https://classic.yarnpkg.com/en/docs/install). Running this command should print out
-the Yarn version:
+Para instalar o Yarn, siga as instruções de instalação no
+[site do Yarn](https://classic.yarnpkg.com/en/docs/install). Executar este comando deverá exibir a versão do Yarn:
 
 ```bash
 $ yarn --version
 ```
 
-If it says something like `1.22.0`, Yarn has been installed correctly.
+Se apresentar algo como `1.22.0`, o Yarn foi instalado corretamente.
 
-Choosing Between Import Maps and a JavaScript Bundler
+Escolhendo entre Importar com Mapas e um JavaScript Bundler
 -----------------------------------------------------
 
-When you create a new Rails application, you will need to choose between import maps and a
-JavaScript bundling solution. Every application has different requirements, and you should
-consider your requirements carefully before choosing a JavaScript option, as migrating from one
-option to another may be time-consuming for large, complex applications.
+Quando você cria uma nova aplicação Rails, você precisará escolher entre importar com mapas ou a solução via JavaScript _bundling_. Cada aplicação possui diferentes requisitos, e você deverá considerar suas necessidades cuidadosamente antes de escolher a opção JavaScript, já que migrar de uma para outra pode ser demorada para aplicações grandes e complexas.
 
-Import maps are the default option because the Rails team believes in import maps' potential for
-reducing complexity, improving developer experience, and delivering performance gains.
+Mapas de importação são a opção padrão porque o time Rails acredita no potencial desses mapas para reduzir complexidade, melhorando a experiência do desenvolvedor e entregando ganhos de performance.
 
-For many applications, especially those that rely primarily on the [Hotwire](https://hotwired.dev/)
-stack for their JavaScript needs, import maps will be the right option for the long term. You
-can read more about the reasoning behind making import maps the default in Rails 7
-[here](https://world.hey.com/dhh/rails-7-will-have-three-great-answers-to-javascript-in-2021-8d68191b).
+Para muitas aplicações, especialmente aquelas que dependem principalmente na _stack_ [Hotwire](https://hotwired.dev/) para suas necessidades JavaScript, mapas de importação são a opção certa a longo prazo. Você pode ler mais sobre as razões dos mapas de importação serem o padrão no Rails 7 [aqui](https://world.hey.com/dhh/rails-7-will-have-three-great-answers-to-javascript-in-2021-8d68191b).
 
-Other applications may still need a traditional JavaScript bundler. Requirements that indicate
-that you should choose a traditional bundler include:
+Outras aplicações ainda podem precisar do tradicional _bundler_ JavaScript. Requisitos que indicam que você deveria escolher o _bundler_ tradicional incluem:
 
-* If your code requires a transpilation step, such as JSX or TypeScript.
-* If you need to use JavaScript libraries that include CSS or otherwise rely on
-[Webpack loaders](https://webpack.js.org/loaders/).
-* If you are absolutely sure that you need
-[tree-shaking](https://webpack.js.org/guides/tree-shaking/).
-* If you will install Bootstrap, Bulma, PostCSS, or Dart CSS through the
-[cssbundling-rails gem](https://github.com/rails/cssbundling-rails). All options provided by this
-gem except Tailwind will automatically install `esbuild` for you if you do not specify a different
-option in `rails new`.
+* Se seu código necessita de um passo de transpilação, como JSX ou TypeScript.
+* Se você precisa usar bibliotecas JavaScript que incluem CSS ou
+libraries that include CSS então dependem de [carregadores Webpack](https://webpack.js.org/loaders/).
+* Se você tem certeza absoluta que você precisa de _[tree-shaking](https://webpack.js.org/guides/tree-shaking/)_.
+* Se você vai instalar Bootstrap, Bulma, PostCSS, ou Dart CSS através da
+[gem cssbundling-rails](https://github.com/rails/cssbundling-rails). Todas as opções disponibilizadas por essa gem, exceto Tailwind, vão automaticamente instalar `esbuild` para você se você não especificar uma opção diferente no `rails new`.
 
 Turbo
 -----
