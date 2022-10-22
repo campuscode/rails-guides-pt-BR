@@ -49,10 +49,10 @@ import React from "react"
 import ReactDOM from "react-dom"
 ```
 
-Adicionando pacotes NPM Packages com Bundlers JavaScript
+Adicionando pacotes NPM com Bundlers JavaScript
 --------
 
-Importar por mapas é o padrão para novas aplicações Rails, mas se você preferir o pacote JavaScript tradicional, você pode criar novas aplicações Rails com sua escolha de [esbuild](https://esbuild.github.io/), [webpack](https://webpack.js.org/), ou
+Importar por mapas é o padrão para novas aplicações Rails, mas se você preferir o pacote JavaScript tradicional, você pode criar novas aplicações Rails com as opções de [esbuild](https://esbuild.github.io/), [webpack](https://webpack.js.org/), ou
 [rollup.js](https://rollupjs.org/guide/en/).
 
 Para usar um _bundler_ ao invés de mapas de importação em uma nova aplicação Rails, passe a opção `—javascript` ou a opção `-j` para `rails new`:
