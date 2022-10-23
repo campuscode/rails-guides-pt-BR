@@ -2173,19 +2173,19 @@ A notação de engenharia ainda é suportada:
 BigDecimal(5.00, 6).to_s("e")  # => "0.5E1"
 ```
 
-Extensions to `Enumerable`
+Extensões para `Enumerable`
 --------------------------
 
 ### `sum`
 
-The method [`sum`][Enumerable#sum] adds the elements of an enumerable:
+O método [`sum`][Enumerable#sum] adiciona os elementos de um *enumerable*:
 
 ```ruby
 [1, 2, 3].sum # => 6
 (1..100).sum  # => 5050
 ```
 
-Addition only assumes the elements respond to `+`:
+A adição apenas assume que os elementos respondem a `+`:
 
 ```ruby
 [[1, 2], [2, 3], [3, 4]].sum    # => [1, 2, 2, 3, 3, 4]
@@ -2193,51 +2193,50 @@ Addition only assumes the elements respond to `+`:
 {a: 1, b: 2, c: 3}.sum          # => [:a, 1, :b, 2, :c, 3]
 ```
 
-The sum of an empty collection is zero by default, but this is customizable:
+A soma de uma coleção vazia é zero por padrão, mas isto é customizável:
 
 ```ruby
 [].sum    # => 0
 [].sum(1) # => 1
 ```
 
-If a block is given, `sum` becomes an iterator that yields the elements of the collection and sums the returned values:
+Se um bloco for fornecido, `sum` se torna um iterador que fornece os elementos da coleção e soma os valores retornados:
 
 ```ruby
 (1..5).sum {|n| n * 2 } # => 30
 [2, 4, 6, 8, 10].sum    # => 30
 ```
 
-The sum of an empty receiver can be customized in this form as well:
+A soma de um recipiente vazio pode ser customizado nessa forma também:
 
 ```ruby
 [].sum(1) {|n| n**3} # => 1
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#sum]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-sum
 
 ### `index_by`
 
-The method [`index_by`][Enumerable#index_by] generates a hash with the elements of an enumerable indexed by some key.
+O método [`index_by`][Enumerable#index_by] gera um  *hash* com os elementos de um *enumerable* indexados por alguma chave.
 
-It iterates through the collection and passes each element to a block. The element will be keyed by the value returned by the block:
+Ele itera pela coleção e passa cada elemento para um bloco. O elemento será chaveado pelo valor retornado pelo bloco:
 
 ```ruby
 invoices.index_by(&:number)
 # => {'2009-032' => <Invoice ...>, '2009-008' => <Invoice ...>, ...}
 ```
 
-WARNING. Keys should normally be unique. If the block returns the same value for different elements no collection is built for that key. The last item will win.
+WARNING. As chaves normalmente devem ser exclusivas. Se o bloco retornar o mesmo valor para elementos diferentes, nenhuma coleção será construida para essa chave. O último item irá ganhar.
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#index_by]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-index_by
 
 ### `index_with`
 
-The method [`index_with`][Enumerable#index_with] generates a hash with the elements of an enumerable as keys. The value
-is either a passed default or returned in a block.
+O método [`index_with`][Enumerable#index_with] gera um *hash* com os elementos de um `enumerable` como chaves. O valor será o que foi passado como padrão ou o retornado em um bloco.
 
 ```ruby
 post = Post.new(title: "hey there", body: "what's up?")
@@ -2249,13 +2248,13 @@ WEEKDAYS.index_with(Interval.all_day)
 # => { monday: [ 0, 1440 ], … }
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#index_with]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-index_with
 
 ### `many?`
 
-The method [`many?`][Enumerable#many?] is shorthand for `collection.size > 1`:
+O método [`many?`][Enumerable#many?] é um atalho para `collection.size > 1`:
 
 ```erb
 <% if pages.many? %>
@@ -2263,80 +2262,79 @@ The method [`many?`][Enumerable#many?] is shorthand for `collection.size > 1`:
 <% end %>
 ```
 
-If an optional block is given, `many?` only takes into account those elements that return true:
+Se for fornecido um bloco opcional, `many?` leva em consideração apenas aqueles elementos que retornam *true*:
 
 ```ruby
 @see_more = videos.many? {|video| video.category == params[:category]}
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#many?]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-many-3F
 
 ### `exclude?`
 
-The predicate [`exclude?`][Enumerable#exclude?] tests whether a given object does **not** belong to the collection. It is the negation of the built-in `include?`:
+O predicado [`exclude?`][Enumerable#exclude?] testa se um dado objeto **não** pertence à coleção. É a negação do método embutido `include?`:
 
 ```ruby
 to_visit << node if visited.exclude?(node)
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#exclude?]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-exclude-3F
 
 ### `including`
 
-The method [`including`][Enumerable#including] returns a new enumerable that includes the passed elements:
+O método [`including`][Enumerable#including] retorna um novo `enumerable` que inclui os elementos passados:
 
 ```ruby
 [ 1, 2, 3 ].including(4, 5)                    # => [ 1, 2, 3, 4, 5 ]
 ["David", "Rafael"].including %w[ Aaron Todd ] # => ["David", "Rafael", "Aaron", "Todd"]
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#including]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-including
 
 ### `excluding`
 
-The method [`excluding`][Enumerable#excluding] returns a copy of an enumerable with the specified elements
-removed:
+O método [`excluding`][Enumerable#excluding] retorna uma cópia de um `enumerable` com os elementos especificados removidos:
 
 ```ruby
 ["David", "Rafael", "Aaron", "Todd"].excluding("Aaron", "Todd") # => ["David", "Rafael"]
 ```
 
-`excluding` is aliased to [`without`][Enumerable#without].
+`excluding` é um *alias* para [`without`][Enumerable#without].
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#excluding]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-excluding
 [Enumerable#without]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-without
 
 ### `pluck`
 
-The method [`pluck`][Enumerable#pluck] extracts the given key from each element:
+O método [`pluck`][Enumerable#pluck] extrai a chave fornecida de cada elemento:
 
 ```ruby
 [{ name: "David" }, { name: "Rafael" }, { name: "Aaron" }].pluck(:name) # => ["David", "Rafael", "Aaron"]
 [{ id: 1, name: "David" }, { id: 2, name: "Rafael" }].pluck(:id, :name) # => [[1, "David"], [2, "Rafael"]]
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#pluck]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-pluck
 
 ### `pick`
 
-The method [`pick`][Enumerable#pick] extracts the given key from the first element:
+O método [`pick`][Enumerable#pick] extrai a chave fornecida do primeiro elemento:
 
 ```ruby
 [{ name: "David" }, { name: "Rafael" }, { name: "Aaron" }].pick(:name) # => "David"
 [{ id: 1, name: "David" }, { id: 2, name: "Rafael" }].pick(:id, :name) # => [1, "David"]
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#pick]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-pick
 

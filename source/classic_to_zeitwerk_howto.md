@@ -38,7 +38,7 @@ Rails 7 ends the transition period and does not include `classic` mode.
 I am Scared
 -----------
 
-Don't :).
+Don't be :).
 
 Zeitwerk was designed to be as compatible with the classic autoloader as possible. If you have a working application autoloading correctly today, chances are the switch will be easy. Many projects, big and small, have reported really smooth switches.
 
@@ -318,6 +318,55 @@ To fix this, just remove the wildcards:
 
 ```ruby
 config.autoload_paths << "#{config.root}/extras"
+```
+
+### Decorating Classes and Modules from Engines
+
+If your application decorates classes or modules from an engine, chances are it is doing something like this somewhere:
+
+```ruby
+config.to_prepare do
+  Dir.glob("#{Rails.root}/app/overrides/**/*_override.rb").each do |override|
+    require_dependency override
+  end
+end
+```
+
+That has to be updated: You need to tell the `main` autoloader to ignore the directory with the overrides, and you need to load them with `load` instead. Something like this:
+
+```ruby
+overrides = "#{Rails.root}/app/overrides"
+Rails.autoloaders.main.ignore(overrides)
+config.to_prepare do
+  Dir.glob("#{overrides}/**/*_override.rb").each do |override|
+    load override
+  end
+end
+```
+
+### `before_remove_const`
+
+Rails 3.1 added support for a callback called `before_remove_const` that was invoked if a class or module responded to this method and was about to be reloaded. This callback has remained otherwise undocumented and it is unlikely that your code uses it.
+
+However, in case it does, you can rewrite something like
+
+```ruby
+class Country < ActiveRecord::Base
+  def self.before_remove_const
+    expire_redis_cache
+  end
+end
+```
+
+as
+
+```ruby
+# config/initializers/country.rb
+unless Rails.application.config.cache_classes
+  Rails.autoloaders.main.on_unload("Country") do |klass, _abspath|
+    klass.expire_redis_cache
+  end
+end
 ```
 
 ### Spring and the `test` Environment
