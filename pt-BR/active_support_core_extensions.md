@@ -4062,12 +4062,12 @@ Extensions to Pathname
 
 ### `existence`
 
-The [`existence`][Pathname#existence] method returns the receiver if the named file exists otherwise returns +nil+. It is useful for idioms like this:
+o [`existence`][Pathname#existence] retorna o receptor se o arquivo nomeado existir, caso contrário retorna +nil+. É útil para expressões idiomáticas como esta:
 
 ```ruby
 content = Pathname.new("file").existence&.read
 ```
 
-NOTE: Defined in `active_support/core_ext/pathname/existence.rb`.
+NOTE: Definido em `active_support/core_ext/pathname/existence.rb`.
 
 [Pathname#existence]: https://api.rubyonrails.org/classes/Pathname.html#method-i-existence
