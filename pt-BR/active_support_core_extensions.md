@@ -2366,7 +2366,7 @@ O método [`including`][Array#including] retorna um novo *array* que inclui os e
 ```
 
 O método [`excluding`][Array#excluding] retorna uma cópia do *array* excluindo os elementos especificados.
-Está é uma otimização de `Enumerable#excluding` que usa `Array#-`
+Esta é uma otimização de `Enumerable#excluding` que usa `Array#-`
 ao invés de `Array#reject` por questão de desempenho.
 
 ```ruby
