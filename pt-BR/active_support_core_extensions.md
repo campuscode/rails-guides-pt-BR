@@ -3981,11 +3981,11 @@ Extensions to `File`
 
 ### `atomic_write`
 
-With the class method [`File.atomic_write`][File.atomic_write] you can write to a file in a way that will prevent any reader from seeing half-written content.
+Com o método de classe [`File.atomic_write`][File.atomic_write] você pode gravar em um arquivo de uma maneira que impeça qualquer leitor de ver o conteúdo semi-escrito.
 
-The name of the file is passed as an argument, and the method yields a file handle opened for writing. Once the block is done `atomic_write` closes the file handle and completes its job.
+O nome do arquivo é passado como um argumento, e o método produz um identificador de arquivo aberto para gravação. Uma vez que o bloco é feito `atomic_write` fecha o identificador de arquivo e conclui seu trabalho.
 
-For example, Action Pack uses this method to write asset cache files like `all.css`:
+Por exemplo, O Action Pack usa esse método para gravar arquivos de cache de ativos como `all.css`:
 
 ```ruby
 File.atomic_write(joined_asset_path) do |cache|
@@ -3993,15 +3993,15 @@ File.atomic_write(joined_asset_path) do |cache|
 end
 ```
 
-To accomplish this `atomic_write` creates a temporary file. That's the file the code in the block actually writes to. On completion, the temporary file is renamed, which is an atomic operation on POSIX systems. If the target file exists `atomic_write` overwrites it and keeps owners and permissions. However there are a few cases where `atomic_write` cannot change the file ownership or permissions, this error is caught and skipped over trusting in the user/filesystem to ensure the file is accessible to the processes that need it.
+Para realizar isso `atomic_write` cria um arquivo temporário. Esse é o arquivo em que o código no bloco realmente grava. Após a conclusão, o arquivo temporário é renomeado, que é uma operação atômica em sistemas POSIX. Se o arquivo de destino existir `atomic_write` sobrescreve e mantém proprietários e permissões. No entanto, existem alguns casos em que `atomic_write` não pode alterar a propriedade ou as permissões do arquivo, este erro é detectado e ignorado confiando no usuário/sistema de arquivos para garantir que o arquivo esteja acessível aos processos que precisam dele.
 
-NOTE. Due to the chmod operation `atomic_write` performs, if the target file has an ACL set on it this ACL will be recalculated/modified.
+NOTE. Devido à operação chmod `atomic_write` executa, se o arquivo de destino tiver uma ACL definida, esta ACL será recalculada/modificada.
 
-WARNING. Note you can't append with `atomic_write`.
+WARNING. Observe que você não pode anexar com `atomic_write`.
 
-The auxiliary file is written in a standard directory for temporary files, but you can pass a directory of your choice as second argument.
+O arquivo auxiliar é escrito em um diretório padrão para arquivos temporários, mas você pode passar um diretório de sua escolha como segundo argumento.
 
-NOTE: Defined in `active_support/core_ext/file/atomic.rb`.
+NOTE: Definido em `active_support/core_ext/file/atomic.rb`.
 
 [File.atomic_write]: https://api.rubyonrails.org/classes/File.html#method-c-atomic_write
 
