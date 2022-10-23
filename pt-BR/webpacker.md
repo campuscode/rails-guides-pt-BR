@@ -50,7 +50,7 @@ Se você estiver familiarizado com o Sprockets, o guia a seguir pode trazer idei
 Instalando Webpacker
 --------------------
 
-Para usar o Webpacker, você precisa instalar o gerenciador de pacotes Yarn, versão 1.x ou acima, e você precisa ter Node.js instalado, versão 10.13.0 ou acima.
+Para usar o Webpacker, você precisa instalar o gerenciador de pacotes Yarn, versão 1.x ou acima, e também precisa ter o Node.js instalado, versão 10.13.0 ou acima.
 
 NOTA: O Webpacker depende do NPM e do Yarn. O NPM, o registro do gerenciador de pacotes do Node, é o repositório principal para publicação e download de projetos JavaScript de código aberto, tanto para Node.js quanto para _runtimes_ do navegador. É análogo ao rubygems.org para as gems Ruby. Yarn é uma utilidade em linha de comando que habilita a instalação e gerenciamento de dependências JavaScript, muito parecido com o que o Bundler faz para Ruby.
 
