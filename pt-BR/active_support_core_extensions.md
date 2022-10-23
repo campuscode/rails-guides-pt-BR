@@ -4035,11 +4035,11 @@ NOTE: Defined in `active_support/core_ext/name_error.rb`.
 Extensions to `LoadError`
 -------------------------
 
-Active Support adds [`is_missing?`][LoadError#is_missing?] to `LoadError`.
+Suporte ativo adiciona [`is_missing?`][LoadError#is_missing?] para `LoadError`.
 
-Given a path name `is_missing?` tests whether the exception was raised due to that particular file (except perhaps for the ".rb" extension).
+Dado um nome de caminho `is_missing?` testa se a exceção foi gerada devido a esse arquivo específico (exceto talvez pelo ".rb" extension).
 
-For example, when an action of `ArticlesController` is called Rails tries to load `articles_helper.rb`, but that file may not exist. That's fine, the helper module is not mandatory so Rails silences a load error. But it could be the case that the helper module does exist and in turn requires another library that is missing. In that case Rails must reraise the exception. The method `is_missing?` provides a way to distinguish both cases:
+Por exemplo, quando uma ação de `ArticlesController` é chamado Rails tenta carregar `articles_helper.rb`, mas esse arquivo pode não existir. Tudo bem, o módulo auxiliar não é obrigatório, então o Rails silencia um erro de carregamento. Mas pode ser que o módulo auxiliar exista e, por sua vez, exija outra biblioteca que esteja faltando. Nesse caso, o Rails deve re-aumentar a exceção. O método `is_missing?` fornece uma maneira de distinguir os dois casos:
 
 ```ruby
 def default_helper_module!
@@ -4053,7 +4053,7 @@ rescue NameError => e
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/load_error.rb`.
+NOTE: Definido em `active_support/core_ext/load_error.rb`.
 
 [LoadError#is_missing?]: https://api.rubyonrails.org/classes/LoadError.html#method-i-is_missing-3F
 
