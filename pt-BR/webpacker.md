@@ -4,7 +4,7 @@
 Webpacker
 =========
 
-Esse guia irá mostrar como instalar e usar o Webpacker para empacotar JavaScript, CSS e outros *assets* para a lado cliente da sua aplicação Rails.
+Esse guia irá mostrar como instalar e usar o Webpacker para empacotar JavaScript, CSS e outros *assets* para a lado cliente da sua aplicação Rails mas por favor note que o [Webpacker foi aposentado](https://github.com/rails/webpacker#webpacker-has-been-retired-).
 
 Depois de ler esse guia, você saberá:
 

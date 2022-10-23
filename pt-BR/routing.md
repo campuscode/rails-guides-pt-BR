@@ -316,7 +316,7 @@ resources :magazines do
 end
 ```
 
-Em adição das rotas para _magazines_, esta declaração também adicionará rotas de _ads_ para um `AdsContriller`. As URLs de _ad_ vão precisar de um _magazine_:
+Em adição das rotas para _magazines_, esta declaração também adicionará rotas de _ads_ para um `AdsController`. As URLs de _ad_ vão precisar de um _magazine_:
 
 | Verbo HTTP | Path                                 | Controller#Action | Usado para                                                                                        |
 | ---------- | ------------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------- |
@@ -348,7 +348,7 @@ _Resources_ profundamente aninhados ficam confusos. Neste caso, por exemplo, a a
 /publishers/1/magazines/2/photos/3
 ```
 
-O _helper_ correspondente a essa rota seria `publisher_magazine_photo_url`, sendo necessário especificar os objetos de todos os três níveis. De fato, esta situação é confusa o bastante que um [artigo](http://weblog.jamisbuck.org/2007/2/5/nesting-resources) escrito por Jamis Buck propõe uma regra de ouro para um bom design no Rails:
+O _helper_ correspondente a essa rota seria `publisher_magazine_photo_url`, sendo necessário especificar os objetos de todos os três níveis. De fato, esta situação é confusa o bastante que um [artigo escrito por Jamis Buck](http://weblog.jamisbuck.org/2007/2/5/nesting-resources) propõe uma regra de ouro para um bom design no Rails:
 
 TIP: _Resources_ não devem nunca ser aninhados mais de um nível de profundidade.
 
@@ -414,7 +414,7 @@ O *resources* de artigos aqui terá as seguintes rotas geradas para ele:
 | PATCH/PUT | /articles/:id(.:format)                      | articles#update   | article_path             |
 | DELETE    | /articles/:id(.:format)                      | articles#destroy  | article_path             |
 
-O método `shallow` do DSL cria um _scope_ em que todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:
+O método [`shallow`][] do DSL cria um _scope_ em que todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:
 
 ```ruby
 shallow do
@@ -469,6 +469,8 @@ O _resource_ _comments_ aqui terá gerado as seguintes rotas para si:
 | GET       | /comments/:id(.:format)                      | comments#show     | sekret_comment_path         |
 | PATCH/PUT | /comments/:id(.:format)                      | comments#update   | sekret_comment_path         |
 | DELETE    | /comments/:id(.:format)                      | comments#destroy  | sekret_comment_path         |
+
+[`shallow`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-shallow
 
 ### Roteamento com método *Concerns*
 
