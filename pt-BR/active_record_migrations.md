@@ -231,7 +231,7 @@ class AddUserRefToProducts < ActiveRecord::Migration[7.0]
 end
 ```
 
-Essa migração criará uma coluna `user_id`, [references](#references) é um
+Essa migração criará uma coluna `user_id`. [References](#references) é um
 abreviação para criar colunas, índices, chaves estrangeiras ou mesmo colunas polimórficas
 de associação.
 
@@ -332,8 +332,7 @@ end
 Que cria uma tabela `products` com uma coluna chamada `name`.
 
 Por padrão, o `create_table` criará uma chave primária chamada `id`. Você pode mudar
-o nome da chave primária com a opção `:primary_key` (não esqueça de
-atualizar o *model* correspondente) ou, se você não quer uma chave primária, você
+o nome da chave primária com a opção `:primary_key` ou, se você não quer uma chave primária, você
 pode passar a opção `id: false`. Se você precisa passar opções específicas do banco de dados
 você pode colocar um fragmento SQL na opção `:option`. Por exemplo:
 
@@ -527,14 +526,22 @@ Embora não seja necessário, você pode adicionar restrições de foreign key (
 add_foreign_key :articles, :authors
 ```
 
-Isso adiciona uma nova *foreign key* (chave estrangeira) à coluna `author_id` da tabela
-`articles`. A chave referencia a coluna `id` para a tabela `authors`. Se os
-nomes da coluna não puderem ser derivados dos nomes das tabelas, você poderá usar as
-opções `:column` e `:primary_key`.
-O Rails irá gerar um nome para cada *foreign key* (chave estrangeira) começando com
-`fk_rails_` seguido por 10 caracteres que são gerados
-especificamente a partir do `from_table` e `column`.
-Existe uma opção `:name` para especificar um nome diferente se necessário.
+A chamada [`add_foreign_key`][] adiciona uma nova restrição à tabela `articles`.
+A restrição garante que existe uma linha na tabela `authors` onde
+a coluna `id` corresponde ao `articles.author_id`.
+
+Se o nome da coluna `from_table` não puder ser derivado do nome `to_table`,
+você pode usar a opção `:column`. Use a opção `:primary_key` se a
+chave primária referenciada não é `:id`.
+
+Por exemplo, para adicionar uma chave estrangeira em `articles.reviewer` referenciando `authors.email`:
+
+```ruby
+add_foreign_key :articles, :authors, column: :reviewer, primary_key: :email
+```
+
+`add_foreign_key` também suporta opções como `name`, `on_delete`,
+`if_not_exists`, `validate` e `deferrable`.
 
 NOTE: O Active Record suporta apenas *foreign keys* (chaves estrangeiras) de coluna única. `execute` e
 `structure.sql` são obrigados a usar foreign keys (chaves estrangeiras) compostas. Consulte
@@ -548,9 +555,6 @@ remove_foreign_key :accounts, :branches
 
 # remove foreign key for a specific column
 remove_foreign_key :accounts, column: :owner_id
-
-# remove foreign key by name
-remove_foreign_key :accounts, name: :special_fk_name
 ```
 
 ### Quando os Helpers não são Suficientes
@@ -578,16 +582,17 @@ e
 
 O método `change` é a principal maneira de escrever *migrations*. Funciona para a
 maioria dos casos, onde o *Active Record* sabe como reverter a *migration*
-automaticamente. Atualmente, o método `change` suporta apenas estas definições de
-*migrations*:
+automaticamente. Abaixo estão algumas ações que o método `change` suporta:
 
 * [`add_column`][]
 * [`add_foreign_key`][]
 * [`add_index`][]
 * [`add_reference`][]
 * [`add_timestamps`][]
+* [`change_column_comment`][] (must supply a `:from` and `:to` option)
 * [`change_column_default`][] (must supply a `:from` and `:to` option)
 * [`change_column_null`][]
+* [`change_table_comment`][] (must supply a `:from` and `:to` option)
 * [`create_join_table`][]
 * [`create_table`][]
 * `disable_extension`
@@ -619,6 +624,8 @@ ou escrever os métodos `up` e `down` em vez de usar o médoto `change`.
 
 [`add_foreign_key`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key
 [`add_timestamps`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_timestamps
+[`change_column_comment`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_comment
+[`change_table_comment`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table_comment
 [`drop_join_table`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_join_table
 [`drop_table`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_table
 [`remove_foreign_key`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key
@@ -986,12 +993,12 @@ Arquivos de *schema* também são úteis se você deseja verificar rapidamente q
 
 ### Tipos de Schema Dumps
 
-O formato dos arquivos de *schema* gerados pelo Rails é controlado pela configuração `config.active_record.schema_format` em `config/application.rb`. Por padrão, o formato é `:ruby`, mas pode ser também alterado para `:sql`.
+O formato dos arquivos de *schema* gerados pelo Rails é controlado pela configuração [`config.active_record.schema_format`][] em `config/application.rb`. Por padrão, o formato é `:ruby`, mas pode ser também alterado para `:sql`.
 
 Se `:ruby` está selecionado, então o arquivo de *schema* é salvo em `db/schema.rb`. Se você analisar este arquivo perceberá que ele se parece muito com uma *migration* gigante.
 
 ```ruby
-ActiveRecord::Schema.define(version: 2008_09_06_171750) do
+ActiveRecord::Schema[7.0].define(version: 2008_09_06_171750) do
   create_table "authors", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -1015,6 +1022,8 @@ O arquivo `db/schema.rb` não consegue expressar tudo o que o seu banco de dados
 Quando o formato do *schema* é definido como `:sql`, a estrutura do banco de dados será reproduzida utilizando uma ferramenta específica para o banco de dados sendo usado no arquivo `db/structure.sql`. Por exemplo, para o PostgreSQL, a ferramenta `pg_dump` é utilizada. Para MySQL e MariaDB, este arquivo irá conter a saída de `SHOW CREATE TABLE` para as tabelas do banco.
 
 Para carregar o *schema* de `db/structure.sql`, execute `bin/rails db:schema:load`. O carregamento deste arquivo é realizado executando os comandos em SQL que ele contém. Por definição, isso irá criar uma cópia perfeita da estrutura do banco de dados.
+
+[`config.active_record.schema_format`]: configuring.html#config-active-record-schema-format
 
 ### Schema Dumps e o Controle de Versão
 

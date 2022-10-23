@@ -96,7 +96,7 @@ NOTE: Você precisa habilitar a extensão `hstore` para usar o hstore.
 
 ```ruby
 # db/migrate/20131009135255_create_profiles.rb
-ActiveRecord::Schema.define do
+class CreateProfiles < ActiveRecord::Migration[7.0]
   enable_extension 'hstore' unless extension_enabled?('hstore')
   create_table :profiles do |t|
     t.hstore 'settings'
@@ -245,20 +245,20 @@ irb> contact.save!
 
 * [definição de tipo](https://www.postgresql.org/docs/current/static/datatype-enum.html)
 
-Atualmente, não existe suporte especial para tipos enumerados. Eles são mapeados como colunas de texto normais:
+O tipo pode ser mapeado como uma coluna de texto normal ou para um [`ActiveRecord::Enum`](https://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
 
 ```ruby
 # db/migrate/20131220144913_create_articles.rb
 def up
-  execute <<-SQL
-    CREATE TYPE article_status AS ENUM ('draft', 'published');
-  SQL
+  create_enum :article_status, ["draft", "published"]
+
   create_table :articles do |t|
-    t.column :status, :article_status
+    t.enum :status, enum_type: :article_status, default: "draft", null: false
   end
 end
 
-# NOTE: It's important to drop table before dropping enum.
+# There's no built in support for dropping enums, but you can do it manually.
+# You should first drop any table that depends on them.
 def down
   drop_table :articles
 
@@ -271,17 +271,21 @@ end
 ```ruby
 # app/models/article.rb
 class Article < ApplicationRecord
+  enum status: {
+    draft: "draft", published: "published"
+  }, _prefix: true
 end
 ```
 
 ```irb
 irb> Article.create status: "draft"
 irb> article = Article.first
+irb> article.status_draft!
 irb> article.status
 => "draft"
 
-irb> article.status = "published"
-irb> article.save!
+irb> article.status_published?
+=> false
 ```
 
 Para adicionar um novo valor antes ou depois de um já existente, é necessário usar o [ALTER TYPE](https://www.postgresql.org/docs/current/static/sql-altertype.html):
@@ -394,7 +398,7 @@ irb> user.settings
 => "01010011"
 irb> user.settings = "0xAF"
 irb> user.settings
-=> 10101111
+=> "10101111"
 irb> user.save!
 ```
 
@@ -628,3 +632,16 @@ irb> Article.count
 
 NOTE: Esta aplicação só se importa com `Articles` não arquivados. Uma visão também
 permite condições para que possamos excluir os `Articles` arquivados diretamente.
+
+Structure dumps
+--------------
+
+If your `config.active_record.schema_format` is `:sql`, Rails will call `pg_dump` to generate a
+structure dump.
+
+You can use `ActiveRecord::Tasks::DatabaseTasks.structure_dump_flags` to configure `pg_dump`.
+For example, to exclude comments from your structure dump, add this to an initializer:
+
+```ruby
+ActiveRecord::Tasks::DatabaseTasks.structure_dump_flags = ['--no-comments']
+```
