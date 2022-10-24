@@ -2037,7 +2037,7 @@ Testando Recursos Adicionais
 
 Rails fornece métodos `built-in` que permitem você fazer asserções se seu código sensível a tempo funciona como esperado.
 
-Aqui está um exemplo usando o helper [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to):
+Aqui está um exemplo usando o *helper* [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to):
 
 ```ruby
 # Vamos dizer que um usuário é elegível para presentear um mês depois que eles se registram.
