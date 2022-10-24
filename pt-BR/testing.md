@@ -2051,4 +2051,4 @@ assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança foi visí
 ```
 
 Por favor veja [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
-para informações mais profundas sobre os helpers disponíveis de tempo.
+para informações mais profundas sobre os *helpers* disponíveis de tempo.
