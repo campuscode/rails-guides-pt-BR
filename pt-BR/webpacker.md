@@ -177,30 +177,30 @@ To support HMR with React, you would need to add react-hot-loader. Check out [Re
 
 Don't forget to disable HMR if you are not running webpack-dev-server; otherwise, you will get a "not found error" for stylesheets.
 
-Webpacker in Different Environments
+Webpacker em Diferentes Ambientes
 -----------------------------------
 
-Webpacker has three environments by default `development`, `test`, and `production`. You can add additional environment configurations in the `webpacker.yml` file and set different defaults for each environment. Webpacker will also load the file `config/webpack/<environment>.js` for additional environment setup.
+O Webpacker possui três ambientes por padrão `development`, `test` e `production`. Você pode adicionar configurações de ambiente adicionais no arquivo `webpacker.yml` e definir padrões diferentes para cada ambiente. O Webpacker também carregará o arquivo `config/webpack/<environment>.js` para configuração adicional do ambiente.
 
-## Running Webpacker in Development
+## Executando Webpacker em Desenvolvimento
 
-Webpacker ships with two binstub files to run in development: `./bin/webpack` and `./bin/webpack-dev-server`. Both are thin wrappers around the standard `webpack.js` and `webpack-dev-server.js` executables and ensure that the right configuration files and environmental variables are loaded based on your environment.
+O Webpacker vem com dois arquivos _binstub_ para rodar em desenvolvimento: `./bin/webpack` e `./bin/webpack-dev-server`. Ambos são _wrappers_ condensados em torno dos executáveis padrão `webpack.js` e `webpack-dev-server.js` e garantem que os arquivos de configuração corretos e variáveis de ambiente sejam carregadas com base em seu ambiente.
 
-By default, Webpacker compiles automatically on demand in development when a Rails page loads. This means that you don't have to run any separate processes, and compilation errors will be logged to the standard Rails log. You can change this by changing to `compile: false` in the `config/webpacker.yml` file. Running `bin/webpack` will force the compilation of your packs.
+Por padrão, o Webpacker compila automaticamente sob demanda em desenvolvimento quando uma página do Rails é carregada. Isso significa que você não precisa executar nenhum processo separado, e os erros de compilação serão registrados no _log_ padrão do Rails. Você pode mudar isso mudando para `compile: false` no arquivo `config/webpacker.yml`. Executar `bin/webpack` forçará a compilação de seus pacotes.
 
-If you want to use live code reloading or have enough JavaScript that on-demand compilation is too slow, you'll need to run `./bin/webpack-dev-server` or `ruby ./bin/webpack-dev-server`. This process will watch for changes in the `app/javascript/packs/*.js` files and automatically recompile and reload the browser to match.
+Se você quiser usar o recarregamento de código em tempo real ou tiver JavaScript suficiente para que a compilação sob demanda seja muito lenta, você precisará executar `./bin/webpack-dev-server` ou `ruby ./bin/webpack-dev-server `. Este processo observará as alterações nos arquivos `app/javascript/packs/*.js`, recompilando e recarregando automaticamente o navegador.
 
-Windows users will need to run these commands in a terminal separate from `bundle exec rails server`.
+Os usuários do Windows precisarão executar esses comandos em um terminal separado do `bundle exec rails server`.
 
-Once you start this development server, Webpacker will automatically start proxying all webpack asset requests to this server. When you stop the server, it'll revert to on-demand compilation.
+Assim que você iniciar esse servidor de desenvolvimento, o Webpacker iniciará automaticamente o _proxy_ de todas as solicitações de ativos do webpack para este servidor. Quando você parar o servidor, ele reverterá para a compilação sob demanda.
 
-The [Webpacker Documentation](https://github.com/rails/webpacker) gives information on environment variables you can use to control `webpack-dev-server`. See additional notes in the [rails/webpacker docs on the webpack-dev-server usage](https://github.com/rails/webpacker#development).
+A [Documentação do Webpacker](https://github.com/rails/webpacker) fornece informações sobre variáveis de ambiente que você pode usar para controlar o `webpack-dev-server`. Veja notas adicionais nos [documentos do Rails/webpacker sobre o uso do webpack-dev-server](https://github.com/rails/webpacker#development).
 
-### Deploying Webpacker
+### Fazendo Deploy do Webpacker
 
-Webpacker adds a `webpacker:compile` task to the `assets:precompile` rake task, so any existing deploy pipeline that was using `assets:precompile` should work. The compile task will compile the packs and place them in `public/packs`.
+O Webpacker adiciona uma tarefa `webpacker:compile` à tarefa de rake `assets:precompile`, portanto, qualquer pipeline de implantação existente que estava usando `assets:precompile` deve funcionar. A tarefa compilará os pacotes e os colocará em `public/packs`.
 
-Additional Documentation
+Documentação Adicional
 ------------------------
 
-For more information on advanced topics, such as using Webpacker with popular frameworks, consult the [Webpacker Documentation](https://github.com/rails/webpacker).
+Para obter mais informações sobre tópicos avançados, como o uso do Webpacker com _frameworks_ populares, consulte a [Documentação do Webpacker](https://github.com/rails/webpacker).
