@@ -327,16 +327,16 @@ Note that _cross-site scripting (XSS) vulnerabilities bypass all CSRF protection
 
 [`config.action_controller.default_protect_from_forgery`]: configuring.html#config-action-controller-default-protect-from-forgery
 
-Redirection and Files
+Redirecionamento e Arquivos
 ---------------------
 
-Another class of security vulnerabilities surrounds the use of redirection and files in web applications.
+Outra classe de vulnerabilidades de segurança envolve o uso de redirecionamento e arquivos em aplicações web.
 
-### Redirection
+### Redirecionamento
 
-WARNING: _Redirection in a web application is an underestimated cracker tool: Not only can the attacker forward the user to a trap website, they may also create a self-contained attack._
+WARNING: _Redirecionamento em um aplicação web é uma ferramenta cracker subestimada: Não somente o invasor pode redirecionar o usuário para um site de armadilha, mas também pode criar um ataque autocontido._
 
-Whenever the user is allowed to pass (parts of) the URL for redirection, it is possibly vulnerable. The most obvious attack would be to redirect users to a fake web application which looks and feels exactly as the original one. This so-called phishing attack works by sending an unsuspicious link in an email to the users, injecting the link by XSS in the web application or putting the link into an external site. It is unsuspicious, because the link starts with the URL to the web application and the URL to the malicious site is hidden in the redirection parameter: http://www.example.com/site/redirect?to=www.attacker.com. Here is an example of a legacy action:
+Sempre que o usuário tem permissão para passar (partes de) a URL para redirecionamento, é possível que esteja vulnerável. O ataque mais óbvio seria redirecionar os usuários para um site falso que se parece exatamente com o original. Esse chamado ataque de _phishing_ funciona enviando um link não suspeito em um e-mail para os usuários, injetando o link por _XSS_ no site ou colocando o link em um site externo. Não é suspeito, porque o link começa com a URL para o site e a URL para o site malicioso está oculta no parâmetro de redirecionamento: http://www.example.com/site/redirect?to=www.attacker.com . Aqui está um exemplo de uma ação legada:
 
 ```ruby
 def legacy
@@ -344,66 +344,68 @@ def legacy
 end
 ```
 
-This will redirect the user to the main action if they tried to access a legacy action. The intention was to preserve the URL parameters to the legacy action and pass them to the main action. However, it can be exploited by attacker if they included a host key in the URL:
+Isso irá redirecionar o usuário para a ação principal se ele tentar acessar uma ação legada. A intenção era preservar os parâmetros da URL para a ação legada e passá-los para a ação principal. No entanto, ele pode ser explorado pelo invasor se ele incluir uma chave de _host_ na URL:
 
 ```
 http://www.example.com/site/legacy?param1=xy&param2=23&host=www.attacker.com
 ```
 
-If it is at the end of the URL it will hardly be noticed and redirects the user to the `attacker.com` host. As a general rule, passing user input directly into `redirect_to` is considered dangerous. A simple countermeasure would be to _include only the expected parameters in a legacy action_ (again a permitted list approach, as opposed to removing unexpected parameters). _And if you redirect to a URL, check it with a permitted list or a regular expression_.
+Se estiver no final da URL dificilmente será notado e redireciona o usuário para o _host_ `attacker.com`. Como regra geral, passar a entrada do usuário diretamente para `redirect_to` é considerado perigoso. Uma contramedida simples seria _incluir apenas os parâmetros esperados em uma ação legada_ (novamente uma abordagem de lista permitida, em vez de remover parâmetros inesperados). _E se você redirecionar para uma URL, verifique-a com uma lista de permissões ou uma expressão regular_.
 
-#### Self-contained XSS
+#### XSS Autocontido
 
-Another redirection and self-contained XSS attack works in Firefox and Opera by the use of the data protocol. This protocol displays its contents directly in the browser and can be anything from HTML or JavaScript to entire images:
+Outro redirecionamento e ataque XSS autônomo funciona no Firefox e no Opera pelo uso do protocolo de dados. Este protocolo exibe seu conteúdo diretamente no navegador e pode ser qualquer coisa, desde HTML ou JavaScript até imagens inteiras:
 
 `data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K`
 
-This example is a Base64 encoded JavaScript which displays a simple message box. In a redirection URL, an attacker could redirect to this URL with the malicious code in it. As a countermeasure, _do not allow the user to supply (parts of) the URL to be redirected to_.
+Este exemplo é um JavaScript codificado em Base64 que exibe uma caixa de mensagem simples. Em uma URL de redirecionamento, um invasor pode redirecionar para essa URL com o código malicioso nele. Como contramedida, _não permita que o usuário forneça (partes de) a URL a ser redirecionada_.
 
-### File Uploads
+### Carregamento de arquivos
 
-NOTE: _Make sure file uploads don't overwrite important files, and process media files asynchronously._
+NOTE: _Certifique-se de que os uploads de arquivos não substituam arquivos importantes e processem arquivos de mídia de forma assíncrona._
 
-Many web applications allow users to upload files. _File names, which the user may choose (partly), should always be filtered_ as an attacker could use a malicious file name to overwrite any file on the server. If you store file uploads at /var/www/uploads, and the user enters a file name like "../../../etc/passwd", it may overwrite an important file. Of course, the Ruby interpreter would need the appropriate permissions to do so - one more reason to run web servers, database servers, and other programs as a less privileged Unix user.
+Muitos aplicativos da web permitem que os usuários façam upload de arquivos. _Os nomes dos arquivos, que o usuário pode escolher (em parte), devem sempre ser filtrados_ pois um invasor pode usar um nome de arquivo malicioso para sobrescrever qualquer arquivo no servidor. Se você armazenar uploads de arquivos em /var/www/uploads, e o usuário digitar um nome de arquivo como "../../../etc/passwd", ele poderá sobrescrever um arquivo importante. É claro que o interpretador Ruby precisaria das permissões apropriadas para fazer isso - mais uma razão para executar servidores web, servidores de banco de dados e outros programas como um usuário Unix menos privilegiado.
 
-When filtering user input file names, _don't try to remove malicious parts_. Think of a situation where the web application removes all "../" in a file name and an attacker uses a string such as "....//" - the result will be "../". It is best to use a permitted list approach, which _checks for the validity of a file name with a set of accepted characters_. This is opposed to a restricted list approach which attempts to remove not allowed characters. In case it isn't a valid file name, reject it (or replace not accepted characters), but don't remove them. Here is the file name sanitizer from the [attachment_fu plugin](https://github.com/technoweenie/attachment_fu/tree/master):
+Ao filtrar nomes de arquivos de entrada do usuário, _não tente remover partes maliciosas_. Pense em uma situação em que o aplicativo da Web remove todos os "../" em um nome de arquivo e um invasor usa uma _string_ como "....//" - o resultado será "../". É melhor usar uma abordagem de lista permitida, que _verifica a validade de um nome de arquivo com um conjunto de caracteres aceitos_. Isso se opõe a uma abordagem de lista restrita que tenta remover caracteres não permitidos. Caso não seja um nome de arquivo válido, rejeite-o (ou substitua caracteres não aceitos), mas não os remova. Aqui está o limpador de nome de arquivo do [plugin attachment_fu](https://github.com/technoweenie/attachment_fu/tree/master):
 
 ```ruby
 def sanitize_filename(filename)
   filename.strip.tap do |name|
-    # NOTE: File.basename doesn't work right with Windows paths on Unix
-    # get only the filename, not the whole path
+    # NOTA: File.basename não funciona corretamente com caminhos do Windows no Unix
+    # obtém apenas o nome do arquivo, não o caminho inteiro
     name.sub! /\A.*(\\|\/)/, ''
-    # Finally, replace all non alphanumeric, underscore
-    # or periods with underscore
+    # Finalmente, substitua todos os não alfanuméricos, sublinhados
+    # ou pontos com sublinhado
     name.gsub! /[^\w\.\-]/, '_'
   end
 end
 ```
 
-A significant disadvantage of synchronous processing of file uploads (as the `attachment_fu` plugin may do with images), is its _vulnerability to denial-of-service attacks_. An attacker can synchronously start image file uploads from many computers which increases the server load and may eventually crash or stall the server.
+Uma desvantagem significativa do processamento síncrono de uploads de arquivos (como o plugin `attachment_fu` pode fazer com imagens), é sua _vulnerabilidade a ataques de negação de serviço_. Um invasor pode iniciar de forma síncrona uploads de arquivos de imagem de muitos computadores, o que aumenta a carga do servidor e pode eventualmente travar ou parar o servidor.
 
-The solution to this is best to _process media files asynchronously_: Save the media file and schedule a processing request in the database. A second process will handle the processing of the file in the background.
+A solução para isso é _processar arquivos de mídia de forma assíncrona_: Salve o arquivo de mídia e agende uma solicitação de processamento no banco de dados. Um segundo processo tratará do processamento do arquivo em segundo plano.
 
-### Executable Code in File Uploads
+### Código executável no carregamento de arquivos
 
-WARNING: _Source code in uploaded files may be executed when placed in specific directories. Do not place file uploads in Rails' /public directory if it is Apache's home directory._
+WARN: _O código-fonte em arquivos carregados pode ser executado quando colocado em diretórios específicos. Não coloque uploads de arquivos no diretório /public do Rails se esse for o diretório inicial do Apache._
 
-The popular Apache web server has an option called DocumentRoot. This is the home directory of the website, everything in this directory tree will be served by the web server. If there are files with a certain file name extension, the code in it will be executed when requested (might require some options to be set). Examples for this are PHP and CGI files. Now think of a situation where an attacker uploads a file "file.cgi" with code in it, which will be executed when someone downloads the file.
+O popular servidor web Apache tem uma opção chamada DocumentRoot. Este é o diretório inicial do site, tudo nesta árvore de diretórios será servido pelo servidor web. Se houver arquivos com uma determinada extensão de nome de arquivo, o código nele será executado quando solicitado (pode exigir que algumas opções sejam definidas). Exemplos para isso são arquivos PHP e CGI. Agora pense em uma situação em que um invasor carrega um arquivo "file.cgi" com código nele, que será executado quando alguém baixar o arquivo.
 
-_If your Apache DocumentRoot points to Rails' /public directory, do not put file uploads in it_, store files at least one level upwards.
+_Se o seu Apache DocumentRoot apontar para o diretório /public do Rails, não coloque uploads de arquivos nele_, armazene arquivos pelo menos um nível acima.
 
 ### File Downloads
 
-NOTE: _Make sure users cannot download arbitrary files._
+NOTE: _Certifique-se de que os usuários não possam baixar arquivos arbitrários._
 
 Just as you have to filter file names for uploads, you have to do so for downloads. The `send_file()` method sends files from the server to the client. If you use a file name, that the user entered, without filtering, any file can be downloaded:
+
+Assim como você precisa filtrar nomes de arquivos para uploads, você precisa fazer isso para downloads. O método `send_file()` envia arquivos do servidor para o cliente. Se você usar um nome de arquivo, que o usuário digitou, sem filtrar, qualquer arquivo pode ser baixado:
 
 ```ruby
 send_file('/var/www/uploads/' + params[:filename])
 ```
 
-Simply pass a file name like "../../../etc/passwd" to download the server's login information. A simple solution against this, is to _check that the requested file is in the expected directory_:
+Basta passar um nome de arquivo como "../../../etc/passwd" para baixar as informações de login do servidor. Uma solução simples contra isso é _verificar se o arquivo solicitado está no diretório esperado_:
 
 ```ruby
 basename = File.expand_path('../../files', __dir__)
@@ -413,7 +415,7 @@ raise if basename !=
 send_file filename, disposition: 'inline'
 ```
 
-Another (additional) approach is to store the file names in the database and name the files on the disk after the ids in the database. This is also a good approach to avoid possible code in an uploaded file to be executed. The `attachment_fu` plugin does this in a similar way.
+Outra abordagem (adicional) é armazenar os nomes dos arquivos no banco de dados e nomear os arquivos no disco após os ids no banco de dados. Essa também é uma boa abordagem para evitar a execução de código em um arquivo carregado. O plugin `attachment_fu` faz isso de maneira semelhante.
 
 Intranet and Admin Security
 ---------------------------
