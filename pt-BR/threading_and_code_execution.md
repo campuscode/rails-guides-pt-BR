@@ -175,7 +175,7 @@ Comportamento do *Framework*
 ----------------------------
 
 Os componentes do *framework* Rails também utilizam essas ferramentas para gerenciar
-suas necessidades relacionadas a concorrência.
+suas necessidades relacionadas à concorrência.
 
 `ActionDispatch::Executor` e `ActionDispatch::Reloader` são *middlewares* Rack
 que envolvem requisições com o *Executor* ou *Reloader* fornecido. Esses componentes
@@ -186,7 +186,7 @@ mais recente possível da aplicação se houver qualquer mudança de código.
 O Active Job também envolve a execução de *jobs* com o *Reloader*, carregando a
 última versão do código para executar cada *job* assim que sai da fila para ser executado.
 
-Ao invés de utilizar o *Reloader*, o Action Cable usa o *Executor*: já que cada conexão *Cable* é
+Ao invés de utilizar o *Reloader*, o Action Cable usa o *Executor*: já que cada conexão *Cable*
 é associada a uma instância de uma classe, não é possível recarregar a cada mensagem WebSocket.
 Somente o *message handler* é envolvido pelo *Reloader* a propósito. Uma conexão
 de longa duração não previne o recarregamento a aplicação promovido por uma requisição ou
