@@ -1828,7 +1828,7 @@ end
 Testando o Action Cable
 --------------------
 
-Desde que o Action Cable é usado em diferentes partes de sua aplicação,
+Como o Action Cable é usado em diferentes partes de sua aplicação,
 você precisará testar ambos os canais, classes de conexão e mensagens corretas das classes de transmissão.
 
 ### Caso de Teste de Conexão
