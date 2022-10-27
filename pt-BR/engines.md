@@ -311,26 +311,27 @@ integration tests for the engine should be placed. Other directories can be
 created in the `test` directory as well. For example, you may wish to create a
 `test/models` directory for your model tests.
 
-Providing Engine Functionality
+Fornecendo Funcionalidades a *Engine*
 ------------------------------
 
-The engine that this guide covers provides submitting articles and commenting
-functionality and follows a similar thread to the [Getting Started
-Guide](getting_started.html), with some new twists.
+A *engine* que este guia cobre fornece funcionalidades de submeter artigos e
+comentários e segue na mesma linha do [Guia Começando com Rails](getting_started.html), com algumas
+novas alterações.
 
 NOTE: For this section, make sure to run the commands in the root of the
 `blorgh` engine's directory.
 
-### Generating an Article Resource
+### Gerando um Recurso de Artigo
 
-The first thing to generate for a blog engine is the `Article` model and related
-controller. To quickly generate this, you can use the Rails scaffold generator.
+A primeira coisa a se gerar para uma *engine* de blog é o *model* `Article` e o
+*controller* relacionado. Para gerar isso rapidamente, você pode utilizar o
+gerador de *scaffold* do Rails.
 
 ```bash
 $ bin/rails generate scaffold article title:string text:text
 ```
 
-This command will output this information:
+Esse comando gerará a seguinte saída:
 
 ```
 invoke  active_record
@@ -358,22 +359,21 @@ create      app/helpers/blorgh/articles_helper.rb
 invoke      test_unit
 ```
 
-The first thing that the scaffold generator does is invoke the `active_record`
-generator, which generates a migration and a model for the resource. Note here,
-however, that the migration is called `create_blorgh_articles` rather than the
-usual `create_articles`. This is due to the `isolate_namespace` method called in
-the `Blorgh::Engine` class's definition. The model here is also namespaced,
-being placed at `app/models/blorgh/article.rb` rather than `app/models/article.rb` due
-to the `isolate_namespace` call within the `Engine` class.
+A primeira coisa que o gerador de *scaffold* faz é invocar o gerador `active_record`,
+que gera uma migração e um `model` para o recurso. Note que, porém, a migração é
+chamada `create_blorgh_articles` ao invés de `create_articles`. Isso se deve a
+chamada do método `isolate_namespace` na definição da classe `Blorgh::Engine`. O *model*
+aqui também está sob um *namespace*, colocado em `app/models/blorgh/article.rb` ao invés
+de `app/models/article.rb` devido à chamada do método `isolate_namespace` dentro da
+classe `Engine`.
 
-Next, the `test_unit` generator is invoked for this model, generating a model
-test at `test/models/blorgh/article_test.rb` (rather than
-`test/models/article_test.rb`) and a fixture at `test/fixtures/blorgh/articles.yml`
-(rather than `test/fixtures/articles.yml`).
+A seguir, é invocado o gerador `test_unit` para este *model*, gerando um teste de *model*
+em `test/models/blorgh/article_test.rb` (ao invés de `test/models/article_test.rb`) e uma
+*fixture* em `test/fixtures/blorgh/articles.yml` (ao invés de `test/fixtures/articles.yml`).
 
-After that, a line for the resource is inserted into the `config/routes.rb` file
-for the engine. This line is simply `resources :articles`, turning the
-`config/routes.rb` file for the engine into this:
+Depois disso, uma linha para o recurso é inserida no arquivo `config/routes.rb` para
+aquela *engine*. Essa linha é simplesmente `resources :articles`, transformando o
+arquivo `config/routes.rb` da *engine* nisto:
 
 ```ruby
 Blorgh::Engine.routes.draw do
@@ -381,21 +381,21 @@ Blorgh::Engine.routes.draw do
 end
 ```
 
-Note here that the routes are drawn upon the `Blorgh::Engine` object rather than
-the `YourApp::Application` class. This is so that the engine routes are confined
-to the engine itself and can be mounted at a specific point as shown in the
-[test directory](#test-directory) section. It also causes the engine's routes to
-be isolated from those routes that are within the application. The
-[Routes](#routes) section of this guide describes it in detail.
+Note que as rotas são escritas sobre o objeto `Blorgh::Engine` ao invés da classe
+`YourApp::Application`. Isso acontece, pois assim as rotas da *engine* permanecem
+confinadas na própria *engine* e podem ser montadas em um ponto específico como
+mostrado na seção [diretório de teste](#test-directory). Isso também faz com que
+as rotas da *engine* estejam isoladas das rotas da própria aplicação. A seção
+[Rotas](#routes) deste guia, descreve isso em detalhes.
 
-Next, the `scaffold_controller` generator is invoked, generating a controller
-called `Blorgh::ArticlesController` (at
-`app/controllers/blorgh/articles_controller.rb`) and its related views at
-`app/views/blorgh/articles`. This generator also generates tests for the
-controller (`test/controllers/blorgh/articles_controller_test.rb` and `test/system/blorgh/articles_test.rb`) and a helper (`app/helpers/blorgh/articles_helper.rb`).
+A seguir, é invocado o gerador `scaffold_controller`, gerando um *controller* chamado
+`Blorgh::ArticlesController` (em `app/controllers/blorgh/articles_controller.rb`) e
+suas *views* relacionadas em `app/views/blorgh/articles`. Esse gerador também gera testes
+para o *controller* (`test/controllers/blorgh/articles_controller_test.rb` e
+`test/system/blorgh/articles_test.rb`) e um *helper* (`app/helpers/blorgh/articles_helper.rb`).
 
-Everything this generator has created is neatly namespaced. The controller's
-class is defined within the `Blorgh` module:
+Tudo que esse gerador cria está sob um *namespace*. A classe do *controller* é
+definida dentro de um módulo `Blorgh`:
 
 ```ruby
 module Blorgh
@@ -408,7 +408,7 @@ end
 NOTE: The `ArticlesController` class inherits from
 `Blorgh::ApplicationController`, not the application's `ApplicationController`.
 
-The helper inside `app/helpers/blorgh/articles_helper.rb` is also namespaced:
+O *helper* dentro de `app/helpers/blorgh/articles_helper.rb` também está sob um *namespace*.
 
 ```ruby
 module Blorgh
@@ -418,55 +418,53 @@ module Blorgh
 end
 ```
 
-This helps prevent conflicts with any other engine or application that may have
-an article resource as well.
+Isso ajuda a prevenir conflitos com qualquer outra *engine* ou aplicação que também
+tenha um recurso de artigo.
 
-You can see what the engine has so far by running `bin/rails db:migrate` at the root
-of our engine to run the migration generated by the scaffold generator, and then
-running `bin/rails server` in `test/dummy`. When you open
-`http://localhost:3000/blorgh/articles` you will see the default scaffold that has
-been generated. Click around! You've just generated your first engine's first
-functions.
+Você pode ver o que a *engine* tem até agora executando `bin/rails db:migrate` na raiz
+de sua *engine* para executar as migrações geradas pelo gerador de *scaffold*, e então
+executar `bin/rails server` em `test/dummy`. Quando você abrir `http://localhost:3000/blorgh/articles`,
+você verá o *scaffold* padrão que foi gerado.  Clique em volta! Você acaba de gerar as
+primeiras funções de sua primeira *engine*.
 
-If you'd rather play around in the console, `bin/rails console` will also work just
-like a Rails application. Remember: the `Article` model is namespaced, so to
-reference it you must call it as `Blorgh::Article`.
+Se você preferir testar utilizando o *console*, `bin/rails console` também funcionará
+como uma aplicação Rails. Lembre-se: o model `Article` utiliza um *namespace*, então para
+referenciá-lo, você deve chamá-lo como `Blorgh::Article`.
 
 ```irb
 irb> Blorgh::Article.find(1)
 => #<Blorgh::Article id: 1 ...>
 ```
 
-One final thing is that the `articles` resource for this engine should be the root
-of the engine. Whenever someone goes to the root path where the engine is
-mounted, they should be shown a list of articles. This can be made to happen if
-this line is inserted into the `config/routes.rb` file inside the engine:
+Uma última coisa é que o recurso `articles` para essa *engine* deve estar na
+raiz da *engine*. Sempre que alguém for ao caminho raiz onde a *engine* está montada,
+eles devem ver uma lista de artigos. Isso pode ser feito se essa linha for inserida
+ao arquivo `config/routes.rb` dentro da *engine*:
 
 ```ruby
 root to: "articles#index"
 ```
 
-Now people will only need to go to the root of the engine to see all the articles,
-rather than visiting `/articles`. This means that instead of
-`http://localhost:3000/blorgh/articles`, you only need to go to
-`http://localhost:3000/blorgh` now.
+Agora, as pessoas só precisarão ir à raiz da *engine* para ver os artigos, ao invés
+de visitar `/articles`. Isso significa que ao invés de `http://localhost:3000/blorgh/articles`,
+você agora só precisa ir até `http://localhost:3000/blorgh`.
 
-### Generating a Comments Resource
+### Gerando um Recurso de Comentários
 
-Now that the engine can create new articles, it only makes sense to add
-commenting functionality as well. To do this, you'll need to generate a comment
-model, a comment controller, and then modify the articles scaffold to display
-comments and allow people to create new ones.
+Agora que a *engine* pode criar novos artigos, faz sentido adicionar a funcionalidade
+de comentários também. Para fazer isso, você precisará gerar um *model* de comentário,
+um *controller* de comentários, e então modificar o *scaffold* de artigos para
+exibir os comentários e permitir que pessoas possam criar novos comentários.
 
-From the engine root, run the model generator. Tell it to generate a
-`Comment` model, with the related table having two columns: an `article_id` integer
-and `text` text column.
+Da raiz da *engine*, execute o gerador de *model*. Indique a geração de um
+*model* `Comment`, com a sua tabela contendo duas colunas: um inteiro `article_id`
+e uma coluna de texto `text`.
 
 ```bash
 $ bin/rails generate model Comment article_id:integer text:text
 ```
 
-This will output the following:
+Isso produzirá a seguinte saída:
 
 ```
 invoke  active_record
@@ -477,32 +475,32 @@ create      test/models/blorgh/comment_test.rb
 create      test/fixtures/blorgh/comments.yml
 ```
 
-This generator call will generate just the necessary model files it needs,
-namespacing the files under a `blorgh` directory and creating a model class
-called `Blorgh::Comment`. Now run the migration to create our blorgh_comments
-table:
+Esse gerador gerará somente os arquivos de *model* que ele precisa, colocando
+os arquivo dentro de um diretório `blorgh` e criando uma classe de *model*
+chamada `Blorgh::Comment`. Agora execute a migração para criar nossa tabela
+`blorgh_comments`.
 
 ```bash
 $ bin/rails db:migrate
 ```
 
-To show the comments on an article, edit `app/views/blorgh/articles/show.html.erb` and
-add this line before the "Edit" link:
+Para exibir os comentários em um artigo, edite `app/views/blorgh/articles/show.html.erb`
+e adicione essas linhas antes do link "Edit".
 
 ```html+erb
 <h3>Comments</h3>
 <%= render @article.comments %>
 ```
 
-This line will require there to be a `has_many` association for comments defined
-on the `Blorgh::Article` model, which there isn't right now. To define one, open
-`app/models/blorgh/article.rb` and add this line into the model:
+Essa linha requer que exista uma associação `has_many` com os comentários definida
+no *model* `Blorgh::Article`, o que não existe até o momento. Para defini-la, abra
+`app/models/blorgh/article.rb` e adicione essa linha no *model*.
 
 ```ruby
 has_many :comments
 ```
 
-Turning the model into this:
+Transformando o *model* nisso:
 
 ```ruby
 module Blorgh
@@ -517,17 +515,17 @@ NOTE: Because the `has_many` is defined inside a class that is inside the
 model for these objects, so there's no need to specify that using the
 `:class_name` option here.
 
-Next, there needs to be a form so that comments can be created on an article. To
-add this, put this line underneath the call to `render @article.comments` in
-`app/views/blorgh/articles/show.html.erb`:
+A seguir, é necessário que tenhamos um formulário para que os comentários sejam
+criados dentro de um artigo. Para adicionar isso, coloque essa linha logo após
+`render @article.comments` em `app/views/blorgh/articles/show.html.erb`.
 
 ```erb
 <%= render "blorgh/comments/form" %>
 ```
 
-Next, the partial that this line will render needs to exist. Create a new
-directory at `app/views/blorgh/comments` and in it a new file called
-`_form.html.erb` which has this content to create the required partial:
+A seguir, a *partial* que essa linha renderizará precisa existir. Crie um novo
+diretório `app/views/blorgh/comments` e dentro dele, um novo arquivo chamado
+`_form.html.erb` que contem esse conteúdo para criar a *partial* requerida:
 
 ```html+erb
 <h3>New comment</h3>
@@ -540,10 +538,10 @@ directory at `app/views/blorgh/comments` and in it a new file called
 <% end %>
 ```
 
-When this form is submitted, it is going to attempt to perform a `POST` request
-to a route of `/articles/:article_id/comments` within the engine. This route doesn't
-exist at the moment, but can be created by changing the `resources :articles` line
-inside `config/routes.rb` into these lines:
+Quando esse formulário é submetido, ele tentará performar uma requisição do tipo
+`POST` a uma rota `/articles/:article_id/comments` da *engine*. Essa ainda não existe
+atualmente, mas pode ser criada mudando a linha `resources :articles` dentro de
+`config/routes.rb` para estas linhas:
 
 ```ruby
 resources :articles do
@@ -551,16 +549,16 @@ resources :articles do
 end
 ```
 
-This creates a nested route for the comments, which is what the form requires.
+Isso cria uma rota aninhada para os comentários, que o formulário requer.
 
-The route now exists, but the controller that this route goes to does not. To
-create it, run this command from the engine root:
+Essa rota agora existe, mas o *controller* para onde está rota leva, não existe.
+Para criá-lo, execute este comando na raiz da *engine*.
 
 ```bash
 $ bin/rails generate controller comments
 ```
 
-This will generate the following things:
+Isso gerará o seguinte:
 
 ```
 create  app/controllers/blorgh/comments_controller.rb
@@ -573,10 +571,10 @@ create    app/helpers/blorgh/comments_helper.rb
 invoke    test_unit
 ```
 
-The form will be making a `POST` request to `/articles/:article_id/comments`, which
-will correspond with the `create` action in `Blorgh::CommentsController`. This
-action needs to be created, which can be done by putting the following lines
-inside the class definition in `app/controllers/blorgh/comments_controller.rb`:
+O formulário está executando uma requisição do tipo `POST` para `/articles/:article_id/comments`
+que corresponderá a ação `create` em `Blorgh::CommentsController`. Essa ação precisa ser
+criada, o que pode ser feito colocando as seguintes linhas dentro da definição da classe
+em `app/controllers/blorgh/comments_controller.rb`:
 
 ```ruby
 def create
@@ -592,9 +590,9 @@ private
   end
 ```
 
-This is the final step required to get the new comment form working. Displaying
-the comments, however, is not quite right yet. If you were to create a comment
-right now, you would see this error:
+Isso é o último passo requerido para obter o formulário de novo comentário funcionando.
+Exibir os comentários, entretanto, ainda não está funcionando. Se você criar um comentário
+agora, você verá o seguinte erro:
 
 ```
 Missing partial blorgh/comments/_comment with {:handlers=>[:erb, :builder],
@@ -603,27 +601,27 @@ Missing partial blorgh/comments/_comment with {:handlers=>[:erb, :builder],
 "/Users/ryan/Sites/side_projects/blorgh/app/views"
 ```
 
-The engine is unable to find the partial required for rendering the comments.
-Rails looks first in the application's (`test/dummy`) `app/views` directory and
-then in the engine's `app/views` directory. When it can't find it, it will throw
-this error. The engine knows to look for `blorgh/comments/_comment` because the
-model object it is receiving is from the `Blorgh::Comment` class.
+Essa *engine* não é capaz de encontrar a *partial* requerida para renderizar os comentários.
+O Rails procura primeiro no diretório `app/views` da aplicação (`test/dummy`) e
+depois no diretório `app/views` da *engine*. Quando ele não consegue encontrar, ele
+irá disparar esse erro. A *engine* sabe procurar por `blorgh/comments/_comment` porque
+o objeto do *model* a está recebendo da classe `Blorgh::Comment`.
 
-This partial will be responsible for rendering just the comment text, for now.
-Create a new file at `app/views/blorgh/comments/_comment.html.erb` and put this
-line inside it:
+Essa *partial* será responsável apenas por renderizar o texto do comentário, por agora.
+Crie um novo arquivo em `app/views/blorgh/comments/_comment.html.erb` e coloque essa
+linha dentro dele:
 
 ```erb
 <%= comment_counter + 1 %>. <%= comment.text %>
 ```
 
-The `comment_counter` local variable is given to us by the `<%= render
-@article.comments %>` call, which will define it automatically and increment the
-counter as it iterates through each comment. It's used in this example to
-display a small number next to each comment when it's created.
+A variável local `comment_counter` nos é provida pela chamada `<%= render
+@article.comments %>`, que irá defini-la automaticamente e incrementar o contador
+enquanto faz a iteração através de cada comentário. Ela é usada nesse exemplo para
+exibir um pequeno número ao lado de cada comentário quando ele é criado.
 
-That completes the comment function of the blogging engine. Now it's time to use
-it within an application.
+Isso finaliza a funcionalidade de comentário da *engine* de *blogging*. Agora é
+hora de utilizá-la em uma aplicação.
 
 Hooking Into an Application
 ---------------------------
