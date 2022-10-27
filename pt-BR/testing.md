@@ -1982,29 +1982,29 @@ assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança é visív
 
 Por favor consulte a [Documentação da API `ActiveSupport::Testing::TimeHelpers`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html) para obter informações detalhadas sobre os *helpers* de tempo disponíveis.
 
-Testing Eager Loading
+Testando Eager Loading
 ---------------------
 
-Normally, applications do not eager load in the `development` or `test` environments to speed things up. But they do in the `production` environment.
+Normalmente, aplicações não fazem `eager loading` em ambientes de desenvolvimento e testes para tornar a app mais rápida. Mas fazem em ambientes de produção. 
 
-If some file in the project cannot be loaded for whatever reason, you better detect it before deploying to production, right?
+Se algum arquivo no projeto não pode ser carregado por qualquer que seja o motivo, é melhor você detectar antes de fazer deploy para produção, correto?
 
-### Continuous Integration
+### Integração Contínua
 
-If your project has CI in place, eager loading in CI is an easy way to ensure the application eager loads.
+Se seu projeto tem o CI configurado, eager loading neste é uma maneira fácil de ter certeza que a app faz eager loading.
 
-CIs typically set some environment variable to indicate the test suite is running there. For example, it could be `CI`:
+CIs normalmente expõem alguma variável de ambiente para indicar a suíte de teste que está rodando lá. Por exemplo, poderia ser `CI`:
 
 ```ruby
 # config/environments/test.rb
 config.eager_load = ENV["CI"].present?
 ```
 
-Starting with Rails 7, newly generated applications are configured that way by default.
+A partir de Rails 7, aplicações geradas são configuradas desse jeito por padrão.
 
-### Bare Test Suites
+### Suítes de Testes Simples
 
-If your project does not have continuous integration, you can still eager load in the test suite by calling `Rails.application.eager_load!`:
+Se seu projeto não possui integração contínua, você ainda pode fazer eager load na suíte de teste por chamar `Rails.application.eager_load!`:
 
 #### minitest
 
@@ -2012,7 +2012,7 @@ If your project does not have continuous integration, you can still eager load i
 require "test_helper"
 
 class ZeitwerkComplianceTest < ActiveSupport::TestCase
-  test "eager loads all files without errors" do
+  test "faz eager loading de todos os arquivos sem erros" do
     assert_nothing_raised { Rails.application.eager_load! }
   end
 end
@@ -2024,7 +2024,7 @@ end
 require "rails_helper"
 
 RSpec.describe "Zeitwerk compliance" do
-  it "eager loads all files without errors" do
+  it "faz eager loading de todos os arquivos sem erros" do
     expect { Rails.application.eager_load! }.not_to raise_error
   end
 end
