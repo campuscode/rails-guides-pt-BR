@@ -1913,7 +1913,7 @@ O Action Cable vem com uma grande variedade de asserções customizadas que pode
 
 É uma boa prática ter certeza que a mensagem correta foi transmitida dentro de outros componentes (ex: dentro de seus _controllers_).
 Isso é precisamente onde as asserções customizadas providas pelo Action Cable são muito úteis.
-Por exemplo, com um model:
+Por exemplo, com um _model_:
 
 ```ruby
 require "test_helper"
