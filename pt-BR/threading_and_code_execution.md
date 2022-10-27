@@ -175,48 +175,48 @@ deve ocorrer antes da *sub-thread* ser executada, mas ela não pode ser invocada
 segurança enquanto a *thread* pai está em execução. *Sub-threads* devem usar somente o
 *Executor*.
 
-Framework Behavior
-------------------
+Comportamento do *Framework*
+----------------------------
 
-The Rails framework components use these tools to manage their own concurrency
-needs too.
+Os componentes do *framework* Rails também utilizam essas ferramentas para gerenciar
+suas necessidades relacionadas à concorrência.
 
-`ActionDispatch::Executor` and `ActionDispatch::Reloader` are Rack middlewares
-that wrap requests with a supplied Executor or Reloader, respectively. They
-are automatically included in the default application stack. The Reloader will
-ensure any arriving HTTP request is served with a freshly-loaded copy of the
-application if any code changes have occurred.
+`ActionDispatch::Executor` e `ActionDispatch::Reloader` são *middlewares* Rack
+que envolvem requisições com o *Executor* ou *Reloader* fornecido. Esses componentes
+são automaticamente incluídos na pilha de *middlewares* de uma aplicação padrão.
+O *Reloader* irá garantir que qualquer requisição HTTP seja servida com a cópia
+mais recente possível da aplicação se houver qualquer mudança de código.
 
-Active Job also wraps its job executions with the Reloader, loading the latest
-code to execute each job as it comes off the queue.
+O Active Job também envolve a execução de *jobs* com o *Reloader*, carregando a
+última versão do código para executar cada *job* assim que sai da fila para ser executado.
 
-Action Cable uses the Executor instead: because a Cable connection is linked to
-a specific instance of a class, it's not possible to reload for every arriving
-WebSocket message. Only the message handler is wrapped, though; a long-running
-Cable connection does not prevent a reload that's triggered by a new incoming
-request or job. Instead, Action Cable uses the Reloader's `before_class_unload`
-callback to disconnect all its connections. When the client automatically
-reconnects, it will be speaking to the new version of the code.
+Ao invés de utilizar o *Reloader*, o Action Cable usa o *Executor*: já que cada conexão *Cable*
+é associada a uma instância de uma classe, não é possível recarregar a cada mensagem WebSocket.
+Somente o *message handler* é envolvido pelo *Reloader* a propósito. Uma conexão
+de longa duração não previne o recarregamento a aplicação promovido por uma requisição ou
+*job*. Ao invés disso, o Action Cable utiliza o *callback* `before_class_unload`
+do *Reloader* para desconectar todas as suas conexões. Quando o cliente automaticamente
+reconectar, ele irá se comunicar com a nova versão do código.
 
-The above are the entry points to the framework, so they are responsible for
-ensuring their respective threads are protected, and deciding whether a reload
-is necessary. Other components only need to use the Executor when they spawn
-additional threads.
+Os pontos acima são *entry points* para o *framework*, logo eles são responsáveis
+por garantir a proteção de suas *threads* e por decidir quando um recarregamento
+é necessário. Outros componentes utilizam apenas o *Executor* quando criam *threads*
+adicionais.
 
-### Configuration
+### Configuração
 
-The Reloader only checks for file changes when `cache_classes` is false and
-`reload_classes_only_on_change` is true (which is the default in the
-`development` environment).
+O *Reloader* apenas verifica mudanças em arquivos se `cache_classes` for falso e
+`reload_classes_only_on_change` for verdadeiro (que é o padrão no ambiente `development`).
 
-When `cache_classes` is true (in `production`, by default), the Reloader is only
-a pass-through to the Executor.
+Quando `cache_classes` for verdadeiro (em `production`, por padrão), o *Reloader*
+passa o controle imediatamente para o *Executor*.
 
-The Executor always has important work to do, like database connection
-management. When `cache_classes` and `eager_load` are both true (`production`),
-no autoloading or class reloading will occur, so it does not need the Load
-Interlock. If either of those are false (`development`), then the Executor will
-use the Load Interlock to ensure constants are only loaded when it is safe.
+O *Executor* sempre tem coisas importantes para fazer, como gerenciar as conexões
+do banco de dados. Quando `cache_classes` e `eager_load` são verdadeiros (`production`),
+nenhum autocarregamento ou recarregamento de classes irá ocorrer, então o *Load Interlock*
+não é necessário. Se algum dessas configurações forem falsas (`development`), o *Executor*
+irá usar o *Load Interlock* para garantir que constantes só serão carregadas quando for
+seguro.
 
 Load Interlock
 --------------
