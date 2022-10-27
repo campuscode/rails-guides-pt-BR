@@ -1835,7 +1835,7 @@ você precisará testar ambos os canais, classes de conexão e mensagens correta
 
 Por padrão, quando você cria uma nova aplicação Rails com o Action Cable, um teste de classe base de conexão (`ApplicationCable::Connection`) também é gerado dentro da pasta `test/channels/application_cable`.
 
-Testes de conexão servem para verificar se os identificadores foram configurados ou que requests de conexão impróprias foram rejeitados. Aqui está um exemplo:
+Testes de conexão servem para verificar se os identificadores foram configurados ou que _requests_ de conexão impróprias foram rejeitados. Aqui está um exemplo:
 
 ```ruby
 class ApplicationCable::ConnectionTest < ActionCable::Connection::TestCase
