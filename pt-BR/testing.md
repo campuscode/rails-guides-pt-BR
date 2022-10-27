@@ -1911,7 +1911,7 @@ Veja a documentação da API do [`ActionCable::Channel::TestCase`](https://api.r
 
 O Action Cable vem com uma grande variedade de asserções customizadas que podem ser usadas para deixar os testes menos verbosos. Para uma lista completa das asserções disponíveis, veja a documentação da API do [`ActionCable::TestHelper`](https://api.rubyonrails.org/classes/ActionCable/TestHelper.html).
 
-É uma boa prática ter certeza que a mensagem correta foi transmitida dentro de outros componentes (ex: dentro de seus controllers).
+É uma boa prática ter certeza que a mensagem correta foi transmitida dentro de outros componentes (ex: dentro de seus _controllers_).
 Isso é precisamente onde as asserções customizadas providas pelo Action Cable são muito úteis.
 Por exemplo, com um model:
 
