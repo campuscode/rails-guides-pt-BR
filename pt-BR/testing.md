@@ -1855,7 +1855,7 @@ class ApplicationCable::ConnectionTest < ActionCable::Connection::TestCase
 end
 ```
 
-Você também pode espificar cookies de request do mesmo jeito que você faz em testes de integração:
+Você também pode especificar _cookies_ de _request_ do mesmo jeito que você faz em testes de integração:
 
 ```ruby
 test "conecta com cookies" do
