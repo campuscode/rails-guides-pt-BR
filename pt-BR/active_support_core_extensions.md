@@ -4060,9 +4060,9 @@ NOTE: Defined in `active_support/core_ext/load_error.rb`.
 Extensions to Pathname
 -------------------------
 
-### `existence`
+### `existência`
 
-o [`existence`][Pathname#existence] retorna o receptor se o arquivo nomeado existir, caso contrário retorna +nil+. É útil para expressões idiomáticas como esta:
+O [`existence`][Pathname#existence] retorna o receptor se o arquivo nomeado existir, caso contrário retorna +nil+. É útil para expressões idiomáticas como esta:
 
 ```ruby
 content = Pathname.new("file").existence&.read
