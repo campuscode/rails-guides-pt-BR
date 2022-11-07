@@ -73,7 +73,7 @@ Gerando uma *Engine*
 
 Para gerar uma *engine*, você precisará rodar o gerador de *plugin* e passar a ele
 opções conforme for necessário. Para o exemplo do "blorgh", você precisará criar
-uma *engine* "montável" (mountable), executando o seguinte comando em um terminal:
+uma *engine* "montável" (_mountable_), executando o seguinte comando em um terminal:
 
 ```bash
 $ rails plugin new blorgh --mountable
@@ -86,8 +86,8 @@ $ rails plugin --help
 ```
 
 A opção `--mountable` indica ao gerador que você quer criar uma *engine*
-"montável" e com *namespace* isolado. Esse gerador proverá uma estrutura de
-esqueleto igual a se fosse usado a opção `--full`. A opção `--full` indica ao
+"montável" e com *namespace* isolado. Esse gerador fornecerá a mesma estrutura de
+esqueleto que a opção `--full`. A opção `--full` indica ao
 gerador que você quer criar uma *engine*, incluindo uma estrutura de esqueleto
 que fornece o seguinte:
 
@@ -190,7 +190,7 @@ por isolar os *controllers*, *models*, rotas e outras coisas em seu próprio *na
 separado de componentes similares dentro da aplicação.
 Sem isso, haveria a possibilidade dos componentes da *engine* "vazarem" dentro
 da aplicação, causando uma disrupção indesejada, ou que componentes importantes
-da *engine* fossem sobrescritos por coisas com nomes similires existentes na aplicação.
+da *engine* fossem sobrescritos por coisas com nomes similares existentes na aplicação.
 Um exemplo de conflitos como esses são os *helpers*. Sem chamar `isolate_namespace`,
 os *helpers* da *engine* seriam incluídos nos *controllers* da aplicação.
 
@@ -198,7 +198,7 @@ NOTE: It is **highly** recommended that the `isolate_namespace` line be left
 within the `Engine` class definition. Without it, classes generated in an engine
 **may** conflict with an application.
 
-O que essa isolação de *namespace* significa é que um model gerado por uma chamada
+O que esse isolamento de *namespace* significa é que um _model_ gerado por uma chamada
 ao `bin/rails generate model`, como `bin/rails generate model article`, não será
 chamada `Article`, mas sim dentro de um *namespace*, chamado de `Blorgh::Article`.
 Além disso, a tabela para o *model* também usará o *namespace*, tornando-se `blorgh_articles`,
@@ -220,14 +220,14 @@ Nós veremos mais sobre *models* em uma seção futura, quando estivermos escrev
 
 Dentro do diretório `app/assets`, estão os diretórios `images` e `stylesheets` que,
 novamente, já deve ser familiar a você devido sua similaridade com uma aplicação.
-Uma diferença aqui, entretanto, é que cada diretório contem um sub-diretório com o nome
+Uma diferença aqui, entretanto, é que cada diretório contém um sub-diretório com o nome
 da *engine*. Como essa *engine* utiliza um *namespace*, seus *assets* também devem usar.
 
-Dentro do diretório `app/controllers` há um diretório `blorgh` que contem um
+Dentro do diretório `app/controllers` há um diretório `blorgh` que contém um
 arquivo chamado `application_controller.rb`. Esse arquivo fornecerá funcionalidades
 comuns aos *controllers* da *engine*. O diretório `blorgh` é onde os outros *controllers*
 da *engine* estarão. Ao colocá-los neste diretório com *namespace*, você estará evitando
-que eles possam conlfitar com *controllers* com nomes idênticos  de *controllers* existentes
+que eles possam conflitar com *controllers* com nomes idênticos  de *controllers* existentes
 em outras *engines* ou da própria aplicação.
 
 NOTE: The `ApplicationController` class inside an engine is named just like a
@@ -263,7 +263,7 @@ colocar seus arquivos nesse subdiretório e utilizar o *namespace* nos seus obje
 você evita que eles possam conflitar com elementos de nome idênticos  ao de outras
 *engines* ou até mesmo da própria aplicação.
 
-Por último, o diretório `app/views` contem uma pasta `layouts`, que contem um
+Por último, o diretório `app/views` contém uma pasta `layouts`, que contém um
 arquivo em `blorgh/application.html.erb`. Esse arquivo permite que você especifique
 um *layout* para a *engine*. Se a *engine* for utilizada sozinha, então você deve
 adicionar as personalizações necessárias para seu arquivo de `layout` ao invés do
@@ -275,7 +275,7 @@ deletar esse arquivo e referenciar um *layout* diferente nos *controllers* da su
 
 #### Diretório `bin`
 
-Esse diretório contem um arquivo, `bin/rails`, que possibilita o uso dos sub-comandos
+Esse diretório contém um arquivo, `bin/rails`, que possibilita o uso dos sub-comandos
 e geradores do Rails assim como você utilizaria em uma aplicação. Isso significa que
 você terá a habilidade de gerar novos *controllers* e *models* para essa *engine* de
 forma bem simples ao rodar comandos como este:
@@ -284,13 +284,13 @@ forma bem simples ao rodar comandos como este:
 $ bin/rails generate model
 ```
 
-Tenha em mente, é claro, que tudo gerado com esse comandos dentro de uma *engine*
-que contem o `isolate_namespace` na classe `Engine` conterá um *namespace*.
+Tenha em mente, é claro, que tudo gerado com esses comandos dentro de uma *engine*
+que contém o `isolate_namespace` na classe `Engine` conterá um *namespace*.
 
 #### Diretório `test`
 
-O diretório `test` é onde os testes para a *engine* estarão. Para testa a *engine*,
-há um versão reduzida de uma aplicação Rails embutida nela em `test/dummy`. Essa
+O diretório `test` é onde os testes para a *engine* estarão. Para testar a *engine*,
+há uma versão reduzida de uma aplicação Rails embutida nela em `test/dummy`. Essa
 aplicação irá montar a *engine* no arquivo `test/dummy/config/routes.rb`:
 
 ```ruby
