@@ -2030,25 +2030,25 @@ RSpec.describe "Zeitwerk compliance" do
 end
 ```
 
-Additional Testing Resources
+Recursos de teste adicionais
 ----------------------------
 
-### Testing Time-Dependent Code
+### Testando código Time-Dependent
 
-Rails provides built-in helper methods that enable you to assert that your time-sensitive code works as expected.
+O Rails fornece métodos auxiliares integrados que permitem garantir que seu código time-sensitive funciona conforme o esperado.
 
-Here is an example using the [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to) helper:
+Aqui está um exemplo utilizando o helper [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to):
 
 ```ruby
-# Lets say that a user is eligible for gifting a month after they register.
+# Digamos que um usuário seja elegível para presentear um mês depois de se registrar.
 user = User.create(name: "Gaurish", activation_date: Date.new(2004, 10, 24))
 assert_not user.applicable_for_gifting?
 travel_to Date.new(2004, 11, 24) do
-  assert_equal Date.new(2004, 10, 24), user.activation_date # inside the `travel_to` block `Date.current` is mocked
+  assert_equal Date.new(2004, 10, 24), user.activation_date # dentro do bloco `travel_to`, `Date.current` é simulado
   assert user.applicable_for_gifting?
 end
-assert_equal Date.new(2004, 10, 24), user.activation_date # The change was visible only inside the `travel_to` block.
+assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança era visível apenas dentro do bloco `travel_to`.
 ```
 
-Please see [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
-for in-depth information about the available time helpers.
+Por favor veja a documentação da API [`ActiveSupport::Testing::TimeHelpers`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
+para obter informações detalhadas sobre os time helpers disponíveis.
