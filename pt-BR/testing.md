@@ -1825,42 +1825,40 @@ class ProductTest < ActiveSupport::TestCase
 end
 ```
 
-Testing Action Cable
+Testando o Action Cable
 --------------------
 
-Since Action Cable is used at different levels inside your application,
-you'll need to test both the channels, connection classes themselves, and that other
-entities broadcast correct messages.
+Como o Action Cable é usado em diferentes partes de sua aplicação,
+você precisará testar ambos os canais, classes de conexão e mensagens corretas das classes de transmissão.
 
-### Connection Test Case
+### Caso de Teste de Conexão
 
-By default, when you generate new Rails application with Action Cable, a test for the base connection class (`ApplicationCable::Connection`) is generated as well under `test/channels/application_cable` directory.
+Por padrão, quando você cria uma nova aplicação Rails com o Action Cable, um teste de classe base de conexão (`ApplicationCable::Connection`) também é gerado dentro da pasta `test/channels/application_cable`.
 
-Connection tests aim to check whether a connection's identifiers get assigned properly
-or that any improper connection requests are rejected. Here is an example:
+Testes de conexão servem para verificar se os identificadores foram configurados ou que _requests_ de conexão impróprias foram rejeitados. Aqui está um exemplo:
 
 ```ruby
 class ApplicationCable::ConnectionTest < ActionCable::Connection::TestCase
-  test "connects with params" do
-    # Simulate a connection opening by calling the `connect` method
+  test "conecta com parâmetros" do
+    # Simula uma conexão chamando o método `connect`
     connect params: { user_id: 42 }
 
-    # You can access the Connection object via `connection` in tests
+    # Você pode acessar o objeto Connection via `connection` nos testes
     assert_equal connection.user_id, "42"
   end
 
-  test "rejects connection without params" do
-    # Use `assert_reject_connection` matcher to verify that
-    # connection is rejected
+  test "rejeita conexão sem parâmetros" do
+    # Use o matcher `assert_reject_connection` para verificar que
+    # a conexão foi rejeitada
     assert_reject_connection { connect }
   end
 end
 ```
 
-You can also specify request cookies the same way you do in integration tests:
+Você também pode especificar _cookies_ de _request_ do mesmo jeito que você faz em testes de integração:
 
 ```ruby
-test "connects with cookies" do
+test "conecta com cookies" do
   cookies.signed[:user_id] = "42"
 
   connect
@@ -1869,37 +1867,35 @@ test "connects with cookies" do
 end
 ```
 
-See the API documentation for [`ActionCable::Connection::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Connection/TestCase.html) for more information.
+Veja a documentação da API do [`ActionCable::Connection::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Connection/TestCase.html) para mais informações.
 
-### Channel Test Case
+### Caso de Teste de Canal
 
-By default, when you generate a channel, an associated test will be generated as well
-under the `test/channels` directory. Here's an example test with a chat channel:
+Por padrão, quando você gera um canal, um teste associado também será criado dentro da pasta `test/channels`. Aqui está um teste de exemplo com um canal de chat:
 
 ```ruby
 require "test_helper"
 
 class ChatChannelTest < ActionCable::Channel::TestCase
-  test "subscribes and stream for room" do
-    # Simulate a subscription creation by calling `subscribe`
+  test "se inscreve e faz um stream para determinada sala" do
+    # Simula uma criação de inscrição por chamar o método `subscribe`
     subscribe room: "15"
 
-    # You can access the Channel object via `subscription` in tests
+    # Você pode acessar o objeto Channel usando o método `subscription`em testes
     assert subscription.confirmed?
     assert_has_stream "chat_15"
   end
 end
 ```
 
-This test is pretty simple and only asserts that the channel subscribes the connection to a particular stream.
-
-You can also specify the underlying connection identifiers. Here's an example test with a web notifications channel:
+Este teste é muito simples e apenas verifica que o canal faz a conexão para uma stream particular.
+Você também pode especificar identificadores de conexões subjacentes. Aqui está um teste de exemplo com canal de notificações web:
 
 ```ruby
 require "test_helper"
 
 class WebNotificationsChannelTest < ActionCable::Channel::TestCase
-  test "subscribes and stream for user" do
+  test "se inscreve e faz stream para dado usuário" do
     stub_connection current_user: users(:john)
 
     subscribe
@@ -1909,21 +1905,21 @@ class WebNotificationsChannelTest < ActionCable::Channel::TestCase
 end
 ```
 
-See the API documentation for [`ActionCable::Channel::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Channel/TestCase.html) for more information.
+Veja a documentação da API do [`ActionCable::Channel::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Channel/TestCase.html) para mais informações.
 
-### Custom Assertions And Testing Broadcasts Inside Other Components
+### Asserções customizadas e Testando Transmissões dentro de outros componentes
 
-Action Cable ships with a bunch of custom assertions that can be used to lessen the verbosity of tests. For a full list of available assertions, see the API documentation for [`ActionCable::TestHelper`](https://api.rubyonrails.org/classes/ActionCable/TestHelper.html).
+O Action Cable vem com uma grande variedade de asserções customizadas que podem ser usadas para deixar os testes menos verbosos. Para uma lista completa das asserções disponíveis, veja a documentação da API do [`ActionCable::TestHelper`](https://api.rubyonrails.org/classes/ActionCable/TestHelper.html).
 
-It's a good practice to ensure that the correct message has been broadcasted inside other components (e.g. inside your controllers). This is precisely where
-the custom assertions provided by Action Cable are pretty useful. For instance,
-within a model:
+É uma boa prática ter certeza que a mensagem correta foi transmitida dentro de outros componentes (ex: dentro de seus _controllers_).
+Isso é precisamente onde as asserções customizadas providas pelo Action Cable são muito úteis.
+Por exemplo, com um _model_:
 
 ```ruby
 require "test_helper"
 
 class ProductTest < ActionCable::TestCase
-  test "broadcast status after charge" do
+  test "status da trasmissão depois da mudança do pagamento" do
     assert_broadcast_on("products:#{product.id}", type: "charged") do
       product.charge(account)
     end
@@ -1931,8 +1927,8 @@ class ProductTest < ActionCable::TestCase
 end
 ```
 
-If you want to test the broadcasting made with `Channel.broadcast_to`, you should use
-`Channel.broadcasting_for` to generate an underlying stream name:
+Se você quer testar a transmissão feita com `Channel.broadcast_to`, você deveria usar
+`Channel.broadcasting_for` para gerar uma stream subjacente:
 
 ```ruby
 # app/jobs/chat_relay_job.rb
@@ -1950,7 +1946,7 @@ require "test_helper"
 class ChatRelayJobTest < ActiveJob::TestCase
   include ActionCable::TestHelper
 
-  test "broadcast message to room" do
+  test "transmite mensagem para a sala" do
     room = rooms(:all)
 
     assert_broadcast_on(ChatChannel.broadcasting_for(room), text: "Hi!") do
