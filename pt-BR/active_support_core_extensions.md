@@ -3100,12 +3100,12 @@ NOTE: Defined in `active_support/core_ext/hash/indifferent_access.rb`.
 [ActiveSupport::HashWithIndifferentAccess]: https://api.rubyonrails.org/classes/ActiveSupport/HashWithIndifferentAccess.html
 [Hash#with_indifferent_access]: https://api.rubyonrails.org/classes/Hash.html#method-i-with_indifferent_access
 
-Extensions to `Regexp`
+Extensões para `Regexp`
 ----------------------
 
 ### `multiline?`
 
-The method [`multiline?`][Regexp#multiline?] says whether a regexp has the `/m` flag set, that is, whether the dot matches newlines.
+O método [`multiline?`][Regexp#multiline?] diz se uma *regexp* tem o sinalizador `/m` definido, ou seja, se o ponto corresponde a novas linhas.
 
 ```ruby
 %r{.}.multiline?  # => false
@@ -3115,7 +3115,7 @@ Regexp.new('.').multiline?                    # => false
 Regexp.new('.', Regexp::MULTILINE).multiline? # => true
 ```
 
-Rails uses this method in a single place, also in the routing code. Multiline regexps are disallowed for route requirements and this flag eases enforcing that constraint.
+O Rails usa esse método em um único lugar, também no código de roteamento. *Regexps* de várias linhas não são permitidas para requisitos de rota e esse sinalizador facilita a aplicação dessa restrição.
 
 ```ruby
 def verify_regexp_requirements(requirements)
@@ -3127,7 +3127,7 @@ def verify_regexp_requirements(requirements)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/regexp.rb`.
+NOTE: Definido em `active_support/core_ext/regexp.rb`.
 
 [Regexp#multiline?]: https://api.rubyonrails.org/classes/Regexp.html#method-i-multiline-3F
 
