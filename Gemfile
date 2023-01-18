@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'activesupport', '~> 7.0.0'
-gem 'actionpack', '~> 7.0.0'
+gem 'actionpack', '~> 7.0.4'
 gem 'execjs'
 gem 'faraday'
 gem 'faraday_middleware'
