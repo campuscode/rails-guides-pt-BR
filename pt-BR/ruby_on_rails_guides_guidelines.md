@@ -1,10 +1,10 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Orientações para Guias de Ruby on Rails
+Orientações para Ruby on Rails Guias 
 ===============================
 
-Esse guia apresenta orientações para escrever guias de Ruby on Rails. Esse guia serve por si só como exemplo.
+Esse guia apresenta orientações para escrever Ruby on Rails guias. Esse guia serve por si só como exemplo.
 
 Após ler esse guia, você saberá:
 
