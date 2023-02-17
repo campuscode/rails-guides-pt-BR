@@ -6,7 +6,7 @@ Ruby on Rails Guides Guidelines
 
 This guide documents guidelines for writing Ruby on Rails Guides. This guide follows itself in a graceful loop, serving itself as an example.
 
-After reading this guide, you will know:
+Depois de ler esse guia, voce vai saber:
 
 * About the conventions to be used in Rails documentation.
 * How to generate guides locally.
