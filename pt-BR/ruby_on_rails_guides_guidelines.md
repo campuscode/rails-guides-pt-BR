@@ -1,22 +1,22 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Ruby on Rails Guides Guidelines
+Orientações para Guias de Ruby on Rails
 ===============================
 
-This guide documents guidelines for writing Ruby on Rails Guides. This guide follows itself in a graceful loop, serving itself as an example.
+Esse guia apresenta orientações para escrever guias de Ruby on Rails. Esse guia serve por si só como exemplo.
 
-Depois de ler esse guia, voce vai saber:
+Após ler esse guia, você saberá:
 
-* About the conventions to be used in Rails documentation.
-* How to generate guides locally.
+* Sobre a convenção a ser usada em uma documentacao Rails.
+* Como gerar guias localmente.
 
 --------------------------------------------------------------------------------
 
 Markdown
 -------
 
-Guides are written in [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown). There is comprehensive [documentation for Markdown](https://daringfireball.net/projects/markdown/syntax), as well as a [cheatsheet](https://daringfireball.net/projects/markdown/basics).
+Guias são escritos em [GitHub Markdown](https://help.github.com/articles/github-flavored-markdown). Para uma melhor compreensão existe a [documentacão para Markdown](https://daringfireball.net/projects/markdown/syntax), assim como essas [dicas](https://daringfireball.net/projects/markdown/basics).
 
 Prologue
 --------
