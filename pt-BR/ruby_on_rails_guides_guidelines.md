@@ -16,7 +16,7 @@ Após ler esse guia, você saberá:
 Markdown
 -------
 
-Guias são escritos em [GitHub Markdown](https://help.github.com/articles/github-flavored-markdown). Para uma melhor compreensão existe a [documentacão para Markdown](https://daringfireball.net/projects/markdown/syntax), assim como essas [dicas](https://daringfireball.net/projects/markdown/basics).
+Guias são escritos em [GitHub Markdown](https://help.github.com/articles/github-flavored-markdown). Para uma melhor compreensão existe a [documentação para Markdown](https://daringfireball.net/projects/markdown/syntax), assim como essas [dicas](https://daringfireball.net/projects/markdown/basics).
 
 Prologue
 --------
