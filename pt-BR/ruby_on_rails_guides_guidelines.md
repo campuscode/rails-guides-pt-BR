@@ -4,7 +4,7 @@
 Orientações para Ruby on Rails Guias 
 ===============================
 
-Esse guia apresenta orientações para escrever Ruby on Rails guias. Esse guia serve por si só como exemplo.
+Esse guia apresenta orientações para escrever guias Ruby on Rails. Esse guia serve por si só como exemplo.
 
 Após ler esse guia, você saberá:
 
