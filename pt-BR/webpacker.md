@@ -4,48 +4,48 @@
 Webpacker
 =========
 
-This guide will show you how to install and use Webpacker to package JavaScript, CSS, and other assets for the client-side of your Rails application but please note [Webpacker has been retired](https://github.com/rails/webpacker#webpacker-has-been-retired-).
+Esse guia irá mostrar como instalar e usar o Webpacker para empacotar JavaScript, CSS e outros *assets* para a lado cliente da sua aplicação Rails mas por favor note que o [Webpacker foi aposentado](https://github.com/rails/webpacker#webpacker-has-been-retired-).
 
-After reading this guide, you will know:
+Depois de ler esse guia, você saberá:
 
-* What Webpacker does and why it is different from Sprockets.
-* How to install Webpacker and integrate it with your framework of choice.
-* How to use Webpacker for JavaScript assets.
-* How to use Webpacker for CSS assets.
-* How to use Webpacker for static assets.
-* How to deploy a site that uses Webpacker.
-* How to use Webpacker in alternate Rails contexts, such as engines or Docker containers.
+* O que o Webpacker faz e o como ele é diferente do Sprockets.
+* Como instalar o Webpacker e integrar com seu _framework_ de escolha.
+* Como usar o Webpacker para *assets* JavaScript.
+* Como usar o Webpacker para *assets* CSS.
+* Como usar o Webpacker para *assets* estáticos.
+* Como fazer deploy de uma aplicação que usa Webpacker.
+* Como usar o Webpacker em contextos Rails alternativos, como *engines* ou *containers* Docker.
 
 --------------------------------------------------------------
 
-What Is Webpacker?
+O que é Webpacker?
 ------------------
 
-Webpacker is a Rails wrapper around the [webpack](https://webpack.js.org) build system that provides a standard webpack configuration and reasonable defaults.
+Webpacker é um *wrapper* Rails feito com o sistema de *build* [webpack](https://webpack.js.org) que provê uma configuração padrão webpack e bons padrões.
 
-### What is webpack?
+### O que é webpack?
 
-The goal of webpack, or any front-end build system, is to allow you to write your front-end code in a way that is convenient for developers and then package that code in a way that is convenient for browsers. With webpack, you can manage JavaScript, CSS, and static assets like images or fonts. Webpack will allow you to write your code, reference other code in your application, transform your code, and combine your code into easily downloadable packs.
+O intuito do webpack, ou qualquer sistema de *build* front-end, é permitir que você escreva código front-end de maneira conveniente para pessoas desenvolvedoras e depois empacotar o código de maneira conveniente para navegadores. Com o webpack, você pode gerenciar Javascript, CSS e *assets* estáticos, como imagens e fontes. O webpack permite que você escreva seu código, referencie outro código na aplicação, transforme seu código e combine ele em pacotes que podem ser facilmente baixados.
 
-See the [webpack documentation](https://webpack.js.org) for information.
+Veja a [documentação do webpack](https://webpack.js.org) para mais informações.
 
-### How is Webpacker Different from Sprockets?
+### Como o Webpacker é diferente do Sprockets?
 
-Rails also ships with Sprockets, an asset-packaging tool whose features overlap with Webpacker. Both tools will compile your JavaScript into browser-friendly files and also minify and fingerprint them in production. In a development environment, Sprockets and Webpacker allow you to incrementally change files.
+O Rails também funciona com o Sprockets, uma ferramenta de empacotamento de *assets* que tem algumas funcionalidade em comum com o Webpacker. Ambas vão compilar seu Javascript em arquivos "amigáveis" para o navegador, além de minificar e adicionar *fingerprints* neles em produção. Em ambiente de desenvolvimento, o Sprockets e o Webpacker permitem que você altere arquivos de maneira incremental.
 
-Sprockets, which was designed to be used with Rails, is somewhat simpler to integrate. In particular, code can be added to Sprockets via a Ruby gem. However, webpack is better at integrating with more current JavaScript tools and NPM packages and allows for a wider range of integration. New Rails apps are configured to use webpack for JavaScript and Sprockets for CSS, although you can do CSS in webpack.
+O Sprockets, que foi feito para ser usado com Rails, é mais simples de integrar. Particularmente, o código pode ser adicionado ao Sprockets por meio de uma *gem* Ruby. Todavia, o webpack integra melhor com mais ferramentas atuais de javascript e pacotes NPM e disponibiliza mais variedade de integrações. Aplicações novas Rails são configuradas para usar o webpack para Javascript e Sprockets para CSS, apesar de que você também pode utilizar o webpack para o CSS.
 
-You should choose Webpacker over Sprockets on a new project if you want to use NPM packages and/or want access to the most current JavaScript features and tools. You should choose Sprockets over Webpacker for legacy applications where migration might be costly, if you want to integrate using Gems, or if you have a very small amount of code to package.
+Você deve escolher o Webpacker em vez de Sprockets em um projeto novo se quiser utilizar pacotes NPM e/ou quiser acessar funcionalidades e ferramentas mais atuais de Javascript. Você deve escolher Sprockets em vez do Webpacker para aplicações legadas onde migrações podem ser custosas, se você quiser integrar usando Gems ou se tiver uma quantidade pequena de código a ser empacotado.
 
-If you are familiar with Sprockets, the following guide might give you some idea of how to translate. Please note that each tool has a slightly different structure, and the concepts don't directly map onto each other.
+Se você estiver familiarizado com o Sprockets, o guia a seguir pode trazer ideias de correspondência entre as duas ferramentas. Por favor, note que cada ferramenta tem uma estrutura diferente, e os conceitos não são exatamentes iguais um ao outro.
 
-|Task              | Sprockets            | Webpacker         |
-|------------------|----------------------|-------------------|
-|Attach JavaScript |javascript_include_tag|javascript_pack_tag|
-|Attach CSS        |stylesheet_link_tag   |stylesheet_pack_tag|
-|Link to an image  |image_url             |image_pack_tag     |
-|Link to an asset  |asset_url             |asset_pack_tag     |
-|Require a script  |//= require           |import or require  |
+|Tarefa               | Sprockets            | Webpacker         |
+|---------------------|----------------------|-------------------|
+|Vincular JavaScript  |javascript_include_tag|javascript_pack_tag|
+|Vincular CSS         |stylesheet_link_tag   |stylesheet_pack_tag|
+|Link de uma imagem   |image_url             |image_pack_tag     |
+|Link de um *asset*   |asset_url             |asset_pack_tag     |
+|Requerer um *script* |//= require           |import or require  |
 
 Installing Webpacker
 --------------------
@@ -177,30 +177,30 @@ To support HMR with React, you would need to add react-hot-loader. Check out [Re
 
 Don't forget to disable HMR if you are not running webpack-dev-server; otherwise, you will get a "not found error" for stylesheets.
 
-Webpacker in Different Environments
+Webpacker em Diferentes Ambientes
 -----------------------------------
 
-Webpacker has three environments by default `development`, `test`, and `production`. You can add additional environment configurations in the `webpacker.yml` file and set different defaults for each environment. Webpacker will also load the file `config/webpack/<environment>.js` for additional environment setup.
+O Webpacker possui três ambientes por padrão `development`, `test` e `production`. Você pode adicionar configurações de ambiente adicionais no arquivo `webpacker.yml` e definir padrões diferentes para cada ambiente. O Webpacker também carregará o arquivo `config/webpack/<environment>.js` para configuração adicional do ambiente.
 
-## Running Webpacker in Development
+## Executando Webpacker em Desenvolvimento
 
-Webpacker ships with two binstub files to run in development: `./bin/webpack` and `./bin/webpack-dev-server`. Both are thin wrappers around the standard `webpack.js` and `webpack-dev-server.js` executables and ensure that the right configuration files and environmental variables are loaded based on your environment.
+O Webpacker vem com dois arquivos _binstub_ para rodar em desenvolvimento: `./bin/webpack` e `./bin/webpack-dev-server`. Ambos são _wrappers_ condensados em torno dos executáveis padrão `webpack.js` e `webpack-dev-server.js` e garantem que os arquivos de configuração corretos e variáveis de ambiente sejam carregadas com base em seu ambiente.
 
-By default, Webpacker compiles automatically on demand in development when a Rails page loads. This means that you don't have to run any separate processes, and compilation errors will be logged to the standard Rails log. You can change this by changing to `compile: false` in the `config/webpacker.yml` file. Running `bin/webpack` will force the compilation of your packs.
+Por padrão, o Webpacker compila automaticamente sob demanda em desenvolvimento quando uma página do Rails é carregada. Isso significa que você não precisa executar nenhum processo separado, e os erros de compilação serão registrados no _log_ padrão do Rails. Você pode mudar isso mudando para `compile: false` no arquivo `config/webpacker.yml`. Executar `bin/webpack` forçará a compilação de seus pacotes.
 
-If you want to use live code reloading or have enough JavaScript that on-demand compilation is too slow, you'll need to run `./bin/webpack-dev-server` or `ruby ./bin/webpack-dev-server`. This process will watch for changes in the `app/javascript/packs/*.js` files and automatically recompile and reload the browser to match.
+Se você quiser usar o recarregamento de código em tempo real ou tiver JavaScript suficiente para que a compilação sob demanda seja muito lenta, você precisará executar `./bin/webpack-dev-server` ou `ruby ./bin/webpack-dev-server `. Este processo observará as alterações nos arquivos `app/javascript/packs/*.js`, recompilando e recarregando automaticamente o navegador.
 
-Windows users will need to run these commands in a terminal separate from `bundle exec rails server`.
+Os usuários do Windows precisarão executar esses comandos em um terminal separado do `bundle exec rails server`.
 
-Once you start this development server, Webpacker will automatically start proxying all webpack asset requests to this server. When you stop the server, it'll revert to on-demand compilation.
+Assim que você iniciar esse servidor de desenvolvimento, o Webpacker iniciará automaticamente o _proxy_ de todas as solicitações de ativos do webpack para este servidor. Quando você parar o servidor, ele reverterá para a compilação sob demanda.
 
-The [Webpacker Documentation](https://github.com/rails/webpacker) gives information on environment variables you can use to control `webpack-dev-server`. See additional notes in the [rails/webpacker docs on the webpack-dev-server usage](https://github.com/rails/webpacker#development).
+A [Documentação do Webpacker](https://github.com/rails/webpacker) fornece informações sobre variáveis de ambiente que você pode usar para controlar o `webpack-dev-server`. Veja notas adicionais nos [documentos do Rails/webpacker sobre o uso do webpack-dev-server](https://github.com/rails/webpacker#development).
 
-### Deploying Webpacker
+### Fazendo Deploy do Webpacker
 
-Webpacker adds a `webpacker:compile` task to the `assets:precompile` rake task, so any existing deploy pipeline that was using `assets:precompile` should work. The compile task will compile the packs and place them in `public/packs`.
+O Webpacker adiciona uma tarefa `webpacker:compile` à tarefa de rake `assets:precompile`, portanto, qualquer pipeline de implantação existente que estava usando `assets:precompile` deve funcionar. A tarefa compilará os pacotes e os colocará em `public/packs`.
 
-Additional Documentation
+Documentação Adicional
 ------------------------
 
-For more information on advanced topics, such as using Webpacker with popular frameworks, consult the [Webpacker Documentation](https://github.com/rails/webpacker).
+Para obter mais informações sobre tópicos avançados, como o uso do Webpacker com _frameworks_ populares, consulte a [Documentação do Webpacker](https://github.com/rails/webpacker).

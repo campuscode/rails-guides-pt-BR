@@ -1825,42 +1825,40 @@ class ProductTest < ActiveSupport::TestCase
 end
 ```
 
-Testing Action Cable
+Testando o Action Cable
 --------------------
 
-Since Action Cable is used at different levels inside your application,
-you'll need to test both the channels, connection classes themselves, and that other
-entities broadcast correct messages.
+Como o Action Cable é usado em diferentes partes de sua aplicação,
+você precisará testar ambos os canais, classes de conexão e mensagens corretas das classes de transmissão.
 
-### Connection Test Case
+### Caso de Teste de Conexão
 
-By default, when you generate new Rails application with Action Cable, a test for the base connection class (`ApplicationCable::Connection`) is generated as well under `test/channels/application_cable` directory.
+Por padrão, quando você cria uma nova aplicação Rails com o Action Cable, um teste de classe base de conexão (`ApplicationCable::Connection`) também é gerado dentro da pasta `test/channels/application_cable`.
 
-Connection tests aim to check whether a connection's identifiers get assigned properly
-or that any improper connection requests are rejected. Here is an example:
+Testes de conexão servem para verificar se os identificadores foram configurados ou que _requests_ de conexão impróprias foram rejeitados. Aqui está um exemplo:
 
 ```ruby
 class ApplicationCable::ConnectionTest < ActionCable::Connection::TestCase
-  test "connects with params" do
-    # Simulate a connection opening by calling the `connect` method
+  test "conecta com parâmetros" do
+    # Simula uma conexão chamando o método `connect`
     connect params: { user_id: 42 }
 
-    # You can access the Connection object via `connection` in tests
+    # Você pode acessar o objeto Connection via `connection` nos testes
     assert_equal connection.user_id, "42"
   end
 
-  test "rejects connection without params" do
-    # Use `assert_reject_connection` matcher to verify that
-    # connection is rejected
+  test "rejeita conexão sem parâmetros" do
+    # Use o matcher `assert_reject_connection` para verificar que
+    # a conexão foi rejeitada
     assert_reject_connection { connect }
   end
 end
 ```
 
-You can also specify request cookies the same way you do in integration tests:
+Você também pode especificar _cookies_ de _request_ do mesmo jeito que você faz em testes de integração:
 
 ```ruby
-test "connects with cookies" do
+test "conecta com cookies" do
   cookies.signed[:user_id] = "42"
 
   connect
@@ -1869,37 +1867,35 @@ test "connects with cookies" do
 end
 ```
 
-See the API documentation for [`ActionCable::Connection::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Connection/TestCase.html) for more information.
+Veja a documentação da API do [`ActionCable::Connection::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Connection/TestCase.html) para mais informações.
 
-### Channel Test Case
+### Caso de Teste de Canal
 
-By default, when you generate a channel, an associated test will be generated as well
-under the `test/channels` directory. Here's an example test with a chat channel:
+Por padrão, quando você gera um canal, um teste associado também será criado dentro da pasta `test/channels`. Aqui está um teste de exemplo com um canal de chat:
 
 ```ruby
 require "test_helper"
 
 class ChatChannelTest < ActionCable::Channel::TestCase
-  test "subscribes and stream for room" do
-    # Simulate a subscription creation by calling `subscribe`
+  test "se inscreve e faz um stream para determinada sala" do
+    # Simula uma criação de inscrição por chamar o método `subscribe`
     subscribe room: "15"
 
-    # You can access the Channel object via `subscription` in tests
+    # Você pode acessar o objeto Channel usando o método `subscription`em testes
     assert subscription.confirmed?
     assert_has_stream "chat_15"
   end
 end
 ```
 
-This test is pretty simple and only asserts that the channel subscribes the connection to a particular stream.
-
-You can also specify the underlying connection identifiers. Here's an example test with a web notifications channel:
+Este teste é muito simples e apenas verifica que o canal faz a conexão para uma stream particular.
+Você também pode especificar identificadores de conexões subjacentes. Aqui está um teste de exemplo com canal de notificações web:
 
 ```ruby
 require "test_helper"
 
 class WebNotificationsChannelTest < ActionCable::Channel::TestCase
-  test "subscribes and stream for user" do
+  test "se inscreve e faz stream para dado usuário" do
     stub_connection current_user: users(:john)
 
     subscribe
@@ -1909,21 +1905,21 @@ class WebNotificationsChannelTest < ActionCable::Channel::TestCase
 end
 ```
 
-See the API documentation for [`ActionCable::Channel::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Channel/TestCase.html) for more information.
+Veja a documentação da API do [`ActionCable::Channel::TestCase`](https://api.rubyonrails.org/classes/ActionCable/Channel/TestCase.html) para mais informações.
 
-### Custom Assertions And Testing Broadcasts Inside Other Components
+### Asserções customizadas e Testando Transmissões dentro de outros componentes
 
-Action Cable ships with a bunch of custom assertions that can be used to lessen the verbosity of tests. For a full list of available assertions, see the API documentation for [`ActionCable::TestHelper`](https://api.rubyonrails.org/classes/ActionCable/TestHelper.html).
+O Action Cable vem com uma grande variedade de asserções customizadas que podem ser usadas para deixar os testes menos verbosos. Para uma lista completa das asserções disponíveis, veja a documentação da API do [`ActionCable::TestHelper`](https://api.rubyonrails.org/classes/ActionCable/TestHelper.html).
 
-It's a good practice to ensure that the correct message has been broadcasted inside other components (e.g. inside your controllers). This is precisely where
-the custom assertions provided by Action Cable are pretty useful. For instance,
-within a model:
+É uma boa prática ter certeza que a mensagem correta foi transmitida dentro de outros componentes (ex: dentro de seus _controllers_).
+Isso é precisamente onde as asserções customizadas providas pelo Action Cable são muito úteis.
+Por exemplo, com um _model_:
 
 ```ruby
 require "test_helper"
 
 class ProductTest < ActionCable::TestCase
-  test "broadcast status after charge" do
+  test "status da trasmissão depois da mudança do pagamento" do
     assert_broadcast_on("products:#{product.id}", type: "charged") do
       product.charge(account)
     end
@@ -1931,8 +1927,8 @@ class ProductTest < ActionCable::TestCase
 end
 ```
 
-If you want to test the broadcasting made with `Channel.broadcast_to`, you should use
-`Channel.broadcasting_for` to generate an underlying stream name:
+Se você quer testar a transmissão feita com `Channel.broadcast_to`, você deveria usar
+`Channel.broadcasting_for` para gerar uma stream subjacente:
 
 ```ruby
 # app/jobs/chat_relay_job.rb
@@ -1950,7 +1946,7 @@ require "test_helper"
 class ChatRelayJobTest < ActiveJob::TestCase
   include ActionCable::TestHelper
 
-  test "broadcast message to room" do
+  test "transmite mensagem para a sala" do
     room = rooms(:all)
 
     assert_broadcast_on(ChatChannel.broadcasting_for(room), text: "Hi!") do
@@ -1982,29 +1978,29 @@ assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança é visív
 
 Por favor consulte a [Documentação da API `ActiveSupport::Testing::TimeHelpers`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html) para obter informações detalhadas sobre os *helpers* de tempo disponíveis.
 
-Testing Eager Loading
+Testando Eager Loading
 ---------------------
 
-Normally, applications do not eager load in the `development` or `test` environments to speed things up. But they do in the `production` environment.
+Normalmente, aplicações não fazem `eager loading` em ambientes de desenvolvimento e testes para tornar a app mais rápida. Mas fazem em ambientes de produção. 
 
-If some file in the project cannot be loaded for whatever reason, you better detect it before deploying to production, right?
+Se algum arquivo no projeto não pode ser carregado por qualquer que seja o motivo, é melhor você detectar antes de fazer deploy para produção, correto?
 
-### Continuous Integration
+### Integração Contínua
 
-If your project has CI in place, eager loading in CI is an easy way to ensure the application eager loads.
+Se seu projeto tem o CI configurado, eager loading neste é uma maneira fácil de ter certeza que a app faz eager loading.
 
-CIs typically set some environment variable to indicate the test suite is running there. For example, it could be `CI`:
+CIs normalmente expõem alguma variável de ambiente para indicar a suíte de teste que está rodando lá. Por exemplo, poderia ser `CI`:
 
 ```ruby
 # config/environments/test.rb
 config.eager_load = ENV["CI"].present?
 ```
 
-Starting with Rails 7, newly generated applications are configured that way by default.
+A partir de Rails 7, aplicações geradas são configuradas desse jeito por padrão.
 
-### Bare Test Suites
+### Suítes de Testes Simples
 
-If your project does not have continuous integration, you can still eager load in the test suite by calling `Rails.application.eager_load!`:
+Se seu projeto não possui integração contínua, você ainda pode fazer eager load na suíte de teste por chamar `Rails.application.eager_load!`:
 
 #### minitest
 
@@ -2012,7 +2008,7 @@ If your project does not have continuous integration, you can still eager load i
 require "test_helper"
 
 class ZeitwerkComplianceTest < ActiveSupport::TestCase
-  test "eager loads all files without errors" do
+  test "faz eager loading de todos os arquivos sem erros" do
     assert_nothing_raised { Rails.application.eager_load! }
   end
 end
@@ -2024,31 +2020,31 @@ end
 require "rails_helper"
 
 RSpec.describe "Zeitwerk compliance" do
-  it "eager loads all files without errors" do
+  it "faz eager loading de todos os arquivos sem erros" do
     expect { Rails.application.eager_load! }.not_to raise_error
   end
 end
 ```
 
-Additional Testing Resources
+Testando Recursos Adicionais
 ----------------------------
 
-### Testing Time-Dependent Code
+### Testando código dependente de tempo
 
-Rails provides built-in helper methods that enable you to assert that your time-sensitive code works as expected.
+Rails fornece métodos `built-in` que permitem você fazer asserções se seu código sensível a tempo funciona como esperado.
 
-Here is an example using the [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to) helper:
+Aqui está um exemplo usando o *helper* [`travel_to`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to):
 
 ```ruby
-# Lets say that a user is eligible for gifting a month after they register.
+# Vamos dizer que um usuário é elegível para presentear um mês depois que eles se registram.
 user = User.create(name: "Gaurish", activation_date: Date.new(2004, 10, 24))
 assert_not user.applicable_for_gifting?
 travel_to Date.new(2004, 11, 24) do
-  assert_equal Date.new(2004, 10, 24), user.activation_date # inside the `travel_to` block `Date.current` is mocked
+  assert_equal Date.new(2004, 10, 24), user.activation_date # dentro do bloco `travel_to` o método `Date.current` é mockado
   assert user.applicable_for_gifting?
 end
-assert_equal Date.new(2004, 10, 24), user.activation_date # The change was visible only inside the `travel_to` block.
+assert_equal Date.new(2004, 10, 24), user.activation_date # A mudança foi visível apenas dentro do bloco `travel_to`.
 ```
 
-Please see [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
-for in-depth information about the available time helpers.
+Por favor veja [`ActiveSupport::Testing::TimeHelpers` API Documentation](https://api.rubyonrails.org/classes/ActiveSupport/Testing/TimeHelpers.html)
+para informações mais profundas sobre os *helpers* disponíveis de tempo.

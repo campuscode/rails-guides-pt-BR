@@ -439,13 +439,12 @@ end
 
 contanto que ele não tenha nenhuma ordenação, pois o método necessita forçar uma ordem interna para iterar.
 
-Se houver uma ordem presente no receptor, o comportamento depende da *flag* `config.active_record.error_on_ignored_order`.
+Se houver uma ordem presente no receptor, o comportamento depende da *flag* [`config.active_record.error_on_ignored_order`][].
 Se verdadeiro, `ArgumentError` é disparada, caso contrário a ordem será ignorada e um aviso gerado, que é o padrão. Isto pode
 ser substituído com a opção `:error_on_ignore`, explicado abaixo.
 
+[`config.active_record.error_on_ignored_order`]: configuring.html#config-active-record-error-on-ignored-order
 [`find_each`]: https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_each
-
-##### Options for `find_each`
 
 ##### Opções para `find_each`
 
@@ -615,6 +614,25 @@ Book.where("created_at >= :start_date AND created_at <= :end_date",
 
 Isso torna a legibilidade mais clara se você tem um grande número de condições variáveis.
 
+#### Condições que usam `LIKE`
+
+Embora os argumentos de condição sejam automaticamente escapados para evitar injeção de SQL (*SQL injection*), os curingas SQL `LIKE` (ou seja, `%` e `_`) **não** são escapados. Isso pode causar um comportamento inesperado se um valor não limpo for usado em um argumento. Por exemplo:
+
+```ruby
+Book.where("title LIKE ?", params[:title] + "%")
+```
+
+No código acima, a intenção é corresponder títulos que começam com uma *string* especificada pelo usuário. No entanto, quaisquer ocorrências de `%` ou `_` em `params[:title]` serão tratadas como curingas, levando a resultados de consulta surpreendentes. Em algumas circunstâncias, isso também pode impedir que o banco de dados use um índice pretendido, levando a uma consulta muito mais lenta.
+
+Para evitar esses problemas, use [`sanitize_sql_like`][] para escapar caracteres curinga na parte relevante do argumento:
+
+```ruby
+Book.where("title LIKE ?",
+  Book.sanitize_sql_like(params[:title]) + "%")
+```
+
+[`sanitize_sql_like`]: https://api.rubyonrails.org/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql_like
+
 ### Condições de Hash
 
 *Active Record* também permite que você passe em condições de *hash* o que pode aumentar a legibilidade de suas sintaxes de condições. Com condições de *hash*, você passa em uma *hash* com chaves (*keys*) dos campos que deseja qualificados e os valores (*values*) de como deseja qualificá-los:
@@ -687,6 +705,18 @@ Em outras palavras, essa consulta pode ser gerada chamando `where` sem nenhum ar
 
 ```sql
 SELECT * FROM customers WHERE (customers.orders_count NOT IN (1,3,5))
+```
+
+Se uma consulta tiver uma condição usando *hash* com valores não nulos em uma coluna anulável, os registros que tiverem valores `nil` na coluna anulável não serão retornados. Por exemplo:
+
+```ruby
+Customer.create!(nullable_contry: nil)
+Customer.where.not(nullable_country: "UK")
+=> []
+# Mas
+Customer.create!(nullable_contry: "UK")
+Customer.where.not(nullable_country: nil)
+=> [#<Customer id: 2, nullable_contry: "UK">]
 ```
 
 [`where.not`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods/WhereChain.html#method-i-not
@@ -1315,7 +1345,7 @@ Ou, em Português: "retorne todos os livros que tem avaliações de um cliente".
 ##### Unindo Associações Aninhadas (Níveis Múltiplos)
 
 ```ruby
-Author.joins(books: [{reviews: { customer: :orders} }, :supplier] )
+Author.joins(books: [{ reviews: { customer: :orders } }, :supplier] )
 ```
 
 Isso produz:
@@ -1349,7 +1379,7 @@ time_range = (Time.now.midnight - 1.day)..Time.now.midnight
 Customer.joins(:orders).where(orders: { created_at: time_range }).distinct
 ```
 
-Para condições mais avançadas ou para reutilizar um escopo nomeado existente, `Relation#merge` pode ser usado. Primeiro, vamos adicionar um novo escopo nomeado ao modelo `Order`:
+Para condições mais avançadas ou para reutilizar um escopo nomeado existente, [`merge`][] pode ser usado. Primeiro, vamos adicionar um novo escopo nomeado ao modelo `Order`:
 
 ```ruby
 class Order < ApplicationRecord
@@ -1361,7 +1391,7 @@ class Order < ApplicationRecord
 end
 ```
 
-Agora nós podemos usar `Relation#merge` para juntar o escopo `created_in_time_range`:
+Agora nós podemos usar `merge` para juntar o escopo `created_in_time_range`:
 
 ```ruby
 time_range = (Time.now.midnight - 1.day)..Time.now.midnight
@@ -1430,10 +1460,10 @@ books.each do |book|
 end
 ```
 
-O código acima executará apenas **2** consultas, em oposição às **11** consultas do caso anterior:
+O código acima executará apenas **2** consultas, em oposição às **11** consultas do caso original:
 
 ```sql
-SELECT `books`* FROM `books` LIMIT 10
+SELECT `books`.* FROM `books` LIMIT 10
 SELECT `authors`.* FROM `authors`
   WHERE `authors`.`book_id` IN (1,2,3,4,5,6,7,8,9,10)
 ```
@@ -1494,9 +1524,9 @@ Isso ocorre porque é ambíguo se eles devem aparecer no registro do pai ou do f
 
 ### preload
 
-Com `preload`, o Active Record garante que seja carregado usando uma consulta para cada associação especificada.
+Com `preload`, o Active Record carrega usando uma consulta para cada associação especificada.
 
-Revisitando o caso em que N + 1 ocorreu usando o método `preload`, poderíamos reescrever `Book.limit(10)` para autores:
+Revisitando o problema com consultas N + 1, poderíamos reescrever `Book.limit(10)` usar `preload` para autores:
 
 ```ruby
 books = Book.preload(:author).limit(10)
@@ -1506,19 +1536,19 @@ books.each do |book|
 end
 ```
 
-O código acima executará apenas **2** consultas, ao contrário de **11** consultas no caso anterior:
+O código acima executará apenas **2** consultas, ao contrário de **11** consultas no caso original:
 
 ```sql
-SELECT `books`* FROM `books` LIMIT 10
+SELECT `books`.* FROM `books` LIMIT 10
 SELECT `authors`.* FROM `authors`
   WHERE `authors`.`book_id` IN (1,2,3,4,5,6,7,8,9,10)
 ```
 
-NOTE: O método `preload` usa um *array*, *hash* ou um *hash* aninhado de *array/hash* da mesma forma que o método `includes` para carregar qualquer número de associações com uma única chamada `Model.find`. No entanto, ao contrário do método `includes`, não é possível especificar condições para associações carregadas antecipadamente.
+NOTE: O método `preload` usa um *array*, *hash* ou um *hash* aninhado de *array/hash* da mesma forma que o método `includes` para carregar qualquer número de associações com uma única chamada `Model.find`. No entanto, ao contrário do método `includes`, não é possível especificar condições para associações carregadas antecipadamente (`preload`).
 
 ### eager_load
 
-Com `eager_load`, o Active Record garante que force o carregamento antecipado usando `LEFT OUTER JOIN` para todas as associações especificadas.
+Com `eager_load`, o Active Record garante que force o carregamento antecipado usando `LEFT OUTER JOIN`.
 
 Revisitando o caso em que N + 1 ocorreu usando o método `eager_load`, poderíamos reescrever `Book.limit(10)` para autores:
 
@@ -1530,7 +1560,7 @@ books.each do |book|
 end
 ```
 
-O código acima executará apenas **2** consultas, ao contrário de **11** consultas no caso anterior:
+O código acima executará apenas **2** consultas, ao contrário de **11** consultas no caso original:
 
 ```sql
 SELECT DISTINCT `books`.`id` FROM `books` LEFT OUTER JOIN `authors` ON `authors`.`book_id` = `books`.`id` LIMIT 10
@@ -1795,7 +1825,7 @@ Para cada campo (também conhecido como atributo) que você define na sua tabela
 
 Você pode especificar o ponto de exclamação (`!`) no final de um localizador dinâmico para que ele levante um erro `ActiveRecord::RecordNotFound` caso não seja retornado nenhum registro, por exemplo `Customer.find_by_name!("Ryan")`
 
-Se você deseja localizar por *name* e *locked*, você pode encadear esses localizadores juntos simplesmente digitando "`and`" entre os campos. Por exemplo, `Customer.find_by_first_name_and_locked("Ryan", true)`.
+Se você deseja localizar ambos por *first_name* e *orders_count*, você pode encadear esses localizadores juntos simplesmente digitando "`and`" entre os campos. Por exemplo, `Customer.find_by_first_name_and_orders_count("Ryan", 5)`.
 
 Enums
 -----

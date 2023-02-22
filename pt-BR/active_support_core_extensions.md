@@ -2175,19 +2175,19 @@ A notação de engenharia ainda é suportada:
 BigDecimal(5.00, 6).to_s("e")  # => "0.5E1"
 ```
 
-Extensions to `Enumerable`
+Extensões para `Enumerable`
 --------------------------
 
 ### `sum`
 
-The method [`sum`][Enumerable#sum] adds the elements of an enumerable:
+O método [`sum`][Enumerable#sum] adiciona os elementos de um *enumerable*:
 
 ```ruby
 [1, 2, 3].sum # => 6
 (1..100).sum  # => 5050
 ```
 
-Addition only assumes the elements respond to `+`:
+A adição apenas assume que os elementos respondem a `+`:
 
 ```ruby
 [[1, 2], [2, 3], [3, 4]].sum    # => [1, 2, 2, 3, 3, 4]
@@ -2195,51 +2195,50 @@ Addition only assumes the elements respond to `+`:
 {a: 1, b: 2, c: 3}.sum          # => [:a, 1, :b, 2, :c, 3]
 ```
 
-The sum of an empty collection is zero by default, but this is customizable:
+A soma de uma coleção vazia é zero por padrão, mas isto é customizável:
 
 ```ruby
 [].sum    # => 0
 [].sum(1) # => 1
 ```
 
-If a block is given, `sum` becomes an iterator that yields the elements of the collection and sums the returned values:
+Se um bloco for fornecido, `sum` se torna um iterador que fornece os elementos da coleção e soma os valores retornados:
 
 ```ruby
 (1..5).sum {|n| n * 2 } # => 30
 [2, 4, 6, 8, 10].sum    # => 30
 ```
 
-The sum of an empty receiver can be customized in this form as well:
+A soma de um recipiente vazio pode ser customizado nessa forma também:
 
 ```ruby
 [].sum(1) {|n| n**3} # => 1
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#sum]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-sum
 
 ### `index_by`
 
-The method [`index_by`][Enumerable#index_by] generates a hash with the elements of an enumerable indexed by some key.
+O método [`index_by`][Enumerable#index_by] gera um  *hash* com os elementos de um *enumerable* indexados por alguma chave.
 
-It iterates through the collection and passes each element to a block. The element will be keyed by the value returned by the block:
+Ele itera pela coleção e passa cada elemento para um bloco. O elemento será chaveado pelo valor retornado pelo bloco:
 
 ```ruby
 invoices.index_by(&:number)
 # => {'2009-032' => <Invoice ...>, '2009-008' => <Invoice ...>, ...}
 ```
 
-WARNING. Keys should normally be unique. If the block returns the same value for different elements no collection is built for that key. The last item will win.
+WARNING. As chaves normalmente devem ser exclusivas. Se o bloco retornar o mesmo valor para elementos diferentes, nenhuma coleção será construida para essa chave. O último item irá ganhar.
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#index_by]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-index_by
 
 ### `index_with`
 
-The method [`index_with`][Enumerable#index_with] generates a hash with the elements of an enumerable as keys. The value
-is either a passed default or returned in a block.
+O método [`index_with`][Enumerable#index_with] gera um *hash* com os elementos de um `enumerable` como chaves. O valor será o que foi passado como padrão ou o retornado em um bloco.
 
 ```ruby
 post = Post.new(title: "hey there", body: "what's up?")
@@ -2251,13 +2250,13 @@ WEEKDAYS.index_with(Interval.all_day)
 # => { monday: [ 0, 1440 ], … }
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#index_with]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-index_with
 
 ### `many?`
 
-The method [`many?`][Enumerable#many?] is shorthand for `collection.size > 1`:
+O método [`many?`][Enumerable#many?] é um atalho para `collection.size > 1`:
 
 ```erb
 <% if pages.many? %>
@@ -2265,96 +2264,95 @@ The method [`many?`][Enumerable#many?] is shorthand for `collection.size > 1`:
 <% end %>
 ```
 
-If an optional block is given, `many?` only takes into account those elements that return true:
+Se for fornecido um bloco opcional, `many?` leva em consideração apenas aqueles elementos que retornam *true*:
 
 ```ruby
 @see_more = videos.many? {|video| video.category == params[:category]}
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#many?]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-many-3F
 
 ### `exclude?`
 
-The predicate [`exclude?`][Enumerable#exclude?] tests whether a given object does **not** belong to the collection. It is the negation of the built-in `include?`:
+O predicado [`exclude?`][Enumerable#exclude?] testa se um dado objeto **não** pertence à coleção. É a negação do método embutido `include?`:
 
 ```ruby
 to_visit << node if visited.exclude?(node)
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#exclude?]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-exclude-3F
 
 ### `including`
 
-The method [`including`][Enumerable#including] returns a new enumerable that includes the passed elements:
+O método [`including`][Enumerable#including] retorna um novo `enumerable` que inclui os elementos passados:
 
 ```ruby
 [ 1, 2, 3 ].including(4, 5)                    # => [ 1, 2, 3, 4, 5 ]
 ["David", "Rafael"].including %w[ Aaron Todd ] # => ["David", "Rafael", "Aaron", "Todd"]
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#including]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-including
 
 ### `excluding`
 
-The method [`excluding`][Enumerable#excluding] returns a copy of an enumerable with the specified elements
-removed:
+O método [`excluding`][Enumerable#excluding] retorna uma cópia de um `enumerable` com os elementos especificados removidos:
 
 ```ruby
 ["David", "Rafael", "Aaron", "Todd"].excluding("Aaron", "Todd") # => ["David", "Rafael"]
 ```
 
-`excluding` is aliased to [`without`][Enumerable#without].
+`excluding` é um *alias* para [`without`][Enumerable#without].
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#excluding]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-excluding
 [Enumerable#without]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-without
 
 ### `pluck`
 
-The method [`pluck`][Enumerable#pluck] extracts the given key from each element:
+O método [`pluck`][Enumerable#pluck] extrai a chave fornecida de cada elemento:
 
 ```ruby
 [{ name: "David" }, { name: "Rafael" }, { name: "Aaron" }].pluck(:name) # => ["David", "Rafael", "Aaron"]
 [{ id: 1, name: "David" }, { id: 2, name: "Rafael" }].pluck(:id, :name) # => [[1, "David"], [2, "Rafael"]]
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#pluck]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-pluck
 
 ### `pick`
 
-The method [`pick`][Enumerable#pick] extracts the given key from the first element:
+O método [`pick`][Enumerable#pick] extrai a chave fornecida do primeiro elemento:
 
 ```ruby
 [{ name: "David" }, { name: "Rafael" }, { name: "Aaron" }].pick(:name) # => "David"
 [{ id: 1, name: "David" }, { id: 2, name: "Rafael" }].pick(:id, :name) # => [1, "David"]
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: Definido em `active_support/core_ext/enumerable.rb`.
 
 [Enumerable#pick]: https://api.rubyonrails.org/classes/Enumerable.html#method-i-pick
 
-Extensions to `Array`
+Extensões para `Array`
 ---------------------
 
-### Accessing
+### Acessando
 
-Active Support augments the API of arrays to ease certain ways of accessing them. For example, [`to`][Array#to] returns the subarray of elements up to the one at the passed index:
+O *Active Support* aumenta a API de *arrays* para facilitar certas maneiras de acessá-los. Por exemplo, [`to`][Array#to] retorna o *subarray* de elementos até aquele no índice passado:
 
 ```ruby
 %w(a b c d).to(2) # => ["a", "b", "c"]
 [].to(7)          # => []
 ```
 
-Similarly, [`from`][Array#from] returns the tail from the element at the passed index to the end. If the index is greater than the length of the array, it returns an empty array.
+Da mesma forma, [`from`][Array#from] retorna os elementos a partir do elemento no índice passado até o final. Se o índice for maior que o comprimento do *array*, será retornado um *array* vazio.
 
 ```ruby
 %w(a b c d).from(2)  # => ["c", "d"]
@@ -2362,30 +2360,30 @@ Similarly, [`from`][Array#from] returns the tail from the element at the passed 
 [].from(0)           # => []
 ```
 
-The method [`including`][Array#including] returns a new array that includes the passed elements:
+O método [`including`][Array#including] retorna um novo *array* que inclui os elementos passados:
 
 ```ruby
 [ 1, 2, 3 ].including(4, 5)          # => [ 1, 2, 3, 4, 5 ]
 [ [ 0, 1 ] ].including([ [ 1, 0 ] ]) # => [ [ 0, 1 ], [ 1, 0 ] ]
 ```
 
-The method [`excluding`][Array#excluding] returns a copy of the Array excluding the specified elements.
-This is an optimization of `Enumerable#excluding` that uses `Array#-`
-instead of `Array#reject` for performance reasons.
+O método [`excluding`][Array#excluding] retorna uma cópia do *array* excluindo os elementos especificados.
+Esta é uma otimização de `Enumerable#excluding` que usa `Array#-`
+ao invés de `Array#reject` por questão de desempenho.
 
 ```ruby
 ["David", "Rafael", "Aaron", "Todd"].excluding("Aaron", "Todd") # => ["David", "Rafael"]
 [ [ 0, 1 ], [ 1, 0 ] ].excluding([ [ 1, 0 ] ])                  # => [ [ 0, 1 ] ]
 ```
 
-The methods [`second`][Array#second], [`third`][Array#third], [`fourth`][Array#fourth], and [`fifth`][Array#fifth] return the corresponding element, as do [`second_to_last`][Array#second_to_last] and [`third_to_last`][Array#third_to_last] (`first` and `last` are built-in). Thanks to social wisdom and positive constructiveness all around, [`forty_two`][Array#forty_two] is also available.
+Os métodos [`second`][Array#second], [`third`][Array#third], [`fourth`][Array#fourth], e [`fifth`][Array#fifth] retornam o elemento correspondente, assim como [`second_to_last`][Array#second_to_last] e [`third_to_last`][Array#third_to_last] (`first` e `last` são embutidos). Graças à sabedoria social e construtividade positiva ao redor, [`forty_two`][Array#forty_two] também está disponível.
 
 ```ruby
 %w(a b c d).third # => "c"
 %w(a b c d).fifth # => nil
 ```
 
-NOTE: Defined in `active_support/core_ext/array/access.rb`.
+NOTE: Definido em `active_support/core_ext/array/access.rb`.
 
 [Array#excluding]: https://api.rubyonrails.org/classes/Array.html#method-i-excluding
 [Array#fifth]: https://api.rubyonrails.org/classes/Array.html#method-i-fifth
@@ -2399,10 +2397,10 @@ NOTE: Defined in `active_support/core_ext/array/access.rb`.
 [Array#third_to_last]: https://api.rubyonrails.org/classes/Array.html#method-i-third_to_last
 [Array#to]: https://api.rubyonrails.org/classes/Array.html#method-i-to
 
-### Extracting
+### Extraindo
 
-The method [`extract!`][Array#extract!] removes and returns the elements for which the block returns a true value.
-If no block is given, an Enumerator is returned instead.
+O método [`extract!`][Array#extract!] remove e retorna os elementos para os quais o bloco retorna um valor *true*.
+Se nenhum bloco for fornecido, um *Enumerator* será retornado.
 
 ```ruby
 numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -2410,25 +2408,25 @@ odd_numbers = numbers.extract! { |number| number.odd? } # => [1, 3, 5, 7, 9]
 numbers # => [0, 2, 4, 6, 8]
 ```
 
-NOTE: Defined in `active_support/core_ext/array/extract.rb`.
+NOTE: Definido em `active_support/core_ext/array/extract.rb`.
 
 [Array#extract!]: https://api.rubyonrails.org/classes/Array.html#method-i-extract-21
 
-### Options Extraction
+### Extração de opções
 
-When the last argument in a method call is a hash, except perhaps for a `&block` argument, Ruby allows you to omit the brackets:
+Quando o último argumento em uma chamada de método é um *hash*, exceto talvez por um argumento do tipo `&block`, o Ruby permite que você omita os colchetes:
 
 ```ruby
 User.exists?(email: params[:email])
 ```
 
-That syntactic sugar is used a lot in Rails to avoid positional arguments where there would be too many, offering instead interfaces that emulate named parameters. In particular it is very idiomatic to use a trailing hash for options.
+Esse *syntactic sugar* é muito usado no Rails para evitar argumentos posicionais onde haveria muitos, oferecendo interfaces que emulam os parâmetros nomeados. Em particular, é muito idiomático usar um *hash* no final para opções.
 
-If a method expects a variable number of arguments and uses `*` in its declaration, however, such an options hash ends up being an item of the array of arguments, where it loses its role.
+Se um método espera um número variável de argumentos e usa `*` em sua declaração, entretanto, tal *hash* de opções acaba sendo um item do *array* de argumentos, onde perde seu papel.
 
-In those cases, you may give an options hash a distinguished treatment with [`extract_options!`][Array#extract_options!]. This method checks the type of the last item of an array. If it is a hash it pops it and returns it, otherwise it returns an empty hash.
+Nesses casos, você pode dar um tratamento diferenciado ao *hash* de opções com [`extract_options!`][Array#extract_options!]. Este método verifica o tipo do último item de um *array*. Se for um *hash*, ele o exibe e o retorna, caso contrário, retorna um *hash* vazio.
 
-Let's see for example the definition of the `caches_action` controller macro:
+Vejamos, por exemplo, a definição da macro do controlador `caches_action`:
 
 ```ruby
 def caches_action(*actions)
@@ -2438,17 +2436,17 @@ def caches_action(*actions)
 end
 ```
 
-This method receives an arbitrary number of action names, and an optional hash of options as last argument. With the call to `extract_options!` you obtain the options hash and remove it from `actions` in a simple and explicit way.
+Este método recebe um número arbitrário de nomes de ações e um *hash* opcional de opções como último argumento. Com a chamada a `extract_options!` você obtém o *hash* de opções e o remove de `actions` de forma simples e explícita.
 
-NOTE: Defined in `active_support/core_ext/array/extract_options.rb`.
+NOTE: Definido em `active_support/core_ext/array/extract_options.rb`.
 
 [Array#extract_options!]: https://api.rubyonrails.org/classes/Array.html#method-i-extract_options-21
 
-### Conversions
+### Conversões
 
 #### `to_sentence`
 
-The method [`to_sentence`][Array#to_sentence] turns an array into a string containing a sentence that enumerates its items:
+O método [`to_sentence`][Array#to_sentence] transforma um *array* em uma *string* contendo uma frase que enumera seus itens:
 
 ```ruby
 %w().to_sentence                # => ""
@@ -2457,31 +2455,30 @@ The method [`to_sentence`][Array#to_sentence] turns an array into a string conta
 %w(Earth Wind Fire).to_sentence # => "Earth, Wind, and Fire"
 ```
 
-This method accepts three options:
+Este método aceita três opções:
 
-* `:two_words_connector`: What is used for arrays of length 2. Default is " and ".
-* `:words_connector`: What is used to join the elements of arrays with 3 or more elements, except for the last two. Default is ", ".
-* `:last_word_connector`: What is used to join the last items of an array with 3 or more elements. Default is ", and ".
+* `:two_words_connector`: O que é usado para *arrays* de comprimento 2. O padrão é " e ".
+* `:words_connector`: O que é usado para unir os elementos de *arrays* com 3 ou mais elementos, exceto os dois últimos. O padrão é ", ".
+* `:last_word_connector`: O que é usado para unir os últimos itens de um *array* com 3 ou mais elementos. O padrão é ", e ".
 
-The defaults for these options can be localized, their keys are:
+Os padrões para essas opções podem ser localizados, suas chaves são:
 
-| Option                 | I18n key                            |
+| Opção                  | Chave I18n                          |
 | ---------------------- | ----------------------------------- |
 | `:two_words_connector` | `support.array.two_words_connector` |
 | `:words_connector`     | `support.array.words_connector`     |
 | `:last_word_connector` | `support.array.last_word_connector` |
 
-NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/array/conversions.rb`.
 
 [Array#to_sentence]: https://api.rubyonrails.org/classes/Array.html#method-i-to_sentence
 
 #### `to_fs`
 
-The method [`to_fs`][Array#to_fs] acts like `to_s` by default.
+O método [`to_fs`][Array#to_formatted_s] age como `to_s` por padrão.
 
-If the array contains items that respond to `id`, however, the symbol
-`:db` may be passed as argument. That's typically used with
-collections of Active Record objects. Returned strings are:
+No entanto, se o *array* contém itens que respondem a `id`, o símbolo 
+`:db` pode ser passado como argumento. Isso é normalmente usado em coleções de objetos do *Active Record*. As *strings* retornadas são:
 
 ```ruby
 [].to_fs(:db)            # => "null"
@@ -2489,15 +2486,15 @@ collections of Active Record objects. Returned strings are:
 invoice.lines.to_fs(:db) # => "23,567,556,12"
 ```
 
-Integers in the example above are supposed to come from the respective calls to `id`.
+Os inteiros no exemplo acima devem vir das respectivas chamadas para `id`.
 
-NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/array/conversions.rb`.
 
 [Array#to_fs]: https://api.rubyonrails.org/classes/Array.html#method-i-to_fs
 
 #### `to_xml`
 
-The method [`to_xml`][Array#to_xml] returns a string containing an XML representation of its receiver:
+O método [`to_xml`][Array#to_xml] retorna uma string contendo uma representação em XML do seu recipiente:
 
 ```ruby
 Contributor.limit(2).order(:rank).to_xml
@@ -2519,11 +2516,11 @@ Contributor.limit(2).order(:rank).to_xml
 # </contributors>
 ```
 
-To do so it sends `to_xml` to every item in turn, and collects the results under a root node. All items must respond to `to_xml`, an exception is raised otherwise.
+Para fazer isso, ele envia `to_xml` para cada item e coleta os resultados em um nó raiz. Todos os itens devem responder a `to_xml`, caso contrário, uma exceção é provocada.
 
-By default, the name of the root element is the underscored and dasherized plural of the name of the class of the first item, provided the rest of elements belong to that type (checked with `is_a?`) and they are not hashes. In the example above that's "contributors".
+Por padrão, o nome do elemento raiz é o plural sublinhado e tracejado do nome da classe do primeiro item, desde que os demais elementos pertençam a esse tipo (verificado com `is_a?`) e não sejam *hashes*. No exemplo acima são "*contributors*".
 
-If there's any element that does not belong to the type of the first one the root node becomes "objects":
+Se houver algum elemento que não pertença ao tipo do primeiro, o nó raiz se torna "*objects*":
 
 ```ruby
 [Contributor.first, Commit.first].to_xml
@@ -2551,7 +2548,7 @@ If there's any element that does not belong to the type of the first one the roo
 # </objects>
 ```
 
-If the receiver is an array of hashes the root element is by default also "objects":
+Se o recipiente é um *array* de *hashes*, o elemento raiz também é, por padrão, "*objects*":
 
 ```ruby
 [{a: 1, b: 2}, {c: 3}].to_xml
@@ -2568,11 +2565,11 @@ If the receiver is an array of hashes the root element is by default also "objec
 # </objects>
 ```
 
-WARNING. If the collection is empty the root element is by default "nil-classes". That's a gotcha, for example the root element of the list of contributors above would not be "contributors" if the collection was empty, but "nil-classes". You may use the `:root` option to ensure a consistent root element.
+WARNING. Se a coleção estiver vazia, o elemento raiz é, por padrão, "*nil-classes*". If the collection is empty the root element is by default "nil-classes". Isso é uma pegadinha, por exemplo, o elemento raiz da lista de *contributors* acima não seria "*contributors*" se a coleção estivesse vazia, e sim "*nil-classes*". Você pode usar a opção `:root` para garantir um elemento raiz consistente.
 
-The name of children nodes is by default the name of the root node singularized. In the examples above we've seen "contributor" and "object". The option `:children` allows you to set these node names.
+O nome dos nós filhos é, por padrão, o nome do nó raiz singularizado. Nos exemplos acima vimos "*contributor*" e "*object*". A opção `:children` permite que você defina esses nomes de nós.
 
-The default XML builder is a fresh instance of `Builder::XmlMarkup`. You can configure your own builder via the `:builder` option. The method also accepts options like `:dasherize` and friends, they are forwarded to the builder:
+O construtor XML padrão é uma nova instância de `Builder::XmlMarkup`. Você pode configurar seu próprio construtor através da opção `:builder`. O método também aceita opções como `:dasherize` e afins, elas são encaminhadas para o construtor:
 
 ```ruby
 Contributor.limit(2).order(:rank).to_xml(skip_types: true)
@@ -2594,19 +2591,19 @@ Contributor.limit(2).order(:rank).to_xml(skip_types: true)
 # </contributors>
 ```
 
-NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/array/conversions.rb`.
 
 [Array#to_xml]: https://api.rubyonrails.org/classes/Array.html#method-i-to_xml
 
-### Wrapping
+### Invólucro
 
-The method [`Array.wrap`][Array.wrap] wraps its argument in an array unless it is already an array (or array-like).
+O método [`Array.wrap`][Array.wrap] envolve seu argumento em um *array*, a menos que já seja um *array* (ou semelhante a um *array*).
 
-Specifically:
+Especificamente:
 
-* If the argument is `nil` an empty array is returned.
-* Otherwise, if the argument responds to `to_ary` it is invoked, and if the value of `to_ary` is not `nil`, it is returned.
-* Otherwise, an array with the argument as its single element is returned.
+* Se o argumento for `nil` um *array* vazio é retornado.
+* Caso contrário, se o argumento responde a `to_ary` ele será invocado, e se o valor de `to_ary` não for `nil`, ele será retornado.
+* Caso contrário, um *array* com o argumento como seu único elemento é retornado.
 
 ```ruby
 Array.wrap(nil)       # => []
@@ -2614,33 +2611,33 @@ Array.wrap([1, 2, 3]) # => [1, 2, 3]
 Array.wrap(0)         # => [0]
 ```
 
-This method is similar in purpose to `Kernel#Array`, but there are some differences:
+Este método é semelhante em propósito ao `Kernel#Array`, mas há algumas diferenças:
 
-* If the argument responds to `to_ary` the method is invoked. `Kernel#Array` moves on to try `to_a` if the returned value is `nil`, but `Array.wrap` returns an array with the argument as its single element right away.
-* If the returned value from `to_ary` is neither `nil` nor an `Array` object, `Kernel#Array` raises an exception, while `Array.wrap` does not, it just returns the value.
-* It does not call `to_a` on the argument, if the argument does not respond to `to_ary` it returns an array with the argument as its single element.
+* Se o argumento responde a `to_ary` o método é invocado. `Kernel#Array` segue em frente para tentar chamar `to_a` se o valor retornado for `nil`, mas `Array.wrap` retorna um *array* com o argumento como seu único elemento imediatamente.
+* Se o valor retornado de `to_ary` não for `nil` nem um objeto `Array`, `Kernel#Array` gera uma exceção, enquanto `Array.wrap` não, apenas retorna o valor.
+* Ele não chama `to_a` no argumento, se o argumento não responde a `to_ary` ele retorna um *array* com o argumento como seu único elemento.
 
-The last point is particularly worth comparing for some enumerables:
+O último ponto é particularmente digno de comparação para alguns *enumerables*:
 
 ```ruby
 Array.wrap(foo: :bar) # => [{:foo=>:bar}]
 Array(foo: :bar)      # => [[:foo, :bar]]
 ```
 
-There's also a related idiom that uses the splat operator:
+Há também um idioma relacionado que usa o operador *splat*:
 
 ```ruby
 [*object]
 ```
 
-NOTE: Defined in `active_support/core_ext/array/wrap.rb`.
+NOTE: Definido em `active_support/core_ext/array/wrap.rb`.
 
 [Array.wrap]: https://api.rubyonrails.org/classes/Array.html#method-c-wrap
 
-### Duplicating
+### Duplicando
 
-The method [`Array#deep_dup`][Array#deep_dup] duplicates itself and all objects inside
-recursively with the Active Support method `Object#deep_dup`. It works like `Array#map`, sending `deep_dup` method to each object inside.
+O método [`Array#deep_dup`][Array#deep_dup] duplica a si mesmo e todos os objetos dentro
+recursivamente com o método do Active Support `Object#deep_dup`. Funciona como um `Array#map`, enviando o método `deep_dup` para cada objeto dentro.
 
 ```ruby
 array = [1, [2, 3]]
@@ -2649,21 +2646,21 @@ dup[1][2] = 4
 array[1][2] == nil   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
+NOTE: Definido em `active_support/core_ext/object/deep_dup.rb`.
 
 [Array#deep_dup]: https://api.rubyonrails.org/classes/Array.html#method-i-deep_dup
 
-### Grouping
+### Agrupamento
 
 #### `in_groups_of(number, fill_with = nil)`
 
-The method [`in_groups_of`][Array#in_groups_of] splits an array into consecutive groups of a certain size. It returns an array with the groups:
+O método [`in_groups_of`][Array#in_groups_of] divide um *array* em grupos consecutivos de um determinado tamanho. Ele retorna um *array* com os grupos:
 
 ```ruby
 [1, 2, 3].in_groups_of(2) # => [[1, 2], [3, nil]]
 ```
 
-or yields them in turn if a block is passed:
+ou os fornece por sua vez se um bloco for passado:
 
 ```html+erb
 <% sample.in_groups_of(3) do |a, b, c| %>
@@ -2675,34 +2672,34 @@ or yields them in turn if a block is passed:
 <% end %>
 ```
 
-The first example shows how `in_groups_of` fills the last group with as many `nil` elements as needed to have the requested size. You can change this padding value using the second optional argument:
+O primeiro elemento mostra como `in_groups_of` preenche o último grupo com quantos elementos `nil` forem necessários para ter o tamanho solicitado. Você pode alterar esse valor de preenchimento usando o segundo argumento opcional:
 
 ```ruby
 [1, 2, 3].in_groups_of(2, 0) # => [[1, 2], [3, 0]]
 ```
 
-And you can tell the method not to fill the last group by passing `false`:
+E você pode dizer ao método para não preencher o último grupo passando `false`:
 
 ```ruby
 [1, 2, 3].in_groups_of(2, false) # => [[1, 2], [3]]
 ```
 
-As a consequence `false` can't be used as a padding value.
+Como consequência, `false` não pode ser usado como valor de preenchimento.
 
-NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
+NOTE: Definido em `active_support/core_ext/array/grouping.rb`.
 
 [Array#in_groups_of]: https://api.rubyonrails.org/classes/Array.html#method-i-in_groups_of
 
 #### `in_groups(number, fill_with = nil)`
 
-The method [`in_groups`][Array#in_groups] splits an array into a certain number of groups. The method returns an array with the groups:
+O método [`in_groups`][Array#in_groups] divide um *array* em um certo número de grupos. O método retorna um *array* com os grupos:
 
 ```ruby
 %w(1 2 3 4 5 6 7).in_groups(3)
 # => [["1", "2", "3"], ["4", "5", nil], ["6", "7", nil]]
 ```
 
-or yields them in turn if a block is passed:
+ou os fornece por sua vez se um bloco for passado:
 
 ```ruby
 %w(1 2 3 4 5 6 7).in_groups(3) {|group| p group}
@@ -2711,49 +2708,49 @@ or yields them in turn if a block is passed:
 ["6", "7", nil]
 ```
 
-The examples above show that `in_groups` fills some groups with a trailing `nil` element as needed. A group can get at most one of these extra elements, the rightmost one if any. And the groups that have them are always the last ones.
+Os exemplos acima mostram que `in_groups` preenche alguns grupos com um elemento `nil` à direita conforme necessário. Um grupo pode obter no máximo um desses elementos extras, o mais à direita, se houver. E os grupos que os possuem são sempre os últimos.
 
-You can change this padding value using the second optional argument:
+Você pode alterar esse valor de preenchimento usando o segundo argumento opcional:
 
 ```ruby
 %w(1 2 3 4 5 6 7).in_groups(3, "0")
 # => [["1", "2", "3"], ["4", "5", "0"], ["6", "7", "0"]]
 ```
 
-And you can tell the method not to fill the smaller groups by passing `false`:
+E você pode dizer ao método para não preencher os grupos menores passando `false`:
 
 ```ruby
 %w(1 2 3 4 5 6 7).in_groups(3, false)
 # => [["1", "2", "3"], ["4", "5"], ["6", "7"]]
 ```
 
-As a consequence `false` can't be used as a padding value.
+Como consequência, `false` não pode ser usado como valor de preenchimento.
 
-NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
+NOTE: Definido em `active_support/core_ext/array/grouping.rb`.
 
 [Array#in_groups]: https://api.rubyonrails.org/classes/Array.html#method-i-in_groups
 
 #### `split(value = nil)`
 
-The method [`split`][Array#split] divides an array by a separator and returns the resulting chunks.
+O método [`split`][Array#split] divide um *array* por um separador e retorna os pedaços resultantes.
 
-If a block is passed the separators are those elements of the array for which the block returns true:
+Se um bloco é passado, os separadores são os elementos do *array* para os quais o bloco retorna *true*:
 
 ```ruby
 (-5..5).to_a.split { |i| i.multiple_of?(4) }
 # => [[-5], [-3, -2, -1], [1, 2, 3], [5]]
 ```
 
-Otherwise, the value received as argument, which defaults to `nil`, is the separator:
+Caso contrário, o valor recebido como argumento, cujo padrão é `nil`, é o separador:
 
 ```ruby
 [0, 1, -5, 1, 1, "foo", "bar"].split(1)
 # => [[0], [-5], [], ["foo", "bar"]]
 ```
 
-TIP: Observe in the previous example that consecutive separators result in empty arrays.
+TIP: Observe no exemplo anterior que separadores consecutivos resultam em *arrays* vazios.
 
-NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
+NOTE: Definido em `active_support/core_ext/array/grouping.rb`.
 
 [Array#split]: https://api.rubyonrails.org/classes/Array.html#method-i-split
 
@@ -3105,12 +3102,12 @@ NOTE: Defined in `active_support/core_ext/hash/indifferent_access.rb`.
 [ActiveSupport::HashWithIndifferentAccess]: https://api.rubyonrails.org/classes/ActiveSupport/HashWithIndifferentAccess.html
 [Hash#with_indifferent_access]: https://api.rubyonrails.org/classes/Hash.html#method-i-with_indifferent_access
 
-Extensions to `Regexp`
+Extensões para `Regexp`
 ----------------------
 
 ### `multiline?`
 
-The method [`multiline?`][Regexp#multiline?] says whether a regexp has the `/m` flag set, that is, whether the dot matches newlines.
+O método [`multiline?`][Regexp#multiline?] diz se uma *regexp* tem o sinalizador `/m` definido, ou seja, se o ponto corresponde a novas linhas.
 
 ```ruby
 %r{.}.multiline?  # => false
@@ -3120,7 +3117,7 @@ Regexp.new('.').multiline?                    # => false
 Regexp.new('.', Regexp::MULTILINE).multiline? # => true
 ```
 
-Rails uses this method in a single place, also in the routing code. Multiline regexps are disallowed for route requirements and this flag eases enforcing that constraint.
+O Rails usa esse método em um único lugar, também no código de roteamento. *Regexps* de várias linhas não são permitidas para requisitos de rota e esse sinalizador facilita a aplicação dessa restrição.
 
 ```ruby
 def verify_regexp_requirements(requirements)
@@ -3132,7 +3129,7 @@ def verify_regexp_requirements(requirements)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/regexp.rb`.
+NOTE: Definido em `active_support/core_ext/regexp.rb`.
 
 [Regexp#multiline?]: https://api.rubyonrails.org/classes/Regexp.html#method-i-multiline-3F
 
@@ -4059,14 +4056,14 @@ NOTE: Defined in `active_support/core_ext/load_error.rb`.
 Extensions to Pathname
 -------------------------
 
-### `existence`
+### `existência`
 
-The [`existence`][Pathname#existence] method returns the receiver if the named file exists otherwise returns +nil+. It is useful for idioms like this:
+O [`existence`][Pathname#existence] retorna o receptor se o arquivo nomeado existir, caso contrário retorna +nil+. É útil para expressões idiomáticas como esta:
 
 ```ruby
 content = Pathname.new("file").existence&.read
 ```
 
-NOTE: Defined in `active_support/core_ext/pathname/existence.rb`.
+NOTE: Definido em `active_support/core_ext/pathname/existence.rb`.
 
 [Pathname#existence]: https://api.rubyonrails.org/classes/Pathname.html#method-i-existence

@@ -1,127 +1,129 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Threading and Code Execution in Rails
-=====================================
+*Threading* e Execução de Código no Rails
+=========================================
 
-After reading this guide, you will know:
+Depois de ler esse guia, você vai saber:
 
-* What code Rails will automatically execute concurrently
-* How to integrate manual concurrency with Rails internals
-* How to wrap all application code
-* How to affect application reloading
+* Quais códigos o Rails executa automaticamente de maneira concorrente
+* Como integrar código concorrente feito por você com a parte interna do Rails
+* Como envolver todo o código da aplicação
+* Como modificar o recarregamento da aplicação
 
 --------------------------------------------------------------------------------
 
-Automatic Concurrency
----------------------
+Concorrência Automática
+-----------------------
 
-Rails automatically allows various operations to be performed at the same time.
+O Rails automaticamente permite que várias operações sejam feitas ao mesmo tempo.
 
-When using a threaded web server, such as the default Puma, multiple HTTP
-requests will be served simultaneously, with each request provided its own
-controller instance.
+Quando um servidor web que utiliza *threads* está em uso, como o Puma, que é padrão,
+múltiplas requisições HTTP serão servidas simultaneamente, com cada requisição
+utilizando sua própria instância de *controller*.
 
-Threaded Active Job adapters, including the built-in Async, will likewise
-execute several jobs at the same time. Action Cable channels are managed this
-way too.
 
-These mechanisms all involve multiple threads, each managing work for a unique
-instance of some object (controller, job, channel), while sharing the global
-process space (such as classes and their configurations, and global variables).
-As long as your code doesn't modify any of those shared things, it can mostly
-ignore that other threads exist.
 
-The rest of this guide describes the mechanisms Rails uses to make it "mostly
-ignorable", and how extensions and applications with special needs can use them.
+Adaptadores do Active Job que usam *thread*, incluindo o Async, que é padrão, vai
+executar vários *jobs* ao mesmo tempo. Os canais (*channels*) Action Cable também
+são gerenciados dessa forma.
+
+Todos esses mecanismos envolvem múltiplas *threads*, cada uma gerenciando trabalho
+para uma única instância de algum objeto (*controller*, *job*, *channel*), enquanto
+compartilham o espaço global do processo (classes e suas configurações e variáveis globais).
+Contanto que seu código não modifique nenhuma dessas coisas compartilhadas, ele pode
+quase esquecer que outras *threads* existem.
+
+O resto desse guia vai mostrar os mecanismos que o Rails usa para fazer com que
+suas *threads* sejam "quase ignoráveis" e como extensões e aplicações com necessidades
+especiais podem usar esse aparato.
 
 Executor
 --------
 
-The Rails Executor separates application code from framework code: any time the
-framework invokes code you've written in your application, it will be wrapped by
-the Executor.
+O *Rails Executor* separa o código da sua aplicação do código de *framework*:
+toda vez que o *framework* invoca código que você escreveu em sua aplicação, ele
+vai estar envolvido pelo *Executor*.
 
-The Executor consists of two callbacks: `to_run` and `to_complete`. The Run
-callback is called before the application code, and the Complete callback is
-called after.
+O *Executor* consiste em dois *callbacks*: `to_run` e `to_complete`. O *callback*
+*Run* é chamado antes do código da aplicação e o *Complete* é chamado após o código
+da aplicação.
 
-### Default callbacks
+### Callbacks padrões
 
-In a default Rails application, the Executor callbacks are used to:
+Em uma aplicação Rails padrão, os *callbacks* do *Executor* são usados para:
 
-* track which threads are in safe positions for autoloading and reloading
-* enable and disable the Active Record query cache
-* return acquired Active Record connections to the pool
-* constrain internal cache lifetimes
+* acompanhar quais *threads* estão em uma posição segura para carregar e recarregar código automaticamente (*autoloading* e *reloading*).
+* habilitar e desabilitar o cache do Active Record
+* retornar conexões Active Record adquiridas para o *pool* de conexões.
+* controlar a duração dos caches internos
 
-Prior to Rails 5.0, some of these were handled by separate Rack middleware
-classes (such as `ActiveRecord::ConnectionAdapters::ConnectionManagement`), or
-directly wrapping code with methods like
-`ActiveRecord::Base.connection_pool.with_connection`. The Executor replaces
-these with a single more abstract interface.
+Antes do Rails 5.0, algumas dessas funções eram gerenciadas por *middlewares* Rack
+(como `ActiveRecord::ConnectionAdapters::ConnectionManagement`) ou envolvendo o código
+diretamente com métodos como `ActiveRecord::Base.connection_pool.with_connection`.
+O *Executor* substitui essas interfaces por uma mais simples e mais abstrata.
 
-### Wrapping application code
+### Envolvendo código da aplicação
 
-If you're writing a library or component that will invoke application code, you
-should wrap it with a call to the executor:
+Se você está escrevendo uma biblioteca ou componente que vai invocar código da aplicação,
+você deve envolver esse código com uma chamada para o *Executor*:
 
 ```ruby
 Rails.application.executor.wrap do
-  # call application code here
+  # chame o código da aplicação aqui
 end
 ```
 
-TIP: If you repeatedly invoke application code from a long-running process, you
-may want to wrap using the [Reloader](#reloader) instead.
+TIP: Se você quiser repetidamente invocar código da aplicação de um processo de
+longa duração, talvez você queira usar o [*Reloader*](#reloader) ao invés do *Executor*.
 
-Each thread should be wrapped before it runs application code, so if your
-application manually delegates work to other threads, such as via `Thread.new`
-or Concurrent Ruby features that use thread pools, you should immediately wrap
-the block:
+Toda *thread* deve ser envolvida antes de rodar código da aplicação, então se sua
+aplicação manualmente delega trabalho para outras *threads* utilizando, por exemplo
+`Thread.new` ou funcionalidades da biblioteca Concurrent Ruby que usam *pools* de
+*threads*, você deve imediatamente envolver o bloco:
 
 ```ruby
 Thread.new do
   Rails.application.executor.wrap do
-    # your code here
+    # seu código aqui
   end
 end
 ```
 
-NOTE: Concurrent Ruby uses a `ThreadPoolExecutor`, which it sometimes configures
-with an `executor` option. Despite the name, it is unrelated.
+NOTE: A biblioteca Concurrent Ruby usa um objeto `ThreadPoolExecutor`, que as vezes se configura
+com uma opção chamada `executor`. Apesar do nome, isso não se relaciona com o *Executor* do Rails.
 
-The Executor is safely re-entrant; if it is already active on the current
-thread, `wrap` is a no-op.
+O *Executor* admite re-entradas seguramente. Se ele já está ativo na *thread* atual,
+`wrap` não faz nada (é uma *no-op*).
 
-If it's impractical to wrap the application code in a block (for
-example, the Rack API makes this problematic), you can also use the `run!` /
-`complete!` pair:
+Se não for possível envolver o código da aplicação em um bloco (como por exemplo
+a API Rack, que torna isso difícil), você pode utilizar o par de métodos `run!`
+/ `complete!`:
+
 
 ```ruby
 Thread.new do
   execution_context = Rails.application.executor.run!
-  # your code here
+  # seu código aqui
 ensure
   execution_context.complete! if execution_context
 end
 ```
 
-### Concurrency
+### Concorrência
 
-The Executor will put the current thread into `running` mode in the [Load
-Interlock](#load-interlock). This operation will block temporarily if another
-thread is currently either autoloading a constant or unloading/reloading
-the application.
+O *Executor* vai colocar a *thread* atual no modo `running`, no [Load Interlock](#load-interlock).
+Essa operação irá bloquear temporariamente outras *threads* que estejam carregando automaticamante
+(*autoloading*) uma constante ou que estejam carregando ou recarregando a aplicação.
 
 Reloader
 --------
 
-Like the Executor, the Reloader also wraps application code. If the Executor is
-not already active on the current thread, the Reloader will invoke it for you,
-so you only need to call one. This also guarantees that everything the Reloader
-does, including all its callback invocations, occurs wrapped inside the
-Executor.
+Assim como o *Executor*, o *Reloader* também envolve o código da aplicação.
+Se o *Executor* ainda não estiver ativo na *thread* atual, o *Reloader* vai
+invocá-lo para você, logo você só precisa chamar o *Reloader*. Isso garante que
+tudo que o *Reloader* faça, inclusive suas invocações de *callback*, ocorram envolvidas
+pelo *Executor*.
 
 ```ruby
 Rails.application.reloader.wrap do
@@ -129,90 +131,92 @@ Rails.application.reloader.wrap do
 end
 ```
 
-The Reloader is only suitable where a long-running framework-level process
-repeatedly calls into application code, such as for a web server or job queue.
-Rails automatically wraps web requests and Active Job workers, so you'll rarely
-need to invoke the Reloader for yourself. Always consider whether the Executor
-is a better fit for your use case.
+O *Reloader* é mais indicado para processos de longa duração de nível de *framework*
+que chamam repetidamente o código da aplicação, como servidores web e filas de *jobs*.
+O Rails automaticamente envolve requisições web e *workers* do Active Job, logo
+você raramente precisará invocar o *Reloader* por si mesmo. Sempre se pergunte se
+o *Executor* não seria a melhor opção para o seu caso de uso.
 
-### Callbacks
+### *Callbacks*
 
-Before entering the wrapped block, the Reloader will check whether the running
-application needs to be reloaded -- for example, because a model's source file has
-been modified. If it determines a reload is required, it will wait until it's
-safe, and then do so, before continuing. When the application is configured to
-always reload regardless of whether any changes are detected, the reload is
-instead performed at the end of the block.
+Antes de executar o bloco envolvido, o *Reloader* vai verificar se a aplicação que
+está rodando precisa ser recarregada. Por exemplo, talvez o código fonte de um *model*
+tenha sido alterado. Se é determinado que um recarregamento é necessário, o *Reloader*
+esperará até que seja seguro fazer isso e depois disso irá recarregar a aplicação
+antes de continuar. Quando a aplicação está configurada para sempre ser recarregada,
+indepentende de modificações, o recarregamento da aplicação é feito no final do bloco,
+ao invés de no começo.
 
-The Reloader also provides `to_run` and `to_complete` callbacks; they are
-invoked at the same points as those of the Executor, but only when the current
-execution has initiated an application reload. When no reload is deemed
-necessary, the Reloader will invoke the wrapped block with no other callbacks.
+O *Reloader* também oferece os *callbacks* `to_run` e `to_complete`. Eles são
+invocados nos mesmos pontos do *Executor*, mas somente quando a execução atual começar
+um recarregamento da aplicação. Quando o recarregamento não é necessário, o *Reloader*
+irá invocar o bloco envolvido por ele sem executar os *callbacks*.
 
-### Class Unload
+### Descarregamento de Classes
 
-The most significant part of the reloading process is the Class Unload, where
-all autoloaded classes are removed, ready to be loaded again. This will occur
-immediately before either the Run or Complete callback, depending on the
-`reload_classes_only_on_change` setting.
+A parte mais trabalhosa do processo de recarregamento é o Descarregamento de Classes,
+em que todas as classes automaticamente carregadas são removidas e ficam prontas para
+ser carregadas de novo. Isso irá ocorrer imediatamente antes do *callback* Run ou Complete,
+dependendo do valor da configuração `reload_classes_only_on_change`.
 
-Often, additional reloading actions need to be performed either just before or
-just after the Class Unload, so the Reloader also provides `before_class_unload`
-and `after_class_unload` callbacks.
+Na maioria das vezes, algumas ações extras precisam ser feitas exatamente no momento
+antes ou no momento posterior ao Descarregamento de Classes, logo o *Reloader* também
+fornece os *callbacks* `before_class_unload` e `after_class_unload`.
 
-### Concurrency
+### Concorrência
 
-Only long-running "top level" processes should invoke the Reloader, because if
-it determines a reload is needed, it will block until all other threads have
-completed any Executor invocations.
+Somente processos "top level" de longa duração devem invocar o *Reloader*, porque
+se ele determinar que um recarregamento é necessário, ele vai bloquear até que
+todas as outras *threads* tenham terminado qualquer invocação do *Executor*.
 
-If this were to occur in a "child" thread, with a waiting parent inside the
-Executor, it would cause an unavoidable deadlock: the reload must occur before
-the child thread is executed, but it cannot be safely performed while the parent
-thread is mid-execution. Child threads should use the Executor instead.
+Se isso ocorrer numa *sub-thread*, com a *thread* pai esperando dentro do *Executor*,
+isso irá causar um bloqueio permanente (*deadlock*) inevitável: o recarregamento
+deve ocorrer antes da *sub-thread* ser executada, mas ela não pode ser invocada com
+segurança enquanto a *thread* pai está em execução. *Sub-threads* devem usar somente o
+*Executor*.
 
-Framework Behavior
-------------------
+Comportamento do *Framework*
+----------------------------
 
-The Rails framework components use these tools to manage their own concurrency
-needs too.
+Os componentes do *framework* Rails também utilizam essas ferramentas para gerenciar
+suas necessidades relacionadas à concorrência.
 
-`ActionDispatch::Executor` and `ActionDispatch::Reloader` are Rack middlewares
-that wrap requests with a supplied Executor or Reloader, respectively. They
-are automatically included in the default application stack. The Reloader will
-ensure any arriving HTTP request is served with a freshly-loaded copy of the
-application if any code changes have occurred.
+`ActionDispatch::Executor` e `ActionDispatch::Reloader` são *middlewares* Rack
+que envolvem requisições com o *Executor* ou *Reloader* fornecido. Esses componentes
+são automaticamente incluídos na pilha de *middlewares* de uma aplicação padrão.
+O *Reloader* irá garantir que qualquer requisição HTTP seja servida com a cópia
+mais recente possível da aplicação se houver qualquer mudança de código.
 
-Active Job also wraps its job executions with the Reloader, loading the latest
-code to execute each job as it comes off the queue.
+O Active Job também envolve a execução de *jobs* com o *Reloader*, carregando a
+última versão do código para executar cada *job* assim que sai da fila para ser executado.
 
-Action Cable uses the Executor instead: because a Cable connection is linked to
-a specific instance of a class, it's not possible to reload for every arriving
-WebSocket message. Only the message handler is wrapped, though; a long-running
-Cable connection does not prevent a reload that's triggered by a new incoming
-request or job. Instead, Action Cable uses the Reloader's `before_class_unload`
-callback to disconnect all its connections. When the client automatically
-reconnects, it will be speaking to the new version of the code.
+Ao invés de utilizar o *Reloader*, o Action Cable usa o *Executor*: já que cada conexão *Cable*
+é associada a uma instância de uma classe, não é possível recarregar a cada mensagem WebSocket.
+Somente o *message handler* é envolvido pelo *Reloader* a propósito. Uma conexão
+de longa duração não previne o recarregamento a aplicação promovido por uma requisição ou
+*job*. Ao invés disso, o Action Cable utiliza o *callback* `before_class_unload`
+do *Reloader* para desconectar todas as suas conexões. Quando o cliente automaticamente
+reconectar, ele irá se comunicar com a nova versão do código.
 
-The above are the entry points to the framework, so they are responsible for
-ensuring their respective threads are protected, and deciding whether a reload
-is necessary. Other components only need to use the Executor when they spawn
-additional threads.
+Os pontos acima são *entry points* para o *framework*, logo eles são responsáveis
+por garantir a proteção de suas *threads* e por decidir quando um recarregamento
+é necessário. Outros componentes utilizam apenas o *Executor* quando criam *threads*
+adicionais.
 
-### Configuration
+### Configuração
 
-The Reloader only checks for file changes when `cache_classes` is false and
-`reload_classes_only_on_change` is true (which is the default in the
-`development` environment).
+O *Reloader* apenas verifica mudanças em arquivos se `cache_classes` for falso e
+`reload_classes_only_on_change` for verdadeiro (que é o padrão no ambiente `development`).
 
-When `cache_classes` is true (in `production`, by default), the Reloader is only
-a pass-through to the Executor.
+Quando `cache_classes` for verdadeiro (em `production`, por padrão), o *Reloader*
+passa o controle imediatamente para o *Executor*.
 
-The Executor always has important work to do, like database connection
-management. When `cache_classes` and `eager_load` are both true (`production`),
-no autoloading or class reloading will occur, so it does not need the Load
-Interlock. If either of those are false (`development`), then the Executor will
-use the Load Interlock to ensure constants are only loaded when it is safe.
+O *Executor* sempre tem coisas importantes para fazer, como gerenciar as conexões
+do banco de dados. Quando `cache_classes` e `eager_load` são verdadeiros (`production`),
+nenhum autocarregamento ou recarregamento de classes irá ocorrer, então o *Load Interlock*
+não é necessário. Se algum dessas configurações forem falsas (`development`), o *Executor*
+irá usar o *Load Interlock* para garantir que constantes só serão carregadas quando for
+seguro.
 
 Load Interlock
 --------------
