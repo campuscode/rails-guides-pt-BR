@@ -12,6 +12,7 @@ Depois de ler esse guia, você saberá:
 * Como decidir quais módulos usar no seu *controller*
 
 --------------------------------------------------------------------------------
+
 O que é uma Aplicação API?
 ---------------------------
 
@@ -151,13 +152,13 @@ Como nos *middlewares*, isso exclui qualquer *Action Controller* ou Módulo que 
 
 Se você deseja usar uma aplicação que já existe e transformá-la em API, siga os passos a seguir.
 
-Em `config/application.rb` adicione a seguinte linha no começo da classe `Application`:
+Em `config/application.rb`, adicione a seguinte linha no começo da classe `Application`:
 
 ```ruby
 config.api_only = true
 ```
 
-Em `config/environments/development.rb`, defina `config.debug_exception_response_format`
+Em [`config/environments/development.rb`][], defina `config.debug_exception_response_format`
 para configurar o formato usado nas respostas quando ocorrer um erro no modo de desenvolvimento.
 
 Para renderizar uma página HTML com as informações de *debugging*, use o valor `:default`.
@@ -187,6 +188,8 @@ troque por:
 class ApplicationController < ActionController::API
 end
 ```
+
+[`config.debug_exception_response_format`]: configuring.html#config-debug-exception-response-format
 
 Escolhendo o Middleware
 --------------------
@@ -279,7 +282,7 @@ Se seu servidor front-end suportar envio de arquivos acelerado, `Rack::SendFile`
 vai descarregar o arquivo real enviando o trabalho para o servidor front-end.
 
 Você pode configurar o nome do cabeçalho que seu servidor _front-end_ usa para
-este propósito usando `config.action_dispatch.x_sendfile_header` em seu arquivo
+este propósito usando [`config.action_dispatch.x_sendfile_header`][] em seu arquivo
 de configuração de ambiente apropriado.
 
 Você pode aprender mais sobre como usar o `Rack::Sendfile` com _front-ends_
@@ -298,6 +301,8 @@ config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
 
 Se certifique de configurar seu servidor para suportar estas opções seguindo as
 instruções na documentação do `Rack::Sendfile`.
+
+[`config.action_dispatch.x_sendfile_header`]: configuring.html#config-action-dispatch-x-sendfile-header
 
 ### Usando ActionDispatch::Request
 
