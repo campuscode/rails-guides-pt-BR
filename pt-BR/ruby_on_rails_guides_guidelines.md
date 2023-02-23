@@ -18,7 +18,7 @@ Markdown
 
 Guias são escritos em [GitHub Markdown](https://help.github.com/articles/github-flavored-markdown). Para uma melhor compreensão existe a [documentação para Markdown](https://daringfireball.net/projects/markdown/syntax), assim como essas [dicas](https://daringfireball.net/projects/markdown/basics).
 
-Prologue
+Prólogo
 --------
 
 Each guide should start with motivational text at the top (that's the little introduction in the blue area). The prologue should tell the reader what the guide is about, and what they will learn. As an example, see the [Routing Guide](routing.html).
