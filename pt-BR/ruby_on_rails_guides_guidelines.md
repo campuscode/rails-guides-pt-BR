@@ -21,7 +21,7 @@ Guias são escritos em [GitHub Markdown](https://help.github.com/articles/github
 Prólogo
 --------
 
-Each guide should start with motivational text at the top (that's the little introduction in the blue area). The prologue should tell the reader what the guide is about, and what they will learn. As an example, see the [Routing Guide](routing.html).
+Cada guia deve começar com um texto motivacional no topo (é uma pequena introdução na área azul). O prólogo deve dizer ao leitor qual será assunto do guia e o que o leitor irá aprender. Como exemplo, veja o [Guia de Rotas](routing.html).
 
 Headings
 ------
