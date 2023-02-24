@@ -18,15 +18,15 @@ Markdown
 
 Guias são escritos em [GitHub Markdown](https://help.github.com/articles/github-flavored-markdown). Para uma melhor compreensão existe a [documentação para Markdown](https://daringfireball.net/projects/markdown/syntax), assim como essas [dicas](https://daringfireball.net/projects/markdown/basics).
 
-Prologue
+Prólogo
 --------
 
-Each guide should start with motivational text at the top (that's the little introduction in the blue area). The prologue should tell the reader what the guide is about, and what they will learn. As an example, see the [Routing Guide](routing.html).
+Cada guia deve começar com um texto motivacional no topo (é uma pequena introdução na área azul). O prólogo deve dizer ao leitor qual será assunto do guia e o que o leitor vai aprender. Como exemplo, veja o [Guia de Rotas](routing.html).
 
-Headings
+Títulos
 ------
 
-The title of every guide uses an `h1` heading; guide sections use `h2` headings; subsections use `h3` headings; etc. Note that the generated HTML output will use heading tags starting with `<h2>`.
+O título de cada guia usa um cabeçalho `h1`, seções de guia usam cabeçalho `h2`; subseções usam cabeçalho `h3`; etc. Note que o resultado gerado do HTML vai usar *tags* de cabeçalho começando com `<h2>`.
 
 ```
 Guide Title
