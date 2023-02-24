@@ -26,7 +26,7 @@ Cada guia deve começar com um texto motivacional no topo (é uma pequena introd
 Títulos
 ------
 
-O título de cada guia usa um cabeçalho `h1`, seções de guia usam cabeçalho `h2`; subseções usam cabeçalho `h3`; etc. Note que o resultado gerado do HTML vai usar tags de cabeçalho começando com `<h2>`.
+O título de cada guia usa um cabeçalho `h1`, seções de guia usam cabeçalho `h2`; subseções usam cabeçalho `h3`; etc. Note que o resultado gerado do HTML vai usar *tags* de cabeçalho começando com `<h2>`.
 
 ```
 Guide Title
