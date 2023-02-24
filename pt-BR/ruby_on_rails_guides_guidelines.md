@@ -21,12 +21,12 @@ Guias são escritos em [GitHub Markdown](https://help.github.com/articles/github
 Prólogo
 --------
 
-Cada guia deve começar com um texto motivacional no topo (é uma pequena introdução na área azul). O prólogo deve dizer ao leitor qual será assunto do guia e o que o leitor irá aprender. Como exemplo, veja o [Guia de Rotas](routing.html).
+Cada guia deve começar com um texto motivacional no topo (é uma pequena introdução na área azul). O prólogo deve dizer ao leitor qual será assunto do guia e o que o leitor vai aprender. Como exemplo, veja o [Guia de Rotas](routing.html).
 
-Headings
+Títulos
 ------
 
-The title of every guide uses an `h1` heading; guide sections use `h2` headings; subsections use `h3` headings; etc. Note that the generated HTML output will use heading tags starting with `<h2>`.
+O título de cada guia usa um cabeçalho `h1`, seções de guia usam cabeçalho `h2`; subseções usam cabeçalho `h3`; etc. Note que o resultado gerado do HTML vai usar tags de cabeçalho começando com `<h2>`.
 
 ```
 Guide Title
