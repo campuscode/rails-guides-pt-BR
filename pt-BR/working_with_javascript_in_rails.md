@@ -18,13 +18,11 @@ seu JavaScript.
 
 -------------------------------------------------------------------------------
 
-Import maps
+Mapas de importação
 -----------
 
-[Import maps](https://github.com/rails/importmap-rails) let you import JavaScript modules using
-logical names that map to versioned files directly from the browser. Import maps are the default
-from Rails 7, allowing anyone to build modern JavaScript applications using most NPM packages
-without the need for transpiling or bundling.
+[Import maps](https://github.com/rails/importmap-rails) permite importar módulos JavaScript usando nomes lógicos que mapeiam para arquivos versionados diretamente do navegador. Os mapas de importação são o padrão utilizado no Rails 7, permitindo que qualquer pessoa construa aplicativos JavaScript modernos usando a maioria dos pacotes NPM
+sem a necessidade de transpilar ou *empacotar (bundling)* seu código.
 
 Applications using import maps do not need [Node.js](https://nodejs.org/en/) or
 [Yarn](https://yarnpkg.com/) to function. If you plan to use Rails with `importmap-rails` to
