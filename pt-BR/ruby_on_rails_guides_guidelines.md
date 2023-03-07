@@ -29,69 +29,69 @@ Títulos
 O título de cada guia usa um cabeçalho `h1`, seções de guia usam cabeçalho `h2`; subseções usam cabeçalho `h3`; etc. Note que o resultado gerado do HTML vai usar *tags* de cabeçalho começando com `<h2>`.
 
 ```
-Guide Title
+Título do Guia
 ===========
 
-Section
+Sessão
 -------
 
-### Sub Section
+### Sub Sessão
 ```
 
-When writing headings, capitalize all words except for prepositions, conjunctions, internal articles, and forms of the verb "to be":
+Quando escrever cabeçalhos, capitalizar todas as palavras exceto para preposições, conjunções, artigos e formulários do verbo "ser":
 
 ```
-#### Assertions and Testing Jobs inside Components
-#### Middleware Stack is an Array
-#### When are Objects Saved?
+#### Asserções e Testando *Jobs* dentro dos Componentes
+#### *Middleware Stack* é um *Array*
+#### Quando os Objetos são salvos?
 ```
 
-Use the same inline formatting as regular text:
+Use a mesma formatação em linha como texto regular:
 
 ```
-##### The `:content_type` Option
+##### A `:content_type` Opção
 ```
 
-Linking to the API
+Linkando com a API
 ------------------
 
-Links to the API (`api.rubyonrails.org`) are processed by the guides generator in the following manner:
+*Links* para a API (`api.rubyonrails.org`) são processados por um gerador de guia a seguir:
 
-Links that include a release tag are left untouched. For example
+*Links* que incluem a *tag* de lançamento não são tocadas, Por exemplo
 
 ```
 https://api.rubyonrails.org/v5.0.1/classes/ActiveRecord/Attributes/ClassMethods.html
 ```
 
-is not modified.
+não é modificada.
 
-Please use these in release notes, since they should point to the corresponding version no matter the target being generated.
+Por favor use essas notas de lançamento, porque elas devem apontar para a versão correspondente, não importanto o alvo sendo gerado.
 
-If the link does not include a release tag and edge guides are being generated, the domain is replaced by `edgeapi.rubyonrails.org`. For example,
+Se o link não incluir a *tag* de lançamento e os *edge* guias estiverem sendo gerados, o dominio é substituido por `edgeapi.rubyonrails.org`. Por exemplo,
 
 ```
 https://api.rubyonrails.org/classes/ActionDispatch/Response.html
 ```
 
-becomes
+se torna
 
 ```
 https://edgeapi.rubyonrails.org/classes/ActionDispatch/Response.html
 ```
 
-If the link does not include a release tag and release guides are being generated, the Rails version is injected. For example, if we are generating the guides for v5.1.0 the link
+Se o link não inclui a *tag* de lançamento e os guias de lançamento estiverem sendo gerados, a versão do Rails é aplicada, Por exemplo, se nós estamos gerando o guia para v5.1.0 o link
 
 ```
 https://api.rubyonrails.org/classes/ActionDispatch/Response.html
 ```
 
-becomes
+se torna
 
 ```
 https://api.rubyonrails.org/v5.1.0/classes/ActionDispatch/Response.html
 ```
 
-Please don't link to `edgeapi.rubyonrails.org` manually.
+Por favor não linkar para `edgeapi.rubyonrails.org` manualmente.
 
 
 API Documentation Guidelines
