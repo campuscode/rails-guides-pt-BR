@@ -350,7 +350,7 @@ Isso redirecionará o usuário para a ação principal se ele tentou acessar uma
 http://www.example.com/site/legacy?param1=xy&param2=23&host=www.attacker.com
 ```
 
-Se é no fim da URL, isso dificilmente será notado e redireciona o usuário para o _host_ `attacker.com`. Como uma regra geral, passar entradas de usuário diretamente no `redirect_to` é considerado perigoso. Uma contramedida simple seria _incluir apenas os parâmetros esperados em uma ação legada. (novamente uma abordagem de lista permitida, ao invés de remover parâmetros inesperados. E se você redirecionar para uma URL, cheque com uma lista permitida ou uma expressão regular.
+Se é no fim da URL, isso dificilmente será notado e redireciona o usuário para o _host_ `attacker.com`. Como uma regra geral, passar entradas de usuário diretamente no `redirect_to` é considerado perigoso. Uma contramedida simple seria _incluir apenas os parâmetros esperados em uma ação legada. (novamente uma abordagem de lista permitida, ao invés de remover parâmetros inesperados). E se você redirecionar para uma URL, cheque com uma lista permitida ou uma expressão regular.
 
 #### Self-contained XSS
 
