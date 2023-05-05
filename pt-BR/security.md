@@ -336,7 +336,7 @@ Outra classe de vulnerabilidades de securanças envolve o uso de redirecionament
 
 WARNING: _Redirection in a web application is an underestimated cracker tool: Not only can the attacker forward the user to a trap website, they may also create a self-contained attack._
 
-Quando quer que o usuário é permitido passar (partes de) a URL para redirecionamento, é possivelmente vulnerável. O ataque mais óbvio seria redirecionar os usuários para uma aplicação web falsa que parece exatamente com a original. Isso também chamado de ataque de _phishing_ funciona por enviar um link não malicioso em um email para os usuários, injetando o link por _XSS_ na aplicação web ou colocando o link em um site externo. É não-suspeito, porque o link começa com a URL da aplicação web e a URL para o site malicioso é escondida no parâmetro de redirecionamento: http://www.example.com/site/redirect?to=www.attacker.com. Aqui está um exemplo com uma ação legada:
+Quando o usuário é permitido passar a (ou partes de uma) URL para redirecionamento, é passível de vulnerábilidades. O ataque mais óbvio seria redirecionar os usuários para uma aplicação web falsa que parece exatamente com a original. Isso também chamado de ataque de _phishing_ funciona por enviar um link não malicioso em um email para os usuários, injetando o link por _XSS_ na aplicação web ou colocando o link em um site externo. É não-suspeito, porque o link começa com a URL da aplicação web e a URL para o site malicioso é escondida no parâmetro de redirecionamento: http://www.example.com/site/redirect?to=www.attacker.com. Aqui está um exemplo com uma ação legada:
 
 ```ruby
 def legacy
