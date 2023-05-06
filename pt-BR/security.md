@@ -330,7 +330,7 @@ Note that _cross-site scripting (XSS) vulnerabilities bypass all CSRF protection
 Redirecionamento e Arquivos
 ---------------------
 
-Outra classe de vulnerabilidades de securanças envolve o uso de redirecionamento e arquivos em aplicações web.
+Outra classe de vulnerabilidades de segurança envolve o uso de redirecionamento e arquivos em aplicações web.
 
 ### Redirecionamento
 
