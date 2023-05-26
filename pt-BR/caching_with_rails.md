@@ -1,7 +1,7 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-Caching with Rails: An Overview
+Cache com Rails: Uma Visão Geral
 ===============================
 
 This guide is an introduction to speeding up your Rails application with caching.
@@ -63,200 +63,168 @@ Page Caching cannot be used for actions that have before filters - for example, 
 
 INFO: Action Caching has been removed from Rails 4. See the [actionpack-action_caching gem](https://github.com/rails/actionpack-action_caching). See [DHH's key-based cache expiration overview](https://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works) for the newly-preferred method.
 
-### Fragment Caching
+### Cache de Fragmento
 
-Dynamic web applications usually build pages with a variety of components not
-all of which have the same caching characteristics. When different parts of the
-page need to be cached and expired separately you can use Fragment Caching.
+Os aplicativos da web dinâmicos geralmente criam páginas com uma variedade de componentes, nem todos com as mesmas características de armazenamento em cache. Quando diferentes partes da página precisam ser armazenadas em cache e expiradas separadamente, você pode usar o cache de fragmento.
 
-Fragment Caching allows a fragment of view logic to be wrapped in a cache block and served out of the cache store when the next request comes in.
+O cache de fragmento permite que um fragmento de lógica de uma *view* seja envolto em um bloco de cache e servido a partir do cache armazenado quando a próxima requisição chegar.
 
-For example, if you wanted to cache each product on a page, you could use this
-code:
+Por exemplo, se você quisesse armazenar em cache cada produto em uma página, poderia utilizar este código:
 
 ```html+erb
-<% @products.each do |product| %>
-  <% cache product do %>
-    <%= render product %>
+<% @produtos.each do |produto| %>
+  <% cache produto do %>
+    <%= render produto %>
   <% end %>
 <% end %>
 ```
 
-When your application receives its first request to this page, Rails will write
-a new cache entry with a unique key. A key looks something like this:
+Quando sua aplicação receber sua primeira requisição para esta página, Rails criará uma nova entrada de cache com uma chave exclusiva. Uma chave se parece com isto:
 
 ```
-views/products/index:bea67108094918eeba42cd4a6e786901/products/1
+views/produtos/index:bea67108094918eeba42cd4a6e786901/produtos/1
 ```
 
-The string of characters in the middle is a template tree digest. It is a hash
-digest computed based on the contents of the view fragment you are caching. If
-you change the view fragment (e.g., the HTML changes), the digest will change,
-expiring the existing file.
+A *string* no meio é um *checksum*. É o resultado de uma [função hash](https://pt.wikipedia.org/wiki/Fun%C3%A7%C3%A3o_hash) calculado com base no conteúdo do fragmento da *view* que você está armazenando em cache. Se você alterar o fragmento da *view* (ex., alterações de HTML), o resultado será alterado, expirando o arquivo existente.
 
-A cache version, derived from the product record, is stored in the cache entry.
-When the product is touched, the cache version changes, and any cached fragments
-that contain the previous version are ignored.
+Uma versão do produto é armazenada em cache. Quando o produto é tocado, a versão do cache muda e quaisquer fragmentos em cache que contenham a versão anterior são ignorados.
 
-TIP: Cache stores like Memcached will automatically delete old cache files.
+TIP: Sistemas de cache, como *Memcached*, excluirão automaticamente os arquivos de cache antigos.
 
-If you want to cache a fragment under certain conditions, you can use
-`cache_if` or `cache_unless`:
+Se quiser armazenar um fragmento em cache sob certas condições, você pode usar `cache_if` ou `cache_unless`:
 
 ```erb
-<% cache_if admin?, product do %>
-  <%= render product %>
+<% cache_if admin?, produto do %>
+  <%= render produto %>
 <% end %>
 ```
 
-#### Collection caching
+#### Cache de Coleção
 
-The `render` helper can also cache individual templates rendered for a collection.
-It can even one up the previous example with `each` by reading all cache
-templates at once instead of one by one. This is done by passing `cached: true` when rendering the collection:
+O *helper* `render` também pode armazenar em cache *templates* individuais renderizados para uma *collection*. Ele pode até mesmo superar o exemplo anterior com `each` lendo todos os *templates* de cache de uma vez ao invés de um por um. Isso é feito passando `cached: true` ao renderizar a coleção:
 
 ```html+erb
-<%= render partial: 'products/product', collection: @products, cached: true %>
+<%= render partial: 'produtos/produto', collection: @produtos, cached: true %>
 ```
 
-All cached templates from previous renders will be fetched at once with much
-greater speed. Additionally, the templates that haven't yet been cached will be
-written to cache and multi fetched on the next render.
+Todos os *templates* que já estão em cache serão buscados de uma vez com velocidade muito maior. Além disso, aqueles que ainda não estão em cache serão adicionados e utilizados na próxima renderização.
 
 ### Russian Doll Caching
 
-You may want to nest cached fragments inside other cached fragments. This is
-called Russian doll caching.
+Talvez você deseje aninhar fragmentos em cache dentro de outros fragmentos em cache. Isso é chamado de *Russian doll caching*.
 
-The advantage of Russian doll caching is that if a single product is updated,
-all the other inner fragments can be reused when regenerating the outer
-fragment.
+A vantagem do *Russian doll caching* é que, se um único `produto` for atualizado, todos os outros fragmentos internos podem ser reutilizados ao regenerar o fragmento externo.
 
-As explained in the previous section, a cached file will expire if the value of
-`updated_at` changes for a record on which the cached file directly depends.
-However, this will not expire any cache the fragment is nested within.
+Conforme explicado na seção anterior, um arquivo em cache expirará se o valor de `updated_at` mudar para um registro do qual o arquivo em cache depende diretamente. No entanto, isso não expirará nenhum cache no qual o fragmento esteja aninhado.
 
-For example, take the following view:
+Por exemplo, considere a seguinte *view*:
 
 ```erb
-<% cache product do %>
-  <%= render product.games %>
+<% cache produto do %>
+  <%= render produto.jogos %>
 <% end %>
 ```
 
-Which in turn renders this view:
+Que por sua vez renderiza esta *view*:
 
 ```erb
-<% cache game do %>
-  <%= render game %>
+<% cache jogo do %>
+  <%= render jogo %>
 <% end %>
 ```
 
-If any attribute of game is changed, the `updated_at` value will be set to the
-current time, thereby expiring the cache. However, because `updated_at`
-will not be changed for the product object, that cache will not be expired and
-your app will serve stale data. To fix this, we tie the models together with
-the `touch` method:
+Se algum atributo do jogo for alterado, o valor `updated_at` será definido para a hora atual, expirando assim o cache. No entanto, como `updated_at` não será alterado para o objeto produto, esse cache não expirará e seu aplicativo servirá dados desatualizados. Para corrigir isso, vinculamos os *models* com o método `touch`:
 
 ```ruby
-class Product < ApplicationRecord
-  has_many :games
+class Produto < ApplicationRecord
+  has_many :jogos
 end
 
-class Game < ApplicationRecord
-  belongs_to :product, touch: true
+class Jogo < ApplicationRecord
+  belongs_to :produto, touch: true
 end
 ```
 
-With `touch` set to `true`, any action which changes `updated_at` for a game
-record will also change it for the associated product, thereby expiring the
-cache.
+Com `touch` definido como `true`, qualquer ação que altere `updated_at` para um registro de jogo irá também alterá-lo para o produto associado, expirando assim o cache.
 
-### Shared Partial Caching
+### Cache de *Parcial* Compartilhada
 
-It is possible to share partials and associated caching between files with different mime types. For example shared partial caching allows template writers to share a partial between HTML and JavaScript files. When templates are collected in the template resolver file paths they only include the template language extension and not the mime type. Because of this templates can be used for multiple mime types. Both HTML and JavaScript requests will respond to the following code:
+É possível compartilhar *partials* e cache associado entre arquivos com diferentes tipos de *mime*. O cache de *parcial* compartilhada, por exemplo, permite que os criadores de *templates* compartilhem uma *parcial* entre arquivos HTML e JavaScript. Quando os *templates* são coletados no *template* resolvedor de caminhos de arquivos, eles incluem apenas a extensão de idioma do *template* e não o tipo *mime*. Por isso os modelos podem ser usados para vários tipos *mime*. As requisições HTML e JavaScript responderão ao código seguinte:
 
 ```ruby
 render(partial: 'hotels/hotel', collection: @hotels, cached: true)
 ```
 
-Will load a file named `hotels/hotel.erb`.
+Será carregado o arquivo `hotels/hotel.erb`.
 
-Another option is to include the full filename of the partial to render.
+Outra opção é incluir o caminho completo do arquivo *partial* a ser renderizado.
 
 ```ruby
 render(partial: 'hotels/hotel.html.erb', collection: @hotels, cached: true)
 ```
 
-Will load a file named `hotels/hotel.html.erb` in any file mime type, for example you could include this partial in a JavaScript file.
+Será carregado o arquivo `hotels/hotel.html.erb` em qualquer tipo de arquivo *mime*. Você pode incluir este *parcial* em um arquivo JavaScript, por exemplo.
 
-### Managing dependencies
+### Gerenciando dependências
 
-In order to correctly invalidate the cache, you need to properly define the
-caching dependencies. Rails is clever enough to handle common cases so you don't
-have to specify anything. However, sometimes, when you're dealing with custom
-helpers for instance, you need to explicitly define them.
+Para invalidar corretamente o cache, você precisa definir adequadamente suas dependências. Rails é inteligente o suficiente para lidar com casos comuns, então você não precisa especificar nada. No entanto, às vezes, quando você está lidando com "helpers" customizados, por exemplo, você precisa defini-los explicitamente.
 
-#### Implicit dependencies
+#### Dependências implícitas
+
+A maioria das dependências dos *templates* pode ser derivada de chamadas a `render` no próprio *template*. Aqui estão alguns exemplos de chamadas de renderização que o `ActionView::Digestor` sabe como decodificar:
 
 Most template dependencies can be derived from calls to `render` in the template
 itself. Here are some examples of render calls that `ActionView::Digestor` knows
 how to decode:
 
 ```ruby
-render partial: "comments/comment", collection: commentable.comments
-render "comments/comments"
-render 'comments/comments'
-render('comments/comments')
+render partial: "comentarios/comentario", collection: comentavel.comentarios
+render "comentarios/comentarios"
+render 'comentarios/comentarios'
+render('comentarios/comentarios')
 
-render "header" translates to render("comments/header")
+render "cabecalho" translates to render("comentarios/cabecalho")
 
-render(@topic)         translates to render("topics/topic")
-render(topics)         translates to render("topics/topic")
-render(message.topics) translates to render("topics/topic")
+render(@topico)          translates to render("topicos/topico")
+render(topicos)          translates to render("topicos/topico")
+render(mensagem.topicos) translates to render("topicos/topico")
 ```
 
-On the other hand, some calls need to be changed to make caching work properly.
-For instance, if you're passing a custom collection, you'll need to change:
+Por outro lado, algumas chamadas precisam ser alteradas para que o cache funcione corretamente. Por exemplo, se você estiver passando uma *collection* personalizada, precisará alterar:
 
 ```ruby
-render @project.documents.where(published: true)
+render @projeto.documentos.where(published: true)
 ```
 
 to:
 
 ```ruby
-render partial: "documents/document", collection: @project.documents.where(published: true)
+render partial: "documentos/documento", collection: @projeto.documentos.where(published: true)
 ```
 
-#### Explicit dependencies
+#### Dependências explícitas
 
-Sometimes you'll have template dependencies that can't be derived at all. This
-is typically the case when rendering happens in helpers. Here's an example:
+Às vezes você terá dependências de *templates* que não podem ser derivadas de forma alguma. Normalmente, esse é o caso quando a renderização ocorre nos *helpers*. Aqui está um exemplo:
 
 ```html+erb
-<%= render_sortable_todolists @project.todolists %>
+<%= render_sortable_todolists @projeto.todolists %>
 ```
 
-You'll need to use a special comment format to call those out:
+Você precisará usar um formato especial de comentário para executá-los:
 
 ```html+erb
 <%# Template Dependency: todolists/todolist %>
-<%= render_sortable_todolists @project.todolists %>
+<%= render_sortable_todolists @projeto.todolists %>
 ```
 
-In some cases, like a single table inheritance setup, you might have a bunch of
-explicit dependencies. Instead of writing every template out, you can use a
-wildcard to match any template in a directory:
+Em alguns casos, como uma configuração de herança de tabela única, você pode ter muitas dependências explícitas. Em vez de escrever todos os *templates*, você pode usar um caractere curinga para corresponder a qualquer *template* em um diretório:
 
 ```html+erb
 <%# Template Dependency: events/* %>
-<%= render_categorizable_events @person.events %>
+<%= render_categorizable_events @pessoa.events %>
 ```
 
-As for collection caching, if the partial template doesn't start with a clean
-cache call, you can still benefit from collection caching by adding a special
-comment format anywhere in the template, like:
+Quanto ao cache de *collection*, se o *template parcial* não começar com uma execução de cache limpo, você ainda pode se beneficiar do cache de *collection* adicionando um formato especial de comentário em qualquer lugar do *template*, assim:
 
 ```html+erb
 <%# Template Collection: notification %>
@@ -449,7 +417,7 @@ store is not appropriate for large application deployments. However, it can
 work well for small, low traffic sites with only a couple of server processes,
 as well as development and test environments.
 
-New Rails projects are configured to use this implementation in development environment by default.
+New Rails projetos are conofigured to use this implementation in development environment by default.
 
 NOTE: Since processes will not share cache data when using `:memory_store`,
 it will not be possible to manually read, write, or expire the cache via the Rails console.
