@@ -2754,14 +2754,14 @@ NOTE: Definido em `active_support/core_ext/array/grouping.rb`.
 
 [Array#split]: https://api.rubyonrails.org/classes/Array.html#method-i-split
 
-Extensions to `Hash`
+Extensões para `Hash`
 --------------------
 
-### Conversions
+### Conversões
 
 #### `to_xml`
 
-The method [`to_xml`][Hash#to_xml] returns a string containing an XML representation of its receiver:
+O método [`to_xml`][Hash#to_xml] retorna uma *string* contendo uma representação XML do seu recipiente:
 
 ```ruby
 {"foo" => 1, "bar" => 2}.to_xml
@@ -2773,17 +2773,17 @@ The method [`to_xml`][Hash#to_xml] returns a string containing an XML representa
 # </hash>
 ```
 
-To do so, the method loops over the pairs and builds nodes that depend on the _values_. Given a pair `key`, `value`:
+Para fazer isso, o método faz um *loop* sobre os pares e cria nós que dependem dos  _values_. Dado um par `key`, `value`:
 
-* If `value` is a hash there's a recursive call with `key` as `:root`.
+* Se `value` for uma *hash*, há uma chamada recursiva com a `key` como `:root`.
 
-* If `value` is an array there's a recursive call with `key` as `:root`, and `key` singularized as `:children`.
+* Se `value` for um *array*, há uma chamada recursiva com a `key` como `:root`, e a `key` singularizada como `:children`.
 
-* If `value` is a callable object it must expect one or two arguments. Depending on the arity, the callable is invoked with the `options` hash as first argument with `key` as `:root`, and `key` singularized as second argument. Its return value becomes a new node.
+* Se `value` for um objeto que pode ser chamado, ele deve esperar um ou dois argumentos. Dependendo da aridade, o objeto chamável é invocado com o *hash* `options` como primeiro argumento, e a `key` singularizada como segundo argumento. Seu valor de retorno se torna um novo nó.
 
-* If `value` responds to `to_xml` the method is invoked with `key` as `:root`.
+* Se `value` responde a `to_xml`, o método é invocado com a `key` como `:root`.
 
-* Otherwise, a node with `key` as tag is created with a string representation of `value` as text node. If `value` is `nil` an attribute "nil" set to "true" is added. Unless the option `:skip_types` exists and is true, an attribute "type" is added as well according to the following mapping:
+* Caso contrário, um nó com a `key` como *tag* é criado com uma representação de *string* de `value` como nó de texto. Se `value` for `nil`, um atributo "*nil*" definido como "*true*" será adicionado. A menos que a opção `:skip_types` exista e seja *true*, um atributo "*type*" também é adicionado de acordo com o seguinte mapeamento:
 
 ```ruby
 XML_TYPE_NAMES = {
@@ -2799,84 +2799,83 @@ XML_TYPE_NAMES = {
 }
 ```
 
-By default the root node is "hash", but that's configurable via the `:root` option.
+Por padrão, o nó raiz é "*hash*", mas isso é configurável através da opção `:root`.
 
-The default XML builder is a fresh instance of `Builder::XmlMarkup`. You can configure your own builder with the `:builder` option. The method also accepts options like `:dasherize` and friends, they are forwarded to the builder.
+O construtor XML padrão é uma nova instância de `Builder::XmlMarkup`. Você pode configurar seu próprio construtor com a opção `:builder`. O método também aceita opções como `:dasherize` e afins, elas são encaminhadas para o construtor.
 
-NOTE: Defined in `active_support/core_ext/hash/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/hash/conversions.rb`.
 
 [Hash#to_xml]: https://api.rubyonrails.org/classes/Hash.html#method-i-to_xml
 
-### Merging
+### Mesclando
 
-Ruby has a built-in method `Hash#merge` that merges two hashes:
+O Ruby tem um método embutido, `Hash#merge`, que mescla dois *hashes*:
 
 ```ruby
 {a: 1, b: 1}.merge(a: 0, c: 2)
 # => {:a=>0, :b=>1, :c=>2}
 ```
 
-Active Support defines a few more ways of merging hashes that may be convenient.
+O *Active Support* define mais algumas maneiras de mesclar *hashes* que podem ser convenientes.
 
-#### `reverse_merge` and `reverse_merge!`
+#### `reverse_merge` e `reverse_merge!`
 
-In case of collision the key in the hash of the argument wins in `merge`. You can support option hashes with default values in a compact way with this idiom:
+Em caso de colisão, a chave no *hash* do argumento ganha no `merge`. Você pode suportar *hashes* de opções com valores padrão de forma compacta com este idioma:
 
 ```ruby
 options = {length: 30, omission: "..."}.merge(options)
 ```
 
-Active Support defines [`reverse_merge`][Hash#reverse_merge] in case you prefer this alternative notation:
+O *Active Support* define [`reverse_merge`][Hash#reverse_merge] caso você prefira esta notação alternativa:
 
 ```ruby
 options = options.reverse_merge(length: 30, omission: "...")
 ```
 
-And a bang version [`reverse_merge!`][Hash#reverse_merge!] that performs the merge in place:
+E uma versão com *bang* [`reverse_merge!`][Hash#reverse_merge!] que executa a mesclagem no local:
 
 ```ruby
 options.reverse_merge!(length: 30, omission: "...")
 ```
 
-WARNING. Take into account that `reverse_merge!` may change the hash in the caller, which may or may not be a good idea.
+WARNING. Leve em conta que `reverse_merge!` pode alterar o *hash* no objeto "chamador", o que pode ou não ser uma boa ideia.
 
-NOTE: Defined in `active_support/core_ext/hash/reverse_merge.rb`.
+NOTE: Definido em `active_support/core_ext/hash/reverse_merge.rb`.
 
 [Hash#reverse_merge!]: https://api.rubyonrails.org/classes/Hash.html#method-i-reverse_merge-21
 [Hash#reverse_merge]: https://api.rubyonrails.org/classes/Hash.html#method-i-reverse_merge
 
 #### `reverse_update`
 
-The method [`reverse_update`][Hash#reverse_update] is an alias for `reverse_merge!`, explained above.
+O método [`reverse_update`][Hash#reverse_update] é um *alias* para o `reverse_merge!`, explicado acima.
 
-WARNING. Note that `reverse_update` has no bang.
+WARNING. Note que `reverse_update` não tem *bang*.
 
-NOTE: Defined in `active_support/core_ext/hash/reverse_merge.rb`.
+NOTE: Definido em `active_support/core_ext/hash/reverse_merge.rb`.
 
 [Hash#reverse_update]: https://api.rubyonrails.org/classes/Hash.html#method-i-reverse_update
 
-#### `deep_merge` and `deep_merge!`
+#### `deep_merge` e `deep_merge!`
 
-As you can see in the previous example if a key is found in both hashes the value in the one in the argument wins.
+Como você pode ver no exemplo anterior, se uma chave for encontrada em ambos os *hashes*, o valor daquele no argumento vence.
 
-Active Support defines [`Hash#deep_merge`][Hash#deep_merge]. In a deep merge, if a key is found in both hashes and their values are hashes in turn, then their _merge_ becomes the value in the resulting hash:
+O Active Support define [`Hash#deep_merge`][Hash#deep_merge]. Em uma mesclagem profunda, se uma chave for encontrada em ambos os *hashes* e seus valores forem *hashes* por sua vez, sua _mesclagem_ se tornará o valor no hash resultante:
 
 ```ruby
 {a: {b: 1}}.deep_merge(a: {c: 2})
 # => {:a=>{:b=>1, :c=>2}}
 ```
 
-The method [`deep_merge!`][Hash#deep_merge!] performs a deep merge in place.
+O método [`deep_merge!`][Hash#deep_merge!] executa uma mesclagem profunda no local.
 
-NOTE: Defined in `active_support/core_ext/hash/deep_merge.rb`.
+NOTE: Definida em `active_support/core_ext/hash/deep_merge.rb`.
 
 [Hash#deep_merge!]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_merge-21
 [Hash#deep_merge]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_merge
 
-### Deep duplicating
+### Duplicação profunda
 
-The method [`Hash#deep_dup`][Hash#deep_dup] duplicates itself and all keys and values
-inside recursively with Active Support method `Object#deep_dup`. It works like `Enumerator#each_with_object` with sending `deep_dup` method to each pair inside.
+O método[`Hash#deep_dup`][Hash#deep_dup] duplica a si mesmo e todas as chaves e valores dentro recursivamente com o método do Active Support, `Object#deep_dup`. Funciona como o `Enumerator#each_with_object` enviando o método `deep_dup` para cada par dentro.
 
 ```ruby
 hash = { a: 1, b: { c: 2, d: [3, 4] } }
@@ -2889,44 +2888,44 @@ hash[:b][:e] == nil      # => true
 hash[:b][:d] == [3, 4]   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
+NOTE: Definido em `active_support/core_ext/object/deep_dup.rb`.
 
 [Hash#deep_dup]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_dup
 
-### Working with Keys
+### Trabalhando com chaves
 
-#### `except` and `except!`
+#### `except` e `except!`
 
-The method [`except`][Hash#except] returns a hash with the keys in the argument list removed, if present:
+O método [`except`][Hash#except] retorna um *hash* com as chaves na lista de argumentos removidas, se presentes:
 
 ```ruby
 {a: 1, b: 2}.except(:a) # => {:b=>2}
 ```
 
-If the receiver responds to `convert_key`, the method is called on each of the arguments. This allows `except` to play nice with hashes with indifferent access for instance:
+Se o recipiente responder a `convert_key`, o método será chamado em cada um dos argumentos. Isso permite que `except` funcione bem com *hashes* com acesso indiferente, por exemplo:
 
 ```ruby
 {a: 1}.with_indifferent_access.except(:a)  # => {}
 {a: 1}.with_indifferent_access.except("a") # => {}
 ```
 
-There's also the bang variant [`except!`][Hash#except!] that removes keys in place.
+Há também uma váriante com *bang*  [`except!`][Hash#except!] que remove as chaves no lugar.
 
-NOTE: Defined in `active_support/core_ext/hash/except.rb`.
+NOTE: Definido em `active_support/core_ext/hash/except.rb`.
 
 [Hash#except!]: https://api.rubyonrails.org/classes/Hash.html#method-i-except-21
 [Hash#except]: https://api.rubyonrails.org/classes/Hash.html#method-i-except
 
-#### `stringify_keys` and `stringify_keys!`
+#### `stringify_keys` e `stringify_keys!`
 
-The method [`stringify_keys`][Hash#stringify_keys] returns a hash that has a stringified version of the keys in the receiver. It does so by sending `to_s` to them:
+O método [`stringify_keys`][Hash#stringify_keys] retorna um *hash* que possui uma versão em *string* das chaves no recipiente. Ele faz isso enviando `to_s` para eles:
 
 ```ruby
 {nil => nil, 1 => 1, a: :a}.stringify_keys
 # => {"" => nil, "1" => 1, "a" => :a}
 ```
 
-In case of key collision, the value will be the one most recently inserted into the hash:
+Em caso de colisão de chaves, o valor será aquele inserido mais recentemente no *hash*:
 
 ```ruby
 {"a" => 1, a: 2}.stringify_keys
@@ -2934,7 +2933,7 @@ In case of key collision, the value will be the one most recently inserted into 
 # => {"a"=>2}
 ```
 
-This method may be useful for example to easily accept both symbols and strings as options. For instance `ActionView::Helpers::FormHelper` defines:
+Este método pode ser útil, por exemplo, para aceitar facilmente símbolos e strings como opções. Por exemplo, `ActionView::Helpers::FormHelper` define:
 
 ```ruby
 def to_check_box_tag(options = {}, checked_value = "1", unchecked_value = "0")
@@ -2944,43 +2943,43 @@ def to_check_box_tag(options = {}, checked_value = "1", unchecked_value = "0")
 end
 ```
 
-The second line can safely access the "type" key, and let the user to pass either `:type` or "type".
+A segunda linha pode acessar com segurança a chave "type" e permitir que o usuário passe `:type` ou "type".
 
-There's also the bang variant [`stringify_keys!`][Hash#stringify_keys!] that stringifies keys in place.
+Há também a variante com *bang* [`stringify_keys!`][Hash#stringify_keys!] que *stringifica* as chaves no lugar.
 
-Besides that, one can use [`deep_stringify_keys`][Hash#deep_stringify_keys] and [`deep_stringify_keys!`][Hash#deep_stringify_keys!] to stringify all the keys in the given hash and all the hashes nested in it. An example of the result is:
+Além disso, pode-se usar [`deep_stringify_keys`][Hash#deep_stringify_keys] e [`deep_stringify_keys!`][Hash#deep_stringify_keys!] para *stringificar* todas as chaves no *hash* fornecido e todos os *hashes* aninhados nele. Um exemplo do resultado é:
 
 ```ruby
 {nil => nil, 1 => 1, nested: {a: 3, 5 => 5}}.deep_stringify_keys
 # => {""=>nil, "1"=>1, "nested"=>{"a"=>3, "5"=>5}}
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+NOTE: Definido em `active_support/core_ext/hash/keys.rb`.
 
 [Hash#deep_stringify_keys!]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_stringify_keys-21
 [Hash#deep_stringify_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_stringify_keys
 [Hash#stringify_keys!]: https://api.rubyonrails.org/classes/Hash.html#method-i-stringify_keys-21
 [Hash#stringify_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-stringify_keys
 
-#### `symbolize_keys` and `symbolize_keys!`
+#### `symbolize_keys` e `symbolize_keys!`
 
-The method [`symbolize_keys`][Hash#symbolize_keys] returns a hash that has a symbolized version of the keys in the receiver, where possible. It does so by sending `to_sym` to them:
+O método [`symbolize_keys`][Hash#symbolize_keys] retorna um *hash* que tem uma versão simbolizada das chaves no recipiente, sempre que possível. Ele faz isso enviando `to_sym` para eles:
 
 ```ruby
 {nil => nil, 1 => 1, "a" => "a"}.symbolize_keys
 # => {nil=>nil, 1=>1, :a=>"a"}
 ```
 
-WARNING. Note in the previous example only one key was symbolized.
+WARNING. Observe que no exemplo anterior apenas uma chave foi simbolizada.
 
-In case of key collision, the value will be the one most recently inserted into the hash:
+Em caso de colisão de chaves, o valor será aquele inserido mais recentemente no *hash*:
 
 ```ruby
 {"a" => 1, a: 2}.symbolize_keys
 # => {:a=>2}
 ```
 
-This method may be useful for example to easily accept both symbols and strings as options. For instance `ActionText::TagHelper` defines
+Este método pode ser útil, por exemplo, para aceitar facilmente símbolos e *strings* como opções. Por exemplo, `ActionText::TagHelper` define
 
 ```ruby
 def rich_text_area_tag(name, value = nil, options = {})
@@ -2991,53 +2990,53 @@ def rich_text_area_tag(name, value = nil, options = {})
 end
 ```
 
-The third line can safely access the `:input` key, and let the user to pass either `:input` or "input".
+A terceira linha pode acessar com segurança a chave `:input` e permitir que o usuário passe `:input` ou "input".
 
-There's also the bang variant [`symbolize_keys!`][Hash#symbolize_keys!] that symbolizes keys in place.
+Há também a variante com *bang* [`symbolize_keys!`][Hash#symbolize_keys!] que simboliza as chaves no lugar.
 
-Besides that, one can use [`deep_symbolize_keys`][Hash#deep_symbolize_keys] and [`deep_symbolize_keys!`][Hash#deep_symbolize_keys!] to symbolize all the keys in the given hash and all the hashes nested in it. An example of the result is:
+Além disso, pode-se usar [`deep_symbolize_keys`][Hash#deep_symbolize_keys] e [`deep_symbolize_keys!`][Hash#deep_symbolize_keys!] para simbolizar todas as chaves no *hash* fornecido e todos os *hashes* aninhados nele. Um exemplo do resultado é:
 
 ```ruby
 {nil => nil, 1 => 1, "nested" => {"a" => 3, 5 => 5}}.deep_symbolize_keys
 # => {nil=>nil, 1=>1, nested:{a:3, 5=>5}}
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+NOTE: Definido em `active_support/core_ext/hash/keys.rb`.
 
 [Hash#deep_symbolize_keys!]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_symbolize_keys-21
 [Hash#deep_symbolize_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_symbolize_keys
 [Hash#symbolize_keys!]: https://api.rubyonrails.org/classes/Hash.html#method-i-symbolize_keys-21
 [Hash#symbolize_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-symbolize_keys
 
-#### `to_options` and `to_options!`
+#### `to_options` e `to_options!`
 
-The methods [`to_options`][Hash#to_options] and [`to_options!`][Hash#to_options!] are aliases of `symbolize_keys` and `symbolize_keys!`, respectively.
+Os métodos [`to_options`][Hash#to_options] e [`to_options!`][Hash#to_options!] são aliases de `symbolize_keys` e `symbolize_keys!`, respectivamente.
 
-NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+NOTE: Definido em `active_support/core_ext/hash/keys.rb`.
 
 [Hash#to_options!]: https://api.rubyonrails.org/classes/Hash.html#method-i-to_options-21
 [Hash#to_options]: https://api.rubyonrails.org/classes/Hash.html#method-i-to_options
 
 #### `assert_valid_keys`
 
-The method [`assert_valid_keys`][Hash#assert_valid_keys] receives an arbitrary number of arguments, and checks whether the receiver has any key outside that list. If it does `ArgumentError` is raised.
+O método [`assert_valid_keys`][Hash#assert_valid_keys] recebe um número arbitrário de argumentos e verifica se o recipiente possui alguma chave fora dessa lista. Se isso acontecer, um `ArgumentError` é gerado.
 
 ```ruby
 {a: 1}.assert_valid_keys(:a)  # passes
 {a: 1}.assert_valid_keys("a") # ArgumentError
 ```
 
-Active Record does not accept unknown options when building associations, for example. It implements that control via `assert_valid_keys`.
+O Active Record não aceita opções desconhecidas ao construir associações, por exemplo. Ele implementa esse controle via `assert_valid_keys`.
 
-NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+NOTE: Definido em `active_support/core_ext/hash/keys.rb`.
 
 [Hash#assert_valid_keys]: https://api.rubyonrails.org/classes/Hash.html#method-i-assert_valid_keys
 
-### Working with Values
+### Trabalhando com valores
 
-#### `deep_transform_values` and `deep_transform_values!`
+#### `deep_transform_values` e `deep_transform_values!`
 
-The method [`deep_transform_values`][Hash#deep_transform_values] returns a new hash with all values converted by the block operation. This includes the values from the root hash and from all nested hashes and arrays.
+O método [`deep_transform_values`][Hash#deep_transform_values] retorna um novo *hash* com todos os valores convertidos pela operação de bloco. Isso inclui os valores do *hash* raiz e de todos os *hashes* e *arrays* aninhados.
 
 ```ruby
 hash = { person: { name: 'Rob', age: '28' } }
@@ -3046,16 +3045,16 @@ hash.deep_transform_values{ |value| value.to_s.upcase }
 # => {person: {name: "ROB", age: "28"}}
 ```
 
-There's also the bang variant [`deep_transform_values!`][Hash#deep_transform_values!] that destructively converts all values by using the block operation.
+Há também a variante com *bang* [`deep_transform_values!`][Hash#deep_transform_values!] que converte destrutivamente todos os valores usando a operação de bloco.
 
-NOTE: Defined in `active_support/core_ext/hash/deep_transform_values.rb`.
+NOTE: Definido em `active_support/core_ext/hash/deep_transform_values.rb`.
 
 [Hash#deep_transform_values!]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_transform_values-21
 [Hash#deep_transform_values]: https://api.rubyonrails.org/classes/Hash.html#method-i-deep_transform_values
 
-### Slicing
+### Fatiamento
 
-The method [`slice!`][Hash#slice!] replaces the hash with only the given keys and returns a hash containing the removed key/value pairs.
+O método [`slice!`][Hash#slice!] substitui o *hash* apenas com as chaves fornecidas e retorna um *hash* contendo os pares chave/valor removidos.
 
 ```ruby
 hash = {a: 1, b: 2}
@@ -3063,13 +3062,13 @@ rest = hash.slice!(:a) # => {:b=>2}
 hash                   # => {:a=>1}
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/slice.rb`.
+NOTE: Definido em `active_support/core_ext/hash/slice.rb`.
 
 [Hash#slice!]: https://api.rubyonrails.org/classes/Hash.html#method-i-slice-21
 
-### Extracting
+### Extraindo
 
-The method [`extract!`][Hash#extract!] removes and returns the key/value pairs matching the given keys.
+O método [`extract!`][Hash#extract!] remove e retorna os pares chave/valor correspondentes às chaves fornecidas.
 
 ```ruby
 hash = {a: 1, b: 2}
@@ -3077,7 +3076,7 @@ rest = hash.extract!(:a) # => {:a=>1}
 hash                     # => {:b=>2}
 ```
 
-The method `extract!` returns the same subclass of Hash that the receiver is.
+O método `extract!` retorna a mesma subclasse de *Hash* que o recipiente é.
 
 ```ruby
 hash = {a: 1, b: 2}.with_indifferent_access
@@ -3085,19 +3084,19 @@ rest = hash.extract!(:a).class
 # => ActiveSupport::HashWithIndifferentAccess
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/slice.rb`.
+NOTE: Definido em `active_support/core_ext/hash/slice.rb`.
 
 [Hash#extract!]: https://api.rubyonrails.org/classes/Hash.html#method-i-extract-21
 
-### Indifferent Access
+### Acesso Indiferente
 
-The method [`with_indifferent_access`][Hash#with_indifferent_access] returns an [`ActiveSupport::HashWithIndifferentAccess`][ActiveSupport::HashWithIndifferentAccess] out of its receiver:
+O método [`with_indifferent_access`][Hash#with_indifferent_access] retorna um [`ActiveSupport::HashWithIndifferentAccess`][ActiveSupport::HashWithIndifferentAccess] de seu recipiente:
 
 ```ruby
 {a: 1}.with_indifferent_access["a"] # => 1
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/indifferent_access.rb`.
+NOTE: Definido em `active_support/core_ext/hash/indifferent_access.rb`.
 
 [ActiveSupport::HashWithIndifferentAccess]: https://api.rubyonrails.org/classes/ActiveSupport/HashWithIndifferentAccess.html
 [Hash#with_indifferent_access]: https://api.rubyonrails.org/classes/Hash.html#method-i-with_indifferent_access
