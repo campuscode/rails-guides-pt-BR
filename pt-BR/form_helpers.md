@@ -215,7 +215,7 @@ Cria o seguinte código:
 </form>
 ```
 
-Existem algumas coisas a serem observadas aqui:
+Estas são algumas coisas a serem observadas aqui:
 
 * A `action` do formulário é automaticamente preenchida com um valor apropriado para `@article`.
 * Os campos do formulário são preenchidos automaticamente com os valores correspondentes do `@article`.
@@ -251,7 +251,10 @@ Que produz a seguinte saída:
 </form>
 ```
 
-O objeto produzido por `fields_for` é um construtor de formulário igual ao produzido por `form_with`.
+O objeto produzido por `fields_for` é um construtor de formulário igual ao produzido por
+`form_with`.
+
+[`fields_for`]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-fields_for
 
 [`fields_for`]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-fields_for
 
@@ -829,7 +832,7 @@ Porém, há uma restrição. Enquanto os *hashes* podem ser aninhados de forma a
 
 WARNING: Parâmetros de *array* não funcionam bem com o *helper* `check_box`. De acordo com a especificação HTML *checkboxes* desmarcadas não enviam nenhum valor. Porém pode ser conveniente fazer com que uma *checkbox* sempre envie um valor. O *helper* `check_box` simula isto ao criar um *input* auxiliar com o mesmo nome. Se a *checkbox* estiver desmarcada apenas o *input* escondido será enviado e se estiver marcada então os dois serão enviados mas o valor da *checkbox* recebe uma prioridade maior.
 
-### Utilizando a opção `:index` do auxiliar `fields_for`
+### Utilizando o auxiliar `fields_for` com a opção `:index`
 
 Digamos que queremos renderizar um formulário com um conjunto de campos para cada endereço de uma pessoa. O auxiliar [`fields_for`][] e seu argumento`: index` podem ajudar com isso:
 
@@ -844,7 +847,7 @@ Digamos que queremos renderizar um formulário com um conjunto de campos para ca
 <% end %>
 ```
 
-Presumindo que a pessoa (person) tenha dois endereços (addresses), com *ids* 23 e 45 isto trará um resultado similar a este:
+Presumindo que a pessoa (_person_) tenha dois endereços (_addresses_), com *ids* 23 e 45 o formulário acima trará um resultado similar a este:
 
 ```html
 <form accept-charset="UTF-8" action="/people/1" method="post">
@@ -855,7 +858,7 @@ Presumindo que a pessoa (person) tenha dois endereços (addresses), com *ids* 23
 </form>
 ```
 
-Isto resultará em um *hash* `params` parecido com
+Isto resultará em um *hash* `params` parecido com:
 
 ```ruby
 {
@@ -873,18 +876,17 @@ Isto resultará em um *hash* `params` parecido com
 }
 ```
 
-
 All of the form inputs map to the `"person"` hash because we called `fields_for`
 on the `person_form` form builder. By specifying an `:index` option, we mapped
 the address inputs to `person[address][#{address.id}][city]` instead of
 `person[address][city]`. Thus we are able to determine which Address records
 should be modified when processing the `params` hash.
 
-You can pass other numbers or strings of significance via the `:index` option.
-You can even pass `nil`, which will produce an array parameter.
+Você pode passar outros números ou *strings* de significância através da opção `:index`.
+Você pode até passar `nil`, que produzirá um parâmetro de array.
 
-To create more intricate nestings, you can specify the leading portion of the
-input name explicitly. For example:
+Para criar aninhamentos mais complexos, você pode especificar a parte inicial do
+nome de entrada explicitamente. Por exemplo:
 
 ```erb
 <%= fields_for 'person[address][primary]', address, index: address.id do |address_form| %>
@@ -892,22 +894,21 @@ input name explicitly. For example:
 <% end %>
 ```
 
-criará *inputs* como
+criará *inputs* como:
 
 ```html
 <input id="person_address_primary_23_city" name="person[address][primary][23][city]" type="text" value="Paris" />
 ```
 
-You can also pass an `:index` option directly to helpers such as `text_field`,
-but it is usually less repetitive to specify this at the form builder level
-than on individual input fields.
+Você também pode passar uma opção `:index` diretamente para auxiliares como `text_field`,
+mas geralmente é menos repetitivo especificar isso no nível do construtor de formulários
+do que em campos de entrada individuais.
 
-Speaking generally, the final input name will be a concatenation of the name
-given to `fields_for` / `form_with`, the `:index` option value, and the name of
-the attribute.
+Falando de forma geral, o nome do *input* final será uma concatenação do nome
+dado a `fields_for` / `form_with`, o valor da opção `:index` e o nome do
+o atributo.
 
-Lastly, as a shortcut, instead of specifying an ID for `:index` (e.g.
-`index: address.id`), you can append `"[]"` to the given name. For example:
+Por último, como um atalho, ao invés de especificar um ID para `:index` (`index: address:id`), você pode usar `"[]"` ao nome e omitir a opção `:index`. Por exemplo:
 
 ```erb
 <%= fields_for 'person[address][primary][]', address do |address_form| %>

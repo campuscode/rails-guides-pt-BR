@@ -327,16 +327,16 @@ Note that _cross-site scripting (XSS) vulnerabilities bypass all CSRF protection
 
 [`config.action_controller.default_protect_from_forgery`]: configuring.html#config-action-controller-default-protect-from-forgery
 
-Redirection and Files
+Redirecionamento e Arquivos
 ---------------------
 
-Another class of security vulnerabilities surrounds the use of redirection and files in web applications.
+Outra classe de vulnerabilidades de segurança envolve o uso de redirecionamento e arquivos em aplicações web.
 
-### Redirection
+### Redirecionamento
 
 WARNING: _Redirection in a web application is an underestimated cracker tool: Not only can the attacker forward the user to a trap website, they may also create a self-contained attack._
 
-Whenever the user is allowed to pass (parts of) the URL for redirection, it is possibly vulnerable. The most obvious attack would be to redirect users to a fake web application which looks and feels exactly as the original one. This so-called phishing attack works by sending an unsuspicious link in an email to the users, injecting the link by XSS in the web application or putting the link into an external site. It is unsuspicious, because the link starts with the URL to the web application and the URL to the malicious site is hidden in the redirection parameter: http://www.example.com/site/redirect?to=www.attacker.com. Here is an example of a legacy action:
+Quando o usuário é permitido passar a (ou partes de uma) URL para redirecionamento, é passível de vulnerabilidades. O ataque mais óbvio seria redirecionar os usuários para uma aplicação web falsa que parece exatamente com a original. Isso também chamado de ataque de _phishing_ funciona por enviar um link não malicioso em um email para os usuários, injetando o link por _XSS_ na aplicação web ou colocando o link em um site externo. É não-suspeito, porque o link começa com a URL da aplicação web e a URL para o site malicioso é escondida no parâmetro de redirecionamento: http://www.example.com/site/redirect?to=www.attacker.com. Aqui está um exemplo com uma ação legada:
 
 ```ruby
 def legacy
@@ -344,13 +344,13 @@ def legacy
 end
 ```
 
-This will redirect the user to the main action if they tried to access a legacy action. The intention was to preserve the URL parameters to the legacy action and pass them to the main action. However, it can be exploited by attacker if they included a host key in the URL:
+Isso redirecionará o usuário para a ação principal se ele tentou acessar uma ação legada. A intenção foi preservar os parâmetros da URL para a ação legada e passar eles para a ação principal. No entanto, pode ser explorado pelo atacante se eles incluíram uma chave _host_ na URL:
 
 ```
 http://www.example.com/site/legacy?param1=xy&param2=23&host=www.attacker.com
 ```
 
-If it is at the end of the URL it will hardly be noticed and redirects the user to the `attacker.com` host. As a general rule, passing user input directly into `redirect_to` is considered dangerous. A simple countermeasure would be to _include only the expected parameters in a legacy action_ (again a permitted list approach, as opposed to removing unexpected parameters). _And if you redirect to a URL, check it with a permitted list or a regular expression_.
+Se é no fim da URL, isso dificilmente será notado e redireciona o usuário para o _host_ `attacker.com`. Como uma regra geral, passar entradas de usuário diretamente no `redirect_to` é considerado perigoso. Uma contramedida simple seria _incluir apenas os parâmetros esperados em uma ação legada. (novamente uma abordagem de lista permitida, ao invés de remover parâmetros inesperados). E se você redirecionar para uma URL, cheque com uma lista permitida ou uma expressão regular.
 
 #### Self-contained XSS
 

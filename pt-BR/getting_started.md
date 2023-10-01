@@ -204,12 +204,12 @@ A execução do comando irá iniciar o Puma, um servidor web distribuído com o
 Rails por padrão. Para ver sua aplicação em execução, abra um navegador e
 navegue para <http://localhost:3000>.  Você deve ver a página padrão com informações do Rails:
 
-![Captura de tela da página inicial do Rails](images/getting_started/rails_welcome.png)
+![Captura de tela da inicialização do Rails](images/getting_started/rails_welcome.png)
 
 Quando você deseja interromper a execução do servidor Web, pressione Ctrl+C na janela do
 terminal em que o servidor está sendo executado. No ambiente de desenvolvimento, o Rails geralmente não requer que você reinicie o servidor; mudanças em arquivos são automaticamente interpretadas pelo servidor.
 
-A página página inicial do Rails é o _smoke test_ (teste de sanidade) para uma
+A página de inicialização do Rails é o _smoke test_ (teste de sanidade) para uma
 nova aplicação Rails: garante que o seu software esteja configurado
 corretamente, o suficiente para gerar uma página.
 
@@ -280,7 +280,7 @@ e veja nosso texto exibido!
 
 ### Configuração da Página Inicial da Aplicação
 
-No momento, <http://localhost:3000> ainda exibe uma página com a logo do Ruby on Rails.
+No momento, <http://localhost:3000> ainda exibe a página de inicialização do Rails.
 Vamos mostrar nosso "Olá, Rails!" texto em <http://localhost:3000> também.
 Para fazer isso, vamos adicionar uma rota que mapeia o caminho raiz (*root path*) da nossa aplicação para o _controller_ e _action_ apropriados.
 
@@ -1254,7 +1254,7 @@ end
 A _action_ `destroy` busca o artigo do banco de dados e chama o método [`destroy`](
 https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-destroy)
 do artigo. Em seguida, redireciona o navegador para o caminho raiz (_root
-path_) com o código de status [303 See Other](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303).
+path_) com o código de status [303 See Other](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/303).
 
 Nós optamos por redirecionar para o caminho raiz porque esse é o nosso principal
 ponto de acesso para os artigos. Mas, em outras circunstâncias, você pode optar
@@ -1278,17 +1278,14 @@ própria página:
 </ul>
 ```
 
-In the above code, we use the `data` option to set the `data-turbo-method` and
-`data-turbo-confirm` HTML attributes of the "Destroy" link. Both of these
-attributes hook into [Turbo](https://turbo.hotwired.dev/), which is included by
-default in fresh Rails applications. `data-turbo-method="delete"` will cause the
-link to make a `DELETE` request instead of a `GET` request.
-`data-turbo-confirm="Are you sure?"` will cause a confirmation dialog to appear
-when the link is clicked. If the user cancels the dialog, the request will be
-aborted.
-
-TIP: Para saber mais sobre Javascript Discreto (_unobtrusive_), consulte
-[Trabalhando com JavaScript no Rails](working_with_javascript_in_rails.html).
+No código acima, nós usamos a opção `data` para definir os atributos HTML
+`data-turbo-method` e `data-turbo-confirm` no *link* "Destroy". Ambos estes
+atributos se conectam ao [Turbo](https://turbo.hotwired.dev/), que é incluído por
+padrão em novas aplicações Rails. `data-turbo-method="delete"` fará com que o
+link faça uma solicitação `DELETE` em vez de uma solicitação `GET`.
+`data-turbo-confirm="Are you sure?"` fará com que uma caixa de diálogo de confirmação apareça
+quando o link é clicado. Se o usuário cancelar a caixa de diálogo, a solicitação será
+abortada.
 
 E é isso! Agora podemos listar, exibir, criar, atualizar e deletar artigos!
 Incrível!
@@ -1700,9 +1697,9 @@ app/controllers/concerns
 app/models/concerns
 ```
 
-In the example below, we will implement a new feature for our blog that would benefit from using a concern. Then, we will create a concern, and refactor the code to use it, making the code more DRY and maintainable.
+No exemplo abaixo, implementaremos um novo recurso para nosso blog que se beneficiaria do uso de uma *concern*. Então, vamos criar uma *concern* e refatorar o código para usá-lo, tornando o código mais DRY e sustentável.
 
-Um determinado artigo do blog pode ter vários status - por exemplo, pode ser visível para todos (ou seja, `public`), ou visível apenas para o autor (ou seja, `private`). Também pode estar oculto para todos, mas ainda pode ser recuperado (ou seja, `archived`). Os comentários também podem estar ocultos ou visíveis. Isso pode ser representado usando uma coluna `status` em cada um dos _models_.
+Um artigo do blog pode ter vários status - por exemplo, pode ser visível para todos (ou seja, `public`), ou visível apenas para o autor (ou seja, `private`). Também pode estar oculto para todos, mas ainda pode ser recuperado (ou seja, `archived`). Os comentários também podem estar ocultos ou visíveis. Isso pode ser representado usando uma coluna `status` em cada um dos _models_.
 
 Primeiro, vamos executar as seguintes *migrations* para adicionar `status` a `Articles` e `Comments`:
 
@@ -1950,7 +1947,7 @@ Primeiro, vamos adicionar o link *delete* na *partial*
   </p>
 
   <p>
-    <%= link_to "Destroy Comment", [comment.article, comment], data: {
+    <%= link_to "Destruir comentário", [comment.article, comment], data: {
                   turbo_method: :delete,
                   turbo_confirm: "Are you sure?"
                 } %>
@@ -2060,8 +2057,8 @@ Agora se você tentar criar um novo artigo, você deverá preencher um formulár
 
 ![Formulário de Autenticação](images/getting_started/challenge.png)
 
-After entering the correct username and password, you will remain authenticated
-until a different username and password is required or the browser is closed.
+Depois de inserir o nome de usuário e a senha corretos, você permanecerá autenticado
+até que um nome de usuário e senha diferentes sejam necessários ou o navegador seja fechado.
 
 Outros métodos de autenticação estão disponíveis para aplicações Rails. Dois
 *add-ons* de autenticação populares para Rails são o
@@ -2087,7 +2084,6 @@ consultar estes recursos:
 * O [Guia Rails](index.html)
 * O [Ruby on Rails Guides](https://guides.rubyonrails.org)
 * A [lista de discussão do Ruby on Rails](https://discuss.rubyonrails.org/c/rubyonrails-talk)
-
 
 Dicas de Configuração
 ---------------------
