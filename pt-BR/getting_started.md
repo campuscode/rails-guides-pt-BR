@@ -70,8 +70,6 @@ tem os pré requisitos necessários instalados. Esses incluem:
 
 * Ruby 
 * SQLite3
-* Node.js
-* Yarn
 
 #### Instalando o Ruby
 
@@ -105,31 +103,6 @@ $ sqlite3 --version
 ```
 
 O programa deverá reportar sua versão.
-
-#### Instalando o Node.js e Yarn
-
-Por fim, você precisará do Node.js e o Yarn instalados para gerenciar o JavaScript da sua aplicação.
-
-Encontre as instruções de instalação no [site do Node.js](https://nodejs.org/en/download/) e
-verifique se está instalado corretamente com o seguinte comando:
-
-```bash 
-$ node --version
-```
-
-A versão do Node.js deve ser impressa. Certifique-se de que é maior
-que 8.16.0.
-
-Para instalar o Yarn, siga as instruções de instalação
-instruções no [site do Yarn](https://classic.yarnpkg.com/en/docs/install).
-
-A execução deste comando deve imprimir a versão do Yarn:
-
-```bash
-$ yarn --version
-```
-
-Se aparecer algo como "1.22.0", o Yarn foi instalado corretamente.
 
 #### Instalando o Rails
 
@@ -197,6 +170,7 @@ que o Rails gerou por padrão:
 |test/|Testes unitários, *fixtures*, e outros tipos de testes. Mais informações em [Testing Rails Applications](testing.html).|
 |tmp/|Arquivos temporários (como cache e arquivos *pid*).|
 |vendor/|Diretório com todos os códigos de terceiros. Em uma típica aplicação Rails inclui *vendored gems*.|
+|.gitattributes|Este arquivo define metadados para locais específicos do repositório git. Estes metadados podem ser usados pelo e git e outras ferramentas para melhorar seu comportamento. Veja a [documentação de gitattributes](https://git-scm.com/docs/gitattributes) para mais informações.|
 |.gitignore|Este arquivo diz ao Git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.|
 |.ruby-version|Este arquivo contém a versão padrão do Ruby.|
 
@@ -230,12 +204,12 @@ A execução do comando irá iniciar o Puma, um servidor web distribuído com o
 Rails por padrão. Para ver sua aplicação em execução, abra um navegador e
 navegue para <http://localhost:3000>.  Você deve ver a página padrão com informações do Rails:
 
-![Captura de tela escrito Yay! Você está no Rails(em inglês)](images/getting_started/rails_welcome.png)
+![Captura de tela da página inicial do Rails](images/getting_started/rails_welcome.png)
 
 Quando você deseja interromper a execução do servidor Web, pressione Ctrl+C na janela do
 terminal em que o servidor está sendo executado. No ambiente de desenvolvimento, o Rails geralmente não requer que você reinicie o servidor; mudanças em arquivos são automaticamente interpretadas pelo servidor.
 
-A página de "Yay! Você está no Rails! (Yay! You're on Rails!)" é o _smoke test_ (teste de sanidade) para uma
+A página página inicial do Rails é o _smoke test_ (teste de sanidade) para uma
 nova aplicação Rails: garante que o seu software esteja configurado
 corretamente, o suficiente para gerar uma página.
 
@@ -278,9 +252,6 @@ create    test/controllers/articles_controller_test.rb
 invoke  helper
 create    app/helpers/articles_helper.rb
 invoke    test_unit
-invoke  assets
-invoke    scss
-create      app/assets/stylesheets/articles.scss
 ```
 
 O mais importante desses é o arquivo _controller_, `app/controllers/articles_controller.rb`. Vamos dar uma olhada nele:
@@ -309,7 +280,7 @@ e veja nosso texto exibido!
 
 ### Configuração da Página Inicial da Aplicação
 
-No momento, <http://localhost:3000> ainda exibe "Yay! Você está no Rails!".
+No momento, <http://localhost:3000> ainda exibe uma página com a logo do Ruby on Rails.
 Vamos mostrar nosso "Olá, Rails!" texto em <http://localhost:3000> também.
 Para fazer isso, vamos adicionar uma rota que mapeia o caminho raiz (*root path*) da nossa aplicação para o _controller_ e _action_ apropriados.
 
@@ -338,7 +309,7 @@ Você deve ter notado que `ArticlesController` herda de `ApplicationController`,
 require "application_controller" # NÃO FAÇA ISSO.
 ```
 
-As classes e módulos da aplicação estão disponíveis em todos os lugares, você não precisa e **não deve** carregar nada em `app` com `require`. Esse recurso é chamado de _autoloading_ e você pode aprender mais sobre ele em [_Autoloading and Reloading Constants_](https://guides.rubyonrails.org/autoloading_and_reloading_constants.html).
+As classes e módulos da aplicação estão disponíveis em todos os lugares, você não precisa e **não deve** carregar nada em `app` com `require`. Esse recurso é chamado de _autoloading_ e você pode aprender mais sobre ele em [_Autoloading and Reloading Constants_](autoloading_and_reloading_constants.html).
 
 Você só precisa de chamadas `require` para dois casos de uso:
 
@@ -812,7 +783,7 @@ corpo e tenta salvá-lo no banco de dados. Se o artigo for salvo com sucesso, a
 _action_ redireciona o navegador para a página do artigo em
 `"http://localhost:3000/articles/#{@article.id}"`. Caso contrário, a _action_
 exibe novamente o formulário renderizando a _view_
-`app/views/articles/new.html.erb` com um código de status 4XX para que a aplicação funcione bem com a [Turbo](https://github.com/hotwired/turbo-rails).
+`app/views/articles/new.html.erb` com um código de status [422 Unprocessable Entity](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422).
 O título e o corpo aqui são valores
 fictícios. Depois de criarmos o formulário, vamos voltar no _controller_ e
 alterá-los.
@@ -1035,8 +1006,7 @@ Quando enviamos o formulário, a solicitação `POST /articles` é mapeada para 
 *action* `create`. A *action* `create` **tenta** salvar o `@article`.
 Portanto, as validações **são** verificadas. Se alguma validação falhar,
 o `@article` não será salvo e a *view* `app/views/articles/new.html.erb` será
-renderizada com as mensagens de erro 
-com um código de status 4XX para que a aplicação funcione bem com a [Turbo](https://github.com/hotwired/turbo-rails).
+renderizada com as mensagens de erro.
 
 TIP: Para saber mais sobre validações, consulte [Validações do Active Record](
 active_record_validations.html). Para saber mais sobre as mensagens de erro de
@@ -1132,7 +1102,7 @@ atualizá-lo com os dados filtrados do formulário enviado por `article_params`.
 Se nenhuma validação falhar e a atualização for bem-sucedida, a _action_
 redireciona o navegador para a página do artigo. Caso contrário, a _action_
 exibe novamente o formulário com mensagens de erro, renderizando
-`app/views/articles/edit.html.erb` com um código de status 4XX para que a aplicação funcione bem com a [Turbo](https://github.com/hotwired/turbo-rails).
+`app/views/articles/edit.html.erb`.
 
 #### Utilizando _Partials_ para Compartilhar Código de _View_
 
@@ -1271,7 +1241,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.destroy
 
-    redirect_to root_path
+    redirect_to root_path, status: :see_other
   end
 
   private
@@ -1284,7 +1254,7 @@ end
 A _action_ `destroy` busca o artigo do banco de dados e chama o método [`destroy`](
 https://api.rubyonrails.org/classes/ActiveRecord/Persistence.html#method-i-destroy)
 do artigo. Em seguida, redireciona o navegador para o caminho raiz (_root
-path_).
+path_) com o código de status [303 See Other](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303).
 
 Nós optamos por redirecionar para o caminho raiz porque esse é o nosso principal
 ponto de acesso para os artigos. Mas, em outras circunstâncias, você pode optar
@@ -1301,20 +1271,21 @@ própria página:
 
 <ul>
   <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= link_to "Destroy", article_path(@article),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" } %></li>
+  <li><%= link_to "Destroy", article_path(@article), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
 </ul>
 ```
 
-Nó código acima, estamos passando algumas opções adicionais para o `link_to`. A
-opção `method: :delete` faz com que o _link_ faça uma requisição `DELETE` em vez
-de uma requisição `GET`. A opção `data: { confirm: "Are you sure?" }` faz com
-que uma caixa de diálogo de confirmação apareça quando o _link_ é clicado. Se o
-usuário cancelar a caixa de diálogo, a requisição será abortada. Ambas as opções
-são alimentadas por um recurso do Rails chamado _JavaScript Discreto_ (UJS). O
-arquivo JavaScript que implementa esses comportamentos é incluído por padrão em
-novas aplicações Rails.
+In the above code, we use the `data` option to set the `data-turbo-method` and
+`data-turbo-confirm` HTML attributes of the "Destroy" link. Both of these
+attributes hook into [Turbo](https://turbo.hotwired.dev/), which is included by
+default in fresh Rails applications. `data-turbo-method="delete"` will cause the
+link to make a `DELETE` request instead of a `GET` request.
+`data-turbo-confirm="Are you sure?"` will cause a confirmation dialog to appear
+when the link is clicked. If the user cancels the dialog, the request will be
+aborted.
 
 TIP: Para saber mais sobre Javascript Discreto (_unobtrusive_), consulte
 [Trabalhando com JavaScript no Rails](working_with_javascript_in_rails.html).
@@ -1471,7 +1442,7 @@ anteriormente:
 ```bash
 $ bin/rails generate controller Comments
 ```
-Isso cria quatro arquivos e um diretório vazio:
+Isso cria três arquivos e um diretório vazio:
 
 | Arquivo/Diretório                            | Propósito                                            |
 | -------------------------------------------- | ---------------------------------------------------- |
@@ -1479,7 +1450,6 @@ Isso cria quatro arquivos e um diretório vazio:
 | app/views/comments/                          | *Views* do *controller* são armazenadas aqui         |
 | test/controllers/comments_controller_test.rb | O teste para o *controller*                          |
 | app/helpers/comments_helper.rb               | Arquivo de *helpers* da *view*                       |
-| app/assets/stylesheets/comments.scss         | *Cascading style sheet* (CSS) para o *controller*    |
 
 Como em qualquer blog, nossos leitores vão criar seus comentários diretamente
 depois de lerem o artigo e, uma vez que adicionarem o comentário, serão enviados
@@ -1497,9 +1467,10 @@ para que possamos criar um novo comentários:
 
 <ul>
   <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= link_to "Destroy", article_path(@article),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" } %></li>
+  <li><%= link_to "Destroy", article_path(@article), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
 </ul>
 
 <h2>Add a comment:</h2>
@@ -1562,9 +1533,10 @@ apareça, então vamos adicionar isso ao arquivo `app/views/articles/show.html.e
 
 <ul>
   <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= link_to "Destroy", article_path(@article),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" } %></li>
+  <li><%= link_to "Destroy", article_path(@article), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
 </ul>
 
 <h2>Comments</h2>
@@ -1635,9 +1607,10 @@ Então você pode mudar `app/views/articles/show.html.erb` para o seguinte códi
 
 <ul>
   <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= link_to "Destroy", article_path(@article),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" } %></li>
+  <li><%= link_to "Destroy", article_path(@article), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
 </ul>
 
 <h2>Comments</h2>
@@ -1695,9 +1668,10 @@ Então deixe o arquivo `app/views/articles/show.html.erb` assim:
 
 <ul>
   <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= link_to "Destroy", article_path(@article),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" } %></li>
+  <li><%= link_to "Destroy", article_path(@article), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
 </ul>
 
 <h2>Comments</h2>
@@ -1726,7 +1700,9 @@ app/controllers/concerns
 app/models/concerns
 ```
 
- Um determinado artigo do blog pode ter vários status - por exemplo, pode ser visível para todos (ou seja, `public`), ou visível apenas para o autor (ou seja, `private`). Também pode estar oculto para todos, mas ainda pode ser recuperado (ou seja, `archived`). Os comentários também podem estar ocultos ou visíveis. Isso pode ser representado usando uma coluna `status` em cada um dos _models_.
+In the example below, we will implement a new feature for our blog that would benefit from using a concern. Then, we will create a concern, and refactor the code to use it, making the code more DRY and maintainable.
+
+Um determinado artigo do blog pode ter vários status - por exemplo, pode ser visível para todos (ou seja, `public`), ou visível apenas para o autor (ou seja, `private`). Também pode estar oculto para todos, mas ainda pode ser recuperado (ou seja, `archived`). Os comentários também podem estar ocultos ou visíveis. Isso pode ser representado usando uma coluna `status` em cada um dos _models_.
 
 Primeiro, vamos executar as seguintes *migrations* para adicionar `status` a `Articles` e `Comments`:
 
@@ -1962,21 +1938,24 @@ Primeiro, vamos adicionar o link *delete* na *partial*
 `app/views/comments/_comment.html.erb`:
 
 ```html+erb
-<p>
-  <strong>Autor do comentário:</strong>
-  <%= comment.commenter %>
-</p>
+<% unless comment.archived? %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
 
-<p>
-  <strong>Comentário:</strong>
-  <%= comment.body %>
-</p>
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
 
-<p>
-  <%= link_to 'Destruir comentário', [comment.article, comment],
-              method: :delete,
-              data: { confirm: "Are you sure?" } %>
-</p>
+  <p>
+    <%= link_to "Destroy Comment", [comment.article, comment], data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"
+                } %>
+  </p>
+<% end %>
 ```
 
 Clicar neste novo link "Destruir comentário" será disparado um `DELETE
@@ -1996,7 +1975,7 @@ class CommentsController < ApplicationController
     @article = Article.find(params[:article_id])
     @comment = @article.comments.find(params[:id])
     @comment.destroy
-    redirect_to article_path(@article)
+    redirect_to article_path(@article), status: :see_other
   end
 
   private
@@ -2081,6 +2060,9 @@ Agora se você tentar criar um novo artigo, você deverá preencher um formulár
 
 ![Formulário de Autenticação](images/getting_started/challenge.png)
 
+After entering the correct username and password, you will remain authenticated
+until a different username and password is required or the browser is closed.
+
 Outros métodos de autenticação estão disponíveis para aplicações Rails. Dois
 *add-ons* de autenticação populares para Rails são o
 [Devise](https://github.com/plataformatec/devise) e o
@@ -2105,7 +2087,6 @@ consultar estes recursos:
 * O [Guia Rails](index.html)
 * O [Ruby on Rails Guides](https://guides.rubyonrails.org)
 * A [lista de discussão do Ruby on Rails](https://discuss.rubyonrails.org/c/rubyonrails-talk)
-* O canal [#rubyonrails](irc://irc.freenode.net/#rubyonrails) no irc.freenode.net
 
 
 Dicas de Configuração

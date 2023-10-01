@@ -71,7 +71,7 @@ This will generate the following HTML:
 </form>
 ```
 
-TIP: Passing `url: my_specified_path` to `form_with` tells the form where to make the request. However, as explained below, you can also pass ActiveRecord objects to the form.
+TIP: Passing `url: my_specified_path` to `form_with` tells the form where to make the request. However, as explained below, you can also pass Active Record objects to the form.
 
 TIP: For every form input, an ID attribute is generated from its name (`"query"` in above example). These IDs can be very useful for CSS styling or manipulation of form controls with JavaScript.
 
@@ -86,7 +86,7 @@ value entered by the user for that field. For example, if the form contains
 `<%= form.text_field :query %>`, then you would be able to get the value of this
 field in the controller with `params[:query]`.
 
-When naming inputs, Rails uses certain conventions that make it possible to submit parameters with non-scalar values such as arrays or hashes, which will also be accessible in `params`. You can read more about them in chapter [Understanding Parameter Naming Conventions](#understanding-parameter-naming-conventions) of this guide. For details on the precise usage of these helpers, please refer to the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
+When naming inputs, Rails uses certain conventions that make it possible to submit parameters with non-scalar values such as arrays or hashes, which will also be accessible in `params`. You can read more about them in the [Understanding Parameter Naming Conventions](#understanding-parameter-naming-conventions) section of this guide. For details on the precise usage of these helpers, please refer to the [API documentation](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
 
 #### Checkboxes
 
@@ -108,7 +108,7 @@ This generates the following:
 <label for="pet_cat">I own a cat</label>
 ```
 
-The first parameter to [`check_box`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-check_box) is the name of the input. The second parameter is the value of the input. This value will be included in the form data (and be present in `params`) when the checkbox is checked.
+The first parameter to [`check_box`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-check_box) is the name of the input. The checkbox's values (the values that will appear in `params`) can optionally be specified using the third and fourth parameters. See the API documentation for details.
 
 #### Radio Buttons
 
@@ -130,7 +130,7 @@ Output:
 <label for="age_adult">I am over 21</label>
 ```
 
-As with `check_box`, the second parameter to [`radio_button`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-radio_button) is the value of the input. Because these two radio buttons share the same name (`age`), the user will only be able to select one of them, and `params[:age]` will contain either `"child"` or `"adult"`.
+The second parameter to [`radio_button`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-radio_button) is the value of the input. Because these two radio buttons share the same name (`age`), the user will only be able to select one of them, and `params[:age]` will contain either `"child"` or `"adult"`.
 
 NOTE: Always use labels for checkbox and radio buttons. They associate text with a specific option and,
 by expanding the clickable region,
@@ -227,7 +227,7 @@ Outputs:
 </form>
 ```
 
-The are several things to notice here:
+There are several things to notice here:
 
 * The form `action` is automatically filled with an appropriate value for `@article`.
 * The form fields are automatically filled with the corresponding values from `@article`.
@@ -238,7 +238,11 @@ TIP: Conventionally your inputs will mirror model attributes. However, they don'
 
 #### The `fields_for` Helper
 
-You can create a similar binding without actually creating `<form>` tags with the [`fields_for`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-fields_for) helper. This is useful for editing additional model objects with the same form. For example, if you had a `Person` model with an associated `ContactDetail` model, you could create a form for creating both like so:
+The [`fields_for`][] helper creates a similar binding but without rendering a
+`<form>` tag. This can be used to render fields for additional model objects
+within the same form. For example, if you had a `Person` model with an
+associated `ContactDetail` model, you could create a single form for both like
+so:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -249,7 +253,7 @@ You can create a similar binding without actually creating `<form>` tags with th
 <% end %>
 ```
 
-which produces the following output:
+Which produces the following output:
 
 ```html
 <form action="/people" accept-charset="UTF-8" method="post">
@@ -259,7 +263,10 @@ which produces the following output:
 </form>
 ```
 
-The object yielded by `fields_for` is a form builder like the one yielded by `form_with`.
+The object yielded by `fields_for` is a form builder like the one yielded by
+`form_with`.
+
+[`fields_for`]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-fields_for
 
 ### Relying on Record Identification
 
@@ -314,7 +321,7 @@ form_with model: [:admin, :management, @article]
 
 For more information on Rails' routing system and the associated conventions, please see [Rails Routing from the Outside In](routing.html) guide.
 
-### How do forms with PATCH, PUT, or DELETE methods work?
+### How do Forms with PATCH, PUT, or DELETE Methods Work?
 
 The Rails framework encourages RESTful design of your applications, which means you'll be making a lot of "PATCH", "PUT", and "DELETE" requests (besides "GET" and "POST"). However, most browsers _don't support_ methods other than "GET" and "POST" when it comes to submitting forms.
 
@@ -577,22 +584,37 @@ For each of these helpers, you may specify a date or time object instead of a nu
 Choices from a Collection of Arbitrary Objects
 ----------------------------------------------
 
-Often, we want to generate a set of choices in a form from a collection of objects. For example, when we want the user to choose from cities in our database, and we have a `City` model like:
+Sometimes, we want to generate a set of choices from a collection of arbitrary objects. For example, if we have a `City` model and corresponding `belongs_to :city` association:
 
 ```ruby
-City.order(:name).to_a
-# => [
-#      #<City id: 3, name: "Berlin">,
-#      #<City id: 1, name: "Chicago">,
-#      #<City id: 2, name: "Madrid">
-#    ]
+class City < ApplicationRecord
+end
+
+class Person < ApplicationRecord
+  belongs_to :city
+end
 ```
 
-Rails provides helpers that generate choices from a collection without having to explicitly iterate over it. These helpers determine the value and text label of each choice by calling specified methods on each object in the collection.
+```ruby
+City.order(:name).map { |city| [city.name, city.id] }
+# => [["Berlin", 3], ["Chicago", 1], ["Madrid", 2]]
+```
+
+Then we can allow the user to choose a city from the database with the following form:
+
+```erb
+<%= form_with model: @person do |form| %>
+  <%= form.select :city_id, City.order(:name).map { |city| [city.name, city.id] } %>
+<% end %>
+```
+
+NOTE: When rendering a field for a `belongs_to` association, you must specify the name of the foreign key (`city_id` in the above example), rather than the name of the association itself.
+
+However, Rails provides helpers that generate choices from a collection without having to explicitly iterate over it. These helpers determine the value and text label of each choice by calling specified methods on each object in the collection.
 
 ### The `collection_select` Helper
 
-To generate a select box for our cities, we can use [`collection_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select):
+To generate a select box, we can use [`collection_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select):
 
 ```erb
 <%= form.collection_select :city_id, City.order(:name), :id, :name %>
@@ -601,7 +623,7 @@ To generate a select box for our cities, we can use [`collection_select`](https:
 Output:
 
 ```html
-<select name="city_id" id="city_id">
+<select name="person[city_id]" id="person_city_id">
   <option value="3">Berlin</option>
   <option value="1">Chicago</option>
   <option value="2">Madrid</option>
@@ -612,7 +634,7 @@ NOTE: With `collection_select` we specify the value method first (`:id` in the e
 
 ### The `collection_radio_buttons` Helper
 
-To generate a set of radio buttons for our cities, we can use [`collection_radio_buttons`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons):
+To generate a set of radio buttons, we can use [`collection_radio_buttons`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons):
 
 ```erb
 <%= form.collection_radio_buttons :city_id, City.order(:name), :id, :name %>
@@ -621,31 +643,38 @@ To generate a set of radio buttons for our cities, we can use [`collection_radio
 Output:
 
 ```html
-<input type="radio" name="city_id" value="3" id="city_id_3">
-<label for="city_id_3">Berlin</label>
-<input type="radio" name="city_id" value="1" id="city_id_1">
-<label for="city_id_1">Chicago</label>
-<input type="radio" name="city_id" value="2" id="city_id_2">
-<label for="city_id_2">Madrid</label>
+<input type="radio" name="person[city_id]" value="3" id="person_city_id_3">
+<label for="person_city_id_3">Berlin</label>
+
+<input type="radio" name="person[city_id]" value="1" id="person_city_id_1">
+<label for="person_city_id_1">Chicago</label>
+
+<input type="radio" name="person[city_id]" value="2" id="person_city_id_2">
+<label for="person_city_id_2">Madrid</label>
 ```
 
 ### The `collection_check_boxes` Helper
 
-To generate a set of check boxes for our cities (which allows users to choose more than one), we can use [`collection_check_boxes`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_check_boxes):
+To generate a set of check boxes — for example, to support a `has_and_belongs_to_many` association — we can use [`collection_check_boxes`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_check_boxes):
 
 ```erb
-<%= form.collection_check_boxes :city_id, City.order(:name), :id, :name %>
+<%= form.collection_check_boxes :interest_ids, Interest.order(:name), :id, :name %>
 ```
 
 Output:
 
 ```html
-<input type="checkbox" name="city_id[]" value="3" id="city_id_3">
-<label for="city_id_3">Berlin</label>
-<input type="checkbox" name="city_id[]" value="1" id="city_id_1">
-<label for="city_id_1">Chicago</label>
-<input type="checkbox" name="city_id[]" value="2" id="city_id_2">
-<label for="city_id_2">Madrid</label>
+<input type="checkbox" name="person[interest_id][]" value="3" id="person_interest_id_3">
+<label for="person_interest_id_3">Engineering</label>
+
+<input type="checkbox" name="person[interest_id][]" value="4" id="person_interest_id_4">
+<label for="person_interest_id_4">Math</label>
+
+<input type="checkbox" name="person[interest_id][]" value="1" id="person_interest_id_1">
+<label for="person_interest_id_1">Science</label>
+
+<input type="checkbox" name="person[interest_id][]" value="2" id="person_interest_id_2">
+<label for="person_interest_id_2">Technology</label>
 ```
 
 Uploading Files
@@ -687,7 +716,20 @@ Once a file has been uploaded, there are a multitude of potential tasks, ranging
 Customizing Form Builders
 -------------------------
 
-The object yielded by `form_with` and `fields_for` is an instance of [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html). Form builders encapsulate the notion of displaying form elements for a single object. While you can write helpers for your forms in the usual way, you can also create a subclass of `ActionView::Helpers::FormBuilder`, and add the helpers there. For example,
+The object yielded by `form_with` and `fields_for` is an instance of
+[`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html).
+Form builders encapsulate the notion of displaying form elements for a single object. While you can write helpers for
+your forms in the usual way, you can also create a subclass of `ActionView::Helpers::FormBuilder`, and add the helpers
+there. For example, assuming you have a helper method defined in your application called `text_field_with_label` as the
+following
+
+```ruby
+module ApplicationHelper
+  def text_field_with_label(form, attribute)
+    form.label(attribute) + form.text_field(attribute)
+  end
+end
+```
 
 ```erb
 <%= form_with model: @person do |form| %>
@@ -716,9 +758,11 @@ end
 If you reuse this frequently you could define a `labeled_form_with` helper that automatically applies the `builder: LabellingFormBuilder` option:
 
 ```ruby
-def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, &block)
-  options.merge! builder: LabellingFormBuilder
-  form_with model: model, scope: scope, url: url, format: format, **options, &block
+module ApplicationHelper
+  def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, &block)
+    options.merge! builder: LabellingFormBuilder
+    form_with model: model, scope: scope, url: url, format: format, **options, &block
+  end
 end
 ```
 
@@ -794,9 +838,10 @@ There's a restriction, however: while hashes can be nested arbitrarily, only one
 
 WARNING: Array parameters do not play well with the `check_box` helper. According to the HTML specification unchecked checkboxes submit no value. However it is often convenient for a checkbox to always submit a value. The `check_box` helper fakes this by creating an auxiliary hidden input with the same name. If the checkbox is unchecked only the hidden input is submitted and if it is checked then both are submitted but the value submitted by the checkbox takes precedence.
 
-### The `fields_for` Helper
+### The `fields_for` Helper `:index` Option
 
-Let's say we want to render a form with a set of fields for each of a person's addresses. The `fields_for` helper and its `:index` argument can assist with this:
+Let's say we want to render a form with a set of fields for each of a person's
+addresses. The [`fields_for`][] helper with its `:index` option can assist:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -809,7 +854,8 @@ Let's say we want to render a form with a set of fields for each of a person's a
 <% end %>
 ```
 
-Assuming the person had two addresses, with ids 23 and 45 this would create output similar to this:
+Assuming the person has two addresses with IDs 23 and 45, the above form would
+render output similar to:
 
 ```html
 <form accept-charset="UTF-8" action="/people/1" method="post">
@@ -820,22 +866,35 @@ Assuming the person had two addresses, with ids 23 and 45 this would create outp
 </form>
 ```
 
-This will result in a `params` hash that looks like
+Which will result in a `params` hash that looks like:
 
 ```ruby
-{'person' => {'name' => 'Bob', 'address' => {'23' => {'city' => 'Paris'}, '45' => {'city' => 'London'}}}}
+{
+  "person" => {
+    "name" => "Bob",
+    "address" => {
+      "23" => {
+        "city" => "Paris"
+      },
+      "45" => {
+        "city" => "London"
+      }
+    }
+  }
+}
 ```
 
-Rails knows that all these inputs should be part of the person hash because you
-called `fields_for` on the first form builder. By specifying an `:index` option
-you're telling Rails that instead of naming the inputs `person[address][city]`
-it should insert that index surrounded by [] between the address and the city.
-This is often useful as it is then easy to locate which Address record
-should be modified. You can pass numbers with some other significance,
-strings or even `nil` (which will result in an array parameter being created).
+All of the form inputs map to the `"person"` hash because we called `fields_for`
+on the `person_form` form builder. By specifying an `:index` option, we mapped
+the address inputs to `person[address][#{address.id}][city]` instead of
+`person[address][city]`. Thus we are able to determine which Address records
+should be modified when processing the `params` hash.
 
-To create more intricate nestings, you can specify the first part of the input
-name (`person[address]` in the previous example) explicitly:
+You can pass other numbers or strings of significance via the `:index` option.
+You can even pass `nil`, which will produce an array parameter.
+
+To create more intricate nestings, you can specify the leading portion of the
+input name explicitly. For example:
 
 ```erb
 <%= fields_for 'person[address][primary]', address, index: address.id do |address_form| %>
@@ -843,15 +902,22 @@ name (`person[address]` in the previous example) explicitly:
 <% end %>
 ```
 
-will create inputs like
+will create inputs like:
 
 ```html
-<input id="person_address_primary_1_city" name="person[address][primary][1][city]" type="text" value="Bologna" />
+<input id="person_address_primary_23_city" name="person[address][primary][23][city]" type="text" value="Paris" />
 ```
 
-As a general rule the final input name is the concatenation of the name given to `fields_for`/`form_with`, the index value, and the name of the attribute. You can also pass an `:index` option directly to helpers such as `text_field`, but it is usually less repetitive to specify this at the form builder level rather than on individual input controls.
+You can also pass an `:index` option directly to helpers such as `text_field`,
+but it is usually less repetitive to specify this at the form builder level
+than on individual input fields.
 
-As a shortcut you can append [] to the name and omit the `:index` option. This is the same as specifying `index: address.id` so
+Speaking generally, the final input name will be a concatenation of the name
+given to `fields_for` / `form_with`, the `:index` option value, and the name of
+the attribute.
+
+Lastly, as a shortcut, instead of specifying an ID for `:index` (e.g.
+`index: address.id`), you can append `"[]"` to the given name. For example:
 
 ```erb
 <%= fields_for 'person[address][primary][]', address do |address_form| %>
@@ -859,7 +925,7 @@ As a shortcut you can append [] to the name and omit the `:index` option. This i
 <% end %>
 ```
 
-produces exactly the same output as the previous example.
+produces exactly the same output as our original example.
 
 Forms to External Resources
 ---------------------------
@@ -1036,7 +1102,7 @@ As a convenience you can instead pass the symbol `:all_blank` which will create 
 
 Rather than rendering multiple sets of fields ahead of time you may wish to add them only when a user clicks on an "Add new address" button. Rails does not provide any built-in support for this. When generating new sets of fields you must ensure the key of the associated array is unique - the current JavaScript date (milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time)) is a common choice.
 
-Using Tag Helpers Without a Form Builder
+Using Tag Helpers without a Form Builder
 ----------------------------------------
 
 In case you need to render form fields outside of the context of a form builder, Rails provides tag helpers for common form elements. For example, [`check_box_tag`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-check_box_tag):
