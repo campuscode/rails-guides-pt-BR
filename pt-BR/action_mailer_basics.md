@@ -24,7 +24,7 @@ O que é o *Action Mailer*?
 *Action Mailer* permite que você envie emails direto da sua aplicação usando as
 classes e _Mailer views_
 
-### _Mailers_ são semelhantes a controllers
+### _Mailers_ são Semelhantes a Controllers
 
 Eles herdam do [`ActionMailer::Base`][] e se encontram na `app/mailers`. Os Mailers também funcionam de maneira muito semelhante aos controllers. Alguns exemplos de semelhanças são mostrados abaixo.
 Mailers tem:
@@ -229,7 +229,7 @@ O objeto `ActionMailer::MessageDelivery` é um _wrapper_ (Embrulho) para a class
 [`message`]: https://api.rubyonrails.org/classes/ActionMailer/MessageDelivery.html#method-i-message
 [`with`]: https://api.rubyonrails.org/classes/ActionMailer/Parameterized/ClassMethods.html#method-i-with
 
-### Codificação automática
+### Codificação Automática no *Header*
 
 _Action Mailer_ gerencia automaticamente a codificação de caracteres _multibytes_ (Caracteres asiáticos, emojis etc) dentro do cabeçalho e corpo.
 
@@ -561,7 +561,7 @@ NOTE: Links que não são `GET` vão exigir o uso de [rails-ujs](https://github.
 [jQuery UJS](https://github.com/rails/jquery-ujs), e, portanto, não irão funcionar em templates de email.
 Eles irão resultar em requisições `GET` normais.
 
-### Adicionando imagens no Action Mailer Views
+### Adicionando Imagens no Action Mailer Views
 
 Ao contrário dos controllers, a instância do `mailer` não tem nenhum contexto sobre a
 requisição recebida, então você precisará informar o parâmetro `:asset_host`.
@@ -661,7 +661,6 @@ class InvitationsMailer < ApplicationMailer
   end
 
   private
-
     def set_inviter_and_invitee
       @inviter = params[:inviter]
       @invitee = params[:invitee]

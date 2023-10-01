@@ -324,7 +324,7 @@ class ApplicationJob < ActiveJob::Base
 end
 ```
 
-### *Callbacks* disponíveis
+### *Callbacks* Disponíveis
 
 * [`before_enqueue`][]
 * [`around_enqueue`][]
@@ -375,7 +375,7 @@ UserMailer.welcome(@user).deliver_later # O e-mail será localizado para Esperan
 ```
 
 
-Tipos suportados por argumentos
+Tipos Suportados por Argumentos
 ----------------------------
 
 O *ActiveJob* suporta os seguintes tipos de argumentos por padrão:
@@ -493,7 +493,7 @@ Se a exceção não for tratada dentro do _job_, então o _job_ é reconhecido c
 
 [`rescue_from`]: https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
 
-### Reexecução ou Descarte de *jobs* falhos
+### Reexecução ou Descarte de *jobs* Falhos
 
 Um *job* que falhou não será executado novamente, exceto se configurado para fazer isso.
 

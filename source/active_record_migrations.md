@@ -73,10 +73,10 @@ to reverse, you can use `reversible`:
 ```ruby
 class ChangeProductsPrice < ActiveRecord::Migration[7.0]
   def change
-    reversible do |dir|
+    reversible do |direction|
       change_table :products do |t|
-        dir.up   { t.change :price, :string }
-        dir.down { t.change :price, :integer }
+        direction.up   { t.change :price, :string }
+        direction.down { t.change :price, :integer }
       end
     end
   end
@@ -134,7 +134,7 @@ class AddPartNumberToProducts < ActiveRecord::Migration[7.0]
 end
 ```
 
-This generator can do much more than append a timestamp to the file name.
+This generator can do much more than prepend a timestamp to the file name.
 Based on naming conventions and additional (optional) arguments it can
 also start fleshing out the migration.
 
@@ -375,11 +375,11 @@ create_table :users do |t|
 end
 ```
 
-Also you can pass the `:comment` option with any description for the table
-that will be stored in database itself and can be viewed with database administration
+Also, you can pass the `:comment` option with any description for the table
+that will be stored in the database itself and can be viewed with database administration
 tools, such as MySQL Workbench or PgAdmin III. It's highly recommended to specify
 comments in migrations for applications with large databases as it helps people
-to understand data model and generate documentation.
+to understand the data model and generate documentation.
 Currently only the MySQL and PostgreSQL adapters support comments.
 
 [`create_table`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-create_table
@@ -509,7 +509,7 @@ add_reference :users, :role
 ```
 
 This migration will create a `role_id` column in the users table. It creates an
-index for this column as well, unless explicitly told not with the
+index for this column as well, unless explicitly told not to with the
 `index: false` option:
 
 ```ruby
@@ -606,6 +606,7 @@ The `change` method is the primary way of writing migrations. It works for the
 majority of cases in which Active Record knows how to reverse a migration's
 actions automatically. Below are some of the actions that `change` supports:
 
+* [`add_check_constraint`][]
 * [`add_column`][]
 * [`add_foreign_key`][]
 * [`add_index`][]
@@ -621,7 +622,9 @@ actions automatically. Below are some of the actions that `change` supports:
 * [`drop_join_table`][]
 * [`drop_table`][] (must supply a block)
 * `enable_extension`
+* [`remove_check_constraint`][] (must supply a constraint expression)
 * [`remove_column`][] (must supply a type)
+* [`remove_columns`][] (must supply a `:type` option)
 * [`remove_foreign_key`][] (must supply a second table)
 * [`remove_index`][]
 * [`remove_reference`][]
@@ -630,8 +633,8 @@ actions automatically. Below are some of the actions that `change` supports:
 * [`rename_index`][]
 * [`rename_table`][]
 
-[`change_table`][] is also reversible, as long as the block does not call `change`,
-`change_default` or `remove`.
+[`change_table`][] is also reversible, as long as the block only calls
+reversible operations like the ones listed above.
 
 `remove_column` is reversible if you supply the column type as the third
 argument. Provide the original column options too, otherwise Rails can't
@@ -644,17 +647,20 @@ remove_column :posts, :slug, :string, null: false, default: ''
 If you're going to need to use any other methods, you should use `reversible`
 or write the `up` and `down` methods instead of using the `change` method.
 
+[`add_check_constraint`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_check_constraint
 [`add_foreign_key`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key
 [`add_timestamps`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_timestamps
 [`change_column_comment`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_comment
 [`change_table_comment`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table_comment
 [`drop_join_table`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_join_table
 [`drop_table`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_table
+[`remove_check_constraint`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_check_constraint
 [`remove_foreign_key`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key
 [`remove_index`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_index
 [`remove_reference`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_reference
 [`remove_timestamps`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_timestamps
 [`rename_column`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_column
+[`remove_columns`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_columns
 [`rename_index`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_index
 [`rename_table`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_table
 
@@ -671,19 +677,18 @@ class ExampleMigration < ActiveRecord::Migration[7.0]
       t.string :zipcode
     end
 
-    reversible do |dir|
-      dir.up do
-        # add a CHECK constraint
+    reversible do |direction|
+      direction.up do
+        # create a distributors view
         execute <<-SQL
-          ALTER TABLE distributors
-            ADD CONSTRAINT zipchk
-              CHECK (char_length(zipcode) = 5) NO INHERIT;
+          CREATE VIEW distributors_view AS
+          SELECT id, zipcode
+          FROM distributors;
         SQL
       end
-      dir.down do
+      direction.down do
         execute <<-SQL
-          ALTER TABLE distributors
-            DROP CONSTRAINT zipchk
+          DROP VIEW distributors_view;
         SQL
       end
     end
@@ -726,11 +731,11 @@ class ExampleMigration < ActiveRecord::Migration[7.0]
       t.string :zipcode
     end
 
-    # add a CHECK constraint
+    # create a distributors view
     execute <<-SQL
-      ALTER TABLE distributors
-        ADD CONSTRAINT zipchk
-        CHECK (char_length(zipcode) = 5);
+      CREATE VIEW distributors_view AS
+      SELECT id, zipcode
+      FROM distributors;
     SQL
 
     add_column :users, :home_page_url, :string
@@ -742,8 +747,7 @@ class ExampleMigration < ActiveRecord::Migration[7.0]
     remove_column :users, :home_page_url
 
     execute <<-SQL
-      ALTER TABLE distributors
-        DROP CONSTRAINT zipchk
+      DROP VIEW distributors_view;
     SQL
 
     drop_table :distributors
@@ -776,28 +780,27 @@ end
 
 The `revert` method also accepts a block of instructions to reverse.
 This could be useful to revert selected parts of previous migrations.
-For example, let's imagine that `ExampleMigration` is committed and it
-is later decided it would be best to use Active Record validations,
-in place of the `CHECK` constraint, to verify the zipcode.
+
+For example, let's imagine that `ExampleMigration` is committed and it is later
+decided that a Distributors view is no longer needed.
 
 ```ruby
-class DontUseConstraintForZipcodeValidationMigration < ActiveRecord::Migration[7.0]
+class DontUseDistributorsViewMigration < ActiveRecord::Migration[7.0]
   def change
     revert do
       # copy-pasted code from ExampleMigration
-      reversible do |dir|
-        dir.up do
-          # add a CHECK constraint
+      reversible do |direction|
+        direction.up do
+          # create a distributors view
           execute <<-SQL
-            ALTER TABLE distributors
-              ADD CONSTRAINT zipchk
-                CHECK (char_length(zipcode) = 5);
+            CREATE VIEW distributors_view AS
+            SELECT id, zipcode
+            FROM distributors;
           SQL
         end
-        dir.down do
+        direction.down do
           execute <<-SQL
-            ALTER TABLE distributors
-              DROP CONSTRAINT zipchk
+            DROP VIEW distributors_view;
           SQL
         end
       end
