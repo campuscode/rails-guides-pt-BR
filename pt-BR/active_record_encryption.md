@@ -9,10 +9,10 @@ This guide covers encrypting your database information using Active Record.
 After reading this guide, you will know:
 
 * How to set up database encryption with Active Record.
-* How to migrate unencrypted data
-* How to make different encryption schemes coexist
-* How to use the API
-* How to configure the library and how to extend it
+* How to migrate unencrypted data.
+* How to make different encryption schemes coexist.
+* How to use the API.
+* How to configure the library and how to extend it.
 
 --------------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ Active Record Encryption exists to protect sensitive information in your applica
 
 As an immediate practical benefit, encrypting sensitive attributes adds an additional security layer. For example, if an attacker gained access to your database, a snapshot of it, or your application logs, they wouldn't be able to make sense of the encrypted information. Additionally, encryption can prevent developers from unintentionally exposing users' sensitive data in application logs.
 
-But more importantly, by using Active Record Encryption, you define what constitutes sensitive information in your application at the code level. Active Record Encryption enables granular control of data access in your application and services consuming data from your application. For example, consider auditable Rails consoles that protect encrypted data or check the built-in system to [filter controller params automatically](#filtering-params-named-as-encrypted-columns).
+But more importantly, by using Active Record Encryption, you define what constitutes sensitive information in your application at the code level. Active Record Encryption enables granular control of data access in your application and services consuming data from your application. For example, consider [auditable Rails consoles that protect encrypted data](https://github.com/basecamp/console1984) or check the built-in system to [filter controller params automatically](#filtering-params-named-as-encrypted-columns).
 
 ## Basic Usage
 
@@ -93,7 +93,7 @@ NOTE: You can disable deterministic encryption by omitting a `deterministic_key`
 
 ### Action Text
 
-You can encrypt action text attributes by passing `encrypted: true` in their declaration.
+You can encrypt Action Text attributes by passing `encrypted: true` in their declaration.
 
 ```ruby
 class Message < ApplicationRecord
@@ -101,7 +101,7 @@ class Message < ApplicationRecord
 end
 ```
 
-NOTE: Passing individual encryption options to action text attributes is not supported yet. It will use non-deterministic encryption with the global encryption options configured.
+NOTE: Passing individual encryption options to Action Text attributes is not supported yet. It will use non-deterministic encryption with the global encryption options configured.
 
 ### Fixtures
 
@@ -115,7 +115,7 @@ When enabled, all the encryptable attributes will be encrypted according to the 
 
 #### Action Text Fixtures
 
-To encrypt action text fixtures, you should place them in `fixtures/action_text/encrypted_rich_texts.yml`.
+To encrypt Action Text fixtures, you should place them in `fixtures/action_text/encrypted_rich_texts.yml`.
 
 ### Supported Types
 
@@ -161,7 +161,7 @@ end
 
 To ease migrations of unencrypted data, the library includes the option `config.active_record.encryption.support_unencrypted_data`. When set to `true`:
 
-* Trying to read encrypted attributes that are not encrypted will work normally, without raising any error
+* Trying to read encrypted attributes that are not encrypted will work normally, without raising any error.
 * Queries with deterministically-encrypted attributes will include the "clear text" version of them to support finding both encrypted and unencrypted content. You need to set `config.active_record.encryption.extend_queries = true` to enable this.
 
 **This option is meant to be used during transition periods** while clear data and encrypted data must coexist. Both are set to `false` by default, which is the recommended goal for any application: errors will be raised when working with unencrypted data.
@@ -240,7 +240,7 @@ end
 
 ### Filtering Params Named as Encrypted Columns
 
-By default, encrypted columns are configured to be [automatically filtered in Rails logs](https://guides.rubyonrails.org/action_controller_overview.html#parameters-filtering). You can disable this behavior by adding the following to your `application.rb`:
+By default, encrypted columns are configured to be [automatically filtered in Rails logs](action_controller_overview.html#parameters-filtering). You can disable this behavior by adding the following to your `application.rb`:
 
 When generating the filter parameter, it will use the model name as a prefix. E.g: For `Person#name` the filter parameter will be `person.name`.
 
@@ -355,12 +355,11 @@ Active Record uses the key to derive the key used to encrypt and decrypt the dat
 - All the keys will be tried when decrypting content until one works.
 
 ```yml
-active_record
-  encryption:
-    primary_key:
-        - a1cc4d7b9f420e40a337b9e68c5ecec6 # Previous keys can still decrypt existing content
-        - bc17e7b413fd4720716a7633027f8cc4 # Active, encrypts new content
-    key_derivation_salt: a3226b97b3b2f8372d1fc6d497a0c0d3
+active_record_encryption:
+  primary_key:
+    - a1cc4d7b9f420e40a337b9e68c5ecec6 # Previous keys can still decrypt existing content
+    - bc17e7b413fd4720716a7633027f8cc4 # Active, encrypts new content
+  key_derivation_salt: a3226b97b3b2f8372d1fc6d497a0c0d3
 ```
 
 This enables workflows in which you keep a short list of keys by adding new keys, re-encrypting content, and deleting old keys.

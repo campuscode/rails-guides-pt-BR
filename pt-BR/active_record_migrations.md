@@ -53,10 +53,10 @@ Se você quiser que uma *migration* faça algo que o *Active Record* não sabe c
 ```ruby
 class ChangeProductsPrice < ActiveRecord::Migration[7.0]
   def change
-    reversible do |dir|
+    reversible do |direction|
       change_table :products do |t|
-        dir.up   { t.change :price, :string }
-        dir.down { t.change :price, :integer }
+        direction.up   { t.change :price, :string }
+        direction.down { t.change :price, :integer }
       end
     end
   end
@@ -584,6 +584,7 @@ O método `change` é a principal maneira de escrever *migrations*. Funciona par
 maioria dos casos, onde o *Active Record* sabe como reverter a *migration*
 automaticamente. Abaixo estão algumas ações que o método `change` suporta:
 
+* [`add_check_constraint`][]
 * [`add_column`][]
 * [`add_foreign_key`][]
 * [`add_index`][]
@@ -599,7 +600,9 @@ automaticamente. Abaixo estão algumas ações que o método `change` suporta:
 * [`drop_join_table`][]
 * [`drop_table`][] (must supply a block)
 * `enable_extension`
+* [`remove_check_constraint`][] (must supply a constraint expression)
 * [`remove_column`][] (must supply a type)
+* [`remove_columns`][] (must supply a `:type` option)
 * [`remove_foreign_key`][] (must supply a second table)
 * [`remove_index`][]
 * [`remove_reference`][]
@@ -608,8 +611,7 @@ automaticamente. Abaixo estão algumas ações que o método `change` suporta:
 * [`rename_index`][]
 * [`rename_table`][]
 
-[`change_table`][] também é reversível, desde que o bloco não chame `change`,
-`change_default` ou `remove`.
+[`change_table`][] também é reversível, desde que o bloco não chame operações reversíveis como as listadas abaixo.
 
 `remove_column` é reversível se você fornecer o tipo de coluna como o terceiro
 argumento. Forneça também as opções da coluna original, caso contrário, o Rails não poderá
@@ -622,17 +624,20 @@ remove_column :posts, :slug, :string, null: false, default: ''
 Se você precisar usar outros métodos, você deve usar `reversible`
 ou escrever os métodos `up` e `down` em vez de usar o médoto `change`.
 
+[`add_check_constraint`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_check_constraint
 [`add_foreign_key`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key
 [`add_timestamps`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_timestamps
 [`change_column_comment`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_column_comment
 [`change_table_comment`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-change_table_comment
 [`drop_join_table`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_join_table
 [`drop_table`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-drop_table
+[`remove_check_constraint`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_check_constraint
 [`remove_foreign_key`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key
 [`remove_index`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_index
 [`remove_reference`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_reference
 [`remove_timestamps`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_timestamps
 [`rename_column`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_column
+[`remove_columns`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_columns
 [`rename_index`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_index
 [`rename_table`]: https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-rename_table
 
@@ -649,19 +654,18 @@ class ExampleMigration < ActiveRecord::Migration[7.0]
       t.string :zipcode
     end
 
-    reversible do |dir|
-      dir.up do
-        # add a CHECK constraint
+    reversible do |direction|
+      direction.up do
+        # create a distributors view
         execute <<-SQL
-          ALTER TABLE distributors
-            ADD CONSTRAINT zipchk
-              CHECK (char_length(zipcode) = 5) NO INHERIT;
+          CREATE VIEW distributors_view AS
+          SELECT id, zipcode
+          FROM distributors;
         SQL
       end
-      dir.down do
+      direction.down do
         execute <<-SQL
-          ALTER TABLE distributors
-            DROP CONSTRAINT zipchk
+          DROP VIEW distributors_view;
         SQL
       end
     end
@@ -704,11 +708,11 @@ class ExampleMigration < ActiveRecord::Migration[7.0]
       t.string :zipcode
     end
 
-    # add a CHECK constraint
+    # create a distributors view
     execute <<-SQL
-      ALTER TABLE distributors
-        ADD CONSTRAINT zipchk
-        CHECK (char_length(zipcode) = 5);
+      CREATE VIEW distributors_view AS
+      SELECT id, zipcode
+      FROM distributors;
     SQL
 
     add_column :users, :home_page_url, :string
@@ -720,8 +724,7 @@ class ExampleMigration < ActiveRecord::Migration[7.0]
     remove_column :users, :home_page_url
 
     execute <<-SQL
-      ALTER TABLE distributors
-        DROP CONSTRAINT zipchk
+      DROP VIEW distributors_view;
     SQL
 
     drop_table :distributors
@@ -754,28 +757,27 @@ end
 
 O método `revert` também aceita um bloco de instruções para reverter.
 Isso pode ser útil para reverter partes selecionadas de *migrations* anteriores.
+
 Por exemplo, vamos imaginar que `ExampleMigration` seja executado e
-mais tarde decidimos que seria melhor usar as validações do Active Record,
-no lugar da *constraint* (restrição) `CHECK`, para verificar o CEP.
+mais tarde decidimos que *view* `Distributors` não é mais necessária.
 
 ```ruby
-class DontUseConstraintForZipcodeValidationMigration < ActiveRecord::Migration[7.0]
+class DontUseDistributorsViewMigration < ActiveRecord::Migration[7.0]
   def change
     revert do
       # copy-pasted code from ExampleMigration
-      reversible do |dir|
-        dir.up do
-          # add a CHECK constraint
+      reversible do |direction|
+        direction.up do
+          # create a distributors view
           execute <<-SQL
-            ALTER TABLE distributors
-              ADD CONSTRAINT zipchk
-                CHECK (char_length(zipcode) = 5);
+            CREATE VIEW distributors_view AS
+            SELECT id, zipcode
+            FROM distributors;
           SQL
         end
-        dir.down do
+        direction.down do
           execute <<-SQL
-            ALTER TABLE distributors
-              DROP CONSTRAINT zipchk
+            DROP VIEW distributors_view;
           SQL
         end
       end

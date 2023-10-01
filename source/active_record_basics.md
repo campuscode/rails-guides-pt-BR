@@ -304,7 +304,7 @@ User.update(:all, max_login_attempts: 3, must_change_password: true)
 
 ### Delete
 
-Likewise, once retrieved an Active Record object can be destroyed which removes
+Likewise, once retrieved, an Active Record object can be destroyed, which removes
 it from the database.
 
 ```ruby
@@ -380,13 +380,11 @@ class CreatePublications < ActiveRecord::Migration[7.0]
       t.string :title
       t.text :description
       t.references :publication_type
-      t.integer :publisher_id
-      t.string :publisher_type
+      t.references :publisher, polymorphic: true
       t.boolean :single_issue
 
       t.timestamps
     end
-    add_index :publications, :publication_type_id
   end
 end
 ```
