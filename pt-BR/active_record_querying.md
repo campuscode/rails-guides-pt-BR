@@ -48,7 +48,7 @@ class Book < ApplicationRecord
 
   scope :in_print, -> { where(out_of_print: false) }
   scope :out_of_print, -> { where(out_of_print: true) }
-  scope :old, -> { where('year_published < ?', 50.years.ago )}
+  scope :old, -> { where(year_published: ...50.years.ago.year) }
   scope :out_of_print_and_expensive, -> { out_of_print.where('price > 500') }
   scope :costs_more_than, ->(amount) { where('price > ?', amount) }
 end
@@ -68,7 +68,7 @@ class Order < ApplicationRecord
 
   enum :status, [:shipped, :being_packed, :complete, :cancelled]
 
-  scope :created_before, ->(time) { where('created_at < ?', time) }
+  scope :created_before, ->(time) { where(created_at: ...time) }
 end
 ```
 
@@ -494,6 +494,16 @@ lidando com 10000 registros atribuindo a opção `:start` e `finish` apropriadas
 Sobrescreve as configurações da aplicação para especificar se um erro deve ser disparada quando a ordem está presente
 na relação.
 
+**`:order`**
+
+Specifies the primary key order (can be `:asc` or `:desc`). Defaults to `:asc`.
+
+```ruby
+Customer.find_each(order: :desc) do |customer|
+  NewsMailer.weekly(customer).deliver_now
+end
+```
+
 #### `find_in_batches`
 
 O método [`find_in_batches`][] é similar ao `find_each`, pois ambos retornam lotes de registros. A diferença é que o `find_in_batches` fornece _lotes_ ao bloco como um array de *models*,
@@ -678,6 +688,18 @@ SELECT * FROM books WHERE (books.created_at BETWEEN '2008-12-21 00:00:00' AND '2
 ```
 
 Isso demonstra uma sintaxe mais curta para exemplos em [Condições de Array](#condicoes-de-array)
+
+Beginless and endless ranges are supported and can be used to build less/greater than conditions.
+
+```ruby
+Book.where(created_at: (Time.now.midnight - 1.day)..)
+```
+
+This would generate SQL like:
+
+```sql
+SELECT * FROM books WHERE books.created_at >= '2008-12-21 00:00:00'
+```
 
 #### Subconjunto de Condições
 
@@ -910,7 +932,7 @@ FROM orders
 GROUP BY created_at
 ```
 
-### Total de itens agrupados
+### Total de Itens Agrupados
 
 Para pegar o total de itens agrupados em uma única _query_, chame [`count`][] depois do `group`.
 
@@ -1029,7 +1051,7 @@ Book.select(:title, :isbn).reselect(:created_at)
 O SQL que será executado:
 
 ```sql
-SELECT `books`.`created_at` FROM `books`
+SELECT books.created_at FROM books
 ```
 
 Compare com uma cláusula em que o `reselect` não é utilizado:
@@ -1041,7 +1063,7 @@ Book.select(:title, :isbn).select(:created_at)
 o SQL executado será:
 
 ```sql
-SELECT `books`.`title`, `books`.`isbn`, `books`.`created_at` FROM `books`
+SELECT books.title, books.isbn, books.created_at FROM books
 ```
 
 ### `reorder`
@@ -1119,7 +1141,7 @@ Book.where(out_of_print: true).rewhere(out_of_print: false)
 O SQL que será executado:
 
 ```sql
-SELECT * FROM books WHERE `out_of_print` = 0
+SELECT * FROM books WHERE out_of_print = 0
 ```
 
 Se a cláusula `rewhere` não for utilizada, as cláusulas `where` são juntadas usando AND:
@@ -1131,7 +1153,7 @@ Book.where(out_of_print: true).where(out_of_print: false)
 o SQL será:
 
 ```sql
-SELECT * FROM books WHERE `out_of_print` = 1 AND `out_of_print` = 0
+SELECT * FROM books WHERE out_of_print = 1 AND out_of_print = 0
 ```
 
 [`rewhere`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-rewhere
@@ -1237,8 +1259,8 @@ A sessão acima produz o seguinte SQL para um banco de dados MySQL:
 
 ```sql
 SQL (0.2ms)   BEGIN
-Book Load (0.3ms)   SELECT * FROM `books` LIMIT 1 FOR UPDATE
-Book Update (0.4ms)   UPDATE `books` SET `updated_at` = '2009-02-07 18:05:56', `title` = 'Algorithms, second edition' WHERE `id` = 1
+Book Load (0.3ms)   SELECT * FROM books LIMIT 1 FOR UPDATE
+Book Update (0.4ms)   UPDATE books SET updated_at = '2009-02-07 18:05:56', title = 'Algorithms, second edition' WHERE id = 1
 SQL (0.8ms)   COMMIT
 ```
 
@@ -1463,9 +1485,9 @@ end
 O código acima executará apenas **2** consultas, em oposição às **11** consultas do caso original:
 
 ```sql
-SELECT `books`.* FROM `books` LIMIT 10
-SELECT `authors`.* FROM `authors`
-  WHERE `authors`.`book_id` IN (1,2,3,4,5,6,7,8,9,10)
+SELECT books.* FROM books LIMIT 10
+SELECT authors.* FROM authors
+  WHERE authors.book_id IN (1,2,3,4,5,6,7,8,9,10)
 ```
 
 #### Eager Loading Multiple Associations
@@ -1502,7 +1524,7 @@ Isso geraria uma consulta que contém um `LEFT OUTER JOIN` enquanto o
 O método `joins` geraria um usando a função `INNER JOIN`.
 
 ```sql
-SELECT authors.id AS t0_r0, ... books.updated_at AS t1_r5 FROM authors LEFT OUTER JOIN "books" ON "books"."author_id" = "authors"."id" WHERE (books.out_of_print = 1)
+  SELECT authors.id AS t0_r0, ... books.updated_at AS t1_r5 FROM authors LEFT OUTER JOIN books ON books.author_id = authors.id WHERE (books.out_of_print = 1)
 ```
 
 Se não houvesse uma condição `where`, isso geraria o conjunto normal de duas consultas.
@@ -1539,9 +1561,9 @@ end
 O código acima executará apenas **2** consultas, ao contrário de **11** consultas no caso original:
 
 ```sql
-SELECT `books`.* FROM `books` LIMIT 10
-SELECT `authors`.* FROM `authors`
-  WHERE `authors`.`book_id` IN (1,2,3,4,5,6,7,8,9,10)
+SELECT books.* FROM books LIMIT 10
+SELECT authors.* FROM authors
+  WHERE authors.book_id IN (1,2,3,4,5,6,7,8,9,10)
 ```
 
 NOTE: O método `preload` usa um *array*, *hash* ou um *hash* aninhado de *array/hash* da mesma forma que o método `includes` para carregar qualquer número de associações com uma única chamada `Model.find`. No entanto, ao contrário do método `includes`, não é possível especificar condições para associações carregadas antecipadamente (`preload`).
@@ -1563,10 +1585,10 @@ end
 O código acima executará apenas **2** consultas, ao contrário de **11** consultas no caso original:
 
 ```sql
-SELECT DISTINCT `books`.`id` FROM `books` LEFT OUTER JOIN `authors` ON `authors`.`book_id` = `books`.`id` LIMIT 10
-SELECT `books`.`id` AS t0_r0, `books`.`last_name` AS t0_r1, ...
-  FROM `books` LEFT OUTER JOIN `authors` ON `authors`.`book_id` = `books`.`id`
-  WHERE `books`.`id` IN (1,2,3,4,5,6,7,8,9,10)
+SELECT DISTINCT books.id FROM books LEFT OUTER JOIN authors ON authors.book_id = books.id LIMIT 10
+SELECT books.id AS t0_r0, books.last_name AS t0_r1, ...
+  FROM books LEFT OUTER JOIN authors ON authors.book_id = books.id
+  WHERE books.id IN (1,2,3,4,5,6,7,8,9,10)
 ```
 
 NOTE: O método `eager_load` usa um *array*, *hash* ou um *hash* aninhado de *array/hash* da mesma forma que o método `includes` para carregar qualquer número de associações com uma única chamada `Model.find`. Além disso, como o método `includes`, você pode especificar as condições da associação carregada antecipadamente.
@@ -1610,7 +1632,7 @@ end
 
 [`scope`]: https://api.rubyonrails.org/classes/ActiveRecord/Scoping/Named/ClassMethods.html#method-i-scope
 
-### Transmitindo argumentos
+### Transmitindo Argumentos
 
 Seu escopo pode receber argumentos:
 
@@ -1642,13 +1664,13 @@ Esses métodos ainda estarão acessíveis nos objetos de associação:
 irb> author.books.costs_more_than(100.10)
 ```
 
-### Usando condicionais
+### Usando Condicionais
 
 Seu escopo pode utilizar condicionais:
 
 ```ruby
 class Order < ApplicationRecord
-  scope :created_before, ->(time) { where("created_at < ?", time) if time.present? }
+  scope :created_before, ->(time) { where(created_at: ...time) if time.present? }
 end
 ```
 
@@ -1657,14 +1679,14 @@ Como os outros exemplos, isso se comportará de maneira semelhante a um método 
 ```ruby
 class Order < ApplicationRecord
   def self.created_before(time)
-    where("created_at < ?", time) if time.present?
+    where(created_at: ...time) if time.present?
   end
 end
 ```
 
 No entanto, há uma advertência importante: um escopo sempre retornará um objeto `ActiveRecord::Relation`, mesmo se a condicional for avaliada como `false`, enquanto um método de classe retornará `nil`. Isso pode causar `NoMethodError` ao encadear métodos de classe com condicionais, se qualquer uma das condicionais retornar `false`.
 
-### Aplicando um escopo padrão
+### Aplicando um Escopo Padrão
 
 Se desejarmos que um escopo seja aplicado em todas as consultas do *model*, podemos usar o
 método [`default_scope`][] dentro do próprio *model*.
@@ -1726,7 +1748,7 @@ irb> Book.new
 
 [`default_scope`]: https://api.rubyonrails.org/classes/ActiveRecord/Scoping/Default/ClassMethods.html#method-i-default_scope
 
-### Mesclagem de escopos
+### Mesclagem de Escopos
 
 Assim como os escopos das cláusulas `where` são mesclados usando as condições `AND`.
 
@@ -1735,8 +1757,8 @@ class Book < ApplicationRecord
   scope :in_print, -> { where(out_of_print: false) }
   scope :out_of_print, -> { where(out_of_print: true) }
 
-  scope :recent, -> { where('year_published >= ?', Date.current.year - 50 )}
-  scope :old, -> { where('year_published < ?', Date.current.year - 50 )}
+  scope :recent, -> { where(year_published: 50.years.ago.year..) }
+  scope :old, -> { where(year_published: ...50.years.ago.year) }
 end
 ```
 
@@ -1749,7 +1771,7 @@ Podemos misturar e combinar as condições `scope` e `where` e o SQL final
 terá todas as condições unidas com `AND`.
 
 ```irb
-irb> Book.in_print.where('price < 100')
+irb> Book.in_print.where(price: ...100)
 SELECT books.* FROM books WHERE books.out_of_print = 'false' AND books.price < 100
 ```
 
@@ -1766,7 +1788,7 @@ condições `scope` e `where`.
 
 ```ruby
 class Book < ApplicationRecord
-  default_scope { where('year_published >= ?', Date.current.year - 50 )}
+  default_scope { where(year_published: 50.years.ago.year..) }
 
   scope :in_print, -> { where(out_of_print: false) }
   scope :out_of_print, -> { where(out_of_print: true) }
@@ -1789,7 +1811,7 @@ condições `scope` e `where`.
 
 [`merge`]: https://api.rubyonrails.org/classes/ActiveRecord/SpawnMethods.html#method-i-merge
 
-### Removendo todo o escopo
+### Removendo Todo o Escopo
 
 Se desejarmos remover o escopo por qualquer motivo, podemos usar o método [`unscoped`][]. Isto é
 especialmente útil se um `default_scope` é especificado no *model* e não deve ser
@@ -1823,7 +1845,7 @@ Localizadores Dinâmicos
 
 Para cada campo (também conhecido como atributo) que você define na sua tabela, o *Active Record* fornece um método localizador. Se você tiver um campo chamado `first_name` no seu *model* `Customer` por exemplo, você terá de graça o método `find_by_first_name` fornecido pelo *Active Record*. Se você tiver o campo `locked` no seu *model* `Customer`, você também receberá o método `find_by_locked`.
 
-Você pode especificar o ponto de exclamação (`!`) no final de um localizador dinâmico para que ele levante um erro `ActiveRecord::RecordNotFound` caso não seja retornado nenhum registro, por exemplo `Customer.find_by_name!("Ryan")`
+Você pode especificar o ponto de exclamação (`!`) no final de um localizador dinâmico para que ele levante um erro `ActiveRecord::RecordNotFound` caso não seja retornado nenhum registro, por exemplo `Customer.find_by_first_name!("Ryan")`
 
 Se você deseja localizar ambos por *first_name* e *orders_count*, você pode encadear esses localizadores juntos simplesmente digitando "`and`" entre os campos. Por exemplo, `Customer.find_by_first_name_and_orders_count("Ryan", 5)`.
 
@@ -1896,7 +1918,7 @@ Quando um método *Active Record* é chamado, a consulta não é imediatamente g
 de dados. A *query* é enviada só quando você precisa dos dados. Então cada
 exemplo abaixo gera uma única consulta.
 
-### Buscando dados filtrados de múltiplas tabelas
+### Buscando Dados Filtrados de Múltiplas Tabelas
 
 ```ruby
 Customer
@@ -1915,7 +1937,7 @@ INNER JOIN reviews
 WHERE (reviews.created_at > '2019-01-08')
 ```
 
-### Buscando dados específicos de múltiplas tabelas
+### Buscando Dados Específicos de Múltiplas Tabelas
 
 ```ruby
 Book
@@ -2081,7 +2103,7 @@ irb> Customer.connection.select_all("SELECT first_name, created_at FROM customer
 
 ```irb
 irb> Book.where(out_of_print: true).pluck(:id)
-SELECT id FROM books WHERE out_of_print = false
+SELECT id FROM books WHERE out_of_print = true
 => [1, 2, 3]
 
 irb> Order.distinct.pluck(:status)

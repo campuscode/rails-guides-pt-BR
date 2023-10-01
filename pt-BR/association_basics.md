@@ -942,10 +942,10 @@ Faz a mesma coisa que o método `create_association` acima, mas retorna `ActiveR
 O método `association_changed?` retorna `true` se um novo objeto associado foi atribuído e a chave estrangeira será atualizada no próximo salvamento.
 
 ```ruby
-@book.author # => #<Book author_number: 123, author_name: "John Doe">
+@book.author # => #<Author author_number: 123, author_name: "John Doe">
 @book.author_changed? # => false
 
-@book.author = Author.second # => #<Book author_number: 456, author_name: "Jane Smith">
+@book.author = Author.second # => #<Author author_number: 456, author_name: "Jane Smith">
 @book.author_changed? # => true
 
 @book.save!
@@ -957,10 +957,10 @@ O método `association_changed?` retorna `true` se um novo objeto associado foi 
 O método `association_previously_changed?` retorna `true` se o salvamento anterior atualizou a associação para referenciar um novo objeto associado.
 
 ```ruby
-@book.author # => #<Book author_number: 123, author_name: "John Doe">
+@book.author # => #<Author author_number: 123, author_name: "John Doe">
 @book.author_previously_changed? # => false
 
-@book.author = Author.second # => #<Book author_number: 456, author_name: "Jane Smith">
+@book.author = Author.second # => #<Author author_number: 456, author_name: "Jane Smith">
 @book.save!
 @book.author_previously_changed? # => true
 ```

@@ -583,7 +583,7 @@ generated URLs are hard to guess, but permanent by design. If your files
 require a higher level of protection consider implementing
 [Authenticated Controllers](#authenticated-controllers).
 
-### Redirect mode
+### Redirect Mode
 
 To generate a permanent URL for a blob, you can pass the blob to the
 [`url_for`][ActionView::RoutingUrlFor#url_for] view helper. This generates a
@@ -621,7 +621,7 @@ Rails.application.routes.url_helpers.rails_blob_path(user.avatar, only_path: tru
 [ActionView::RoutingUrlFor#url_for]: https://api.rubyonrails.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
 [ActiveStorage::Blob#signed_id]: https://api.rubyonrails.org/classes/ActiveStorage/Blob.html#method-i-signed_id
 
-### Proxy mode
+### Proxy Mode
 
 Optionally, files can be proxied instead. This means that your application servers will download file data from the storage service in response to requests. This can be useful for serving files from a CDN.
 
@@ -638,7 +638,7 @@ Or if you want to explicitly proxy specific attachments there are URL helpers yo
 <%= image_tag rails_storage_proxy_path(@user.avatar) %>
 ```
 
-#### Putting a CDN in front of Active Storage
+#### Putting a CDN in Front of Active Storage
 
 Additionally, in order to use a CDN for Active Storage attachments, you will need to generate URLs with proxy mode so that they are served by your app and the CDN will cache the attachment without any extra configuration. This works out of the box because the default Active Storage proxy controller sets an HTTP header indicating to the CDN to cache the response.
 
@@ -932,7 +932,7 @@ O *Active Storage* com a sua biblioteca JavaScript incluída suporta *uploads* d
     Se você não está usando um [FormBuilder](form_helpers.html#customizando-os-construtores-de-formularios) adicione o `direct_upload: true` diretamente:
 
     ```erb
-    <input type=file data-direct-upload-url="<%= rails_direct_uploads_url %>" />
+    <input type="file" data-direct-upload-url="<%= rails_direct_uploads_url %>" />
     ```
 
 3. Configure o serviço de armazenamento de terceiros do CORS para permitir requisições de *upload* direto.
@@ -1013,7 +1013,7 @@ Se você for utilizar seu disco como armazenamento e ele compartilhar a mesma or
 </Cors>
 ```
 
-### Eventos de *upload* do JavaScript
+### Eventos de *Upload* Direto do JavaScript
 
 | Nome do evento | Alvo do evento | Dados do evento (`event.detail`) | Descrição |
 | --- | --- | --- | --- |
@@ -1227,7 +1227,9 @@ end
 
 [`fixture_file_upload`]: https://api.rubyonrails.org/classes/ActionDispatch/TestProcess/FixtureFile.html
 
-### Descartando arquivos criados durante os testes
+### Descartando Arquivos Criados Durante os Testes
+
+#### System Tests
 
 Os testes de sistema limpam os dados de testes revertendo uma transação. Como o
 `destroy` nunca é chamado em um objeto, os arquivos anexados nunca são limpos. Se
@@ -1271,7 +1273,7 @@ em vez de em um momento desconhecido no futuro.
 config.active_job.queue_adapter = :inline
 ```
 
-[parallel tests]: https://guides.rubyonrails.org/testing.html#parallel-testing
+[parallel tests]: testing.html#parallel-testing
 
 #### Testes de Integração
 
@@ -1299,9 +1301,9 @@ class ActionDispatch::IntegrationTest
 end
 ```
 
-[parallel tests]: https://guides.rubyonrails.org/testing.html#parallel-testing
+[parallel tests]: testing.html#parallel-testing
 
-### Adicionando arquivos em fixtures
+### Adicionando Arquivos em Fixtures
 
 Você pode adicionar anexos às suas [fixtures][]. Primeiro, você desejará criar um serviço de armazenamento separado:
 
@@ -1348,7 +1350,7 @@ class UserTest < ActiveSupport::TestCase
 end
 ```
 
-#### Limpando as fixtures
+#### Limpando as Fixtures
 
 Enquanto os arquivos enviados nos testes são limpos [no final de cada teste](#discarding-files-created-durante-tests),
 você só precisa limpar os arquivos de fixtures uma vez: quando todos os seus testes forem concluídos.
@@ -1376,7 +1378,7 @@ Minitest.after_run do
 end
 ```
 
-[fixtures]: https://guides.rubyonrails.org/testing.html#the-low-down-on-fixtures
+[fixtures]: testing.html#the-low-down-on-fixtures
 [`ActiveStorage::FixtureSet`]: https://api.rubyonrails.org/classes/ActiveStorage/FixtureSet.html
 
 Implementando Suporte a Outros Serviços *Cloud*
@@ -1394,7 +1396,7 @@ There are cases where a file is uploaded but never attached to a record. This ca
 namespace :active_storage do
   desc "Purges unattached Active Storage blobs. Run regularly."
   task purge_unattached: :environment do
-    ActiveStorage::Blob.unattached.where("active_storage_blobs.created_at <= ?", 2.days.ago).find_each(&:purge_later)
+    ActiveStorage::Blob.unattached.where(created_at: ..2.days.ago).find_each(&:purge_later)
   end
 end
 ```

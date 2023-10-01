@@ -44,7 +44,7 @@ class Book < ApplicationRecord
 
   scope :in_print, -> { where(out_of_print: false) }
   scope :out_of_print, -> { where(out_of_print: true) }
-  scope :old, -> { where('year_published < ?', 50.years.ago )}
+  scope :old, -> { where(year_published: ...50.years.ago.year) }
   scope :out_of_print_and_expensive, -> { out_of_print.where('price > 500') }
   scope :costs_more_than, ->(amount) { where('price > ?', amount) }
 end
@@ -64,7 +64,7 @@ class Order < ApplicationRecord
 
   enum :status, [:shipped, :being_packed, :complete, :cancelled]
 
-  scope :created_before, ->(time) { where('created_at < ?', time) }
+  scope :created_before, ->(time) { where(created_at: ...time) }
 end
 ```
 
@@ -473,6 +473,16 @@ appropriate `:start` and `:finish` options on each worker.
 Overrides the application config to specify if an error should be raised when an
 order is present in the relation.
 
+**`:order`**
+
+Specifies the primary key order (can be `:asc` or `:desc`). Defaults to `:asc`.
+
+```ruby
+Customer.find_each(order: :desc) do |customer|
+  NewsMailer.weekly(customer).deliver_now
+end
+```
+
 #### `find_in_batches`
 
 The [`find_in_batches`][] method is similar to `find_each`, since both retrieve batches of records. The difference is that `find_in_batches` yields _batches_ to the block as an array of models, instead of individually. The following example will yield to the supplied block an array of up to 1000 customers at a time, with the final block containing any remaining customers:
@@ -656,6 +666,18 @@ SELECT * FROM books WHERE (books.created_at BETWEEN '2008-12-21 00:00:00' AND '2
 ```
 
 This demonstrates a shorter syntax for the examples in [Array Conditions](#array-conditions)
+
+Beginless and endless ranges are supported and can be used to build less/greater than conditions.
+
+```ruby
+Book.where(created_at: (Time.now.midnight - 1.day)..)
+```
+
+This would generate SQL like:
+
+```sql
+SELECT * FROM books WHERE books.created_at >= '2008-12-21 00:00:00'
+```
 
 #### Subset Conditions
 
@@ -887,7 +909,7 @@ FROM orders
 GROUP BY created_at
 ```
 
-### Total of grouped items
+### Total of Grouped Items
 
 To get the total of grouped items on a single query, call [`count`][] after the `group`.
 
@@ -1006,7 +1028,7 @@ Book.select(:title, :isbn).reselect(:created_at)
 The SQL that would be executed:
 
 ```sql
-SELECT `books`.`created_at` FROM `books`
+SELECT books.created_at FROM books
 ```
 
 Compare this to the case where the `reselect` clause is not used:
@@ -1018,7 +1040,7 @@ Book.select(:title, :isbn).select(:created_at)
 the SQL executed would be:
 
 ```sql
-SELECT `books`.`title`, `books`.`isbn`, `books`.`created_at` FROM `books`
+SELECT books.title, books.isbn, books.created_at FROM books
 ```
 
 ### `reorder`
@@ -1096,7 +1118,7 @@ Book.where(out_of_print: true).rewhere(out_of_print: false)
 The SQL that would be executed:
 
 ```sql
-SELECT * FROM books WHERE `out_of_print` = 0
+SELECT * FROM books WHERE out_of_print = 0
 ```
 
 If the `rewhere` clause is not used, the where clauses are ANDed together:
@@ -1108,7 +1130,7 @@ Book.where(out_of_print: true).where(out_of_print: false)
 the SQL executed would be:
 
 ```sql
-SELECT * FROM books WHERE `out_of_print` = 1 AND `out_of_print` = 0
+SELECT * FROM books WHERE out_of_print = 1 AND out_of_print = 0
 ```
 
 [`rewhere`]: https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-rewhere
@@ -1214,8 +1236,8 @@ The above session produces the following SQL for a MySQL backend:
 
 ```sql
 SQL (0.2ms)   BEGIN
-Book Load (0.3ms)   SELECT * FROM `books` LIMIT 1 FOR UPDATE
-Book Update (0.4ms)   UPDATE `books` SET `updated_at` = '2009-02-07 18:05:56', `title` = 'Algorithms, second edition' WHERE `id` = 1
+Book Load (0.3ms)   SELECT * FROM books LIMIT 1 FOR UPDATE
+Book Update (0.4ms)   UPDATE books SET updated_at = '2009-02-07 18:05:56', title = 'Algorithms, second edition' WHERE id = 1
 SQL (0.8ms)   COMMIT
 ```
 
@@ -1444,9 +1466,9 @@ end
 The above code will execute just **2** queries, as opposed to the **11** queries from the original case:
 
 ```sql
-SELECT `books`.* FROM `books` LIMIT 10
-SELECT `authors`.* FROM `authors`
-  WHERE `authors`.`book_id` IN (1,2,3,4,5,6,7,8,9,10)
+SELECT books.* FROM books LIMIT 10
+SELECT authors.* FROM authors
+  WHERE authors.book_id IN (1,2,3,4,5,6,7,8,9,10)
 ```
 
 #### Eager Loading Multiple Associations
@@ -1483,7 +1505,7 @@ This would generate a query which contains a `LEFT OUTER JOIN` whereas the
 `joins` method would generate one using the `INNER JOIN` function instead.
 
 ```sql
-  SELECT authors.id AS t0_r0, ... books.updated_at AS t1_r5 FROM authors LEFT OUTER JOIN "books" ON "books"."author_id" = "authors"."id" WHERE (books.out_of_print = 1)
+  SELECT authors.id AS t0_r0, ... books.updated_at AS t1_r5 FROM authors LEFT OUTER JOIN books ON books.author_id = authors.id WHERE (books.out_of_print = 1)
 ```
 
 If there was no `where` condition, this would generate the normal set of two queries.
@@ -1521,9 +1543,9 @@ end
 The above code will execute just **2** queries, as opposed to the **11** queries from the original case:
 
 ```sql
-SELECT `books`.* FROM `books` LIMIT 10
-SELECT `authors`.* FROM `authors`
-  WHERE `authors`.`book_id` IN (1,2,3,4,5,6,7,8,9,10)
+SELECT books.* FROM books LIMIT 10
+SELECT authors.* FROM authors
+  WHERE authors.book_id IN (1,2,3,4,5,6,7,8,9,10)
 ```
 
 NOTE: The `preload` method uses an array, hash, or a nested hash of array/hash in the same way as the `includes` method to load any number of associations with a single `Model.find` call. However, unlike the `includes` method, it is not possible to specify conditions for preloaded associations.
@@ -1545,10 +1567,10 @@ end
 The above code will execute just **2** queries, as opposed to the **11** queries from the original case:
 
 ```sql
-SELECT DISTINCT `books`.`id` FROM `books` LEFT OUTER JOIN `authors` ON `authors`.`book_id` = `books`.`id` LIMIT 10
-SELECT `books`.`id` AS t0_r0, `books`.`last_name` AS t0_r1, ...
-  FROM `books` LEFT OUTER JOIN `authors` ON `authors`.`book_id` = `books`.`id`
-  WHERE `books`.`id` IN (1,2,3,4,5,6,7,8,9,10)
+SELECT DISTINCT books.id FROM books LEFT OUTER JOIN authors ON authors.book_id = books.id LIMIT 10
+SELECT books.id AS t0_r0, books.last_name AS t0_r1, ...
+  FROM books LEFT OUTER JOIN authors ON authors.book_id = books.id
+  WHERE books.id IN (1,2,3,4,5,6,7,8,9,10)
 ```
 
 NOTE: The `eager_load` method uses an array, hash, or a nested hash of array/hash in the same way as the `includes` method to load any number of associations with a single `Model.find` call. Also, like the `includes` method, you can specify conditions for eager loaded associations.
@@ -1592,7 +1614,7 @@ end
 
 [`scope`]: https://api.rubyonrails.org/classes/ActiveRecord/Scoping/Named/ClassMethods.html#method-i-scope
 
-### Passing in arguments
+### Passing in Arguments
 
 Your scope can take arguments:
 
@@ -1624,13 +1646,13 @@ These methods will still be accessible on the association objects:
 irb> author.books.costs_more_than(100.10)
 ```
 
-### Using conditionals
+### Using Conditionals
 
 Your scope can utilize conditionals:
 
 ```ruby
 class Order < ApplicationRecord
-  scope :created_before, ->(time) { where("created_at < ?", time) if time.present? }
+  scope :created_before, ->(time) { where(created_at: ...time) if time.present? }
 end
 ```
 
@@ -1639,14 +1661,14 @@ Like the other examples, this will behave similarly to a class method.
 ```ruby
 class Order < ApplicationRecord
   def self.created_before(time)
-    where("created_at < ?", time) if time.present?
+    where(created_at: ...time) if time.present?
   end
 end
 ```
 
 However, there is one important caveat: A scope will always return an `ActiveRecord::Relation` object, even if the conditional evaluates to `false`, whereas a class method, will return `nil`. This can cause `NoMethodError` when chaining class methods with conditionals, if any of the conditionals return `false`.
 
-### Applying a default scope
+### Applying a Default Scope
 
 If we wish for a scope to be applied across all queries to the model we can use the
 [`default_scope`][] method within the model itself.
@@ -1708,7 +1730,7 @@ irb> Book.new
 
 [`default_scope`]: https://api.rubyonrails.org/classes/ActiveRecord/Scoping/Default/ClassMethods.html#method-i-default_scope
 
-### Merging of scopes
+### Merging of Scopes
 
 Just like `where` clauses, scopes are merged using `AND` conditions.
 
@@ -1717,8 +1739,8 @@ class Book < ApplicationRecord
   scope :in_print, -> { where(out_of_print: false) }
   scope :out_of_print, -> { where(out_of_print: true) }
 
-  scope :recent, -> { where('year_published >= ?', Date.current.year - 50 )}
-  scope :old, -> { where('year_published < ?', Date.current.year - 50 )}
+  scope :recent, -> { where(year_published: 50.years.ago.year..) }
+  scope :old, -> { where(year_published: ...50.years.ago.year) }
 end
 ```
 
@@ -1731,7 +1753,7 @@ We can mix and match `scope` and `where` conditions and the final SQL
 will have all conditions joined with `AND`.
 
 ```irb
-irb> Book.in_print.where('price < 100')
+irb> Book.in_print.where(price: ...100)
 SELECT books.* FROM books WHERE books.out_of_print = 'false' AND books.price < 100
 ```
 
@@ -1748,7 +1770,7 @@ One important caveat is that `default_scope` will be prepended in
 
 ```ruby
 class Book < ApplicationRecord
-  default_scope { where('year_published >= ?', Date.current.year - 50 )}
+  default_scope { where(year_published: 50.years.ago.year..) }
 
   scope :in_print, -> { where(out_of_print: false) }
   scope :out_of_print, -> { where(out_of_print: true) }
@@ -1809,7 +1831,7 @@ you get the instance method `find_by_first_name` for free from Active Record.
 If you also have a `locked` field on the `Customer` model, you also get `find_by_locked` method.
 
 You can specify an exclamation point (`!`) on the end of the dynamic finders
-to get them to raise an `ActiveRecord::RecordNotFound` error if they do not return any records, like `Customer.find_by_name!("Ryan")`
+to get them to raise an `ActiveRecord::RecordNotFound` error if they do not return any records, like `Customer.find_by_first_name!("Ryan")`
 
 If you want to find both by `first_name` and `orders_count`, you can chain these finders together by simply typing "`and`" between the fields.
 For example, `Customer.find_by_first_name_and_orders_count("Ryan", 5)`.
@@ -1883,7 +1905,7 @@ There are some examples below. This guide won't cover all the possibilities, jus
 When an Active Record method is called, the query is not immediately generated and sent to the database.
 The query is sent only when the data is actually needed. So each example below generates a single query.
 
-### Retrieving filtered data from multiple tables
+### Retrieving Filtered Data from Multiple Tables
 
 ```ruby
 Customer
@@ -1902,7 +1924,7 @@ INNER JOIN reviews
 WHERE (reviews.created_at > '2019-01-08')
 ```
 
-### Retrieving specific data from multiple tables
+### Retrieving Specific Data from Multiple Tables
 
 ```ruby
 Book
@@ -2064,7 +2086,7 @@ irb> Customer.connection.select_all("SELECT first_name, created_at FROM customer
 
 ```irb
 irb> Book.where(out_of_print: true).pluck(:id)
-SELECT id FROM books WHERE out_of_print = false
+SELECT id FROM books WHERE out_of_print = true
 => [1, 2, 3]
 
 irb> Order.distinct.pluck(:status)

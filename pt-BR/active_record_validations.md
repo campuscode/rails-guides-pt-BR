@@ -1146,7 +1146,7 @@ passando os *symbols* dos nomes dos métodos de validação.
 Você pode passar mais do que um *symbol* para cada método da classe e as
 respectivas validações serão executadas na mesma ordem que elas foram registradas.
 
-O método `valid?` verificará se a coleção de erros está vazia,
+O método `valid?` verificará se a coleção `errors` está vazia,
 sendo assim seus métodos de validação customizados devem adicionar erros
 à ela quando você desejar que as validações falhem:
 
@@ -1254,7 +1254,7 @@ irb> person.errors[:name]
 => ["can't be blank", "is too short (minimum is 3 characters)"]
 ```
 
-### `errors.where` e objetos de erro
+### `errors.where` e Objetos de Erro
 
 Às vezes, podemos precisar de mais informações sobre cada erro e sua mensagem. Cada erro é encapsulado como um objeto `ActiveModel::Error` e o método [`where`][] é a forma mais comum de acesso.
 
@@ -1300,7 +1300,7 @@ irb> error.full_message
 => "Name is too short (minimum is 3 characters)"
 ```
 
-O método [`full_message`][] gera uma mensagem mais legível, que começa com o atributo com a primeira letra maiúscula.
+O método [`full_message`][] gera uma mensagem mais legível, que começa com o atributo com a primeira letra maiúscula. (Para customizar o formato que o método `full_message` usa, veja o [guia de I18n](i18n.html#active-model-methods).)
 
 [`full_message`]: https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-full_message
 [`where`]: https://api.rubyonrails.org/classes/ActiveModel/Errors.html#method-i-where

@@ -217,7 +217,7 @@ irb(main):001:0> Article.pamplemousse
 => #<Comment id: 2, author: "1", body: "Well, actually...", article_id: 1, created_at: "2018-10-19 00:56:10", updated_at: "2018-10-19 00:56:10">
 ```
 
-Depois de executar `ActiveRecord::Base.verbose_query_logs = true` na sessão `bin/rails console` para habilitar logs de consulta detalhados e executar o método novamente, torna-se óbvio qual linha única de código está gerando todas essas chamadas discretas de banco de dados:
+Depois de executar `ActiveRecord.verbose_query_logs = true` na sessão `bin/rails console` para habilitar logs de consulta detalhados e executar o método novamente, torna-se óbvio qual linha única de código está gerando todas essas chamadas discretas de banco de dados:
 
 ```
 irb(main):003:0> Article.pamplemousse
@@ -282,10 +282,10 @@ O conteúdo do bloco e, portanto, a interpolação de _string_, são apenas
 avaliada se o _debug_ está habilitado. Essa economia de desempenho é apenas realmente
 perceptível com grandes quantidades de registro, mas é uma boa prática empregar.
 
-INFO: Esta seção foi escrita por [Jon Cairns em uma resposta no StackOverflow](https://stackoverflow.com/questions/16546730/logging-in-rails-is-there-any-performance-hit/16546935#16546935)
+INFO: Esta seção foi escrita por [Jon Cairns em uma resposta no Stack Overflow](https://stackoverflow.com/questions/16546730/logging-in-rails-is-there-any-performance-hit/16546935#16546935)
 e está licenciada sob [cc by-sa 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
-Debugging with the `debug` gem
+Debugging with the `debug` Gem
 ------------------------------
 
 When your code is behaving in unexpected ways, you can try printing to logs or
@@ -343,6 +343,8 @@ Processing by PostsController#index as HTML
 (rdbg)
 ```
 
+You can exit the debugging session at any time and continue your application execution with the `continue` (or `c`) command.  Or, to exit both the debugging session and your application, use the `quit` (or `q`) command.
+
 ### The Context
 
 After entering the debugging session, you can type in Ruby code as you're in a Rails console or IRB.
@@ -376,7 +378,7 @@ Besides direct evaluation, debugger also helps you collect rich amount of inform
 - `backtrace` (or `bt`) - Backtrace (with additional information).
 - `outline` (or `o`, `ls`) - Available methods, constants, local variables, and instance variables in the current scope.
 
-#### The info command
+#### The `info` Command
 
 It'll give you an overview of the values of local and instance variables that are visible from the current frame.
 
@@ -396,7 +398,7 @@ It'll give you an overview of the values of local and instance variables that ar
 @rendered_format = nil
 ```
 
-#### The backtrace command
+#### The `backtrace` Command
 
 When used without any options, it lists all the frames on the stack:
 
@@ -431,15 +433,14 @@ Don't worry, the `backtrace` command provides 2 options to help you filter frame
 
 It's also possible to use these options together: `backtrace [num] /pattern/`.
 
-#### The outline command
+#### The `outline` Command
 
-This command is similar to `pry` and `irb`'s `ls` command. It will show you what's accessible from you current scope, including:
+This command is similar to `pry` and `irb`'s `ls` command. It will show you what's accessible from the current scope, including:
 
 - Local variables
 - Instance variables
 - Class variables
 - Methods & their sources
-- ...etc.
 
 ```rb
 ActiveSupport::Configurable#methods: config
@@ -469,7 +470,7 @@ class variables: @@raise_on_missing_translations  @@raise_on_open_redirects
 
 ### Breakpoints
 
-There are many ways to insert and trigger a breakpoint in the debugger. In additional to adding debugging statements (e.g. `debugger`) directly in your code, you can also insert breakpoints with commands:
+There are many ways to insert and trigger a breakpoint in the debugger. In addition to adding debugging statements (e.g. `debugger`) directly in your code, you can also insert breakpoints with commands:
 
 - `break` (or `b`)
   - `break` - list all breakpoints
@@ -486,9 +487,9 @@ And to remove them, you can use:
   - `delete` - delete all breakpoints
   - `delete <num>` - delete the breakpoint with id `num`
 
-#### The break command
+#### The `break` Command
 
-**Set a breakpoint with specified line number - e.g. `b 28`**
+**Set a breakpoint on a specified line number - e.g. `b 28`**
 
 ```rb
 [20, 29] in ~/projects/rails-guide-example/app/controllers/posts_controller.rb
@@ -571,7 +572,7 @@ Stop by #0  BP - Line  /Users/st0012/projects/rails-guide-example/app/controller
 Stop by #0  BP - Method  @post.save at /Users/st0012/.rbenv/versions/3.0.1/lib/ruby/gems/3.0.0/gems/activerecord-7.0.0.alpha2/lib/active_record/suppressor.rb:43
 ```
 
-#### The catch command
+#### The `catch` Command
 
 **Stop when an exception is raised - e.g. `catch ActiveRecord::RecordInvalid`**
 
@@ -614,7 +615,7 @@ Stop by #0  BP - Method  @post.save at /Users/st0012/.rbenv/versions/3.0.1/lib/r
 Stop by #1  BP - Catch  "ActiveRecord::RecordInvalid"
 ```
 
-#### The watch command
+#### The `watch` Command
 
 **Stop when the instance variable is changed - e.g. `watch @_response_body`**
 
@@ -658,7 +659,7 @@ Stop by #0  BP - Watch  #<PostsController:0x00007fce69ca5320> @_response_body = 
 (rdbg)
 ```
 
-#### Breakpoint options
+#### Breakpoint Options
 
 In addition to different types of breakpoints, you can also specify options to achieve more advanced debugging workflow. Currently, the debugger supports 4 options:
 
@@ -703,7 +704,7 @@ Please also note that the first 3 options: `do:`, `pre:` and `if:` are also avai
 @rendered_format = nil
 ```
 
-#### Program your debugging workflow
+#### Program Your Debugging Workflow
 
 With those options, you can script your debugging workflow in one line like:
 
@@ -781,10 +782,10 @@ subdirectories are not subject to this issue either.
 
 See [ruby/debug#408](https://github.com/ruby/debug/issues/408) for details.
 
-Debug com a gem `web-console`
+Debug com a Gem `web-console`
 ------------------------------------
 
-A *gem* Web Console é um pouco semelhante à *gem* `debug`, porém é executada no navegador. Em qualquer página que você esteja desenvolvendo, você pode solicitar um `console` no contexto da *view* ou do *controller*. O *console* deve ser renderizado próximo ao conteúdo HTML.
+A *gem* Web Console é um pouco semelhante à *gem* `debug`, porém é executada no navegador. Em qualquer página você pode solicitar um `console` no contexto da *view* ou do *controller*. O *console* deve ser renderizado próximo ao conteúdo HTML.
 
 ### Console
 

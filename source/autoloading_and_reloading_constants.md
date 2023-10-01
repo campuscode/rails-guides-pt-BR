@@ -84,7 +84,7 @@ $ bin/rails runner 'p UsersHelper'
 UsersHelper
 ```
 
-Rails adds custom directories under `app` to the autoload paths automatically. For example, if your application has `app/presenters`, you don't need to configure anything in order to autoload presenters, it works out of the box.
+Rails adds custom directories under `app` to the autoload paths automatically. For example, if your application has `app/presenters`, you don't need to configure anything in order to autoload presenters; it works out of the box.
 
 The array of default autoload paths can be extended by pushing to `config.autoload_paths`, in `config/application.rb` or `config/environments/*.rb`. For example:
 
@@ -237,20 +237,18 @@ However, you cannot autoload from the autoload paths, which are managed by the `
 
 Why? Initializers only run once, when the application boots. If you reboot the server, they run again in a new process, but reloading does not reboot the server, and initializers don't run again. Let's see the two main use cases.
 
-### Use case 1: During boot, load reloadable code
+### Use Case 1: During Boot, Load Reloadable Code
 
-#### Autoload on boot and on each reload
+#### Autoload on Boot and on Each Reload
 
 Let's imagine `ApiGateway` is a reloadable class from `app/services` managed by the `main` autoloader and you need to configure its endpoint while the application boots:
 
 ```ruby
 # config/initializers/api_gateway_setup.rb
-ApiGateway.endpoint = "https://example.com" # DO NOT DO THIS
+ApiGateway.endpoint = "https://example.com" # NameError
 ```
 
-a reloaded `ApiGateway` would have a `nil` endpoint, because the code above does not run again.
-
-You can still set things up during boot, but you need to wrap them in a `to_prepare` block, which runs on boot, and after each reload:
+Initializers cannot refer to reloadable constants, you need to wrap that in a `to_prepare` block, which runs on boot, and after each reload:
 
 ```ruby
 # config/initializers/api_gateway_setup.rb
@@ -261,7 +259,7 @@ end
 
 NOTE: For historical reasons, this callback may run twice. The code it executes must be idempotent.
 
-#### Autoload on boot only
+#### Autoload on Boot Only
 
 Reloadable classes and modules can be autoloaded in `after_initialize` blocks too. These run on boot, but do not run again on reload. In some exceptional cases this may be what you want.
 
@@ -276,9 +274,9 @@ Rails.application.config.after_initialize do
 end
 ```
 
-### Use case 2: During boot, load code that remains cached
+### Use Case 2: During Boot, Load Code that Remains Cached
 
-Some configurations take a class or module object, and they store it in a place that is not reloaded.
+Some configurations take a class or module object, and they store it in a place that is not reloaded. It is important that these are not reloadable, because edits would not be reflected in those cached stale objects.
 
 One example is middleware:
 
@@ -286,7 +284,7 @@ One example is middleware:
 config.middleware.use MyApp::Middleware::Foo
 ```
 
-When you reload, the middleware stack is not affected, so, whatever object was stored in `MyApp::Middleware::Foo` at boot time remains there stale.
+When you reload, the middleware stack is not affected, so it would be confusing that `MyApp::Middleware::Foo` is reloadable. Changes in its implementation would have no effect.
 
 Another example is Active Job serializers:
 
@@ -295,7 +293,7 @@ Another example is Active Job serializers:
 Rails.application.config.active_job.custom_serializers << MoneySerializer
 ```
 
-Whatever `MoneySerializer` evaluates to during initialization gets pushed to the custom serializers. If that was reloadable, the initial object would be still within Active Job, not reflecting your changes.
+Whatever `MoneySerializer` evaluates to during initialization gets pushed to the custom serializers, and that object stays there on reloads.
 
 Yet another example are railties or engines decorating framework classes by including modules. For instance, [`turbo-rails`](https://github.com/hotwired/turbo-rails) decorates `ActiveRecord::Base` this way:
 
@@ -313,20 +311,44 @@ Corollary: Those classes or modules **cannot be reloadable**.
 
 The easiest way to refer to those classes or modules during boot is to have them defined in a directory which does not belong to the autoload paths. For instance, `lib` is an idiomatic choice. It does not belong to the autoload paths by default, but it does belong to `$LOAD_PATH`. Just perform a regular `require` to load it.
 
-As noted above, another option is to have the directory that defines them in the autoload once paths and autoload. Please check the [section about config.autoload_once_paths](https://edgeguides.rubyonrails.org/autoloading_and_reloading_constants.html#config-autoload-once-paths) for details.
+As noted above, another option is to have the directory that defines them in the autoload once paths and autoload. Please check the [section about config.autoload_once_paths](#config-autoload-once-paths) for details.
+
+### Use Case 3: Configure Application Classes for Engines
+
+Let's suppose an engine works with the reloadable application class that models users, and has a configuration point for it:
+
+```ruby
+# config/initializers/my_engine.rb
+MyEngine.configure do |config|
+  config.user_model = User # NameError
+end
+```
+
+In order to play well with reloadable application code, the engine instead needs applications to configure the _name_ of that class:
+
+```ruby
+# config/initializers/my_engine.rb
+MyEngine.configure do |config|
+  config.user_model = "User" # OK
+end
+```
+
+Then, at run time, `config.user_model.constantize` gives you the current class object.
 
 Eager Loading
 -------------
 
 In production-like environments it is generally better to load all the application code when the application boots. Eager loading puts everything in memory ready to serve requests right away, and it is also [CoW](https://en.wikipedia.org/wiki/Copy-on-write)-friendly.
 
-Eager loading is controlled by the flag [`config.eager_load`][], which is enabled by default in `production` mode.
+Eager loading is controlled by the flag [`config.eager_load`][], which is disabled by default in all environments except `production`. When a Rake task gets executed, `config.eager_load` is overridden by [`config.rake_eager_load`][], which is `false` by default. So, by default, in production environments Rake tasks do not eager load the application.
 
 The order in which files are eager-loaded is undefined.
 
 During eager loading, Rails invokes `Zeitwerk::Loader.eager_load_all`. That ensures all gem dependencies managed by Zeitwerk are eager-loaded too.
 
+
 [`config.eager_load`]: configuring.html#config-eager-load
+[`config.rake_eager_load`]: configuring.html#config-rake-eager-load
 
 Single Table Inheritance
 ------------------------
@@ -408,7 +430,7 @@ By default, Rails uses `String#camelize` to know which constant a given file or 
 
 It could be the case that some particular file or directory name does not get inflected as you want. For instance, `html_parser.rb` is expected to define `HtmlParser` by default. What if you prefer the class to be `HTMLParser`? There are a few ways to customize this.
 
-The easiest way is to define acronyms in `config/initializers/inflections.rb`:
+The easiest way is to define acronyms:
 
 ```ruby
 ActiveSupport::Inflector.inflections(:en) do |inflect|
@@ -420,7 +442,6 @@ end
 Doing so affects how Active Support inflects globally. That may be fine in some applications, but you can also customize how to camelize individual basenames independently from Active Support by passing a collection of overrides to the default inflectors:
 
 ```ruby
-# config/initializers/zeitwerk.rb
 Rails.autoloaders.each do |autoloader|
   autoloader.inflector.inflect(
     "html_parser" => "HTMLParser",
@@ -432,7 +453,6 @@ end
 That technique still depends on `String#camelize`, though, because that is what the default inflectors use as fallback. If you instead prefer not to depend on Active Support inflections at all and have absolute control over inflections, configure the inflectors to be instances of `Zeitwerk::Inflector`:
 
 ```ruby
-# config/initializers/zeitwerk.rb
 Rails.autoloaders.each do |autoloader|
   autoloader.inflector = Zeitwerk::Inflector.new
   autoloader.inflector.inflect(
@@ -445,6 +465,12 @@ end
 There is no global configuration that can affect said instances; they are deterministic.
 
 You can even define a custom inflector for full flexibility. Please check the [Zeitwerk documentation](https://github.com/fxn/zeitwerk#custom-inflector) for further details.
+
+### Where Should Inflection Customization Go?
+
+If an application does not use the `once` autoloader, the snippets above can go in `config/initializers`. For example, `config/initializers/inflections.rb` for the Active Support use case, or `config/initializers/zeitwerk.rb` for the other ones.
+
+Applications using the `once` autoloader have to move or load this configuration from the body of the application class in `config/application.rb`, because the `once` autoloader uses the inflector early in the boot process.
 
 Autoloading and Engines
 -----------------------
