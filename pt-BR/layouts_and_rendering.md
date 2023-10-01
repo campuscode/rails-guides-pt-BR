@@ -31,7 +31,7 @@ Do ponto de vista do _controller_, há três maneiras de criar uma resposta HTTP
 * Chamar [`redirect_to`][] para enviar um _status code_ HTTP de redirecionamento para o navegador
 * Chamar [`head`][] para criar uma resposta que consiste apenas em cabeçalhos HTTP para enviar de volta ao navegador
 
-[controller.render]: https://api.rubyonrails.org/classes/AbstractController/Rendering.html#method-i-render
+[controller.render]: https://api.rubyonrails.org/classes/ActionController/Rendering.html#method-i-render
 [`redirect_to`]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
 [`head`]: https://api.rubyonrails.org/classes/ActionController/Head.html#method-i-head
 
@@ -106,7 +106,7 @@ NOTE: A renderização real é feita por classes aninhadas do módulo [`ActionVi
 
 ### Usando `render`
 
-Na maioria dos casos, o método [`ActionController::Base#render`][controller.render] faz o trabalho pesado de renderizar o conteúdo do aplicativo para ser utilizado por um navegador. Existem várias maneiras de personalizar o comportamento do `render`. Você pode renderizar a _view_ padrão de um template do Rails, ou de um template específico, ou de um arquivo, ou código embutido, ou nada. Você pode renderizar text, JSON ou XML. Você também pode especificar o tipo de conteúdo ou o status HTTP da resposta renderizada.
+Na maioria dos casos, o método [`render`][controller.render] faz o trabalho pesado de renderizar o conteúdo do aplicativo para ser utilizado por um navegador. Existem várias maneiras de personalizar o comportamento do `render`. Você pode renderizar a _view_ padrão de um template do Rails, ou de um template específico, ou de um arquivo, ou código embutido, ou nada. Você pode renderizar text, JSON ou XML. Você também pode especificar o tipo de conteúdo ou o status HTTP da resposta renderizada.
 
 TIP: Se você deseja ver os resultados exatos de uma chamada para `render` sem precisar inspecioná-la em um navegador, você pode chamar` render_to_string`. Este método usa exatamente as mesmas opções que o `render`, mas retorna uma string em vez de enviar uma resposta de volta ao navegador.
 

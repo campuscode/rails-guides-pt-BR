@@ -14,7 +14,7 @@ Após ler este guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-Por que escrever testes para a sua aplicação Rails?
+Por que escrever testes para a sua Aplicação Rails?
 ---------------------------------------------------
 
 O Rails torna super fácil escrever seus testes. Ele começa produzindo um esqueleto de código de teste enquanto você cria seus *models* e *controllers*.
@@ -343,7 +343,7 @@ Rails adiciona algumas asserções customizadas o framework `minitest`:
 | [`assert_nothing_raised { block }`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised) | Checa se o bloco dado não dispara nenhuma exceção.|
 | [`assert_recognizes(expected_options, path, extras={}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes) | Checa se o Rails reconhece a rota fornecida pelas `expected_options`.|
 | [`assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates) | O inverso de `assert_recognizes`. Checa se o Rails não reconhece a rota fornecida pelas `expected_options`.|
-| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Checa se a resposta de uma requisição vem com um código de status específico. Você pode especificar `:success` para indicar 200-299, `:redirect` para indicar 300-399, `:missing` para indicar 404, ou `:error` para indicar o intervalo de 500-599. Você pode também passar o número explícito do status ou símbolo equivalente. Para mais informação, veja [lista completa de códigos de status](https://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) e como seus [mapeamentos](https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) funcionam.|
+| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Checa se a resposta de uma requisição vem com um código de status específico. Você pode especificar `:success` para indicar 200-299, `:redirect` para indicar 300-399, `:missing` para indicar 404, ou `:error` para indicar o intervalo de 500-599. Você pode também passar o número explícito do status ou símbolo equivalente. Para mais informação, veja [lista completa de códigos de status](https://rubydoc.info/gems/rack/Rack/Utils#HTTP_STATUS_CODES-constant) e como seus [mapeamentos](https://rubydoc.info/gems/rack/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) funcionam.|
 | [`assert_redirected_to(options = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to) | Checa se a resposta de uma requisição é redirecionada para uma URL que "bate" com as opções dadas. Você pode passar rotas nomeadas tais como `asset_redirected_to root_path` e objetos do Active Record como `assert_redirected_to @article`.|
 
 Agora você verá alguns usos de algumas dessas asserções no próximo capítulo.
@@ -672,7 +672,7 @@ NOTE: Para que associações façam referência umas as outras pelo nome, você 
 O Rails vai dar automaticamente uma chave para que haja consistência entre execuções dos testes.
 Para mais informações sobre esse comportamento das associações, leia a página [documentação da API de Fixtures](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
 
-#### Arquivos anexos em *fixtures*
+#### Arquivos anexos em *Fixtures*
 
 Como outros *models* com suporte ao *Active Record*, os registros em anexo do *Active Storage*
 herdam de instâncias de ActiveRecord::Base e podem, portanto, ser preenchidos por
@@ -738,9 +738,9 @@ O carregamento envolve três passos:
 TIP: Para remover todos os dados existentes, o Rails tenta desabilitar os *triggers* de integridade referencial (como chaves estrangeiras e *constraints*).
 Se você estiver recebendo erros irritantes de permissão na hora de rodar os testes, garanta que o usuário do banco de dados tenha permissão para desabilitar esses *triggers* no ambiente de teste.
 (No PostgreSQL, somente superusuários podem desativar todos os *triggers*.
-Leia mais sobre as permissões do PostgreSQL [aqui](http://blog.endpoint.com/2012/10/postgres-system-triggers-error.html)).
+Leia mais sobre as permissões do PostgreSQL [aqui](https://www.postgresql.org/docs/current/sql-altertable.html)).
 
-#### Fixtures são objetos do Active Record
+#### Fixtures são Objetos do Active Record
 
 *Fixtures* são instâncias de Active Record.
 Como mencionado no ponto #3 acima, você pode acessar o objeto diretamente, já que ele está automaticamente acessível como um método cujo escopo é local para cada teste.
@@ -949,7 +949,7 @@ Finalmente, nós vamos ser redirecionados de volta para a página inicial (*inde
 
 #### Testando em diferentes tamanhos de tela
 
-Se você quiser testar em telas de tamanho mobile além do tamanho desktop, você pode criar outra classe que herda de `SystemTestCase` para usar em sua suite de testes.
+Se você quiser testar em telas de tamanho mobile além do tamanho desktop, você pode criar outra classe que herda de `ActionDispatch::SystemTestCase` para usar em sua suite de testes.
 Nesse exemplo, um arquivo chamado `mobile_system_test_case.rb` foi criado no caminho `/test` com a seguinte configuração:
 
 ```ruby
@@ -1493,7 +1493,7 @@ One good place to store them is `test/lib` or `test/test_helpers`.
 # test/test_helpers/multiple_assertions.rb
 module MultipleAssertions
   def assert_multiple_of_forty_two(number)
-    assert (number % 42 == 0), 'expected #{number} to be a multiple of 42'
+    assert (number % 42 == 0), "expected #{number} to be a multiple of 42"
   end
 end
 ```
@@ -2002,7 +2002,7 @@ A partir de Rails 7, aplicações geradas são configuradas desse jeito por padr
 
 Se seu projeto não possui integração contínua, você ainda pode fazer eager load na suíte de teste por chamar `Rails.application.eager_load!`:
 
-#### minitest
+#### Minitest
 
 ```ruby
 require "test_helper"

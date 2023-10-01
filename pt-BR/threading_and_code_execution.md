@@ -1,7 +1,7 @@
 **NÃO LEIA ESTE ARQUIVO NO GITHUB, OS GUIAS SÃO PUBLICADOS NO https://guiarails.com.br.**
 **DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON https://guides.rubyonrails.org.**
 
-*Threading* e Execução de Código no Rails
+_Threading_ e Execução de Código no Rails
 =========================================
 
 Depois de ler esse guia, você vai saber:
@@ -49,7 +49,7 @@ O *Executor* consiste em dois *callbacks*: `to_run` e `to_complete`. O *callback
 *Run* é chamado antes do código da aplicação e o *Complete* é chamado após o código
 da aplicação.
 
-### Callbacks padrões
+### Callbacks Padrões
 
 Em uma aplicação Rails padrão, os *callbacks* do *Executor* são usados para:
 
@@ -63,7 +63,7 @@ Antes do Rails 5.0, algumas dessas funções eram gerenciadas por *middlewares* 
 diretamente com métodos como `ActiveRecord::Base.connection_pool.with_connection`.
 O *Executor* substitui essas interfaces por uma mais simples e mais abstrata.
 
-### Envolvendo código da aplicação
+### Envolvendo Código da Aplicação
 
 Se você está escrevendo uma biblioteca ou componente que vai invocar código da aplicação,
 você deve envolver esse código com uma chamada para o *Executor*:

@@ -77,6 +77,8 @@ Para permitir que você atualize para novos padrões um por um, a tarefa de atua
 Upgrading from Rails 6.1 to Rails 7.0
 -------------------------------------
 
+For more information on changes made to Rails 7.0 please see the [release notes](7_0_release_notes.html).
+
 ### `ActionView::Helpers::UrlHelper#button_to` changed behavior
 
 Starting from Rails 7.0 `button_to` renders a `form` tag with `patch` HTTP verb if a persisted Active Record object is used to build button URL.
@@ -117,7 +119,7 @@ gem "sprockets-rails"
 
 ### Applications need to run in `zeitwerk` mode
 
-Applications still running in `classic` mode have to switch to `zeitwerk` mode. Please check the [Classic to Zeitwerk HOWTO](https://guides.rubyonrails.org/classic_to_zeitwerk_howto.html) guide for details.
+Applications still running in `classic` mode have to switch to `zeitwerk` mode. Please check the [Classic to Zeitwerk HOWTO](https://guides.rubyonrails.org/v7.0/classic_to_zeitwerk_howto.html) guide for details.
 
 ### The setter `config.autoloader=` has been deleted
 
@@ -169,7 +171,7 @@ If you configured this setting after the environments configuration has been pro
 
 [`config.autoload_once_paths`]: configuring.html#config-autoload-once-paths
 
-### `ActionDispatch::Request#content_type` now returned Content-Type header as it is.
+### `ActionDispatch::Request#content_type` now returns Content-Type header as it is.
 
 Previously, `ActionDispatch::Request#content_type` returned value does NOT contain charset part.
 This behavior changed to returned Content-Type header containing charset part as it is.
@@ -200,22 +202,27 @@ encrypted cookies.
 In order to be able to read messages using the old digest class it is necessary
 to register a rotator.
 
-The following is an example for rotator for the encrypted cookies.
+The following is an example for rotator for the encrypted and the signed cookies.
 
 ```ruby
 # config/initializers/cookie_rotator.rb
 Rails.application.config.after_initialize do
   Rails.application.config.action_dispatch.cookies_rotations.tap do |cookies|
-    salt = Rails.application.config.action_dispatch.authenticated_encrypted_cookie_salt
+    authenticated_encrypted_cookie_salt = Rails.application.config.action_dispatch.authenticated_encrypted_cookie_salt
+    signed_cookie_salt = Rails.application.config.action_dispatch.signed_cookie_salt
+
     secret_key_base = Rails.application.secret_key_base
 
     key_generator = ActiveSupport::KeyGenerator.new(
       secret_key_base, iterations: 1000, hash_digest_class: OpenSSL::Digest::SHA1
     )
     key_len = ActiveSupport::MessageEncryptor.key_len
-    secret = key_generator.generate_key(salt, key_len)
 
-    cookies.rotate :encrypted, secret
+    old_encrypted_secret = key_generator.generate_key(authenticated_encrypted_cookie_salt, key_len)
+    old_signed_secret = key_generator.generate_key(signed_cookie_salt)
+
+    cookies.rotate :encrypted, old_encrypted_secret
+    cookies.rotate :signed, old_signed_secret
   end
 end
 ```
@@ -975,7 +982,7 @@ Para melhorar a segurança, Rails agora incorpora as informações de expiraçã
 Estas novas informações incorporadas tornam estes *cookies* incompatíveis com versões do Rails mais antigas que 5.2.
 
 Se você quer que seus cookies sejam lidos até 5.1 e anteriores, ou se ainda estiver validando seu *deploy* 5.2 e quiser permitir o *rollback* configure
- `Rails.application.config.action_dispatch.use_authenticated_cookie_encryption` para `false'.
+ `Rails.application.config.action_dispatch.use_authenticated_cookie_encryption` para `false`.
 
 Atualizando do Rails 5.0 para o Rails 5.1
 -------------------------------------
@@ -2296,8 +2303,7 @@ O Rails 4.0 remove o alias `j` para `ERB::Util#json_escape` visto que `j` já é
 
 #### *Cache*
 
-The caching method changed between Rails 3.x and 4.0. You should [change the cache namespace](https://guides.rubyonrails.org/caching_with_rails.html#activesupport-cache-store) and roll out with a cold cache.
-O método de *cache* mudou entre Rails 3.x e 4.0. Você deve [alterar o *namespace* do *cache*](https://guides.rubyonrails.org/caching_with_rails.html#activesupport-cache-store) e implementar com um *cold cache*.
+O método de *cache* mudou entre Rails 3.x e 4.0. Você deve [alterar o *namespace* do *cache*](https://guides.rubyonrails.org/v4.0/caching_with_rails.html#activesupport-cache-store) e implementar com um *cold cache*.
 
 ### Ordem de Carregamento de *Helpers*
 

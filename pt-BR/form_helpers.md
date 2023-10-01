@@ -71,7 +71,7 @@ Isso irá gerar o seguinte HTML:
 </form>
 ```
 
-TIP: Passando `url: my_speccified_path` para `form_with` indica ao formulário onde fazer a requisição. No entanto, conforme explicado abaixo, você também pode passar objetos ActiveRecord para o formulário.
+TIP: Passando `url: my_speccified_path` para `form_with` indica ao formulário onde fazer a requisição. No entanto, conforme explicado abaixo, você também pode passar objetos Active Record para o formulário.
 
 TIP: Para cada entrada de formulário, um atributo ID é gerado a partir de seu nome ("query" no exemplo acima). Esses IDs podem ser muito úteis para estilizar CSS ou manipular controles de formulário com JavaScript.
 
@@ -103,7 +103,7 @@ Isso gera o seguinte:
 <label for="pet_cat">I own a cat</label>
 ```
 
-O primeiro parâmetro para [`check_box`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-check_box), é o nome da entrada. O segundo parâmetro, é o valor da entrada. Este valor será incluído nos dados do formulário (e está presente em `params`) quando a caixa de seleção estiver marcada.
+O primeiro parâmetro para [`check_box`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-check_box), é o nome da entrada. o valor da checkbox (valor que vai aparecer no `params`) pode ser especificado pelo terceiro e quarto parâmetros. Veja a documentação da API para detalhes.
 
 #### *Radio Buttons* Botões de opção
 
@@ -125,7 +125,7 @@ Resultado:
 <label for="age_adult">I am over 21</label>
 ```
 
-Assim como `check_box`, o segundo parâmetro para [`radio_button`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-radio_button) é o valor da entrada. Como esses dois botões compartilham o mesmo nome (`age`), o usuário poderá selecionar apenas um deles, e `params[:age]` receberá `"child"` ou `"adult"`.
+O segundo parâmetro para [`radio_button`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-radio_button) é o valor da entrada. Como esses dois botões compartilham o mesmo nome (`age`), o usuário poderá selecionar apenas um deles, e `params[:age]` receberá `"child"` ou `"adult"`.
 
 NOTE: Sempre use *labels* para a caixa de seleção e botões de opção. Eles associam o texto a uma opção específica e, ao expandir a região clicável, facilita o clique dos usuários nas entradas.
 
@@ -226,7 +226,11 @@ TIP: Convencionalmente, suas entradas espelharão os atributos do *model*. No en
 
 #### O auxiliar `fields_for`
 
-Você pode criar uma vinculação semelhante sem realmente criar uma tag `<form>` com o *helper* [`fields_for`][]. Isso é útil para editar objetos *model* adicionais com o mesmo formulário. Por exemplo, se você tem um *model* `Person` vinculado à um *model* `ContactDetail`, você pode criar um formulário para criar os dois, assim:
+The [`fields_for`][] helper creates a similar binding but without rendering a
+`<form>` tag. This can be used to render fields for additional model objects
+within the same form. For example, if you had a `Person` model with an
+associated `ContactDetail` model, you could create a single form for both like
+so:
 
 ```erb
 <%= form_with model: @person do |person_form| %>
@@ -249,6 +253,8 @@ Que produz a seguinte saída:
 
 O objeto produzido por `fields_for` é um construtor de formulário igual ao produzido por
 `form_with`.
+
+[`fields_for`]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-fields_for
 
 [`fields_for`]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-fields_for
 
@@ -569,22 +575,37 @@ Para cada um desses auxiliares, você pode especificar um objeto de data ou hora
 Escolhas a partir de uma Coleção de Objetos Arbitrários
 ----------------------------------------------
 
-Frequentemente desejamos gerar um conjunto de escolhas em um formulário a partir de uma coleção de objetos. Por exemplo, quando queremos que um usuário escolha cidades a partir do nosso banco de dados, e temos um modelo `City` conforme:
+Sometimes, we want to generate a set of choices from a collection of arbitrary objects. For example, if we have a `City` model and corresponding `belongs_to :city` association:
 
 ```ruby
-City.order(:name).to_a
-# => [
-#      #<City id: 3, name: "Berlin">,
-#      #<City id: 1, name: "Chicago">,
-#      #<City id: 2, name: "Madrid">
-#    ]
+class City < ApplicationRecord
+end
+
+class Person < ApplicationRecord
+  belongs_to :city
+end
 ```
 
-O Rails oferece *helpers* que geram escolhas a partir de uma coleção sem ser necessário iterar explicitamente sobre ela. Esses *helpers* determinam o valor e o texto descritivo de cada escolha chamando métodos especificados em cada objeto na coleção.
+```ruby
+City.order(:name).map { |city| [city.name, city.id] }
+# => [["Berlin", 3], ["Chicago", 1], ["Madrid", 2]]
+```
+
+Then we can allow the user to choose a city from the database with the following form:
+
+```erb
+<%= form_with model: @person do |form| %>
+  <%= form.select :city_id, City.order(:name).map { |city| [city.name, city.id] } %>
+<% end %>
+```
+
+NOTE: When rendering a field for a `belongs_to` association, you must specify the name of the foreign key (`city_id` in the above example), rather than the name of the association itself.
+
+However, Rails provides helpers that generate choices from a collection without having to explicitly iterate over it. These helpers determine the value and text label of each choice by calling specified methods on each object in the collection.
 
 ### O auxiliar `collection_select`
 
-Para gerar uma caixa de seleção (*select box*) para nossas cidades, podemos utilizar [`collection_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select):
+Para gerar uma caixa de seleção (*select box*) podemos utilizar [`collection_select`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_select):
 
 ```erb
 <%= form.collection_select :city_id, City.order(:name), :id, :name %>
@@ -593,7 +614,7 @@ Para gerar uma caixa de seleção (*select box*) para nossas cidades, podemos ut
 Resultado:
 
 ```html
-<select name="city_id" id="city_id">
+<select name="person[city_id]" id="person_city_id">
   <option value="3">Berlin</option>
   <option value="1">Chicago</option>
   <option value="2">Madrid</option>
@@ -604,7 +625,7 @@ NOTE: Utilizando `collection_select` devemos especificar primeiramente o método
 
 ### O auxiliar `collection_radio_buttons`
 
-Para gerar um conjunto de botões de rádio (*radio buttons*) para nossas cidades, podemos utilizar [`collection_radio_buttons`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons):
+Para gerar um conjunto de botões de rádio (*radio buttons*), podemos utilizar [`collection_radio_buttons`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_radio_buttons):
 
 ```erb
 <%= form.collection_radio_buttons :city_id, City.order(:name), :id, :name %>
@@ -613,31 +634,38 @@ Para gerar um conjunto de botões de rádio (*radio buttons*) para nossas cidade
 Resultado:
 
 ```html
-<input type="radio" name="city_id" value="3" id="city_id_3">
-<label for="city_id_3">Berlin</label>
-<input type="radio" name="city_id" value="1" id="city_id_1">
-<label for="city_id_1">Chicago</label>
-<input type="radio" name="city_id" value="2" id="city_id_2">
-<label for="city_id_2">Madrid</label>
+<input type="radio" name="person[city_id]" value="3" id="person_city_id_3">
+<label for="person_city_id_3">Berlin</label>
+
+<input type="radio" name="person[city_id]" value="1" id="person_city_id_1">
+<label for="person_city_id_1">Chicago</label>
+
+<input type="radio" name="person[city_id]" value="2" id="person_city_id_2">
+<label for="person_city_id_2">Madrid</label>
 ```
 
 ### O auxiliar `collection_check_boxes`
 
-Para gerar um conjunto de *check boxes* para nossas cidades (que permite que usuários escolham mais de uma opção), podemos utilizar [`collection_check_boxes`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_check_boxes):
+To generate a set of check boxes — for example, to support a `has_and_belongs_to_many` association — we can use [`collection_check_boxes`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html#method-i-collection_check_boxes):
 
 ```erb
-<%= form.collection_check_boxes :city_id, City.order(:name), :id, :name %>
+<%= form.collection_check_boxes :interest_ids, Interest.order(:name), :id, :name %>
 ```
 
 Resultado:
 
 ```html
-<input type="checkbox" name="city_id[]" value="3" id="city_id_3">
-<label for="city_id_3">Berlin</label>
-<input type="checkbox" name="city_id[]" value="1" id="city_id_1">
-<label for="city_id_1">Chicago</label>
-<input type="checkbox" name="city_id[]" value="2" id="city_id_2">
-<label for="city_id_2">Madrid</label>
+<input type="checkbox" name="person[interest_id][]" value="3" id="person_interest_id_3">
+<label for="person_interest_id_3">Engineering</label>
+
+<input type="checkbox" name="person[interest_id][]" value="4" id="person_interest_id_4">
+<label for="person_interest_id_4">Math</label>
+
+<input type="checkbox" name="person[interest_id][]" value="1" id="person_interest_id_1">
+<label for="person_interest_id_1">Science</label>
+
+<input type="checkbox" name="person[interest_id][]" value="2" id="person_interest_id_2">
+<label for="person_interest_id_2">Technology</label>
 ```
 
 Enviando Arquivos
@@ -679,11 +707,20 @@ Uma vez que o arquivo é enviado, há uma infinidade de tarefas em potencial, va
 Customizando os Construtores de Formulários
 -------------------------
 
-O objeto que é dado para o *yield* no `form_with` e `fields_for` é uma instância de
+The object yielded by `form_with` and `fields_for` is an instance of
 [`ActionView::Helpers::FormBuilder`](https://api.rubyonrails.org/classes/ActionView/Helpers/FormBuilder.html).
-Construtores de Formulários encapsulam a noção de exibir os elementos do formulário para um único objeto.
-Enquanto você pode escrever *helpers* para seus formulários da forma usual, você também pode criar uma subclasse
-de `ActionView::Helpers::FormBuilder` e adicionar os *helpers* lá. Por exemplo,
+Form builders encapsulate the notion of displaying form elements for a single object. While you can write helpers for
+your forms in the usual way, you can also create a subclass of `ActionView::Helpers::FormBuilder`, and add the helpers
+there. For example, assuming you have a helper method defined in your application called `text_field_with_label` as the
+following
+
+```ruby
+module ApplicationHelper
+  def text_field_with_label(form, attribute)
+    form.label(attribute) + form.text_field(attribute)
+  end
+end
+```
 
 ```erb
 <%= form_with model: @person do |form| %>
@@ -713,9 +750,11 @@ Se você reutilizar isso frequentemente, você pode definir um *helper* `labeled
 aplica a opção `builder: LabellingFormBuilder`:
 
 ```ruby
-def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, &block)
-  options.merge! builder: LabellingFormBuilder
-  form_with model: model, scope: scope, url: url, format: format, **options, &block
+module ApplicationHelper
+  def labeled_form_with(model: nil, scope: nil, url: nil, format: nil, **options, &block)
+    options.merge! builder: LabellingFormBuilder
+    form_with model: model, scope: scope, url: url, format: format, **options, &block
+  end
 end
 ```
 
@@ -837,17 +876,11 @@ Isto resultará em um *hash* `params` parecido com:
 }
 ```
 
-O Rails sabe que todos estes *inputs* devem ser parte do *hash* person porque você chamou `fields_for` no primeiro *builder* do formulário. Ao especificar uma opção `:index`
-você diz ao Rails que ao invés de nomear os *inputs* `person[address][city]`
-ele deve inserir aquele índice dentro de [] entre o *address* e a *city*.
-Isso geralmente é útil porque deixa mais fácil para saber qual registro *Address* deve ser modificado. Você pode passar números com algum outro significado,
-*strings* ou mesmo `nil` (que resultará em um *array* de parâmetros sendo criado).
-Todas as entradas do formulário são mapeadas para o hash `"person"` porque chamamos `fields_for`
-no construtor do formulário `person_form`. Ao especificar uma opção `:index`, mapeamos
-as entradas de endereço para `person[address][#{address.id}][city]` em vez de
-`person[address][city]`. Assim, podemos determinar quais registros de endereço
-deve ser modificado ao processar o hash `params`.
-
+All of the form inputs map to the `"person"` hash because we called `fields_for`
+on the `person_form` form builder. By specifying an `:index` option, we mapped
+the address inputs to `person[address][#{address.id}][city]` instead of
+`person[address][city]`. Thus we are able to determine which Address records
+should be modified when processing the `params` hash.
 
 Você pode passar outros números ou *strings* de significância através da opção `:index`.
 Você pode até passar `nil`, que produzirá um parâmetro de array.

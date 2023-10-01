@@ -226,7 +226,7 @@ One possibility is to set the expiry time-stamp of the cookie with the session I
 ```ruby
 class Session < ApplicationRecord
   def self.sweep(time = 1.hour)
-    where("updated_at < ?", time.ago.to_fs(:db)).delete_all
+    where(updated_at: ...time.ago).delete_all
   end
 end
 ```
@@ -234,7 +234,7 @@ end
 The section about session fixation introduced the problem of maintained sessions. An attacker maintaining a session every five minutes can keep the session alive forever, although you are expiring sessions. A simple solution for this would be to add a `created_at` column to the sessions table. Now you can delete sessions that were created a long time ago. Use this line in the sweep method above:
 
 ```ruby
-where("updated_at < ? OR created_at < ?", time.ago.to_fs(:db), 2.days.ago.to_fs(:db)).delete_all
+where(updated_at: ...time.ago).or(where(created_at: ...2.days.ago)).delete_all
 ```
 
 Cross-Site Request Forgery (CSRF)
@@ -408,8 +408,7 @@ Simply pass a file name like "../../../etc/passwd" to download the server's logi
 ```ruby
 basename = File.expand_path('../../files', __dir__)
 filename = File.expand_path(File.join(basename, @file.public_filename))
-raise if basename !=
-     File.expand_path(File.join(File.dirname(filename), '../../../'))
+raise if basename != File.expand_path(File.dirname(filename))
 send_file filename, disposition: 'inline'
 ```
 
@@ -598,7 +597,7 @@ INFO: _Injection is a class of attacks that introduce malicious code or paramete
 
 Injection is very tricky, because the same code or parameter can be malicious in one context, but totally harmless in another. A context can be a scripting, query, or programming language, the shell, or a Ruby/Rails method. The following sections will cover all important contexts where injection attacks may happen. The first section, however, covers an architectural decision in connection with Injection.
 
-### Permitted lists versus Restricted lists
+### Permitted Lists Versus Restricted Lists
 
 NOTE: _When sanitizing, protecting, or verifying something, prefer permitted lists over restricted lists._
 
@@ -675,7 +674,7 @@ Also, the second query renames some columns with the AS statement so that the we
 
 #### Countermeasures
 
-Ruby on Rails has a built-in filter for special SQL characters, which will escape `'` , `"` , NULL character, and line breaks. *Using `Model.find(id)` or `Model.find_by_some thing(something)` automatically applies this countermeasure*. But in SQL fragments, especially *in conditions fragments (`where("...")`), the `connection.execute()` or `Model.find_by_sql()` methods, it has to be applied manually*.
+Ruby on Rails has a built-in filter for special SQL characters, which will escape `'` , `"` , NULL character, and line breaks. *Using `Model.find(id)` or `Model.find_by_something(something)` automatically applies this countermeasure*. But in SQL fragments, especially *in conditions fragments (`where("...")`), the `connection.execute()` or `Model.find_by_sql()` methods, it has to be applied manually*.
 
 Instead of passing a string, you can use positional handlers to sanitize tainted strings like this:
 
@@ -700,8 +699,10 @@ Model.where(zip_code: entered_zip_code).where("quantity >= ?", entered_quantity)
 ```
 
 Note the previous mentioned countermeasures are only available in model instances. You can
-try `sanitize_sql()` elsewhere. _Make it a habit to think about the security consequences
+try [`sanitize_sql`][] elsewhere. _Make it a habit to think about the security consequences
 when using an external string in SQL_.
+
+[`sanitize_sql`]: https://api.rubyonrails.org/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql
 
 ### Cross-Site Scripting (XSS)
 
@@ -730,7 +731,7 @@ Here is the most straightforward test to check for XSS:
 This JavaScript code will simply display an alert box. The next examples do exactly the same, only in very uncommon places:
 
 ```html
-<img src=javascript:alert('Hello')>
+<img src="javascript:alert('Hello')">
 <table background="javascript:alert('Hello')">
 ```
 
@@ -758,7 +759,7 @@ You can mitigate these attacks (in the obvious way) by adding the **httpOnly** f
 
 ##### Defacement
 
-With web page defacement an attacker can do a lot of things, for example, present false information or lure the victim on the attackers website to steal the cookie, login credentials, or other sensitive data. The most popular way is to include code from external sources by iframes:
+With web page defacement an attacker can do a lot of things, for example, present false information or lure the victim on the attacker's website to steal the cookie, login credentials, or other sensitive data. The most popular way is to include code from external sources by iframes:
 
 ```html
 <iframe name="StatPage" src="http://58.xx.xxx.xxx" width=5 height=5 style="display:none"></iframe>
@@ -921,7 +922,7 @@ system("/bin/echo","hello; rm *")
 # prints "hello; rm *" and does not delete files
 ```
 
-#### Kernel#open's vulnerability
+#### Kernel#open's Vulnerability
 
 `Kernel#open` executes OS command if the argument starts with a vertical bar (`|`).
 
@@ -1086,10 +1087,10 @@ Here is a list of common headers:
 * **Access-Control-Allow-Origin:** Used to control which sites are allowed to bypass same origin policies and send cross-origin requests.
 * **Strict-Transport-Security:** [Used to control if the browser is allowed to only access a site over a secure connection](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)
 
-### Content-Security-Policy Header
+### `Content-Security-Policy` Header
 
 To help protect against XSS and injection attacks, it is recommended to define a
-[Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
+[`Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
 response header for your application. Rails provides a DSL that allows you to
 configure the header.
 
@@ -1142,7 +1143,7 @@ end
 #### Reporting Violations
 
 Enable the
-[report-uri](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-uri)
+[`report-uri`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-uri)
 directive to report violations to the specified URI:
 
 ```ruby
@@ -1153,7 +1154,7 @@ end
 
 When migrating legacy content, you might want to report violations without
 enforcing the policy. Set the
-[Content-Security-Policy-Report-Only](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only)
+[`Content-Security-Policy-Report-Only`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only)
 response header to only report violations:
 
 ```ruby
@@ -1170,9 +1171,9 @@ end
 
 #### Adding a Nonce
 
-If you are considering 'unsafe-inline', consider using nonces instead. [Nonces
+If you are considering `'unsafe-inline'`, consider using nonces instead. [Nonces
 provide a substantial improvement](https://www.w3.org/TR/CSP3/#security-nonces)
-over 'unsafe-inline' when implementing a Content Security Policy on top
+over `'unsafe-inline'` when implementing a Content Security Policy on top
 of existing code.
 
 ```ruby
@@ -1260,7 +1261,7 @@ Additional Resources
 
 The security landscape shifts and it is important to keep up to date, because missing a new vulnerability can be catastrophic. You can find additional resources about (Rails) security here:
 
-* Subscribe to the Rails security [mailing list](https://groups.google.com/forum/#!forum/rubyonrails-security).
+* Subscribe to the Rails security [mailing list](https://discuss.rubyonrails.org/c/security-announcements/9).
 * [Brakeman - Rails Security Scanner](https://brakemanscanner.org/) - To perform static security analysis for Rails applications.
 * [Mozilla's Web Security Guidelines](https://infosec.mozilla.org/guidelines/web_security.html) - Recommendations on topics covering Content Security Policy, HTTP headers, Cookies, TLS configuration, etc.
 * A [good security blog](https://owasp.org/) including the [Cross-Site scripting Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md).

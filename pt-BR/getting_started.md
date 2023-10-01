@@ -170,7 +170,7 @@ que o Rails gerou por padrão:
 |test/|Testes unitários, *fixtures*, e outros tipos de testes. Mais informações em [Testing Rails Applications](testing.html).|
 |tmp/|Arquivos temporários (como cache e arquivos *pid*).|
 |vendor/|Diretório com todos os códigos de terceiros. Em uma típica aplicação Rails inclui *vendored gems*.|
-|.gitattributes|Este arquivo define metadados para caminhos específicos num repositório git. Estes metadados podem ser usados pelo git e outras ferramentas para melhorar seu comportamento. Veja a [documentação dos gitattributes](https://git-scm.com/docs/gitattributes) para mais informações.|
+|.gitattributes|Este arquivo define metadados para locais específicos do repositório git. Estes metadados podem ser usados pelo e git e outras ferramentas para melhorar seu comportamento. Veja a [documentação de gitattributes](https://git-scm.com/docs/gitattributes) para mais informações.|
 |.gitignore|Este arquivo diz ao Git quais arquivos (ou padrões) devem ser ignorados. Acesse [GitHub - Ignoring files](https://help.github.com/articles/ignoring-files) para mais informações sobre arquivos ignorados.|
 |.ruby-version|Este arquivo contém a versão padrão do Ruby.|
 
@@ -309,7 +309,7 @@ Você deve ter notado que `ArticlesController` herda de `ApplicationController`,
 require "application_controller" # NÃO FAÇA ISSO.
 ```
 
-As classes e módulos da aplicação estão disponíveis em todos os lugares, você não precisa e **não deve** carregar nada em `app` com `require`. Esse recurso é chamado de _autoloading_ e você pode aprender mais sobre ele em [_Autoloading and Reloading Constants_](https://guides.rubyonrails.org/autoloading_and_reloading_constants.html).
+As classes e módulos da aplicação estão disponíveis em todos os lugares, você não precisa e **não deve** carregar nada em `app` com `require`. Esse recurso é chamado de _autoloading_ e você pode aprender mais sobre ele em [_Autoloading and Reloading Constants_](autoloading_and_reloading_constants.html).
 
 Você só precisa de chamadas `require` para dois casos de uso:
 
@@ -1935,22 +1935,24 @@ Primeiro, vamos adicionar o link *delete* na *partial*
 `app/views/comments/_comment.html.erb`:
 
 ```html+erb
-<p>
-  <strong>Autor do comentário:</strong>
-  <%= comment.commenter %>
-</p>
+<% unless comment.archived? %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
 
-<p>
-  <strong>Comentário:</strong>
-  <%= comment.body %>
-</p>
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
 
-<p>
-  <%= link_to "Destruir comentário", [comment.article, comment], data: {
-                turbo_method: :delete,
-                turbo_confirm: "Are you sure?"
-              } %>
-</p>
+  <p>
+    <%= link_to "Destruir comentário", [comment.article, comment], data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"
+                } %>
+  </p>
+<% end %>
 ```
 
 Clicar neste novo link "Destruir comentário" será disparado um `DELETE
@@ -1970,7 +1972,7 @@ class CommentsController < ApplicationController
     @article = Article.find(params[:article_id])
     @comment = @article.comments.find(params[:id])
     @comment.destroy
-    redirect_to article_path(@article), status: 303
+    redirect_to article_path(@article), status: :see_other
   end
 
   private

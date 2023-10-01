@@ -52,19 +52,14 @@ Esses lançamentos são criados utilizando a última versão lançada, aplicando
 
 Apenas *patches* de seguranças diretos serão incluídos em lançamentos de segurança. Correções para *bugs* que não são relacionados à segurança que resultam de um *patch* de segurança podem ser publicados na _branch_ x-y-stable de um lançamento, e será lançado apenas em uma nova *gem* de acordo com a política de Correção de *Bugs*.
 
-
-**Versões incluídas atualmente:** `7.0.Z`, `6.1.Z`.
+**Currently included series:** `7.0.Z`, `6.1.Z`.
 
 Problemas Críticos de Segurança
 ----------------------
 
 Para problemas críticos de segurança, todos os lançamentos que estão na versão *major* atual, e o último _release_ na versão *major* anterior, vão receber patches e novas versões. A classificação do problema de segurança é avaliado pelo time *core*.
 
-NOTE: Rails 5.2.Z está incluído na lista de versões suportadas até dia 1 de Junho de 2022.
-
-NOTE: Rails 6.0.Z está incluído na lista de versões suportadas até dia 1 de Junho de 2023.
-
-**Versões atualmente incluídas:** `7.0.Z`, `6.1.Z`, `6.0.Z`, `5.2.Z`.
+**Versões atualmente incluídas:** `7.0.Z`, `6.1.Z`
 
 Versões não suportadas para lançamentos
 --------------------------
