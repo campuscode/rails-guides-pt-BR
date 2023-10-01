@@ -633,7 +633,7 @@ irb> Article.count
 NOTE: Esta aplicação só se importa com `Articles` não arquivados. Uma visão também
 permite condições para que possamos excluir os `Articles` arquivados diretamente.
 
-Structure dumps
+Structure Dumps
 --------------
 
 If your `config.active_record.schema_format` is `:sql`, Rails will call `pg_dump` to generate a

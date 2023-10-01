@@ -148,6 +148,7 @@ end
 ```
 
 #### Jbuilder
+
 [Jbuilder](https://github.com/rails/jbuilder) é uma *gem* que é
 mantida pelo time do Rails e incluída por padrão no `Gemfile` do Rails.
 É similar ao *Builder* mas é usada para gerar *JSON*, ao invés de *XML*.
@@ -202,7 +203,7 @@ Isso renderizará o arquivo `_menu.html.erb` naquele ponto dentro da *view* send
 
 Esse código pegará a *partial* de `app/views/shared/_menu.html.erb`.
 
-#### Usando *Partials* para simplificar *Views*
+#### Usando *Partials* para Simplificar *Views*
 
 Uma maneira de usar *partials* é tratando-as como se fossem sub-rotinas; uma maneira de mover detalhes para fora da *view* para que você consiga entender o que está acontecendo com mais facilidade. Por exemplo, você pode ter uma *view* parecida com essa:
 
@@ -221,7 +222,7 @@ Uma maneira de usar *partials* é tratando-as como se fossem sub-rotinas; uma ma
 
 Aqui, as *partials* `_ad_banner.html.erb` e `_footer.html.erb` podem ter conteúdos que são compartilhados entre muitas páginas em sua aplicação. Você não precisa ver os detalhes dessas seções quando estiver se concentrando em uma página específica.
 
-#### `render` sem os parâmetros `partial` e `locals`
+#### `render` sem os Parâmetros `partial` e `locals`
 
 No exemplo acima, o método `render` recebe 2 parâmetros: `partial` e `locals`.
 Mas se esses forem os únicos parâmetros que você deseja passar, você pode ignorá-los.
@@ -237,7 +238,7 @@ Você também pode usar:
 <%= render "product", product: @product %>
 ```
 
-#### Os parâmetros `as` e `object`
+#### Os Parâmetros `as` e `object`
 
 Por padrão o `ActionView::Partials::PartialRenderer` tem seu objeto em uma variável local com o mesmo nome do *template*. Então, dado que:
 
@@ -373,7 +374,7 @@ Ao renderizar uma resposta, o *controller* precisa resolver onde as diferentes
 Podemos adicionar outros locais e dar-lhes uma certa precedência ao resolver
 caminhos usando os métodos `prepend_view_path` e `append_view_path`.
 
-### Pré-anexando caminho das views
+### Pré-anexando Caminho das Views
 
 Isso pode ser útil, por exemplo, quando nós queremos colocar às *views* dentro
 de um diretório diferente para subdomínios.
@@ -387,7 +388,7 @@ prepend_view_path "app/views/#{request.subdomain}"
 Então, a *Action View* procurará primeiro dentro deste diretório quando ao resolver as
 *views*.
 
-### Anexando caminho das views
+### Anexando Caminho das Views
 
 Da mesma forma, podemos acrescentar caminhos:
 

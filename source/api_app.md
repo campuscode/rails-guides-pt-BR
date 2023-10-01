@@ -131,7 +131,7 @@ If you're building a Rails application that will be an API server first and
 foremost, you can start with a more limited subset of Rails and add in features
 as needed.
 
-### Creating a new application
+### Creating a New Application
 
 You can generate a new api Rails app:
 
@@ -151,7 +151,7 @@ This will do three main things for you:
 - Configure the generators to skip generating views, helpers, and assets when
   you generate a new resource.
 
-### Changing an existing application
+### Changing an Existing Application
 
 If you want to take an existing application and make it an API one, read the
 following steps.
@@ -291,7 +291,7 @@ environment's configuration file.
 
 You can learn more about how to use `Rack::Sendfile` with popular
 front-ends in [the Rack::Sendfile
-documentation](https://www.rubydoc.info/github/rack/rack/master/Rack/Sendfile).
+documentation](https://www.rubydoc.info/gems/rack/Rack/Sendfile).
 
 Here are some values for this header for some popular servers, once these servers are configured to support
 accelerated file sending:

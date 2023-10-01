@@ -29,7 +29,7 @@ As seguintes funcionalidades (ainda) não têm suporte:
 
 * *Load balancing* de réplicas
 
-## Configurando sua aplicação
+## Configurando Sua Aplicação
 
 O Rails tenta fazer a maior parte do trabalho para você, porém, mesmo assim, ainda existem alguns passos que você precisa seguir para preparar sua aplicação para múltiplos bancos de dados.
 
@@ -112,7 +112,7 @@ deve compartilhar uma conexão com.
 
 ```ruby
 class PrimaryApplicationRecord < ActiveRecord::Base
-  self.primary_abstract_class = true
+  primary_abstract_class = true
 end
 ```
 
@@ -237,7 +237,7 @@ $ bin/rails generate scaffold Dog name:string --database animals --parent Animal
 
 Isto fará com que a geração de `AnimalsRecord` seja ignorada, visto que você indicou para o Rails que irá usar uma outra classe pai.
 
-## Habilitando a troca automática de papel
+## Habilitando a Troca Automática de Papel
 
 Por último, para conseguir usar a réplica de leitura na sua aplicação, será necessário habilitar o *middleware* de troca automática.
 
@@ -281,7 +281,7 @@ config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelec
 config.active_record.database_resolver_context = MyCookieResolver
 ```
 
-## Usando a troca de conexão manual
+## Usando a Troca de Conexão Manual
 
 Existem casos nos quais você pode querer que sua aplicação se conecte ao banco de escrita ou à réplica, e onde a troca automática de conexão não será adequada. Por exemplo, suponhamos que exista uma requisição em particular que sempre deverá ser encaminhada para a réplica, mesmo que tenha método POST.
 
@@ -307,7 +307,7 @@ ActiveRecord::Base.connected_to(role: :reading, prevent_writes: true) do
 end
 ```
 
-## Horizontal sharding
+## Horizontal Sharding
 
 Fragmentação horizontal é quando você divide seu banco de dados para reduzir o número de linhas em cada
 servidor de banco de dados, mas mantém o mesmo esquema em "fragmentos". Isso é comumente chamado de fragmentação "multilocatário" (*multi-tenant*).
@@ -371,7 +371,7 @@ ActiveRecord::Base.connected_to(role: :reading, shard: :shard_one) do
 end
 ```
 
-## Activating automatic shard switching
+## Activating Automatic Shard Switching
 
 Applications are able to automatically switch shards per request using the provided
 middleware.
@@ -483,7 +483,7 @@ end
 `ActiveRecord::Base.connected_to` mantém a capacidade de alternar
 conexões globalmente.
 
-### Manipulando associações com *join* entre bancos de dados
+### Manipulando Associações com *join* entre Bancos de Dados
 
 A partir do Rails 7.0+, o Active Record tem uma opção para manipular associações que realizariam
 um *join* em vários bancos de dados. Se você tem um *has many through* ou uma associação *has one through*
