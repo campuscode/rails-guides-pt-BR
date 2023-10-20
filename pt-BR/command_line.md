@@ -342,17 +342,17 @@ Go to your browser and open [http://localhost:3000/high_scores](http://localhost
 
 ### `bin/rails console`
 
-The `console` command lets you interact with your Rails application from the command line. On the underside, `bin/rails console` uses IRB, so if you've ever used it, you'll be right at home. This is useful for testing out quick ideas with code and changing data server-side without touching the website.
+O comando `console` permite a interação com a aplicação Rails através da linha de comando. Por trás, `bin/rails console` usa o IRB, então se você já o utilizou, estará em casa. Esse comando é útil para testar rapidamente idéias de código e alterar dados server-side sem acessar a aplicação via web.
 
-INFO: You can also use the alias "c" to invoke the console: `bin/rails c`.
+INFO: Você também pode usar o alias "c" para iniciar o console: `bin/rails c`.
 
-You can specify the environment in which the `console` command should operate.
+Você pode especificar o ambiente em que o comando `console` deverá operar:
 
 ```bash
 $ bin/rails console -e staging
 ```
 
-If you wish to test out some code without changing any data, you can do that by invoking `bin/rails console --sandbox`.
+Se desejar testar o código sem alterar nenhum dado, pode fazer isso chamando `bin/rails console --sandbox`.
 
 ```bash
 $ bin/rails console --sandbox
@@ -363,9 +363,9 @@ irb(main):001:0>
 
 #### The `app` and `helper` Objects
 
-Inside the `bin/rails console` you have access to the `app` and `helper` instances.
+Dentro do `bin/rails console` você tem acesso as instâncias `app` e `helper`.
 
-With the `app` method you can access named route helpers, as well as do requests.
+Com o método `app` você pode acessar as rotas definidas, assim como realizar requisições.
 
 ```irb
 irb> app.root_path
@@ -376,7 +376,7 @@ Started GET "/" for 127.0.0.1 at 2014-06-19 10:41:57 -0300
 ...
 ```
 
-With the `helper` method it is possible to access Rails and your application's helpers.
+Com o método `helper` é possível acessar os métodos "helpers" definidos na sua aplicação.
 
 ```irb
 irb> helper.time_ago_in_words 30.days.ago
