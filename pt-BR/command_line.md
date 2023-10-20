@@ -121,9 +121,9 @@ Além desses comandos, existem:
 
 ### `bin/rails server`
 
-The `bin/rails server` command launches a web server named Puma which comes bundled with Rails. You'll use this any time you want to access your application through a web browser.
+O comando `bin/rails server` inicia um servidor web chamado Puma que tem o Rails incluido. Você usará esse comando toda vez que quiser acessar sua aplicação através de um navegador web.
 
-With no further work, `bin/rails server` will run our new shiny Rails app:
+Sem mais trabalho, `bin/rails server` rodará nosso novo app Rails:
 
 ```bash
 $ cd my_app
@@ -139,17 +139,17 @@ Puma starting in single mode...
 Use Ctrl-C to stop
 ```
 
-With just three commands we whipped up a Rails server listening on port 3000. Go to your browser and open [http://localhost:3000](http://localhost:3000), you will see a basic Rails app running.
+Com apenas três comandos nós subimos um servidor Rails executando na porta 3000. Vá para o navegador e acesse [http://localhost:3000](http://localhost:3000), você verá um app Rails básico rodando.
 
-INFO: You can also use the alias "s" to start the server: `bin/rails s`.
+INFO: Você também pode usar o alias "s" para iniciar o servidor: `bin/rails s`.
 
-The server can be run on a different port using the `-p` option. The default development environment can be changed using `-e`.
+O servidor pode ser direcionado para diferentes portas usando a opção `-p`. O ambiente padrão de desenvolvimento também pode ser alterado usando `-e`.
 
 ```bash
 $ bin/rails server -e production -p 4000
 ```
 
-The `-b` option binds Rails to the specified IP, by default it is localhost. You can run a server as a daemon by passing a `-d` option.
+A opção `-b` aponta o servidor para o IP especificado, por padrão é localhost. É possível rodar um servidor como daemon (plano de fundo) passando a opção `-d`.
 
 ### `bin/rails generate`
 
