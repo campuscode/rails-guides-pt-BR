@@ -361,7 +361,7 @@ Any modifications you make will be rolled back on exit
 irb(main):001:0>
 ```
 
-#### The `app` and `helper` Objects
+#### Os objetos `app` e `helper`
 
 Dentro do `bin/rails console` você tem acesso as instâncias `app` e `helper`.
 
