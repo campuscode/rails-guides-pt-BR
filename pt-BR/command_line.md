@@ -610,21 +610,20 @@ The `tmp:` namespaced commands will help you clear and create the `Rails.root/tm
 * `bin/rails secret` will give you a pseudo-random key to use for your session secret.
 * `bin/rails time:zones:all` lists all the timezones Rails knows about.
 
-### Custom Rake Tasks
+### Rake *Tasks* customizadas
 
-Custom rake tasks have a `.rake` extension and are placed in
-`Rails.root/lib/tasks`. You can create these custom rake tasks with the
-`bin/rails generate task` command.
+Rake *tasks* customizadas tem a extensão `.rake` e são localizadas em `Rails.root/lib/tasks`.
+Você pode criá-las com o comando `bin/rails generate task`.
 
 ```ruby
 desc "I am short, but comprehensive description for my cool task"
 task task_name: [:prerequisite_task, :another_task_we_depend_on] do
-  # All your magic here
-  # Any valid Ruby code is allowed
+  # Toda a mágica vai aqui
+  # Qualquer código Ruby válido é permitido
 end
 ```
 
-To pass arguments to your custom rake task:
+Para passar argumentos para a sua rake *task* customizada:
 
 ```ruby
 task :task_name, [:arg_1] => [:prerequisite_1, :prerequisite_2] do |task, args|
@@ -632,27 +631,27 @@ task :task_name, [:arg_1] => [:prerequisite_1, :prerequisite_2] do |task, args|
 end
 ```
 
-You can group tasks by placing them in namespaces:
+Você pode agrupar *tasks* colocando-as em *namespaces*:
 
 ```ruby
 namespace :db do
   desc "This task does nothing"
   task :nothing do
-    # Seriously, nothing
+    # Sério, nada
   end
 end
 ```
 
-Invocation of the tasks will look like:
+A chamada das *tasks* ficará assim:
 
 ```bash
 $ bin/rails task_name
-$ bin/rails "task_name[value 1]" # entire argument string should be quoted
-$ bin/rails "task_name[value 1,value2,value3]" # separate multiple args with a comma
+$ bin/rails "task_name[value 1]" # toda a string deve estar entre aspas
+$ bin/rails "task_name[value 1,value2,value3]" # separe múltiplos argumentos com vírgula
 $ bin/rails db:nothing
 ```
 
-NOTE: If you need to interact with your application models, perform database queries, and so on, your task should depend on the `environment` task, which will load your application code.
+NOTE: Se você precisar interagir com os *models* da sua aplicação, realizar consultas no banco de dados, etc., sua *task* deve depender da *task* `environment`, que carregará todo o código da aplicação.
 
 The Rails Advanced Command Line
 -------------------------------
