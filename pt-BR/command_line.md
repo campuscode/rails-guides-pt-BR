@@ -15,18 +15,18 @@ Depois de ler este guia, você saberá:
 
 NOTE: Esse tutorial considera que você já tenha um conhecimento básico de Rails, ou tenha lido o [Começando com o Rails](getting_started.html).
 
-Creating a Rails App
+Criando um app Rails
 --------------------
 
-First, let's create a simple Rails application using the `rails new` command.
+Primeiro, vamos criar uma aplicação Rails simples usando o comando `rails new`.
 
-We will use this application to play and discover all the commands described in this guide.
+Usaremos esta aplicação para brincar e descobrir todos os comandos descritos neste guia.
 
-INFO: You can install the rails gem by typing `gem install rails`, if you don't have it already.
+INFO: Você pode instalar a gem rails digitando `gem install rails`, caso ainda não a tenha.
 
 ### `rails new`
 
-The first argument we'll pass to the `rails new` command is the application name.
+O primeiro argumento que passaremos ao comando `rails new` é o nome da aplicação.
 
 ```bash
 $ rails new my_app
@@ -43,30 +43,30 @@ $ rails new my_app
         run  bundle install
 ```
 
-Rails will set up what seems like a huge amount of stuff for such a tiny command! We've got the entire Rails directory structure now with all the code we need to run our simple application right out of the box.
+Rails construirá o que parece ser muita coisa para um comando tão pequeno! Temos toda a estrutura de diretórios do Rails com todo o código que precisamos para rodar nossa aplicação.
 
-If you wish to skip some files from being generated or skip some libraries, you can append any of the following arguments to your `rails new` command:
+Caso deseje que algum arquivo ou biblioteca não seja gerado, podemos adicionar qualquer um dos seguintes argumentos ao comando `rails new`:
 
 | Argument                | Description                                                 |
 | ----------------------- | ----------------------------------------------------------- |
-| `--skip-git`            | Skip git init, .gitignore, and .gitattributes               |
-| `--skip-keeps`          | Skip source control .keep files                             |
-| `--skip-action-mailer`  | Skip Action Mailer files                                    |
-| `--skip-action-mailbox` | Skip Action Mailbox gem                                     |
-| `--skip-action-text`    | Skip Action Text gem                                        |
-| `--skip-active-record`  | Skip Active Record files                                    |
-| `--skip-active-job`     | Skip Active Job                                             |
-| `--skip-active-storage` | Skip Active Storage files                                   |
-| `--skip-action-cable`   | Skip Action Cable files                                     |
-| `--skip-asset-pipeline` | Skip Asset Pipeline                                         |
-| `--skip-javascript`     | Skip JavaScript files                                       |
-| `--skip-hotwire`        | Skip Hotwire integration                                    |
-| `--skip-jbuilder`       | Skip jbuilder gem                                           |
-| `--skip-test`           | Skip test files                                             |
-| `--skip-system-test`    | Skip system test files                                      |
-| `--skip-bootsnap`       | Skip bootsnap gem                                           |
+| `--skip-git`            | Pula git init, .gitignore, and .gitattributes               |
+| `--skip-keeps`          | Pula source control .keep files                             |
+| `--skip-action-mailer`  | Pula Action Mailer files                                    |
+| `--skip-action-mailbox` | Pula Action Mailbox gem                                     |
+| `--skip-action-text`    | Pula Action Text gem                                        |
+| `--skip-active-record`  | Pula Active Record files                                    |
+| `--skip-active-job`     | Pula Active Job                                             |
+| `--skip-active-storage` | Pula Active Storage files                                   |
+| `--skip-action-cable`   | Pula Action Cable files                                     |
+| `--skip-asset-pipeline` | Pula Asset Pipeline                                         |
+| `--skip-javascript`     | Pula JavaScript files                                       |
+| `--skip-hotwire`        | Pula Hotwire integration                                    |
+| `--skip-jbuilder`       | Pula jbuilder gem                                           |
+| `--skip-test`           | Pula test files                                             |
+| `--skip-system-test`    | Pula system test files                                      |
+| `--skip-bootsnap`       | Pula bootsnap gem                                           |
 
-These are just some of the options that `rails new` accepts. For a full list of options, type `rails new --help`.
+Estas são algumas das opções aceitas pelo `rails new`. Para a lista completa de opções, digite `rails new --help`.
 
 Noções Básicas de Linha de Comando
 -------------------
