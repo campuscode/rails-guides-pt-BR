@@ -33,7 +33,7 @@ Setup
 Currently, Rails plugins are built as gems, _gemified plugins_. They can be shared across
 different Rails applications using RubyGems and Bundler if desired.
 
-### Generate a gemified plugin.
+### Generate a Gemified Plugin
 
 Rails ships with a `rails plugin new` command which creates a
 skeleton for developing any kind of Rails extension with the ability
@@ -53,10 +53,23 @@ $ rails plugin new --help
 Testing Your Newly Generated Plugin
 -----------------------------------
 
-You can navigate to the directory that contains the plugin, run the `bundle install` command
-and run the one generated test using the `bin/test` command.
+Navigate to the directory that contains the plugin, and edit `yaffle.gemspec` to
+replace any lines that have `TODO` values:
 
-You should see:
+```ruby
+  spec.homepage    = "http://example.com"
+  spec.summary     = "Summary of Yaffle."
+  spec.description = "Description of Yaffle."
+
+...
+
+  spec.metadata["source_code_uri"] = "http://example.com"
+  spec.metadata["changelog_uri"] = "http://example.com"
+```
+
+Then run the `bundle install` command.
+
+Now you can run the tests using the `bin/test` command, and you should see:
 
 ```
   1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
@@ -109,6 +122,7 @@ In `lib/yaffle.rb`, add `require "yaffle/core_ext"`:
 ```ruby
 # yaffle/lib/yaffle.rb
 
+require "yaffle/version"
 require "yaffle/railtie"
 require "yaffle/core_ext"
 
@@ -162,6 +176,7 @@ end
 ```ruby
 # yaffle/lib/yaffle.rb
 
+require "yaffle/version"
 require "yaffle/railtie"
 require "yaffle/core_ext"
 require "yaffle/acts_as_yaffle"

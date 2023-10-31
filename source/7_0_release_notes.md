@@ -175,6 +175,18 @@ Please refer to the [Changelog][active-record] for detailed changes.
 
 *   Remove deprecated `ActiveRecord::DatabaseConfigurations::DatabaseConfig#spec_name`.
 
+*   Remove deprecated `ActiveRecord::Base.connection_config`.
+
+*   Remove deprecated `ActiveRecord::Base.arel_attribute`.
+
+*   Remove deprecated `ActiveRecord::Base.configurations.default_hash`.
+
+*   Remove deprecated `ActiveRecord::Base.configurations.to_h`.
+
+*   Remove deprecated `ActiveRecord::Result#map!` and `ActiveRecord::Result#collect!`.
+
+*   Remove deprecated `ActiveRecord::Base#remove_connection`.
+
 ### Deprecations
 
 *   Deprecated `Tasks::DatabaseTasks.schema_file_type`.
@@ -262,15 +274,15 @@ Please refer to the [Changelog][active-support] for detailed changes.
 *   Remove deprecated support to use `Range#include?` to check the inclusion of a value in
     a date time range is deprecated.
 
-*   Remove deprecate `ActiveSupport::Multibyte::Unicode.default_normalization_form`.
+*   Remove deprecated `ActiveSupport::Multibyte::Unicode.default_normalization_form`.
 
 ### Deprecations
 
-*   Deprecate passing a format to `#to_s` in favor of `#to_formatted_s` in `Array`, `Range`, `Date`, `DateTime`, `Time`,
+*   Deprecate passing a format to `#to_s` in favor of `#to_fs` in `Array`, `Range`, `Date`, `DateTime`, `Time`,
     `BigDecimal`, `Float` and, `Integer`.
 
     This deprecation is to allow Rails application to take advantage of a Ruby 3.1
-    [optimization][https://github.com/ruby/ruby/commit/b08dacfea39ad8da3f1fd7fdd0e4538cc892ec44] that makes
+    [optimization](https://github.com/ruby/ruby/commit/b08dacfea39ad8da3f1fd7fdd0e4538cc892ec44) that makes
     interpolation of some types of objects faster.
 
     New applications will not have the `#to_s` method overridden on those classes, existing applications can use
@@ -289,18 +301,6 @@ Please refer to the [Changelog][active-job] for detailed changes.
     previous callback was halted with `throw :abort`.
 
 *   Remove deprecated `:return_false_on_aborted_enqueue` option.
-
-*   Remove deprecated `ActiveRecord::Base.connection_config`.
-
-*   Remove deprecated `ActiveRecord::Base.arel_attribute`.
-
-*   Remove deprecated `ActiveRecord::Base.configurations.default_hash`.
-
-*   Remove deprecated `ActiveRecord::Base.configurations.to_h`.
-
-*   Remove deprecated `ActiveRecord::Result#map!` and `ActiveRecord::Result#collect!`.
-
-*   Remove deprecated `ActiveRecord::Base#remove_connection`.
 
 ### Deprecations
 

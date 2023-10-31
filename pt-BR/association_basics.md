@@ -793,7 +793,7 @@ nomes padrão. No entanto, o *Active Record* não identificará automaticamente
 associações bidirecionais que contêm o `:through` ou `:foreign_key`.
 Escopos personalizados na associação oposta também impedem
 identificação, assim como escopos personalizados na própria associação, a menos que
-`config.active_record.automatic_scope_inversing` estiver definido como verdadeiro (o padrão para
+[`config.active_record.automatic_scope_inversing`][] estiver definido como verdadeiro (o padrão para
 novas aplicações).
 
 Por exemplo, considere as declarações de *models* abaixo:
@@ -843,6 +843,8 @@ irb> a.first_name = 'David'
 irb> a.first_name == b.writer.first_name
 => true
 ```
+
+[`config.active_record.automatic_scope_inversing`]: configuring.html#config-active-record-automatic-scope-inversing
 
 Referência Detalhada das Associações
 ------------------------------
@@ -940,10 +942,10 @@ Faz a mesma coisa que o método `create_association` acima, mas retorna `ActiveR
 O método `association_changed?` retorna `true` se um novo objeto associado foi atribuído e a chave estrangeira será atualizada no próximo salvamento.
 
 ```ruby
-@book.author # => #<Book author_number: 123, author_name: "John Doe">
+@book.author # => #<Author author_number: 123, author_name: "John Doe">
 @book.author_changed? # => false
 
-@book.author = Author.second # => #<Book author_number: 456, author_name: "Jane Smith">
+@book.author = Author.second # => #<Author author_number: 456, author_name: "Jane Smith">
 @book.author_changed? # => true
 
 @book.save!
@@ -955,10 +957,10 @@ O método `association_changed?` retorna `true` se um novo objeto associado foi 
 O método `association_previously_changed?` retorna `true` se o salvamento anterior atualizou a associação para referenciar um novo objeto associado.
 
 ```ruby
-@book.author # => #<Book author_number: 123, author_name: "John Doe">
+@book.author # => #<Author author_number: 123, author_name: "John Doe">
 @book.author_previously_changed? # => false
 
-@book.author = Author.second # => #<Book author_number: 456, author_name: "Jane Smith">
+@book.author = Author.second # => #<Author author_number: 456, author_name: "Jane Smith">
 @book.save!
 @book.author_previously_changed? # => true
 ```

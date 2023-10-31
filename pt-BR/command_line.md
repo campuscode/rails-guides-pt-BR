@@ -15,6 +15,59 @@ Depois de ler este guia, você saberá:
 
 NOTE: Esse tutorial considera que você já tenha um conhecimento básico de Rails, ou tenha lido o [Começando com o Rails](getting_started.html).
 
+Criando um app Rails
+--------------------
+
+Primeiro, vamos criar uma aplicação Rails simples usando o comando `rails new`.
+
+Usaremos esta aplicação para brincar e descobrir todos os comandos descritos neste guia.
+
+INFO: Você pode instalar a gem rails digitando `gem install rails`, caso ainda não a tenha.
+
+### `rails new`
+
+O primeiro argumento que passaremos ao comando `rails new` é o nome da aplicação.
+
+```bash
+$ rails new my_app
+     create
+     create  README.md
+     create  Rakefile
+     create  config.ru
+     create  .gitignore
+     create  Gemfile
+     create  app
+     ...
+     create  tmp/cache
+     ...
+        run  bundle install
+```
+
+Rails construirá o que parece ser muita coisa para um comando tão pequeno! Temos toda a estrutura de diretórios do Rails com todo o código que precisamos para rodar nossa aplicação.
+
+Caso deseje que algum arquivo ou biblioteca não seja gerado, podemos adicionar qualquer um dos seguintes argumentos ao comando `rails new`:
+
+| Argument                | Description                                                 |
+| ----------------------- | ----------------------------------------------------------- |
+| `--skip-git`            | Pula git init, .gitignore, and .gitattributes               |
+| `--skip-keeps`          | Pula source control .keep files                             |
+| `--skip-action-mailer`  | Pula Action Mailer files                                    |
+| `--skip-action-mailbox` | Pula Action Mailbox gem                                     |
+| `--skip-action-text`    | Pula Action Text gem                                        |
+| `--skip-active-record`  | Pula Active Record files                                    |
+| `--skip-active-job`     | Pula Active Job                                             |
+| `--skip-active-storage` | Pula Active Storage files                                   |
+| `--skip-action-cable`   | Pula Action Cable files                                     |
+| `--skip-asset-pipeline` | Pula Asset Pipeline                                         |
+| `--skip-javascript`     | Pula JavaScript files                                       |
+| `--skip-hotwire`        | Pula Hotwire integration                                    |
+| `--skip-jbuilder`       | Pula jbuilder gem                                           |
+| `--skip-test`           | Pula test files                                             |
+| `--skip-system-test`    | Pula system test files                                      |
+| `--skip-bootsnap`       | Pula bootsnap gem                                           |
+
+Estas são algumas das opções aceitas pelo `rails new`. Para a lista completa de opções, digite `rails new --help`.
+
 Noções Básicas de Linha de Comando
 -------------------
 
@@ -66,49 +119,6 @@ Além desses comandos, existem:
  tmp:create                          Cria diretórios tmp ...
 ```
 
-Vamos criar uma aplicação Rails simples passando por cada um destes comandos.
-
-### `rails new`
-
-The first thing we'll want to do is create a new Rails application by running the `rails new` command after installing Rails.
-
-INFO: You can install the rails gem by typing `gem install rails`, if you don't have it already.
-
-```bash
-$ rails new commandsapp
-     create
-     create  README.md
-     create  Rakefile
-     create  config.ru
-     create  .gitignore
-     create  Gemfile
-     create  app
-     ...
-     create  tmp/cache
-     ...
-        run  bundle install
-```
-
-Rails will set you up with what seems like a huge amount of stuff for such a tiny command! You've got the entire Rails directory structure now with all the code you need to run our simple application right out of the box.
-
-If you wish to skip some files or components from being generated, you can append the following arguments to your `rails new` command:
-
-| Argument                | Description                                                 |
-| ----------------------- | ----------------------------------------------------------- |
-| `--skip-git`            | Skip .gitignore file                                        |
-| `--skip-keeps`          | Skip source control .keep files                             |
-| `--skip-action-mailer`  | Skip Action Mailer files                                    |
-| `--skip-action-text`    | Skip Action Text gem                                        |
-| `--skip-active-record`  | Skip Active Record files                                    |
-| `--skip-active-storage` | Skip Active Storage files                                   |
-| `--skip-action-cable`   | Skip Action Cable files                                     |
-| `--skip-sprockets`      | Skip Sprockets files                                        |
-| `--skip-javascript`     | Skip JavaScript files                                       |
-| `--skip-turbolinks`     | Skip turbolinks gem                                         |
-| `--skip-test`           | Skip test files                                             |
-| `--skip-system-test`    | Skip system test files                                      |
-| `--skip-bootsnap`       | Skip bootsnap gem                                           |
-
 ### `bin/rails server`
 
 The `bin/rails server` command launches a web server named Puma which comes bundled with Rails. You'll use this any time you want to access your application through a web browser.
@@ -116,10 +126,10 @@ The `bin/rails server` command launches a web server named Puma which comes bund
 With no further work, `bin/rails server` will run our new shiny Rails app:
 
 ```bash
-$ cd commandsapp
+$ cd my_app
 $ bin/rails server
 => Booting Puma
-=> Rails 6.0.0 application starting in development
+=> Rails 7.0.0 application starting in development
 => Run `bin/rails server --help` for more startup options
 Puma starting in single mode...
 * Version 3.12.1 (ruby 2.5.7-p206), codename: Llamas in Pajamas
@@ -302,9 +312,9 @@ $ bin/rails generate scaffold HighScore game:string score:integer
     create      app/views/high_scores/_high_score.json.jbuilder
 ```
 
-The generator checks that there exist the directories for models, controllers, helpers, layouts, functional and unit tests, stylesheets, creates the views, controller, model and database migration for HighScore (creating the `high_scores` table and fields), takes care of the route for the **resource**, and new tests for everything.
+The generator creates the model, views, controller, **resource** route, and database migration (which creates the `high_scores` table) for HighScore. And it adds tests for those.
 
-The migration requires that we **migrate**, that is, run some Ruby code (living in that `20130717151933_create_high_scores.rb`) to modify the schema of our database. Which database? The SQLite3 database that Rails will create for you when we run the `bin/rails db:migrate` command. We'll talk more about that command below.
+The migration requires that we **migrate**, that is, run some Ruby code (the `20190416145729_create_high_scores.rb` file from the above output) to modify the schema of our database. Which database? The SQLite3 database that Rails will create for you when we run the `bin/rails db:migrate` command. We'll talk more about that command below.
 
 ```bash
 $ bin/rails db:migrate
@@ -319,7 +329,7 @@ about code. In unit testing, we take a little part of code, say a method of a mo
 and test its inputs and outputs. Unit tests are your friend. The sooner you make
 peace with the fact that your quality of life will drastically increase when you unit
 test your code, the better. Seriously. Please visit
-[the testing guide](https://guides.rubyonrails.org/testing.html) for an in-depth
+[the testing guide](testing.html) for an in-depth
 look at unit testing.
 
 Let's see the interface Rails created for us.
@@ -351,7 +361,7 @@ Any modifications you make will be rolled back on exit
 irb(main):001:0>
 ```
 
-#### The app and helper objects
+#### The `app` and `helper` Objects
 
 Inside the `bin/rails console` you have access to the `app` and `helper` instances.
 
@@ -442,13 +452,13 @@ $ bin/rails destroy model Oops
 ```bash
 $ bin/rails about
 About your application's environment
-Rails version             6.0.0
+Rails version             7.0.0
 Ruby version              2.7.0 (x86_64-linux)
 RubyGems version          2.7.3
 Rack version              2.0.4
 JavaScript Runtime        Node.js (V8)
 Middleware:               Rack::Sendfile, ActionDispatch::Static, ActionDispatch::Executor, ActiveSupport::Cache::Strategy::LocalCache::Middleware, Rack::Runtime, Rack::MethodOverride, ActionDispatch::RequestId, ActionDispatch::RemoteIp, Sprockets::Rails::QuietAssets, Rails::Rack::Logger, ActionDispatch::ShowExceptions, WebConsole::Middleware, ActionDispatch::DebugExceptions, ActionDispatch::Reloader, ActionDispatch::Callbacks, ActiveRecord::Migration::CheckPending, ActionDispatch::Cookies, ActionDispatch::Session::CookieStore, ActionDispatch::Flash, Rack::Head, Rack::ConditionalGet, Rack::ETag
-Application root          /home/foobar/commandsapp
+Application root          /home/foobar/my_app
 Environment               development
 Database adapter          sqlite3
 Database schema version   20180205173523

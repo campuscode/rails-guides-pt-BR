@@ -192,7 +192,7 @@ class Person
 end
 ```
 
-#### Consultando o objeto diretamente para obter uma lista de todos os atributos alterados.
+#### Consultando o Objeto Diretamente para Obter uma Lista de Todos os Atributos Alterados.
 
 ```irb
 irb> person = Person.new
@@ -220,7 +220,7 @@ irb> person.changes
 => {"first_name"=>[nil, "First Name"]}
 ```
 
-#### Atributos baseados em métodos de acesso
+#### Atributos Baseados em Métodos de Acesso
 
 Rastreia se o atributo específico foi alterado ou não.
 

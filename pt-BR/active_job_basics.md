@@ -127,7 +127,7 @@ consulte a documentação da API para [`ActiveJob::QueueAdapters`][].
 
 ### Configurando o *Backend*
 
-Você pode definir facilmente o *backend* de fila:
+Você pode definir facilmente o *backend* de fila usando [`config.active_job.queue_adapter`][]:
 
 ```ruby
 # config/application.rb
@@ -152,6 +152,8 @@ end
 # Agora o seu job vai usar `resque` como gerenciados de fials sobrescrevendo o
 # que estava configurado em `config.active_job.queue_adapter`.
 ```
+
+[`config.active_job.queue_adapter`]: configuring.html#config-active-job-queue-adapter
 
 ### Iniciando o *Backend*
 
@@ -185,7 +187,7 @@ end
 ```
 
 Você pode prefixar o nome da fila para todos os *jobs* usando
-`config.active_job.queue_name_prefix` in `application.rb`:
+[`config.active_job.queue_name_prefix`][] in `application.rb`:
 
 ```ruby
 # config/application.rb
@@ -222,7 +224,7 @@ end
 ```
 
 O prefixo delimitador padrão de nome de fila é '\_'. Isso pode ser alterado configurando o
-`config.active_job.queue_name_delimiter` no `application.rb`:
+[`config.active_job.queue_name_delimiter`][] no `application.rb`:
 
 ```ruby
 # config/application.rb
@@ -281,6 +283,8 @@ ProcessVideoJob.perform_later(Video.last)
 NOTE: Tenha certeza de que o seu *backend* de fila "escuta" o nome da fila.
 Para alguns *backends* você precisará especificar as filas a serem "ouvidas".
 
+[`config.active_job.queue_name_delimiter`]: configuring.html#config-active-job-queue-name-delimiter
+[`config.active_job.queue_name_prefix`]: configuring.html#config-active-job-queue-name-prefix
 [`queue_as`]: https://api.rubyonrails.org/classes/ActiveJob/QueueName/ClassMethods.html#method-i-queue_as
 
 *Callbacks*
@@ -320,7 +324,7 @@ class ApplicationJob < ActiveJob::Base
 end
 ```
 
-### *Callbacks* disponíveis
+### *Callbacks* Disponíveis
 
 * [`before_enqueue`][]
 * [`around_enqueue`][]
@@ -371,7 +375,7 @@ UserMailer.welcome(@user).deliver_later # O e-mail será localizado para Esperan
 ```
 
 
-Tipos suportados por argumentos
+Tipos Suportados por Argumentos
 ----------------------------
 
 O *ActiveJob* suporta os seguintes tipos de argumentos por padrão:
@@ -489,7 +493,7 @@ Se a exceção não for tratada dentro do _job_, então o _job_ é reconhecido c
 
 [`rescue_from`]: https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
 
-### Reexecução ou Descarte de *jobs* falhos
+### Reexecução ou Descarte de *jobs* Falhos
 
 Um *job* que falhou não será executado novamente, exceto se configurado para fazer isso.
 

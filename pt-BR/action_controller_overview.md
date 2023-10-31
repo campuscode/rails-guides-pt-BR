@@ -68,7 +68,7 @@ WARNING: Alguns nomes de métodos são reservados pelo *Action Controller*. Rede
 NOTE: Se você precisar usar um método reservado como um nome de *action*, uma solução alternativa é usar uma rota personalizada para mapear o nome do método reservado para o método da *action* não reservado.
 
 [`ActionController::Base`]: https://api.rubyonrails.org/classes/ActionController/Base.html
-[Resource Routing]: https://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default
+[Resource Routing]: routing.html#resource-routing-the-rails-default
 
 Parâmetros
 ----------
@@ -335,7 +335,7 @@ Sua aplicação possui uma sessão para cada usuário, na qual pode-se armazenar
 * [`ActionDispatch::Session::CookieStore`][] - Armazena tudo no cliente.
 * [`ActionDispatch::Session::CacheStore`][] - Armazena os dados no *cache* do Rails.
 * `ActionDispatch::Session::ActiveRecordStore` - Armazena os dados em um banco de dados utilizando o *Active Record*. (a gem `activerecord-session_store` é necessária).
-* [`ActionDispatch::Session::MemCacheStore`][] - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o *CacheStore* como alternativa)
+* [`ActionDispatch::Session::MemCacheStore`][] - Armazena os dados em um *cluster* de *cache* de memória (esta é uma implementação legada; considere utilizar o `CacheStore` como alternativa)
 
 Todos os armazenamentos de sessão utilizam um *cookie* para armazenar um ID único para cada sessão (você deve utilizar um *cookie*, o Rails não permitirá que você passe o ID da sessão na URL, pois isso é menos seguro).
 
@@ -437,7 +437,7 @@ class LoginsController < ApplicationController
     session.delete(:current_user_id)
     # Clear the memoized current user
     @_current_user = nil
-    redirect_to root_url
+    redirect_to root_url, status: :see_other
   end
 end
 ```
@@ -459,7 +459,7 @@ class LoginsController < ApplicationController
   def destroy
     session.delete(:current_user_id)
     flash[:notice] = "Você foi deslogado com sucesso."
-    redirect_to root_url
+    redirect_to root_url, status: :see_other
   end
 end
 ```
@@ -630,7 +630,7 @@ Se você usar o *cookie* de armazenamento de sessão, isso também se aplicaria 
 
 [`cookies`]: https://api.rubyonrails.org/classes/ActionController/Cookies.html#method-i-cookies
 
-Renderizando dados XML e JSON
+Renderizando Dados XML e JSON
 ---------------------------
 
 O *ActionController* faz com que renderizar dados `XML` ou `JSON` seja extremamente fácil. Se você gerou um *controller* usando o *scaffold*, será algo mais ou menos assim:
@@ -664,13 +664,12 @@ class ApplicationController < ActionController::Base
   before_action :require_login
 
   private
-
-  def require_login
-    unless logged_in?
-      flash[:error] = "You must be logged in to access this section"
-      redirect_to new_login_url # interrompe o ciclo da requisição
+    def require_login
+        unless logged_in?
+        flash[:error] = "You must be logged in to access this section"
+        redirect_to new_login_url # interrompe o ciclo da requisição
+        end
     end
-  end
 end
 ```
 Esse método simplesmente armazena uma mensagem de erro no *flash* e redireciona para o formulário de login se o usuário não estiver logado. Se um filtro "before" renderiza ou redireciona, a ação não será executada. Se filtros adicionais estão programados para executar após esse filtro, eles são cancelados também.
@@ -706,16 +705,15 @@ class ChangesController < ApplicationController
   around_action :wrap_in_transaction, only: :show
 
   private
-
-  def wrap_in_transaction
-    ActiveRecord::Base.transaction do
-      begin
-        yield
-      ensure
-        raise ActiveRecord::Rollback
-      end
+    def wrap_in_transaction
+        ActiveRecord::Base.transaction do
+        begin
+            yield
+        ensure
+            raise ActiveRecord::Rollback
+        end
+        end
     end
-  end
 end
 ```
 
@@ -1113,13 +1111,20 @@ Rails mantém um arquivo de log pra cada ambiente na pasta `log`. Eles são bast
 
 ### Filtrando Parâmetros
 
-Você pode evitar que parâmetros sensíveis da requisição sejam salvos no seu arquivo de log adicionando-os a `config.filter_parameters` na configuração da aplicação. Esses parâmetros aparecerão como [FILTERED] no arquivo de log.
+Você pode evitar que parâmetros sensíveis da requisição sejam salvos no seu arquivo de log
+adicionando-os a [`config.filter_parameters`][] na configuração da aplicação.
+Esses parâmetros aparecerão como [FILTERED] no arquivo de log.
 
 ```ruby
 config.filter_parameters << :password
 ```
 
-NOTE: Os Parâmetros fornecidos serão filtrados correspondendo parcialmente a uma expressão regular. Rails por padrão adiciona `:password` no *initializer* apropriado (`initializers/filter_parameter_logging.`) e se preocupa com parâmetros típicos da aplicação `password` e `password_confirmation`.
+NOTE: Os parâmetros fornecidos serão filtrados correspondendo parcialmente a uma expressão
+regular. O Rails por padrão adiciona `:passw`, `:secret`, `:token` no *initializer*
+apropriado (`initializers/filter_parameter_logging.`) e se preocupa com parâmetros típicos da aplicação
+como `password`, `password_confirmation` e `my_token`.
+
+[`config.filter_parameters`]: configuring.html#config-filter-parameters
 
 ### Filtrando Redirecionamentos
 
@@ -1207,11 +1212,12 @@ NOTE: Certas exceções são tratadas apenas pela classe `ApplicationController`
 
 [`rescue_from`]: https://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html#method-i-rescue_from
 
-Forçar protocolo HTTPS
+Forçar o Protocolo HTTPS
 --------------------
 
 Se você quiser garantir que a comunicação com seu *controller* seja possível apenas
 via HTTPS, você deve fazer isso ativando o middleware [`ActionDispatch::SSL`][] via
-`config.force_ssl` na configuração do seu ambiente.
+[`config.force_ssl`][] na configuração do seu ambiente.
 
+[`config.force_ssl`]: configuring.html#config-force-ssl
 [`ActionDispatch::SSL`]: https://api.rubyonrails.org/classes/ActionDispatch/SSL.html

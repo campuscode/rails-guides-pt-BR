@@ -23,7 +23,7 @@ namespace :guides do
     desc "Generate HTML guides"
     task :html do
       ENV["WARNINGS"] = "1" # authors can't disable this
-      ENV["RAILS_VERSION"] = "v7.0.0"
+      ENV["RAILS_VERSION"] = "v7.0.8"
       ENV["GUIDES_LANGUAGE"] = "pt-BR"
       system 'git apply lib/rails.patch'
       system 'cp -r ./pt-BR rails/guides/source'
@@ -45,7 +45,7 @@ namespace :guides do
         abort "Please install ImageMagick"
       end
       ENV["KINDLE"] = "1"
-      ENV["RAILS_VERSION"] = "v7.0.0"
+      ENV["RAILS_VERSION"] = "v7.0.8"
       ENV["GUIDES_LANGUAGE"] = "pt-BR"
       system 'git apply lib/rails.patch'
       system 'cp -r ./pt-BR rails/guides/source'

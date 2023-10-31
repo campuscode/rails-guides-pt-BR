@@ -219,10 +219,9 @@ class ChatChannel < ApplicationCable::Channel
   rescue_from 'MyError', with: :deliver_error_message
 
   private
-
-  def deliver_error_message(e)
-    broadcast_to(...)
-  end
+    def deliver_error_message(e)
+        broadcast_to(...)
+    end
 end
 ```
 
@@ -549,14 +548,14 @@ consumer.subscriptions.create("AppearanceChannel", {
   install() {
     window.addEventListener("focus", this.update)
     window.addEventListener("blur", this.update)
-    document.addEventListener("turbolinks:load", this.update)
+    document.addEventListener("turbo:load", this.update)
     document.addEventListener("visibilitychange", this.update)
   },
 
   uninstall() {
     window.removeEventListener("focus", this.update)
     window.removeEventListener("blur", this.update)
-    document.removeEventListener("turbolinks:load", this.update)
+    document.removeEventListener("turbo:load", this.update)
     document.removeEventListener("visibilitychange", this.update)
   },
 
@@ -585,7 +584,7 @@ canal de aspectos e executa seu *callback* `subscribed`, chamando o método `app
 em `current_user`. (`appearance_channel.rb`)
 
 4. **Cliente** reconhece que uma assinatura foi estabelecida e chama 
-`connected` (`appearance_channel.js`) que por sua vez chama `install` e `appear`. 
+`connected` (`appearance_channel.js`), que por sua vez chama `install` e `appear`. 
 `appear` chama `AppearanceChannel#appear(data)` no servidor e fornece um *hash* de 
 dados de `{ appearing_on: this.appearingOn }`. Isso é possível porque a instância 
 do canal do lado do servidor expõe automaticamente todos os métodos públicos 
@@ -601,11 +600,11 @@ valor da chave `:on` sendo passada para `current_user.appear`.
 
 O exemplo de aspectos era todo sobre expor a funcionalidade do servidor ao 
 cliente pela conexão WebSocket. Mas o melhor do WebSockets é que ele é uma via 
-de mão dupla. Portanto, agora vamos mostrar um exemplo em que o servidor invoca 
+de mão dupla. Portanto, agora, vamos mostrar um exemplo em que o servidor invoca 
 uma ação no cliente.
 
 Este é um canal de notificação da web que permite acionar notificações da web 
-no lado do cliente quando você transmite para os *streams* certos:
+no lado do cliente quando você transmite para os *streams* relevantes:
 
 Criando o canal de notificações da web do lado do servidor:
 
@@ -652,7 +651,7 @@ usuário. Exemplo, para um usuário com ID 1, o nome da transmissão seria
 
 O canal foi instruído a transmitir tudo que chegar a `web_notifications:1` 
 diretamente para o cliente, invocando o callback `received`. Os dados passados 
-como argumento são o hash enviado como o segundo parâmetro para a chamada de 
+como um argumento são o hash enviado como o segundo parâmetro para a chamada de 
 transmissão do lado do servidor, JSON codificado, para a transição, e também
 descompactado, para o argumento de dados que chega como `received`.
 
@@ -698,7 +697,7 @@ O adaptador assíncrono destina-se ao desenvolvimento / teste e não deve ser us
 O adaptador Redis requer que os usuários forneçam uma URL apontando para o servidor Redis.
 Além disso, um `channel_prefix` pode ser fornecido para evitar colisões de nome de canal
 ao usar o mesmo servidor Redis para vários aplicativos. Veja a
-[Documentação Redis PubSub](https://redis.io/topics/pubsub#database-amp-scoping) para mais detalhes.
+[Documentação Redis PubSub](https://redis.io/docs/manual/pubsub/#database--scoping) para mais detalhes.
 
 O adaptador Redis também oferece suporte a conexões SSL/TLS. Os parâmetros SSL/TLS necessários podem ser passados na chave `ssl_params` no arquivo yaml de configuração.
 
@@ -747,9 +746,10 @@ no ambiente de desenvolvimento.
 ### Configuração do Consumidor
 
 Para configurar a URL, adicione uma chamada para [`action_cable_meta_tag`][] em seu _layout_ HTML
-HEAD. Isso usa uma URL ou caminho (_path_) normalmente definido via `config.action_cable.url` nos
+HEAD. Isso usa uma URL ou caminho (_path_) normalmente definido via [`config.action_cable.url`][] nos
 arquivos de configuração de ambiente.
 
+[`config.action_cable.url`]: configuring.html#config-action-cable-url
 [`action_cable_meta_tag`]: https://api.rubyonrails.org/classes/ActionCable/Helpers/ActionCableHelper.html#method-i-action_cable_meta_tag
 
 ### Configuração do _Worker Pool_
@@ -800,7 +800,7 @@ classe `ActionCable::Server::Configuration`.
 
 O _Action Cable_ pode ser executado junto com sua aplicação Rails. Por exemplo, para
 escutar as requisições _WebSocket_ em `/websocket`, especifique esse caminho para
-`config.action_cable.mount_path`:
+[`config.action_cable.mount_path`][]:
 
 ```ruby
 # config/application.rb
@@ -816,6 +816,8 @@ especificado como primeiro argumento para `createConsumer` (e.g. `ActionCable.cr
 Para cada instância de seu servidor que você cria e para cada _worker_ que seu servidor
 instancia, você também terá uma nova instância do _Action Cable_, mas o adaptador Redis ou
 PostgreSQL mantém as mensagens sincronizadas entre as conexões.
+
+[`config.action_cable.mount_path`]: configuring.html#config-action-cable-mount-path
 
 ### Autônomo
 

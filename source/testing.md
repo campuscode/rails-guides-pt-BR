@@ -13,7 +13,7 @@ After reading this guide, you will know:
 
 --------------------------------------------------------------------------------
 
-Why Write Tests for your Rails Applications?
+Why Write Tests for Your Rails Applications?
 --------------------------------------------
 
 Rails makes it super easy to write your tests. It starts by producing skeleton test code while you are creating your models and controllers.
@@ -62,7 +62,7 @@ Each environment's configuration can be modified similarly. In this case, we can
 
 NOTE: Your tests are run under `RAILS_ENV=test`.
 
-### Rails meets Minitest
+### Rails Meets Minitest
 
 If you remember, we used the `bin/rails generate model` command in the
 [Getting Started with Rails](getting_started.html) guide. We created our first
@@ -141,7 +141,7 @@ An assertion is a line of code that evaluates an object (or expression) for expe
 
 Every test may contain one or more assertions, with no restriction as to how many assertions are allowed. Only when all the assertions are successful will the test pass.
 
-#### Your first failing test
+#### Your First Failing Test
 
 To see how a test failure is reported, you can add a failing test to the `article_test.rb` test case.
 
@@ -264,8 +264,7 @@ Notice the 'E' in the output. It denotes a test with error.
 NOTE: The execution of each test method stops as soon as any error or an
 assertion failure is encountered, and the test suite continues with the next
 method. All test methods are executed in random order. The
-[`config.active_support.test_order` option](configuring.html#configuring-active-support)
-can be used to configure test order.
+[`config.active_support.test_order`][] option can be used to configure test order.
 
 When a test fails you are presented with the corresponding backtrace. By default
 Rails filters that backtrace and will only print lines relevant to your
@@ -289,6 +288,8 @@ end
 ```
 
 This test should now pass.
+
+[`config.active_support.test_order`]: configuring.html#config-active-support-test-order
 
 ### Available Assertions
 
@@ -355,7 +356,7 @@ Rails adds some custom assertions of its own to the `minitest` framework:
 | [`assert_nothing_raised { block }`](https://api.rubyonrails.org/classes/ActiveSupport/Testing/Assertions.html#method-i-assert_nothing_raised) | Ensures that the given block doesn't raise any exceptions.|
 | [`assert_recognizes(expected_options, path, extras={}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_recognizes) | Asserts that the routing of the given path was handled correctly and that the parsed options (given in the expected_options hash) match path. Basically, it asserts that Rails recognizes the route given by expected_options.|
 | [`assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html#method-i-assert_generates) | Asserts that the provided options can be used to generate the provided path. This is the inverse of assert_recognizes. The extras parameter is used to tell the request the names and values of additional request parameters that would be in a query string. The message parameter allows you to specify a custom error message for assertion failures.|
-| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Asserts that the response comes with a specific status code. You can specify `:success` to indicate 200-299, `:redirect` to indicate 300-399, `:missing` to indicate 404, or `:error` to match the 500-599 range. You can also pass an explicit status number or its symbolic equivalent. For more information, see [full list of status codes](https://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant) and how their [mapping](https://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) works.|
+| [`assert_response(type, message = nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_response) | Asserts that the response comes with a specific status code. You can specify `:success` to indicate 200-299, `:redirect` to indicate 300-399, `:missing` to indicate 404, or `:error` to match the 500-599 range. You can also pass an explicit status number or its symbolic equivalent. For more information, see [full list of status codes](https://rubydoc.info/gems/rack/Rack/Utils#HTTP_STATUS_CODES-constant) and how their [mapping](https://rubydoc.info/gems/rack/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant) works.|
 | [`assert_redirected_to(options = {}, message=nil)`](https://api.rubyonrails.org/classes/ActionDispatch/Assertions/ResponseAssertions.html#method-i-assert_redirected_to) | Asserts that the response is a redirect to a URL matching the given options. You can also pass named routes such as `assert_redirected_to root_path` and Active Record objects such as `assert_redirected_to @article`.|
 
 You'll see the usage of some of these assertions in the next chapter.
@@ -598,7 +599,7 @@ By default, every Rails application has three environments: development, test, a
 
 A dedicated test database allows you to set up and interact with test data in isolation. This way your tests can mangle test data with confidence, without worrying about the data in the development or production databases.
 
-### Maintaining the test database schema
+### Maintaining the Test Database Schema
 
 In order to run your tests, your test database will need to have the current
 structure. The test helper checks whether your test database has any pending
@@ -675,7 +676,7 @@ Notice the `category` key of the `first` Article found in `fixtures/articles.yml
 
 NOTE: For associations to reference one another by name, you can use the fixture name instead of specifying the `id:` attribute on the associated fixtures. Rails will auto assign a primary key to be consistent between runs. For more information on this association behavior please read the [Fixtures API documentation](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
 
-#### File attachment fixtures
+#### File Attachment Fixtures
 
 Like other Active Record-backed models, Active Storage attachment records
 inherit from ActiveRecord::Base instances and can therefore be populated by
@@ -737,9 +738,9 @@ default. Loading involves three steps:
 2. Load the fixture data into the table
 3. Dump the fixture data into a method in case you want to access it directly
 
-TIP: In order to remove existing data from the database, Rails tries to disable referential integrity triggers (like foreign keys and check constraints). If you are getting annoying permission errors on running tests, make sure the database user has privilege to disable these triggers in testing environment. (In PostgreSQL, only superusers can disable all triggers. Read more about PostgreSQL permissions [here](http://blog.endpoint.com/2012/10/postgres-system-triggers-error.html)).
+TIP: In order to remove existing data from the database, Rails tries to disable referential integrity triggers (like foreign keys and check constraints). If you are getting annoying permission errors on running tests, make sure the database user has privilege to disable these triggers in testing environment. (In PostgreSQL, only superusers can disable all triggers. Read more about PostgreSQL permissions [here](https://www.postgresql.org/docs/current/sql-altertable.html)).
 
-#### Fixtures are Active Record objects
+#### Fixtures are Active Record Objects
 
 Fixtures are instances of Active Record. As mentioned in point #3 above, you can access the object directly because it is automatically available as a method whose scope is local of the test case. For example:
 
@@ -812,7 +813,7 @@ By default, system tests are run with the Selenium driver, using the Chrome
 browser, and a screen size of 1400x1400. The next section explains how to
 change the default settings.
 
-### Changing the default settings
+### Changing the Default Settings
 
 Rails makes changing the default settings for system tests very simple. All
 the setup is abstracted away so you can focus on writing your tests.
@@ -958,10 +959,10 @@ send a POST request to create the new article in the database.
 We will be redirected back to the articles index page and there we assert
 that the text from the new article's title is on the articles index page.
 
-#### Testing for multiple screen sizes
+#### Testing for Multiple Screen Sizes
 
 If you want to test for mobile sizes on top of testing for desktop,
-you can create another class that inherits from SystemTestCase and use in your
+you can create another class that inherits from `ActionDispatch::SystemTestCase` and use it in your
 test suite. In this example a file called `mobile_system_test_case.rb` is created
 in the `/test` directory with the following configuration.
 
@@ -988,7 +989,7 @@ class PostsTest < MobileSystemTestCase
 end
 ```
 
-#### Taking it further
+#### Taking It Further
 
 The beauty of system testing is that it is similar to integration testing in
 that it tests the user's interaction with your controller, model, and view, but
@@ -1034,7 +1035,7 @@ When performing requests, we will have [`ActionDispatch::Integration::RequestHel
 
 If we need to modify the session, or state of our integration test, take a look at [`ActionDispatch::Integration::Session`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/Session.html) to help.
 
-### Implementing an integration test
+### Implementing an Integration Test
 
 Let's add an integration test to our blog application. We'll start with a basic workflow of creating a new blog article, to verify that everything is working properly.
 
@@ -1069,7 +1070,7 @@ We will take a look at `assert_select` to query the resulting HTML of a request 
 
 When we visit our root path, we should see `welcome/index.html.erb` rendered for the view. So this assertion should pass.
 
-#### Creating articles integration
+#### Creating Articles Integration
 
 How about testing our ability to create a new article in our blog and see the resulting article.
 
@@ -1106,7 +1107,7 @@ NOTE: Don't forget to call `follow_redirect!` if you plan to make subsequent req
 
 Finally we can assert that our response was successful and our new article is readable on the page.
 
-#### Taking it further
+#### Taking It Further
 
 We were able to successfully test a very small workflow for visiting our blog and creating a new article. If we wanted to take this further we could add tests for commenting, removing articles, or editing comments. Integration tests are a great place to experiment with all kinds of use cases for our applications.
 
@@ -1116,7 +1117,7 @@ Functional Tests for Your Controllers
 
 In Rails, testing the various actions of a controller is a form of writing functional tests. Remember your controllers handle the incoming web requests to your application and eventually respond with a rendered view. When writing functional tests, you are testing how your actions handle the requests and the expected result or response, in some cases an HTML view.
 
-### What to include in your Functional Tests
+### What to Include in Your Functional Tests
 
 You should test for things such as:
 
@@ -1236,7 +1237,7 @@ All of request types have equivalent methods that you can use. In a typical C.R.
 
 NOTE: Functional tests do not verify whether the specified request type is accepted by the action, we're more concerned with the result. Request tests exist for this use case to make your tests more purposeful.
 
-### Testing XHR (AJAX) requests
+### Testing XHR (AJAX) Requests
 
 To test AJAX requests, you can specify the `xhr: true` option to `get`, `post`,
 `patch`, `put`, and `delete` methods. For example:
@@ -1288,7 +1289,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 end
 ```
 
-### Setting Headers and CGI variables
+### Setting Headers and CGI Variables
 
 [HTTP headers](https://tools.ietf.org/search/rfc2616#section-5.3)
 and
@@ -1303,7 +1304,7 @@ get articles_url, headers: { "Content-Type": "text/plain" } # simulate the reque
 get articles_url, headers: { "HTTP_REFERER": "http://example.com/home" } # simulate the request with custom env variable
 ```
 
-### Testing `flash` notices
+### Testing `flash` Notices
 
 If you remember from earlier, one of the Three Hashes of the Apocalypse was `flash`.
 
@@ -1376,7 +1377,7 @@ Finished in 0.081972s, 12.1993 runs/s, 48.7972 assertions/s.
 1 runs, 4 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-### Putting it together
+### Putting It Together
 
 At this point our Articles controller tests the `:index` as well as `:new` and `:create` actions. What about dealing with existing data?
 
@@ -1466,7 +1467,7 @@ end
 
 Similar to other callbacks in Rails, the `setup` and `teardown` methods can also be used by passing a block, lambda, or method name as a symbol to call.
 
-### Test helpers
+### Test Helpers
 
 To avoid code duplication, you can add your own test helpers.
 Sign in helper can be a good example:
@@ -1509,7 +1510,7 @@ One good place to store them is `test/lib` or `test/test_helpers`.
 # test/test_helpers/multiple_assertions.rb
 module MultipleAssertions
   def assert_multiple_of_forty_two(number)
-    assert (number % 42 == 0), 'expected #{number} to be a multiple of 42'
+    assert (number % 42 == 0), "expected #{number} to be a multiple of 42"
   end
 end
 ```
@@ -1949,7 +1950,7 @@ If you want to test the broadcasting made with `Channel.broadcast_to`, you shoul
 ```ruby
 # app/jobs/chat_relay_job.rb
 class ChatRelayJob < ApplicationJob
-  def perform_later(room, message)
+  def perform(room, message)
     ChatChannel.broadcast_to room, text: message
   end
 end
@@ -1996,7 +1997,7 @@ Starting with Rails 7, newly generated applications are configured that way by d
 
 If your project does not have continuous integration, you can still eager load in the test suite by calling `Rails.application.eager_load!`:
 
-#### minitest
+#### Minitest
 
 ```ruby
 require "test_helper"

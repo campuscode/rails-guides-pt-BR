@@ -28,10 +28,10 @@ Isso permite que os *assets* da sua aplicação sejam automaticamente combinados
 O *asset pipeline* é implementado pela *gem*
 [sprockets-rails](https://github.com/rails/sprockets-rails),
 e é habilitado por padrão. Você pode desabilitar enquanto está criando uma nova aplicação
-passando a opção `--skip-sprockets`.
+passando a opção `--skip-asset-pipeline`.
 
 ```bash
-$ rails new appname --skip-sprockets
+$ rails new appname --skip-asset-pipeline
 ```
 
 O Rails pode facilmente trabalhar com Sass adicionando a *gem* [`sassc-rails`](https://github.com/sass/sassc-rails)
@@ -42,8 +42,8 @@ gem 'sassc-rails'
 ```
 
 Para configurar os métodos de compactação do *asset*, coloque as opções de configuração
-apropriadas no `production.rb` - `config.assets.css_compressor` para o seu CSS e
-`config.assets.js_compressor` para seu JavaScript:
+apropriadas no `production.rb` - [`config.assets.css_compressor`][] para o seu CSS e
+[`config.assets.js_compressor`][] para seu JavaScript:
 
 ```ruby
 config.assets.css_compressor = :yui
@@ -52,6 +52,9 @@ config.assets.js_compressor = :terser
 
 NOTE: A *gem* `sassc-rails` é automaticamente usada para a compactação de CSS se estiver
 incluída no `Gemfile` e nenhuma opção `config.assets.css_compressor` é definida.
+
+[`config.assets.css_compressor`]: configuring.html#config-assets-css-compressor
+[`config.assets.js_compressor`]: configuring.html#config-assets-js-compressor
 
 ### Principais Características
 
@@ -138,12 +141,14 @@ que o nome dos arquivos sejam coerentes com base no seu conteúdo.
 
 A impressão digital é habilitada por padrão para ambos os ambientes desenvolvimento e
 produção. Você pode habilitar ou desabilitar isso na sua configuração através da opção
-`config.assets.digest`.
+[`config.assets.digest`][].
 
 Mais leitura:
 
-* [Otimizar o armazenamento cache](https://developers.google.com/speed/docs/insights/LeverageBrowserCaching)
-* [Acelerando nome dos arquivos: não use *Query String*(string de consulta)](http://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/)
+* [Otimizar o armazenamento cache (em inglês)](https://developers.google.com/speed/docs/insights/LeverageBrowserCaching)
+* [Acelerando nome dos arquivos: não use *Query String*(string de consulta) (em inglês)](http://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/)
+
+[`config.assets.digest`]: configuring.html#config-assets-digest
 
 
 Como usar o *Asset Pipeline*
@@ -156,12 +161,14 @@ Arquivos nesse diretório serão servidos pelo *Sprockets middleware*.
 
 Os *assets* podem ainda ser colocados na hierarquia do `public`. Qualquer *asset* sob
 `public` ainda será servido como um arquivo estático pela aplicação ou servidor *web* quando
-`config.public_file_server.enabled` estiver configurado como *true*. Você deve usar o 
+[`config.public_file_server.enabled`][] estiver configurado como *true*. Você deve usar o
 `app/assets` para arquivos que devem ser pré-processados antes de serem servidos.
 
 Em produção, o Rails pré-compila esses arquivos para `public/assets` por padrão.
 As cópias dos arquivos pré-compilados serão então servidas como *assets* estáticos
 pelo servidor *web*. Os arquivos em `app/assets` nunca serão servidos diretamente em produção.
+
+[`config.public_file_server.enabled`]: configuring.html#config-public-file-server-enabled
 
 ### *Assets* Específicos de *Controllers*
 
@@ -252,7 +259,7 @@ app/assets/javascripts/sub/something.js
 ```
 
 Você pode visualizar o caminho de busca inspecionando
-`Rails.application.config.assets.paths` no *console* do Rails.
+[`Rails.application.config.assets.paths`][`config.assets.paths`] no *console* do Rails.
 
 Adicionalmente, além do caminho padrão `assets/*`, caminhos (completos)
 podem ser adicionados ao *pipeline* em `config/initializers/assets.rb`. Por exemplo:
@@ -268,6 +275,8 @@ correspondentes em `lib` e `vendor`.
 É importante notar que os arquivos que você quiser referenciar fora de um manifesto devem
 ser adicionados ao *array* de pré-compilação, caso contrário eles não estarão disponíveis
 no ambiente de produção.
+
+[`config.assets.paths`]: configuring.html#config-assets-paths
 
 #### Usando Índices de Arquivos
 
@@ -323,7 +332,7 @@ Alternativamente, uma requisição para um arquivo com um *hash* SHA256 como
 é tratado da mesma maneira. A forma como esses *hashes* são gerados está coberta na seção
 [Em Produção](#in-production), posteriormente nesse guia.
 
-O *Sprockets* procurará através dos caminhos especificados em `config.assets.paths`,
+O *Sprockets* procurará através dos caminhos especificados em [`config.assets.paths`][],
 que inclui os caminhos padrões da aplicação e quaisquer caminhos adicionados pelas *engines*
 do Rails.
 
@@ -448,7 +457,7 @@ que contém essas linhas:
 ```
 
 O Rails cria o `app/assets/stylesheets/application.css` independentemente se
-a opção `--skip-sprockets` é usada ao criar uma nova aplicação Rails. Isso permite
+a opção `--skip-asset-pipeline` é usada ao criar uma nova aplicação Rails. Isso permite
 que você facilmente adicione o *asset pipelining* mais tarde se assim o quiser.
 
 As diretivas que funcionam nos arquivos JavaScript também funcionam nas folhas de estilo
@@ -603,7 +612,7 @@ NOTE: with the Asset Pipeline the `:cache` and `:concat` options aren't used
 anymore, delete these options from the `javascript_include_tag` and
 `stylesheet_link_tag`.
 
-The fingerprinting behavior is controlled by the `config.assets.digest`
+The fingerprinting behavior is controlled by the [`config.assets.digest`][]
 initialization option (which defaults to `true`).
 
 NOTE: Under normal circumstances the default `config.assets.digest` option
@@ -616,7 +625,7 @@ content changes.
 Rails comes bundled with a command to compile the asset manifests and other
 files in the pipeline.
 
-Compiled assets are written to the location specified in `config.assets.prefix`.
+Compiled assets are written to the location specified in [`config.assets.prefix`][].
 By default, this is the `/assets` directory.
 
 You can call this command on the server during deployment to create compiled
@@ -687,6 +696,8 @@ The default location for the manifest is the root of the location specified in
 NOTE: If there are missing precompiled files in production you will get a
 `Sprockets::Helpers::RailsHelper::AssetPaths::AssetNotPrecompiledError`
 exception indicating the name of the missing file(s).
+
+[`config.assets.prefix`]: configuring.html#config-assets-prefix
 
 #### Far-future Expires Header
 
@@ -825,7 +836,7 @@ To set up your CDN you have to have your application running in production on
 the internet at a publicly available URL, for example `example.com`. Next
 you'll need to sign up for a CDN service from a cloud hosting provider. When you
 do this you need to configure the "origin" of the CDN to point back at your
-website `example.com`, check your provider for documentation on configuring the
+website `example.com`. Check your provider for documentation on configuring the
 origin server.
 
 The CDN you provisioned should give you a custom subdomain for your application
@@ -834,7 +845,7 @@ valid CDN provider at the time of this writing). Now that you have configured
 your CDN server, you need to tell browsers to use your CDN to grab assets
 instead of your Rails server directly. You can do this by configuring Rails to
 set your CDN as the asset host instead of using a relative path. To set your
-asset host in Rails, you need to set `config.asset_host` in
+asset host in Rails, you need to set [`config.asset_host`][] in
 `config/environments/production.rb`:
 
 ```ruby
@@ -859,47 +870,46 @@ config.asset_host = ENV['CDN_HOST']
 NOTE: You would need to set `CDN_HOST` on your server to `mycdnsubdomain
 .fictional-cdn.com` for this to work.
 
-Once you have configured your server and your CDN when you serve a webpage that
-has an asset:
+Once you have configured your server and your CDN, asset paths from helpers such
+as:
 
 ```erb
 <%= asset_path('smile.png') %>
 ```
 
-Instead of returning a path such as `/assets/smile.png` (digests are left out
-for readability). The URL generated will have the full path to your CDN.
+Will be rendered as full CDN URLs like `http://mycdnsubdomain.fictional-cdn.com/assets/smile.png`
+(digest omitted for readability).
 
-```
-http://mycdnsubdomain.fictional-cdn.com/assets/smile.png
-```
-
-If the CDN has a copy of `smile.png` it will serve it to the browser and your
-server doesn't even know it was requested. If the CDN does not have a copy it
-will try to find it at the "origin" `example.com/assets/smile.png` and then store
+If the CDN has a copy of `smile.png`, it will serve it to the browser, and your
+server doesn't even know it was requested. If the CDN does not have a copy, it
+will try to find it at the "origin" `example.com/assets/smile.png`, and then store
 it for future use.
 
 If you want to serve only some assets from your CDN, you can use custom `:host`
 option your asset helper, which overwrites value set in
-`config.action_controller.asset_host`.
+[`config.action_controller.asset_host`][].
 
 ```erb
 <%= asset_path 'image.png', host: 'mycdnsubdomain.fictional-cdn.com' %>
 ```
 
+[`config.action_controller.asset_host`]: configuring.html#config-action-controller-asset-host
+[`config.asset_host`]: configuring.html#config-asset-host
+
 #### Customize CDN Caching Behavior
 
 A CDN works by caching content. If the CDN has stale or bad content, then it is
 hurting rather than helping your application. The purpose of this section is to
-describe general caching behavior of most CDNs, your specific provider may
+describe general caching behavior of most CDNs. Your specific provider may
 behave slightly differently.
 
 ##### CDN Request Caching
 
-While a CDN is described as being good for caching assets, in reality caches the
+While a CDN is described as being good for caching assets, it actually caches the
 entire request. This includes the body of the asset as well as any headers. The
-most important one being `Cache-Control` which tells the CDN (and web browsers)
+most important one being `Cache-Control`, which tells the CDN (and web browsers)
 how to cache contents. This means that if someone requests an asset that does
-not exist `/assets/i-dont-exist.png` and your Rails application returns a 404,
+not exist, such as `/assets/i-dont-exist.png`, and your Rails application returns a 404,
 then your CDN will likely cache the 404 page if a valid `Cache-Control` header
 is present.
 
@@ -924,7 +934,7 @@ Content-Length: 126560
 Via: 1.1 vegur
 ```
 
-Versus the CDN copy.
+Versus the CDN copy:
 
 ```bash
 $ curl -I http://mycdnsubdomain.fictional-cdn.com/application-
@@ -953,16 +963,14 @@ such as `X-Cache` or for any additional headers they may add.
 
 ##### CDNs and the Cache-Control Header
 
-The [cache control
-header](https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9) is a W3C
-specification that describes how a request can be cached. When no CDN is used, a
+The [`Cache-Control`][] header describes how a request can be cached. When no CDN is used, a
 browser will use this information to cache contents. This is very helpful for
 assets that are not modified so that a browser does not need to re-download a
 website's CSS or JavaScript on every request. Generally we want our Rails server
-to tell our CDN (and browser) that the asset is "public", that means any cache
+to tell our CDN (and browser) that the asset is "public". That means any cache
 can store the request. Also we commonly want to set `max-age` which is how long
 the cache will store the object before invalidating the cache. The `max-age`
-value is set to seconds with a maximum possible value of `31536000` which is one
+value is set to seconds with a maximum possible value of `31536000`, which is one
 year. You can do this in your Rails application by setting
 
 ```ruby
@@ -973,9 +981,11 @@ config.public_file_server.headers = {
 
 Now when your application serves an asset in production, the CDN will store the
 asset for up to a year. Since most CDNs also cache headers of the request, this
-`Cache-Control` will be passed along to all future browsers seeking this asset,
-the browser then knows that it can store this asset for a very long time before
+`Cache-Control` will be passed along to all future browsers seeking this asset.
+The browser then knows that it can store this asset for a very long time before
 needing to re-request it.
+
+[`Cache-Control`]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
 
 ##### CDNs and URL-based Cache Invalidation
 
@@ -1031,7 +1041,7 @@ Possible options for JavaScript compression are `:terser`, `:closure` and
 
 Take the `terser` gem, for example.
 This gem wraps [Terser](https://github.com/terser/terser) (written for
-NodeJS) in Ruby. It compresses your code by removing white space and comments,
+Node.js) in Ruby. It compresses your code by removing white space and comments,
 shortening local variable names, and performing other micro-optimizations such
 as changing `if` and `else` statements to ternary operators where possible.
 
@@ -1045,7 +1055,7 @@ NOTE: You will need an [ExecJS](https://github.com/rails/execjs#readme)
 supported runtime in order to use `terser`. If you are using macOS or
 Windows you have a JavaScript runtime installed in your operating system.
 
-### GZipping your assets
+### GZipping Your Assets
 
 By default, gzipped version of compiled assets will be generated, along with
 the non-gzipped version of assets. Gzipped assets help reduce the transmission

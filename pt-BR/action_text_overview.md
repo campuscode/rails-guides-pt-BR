@@ -26,7 +26,7 @@ RichText model that's associated with any existing Active Record model in the ap
 Any embedded images (or other attachments) are automatically stored using
 Active Storage and associated with the included RichText model.
 
-## Trix compared to other rich text editors
+## Trix Compared to Other Rich Text Editors
 
 Most WYSIWYG editors are wrappers around HTML’s `contenteditable` and `execCommand` APIs,
 designed by Microsoft to support live editing of web pages in Internet Explorer 5.5,
@@ -62,7 +62,7 @@ After the installation is complete, a Rails app should have the following change
 
 2. The `trix` stylesheet will be included together with Action Text styles in your `application.css` file.
 
-## Creating Rich Text content
+## Creating Rich Text Content
 
 Add a rich text field to an existing model:
 
@@ -112,18 +112,10 @@ end
 
 [`rich_text_area`]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-rich_text_area
 
-## Rendering Rich Text content
+## Rendering Rich Text Content
 
-Action Text will sanitize and render rich content on your behalf.
-
-By default, the Action Text editor and content are styled by the Trix defaults.
-
-If you want to change these defaults, remove the `// require "actiontext.scss"`
-line from your `application.scss` to omit the [contents of that
-file](https://raw.githubusercontent.com/basecamp/trix/master/dist/trix.css).
-
-By default, Action Text will render rich text content into an element that
-declares the `.trix-content` class:
+By default, Action Text will render rich text content inside an element with the
+`.trix-content` class:
 
 ```html+erb
 <%# app/views/layouts/action_text/contents/_content.html.erb %>
@@ -132,13 +124,18 @@ declares the `.trix-content` class:
 </div>
 ```
 
-If you'd like to change the rich text's surrounding HTML with your own layout,
-declare your own `app/views/layouts/action_text/contents/_content.html.erb`
-template and call `yield` in place of the content.
+Elements with this class, as well as the Action Text editor, are styled by the
+[`trix` stylesheet](https://raw.githubusercontent.com/basecamp/trix/master/dist/trix.css).
+To provide your own styles instead, remove the `= require trix` line from the
+`app/assets/stylesheets/actiontext.css` stylesheet created by the installer.
 
-You can also style the HTML used for embedded images and other attachments
-(known as blobs). On installation, Action Text will copy over a partial to
-`app/views/active_storage/blobs/_blob.html.erb`, which you can specialize.
+To customize the HTML rendered around rich text content, edit the
+`app/views/layouts/action_text/contents/_content.html.erb` layout created by the
+installer.
+
+To customize the HTML rendered for embedded images and other attachments (known
+as blobs), edit the `app/views/active_storage/blobs/_blob.html.erb` template
+created by the installer.
 
 ### Rendering attachments
 
@@ -149,7 +146,7 @@ GlobalID](https://github.com/rails/globalid#signed-global-ids).
 Action Text renders embedded `<action-text-attachment>` elements by resolving
 their `sgid` attribute into an instance. Once resolved, that instance is passed
 along to
-[`render`](https://edgeapi.rubyonrails.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render).
+[`render`](https://api.rubyonrails.org/classes/ActionView/Helpers/RenderingHelper.html#method-i-render).
 The resulting HTML is embedded as a descendant of the `<action-text-attachment>`
 element.
 
@@ -218,7 +215,7 @@ By default, all `ActiveRecord::Base` descendants mix-in
 
 [global-id]: https://github.com/rails/globalid#usage
 
-## Avoid N+1 queries
+## Avoid N+1 Queries
 
 If you wish to preload the dependent `ActionText::RichText` model, assuming your rich text field is named `content`, you can use the named scope:
 
@@ -227,7 +224,7 @@ Message.all.with_rich_text_content # Preload the body without attachments.
 Message.all.with_rich_text_content_and_embeds # Preload both body and attachments.
 ```
 
-## API / Backend development
+## API / Backend Development
 
 1. A backend API (for example, using JSON) needs a separate endpoint for uploading files that creates an `ActiveStorage::Blob` and returns its `attachable_sgid`:
 

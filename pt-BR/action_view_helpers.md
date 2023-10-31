@@ -13,7 +13,7 @@ Depois de ler este guia, você saberá:
 
 --------------------------------------------------------------------------------
 
-Visão geral dos *helpers* fornecidos pelo Action View
+Visão Geral dos *helpers* Fornecidos pelo Action View
 -------------------------------------------
 
 WIP: Nem todos os *helpers* estão listados aqui. Para uma lista completa, consulte a [documentação da API](https://api.rubyonrails.org/classes/ActionView/Helpers.html)
@@ -24,13 +24,15 @@ O que se segue é apenas um breve resumo geral dos *helpers* disponíveis no Act
 
 Este módulo fornece métodos para gerar HTML que vincula *views* aos *assets*, como imagens, arquivos JavaScript, folhas de estilo e feeds.
 
-Por padrão, o Rails disponibiliza esses *assets* no *host* atual na pasta `public`, mas você pode direcionar o Rails para disponibilizar os *assets* de um servidor de *assets* dedicado definindo `config.asset_host` na configuração da aplicação, normalmente em `config/environment/production.rb`. Por exemplo, digamos que seu *host* de *assets* seja `assets.example.com`:
+Por padrão, o Rails disponibiliza esses *assets* no *host* atual na pasta `public`, mas você pode direcionar o Rails para disponibilizar os *assets* de um servidor de *assets* dedicado definindo [`config.asset_host`][] na configuração da aplicação, normalmente em `config/environment/production.rb`. Por exemplo, digamos que seu *host* de *assets* seja `assets.example.com`:
 
 ```ruby
 config.asset_host = "assets.example.com"
 image_tag("rails.png")
 # => <img src="http://assets.example.com/images/rails.png" />
 ```
+
+[`config.asset_host`]: configuring.html#config-asset-host
 
 #### auto_discovery_link_tag
 

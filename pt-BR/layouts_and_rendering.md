@@ -31,7 +31,7 @@ Do ponto de vista do _controller_, há três maneiras de criar uma resposta HTTP
 * Chamar [`redirect_to`][] para enviar um _status code_ HTTP de redirecionamento para o navegador
 * Chamar [`head`][] para criar uma resposta que consiste apenas em cabeçalhos HTTP para enviar de volta ao navegador
 
-[controller.render]: https://api.rubyonrails.org/classes/AbstractController/Rendering.html#method-i-render
+[controller.render]: https://api.rubyonrails.org/classes/ActionController/Rendering.html#method-i-render
 [`redirect_to`]: https://api.rubyonrails.org/classes/ActionController/Redirecting.html#method-i-redirect_to
 [`head`]: https://api.rubyonrails.org/classes/ActionController/Head.html#method-i-head
 
@@ -91,7 +91,7 @@ Se queremos exibir as propriedades de todos os livros em nossa _view_, podemos f
         <td><%= book.content %></td>
         <td><%= link_to "Show", book %></td>
         <td><%= link_to "Edit", edit_book_path(book) %></td>
-        <td><%= link_to "Destroy", book, method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <td><%= link_to "Destroy", book, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -106,7 +106,7 @@ NOTE: A renderização real é feita por classes aninhadas do módulo [`ActionVi
 
 ### Usando `render`
 
-Na maioria dos casos, o método [`ActionController::Base#render`][controller.render] faz o trabalho pesado de renderizar o conteúdo do aplicativo para ser utilizado por um navegador. Existem várias maneiras de personalizar o comportamento do `render`. Você pode renderizar a _view_ padrão de um template do Rails, ou de um template específico, ou de um arquivo, ou código embutido, ou nada. Você pode renderizar text, JSON ou XML. Você também pode especificar o tipo de conteúdo ou o status HTTP da resposta renderizada.
+Na maioria dos casos, o método [`render`][controller.render] faz o trabalho pesado de renderizar o conteúdo do aplicativo para ser utilizado por um navegador. Existem várias maneiras de personalizar o comportamento do `render`. Você pode renderizar a _view_ padrão de um template do Rails, ou de um template específico, ou de um arquivo, ou código embutido, ou nada. Você pode renderizar text, JSON ou XML. Você também pode especificar o tipo de conteúdo ou o status HTTP da resposta renderizada.
 
 TIP: Se você deseja ver os resultados exatos de uma chamada para `render` sem precisar inspecioná-la em um navegador, você pode chamar` render_to_string`. Este método usa exatamente as mesmas opções que o `render`, mas retorna uma string em vez de enviar uma resposta de volta ao navegador.
 
@@ -158,7 +158,7 @@ render template: "products/show"
 
 As duas maneiras acima de renderizar (renderizar um template de outra _action_ dentro do mesmo _controller_ e renderizar um template de outra _action_ dentro de outro _controller_) são na verdade variantes da mesma operação.
 
-De fato, na classe _BooksController_, dentro da _action_ update na qual queremos renderizar o template _edit_, se o livro não for atualizado com êxito, todas as seguintes chamadas de `render` renderizarão o _template_ `edit.html.erb` no diretório `views/books`:
+De fato, na classe `BooksController`, dentro da _action_ update na qual queremos renderizar o template _edit_, se o livro não for atualizado com êxito, todas as seguintes chamadas de `render` renderizarão o _template_ `edit.html.erb` no diretório `views/books`:
 
 ```ruby
 render :edit
@@ -967,7 +967,7 @@ Além da tag especial acima, você pode fornecer um *hash* final de opções HTM
 
 #### Ligando a Vídeos com o método `video_tag`
 
-O *helper* [`video_tag`][] monta uma tag HTML 5 `<video>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/videos`.
+O *helper* [`video_tag`][] monta uma tag HTML5 `<video>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/videos`.
 
 ```erb
 <%= video_tag "movie.ogg" %>
@@ -1006,7 +1006,7 @@ Isto irá produzir:
 
 #### Ligando a Arquivos de Áudio com o método `audio_tag`
 
-O *helper* [`audio_tag`][] monta uma tag HTML 5 `<audio>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/audios`.
+O *helper* [`audio_tag`][] monta uma tag HTML5 `<audio>` apontando para o arquivo especificado. Por padrão, os arquivos são carregados a partir de `public/audios`.
 
 ```erb
 <%= audio_tag "music.mp3" %>

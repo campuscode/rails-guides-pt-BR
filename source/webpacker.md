@@ -1,7 +1,7 @@
 Webpacker
 =========
 
-This guide will show you how to install and use Webpacker to package JavaScript, CSS, and other assets for the client-side of your Rails application.
+This guide will show you how to install and use Webpacker to package JavaScript, CSS, and other assets for the client-side of your Rails application but please note [Webpacker has been retired](https://github.com/rails/webpacker#webpacker-has-been-retired-).
 
 After reading this guide, you will know:
 
@@ -20,7 +20,7 @@ What Is Webpacker?
 
 Webpacker is a Rails wrapper around the [webpack](https://webpack.js.org) build system that provides a standard webpack configuration and reasonable defaults.
 
-### What is webpack?
+### What is Webpack?
 
 The goal of webpack, or any front-end build system, is to allow you to write your front-end code in a way that is convenient for developers and then package that code in a way that is convenient for browsers. With webpack, you can manage JavaScript, CSS, and static assets like images or fonts. Webpack will allow you to write your code, reference other code in your application, transform your code, and combine your code into easily downloadable packs.
 

@@ -39,7 +39,7 @@ Rails 7 ends the transition period and does not include `classic` mode.
 I am Scared
 -----------
 
-Don't :).
+Don't be :).
 
 Zeitwerk was designed to be as compatible with the classic autoloader as possible. If you have a working application autoloading correctly today, chances are the switch will be easy. Many projects, big and small, have reported really smooth switches.
 
@@ -51,11 +51,11 @@ If for whatever reason you find a situation you don't know how to resolve, don't
 How to Activate `zeitwerk` Mode
 -------------------------------
 
-### Applications running Rails 5.x or Less
+### Applications Running Rails 5.x or Less
 
 In applications running a Rails version previous to 6.0, `zeitwerk` mode is not available. You need to be at least in Rails 6.0.
 
-### Applications running Rails 6.x
+### Applications Running Rails 6.x
 
 In applications running Rails 6.x there are two scenarios.
 
@@ -209,7 +209,7 @@ If your application uses `Concerns` as namespace, you have two options:
     delete("#{Rails.root}/app/models/concerns")
   ```
 
-### Having `app` in the autoload paths
+### Having `app` in the Autoload Paths
 
 Some projects want something like `app/api/base.rb` to define `API::Base`, and add `app` to the autoload paths to accomplish that.
 
@@ -274,7 +274,7 @@ won't work, child objects like `Hotel::Pricing` won't be found.
 
 This restriction only applies to explicit namespaces. Classes and modules not defining a namespace can be defined using those idioms.
 
-### One file, one constant (at the same top-level)
+### One File, One Constant (at the Same Top-level)
 
 In `classic` mode you could technically define several constants at the same top-level and have them all reloaded. For example, given
 
@@ -321,6 +321,55 @@ To fix this, just remove the wildcards:
 config.autoload_paths << "#{config.root}/extras"
 ```
 
+### Decorating Classes and Modules from Engines
+
+If your application decorates classes or modules from an engine, chances are it is doing something like this somewhere:
+
+```ruby
+config.to_prepare do
+  Dir.glob("#{Rails.root}/app/overrides/**/*_override.rb").sort.each do |override|
+    require_dependency override
+  end
+end
+```
+
+That has to be updated: You need to tell the `main` autoloader to ignore the directory with the overrides, and you need to load them with `load` instead. Something like this:
+
+```ruby
+overrides = "#{Rails.root}/app/overrides"
+Rails.autoloaders.main.ignore(overrides)
+config.to_prepare do
+  Dir.glob("#{overrides}/**/*_override.rb").sort.each do |override|
+    load override
+  end
+end
+```
+
+### `before_remove_const`
+
+Rails 3.1 added support for a callback called `before_remove_const` that was invoked if a class or module responded to this method and was about to be reloaded. This callback has remained otherwise undocumented and it is unlikely that your code uses it.
+
+However, in case it does, you can rewrite something like
+
+```ruby
+class Country < ActiveRecord::Base
+  def self.before_remove_const
+    expire_redis_cache
+  end
+end
+```
+
+as
+
+```ruby
+# config/initializers/country.rb
+unless Rails.application.config.cache_classes
+  Rails.autoloaders.main.on_unload("Country") do |klass, _abspath|
+    klass.expire_redis_cache
+  end
+end
+```
+
 ### Spring and the `test` Environment
 
 Spring reloads the application code if something changes. In the `test` environment you need to enable reloading for that to work:
@@ -365,7 +414,7 @@ Starting with Rails 7, newly generated applications are configured that way by d
 
 If your project does not have continuous integration, you can still eager load in the test suite by calling `Rails.application.eager_load!`:
 
-#### minitest
+#### Minitest
 
 ```ruby
 require "test_helper"
@@ -389,7 +438,7 @@ RSpec.describe "Zeitwerk compliance" do
 end
 ```
 
-Delete any `require` calls
+Delete any `require` Calls
 --------------------------
 
 In my experience, projects generally do not do this. But I've seen a couple, and have heard of a few others.
@@ -407,13 +456,13 @@ Please delete any `require` calls of that type.
 New Features You Can Leverage
 -----------------------------
 
-### Delete `require_dependency` calls
+### Delete `require_dependency` Calls
 
 All known use cases of `require_dependency` have been eliminated with Zeitwerk. You should grep the project and delete them.
 
 If your application uses Single Table Inheritance, please see the [Single Table Inheritance section](autoloading_and_reloading_constants.html#single-table-inheritance) of the Autoloading and Reloading Constants (Zeitwerk Mode) guide.
 
-### Qualified Names in Class and Module Definitions Are Now Possible
+### Qualified Names in Class and Module Definitions are Now Possible
 
 You can now robustly use constant paths in class and module definitions:
 

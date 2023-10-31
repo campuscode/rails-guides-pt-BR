@@ -316,7 +316,7 @@ resources :magazines do
 end
 ```
 
-Em adição das rotas para _magazines_, esta declaração também adicionará rotas de _ads_ para um `AdsContriller`. As URLs de _ad_ vão precisar de um _magazine_:
+Em adição das rotas para _magazines_, esta declaração também adicionará rotas de _ads_ para um `AdsController`. As URLs de _ad_ vão precisar de um _magazine_:
 
 | Verbo HTTP | Path                                 | Controller#Action | Usado para                                                                                        |
 | ---------- | ------------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------- |
@@ -348,7 +348,7 @@ _Resources_ profundamente aninhados ficam confusos. Neste caso, por exemplo, a a
 /publishers/1/magazines/2/photos/3
 ```
 
-O _helper_ correspondente a essa rota seria `publisher_magazine_photo_url`, sendo necessário especificar os objetos de todos os três níveis. De fato, esta situação é confusa o bastante que um [artigo](http://weblog.jamisbuck.org/2007/2/5/nesting-resources) escrito por Jamis Buck propõe uma regra de ouro para um bom design no Rails:
+O _helper_ correspondente a essa rota seria `publisher_magazine_photo_url`, sendo necessário especificar os objetos de todos os três níveis. De fato, esta situação é confusa o bastante que um [artigo escrito por Jamis Buck](http://weblog.jamisbuck.org/2007/2/5/nesting-resources) propõe uma regra de ouro para um bom design no Rails:
 
 TIP: _Resources_ não devem nunca ser aninhados mais de um nível de profundidade.
 
@@ -414,7 +414,7 @@ O *resources* de artigos aqui terá as seguintes rotas geradas para ele:
 | PATCH/PUT | /articles/:id(.:format)                      | articles#update   | article_path             |
 | DELETE    | /articles/:id(.:format)                      | articles#destroy  | article_path             |
 
-O método `shallow` do DSL cria um _scope_ em que todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:
+O método [`shallow`][] do DSL cria um _scope_ em que todos os aninhamentos são rasos. Isso gera as mesmas rotas que o exemplo anterior:
 
 ```ruby
 shallow do
@@ -469,6 +469,8 @@ O _resource_ _comments_ aqui terá gerado as seguintes rotas para si:
 | GET       | /comments/:id(.:format)                      | comments#show     | sekret_comment_path         |
 | PATCH/PUT | /comments/:id(.:format)                      | comments#update   | sekret_comment_path         |
 | DELETE    | /comments/:id(.:format)                      | comments#destroy  | sekret_comment_path         |
+
+[`shallow`]: https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-shallow
 
 ### Roteamento com método *Concerns*
 
@@ -532,7 +534,7 @@ Enquanto estiver usando `magazine_ad_path`, você pode passar as instâncias de 
 <%= link_to 'Ad details', magazine_ad_path(@magazine, @ad) %>
 ```
 
-Você pode também usar `url_for` com um grupo de objetos, e o Rails vai automaticamente determinar qual rota você quer:
+Você pode também usar [`url_for`][ActionView::RoutingUrlFor#url_for] com um grupo de objetos, e o Rails vai automaticamente determinar qual rota você quer:
 
 ```erb
 <%= link_to 'Ad details', url_for([@magazine, @ad]) %>
@@ -557,6 +559,8 @@ Para outras _actions_, você apenas precisa inserir o nome desta _action_ como o
 ```
 
 Isto permite você tratar instâncias de seus _models_ como URLs, e é uma vantagem chave de usar o estilo _resourceful_.
+
+[ActionView::RoutingUrlFor#url_for]: https://api.rubyonrails.org/classes/ActionView/RoutingUrlFor.html#method-i-url_for
 
 ### Adicionando mais RESTful Actions
 
@@ -1179,15 +1183,29 @@ Isto irá gerar rotas como `admin_photos_path` e `admin_accounts_path` que são 
 
 NOTE: O *scope* `namespace` adicionará automaticamente os prefixos `:as`, assim como `:module` e `:path`.
 
-Você pode prefixar as rotas com um *named parameter* também:
+#### Parametric Scopes
+
+You can prefix routes with a named parameter:
 
 ```ruby
-scope ':username' do
+scope ':account_id', as: 'account', constraints: { account_id: /\d+/ } do
   resources :articles
 end
 ```
 
-Isto vai lhe deixar com URLs como `/bob/articles/-1` e também permitirá referir à parte `username` do caminho como `params[:username]` nos *controllers*, *helpers*, e *views*.
+This will provide you with paths such as `/1/articles/9` and will allow you to reference the `account_id` part of the path as `params[:account_id]` in controllers, helpers, and views.
+
+It will also generate path and URL helpers prefixed with `account_`, into which you can pass your objects as expected:
+
+```ruby
+account_article_path(@account, @article) # => /1/article/9
+url_for([@account, @article])            # => /1/article/9
+form_with(model: [@account, @article])   # => <form action="/1/article/9" ...>
+```
+
+We are [using a constraint](#segment-constraints) to limit the scope to only match ID-like strings. You can change the constraint to suit your needs, or omit it entirely. The `:as` option is also not strictly required, but without it, Rails will raise an error when evaluating `url_for([@account, @article])` or other helpers that rely on `url_for`, such as [`form_with`][].
+
+[`form_with`]: https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with
 
 ### Restringindo as Rotas Criadas
 
