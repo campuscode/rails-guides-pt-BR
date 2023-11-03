@@ -143,7 +143,7 @@ Com apenas três comandos nós subimos um servidor Rails escutando na porta 3000
 
 INFO: Você também pode usar o alias "s" para iniciar o servidor: `bin/rails s`.
 
-O servidor pode ser direcionado para diferentes portas usando a opção `-p`. O ambiente padrão de desenvolvimento também pode ser alterado usando `-e`.
+O servidor pode ser direcionado para diferentes portas usando a opção `-p`. O ambiente padrão *development* também pode ser alterado usando `-e`.
 
 ```bash
 $ bin/rails server -e production -p 4000
