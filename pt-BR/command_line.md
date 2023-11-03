@@ -139,7 +139,7 @@ Puma starting in single mode...
 Use Ctrl-C to stop
 ```
 
-Com apenas três comandos nós subimos um servidor Rails executando na porta 3000. Vá para o navegador e acesse [http://localhost:3000](http://localhost:3000), você verá um app Rails básico rodando.
+Com apenas três comandos nós subimos um servidor Rails escutando na porta 3000. Vá para o navegador e acesse [http://localhost:3000](http://localhost:3000), você verá um app Rails básico rodando.
 
 INFO: Você também pode usar o alias "s" para iniciar o servidor: `bin/rails s`.
 
