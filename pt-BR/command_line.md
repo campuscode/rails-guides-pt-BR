@@ -121,7 +121,7 @@ Além desses comandos, existem:
 
 ### `bin/rails server`
 
-O comando `bin/rails server` inicia um servidor web chamado Puma que tem o Rails incluido. Você usará esse comando toda vez que quiser acessar sua aplicação através de um navegador web.
+O comando `bin/rails server` inicia um servidor web chamado Puma que vem incluído com o Rails. Você usará esse comando toda vez que quiser acessar sua aplicação através de um navegador web.
 
 Sem mais trabalho, `bin/rails server` rodará nosso app Rails novo em folha:
 
