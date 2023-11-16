@@ -376,7 +376,7 @@ Started GET "/" for 127.0.0.1 at 2014-06-19 10:41:57 -0300
 ...
 ```
 
-Com o método `helper` é possível acessar os métodos "helpers" definidos na sua aplicação.
+Com o método `helper` é possível acessar os métodos *helpers* definidos na sua aplicação.
 
 ```irb
 irb> helper.time_ago_in_words 30.days.ago
