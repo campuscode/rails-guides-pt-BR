@@ -342,7 +342,7 @@ Go to your browser and open [http://localhost:3000/high_scores](http://localhost
 
 ### `bin/rails console`
 
-O comando `console` permite a interação com a aplicação Rails através da linha de comando. Por trás, `bin/rails console` usa o IRB, então se você já o utilizou, estará em casa. Esse comando é útil para testar rapidamente idéias de código e alterar dados server-side sem acessar a aplicação via web.
+O comando `console` permite a interação com a aplicação Rails através da linha de comando. Por trás, `bin/rails console` usa o IRB, então se você já o utilizou, estará em casa. Esse comando é útil para testar rapidamente idéias de código e alterar dados *server-side* sem acessar a aplicação via web.
 
 INFO: Você também pode usar o alias "c" para iniciar o console: `bin/rails c`.
 
