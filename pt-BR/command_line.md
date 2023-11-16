@@ -616,7 +616,7 @@ Rake *tasks* customizadas tem a extensão `.rake` e são localizadas em `Rails.r
 Você pode criá-las com o comando `bin/rails generate task`.
 
 ```ruby
-desc "I am short, but comprehensive description for my cool task"
+desc "Sou uma descrição curta, mas compreensiva para a minha *task* legal"
 task task_name: [:prerequisite_task, :another_task_we_depend_on] do
   # Toda a mágica vai aqui
   # Qualquer código Ruby válido é permitido
@@ -635,7 +635,7 @@ Você pode agrupar *tasks* colocando-as em *namespaces*:
 
 ```ruby
 namespace :db do
-  desc "This task does nothing"
+  desc "Esta *task* não faz nada"
   task :nothing do
     # Sério, nada
   end
