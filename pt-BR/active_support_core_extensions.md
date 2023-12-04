@@ -3988,13 +3988,13 @@ NOTE: Defined in `active_support/core_ext/file/atomic.rb`.
 Extensions to `NameError`
 -------------------------
 
-Active Support adds [`missing_name?`][NameError#missing_name?] to `NameError`, which tests whether the exception was raised because of the name passed as argument.
+Suporte ativo adiciona [`missing_name?`][NameError#missing_name?] para `NameError`, que testa se a exceção foi levantada por causa do nome passado como argumento.
 
-The name may be given as a symbol or string. A symbol is tested against the bare constant name, a string is against the fully qualified constant name.
+O nome pode ser dado como um símbolo ou string. Um símbolo é testado em relação ao nome da constante simples, uma string é testada em relação ao nome da constante totalmente qualificado.
 
-TIP: A symbol can represent a fully qualified constant name as in `:"ActiveRecord::Base"`, so the behavior for symbols is defined for convenience, not because it has to be that way technically.
+TIP: Um símbolo pode representar um nome de constante totalmente qualificado como em `:"ActiveRecord::Base"`, então o comportamento dos símbolos é definido por conveniência, não porque tem que ser assim tecnicamente.
 
-For example, when an action of `ArticlesController` is called Rails tries optimistically to use `ArticlesHelper`. It is OK that the helper module does not exist, so if an exception for that constant name is raised it should be silenced. But it could be the case that `articles_helper.rb` raises a `NameError` due to an actual unknown constant. That should be reraised. The method `missing_name?` provides a way to distinguish both cases:
+Por exemplo, quando uma ação de `ArticlesController` é chamado Rails tenta usar com otimismo `ArticlesHelper`. Não há problema em que o módulo auxiliar não exista, portanto, se uma exceção para esse nome constante for levantada, ela deve ser silenciada. Mas pode ser que `articles_helper.rb` levanta um `NameError` devido a uma constante real desconhecida. Isso deve ser refeito. O método `missing_name?` fornece uma maneira de distinguir os dois casos:
 
 ```ruby
 def default_helper_module!
@@ -4008,7 +4008,7 @@ rescue NameError => e
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/name_error.rb`.
+NOTE: Definido em `active_support/core_ext/name_error.rb`.
 
 [NameError#missing_name?]: https://api.rubyonrails.org/classes/NameError.html#method-i-missing_name-3F
 
