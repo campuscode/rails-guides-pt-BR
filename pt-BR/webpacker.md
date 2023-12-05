@@ -76,7 +76,7 @@ Uso
 
 Com Webpacker instalado, qualquer arquivo JavaScript no diretório `app/javascript/packs` será compilado para seu próprio arquivo de pacote padrão.
 
-Então, se você tem um arquivo chamado `app/javascript/packs/application.js`, Webpacker irá criar um pacote chamado `application`, e você pode adicionar isto para sua aplicação Rails com o código `<%= javascript_pack_tag "application" %>`. Com isso no lugar, em desenvolvimento, Rails irá recompilar o arquivo `application.js` a cada vez que é alterado, e você carrega a página que usa esse pacote. Normalmente, o arquivo no diretório `packs` real será um manifesto que carrega principalmente outros arquivos, mas também pode ter código JavaScript arbitrário.
+Então, se você tem um arquivo chamado `app/javascript/packs/application.js`, Webpacker irá criar um pacote chamado `application`, e você pode adicionar isto para sua aplicação Rails com o código `<%= javascript_pack_tag "application" %>`. Com isso no lugar, em desenvolvimento, Rails irá recompilar o arquivo `application.js` a cada vez que é alterado, e você carrega uma página que usa esse pacote. Normalmente, o arquivo no diretório `packs` real será um manifesto que carrega na sua maior parte outros arquivos, mas também pode ter código JavaScript arbitrário.
 
 O pacote padrão criado para você pelo Webpacker será vinculado aos pacotes JavaScript padrão do Rails se eles tiverem sido incluídos no projeto:
 
