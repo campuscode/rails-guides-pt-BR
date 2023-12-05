@@ -147,7 +147,7 @@ const images = require.context("../images", true)
 const imagePath = name => images(name, true)
 ```
 
-_Assets_ estáticos serão enviados para um diretório em `public/packs/media`. Por exemplo, uma imagem localizada e importada em `app/javascript/images/my-image.jpg` será gerada em `public/packs/media/images/my-image-abcd1234.jpg`. Para renderizar uma tag de imagem para esta imagem em uma visualização do Rails, use `image_pack_tag 'media/images/my-image.jpg`.
+_Assets_ estáticos serão enviados para um diretório em `public/packs/media`. Por exemplo, uma imagem localizada e importada em `app/javascript/images/my-image.jpg` será gerada em `public/packs/media/images/my-image-abcd1234.jpg`. Para renderizar uma tag de imagem para esta imagem em uma _view_ do Rails, use `image_pack_tag 'media/images/my-image.jpg`.
 
 Os _helpers_ do Webpacker ActionView para _assets_ estáticos correspondem aos _helpers_ de pipeline de _assets_ de acordo com a tabela a seguir:
 
