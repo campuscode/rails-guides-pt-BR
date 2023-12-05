@@ -113,7 +113,7 @@ Normalmente, o próprio arquivo de pacote é em grande parte um manifesto que us
 
 Se você quiser mudar esses diretórios, você pode ajustar o `source_path` (padrão `app/javascript`) e `source_entry_path` (padrão `packs`) no arquivo `config/webpacker.yml`.
 
-Dentro dos arquivos de origem, as instruções `import` são resolvidas em relação ao arquivo fazendo a importação, então `import Bar from "./foo"` encontra um arquivo `foo.js` no mesmo diretório que o arquivo atual, enquanto `import Bar from "../src/foo"` encontra um arquivo em um diretório irmão chamado `src`.
+Dentro dos arquivos de código fonte, as declarações `import` são resolvidas em relação ao arquivo fazendo a importação, então `import Bar from "./foo"` encontra um arquivo `foo.js` no mesmo diretório que o arquivo atual, enquanto `import Bar from "../src/foo"` encontra um arquivo em um diretório irmão chamado `src`.
 
 ### Usando Webpacker para CSS
 
