@@ -93,7 +93,7 @@ ActiveStorage.start()
 
 Você precisará incluir um pacote que requeira esses pacotes para usá-los em seu aplicativo Rails.
 
-É importante notar que apenas os arquivos de entrada do Webpack devem ser colocados no diretório `app/javascript/packs`; O Webpack criará um gráfico de dependência separado para cada ponto de entrada, portanto, um grande número de pacotes aumentará a sobrecarga de compilação. O restante do código-fonte do seu ativo deve ficar fora desse diretório, embora o Webpacker não coloque nenhuma restrição ou faça sugestões sobre como estruturar seu código-fonte. Aqui está um exemplo:
+É importante notar que apenas os arquivos de entrada do Webpack devem ser colocados no diretório `app/javascript/packs`; O Webpack criará um gráfico de dependência separado para cada ponto de entrada, portanto, um grande número de pacotes aumentará a sobrecarga de compilação. O restante do seu código-fonte deve ficar fora desse diretório, embora o Webpacker não coloque nenhuma restrição ou faça sugestões sobre como estruturar seu código-fonte. Aqui está um exemplo:
 
 ```sh
 app/javascript:
