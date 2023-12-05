@@ -140,7 +140,7 @@ myImage.alt = "Eu sou uma imagem do pacote Webpacker";
 document.body.appendChild(myImage);
 ```
 
-Se você precisar referenciar ativos estáticos do Webpacker a partir de uma visualização do Rails, os ativos precisam ser explicitamente exigidos dos arquivos JavaScript do pacote do Webpacker. Ao contrário do Sprockets, o Webpacker não importa seus ativos estáticos por padrão. O arquivo padrão `app/javascript/packs/application.js` tem um modelo para importar arquivos de um determinado diretório, que você pode descomentar para cada diretório em que deseja ter arquivos estáticos. Os diretórios são relativos a `app/javascript` . O template usa o diretório `images`, mas você pode usar qualquer coisa em `app/javascript`:
+Se você precisar referenciar _assets_ estáticos do Webpacker a partir de uma _view_ do Rails, os _assets_ precisam ser explicitamente requeridos nos arquivos JavaScript empacotados do Webpacker. Ao contrário do Sprockets, o Webpacker não importa seus _assets_ estáticos por padrão. O arquivo padrão `app/javascript/packs/application.js` tem um _template_ para importar arquivos de um determinado diretório, que você pode descomentar para cada diretório em que deseja ter arquivos estáticos. Os diretórios são relativos a `app/javascript` . O _template_ usa o diretório `images`, mas você pode usar qualquer coisa em `app/javascript`:
 
 ```
 const images = require.context("../images", true)
