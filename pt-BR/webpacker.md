@@ -162,7 +162,7 @@ Você também pode acessar a imagem referenciando diretamente o arquivo de um ar
 
 ### Webpacker em Engines Rails
 
-A partir da versão 6 do Webpacker, o Webpacker não é "consciente da _engine_", o que significa que o Webpacker não possui paridade de recursos com o Sprockets quando se trata de usar nas _engines_ do Rails.
+A partir da versão 6 do Webpacker, o Webpacker não é "consciente da _engine_", o que significa que o Webpacker não possui paridade de recursos com o Sprockets quando se trata de seu uso nas _engines_ do Rails.
 
 Os autores de gems de _engines_ Rails que desejam oferecer suporte aos consumidores usando o Webpacker são incentivados a distribuir ativos de _front-end_ como um pacote NPM além da própria gem e fornecer instruções (ou um instalador) para demonstrar como os aplicativos hospedeiros devem se integrar. Um bom exemplo dessa abordagem é o [Alchemy CMS](https://github.com/AlchemyCMS/alchemy_cms).
 
