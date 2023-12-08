@@ -69,16 +69,16 @@ Installing Webpacker creates the following local files:
 
 The installation also calls the `yarn` package manager, creates a `package.json` file with a basic set of packages listed, and uses Yarn to install these dependencies.
 
-Usage
+Uso
 -----
 
-### Using Webpacker for JavaScript
+### Usando Webpacker para JavaScript
 
-With Webpacker installed, any JavaScript file in the `app/javascript/packs` directory will get compiled to its own pack file by default.
+Com Webpacker instalado, qualquer arquivo JavaScript no diretório `app/javascript/packs` será compilado para seu próprio arquivo de _pack_ (pacote) padrão.
 
-So if you have a file called `app/javascript/packs/application.js`, Webpacker will create a pack called `application`, and you can add it to your Rails application with the code `<%= javascript_pack_tag "application" %>`. With that in place, in development, Rails will recompile the `application.js` file every time it changes, and you load a page that uses that pack. Typically, the file in the actual `packs` directory will be a manifest that mostly loads other files, but it can also have arbitrary JavaScript code.
+Então, se você tem um arquivo chamado `app/javascript/packs/application.js`, Webpacker irá criar um pacote chamado `application`, e você pode adicionar isto para sua aplicação Rails com o código `<%= javascript_pack_tag "application" %>`. Com isso no lugar, em desenvolvimento, Rails irá recompilar o arquivo `application.js` a cada vez que é alterado, e você carrega uma página que usa esse pacote. Normalmente, o arquivo no diretório `packs` real será um manifesto que carrega na sua maior parte outros arquivos, mas também pode ter código JavaScript arbitrário.
 
-The default pack created for you by Webpacker will link to Rails' default JavaScript packages if they have been included in the project:
+O pacote padrão criado para você pelo Webpacker será vinculado aos pacotes JavaScript padrão do Rails se eles tiverem sido incluídos no projeto:
 
 ```
 import Rails from "@rails/ujs"
@@ -91,14 +91,14 @@ Turbolinks.start()
 ActiveStorage.start()
 ```
 
-You'll need to include a pack that requires these packages to use them in your Rails application.
+Você precisará incluir um pacote que requeira esses pacotes para usá-los em seu aplicativo Rails.
 
-It is important to note that only webpack entry files should be placed in the `app/javascript/packs` directory; Webpack will create a separate dependency graph for each entry point, so a large number of packs will increase compilation overhead. The rest of your asset source code should live outside this directory though Webpacker does not place any restrictions or make any suggestions on how to structure your source code. Here is an example:
+É importante notar que apenas os arquivos de entrada do Webpack devem ser colocados no diretório `app/javascript/packs`; O Webpack criará um gráfico de dependência separado para cada ponto de entrada, portanto, um grande número de pacotes aumentará a sobrecarga de compilação. O restante do seu código-fonte deve ficar fora desse diretório, embora o Webpacker não coloque nenhuma restrição ou faça sugestões sobre como estruturar seu código-fonte. Aqui está um exemplo:
 
 ```sh
 app/javascript:
   ├── packs:
-  │   # only webpack entry files here
+  │   # apenas arquivos de entrada do webpack aqui
   │   └── application.js
   │   └── application.css
   └── src:
@@ -109,27 +109,26 @@ app/javascript:
       └── logo.svg
 ```
 
-Typically, the pack file itself is largely a manifest that uses `import` or `require` to load the necessary files and may also do some initialization.
+Normalmente, o próprio arquivo de pacote é em grande parte um manifesto que usa `import` ou `require` para carregar os arquivos necessários e também pode fazer alguma inicialização.
 
-If you want to change these directories, you can adjust the `source_path` (default `app/javascript`) and `source_entry_path` (default `packs`) in the `config/webpacker.yml` file.
+Se você quiser mudar esses diretórios, você pode ajustar o `source_path` (padrão `app/javascript`) e `source_entry_path` (padrão `packs`) no arquivo `config/webpacker.yml`.
 
-Within source files, `import` statements are resolved relative to the file doing the import, so `import Bar from "./foo"` finds a `foo.js` file in the same directory as the current file, while `import Bar from "../src/foo"` finds a file in a sibling directory named `src`.
+Dentro dos arquivos de código fonte, as declarações `import` são resolvidas em relação ao arquivo fazendo a importação, então `import Bar from "./foo"` encontra um arquivo `foo.js` no mesmo diretório que o arquivo atual, enquanto `import Bar from "../src/foo"` encontra um arquivo em um diretório irmão chamado `src`.
 
-### Using Webpacker for CSS
+### Usando Webpacker para CSS
 
-Out of the box, Webpacker supports CSS and SCSS using the PostCSS processor.
+Pronto para uso, o Webpacker suporta CSS e SCSS usando o processador PostCSS.
 
-To include CSS code in your packs, first include your CSS files in your top-level pack file as though it was a JavaScript file. So if your CSS top-level manifest is in `app/javascript/styles/styles.scss`, you can import it with `import styles/styles`. This tells webpack to include your CSS file in the download. To actually load it in the page, include `<%= stylesheet_pack_tag "application" %>` in the view, where the `application` is the same pack name that you were using.
+Para incluir código CSS em seus pacotes, primeiro inclua seus arquivos CSS em seu arquivo de pacote de nível superior como se fosse um arquivo JavaScript. Portanto, se seu manifesto CSS de nível superior estiver em `app/javascript/styles/styles.scss`, você poderá importá-lo com `import styles/styles`. Isso diz ao webpack para incluir seu arquivo CSS no download. Para realmente carregá-lo na página, inclua `<%= stylesheet_pack_tag "application" %>` na visualização, onde o `application` é o mesmo nome do pacote que você estava usando.
 
-If you are using a CSS framework, you can add it to Webpacker by following the instructions to load the framework as an NPM module using `yarn`, typically `yarn add <framework>`. The framework should have instructions on importing it into a CSS or SCSS file.
+Se você estiver usando um framework CSS, você pode adicioná-lo ao Webpacker seguindo as instruções para carregar o framework como um módulo NPM usando `yarn`, normalmente `yarn add <framework>`. A estrutura deve ter instruções sobre como importá-la para um arquivo CSS ou SCSS.
 
+### Usando Webpacker para Assets Estáticos
 
-### Using Webpacker for Static Assets
+A [configuração](https://github.com/rails/webpacker/blob/master/lib/install/config/webpacker.yml#L21) do Webpack padrão deve funcionar imediatamente para _assets_ estáticos.
+A configuração inclui várias extensões de formato de arquivo de imagem e fonte, permitindo que o webpack as inclua no arquivo `manifest.json` gerado.
 
-The default Webpacker [configuration](https://github.com/rails/webpacker/blob/master/lib/install/config/webpacker.yml#L21) should work out of the box for static assets.
-The configuration includes several image and font file format extensions, allowing webpack to include them in the generated `manifest.json` file.
-
-With webpack, static assets can be imported directly in JavaScript files. The imported value represents the URL to the asset. For example:
+Com o webpack, os _assets_ estáticos podem ser importados diretamente em arquivos JavaScript. O valor importado representa a URL para o ativo. Por exemplo:
 
 ```javascript
 import myImageUrl from '../images/my-image.jpg'
@@ -137,45 +136,45 @@ import myImageUrl from '../images/my-image.jpg'
 // ...
 let myImage = new Image();
 myImage.src = myImageUrl;
-myImage.alt = "I'm a Webpacker-bundled image";
+myImage.alt = "Eu sou uma imagem do pacote Webpacker";
 document.body.appendChild(myImage);
 ```
 
-If you need to reference Webpacker static assets from a Rails view, the assets need to be explicitly required from Webpacker-bundled JavaScript files. Unlike Sprockets, Webpacker does not import your static assets by default. The default `app/javascript/packs/application.js` file has a template for importing files from a given directory, which you can uncomment for every directory you want to have static files in. The directories are relative to `app/javascript`. The template uses the directory `images`, but you can use anything in `app/javascript`:
+Se você precisar referenciar _assets_ estáticos do Webpacker a partir de uma _view_ do Rails, os _assets_ precisam ser explicitamente requeridos nos arquivos JavaScript empacotados do Webpacker. Ao contrário do Sprockets, o Webpacker não importa seus _assets_ estáticos por padrão. O arquivo padrão `app/javascript/packs/application.js` tem um _template_ para importar arquivos de um determinado diretório, que você pode descomentar para cada diretório em que deseja ter arquivos estáticos. Os diretórios são relativos a `app/javascript` . O _template_ usa o diretório `images`, mas você pode usar qualquer coisa em `app/javascript`:
 
 ```
 const images = require.context("../images", true)
 const imagePath = name => images(name, true)
 ```
 
-Static assets will be output into a directory under `public/packs/media`. For example, an image located and imported at `app/javascript/images/my-image.jpg` will be output at `public/packs/media/images/my-image-abcd1234.jpg`. To render an image tag for this image in a Rails view, use `image_pack_tag 'media/images/my-image.jpg`.
+_Assets_ estáticos serão enviados para um diretório em `public/packs/media`. Por exemplo, uma imagem localizada e importada em `app/javascript/images/my-image.jpg` será gerada em `public/packs/media/images/my-image-abcd1234.jpg`. Para renderizar uma tag de imagem para esta imagem em uma _view_ do Rails, use `image_pack_tag 'media/images/my-image.jpg`.
 
-The Webpacker ActionView helpers for static assets correspond to asset pipeline helpers according to the following table:
+Os _helpers_ do Webpacker ActionView para _assets_ estáticos correspondem aos _helpers_ de pipeline de _assets_ de acordo com a tabela a seguir:
 
-|ActionView helper | Webpacker helper |
+|Helper ActionView | Helper Webpacker |
 |------------------|------------------|
 |favicon_link_tag  |favicon_pack_tag  |
 |image_tag         |image_pack_tag    |
 
-Also, the generic helper `asset_pack_path` takes the local location of a file and returns its Webpacker location for use in Rails views.
+Além disso, o _helper_ genérico `asset_pack_path` seleciona a localização local de um arquivo e retorna sua localização do Webpacker para uso em _views_ do Rails.
 
-You can also access the image by directly referencing the file from a CSS file in `app/javascript`.
+Você também pode acessar a imagem referenciando diretamente o arquivo de um arquivo CSS em `app/javascript`.
 
-### Webpacker in Rails Engines
+### Webpacker em Engines Rails
 
-As of Webpacker version 6, Webpacker is not "engine-aware," which means Webpacker does not have feature-parity with Sprockets when it comes to using within Rails engines.
+A partir da versão 6 do Webpacker, o Webpacker não é "consciente da _engine_", o que significa que o Webpacker não possui paridade de recursos com o Sprockets quando se trata de seu uso nas _engines_ do Rails.
 
-Gem authors of Rails engines who wish to support consumers using Webpacker are encouraged to distribute frontend assets as an NPM package in addition to the gem itself and provide instructions (or an installer) to demonstrate how host apps should integrate. A good example of this approach is [Alchemy CMS](https://github.com/AlchemyCMS/alchemy_cms).
+Os autores de gems de _engines_ Rails que desejam oferecer suporte aos consumidores usando o Webpacker são incentivados a distribuir ativos de _front-end_ como um pacote NPM além da própria gem e fornecer instruções (ou um instalador) para demonstrar como os aplicativos hospedeiros devem se integrar. Um bom exemplo dessa abordagem é o [Alchemy CMS](https://github.com/AlchemyCMS/alchemy_cms).
 
-### Hot Module Replacement (HMR)
+### Substituição de Hot Module (HMR - Hot Module Replacement)
 
-Webpacker out-of-the-box supports HMR with webpack-dev-server, and you can toggle it by setting dev_server/hmr option inside `webpacker.yml`.
+O Webpacker pronto para uso suporta HMR com webpack-dev-server, e você pode alterná-lo configurando a opção dev_server/hmr dentro de `webpacker.yml`.
 
-Check out [webpack's documentation on DevServer](https://webpack.js.org/configuration/dev-server/#devserver-hot) for more information.
+Confira a [documentação do webpack no DevServer](https://webpack.js.org/configuration/dev-server/#devserver-hot) para mais informações.
 
-To support HMR with React, you would need to add react-hot-loader. Check out [React Hot Loader's _Getting Started_ guide](https://gaearon.github.io/react-hot-loader/getstarted/).
+Para suportar HMR com React, você precisará adicionar react-hot-loader. Confira [Guia de primeiros passos no React Hot Loader](https://gaearon.github.io/react-hot-loader/getstarted/).
 
-Don't forget to disable HMR if you are not running webpack-dev-server; otherwise, you will get a "not found error" for stylesheets.
+Não se esqueça de desabilitar o HMR se você não estiver executando o webpack-dev-server; caso contrário, você receberá um "erro não encontrado" para arquivos css.
 
 Webpacker em Diferentes Ambientes
 -----------------------------------
