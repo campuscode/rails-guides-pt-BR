@@ -75,7 +75,7 @@ Se ela existir, verifique se já não há alguém trabalhando nessa tradução. 
 
 O primeiro passo é ler o [Manual de Tradução](https://github.com/campuscode/rails-guides-pt-BR/blob/main/TRANSLATION_MANUAL.md) para conhecer os padrões, dicas de tradução e termos comuns usados no Guia.
 
-Depois, você pode criar no terminal, usando git, um [*branch*](https://git-scm.com/book/pt-br/v2/Branches-no-Git-Branches-em-poucas-palavras) referente à sua tradução e abrir um Pull Request ([link da documentação](https://docs.github.com/pt/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)) em Draft ou com a palavra WIP (Work in Progress) antes do título. Desta forma, todos podem saber que você iniciou uma tradução. Lembre-se de marcar no texto do Pull Request a issue que planeja traduzir (campuscode/rails-guides-pt-BR#numero-da-issue).
+Depois, você pode criar no terminal, usando git, um [*branch*](https://git-scm.com/book/pt-br/v2/Branches-no-Git-Branches-em-poucas-palavras) referente à sua tradução e abrir um Pull Request ([link da documentação](https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)) em Draft ou com a palavra WIP (Work in Progress) antes do título. Desta forma, todos podem saber que você iniciou uma tradução. Lembre-se de marcar no texto do Pull Request a issue que planeja traduzir (campuscode/rails-guides-pt-BR#numero-da-issue).
 
 Faça a tradução do capítulo fazendo commits durante o processo. Ao final, retire o WIP do Pull Request (ou o Draft) para que todos saibam que você terminou a tradução.
 
