@@ -626,151 +626,150 @@ display a small number next to each comment when it's created.
 That completes the comment function of the blogging engine. Now it's time to use
 it within an application.
 
-Hooking Into an Application
+Como conectar a *engine* em uma aplicação
 ---------------------------
 
-Using an engine within an application is very easy. This section covers how to
-mount the engine into an application and the initial setup required, as well as
-linking the engine to a `User` class provided by the application to provide
-ownership for articles and comments within the engine.
+Usar uma *engine* dentro de uma aplicação é muito fácil. Essa seção mostra como montar
+uma *engine* dentro de uma aplicação e a configuração inicial necessária, como também
+vincular a *engine* com uma classe `User` fornecida pela aplicação para fornecer
+propriedade aos artigos e comentários a *engine*.
 
-### Mounting the Engine
+### Montando a *Engine*
 
-First, the engine needs to be specified inside the application's `Gemfile`. If
-there isn't an application handy to test this out in, generate one using the
-`rails new` command outside of the engine directory like this:
+Primeiro, a engine precisa estar especificada dentro do Gemfile da aplicação. se
+não tiver uma aplicação útil para testar, crie uma usando o comando `rails new`
+fora do diretório da *engine* dessa forma:
 
 ```bash
 $ rails new unicorn
 ```
 
-Usually, specifying the engine inside the `Gemfile` would be done by specifying it
-as a normal, everyday gem.
+Geralmente, especificando a *engine* dentro do `Gemfile` deve ser feito especificando
+normalmente como, uma *gem* de todos os dias.
 
 ```ruby
 gem 'devise'
 ```
 
-However, because you are developing the `blorgh` engine on your local machine,
-you will need to specify the `:path` option in your `Gemfile`:
+Contudo, pelo motivo de você estar desenvolvendo a *engine* `blogrgh` na sua maquina local,
+você precisará especificar a opção `:path` no seu `Gemfile`:
 
 ```ruby
 gem 'blorgh', path: 'engines/blorgh'
 ```
 
-Then run `bundle` to install the gem.
+Então rode `bundle` para instalar a *gem*.
 
-As described earlier, by placing the gem in the `Gemfile` it will be loaded when
-Rails is loaded. It will first require `lib/blorgh.rb` from the engine, then
-`lib/blorgh/engine.rb`, which is the file that defines the major pieces of
-functionality for the engine.
+Como descrito antes, colocando a gem no `Gemfile` irá ser carregada quando
+o Rails for carregado. Vai procurar primeiro por `lib/blogrgh.rb` da *engine*, e então
+`lib/blogrgh/engine.rb`, o qual é o arquivo que define a maior parte das funcionalidades
+para a *engine*.
 
-To make the engine's functionality accessible from within an application, it
-needs to be mounted in that application's `config/routes.rb` file:
+Para deixar as funcionalidades da *engine* acessíveis de dentro de uma aplicação,
+é necessario estar montado no arquivo `config/routes.rb` da aplicação:
 
 ```ruby
 mount Blorgh::Engine, at: "/blog"
 ```
 
-This line will mount the engine at `/blog` in the application. Making it
-accessible at `http://localhost:3000/blog` when the application runs with `bin/rails
-server`.
+Essa linha irá montar a *engine* no `/blog` na aplicação. Fazendo isso
+estará acessível em `httpL://localhost:3000/blog` quando aplicação estiver
+rodando com `bin/rails server`.
 
-NOTE: Other engines, such as Devise, handle this a little differently by making
-you specify custom helpers (such as `devise_for`) in the routes. These helpers
-do exactly the same thing, mounting pieces of the engines's functionality at a
-pre-defined path which may be customizable.
+OBSERVAÇÃO: Outras engines, como o *Devise*, lidam com isso um pouco diferente
+fazendo você especificar um *helpers* customizado (tal como `devise_for`) nas rotas.
+Esses *helpers* fazem exatamente a mesma coisa, montando pedaços das funcionalidades
+da engine no caminho pré-definido o qual pode ser customizável.
 
-### Engine Setup
+### Configuração da *Engine*
 
-The engine contains migrations for the `blorgh_articles` and `blorgh_comments`
-table which need to be created in the application's database so that the
-engine's models can query them correctly. To copy these migrations into the
-application run the following command from the application's root:
+A *engine* contém *migrations* para as tabelas `blorgh_articles` e `blorgh_comments`
+as quais precisam ser criadas no banco de dados da aplicação então os *models* da *engine*
+podem consultar eles corretamente. Para copiar as *migrations*
+para dentro da aplicação rode o seguinte comando na raiz da aplicação:
 
 ```bash
 $ bin/rails blorgh:install:migrations
 ```
 
-If you have multiple engines that need migrations copied over, use
-`railties:install:migrations` instead:
+Se você tiver multiplas *engines* que precisam das *migrations* copiadas, use
+ao inves `railsties:install:migrations`:
 
 ```bash
 $ bin/rails railties:install:migrations
 ```
 
-This command, when run for the first time, will copy over all the migrations
-from the engine. When run the next time, it will only copy over migrations that
-haven't been copied over already. The first run for this command will output
-something such as this:
+Esse comando, quando rodar pela primeira vez, irá copiar todas as *migrations*
+da *engine*. Quando rodar a próxima vez, irá apenas copiar as *migrations* que
+não foram copiadas ainda. A primeira vez que rodar o comando o resultado será
+algo como isso:
 
 ```
 Copied migration [timestamp_1]_create_blorgh_articles.blorgh.rb from blorgh
 Copied migration [timestamp_2]_create_blorgh_comments.blorgh.rb from blorgh
 ```
 
-The first timestamp (`[timestamp_1]`) will be the current time, and the second
-timestamp (`[timestamp_2]`) will be the current time plus a second. The reason
-for this is so that the migrations for the engine are run after any existing
-migrations in the application.
+O primeiro registro de hora (`[timestamp_1]`) será a data atual, e o segundo
+registro de hora (`[timestamp_2]`) será a data atual mais um segundo. A razão
+para isso é que as *migrations* para as *engines* são rodadas depois de quaisquer
+*migrations* existentes na aplicação.
 
-To run these migrations within the context of the application, simply run `bin/rails
-db:migrate`. When accessing the engine through `http://localhost:3000/blog`, the
-articles will be empty. This is because the table created inside the application is
-different from the one created within the engine. Go ahead, play around with the
-newly mounted engine. You'll find that it's the same as when it was only an
-engine.
 
-If you would like to run migrations only from one engine, you can do it by
-specifying `SCOPE`:
+Para rodar essas *migrations* dentro do contexto da aplicação, simplemente rode `bin/rails db:migrate`.
+Quando acessar a *engine* através de `http://localhost:3000/blog`, o artigo estará vazio.
+Isso é porque a tabela criada dentro da aplicação é diferente das criadas dentro da *engine*.
+Vá em frente, brinque com a *engine* montada recentemente. Você irá descobrir que é o mesmo de quando
+era apenas uma engine.
+
+Se você gostaria de rodar as *migrations* apenas de uma *engine*, você pode fazer isso
+especificando o `SCOPE`:
 
 ```bash
 $ bin/rails db:migrate SCOPE=blorgh
 ```
 
-This may be useful if you want to revert engine's migrations before removing it.
-To revert all migrations from blorgh engine you can run code such as:
+Isso pode ser útil quando você quiser reverter as *migrations* da engine antes de remover ela.
+Para reverter todas as *migrations* da *engine* blorgh você pode rodar o código tal como:
 
 ```bash
 $ bin/rails db:migrate SCOPE=blorgh VERSION=0
 ```
 
-### Using a Class Provided by the Application
+### Usando uma classe fornecida pela aplicação
 
-#### Using a Model Provided by the Application
+#### Usando um *Model* fornecido pela aplicação
 
-When an engine is created, it may want to use specific classes from an
-application to provide links between the pieces of the engine and the pieces of
-the application. In the case of the `blorgh` engine, making articles and comments
-have authors would make a lot of sense.
+Quando uma *engine* é criada, isso pode querer especificar classes de uma plicação
+para fornecer links entre a parte da *engine* e parte da aplicação.
+Nesse caso da *engine* `blorgh`, fazer artigos e comentários terem autores
+faria muito sentido.
 
-A typical application might have a `User` class that would be used to represent
-authors for an article or a comment. But there could be a case where the
-application calls this class something different, such as `Person`. For this
-reason, the engine should not hardcode associations specifically for a `User`
-class.
+Uma típica aplicação pode ter uma classe `User` que poderia ser usada para representar
+autores para um artigo ou um comentário. Mas poderia ser um caso onde a aplicação
+chame essa classe de algo diferente, tal como `Person`. Por esse motivo,
+a *engine* não deveria fazer uma associação *hardcode* especificamente para a
+classe `User`.
 
-To keep it simple in this case, the application will have a class called `User`
-that represents the users of the application (we'll get into making this
-configurable further on). It can be generated using this command inside the
-application:
+Para manter simples nesse caso, a aplicação terá a classe chamada `User`
+que representa os usuários da aplicação (nós vamos tornar isso configurável mais adiante).
+Isso pode ser gerado usando esse comando dentro da aplicação:
 
 ```bash
 $ bin/rails generate model user name:string
 ```
 
-The `bin/rails db:migrate` command needs to be run here to ensure that our
-application has the `users` table for future use.
+O comando `bin/rails db:migrate` precisa ser rodado aqui para garantir que
+nossa aplicação tem a tabela `users` para usar no futuro.
 
-Also, to keep it simple, the articles form will have a new text field called
-`author_name`, where users can elect to put their name. The engine will then
-take this name and either create a new `User` object from it, or find one that
-already has that name. The engine will then associate the article with the found or
-created `User` object.
+Também, para manter simples, o formulário dos artigos terão um novo campo de texto
+chamado `author_name`, onde usuários podem optar por colocar seus nomes. A engine irá então
+pegar esse nome e criar um novo objeto `User` a partir dele, our encontrar um que
+já tenha esse nome. A *engine* irá então ser associada ao artigo com o objeto `User` encontrado
+ou criado.
 
-First, the `author_name` text field needs to be added to the
-`app/views/blorgh/articles/_form.html.erb` partial inside the engine. This can be
-added above the `title` field with this code:
+Primeiro, o campo de texto `author_name` precisa ser adicionado a
+partial `app/views/blorgh/articles/_form.html.erb` dentro da *engine*. Isso pode ser
+adicionado acima do campo `title` com esse código:
 
 ```html+erb
 <div class="field">
@@ -779,8 +778,8 @@ added above the `title` field with this code:
 </div>
 ```
 
-Next, we need to update our `Blorgh::ArticlesController#article_params` method to
-permit the new form parameter:
+Próximo, nós precisamos atualizar nosso método
+`Blorgh::ArticlesController#article_params` para permitir o novo parâmetro do form:
 
 ```ruby
 def article_params
@@ -788,15 +787,14 @@ def article_params
 end
 ```
 
-The `Blorgh::Article` model should then have some code to convert the `author_name`
-field into an actual `User` object and associate it as that article's `author`
-before the article is saved. It will also need to have an `attr_accessor` set up
-for this field, so that the setter and getter methods are defined for it.
+O *model* `Blorgh::Article` deve então ter algum código para converter o campo
+`author_name` no atual objeto `User` e associar como um artigo do `author` antes
+do artigo ser salvo. Isso irá também precisar ter um `attr_accessor` configurado
+para esse campo, então os métodos *getter* e *setter* são definidos para ele.
 
-To do all this, you'll need to add the `attr_accessor` for `author_name`, the
-association for the author and the `before_validation` call into
-`app/models/blorgh/article.rb`. The `author` association will be hard-coded to the
-`User` class for the time being.
+Para fazer tudo isso, você precisará adicionar o `attr_accessor` para `author_name`, a
+associação para o autor e a chamada do `before_validation` no `app/models/blorgh/article.rb`.
+A associação `author` estará *hard-coded* para a classe `User` por enquanto.
 
 ```ruby
 attr_accessor :author_name
@@ -810,32 +808,31 @@ private
   end
 ```
 
-By representing the `author` association's object with the `User` class, a link
-is established between the engine and the application. There needs to be a way
-of associating the records in the `blorgh_articles` table with the records in the
-`users` table. Because the association is called `author`, there should be an
-`author_id` column added to the `blorgh_articles` table.
+Ao representar o objeto da associação de `author` com a classe `User`, um link
+é estabelecido entre a *engine* e a aplicação. É necessário ter um jeito de associar os
+registros na tabela `blorgh_articles` com os registros na tabela `users`. Por causa
+dessa associação ser chamada `author`, deve haver
+uma coluna `author_id` adicionada a tabela `blorgh_articles`.
 
-To generate this new column, run this command within the engine:
+Para gerar essa nova coluna, rode esse comando dentro da *engine*:
 
 ```bash
 $ bin/rails generate migration add_author_id_to_blorgh_articles author_id:integer
 ```
 
-NOTE: Due to the migration's name and the column specification after it, Rails
-will automatically know that you want to add a column to a specific table and
-write that into the migration for you. You don't need to tell it any more than
-this.
+OBSERVAÇÃO: Devido ao nome da *migration* e a coluna especificada, Rails
+automaticamente saberá que você quer adicionar uma coluna para uma tabela específica
+e escreve aquilo na *migration* por você. Você não precisa dizer mais nada além disso.
 
-This migration will need to be run on the application. To do that, it must first
-be copied using this command:
+Essa *migration* precisará ser rodada na aplicação. Para fazer isso, primeiro precisa
+ser copiada usando esse comando:
 
 ```bash
 $ bin/rails blorgh:install:migrations
 ```
 
-Notice that only _one_ migration was copied over here. This is because the first
-two migrations were copied over the first time this command was run.
+Note que apenas _uma_ *migration* foi copiada aqui. Isso é por que as primeiras
+duas *migrations* foram copiadas quando você rodou esse comando a primeira vez.
 
 ```
 NOTE Migration [timestamp]_create_blorgh_articles.blorgh.rb from blorgh has been skipped. Migration with the same name already exists.
@@ -843,18 +840,18 @@ NOTE Migration [timestamp]_create_blorgh_comments.blorgh.rb from blorgh has been
 Copied migration [timestamp]_add_author_id_to_blorgh_articles.blorgh.rb from blorgh
 ```
 
-Run the migration using:
+Rode a *migration* usando:
 
 ```bash
 $ bin/rails db:migrate
 ```
 
-Now with all the pieces in place, an action will take place that will associate
-an author - represented by a record in the `users` table - with an article,
-represented by the `blorgh_articles` table from the engine.
+Agora todas as peças no lugar, uma ação tomará o lugar que associará
+um autor - representado pelo registro na tabela `users` - com um artigo,
+representado pela tabela `blorgh_articles` da *engine*.
 
-Finally, the author's name should be displayed on the article's page. Add this code
-above the "Title" output inside `app/views/blorgh/articles/show.html.erb`:
+Finalmente, o nome do autor deve ser mostrado na pagina do artigo. Adicione esse código
+em cima do "Títtulo" dentro de `app/views/blorgh/articles/show.html.erb`:
 
 ```html+erb
 <p>
@@ -863,18 +860,17 @@ above the "Title" output inside `app/views/blorgh/articles/show.html.erb`:
 </p>
 ```
 
-#### Using a Controller Provided by the Application
+#### Usando um *Controller* fornecido pela aplicação
 
-Because Rails controllers generally share code for things like authentication
-and accessing session variables, they inherit from `ApplicationController` by
-default. Rails engines, however are scoped to run independently from the main
-application, so each engine gets a scoped `ApplicationController`. This
-namespace prevents code collisions, but often engine controllers need to access
-methods in the main application's `ApplicationController`. An easy way to
-provide this access is to change the engine's scoped `ApplicationController` to
-inherit from the main application's `ApplicationController`. For our Blorgh
-engine this would be done by changing
-`app/controllers/blorgh/application_controller.rb` to look like:
+Por causa dos controllers do Rails geralmente compartilharem código para coisas
+como autenticação e acessando sessões variáveis, eles herdam do `ApplicationContoller`
+por padrão. Engines do Rails, contudo com escopop para rodar independente da aplicação
+principal, então cada *engine* tem um escopo `ApplicationController`. Esse *namespace*
+previne colisões de código, mas muitos *controllers* de *engines* precisam acessar métodos
+no `ApplicationController` da aplicação principal. Um jeito fácil de providenciar
+esse acesso é mudando o `ApplicationController` do escopo da *engine* para
+herdar do `ApplicationController` da aplicação principal. Para nossa *engine*
+Blorgh esse poderia ser feito mudando `app/controllers/blorgh/application_controller` para parecer como:
 
 ```ruby
 module Blorgh
@@ -883,57 +879,57 @@ module Blorgh
 end
 ```
 
-By default, the engine's controllers inherit from
-`Blorgh::ApplicationController`. So, after making this change they will have
-access to the main application's `ApplicationController`, as though they were
-part of the main application.
+Por padrão, os *controllers* da *engine* herdam do
+`Blorgh::ApplicationController`. Então, depois de fazer essa mudança ele terá
+acesso ao `ApplicationController` da aplicação principal, como se eles fossem
+parte da aplicação principal.
 
-This change does require that the engine is run from a Rails application that
-has an `ApplicationController`.
+Essa mudanção é necessita que a *engine* rode a partir da aplicação Rails que
+tenha um `ApplicationController`.
 
-### Configuring an Engine
+### Configurando uma *Engine*
 
-This section covers how to make the `User` class configurable, followed by
-general configuration tips for the engine.
+Essa seção cobre como fazer a claase `User` configurável, seguida por
+dicas de configuração geral para a *engine*.
 
-#### Setting Configuration Settings in the Application
+#### Definindo as configurações na aplicação
 
-The next step is to make the class that represents a `User` in the application
-customizable for the engine. This is because that class may not always be
-`User`, as previously explained. To make this setting customizable, the engine
-will have a configuration setting called `author_class` that will be used to
-specify which class represents users inside the application.
+O próximo passo é fazer a claase que representa o `User` na aplicação
+customizável para a *engine*. Isso é porque a classe pode nem sempre ser
+`User`, como explicado anteriormente. Para fazer essa configuração customizável,
+a *engine* precisará de uma configuração chamada `author_class` que será usada
+para especificar qual classe representa usuários na aplicação.
 
-To define this configuration setting, you should use a `mattr_accessor` inside
-the `Blorgh` module for the engine. Add this line to `lib/blorgh.rb` inside the
-engine:
+Para definir essa configuração, você deveria usar um `mattr_accessor` dentro
+do módulo `Blorgh` para a *engine*. Adicione essa linha em `lib/blorgh.rb` dentro
+da *engine*:
 
 ```ruby
 mattr_accessor :author_class
 ```
 
-This method works like its siblings, `attr_accessor` and `cattr_accessor`, but
-provides a setter and getter method on the module with the specified name. To
-use it, it must be referenced using `Blorgh.author_class`.
+Esse método trabalha como seu irmão, `attr_accessor` e `cattr_accessor`, mas
+providencia um método *getter* e *setter* no módulo com o nome especificado. Para
+usar isso, deve ser referenciado usando `Blorgh.author_class`.
 
-The next step is to switch the `Blorgh::Article` model over to this new setting.
-Change the `belongs_to` association inside this model
-(`app/models/blorgh/article.rb`) to this:
+O próximo passso é mudar o *model* `Blorgh::Article` para essa configuração.
+Mude a associação `belongs_to` dentro do *model*
+(`app/models/blorgh/article.rb`) para isso:
 
 ```ruby
 belongs_to :author, class_name: Blorgh.author_class
 ```
 
-The `set_author` method in the `Blorgh::Article` model should also use this class:
+O método `set_author` no *model* `Blorgh::Article` deveria também usar essa classe:
 
 ```ruby
 self.author = Blorgh.author_class.constantize.find_or_create_by(name: author_name)
 ```
 
-To save having to call `constantize` on the `author_class` result all the time,
-you could instead just override the `author_class` getter method inside the
-`Blorgh` module in the `lib/blorgh.rb` file to always call `constantize` on the
-saved value before returning the result:
+Para evitar uma chamada `constantize` no resultado `author_class` o tempo todo,
+você poderia ao invé só sobrescreve o método *getter* `author_class` dentro do
+módulo `Blorgh` no arquivo `lib/blorgh.rb` para sempre chamar `constantize` no
+valor salvo antes de retornar o resultado:
 
 ```ruby
 def self.author_class
@@ -941,69 +937,69 @@ def self.author_class
 end
 ```
 
-This would then turn the above code for `set_author` into this:
+Então isso mudaria o código acima de `set_author` para isso:
 
 ```ruby
 self.author = Blorgh.author_class.find_or_create_by(name: author_name)
 ```
 
-Resulting in something a little shorter, and more implicit in its behavior. The
-`author_class` method should always return a `Class` object.
+Resultando em algo um pouco menor, e mais implicito no comportamento. O
+método `author_class` deveria sempre retornar um objeto `Class`.
 
-Since we changed the `author_class` method to return a `Class` instead of a
-`String`, we must also modify our `belongs_to` definition in the `Blorgh::Article`
-model:
+Desde que nós mudamos o método `author_class` para retornar uma `Class` ao invés
+de uma `String`, nós devemos também modificar nossa definição `belongs_to` no *model*
+`Blorgh::Article`:
 
 ```ruby
 belongs_to :author, class_name: Blorgh.author_class.to_s
 ```
 
-To set this configuration setting within the application, an initializer should
-be used. By using an initializer, the configuration will be set up before the
-application starts and calls the engine's models, which may depend on this
-configuration setting existing.
+Para definir essa configuração dentro da aplicação, um inicializador deverá
+ser usado. Por usar um inicializador, a configuração será definir antes da
+aplicação inicial e chamar os *models* da *engine*, o qual pode depender
+desta configuração existente.
 
-Create a new initializer at `config/initializers/blorgh.rb` inside the
-application where the `blorgh` engine is installed and put this content in it:
+Criar um novo inicializador dentro da `config/initializers/blorgh.rb` a
+aplicação onde a *engine* `blorgh` esta instalado e colocar esse conteúdo nele:
 
 ```ruby
 Blorgh.author_class = "User"
 ```
 
-WARNING: It's very important here to use the `String` version of the class,
-rather than the class itself. If you were to use the class, Rails would attempt
-to load that class and then reference the related table. This could lead to
-problems if the table didn't already exist. Therefore, a `String` should be
-used and then converted to a class using `constantize` in the engine later on.
+ATENÇÃO: É muito importante usar aqui a versão `String` da classe,
+ao invés da classe em si. Se você fosse usar a classe, o Rails tentaria
+carregar a classe e então referenciar a tabela relacionada. Esse poderia levar
+a problemas se a tabela não esxistir. Portanto, uma `String` poderia ser
+usada e então convertida para classe usando `constantize` e uma *engine* mais tarde.
 
-Go ahead and try to create a new article. You will see that it works exactly in the
-same way as before, except this time the engine is using the configuration
-setting in `config/initializers/blorgh.rb` to learn what the class is.
+Vá em frente e tente criar um novo artigo. Você verá que funciona exatamente do mesmo
+jeito que antes, exceto que agora a *engine* está usando a definição da configuração
+no `config/initializers/blorgh.rb` par aprender o que a classe é.
 
-There are now no strict dependencies on what the class is, only what the API for
-the class must be. The engine simply requires this class to define a
-`find_or_create_by` method which returns an object of that class, to be
-associated with an article when it's created. This object, of course, should have
-some sort of identifier by which it can be referenced.
+Há agora nenhuma dependência estrita no que a classe é, só o que a API deve ser
+para a classe. A *engine* simplesmente precisa dessa classe para definir um método
+`find_or_create_by` o qual retorna um objeto da classe, para ser associado
+com um artigo quando é criado. Esse objeto, com certeza, poderia ter
+algum tipo de identificador pelo qual ele pode ser referenciado.
 
-#### General Engine Configuration
+#### Configuração Geral da *Engine*
 
-Within an engine, there may come a time where you wish to use things such as
-initializers, internationalization, or other configuration options. The great
-news is that these things are entirely possible, because a Rails engine shares
-much the same functionality as a Rails application. In fact, a Rails
-application's functionality is actually a superset of what is provided by
-engines!
+Dentro de uma *engine*, pode vir um momento onde você deseja usar coisas como
+um inicializador, internacionalização, ou outras opções de configuração. A maior
+notícia é que essas coisas são totalmente possíveis, porque a *engine* do Rails
+compartilha muito das mesmas funcionalidades como uma aplicação Rails. De fato,
+uma funcionalidade do Rails é atualmente um superconjunto do que é fornecido pelas
+*engines*!
 
-If you wish to use an initializer - code that should run before the engine is
-loaded - the place for it is the `config/initializers` folder. This directory's
-functionality is explained in the [Initializers
-section](configuring.html#initializers) of the Configuring guide, and works
-precisely the same way as the `config/initializers` directory inside an
-application. The same thing goes if you want to use a standard initializer.
+Se você deseja usar um inicializador - O código que precisa rodar antes da *engine*
+é carregado - o lugar para isso é a pasta `config/initializers`. Essa funcionalidade
+do diretório é explicada na [Seção Inicializadores](configuring.html#initializers) do
+guia de configuração, e funciona precisamente do mesmo jeito que o diretório
+`config/initializers` dentro de uma aplicação. O mesmo acontece se você quer usar
+um inicializador qualquer.
 
-For locales, simply place the locale files in the `config/locales` directory,
-just like you would in an application.
+Para traduções, simplemente coloque o arquivo de tradução no diretório `config/locales`,
+como você faria em uma aplicação.
 
 Testing an Engine
 -----------------
