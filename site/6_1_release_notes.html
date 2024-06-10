@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v7.0.0</div>
+    <div id="version-badge">v7.0.8</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -35,7 +35,7 @@
         Mais Ruby on Rails
       </span>
       <ul class="more-info-links s-hidden">
-        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://rubyonrails.org/blog">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
         <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
@@ -136,7 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
-                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - Dezembro 2021</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -231,7 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
-                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - Dezembro 2021</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -528,11 +528,10 @@ in initialization block and callbacks.</p>
   <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">)</span> <span class="c1"># =&gt; nil</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-52fb3bf9e6ef3e72738ba02ab6f015a3">User.where(name: "John").create do |john|
+<button class="clipboard-button" data-clipboard-text='User.where(name: "John").create do |john|
   User.find_by(name: "David") # =&gt; nil
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-52fb3bf9e6ef3e72738ba02ab6f015a3">Copiar</button>
+'>Copy</button>
 </div>
 <p>After:</p>
 <div class="code_container">
@@ -540,11 +539,10 @@ end
   <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">)</span> <span class="c1"># =&gt; #&lt;User name: "David", ...&gt;</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-45aec038a84e935ebfe0cbfd7abea4bb">User.where(name: "John").create do |john|
+<button class="clipboard-button" data-clipboard-text='User.where(name: "John").create do |john|
   User.find_by(name: "David") # =&gt; #&lt;User name: "David", ...&gt;
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-45aec038a84e935ebfe0cbfd7abea4bb">Copiar</button>
+'>Copy</button>
 </div>
 </li>
 <li>
@@ -554,31 +552,28 @@ end
   <span class="n">scope</span> <span class="ss">:david</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"David"</span><span class="p">)</span> <span class="p">}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7d837ec5e094ef9a7650166815faa91b">class User &lt; ActiveRecord::Base
+<button class="clipboard-button" data-clipboard-text='class User &lt; ActiveRecord::Base
   scope :david, -&gt; { User.where(name: "David") }
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7d837ec5e094ef9a7650166815faa91b">Copiar</button>
+'>Copy</button>
 </div>
 <p>Before:</p>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"John"</span><span class="p">).</span><span class="nf">david</span>
 <span class="c1"># SELECT * FROM users WHERE name = 'John' AND name = 'David'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-95eee110dcff19fe10bb26e0a43bc028">User.where(name: "John").david
+<button class="clipboard-button" data-clipboard-text="User.where(name: &quot;John&quot;).david
 # SELECT * FROM users WHERE name = 'John' AND name = 'David'
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-95eee110dcff19fe10bb26e0a43bc028">Copiar</button>
+">Copy</button>
 </div>
 <p>After:</p>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"John"</span><span class="p">).</span><span class="nf">david</span>
 <span class="c1"># SELECT * FROM users WHERE name = 'David'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8e37c38c4f15c434145d2b43567f9c3a">User.where(name: "John").david
+<button class="clipboard-button" data-clipboard-text="User.where(name: &quot;John&quot;).david
 # SELECT * FROM users WHERE name = 'David'
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8e37c38c4f15c434145d2b43567f9c3a">Copiar</button>
+">Copy</button>
 </div>
 </li>
 <li>
@@ -588,20 +583,18 @@ end
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">.</span><span class="nf">not</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Jon"</span><span class="p">,</span> <span class="ss">role: </span><span class="s2">"admin"</span><span class="p">)</span>
 <span class="c1"># SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cb71e56eb4cdea387bad185325214f34">User.where.not(name: "Jon", role: "admin")
+<button class="clipboard-button" data-clipboard-text="User.where.not(name: &quot;Jon&quot;, role: &quot;admin&quot;)
 # SELECT * FROM users WHERE name != 'Jon' AND role != 'admin'
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cb71e56eb4cdea387bad185325214f34">Copiar</button>
+">Copy</button>
 </div>
 <p>After:</p>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">.</span><span class="nf">not</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Jon"</span><span class="p">,</span> <span class="ss">role: </span><span class="s2">"admin"</span><span class="p">)</span>
 <span class="c1"># SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-81bd3c2102dfd47aa6903df937fa6fd9">User.where.not(name: "Jon", role: "admin")
+<button class="clipboard-button" data-clipboard-text="User.where.not(name: &quot;Jon&quot;, role: &quot;admin&quot;)
 # SELECT * FROM users WHERE NOT (name == 'Jon' AND role == 'admin')
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-81bd3c2102dfd47aa6903df937fa6fd9">Copiar</button>
+">Copy</button>
 </div>
 </li>
 <li><p>  To use the new per-database connection handling applications must change
@@ -679,7 +672,11 @@ editor and fill it with given HTML content.
 <code>&lt;action-text-attachment&gt;</code> elements in database fixtures.
 (<a href="https://github.com/rails/rails/pull/40289">Pull Request</a>)</p></li>
 </ul>
-<h3 id="action-mailbox"><a class="anchorlink" href="#action-mailbox">14 Action Mailbox</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/actionmailbox/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-mailbox-removals"><a class="anchorlink" href="#action-mailbox-removals">14.1 Removals</a></h4><h4 id="action-mailbox-deprecations"><a class="anchorlink" href="#action-mailbox-deprecations">14.2 Deprecations</a></h4><h4 id="action-mailbox-notable-changes"><a class="anchorlink" href="#action-mailbox-notable-changes">14.3 Notable changes</a></h4><h3 id="ruby-on-rails-guides"><a class="anchorlink" href="#ruby-on-rails-guides">15 Ruby on Rails Guides</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/guides/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="notable-changes"><a class="anchorlink" href="#notable-changes">15.1 Notable changes</a></h4><h3 id="credits"><a class="anchorlink" href="#credits">16 Credits</a></h3><p>See the
+<h3 id="action-mailbox"><a class="anchorlink" href="#action-mailbox">14 Action Mailbox</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/actionmailbox/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="action-mailbox-removals"><a class="anchorlink" href="#action-mailbox-removals">14.1 Removals</a></h4><h4 id="action-mailbox-deprecations"><a class="anchorlink" href="#action-mailbox-deprecations">14.2 Deprecations</a></h4>
+<ul>
+<li>  Deprecate <code>Rails.application.credentials.action_mailbox.api_key</code> and <code>MAILGUN_INGRESS_API_KEY</code> in favor of <code>Rails.application.credentials.action_mailbox.signing_key</code> and <code>MAILGUN_INGRESS_SIGNING_KEY</code>.</li>
+</ul>
+<h4 id="action-mailbox-notable-changes"><a class="anchorlink" href="#action-mailbox-notable-changes">14.3 Notable changes</a></h4><h3 id="ruby-on-rails-guides"><a class="anchorlink" href="#ruby-on-rails-guides">15 Ruby on Rails Guides</a></h3><p>Please refer to the <a href="https://github.com/rails/rails/blob/6-1-stable/guides/CHANGELOG.md">Changelog</a> for detailed changes.</p><h4 id="notable-changes"><a class="anchorlink" href="#notable-changes">15.1 Notable changes</a></h4><h3 id="credits"><a class="anchorlink" href="#credits">16 Credits</a></h3><p>See the
 <a href="https://contributors.rubyonrails.org/">full list of contributors to Rails</a>
 for the many people who spent many hours making Rails, the stable and robust
 framework it is. Kudos to all of them.</p>
@@ -706,7 +703,7 @@ framework it is. Kudos to all of them.</p>
         </p>
         <p>
           E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
-          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">forum oficial do Ruby on Rails</a> e nas
           <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
         </p>
       </div>

@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v7.0.0</div>
+    <div id="version-badge">v7.0.8</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -35,7 +35,7 @@
         Mais Ruby on Rails
       </span>
       <ul class="more-info-links s-hidden">
-        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://rubyonrails.org/blog">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
         <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
@@ -136,7 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
-                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - Dezembro 2021</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -231,7 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
-                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - Dezembro 2021</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -267,27 +267,29 @@
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#introducao-a-instrumentacao">Introdução à instrumentação</a></li>
-<li><a href="#subscribing-to-an-event">Subscribing to an event</a></li>
+<li><a href="#introduction-to-instrumentation">Introduction to Instrumentation</a></li>
+<li><a href="#subscribing-to-an-event">Subscribing to an Event</a></li>
 <li>
-<a href="#rails-framework-hooks">Rails framework hooks</a>
+<a href="#rails-framework-hooks">Rails Framework Hooks</a>
 
 <ul>
 <li><a href="#action-controller">Action Controller</a></li>
+<li><a href="#action-controller-%E2%80%94-caching">Action Controller — Caching</a></li>
 <li><a href="#action-dispatch">Action Dispatch</a></li>
 <li><a href="#action-view">Action View</a></li>
 <li><a href="#active-record">Active Record</a></li>
 <li><a href="#action-mailer">Action Mailer</a></li>
-<li><a href="#active-support">Active Support</a></li>
+<li><a href="#active-support-%E2%80%94-caching">Active Support — Caching</a></li>
 <li><a href="#active-job">Active Job</a></li>
 <li><a href="#action-cable">Action Cable</a></li>
 <li><a href="#active-storage">Active Storage</a></li>
+<li><a href="#active-storage-%E2%80%94-storage-service">Active Storage — Storage Service</a></li>
 <li><a href="#railties">Railties</a></li>
 <li><a href="#rails">Rails</a></li>
 </ul>
 </li>
 <li><a href="#exceptions">Exceptions</a></li>
-<li><a href="#creating-custom-events">Creating custom events</a></li>
+<li><a href="#creating-custom-events">Creating Custom Events</a></li>
 </ol>
 
           </div>
@@ -298,15 +300,14 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="introducao-a-instrumentacao"><a class="anchorlink" href="#introducao-a-instrumentacao">1 Introdução à instrumentação</a></h3><p>A API de instrumentação fornecida pelo <em>Active Support</em> permite que desenvolvedores exponham <em>hooks</em> para outros desenvolvedores utilizarem. Existem diversos destes <em>hooks</em> embutidos no <a href="#rails-framework-hooks">framework Rails</a>. Com essa API, os desenvolvedores podem escolher serem notificados quando certos eventos ocorrerem nas suas aplicações Rails ou em outros códigos em Ruby.</p><p>Por exemplo, existe um <em>hook</em> do <em>Active Record</em> que é chamado todas as vezes que uma <em>query</em> SQL é executada no banco.
-Um <strong>subscriber</strong> (ou observador) pode se inscrever à este <em>hook</em>, e assim, observar o número de <em>queries</em> feitas durante uma certa ação. Durante a execução de uma das <em>actions</em> de um <em>controller</em>, existe também um <em>hook</em> que permite, por exemplo, monitorar a duração desta ação.</p><p>Também é possível <a href="#creating-custom-events">criar seus próprios eventos</a> dentro da sua aplicação, os quais você poderá se inscrever.</p><h3 id="subscribing-to-an-event"><a class="anchorlink" href="#subscribing-to-an-event">2 Subscribing to an event</a></h3><p>Subscribing to an event is easy. Use <code>ActiveSupport::Notifications.subscribe</code> with a block to
+        <h3 id="introduction-to-instrumentation"><a class="anchorlink" href="#introduction-to-instrumentation">1 Introduction to Instrumentation</a></h3><p>The instrumentation API provided by Active Support allows developers to provide hooks which other developers may hook into. There are <a href="#rails-framework-hooks">several of these</a> within the Rails framework. With this API, developers can choose to be notified when certain events occur inside their application or another piece of Ruby code.</p><p>For example, there is <a href="#sql-active-record">a hook</a> provided within Active Record that is called every time Active Record uses an SQL query on a database. This hook could be <strong>subscribed</strong> to, and used to track the number of queries during a certain action. There's <a href="#process-action-action-controller">another hook</a> around the processing of an action of a controller. This could be used, for instance, to track how long a specific action has taken.</p><p>You are even able to <a href="#creating-custom-events">create your own events</a> inside your application which you can later subscribe to.</p><h3 id="subscribing-to-an-event"><a class="anchorlink" href="#subscribing-to-an-event">2 Subscribing to an Event</a></h3><p>Subscribing to an event is easy. Use <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Notifications.html#method-c-subscribe"><code>ActiveSupport::Notifications.subscribe</code></a> with a block to
 listen to any notification.</p><p>The block receives the following arguments:</p>
 <ul>
-<li>The name of the event</li>
+<li>Name of the event</li>
 <li>Time when it started</li>
 <li>Time when it finished</li>
 <li>A unique ID for the instrumenter that fired the event</li>
-<li>The payload (described in future sections)</li>
+<li>The payload for the event</li>
 </ul>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">subscribe</span> <span class="s2">"process_action.action_controller"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">started</span><span class="p">,</span> <span class="n">finished</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">,</span> <span class="n">data</span><span class="o">|</span>
@@ -314,27 +315,25 @@ listen to any notification.</p><p>The block receives the following arguments:</p
   <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">info</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> Received! (started: </span><span class="si">#{</span><span class="n">started</span><span class="si">}</span><span class="s2">, finished: </span><span class="si">#{</span><span class="n">finished</span><span class="si">}</span><span class="s2">)"</span> <span class="c1"># process_action.action_controller Received (started: 2019-05-05 13:43:57 -0800, finished: 2019-05-05 13:43:58 -0800)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3b5d429137ce384660f3b8af2b31fe10">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
+<button class="clipboard-button" data-clipboard-text='ActiveSupport::Notifications.subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
   # your own custom stuff
   Rails.logger.info "#{name} Received! (started: #{started}, finished: #{finished})" # process_action.action_controller Received (started: 2019-05-05 13:43:57 -0800, finished: 2019-05-05 13:43:58 -0800)
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3b5d429137ce384660f3b8af2b31fe10">Copiar</button>
+'>Copy</button>
 </div>
-<p>If you are concerned about the accuracy of <code>started</code> and <code>finished</code> to compute a precise elapsed time then use <code>ActiveSupport::Notifications.monotonic_subscribe</code>. The given block would receive the same arguments as above but the <code>started</code> and <code>finished</code> will have values with an accurate monotonic time instead of wall-clock time.</p><div class="code_container">
+<p>If you are concerned about the accuracy of <code>started</code> and <code>finished</code> to compute a precise elapsed time, then use <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Notifications.html#method-c-monotonic_subscribe"><code>ActiveSupport::Notifications.monotonic_subscribe</code></a>. The given block would receive the same arguments as above, but the <code>started</code> and <code>finished</code> will have values with an accurate monotonic time instead of wall-clock time.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">monotonic_subscribe</span> <span class="s2">"process_action.action_controller"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">started</span><span class="p">,</span> <span class="n">finished</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">,</span> <span class="n">data</span><span class="o">|</span>
   <span class="c1"># your own custom stuff</span>
   <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">info</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> Received! (started: </span><span class="si">#{</span><span class="n">started</span><span class="si">}</span><span class="s2">, finished: </span><span class="si">#{</span><span class="n">finished</span><span class="si">}</span><span class="s2">)"</span> <span class="c1"># process_action.action_controller Received (started: 1560978.425334, finished: 1560979.429234)</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2523737dfe198ad34bdfff8f8e50918c">ActiveSupport::Notifications.monotonic_subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
+<button class="clipboard-button" data-clipboard-text='ActiveSupport::Notifications.monotonic_subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
   # your own custom stuff
   Rails.logger.info "#{name} Received! (started: #{started}, finished: #{finished})" # process_action.action_controller Received (started: 1560978.425334, finished: 1560979.429234)
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2523737dfe198ad34bdfff8f8e50918c">Copiar</button>
+'>Copy</button>
 </div>
-<p>Defining all those block arguments each time can be tedious. You can easily create an <code>ActiveSupport::Notifications::Event</code>
+<p>Defining all those block arguments each time can be tedious. You can easily create an <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Notifications/Event.html"><code>ActiveSupport::Notifications::Event</code></a>
 from block arguments like this:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">subscribe</span> <span class="s2">"process_action.action_controller"</span> <span class="k">do</span> <span class="o">|*</span><span class="n">args</span><span class="o">|</span>
   <span class="n">event</span> <span class="o">=</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="o">::</span><span class="no">Event</span><span class="p">.</span><span class="nf">new</span> <span class="o">*</span><span class="n">args</span>
@@ -346,7 +345,7 @@ from block arguments like this:</p><div class="code_container">
   <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">info</span> <span class="s2">"</span><span class="si">#{</span><span class="n">event</span><span class="si">}</span><span class="s2"> Received!"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6ed7acc8201c32b4a8a0728ff80b684f">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
+<button class="clipboard-button" data-clipboard-text='ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
   event = ActiveSupport::Notifications::Event.new *args
 
   event.name      # =&gt; "process_action.action_controller"
@@ -355,8 +354,7 @@ from block arguments like this:</p><div class="code_container">
 
   Rails.logger.info "#{event} Received!"
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6ed7acc8201c32b4a8a0728ff80b684f">Copiar</button>
+'>Copy</button>
 </div>
 <p>You may also pass a block that accepts only one argument, and it will receive an event object:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">subscribe</span> <span class="s2">"process_action.action_controller"</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
@@ -367,146 +365,27 @@ end
   <span class="no">Rails</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">info</span> <span class="s2">"</span><span class="si">#{</span><span class="n">event</span><span class="si">}</span><span class="s2"> Received!"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ed5b2259bba256513315f6f8ffd48593">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |event|
+<button class="clipboard-button" data-clipboard-text='ActiveSupport::Notifications.subscribe "process_action.action_controller" do |event|
   event.name      # =&gt; "process_action.action_controller"
   event.duration  # =&gt; 10 (in milliseconds)
   event.payload   # =&gt; {:extra=&gt;information}
 
   Rails.logger.info "#{event} Received!"
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ed5b2259bba256513315f6f8ffd48593">Copiar</button>
-</div>
-<p>Most times you only care about the data itself. Here is a shortcut to just get the data.</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">subscribe</span> <span class="s2">"process_action.action_controller"</span> <span class="k">do</span> <span class="o">|*</span><span class="n">args</span><span class="o">|</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">args</span><span class="p">.</span><span class="nf">extract_options!</span>
-  <span class="n">data</span> <span class="c1"># { extra: :information }</span>
-<span class="k">end</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-ef78af69cfcc00c243ae121c1fc1233b">ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
-  data = args.extract_options!
-  data # { extra: :information }
-end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ef78af69cfcc00c243ae121c1fc1233b">Copiar</button>
+'>Copy</button>
 </div>
 <p>You may also subscribe to events matching a regular expression. This enables you to subscribe to
-multiple events at once. Here's how to subscribe to everything from <code>ActionController</code>.</p><div class="code_container">
+multiple events at once. Here's how to subscribe to everything from <code>ActionController</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">subscribe</span> <span class="sr">/action_controller/</span> <span class="k">do</span> <span class="o">|*</span><span class="n">args</span><span class="o">|</span>
   <span class="c1"># inspect all ActionController events</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ac5630b3a22666a640185b9f562baf88">ActiveSupport::Notifications.subscribe /action_controller/ do |*args|
+<button class="clipboard-button" data-clipboard-text="ActiveSupport::Notifications.subscribe /action_controller/ do |*args|
   # inspect all ActionController events
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ac5630b3a22666a640185b9f562baf88">Copiar</button>
+">Copy</button>
 </div>
-<h3 id="rails-framework-hooks"><a class="anchorlink" href="#rails-framework-hooks">3 Rails framework hooks</a></h3><p>Within the Ruby on Rails framework, there are a number of hooks provided for common events. These are detailed below.</p><h4 id="action-controller"><a class="anchorlink" href="#action-controller">3.1 Action Controller</a></h4><h5 id="write-fragment-action-controller"><a class="anchorlink" href="#write-fragment-action-controller">3.1.1 write_fragment.action_controller</a></h5>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>:key</code></td>
-<td>The complete key</td>
-</tr>
-</tbody>
-</table>
-<div class="code_container">
-<pre><code class="highlight ruby"><span class="p">{</span>
-  <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
-<span class="p">}</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-170ffe361519600ba36ac07c76b1c61c">{
-  key: 'posts/1-dashboard-view'
-}
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-170ffe361519600ba36ac07c76b1c61c">Copiar</button>
-</div>
-<h5 id="read-fragment-action-controller"><a class="anchorlink" href="#read-fragment-action-controller">3.1.2 read_fragment.action_controller</a></h5>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>:key</code></td>
-<td>The complete key</td>
-</tr>
-</tbody>
-</table>
-<div class="code_container">
-<pre><code class="highlight ruby"><span class="p">{</span>
-  <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
-<span class="p">}</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-51c463921202fe889ea3fcc5351adac9">{
-  key: 'posts/1-dashboard-view'
-}
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-51c463921202fe889ea3fcc5351adac9">Copiar</button>
-</div>
-<h5 id="expire-fragment-action-controller"><a class="anchorlink" href="#expire-fragment-action-controller">3.1.3 expire_fragment.action_controller</a></h5>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>:key</code></td>
-<td>The complete key</td>
-</tr>
-</tbody>
-</table>
-<div class="code_container">
-<pre><code class="highlight ruby"><span class="p">{</span>
-  <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
-<span class="p">}</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-27072120e1b2d3677598625ad5e80d71">{
-  key: 'posts/1-dashboard-view'
-}
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-27072120e1b2d3677598625ad5e80d71">Copiar</button>
-</div>
-<h5 id="exist-fragment-questionmark-action-controller"><a class="anchorlink" href="#exist-fragment-questionmark-action-controller">3.1.4 exist_fragment?.action_controller</a></h5>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>:key</code></td>
-<td>The complete key</td>
-</tr>
-</tbody>
-</table>
-<div class="code_container">
-<pre><code class="highlight ruby"><span class="p">{</span>
-  <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
-<span class="p">}</span>
-</code></pre>
-<textarea class="clipboard-content" id="clipboard-e72ec065048f5a54062136b08f8d19b8">{
-  key: 'posts/1-dashboard-view'
-}
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e72ec065048f5a54062136b08f8d19b8">Copiar</button>
-</div>
-<h5 id="start-processing-action-controller"><a class="anchorlink" href="#start-processing-action-controller">3.1.5 start_processing.action_controller</a></h5>
+<h3 id="rails-framework-hooks"><a class="anchorlink" href="#rails-framework-hooks">3 Rails Framework Hooks</a></h3><p>Within the Ruby on Rails framework, there are a number of hooks provided for common events. These events and their payloads are detailed below.</p><h4 id="action-controller"><a class="anchorlink" href="#action-controller">3.1 Action Controller</a></h4><h5 id="start-processing-action-controller"><a class="anchorlink" href="#start-processing-action-controller">3.1.1 <code>start_processing.action_controller</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -556,7 +435,7 @@ end
   <span class="ss">path: </span><span class="s2">"/posts/new"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1f93d69860000fa52ad00baf6918e896">{
+<button class="clipboard-button" data-clipboard-text='{
   controller: "PostsController",
   action: "new",
   params: { "action" =&gt; "new", "controller" =&gt; "posts" },
@@ -565,10 +444,9 @@ end
   method: "GET",
   path: "/posts/new"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1f93d69860000fa52ad00baf6918e896">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="process-action-action-controller"><a class="anchorlink" href="#process-action-action-controller">3.1.6 process_action.action_controller</a></h5>
+<h5 id="process-action-action-controller"><a class="anchorlink" href="#process-action-action-controller">3.1.2 <code>process_action.action_controller</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -607,13 +485,11 @@ end
 </tr>
 <tr>
 <td><code>:request</code></td>
-<td>The <code>ActionDispatch::Request</code>
-</td>
+<td>The <a href="https://api.rubyonrails.org/v7.0.8/classes/ActionDispatch/Request.html"><code>ActionDispatch::Request</code></a> object</td>
 </tr>
 <tr>
 <td><code>:response</code></td>
-<td>The <code>ActionDispatch::Response</code>
-</td>
+<td>The <a href="https://api.rubyonrails.org/v7.0.8/classes/ActionDispatch/Response.html"><code>ActionDispatch::Response</code></a> object</td>
 </tr>
 <tr>
 <td><code>:status</code></td>
@@ -645,7 +521,7 @@ end
   <span class="ss">db_runtime: </span><span class="mf">0.157</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0f6ba6093a1dbfcbced732c28a64202b">{
+<button class="clipboard-button" data-clipboard-text='{
   controller: "PostsController",
   action: "index",
   params: {"action" =&gt; "index", "controller" =&gt; "posts"},
@@ -659,10 +535,9 @@ end
   view_runtime: 46.848,
   db_runtime: 0.157
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0f6ba6093a1dbfcbced732c28a64202b">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="send-file-action-controller"><a class="anchorlink" href="#send-file-action-controller">3.1.7 send_file.action_controller</a></h5>
+<h5 id="send-file-action-controller"><a class="anchorlink" href="#send-file-action-controller">3.1.3 <code>send_file.action_controller</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -677,7 +552,7 @@ end
 </tr>
 </tbody>
 </table>
-<div class="info"><p>Additional keys may be added by the caller.</p></div><h5 id="send-data-action-controller"><a class="anchorlink" href="#send-data-action-controller">3.1.8 send_data.action_controller</a></h5><p><code>ActionController</code> does not add any specific information to the payload. All options are passed through to the payload.</p><h5 id="redirect-to-action-controller"><a class="anchorlink" href="#redirect-to-action-controller">3.1.9 redirect_to.action_controller</a></h5>
+<p>Additional keys may be added by the caller.</p><h5 id="send-data-action-controller"><a class="anchorlink" href="#send-data-action-controller">3.1.4 <code>send_data.action_controller</code></a></h5><p><code>ActionController</code> does not add any specific information to the payload. All options are passed through to the payload.</p><h5 id="redirect-to-action-controller"><a class="anchorlink" href="#redirect-to-action-controller">3.1.5 <code>redirect_to.action_controller</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -696,8 +571,7 @@ end
 </tr>
 <tr>
 <td><code>:request</code></td>
-<td>The <code>ActionDispatch::Request</code>
-</td>
+<td>The <a href="https://api.rubyonrails.org/v7.0.8/classes/ActionDispatch/Request.html"><code>ActionDispatch::Request</code></a> object</td>
 </tr>
 </tbody>
 </table>
@@ -708,15 +582,14 @@ end
   <span class="ss">request: </span><span class="c1">#&lt;ActionDispatch::Request:0x00007ff1cb9bd7b8&gt;</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7faf046af0099a11f7512da01c3bc9a0">{
+<button class="clipboard-button" data-clipboard-text='{
   status: 302,
   location: "http://localhost:3000/posts/new",
   request: #&lt;ActionDispatch::Request:0x00007ff1cb9bd7b8&gt;
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7faf046af0099a11f7512da01c3bc9a0">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="halted-callback-action-controller"><a class="anchorlink" href="#halted-callback-action-controller">3.1.10 halted_callback.action_controller</a></h5>
+<h5 id="halted-callback-action-controller"><a class="anchorlink" href="#halted-callback-action-controller">3.1.6 <code>halted_callback.action_controller</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -736,13 +609,12 @@ end
   <span class="ss">filter: </span><span class="s2">":halting_filter"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-de22aa92b8eea7434616b78e4df8be52">{
+<button class="clipboard-button" data-clipboard-text='{
   filter: ":halting_filter"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-de22aa92b8eea7434616b78e4df8be52">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="unpermitted-parameters-action-controller"><a class="anchorlink" href="#unpermitted-parameters-action-controller">3.1.11 unpermitted_parameters.action_controller</a></h5>
+<h5 id="unpermitted-parameters-action-controller"><a class="anchorlink" href="#unpermitted-parameters-action-controller">3.1.7 <code>unpermitted_parameters.action_controller</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -757,11 +629,112 @@ end
 </tr>
 <tr>
 <td><code>:context</code></td>
-<td>Hash with the following keys: :controller, :action, :params, :request</td>
+<td>Hash with the following keys: <code>:controller</code>, <code>:action</code>, <code>:params</code>, <code>:request</code>
+</td>
 </tr>
 </tbody>
 </table>
-<h4 id="action-dispatch"><a class="anchorlink" href="#action-dispatch">3.2 Action Dispatch</a></h4><h5 id="process-middleware-action-dispatch"><a class="anchorlink" href="#process-middleware-action-dispatch">3.2.1 process_middleware.action_dispatch</a></h5>
+<h4 id="action-controller-—-caching"><a class="anchorlink" href="#action-controller-%E2%80%94-caching">3.2 Action Controller — Caching</a></h4><h5 id="write-fragment-action-controller"><a class="anchorlink" href="#write-fragment-action-controller">3.2.1 <code>write_fragment.action_controller</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>The complete key</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="{
+  key: 'posts/1-dashboard-view'
+}
+">Copy</button>
+</div>
+<h5 id="read-fragment-action-controller"><a class="anchorlink" href="#read-fragment-action-controller">3.2.2 <code>read_fragment.action_controller</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>The complete key</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="{
+  key: 'posts/1-dashboard-view'
+}
+">Copy</button>
+</div>
+<h5 id="expire-fragment-action-controller"><a class="anchorlink" href="#expire-fragment-action-controller">3.2.3 <code>expire_fragment.action_controller</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>The complete key</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="{
+  key: 'posts/1-dashboard-view'
+}
+">Copy</button>
+</div>
+<h5 id="exist-fragment-questionmark-action-controller"><a class="anchorlink" href="#exist-fragment-questionmark-action-controller">3.2.4 <code>exist_fragment?.action_controller</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>The complete key</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">key: </span><span class="s1">'posts/1-dashboard-view'</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="{
+  key: 'posts/1-dashboard-view'
+}
+">Copy</button>
+</div>
+<h4 id="action-dispatch"><a class="anchorlink" href="#action-dispatch">3.3 Action Dispatch</a></h4><h5 id="process-middleware-action-dispatch"><a class="anchorlink" href="#process-middleware-action-dispatch">3.3.1 <code>process_middleware.action_dispatch</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -776,7 +749,7 @@ end
 </tr>
 </tbody>
 </table>
-<h4 id="action-view"><a class="anchorlink" href="#action-view">3.3 Action View</a></h4><h5 id="render-template-action-view"><a class="anchorlink" href="#render-template-action-view">3.3.1 render_template.action_view</a></h5>
+<h4 id="action-view"><a class="anchorlink" href="#action-view">3.4 Action View</a></h4><h5 id="render-template-action-view"><a class="anchorlink" href="#render-template-action-view">3.4.1 <code>render_template.action_view</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -801,14 +774,13 @@ end
   <span class="ss">layout: </span><span class="s2">"layouts/application"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0d362e406a05bef388ee2af395587360">{
+<button class="clipboard-button" data-clipboard-text='{
   identifier: "/Users/adam/projects/notifications/app/views/posts/index.html.erb",
   layout: "layouts/application"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0d362e406a05bef388ee2af395587360">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="render-partial-action-view"><a class="anchorlink" href="#render-partial-action-view">3.3.2 render_partial.action_view</a></h5>
+<h5 id="render-partial-action-view"><a class="anchorlink" href="#render-partial-action-view">3.4.2 <code>render_partial.action_view</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -828,13 +800,12 @@ end
   <span class="ss">identifier: </span><span class="s2">"/Users/adam/projects/notifications/app/views/posts/_form.html.erb"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-384ed9665379ec3e82c7d35f45d9b650">{
+<button class="clipboard-button" data-clipboard-text='{
   identifier: "/Users/adam/projects/notifications/app/views/posts/_form.html.erb"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-384ed9665379ec3e82c7d35f45d9b650">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="render-collection-action-view"><a class="anchorlink" href="#render-collection-action-view">3.3.3 render_collection.action_view</a></h5>
+<h5 id="render-collection-action-view"><a class="anchorlink" href="#render-collection-action-view">3.4.3 <code>render_collection.action_view</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -857,22 +828,46 @@ end
 </tr>
 </tbody>
 </table>
-<p><code>:cache_hits</code> is only included if the collection is rendered with <code>cached: true</code>.</p><div class="code_container">
+<p>The <code>:cache_hits</code> key is only included if the collection is rendered with <code>cached: true</code>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span>
   <span class="ss">identifier: </span><span class="s2">"/Users/adam/projects/notifications/app/views/posts/_post.html.erb"</span><span class="p">,</span>
   <span class="ss">count: </span><span class="mi">3</span><span class="p">,</span>
   <span class="ss">cache_hits: </span><span class="mi">0</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-be7f30ea9d5b5fb50236f382599bf28b">{
+<button class="clipboard-button" data-clipboard-text='{
   identifier: "/Users/adam/projects/notifications/app/views/posts/_post.html.erb",
   count: 3,
   cache_hits: 0
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-be7f30ea9d5b5fb50236f382599bf28b">Copiar</button>
+'>Copy</button>
 </div>
-<h4 id="active-record"><a class="anchorlink" href="#active-record">3.4 Active Record</a></h4><h5 id="sql-active-record"><a class="anchorlink" href="#sql-active-record">3.4.1 sql.active_record</a></h5>
+<h5 id="render-layout-action-view"><a class="anchorlink" href="#render-layout-action-view">3.4.4 <code>render_layout.action_view</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:identifier</code></td>
+<td>Full path to template</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">identifier: </span><span class="s2">"/Users/adam/projects/notifications/app/views/layouts/application.html.erb"</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text='{
+  identifier: "/Users/adam/projects/notifications/app/views/layouts/application.html.erb"
+}
+'>Copy</button>
+</div>
+<h4 id="active-record"><a class="anchorlink" href="#active-record">3.5 Active Record</a></h4><h5 id="sql-active-record"><a class="anchorlink" href="#sql-active-record">3.5.1 <code>sql.active_record</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -912,7 +907,7 @@ end
 </tr>
 </tbody>
 </table>
-<div class="info"><p>The adapters will add their own data as well.</p></div><div class="code_container">
+<p>Adapters may add their own data as well.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span>
   <span class="ss">sql: </span><span class="s2">"SELECT </span><span class="se">\"</span><span class="s2">posts</span><span class="se">\"</span><span class="s2">.* FROM </span><span class="se">\"</span><span class="s2">posts</span><span class="se">\"</span><span class="s2"> "</span><span class="p">,</span>
   <span class="ss">name: </span><span class="s2">"Post Load"</span><span class="p">,</span>
@@ -922,7 +917,7 @@ end
   <span class="ss">statement_name: </span><span class="kp">nil</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f7a215f01809e015ef06ecffd9dc517e">{
+<button class="clipboard-button" data-clipboard-text='{
   sql: "SELECT \"posts\".* FROM \"posts\" ",
   name: "Post Load",
   connection: #&lt;ActiveRecord::ConnectionAdapters::SQLite3Adapter:0x00007f9f7a838850&gt;,
@@ -930,10 +925,9 @@ end
   type_casted_binds: [11],
   statement_name: nil
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f7a215f01809e015ef06ecffd9dc517e">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="instantiation-active-record"><a class="anchorlink" href="#instantiation-active-record">3.4.2 instantiation.active_record</a></h5>
+<h5 id="instantiation-active-record"><a class="anchorlink" href="#instantiation-active-record">3.5.2 <code>instantiation.active_record</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -958,14 +952,13 @@ end
   <span class="ss">class_name: </span><span class="s2">"User"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e63c4f3c7b378ebbfd95eef4f90e15ca">{
+<button class="clipboard-button" data-clipboard-text='{
   record_count: 1,
   class_name: "User"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e63c4f3c7b378ebbfd95eef4f90e15ca">Copiar</button>
+'>Copy</button>
 </div>
-<h4 id="action-mailer"><a class="anchorlink" href="#action-mailer">3.5 Action Mailer</a></h4><h5 id="deliver-action-mailer"><a class="anchorlink" href="#deliver-action-mailer">3.5.1 deliver.action_mailer</a></h5>
+<h4 id="action-mailer"><a class="anchorlink" href="#action-mailer">3.6 Action Mailer</a></h4><h5 id="deliver-action-mailer"><a class="anchorlink" href="#deliver-action-mailer">3.6.1 <code>deliver.action_mailer</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1028,7 +1021,7 @@ end
   <span class="ss">perform_deliveries: </span><span class="kp">true</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2c7f23d9be4c5a557cfb74b5dc13dc40">{
+<button class="clipboard-button" data-clipboard-text='{
   mailer: "Notification",
   message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
   subject: "Rails Guides",
@@ -1038,10 +1031,9 @@ end
   mail: "...", # omitted for brevity
   perform_deliveries: true
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2c7f23d9be4c5a557cfb74b5dc13dc40">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="process-action-mailer"><a class="anchorlink" href="#process-action-mailer">3.5.2 process.action_mailer</a></h5>
+<h5 id="process-action-mailer"><a class="anchorlink" href="#process-action-mailer">3.6.2 <code>process.action_mailer</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1071,15 +1063,14 @@ end
   <span class="ss">args: </span><span class="p">[]</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9d16db0f278c136405b7a83959c5015e">{
+<button class="clipboard-button" data-clipboard-text='{
   mailer: "Notification",
   action: "welcome_email",
   args: []
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9d16db0f278c136405b7a83959c5015e">Copiar</button>
+'>Copy</button>
 </div>
-<h4 id="active-support"><a class="anchorlink" href="#active-support">3.6 Active Support</a></h4><h5 id="cache-read-active-support"><a class="anchorlink" href="#cache-read-active-support">3.6.1 cache_read.active_support</a></h5>
+<h4 id="active-support-—-caching"><a class="anchorlink" href="#active-support-%E2%80%94-caching">3.7 Active Support — Caching</a></h4><h5 id="cache-read-active-support"><a class="anchorlink" href="#cache-read-active-support">3.7.1 <code>cache_read.active_support</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1102,12 +1093,42 @@ end
 </tr>
 <tr>
 <td><code>:super_operation</code></td>
-<td>:fetch is added when a read is used with <code>#fetch</code>
+<td>
+<code>:fetch</code> if a read is done with <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/Store.html#method-i-fetch"><code>fetch</code></a>
 </td>
 </tr>
 </tbody>
 </table>
-<h5 id="cache-generate-active-support"><a class="anchorlink" href="#cache-generate-active-support">3.6.2 cache_generate.active_support</a></h5><p>This event is only used when <code>#fetch</code> is called with a block.</p>
+<h5 id="cache-read-multi-active-support"><a class="anchorlink" href="#cache-read-multi-active-support">3.7.2 <code>cache_read_multi.active_support</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>Keys used in the store</td>
+</tr>
+<tr>
+<td><code>:store</code></td>
+<td>Name of the store class</td>
+</tr>
+<tr>
+<td><code>:hits</code></td>
+<td>Keys of cache hits</td>
+</tr>
+<tr>
+<td><code>:super_operation</code></td>
+<td>
+<code>:fetch_multi</code> if a read is done with <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/Store.html#method-i-fetch_multi"><code>fetch_multi</code></a>
+</td>
+</tr>
+</tbody>
+</table>
+<h5 id="cache-generate-active-support"><a class="anchorlink" href="#cache-generate-active-support">3.7.3 <code>cache_generate.active_support</code></a></h5><p>This event is only emitted when <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/Store.html#method-i-fetch"><code>fetch</code></a> is called with a block.</p>
 <table>
 <thead>
 <tr>
@@ -1126,20 +1147,19 @@ end
 </tr>
 </tbody>
 </table>
-<div class="info"><p>Options passed to fetch will be merged with the payload when writing to the store</p></div><div class="code_container">
+<p>Options passed to <code>fetch</code> will be merged with the payload when writing to the store.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span>
   <span class="ss">key: </span><span class="s2">"name-of-complicated-computation"</span><span class="p">,</span>
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-54f4646c9956e1c693ef2ca378d40d66">{
+<button class="clipboard-button" data-clipboard-text='{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-54f4646c9956e1c693ef2ca378d40d66">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="cache-fetch-hit-active-support"><a class="anchorlink" href="#cache-fetch-hit-active-support">3.6.3 cache_fetch_hit.active_support</a></h5><p>This event is only used when <code>#fetch</code> is called with a block.</p>
+<h5 id="cache-fetch-hit-active-support"><a class="anchorlink" href="#cache-fetch-hit-active-support">3.7.4 <code>cache_fetch_hit.active_support</code></a></h5><p>This event is only emitted when <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/Store.html#method-i-fetch"><code>fetch</code></a> is called with a block.</p>
 <table>
 <thead>
 <tr>
@@ -1158,20 +1178,19 @@ end
 </tr>
 </tbody>
 </table>
-<div class="info"><p>Options passed to fetch will be merged with the payload.</p></div><div class="code_container">
+<p>Options passed to <code>fetch</code> will be merged with the payload.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span>
   <span class="ss">key: </span><span class="s2">"name-of-complicated-computation"</span><span class="p">,</span>
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-84ce7027b710133b12f69015e9698a73">{
+<button class="clipboard-button" data-clipboard-text='{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-84ce7027b710133b12f69015e9698a73">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="cache-write-active-support"><a class="anchorlink" href="#cache-write-active-support">3.6.4 cache_write.active_support</a></h5>
+<h5 id="cache-write-active-support"><a class="anchorlink" href="#cache-write-active-support">3.7.5 <code>cache_write.active_support</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1190,20 +1209,113 @@ end
 </tr>
 </tbody>
 </table>
-<div class="info"><p>Cache stores may add their own keys</p></div><div class="code_container">
+<p>Cache stores may add their own data as well.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="p">{</span>
   <span class="ss">key: </span><span class="s2">"name-of-complicated-computation"</span><span class="p">,</span>
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-072b53394e64be76b1a01ea96da03a51">{
+<button class="clipboard-button" data-clipboard-text='{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-072b53394e64be76b1a01ea96da03a51">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="cache-delete-active-support"><a class="anchorlink" href="#cache-delete-active-support">3.6.5 cache_delete.active_support</a></h5>
+<h5 id="cache-write-multi-active-support"><a class="anchorlink" href="#cache-write-multi-active-support">3.7.6 <code>cache_write_multi.active_support</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>Keys and values written to the store</td>
+</tr>
+<tr>
+<td><code>:store</code></td>
+<td>Name of the store class</td>
+</tr>
+</tbody>
+</table>
+<h5 id="cache-increment-active-support"><a class="anchorlink" href="#cache-increment-active-support">3.7.7 <code>cache_increment.active_support</code></a></h5><p>This event is only emitted when using <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/MemCacheStore.html"><code>MemCacheStore</code></a>
+or <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/RedisCacheStore.html"><code>RedisCacheStore</code></a>.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>Key used in the store</td>
+</tr>
+<tr>
+<td><code>:store</code></td>
+<td>Name of the store class</td>
+</tr>
+<tr>
+<td><code>:amount</code></td>
+<td>Increment amount</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">key: </span><span class="s2">"bottles-of-beer"</span><span class="p">,</span>
+  <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::RedisCacheStore"</span><span class="p">,</span>
+  <span class="ss">amount: </span><span class="mi">99</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text='{
+  key: "bottles-of-beer",
+  store: "ActiveSupport::Cache::RedisCacheStore",
+  amount: 99
+}
+'>Copy</button>
+</div>
+<h5 id="cache-decrement-active-support"><a class="anchorlink" href="#cache-decrement-active-support">3.7.8 <code>cache_decrement.active_support</code></a></h5><p>This event is only emitted when using the Memcached or Redis cache stores.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>Key used in the store</td>
+</tr>
+<tr>
+<td><code>:store</code></td>
+<td>Name of the store class</td>
+</tr>
+<tr>
+<td><code>:amount</code></td>
+<td>Decrement amount</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">key: </span><span class="s2">"bottles-of-beer"</span><span class="p">,</span>
+  <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::RedisCacheStore"</span><span class="p">,</span>
+  <span class="ss">amount: </span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text='{
+  key: "bottles-of-beer",
+  store: "ActiveSupport::Cache::RedisCacheStore",
+  amount: 1
+}
+'>Copy</button>
+</div>
+<h5 id="cache-delete-active-support"><a class="anchorlink" href="#cache-delete-active-support">3.7.9 <code>cache_delete.active_support</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1228,14 +1340,132 @@ end
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ab687d2a5862b4ade11f2cf9ca2cc227">{
+<button class="clipboard-button" data-clipboard-text='{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ab687d2a5862b4ade11f2cf9ca2cc227">Copiar</button>
+'>Copy</button>
 </div>
-<h5 id="cache-exist-questionmark-active-support"><a class="anchorlink" href="#cache-exist-questionmark-active-support">3.6.6 cache_exist?.active_support</a></h5>
+<h5 id="cache-delete-multi-active-support"><a class="anchorlink" href="#cache-delete-multi-active-support">3.7.10 <code>cache_delete_multi.active_support</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>Keys used in the store</td>
+</tr>
+<tr>
+<td><code>:store</code></td>
+<td>Name of the store class</td>
+</tr>
+</tbody>
+</table>
+<h5 id="cache-delete-matched-active-support"><a class="anchorlink" href="#cache-delete-matched-active-support">3.7.11 <code>cache_delete_matched.active_support</code></a></h5><p>This event is only emitted when using <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/RedisCacheStore.html"><code>RedisCacheStore</code></a>,
+<a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/FileStore.html"><code>FileStore</code></a>, or <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/MemoryStore.html"><code>MemoryStore</code></a>.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>Key pattern used</td>
+</tr>
+<tr>
+<td><code>:store</code></td>
+<td>Name of the store class</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">key: </span><span class="s2">"posts/*"</span><span class="p">,</span>
+  <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::RedisCacheStore"</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text='{
+  key: "posts/*",
+  store: "ActiveSupport::Cache::RedisCacheStore"
+}
+'>Copy</button>
+</div>
+<h5 id="cache-cleanup-active-support"><a class="anchorlink" href="#cache-cleanup-active-support">3.7.12 <code>cache_cleanup.active_support</code></a></h5><p>This event is only emitted when using <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/MemoryStore.html"><code>MemoryStore</code></a>.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:store</code></td>
+<td>Name of the store class</td>
+</tr>
+<tr>
+<td><code>:size</code></td>
+<td>Number of entries in the cache before cleanup</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemoryStore"</span><span class="p">,</span>
+  <span class="ss">size: </span><span class="mi">9001</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text='{
+  store: "ActiveSupport::Cache::MemoryStore",
+  size: 9001
+}
+'>Copy</button>
+</div>
+<h5 id="cache-prune-active-support"><a class="anchorlink" href="#cache-prune-active-support">3.7.13 <code>cache_prune.active_support</code></a></h5><p>This event is only emitted when using <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Cache/MemoryStore.html"><code>MemoryStore</code></a>.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:store</code></td>
+<td>Name of the store class</td>
+</tr>
+<tr>
+<td><code>:key</code></td>
+<td>Target size (in bytes) for the cache</td>
+</tr>
+<tr>
+<td><code>:from</code></td>
+<td>Size (in bytes) of the cache before prune</td>
+</tr>
+</tbody>
+</table>
+<div class="code_container">
+<pre><code class="highlight ruby"><span class="p">{</span>
+  <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemoryStore"</span><span class="p">,</span>
+  <span class="ss">key: </span><span class="mi">5000</span><span class="p">,</span>
+  <span class="ss">from: </span><span class="mi">9001</span>
+<span class="p">}</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text='{
+  store: "ActiveSupport::Cache::MemoryStore",
+  key: 5000,
+  from: 9001
+}
+'>Copy</button>
+</div>
+<h5 id="cache-exist-questionmark-active-support"><a class="anchorlink" href="#cache-exist-questionmark-active-support">3.7.14 <code>cache_exist?.active_support</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1260,14 +1490,13 @@ end
   <span class="ss">store: </span><span class="s2">"ActiveSupport::Cache::MemCacheStore"</span>
 <span class="p">}</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b2fe8caf454119ca36cd4d18e95a0432">{
+<button class="clipboard-button" data-clipboard-text='{
   key: "name-of-complicated-computation",
   store: "ActiveSupport::Cache::MemCacheStore"
 }
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b2fe8caf454119ca36cd4d18e95a0432">Copiar</button>
+'>Copy</button>
 </div>
-<h4 id="active-job"><a class="anchorlink" href="#active-job">3.7 Active Job</a></h4><h5 id="enqueue-at-active-job"><a class="anchorlink" href="#enqueue-at-active-job">3.7.1 enqueue_at.active_job</a></h5>
+<h4 id="active-job"><a class="anchorlink" href="#active-job">3.8 Active Job</a></h4><h5 id="enqueue-at-active-job"><a class="anchorlink" href="#enqueue-at-active-job">3.8.1 <code>enqueue_at.active_job</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1286,7 +1515,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="enqueue-active-job"><a class="anchorlink" href="#enqueue-active-job">3.7.2 enqueue.active_job</a></h5>
+<h5 id="enqueue-active-job"><a class="anchorlink" href="#enqueue-active-job">3.8.2 <code>enqueue.active_job</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1305,7 +1534,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="enqueue-retry-active-job"><a class="anchorlink" href="#enqueue-retry-active-job">3.7.3 enqueue_retry.active_job</a></h5>
+<h5 id="enqueue-retry-active-job"><a class="anchorlink" href="#enqueue-retry-active-job">3.8.3 <code>enqueue_retry.active_job</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1332,7 +1561,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="perform-start-active-job"><a class="anchorlink" href="#perform-start-active-job">3.7.4 perform_start.active_job</a></h5>
+<h5 id="perform-start-active-job"><a class="anchorlink" href="#perform-start-active-job">3.8.4 <code>perform_start.active_job</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1351,7 +1580,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="perform-active-job"><a class="anchorlink" href="#perform-active-job">3.7.5 perform.active_job</a></h5>
+<h5 id="perform-active-job"><a class="anchorlink" href="#perform-active-job">3.8.5 <code>perform.active_job</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1370,7 +1599,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="retry-stopped-active-job"><a class="anchorlink" href="#retry-stopped-active-job">3.7.6 retry_stopped.active_job</a></h5>
+<h5 id="retry-stopped-active-job"><a class="anchorlink" href="#retry-stopped-active-job">3.8.6 <code>retry_stopped.active_job</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1393,7 +1622,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="discard-active-job"><a class="anchorlink" href="#discard-active-job">3.7.7 discard.active_job</a></h5>
+<h5 id="discard-active-job"><a class="anchorlink" href="#discard-active-job">3.8.7 <code>discard.active_job</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1416,7 +1645,7 @@ end
 </tr>
 </tbody>
 </table>
-<h4 id="action-cable"><a class="anchorlink" href="#action-cable">3.8 Action Cable</a></h4><h5 id="perform-action-action-cable"><a class="anchorlink" href="#perform-action-action-cable">3.8.1 perform_action.action_cable</a></h5>
+<h4 id="action-cable"><a class="anchorlink" href="#action-cable">3.9 Action Cable</a></h4><h5 id="perform-action-action-cable"><a class="anchorlink" href="#perform-action-action-cable">3.9.1 <code>perform_action.action_cable</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1439,7 +1668,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="transmit-action-cable"><a class="anchorlink" href="#transmit-action-cable">3.8.2 transmit.action_cable</a></h5>
+<h5 id="transmit-action-cable"><a class="anchorlink" href="#transmit-action-cable">3.9.2 <code>transmit.action_cable</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1462,7 +1691,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="transmit-subscription-confirmation-action-cable"><a class="anchorlink" href="#transmit-subscription-confirmation-action-cable">3.8.3 transmit_subscription_confirmation.action_cable</a></h5>
+<h5 id="transmit-subscription-confirmation-action-cable"><a class="anchorlink" href="#transmit-subscription-confirmation-action-cable">3.9.3 <code>transmit_subscription_confirmation.action_cable</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1477,7 +1706,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="transmit-subscription-rejection-action-cable"><a class="anchorlink" href="#transmit-subscription-rejection-action-cable">3.8.4 transmit_subscription_rejection.action_cable</a></h5>
+<h5 id="transmit-subscription-rejection-action-cable"><a class="anchorlink" href="#transmit-subscription-rejection-action-cable">3.9.4 <code>transmit_subscription_rejection.action_cable</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1492,7 +1721,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="broadcast-action-cable"><a class="anchorlink" href="#broadcast-action-cable">3.8.5 broadcast.action_cable</a></h5>
+<h5 id="broadcast-action-cable"><a class="anchorlink" href="#broadcast-action-cable">3.9.5 <code>broadcast.action_cable</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1515,7 +1744,37 @@ end
 </tr>
 </tbody>
 </table>
-<h4 id="active-storage"><a class="anchorlink" href="#active-storage">3.9 Active Storage</a></h4><h5 id="service-upload-active-storage"><a class="anchorlink" href="#service-upload-active-storage">3.9.1 service_upload.active_storage</a></h5>
+<h4 id="active-storage"><a class="anchorlink" href="#active-storage">3.10 Active Storage</a></h4><h5 id="preview-active-storage"><a class="anchorlink" href="#preview-active-storage">3.10.1 <code>preview.active_storage</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:key</code></td>
+<td>Secure token</td>
+</tr>
+</tbody>
+</table>
+<h5 id="transform-active-storage"><a class="anchorlink" href="#transform-active-storage">3.10.2 <code>transform.active_storage</code></a></h5><h5 id="analyze-active-storage"><a class="anchorlink" href="#analyze-active-storage">3.10.3 <code>analyze.active_storage</code></a></h5>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:analyzer</code></td>
+<td>Name of analyzer e.g., ffprobe</td>
+</tr>
+</tbody>
+</table>
+<h4 id="active-storage-—-storage-service"><a class="anchorlink" href="#active-storage-%E2%80%94-storage-service">3.11 Active Storage — Storage Service</a></h4><h5 id="service-upload-active-storage"><a class="anchorlink" href="#service-upload-active-storage">3.11.1 <code>service_upload.active_storage</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1538,7 +1797,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="service-streaming-download-active-storage"><a class="anchorlink" href="#service-streaming-download-active-storage">3.9.2 service_streaming_download.active_storage</a></h5>
+<h5 id="service-streaming-download-active-storage"><a class="anchorlink" href="#service-streaming-download-active-storage">3.11.2 <code>service_streaming_download.active_storage</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1557,7 +1816,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="service-download-chunk-active-storage"><a class="anchorlink" href="#service-download-chunk-active-storage">3.9.3 service_download_chunk.active_storage</a></h5>
+<h5 id="service-download-chunk-active-storage"><a class="anchorlink" href="#service-download-chunk-active-storage">3.11.3 <code>service_download_chunk.active_storage</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1580,7 +1839,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="service-download-active-storage"><a class="anchorlink" href="#service-download-active-storage">3.9.4 service_download.active_storage</a></h5>
+<h5 id="service-download-active-storage"><a class="anchorlink" href="#service-download-active-storage">3.11.4 <code>service_download.active_storage</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1599,7 +1858,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="service-delete-active-storage"><a class="anchorlink" href="#service-delete-active-storage">3.9.5 service_delete.active_storage</a></h5>
+<h5 id="service-delete-active-storage"><a class="anchorlink" href="#service-delete-active-storage">3.11.5 <code>service_delete.active_storage</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1618,7 +1877,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="service-delete-prefixed-active-storage"><a class="anchorlink" href="#service-delete-prefixed-active-storage">3.9.6 service_delete_prefixed.active_storage</a></h5>
+<h5 id="service-delete-prefixed-active-storage"><a class="anchorlink" href="#service-delete-prefixed-active-storage">3.11.6 <code>service_delete_prefixed.active_storage</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1637,7 +1896,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="service-exist-active-storage"><a class="anchorlink" href="#service-exist-active-storage">3.9.7 service_exist.active_storage</a></h5>
+<h5 id="service-exist-active-storage"><a class="anchorlink" href="#service-exist-active-storage">3.11.7 <code>service_exist.active_storage</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1660,7 +1919,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="service-url-active-storage"><a class="anchorlink" href="#service-url-active-storage">3.9.8 service_url.active_storage</a></h5>
+<h5 id="service-url-active-storage"><a class="anchorlink" href="#service-url-active-storage">3.11.8 <code>service_url.active_storage</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1683,7 +1942,7 @@ end
 </tr>
 </tbody>
 </table>
-<h5 id="service-update-metadata-active-storage"><a class="anchorlink" href="#service-update-metadata-active-storage">3.9.9 service_update_metadata.active_storage</a></h5>
+<h5 id="service-update-metadata-active-storage"><a class="anchorlink" href="#service-update-metadata-active-storage">3.11.9 <code>service_update_metadata.active_storage</code></a></h5><p>This event is only emitted when using the Google Cloud Storage service.</p>
 <table>
 <thead>
 <tr>
@@ -1702,45 +1961,15 @@ end
 </tr>
 <tr>
 <td><code>:content_type</code></td>
-<td>HTTP Content-Type field</td>
+<td>HTTP <code>Content-Type</code> field</td>
 </tr>
 <tr>
 <td><code>:disposition</code></td>
-<td>HTTP Content-Disposition field</td>
+<td>HTTP <code>Content-Disposition</code> field</td>
 </tr>
 </tbody>
 </table>
-<div class="info"><p>The only ActiveStorage service that provides this hook so far is GCS.</p></div><h5 id="preview-active-storage"><a class="anchorlink" href="#preview-active-storage">3.9.10 preview.active_storage</a></h5>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>:key</code></td>
-<td>Secure token</td>
-</tr>
-</tbody>
-</table>
-<h5 id="transform-active-storage"><a class="anchorlink" href="#transform-active-storage">3.9.11 transform.active_storage</a></h5><h5 id="analyze-active-storage"><a class="anchorlink" href="#analyze-active-storage">3.9.12 analyze.active_storage</a></h5>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>:analyzer</code></td>
-<td>Name of analyzer e.g., ffprobe</td>
-</tr>
-</tbody>
-</table>
-<h4 id="railties"><a class="anchorlink" href="#railties">3.10 Railties</a></h4><h5 id="load-config-initializer-railties"><a class="anchorlink" href="#load-config-initializer-railties">3.10.1 load_config_initializer.railties</a></h5>
+<h4 id="railties"><a class="anchorlink" href="#railties">3.12 Railties</a></h4><h5 id="load-config-initializer-railties"><a class="anchorlink" href="#load-config-initializer-railties">3.12.1 <code>load_config_initializer.railties</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1751,12 +1980,12 @@ end
 <tbody>
 <tr>
 <td><code>:initializer</code></td>
-<td>Path to loaded initializer from <code>config/initializers</code>
+<td>Path of loaded initializer in <code>config/initializers</code>
 </td>
 </tr>
 </tbody>
 </table>
-<h4 id="rails"><a class="anchorlink" href="#rails">3.11 Rails</a></h4><h5 id="deprecation-rails"><a class="anchorlink" href="#deprecation-rails">3.11.1 deprecation.rails</a></h5>
+<h4 id="rails"><a class="anchorlink" href="#rails">3.13 Rails</a></h4><h5 id="deprecation-rails"><a class="anchorlink" href="#deprecation-rails">3.13.1 <code>deprecation.rails</code></a></h5>
 <table>
 <thead>
 <tr>
@@ -1795,33 +2024,31 @@ information about it.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="creating-custom-events"><a class="anchorlink" href="#creating-custom-events">5 Creating custom events</a></h3><p>Adding your own events is easy as well. <code>ActiveSupport::Notifications</code> will take care of
-all the heavy lifting for you. Simply call <code>instrument</code> with a <code>name</code>, <code>payload</code> and a block.
-The notification will be sent after the block returns. <code>ActiveSupport</code> will generate the start and end times
+<h3 id="creating-custom-events"><a class="anchorlink" href="#creating-custom-events">5 Creating Custom Events</a></h3><p>Adding your own events is easy as well. Active Support will take care of
+all the heavy lifting for you. Simply call <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Notifications.html#method-c-instrument"><code>ActiveSupport::Notifications.instrument</code></a> with a <code>name</code>, <code>payload</code>, and a block.
+The notification will be sent after the block returns. Active Support will generate the start and end times,
 and add the instrumenter's unique ID. All data passed into the <code>instrument</code> call will make
 it into the payload.</p><p>Here's an example:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">instrument</span> <span class="s2">"my.custom.event"</span><span class="p">,</span> <span class="ss">this: :data</span> <span class="k">do</span>
   <span class="c1"># do your custom stuff here</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-97b66204c634c895db8af75427c489a9">ActiveSupport::Notifications.instrument "my.custom.event", this: :data do
+<button class="clipboard-button" data-clipboard-text='ActiveSupport::Notifications.instrument "my.custom.event", this: :data do
   # do your custom stuff here
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-97b66204c634c895db8af75427c489a9">Copiar</button>
+'>Copy</button>
 </div>
 <p>Now you can listen to this event with:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">subscribe</span> <span class="s2">"my.custom.event"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">started</span><span class="p">,</span> <span class="n">finished</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">,</span> <span class="n">data</span><span class="o">|</span>
   <span class="nb">puts</span> <span class="n">data</span><span class="p">.</span><span class="nf">inspect</span> <span class="c1"># {:this=&gt;:data}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ca64c708b4830ef9a092002fcafe1662">ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, finished, unique_id, data|
+<button class="clipboard-button" data-clipboard-text='ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, finished, unique_id, data|
   puts data.inspect # {:this=&gt;:data}
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ca64c708b4830ef9a092002fcafe1662">Copiar</button>
+'>Copy</button>
 </div>
-<p>You also have the option to call instrument without passing a block. This lets you leverage the
+<p>You may also call <code>instrument</code> without passing a block. This lets you leverage the
 instrumentation infrastructure for other messaging uses.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Notifications</span><span class="p">.</span><span class="nf">instrument</span> <span class="s2">"my.custom.event"</span><span class="p">,</span> <span class="ss">this: :data</span>
 
@@ -1829,13 +2056,12 @@ instrumentation infrastructure for other messaging uses.</p><div class="code_con
   <span class="nb">puts</span> <span class="n">data</span><span class="p">.</span><span class="nf">inspect</span> <span class="c1"># {:this=&gt;:data}</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5a05af30edc558f61ea19ef4e789d0c9">ActiveSupport::Notifications.instrument "my.custom.event", this: :data
+<button class="clipboard-button" data-clipboard-text='ActiveSupport::Notifications.instrument "my.custom.event", this: :data
 
 ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, finished, unique_id, data|
   puts data.inspect # {:this=&gt;:data}
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5a05af30edc558f61ea19ef4e789d0c9">Copiar</button>
+'>Copy</button>
 </div>
 <p>You should follow Rails conventions when defining your own events. The format is: <code>event.library</code>.
 If your application is sending Tweets, you should create an event named <code>tweet.twitter</code>.</p>
@@ -1862,7 +2088,7 @@ If your application is sending Tweets, you should create an event named <code>tw
         </p>
         <p>
           E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
-          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">forum oficial do Ruby on Rails</a> e nas
           <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
         </p>
       </div>

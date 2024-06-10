@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Active Record and PostgreSQL — Ruby on Rails Guides</title>
+  <title>Active Record e PostgreSQL — Ruby on Rails Guides</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
@@ -16,9 +16,9 @@
   <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/toggle-theme.js" data-turbolinks-track="reload"></script>
-  <meta property="og:title" content="Active Record and PostgreSQL — Ruby on Rails Guides" />
-  <meta name="description" content="Active Record and PostgreSQLThis guide covers PostgreSQL specific usage of Active Record.After reading this guide, you will know: How to use PostgreSQL&#39;s datatypes. How to use UUID primary keys. How to implement full text search with PostgreSQL. How to back your Active Record models with database views." />
-  <meta property="og:description" content="Active Record and PostgreSQLThis guide covers PostgreSQL specific usage of Active Record.After reading this guide, you will know: How to use PostgreSQL&#39;s datatypes. How to use UUID primary keys. How to implement full text search with PostgreSQL. How to back your Active Record models with database views." />
+  <meta property="og:title" content="Active Record e PostgreSQL — Ruby on Rails Guides" />
+  <meta name="description" content="Active Record e PostgreSQLEsse guia cobre o uso específico de Active Record pelo PostgreSQLApós ler este guia, você saberá: Como usar os datatypes do PostgreSQL. Como usar chaves primárias UUID. Como implementar pesquisa com texto no PostregreSQL. Como usar database views em seus models Active Record." />
+  <meta property="og:description" content="Active Record e PostgreSQLEsse guia cobre o uso específico de Active Record pelo PostgreSQLApós ler este guia, você saberá: Como usar os datatypes do PostgreSQL. Como usar chaves primárias UUID. Como implementar pesquisa com texto no PostregreSQL. Como usar database views em seus models Active Record." />
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:site_name" content="Guia Ruby on Rails" />
   <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v7.0.0</div>
+    <div id="version-badge">v7.0.8</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -35,7 +35,7 @@
         Mais Ruby on Rails
       </span>
       <ul class="more-info-links s-hidden">
-        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://rubyonrails.org/blog">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
         <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
@@ -136,7 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
-                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - Dezembro 2021</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -231,7 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
-                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - Dezembro 2021</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -255,12 +255,12 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Active Record and PostgreSQL</h2><p>This guide covers PostgreSQL specific usage of Active Record.</p><p>After reading this guide, you will know:</p>
+      <h2>Active Record e PostgreSQL</h2><p>Esse guia cobre o uso específico de Active Record pelo PostgreSQL</p><p>Após ler este guia, você saberá:</p>
 <ul>
-<li>How to use PostgreSQL&#39;s datatypes.</li>
-<li>How to use UUID primary keys.</li>
-<li>How to implement full text search with PostgreSQL.</li>
-<li>How to back your Active Record models with database views.</li>
+<li>Como usar os <em>datatypes</em> do PostgreSQL.</li>
+<li>Como usar chaves primárias UUID.</li>
+<li>Como implementar pesquisa com texto no PostregreSQL.</li>
+<li>Como usar <em>database views</em> em seus <em>models</em> Active Record.</li>
 </ul>
 
 
@@ -274,21 +274,22 @@
 <li><a href="#bytea">Bytea</a></li>
 <li><a href="#array">Array</a></li>
 <li><a href="#hstore">Hstore</a></li>
-<li><a href="#json-and-jsonb">JSON and JSONB</a></li>
-<li><a href="#range-types">Range Types</a></li>
-<li><a href="#composite-types">Composite Types</a></li>
-<li><a href="#enumerated-types">Enumerated Types</a></li>
+<li><a href="#json-e-jsonb">JSON e JSONB</a></li>
+<li><a href="#tipos-de-intervalo">Tipos de Intervalo</a></li>
+<li><a href="#tipos-compostos">Tipos Compostos</a></li>
+<li><a href="#tipos-enumerados">Tipos Enumerados</a></li>
 <li><a href="#uuid">UUID</a></li>
 <li><a href="#bit-string-types">Bit String Types</a></li>
-<li><a href="#network-address-types">Network Address Types</a></li>
-<li><a href="#geometric-types">Geometric Types</a></li>
-<li><a href="#interval">Interval</a></li>
+<li><a href="#tipo-endere%C3%A7o-de-internet">Tipo Endereço de Internet</a></li>
+<li><a href="#tipos-geom%C3%A9tricos">Tipos Geométricos</a></li>
+<li><a href="#intervalo">Intervalo</a></li>
 </ul>
 </li>
 <li><a href="#uuid-primary-keys">UUID Primary Keys</a></li>
 <li><a href="#generated-columns">Generated Columns</a></li>
 <li><a href="#pesquisa-de-texto-completo">Pesquisa de Texto Completo</a></li>
-<li><a href="#visao-de-banco-de-dados">Visão de Banco de Dados</a></li>
+<li><a href="#vis%C3%A3o-de-banco-de-dados">Visão de Banco de Dados</a></li>
+<li><a href="#structure-dumps">Structure Dumps</a></li>
 </ol>
 
           </div>
@@ -299,14 +300,11 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <p>In order to use the PostgreSQL adapter you need to have at least version 9.3
-installed. Older versions are not supported.</p><p>To get started with PostgreSQL have a look at the
-<a href="configuring.html#configuring-a-postgresql-database">configuring Rails guide</a>.
-It describes how to properly set up Active Record for PostgreSQL.</p><h3 id="datatypes"><a class="anchorlink" href="#datatypes">1 Datatypes</a></h3><p>PostgreSQL offers a number of specific datatypes. Following is a list of types,
-that are supported by the PostgreSQL adapter.</p><h4 id="bytea"><a class="anchorlink" href="#bytea">1.1 Bytea</a></h4>
+        <p>Para usar o adaptador PostgreSQL, você precisa ter pelo menos a versão 9.3 instalada. Versões anteriores não são suportadas.</p><p>Para iniciar o PostgreSQL, veja o <a href="configuring.html#configuring-a-postgresql-database">guia de configuração Rails</a>.
+Ele descreve como configurar o Active Record para o PostgreSQL.</p><h3 id="datatypes"><a class="anchorlink" href="#datatypes">1 Datatypes</a></h3><p>O PostgreSQL oferece um número de <em>datatypes</em> específicos. Seguindo a lista de tipos que são suportados pelo adaptador PostgreSQL.</p><h4 id="bytea"><a class="anchorlink" href="#bytea">1.1 Bytea</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/datatype-binary.html">type definition</a></li>
-<li><a href="https://www.postgresql.org/docs/current/static/functions-binarystring.html">functions and operators</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/datatype-binary.html">definição de tipo</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/functions-binarystring.html">funções e operações</a></li>
 </ul>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20140207133952_create_documents.rb</span>
@@ -314,39 +312,36 @@ that are supported by the PostgreSQL adapter.</p><h4 id="bytea"><a class="anchor
   <span class="n">t</span><span class="p">.</span><span class="nf">binary</span> <span class="s1">'payload'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f6650e2918e440c0be16ed6ad4a71b81"># db/migrate/20140207133952_create_documents.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20140207133952_create_documents.rb
 create_table :documents do |t|
   t.binary 'payload'
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f6650e2918e440c0be16ed6ad4a71b81">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/document.rb</span>
 <span class="k">class</span> <span class="nc">Document</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a644227c56b63df66b05bf2e927f1349"># app/models/document.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/document.rb
 class Document &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a644227c56b63df66b05bf2e927f1349">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Usage</span>
 <span class="n">data</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="no">Rails</span><span class="p">.</span><span class="nf">root</span> <span class="o">+</span> <span class="s2">"tmp/output.pdf"</span><span class="p">)</span>
 <span class="no">Document</span><span class="p">.</span><span class="nf">create</span> <span class="ss">payload: </span><span class="n">data</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-43f3007396deef4e7632e6e1beed6d77"># Usage
+<button class="clipboard-button" data-clipboard-text='# Usage
 data = File.read(Rails.root + "tmp/output.pdf")
 Document.create payload: data
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-43f3007396deef4e7632e6e1beed6d77">Copiar</button>
+'>Copy</button>
 </div>
 <h4 id="array"><a class="anchorlink" href="#array">1.2 Array</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/arrays.html">type definition</a></li>
-<li><a href="https://www.postgresql.org/docs/current/static/functions-array.html">functions and operators</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/arrays.html">definição de tipo</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/functions-array.html">funções e operações</a></li>
 </ul>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20140207133952_create_books.rb</span>
@@ -358,7 +353,7 @@ Document.create payload: data
 <span class="n">add_index</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">using: </span><span class="s1">'gin'</span>
 <span class="n">add_index</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">:ratings</span><span class="p">,</span> <span class="ss">using: </span><span class="s1">'gin'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ad13e03a253babffa6fc2eb6baa2ed58"># db/migrate/20140207133952_create_books.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20140207133952_create_books.rb
 create_table :books do |t|
   t.string 'title'
   t.string 'tags', array: true
@@ -366,19 +361,17 @@ create_table :books do |t|
 end
 add_index :books, :tags, using: 'gin'
 add_index :books, :ratings, using: 'gin'
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ad13e03a253babffa6fc2eb6baa2ed58">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/book.rb</span>
 <span class="k">class</span> <span class="nc">Book</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4132feeeffe15b2cfc92b0f1bb4b95e4"># app/models/book.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/book.rb
 class Book &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4132feeeffe15b2cfc92b0f1bb4b95e4">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Usage</span>
@@ -395,56 +388,53 @@ end
 <span class="c1">## Books with 3 or more ratings</span>
 <span class="no">Book</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"array_length(ratings, 1) &gt;= 3"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b072ff539dc787b07261b3d1e6aef0d1"># Usage
-Book.create title: "Brave New World",
-            tags: ["fantasy", "fiction"],
+<button class="clipboard-button" data-clipboard-text="# Usage
+Book.create title: &quot;Brave New World&quot;,
+            tags: [&quot;fantasy&quot;, &quot;fiction&quot;],
             ratings: [4, 5]
 
 ## Books for a single tag
-Book.where("'fantasy' = ANY (tags)")
+Book.where(&quot;'fantasy' = ANY (tags)&quot;)
 
 ## Books for multiple tags
-Book.where("tags @&gt; ARRAY[?]::varchar[]", ["fantasy", "fiction"])
+Book.where(&quot;tags @&gt; ARRAY[?]::varchar[]&quot;, [&quot;fantasy&quot;, &quot;fiction&quot;])
 
 ## Books with 3 or more ratings
-Book.where("array_length(ratings, 1) &gt;= 3")
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b072ff539dc787b07261b3d1e6aef0d1">Copiar</button>
+Book.where(&quot;array_length(ratings, 1) &gt;= 3&quot;)
+">Copy</button>
 </div>
 <h4 id="hstore"><a class="anchorlink" href="#hstore">1.3 Hstore</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/hstore.html">type definition</a></li>
-<li><a href="https://www.postgresql.org/docs/current/static/hstore.html#id-1.11.7.26.5">functions and operators</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/hstore.html">definição de tipo</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/hstore.html#id-1.11.7.26.5">funções e operações</a></li>
 </ul>
-<div class="note"><p>You need to enable the <code>hstore</code> extension to use hstore.</p></div><div class="code_container">
+<div class="note"><p>Você precisa habilitar a extensão <code>hstore</code> para usar o hstore.</p></div><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20131009135255_create_profiles.rb</span>
-<span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Schema</span><span class="p">.</span><span class="nf">define</span> <span class="k">do</span>
+<span class="k">class</span> <span class="nc">CreateProfiles</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">7.0</span><span class="p">]</span>
   <span class="n">enable_extension</span> <span class="s1">'hstore'</span> <span class="k">unless</span> <span class="n">extension_enabled?</span><span class="p">(</span><span class="s1">'hstore'</span><span class="p">)</span>
   <span class="n">create_table</span> <span class="ss">:profiles</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
     <span class="n">t</span><span class="p">.</span><span class="nf">hstore</span> <span class="s1">'settings'</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a0af1c96e9cd408f7843ee942e8982bf"># db/migrate/20131009135255_create_profiles.rb
-ActiveRecord::Schema.define do
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20131009135255_create_profiles.rb
+class CreateProfiles &lt; ActiveRecord::Migration[7.0]
   enable_extension 'hstore' unless extension_enabled?('hstore')
   create_table :profiles do |t|
     t.hstore 'settings'
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a0af1c96e9cd408f7843ee942e8982bf">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/profile.rb</span>
 <span class="k">class</span> <span class="nc">Profile</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-edb1ec31a4d6ca981227a39443235844"># app/models/profile.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/profile.rb
 class Profile &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-edb1ec31a4d6ca981227a39443235844">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Profile</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">settings: </span><span class="p">{</span> <span class="s2">"color"</span> <span class="o">=&gt;</span> <span class="s2">"blue"</span><span class="p">,</span> <span class="s2">"resolution"</span> <span class="o">=&gt;</span> <span class="s2">"800x600"</span> <span class="p">})</span>
@@ -459,19 +449,18 @@ end
 </span><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Profile</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"settings-&gt;'color' = ?"</span><span class="p">,</span> <span class="s2">"yellow"</span><span class="p">)</span>
 <span class="p">=&gt;</span> <span class="kt">#&lt;</span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Relation</span> <span class="p">[</span><span class="kt">#&lt;</span><span class="no">Profile</span> <span class="ss">id: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">settings: </span><span class="p">{</span><span class="s2">"color"</span><span class="o">=</span><span class="kt">&gt;</span><span class="s2">"yellow"</span><span class="p">,</span> <span class="s2">"resolution"</span><span class="o">=</span><span class="kt">&gt;</span><span class="s2">"1280x1024"</span><span class="p">}</span><span class="o">&gt;</span><span class="p">]</span><span class="o">&gt;</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-80143e10738799a6d77e0a0886573714">Profile.create(settings: { "color" =&gt; "blue", "resolution" =&gt; "800x600" })
+<button class="clipboard-button" data-clipboard-text="Profile.create(settings: { &quot;color&quot; =&gt; &quot;blue&quot;, &quot;resolution&quot; =&gt; &quot;800x600&quot; })
 profile = Profile.first
 profile.settings
-profile.settings = {"color" =&gt; "yellow", "resolution" =&gt; "1280x1024"}
+profile.settings = {&quot;color&quot; =&gt; &quot;yellow&quot;, &quot;resolution&quot; =&gt; &quot;1280x1024&quot;}
 profile.save!
-Profile.where("settings-&gt;'color' = ?", "yellow")
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-80143e10738799a6d77e0a0886573714">Copiar</button>
+Profile.where(&quot;settings-&gt;'color' = ?&quot;, &quot;yellow&quot;)
+">Copy</button>
 </div>
-<h4 id="json-and-jsonb"><a class="anchorlink" href="#json-and-jsonb">1.4 JSON and JSONB</a></h4>
+<h4 id="json-e-jsonb"><a class="anchorlink" href="#json-e-jsonb">1.4 JSON e JSONB</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/datatype-json.html">type definition</a></li>
-<li><a href="https://www.postgresql.org/docs/current/static/functions-json.html">functions and operators</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/datatype-json.html">definição de tipo</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/functions-json.html">funções e operações</a></li>
 </ul>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20131220144913_create_events.rb</span>
@@ -484,7 +473,7 @@ Profile.where("settings-&gt;'color' = ?", "yellow")
   <span class="n">t</span><span class="p">.</span><span class="nf">jsonb</span> <span class="s1">'payload'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6a74190dbebc8353029665c5a3c2d7ed"># db/migrate/20131220144913_create_events.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20131220144913_create_events.rb
 # ... for json datatype:
 create_table :events do |t|
   t.json 'payload'
@@ -493,19 +482,17 @@ end
 create_table :events do |t|
   t.jsonb 'payload'
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6a74190dbebc8353029665c5a3c2d7ed">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/event.rb</span>
 <span class="k">class</span> <span class="nc">Event</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f430f268be016b50e16dfa25a9df3a77"># app/models/event.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/event.rb
 class Event &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f430f268be016b50e16dfa25a9df3a77">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Event</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">payload: </span><span class="p">{</span> <span class="ss">kind: </span><span class="s2">"user_renamed"</span><span class="p">,</span> <span class="ss">change: </span><span class="p">[</span><span class="s2">"jack"</span><span class="p">,</span> <span class="s2">"john"</span><span class="p">]})</span>
@@ -515,44 +502,41 @@ end
 <span class="p">=&gt;</span> <span class="p">{</span><span class="s2">"kind"</span><span class="o">=&gt;</span><span class="s2">"user_renamed"</span><span class="p">,</span> <span class="s2">"change"</span><span class="o">=&gt;</span><span class="p">[</span><span class="s2">"jack"</span><span class="p">,</span> <span class="s2">"john"</span><span class="p">]}</span>
 
 <span class="c">## Query based on JSON document
-# The -&gt; operator returns the original JSON type (which might be an object), whereas -&gt;&gt; returns text
-</span><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Event</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"payload-&gt;&gt;'kind' = ?"</span><span class="p">,</span> <span class="s2">"user_renamed"</span><span class="p">)</span>
+</span><span class="gp"># The -&gt; operator returns the original JSON type (which might be an object), whereas -&gt;&gt;</span><span class="w"> </span><span class="n">returns</span> <span class="n">text</span>
+<span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Event</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"payload-&gt;&gt;'kind' = ?"</span><span class="p">,</span> <span class="s2">"user_renamed"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-29b3b72ad55deed61e7769ef1fcf64ac">Event.create(payload: { kind: "user_renamed", change: ["jack", "john"]})
+<button class="clipboard-button" data-clipboard-text="Event.create(payload: { kind: &quot;user_renamed&quot;, change: [&quot;jack&quot;, &quot;john&quot;]})
 event = Event.first
 event.payload
-Event.where("payload-&gt;&gt;'kind' = ?", "user_renamed")
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-29b3b72ad55deed61e7769ef1fcf64ac">Copiar</button>
+Event.where(&quot;payload-&gt;&gt;'kind' = ?&quot;, &quot;user_renamed&quot;)
+">Copy</button>
 </div>
-<h4 id="range-types"><a class="anchorlink" href="#range-types">1.5 Range Types</a></h4>
+<h4 id="tipos-de-intervalo"><a class="anchorlink" href="#tipos-de-intervalo">1.5 Tipos de Intervalo</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/rangetypes.html">type definition</a></li>
-<li><a href="https://www.postgresql.org/docs/current/static/functions-range.html">functions and operators</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/rangetypes.html">definição de tipo</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/functions-range.html">funções e operações</a></li>
 </ul>
-<p>This type is mapped to Ruby <a href="https://ruby-doc.org/core-2.7.0/Range.html"><code>Range</code></a> objects.</p><div class="code_container">
+<p>Esse tipo é mapeado para objetos <a href="https://ruby-doc.org/core-2.7.0/Range.html"><code>Range</code></a> no Ruby.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20130923065404_create_events.rb</span>
 <span class="n">create_table</span> <span class="ss">:events</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
   <span class="n">t</span><span class="p">.</span><span class="nf">daterange</span> <span class="s1">'duration'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-7b34f49027766f87d757240b82b1fe86"># db/migrate/20130923065404_create_events.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20130923065404_create_events.rb
 create_table :events do |t|
   t.daterange 'duration'
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-7b34f49027766f87d757240b82b1fe86">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/event.rb</span>
 <span class="k">class</span> <span class="nc">Event</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9ebba8e2bc252bc6e494852ef5ae9496"># app/models/event.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/event.rb
 class Event &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9ebba8e2bc252bc6e494852ef5ae9496">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Event</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">duration: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span><span class="o">..</span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
@@ -572,35 +556,32 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="nf">ends_at</span>
 <span class="p">=&gt;</span> <span class="no">Thu</span><span class="p">,</span> <span class="mi">13</span> <span class="no">Feb</span> <span class="mi">2014</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ae5780c026dca70957ad05bb2a1bbe8c">Event.create(duration: Date.new(2014, 2, 11)..Date.new(2014, 2, 12))
+<button class="clipboard-button" data-clipboard-text='Event.create(duration: Date.new(2014, 2, 11)..Date.new(2014, 2, 12))
 event = Event.first
 event.duration
 Event.where("duration @&gt; ?::date", Date.new(2014, 2, 12))
 event = Event.select("lower(duration) AS starts_at").select("upper(duration) AS ends_at").first
 event.starts_at
 event.ends_at
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ae5780c026dca70957ad05bb2a1bbe8c">Copiar</button>
+'>Copy</button>
 </div>
-<h4 id="composite-types"><a class="anchorlink" href="#composite-types">1.6 Composite Types</a></h4>
+<h4 id="tipos-compostos"><a class="anchorlink" href="#tipos-compostos">1.6 Tipos Compostos</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/rowtypes.html">type definition</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/rowtypes.html">definição de tipo</a></li>
 </ul>
-<p>Currently there is no special support for composite types. They are mapped to
-normal text columns:</p><div class="code_container">
+<p>Atualmente, não existe suporte específico para tipos compostos. Eles são mapeados para colunas de texto normais:</p><div class="code_container">
 <pre><code class="highlight sql"><span class="k">CREATE</span> <span class="k">TYPE</span> <span class="n">full_address</span> <span class="k">AS</span>
 <span class="p">(</span>
   <span class="n">city</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span>
   <span class="n">street</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-35da5eab458e3ef41b980b8a1e4b91d6">CREATE TYPE full_address AS
+<button class="clipboard-button" data-clipboard-text="CREATE TYPE full_address AS
 (
   city VARCHAR(90),
   street VARCHAR(90)
 );
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-35da5eab458e3ef41b980b8a1e4b91d6">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20140207133952_create_contacts.rb</span>
@@ -615,7 +596,7 @@ normal text columns:</p><div class="code_container">
   <span class="n">t</span><span class="p">.</span><span class="nf">column</span> <span class="ss">:address</span><span class="p">,</span> <span class="ss">:full_address</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dacb823978bf5828d8561e9ca0cf99bb"># db/migrate/20140207133952_create_contacts.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20140207133952_create_contacts.rb
 execute &lt;&lt;-SQL
   CREATE TYPE full_address AS
   (
@@ -626,19 +607,17 @@ SQL
 create_table :contacts do |t|
   t.column :address, :full_address
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dacb823978bf5828d8561e9ca0cf99bb">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/contact.rb</span>
 <span class="k">class</span> <span class="nc">Contact</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6093f7915ec9a9a289f4786ca05093f6"># app/models/contact.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/contact.rb
 class Contact &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6093f7915ec9a9a289f4786ca05093f6">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Contact</span><span class="p">.</span><span class="nf">create</span> <span class="ss">address: </span><span class="s2">"(Paris,Champs-Élysées)"</span>
@@ -648,31 +627,29 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">contact</span><span class="p">.</span><span class="nf">address</span> <span class="o">=</span> <span class="s2">"(Paris,Rue Basse)"</span>
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">contact</span><span class="p">.</span><span class="nf">save!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cce9d260badeaeb852da5ef5fcecd542">Contact.create address: "(Paris,Champs-Élysées)"
+<button class="clipboard-button" data-clipboard-text='Contact.create address: "(Paris,Champs-Élysées)"
 contact = Contact.first
 contact.address
 contact.address = "(Paris,Rue Basse)"
 contact.save!
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cce9d260badeaeb852da5ef5fcecd542">Copiar</button>
+'>Copy</button>
 </div>
-<h4 id="enumerated-types"><a class="anchorlink" href="#enumerated-types">1.7 Enumerated Types</a></h4>
+<h4 id="tipos-enumerados"><a class="anchorlink" href="#tipos-enumerados">1.7 Tipos Enumerados</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/datatype-enum.html">type definition</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/datatype-enum.html">definição de tipo</a></li>
 </ul>
-<p>Currently there is no special support for enumerated types. They are mapped as
-normal text columns:</p><div class="code_container">
+<p>O tipo pode ser mapeado como uma coluna de texto normal ou para um <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveRecord/Enum.html"><code>ActiveRecord::Enum</code></a>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20131220144913_create_articles.rb</span>
 <span class="k">def</span> <span class="nf">up</span>
-  <span class="n">execute</span> <span class="o">&lt;&lt;-</span><span class="no">SQL</span><span class="sh">
-    CREATE TYPE article_status AS ENUM ('draft', 'published');
-</span><span class="no">  SQL</span>
+  <span class="n">create_enum</span> <span class="ss">:article_status</span><span class="p">,</span> <span class="p">[</span><span class="s2">"draft"</span><span class="p">,</span> <span class="s2">"published"</span><span class="p">]</span>
+
   <span class="n">create_table</span> <span class="ss">:articles</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-    <span class="n">t</span><span class="p">.</span><span class="nf">column</span> <span class="ss">:status</span><span class="p">,</span> <span class="ss">:article_status</span>
+    <span class="n">t</span><span class="p">.</span><span class="nf">enum</span> <span class="ss">:status</span><span class="p">,</span> <span class="ss">enum_type: :article_status</span><span class="p">,</span> <span class="ss">default: </span><span class="s2">"draft"</span><span class="p">,</span> <span class="ss">null: </span><span class="kp">false</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="c1"># NOTE: It's important to drop table before dropping enum.</span>
+<span class="c1"># There's no built in support for dropping enums, but you can do it manually.</span>
+<span class="c1"># You should first drop any table that depends on them.</span>
 <span class="k">def</span> <span class="nf">down</span>
   <span class="n">drop_table</span> <span class="ss">:articles</span>
 
@@ -681,17 +658,17 @@ normal text columns:</p><div class="code_container">
 </span><span class="no">  SQL</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c9e02f6721318e6c2fec77a08089e418"># db/migrate/20131220144913_create_articles.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20131220144913_create_articles.rb
 def up
-  execute &lt;&lt;-SQL
-    CREATE TYPE article_status AS ENUM ('draft', 'published');
-  SQL
+  create_enum :article_status, [&quot;draft&quot;, &quot;published&quot;]
+
   create_table :articles do |t|
-    t.column :status, :article_status
+    t.enum :status, enum_type: :article_status, default: &quot;draft&quot;, null: false
   end
 end
 
-# NOTE: It's important to drop table before dropping enum.
+# There's no built in support for dropping enums, but you can do it manually.
+# You should first drop any table that depends on them.
 def down
   drop_table :articles
 
@@ -699,38 +676,42 @@ def down
     DROP TYPE article_status;
   SQL
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c9e02f6721318e6c2fec77a08089e418">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/article.rb</span>
 <span class="k">class</span> <span class="nc">Article</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+  <span class="n">enum</span> <span class="ss">status: </span><span class="p">{</span>
+    <span class="ss">draft: </span><span class="s2">"draft"</span><span class="p">,</span> <span class="ss">published: </span><span class="s2">"published"</span>
+  <span class="p">},</span> <span class="ss">_prefix: </span><span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b2c1574b1ab4cf2643445b729e79bf45"># app/models/article.rb
+<button class="clipboard-button" data-clipboard-text='# app/models/article.rb
 class Article &lt; ApplicationRecord
+  enum status: {
+    draft: "draft", published: "published"
+  }, _prefix: true
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b2c1574b1ab4cf2643445b729e79bf45">Copiar</button>
+'>Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Article</span><span class="p">.</span><span class="nf">create</span> <span class="ss">status: </span><span class="s2">"draft"</span>
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">first</span>
+<span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span><span class="p">.</span><span class="nf">status_draft!</span>
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span><span class="p">.</span><span class="nf">status</span>
 <span class="p">=&gt;</span> <span class="s2">"draft"</span>
 
-<span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span><span class="p">.</span><span class="nf">status</span> <span class="o">=</span> <span class="s2">"published"</span>
-<span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span><span class="p">.</span><span class="nf">save!</span>
+<span class="gp">irb&gt;</span><span class="w"> </span><span class="n">article</span><span class="p">.</span><span class="nf">status_published?</span>
+<span class="p">=&gt;</span> <span class="kp">false</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c6521e5b93cce86a63e66dea668b0284">Article.create status: "draft"
+<button class="clipboard-button" data-clipboard-text='Article.create status: "draft"
 article = Article.first
+article.status_draft!
 article.status
-article.status = "published"
-article.save!
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c6521e5b93cce86a63e66dea668b0284">Copiar</button>
+article.status_published?
+'>Copy</button>
 </div>
-<p>To add a new value before/after existing one you should use <a href="https://www.postgresql.org/docs/current/static/sql-altertype.html">ALTER TYPE</a>:</p><div class="code_container">
+<p>Para adicionar um novo valor antes ou depois de um já existente, é necessário usar o <a href="https://www.postgresql.org/docs/current/static/sql-altertype.html">ALTER TYPE</a>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20150720144913_add_new_state_to_articles.rb</span>
 <span class="c1"># NOTE: ALTER TYPE ... ADD VALUE cannot be executed inside of a transaction block so here we are using disable_ddl_transaction!</span>
 <span class="n">disable_ddl_transaction!</span>
@@ -741,7 +722,7 @@ article.save!
 </span><span class="no">  SQL</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-cc3de3afb36d44eeb7b02bcc1f92cdfd"># db/migrate/20150720144913_add_new_state_to_articles.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20150720144913_add_new_state_to_articles.rb
 # NOTE: ALTER TYPE ... ADD VALUE cannot be executed inside of a transaction block so here we are using disable_ddl_transaction!
 disable_ddl_transaction!
 
@@ -750,10 +731,9 @@ def up
     ALTER TYPE article_status ADD VALUE IF NOT EXISTS 'archived' AFTER 'published';
   SQL
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-cc3de3afb36d44eeb7b02bcc1f92cdfd">Copiar</button>
+">Copy</button>
 </div>
-<div class="note"><p>ENUM values can't be dropped currently. You can read why <a href="https://www.postgresql.org/message-id/29F36C7C98AB09499B1A209D48EAA615B7653DBC8A@mail2a.alliedtesting.com">here</a>.</p></div><p>Hint: to show all the values of the all enums you have, you should call this query in <code>bin/rails db</code> or <code>psql</code> console:</p><div class="code_container">
+<div class="note"><p>Valores ENUM não podem ser removidos atualmente. Você pode ler o motivo <a href="https://www.postgresql.org/message-id/29F36C7C98AB09499B1A209D48EAA615B7653DBC8A@mail2a.alliedtesting.com">aqui</a>.</p></div><p>Dica: para mostrar todos os valores de todos os enums que você tem, deve chamar essa query no console <code>bin/rails db</code> ou <code>psql</code>:</p><div class="code_container">
 <pre><code class="highlight sql"><span class="k">SELECT</span> <span class="n">n</span><span class="p">.</span><span class="n">nspname</span> <span class="k">AS</span> <span class="n">enum_schema</span><span class="p">,</span>
        <span class="n">t</span><span class="p">.</span><span class="n">typname</span> <span class="k">AS</span> <span class="n">enum_name</span><span class="p">,</span>
        <span class="n">e</span><span class="p">.</span><span class="n">enumlabel</span> <span class="k">AS</span> <span class="n">enum_value</span>
@@ -761,45 +741,41 @@ end
       <span class="k">JOIN</span> <span class="n">pg_enum</span> <span class="n">e</span> <span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">enumtypid</span>
       <span class="k">JOIN</span> <span class="n">pg_catalog</span><span class="p">.</span><span class="n">pg_namespace</span> <span class="n">n</span> <span class="k">ON</span> <span class="n">n</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">typnamespace</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-be1dcd5bd46edfd52d94cbb6be3af68a">SELECT n.nspname AS enum_schema,
+<button class="clipboard-button" data-clipboard-text="SELECT n.nspname AS enum_schema,
        t.typname AS enum_name,
        e.enumlabel AS enum_value
   FROM pg_type t
       JOIN pg_enum e ON t.oid = e.enumtypid
       JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-be1dcd5bd46edfd52d94cbb6be3af68a">Copiar</button>
+">Copy</button>
 </div>
 <h4 id="uuid"><a class="anchorlink" href="#uuid">1.8 UUID</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/datatype-uuid.html">type definition</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/datatype-uuid.html">definição de tipo</a></li>
 <li><a href="https://www.postgresql.org/docs/current/static/pgcrypto.html">pgcrypto generator function</a></li>
 <li><a href="https://www.postgresql.org/docs/current/static/uuid-ossp.html">uuid-ossp generator functions</a></li>
 </ul>
-<div class="note"><p>You need to enable the <code>pgcrypto</code> (only PostgreSQL &gt;= 9.4) or <code>uuid-ossp</code>
-extension to use uuid.</p></div><div class="code_container">
+<div class="note"><p>Você precisa habilitar a extensão <code>pgcrypto</code> (apenas para PostgreSQL &gt;= 9.4) ou a extensão <code>uuid-ossp</code> para usar uuid.</p></div><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20131220144913_create_revisions.rb</span>
 <span class="n">create_table</span> <span class="ss">:revisions</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
   <span class="n">t</span><span class="p">.</span><span class="nf">uuid</span> <span class="ss">:identifier</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8e96d83d31590ad99e2f1d133016a9f2"># db/migrate/20131220144913_create_revisions.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20131220144913_create_revisions.rb
 create_table :revisions do |t|
   t.uuid :identifier
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8e96d83d31590ad99e2f1d133016a9f2">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/revision.rb</span>
 <span class="k">class</span> <span class="nc">Revision</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-859549181957bdf44c31722546080dc1"># app/models/revision.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/revision.rb
 class Revision &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-859549181957bdf44c31722546080dc1">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Revision</span><span class="p">.</span><span class="nf">create</span> <span class="ss">identifier: </span><span class="s2">"A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"</span>
@@ -808,13 +784,12 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">revision</span><span class="p">.</span><span class="nf">identifier</span>
 <span class="p">=&gt;</span> <span class="s2">"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b42f8a9373b9e0b077cff4452fb27787">Revision.create identifier: "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"
+<button class="clipboard-button" data-clipboard-text='Revision.create identifier: "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"
 revision = Revision.first
 revision.identifier
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b42f8a9373b9e0b077cff4452fb27787">Copiar</button>
+'>Copy</button>
 </div>
-<p>You can use <code>uuid</code> type to define references in migrations:</p><div class="code_container">
+<p>Você pode usar o tipo <code>uuid</code> para definir referências em <em>migrations</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20150418012400_create_blog.rb</span>
 <span class="n">enable_extension</span> <span class="s1">'pgcrypto'</span> <span class="k">unless</span> <span class="n">extension_enabled?</span><span class="p">(</span><span class="s1">'pgcrypto'</span><span class="p">)</span>
 <span class="n">create_table</span> <span class="ss">:posts</span><span class="p">,</span> <span class="ss">id: :uuid</span>
@@ -824,7 +799,7 @@ revision.identifier
   <span class="n">t</span><span class="p">.</span><span class="nf">references</span> <span class="ss">:post</span><span class="p">,</span> <span class="ss">type: :uuid</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5ef553872d35101cd41afbd181bb8b23"># db/migrate/20150418012400_create_blog.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20150418012400_create_blog.rb
 enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
 create_table :posts, id: :uuid
 
@@ -832,8 +807,7 @@ create_table :comments, id: :uuid do |t|
   # t.belongs_to :post, type: :uuid
   t.references :post, type: :uuid
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5ef553872d35101cd41afbd181bb8b23">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/post.rb</span>
@@ -841,12 +815,11 @@ end
   <span class="n">has_many</span> <span class="ss">:comments</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bdffb658758494deb25179bda2154ade"># app/models/post.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/post.rb
 class Post &lt; ApplicationRecord
   has_many :comments
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bdffb658758494deb25179bda2154ade">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/comment.rb</span>
@@ -854,17 +827,16 @@ end
   <span class="n">belongs_to</span> <span class="ss">:post</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0d07a15bec81c77920227326d83d88bf"># app/models/comment.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/comment.rb
 class Comment &lt; ApplicationRecord
   belongs_to :post
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0d07a15bec81c77920227326d83d88bf">Copiar</button>
+">Copy</button>
 </div>
-<p>See <a href="#uuid-primary-keys">this section</a> for more details on using UUIDs as primary key.</p><h4 id="bit-string-types"><a class="anchorlink" href="#bit-string-types">1.9 Bit String Types</a></h4>
+<p>Veja <a href="#uuid-primary-keys">essa seção</a> para mais detalhes sobre usar UUIDs como chaves primárias.</p><h4 id="bit-string-types"><a class="anchorlink" href="#bit-string-types">1.9 Bit String Types</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/datatype-bit.html">type definition</a></li>
-<li><a href="https://www.postgresql.org/docs/current/static/functions-bitstring.html">functions and operators</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/datatype-bit.html">definição de tipo</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/functions-bitstring.html">funções e operações</a></li>
 </ul>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20131220144913_create_users.rb</span>
@@ -872,23 +844,21 @@ end
   <span class="n">t</span><span class="p">.</span><span class="nf">column</span> <span class="ss">:settings</span><span class="p">,</span> <span class="s2">"bit(8)"</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-36f4078e5fb6f348ddb0258d33fa6eeb"># db/migrate/20131220144913_create_users.rb
+<button class="clipboard-button" data-clipboard-text='# db/migrate/20131220144913_create_users.rb
 create_table :users, force: true do |t|
   t.column :settings, "bit(8)"
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-36f4078e5fb6f348ddb0258d33fa6eeb">Copiar</button>
+'>Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/user.rb</span>
 <span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c5e5177c447e69400c06467cc3d9b911"># app/models/user.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/user.rb
 class User &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c5e5177c447e69400c06467cc3d9b911">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">User</span><span class="p">.</span><span class="nf">create</span> <span class="ss">settings: </span><span class="s2">"01010011"</span>
@@ -897,25 +867,22 @@ end
 <span class="p">=&gt;</span> <span class="s2">"01010011"</span>
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="nf">settings</span> <span class="o">=</span> <span class="s2">"0xAF"</span>
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="nf">settings</span>
-<span class="p">=&gt;</span> <span class="mi">10101111</span>
+<span class="p">=&gt;</span> <span class="s2">"10101111"</span>
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="nf">save!</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-923f10fc9fdd3667d58c246e7cefd85e">User.create settings: "01010011"
+<button class="clipboard-button" data-clipboard-text='User.create settings: "01010011"
 user = User.first
 user.settings
 user.settings = "0xAF"
 user.settings
 user.save!
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-923f10fc9fdd3667d58c246e7cefd85e">Copiar</button>
+'>Copy</button>
 </div>
-<h4 id="network-address-types"><a class="anchorlink" href="#network-address-types">1.10 Network Address Types</a></h4>
+<h4 id="tipo-endereço-de-internet"><a class="anchorlink" href="#tipo-endere%C3%A7o-de-internet">1.10 Tipo Endereço de Internet</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/datatype-net-types.html">type definition</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/datatype-net-types.html">definição de tipo</a></li>
 </ul>
-<p>The types <code>inet</code> and <code>cidr</code> are mapped to Ruby
-<a href="https://ruby-doc.org/stdlib-2.7.0/libdoc/ipaddr/rdoc/IPAddr.html"><code>IPAddr</code></a>
-objects. The <code>macaddr</code> type is mapped to normal text.</p><div class="code_container">
+<p>Os tipos <code>inet</code> e <code>cidr</code>são transformados em objetos Ruby <a href="https://ruby-doc.org/stdlib-2.7.0/libdoc/ipaddr/rdoc/IPAddr.html"><code>IPAddr</code></a>. O tipo <code>macaddr</code> é transformado em texto normal.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20140508144913_create_devices.rb</span>
 <span class="n">create_table</span><span class="p">(</span><span class="ss">:devices</span><span class="p">,</span> <span class="ss">force: </span><span class="kp">true</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
   <span class="n">t</span><span class="p">.</span><span class="nf">inet</span> <span class="s1">'ip'</span>
@@ -923,25 +890,23 @@ objects. The <code>macaddr</code> type is mapped to normal text.</p><div class="
   <span class="n">t</span><span class="p">.</span><span class="nf">macaddr</span> <span class="s1">'address'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c68be324a5affb5385c062b1c5fb8cfd"># db/migrate/20140508144913_create_devices.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20140508144913_create_devices.rb
 create_table(:devices, force: true) do |t|
   t.inet 'ip'
   t.cidr 'network'
   t.macaddr 'address'
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c68be324a5affb5385c062b1c5fb8cfd">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/device.rb</span>
 <span class="k">class</span> <span class="nc">Device</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2b065b3bb56c3d52601de612bbf0fffe"># app/models/device.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/device.rb
 class Device &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2b065b3bb56c3d52601de612bbf0fffe">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">macbook</span> <span class="o">=</span> <span class="no">Device</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">ip: </span><span class="s2">"192.168.1.12"</span><span class="p">,</span> <span class="ss">network: </span><span class="s2">"192.168.2.0/24"</span><span class="p">,</span> <span class="ss">address: </span><span class="s2">"32:01:16:6d:05:ef"</span><span class="p">)</span>
@@ -955,46 +920,43 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">macbook</span><span class="p">.</span><span class="nf">address</span>
 <span class="p">=&gt;</span> <span class="s2">"32:01:16:6d:05:ef"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-885fed33008d83d16279bf82eae39f74">macbook = Device.create(ip: "192.168.1.12", network: "192.168.2.0/24", address: "32:01:16:6d:05:ef")
+<button class="clipboard-button" data-clipboard-text='macbook = Device.create(ip: "192.168.1.12", network: "192.168.2.0/24", address: "32:01:16:6d:05:ef")
 macbook.ip
 macbook.network
 macbook.address
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-885fed33008d83d16279bf82eae39f74">Copiar</button>
+'>Copy</button>
 </div>
-<h4 id="geometric-types"><a class="anchorlink" href="#geometric-types">1.11 Geometric Types</a></h4>
+<h4 id="tipos-geométricos"><a class="anchorlink" href="#tipos-geom%C3%A9tricos">1.11 Tipos Geométricos</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/datatype-geometric.html">type definition</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/datatype-geometric.html">definição de tipo</a></li>
 </ul>
-<p>All geometric types, with the exception of <code>points</code> are mapped to normal text.
-A point is casted to an array containing <code>x</code> and <code>y</code> coordinates.</p><h4 id="interval"><a class="anchorlink" href="#interval">1.12 Interval</a></h4>
+<p>Todos os tipos geométricos, com exceção de <code>points</code>, são mapeados para texto normal.
+Um ponto é transformado em um <em>array</em> contendo as coordenadas <code>x</code> e <code>y</code>.</p><h4 id="intervalo"><a class="anchorlink" href="#intervalo">1.12 Intervalo</a></h4>
 <ul>
-<li><a href="https://www.postgresql.org/docs/current/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT">type definition</a></li>
-<li><a href="https://www.postgresql.org/docs/current/static/functions-datetime.html">functions and operators</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/datatype-datetime.html#DATATYPE-INTERVAL-INPUT">definição de tipo</a></li>
+<li><a href="https://www.postgresql.org/docs/current/static/functions-datetime.html">funções e operações</a></li>
 </ul>
-<p>This type is mapped to <a href="https://api.rubyonrails.org/v7.0.0/classes/ActiveSupport/Duration.html"><code>ActiveSupport::Duration</code></a> objects.</p><div class="code_container">
+<p>Esse tipo é mapeado em um objeto <a href="https://api.rubyonrails.org/v7.0.8/classes/ActiveSupport/Duration.html"><code>ActiveSupport::Duration</code></a>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20200120000000_create_events.rb</span>
 <span class="n">create_table</span> <span class="ss">:events</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
   <span class="n">t</span><span class="p">.</span><span class="nf">interval</span> <span class="s1">'duration'</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a09e8e7f5d3eac957a348e37b214a142"># db/migrate/20200120000000_create_events.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20200120000000_create_events.rb
 create_table :events do |t|
   t.interval 'duration'
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a09e8e7f5d3eac957a348e37b214a142">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/event.rb</span>
 <span class="k">class</span> <span class="nc">Event</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-76ff71324df241bb3e8af69e62b5ff53"># app/models/event.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/event.rb
 class Event &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-76ff71324df241bb3e8af69e62b5ff53">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Event</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">duration: </span><span class="mi">2</span><span class="p">.</span><span class="nf">days</span><span class="p">)</span>
@@ -1003,11 +965,10 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="n">event</span><span class="p">.</span><span class="nf">duration</span>
 <span class="p">=&gt;</span> <span class="mi">2</span> <span class="n">days</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-57ab9e354ba7a8ced42003c309fd509a">Event.create(duration: 2.days)
+<button class="clipboard-button" data-clipboard-text="Event.create(duration: 2.days)
 event = Event.first
 event.duration
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-57ab9e354ba7a8ced42003c309fd509a">Copiar</button>
+">Copy</button>
 </div>
 <h3 id="uuid-primary-keys"><a class="anchorlink" href="#uuid-primary-keys">2 UUID Primary Keys</a></h3><div class="note"><p>You need to enable the <code>pgcrypto</code> (only PostgreSQL &gt;= 9.4) or <code>uuid-ossp</code>
 extension to generate random UUIDs.</p></div><div class="code_container">
@@ -1017,35 +978,32 @@ extension to generate random UUIDs.</p></div><div class="code_container">
   <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:kind</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-86f316bd43c4f6d4e307b871f6c4781e"># db/migrate/20131220144913_create_devices.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20131220144913_create_devices.rb
 enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
 create_table :devices, id: :uuid do |t|
   t.string :kind
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-86f316bd43c4f6d4e307b871f6c4781e">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/device.rb</span>
 <span class="k">class</span> <span class="nc">Device</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-87b6aead547f5a04a461a9a3da3fd150"># app/models/device.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/device.rb
 class Device &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-87b6aead547f5a04a461a9a3da3fd150">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="n">irb</span><span class="o">&gt;</span> <span class="n">device</span> <span class="o">=</span> <span class="no">Device</span><span class="p">.</span><span class="nf">create</span>
 <span class="n">irb</span><span class="o">&gt;</span> <span class="n">device</span><span class="p">.</span><span class="nf">id</span>
 <span class="o">=&gt;</span> <span class="s2">"814865cd-5a1d-4771-9306-4268f188fe9e"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4dd874ff1a208e31ea5ed9efb01d93c6">irb&gt; device = Device.create
+<button class="clipboard-button" data-clipboard-text='irb&gt; device = Device.create
 irb&gt; device.id
 =&gt; "814865cd-5a1d-4771-9306-4268f188fe9e"
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4dd874ff1a208e31ea5ed9efb01d93c6">Copiar</button>
+'>Copy</button>
 </div>
 <div class="note"><p><code>gen_random_uuid()</code> (from <code>pgcrypto</code>) is assumed if no <code>:default</code> option was
 passed to <code>create_table</code>.</p></div><h3 id="generated-columns"><a class="anchorlink" href="#generated-columns">3 Generated Columns</a></h3><div class="note"><p>Generated columns are supported since version 12.0 of PostgreSQL.</p></div><div class="code_container">
@@ -1063,7 +1021,7 @@ passed to <code>create_table</code>.</p></div><h3 id="generated-columns"><a clas
 <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">name: </span><span class="s1">'John'</span><span class="p">)</span>
 <span class="no">User</span><span class="p">.</span><span class="nf">last</span><span class="p">.</span><span class="nf">name_upcased</span> <span class="c1"># =&gt; "JOHN"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-5ea608a1acfea16fd0243bd0ecf8d602"># db/migrate/20131220144913_create_users.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20131220144913_create_users.rb
 create_table :users do |t|
   t.string :name
   t.virtual :name_upcased, type: :string, as: 'upper(name)', stored: true
@@ -1075,9 +1033,8 @@ end
 
 # Usage
 user = User.create(name: 'John')
-User.last.name_upcased # =&gt; "JOHN"
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-5ea608a1acfea16fd0243bd0ecf8d602">Copiar</button>
+User.last.name_upcased # =&gt; &quot;JOHN&quot;
+">Copy</button>
 </div>
 <h3 id="pesquisa-de-texto-completo"><a class="anchorlink" href="#pesquisa-de-texto-completo">4 Pesquisa de Texto Completo</a></h3><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20131220144913_create_documents.rb</span>
@@ -1088,26 +1045,24 @@ User.last.name_upcased # =&gt; "JOHN"
 
 <span class="n">add_index</span> <span class="ss">:documents</span><span class="p">,</span> <span class="s2">"to_tsvector('english', title || ' ' || body)"</span><span class="p">,</span> <span class="ss">using: :gin</span><span class="p">,</span> <span class="ss">name: </span><span class="s1">'documents_idx'</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1c5026f54545e88ff220b6a8d5c22d57"># db/migrate/20131220144913_create_documents.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20131220144913_create_documents.rb
 create_table :documents do |t|
   t.string :title
   t.string :body
 end
 
-add_index :documents, "to_tsvector('english', title || ' ' || body)", using: :gin, name: 'documents_idx'
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1c5026f54545e88ff220b6a8d5c22d57">Copiar</button>
+add_index :documents, &quot;to_tsvector('english', title || ' ' || body)&quot;, using: :gin, name: 'documents_idx'
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/document.rb</span>
 <span class="k">class</span> <span class="nc">Document</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-8e15741f18f8f08dbd5dca5a2ff5b397"># app/models/document.rb
+<button class="clipboard-button" data-clipboard-text="# app/models/document.rb
 class Document &lt; ApplicationRecord
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-8e15741f18f8f08dbd5dca5a2ff5b397">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># Utilização</span>
@@ -1117,14 +1072,13 @@ end
 <span class="no">Document</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)"</span><span class="p">,</span>
                  <span class="s2">"cat &amp; dog"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-26d552af31c14cbd8943aeb7aeac5647"># Utilização
-Document.create(title: "Cats and Dogs", body: "are nice!")
+<button class="clipboard-button" data-clipboard-text="# Utilização
+Document.create(title: &quot;Cats and Dogs&quot;, body: &quot;are nice!&quot;)
 
 ## todos os documentos que correspondem a 'cat &amp; dog'
-Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
-                 "cat &amp; dog")
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-26d552af31c14cbd8943aeb7aeac5647">Copiar</button>
+Document.where(&quot;to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)&quot;,
+                 &quot;cat &amp; dog&quot;)
+">Copy</button>
 </div>
 <p>Opcionalmente, você pode armazenar o vetor como coluna gerada automaticamente (do PostgreSQL 12.0):</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># db/migrate/20131220144913_create_documents.rb</span>
@@ -1144,26 +1098,25 @@ Document.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)",
 <span class="c1">## todos os documentos contendo 'cat &amp; dog'</span>
 <span class="no">Document</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="s2">"textsearchable_index_col @@ to_tsquery(?)"</span><span class="p">,</span> <span class="s2">"cat &amp; dog"</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-11a46a01bb6d583f00e4529086e3be45"># db/migrate/20131220144913_create_documents.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20131220144913_create_documents.rb
 create_table :documents do |t|
   t.string :title
   t.string :body
 
   t.virtual :textsearchable_index_col,
-            type: :tsvector, as: "to_tsvector('english', title || ' ' || body)", stored: true
+            type: :tsvector, as: &quot;to_tsvector('english', title || ' ' || body)&quot;, stored: true
 end
 
 add_index :documents, :textsearchable_index_col, using: :gin, name: 'documents_idx'
 
 # Uso
-Document.create(title: "Cats and Dogs", body: "are nice!")
+Document.create(title: &quot;Cats and Dogs&quot;, body: &quot;are nice!&quot;)
 
 ## todos os documentos contendo 'cat &amp; dog'
-Document.where("textsearchable_index_col @@ to_tsquery(?)", "cat &amp; dog")
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-11a46a01bb6d583f00e4529086e3be45">Copiar</button>
+Document.where(&quot;textsearchable_index_col @@ to_tsquery(?)&quot;, &quot;cat &amp; dog&quot;)
+">Copy</button>
 </div>
-<h3 id="visao-de-banco-de-dados"><a class="anchorlink" href="#visao-de-banco-de-dados">5 Visão de Banco de Dados</a></h3>
+<h3 id="visão-de-banco-de-dados"><a class="anchorlink" href="#vis%C3%A3o-de-banco-de-dados">5 Visão de Banco de Dados</a></h3>
 <ul>
 <li><a href="https://www.postgresql.org/docs/current/static/sql-createview.html">criação da visão</a></li>
 </ul>
@@ -1180,19 +1133,18 @@ Document.where("textsearchable_index_col @@ to_tsquery(?)", "cat &amp; dog")
 Indexes:
     "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a61107474395b874bcc21171acc66e28">rails_pg_guide=# \d "TBL_ART"
-                                        Table "public.TBL_ART"
+<button class="clipboard-button" data-clipboard-text="rails_pg_guide=# \d &quot;TBL_ART&quot;
+                                        Table &quot;public.TBL_ART&quot;
    Column   |            Type             |                         Modifiers
 ------------+-----------------------------+------------------------------------------------------------
- INT_ID     | integer                     | not null default nextval('"TBL_ART_INT_ID_seq"'::regclass)
+ INT_ID     | integer                     | not null default nextval('&quot;TBL_ART_INT_ID_seq&quot;'::regclass)
  STR_TITLE  | character varying           |
  STR_STAT   | character varying           | default 'draft'::character varying
  DT_PUBL_AT | timestamp without time zone |
  BL_ARCH    | boolean                     | default false
 Indexes:
-    "TBL_ART_pkey" PRIMARY KEY, btree ("INT_ID")
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a61107474395b874bcc21171acc66e28">Copiar</button>
+    &quot;TBL_ART_pkey&quot; PRIMARY KEY, btree (&quot;INT_ID&quot;)
+">Copy</button>
 </div>
 <p>Esta tabela certamente não segue as convenções do Rails.
 Como as <a href="https://pt.wikipedia.org/wiki/Vis%C3%A3o_(banco_de_dados)">visões</a> no PostgreSQL são atualizáveis por padrão,
@@ -1209,19 +1161,18 @@ CREATE VIEW articles AS
   WHERE "BL_ARCH" = 'f'
 </span><span class="no">  SQL</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-701f6e6b0d3be68b7a14fdef4f7d247a"># db/migrate/20131220144913_create_articles_view.rb
+<button class="clipboard-button" data-clipboard-text="# db/migrate/20131220144913_create_articles_view.rb
 execute &lt;&lt;-SQL
 CREATE VIEW articles AS
-  SELECT "INT_ID" AS id,
-         "STR_TITLE" AS title,
-         "STR_STAT" AS status,
-         "DT_PUBL_AT" AS published_at,
-         "BL_ARCH" AS archived
-  FROM "TBL_ART"
-  WHERE "BL_ARCH" = 'f'
+  SELECT &quot;INT_ID&quot; AS id,
+         &quot;STR_TITLE&quot; AS title,
+         &quot;STR_STAT&quot; AS status,
+         &quot;DT_PUBL_AT&quot; AS published_at,
+         &quot;BL_ARCH&quot; AS archived
+  FROM &quot;TBL_ART&quot;
+  WHERE &quot;BL_ARCH&quot; = 'f'
   SQL
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-701f6e6b0d3be68b7a14fdef4f7d247a">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># app/models/article.rb</span>
@@ -1232,15 +1183,14 @@ CREATE VIEW articles AS
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9d81780f541a12019d4ac71a2de71f8e"># app/models/article.rb
+<button class="clipboard-button" data-clipboard-text='# app/models/article.rb
 class Article &lt; ApplicationRecord
   self.primary_key = "id"
   def archive!
     update_attribute :archived, true
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9d81780f541a12019d4ac71a2de71f8e">Copiar</button>
+'>Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="n">first</span> <span class="o">=</span> <span class="no">Article</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">title: </span><span class="s2">"Winter is coming"</span><span class="p">,</span> <span class="ss">status: </span><span class="s2">"published"</span><span class="p">,</span> <span class="ss">published_at: </span><span class="mi">1</span><span class="p">.</span><span class="nf">year</span><span class="p">.</span><span class="nf">ago</span>
@@ -1252,16 +1202,23 @@ end
 <span class="gp">irb&gt;</span><span class="w"> </span><span class="no">Article</span><span class="p">.</span><span class="nf">count</span>
 <span class="p">=&gt;</span> <span class="mi">1</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3a17abcd8658264280b3649d33ebfef7">first = Article.create! title: "Winter is coming", status: "published", published_at: 1.year.ago
+<button class="clipboard-button" data-clipboard-text='first = Article.create! title: "Winter is coming", status: "published", published_at: 1.year.ago
 second = Article.create! title: "Brace yourself", status: "draft", published_at: 1.month.ago
 Article.count
 first.archive!
 Article.count
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3a17abcd8658264280b3649d33ebfef7">Copiar</button>
+'>Copy</button>
 </div>
 <div class="note"><p>Esta aplicação só se importa com <code>Articles</code> não arquivados. Uma visão também
-permite condições para que possamos excluir os <code>Articles</code> arquivados diretamente.</p></div>
+permite condições para que possamos excluir os <code>Articles</code> arquivados diretamente.</p></div><h3 id="structure-dumps"><a class="anchorlink" href="#structure-dumps">6 Structure Dumps</a></h3><p>If your <code>config.active_record.schema_format</code> is <code>:sql</code>, Rails will call <code>pg_dump</code> to generate a
+structure dump.</p><p>You can use <code>ActiveRecord::Tasks::DatabaseTasks.structure_dump_flags</code> to configure <code>pg_dump</code>.
+For example, to exclude comments from your structure dump, add this to an initializer:</p><div class="code_container">
+<pre><code class="highlight ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Tasks</span><span class="o">::</span><span class="no">DatabaseTasks</span><span class="p">.</span><span class="nf">structure_dump_flags</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'--no-comments'</span><span class="p">]</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="ActiveRecord::Tasks::DatabaseTasks.structure_dump_flags = ['--no-comments']
+">Copy</button>
+</div>
+
 
         <h3>Feedback</h3>
         <p>
@@ -1285,7 +1242,7 @@ permite condições para que possamos excluir os <code>Articles</code> arquivado
         </p>
         <p>
           E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
-          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">forum oficial do Ruby on Rails</a> e nas
           <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
         </p>
       </div>

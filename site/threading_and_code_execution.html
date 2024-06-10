@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Threading and Code Execution in Rails — Ruby on Rails Guides</title>
+  <title>Threading e Execução de Código no Rails — Ruby on Rails Guides</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css" data-turbolinks-track="reload">
   <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
   <link rel="stylesheet" type="text/css" href="stylesheets/highlight.css" data-turbolinks-track="reload">
@@ -16,9 +16,9 @@
   <script src="javascripts/lunr-documents.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/lunr.js" data-turbolinks-track="reload"></script>
   <script src="javascripts/toggle-theme.js" data-turbolinks-track="reload"></script>
-  <meta property="og:title" content="Threading and Code Execution in Rails — Ruby on Rails Guides" />
-  <meta name="description" content="Threading and Code Execution in RailsAfter reading this guide, you will know: What code Rails will automatically execute concurrently How to integrate manual concurrency with Rails internals How to wrap all application code How to affect application reloading" />
-  <meta property="og:description" content="Threading and Code Execution in RailsAfter reading this guide, you will know: What code Rails will automatically execute concurrently How to integrate manual concurrency with Rails internals How to wrap all application code How to affect application reloading" />
+  <meta property="og:title" content="Threading e Execução de Código no Rails — Ruby on Rails Guides" />
+  <meta name="description" content="Threading e Execução de Código no RailsDepois de ler esse guia, você vai saber: Quais códigos o Rails executa automaticamente de maneira concorrente Como integrar código concorrente feito por você com a parte interna do Rails Como envolver todo o código da aplicação Como modificar o recarregamento da aplicação" />
+  <meta property="og:description" content="Threading e Execução de Código no RailsDepois de ler esse guia, você vai saber: Quais códigos o Rails executa automaticamente de maneira concorrente Como integrar código concorrente feito por você com a parte interna do Rails Como envolver todo o código da aplicação Como modificar o recarregamento da aplicação" />
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:site_name" content="Guia Ruby on Rails" />
   <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v7.0.0</div>
+    <div id="version-badge">v7.0.8</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -35,7 +35,7 @@
         Mais Ruby on Rails
       </span>
       <ul class="more-info-links s-hidden">
-        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://rubyonrails.org/blog">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
         <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
@@ -136,7 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
-                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - Dezembro 2021</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -231,7 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
-                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - Dezembro 2021</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -255,42 +255,42 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Threading and Code Execution in Rails</h2><p>After reading this guide, you will know:</p>
+      <h2><em>Threading</em> e Execução de Código no Rails</h2><p>Depois de ler esse guia, você vai saber:</p>
 <ul>
-<li>What code Rails will automatically execute concurrently</li>
-<li>How to integrate manual concurrency with Rails internals</li>
-<li>How to wrap all application code</li>
-<li>How to affect application reloading</li>
+<li>Quais códigos o Rails executa automaticamente de maneira concorrente</li>
+<li>Como integrar código concorrente feito por você com a parte interna do Rails</li>
+<li>Como envolver todo o código da aplicação</li>
+<li>Como modificar o recarregamento da aplicação</li>
 </ul>
 
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#automatic-concurrency">Automatic Concurrency</a></li>
+<li><a href="#concorr%C3%AAncia-autom%C3%A1tica">Concorrência Automática</a></li>
 <li>
 <a href="#executor">Executor</a>
 
 <ul>
-<li><a href="#default-callbacks">Default callbacks</a></li>
-<li><a href="#wrapping-application-code">Wrapping application code</a></li>
-<li><a href="#executor-concurrency">Concurrency</a></li>
+<li><a href="#callbacks-padr%C3%B5es">Callbacks Padrões</a></li>
+<li><a href="#envolvendo-c%C3%B3digo-da-aplica%C3%A7%C3%A3o">Envolvendo Código da Aplicação</a></li>
+<li><a href="#executor-concorr%C3%AAncia">Concorrência</a></li>
 </ul>
 </li>
 <li>
 <a href="#reloader">Reloader</a>
 
 <ul>
-<li><a href="#callbacks">Callbacks</a></li>
-<li><a href="#class-unload">Class Unload</a></li>
-<li><a href="#reloader-concurrency">Concurrency</a></li>
+<li><a href="#callbacks"><em>Callbacks</em></a></li>
+<li><a href="#descarregamento-de-classes">Descarregamento de Classes</a></li>
+<li><a href="#reloader-concorr%C3%AAncia">Concorrência</a></li>
 </ul>
 </li>
 <li>
-<a href="#framework-behavior">Framework Behavior</a>
+<a href="#comportamento-do-framework">Comportamento do <em>Framework</em></a>
 
 <ul>
-<li><a href="#configuration">Configuration</a></li>
+<li><a href="#configura%C3%A7%C3%A3o">Configuração</a></li>
 </ul>
 </li>
 <li>
@@ -311,145 +311,142 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="automatic-concurrency"><a class="anchorlink" href="#automatic-concurrency">1 Automatic Concurrency</a></h3><p>Rails automatically allows various operations to be performed at the same time.</p><p>When using a threaded web server, such as the default Puma, multiple HTTP
-requests will be served simultaneously, with each request provided its own
-controller instance.</p><p>Threaded Active Job adapters, including the built-in Async, will likewise
-execute several jobs at the same time. Action Cable channels are managed this
-way too.</p><p>These mechanisms all involve multiple threads, each managing work for a unique
-instance of some object (controller, job, channel), while sharing the global
-process space (such as classes and their configurations, and global variables).
-As long as your code doesn't modify any of those shared things, it can mostly
-ignore that other threads exist.</p><p>The rest of this guide describes the mechanisms Rails uses to make it "mostly
-ignorable", and how extensions and applications with special needs can use them.</p><h3 id="executor"><a class="anchorlink" href="#executor">2 Executor</a></h3><p>The Rails Executor separates application code from framework code: any time the
-framework invokes code you've written in your application, it will be wrapped by
-the Executor.</p><p>The Executor consists of two callbacks: <code>to_run</code> and <code>to_complete</code>. The Run
-callback is called before the application code, and the Complete callback is
-called after.</p><h4 id="default-callbacks"><a class="anchorlink" href="#default-callbacks">2.1 Default callbacks</a></h4><p>In a default Rails application, the Executor callbacks are used to:</p>
+        <h3 id="concorrência-automática"><a class="anchorlink" href="#concorr%C3%AAncia-autom%C3%A1tica">1 Concorrência Automática</a></h3><p>O Rails automaticamente permite que várias operações sejam feitas ao mesmo tempo.</p><p>Quando um servidor web que utiliza <em>threads</em> está em uso, como o Puma, que é padrão,
+múltiplas requisições HTTP serão servidas simultaneamente, com cada requisição
+utilizando sua própria instância de <em>controller</em>.</p><p>Adaptadores do Active Job que usam <em>thread</em>, incluindo o Async, que é padrão, vai
+executar vários <em>jobs</em> ao mesmo tempo. Os canais (<em>channels</em>) Action Cable também
+são gerenciados dessa forma.</p><p>Todos esses mecanismos envolvem múltiplas <em>threads</em>, cada uma gerenciando trabalho
+para uma única instância de algum objeto (<em>controller</em>, <em>job</em>, <em>channel</em>), enquanto
+compartilham o espaço global do processo (classes e suas configurações e variáveis globais).
+Contanto que seu código não modifique nenhuma dessas coisas compartilhadas, ele pode
+quase esquecer que outras <em>threads</em> existem.</p><p>O resto desse guia vai mostrar os mecanismos que o Rails usa para fazer com que
+suas <em>threads</em> sejam "quase ignoráveis" e como extensões e aplicações com necessidades
+especiais podem usar esse aparato.</p><h3 id="executor"><a class="anchorlink" href="#executor">2 Executor</a></h3><p>O <em>Rails Executor</em> separa o código da sua aplicação do código de <em>framework</em>:
+toda vez que o <em>framework</em> invoca código que você escreveu em sua aplicação, ele
+vai estar envolvido pelo <em>Executor</em>.</p><p>O <em>Executor</em> consiste em dois <em>callbacks</em>: <code>to_run</code> e <code>to_complete</code>. O <em>callback</em>
+<em>Run</em> é chamado antes do código da aplicação e o <em>Complete</em> é chamado após o código
+da aplicação.</p><h4 id="callbacks-padrões"><a class="anchorlink" href="#callbacks-padr%C3%B5es">2.1 Callbacks Padrões</a></h4><p>Em uma aplicação Rails padrão, os <em>callbacks</em> do <em>Executor</em> são usados para:</p>
 <ul>
-<li>track which threads are in safe positions for autoloading and reloading</li>
-<li>enable and disable the Active Record query cache</li>
-<li>return acquired Active Record connections to the pool</li>
-<li>constrain internal cache lifetimes</li>
+<li>acompanhar quais <em>threads</em> estão em uma posição segura para carregar e recarregar código automaticamente (<em>autoloading</em> e <em>reloading</em>).</li>
+<li>habilitar e desabilitar o cache do Active Record</li>
+<li>retornar conexões Active Record adquiridas para o <em>pool</em> de conexões.</li>
+<li>controlar a duração dos caches internos</li>
 </ul>
-<p>Prior to Rails 5.0, some of these were handled by separate Rack middleware
-classes (such as <code>ActiveRecord::ConnectionAdapters::ConnectionManagement</code>), or
-directly wrapping code with methods like
-<code>ActiveRecord::Base.connection_pool.with_connection</code>. The Executor replaces
-these with a single more abstract interface.</p><h4 id="wrapping-application-code"><a class="anchorlink" href="#wrapping-application-code">2.2 Wrapping application code</a></h4><p>If you're writing a library or component that will invoke application code, you
-should wrap it with a call to the executor:</p><div class="code_container">
+<p>Antes do Rails 5.0, algumas dessas funções eram gerenciadas por <em>middlewares</em> Rack
+(como <code>ActiveRecord::ConnectionAdapters::ConnectionManagement</code>) ou envolvendo o código
+diretamente com métodos como <code>ActiveRecord::Base.connection_pool.with_connection</code>.
+O <em>Executor</em> substitui essas interfaces por uma mais simples e mais abstrata.</p><h4 id="envolvendo-código-da-aplicação"><a class="anchorlink" href="#envolvendo-c%C3%B3digo-da-aplica%C3%A7%C3%A3o">2.2 Envolvendo Código da Aplicação</a></h4><p>Se você está escrevendo uma biblioteca ou componente que vai invocar código da aplicação,
+você deve envolver esse código com uma chamada para o <em>Executor</em>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
-  <span class="c1"># call application code here</span>
+  <span class="c1"># chame o código da aplicação aqui</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0af5eac13a1c2febd9d645cbbba56807">Rails.application.executor.wrap do
-  # call application code here
+<button class="clipboard-button" data-clipboard-text="Rails.application.executor.wrap do
+  # chame o código da aplicação aqui
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0af5eac13a1c2febd9d645cbbba56807">Copiar</button>
+">Copy</button>
 </div>
-<div class="info"><p>If you repeatedly invoke application code from a long-running process, you
-may want to wrap using the <a href="#reloader">Reloader</a> instead.</p></div><p>Each thread should be wrapped before it runs application code, so if your
-application manually delegates work to other threads, such as via <code>Thread.new</code>
-or Concurrent Ruby features that use thread pools, you should immediately wrap
-the block:</p><div class="code_container">
+<div class="info"><p>Se você quiser repetidamente invocar código da aplicação de um processo de
+longa duração, talvez você queira usar o <a href="#reloader"><em>Reloader</em></a> ao invés do <em>Executor</em>.</p></div><p>Toda <em>thread</em> deve ser envolvida antes de rodar código da aplicação, então se sua
+aplicação manualmente delega trabalho para outras <em>threads</em> utilizando, por exemplo
+<code>Thread.new</code> ou funcionalidades da biblioteca Concurrent Ruby que usam <em>pools</em> de
+<em>threads</em>, você deve imediatamente envolver o bloco:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Thread</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
   <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
-    <span class="c1"># your code here</span>
+    <span class="c1"># seu código aqui</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1f68c557ed90a7c2df5661f64465757d">Thread.new do
+<button class="clipboard-button" data-clipboard-text="Thread.new do
   Rails.application.executor.wrap do
-    # your code here
+    # seu código aqui
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1f68c557ed90a7c2df5661f64465757d">Copiar</button>
+">Copy</button>
 </div>
-<div class="note"><p>Concurrent Ruby uses a <code>ThreadPoolExecutor</code>, which it sometimes configures
-with an <code>executor</code> option. Despite the name, it is unrelated.</p></div><p>The Executor is safely re-entrant; if it is already active on the current
-thread, <code>wrap</code> is a no-op.</p><p>If it's impractical to wrap the application code in a block (for
-example, the Rack API makes this problematic), you can also use the <code>run!</code> /
-<code>complete!</code> pair:</p><div class="code_container">
+<div class="note"><p>A biblioteca Concurrent Ruby usa um objeto <code>ThreadPoolExecutor</code>, que as vezes se configura
+com uma opção chamada <code>executor</code>. Apesar do nome, isso não se relaciona com o <em>Executor</em> do Rails.</p></div><p>O <em>Executor</em> admite re-entradas seguramente. Se ele já está ativo na <em>thread</em> atual,
+<code>wrap</code> não faz nada (é uma <em>no-op</em>).</p><p>Se não for possível envolver o código da aplicação em um bloco (como por exemplo
+a API Rack, que torna isso difícil), você pode utilizar o par de métodos <code>run!</code>
+/ <code>complete!</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Thread</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
   <span class="n">execution_context</span> <span class="o">=</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">run!</span>
-  <span class="c1"># your code here</span>
+  <span class="c1"># seu código aqui</span>
 <span class="k">ensure</span>
   <span class="n">execution_context</span><span class="p">.</span><span class="nf">complete!</span> <span class="k">if</span> <span class="n">execution_context</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1b8c5aaa77ccdab11b8c273940a6377e">Thread.new do
+<button class="clipboard-button" data-clipboard-text="Thread.new do
   execution_context = Rails.application.executor.run!
-  # your code here
+  # seu código aqui
 ensure
   execution_context.complete! if execution_context
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1b8c5aaa77ccdab11b8c273940a6377e">Copiar</button>
+">Copy</button>
 </div>
-<h4 id="executor-concurrency"><a class="anchorlink" href="#executor-concurrency">2.3 Concurrency</a></h4><p>The Executor will put the current thread into <code>running</code> mode in the <a href="#load-interlock">Load
-Interlock</a>. This operation will block temporarily if another
-thread is currently either autoloading a constant or unloading/reloading
-the application.</p><h3 id="reloader"><a class="anchorlink" href="#reloader">3 Reloader</a></h3><p>Like the Executor, the Reloader also wraps application code. If the Executor is
-not already active on the current thread, the Reloader will invoke it for you,
-so you only need to call one. This also guarantees that everything the Reloader
-does, including all its callback invocations, occurs wrapped inside the
-Executor.</p><div class="code_container">
+<h4 id="executor-concorrência"><a class="anchorlink" href="#executor-concorr%C3%AAncia">2.3 Concorrência</a></h4><p>O <em>Executor</em> vai colocar a <em>thread</em> atual no modo <code>running</code>, no <a href="#load-interlock">Load Interlock</a>.
+Essa operação irá bloquear temporariamente outras <em>threads</em> que estejam carregando automaticamante
+(<em>autoloading</em>) uma constante ou que estejam carregando ou recarregando a aplicação.</p><h3 id="reloader"><a class="anchorlink" href="#reloader">3 Reloader</a></h3><p>Assim como o <em>Executor</em>, o <em>Reloader</em> também envolve o código da aplicação.
+Se o <em>Executor</em> ainda não estiver ativo na <em>thread</em> atual, o <em>Reloader</em> vai
+invocá-lo para você, logo você só precisa chamar o <em>Reloader</em>. Isso garante que
+tudo que o <em>Reloader</em> faça, inclusive suas invocações de <em>callback</em>, ocorram envolvidas
+pelo <em>Executor</em>.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">reloader</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
   <span class="c1"># call application code here</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ffc3d903d75fe66586ac806438702568">Rails.application.reloader.wrap do
+<button class="clipboard-button" data-clipboard-text="Rails.application.reloader.wrap do
   # call application code here
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ffc3d903d75fe66586ac806438702568">Copiar</button>
+">Copy</button>
 </div>
-<p>The Reloader is only suitable where a long-running framework-level process
-repeatedly calls into application code, such as for a web server or job queue.
-Rails automatically wraps web requests and Active Job workers, so you'll rarely
-need to invoke the Reloader for yourself. Always consider whether the Executor
-is a better fit for your use case.</p><h4 id="callbacks"><a class="anchorlink" href="#callbacks">3.1 Callbacks</a></h4><p>Before entering the wrapped block, the Reloader will check whether the running
-application needs to be reloaded -- for example, because a model's source file has
-been modified. If it determines a reload is required, it will wait until it's
-safe, and then do so, before continuing. When the application is configured to
-always reload regardless of whether any changes are detected, the reload is
-instead performed at the end of the block.</p><p>The Reloader also provides <code>to_run</code> and <code>to_complete</code> callbacks; they are
-invoked at the same points as those of the Executor, but only when the current
-execution has initiated an application reload. When no reload is deemed
-necessary, the Reloader will invoke the wrapped block with no other callbacks.</p><h4 id="class-unload"><a class="anchorlink" href="#class-unload">3.2 Class Unload</a></h4><p>The most significant part of the reloading process is the Class Unload, where
-all autoloaded classes are removed, ready to be loaded again. This will occur
-immediately before either the Run or Complete callback, depending on the
-<code>reload_classes_only_on_change</code> setting.</p><p>Often, additional reloading actions need to be performed either just before or
-just after the Class Unload, so the Reloader also provides <code>before_class_unload</code>
-and <code>after_class_unload</code> callbacks.</p><h4 id="reloader-concurrency"><a class="anchorlink" href="#reloader-concurrency">3.3 Concurrency</a></h4><p>Only long-running "top level" processes should invoke the Reloader, because if
-it determines a reload is needed, it will block until all other threads have
-completed any Executor invocations.</p><p>If this were to occur in a "child" thread, with a waiting parent inside the
-Executor, it would cause an unavoidable deadlock: the reload must occur before
-the child thread is executed, but it cannot be safely performed while the parent
-thread is mid-execution. Child threads should use the Executor instead.</p><h3 id="framework-behavior"><a class="anchorlink" href="#framework-behavior">4 Framework Behavior</a></h3><p>The Rails framework components use these tools to manage their own concurrency
-needs too.</p><p><code>ActionDispatch::Executor</code> and <code>ActionDispatch::Reloader</code> are Rack middlewares
-that wrap requests with a supplied Executor or Reloader, respectively. They
-are automatically included in the default application stack. The Reloader will
-ensure any arriving HTTP request is served with a freshly-loaded copy of the
-application if any code changes have occurred.</p><p>Active Job also wraps its job executions with the Reloader, loading the latest
-code to execute each job as it comes off the queue.</p><p>Action Cable uses the Executor instead: because a Cable connection is linked to
-a specific instance of a class, it's not possible to reload for every arriving
-WebSocket message. Only the message handler is wrapped, though; a long-running
-Cable connection does not prevent a reload that's triggered by a new incoming
-request or job. Instead, Action Cable uses the Reloader's <code>before_class_unload</code>
-callback to disconnect all its connections. When the client automatically
-reconnects, it will be speaking to the new version of the code.</p><p>The above are the entry points to the framework, so they are responsible for
-ensuring their respective threads are protected, and deciding whether a reload
-is necessary. Other components only need to use the Executor when they spawn
-additional threads.</p><h4 id="configuration"><a class="anchorlink" href="#configuration">4.1 Configuration</a></h4><p>The Reloader only checks for file changes when <code>cache_classes</code> is false and
-<code>reload_classes_only_on_change</code> is true (which is the default in the
-<code>development</code> environment).</p><p>When <code>cache_classes</code> is true (in <code>production</code>, by default), the Reloader is only
-a pass-through to the Executor.</p><p>The Executor always has important work to do, like database connection
-management. When <code>cache_classes</code> and <code>eager_load</code> are both true (<code>production</code>),
-no autoloading or class reloading will occur, so it does not need the Load
-Interlock. If either of those are false (<code>development</code>), then the Executor will
-use the Load Interlock to ensure constants are only loaded when it is safe.</p><h3 id="load-interlock"><a class="anchorlink" href="#load-interlock">5 Load Interlock</a></h3><p>The Load Interlock allows autoloading and reloading to be enabled in a
+<p>O <em>Reloader</em> é mais indicado para processos de longa duração de nível de <em>framework</em>
+que chamam repetidamente o código da aplicação, como servidores web e filas de <em>jobs</em>.
+O Rails automaticamente envolve requisições web e <em>workers</em> do Active Job, logo
+você raramente precisará invocar o <em>Reloader</em> por si mesmo. Sempre se pergunte se
+o <em>Executor</em> não seria a melhor opção para o seu caso de uso.</p><h4 id="callbacks"><a class="anchorlink" href="#callbacks">3.1 <em>Callbacks</em></a></h4><p>Antes de executar o bloco envolvido, o <em>Reloader</em> vai verificar se a aplicação que
+está rodando precisa ser recarregada. Por exemplo, talvez o código fonte de um <em>model</em>
+tenha sido alterado. Se é determinado que um recarregamento é necessário, o <em>Reloader</em>
+esperará até que seja seguro fazer isso e depois disso irá recarregar a aplicação
+antes de continuar. Quando a aplicação está configurada para sempre ser recarregada,
+indepentende de modificações, o recarregamento da aplicação é feito no final do bloco,
+ao invés de no começo.</p><p>O <em>Reloader</em> também oferece os <em>callbacks</em> <code>to_run</code> e <code>to_complete</code>. Eles são
+invocados nos mesmos pontos do <em>Executor</em>, mas somente quando a execução atual começar
+um recarregamento da aplicação. Quando o recarregamento não é necessário, o <em>Reloader</em>
+irá invocar o bloco envolvido por ele sem executar os <em>callbacks</em>.</p><h4 id="descarregamento-de-classes"><a class="anchorlink" href="#descarregamento-de-classes">3.2 Descarregamento de Classes</a></h4><p>A parte mais trabalhosa do processo de recarregamento é o Descarregamento de Classes,
+em que todas as classes automaticamente carregadas são removidas e ficam prontas para
+ser carregadas de novo. Isso irá ocorrer imediatamente antes do <em>callback</em> Run ou Complete,
+dependendo do valor da configuração <code>reload_classes_only_on_change</code>.</p><p>Na maioria das vezes, algumas ações extras precisam ser feitas exatamente no momento
+antes ou no momento posterior ao Descarregamento de Classes, logo o <em>Reloader</em> também
+fornece os <em>callbacks</em> <code>before_class_unload</code> e <code>after_class_unload</code>.</p><h4 id="reloader-concorrência"><a class="anchorlink" href="#reloader-concorr%C3%AAncia">3.3 Concorrência</a></h4><p>Somente processos "top level" de longa duração devem invocar o <em>Reloader</em>, porque
+se ele determinar que um recarregamento é necessário, ele vai bloquear até que
+todas as outras <em>threads</em> tenham terminado qualquer invocação do <em>Executor</em>.</p><p>Se isso ocorrer numa <em>sub-thread</em>, com a <em>thread</em> pai esperando dentro do <em>Executor</em>,
+isso irá causar um bloqueio permanente (<em>deadlock</em>) inevitável: o recarregamento
+deve ocorrer antes da <em>sub-thread</em> ser executada, mas ela não pode ser invocada com
+segurança enquanto a <em>thread</em> pai está em execução. <em>Sub-threads</em> devem usar somente o
+<em>Executor</em>.</p><h3 id="comportamento-do-framework"><a class="anchorlink" href="#comportamento-do-framework">4 Comportamento do <em>Framework</em></a></h3><p>Os componentes do <em>framework</em> Rails também utilizam essas ferramentas para gerenciar
+suas necessidades relacionadas à concorrência.</p><p><code>ActionDispatch::Executor</code> e <code>ActionDispatch::Reloader</code> são <em>middlewares</em> Rack
+que envolvem requisições com o <em>Executor</em> ou <em>Reloader</em> fornecido. Esses componentes
+são automaticamente incluídos na pilha de <em>middlewares</em> de uma aplicação padrão.
+O <em>Reloader</em> irá garantir que qualquer requisição HTTP seja servida com a cópia
+mais recente possível da aplicação se houver qualquer mudança de código.</p><p>O Active Job também envolve a execução de <em>jobs</em> com o <em>Reloader</em>, carregando a
+última versão do código para executar cada <em>job</em> assim que sai da fila para ser executado.</p><p>Ao invés de utilizar o <em>Reloader</em>, o Action Cable usa o <em>Executor</em>: já que cada conexão <em>Cable</em>
+é associada a uma instância de uma classe, não é possível recarregar a cada mensagem WebSocket.
+Somente o <em>message handler</em> é envolvido pelo <em>Reloader</em> a propósito. Uma conexão
+de longa duração não previne o recarregamento a aplicação promovido por uma requisição ou
+<em>job</em>. Ao invés disso, o Action Cable utiliza o <em>callback</em> <code>before_class_unload</code>
+do <em>Reloader</em> para desconectar todas as suas conexões. Quando o cliente automaticamente
+reconectar, ele irá se comunicar com a nova versão do código.</p><p>Os pontos acima são <em>entry points</em> para o <em>framework</em>, logo eles são responsáveis
+por garantir a proteção de suas <em>threads</em> e por decidir quando um recarregamento
+é necessário. Outros componentes utilizam apenas o <em>Executor</em> quando criam <em>threads</em>
+adicionais.</p><h4 id="configuração"><a class="anchorlink" href="#configura%C3%A7%C3%A3o">4.1 Configuração</a></h4><p>O <em>Reloader</em> apenas verifica mudanças em arquivos se <code>cache_classes</code> for falso e
+<code>reload_classes_only_on_change</code> for verdadeiro (que é o padrão no ambiente <code>development</code>).</p><p>Quando <code>cache_classes</code> for verdadeiro (em <code>production</code>, por padrão), o <em>Reloader</em>
+passa o controle imediatamente para o <em>Executor</em>.</p><p>O <em>Executor</em> sempre tem coisas importantes para fazer, como gerenciar as conexões
+do banco de dados. Quando <code>cache_classes</code> e <code>eager_load</code> são verdadeiros (<code>production</code>),
+nenhum autocarregamento ou recarregamento de classes irá ocorrer, então o <em>Load Interlock</em>
+não é necessário. Se algum dessas configurações forem falsas (<code>development</code>), o <em>Executor</em>
+irá usar o <em>Load Interlock</em> para garantir que constantes só serão carregadas quando for
+seguro.</p><h3 id="load-interlock"><a class="anchorlink" href="#load-interlock">5 Load Interlock</a></h3><p>The Load Interlock allows autoloading and reloading to be enabled in a
 multi-threaded runtime environment.</p><p>When one thread is performing an autoload by evaluating the class definition
 from the appropriate file, it is important no other thread encounters a
 reference to the partially-defined constant.</p><p>Similarly, it is only safe to perform an unload/reload when no application code
@@ -478,7 +475,7 @@ deadlock.</p><p>For example, assuming <code>User</code> is not yet loaded, the f
   <span class="n">th</span><span class="p">.</span><span class="nf">join</span> <span class="c1"># outer thread waits here, holding 'running' lock</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-e1f4b95858dce912ebec7920add97f07">Rails.application.executor.wrap do
+<button class="clipboard-button" data-clipboard-text="Rails.application.executor.wrap do
   th = Thread.new do
     Rails.application.executor.wrap do
       User # inner thread waits here; it cannot load
@@ -488,8 +485,7 @@ deadlock.</p><p>For example, assuming <code>User</code> is not yet loaded, the f
 
   th.join # outer thread waits here, holding 'running' lock
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-e1f4b95858dce912ebec7920add97f07">Copiar</button>
+">Copy</button>
 </div>
 <p>To prevent this deadlock, the outer thread can <code>permit_concurrent_loads</code>. By
 calling this method, the thread guarantees it will not dereference any
@@ -508,7 +504,7 @@ that promise is to put it as close as possible to the blocking call:</p><div cla
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-dbb0dcb89e367d17152cfd2a70dd73f9">Rails.application.executor.wrap do
+<button class="clipboard-button" data-clipboard-text="Rails.application.executor.wrap do
   th = Thread.new do
     Rails.application.executor.wrap do
       User # inner thread can acquire the 'load' lock,
@@ -520,8 +516,7 @@ that promise is to put it as close as possible to the blocking call:</p><div cla
     th.join # outer thread waits here, but has no lock
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-dbb0dcb89e367d17152cfd2a70dd73f9">Copiar</button>
+">Copy</button>
 </div>
 <p>Another example, using Concurrent Ruby:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">executor</span><span class="p">.</span><span class="nf">wrap</span> <span class="k">do</span>
@@ -538,7 +533,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b59393ba26aacbc714715c8904fc775e">Rails.application.executor.wrap do
+<button class="clipboard-button" data-clipboard-text="Rails.application.executor.wrap do
   futures = 3.times.collect do |i|
     Concurrent::Promises.future do
       Rails.application.executor.wrap do
@@ -551,8 +546,7 @@ end
     futures.collect(&amp;:value)
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b59393ba26aacbc714715c8904fc775e">Copiar</button>
+">Copy</button>
 </div>
 <h4 id="actiondispatch-debuglocks"><a class="anchorlink" href="#actiondispatch-debuglocks">5.2 ActionDispatch::DebugLocks</a></h4><p>If your application is deadlocking and you think the Load Interlock may be
 involved, you can temporarily add the ActionDispatch::DebugLocks middleware to
@@ -560,10 +554,9 @@ involved, you can temporarily add the ActionDispatch::DebugLocks middleware to
 <pre><code class="highlight ruby"><span class="n">config</span><span class="p">.</span><span class="nf">middleware</span><span class="p">.</span><span class="nf">insert_before</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Sendfile</span><span class="p">,</span>
                                   <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">DebugLocks</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6d2249abfce6c2c2e4f7da1c1ad32d6d">config.middleware.insert_before Rack::Sendfile,
+<button class="clipboard-button" data-clipboard-text="config.middleware.insert_before Rack::Sendfile,
                                   ActionDispatch::DebugLocks
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6d2249abfce6c2c2e4f7da1c1ad32d6d">Copiar</button>
+">Copy</button>
 </div>
 <p>If you then restart the application and re-trigger the deadlock condition,
 <code>/rails/locks</code> will show a summary of all threads currently known to the
@@ -594,7 +587,7 @@ external lock or blocking I/O call. Once you find it, you can wrap it with
         </p>
         <p>
           E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
-          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">forum oficial do Ruby on Rails</a> e nas
           <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
         </p>
       </div>

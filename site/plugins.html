@@ -26,7 +26,7 @@
 </head>
 <body class="guide">
   <div>
-    <div id="version-badge">v7.0.0</div>
+    <div id="version-badge">v7.0.8</div>
   </div>
   <div id="topNav">
     <div class="wrapper">
@@ -35,7 +35,7 @@
         Mais Ruby on Rails
       </span>
       <ul class="more-info-links s-hidden">
-        <li class="more-info"><a href="https://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="https://rubyonrails.org/blog">Blog</a></li>
         <li class="more-info"><a href="https://guides.rubyonrails.org/">Guia oficial</a></li>
         <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
         <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
@@ -136,7 +136,7 @@
                 <div class="guides-section">
                   <dt>Release Notes</dt>
                   <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
-                  <dd><a href="7_0_release_notes.html">Version 7.0 - ?</a></dd>
+                  <dd><a href="7_0_release_notes.html">Version 7.0 - Dezembro 2021</a></dd>
                   <dd><a href="6_1_release_notes.html">Version 6.1 - Dezembro 2020</a></dd>
                   <dd><a href="6_0_release_notes.html">Version 6.0 - Agosto 2019</a></dd>
                   <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
@@ -231,7 +231,7 @@
               </optgroup>
               <optgroup label="Release Notes">
                   <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
-                  <option value="7_0_release_notes.html">Version 7.0 - ?</option>
+                  <option value="7_0_release_notes.html">Version 7.0 - Dezembro 2021</option>
                   <option value="6_1_release_notes.html">Version 6.1 - Dezembro 2020</option>
                   <option value="6_0_release_notes.html">Version 6.0 - Agosto 2019</option>
                   <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
@@ -283,7 +283,7 @@ goodness.</p>
 <a href="#setup">Setup</a>
 
 <ul>
-<li><a href="#generate-a-gemified-plugin">Generate a gemified plugin.</a></li>
+<li><a href="#generate-a-gemified-plugin">Generate a Gemified Plugin</a></li>
 </ul>
 </li>
 <li><a href="#testing-your-newly-generated-plugin">Testing Your Newly Generated Plugin</a></li>
@@ -316,30 +316,47 @@ goodness.</p>
     <div class="wrapper">
       <div id="mainCol">
         <h3 id="setup"><a class="anchorlink" href="#setup">1 Setup</a></h3><p>Currently, Rails plugins are built as gems, <em>gemified plugins</em>. They can be shared across
-different Rails applications using RubyGems and Bundler if desired.</p><h4 id="generate-a-gemified-plugin"><a class="anchorlink" href="#generate-a-gemified-plugin">1.1 Generate a gemified plugin.</a></h4><p>Rails ships with a <code>rails plugin new</code> command which creates a
+different Rails applications using RubyGems and Bundler if desired.</p><h4 id="generate-a-gemified-plugin"><a class="anchorlink" href="#generate-a-gemified-plugin">1.1 Generate a Gemified Plugin</a></h4><p>Rails ships with a <code>rails plugin new</code> command which creates a
 skeleton for developing any kind of Rails extension with the ability
 to run integration tests using a dummy Rails application. Create your
 plugin with the command:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>plugin new yaffle
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-19e1d436e1d35edecfbcfab43571b200">rails plugin new yaffle
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-19e1d436e1d35edecfbcfab43571b200">Copiar</button>
+<button class="clipboard-button" data-clipboard-text="rails plugin new yaffle
+">Copy</button>
 </div>
 <p>See usage and options by asking for help:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>plugin new <span class="nt">--help</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-357b946790516015f0996a4e0f0fc36c">rails plugin new --help
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-357b946790516015f0996a4e0f0fc36c">Copiar</button>
+<button class="clipboard-button" data-clipboard-text="rails plugin new --help
+">Copy</button>
 </div>
-<h3 id="testing-your-newly-generated-plugin"><a class="anchorlink" href="#testing-your-newly-generated-plugin">2 Testing Your Newly Generated Plugin</a></h3><p>You can navigate to the directory that contains the plugin, run the <code>bundle install</code> command
-and run the one generated test using the <code>bin/test</code> command.</p><p>You should see:</p><div class="code_container">
+<h3 id="testing-your-newly-generated-plugin"><a class="anchorlink" href="#testing-your-newly-generated-plugin">2 Testing Your Newly Generated Plugin</a></h3><p>Navigate to the directory that contains the plugin, and edit <code>yaffle.gemspec</code> to
+replace any lines that have <code>TODO</code> values:</p><div class="code_container">
+<pre><code class="highlight ruby">  <span class="n">spec</span><span class="p">.</span><span class="nf">homepage</span>    <span class="o">=</span> <span class="s2">"http://example.com"</span>
+  <span class="n">spec</span><span class="p">.</span><span class="nf">summary</span>     <span class="o">=</span> <span class="s2">"Summary of Yaffle."</span>
+  <span class="n">spec</span><span class="p">.</span><span class="nf">description</span> <span class="o">=</span> <span class="s2">"Description of Yaffle."</span>
+
+<span class="o">...</span>
+
+  <span class="n">spec</span><span class="p">.</span><span class="nf">metadata</span><span class="p">[</span><span class="s2">"source_code_uri"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"http://example.com"</span>
+  <span class="n">spec</span><span class="p">.</span><span class="nf">metadata</span><span class="p">[</span><span class="s2">"changelog_uri"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"http://example.com"</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text='  spec.homepage    = "http://example.com"
+  spec.summary     = "Summary of Yaffle."
+  spec.description = "Description of Yaffle."
+
+...
+
+  spec.metadata["source_code_uri"] = "http://example.com"
+  spec.metadata["changelog_uri"] = "http://example.com"
+'>Copy</button>
+</div>
+<p>Then run the <code>bundle install</code> command.</p><p>Now you can run the tests using the <code>bin/test</code> command, and you should see:</p><div class="code_container">
 <pre><code class="highlight plaintext">  1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-0958a7db2bbbd89af246b018f3141523">  1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-0958a7db2bbbd89af246b018f3141523">Copiar</button>
+<button class="clipboard-button" data-clipboard-text="  1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
+">Copy</button>
 </div>
 <p>This will tell you that everything got generated properly, and you are ready to start adding functionality.</p><h3 id="extending-core-classes"><a class="anchorlink" href="#extending-core-classes">3 Extending Core Classes</a></h3><p>This section will explain how to add a method to String that will be available anywhere in your Rails application.</p><p>In this example you will add a method to String named <code>to_squawk</code>. To begin, create a new test file with a few assertions:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># yaffle/test/core_ext_test.rb</span>
@@ -352,7 +369,7 @@ and run the one generated test using the <code>bin/test</code> command.</p><p>Yo
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c6d3fc010f3b3cd490a772b12f96b666"># yaffle/test/core_ext_test.rb
+<button class="clipboard-button" data-clipboard-text='# yaffle/test/core_ext_test.rb
 
 require "test_helper"
 
@@ -361,8 +378,7 @@ class CoreExtTest &lt; ActiveSupport::TestCase
     assert_equal "squawk! Hello World", "Hello World".to_squawk
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c6d3fc010f3b3cd490a772b12f96b666">Copiar</button>
+'>Copy</button>
 </div>
 <p>Run <code>bin/test</code> to run the test. This test should fail because we haven't implemented the <code>to_squawk</code> method:</p><div class="code_container">
 <pre><code class="highlight plaintext">E
@@ -380,11 +396,11 @@ Finished in 0.003358s, 595.6483 runs/s, 297.8242 assertions/s.
 
 2 runs, 1 assertions, 0 failures, 1 errors, 0 skips
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-4dc2be0cf87a4130f472f6ce7fd83082">E
+<button class="clipboard-button" data-clipboard-text="E
 
 Error:
 CoreExtTest#test_to_squawk_prepends_the_word_squawk:
-NoMethodError: undefined method `to_squawk' for "Hello World":String
+NoMethodError: undefined method `to_squawk' for &quot;Hello World&quot;:String
 
 
 bin/test /path/to/yaffle/test/core_ext_test.rb:4
@@ -394,12 +410,12 @@ bin/test /path/to/yaffle/test/core_ext_test.rb:4
 Finished in 0.003358s, 595.6483 runs/s, 297.8242 assertions/s.
 
 2 runs, 1 assertions, 0 failures, 1 errors, 0 skips
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-4dc2be0cf87a4130f472f6ce7fd83082">Copiar</button>
+">Copy</button>
 </div>
 <p>Great - now you are ready to start development.</p><p>In <code>lib/yaffle.rb</code>, add <code>require "yaffle/core_ext"</code>:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># yaffle/lib/yaffle.rb</span>
 
+<span class="nb">require</span> <span class="s2">"yaffle/version"</span>
 <span class="nb">require</span> <span class="s2">"yaffle/railtie"</span>
 <span class="nb">require</span> <span class="s2">"yaffle/core_ext"</span>
 
@@ -407,16 +423,16 @@ Finished in 0.003358s, 595.6483 runs/s, 297.8242 assertions/s.
   <span class="c1"># Your code goes here...</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-03802b715f31372a64c1625033f9ac3f"># yaffle/lib/yaffle.rb
+<button class="clipboard-button" data-clipboard-text='# yaffle/lib/yaffle.rb
 
+require "yaffle/version"
 require "yaffle/railtie"
 require "yaffle/core_ext"
 
 module Yaffle
   # Your code goes here...
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-03802b715f31372a64c1625033f9ac3f">Copiar</button>
+'>Copy</button>
 </div>
 <p>Finally, create the <code>core_ext.rb</code> file and add the <code>to_squawk</code> method:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># yaffle/lib/yaffle/core_ext.rb</span>
@@ -427,30 +443,27 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-51ed99869ff55b5621406f03ad9a285b"># yaffle/lib/yaffle/core_ext.rb
+<button class="clipboard-button" data-clipboard-text='# yaffle/lib/yaffle/core_ext.rb
 
 class String
   def to_squawk
     "squawk! #{self}".strip
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-51ed99869ff55b5621406f03ad9a285b">Copiar</button>
+'>Copy</button>
 </div>
 <p>To test that your method does what it says it does, run the unit tests with <code>bin/test</code> from your plugin directory.</p><div class="code_container">
 <pre><code class="highlight plaintext">  2 runs, 2 assertions, 0 failures, 0 errors, 0 skips
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-a6322b0b3532a257bd5081d50d14258c">  2 runs, 2 assertions, 0 failures, 0 errors, 0 skips
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-a6322b0b3532a257bd5081d50d14258c">Copiar</button>
+<button class="clipboard-button" data-clipboard-text="  2 runs, 2 assertions, 0 failures, 0 errors, 0 skips
+">Copy</button>
 </div>
 <p>To see this in action, change to the <code>test/dummy</code> directory, start <code>bin/rails console</code>, and commence squawking:</p><div class="code_container">
 <pre><code class="highlight irb"><span class="gp">irb&gt;</span><span class="w"> </span><span class="s2">"Hello World"</span><span class="p">.</span><span class="nf">to_squawk</span>
 <span class="p">=&gt;</span> <span class="s2">"squawk! Hello World"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-10c426e09eaa2d0ec9d03ede5a6a6adf">"Hello World".to_squawk
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-10c426e09eaa2d0ec9d03ede5a6a6adf">Copiar</button>
+<button class="clipboard-button" data-clipboard-text='"Hello World".to_squawk
+'>Copy</button>
 </div>
 <h3 id="add-an-acts-as-method-to-active-record"><a class="anchorlink" href="#add-an-acts-as-method-to-active-record">4 Add an "acts_as" Method to Active Record</a></h3><p>A common pattern in plugins is to add a method called <code>acts_as_something</code> to models. In this case, you
 want to write a method called <code>acts_as_yaffle</code> that adds a <code>squawk</code> method to your Active Record models.</p><p>To begin, set up your files so that you have:</p><div class="code_container">
@@ -461,18 +474,18 @@ want to write a method called <code>acts_as_yaffle</code> that adds a <code>squa
 <span class="k">class</span> <span class="nc">ActsAsYaffleTest</span> <span class="o">&lt;</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">TestCase</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-2a13dcad468c79d9751a1d6f43eda9cf"># yaffle/test/acts_as_yaffle_test.rb
+<button class="clipboard-button" data-clipboard-text='# yaffle/test/acts_as_yaffle_test.rb
 
 require "test_helper"
 
 class ActsAsYaffleTest &lt; ActiveSupport::TestCase
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-2a13dcad468c79d9751a1d6f43eda9cf">Copiar</button>
+'>Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># yaffle/lib/yaffle.rb</span>
 
+<span class="nb">require</span> <span class="s2">"yaffle/version"</span>
 <span class="nb">require</span> <span class="s2">"yaffle/railtie"</span>
 <span class="nb">require</span> <span class="s2">"yaffle/core_ext"</span>
 <span class="nb">require</span> <span class="s2">"yaffle/acts_as_yaffle"</span>
@@ -481,8 +494,9 @@ end
   <span class="c1"># Your code goes here...</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c9e5442a7321a7c81d03a7885f62e5a4"># yaffle/lib/yaffle.rb
+<button class="clipboard-button" data-clipboard-text='# yaffle/lib/yaffle.rb
 
+require "yaffle/version"
 require "yaffle/railtie"
 require "yaffle/core_ext"
 require "yaffle/acts_as_yaffle"
@@ -490,8 +504,7 @@ require "yaffle/acts_as_yaffle"
 module Yaffle
   # Your code goes here...
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c9e5442a7321a7c81d03a7885f62e5a4">Copiar</button>
+'>Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># yaffle/lib/yaffle/acts_as_yaffle.rb</span>
@@ -501,14 +514,13 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3b2300bacee42c776ea51e8a7ebb0030"># yaffle/lib/yaffle/acts_as_yaffle.rb
+<button class="clipboard-button" data-clipboard-text="# yaffle/lib/yaffle/acts_as_yaffle.rb
 
 module Yaffle
   module ActsAsYaffle
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3b2300bacee42c776ea51e8a7ebb0030">Copiar</button>
+">Copy</button>
 </div>
 <h4 id="add-a-class-method"><a class="anchorlink" href="#add-a-class-method">4.1 Add a Class Method</a></h4><p>This plugin will expect that you've added a method to your model named <code>last_squawk</code>. However, the
 plugin users might have already defined a method on their model named <code>last_squawk</code> that they use
@@ -527,7 +539,7 @@ for something else. This plugin will allow the name to be changed by adding a cl
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6832908d321f484583ba39ee514fa1c3"># yaffle/test/acts_as_yaffle_test.rb
+<button class="clipboard-button" data-clipboard-text='# yaffle/test/acts_as_yaffle_test.rb
 
 require "test_helper"
 
@@ -540,8 +552,7 @@ class ActsAsYaffleTest &lt; ActiveSupport::TestCase
     assert_equal "last_tweet", Wickwall.yaffle_text_field
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6832908d321f484583ba39ee514fa1c3">Copiar</button>
+'>Copy</button>
 </div>
 <p>When you run <code>bin/test</code>, you should see the following:</p><div class="code_container">
 <pre><code class="highlight plaintext"># Running:
@@ -570,7 +581,7 @@ Finished in 0.004812s, 831.2949 runs/s, 415.6475 assertions/s.
 
 4 runs, 2 assertions, 0 failures, 2 errors, 0 skips
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1528f1a3bd6e1677766a216b31650850"># Running:
+<button class="clipboard-button" data-clipboard-text="# Running:
 
 ..E
 
@@ -595,8 +606,7 @@ bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:4
 Finished in 0.004812s, 831.2949 runs/s, 415.6475 assertions/s.
 
 4 runs, 2 assertions, 0 failures, 2 errors, 0 skips
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1528f1a3bd6e1677766a216b31650850">Copiar</button>
+">Copy</button>
 </div>
 <p>This tells us that we don't have the necessary models (Hickwall and Wickwall) that we are trying to test.
 We can easily generate these models in our "dummy" Rails application by running the following commands from the
@@ -605,21 +615,19 @@ We can easily generate these models in our "dummy" Rails application by running 
 <span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate model Hickwall last_squawk:string
 <span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate model Wickwall last_squawk:string last_tweet:string
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-ef2c4ae7518463ee3f806fe126a259b7">cd test/dummy
+<button class="clipboard-button" data-clipboard-text="cd test/dummy
 bin/rails generate model Hickwall last_squawk:string
 bin/rails generate model Wickwall last_squawk:string last_tweet:string
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-ef2c4ae7518463ee3f806fe126a259b7">Copiar</button>
+">Copy</button>
 </div>
 <p>Now you can create the necessary database tables in your testing database by navigating to your dummy app
 and migrating the database. First, run:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">cd test</span>/dummy
 <span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>db:migrate
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-c5c758460e233e8cfd588a38223a7321">cd test/dummy
+<button class="clipboard-button" data-clipboard-text="cd test/dummy
 bin/rails db:migrate
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-c5c758460e233e8cfd588a38223a7321">Copiar</button>
+">Copy</button>
 </div>
 <p>While you are here, change the Hickwall and Wickwall models so that they know that they are supposed to act
 like yaffles.</p><div class="code_container">
@@ -629,13 +637,12 @@ like yaffles.</p><div class="code_container">
   <span class="n">acts_as_yaffle</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-b3c4a004562665049d13e48505f4e97d"># test/dummy/app/models/hickwall.rb
+<button class="clipboard-button" data-clipboard-text="# test/dummy/app/models/hickwall.rb
 
 class Hickwall &lt; ApplicationRecord
   acts_as_yaffle
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-b3c4a004562665049d13e48505f4e97d">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># test/dummy/app/models/wickwall.rb</span>
@@ -644,13 +651,12 @@ end
   <span class="n">acts_as_yaffle</span> <span class="ss">yaffle_text_field: :last_tweet</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-1e4b5fc35f02cbe810f0587fa987085d"># test/dummy/app/models/wickwall.rb
+<button class="clipboard-button" data-clipboard-text="# test/dummy/app/models/wickwall.rb
 
 class Wickwall &lt; ApplicationRecord
   acts_as_yaffle yaffle_text_field: :last_tweet
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-1e4b5fc35f02cbe810f0587fa987085d">Copiar</button>
+">Copy</button>
 </div>
 <p>We will also add code to define the <code>acts_as_yaffle</code> method.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># yaffle/lib/yaffle/acts_as_yaffle.rb</span>
@@ -666,7 +672,7 @@ end
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f6b2ede18bee279e9bd4bdf650e5cae9"># yaffle/lib/yaffle/acts_as_yaffle.rb
+<button class="clipboard-button" data-clipboard-text="# yaffle/lib/yaffle/acts_as_yaffle.rb
 
 module Yaffle
   module ActsAsYaffle
@@ -678,8 +684,7 @@ module Yaffle
     end
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f6b2ede18bee279e9bd4bdf650e5cae9">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># test/dummy/app/models/application_record.rb</span>
@@ -690,15 +695,14 @@ end
   <span class="nb">self</span><span class="p">.</span><span class="nf">abstract_class</span> <span class="o">=</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-9694d35ed3e35b343be13363dfc52d1a"># test/dummy/app/models/application_record.rb
+<button class="clipboard-button" data-clipboard-text="# test/dummy/app/models/application_record.rb
 
 class ApplicationRecord &lt; ActiveRecord::Base
   include Yaffle::ActsAsYaffle
 
   self.abstract_class = true
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-9694d35ed3e35b343be13363dfc52d1a">Copiar</button>
+">Copy</button>
 </div>
 <p>You can then return to the root directory (<code>cd ../..</code>) of your plugin and rerun the tests using <code>bin/test</code>.</p><div class="code_container">
 <pre><code class="highlight plaintext"># Running:
@@ -727,7 +731,7 @@ Finished in 0.008263s, 484.0999 runs/s, 242.0500 assertions/s.
 
 4 runs, 2 assertions, 0 failures, 2 errors, 0 skips
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-f923a1aa24c30e270370faa0ff29b150"># Running:
+<button class="clipboard-button" data-clipboard-text="# Running:
 
 .E
 
@@ -752,8 +756,7 @@ bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:8
 Finished in 0.008263s, 484.0999 runs/s, 242.0500 assertions/s.
 
 4 runs, 2 assertions, 0 failures, 2 errors, 0 skips
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-f923a1aa24c30e270370faa0ff29b150">Copiar</button>
+">Copy</button>
 </div>
 <p>Getting closer... Now we will implement the code of the <code>acts_as_yaffle</code> method to make the tests pass.</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># yaffle/lib/yaffle/acts_as_yaffle.rb</span>
@@ -770,7 +773,7 @@ Finished in 0.008263s, 484.0999 runs/s, 242.0500 assertions/s.
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-34cd20f8503b87be19a973f42de552bd"># yaffle/lib/yaffle/acts_as_yaffle.rb
+<button class="clipboard-button" data-clipboard-text="# yaffle/lib/yaffle/acts_as_yaffle.rb
 
 module Yaffle
   module ActsAsYaffle
@@ -783,8 +786,7 @@ module Yaffle
     end
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-34cd20f8503b87be19a973f42de552bd">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># test/dummy/app/models/application_record.rb</span>
@@ -795,22 +797,20 @@ end
   <span class="nb">self</span><span class="p">.</span><span class="nf">abstract_class</span> <span class="o">=</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3107799fa098d563115e3670d3937e23"># test/dummy/app/models/application_record.rb
+<button class="clipboard-button" data-clipboard-text="# test/dummy/app/models/application_record.rb
 
 class ApplicationRecord &lt; ActiveRecord::Base
   include Yaffle::ActsAsYaffle
 
   self.abstract_class = true
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3107799fa098d563115e3670d3937e23">Copiar</button>
+">Copy</button>
 </div>
 <p>When you run <code>bin/test</code>, you should see the tests all pass:</p><div class="code_container">
 <pre><code class="highlight plaintext">  4 runs, 4 assertions, 0 failures, 0 errors, 0 skips
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-557dbc4fd8595e3a68bda76285f62592">  4 runs, 4 assertions, 0 failures, 0 errors, 0 skips
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-557dbc4fd8595e3a68bda76285f62592">Copiar</button>
+<button class="clipboard-button" data-clipboard-text="  4 runs, 4 assertions, 0 failures, 0 errors, 0 skips
+">Copy</button>
 </div>
 <h4 id="add-an-instance-method"><a class="anchorlink" href="#add-an-instance-method">4.2 Add an Instance Method</a></h4><p>This plugin will add a method named 'squawk' to any Active Record object that calls <code>acts_as_yaffle</code>. The 'squawk'
 method will simply set the value of one of the fields in the database.</p><p>To start out, write a failing test that shows the behavior you'd like:</p><div class="code_container">
@@ -839,7 +839,7 @@ method will simply set the value of one of the fields in the database.</p><p>To 
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-05cb839ab80fc76f54f199ac7ac3c3dc"># yaffle/test/acts_as_yaffle_test.rb
+<button class="clipboard-button" data-clipboard-text='# yaffle/test/acts_as_yaffle_test.rb
 require "test_helper"
 
 class ActsAsYaffleTest &lt; ActiveSupport::TestCase
@@ -863,8 +863,7 @@ class ActsAsYaffleTest &lt; ActiveSupport::TestCase
     assert_equal "squawk! Hello World", wickwall.last_tweet
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-05cb839ab80fc76f54f199ac7ac3c3dc">Copiar</button>
+'>Copy</button>
 </div>
 <p>Run the test to make sure the last two tests fail with an error that contains "NoMethodError: undefined method `squawk'",
 then update <code>acts_as_yaffle.rb</code> to look like this:</p><div class="code_container">
@@ -888,7 +887,7 @@ then update <code>acts_as_yaffle.rb</code> to look like this:</p><div class="cod
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-6f5cf98368197851c7c5cc89013c73cd"># yaffle/lib/yaffle/acts_as_yaffle.rb
+<button class="clipboard-button" data-clipboard-text="# yaffle/lib/yaffle/acts_as_yaffle.rb
 
 module Yaffle
   module ActsAsYaffle
@@ -907,8 +906,7 @@ module Yaffle
     end
   end
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-6f5cf98368197851c7c5cc89013c73cd">Copiar</button>
+">Copy</button>
 </div>
 <div class="code_container">
 <pre><code class="highlight ruby"><span class="c1"># test/dummy/app/models/application_record.rb</span>
@@ -919,38 +917,34 @@ end
   <span class="nb">self</span><span class="p">.</span><span class="nf">abstract_class</span> <span class="o">=</span> <span class="kp">true</span>
 <span class="k">end</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-01de84f4836f5bf0b170dba67e63b919"># test/dummy/app/models/application_record.rb
+<button class="clipboard-button" data-clipboard-text="# test/dummy/app/models/application_record.rb
 
 class ApplicationRecord &lt; ActiveRecord::Base
   include Yaffle::ActsAsYaffle
 
   self.abstract_class = true
 end
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-01de84f4836f5bf0b170dba67e63b919">Copiar</button>
+">Copy</button>
 </div>
 <p>Run <code>bin/test</code> one final time, and you should see:</p><div class="code_container">
 <pre><code class="highlight plaintext">  6 runs, 6 assertions, 0 failures, 0 errors, 0 skips
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-81c7361e6adc4cecda125d7bb879012b">  6 runs, 6 assertions, 0 failures, 0 errors, 0 skips
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-81c7361e6adc4cecda125d7bb879012b">Copiar</button>
+<button class="clipboard-button" data-clipboard-text="  6 runs, 6 assertions, 0 failures, 0 errors, 0 skips
+">Copy</button>
 </div>
 <div class="note"><p>The use of <code>write_attribute</code> to write to the field in model is just one example of how a plugin can interact with the model, and will not always be the right method to use. For example, you could also use:</p></div><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">send</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">yaffle_text_field</span><span class="si">}</span><span class="s2">="</span><span class="p">,</span> <span class="n">string</span><span class="p">.</span><span class="nf">to_squawk</span><span class="p">)</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-46aaf20c35058a9381f0498e07b0bd79">send("#{self.class.yaffle_text_field}=", string.to_squawk)
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-46aaf20c35058a9381f0498e07b0bd79">Copiar</button>
+<button class="clipboard-button" data-clipboard-text='send("#{self.class.yaffle_text_field}=", string.to_squawk)
+'>Copy</button>
 </div>
 <h3 id="generators"><a class="anchorlink" href="#generators">5 Generators</a></h3><p>Generators can be included in your gem simply by creating them in a <code>lib/generators</code> directory of your plugin. More information about
 the creation of generators can be found in the <a href="generators.html">Generators Guide</a>.</p><h3 id="publishing-your-gem"><a class="anchorlink" href="#publishing-your-gem">6 Publishing Your Gem</a></h3><p>Gem plugins currently in development can easily be shared from any Git repository. To share the Yaffle gem with others, simply
 commit the code to a Git repository (like GitHub) and add a line to the <code>Gemfile</code> of the application in question:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">gem</span> <span class="s2">"yaffle"</span><span class="p">,</span> <span class="ss">git: </span><span class="s2">"https://github.com/rails/yaffle.git"</span>
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-3bb14cee84c92f444d4ed024c815f1aa">gem "yaffle", git: "https://github.com/rails/yaffle.git"
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-3bb14cee84c92f444d4ed024c815f1aa">Copiar</button>
+<button class="clipboard-button" data-clipboard-text='gem "yaffle", git: "https://github.com/rails/yaffle.git"
+'>Copy</button>
 </div>
 <p>After running <code>bundle install</code>, your gem functionality will be available to the application.</p><p>When the gem is ready to be shared as a formal release, it can be published to <a href="https://rubygems.org">RubyGems</a>.</p><p>Alternatively, you can benefit from Bundler's Rake tasks. You can see a full list with the following:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake</span> <span class="nt">-T</span>
@@ -964,12 +958,11 @@ commit the code to a Git repository (like GitHub) and add a line to the <code>Ge
 </span><span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake </span>release
 <span class="gp">#</span><span class="w"> </span>Create tag v0.1.0 and build and push yaffle-0.1.0.gem to Rubygems
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-27cf7de195cf3125b40af65ca125335b">bundle exec rake -T
+<button class="clipboard-button" data-clipboard-text="bundle exec rake -T
 bundle exec rake build
 bundle exec rake install
 bundle exec rake release
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-27cf7de195cf3125b40af65ca125335b">Copiar</button>
+">Copy</button>
 </div>
 <p>For more information about publishing gems to RubyGems, see: <a href="https://guides.rubygems.org/publishing">Publishing your gem</a>.</p><h3 id="rdoc-documentation"><a class="anchorlink" href="#rdoc-documentation">7 RDoc Documentation</a></h3><p>Once your plugin is stable, and you are ready to deploy, do everyone else a favor and document it! Luckily, writing documentation for your plugin is easy.</p><p>The first step is to update the README file with detailed information about how to use your plugin. A few key things to include are:</p>
 <ul>
@@ -981,9 +974,8 @@ bundle exec rake release
 <p>Once your README is solid, go through and add rdoc comments to all the methods that developers will use. It's also customary to add <code># :nodoc:</code> comments to those parts of the code that are not included in the public API.</p><p>Once your comments are good to go, navigate to your plugin directory and run:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bundle exec rake </span>rdoc
 </code></pre>
-<textarea class="clipboard-content" id="clipboard-bd85b3c1b350e127ff28bd1c2101c3dc">bundle exec rake rdoc
-</textarea>
-<button class="clipboard-button" data-clipboard-target="#clipboard-bd85b3c1b350e127ff28bd1c2101c3dc">Copiar</button>
+<button class="clipboard-button" data-clipboard-text="bundle exec rake rdoc
+">Copy</button>
 </div>
 <h4 id="references"><a class="anchorlink" href="#references">7.1 References</a></h4>
 <ul>
@@ -1015,7 +1007,7 @@ bundle exec rake release
         </p>
         <p>
           E por último, mas não menos importante, qualquer tipo de discussão sobre a documentação do Ruby on Rails
-          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">lista de discussão rubyonrails-docs</a> e nas
+          é muito bem vinda na <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">forum oficial do Ruby on Rails</a> e nas
           <a href="https://github.com/campuscode/rails-guides-pt-BR/issues">issues do Guia em português</a>.
         </p>
       </div>
