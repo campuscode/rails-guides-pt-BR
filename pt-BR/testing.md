@@ -1041,22 +1041,22 @@ Agora vamos abrir esse arquivo e escrever nossa primeira asserção:
 require "test_helper"
 
 class BlogFlowTest < ActionDispatch::IntegrationTest
-  test "can see the welcome page" do
+  test "consegue ver a tela de boas vindas" do
     get "/"
     assert_select "h1", "Welcome#index"
   end
 end
 ```
 
-Vamos dar uma olhada em `assert_select` para consultar o HTML resultante de uma requisição na seção "Testando Views" abaixo. Ele é usado para testar a resposta da nossa requisição, assegurando a presença de elementos HTML-chave e seu conteúdo.
+Vamos dar uma olhada em `assert_select` para consultar o HTML resultante de uma requisição na seção "Testando Views" abaixo. Ele é usado para testar a resposta da nossa requisição, assegurando a presença de elementos HTML chave e seu conteúdo.
 
 Quando visitamos nosso caminho raiz, deveríamos ver `welcome/index.html.erb` renderizado para a view. Então essa asserção deveria passar.
 
-#### Criando integrações de artigos
+#### Integração de criação de artigos
 
 Que tal testar nossa capacidade de criar um novo artigo em nosso blog e ver o artigo resultante.
 ```ruby
-test "can create an article" do
+test "consegue criar um artigo" do
   get "/articles/new"
   assert_response :success
 
