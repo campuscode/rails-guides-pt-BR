@@ -981,12 +981,12 @@ A beleza dos testes de sistema é que, parecido com os testes de integração, e
 Porém, o teste de sistema é muito mais robusto e testa a aplicação como se uma pessoa de verdade estivesse usando.
 Indo além, você pode testar qualquer coisa que os próprios usuários fariam em sua aplicação, como comentar, deletar artigos, publicar rascunhos e etc.
 
-Integration Testing
+Testes de Integração
 -------------------
 
-Integration tests are used to test how various parts of our application interact. They are generally used to test important workflows within our application.
+Os testes de integração são utilizados para testar como várias partes da nossa aplicação interagem. Geralmente, são usados para testar fluxos importantes dentro da nossa aplicação.
 
-For creating Rails integration tests, we use the `test/integration` directory for our application. Rails provides a generator to create an integration test skeleton for us.
+Para criar testes de integração no Rails, utilizamos o diretório `test/integration` da nossa aplicação. O Rails fornece um gerador para criar uma estrutura básica de teste de integração para nós.
 
 ```bash
 $ bin/rails generate integration_test user_flows
@@ -994,71 +994,69 @@ $ bin/rails generate integration_test user_flows
       create  test/integration/user_flows_test.rb
 ```
 
-Here's what a freshly generated integration test looks like:
+Veja como fica um teste de integração recém-gerado:
 
 ```ruby
 require "test_helper"
 
 class UserFlowsTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
+  # test "a verdade" do
   #   assert true
   # end
 end
 ```
 
-Here the test is inheriting from `ActionDispatch::IntegrationTest`. This makes some additional helpers available for us to use in our integration tests.
+Aqui, o teste está herdando de `ActionDispatch::IntegrationTest`. Isso disponibiliza alguns *helpers* adicionais para usarmos em nossos testes de integração.
 
-### Helpers Available for Integration Tests
+### *Helpers* Disponíveis para Testes de Integração
 
-In addition to the standard testing helpers, inheriting from `ActionDispatch::IntegrationTest` comes with some additional helpers available when writing integration tests. Let's get briefly introduced to the three categories of helpers we get to choose from.
+Além dos *helpers* de teste padrão, herdar de `ActionDispatch::IntegrationTest` nos proporciona alguns *helpers* adicionais ao escrever testes de integração. Vamos nos familiarizar brevemente com as três categorias de *helpers* que temos à disposição.
 
-For dealing with the integration test runner, see [`ActionDispatch::Integration::Runner`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/Runner.html).
+Para lidar com o *runner* de teste de integração, consulte [`ActionDispatch::Integration::Runner`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/Runner.html).
 
-When performing requests, we will have [`ActionDispatch::Integration::RequestHelpers`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/RequestHelpers.html) available for our use.
+Ao realizar requisições, teremos [`ActionDispatch::Integration::RequestHelpers`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/RequestHelpers.html) disponíveis para nosso uso.
 
-If we need to modify the session, or state of our integration test, take a look at [`ActionDispatch::Integration::Session`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/Session.html) to help.
+Se precisarmos modificar a sessão ou o estado do nosso teste de integração, dê uma olhada em [`ActionDispatch::Integration::Session`](https://api.rubyonrails.org/classes/ActionDispatch/Integration/Session.html) para ajudar.
 
-### Implementing an integration test
+### Implementando um Teste de Integração
 
-Let's add an integration test to our blog application. We'll start with a basic workflow of creating a new blog article, to verify that everything is working properly.
+Vamos adicionar um teste de integração à nossa aplicação de blog. Vamos começar com um fluxo básico de criação de um novo artigo de blog, para verificar se tudo está funcionando corretamente.
 
-We'll start by generating our integration test skeleton:
+Vamos começar gerando a estrutura básica do nosso teste de integração:
 
 ```bash
 $ bin/rails generate integration_test blog_flow
 ```
 
-It should have created a test file placeholder for us. With the output of the
-previous command we should see:
+Isso deve ter criado um arquivo de teste para nós. Com a saída do comando anterior, deveríamos ver:
 
 ```
       invoke  test_unit
       create    test/integration/blog_flow_test.rb
 ```
 
-Now let's open that file and write our first assertion:
+Agora vamos abrir esse arquivo e escrever nossa primeira asserção:
 
 ```ruby
 require "test_helper"
 
 class BlogFlowTest < ActionDispatch::IntegrationTest
-  test "can see the welcome page" do
+  test "consegue ver a tela de boas vindas" do
     get "/"
     assert_select "h1", "Welcome#index"
   end
 end
 ```
 
-We will take a look at `assert_select` to query the resulting HTML of a request in the "Testing Views" section below. It is used for testing the response of our request by asserting the presence of key HTML elements and their content.
+Vamos dar uma olhada em `assert_select` para consultar o HTML resultante de uma requisição na seção "Testando Views" abaixo. Ele é usado para testar a resposta da nossa requisição, assegurando a presença de elementos HTML chave e seu conteúdo.
 
-When we visit our root path, we should see `welcome/index.html.erb` rendered for the view. So this assertion should pass.
+Quando visitamos nosso caminho raiz, deveríamos ver `welcome/index.html.erb` renderizado para a view. Então essa asserção deveria passar.
 
-#### Creating articles integration
+#### Integração de criação de artigos
 
-How about testing our ability to create a new article in our blog and see the resulting article.
-
+Que tal testar nossa capacidade de criar um novo artigo em nosso blog e ver o artigo resultante.
 ```ruby
-test "can create an article" do
+test "consegue criar um artigo" do
   get "/articles/new"
   assert_response :success
 
@@ -1071,11 +1069,11 @@ test "can create an article" do
 end
 ```
 
-Let's break this test down so we can understand it.
+Vamos fragmentar esse teste para que possamos entendê-lo.
 
-We start by calling the `:new` action on our Articles controller. This response should be successful.
+Começamos chamando a ação `:new` no nosso *controller* de Artigos. Essa resposta deveria ser bem-sucedida.
 
-After this we make a post request to the `:create` action of our Articles controller:
+Depois disso, fazemos uma requisição de *post* para a ação `:create` do nosso *controller* de Artigos:
 
 ```ruby
 post "/articles",
@@ -1084,15 +1082,15 @@ assert_response :redirect
 follow_redirect!
 ```
 
-The two lines following the request are to handle the redirect we setup when creating a new article.
+As duas linhas após a requisição são para lidar com o redirecionamento que configuramos ao criar um novo artigo.
 
-NOTE: Don't forget to call `follow_redirect!` if you plan to make subsequent requests after a redirect is made.
+NOTE: Não se esqueça de chamar `follow_redirect!` se planeja fazer requisições subsequentes após um redirecionamento ser feito.
 
-Finally we can assert that our response was successful and our new article is readable on the page.
+Finalmente, podemos assegurar que nossa resposta foi bem-sucedida e que nosso novo artigo está legível na página.
 
-#### Taking it further
+#### Indo além
 
-We were able to successfully test a very small workflow for visiting our blog and creating a new article. If we wanted to take this further we could add tests for commenting, removing articles, or editing comments. Integration tests are a great place to experiment with all kinds of use cases for our applications.
+Conseguimos testar com sucesso um fluxo muito pequeno para visitar nosso blog e criar um novo artigo. Se quisermos levar isso adiante, poderíamos adicionar testes para comentários, remover artigos ou editar comentários. Testes de integração são um ótimo lugar para experimentar todos os tipos de casos de uso para nossas aplicações.
 
 
 Functional Tests for Your Controllers
