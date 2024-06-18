@@ -1000,7 +1000,7 @@ Veja como fica um teste de integração recém-gerado:
 require "test_helper"
 
 class UserFlowsTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
+  # test "a verdade" do
   #   assert true
   # end
 end
