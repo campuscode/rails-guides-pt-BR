@@ -309,11 +309,11 @@
 </ul>
 </li>
 <li>
-<a href="#integration-testing">Integration Testing</a>
+<a href="#testes-de-integra%C3%A7%C3%A3o">Testes de Integração</a>
 
 <ul>
-<li><a href="#helpers-available-for-integration-tests">Helpers Available for Integration Tests</a></li>
-<li><a href="#implementing-an-integration-test">Implementing an integration test</a></li>
+<li><a href="#helpers-dispon%C3%ADveis-para-testes-de-integra%C3%A7%C3%A3o"><em>Helpers</em> Disponíveis para Testes de Integração</a></li>
+<li><a href="#implementando-um-teste-de-integra%C3%A7%C3%A3o">Implementando um Teste de Integração</a></li>
 </ul>
 </li>
 <li>
@@ -1418,9 +1418,9 @@ class PostsTest &lt; MobileSystemTestCase
 end
 '>Copy</button>
 </div>
-<h5 id="indo-além"><a class="anchorlink" href="#indo-al%C3%A9m">6.3.3 Indo Além</a></h5><p>A beleza dos testes de sistema é que, parecido com os testes de integração, eles também testam a interação do usuário com o <em>controller</em>, <em>model</em> e a <em>view</em>.
+<h5 id="implementando-um-teste-de-sistema-indo-além"><a class="anchorlink" href="#implementando-um-teste-de-sistema-indo-al%C3%A9m">6.3.3 Indo Além</a></h5><p>A beleza dos testes de sistema é que, parecido com os testes de integração, eles também testam a interação do usuário com o <em>controller</em>, <em>model</em> e a <em>view</em>.
 Porém, o teste de sistema é muito mais robusto e testa a aplicação como se uma pessoa de verdade estivesse usando.
-Indo além, você pode testar qualquer coisa que os próprios usuários fariam em sua aplicação, como comentar, deletar artigos, publicar rascunhos e etc.</p><h3 id="integration-testing"><a class="anchorlink" href="#integration-testing">7 Integration Testing</a></h3><p>Integration tests are used to test how various parts of our application interact. They are generally used to test important workflows within our application.</p><p>For creating Rails integration tests, we use the <code>test/integration</code> directory for our application. Rails provides a generator to create an integration test skeleton for us.</p><div class="code_container">
+Indo além, você pode testar qualquer coisa que os próprios usuários fariam em sua aplicação, como comentar, deletar artigos, publicar rascunhos e etc.</p><h3 id="testes-de-integração"><a class="anchorlink" href="#testes-de-integra%C3%A7%C3%A3o">7 Testes de Integração</a></h3><p>Os testes de integração são utilizados para testar como várias partes da nossa aplicação interagem. Geralmente, são usados para testar fluxos importantes dentro da nossa aplicação.</p><p>Para criar testes de integração no Rails, utilizamos o diretório <code>test/integration</code> da nossa aplicação. O Rails fornece um gerador para criar uma estrutura básica de teste de integração para nós.</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate integration_test user_flows
 <span class="go">      exists  test/integration/
       create  test/integration/user_flows_test.rb
@@ -1428,11 +1428,11 @@ Indo além, você pode testar qualquer coisa que os próprios usuários fariam e
 <button class="clipboard-button" data-clipboard-text="bin/rails generate integration_test user_flows
 ">Copy</button>
 </div>
-<p>Here's what a freshly generated integration test looks like:</p><div class="code_container">
+<p>Veja como fica um teste de integração recém-gerado:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
 
 <span class="k">class</span> <span class="nc">UserFlowsTest</span> <span class="o">&lt;</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">IntegrationTest</span>
-  <span class="c1"># test "the truth" do</span>
+  <span class="c1"># test "a verdade" do</span>
   <span class="c1">#   assert true</span>
   <span class="c1"># end</span>
 <span class="k">end</span>
@@ -1440,20 +1440,19 @@ Indo além, você pode testar qualquer coisa que os próprios usuários fariam e
 <button class="clipboard-button" data-clipboard-text='require "test_helper"
 
 class UserFlowsTest &lt; ActionDispatch::IntegrationTest
-  # test "the truth" do
+  # test "a verdade" do
   #   assert true
   # end
 end
 '>Copy</button>
 </div>
-<p>Here the test is inheriting from <code>ActionDispatch::IntegrationTest</code>. This makes some additional helpers available for us to use in our integration tests.</p><h4 id="helpers-available-for-integration-tests"><a class="anchorlink" href="#helpers-available-for-integration-tests">7.1 Helpers Available for Integration Tests</a></h4><p>In addition to the standard testing helpers, inheriting from <code>ActionDispatch::IntegrationTest</code> comes with some additional helpers available when writing integration tests. Let's get briefly introduced to the three categories of helpers we get to choose from.</p><p>For dealing with the integration test runner, see <a href="https://api.rubyonrails.org/v7.0.8/classes/ActionDispatch/Integration/Runner.html"><code>ActionDispatch::Integration::Runner</code></a>.</p><p>When performing requests, we will have <a href="https://api.rubyonrails.org/v7.0.8/classes/ActionDispatch/Integration/RequestHelpers.html"><code>ActionDispatch::Integration::RequestHelpers</code></a> available for our use.</p><p>If we need to modify the session, or state of our integration test, take a look at <a href="https://api.rubyonrails.org/v7.0.8/classes/ActionDispatch/Integration/Session.html"><code>ActionDispatch::Integration::Session</code></a> to help.</p><h4 id="implementing-an-integration-test"><a class="anchorlink" href="#implementing-an-integration-test">7.2 Implementing an integration test</a></h4><p>Let's add an integration test to our blog application. We'll start with a basic workflow of creating a new blog article, to verify that everything is working properly.</p><p>We'll start by generating our integration test skeleton:</p><div class="code_container">
+<p>Aqui, o teste está herdando de <code>ActionDispatch::IntegrationTest</code>. Isso disponibiliza alguns <em>helpers</em> adicionais para usarmos em nossos testes de integração.</p><h4 id="helpers-disponíveis-para-testes-de-integração"><a class="anchorlink" href="#helpers-dispon%C3%ADveis-para-testes-de-integra%C3%A7%C3%A3o">7.1 <em>Helpers</em> Disponíveis para Testes de Integração</a></h4><p>Além dos <em>helpers</em> de teste padrão, herdar de <code>ActionDispatch::IntegrationTest</code> nos proporciona alguns <em>helpers</em> adicionais ao escrever testes de integração. Vamos nos familiarizar brevemente com as três categorias de <em>helpers</em> que temos à disposição.</p><p>Para lidar com o <em>runner</em> de teste de integração, consulte <a href="https://api.rubyonrails.org/v7.0.8/classes/ActionDispatch/Integration/Runner.html"><code>ActionDispatch::Integration::Runner</code></a>.</p><p>Ao realizar requisições, teremos <a href="https://api.rubyonrails.org/v7.0.8/classes/ActionDispatch/Integration/RequestHelpers.html"><code>ActionDispatch::Integration::RequestHelpers</code></a> disponíveis para nosso uso.</p><p>Se precisarmos modificar a sessão ou o estado do nosso teste de integração, dê uma olhada em <a href="https://api.rubyonrails.org/v7.0.8/classes/ActionDispatch/Integration/Session.html"><code>ActionDispatch::Integration::Session</code></a> para ajudar.</p><h4 id="implementando-um-teste-de-integração"><a class="anchorlink" href="#implementando-um-teste-de-integra%C3%A7%C3%A3o">7.2 Implementando um Teste de Integração</a></h4><p>Vamos adicionar um teste de integração à nossa aplicação de blog. Vamos começar com um fluxo básico de criação de um novo artigo de blog, para verificar se tudo está funcionando corretamente.</p><p>Vamos começar gerando a estrutura básica do nosso teste de integração:</p><div class="code_container">
 <pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">bin/rails </span>generate integration_test blog_flow
 </code></pre>
 <button class="clipboard-button" data-clipboard-text="bin/rails generate integration_test blog_flow
 ">Copy</button>
 </div>
-<p>It should have created a test file placeholder for us. With the output of the
-previous command we should see:</p><div class="code_container">
+<p>Isso deve ter criado um arquivo de teste para nós. Com a saída do comando anterior, deveríamos ver:</p><div class="code_container">
 <pre><code class="highlight plaintext">      invoke  test_unit
       create    test/integration/blog_flow_test.rb
 </code></pre>
@@ -1461,11 +1460,11 @@ previous command we should see:</p><div class="code_container">
       create    test/integration/blog_flow_test.rb
 ">Copy</button>
 </div>
-<p>Now let's open that file and write our first assertion:</p><div class="code_container">
+<p>Agora vamos abrir esse arquivo e escrever nossa primeira asserção:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="nb">require</span> <span class="s2">"test_helper"</span>
 
 <span class="k">class</span> <span class="nc">BlogFlowTest</span> <span class="o">&lt;</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">IntegrationTest</span>
-  <span class="nb">test</span> <span class="s2">"can see the welcome page"</span> <span class="k">do</span>
+  <span class="nb">test</span> <span class="s2">"consegue ver a tela de boas vindas"</span> <span class="k">do</span>
     <span class="n">get</span> <span class="s2">"/"</span>
     <span class="n">assert_select</span> <span class="s2">"h1"</span><span class="p">,</span> <span class="s2">"Welcome#index"</span>
   <span class="k">end</span>
@@ -1474,40 +1473,25 @@ previous command we should see:</p><div class="code_container">
 <button class="clipboard-button" data-clipboard-text='require "test_helper"
 
 class BlogFlowTest &lt; ActionDispatch::IntegrationTest
-  test "can see the welcome page" do
+  test "consegue ver a tela de boas vindas" do
     get "/"
     assert_select "h1", "Welcome#index"
   end
 end
 '>Copy</button>
 </div>
-<p>We will take a look at <code>assert_select</code> to query the resulting HTML of a request in the "Testing Views" section below. It is used for testing the response of our request by asserting the presence of key HTML elements and their content.</p><p>When we visit our root path, we should see <code>welcome/index.html.erb</code> rendered for the view. So this assertion should pass.</p><h5 id="creating-articles-integration"><a class="anchorlink" href="#creating-articles-integration">7.2.1 Creating articles integration</a></h5><p>How about testing our ability to create a new article in our blog and see the resulting article.</p><div class="code_container">
-<pre><code class="highlight ruby"><span class="nb">test</span> <span class="s2">"can create an article"</span> <span class="k">do</span>
-  <span class="n">get</span> <span class="s2">"/articles/new"</span>
-  <span class="n">assert_response</span> <span class="ss">:success</span>
-
-  <span class="n">post</span> <span class="s2">"/articles"</span><span class="p">,</span>
-    <span class="ss">params: </span><span class="p">{</span> <span class="ss">article: </span><span class="p">{</span> <span class="ss">title: </span><span class="s2">"can create"</span><span class="p">,</span> <span class="ss">body: </span><span class="s2">"article successfully."</span> <span class="p">}</span> <span class="p">}</span>
-  <span class="n">assert_response</span> <span class="ss">:redirect</span>
-  <span class="n">follow_redirect!</span>
-  <span class="n">assert_response</span> <span class="ss">:success</span>
-  <span class="n">assert_select</span> <span class="s2">"p"</span><span class="p">,</span> <span class="s2">"Title:</span><span class="se">\n</span><span class="s2">  can create"</span>
-<span class="k">end</span>
-</code></pre>
-<button class="clipboard-button" data-clipboard-text='test "can create an article" do
+<p>Vamos dar uma olhada em <code>assert_select</code> para consultar o HTML resultante de uma requisição na seção "Testando Views" abaixo. Ele é usado para testar a resposta da nossa requisição, assegurando a presença de elementos HTML chave e seu conteúdo.</p><p>Quando visitamos nosso caminho raiz, deveríamos ver <code>welcome/index.html.erb</code> renderizado para a view. Então essa asserção deveria passar.</p><h5 id="integração-de-criação-de-artigos"><a class="anchorlink" href="#integra%C3%A7%C3%A3o-de-cria%C3%A7%C3%A3o-de-artigos">7.2.1 Integração de criação de artigos</a></h5><p>Que tal testar nossa capacidade de criar um novo artigo em nosso blog e ver o artigo resultante.
+```ruby
+test "consegue criar um artigo" do
   get "/articles/new"
-  assert_response :success
-
-  post "/articles",
+  assert_response :success</p><p>  post "/articles",
     params: { article: { title: "can create", body: "article successfully." } }
   assert_response :redirect
   follow_redirect!
   assert_response :success
   assert_select "p", "Title:\n  can create"
 end
-'>Copy</button>
-</div>
-<p>Let's break this test down so we can understand it.</p><p>We start by calling the <code>:new</code> action on our Articles controller. This response should be successful.</p><p>After this we make a post request to the <code>:create</code> action of our Articles controller:</p><div class="code_container">
+```</p><p>Vamos fragmentar esse teste para que possamos entendê-lo.</p><p>Começamos chamando a ação <code>:new</code> no nosso <em>controller</em> de Artigos. Essa resposta deveria ser bem-sucedida.</p><p>Depois disso, fazemos uma requisição de <em>post</em> para a ação <code>:create</code> do nosso <em>controller</em> de Artigos:</p><div class="code_container">
 <pre><code class="highlight ruby"><span class="n">post</span> <span class="s2">"/articles"</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span> <span class="ss">article: </span><span class="p">{</span> <span class="ss">title: </span><span class="s2">"can create"</span><span class="p">,</span> <span class="ss">body: </span><span class="s2">"article successfully."</span> <span class="p">}</span> <span class="p">}</span>
 <span class="n">assert_response</span> <span class="ss">:redirect</span>
@@ -1519,7 +1503,7 @@ assert_response :redirect
 follow_redirect!
 '>Copy</button>
 </div>
-<p>The two lines following the request are to handle the redirect we setup when creating a new article.</p><div class="note"><p>Don't forget to call <code>follow_redirect!</code> if you plan to make subsequent requests after a redirect is made.</p></div><p>Finally we can assert that our response was successful and our new article is readable on the page.</p><h5 id="taking-it-further"><a class="anchorlink" href="#taking-it-further">7.2.2 Taking it further</a></h5><p>We were able to successfully test a very small workflow for visiting our blog and creating a new article. If we wanted to take this further we could add tests for commenting, removing articles, or editing comments. Integration tests are a great place to experiment with all kinds of use cases for our applications.</p><h3 id="functional-tests-for-your-controllers"><a class="anchorlink" href="#functional-tests-for-your-controllers">8 Functional Tests for Your Controllers</a></h3><p>In Rails, testing the various actions of a controller is a form of writing functional tests. Remember your controllers handle the incoming web requests to your application and eventually respond with a rendered view. When writing functional tests, you are testing how your actions handle the requests and the expected result or response, in some cases an HTML view.</p><h4 id="what-to-include-in-your-functional-tests"><a class="anchorlink" href="#what-to-include-in-your-functional-tests">8.1 What to include in your Functional Tests</a></h4><p>You should test for things such as:</p>
+<p>As duas linhas após a requisição são para lidar com o redirecionamento que configuramos ao criar um novo artigo.</p><div class="note"><p>Não se esqueça de chamar <code>follow_redirect!</code> se planeja fazer requisições subsequentes após um redirecionamento ser feito.</p></div><p>Finalmente, podemos assegurar que nossa resposta foi bem-sucedida e que nosso novo artigo está legível na página.</p><h5 id="implementando-um-teste-de-integração-indo-além"><a class="anchorlink" href="#implementando-um-teste-de-integra%C3%A7%C3%A3o-indo-al%C3%A9m">7.2.2 Indo além</a></h5><p>Conseguimos testar com sucesso um fluxo muito pequeno para visitar nosso blog e criar um novo artigo. Se quisermos levar isso adiante, poderíamos adicionar testes para comentários, remover artigos ou editar comentários. Testes de integração são um ótimo lugar para experimentar todos os tipos de casos de uso para nossas aplicações.</p><h3 id="functional-tests-for-your-controllers"><a class="anchorlink" href="#functional-tests-for-your-controllers">8 Functional Tests for Your Controllers</a></h3><p>In Rails, testing the various actions of a controller is a form of writing functional tests. Remember your controllers handle the incoming web requests to your application and eventually respond with a rendered view. When writing functional tests, you are testing how your actions handle the requests and the expected result or response, in some cases an HTML view.</p><h4 id="what-to-include-in-your-functional-tests"><a class="anchorlink" href="#what-to-include-in-your-functional-tests">8.1 What to include in your Functional Tests</a></h4><p>You should test for things such as:</p>
 <ul>
 <li>was the web request successful?</li>
 <li>was the user redirected to the right page?</li>
