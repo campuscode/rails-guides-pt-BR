@@ -47,27 +47,27 @@ Se você estiver familiarizado com o Sprockets, o guia a seguir pode trazer idei
 |Link de um *asset*   |asset_url             |asset_pack_tag     |
 |Requerer um *script* |//= require           |import or require  |
 
-Installing Webpacker
+Instalando Webpacker
 --------------------
 
-To use Webpacker, you must install the Yarn package manager, version 1.x or up, and you must have Node.js installed, version 10.13.0 and up.
+Para usar o Webpacker, você precisa instalar o gerenciador de pacotes Yarn, versão 1.x ou acima, e também precisa ter o Node.js instalado, versão 10.13.0 ou acima.
 
-NOTE: Webpacker depends on NPM and Yarn. NPM, the Node package manager registry, is the primary repository for publishing and downloading open-source JavaScript projects, both for Node.js and browser runtimes. It is analogous to rubygems.org for Ruby gems. Yarn is a command-line utility that enables the installation and management of JavaScript dependencies, much like Bundler does for Ruby.
+NOTA: O Webpacker depende do NPM e do Yarn. O NPM, o registro do gerenciador de pacotes do Node, é o repositório principal para publicação e download de projetos JavaScript de código aberto, tanto para Node.js quanto para _runtimes_ do navegador. É análogo ao rubygems.org para as gems Ruby. Yarn é uma utilidade em linha de comando que habilita a instalação e gerenciamento de dependências JavaScript, muito parecido com o que o Bundler faz para Ruby.
 
-To include Webpacker in a new project, add `--webpack` to the `rails new` command. To add Webpacker to an existing project, add the `webpacker` gem to the project's `Gemfile`, run `bundle install`, and then run `bin/rails webpacker:install`.
+Para incluir Webpacker em um novo projeto, adicione `--webpack` no comando `rails new`. Para adicionar o Webpacker em um projeto já criado, adicione a gem `webpacker` no `Gemfile`, rode `bundle install`, e então execute `bin/rails webpacker:install`.
 
-Installing Webpacker creates the following local files:
+Instalar o Webpacker cria os seguintes arquivos locais:
 
-|File                    |Location                |Explanation                                                                                         |
+|Arquivo                    |Localização                |Explicação                                                                                         |
 |------------------------|------------------------|----------------------------------------------------------------------------------------------------|
-|JavaScript Folder       | `app/javascript`       |A place for your front-end source                                                                   |
-|Webpacker Configuration | `config/webpacker.yml` |Configure the Webpacker gem                                                                         |
-|Babel Configuration     | `babel.config.js`      |Configuration for the [Babel](https://babeljs.io) JavaScript Compiler                               |
-|PostCSS Configuration   | `postcss.config.js`    |Configuration for the [PostCSS](https://postcss.org) CSS Post-Processor                             |
-|Browserlist             | `.browserslistrc`      |[Browserlist](https://github.com/browserslist/browserslist) manages target browsers configuration   |
+|Pasta JavaScript       | `app/javascript`       |Um lugar para suas fontes de front-end                                                                   |
+|Configuração Webpacker | `config/webpacker.yml` |Configura a gem Webpacker                                                                         |
+|Configuração Babel     | `babel.config.js`      |Configuração para o Compilador JavaScript [Babel](https://babeljs.io)                               |
+|Configuração PostCSS   | `postcss.config.js`    |Configuração para o Pré-Processador CSS[PostCSS](https://postcss.org)                             |
+|Browserlist             | `.browserslistrc`      |[Browserlist](https://github.com/browserslist/browserslist) gerencia configuração de navegadores   |
 
 
-The installation also calls the `yarn` package manager, creates a `package.json` file with a basic set of packages listed, and uses Yarn to install these dependencies.
+A instalação também chama o gerenciador de pacotes `yarn`, cria um arquivo `package.json` com uma lista básica de pacotes, e usa Yarn para instalar essas dependências.
 
 Uso
 -----
