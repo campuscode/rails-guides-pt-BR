@@ -51,7 +51,7 @@ de testar. O Rails fornece ajudantes
 *build-in* para necessidades comuns, e também permite que você crie seus
 próprios métodos de validação.
 
-Exitem outros modos de validar dados antes deles serem salvos no seu banco de
+Existem outros modos de validar dados antes deles serem salvos no seu banco de
 dados, incluindo restrições nativas do banco de dados, validações no lado do
 cliente e validações no nível do *controller*. Este é um sumário dos prós
 e contras:
