@@ -3138,7 +3138,7 @@ Extensions to `Range`
 
 ### `to_s`
 
-Active Support extends the method `Range#to_s` so that it understands an optional format argument. As of this writing the only supported non-default format is `:db`:
+O Suporte Ativo estende o método `Range#to_s` para que ele entenda um argumento de formato opcional. No momento em que este artigo foi escrito, o único formato não padrão suportado é `:db`:
 
 ```ruby
 (Date.today..Date.tomorrow).to_s
@@ -3148,19 +3148,19 @@ Active Support extends the method `Range#to_s` so that it understands an optiona
 # => "BETWEEN '2009-10-25' AND '2009-10-26'"
 ```
 
-As the example depicts, the `:db` format generates a `BETWEEN` SQL clause. That is used by Active Record in its support for range values in conditions.
+Como o exemplo mostra, the `:db` formato gera um `BETWEEN` Cláusula SQL. Isso é usado pelo Active Record em seu suporte para valores de intervalo em condições.
 
-NOTE: Defined in `active_support/core_ext/range/conversions.rb`.
+NOTE: Definido em `active_support/core_ext/range/conversions.rb`.
 
 ### `===` and `include?`
 
-The methods `Range#===` and `Range#include?` say whether some value falls between the ends of a given instance:
+Os métodos `Range#===` e `Range#include?` dizer se algum valor está entre as extremidades de uma determinada instância:
 
 ```ruby
 (2..3).include?(Math::E) # => true
 ```
 
-Active Support extends these methods so that the argument may be another range in turn. In that case we test whether the ends of the argument range belong to the receiver themselves:
+O Active Support estende esses métodos para que o argumento possa ser outro intervalo. Nesse caso, testamos se as extremidades do intervalo de argumentos pertencem ao próprio receptor:
 
 ```ruby
 (1..10) === (3..7)  # => true
@@ -3174,11 +3174,11 @@ Active Support extends these methods so that the argument may be another range i
 (1...9).include?(3..9)  # => false
 ```
 
-NOTE: Defined in `active_support/core_ext/range/compare_range.rb`.
+NOTE: Definido em `active_support/core_ext/range/compare_range.rb`.
 
 ### `overlaps?`
 
-The method [`Range#overlaps?`][Range#overlaps?] says whether any two given ranges have non-void intersection:
+O método [`Range#overlaps?`][Range#overlaps?] diz se quaisquer dois intervalos dados têm interseção não vazia:
 
 ```ruby
 (1..10).overlaps?(7..11)  # => true
@@ -3186,7 +3186,7 @@ The method [`Range#overlaps?`][Range#overlaps?] says whether any two given range
 (1..10).overlaps?(11..27) # => false
 ```
 
-NOTE: Defined in `active_support/core_ext/range/overlaps.rb`.
+NOTE: Definido em `active_support/core_ext/range/overlaps.rb`.
 
 [Range#overlaps?]: https://api.rubyonrails.org/classes/Range.html#method-i-overlaps-3F
 
