@@ -4,19 +4,18 @@
 Active Storage Overview
 =======================
 
-This guide covers how to attach files to your Active Record models.
+Esse guia cobre como anexar arquivos aos seus modelos do Active Record.
 
-After reading this guide, you will know:
+Após ler esse guia, você saberá:
 
-* How to attach one or many files to a record.
-* How to delete an attached file.
-* How to link to an attached file.
-* How to use variants to transform images.
-* How to generate an image representation of a non-image file, such as a PDF or a video.
-* How to send file uploads directly from browsers to a storage service,
-  bypassing your application servers.
-* How to clean up files stored during testing.
-* How to implement support for additional storage services.
+* Como anexar um ou vários arquivos a um registro.
+* Como deletar um arquivo anexado.
+* Como criar um link para um arquivo anexado.
+* Como usar variantes para transformar imagens. 
+* Como gerar uma representação em forma de imagem de arquivos que não sejam imagens, como um PDF ou um vídeo.
+* Como enviar arquivos upados diretamente de um navegador para um serviço de armazenamento, contornando seus servidores de aplicação.
+* Como fazer a limpeza de arquivos armazenados durante testes.
+* Como implementar suporte para serviços de armazenamento adicionais.
 
 --------------------------------------------------------------------------------
 
