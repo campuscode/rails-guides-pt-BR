@@ -67,6 +67,7 @@ staging       | homologação             |
 logged        | adicionado ao log       |
 breakpoints   | pontos de interrupção   |
 debugging     | debug                   |
+request       | requisição              |
 
 ### Casos especiais
 *Deploy*: analisar caso a caso. Sugestão: utilizar implantar ou implantação seguido
